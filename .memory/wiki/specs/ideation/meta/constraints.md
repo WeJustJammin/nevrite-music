@@ -35,11 +35,39 @@
 | Origin | `https://github.com/WeJustJammin/nevrite-music.git` (WeJustJammin business org) |
 | Default branch | `main` (no commits yet as of 2026-07-16) |
 
+### CI/CD Constraints (user-declared, 2026-07-16)
+
+> Locked directives. Not product domains — inputs to `/setup-workspace-cicd`.
+
+| Constraint | Value |
+|---|---|
+| **Deployment flow** | GitHub → Cloudflare (owner's stated preference) |
+| **Runner strategy** | **Self-hosted local runners**, 2–3 of them |
+| **Runner lifecycle** | Installed as a **systemd service**, **autostart on boot**, always ready |
+| **Motivation** | Avoid consuming GitHub Actions minutes on the account |
+
+**Why the motivation is sound**: `WeJustJammin/nevrite-music` is a **private** repo, so Actions
+minutes are metered against the account's allowance (they are only unlimited on public repos).
+Self-hosted runners bypass the meter entirely.
+
+**Security note for `/setup-workspace-cicd`**: self-hosted runners are safe on this repo
+*because it is private*. If the repo is ever made public, self-hosted runners must be
+reconfigured or removed first — a fork's pull request would otherwise execute untrusted code
+on the host. Record this as a gate on any future public-visibility change.
+
+**Prerequisite chain**:
+1. `gh auth login` as `WeJustJammin` — **BLOCKS runner registration** (a runner registration
+   token must be minted for the repo by an authorized account)
+2. Runner registration → systemd unit creation → enable + start
+
 ### Open Infrastructure Actions
 
 | Item | Status | Owner | Blocks |
 |---|---|---|---|
 | Point `wejamm.in` DNS at Cloudflare | **NOT DONE** — domain not yet forwarding to Cloudflare | User | `/setup-workspace-hosting` |
+| `gh auth login` as `WeJustJammin` | **NOT DONE** — currently authed as personal account `NEVRITERob` | User (interactive; agent cannot handle credentials) | Initial `git push`; self-hosted runner registration |
+| Install 2–3 self-hosted runners as systemd services | **NOT DONE** — blocked on gh reauth | User + Agent | `/setup-workspace-cicd` |
+| Convert `WeJustJammin` from User account → Organization | **OPEN QUESTION** — currently `type: User` (id 305953066). Orgs give teams, scoped repo roles, and runner groups. Cheapest to do now while the repo is empty. | User | — |
 
 ## Architecture Concerns Reclassified Out of the Product
 
