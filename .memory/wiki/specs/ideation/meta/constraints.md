@@ -55,10 +55,49 @@ Self-hosted runners bypass the meter entirely.
 reconfigured or removed first — a fork's pull request would otherwise execute untrusted code
 on the host. Record this as a gate on any future public-visibility change.
 
-**Prerequisite chain**:
-1. `gh auth login` as `WeJustJammin` — **BLOCKS runner registration** (a runner registration
-   token must be minted for the repo by an authorized account)
-2. Runner registration → systemd unit creation → enable + start
+### Self-Hosted Runner Fleet — BUILT & VERIFIED (2026-07-16)
+
+| Property | Value |
+|---|---|
+| Runners | `wejammin-1`, `wejammin-2`, `wejammin-3` — all **online** |
+| Runner version | `actions/runner` v2.335.1 (linux-x64) |
+| Install path | `/home/rob/actions-runners/wejammin-{1,2,3}` |
+| Labels | `self-hosted`, `Linux`, `X64`, `wejammin`, `cachyos` |
+| Service | `github-runner@wejammin-{1,2,3}.service` (**systemd `--user`**, templated unit) |
+| Unit file | `/home/rob/.config/systemd/user/github-runner@.service` |
+| Autostart | ✅ `enabled` + `Linger=yes` → starts at boot **without login** |
+| Restart policy | `Restart=always`, `RestartSec=5s`, burst-limited 5/300s |
+| Shutdown | `SIGTERM` + `TimeoutStopSec=5min` → in-flight jobs finish before exit |
+| Host | CachyOS (Arch), 8 cores, 15 GiB RAM |
+
+**Deviation from GitHub's documented install — and why**: the official `svc.sh install` writes
+to `/etc/systemd/system` and needs root. `sudo` requires a password on this host, so that path
+was unavailable to automation. **`systemd --user` units were used instead.** This is not a
+downgrade: `svc.sh` configures the service to run as the invoking user anyway, so the runtime
+identity is identical, and `Linger=yes` (already enabled) delivers the same boot-autostart
+guarantee. It also keeps the fleet entirely within the user's own systemd scope — no root
+surface at all.
+
+**Dependency note (Arch)**: `icu`, `krb5`, `zlib`, `openssl` present. `lttng-ust` is **absent**
+— it is optional (.NET tracing only) and the runner operates without it. GitHub's
+`installdependencies.sh` targets Debian/RHEL and must not be run on this host.
+
+**Verification performed** (`.github/workflows/runner-smoke-test.yml`, temporary scaffolding):
+3 matrix jobs fanned across all 3 runners, one each — proving fleet distribution, not just a
+single live runner. Toolchain reachable, Cloudflare API egress confirmed **from the runner**,
+checkout succeeded, **0 minutes billable**.
+
+**Operator commands**:
+```bash
+systemctl --user status  'github-runner@wejammin-*'   # health
+systemctl --user restart 'github-runner@wejammin-1'   # bounce one
+journalctl --user -u 'github-runner@*' -f             # live logs
+gh api repos/WeJustJammin/nevrite-music/actions/runners --jq '.runners[].status'
+```
+
+**Capacity note for `/setup-workspace-cicd`**: 3 runners on 8 cores / 15 GiB. Concurrent
+heavy builds (3× Node/Astro at once) will contend for RAM — ~5.8 GiB was available at install
+time. If builds start thrashing, reduce to 2 runners rather than adding memory pressure.
 
 ### Open Infrastructure Actions
 
