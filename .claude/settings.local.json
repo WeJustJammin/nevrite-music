@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(sudo -S pacman -S --noconfirm uv)",
+      "Bash(sudo -S pacman -Syu --noconfirm uv)",
+      "Bash(uv --version)",
+      "Bash(uvx --version)",
+      "Bash(pacman -Q uv linux-cachyos)"
+    ]
+  }
+}

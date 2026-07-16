@@ -1,0 +1,6 @@
+{
+  "version": 1,
+  "backend": "jsonl",
+  "retrieval": "index-guided",
+  "agents": ["claude", "gemini", "factory", "codex", "pi"]
+}
