@@ -63,20 +63,50 @@ on the host. Record this as a gate on any future public-visibility change.
 | Runner version | `actions/runner` v2.335.1 (linux-x64) |
 | Install path | `/home/rob/actions-runners/wejammin-{1,2,3}` |
 | Labels | `self-hosted`, `Linux`, `X64`, `wejammin`, `cachyos` |
-| Service | `github-runner@wejammin-{1,2,3}.service` (**systemd `--user`**, templated unit) |
-| Unit file | `/home/rob/.config/systemd/user/github-runner@.service` |
-| Autostart | ✅ `enabled` + `Linger=yes` → starts at boot **without login** |
-| Restart policy | `Restart=always`, `RestartSec=5s`, burst-limited 5/300s |
-| Shutdown | `SIGTERM` + `TimeoutStopSec=5min` → in-flight jobs finish before exit |
+| Service | `actions.runner.WeJustJammin-nevrite-music.wejammin-{1,2,3}.service` (**system**, via official `svc.sh`) |
+| Unit files | `/etc/systemd/system/actions.runner.WeJustJammin-nevrite-music.wejammin-*.service` |
+| Autostart | ✅ `enabled`, `WantedBy=multi-user.target`, 3 boot symlinks present |
+| Runs as | `rob` (svc.sh sets `User=`) |
 | Host | CachyOS (Arch), 8 cores, 15 GiB RAM |
 
-**Deviation from GitHub's documented install — and why**: the official `svc.sh install` writes
-to `/etc/systemd/system` and needs root. `sudo` requires a password on this host, so that path
-was unavailable to automation. **`systemd --user` units were used instead.** This is not a
-downgrade: `svc.sh` configures the service to run as the invoking user anyway, so the runtime
-identity is identical, and `Linger=yes` (already enabled) delivers the same boot-autostart
-guarantee. It also keeps the fleet entirely within the user's own systemd scope — no root
-surface at all.
+**Install path — official.** Uses GitHub's documented `svc.sh install`. An earlier interim
+build used `systemd --user` units (because `sudo` requires a password here); that approach has
+been **fully removed** — see the incident note below, which records a real defect it caused.
+
+**Scoped sudo**: `/etc/sudoers.d/10-wejammin-runners` grants passwordless `systemctl`/`journalctl`
+**only** for `actions.runner.*` units. Source of truth for the entry, including the scoping
+rationale, is version-controlled at `.github/10-wejammin-runners.sudoers`. It deliberately does
+**not** cover `svc.sh` (user-writable ⇒ NOPASSWD there would be equivalent to passwordless root).
+
+### ⚠️ Incident: orphaned listeners locked out the real services (2026-07-16)
+
+Recorded because the failure mode is non-obvious and would be expensive to rediscover.
+
+**What happened**: the interim user-unit had `KillMode=process`, chosen so in-flight jobs could
+finish on shutdown. Side effect: on stop, systemd killed only the main process and **left
+`run-helper.sh` + `Runner.Listener` alive as orphans**. Those orphans kept holding their GitHub
+runner sessions. When the official `svc.sh` units then started, they collided:
+
+```
+A session for this runner already exists.
+Runner connect error: Error: Conflict. Retrying until reconnected.
+```
+
+**Two of the three system services gave up and exited.** Meanwhile the GitHub API still
+reported all 3 runners `online` (its status lags ~60s), so the control plane looked healthy
+while the fleet was two-thirds dead.
+
+**Lessons for `/setup-workspace-cicd`**:
+1. `KillMode=process` on a runner unit **leaks supervised children**. The runner's own
+   `run-helper.sh` is a respawner — killing a listener while its helper lives just relaunches it.
+   Kill supervisors before children, or don't use `KillMode=process`.
+2. **A runner session is exclusive.** Two listeners registered under one runner name will
+   conflict, and the loser exits. Never leave a second supervisor running.
+3. **Never verify a runner fleet from the GitHub API alone** — cross-check `systemctl is-active`
+   and the process table, then prove it with a real workflow run.
+
+**Resolution**: orphans killed, sessions freed, dead units restarted via the scoped sudo entry,
+interim user unit file deleted, `systemctl --user daemon-reload` confirms no residue.
 
 **Dependency note (Arch)**: `icu`, `krb5`, `zlib`, `openssl` present. `lttng-ust` is **absent**
 — it is optional (.NET tracing only) and the runner operates without it. GitHub's

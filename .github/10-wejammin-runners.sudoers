@@ -1,0 +1,51 @@
+# /etc/sudoers.d/10-wejammin-runners
+#
+# Scoped passwordless sudo for GitHub Actions self-hosted runner management.
+# Target: WeJustJammin/nevrite-music runner fleet (wejammin-1..3).
+#
+# SCOPING RATIONALE — read before widening this file:
+#
+#   This grants systemctl ONLY over units matching `actions.runner.*`, which is
+#   the naming scheme GitHub's svc.sh uses. It deliberately does NOT grant:
+#
+#     - Blanket /usr/bin/systemctl  -> could start ANY unit, including one an
+#       attacker just wrote. That is root, not runner management.
+#
+#     - /home/rob/actions-runners/*/svc.sh  -> the script is USER-WRITABLE.
+#       NOPASSWD on a user-writable file is equivalent to passwordless root:
+#       anything able to edit svc.sh gets arbitrary root execution. The one-time
+#       `svc.sh install` is therefore run interactively by the operator instead.
+#
+#   Net effect: an attacker with code execution as `rob` gains the ability to
+#   start/stop the runner services — which they could already do via the user
+#   systemd session anyway. No privilege is escalated beyond the status quo.
+#
+# INSTALL (validate first — a syntax error here can lock you out of sudo):
+#
+#   sudo visudo -cf /home/rob/Projects/WeJammin/.github/10-wejammin-runners.sudoers \
+#     && sudo install -m 0440 -o root -g root \
+#          /home/rob/Projects/WeJammin/.github/10-wejammin-runners.sudoers \
+#          /etc/sudoers.d/10-wejammin-runners
+#
+#   The `visudo -cf` check is not optional. Never edit /etc/sudoers.d/* directly
+#   with a plain editor — always validate, then install.
+#
+# REVOKE:
+#
+#   sudo rm /etc/sudoers.d/10-wejammin-runners
+#
+# ---------------------------------------------------------------------------
+
+Cmnd_Alias WEJAMMIN_RUNNER_SVC = \
+    /usr/bin/systemctl daemon-reload, \
+    /usr/bin/systemctl start   actions.runner.*, \
+    /usr/bin/systemctl stop    actions.runner.*, \
+    /usr/bin/systemctl restart actions.runner.*, \
+    /usr/bin/systemctl enable  actions.runner.*, \
+    /usr/bin/systemctl disable actions.runner.*, \
+    /usr/bin/systemctl status  actions.runner.*, \
+    /usr/bin/systemctl is-active  actions.runner.*, \
+    /usr/bin/systemctl is-enabled actions.runner.*, \
+    /usr/bin/journalctl -u actions.runner.*
+
+rob ALL=(root) NOPASSWD: WEJAMMIN_RUNNER_SVC
