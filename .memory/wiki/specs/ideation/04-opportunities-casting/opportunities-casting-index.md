@@ -31,11 +31,11 @@ The demand side of work — posted gigs, dep calls, auditions, band vacancies, c
 
 | # | Name | Type | Path | Status | Deep Think |
 |---|------|------|------|--------|------------|
-| 01 | Opportunity Posting & Targeting | sub-domain | [04.01-opportunity-posting-targeting/](./04.01-opportunity-posting-targeting/) | `[SURFACE]` | 10 hypotheses |
-| 02 | Discovery, Matching & Alerts | sub-domain | [04.02-discovery-matching-alerts/](./04.02-discovery-matching-alerts/) | `[SURFACE]` | 10 hypotheses |
-| 03 | Submission & Audition | sub-domain | [04.03-submission-audition/](./04.03-submission-audition/) | `[SURFACE]` | 13 hypotheses |
-| 04 | Triage, Shortlist & Decisioning | sub-domain | [04.04-triage-shortlist-decisioning/](./04.04-triage-shortlist-decisioning/) | `[SURFACE]` | 10 hypotheses |
-| 05 | Outcome, Response & Handoff | sub-domain | [04.05-outcome-response-handoff/](./04.05-outcome-response-handoff/) | `[SURFACE]` | 11 hypotheses |
+| 01 | Opportunity Posting & Targeting | sub-domain | [04.01-opportunity-posting-targeting/](./04.01-opportunity-posting-targeting/) | `[BREADTH]` | 10 hypotheses |
+| 02 | Discovery, Matching & Alerts | sub-domain | [04.02-discovery-matching-alerts/](./04.02-discovery-matching-alerts/) | `[BREADTH]` | 10 hypotheses |
+| 03 | Submission & Audition | sub-domain | [04.03-submission-audition/](./04.03-submission-audition/) | `[BREADTH]` | 13 hypotheses |
+| 04 | Triage, Shortlist & Decisioning | sub-domain | [04.04-triage-shortlist-decisioning/](./04.04-triage-shortlist-decisioning/) | `[BREADTH]` | 10 hypotheses |
+| 05 | Outcome, Response & Handoff | sub-domain | [04.05-outcome-response-handoff/](./04.05-outcome-response-handoff/) | `[BREADTH]` | 11 hypotheses |
 | 06 | Band & Member Wanted | feature | [04.06-band-member-wanted.md](./04.06-band-member-wanted.md) | `[SURFACE]` | 2 hypotheses |
 | 07 | Open Calls — Festival, Showcase & Competition | feature | [04.07-open-calls-festival-showcase-competition.md](./04.07-open-calls-festival-showcase-competition.md) | `[SURFACE]` | 3 hypotheses |
 

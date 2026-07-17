@@ -41,18 +41,18 @@ Multi-vendor buying and selling of new and used instruments and equipment — ca
 
 | # | Name | Type | Path | Status | Deep Think |
 |---|------|------|------|--------|------------|
-| 01 | Canonical Gear Catalog | sub-domain | [13.01-canonical-gear-catalog/](./13.01-canonical-gear-catalog/) | `[SURFACE]` | 10 hypotheses |
-| 02 | Condition, Originality & Disclosure | sub-domain | [13.02-condition-originality-disclosure/](./13.02-condition-originality-disclosure/) | `[SURFACE]` | 8 hypotheses |
-| 03 | Listings & Inventory | sub-domain | [13.03-listings-inventory/](./13.03-listings-inventory/) | `[SURFACE]` | 14 hypotheses |
-| 04 | Price Discovery & Market Data | sub-domain | [13.04-price-discovery-market-data/](./13.04-price-discovery-market-data/) | `[SURFACE]` | 6 hypotheses |
-| 05 | Offers, Auctions & Negotiation | sub-domain | [13.05-offers-auctions-negotiation/](./13.05-offers-auctions-negotiation/) | `[SURFACE]` | 6 hypotheses |
-| 06 | Cart, Checkout & Orders | sub-domain | [13.06-cart-checkout-orders/](./13.06-cart-checkout-orders/) | `[SURFACE]` | 10 hypotheses |
-| 07 | Gear Logistics & Cross-Border | sub-domain | [13.07-gear-logistics-cross-border/](./13.07-gear-logistics-cross-border/) | `[SURFACE]` | 8 hypotheses |
-| 08 | Returns, RMA & Warranty | sub-domain | [13.08-returns-rma-warranty/](./13.08-returns-rma-warranty/) | `[SURFACE]` | 6 hypotheses |
-| 09 | Trade-In, Part-Exchange & Consignment | sub-domain | [13.09-tradein-consignment/](./13.09-tradein-consignment/) | `[SURFACE]` | 6 hypotheses |
-| 10 | Gear Rental & Backline Hire | sub-domain | [13.10-gear-rental-backline/](./13.10-gear-rental-backline/) | `[SURFACE]` | 6 hypotheses |
+| 01 | Canonical Gear Catalog | sub-domain | [13.01-canonical-gear-catalog/](./13.01-canonical-gear-catalog/) | `[BREADTH]` | 10 hypotheses |
+| 02 | Condition, Originality & Disclosure | sub-domain | [13.02-condition-originality-disclosure/](./13.02-condition-originality-disclosure/) | `[BREADTH]` | 8 hypotheses |
+| 03 | Listings & Inventory | sub-domain | [13.03-listings-inventory/](./13.03-listings-inventory/) | `[BREADTH]` | 14 hypotheses |
+| 04 | Price Discovery & Market Data | sub-domain | [13.04-price-discovery-market-data/](./13.04-price-discovery-market-data/) | `[BREADTH]` | 6 hypotheses |
+| 05 | Offers, Auctions & Negotiation | sub-domain | [13.05-offers-auctions-negotiation/](./13.05-offers-auctions-negotiation/) | `[BREADTH]` | 6 hypotheses |
+| 06 | Cart, Checkout & Orders | sub-domain | [13.06-cart-checkout-orders/](./13.06-cart-checkout-orders/) | `[BREADTH]` | 10 hypotheses |
+| 07 | Gear Logistics & Cross-Border | sub-domain | [13.07-gear-logistics-cross-border/](./13.07-gear-logistics-cross-border/) | `[BREADTH]` | 8 hypotheses |
+| 08 | Returns, RMA & Warranty | sub-domain | [13.08-returns-rma-warranty/](./13.08-returns-rma-warranty/) | `[BREADTH]` | 6 hypotheses |
+| 09 | Trade-In, Part-Exchange & Consignment | sub-domain | [13.09-tradein-consignment/](./13.09-tradein-consignment/) | `[BREADTH]` | 6 hypotheses |
+| 10 | Gear Rental & Backline Hire | sub-domain | [13.10-gear-rental-backline/](./13.10-gear-rental-backline/) | `[BREADTH]` | 6 hypotheses |
 | 11 | Local Pickup & Meetup Safety | feature | [13.11-local-pickup-meetup-safety.md](./13.11-local-pickup-meetup-safety.md) | `[SURFACE]` | 2 hypotheses |
-| 12 | Gear Seller Storefront & Commerce Policies | feature | [13.12-gear-seller-storefront-policies.md](./13.12-gear-seller-storefront-policies.md) | `[SURFACE]` | 2 hypotheses |
+| 12 | Gear Seller Storefront & Commerce Policies | feature | [13.12-gear-seller-storefront-policies.md](./13.12-gear-seller-storefront-policies.md) | `[DEEP]` | 2 hypotheses |
 | 13 | Authorized Dealer Program & MAP Pricing | feature | [13.13-authorized-dealer-map-pricing.md](./13.13-authorized-dealer-map-pricing.md) | `[SURFACE]` | 2 hypotheses |
 
 > **Type column values:**

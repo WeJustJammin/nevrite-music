@@ -61,8 +61,9 @@
 | Total leaf features | **734** |
 | Total ideation files | **1,118** (190 indexes · 190 CX · 734 features · meta · super-index) |
 | Max depth reached | 3 |
-| Domains at [BREADTH] | 24 / 24 |
-| Nodes at [DEEP] | 0 — _Step 5 deepening is gated on MoSCoW_ |
+| Domains at [BREADTH] | 24 / 24 (mixed: Musts [DEEP], Shoulds/Coulds [SURFACE]) |
+| Must features at [DEEP] | **195 / 195** — Step 5 complete |
+| Should/Could features at [SURFACE] | 539 — _Step 5 deepens Shoulds one level next; Coulds stay [SURFACE]_ |
 | Nodes at [EXHAUSTED] | 0 |
 | Role Lens coverage | **734 / 734** feature files (2,936 rows = 4 personas × 734, verified) |
 | Invented personas | **0** — only Musician / Producer / Operator / Fan |
@@ -165,6 +166,7 @@ Numbered decisions with source references.
 | D-20 | **All 195 Must-haves retained; v1 beachhead sequencing deferred to `/plan-phase`.** Owner declined the session/gear/live spine options. Agent flagged: `/plan-phase` orders by dependency, not strategy — it will not select a beachhead, so this decision is deferred rather than resolved. `/audit-ambiguity ideation` is likely to flag a 195-Must ledger as carrying no priority signal. Options retained in the MoSCoW Summary for re-decision. | User decision, 2026-07-16, `/ideate-discover` | Global |
 | D-21 | **Breadth pass complete**: 165 sub-domains + 734 leaf features written across 24 domains (1,118 files). Deep Think added **166 nodes** the sweep's candidate list missed; **118 duplicate candidates merged**; 142 not-product concerns routed to `/create-prd`; 175 cross-cut mechanisms surfaced pending consolidation. Independent disk audit: 13 clean / 11 minor / **0 major**; Role Lens 734/734 with 0 invented personas; 0 placeholder leaks. | `/ideate-discover` Step 3, verified against disk 2026-07-16 | All |
 | D-22 | **Systemic gap found by audit and fixed**: the drill step never wrote back to the parent `ideation-index.md`, leaving all 24 domains reported as `[SURFACE]`/"N candidates"/Depth 1 while disk showed `[BREADTH]`/real children/Depth 3. Auditors correctly diagnosed this as a workflow gap rather than per-driller negligence. Parent index reconciled **from disk**, not from agent self-reports. | Audit finding, 2026-07-16 | Global |
+| D-23 | **Step 5 deepening of all 195 Musts complete and verified.** Every Must feature taken from `[SURFACE]` to `[DEEP]` with full Behavior/Happy Path/Edge Cases/States/Deep Think, verified by 195 independent adversarial agents (no sampling), 0 real behavior-section PENDING leaks (precise scan), 24 domain index trees reconciled deterministically from disk (109 status cells). Executed across 4 workflow runs spanning 2 session-limit resets; each run's counts cross-checked against disk truth, never trusted from self-reports. Sub-domains stay `[BREADTH]` (mixed Must-[DEEP]/Should-[SURFACE]) per rollup rule. | `/ideate-discover` Step 5, 2026-07-17 | All |
 
 ## MoSCoW Summary
 

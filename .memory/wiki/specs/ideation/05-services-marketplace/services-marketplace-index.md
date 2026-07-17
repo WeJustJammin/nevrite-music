@@ -30,13 +30,13 @@ Buying and selling human music work — mixing, mastering, production, remote se
 
 | # | Name | Type | Path | Status | Deep Think |
 |---|------|------|------|--------|------------|
-| 05.01 | Service Listings & Music Pricing | sub-domain | [05.01-service-listings-pricing/](./05.01-service-listings-pricing/) | `[SURFACE]` | 19 hypotheses across 7 features |
-| 05.02 | Quotes, Scope & Contracting | sub-domain | [05.02-quotes-scope-contracting/](./05.02-quotes-scope-contracting/) | `[SURFACE]` | 9 hypotheses across 3 features |
-| 05.03 | Engagement Lifecycle | sub-domain | [05.03-engagement-lifecycle/](./05.03-engagement-lifecycle/) | `[SURFACE]` | 15 hypotheses across 6 features |
-| 05.04 | Delivery, QC & Acceptance | sub-domain | [05.04-delivery-qc-acceptance/](./05.04-delivery-qc-acceptance/) | `[SURFACE]` | 12 hypotheses across 4 features |
-| 05.05 | Multi-Party Supply | sub-domain | [05.05-multi-party-supply/](./05.05-multi-party-supply/) | `[SURFACE]` | 10 hypotheses across 4 features |
-| 05.06 | Rights, Warranties & Transfer | sub-domain | [05.06-rights-warranties-transfer/](./05.06-rights-warranties-transfer/) | `[SURFACE]` | 15 hypotheses across 5 features |
-| 05.07 | Custodial & Physical Services | sub-domain | [05.07-custodial-physical-services/](./05.07-custodial-physical-services/) | `[SURFACE]` | 9 hypotheses across 3 features |
+| 05.01 | Service Listings & Music Pricing | sub-domain | [05.01-service-listings-pricing/](./05.01-service-listings-pricing/) | `[BREADTH]` | 19 hypotheses across 7 features |
+| 05.02 | Quotes, Scope & Contracting | sub-domain | [05.02-quotes-scope-contracting/](./05.02-quotes-scope-contracting/) | `[BREADTH]` | 9 hypotheses across 3 features |
+| 05.03 | Engagement Lifecycle | sub-domain | [05.03-engagement-lifecycle/](./05.03-engagement-lifecycle/) | `[BREADTH]` | 15 hypotheses across 6 features |
+| 05.04 | Delivery, QC & Acceptance | sub-domain | [05.04-delivery-qc-acceptance/](./05.04-delivery-qc-acceptance/) | `[BREADTH]` | 12 hypotheses across 4 features |
+| 05.05 | Multi-Party Supply | sub-domain | [05.05-multi-party-supply/](./05.05-multi-party-supply/) | `[BREADTH]` | 10 hypotheses across 4 features |
+| 05.06 | Rights, Warranties & Transfer | sub-domain | [05.06-rights-warranties-transfer/](./05.06-rights-warranties-transfer/) | `[BREADTH]` | 15 hypotheses across 5 features |
+| 05.07 | Custodial & Physical Services | sub-domain | [05.07-custodial-physical-services/](./05.07-custodial-physical-services/) | `[BREADTH]` | 9 hypotheses across 3 features |
 
 > **Type column values:**
 > - `domain` — a top-level grouping within a surface (folder with index + CX)

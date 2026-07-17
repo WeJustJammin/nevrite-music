@@ -3,7 +3,7 @@
 > **Level**: domain
 > **Parent**: [WeJammin Ideation Index](../ideation-index.md)
 > **Status**: [BREADTH]
-> **Last updated**: 2026-07-16
+> **Last updated**: 2026-07-17
 > **Novelty**: `industry-standard` | **Priority**: `important`
 
 ## Overview
@@ -34,7 +34,7 @@ Teaching and learning — lesson booking and packages, curriculum and practice t
 
 | # | Name | Type | Path | Status | Deep Think |
 |---|------|------|------|--------|------------|
-| 01 | Lesson Booking, Packages & Delivery | sub-domain | [06.01-lesson-booking-packages-delivery/](./06.01-lesson-booking-packages-delivery/) | `[BREADTH]` | 13 hypotheses |
+| 01 | Lesson Booking, Packages & Delivery | sub-domain | [06.01-lesson-booking-packages-delivery/](./06.01-lesson-booking-packages-delivery/) | `[DEEP]` | 13 hypotheses |
 | 02 | Teacher Discovery, Profiles & Trials | sub-domain | [06.02-teacher-discovery-profiles-trials/](./06.02-teacher-discovery-profiles-trials/) | `[BREADTH]` | 13 hypotheses |
 | 03 | Curriculum, Assignments & Practice | sub-domain | [06.03-curriculum-assignments-practice/](./06.03-curriculum-assignments-practice/) | `[BREADTH]` | 17 hypotheses |
 | 04 | Course Marketplace & Authoring | sub-domain | [06.04-course-marketplace-authoring/](./06.04-course-marketplace-authoring/) | `[BREADTH]` | 9 hypotheses |

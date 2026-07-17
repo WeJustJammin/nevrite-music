@@ -29,12 +29,12 @@ Who exists on the platform: humans holding several simultaneous professional rol
 
 | # | Name | Type | Path | Status | Deep Think |
 |---|------|------|------|--------|------------|
-| 01.01 | Person Identity & Roles | sub-domain | [01.01-person-identity-roles/](./01.01-person-identity-roles/) | `[SURFACE]` | 12 hypotheses (4 features) |
-| 01.02 | Organizations & Entity Model | sub-domain | [01.02-organizations-entity-model/](./01.02-organizations-entity-model/) | `[SURFACE]` | 9 hypotheses (3 features) |
-| 01.03 | Membership, Representation & Mandate | sub-domain | [01.03-membership-representation-mandate/](./01.03-membership-representation-mandate/) | `[SURFACE]` | 9 hypotheses (3 features) |
-| 01.04 | Band & Ensemble Governance | sub-domain | [01.04-band-ensemble-governance/](./01.04-band-ensemble-governance/) | `[SURFACE]` | 12 hypotheses (4 features) |
-| 01.05 | Profile Claiming & Ownership Verification | sub-domain | [01.05-profile-claiming-verification/](./01.05-profile-claiming-verification/) | `[SURFACE]` | 9 hypotheses (3 features) |
-| 01.06 | Portfolio, Media Reel & EPK | sub-domain | [01.06-portfolio-media-epk/](./01.06-portfolio-media-epk/) | `[SURFACE]` | 9 hypotheses (3 features) |
+| 01.01 | Person Identity & Roles | sub-domain | [01.01-person-identity-roles/](./01.01-person-identity-roles/) | `[BREADTH]` | 12 hypotheses (4 features) |
+| 01.02 | Organizations & Entity Model | sub-domain | [01.02-organizations-entity-model/](./01.02-organizations-entity-model/) | `[BREADTH]` | 9 hypotheses (3 features) |
+| 01.03 | Membership, Representation & Mandate | sub-domain | [01.03-membership-representation-mandate/](./01.03-membership-representation-mandate/) | `[BREADTH]` | 9 hypotheses (3 features) |
+| 01.04 | Band & Ensemble Governance | sub-domain | [01.04-band-ensemble-governance/](./01.04-band-ensemble-governance/) | `[BREADTH]` | 12 hypotheses (4 features) |
+| 01.05 | Profile Claiming & Ownership Verification | sub-domain | [01.05-profile-claiming-verification/](./01.05-profile-claiming-verification/) | `[BREADTH]` | 9 hypotheses (3 features) |
+| 01.06 | Portfolio, Media Reel & EPK | sub-domain | [01.06-portfolio-media-epk/](./01.06-portfolio-media-epk/) | `[BREADTH]` | 9 hypotheses (3 features) |
 | 01.07 | Professional, Union & Credential Verification | feature | [01.07-professional-credential-verification.md](./01.07-professional-credential-verification.md) | `[SURFACE]` | 3 hypotheses |
 | 01.08 | Trader vs Private Seller Classification | feature | [01.08-trader-status-classification.md](./01.08-trader-status-classification.md) | `[SURFACE]` | 3 hypotheses |
 | 01.09 | Party Identifier Resolution | feature | [01.09-party-identifier-resolution.md](./01.09-party-identifier-resolution.md) | `[SURFACE]` | 3 hypotheses |

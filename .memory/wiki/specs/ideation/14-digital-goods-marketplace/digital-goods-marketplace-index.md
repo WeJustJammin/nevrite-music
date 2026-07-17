@@ -3,7 +3,7 @@
 > **Level**: domain
 > **Parent**: [WeJammin Ideation Index](../ideation-index.md)
 > **Status**: [BREADTH]
-> **Last updated**: 2026-07-16
+> **Last updated**: 2026-07-17
 > **Novelty**: `user-directive` | **Priority**: `core`
 
 ## Overview
@@ -30,16 +30,16 @@ Multi-vendor sale and delivery of DAW plugins, sample packs, presets, beats, MID
 
 | # | Name | Type | Path | Status | Deep Think |
 |---|------|------|------|--------|------------|
-| 14.01 | Digital Product Catalog & Compatibility | sub-domain | [14.01-catalog-compatibility/](./14.01-catalog-compatibility/) | `[SURFACE]` | 8 hypotheses (4 features) |
-| 14.02 | Licensing, Activation & Entitlement | sub-domain | [14.02-licensing-activation-entitlement/](./14.02-licensing-activation-entitlement/) | `[SURFACE]` | 13 hypotheses (6 features) |
-| 14.03 | Delivery, Versioning & Library | sub-domain | [14.03-delivery-versioning-library/](./14.03-delivery-versioning-library/) | `[SURFACE]` | 10 hypotheses (5 features) |
-| 14.04 | Sound Content Catalogs (Samples, Presets, Templates) | sub-domain | [14.04-sound-content-catalogs/](./14.04-sound-content-catalogs/) | `[SURFACE]` | 8 hypotheses (4 features) |
-| 14.05 | Beat & Instrumental Licensing | sub-domain | [14.05-beat-instrumental-licensing/](./14.05-beat-instrumental-licensing/) | `[SURFACE]` | 8 hypotheses (4 features) |
-| 14.06 | Used Licence Transfer & Resale | sub-domain | [14.06-used-licence-transfer/](./14.06-used-licence-transfer/) | `[SURFACE]` | 6 hypotheses (3 features) |
-| 14.07 | Monetisation Models & Pricing | sub-domain | [14.07-monetisation-models-pricing/](./14.07-monetisation-models-pricing/) | `[SURFACE]` | 10 hypotheses (5 features) |
-| 14.08 | Vendor Portal, Build Submission & QA | sub-domain | [14.08-vendor-portal-build-qa/](./14.08-vendor-portal-build-qa/) | `[SURFACE]` | 10 hypotheses (5 features) |
-| 14.09 | Digital Refunds, Withdrawal & Revocation | sub-domain | [14.09-digital-refunds-revocation/](./14.09-digital-refunds-revocation/) | `[SURFACE]` | 6 hypotheses (3 features) |
-| 14.10 | Contributor Revenue & Per-Download Royalty Pool | sub-domain | [14.10-contributor-revenue-royalty-pool/](./14.10-contributor-revenue-royalty-pool/) | `[SURFACE]` | 7 hypotheses (3 features) |
+| 14.01 | Digital Product Catalog & Compatibility | sub-domain | [14.01-catalog-compatibility/](./14.01-catalog-compatibility/) | `[BREADTH]` | 8 hypotheses (4 features) |
+| 14.02 | Licensing, Activation & Entitlement | sub-domain | [14.02-licensing-activation-entitlement/](./14.02-licensing-activation-entitlement/) | `[BREADTH]` | 13 hypotheses (6 features) |
+| 14.03 | Delivery, Versioning & Library | sub-domain | [14.03-delivery-versioning-library/](./14.03-delivery-versioning-library/) | `[BREADTH]` | 10 hypotheses (5 features) |
+| 14.04 | Sound Content Catalogs (Samples, Presets, Templates) | sub-domain | [14.04-sound-content-catalogs/](./14.04-sound-content-catalogs/) | `[BREADTH]` | 8 hypotheses (4 features) |
+| 14.05 | Beat & Instrumental Licensing | sub-domain | [14.05-beat-instrumental-licensing/](./14.05-beat-instrumental-licensing/) | `[BREADTH]` | 8 hypotheses (4 features) |
+| 14.06 | Used Licence Transfer & Resale | sub-domain | [14.06-used-licence-transfer/](./14.06-used-licence-transfer/) | `[BREADTH]` | 6 hypotheses (3 features) |
+| 14.07 | Monetisation Models & Pricing | sub-domain | [14.07-monetisation-models-pricing/](./14.07-monetisation-models-pricing/) | `[BREADTH]` | 10 hypotheses (5 features) |
+| 14.08 | Vendor Portal, Build Submission & QA | sub-domain | [14.08-vendor-portal-build-qa/](./14.08-vendor-portal-build-qa/) | `[BREADTH]` | 10 hypotheses (5 features) |
+| 14.09 | Digital Refunds, Withdrawal & Revocation | sub-domain | [14.09-digital-refunds-revocation/](./14.09-digital-refunds-revocation/) | `[BREADTH]` | 6 hypotheses (3 features) |
+| 14.10 | Contributor Revenue & Per-Download Royalty Pool | sub-domain | [14.10-contributor-revenue-royalty-pool/](./14.10-contributor-revenue-royalty-pool/) | `[BREADTH]` | 7 hypotheses (3 features) |
 
 > **Intra-domain cross-cuts**: [digital-goods-marketplace-cx.md](./digital-goods-marketplace-cx.md) — 11 confirmed pairs, 5 rejected pairs, 9 cross-cuts escalated to the global CX, 11 not-product concerns routed out.
 

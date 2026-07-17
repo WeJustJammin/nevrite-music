@@ -29,11 +29,11 @@ Registering with the bodies that collect and turning what arrives into correct, 
 
 | # | Name | Type | Path | Status | Deep Think |
 |---|------|------|------|--------|------------|
-| 10.01 | Society Registration & Delivery | sub-domain | [10.01-society-registration-delivery/](./10.01-society-registration-delivery/) | `[SURFACE]` | 19 hypotheses (7 children) |
-| 10.02 | Statement Ingestion & Normalization | sub-domain | [10.02-statement-ingestion-normalization/](./10.02-statement-ingestion-normalization/) | `[SURFACE]` | 15 hypotheses (5 children) |
-| 10.03 | Royalty Calculation & Recoupment | sub-domain | [10.03-calculation-recoupment/](./10.03-calculation-recoupment/) | `[SURFACE]` | 12 hypotheses (4 children) |
-| 10.04 | Disbursement & Payee Statements | sub-domain | [10.04-disbursement-payee-statements/](./10.04-disbursement-payee-statements/) | `[SURFACE]` | 11 hypotheses (4 children) |
-| 10.05 | Recovery & Leakage | sub-domain | [10.05-recovery-leakage/](./10.05-recovery-leakage/) | `[SURFACE]` | 9 hypotheses (3 children) |
+| 10.01 | Society Registration & Delivery | sub-domain | [10.01-society-registration-delivery/](./10.01-society-registration-delivery/) | `[BREADTH]` | 19 hypotheses (7 children) |
+| 10.02 | Statement Ingestion & Normalization | sub-domain | [10.02-statement-ingestion-normalization/](./10.02-statement-ingestion-normalization/) | `[DEEP]` | 15 hypotheses (5 children) |
+| 10.03 | Royalty Calculation & Recoupment | sub-domain | [10.03-calculation-recoupment/](./10.03-calculation-recoupment/) | `[BREADTH]` | 12 hypotheses (4 children) |
+| 10.04 | Disbursement & Payee Statements | sub-domain | [10.04-disbursement-payee-statements/](./10.04-disbursement-payee-statements/) | `[BREADTH]` | 11 hypotheses (4 children) |
+| 10.05 | Recovery & Leakage | sub-domain | [10.05-recovery-leakage/](./10.05-recovery-leakage/) | `[BREADTH]` | 9 hypotheses (3 children) |
 | 10.06 | Live Performance Setlist → PRO Reporting | feature | [10.06-live-setlist-pro-reporting.md](./10.06-live-setlist-pro-reporting.md) | `[SURFACE]` | 3 hypotheses |
 | 10.07 | Cue Sheets & Broadcast Performance Reporting | feature | [10.07-cue-sheets-broadcast-reporting.md](./10.07-cue-sheets-broadcast-reporting.md) | `[SURFACE]` | 3 hypotheses |
 | 10.08 | Statement Disputes & Audit Rights | feature | [10.08-statement-disputes-audit-rights.md](./10.08-statement-disputes-audit-rights.md) | `[SURFACE]` | 3 hypotheses |

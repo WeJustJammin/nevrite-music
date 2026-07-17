@@ -39,15 +39,15 @@ seven features across four sub-domains independently named it as a hard dependen
 
 | # | Name | Type | Path | Status | Deep Think |
 |---|------|------|------|--------|------------|
-| 01 | Song, Release & Production Board | sub-domain | [07.01-song-release-production-board/](./07.01-song-release-production-board/) | `[SURFACE]` | 9 hypotheses |
-| 02 | Songwriting & Composition Workspace | sub-domain | [07.02-songwriting-composition-workspace/](./07.02-songwriting-composition-workspace/) | `[SURFACE]` | 9 hypotheses |
-| 03 | Contributors, Access & Confidentiality | sub-domain | [07.03-contributors-access-confidentiality/](./07.03-contributors-access-confidentiality/) | `[SURFACE]` | 9 hypotheses |
-| 04 | Audio Version Control & Lineage | sub-domain | [07.04-audio-version-control-lineage/](./07.04-audio-version-control-lineage/) | `[SURFACE]` | 18 hypotheses |
-| 05 | Review, Feedback & Approval | sub-domain | [07.05-review-feedback-approval/](./07.05-review-feedback-approval/) | `[SURFACE]` | 15 hypotheses |
-| 06 | Sessions, Documentation & Recall | sub-domain | [07.06-sessions-documentation-recall/](./07.06-sessions-documentation-recall/) | `[SURFACE]` | 13 hypotheses |
-| 07 | Mix & Master Workflow | sub-domain | [07.07-mix-master-workflow/](./07.07-mix-master-workflow/) | `[SURFACE]` | 15 hypotheses |
-| 08 | Delivery, Readiness & QC | sub-domain | [07.08-delivery-readiness-qc/](./07.08-delivery-readiness-qc/) | `[SURFACE]` | 16 hypotheses |
-| 09 | DAW Bridge & Capture-at-Source | sub-domain | [07.09-daw-bridge-capture-at-source/](./07.09-daw-bridge-capture-at-source/) | `[SURFACE]` | 9 hypotheses |
+| 01 | Song, Release & Production Board | sub-domain | [07.01-song-release-production-board/](./07.01-song-release-production-board/) | `[BREADTH]` | 9 hypotheses |
+| 02 | Songwriting & Composition Workspace | sub-domain | [07.02-songwriting-composition-workspace/](./07.02-songwriting-composition-workspace/) | `[BREADTH]` | 9 hypotheses |
+| 03 | Contributors, Access & Confidentiality | sub-domain | [07.03-contributors-access-confidentiality/](./07.03-contributors-access-confidentiality/) | `[BREADTH]` | 9 hypotheses |
+| 04 | Audio Version Control & Lineage | sub-domain | [07.04-audio-version-control-lineage/](./07.04-audio-version-control-lineage/) | `[BREADTH]` | 18 hypotheses |
+| 05 | Review, Feedback & Approval | sub-domain | [07.05-review-feedback-approval/](./07.05-review-feedback-approval/) | `[BREADTH]` | 15 hypotheses |
+| 06 | Sessions, Documentation & Recall | sub-domain | [07.06-sessions-documentation-recall/](./07.06-sessions-documentation-recall/) | `[BREADTH]` | 13 hypotheses |
+| 07 | Mix & Master Workflow | sub-domain | [07.07-mix-master-workflow/](./07.07-mix-master-workflow/) | `[BREADTH]` | 15 hypotheses |
+| 08 | Delivery, Readiness & QC | sub-domain | [07.08-delivery-readiness-qc/](./07.08-delivery-readiness-qc/) | `[BREADTH]` | 16 hypotheses |
+| 09 | DAW Bridge & Capture-at-Source | sub-domain | [07.09-daw-bridge-capture-at-source/](./07.09-daw-bridge-capture-at-source/) | `[BREADTH]` | 9 hypotheses |
 
 > **Type column values:**
 > - `sub-domain` — a grouping within a domain that has 2+ interacting capabilities (folder with index + CX)

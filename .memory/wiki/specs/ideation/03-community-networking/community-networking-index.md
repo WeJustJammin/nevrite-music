@@ -30,14 +30,14 @@ The social layer — connections and follows, the activity feed, collaborator ma
 
 | # | Name | Type | Path | Status | Deep Think |
 |---|------|------|------|--------|------------|
-| 03.01 | Connections, Follows & Endorsements | sub-domain | [03.01-connections-follows-endorsements/](./03.01-connections-follows-endorsements/) | [SURFACE] | 10 hypotheses |
-| 03.02 | Activity Feed & Ranking | sub-domain | [03.02-activity-feed-ranking/](./03.02-activity-feed-ranking/) | [SURFACE] | 10 hypotheses |
-| 03.03 | Collaborator Discovery & Matchmaking | sub-domain | [03.03-collaborator-discovery-matchmaking/](./03.03-collaborator-discovery-matchmaking/) | [SURFACE] | 13 hypotheses |
-| 03.04 | Warm Intros & the Collaboration Graph | sub-domain | [03.04-warm-intros-collaboration-graph/](./03.04-warm-intros-collaboration-graph/) | [SURFACE] | 15 hypotheses |
-| 03.05 | Private Industry Rolodex & Contact CRM | sub-domain | [03.05-private-rolodex-crm/](./03.05-private-rolodex-crm/) | [SURFACE] | 10 hypotheses |
-| 03.06 | Scenes & Communities | sub-domain | [03.06-scenes-communities/](./03.06-scenes-communities/) | [SURFACE] | 14 hypotheses |
+| 03.01 | Connections, Follows & Endorsements | sub-domain | [03.01-connections-follows-endorsements/](./03.01-connections-follows-endorsements/) | [BREADTH] | 10 hypotheses |
+| 03.02 | Activity Feed & Ranking | sub-domain | [03.02-activity-feed-ranking/](./03.02-activity-feed-ranking/) | [BREADTH] | 10 hypotheses |
+| 03.03 | Collaborator Discovery & Matchmaking | sub-domain | [03.03-collaborator-discovery-matchmaking/](./03.03-collaborator-discovery-matchmaking/) | [BREADTH] | 13 hypotheses |
+| 03.04 | Warm Intros & the Collaboration Graph | sub-domain | [03.04-warm-intros-collaboration-graph/](./03.04-warm-intros-collaboration-graph/) | [BREADTH] | 15 hypotheses |
+| 03.05 | Private Industry Rolodex & Contact CRM | sub-domain | [03.05-private-rolodex-crm/](./03.05-private-rolodex-crm/) | [BREADTH] | 10 hypotheses |
+| 03.06 | Scenes & Communities | sub-domain | [03.06-scenes-communities/](./03.06-scenes-communities/) | [BREADTH] | 14 hypotheses |
 | 03.07 | Forums & Craft Q&A | feature | [03.07-forums-craft-qa.md](./03.07-forums-craft-qa.md) | [SURFACE] | 3 hypotheses |
-| 03.08 | Contests, Challenges & Beat Battles | sub-domain | [03.08-contests-challenges-beat-battles/](./03.08-contests-challenges-beat-battles/) | [SURFACE] | 14 hypotheses |
+| 03.08 | Contests, Challenges & Beat Battles | sub-domain | [03.08-contests-challenges-beat-battles/](./03.08-contests-challenges-beat-battles/) | [BREADTH] | 14 hypotheses |
 | 03.09 | Local Jam & Open Mic Discovery | feature | [03.09-local-jam-open-mic-discovery.md](./03.09-local-jam-open-mic-discovery.md) | [SURFACE] | 3 hypotheses |
 | 03.10 | Peer & Scene Listening Rooms | feature | [03.10-peer-scene-listening-rooms.md](./03.10-peer-scene-listening-rooms.md) | [SURFACE] | 3 hypotheses |
 | 03.11 | Conference & Industry Event Networking Mode | feature | [03.11-conference-event-networking-mode.md](./03.11-conference-event-networking-mode.md) | [SURFACE] | 3 hypotheses |
