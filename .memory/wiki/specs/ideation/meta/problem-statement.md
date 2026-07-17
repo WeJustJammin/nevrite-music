@@ -1,50 +1,93 @@
 # Problem Statement — WeJammin
 
-> Status: `[PENDING]` — written by `/ideate-discover`.
-> Seeded by `/ideate-extract` 2026-07-16.
+> Status: `[DEEP]` — thesis confirmed by owner 2026-07-16 during `/ideate-discover`.
+> Personas: [personas.md](./personas.md) · Competitive: [competitive-landscape.md](./competitive-landscape.md)
 
 ## The Problem
 
-`[PENDING]`
+**A music career is assembled from a dozen disconnected tools that share no identity, no
+history, and no record of who did what — so the work gets done, but the proof of it evaporates.**
 
-> **Note for `/ideate-discover`**: the source README (`idea.md`) states no problem — it is a
-> feature list. The problem statement must be established with the owner, not inferred from
-> the predecessor's marketing copy.
+A working musician today runs their career across Reverb (gear), SoundBetter (services),
+Bandsintown (gigs), Splice (sounds), DistroKid (release), a WhatsApp thread (the band), and a
+spreadsheet (the money). Nothing connects. Each tool knows a sliver; none knows the career.
+
+The consequence is not merely inconvenience. **Because no system is present when the work
+happens, the facts of the work are never recorded** — who played on it, who wrote what, who
+owns which percentage. Those facts are then reconstructed years later, from memory, usually at
+the exact moment they become contested and valuable.
+
+## The Thesis — confirmed by owner (D-18)
+
+> **Provenance is the wedge. Consolidation is the platform.**
+
+| Half | What it does | Why it matters |
+|---|---|---|
+| **Consolidation** | One platform for gear, gigs, services, projects, venues, releases | The **daily reason to show up**. It is the pain musicians actually feel and can articulate. It wins the user. |
+| **Provenance** | Credits, splits, and ownership captured at the moment of creation | The **reason they cannot leave**. It is the value they cannot take with them and no competitor can retroactively manufacture. It keeps the user. |
+
+**Why the pairing is coherent, not a hedge**: the two halves are causally linked, not merely
+bundled. A platform earns the right to capture a split *because it is already where the work
+happens*. Nobody opens an app to file a split sheet — but they will confirm one in the app
+they are already using to book the session, pay the engineer, and share the stems. Consolidation
+is what puts WeJammin **in the room**; being in the room is the only way provenance is capturable.
+
+Neither half stands alone:
+- **Provenance alone** is a slow burn with no daily hook — the Jaxsta / Muso.AI / Sound Credit
+  failure mode. Nobody wakes up wanting a credits database.
+- **Consolidation alone** is copyable, and means fighting six incumbents simultaneously, each
+  better than you at their one thing, with nothing that compounds.
 
 ## Why It Matters
 
-`[PENDING]`
+- **The reconstruction is the failure.** Splits, credits and ownership are recorded — if at all —
+  long after the session, from memory, once money is at stake and relationships have soured.
+  This is the single most litigated failure in music.
+- **The data is unrepeatable.** A split captured on the day costs one signature. The same split
+  reconstructed three years later may cost a lawsuit, and may be unobtainable at any price.
+- **Every point solution is structurally blind to it.** None of them are present at the session,
+  so none of them can capture the fact at source. They can only ask someone to remember.
 
 ## Why Now
 
-`[PENDING]`
+`[PARTIAL]` — the strongest candidate signals, to be confirmed with the owner:
+
+| Signal | Why it makes this solvable/valuable now |
+|---|---|
+| **Remote collaboration is normal** | Post-2020, sessions are routinely distributed. The "room" is already digital — so a platform *can* be present in it. Ten years ago the room was physical and uninstrumentable. |
+| **The credits crisis is now an industry priority** | DDEX RIN, Sound Credit, Jaxsta, Muso.AI and the MLC all exist because the metadata gap became unignorable at streaming scale. The problem is acknowledged; nobody has solved capture-at-source. |
+| **Streaming economics made splits matter to everyone** | Fractional royalties on millions of streams mean split accuracy now affects working musicians, not just stars. The stakes moved down-market. |
+| **Edge compute makes a fat multi-domain platform viable solo** | Cloudflare Workers + Supabase make an ambitious 24-domain platform buildable without a platform team — the constraint that historically forced point solutions. |
+
+> **Open question for the owner (Q-01)**: which of these is the *real* "why now"? Or is the
+> trigger something specific to your situation rather than the market's?
 
 ## Root Cause
 
-`[PENDING]`
+**No system is present at the moment of creation, so the record is always a reconstruction.**
 
----
+The industry's response has been to build better reconstruction engines — databases that ingest
+liner notes, label submissions, and self-asserted claims, then try to reconcile them. Every one
+of them inherits the same defect: **they are asking people to remember**, and memory is
+contested, lossy, and self-interested.
 
-## Working Hypothesis (from the 14-lens sweep — NOT confirmed)
+The root cause is not bad databases. It is **absence at the point of truth**. The only fix is to
+be in the room — which is why consolidation is not a separate ambition but the *precondition*
+for provenance.
 
-> The sweep surfaced a candidate thesis. Recorded here as an input to the discovery interview,
-> explicitly **not** as an answer. The owner defines the problem.
+## Deep Think Annotations
 
-**The wedge identified**: **split-at-creation**.
+| # | Hypothesis | Source | Outcome |
+|---|-----------|--------|---------|
+| DT-01 | The problem is the rights/credits gap (provenance) | Sweep whitespace lens; D-10 | ✅ CONFIRMED — but as the *wedge*, not the whole |
+| DT-02 | The problem is tool fragmentation (consolidation) | Sweep competitive lens; owner directives D-05..D-08 | ✅ CONFIRMED — but as the *platform*, not the differentiator |
+| DT-03 | These are alternatives requiring a choice | Agent framing when presenting the decision | ❌ REJECTED by owner — they are causally linked: consolidation is the precondition for provenance capture |
+| DT-04 | "Cannot live without" comes from accumulated switching cost | Sweep whitespace lens | ⏳ DEFERRED — must confirm lock-in is *earned* (value they'd miss) not *hostile* (data they can't extract). See Q-02 |
 
-Splits, credits, and ownership can only be captured truthfully **in the room, on the day**,
-while collaborators are still on good terms and the facts are fresh. That data cannot be
-reconstructed later at any price — which is precisely why Jaxsta, Muso.AI, Sound Credit and
-the MLC all fail at it: they reconstruct after the fact from whoever remembers. A platform
-**present at the session** is the only kind of system that can capture it at source.
+## Open Questions
 
-This is why domain **02 Credits & Attribution** was classified `whitespace` and why the owner
-ratified the full rights stack as thesis rather than adjacency (D-10).
-
-**To confirm or kill during discovery:**
-
-| # | Question | Why it matters |
-|---|----------|----------------|
-| H-01 | Is the owner's actual problem the rights/credits gap, or is it the fragmentation of tools (Reverb + SoundBetter + Bandsintown + Splice + a spreadsheet)? | Decides whether the thesis is *provenance* or *consolidation* — these imply very different products |
-| H-02 | Who feels the pain most acutely — the multi-hyphenate working musician, the band, or the studio/venue operator? | Decides the beachhead persona |
-| H-03 | Does the "cannot live without" come from the daily wedge, or from accumulated switching cost? | Decides whether lock-in is earned or hostile |
+| # | Question | Owner | Deferred To |
+|---|----------|-------|-------------|
+| Q-01 | Which "Why Now" signal is the real trigger — or is it situational rather than market-driven? | User | `/ideate-validate` |
+| Q-02 | Is the lock-in **earned** or **hostile**? If a user leaves, what do they take? (Data portability is a cross-cut — and a values decision.) | User | `/ideate-validate` |
+| Q-03 | If consolidation is what wins users, which single consolidation surface is the **beachhead**? All 24 domains cannot ship first. | User | MoSCoW, this shard |

@@ -2,7 +2,7 @@
 
 > **Level**: domain
 > **Parent**: [WeJammin Ideation Index](../ideation-index.md)
-> **Status**: [SURFACE]
+> **Status**: [BREADTH]
 > **Last updated**: 2026-07-16
 > **Novelty**: `user-directive` | **Priority**: `core`
 
@@ -22,63 +22,115 @@ Multi-vendor buying and selling of new and used instruments and equipment — ca
 - price guide from comps
 - vendor storefront ops
 
-## Children
+## Breadth Pass Summary (2026-07-16)
 
-> Candidate children discovered by the 14-lens sweep. All are `[SURFACE]` — identified only.
-> `/ideate-discover` runs each through the Node Classification Gate to determine
-> sub-domain (folder) vs feature (file), then drills. **Nothing below is confirmed structure.**
+28 swept candidates → **13 children**: 10 sub-domains, 3 features, **43 leaf features total**.
+
+| Outcome | Count | Notes |
+|---|---|---|
+| Classified as sub-domain | 10 | Each has 2+ interacting capabilities |
+| Classified as feature (direct child) | 3 | 13.11, 13.12, 13.13 |
+| Routed to cross-cuts | 8 | See `gear-marketplace-cx.md` §Cross-Cut Routing |
+| Routed to `/create-prd` (not product) | 3 | Concurrency control, comp pipeline, media at scale |
+| Deep Think additions (not in the sweep) | 7 | See below |
+| Candidates merged or split | 6 | See `gear-marketplace-cx.md` §Candidate Disposition |
+
+**The central Deep Think finding**: the sweep's 28 candidates describe a complete gear marketplace — and **every one of them exists at Reverb today**. Under D-18 (provenance is the wedge; consolidation is the platform), a domain containing only copyable features is pure consolidation with nothing that compounds — the failure mode the problem statement names explicitly. The gear domain's provenance contribution was entirely absent from the sweep. Seven nodes were added; three of them (13.03.06, 13.03.07, 13.06.05) are that contribution, and 13.06.05 is the load-bearing one: **without it, domain 15's ownership chain is populated by self-assertion, which is the reconstruction failure this platform exists to end, reproduced inside it.**
+
+## Children
 
 | # | Name | Type | Path | Status | Deep Think |
 |---|------|------|------|--------|------------|
-| 01 | Canonical Gear Catalog, Taxonomy & Faceted Attributes | _unclassified_ | _pending_ | `[SURFACE]` | 0 |
-| 02 | Catalog Contribution & Moderation | _unclassified_ | _pending_ | `[SURFACE]` | 0 |
-| 03 | Serial Number Decoding & Dating | _unclassified_ | _pending_ | `[SURFACE]` | 0 |
-| 04 | Condition Grading & Mandatory Flaw/Mod Disclosure | _unclassified_ | _pending_ | `[SURFACE]` | 0 |
-| 05 | Listing Creation, Media & Lifecycle (incl. unit-specific audio/video demo) | _unclassified_ | _pending_ | `[SURFACE]` | 0 |
-| 06 | Offers & Negotiation | _unclassified_ | _pending_ | `[SURFACE]` | 0 |
-| 07 | Auctions & Bidding | _unclassified_ | _pending_ | `[SURFACE]` | 0 |
-| 08 | Cart & Multi-Vendor Checkout | _unclassified_ | _pending_ | `[SURFACE]` | 0 |
-| 09 | Order Management & Lifecycle | _unclassified_ | _pending_ | `[SURFACE]` | 0 |
-| 10 | Freight, Oversize Handling & Packing Standards | _unclassified_ | _pending_ | `[SURFACE]` | 0 |
-| 11 | International Shipping, Customs, Duties & Landed Cost | _unclassified_ | _pending_ | `[SURFACE]` | 0 |
-| 12 | Restricted Materials (CITES) & Export Compliance | _unclassified_ | _pending_ | `[SURFACE]` | 0 |
-| 13 | Shipping Insurance & High-Value Damage Claims | _unclassified_ | _pending_ | `[SURFACE]` | 0 |
-| 14 | Returns, RMA & Warranty Management | _unclassified_ | _pending_ | `[SURFACE]` | 0 |
-| 15 | Gear Price Guide & Market Data | _unclassified_ | _pending_ | `[SURFACE]` | 0 |
-| 16 | Pricing Suggestions & Repricing | _unclassified_ | _pending_ | `[SURFACE]` | 0 |
-| 17 | Vendor Onboarding, Storefronts, Tiers & Scorecards | _unclassified_ | _pending_ | `[SURFACE]` | 0 |
-| 18 | Inventory & Oversell Prevention | _unclassified_ | _pending_ | `[SURFACE]` | 0 |
-| 19 | Multi-Channel Inventory Sync & Bulk Listing | _unclassified_ | _pending_ | `[SURFACE]` | 0 |
-| 20 | Local Pickup, Geo Commerce & Meetup Safety | _unclassified_ | _pending_ | `[SURFACE]` | 0 |
-| 21 | Trade-In, Part-Exchange & Consignment | _unclassified_ | _pending_ | `[SURFACE]` | 0 |
-| 22 | Gear Rental & Backline Hire | _unclassified_ | _pending_ | `[SURFACE]` | 0 |
-| 23 | Parts, Consumables, Bundles & B-Stock | _unclassified_ | _pending_ | `[SURFACE]` | 0 |
-| 24 | Compatibility, Fitment & Voltage/Region Warnings | _unclassified_ | _pending_ | `[SURFACE]` | 0 |
-| 25 | Wanted/ISO Reverse Marketplace & Watchlists | _unclassified_ | _pending_ | `[SURFACE]` | 0 |
-| 26 | Authorized Dealer Program & MAP Pricing | _unclassified_ | _pending_ | `[SURFACE]` | 0 |
-| 27 | Financing, BNPL & Layaway | _unclassified_ | _pending_ | `[SURFACE]` | 0 |
-| 28 | Point-of-Sale Service Add-Ons (setup, inspection) | _unclassified_ | _pending_ | `[SURFACE]` | 0 |
+| 01 | Canonical Gear Catalog | sub-domain | [13.01-canonical-gear-catalog/](./13.01-canonical-gear-catalog/) | `[SURFACE]` | 10 hypotheses |
+| 02 | Condition, Originality & Disclosure | sub-domain | [13.02-condition-originality-disclosure/](./13.02-condition-originality-disclosure/) | `[SURFACE]` | 8 hypotheses |
+| 03 | Listings & Inventory | sub-domain | [13.03-listings-inventory/](./13.03-listings-inventory/) | `[SURFACE]` | 14 hypotheses |
+| 04 | Price Discovery & Market Data | sub-domain | [13.04-price-discovery-market-data/](./13.04-price-discovery-market-data/) | `[SURFACE]` | 6 hypotheses |
+| 05 | Offers, Auctions & Negotiation | sub-domain | [13.05-offers-auctions-negotiation/](./13.05-offers-auctions-negotiation/) | `[SURFACE]` | 6 hypotheses |
+| 06 | Cart, Checkout & Orders | sub-domain | [13.06-cart-checkout-orders/](./13.06-cart-checkout-orders/) | `[SURFACE]` | 10 hypotheses |
+| 07 | Gear Logistics & Cross-Border | sub-domain | [13.07-gear-logistics-cross-border/](./13.07-gear-logistics-cross-border/) | `[SURFACE]` | 8 hypotheses |
+| 08 | Returns, RMA & Warranty | sub-domain | [13.08-returns-rma-warranty/](./13.08-returns-rma-warranty/) | `[SURFACE]` | 6 hypotheses |
+| 09 | Trade-In, Part-Exchange & Consignment | sub-domain | [13.09-tradein-consignment/](./13.09-tradein-consignment/) | `[SURFACE]` | 6 hypotheses |
+| 10 | Gear Rental & Backline Hire | sub-domain | [13.10-gear-rental-backline/](./13.10-gear-rental-backline/) | `[SURFACE]` | 6 hypotheses |
+| 11 | Local Pickup & Meetup Safety | feature | [13.11-local-pickup-meetup-safety.md](./13.11-local-pickup-meetup-safety.md) | `[SURFACE]` | 2 hypotheses |
+| 12 | Gear Seller Storefront & Commerce Policies | feature | [13.12-gear-seller-storefront-policies.md](./13.12-gear-seller-storefront-policies.md) | `[SURFACE]` | 2 hypotheses |
+| 13 | Authorized Dealer Program & MAP Pricing | feature | [13.13-authorized-dealer-map-pricing.md](./13.13-authorized-dealer-map-pricing.md) | `[SURFACE]` | 2 hypotheses |
+
+> **Type column values:**
+> - `sub-domain` — a grouping with 2+ interacting capabilities (folder with index + CX)
+> - `feature` — a leaf node describing a single capability (.md file)
+
+### Deep Think Additions (not in the sweep's candidate list)
+
+| Node | Why it had to exist |
+|---|---|
+| [13.01.04 Listing↔Model Matching](./13.01-canonical-gear-catalog/13.01.04-listing-model-matching.md) | The sweep had a catalog and a contribution flow with nothing joining a listing to either. Without it the catalog is decorative. |
+| [13.02.04 Condition Evidence Pack](./13.02-condition-originality-disclosure/13.02.04-condition-evidence-pack.md) | The sweep had disclosure and damage claims but no baseline between them. **Six independent consumers** across the domain — the most depended-upon node here. |
+| [13.03.06 Provenance & Session-History Display](./13.03-listings-inventory/13.03.06-provenance-session-history-display.md) | The one listing feature Reverb structurally cannot build. Requires credit graph + registry + listing simultaneously. |
+| [13.03.07 Stolen-Serial Screening](./13.03-listings-inventory/13.03.07-stolen-serial-screening.md) | Domain 15 owns the registry and has no listing flow to gate. The gate must live here. |
+| [13.04.03 Valuation Confidence](./13.04-price-discovery-market-data/13.04.03-valuation-confidence-thin-market.md) | The sweep had a price guide with nothing governing when it may speak. Thin markets are permanent, not a cold start. |
+| [13.06.05 Ownership Transfer on Settlement](./13.06-cart-checkout-orders/13.06.05-ownership-transfer-on-settlement.md) | **The thesis node.** No swept candidate wrote anything to the registry. |
+| [13.09.03 Inspection & Intake Grading](./13.09-tradein-consignment/13.09.03-inspection-intake-grading.md) | The sweep had trade-in and consignment with nothing between "owner describes it" and "dealer offers a number". |
 
 ## Role Matrix
 
-> `[PENDING]` — populated by `/ideate-discover` once `meta/personas.md` exists.
-> Provisional personas for this domain (from sweep): private seller, dealer/shop, buyer/collector, working musician, luthier, rental house
->
-> **Legend**: ✅ Full · ⚙️ Config · 👁️ Read-only · 📊 Reports · ❌ None
+| Child | Musician | Producer | Operator | Fan |
+|-------|----------|----------|----------|-----|
+| 13.01 Canonical Gear Catalog | ✅ Full (contribute) | ✅ Full (contribute) | ✅ Full (contribute) | 👁️ Read-only |
+| 13.02 Condition, Originality & Disclosure | ✅ Full (as seller) | ✅ Full (as seller) | ✅ Full (as seller) | 👁️ Read-only |
+| 13.03 Listings & Inventory | ✅ Full | ✅ Full | ✅ Full | ❌ None (no seller side) |
+| 13.04 Price Discovery & Market Data | 👁️ Read-only (✅ on own repricing) | 👁️ Read-only (✅ on own) | 👁️ Read-only (✅ on own) | 👁️ Read-only |
+| 13.05 Offers, Auctions & Negotiation | ✅ Full (both sides) | ✅ Full (both sides) | ✅ Full (both sides) | 👁️ Read-only (may offer/bid; no seller side) |
+| 13.06 Cart, Checkout & Orders | ✅ Full | ✅ Full | ✅ Full | ✅ Full (as buyer) |
+| 13.07 Gear Logistics & Cross-Border | ✅ Full (as seller) | ✅ Full (as seller) | ✅ Full (as seller) | 👁️ Read-only (✅ on damage claims as buyer) |
+| 13.08 Returns, RMA & Warranty | ✅ Full (both sides) | ✅ Full (both sides) | ✅ Full (both sides) | ✅ Full on returns (statutory) |
+| 13.09 Trade-In & Consignment | ✅ Full (as consignor/trader-in) | ✅ Full | ⚙️ Config (as counterparty — **poor fit**) | 👁️ Read-only (trade-in only) |
+| 13.10 Gear Rental & Backline Hire | ✅ Full (both sides) | ✅ Full (both sides) | ✅ Full (primary supplier) | 👁️ Read-only (❌ on deposits) |
+| 13.11 Local Pickup & Meetup Safety | ✅ Full (both sides) | ✅ Full (both sides) | ✅ Full (both sides) | ✅ Full (as buyer) |
+| 13.12 Seller Storefront & Policies | ✅ Full (own) | ✅ Full (own) | ✅ Full (own) | ❌ None |
+| 13.13 Authorized Dealer & MAP | 👁️ Read-only | 👁️ Read-only | ⚙️ Config (**poor fit**) | 👁️ Read-only |
 
-| Child | private seller | dealer/shop | buyer/collector | working musician | luthier | rental house |
-|-------| --- | --- | --- | --- | --- | --- |
-| _pending — children unclassified_ | _pending_ | _pending_ | _pending_ | _pending_ | _pending_ | _pending_ |
+> **Legend**: ✅ Full access · ⚙️ Configuration only · 👁️ Read-only · 📊 Reports only · ❌ No access
+> Personas from [meta/personas.md](../meta/personas.md). Per-role behaviour lives in each feature file's Role Lens.
+
+### ⚠️ The Role Matrix came out thin — `meta/personas.md` Q-01 has triggered
+
+`meta/personas.md` Q-01 asked whether a professional **dealer** is a distinct persona, and said explicitly: *"revisit if the Gear/Digital Role Matrices come out thin during drilling."*
+
+**They did.** Three places in this domain have no persona that fits:
+
+| Node | The gap |
+|---|---|
+| [13.13 Authorized Dealer & MAP](./13.13-authorized-dealer-map-pricing.md) | Role Lens is **empty**. No persona holds a manufacturer authorisation. |
+| [13.09 Trade-In & Consignment](./13.09-tradein-consignment/) | Both features need a dealer counterparty. `Operator` is defined as selling "time and space" — a rehearsal room is not a guitar shop. |
+| [13.12 Seller Storefront](./13.12-gear-seller-storefront-policies.md) | The trader-vs-private-seller distinction (DT-02 there) has legal consequences and no persona to hang them on. |
+
+The same gap arrives from a fourth direction as a **compliance** question: [13.08.01 DT-01](./13.08-returns-rma-warranty/13.08.01-returns-refunds.md) finds that a marketplace hosting both private sellers and traders is hosting **two consumer-protection regimes**, and the platform currently cannot tell them apart. This is not a modelling preference — it determines statutory obligations.
 
 ## Decision Log
 
 | # | Decision | Context | Source |
 |---|----------|---------|--------|
 | D-01 | Established as a top-level domain | Explicit owner directive (D-05). Kept apart from digital goods and services because the physics are irreconcilable: qty=1 non-fungible inventory, condition as ~40% of price, freigh... | 14-lens sweep + 3× adversarial verification; ratified by user 2026-07-16 (D-16) |
+| D-02 | **Condition and originality are orthogonal axes**, never merged | A refinished mint '59 Les Paul and an all-original player-grade one cannot share a scale. Merging makes the price guide systematically wrong exactly where the money is. | Breadth pass, 13.02 |
+| D-03 | **The listing flow never stalls** — every degradation publishes rather than blocks | Recurring across catalog matching, contribution, grading and disclosure. Two deliberate exceptions: material flaw photos (13.02.02 D-03) and CITES on international (13.07.03 D-02). | Breadth pass, 13.03 D-01 |
+| D-04 | **The unit — not the listing, not the order — is the identity anchor** | Reached independently **five times**: relisting (13.03.02 DT-02), bundles (13.03 CX-05), repair history (13.08.02 DT-01), warranty (13.08.03 DT-01), rental condition (13.10 D-02). Flagged for `/create-prd-architecture`. | Breadth pass, converged |
+| D-05 | **Settlement writes the ownership chain** — 15 owns the record, 13 owns the event | The gear analogue of capturing splits in the session. Without it, 15's chain is self-asserted, which is the failure D-18 exists to end. | Breadth pass, 13.06.05 |
+| D-06 | The domain carries **three inventory regimes**, not one | qty=1 non-fungible sale, counted-stock fungible sale (13.03.03 DT-01), and pooled time-boxed rental (13.10.01 DT-01). D-14's "qty=1" framing is correct about what makes the domain *distinct* but is not complete. | Breadth pass |
 
 ## Open Questions
 
 | # | Question | Owner | Deferred To |
 |---|----------|-------|-------------|
-| Q-01 | Which candidate children are sub-domains (2+ interacting capabilities) vs features (single capability)? | Agent | `/ideate-discover` |
-| Q-02 | Are any candidate children actually cross-cuts belonging in a CX file? | Agent | `/ideate-discover` |
+| Q-01 | ~~Which candidate children are sub-domains vs. features?~~ **RESOLVED** — 10 sub-domains, 3 features. | Agent | ✅ this pass |
+| Q-02 | ~~Are any candidate children actually cross-cuts?~~ **RESOLVED** — 8 routed; see `gear-marketplace-cx.md`. | Agent | ✅ this pass |
+| Q-03 | **Is there a dealer persona?** The Role Matrix came out thin in three places, and the trader/private-seller distinction has statutory consequences (13.08.01 DT-01). Triggers `meta/personas.md` Q-01 directly. | User | `/ideate-validate` |
+| Q-04 | **Ratify 13.06.05 D-02**: the ownership chain always records; the owner controls visibility; default private. Opt-in *recording* makes the chain evidentially worthless; always-recording is a values position on problem-statement Q-02 (earned vs. hostile lock-in). Cannot be defaulted by an agent. | User | `/ideate-validate` |
+| Q-05 | **Is international physical sale in scope at launch?** Reshapes 13.07 entirely — if yes, CITES is a `must` (most vintage guitars have restricted materials); if no, half of 13.07 defers. | User | MoSCoW |
+| Q-06 | **Does money move through the platform on local pickup?** (13.11 Q-01) Determines fee revenue, escrow protection, and whether the ownership chain has a hole at the category's most common transaction shape. | User | `/create-prd` |
+| Q-07 | **Should rental (13.10) be promoted out of this domain?** Its order model, comp model, ownership model and condition model are all irreconcilable with sale's — the same D-14 logic that separated 13/14/05. Overlaps domain 16 (Operators selling time) and 18 (backline). | User | `/ideate-validate` |
+| Q-08 | **Does the price guide survive MAP, or does MAP survive the price guide?** (13.13 DT-02) A transparent comp guide publishes the below-MAP prices MAP exists to suppress. They may be mutually exclusive products. | User | `/ideate-validate` |
+| Q-09 | **Resolve the custody-liability model once, platform-wide.** Three features hit the identical unowned question — layaway (13.06.03 Q-01), repair custody (13.08.02 Q-01), consignment (13.09.02 DT-02): *an irreplaceable object is held by someone who doesn't own it; if it's destroyed, whose loss is it?* Domain 15 has the custody/ownership vocabulary and nothing is using it. | Agent | `/create-prd-architecture` |
+| Q-10 | Can a cart mix gear (13) and digital goods (14)? D-14 separated the domains at schema level and said nothing about the cart. | User | `/create-prd` |
+| Q-11 | Should CX-M04 (Atomic Payment ↔ Rights Transfer) be extended to serve gear-marketplace and gear-registry? The mechanism is structurally identical to the rights transfers it already covers. Likely a gap in the ratified cross-cut list. | Agent | `/ideate-validate` |
+| Q-12 | Should CX-M31 (Safeguarding & Minor Protection) be extended to serve gear-marketplace? 13.11 puts a possibly-minor Fan in a room with a stranger and cash; CX-M31 does not currently list this domain. | Agent | `/ideate-validate` |
+| Q-13 | How do bulk listings (13.03.04) satisfy per-unit model binding, grading, disclosure and unit media? Either the quality bar bends for bulk, or bulk fails the Operator persona it exists to serve. | User | `/ideate-discover` Step 5 |

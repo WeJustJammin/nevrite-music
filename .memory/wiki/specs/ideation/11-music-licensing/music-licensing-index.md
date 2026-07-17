@@ -2,7 +2,7 @@
 
 > **Level**: domain
 > **Parent**: [WeJammin Ideation Index](../ideation-index.md)
-> **Status**: [SURFACE]
+> **Status**: [BREADTH]
 > **Last updated**: 2026-07-16
 > **Novelty**: `industry-standard` | **Priority**: `core` _(raised to core by D-10 — rights stack is the thesis)_
 
@@ -21,53 +21,130 @@ Third parties acquiring permission to use music — sync for screen, sample clea
 - sample/cover/remix/AI licence workflows
 - licence certificate issuance
 
+### What breadth drilling changed about this rationale
+
+Two claims above survived; two did not, and both matter more than the ones that did.
+
+1. **"Clearance collapses to a lookup plus a pre-set price" was half-specified.** The registry removes the
+   *archaeology* (who owns what). It does nothing about the *asking* (getting them to say yes) — and nothing in
+   the sweep's 18 candidates pre-set a price. That gap forced an entire unlisted sub-domain into existence:
+   **11.04 Licensing Policy & Rights-Holder Preferences** (D-05). The rationale's own phrase contained the tell.
+2. **"Split-at-creation MANUFACTURES one-stops" is true only for works created on-platform, after the ritual
+   existed.** The one-stop catalogue is **cold-start-empty** and grows with platform age. This surfaced
+   independently three times — sync (11.01.05 DT-03), samples (11.05.01 DT-03), covers (11.09 DT-02) — and it
+   is the load-bearing caveat on the domain's entire value proposition (D-07, Q-04).
+
 ## Children
 
-> Candidate children discovered by the 14-lens sweep. All are `[SURFACE]` — identified only.
-> `/ideate-discover` runs each through the Node Classification Gate to determine
-> sub-domain (folder) vs feature (file), then drills. **Nothing below is confirmed structure.**
+> 8 sub-domains and 3 features, classified from 18 sweep candidates through the Node Classification Gate.
+> All `[SURFACE]` — breadth pass only; depth is allocated by MoSCoW in `/ideate-discover` Step 5.
 
 | # | Name | Type | Path | Status | Deep Think |
 |---|------|------|------|--------|------------|
-| 01 | Sync Licensing Marketplace | _unclassified_ | _pending_ | `[SURFACE]` | 0 |
-| 02 | Catalogue Metadata & Sync Tagging (mood, tempo, key, lyric, instrumentation) | _unclassified_ | _pending_ | `[SURFACE]` | 0 |
-| 03 | Clearance Status & One-Stop / Pre-Cleared Flag | _unclassified_ | _pending_ | `[SURFACE]` | 0 |
-| 04 | Sync Briefs, Pitching & Holds | _unclassified_ | _pending_ | `[SURFACE]` | 0 |
-| 05 | Licence Quoting, Rate Cards & MFN | _unclassified_ | _pending_ | `[SURFACE]` | 0 |
-| 06 | Master Use + Sync Dual Licence Coordination | _unclassified_ | _pending_ | `[SURFACE]` | 0 |
-| 07 | Sample Clearance & Revenue-Share Licensing | _unclassified_ | _pending_ | `[SURFACE]` | 0 |
-| 08 | Programmatic Sample Clearance | _unclassified_ | _pending_ | `[SURFACE]` | 0 |
-| 09 | Interpolation & Replay Clearance | _unclassified_ | _pending_ | `[SURFACE]` | 0 |
-| 10 | Cover Songs & Compulsory Mechanical Licences | _unclassified_ | _pending_ | `[SURFACE]` | 0 |
-| 11 | Remix, Stem & Bootleg Licensing | _unclassified_ | _pending_ | `[SURFACE]` | 0 |
-| 12 | Micro-Licensing for Creators, Podcasters & Streamers | _unclassified_ | _pending_ | `[SURFACE]` | 0 |
-| 13 | Creator-Safe Licensing & Content ID Whitelisting | _unclassified_ | _pending_ | `[SURFACE]` | 0 |
-| 14 | AI Training Licensing | _unclassified_ | _pending_ | `[SURFACE]` | 0 |
-| 15 | Print & Lyric Rights | _unclassified_ | _pending_ | `[SURFACE]` | 0 |
-| 16 | Grand Rights & Dramatic Performance | _unclassified_ | _pending_ | `[SURFACE]` | 0 |
-| 17 | Licence Certificate & Contract Generation | _unclassified_ | _pending_ | `[SURFACE]` | 0 |
-| 18 | Rights Persistence After Subscription Ends | _unclassified_ | _pending_ | `[SURFACE]` | 0 |
+| 11.01 | Sync Licensing | sub-domain | [11.01-sync-licensing/](./11.01-sync-licensing/) | `[SURFACE]` | 15 hypotheses (5 features) |
+| 11.02 | Clearance & One-Stop Status | sub-domain | [11.02-clearance-one-stop-status/](./11.02-clearance-one-stop-status/) | `[SURFACE]` | 13 hypotheses (4 features) |
+| 11.03 | Licence Pricing & Negotiation | sub-domain | [11.03-licence-pricing-negotiation/](./11.03-licence-pricing-negotiation/) | `[SURFACE]` | 9 hypotheses (3 features) |
+| 11.04 | Licensing Policy & Rights-Holder Preferences | sub-domain | [11.04-licensing-policy-preferences/](./11.04-licensing-policy-preferences/) | `[SURFACE]` | 9 hypotheses (3 features) |
+| 11.05 | Sample & Derivative Clearance | sub-domain | [11.05-sample-derivative-clearance/](./11.05-sample-derivative-clearance/) | `[SURFACE]` | 15 hypotheses (5 features) |
+| 11.06 | Creator Micro-Licensing | sub-domain | [11.06-creator-micro-licensing/](./11.06-creator-micro-licensing/) | `[SURFACE]` | 12 hypotheses (4 features) |
+| 11.07 | AI Training Licensing | sub-domain | [11.07-ai-training-licensing/](./11.07-ai-training-licensing/) | `[SURFACE]` | 9 hypotheses (3 features) |
+| 11.08 | Licence Instrument & Lifecycle | sub-domain | [11.08-licence-instrument-lifecycle/](./11.08-licence-instrument-lifecycle/) | `[SURFACE]` | 12 hypotheses (4 features) |
+| 11.09 | Cover Songs & Compulsory Mechanical Licensing | feature | [11.09-cover-song-compulsory-mechanical.md](./11.09-cover-song-compulsory-mechanical.md) | `[SURFACE]` | 3 hypotheses |
+| 11.10 | Print & Lyric Rights | feature | [11.10-print-lyric-rights.md](./11.10-print-lyric-rights.md) | `[SURFACE]` | 3 hypotheses |
+| 11.11 | Grand Rights & Dramatic Performance | feature | [11.11-grand-rights-dramatic-performance.md](./11.11-grand-rights-dramatic-performance.md) | `[SURFACE]` | 3 hypotheses |
+
+**Totals**: 8 sub-domains · 34 leaf features · 103 Deep Think hypotheses logged · max depth 3.
+
+Intra-domain cross-cuts, domain-wide patterns and rejected pairs: [music-licensing-cx.md](./music-licensing-cx.md).
 
 ## Role Matrix
 
-> `[PENDING]` — populated by `/ideate-discover` once `meta/personas.md` exists.
-> Provisional personas for this domain (from sweep): music supervisor, brand/agency, content creator, producer (sampling), publisher, label, artist
->
+> Personas from [meta/personas.md](../meta/personas.md) (D-19). Referenced, never redefined.
+
+| Child | Musician | Producer | Operator | Fan |
+|-------|----------|----------|----------|-----|
+| 11.01 Sync Licensing | ✅ Full — tags, pitches, approves holds on own works | ✅ Full — master-side counterparty; the dual-licence coordinator | ❌ None | ❌ None |
+| 11.02 Clearance & One-Stop | ✅ Full — attests completeness, declares encumbrances, responds to consents | ✅ Full — **the best-informed attester**; holds the stems, knows what is in the mix | ❌ None | ❌ None |
+| 11.03 Pricing & Negotiation | ✅ Full — rate cards, quotes, MFN on their share | ✅ Full — same, master side | ❌ None | ❌ None |
+| 11.04 Licensing Policy | ✅ Full — **the persona this sub-domain most serves**; small stakes in many works, cannot field every request | ✅ Full — same, plus reads others' policies to know what can move today | ❌ None | ❌ None |
+| 11.05 Sample & Derivative | ✅ Full — **both sides**; samples others, is sampled | ✅ Full — the sampling persona and the declaring party | ❌ None | ❌ None |
+| 11.06 Creator Micro-Licensing | ⚙️ Config — opts in, sets a flat price, never negotiates | ⚙️ Config — same, master side | ❌ None | ✅ Full — **as buyer.** Strained mapping — see below |
+| 11.07 AI Training | ✅ Full — consent per share; Read-only downstream | ✅ Full — same; **their stems are the most valuable corpus** | ❌ None | ❌ None |
+| 11.08 Licence Instrument | 👁️ Read-only — the gate issues, not the owner | 👁️ Read-only — plus the delivery-side "where's the licence?" consumer | 👁️ Read-only — **the Operator's only touchpoint in the domain** (11.08.03 verification) | 👁️ Read-only — as creator buyer; the evidence that wins a claim dispute |
+| 11.09 Cover & Compulsory | ✅ Full — **both sides**; covers others, is covered without being asked | ✅ Full — records the cover; an unlicensed cover is their delivery problem | ❌ None | ❌ None |
+| 11.10 Print & Lyric | ✅ Full — the writer | ❌ None — **no standing**; composition rights only | ❌ None | ❌ None |
+| 11.11 Grand Rights | ✅ Full — the writer, with treatment approval | ❌ None — composition rights only | ✅ Full — **the Operator's only Full access in the domain**; a theatre staging a musical | ❌ None |
+
 > **Legend**: ✅ Full · ⚙️ Config · 👁️ Read-only · 📊 Reports · ❌ None
 
-| Child | music supervisor | brand/agency | content creator | producer (sampling) | publisher | label | artist |
-|-------| --- | --- | --- | --- | --- | --- | --- |
-| _pending — children unclassified_ | _pending_ | _pending_ | _pending_ | _pending_ | _pending_ | _pending_ | _pending_ |
+### Three persona findings this matrix records
+
+**1. The licence buyer has no persona.** ⚠️ The music supervisor, brand and agency who drive 11.01 and 11.03 map
+to **none** of the four ratified personas (D-19). Every row for those sub-domains is a *sell-side* row.
+personas.md's coverage check assigns domain 11 to "Musician + Producer" ✅ — which is correct for the sell side
+and for the sampling buyer (a producer clearing a sample **is** a Producer), and silently omits the professional
+buyer entirely. See Q-01. **This blocks `/write-fe-spec` for the domain's most valuable surface.**
+
+**2. The creator buyer maps to Fan, badly.** ⚠️ A podcaster with a monetised channel is a small business, not a
+music enthusiast. Fan fits only because it is the one persona defined by having *no professional music stake*.
+This is more dangerous than gap #1: a spec writer reading "Fan: Full" will build for a listener. Same structural
+question as personas.md Q-01 (the dealer persona for 13/14/15) — **answer them together**.
+
+**3. Operator's near-total absence is a confirmation, not a gap.** ✅ Operator appears twice in 34 features:
+verification (11.08.03) and grand rights (11.11). They sell time and space; they hold no recording or composition
+shares in that capacity. personas.md's coverage claim survived contact with the domain. The one piece of real
+Operator licensing work — **a venue's PRO blanket licence for ordinary public performance** — is *not* this
+domain's and currently has no home (Q-05).
 
 ## Decision Log
 
 | # | Decision | Context | Source |
 |---|----------|---------|--------|
-| D-01 | Established as a top-level domain | Structurally a fourth marketplace: buyers (supervisors, brands, creators, producers) who never touch the ownership registry, its own search paradigm (mood/tempo/lyric/reference, no... | 14-lens sweep + 3× adversarial verification; ratified by user 2026-07-16 (D-16) |
+| D-01 | Established as a top-level domain | Structurally a fourth marketplace: buyers who never touch the ownership registry, its own search paradigm, its own negotiation grammar, its own clearance gate. | 14-lens sweep + 3× adversarial verification; ratified by user 2026-07-16 (D-16) |
+| D-02 | **18 candidates → 8 sub-domains + 3 features.** Candidate 01 (Sync Licensing Marketplace) dissolved as an umbrella; 07+08 merged as two paths of one flow; 12+13 merged as one product; 18 relocated into 11.06; 17 split (generic half → cross-cut). | The sweep was tuned for coverage, not discipline. Pruning and merging were expected. Details in each sub-domain's Decision Log. | `/ideate-discover` Step 3 |
+| D-03 | **11.04 Licensing Policy created — no sweep candidate.** | The domain rationale claims clearance collapses to "a lookup plus a pre-set price". Nothing in the 18 candidates pre-set a price. The registry removes archaeology, not asking. **The domain's central claim rested on an unspecified mechanism.** | Deep Think (11.02.04 DT-01) |
+| D-04 | **11.08.01 Scope Grammar created — no sweep candidate.** | The sweep listed the certificate but never the vocabulary it serialises. Policies, rate cards, clearance verdicts (per-(work, scope)) and MFN comparability all key off it. It is the domain's shared type system, and it was invisible. | Deep Think (11.08.01 DT-01) |
+| D-05 | **Five further nodes created with no sweep candidate**: 11.02.02 completeness attestation, 11.02.03 encumbrance declaration, 11.02.04 consent routing, 11.06.03 claim release, 11.08.03 third-party verification. | Each closes a gap that makes an existing candidate unworkable — most sharply 11.02.02: splits summing to 100% proves nothing about *missing* parties, so without an attestation the one-stop flag is unfalsifiable and the wedge is decorative. | Deep Think, `/ideate-discover` Step 3 |
+| D-06 | **Licences are irrevocable instruments** — a domain-wide invariant, owned by 11.08. | Relied on by 11.02.03 (post-issue encumbrance), 11.04.02 D-04 (veto after issue), 11.05.02 (splits change after issue), 11.06.04 (persistence). A revocable licence is worth nothing to a buyer, which makes the domain unsellable. | `/ideate-discover` Step 3 |
+| D-07 | **The one-stop catalogue is cold-start-empty**, and this is recorded as a domain-level fact rather than three local caveats. | Found independently in sync (11.01.05 DT-03), samples (11.05.01 DT-03 — sampling skews to *catalogue*, which predates the platform) and covers (11.09 DT-02). Split-at-creation only reaches works made on-platform after the ritual existed. | Deep Think ×3 |
+| D-08 | **Clearance is per-(work, scope), never per-work.** | The sweep's candidate 03 read as a work-level flag. A work that clears for a podcast and is blocked for a tobacco ad has no single truth value — a work-level flag is right most of the time and catastrophically wrong exactly where the money and the offence are. Propagates into 11.01.02, 11.04, 11.06, 11.08.01. | Deep Think (11.02.01 DT-01) |
+| D-09 | **Everything in this domain fails closed.** No verdict, no licence. | Asymmetric costs: a false negative loses one sale; a false positive sells a licence the platform cannot honour — a lawsuit naming *the platform* as the party that asserted clearability. Applied in 11.02.01 D-02, 11.04.01 D-04, 11.04.03 D-05, 11.05.02 D-01, 11.07.01 D-04, 11.08.01 D-05. | Deep Think (11.02.01 DT-03) |
+
+## Cross-Cuts Contributed
+
+> Mechanisms this domain uses but does not own. Recorded here and returned for the global CX file.
+
+| Mechanism | Also serves | Why it is a cross-cut, not a node here |
+|---|---|---|
+| **Contract Generation & E-Signature** | 05, 07, 09, 13, 17 | Split sheets, booking contracts, service agreements and rights transfers all render and sign documents. Building it inside 11 would fork it five ways. The domain-specific half (scope grammar, the legal payload) stayed as 11.08.01. |
+| **Payments, Escrow & Fee Disbursement** | 05, 10, 13, 14, 17, 19 | Licence fees, MFN uplifts and creator checkout are all money movement across splits. |
+| **Post → Submit → Triage** | 04, 05, 06 | Sync briefs (11.01.03) reuse the mechanism explicitly — an acknowledged cross-boundary reuse ratified at domain-map time. The *payload* (clearance-filtered pitches) stays here. |
+| **Audio Fingerprinting & Content Identification** | 12, 14, 24 | Sample suggestion (11.05.01), reference-track matching (11.01.02), Content ID assets (11.06.02). |
+| **Search & Discovery Infrastructure** | 03, 04, 05, 13, 14 | This domain contributes **two distinct paradigms** on shared infra: supervisor/reference-track search and creator/video-context search. |
+| **Notifications & Alerting** | all | Consent requests, hold expiry, brief matches, licence expiry. |
+| **Messaging & Negotiation Threads** | 05, 13, 17 | Quote negotiation and sample clearance conversations share a grammar — 11.05.03 Q-01 asks whether they should share an implementation. |
+| **Scheduled Jobs / Time-Triggered State** | 17, 19 | Hold expiry, licence expiry — unattended transitions. |
+| **Attestation & Counter-Signature** | 02, 09 | 11.02.02's completeness attestation is the same trust primitive the credits domain runs on. |
+| **External Platform Integration & OAuth** | 12, 20, 21 | Content ID whitelisting (11.06.02) and distribution registration (12) hit the **same external systems with inverse intent** — 11.06.02 Q-03. |
+
+## Not-Product Concerns Routed Out
+
+| Concern | Why not product | Routed to |
+|---|---|---|
+| Licence record immutability & audit ledger | Append-only storage is architecture. The *product* half (supersede-never-edit, and what the user sees of history) stayed in 11.08.04. | `/create-prd-architecture` |
+| DDEX / CWR / RIN interchange formats | Protocol and schema choice. The *product* half — which scope axes exist, per 11.08.01 DT-02 — stayed. | `/create-prd` (integration architecture) |
+| Catalogue scraping / enumeration defence | NFR. Surfaced in 11.01.02, 11.03.01, 11.08.03 — a public verification endpoint is enumerable by construction and leaks commercial relationships. | `/create-prd-security` |
+| Content ID / Rights Manager API mechanics | Integration architecture. **The dependency itself is a product risk** and stayed as 11.06.02 Q-01 — no relationship, no sub-domain. | `/create-prd` (integration architecture) |
+| Clearance graph traversal performance | NFR. Deep credit graphs are genuinely slow and clearance sits in the buyer's search path (11.02.01, 11.01.02). | `/create-prd-compile` (performance budget) |
 
 ## Open Questions
 
 | # | Question | Owner | Deferred To |
 |---|----------|-------|-------------|
-| Q-01 | Which candidate children are sub-domains (2+ interacting capabilities) vs features (single capability)? | Agent | `/ideate-discover` |
-| Q-02 | Are any candidate children actually cross-cuts belonging in a CX file? | Agent | `/ideate-discover` |
+| Q-01 | **The licence buyer has no persona.** Supervisors, brands and agencies drive this domain's most valuable surfaces and match none of the four (D-19). Same structural question as personas.md Q-01 (dealer persona) and 11.06 Q-01 (creator buyer as strained Fan) — **all three are one question: does the 4-persona model cover non-musician commercial users?** Blocks `/write-fe-spec` for 11.01/11.03. | User | `/ideate-validate` |
+| Q-02 | **Is the one-stop flag a warranty, an indemnity, or best-effort?** It determines whether the flag is an asset or a liability. Per 11.08.04 DT-03 the only coherent remedy for a wrongly-issued licence is liability rather than revocation — which makes this **the question that decides whether the domain has a business model**, not a legal footnote. | User | `/create-prd-security` (legal escalation) |
+| Q-03 | **Domain-wide: does silence mean yes or no?** The same question arises in 11.02.02 (attestation), 11.02.04 (consent) and 11.04.03 (policy folding). **They must be answered together** — a platform where silence means yes for policy and no for consent is not expressing a principle, it is expressing whichever answer was convenient. | User | `/ideate-validate` |
+| Q-04 | **Given cold-start (D-07), what is this domain's beachhead?** Drilling found that the two nodes whose demand survives an empty registry — creator micro-licensing (11.06.01 DT-03, demand is *substitutable*) and cover/compulsory (11.09 DT-03, the compulsory regime needs no counterparty) — are the two the domain rationale treats as peripheral. That may be backwards. Feeds problem-statement Q-03. | User | MoSCoW / `/ideate-validate` |
+| Q-05 | **Venue PRO blanket licensing has no home.** Real Operator work, genuinely licensing, and not this domain's (it is domain 10 collections or domain 16 compliance). Surfaced because 11.11 made the Operator's absence visible. | Agent | `/ideate-validate` |
+| Q-06 | **Does WeJammin train on user audio?** Not 11.07's product, and the most consequential AI question the project faces: the platform holds the industry's most attractive training corpus (labelled multi-track stems, per 11.07.01) and sells its owners a consent control. Silence is itself an answer. | User | `/create-prd-security` (values + ToS) |
+| Q-07 | Is "the old record always survives" (P-02 in the CX file) a **platform-level invariant** rather than a domain-11 rule? Three independent instances found. | Agent | global CX / `/create-prd-architecture` |

@@ -2,7 +2,7 @@
 
 > **Level**: domain
 > **Parent**: [WeJammin Ideation Index](../ideation-index.md)
-> **Status**: [SURFACE]
+> **Status**: [BREADTH]
 > **Last updated**: 2026-07-16
 > **Novelty**: `user-directive` | **Priority**: `core`
 
@@ -23,57 +23,122 @@ Multi-vendor sale and delivery of DAW plugins, sample packs, presets, beats, MID
 
 ## Children
 
-> Candidate children discovered by the 14-lens sweep. All are `[SURFACE]` — identified only.
-> `/ideate-discover` runs each through the Node Classification Gate to determine
-> sub-domain (folder) vs feature (file), then drills. **Nothing below is confirmed structure.**
+> 24 sweep candidates classified through the Node Classification Gate → **10 sub-domains, 42 leaf
+> features, 0 direct features**. One candidate demoted to a cross-cut; four candidates merged; four
+> split; four features added by Deep Think. All `[SURFACE]` — breadth pass, depth allocated by
+> MoSCoW later.
 
 | # | Name | Type | Path | Status | Deep Think |
 |---|------|------|------|--------|------------|
-| 01 | Digital Product Listings & Spec Sheets | _unclassified_ | _pending_ | `[SURFACE]` | 0 |
-| 02 | Plugin Format, OS/CPU & DAW Host Compatibility Matrix | _unclassified_ | _pending_ | `[SURFACE]` | 0 |
-| 03 | Host-Dependency Modelling (Kontakt full vs Player, Serum presets) | _unclassified_ | _pending_ | `[SURFACE]` | 0 |
-| 04 | System Compatibility Checker & Saved Rig Profile | _unclassified_ | _pending_ | `[SURFACE]` | 0 |
-| 05 | Licence Issuance, Delivery, Activation & Seat Management | _unclassified_ | _pending_ | `[SURFACE]` | 0 |
-| 06 | Offline Activation, iLok/PACE & Third-Party DRM Bridges | _unclassified_ | _pending_ | `[SURFACE]` | 0 |
-| 07 | Download Delivery, Versioning, Updates & Legacy Archive | _unclassified_ | _pending_ | `[SURFACE]` | 0 |
-| 08 | Desktop Library Manager & Resumable Multi-GB Download | _unclassified_ | _pending_ | `[SURFACE]` | 0 |
-| 09 | Customer Licence Portal & Creative Asset Library (tagging, search, sync) | _unclassified_ | _pending_ | `[SURFACE]` | 0 |
-| 10 | Sample & Loop Pack Marketplace (BPM/key metadata, per-file audition) | _unclassified_ | _pending_ | `[SURFACE]` | 0 |
-| 11 | Preset & Patch Marketplace | _unclassified_ | _pending_ | `[SURFACE]` | 0 |
-| 12 | Project/DAW Template Marketplace & Dependency Manifest | _unclassified_ | _pending_ | `[SURFACE]` | 0 |
-| 13 | Beat & Instrumental Licensing (tiered leases, exclusivity, auto-delist) | _unclassified_ | _pending_ | `[SURFACE]` | 0 |
-| 14 | Used Licence Transfer, Vendor Policy Registry & Conditional Escrow | _unclassified_ | _pending_ | `[SURFACE]` | 0 |
-| 15 | Bundled Software Licences with Used Hardware Sales | _unclassified_ | _pending_ | `[SURFACE]` | 0 |
-| 16 | Trials, Demos, Freeware & Trial Abuse Prevention | _unclassified_ | _pending_ | `[SURFACE]` | 0 |
-| 17 | Perpetual, Subscription, Credit Economy & Rent-to-Own | _unclassified_ | _pending_ | `[SURFACE]` | 0 |
-| 18 | Bundles, Sales, Upgrade/Crossgrade & Loyalty Credit | _unclassified_ | _pending_ | `[SURFACE]` | 0 |
-| 19 | Developer/Vendor Portal, Build Submission & QA (malware scan, code signing, pluginval/auval, audio QC) | _unclassified_ | _pending_ | `[SURFACE]` | 0 |
-| 20 | Per-Download Royalty Pool for Contributors | _unclassified_ | _pending_ | `[SURFACE]` | 0 |
-| 21 | Digital Refunds, EU Withdrawal Waiver & Licence Revocation | _unclassified_ | _pending_ | `[SURFACE]` | 0 |
-| 22 | DRM, Anti-Piracy, Watermarking & Serial Blacklisting | _unclassified_ | _pending_ | `[SURFACE]` | 0 |
-| 23 | Vendor Exit & Perpetual Licence Continuity | _unclassified_ | _pending_ | `[SURFACE]` | 0 |
-| 24 | AI-Generated Content Disclosure & Clearance Attestation | _unclassified_ | _pending_ | `[SURFACE]` | 0 |
+| 14.01 | Digital Product Catalog & Compatibility | sub-domain | [14.01-catalog-compatibility/](./14.01-catalog-compatibility/) | `[SURFACE]` | 8 hypotheses (4 features) |
+| 14.02 | Licensing, Activation & Entitlement | sub-domain | [14.02-licensing-activation-entitlement/](./14.02-licensing-activation-entitlement/) | `[SURFACE]` | 13 hypotheses (6 features) |
+| 14.03 | Delivery, Versioning & Library | sub-domain | [14.03-delivery-versioning-library/](./14.03-delivery-versioning-library/) | `[SURFACE]` | 10 hypotheses (5 features) |
+| 14.04 | Sound Content Catalogs (Samples, Presets, Templates) | sub-domain | [14.04-sound-content-catalogs/](./14.04-sound-content-catalogs/) | `[SURFACE]` | 8 hypotheses (4 features) |
+| 14.05 | Beat & Instrumental Licensing | sub-domain | [14.05-beat-instrumental-licensing/](./14.05-beat-instrumental-licensing/) | `[SURFACE]` | 8 hypotheses (4 features) |
+| 14.06 | Used Licence Transfer & Resale | sub-domain | [14.06-used-licence-transfer/](./14.06-used-licence-transfer/) | `[SURFACE]` | 6 hypotheses (3 features) |
+| 14.07 | Monetisation Models & Pricing | sub-domain | [14.07-monetisation-models-pricing/](./14.07-monetisation-models-pricing/) | `[SURFACE]` | 10 hypotheses (5 features) |
+| 14.08 | Vendor Portal, Build Submission & QA | sub-domain | [14.08-vendor-portal-build-qa/](./14.08-vendor-portal-build-qa/) | `[SURFACE]` | 10 hypotheses (5 features) |
+| 14.09 | Digital Refunds, Withdrawal & Revocation | sub-domain | [14.09-digital-refunds-revocation/](./14.09-digital-refunds-revocation/) | `[SURFACE]` | 6 hypotheses (3 features) |
+| 14.10 | Contributor Revenue & Per-Download Royalty Pool | sub-domain | [14.10-contributor-revenue-royalty-pool/](./14.10-contributor-revenue-royalty-pool/) | `[SURFACE]` | 7 hypotheses (3 features) |
+
+> **Intra-domain cross-cuts**: [digital-goods-marketplace-cx.md](./digital-goods-marketplace-cx.md) — 11 confirmed pairs, 5 rejected pairs, 9 cross-cuts escalated to the global CX, 11 not-product concerns routed out.
+
+### Classification Ledger
+
+| Candidate (sweep) | Outcome |
+|---|---|
+| 01 Digital Product Listings & Spec Sheets | → 14.01.01 |
+| 02 Plugin Format, OS/CPU & DAW Host Compatibility Matrix | → 14.01.02 |
+| 03 Host-Dependency Modelling | → 14.01.03 |
+| 04 System Compatibility Checker & Saved Rig Profile | → 14.01.04 |
+| 05 Licence Issuance, Delivery, Activation & Seat Management | **split** → 14.02.01 + 14.02.02 |
+| 06 Offline Activation, iLok/PACE & Third-Party DRM Bridges | → 14.02.03 |
+| 07 Download Delivery, Versioning, Updates & Legacy Archive | **split** → 14.03.01 + 14.03.02 |
+| 08 Desktop Library Manager & Resumable Multi-GB Download | **partially built** → 14.03.01 (web-feasible half). Desktop surface contradicts D-02/D-12 → Q-01 |
+| 09 Customer Licence Portal & Creative Asset Library | **split** → 14.03.03 + 14.03.04 |
+| 10 Sample & Loop Pack Marketplace | → 14.04.01 |
+| 11 Preset & Patch Marketplace | → 14.04.02 |
+| 12 Project/DAW Template Marketplace & Dependency Manifest | → 14.04.03 |
+| 13 Beat & Instrumental Licensing | **promoted to sub-domain** → 14.05 (4 features) |
+| 14 Used Licence Transfer, Vendor Policy Registry & Conditional Escrow | **promoted to sub-domain** → 14.06.01 + 14.06.02 |
+| 15 Bundled Software Licences with Used Hardware Sales | **merged into 14.06** → 14.06.03 |
+| 16 Trials, Demos, Freeware & Trial Abuse Prevention | **demoted to feature** → 14.02.06 |
+| 17 Perpetual, Subscription, Credit Economy & Rent-to-Own | **merged with 18 → 14.07**; split → 14.07.01/02/03 |
+| 18 Bundles, Sales, Upgrade/Crossgrade & Loyalty Credit | **merged with 17 → 14.07**; split → 14.07.04 + 14.07.05 |
+| 19 Developer/Vendor Portal, Build Submission & QA | **split** → 14.08.01 + 14.08.02 + 14.08.03 |
+| 20 Per-Download Royalty Pool for Contributors | **promoted to sub-domain** → 14.10 |
+| 21 Digital Refunds, EU Withdrawal Waiver & Licence Revocation | **promoted to sub-domain** → 14.09 |
+| 22 DRM, Anti-Piracy, Watermarking & Serial Blacklisting | **split across 3 sub-domains** → 14.02.04 (blacklisting) + 14.03.05 (watermarking) + 14.09.03 (revocation) |
+| 23 Vendor Exit & Perpetual Licence Continuity | **merged into 14.08** → 14.08.05 |
+| 24 AI-Generated Content Disclosure & Clearance Attestation | **CROSS-CUT** — serves 07/09/12/14/24. No node. Captured at 14.08.01; recorded in domain CX |
+| — | **Deep Think additions**: 14.02.05, 14.04.04, 14.08.04, 14.10.03 |
 
 ## Role Matrix
 
-> `[PENDING]` — populated by `/ideate-discover` once `meta/personas.md` exists.
-> Provisional personas for this domain (from sweep): plugin developer, sample label, beatmaker, producer buyer, engineer, artist
->
-> **Legend**: ✅ Full · ⚙️ Config · 👁️ Read-only · 📊 Reports · ❌ None
+> Personas per [meta/personas.md](../meta/personas.md) (D-19). Detailed per-role behaviour lives in
+> each feature file's Role Lens.
 
-| Child | plugin developer | sample label | beatmaker | producer buyer | engineer | artist |
-|-------| --- | --- | --- | --- | --- | --- |
-| _pending — children unclassified_ | _pending_ | _pending_ | _pending_ | _pending_ | _pending_ | _pending_ |
+| Child | Musician | Producer | Operator | Fan |
+|-------|----------|----------|----------|-----|
+| 14.01 Catalog & Compatibility | ✅ Full | ✅ Full | 👁️ Read-only | ❌ None |
+| 14.02 Licensing & Entitlement | ✅ Full | ✅ Full | ✅ Full (seats = rooms) | 👁️ Read-only (via domain 20 only) |
+| 14.03 Delivery & Library | ✅ Full | ✅ Full | ✅ Full | 👁️ Read-only ("my purchases", shared layer) |
+| 14.04 Sound Content Catalogs | ✅ Full (buyer + vendor) | ✅ Full (buyer + vendor) | ❌ None | ❌ None |
+| 14.05 Beat & Instrumental Licensing | ✅ Full (the artist buying) | ✅ Full (the beatmaker selling) | ❌ None | 👁️ Read-only (public beat pages only) |
+| 14.06 Used Licence Transfer | ✅ Full | ✅ Full | ✅ Full (studio clear-outs) | ❌ None |
+| 14.07 Monetisation & Pricing | ✅ Full | ✅ Full | ✅ Full | ❌ None |
+| 14.08 Vendor Portal & QA | ✅ Full (the realistic vendor) | ✅ Full (the archetypal vendor) | ⚙️ Config | ❌ None |
+| 14.09 Refunds & Revocation | ✅ Full | ✅ Full | ✅ Full | 👁️ Read-only (via domain 20) |
+| 14.10 Contributor Revenue | 📊 Reports · ✅ Full (splits) | 📊 Reports · ✅ Full (splits) | ❌ None | ❌ None |
+
+> **Legend**: ✅ Full access · ⚙️ Configuration only · 👁️ Read-only · 📊 Reports only · ❌ No access
+
+**Two findings from this matrix, both material:**
+
+1. **The Fan column is almost entirely `None`** — and where it isn't, the access arrives through
+   *domain 20*, not this store. This confirms the domain index's original framing (the split is by
+   destination) and shows the shared delivery layer is the only real Fan touchpoint.
+2. **The Operator column is thin and lopsided** — substantial in exactly three places (seats as
+   rooms, studio clear-outs, buyer-selected release channels) and absent everywhere content is
+   concerned. That is honest, not lazy: a venue operator has no reason to buy loops.
+3. **A commercial plugin developer has no column at all.** iZotope is not a Musician, Producer,
+   Operator or Fan. See Q-03 — this is personas.md Q-01, no longer theoretical.
 
 ## Decision Log
 
 | # | Decision | Context | Source |
 |---|----------|---------|--------|
 | D-01 | Established as a top-level domain | Explicit owner directive (D-06: 'digital plugins for DAWs'). Shares a checkout with physical gear and essentially nothing else. Everything below the cart differs: no shipping but l... | 14-lens sweep + 3× adversarial verification; ratified by user 2026-07-16 (D-16) |
+| D-02 | 24 candidates → 10 sub-domains, 42 features, 0 direct features | Every candidate ran the Node Classification Gate. Zero direct features is unusual and correct for a domain this dense: no candidate survived as a single standalone capability under the domain root — each belonged to a cluster with 2+ interacting parts. | `/ideate-discover` Step 3 |
+| D-03 | Candidate 24 (AI disclosure) demoted to a **cross-cut**; no node created | The mechanism — an attestation attached to an asset, propagating downstream — serves 07, 09, 12, 14 and 24 identically. Per the Node Classification Gate a mechanism serving many domains is a cross-cut. Domain 14's touchpoint is capture at submission (14.08.01). | Agent, Node Classification Gate |
+| D-04 | Candidate 22 split across **three** sub-domains | "DRM, Anti-Piracy, Watermarking & Serial Blacklisting" bundled four things with three owners and three trigger moments: blacklisting is a licence-state op (14.02.04), watermarking is a delivery-time op (14.03.05), revocation is a refund consequence (14.09.03). Keeping them together would force one node to span three sub-domains. | Agent, Node Classification Gate |
+| D-05 | Candidate 08's desktop library manager **not built as specified** | It presumes a desktop surface that D-02/D-12 ratify against. The resumable-download half is web-feasible and lands in 14.03.01; the native app is a *surface* decision, raised as Q-02 rather than silently invented. | Agent — conflict with ratified D-02/D-12 |
+| D-06 | Four Deep Think additions: 14.02.05, 14.04.04, 14.08.04, 14.10.03 | The candidate list models this domain as a **file shop**. Two of the four additions (14.02.05 licence terms registry, 14.10.03 multi-contributor splits) are where the domain touches the project thesis (D-18); the sweep contained neither. | Deep Think, `/ideate-discover` |
+
+## Deep Think — Domain-Level Findings
+
+> The four findings that changed this domain's shape. Full reasoning lives in the cited features.
+
+| # | Finding | Where |
+|---|---|---|
+| DT-A | **The store's realistic launch inventory is creator-made content, not third-party plugins.** Commercial plugin vendors (FabFilter, iZotope, Xfer) require a business-development motion WeJammin cannot run at launch, and Plugin Boutique/Splice already hold those relationships. But WeJammin's *own users are the vendors* for packs, presets, beats and templates — a producer with a folder can list on day one. This inverts the MoSCoW the candidate order implies: 14.04/14.05 are the domain; the plugin apparatus (iLok bridges, compat matrix, host deps, DRM) serves inventory the store may never obtain. | [14.01.01 DT-02](./14.01-catalog-compatibility/14.01.01-digital-product-listing-spec-sheet.md) |
+| DT-B | **The domain's real exposure is inbound, not outbound.** The candidate list spends four nodes on protecting vendors from buyers (DRM, watermarking, blacklisting, anti-piracy) and one on verifying vendors. Piracy costs a vendor a sale; a pack sold with rights its vendor never held costs **every buyer their record**, with a WeJammin receipt vouching for each. personas.md names the mechanism as the Musician's worst *accidental* behaviour; the store multiplies its blast radius from a band to a customer base. | [14.04.01 DT-02](./14.04-sound-content-catalogs/14.04.01-sample-loop-pack-catalog.md), [14.02.05 DT-03](./14.02-licensing-activation-entitlement/14.02.05-licence-terms-registry.md) |
+| DT-C | **This domain has a genuine thesis stake, and the sweep missed it entirely.** The candidate list models licensing purely as access control — never as a *grant of rights that travels downstream*. But a purchased sample is a fact about a recording, and the store is present at the exact moment it becomes true, with a payment receipt as evidence. Nowhere else on the platform is a cleaner capture point. With 14.02.05 and 14.10.03, the store *feeds* the rights stack; without them it is a file shop adjacent to one. | [14.02.05 DT-02](./14.02-licensing-activation-entitlement/14.02.05-licence-terms-registry.md), [14.10.03 DT-01](./14.10-contributor-revenue-royalty-pool/14.10.03-multi-contributor-pack-splits.md) |
+| DT-D | **"Perpetual" is an unbounded liability sold at a fixed price, and nobody has costed it.** A one-time purchase of a 100 GB library commits the platform to store it forever, serve it on every machine change for decades, keep every archived version fetchable, and honour all of it after the vendor exits and stops caring (14.08.05). Watermarking makes those artifacts uncacheable (14.03 CX-04), removing the CDN the locked Cloudflare constraint assumes. This plausibly decides whether large-format content is sellable here at all. | [14.03.01 DT-02](./14.03-delivery-versioning-library/14.03.01-download-delivery-resumable-transfer.md), [14.07.01 DT-01](./14.07-monetisation-models-pricing/14.07.01-perpetual-purchase-ownership.md) |
 
 ## Open Questions
 
 | # | Question | Owner | Deferred To |
 |---|----------|-------|-------------|
-| Q-01 | Which candidate children are sub-domains (2+ interacting capabilities) vs features (single capability)? | Agent | `/ideate-discover` |
-| Q-02 | Are any candidate children actually cross-cuts belonging in a CX file? | Agent | `/ideate-discover` |
+| Q-01 | ~~Which candidate children are sub-domains vs features?~~ **RESOLVED** — see Children table and Classification Ledger. | Agent | ✅ `/ideate-discover` |
+| Q-02 | ~~Are any candidate children actually cross-cuts?~~ **RESOLVED** — candidate 24 (AI disclosure) demoted to a cross-cut; 8 further platform cross-cuts identified. See [domain CX](./digital-goods-marketplace-cx.md). | Agent | ✅ `/ideate-discover` |
+| Q-03 | **Per DT-A: is the store's launch inventory creator-made content rather than third-party plugins?** If yes, most of the plugin apparatus (14.01.02/03/04, 14.02.03, 14.08.02) drops to `could`/`wont` and 14.04/14.05 become the domain. This is the single highest-leverage decision in domain 14 and it reorders every MoSCoW below it. | User | `/ideate-validate` |
+| Q-04 | **Does a plugin-developer / sample-label persona exist?** personas.md Q-01 explicitly says to "revisit if the Gear/Digital Role Matrices come out thin during drilling". They did: the Role Matrix has no column for a commercial software vendor, and 14.08's entire vendor side is designed for a Musician with a folder. That may be exactly right — but it should be a decision, not an omission. | User | `/ideate-validate` |
+| Q-05 | **Does a desktop companion surface exist?** (14.03 Q-01, from candidate 08.) A browser cannot reliably fetch 100 GB, install to a sample folder, auto-detect a rig (14.01.04 DT-01), or sync a local library (14.03.04). Multiple features across this domain are materially weaker without it. Same shape as the mobile question already open in `meta/constraints.md`. | User | `/ideate-validate` |
+| Q-06 | **Is 14.03 (Delivery & Library) actually a platform cross-cut?** The domain index concedes 20 reuses it. Classification found 05 (client deliverables), 06 (lesson materials) and 07 (stems) plausibly need the same "entitled party fetches a versioned file, permanently" shape. One dependant is a seam; four is a cross-cut wearing a domain costume. Not overturning D-16 unilaterally — flagging it loudly. | User | `/ideate-validate` |
+| Q-07 | **Does 14.05 (Beat Licensing) belong here or in 11 (Music Licensing)?** The domain index already hedges ("genuinely both"). Classification strengthened the objection: the objects transacted are rights, not files — an exclusive sale transfers copyright (09), a lease is a licence with stream caps (11), expiry obligates a *released record*. The counter-argument is the cart and the player — and both are cross-cuts. A cross-cut and a cross-cut do not make a domain. | User | `/ideate-validate` |
+| Q-08 | **Is the used-licence market real** (14.06 Q-01)? The domain index calls it "the sharpest wedge here". The registry only functions where vendors permit transfer, and the vendors worth reselling have the strongest incentive to forbid it. Meanwhile creator content is priced too low to resell (CX R-02). The wedge may be sharp and pointed at an empty market — though the *registry alone* is defensible as consumer information at the point of new purchase (14.06.01 DT-01). | User | `/ideate-validate` |
+| Q-09 | **What is the refund policy?** (14.09 Q-01.) All of 14.09 is machinery serving a policy nobody has set. Recommendation (14.09.02 DT-01): generous — for a new store selling goods buyers cannot inspect, from vendors they've never heard of, it is the cheapest available substitute for a reputation we don't have. | User | `/ideate-validate` |
+| Q-10 | **Which monetisation models ship?** (14.07 Q-01.) Five models is a mature market's end-state. At £10–£50 creator content, subscription/credits/rent-to-own all solve a capital problem that doesn't exist. Recommend perpetual only at launch — which also means 14.10 does not exist (14.10 Q-01), since the pool has no funding source. | User | `/ideate-validate` |
+| Q-11 | **Does selling subscriptions contradict the thesis?** (14.07 Q-03.) personas.md: the Musician "cannot afford per-tool subscriptions across six products" — that fragmentation *is* the pain WeJammin exists to end. Selling them a seventh is at best ironic. Counter: one subscription replacing six is consolidation — but only if it's a *platform membership*, not a domain-14 sample plan. | User | `/ideate-validate` |
+| Q-12 | **Reviews & ratings never appeared in the sweep's 24 candidates for this domain**, which is itself a finding — a store with no reviews is not a store. Presumed a platform cross-cut (05/13/14/16). Confirm it is owned somewhere. | Agent | `/ideate-validate` |

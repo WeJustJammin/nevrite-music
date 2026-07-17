@@ -2,15 +2,27 @@
 
 > **Level**: domain
 > **Parent**: [WeJammin Ideation Index](../ideation-index.md)
-> **Status**: [SURFACE]
+> **Status**: [BREADTH]
 > **Last updated**: 2026-07-16
 > **Novelty**: `user-directive` | **Priority**: `core`
 
 ## Overview
 
-The canonical, community-curated registry of music's physical places — venue technical specs, studio rooms and mic lockers, rehearsal spaces, trades — plus the booking of their time.
+The canonical, community-curated registry of music's physical places — venue technical specs, studio
+rooms and mic lockers, rehearsal spaces, trades — plus the booking of their time.
 
-**Why this is a top-level domain**: Explicit owner directive (D-07: 'a directory for venues, studios...'). Its write model is what makes it a domain rather than listings: records exist unclaimed and seeded from public data (OSM, Wikidata, MusicBrainz, licensing registers), facts are contested between owner and community, and the data needs provenance, revision history, dedup/merge and freshness decay — a machine with nothing in common with a single-writer gear listing. Its unit of value is coverage and accuracy at zero transactions (SEO, cold start). Venue technical truth is the highest-leverage unbuilt asset in live music: every advance re-asks questions the venue has answered a thousand times, and structured specs make rider-vs-venue conflict detection possible for the first time. Booking is kept here rather than in Services because separating a studio's mic locker from its rate card fails the wrong-cut test — the mic locker IS the booking decision. The write-model seam is real and preserved either way: specs stay community-curated with provenance and freshness decay, rates stay owner-controlled.
+**Why this is a top-level domain**: Explicit owner directive (D-07: 'a directory for venues,
+studios...'). Its write model is what makes it a domain rather than listings: records exist unclaimed
+and seeded from public data (OSM, Wikidata, MusicBrainz, licensing registers), facts are contested
+between owner and community, and the data needs provenance, revision history, dedup/merge and
+freshness decay — a machine with nothing in common with a single-writer gear listing. Its unit of
+value is coverage and accuracy at zero transactions (SEO, cold start). Venue technical truth is the
+highest-leverage unbuilt asset in live music: every advance re-asks questions the venue has answered a
+thousand times, and structured specs make rider-vs-venue conflict detection possible for the first
+time. Booking is kept here rather than in Services because separating a studio's mic locker from its
+rate card fails the wrong-cut test — the mic locker IS the booking decision. The write-model seam is
+real and preserved either way: specs stay community-curated with provenance and freshness decay, rates
+stay owner-controlled.
 
 **Interacting capabilities** (what justifies domain status):
 
@@ -21,57 +33,123 @@ The canonical, community-curated registry of music's physical places — venue t
 - compound resource booking (room + engineer + backline)
 - enquiry/RFQ routing
 
+### What this pass added to the rationale
+
+Two findings from breadth classification strengthen the domain-status argument beyond the original:
+
+1. **A second, mechanical reason booking belongs here.** The domain index argued the wrong-cut test
+   (the mic locker IS the booking decision). Drilling found a harder one: **the completed reservation
+   is the proof of presence that makes a post-gig report first-hand** (16.06.03 DT-01). Without
+   booking in this domain, 16.05.06 has no trigger and no credential — and without 16.05.06 the
+   registry rots (16.05.05 DT-05). Booking is not adjacent to the registry; it is its power supply.
+
+2. **The domain touches the thesis directly, in two places.** D-18 says provenance is the wedge. The
+   post-gig harvest is capture-at-source applied to *rooms* — a load-in is known perfectly by the band
+   on the night and by nobody afterwards (16.05.06 DT-03). And 16.02.06 is capture-at-source applied
+   to *live performance royalties*: a setlist at a licensed venue on a known date is money that
+   currently evaporates. This domain was classified `user-directive`; it is also a provenance surface.
+
 ## Children
 
-> Candidate children discovered by the 14-lens sweep. All are `[SURFACE]` — identified only.
-> `/ideate-discover` runs each through the Node Classification Gate to determine
-> sub-domain (folder) vs feature (file), then drills. **Nothing below is confirmed structure.**
+> Classified from the sweep's 22 candidates via the Node Classification Gate. **5 sub-domains, 2
+> domain-level features, 33 leaf features.** 6 features are Deep Think additions (absent from the
+> sweep); 3 candidates were merged; 3 were split. All nodes `[SURFACE]` — breadth pass only.
 
 | # | Name | Type | Path | Status | Deep Think |
 |---|------|------|------|--------|------------|
-| 01 | Venue Records & Technical Specs (capacity model, stage, PA/FOH/monitors, sound limiter, load-in, curfew, parking, green room, merch terms, deal model, booking contact) | _unclassified_ | _pending_ | `[SURFACE]` | 0 |
-| 02 | Studio Records, Rooms & Acoustics | _unclassified_ | _pending_ | `[SURFACE]` | 0 |
-| 03 | Studio Signal Chain, Mic Locker & Instrument Inventory | _unclassified_ | _pending_ | `[SURFACE]` | 0 |
-| 04 | Engineer Staffing Model (dry hire / assisted / full-service) | _unclassified_ | _pending_ | `[SURFACE]` | 0 |
-| 05 | Rehearsal & Practice Spaces (backline inclusion, access model) | _unclassified_ | _pending_ | `[SURFACE]` | 0 |
-| 06 | Industry Trades & Facilities Directory (luthiers, rental houses, PA/production, pressing plants) | _unclassified_ | _pending_ | `[SURFACE]` | 0 |
-| 07 | Room/Space as First-Class Child Entity | _unclassified_ | _pending_ | `[SURFACE]` | 0 |
-| 08 | Claim & Ownership Verification (incl. unclaimed ghost records) | _unclassified_ | _pending_ | `[SURFACE]` | 0 |
-| 09 | Data Seeding & Ingestion (with source-licence compliance) | _unclassified_ | _pending_ | `[SURFACE]` | 0 |
-| 10 | Community Curation, Suggested Edits & Field-Level Provenance | _unclassified_ | _pending_ | `[SURFACE]` | 0 |
-| 11 | Owner-vs-Community Conflict Resolution Policy | _unclassified_ | _pending_ | `[SURFACE]` | 0 |
-| 12 | Verification Decay & Freshness Scoring | _unclassified_ | _pending_ | `[SURFACE]` | 0 |
-| 13 | Post-Gig/Post-Session Data Harvesting | _unclassified_ | _pending_ | `[SURFACE]` | 0 |
-| 14 | Space Booking & Reservations (availability, deposits, minimum blocks, buffers, overtime, lockout, cancellation ladders, waitlist backfill) | _unclassified_ | _pending_ | `[SURFACE]` | 0 |
-| 15 | Compound / Multi-Resource Booking | _unclassified_ | _pending_ | `[SURFACE]` | 0 |
-| 16 | Booking Posture Discriminator & Enquiry/RFQ Routing | _unclassified_ | _pending_ | `[SURFACE]` | 0 |
-| 17 | Rate Cards, Inclusions, Extras & Session Archive Policy | _unclassified_ | _pending_ | `[SURFACE]` | 0 |
-| 18 | Structured Photo Checklist & Virtual Tours | _unclassified_ | _pending_ | `[SURFACE]` | 0 |
-| 19 | Audience & Performer Accessibility Profile | _unclassified_ | _pending_ | `[SURFACE]` | 0 |
-| 20 | Venue Status & At-Risk Signalling | _unclassified_ | _pending_ | `[SURFACE]` | 0 |
-| 21 | Venue Blanket Licence (PRO) Compliance Status | _unclassified_ | _pending_ | `[SURFACE]` | 0 |
-| 22 | Off-Peak, Seasonal & Dynamic Pricing | _unclassified_ | _pending_ | `[SURFACE]` | 0 |
+| 01 | Place Records & Rooms | sub-domain | [16.01-place-records-rooms/](./16.01-place-records-rooms/) | [SURFACE] | 28 hypotheses (7 features) |
+| 02 | Venue Technical Specification | sub-domain | [16.02-venue-technical-specification/](./16.02-venue-technical-specification/) | [SURFACE] | 27 hypotheses (6 features) |
+| 03 | Studio Technical Specification | sub-domain | [16.03-studio-technical-specification/](./16.03-studio-technical-specification/) | [SURFACE] | 18 hypotheses (4 features) |
+| 04 | Rehearsal & Practice Space Specification | feature | [16.04-rehearsal-practice-space-specification.md](./16.04-rehearsal-practice-space-specification.md) | [SURFACE] | 4 hypotheses |
+| 05 | Curation, Provenance & Data Integrity | sub-domain | [16.05-curation-provenance-data-integrity/](./16.05-curation-provenance-data-integrity/) | [SURFACE] | 35 hypotheses (7 features) |
+| 06 | Space Booking & Reservations | sub-domain | [16.06-space-booking-reservations/](./16.06-space-booking-reservations/) | [SURFACE] | 44 hypotheses (9 features) |
+| 07 | Spec Conformance Check (Rider ↔ Room) | feature | [16.07-spec-conformance-check-rider-room.md](./16.07-spec-conformance-check-rider-room.md) | [SURFACE] | 5 hypotheses |
+
+> **Type column values:**
+> - `sub-domain` — a grouping with 2+ interacting capabilities (folder with index + CX)
+> - `feature` — a leaf node describing a single capability (.md file)
+
+### Deep Think Additions (not in the sweep's 22 candidates)
+
+| Node | Why it must exist |
+|------|-------------------|
+| [16.06.02 External Calendar Sync](./16.06-space-booking-reservations/16.06.02-external-calendar-sync.md) | **The sweep's largest gap.** The Operator's primary pain point is a calendar in three incompatible places. No candidate addressed it. Without sync, WeJammin is the fourth. |
+| [16.05.07 Duplicate Detection & Merge](./16.05-curation-provenance-data-integrity/16.05.07-duplicate-detection-merge.md) | Named in this index's own rationale ("dedup/merge"), absent from the candidates. Seeding from 3+ sources without it produces a registry **worse than empty** — it splits calendars. |
+| [16.07 Spec Conformance Check](./16.07-spec-conformance-check-rider-room.md) | Asserted in this index's rationale as the domain's headline capability, owned by nobody. It sits between 16's spec and 18's rider and would fall down the gap. |
+| [16.06.09 Recurring & Lockout Tenancy](./16.06-space-booking-reservations/16.06.09-recurring-bookings-lockout-tenancy.md) | Lockout appears in the sweep only as a word in a parenthetical. It is a **tenancy, not a booking** — and a large share of rehearsal revenue. |
+| [16.01.06 Licences, Insurance & Statutory Records](./16.01-place-records-rooms/16.01.06-licences-insurance-statutory-records.md) | PLI is a hard gate on real UK venue bookings; licensed capacity is a statutory ceiling 19 must not exceed. Entirely absent from the sweep. |
+| [16.03.04 Session Archive & Recall Policy](./16.03-studio-technical-specification/16.03.04-session-archive-recall-policy.md) | Split out of candidate 17, where it was bundled with invoicing. The session archive is **where provenance physically lives**. |
 
 ## Role Matrix
 
-> `[PENDING]` — populated by `/ideate-discover` once `meta/personas.md` exists.
-> Provisional personas for this domain (from sweep): venue operator, studio owner, rehearsal space operator, band, artist, tour manager, engineer, community editor
->
-> **Legend**: ✅ Full · ⚙️ Config · 👁️ Read-only · 📊 Reports · ❌ None
+| Child | Musician | Producer | Operator | Fan |
+|-------|----------|----------|----------|-----|
+| 16.01 Place Records & Rooms | 👁️ View + suggest | 👁️ View + suggest | ✅ Full | 👁️ View (venue-type only) |
+| 16.02 Venue Technical Specification | 👁️ View + suggest | 👁️ View | ⚙️ Config (licence-derived fields not writable) | ❌ None (doors/transport only) |
+| 16.03 Studio Technical Specification | 👁️ View + suggest | 👁️ View + suggest (primary) | ✅ Full | ❌ None |
+| 16.04 Rehearsal & Practice Spaces | ✅ Full (primary) | 👁️ View | ✅ Full | ❌ None |
+| 16.05 Curation, Provenance & Data Integrity | ✅ Contribute (primary) | ✅ Contribute (primary) | ✅ Full / 📊 Reports (harvest) | ⚙️ Suggest (limited, unresolved) |
+| 16.06 Space Booking & Reservations | ✅ Full | ✅ Full | ✅ Full | ❌ None |
+| 16.07 Spec Conformance Check | ✅ Full | ✅ Full | 📊 Reports | ❌ None |
 
-| Child | venue operator | studio owner | rehearsal space operator | band | artist | tour manager | engineer | community editor |
-|-------| --- | --- | --- | --- | --- | --- | --- | --- |
-| _pending — children unclassified_ | _pending_ | _pending_ | _pending_ | _pending_ | _pending_ | _pending_ | _pending_ | _pending_ |
+> **Legend**: ✅ Full access · ⚙️ Configuration only · 👁️ Read-only · 📊 Reports only · ❌ No access
+>
+> Persona names come from [meta/personas.md](../meta/personas.md) — never redefined here.
+>
+> **Three patterns worth reading off this matrix:**
+> 1. **The Fan is almost entirely absent** — `❌ None` on 4 of 7, and the exceptions are thin (a venue
+>    page, an accessibility route, an at-risk signal to rally around). This is the platform's most
+>    professional domain. Per D-11 the Fan is a first-class user; here that means a small, deliberate
+>    surface, not a shrunken version of the professional one.
+> 2. **The Operator is `⚙️ Config`, not `✅ Full`, on the venue spec** — licence-derived facts
+>    (curfew, dB limit, licensed capacity) are not theirs to write (16.01.06 D-02).
+> 3. **On 16.05 the Operator is `📊 Reports` for the harvest while Musician and Producer are `✅`** —
+>    the party who owns the record is not the party who supplies its most trustworthy facts. That
+>    inversion is the domain's defining property.
 
 ## Decision Log
 
 | # | Decision | Context | Source |
 |---|----------|---------|--------|
-| D-01 | Established as a top-level domain | Explicit owner directive (D-07: 'a directory for venues, studios...'). Its write model is what makes it a domain rather than listings: records exist unclaimed and seeded from publi... | 14-lens sweep + 3× adversarial verification; ratified by user 2026-07-16 (D-16) |
+| D-01 | Established as a top-level domain | Explicit owner directive (D-07). Write model, coverage-at-zero-transactions, and the wrong-cut test on booking | 14-lens sweep + 3× adversarial verification; ratified by user 2026-07-16 (D-16) |
+| D-02 | **5 sub-domains, 2 domain-level features, 33 leaf features** | Classification gate applied to 22 candidates + 6 Deep Think additions | `/ideate-discover` Step 3 |
+| D-03 | **Rehearsal (16.04) is a feature, not a sub-domain** — despite venues and studios being sub-domains | One spec sheet, no interacting capability clusters. Symmetry is an aesthetic argument, and inflating structure is exactly what D-17 warns about | 16.04 DT-01 |
+| D-04 | Booking stays in this domain — on a **mechanical** ground, not only the wrong-cut test | The completed reservation is the proof of presence that makes a post-gig report first-hand. No booking → no harvest → the registry rots | 16.06.03 DT-01; 16.05.06 DT-03 |
+| D-05 | **Conflict default: last-agreed stands, contest visible** — not owner-wins | Owner-wins makes this a listings product and favours the party whose anti-persona is "misrepresents the room's specs". Policy is per field class | 16.05.04 D-01 |
+| D-06 | Place type is a **set**, not an enum; the **room** is the spec- and calendar-carrying unit | Buildings are multi-hyphenate too. A spec on the place sends bands to the wrong room; a calendar on the place blocks parallel sales | 16.01.01 D-01; 16.01.02 D-01 |
+| D-07 | The spec is **structured fields, not a document** | A PDF cannot be searched, diffed against a rider, or dated per-field. The structuring IS the unbuilt asset | 16.02.02 DT-01 |
+| D-08 | The platform's calendar is **not** authoritative — it earns authority by syncing | Their calendar is where their life already is; asserting authority makes us the fourth incompatible place | 16.06.01 DT-03; 16.06.02 DT-02 |
+| D-09 | **Dynamic pricing proposed `wont`** — for a positive reason, not scheduling | No demand data exists at cold start; surge-pricing a community's rehearsal room is a relationship decision; serves neither half of D-18 | 16.06.08 D-02 |
+| D-10 | Two capabilities routed **out of the product** to `/create-prd` | ODbL share-alike contamination (legal); calendar sync protocol layer; virtual tour hosting | 16.05.01 DT-03; 16.06.02 DT-05; 16.01.03 DT-03 |
+| D-11 | 16 publishes **standing terms**; 17 negotiates and settles the **deal** | The domain's sharpest seam. Standing terms are a room property; the deal is a show property | 16.02.05 DT-01 |
+
+### Merges & Splits Applied to the Sweep's Candidates
+
+| Action | Detail |
+|--------|--------|
+| **Merged** | Candidate 02's "Studio Records" half → 16.01.01 Place Record. A studio record *is* a place record with `type=studio`; only the spec sheet differs. Only "Rooms & Acoustics" remained studio-specific (→ 16.03.01). |
+| **Merged** | "Booking contact" (inside candidate 01's bundle) → 16.06.06 Enquiry Routing. A booking contact is a routing target, not a spec field. |
+| **Merged** | "Merch terms" + "deal model" (both inside candidate 01) → 16.02.05 Standing Deal Model. Both are commercial terms; merch was filed under hospitality by habit. |
+| **Split** | Candidate 14 → 16.06.03 Reservation Lifecycle / 16.06.04 Waitlist & Backfill / 16.06.09 Lockout. Waitlist is demand captured, not supply committed; lockout is not a booking. |
+| **Split** | Candidate 17 → 16.06.07 Rate Cards / 16.03.04 Session Archive Policy. The recall fee is an extra; the policy is a durable provenance-bearing studio property. |
+| **Split** | Candidate 22 → off-peak/seasonal (a rate-card variant) / dynamic pricing (proposed `wont`). They share a phrase and nothing else. |
+| **Split** | Candidate 01's 11-field bundle → 5 features across 16.02 (capacity / stage-PA / access-logistics / hospitality / deal model). |
 
 ## Open Questions
 
 | # | Question | Owner | Deferred To |
 |---|----------|-------|-------------|
-| Q-01 | Which candidate children are sub-domains (2+ interacting capabilities) vs features (single capability)? | Agent | `/ideate-discover` |
-| Q-02 | Are any candidate children actually cross-cuts belonging in a CX file? | Agent | `/ideate-discover` |
+| Q-01 | **Will bands answer the post-gig prompt?** The domain's largest unvalidated assumption. Every freshness guarantee rests on it; if the rate is near zero, decay does not degrade gracefully — the registry rots while accurately documenting the rot. Test before finalising MoSCoW. | **User** | `/ideate-validate` — **validation, not design** |
+| Q-02 | **The field-class → conflict-policy map**: who does the platform believe when an Operator and a band disagree about a physical fact? A values decision that defines what kind of registry this is. | **User** | Step 5 — **owner decision** |
+| Q-03 | **The spec is not a set of constants.** Four features independently hit this: day-varying curfew (16.02.03 DT-04), production-dependent capacity (16.02.01 Q-02), billing-dependent hospitality (16.02.04 DT-04), conditional accessibility (16.01.04 DT-02). Does the spec need a general conditionality model? **16.05.04 DT-05 suggests fixing this would remove conflicts rather than resolve them.** | Agent | Step 5 — highest-value structural question |
+| Q-04 | **Enum vs free text per spec field** (16.02 Q-01). Enums enable 16.07; free text is honest and uncheckable. **The domain's headline capability rests on this.** | Agent | Step 5 |
+| Q-05 | **Is the mic locker a view over 15 Gear Registry scoped to the studio's org?** Decides whether there is one gear taxonomy or two. | Agent | Step 5 · **cross-check with 15 mandatory** |
+| Q-06 | **Can ODbL sources be used at all?** Share-alike may reach a derived database; OSM is simultaneously the best venue geodata and the heaviest obligation. | User | `/create-prd` (legal + architecture) |
+| Q-07 | **Studio supply has no seeding story** — public data knows venues, not studios. Does 16.03's supply need a wholly different acquisition strategy, and does that change the launch sequence? | User | `/ideate-validate` |
+| Q-08 | **Who owns the cross-domain compound** (dry-hire room + a 05 freelance engineer)? The platform's clearest structural cross-sell, currently nobody's feature. | **User** | `/ideate-validate` · cross-check with 05 |
+| Q-09 | **Does the platform operate tenancies or only represent them?** Operating them = property-management software; representing them leaves a large share of rehearsal revenue untransactable. | **User** | `/ideate-validate` — scope decision |
+| Q-10 | **Lockout generates no completion events**, so the harvest never fires on the supply used most (16.06 CX-08). The freshest data comes from the least-used rooms. Real hole, no proposed fix. | Agent | Step 5 |
+| Q-11 | **Is rehearsal the domain's beachhead?** Highest frequency, lowest stakes, fastest feedback, simplest spec — and `problem-statement.md` Q-03 asks which consolidation surface goes first. | User | `/ideate-validate` · MoSCoW |
+| Q-12 | Is 16.01.07 Trades genuinely in this domain? It passes the address test, exercises no spec and no calendar, and has **no freshness mechanism at all** (no transaction → no harvest). | User | `/ideate-validate` |
+| Q-13 | **Jurisdiction** — 16.01.06 and 16.02.06 assume a UK regime (PRS/PPL/PAT/premises licence). Does the launch market decide these features' shape? | User | `/ideate-validate` |
+| Q-14 | Does a business have the right to be **delisted** from an unclaimed record it never created? That is most of the registry at launch. | User | `/create-prd-security` |

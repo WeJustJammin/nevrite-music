@@ -1,80 +1,148 @@
 # User Personas — WeJammin
 
-> Status: `[PENDING]` — written by `/ideate-discover`.
-> Seeded by `/ideate-extract` 2026-07-16.
->
-> Every persona must have all 6 fields. Do not proceed to features until all personas
-> are complete. See Vision Rubric Dimension 2.
->
-> **Blocks**: every domain index's Role Matrix is `[PENDING]` until this file exists.
-> 24 domain indexes reference this file.
+> Status: `[DEEP]` — 4 primary personas confirmed by owner 2026-07-16 (D-19).
+> Consumed by: every domain index Role Matrix (24), every feature file Role Lens.
+> Short names for Role Matrix columns: **Musician** · **Producer** · **Operator** · **Fan**
 
-## Persona Roster — candidates from the 14-lens sweep
-
-> The `personas-roles` lens enumerated music-industry roles and derived needs from each.
-> These are **candidates**, not confirmed personas. `/ideate-discover` must select 2–4 primary
-> personas (the template recommends 2–4 — do not write 40) and fully specify each.
-
-### The structural fact that shapes this roster
+## The Structural Fact
 
 Music's defining identity characteristic is the **multi-hyphenate**: one human simultaneously
-holds several professional roles (a drummer who also mixes, sits in three bands, engineers at
-a studio, and sells a cymbal on the marketplace). A persona model of "user has a role" is
-wrong for this product — this drove domain 01's entity model and the `Act-As / Context
-Switching` sub-domain.
+holds several professional roles — a drummer who also mixes, sits in three bands, engineers at a
+studio, and sells a cymbal on the marketplace. **A persona model of "user has a role" is wrong
+for this product.** These four personas are lenses on behaviour, not account types; one human
+routinely occupies three of them in one day.
 
-Second structural fact: **bands, labels, studios, venues and agencies are first-class
-entities** that book, sign, own and get paid independently of their members. A persona is not
-always a person.
+Second structural fact: **bands, labels, studios, venues and agencies are first-class entities**
+that book, sign, own and get paid independently of their members. A persona is not always a
+person. The Band is modelled as an **entity** (domain 01), experienced *through* the Musician
+and Producer personas — it is not a fifth persona.
 
-### Candidate roles surfaced
+---
 
-**Creator side**: recording artist · band member · songwriter · topliner · composer ·
-producer · beatmaker · session musician · vocalist · DJ · arranger · orchestrator
+## Persona: Musician (multi-hyphenate working musician)
 
-**Technical side**: mixing engineer · mastering engineer · tracking engineer · live sound
-engineer · backline tech · instrument tech / luthier
-
-**Live side**: tour manager · road crew · promoter · booking agent · venue owner / booker
-
-**Business side**: band manager · label A&R · label marketing · publisher · publishing admin ·
-music supervisor (sync) · PR · radio plugger · playlist curator · distributor
-
-**Commerce side**: gear dealer / shop · private seller · plugin developer · sample pack creator
-
-**Space side**: studio owner · studio manager · rehearsal space operator
-
-**Education side**: music teacher · student
-
-**Audience side**: **fan** — confirmed as a first-class USER per D-11, not a CRM record
-
-## Personas
-
-`[PENDING — /ideate-discover]`
-
-<!--
-Template per persona:
-
-## Persona: {{Name}}
+> The structural centre. Feels fragmentation worst because they personally use all six tools.
 
 | Field | Detail |
 |-------|--------|
-| **Name + Role** | _Named role with context — not "a user"_ |
-| **Primary Pain Point** | _Specific friction in one sentence_ |
-| **Current Workaround** | _Exact tool, process, or coping mechanism today_ |
-| **Success Criteria** | _What "solved" looks like, measurable if possible_ |
-| **Switching Trigger** | _What event/threshold makes them switch_ |
-| **Unique Constraint** | _What makes their situation different from other personas_ |
+| **Name + Role** | Working musician holding 3+ simultaneous roles — e.g. session drummer, occasional mixer, member of two bands, part-time gear flipper. Not a star; makes a living from a portfolio of small income streams. |
+| **Primary Pain Point** | Their career exists in fragments across six platforms that share no identity — so nothing accumulates, and every new client requires re-proving who they are and what they've played on. |
+| **Current Workaround** | Reverb + SoundBetter + Bandsintown + Splice + DistroKid + a WhatsApp thread + a spreadsheet. A Linktree and a manually-maintained "credits" list in a Notes app or a PDF one-sheet. |
+| **Success Criteria** | One identity that carries verified proof of work across every context; income visible in one place; no re-proving themselves to each new client. Measurable: time-to-book a session drops; credits are cited rather than claimed. |
+| **Switching Trigger** | Losing money or a gig to a fact they couldn't prove — an unpaid session, a credit that went to someone else, a split they agreed verbally and can't evidence. Or: a trusted collaborator invites them into a project already on WeJammin. |
+| **Unique Constraint** | Their roles are simultaneous, not sequential. Any UX forcing "are you an artist OR a producer OR a seller?" fails them immediately. They also cannot afford per-tool subscriptions across six products. |
 
 ### Workflow
+1. Gets invited to (or finds) work — session, gig, or service request
+2. Negotiates terms, does the work, delivers
+3. **The moment that matters**: credit + split captured while everyone is present and friendly
+4. Gets paid; the fact of the work accretes to their identity
+5. That accumulated proof is what wins the next job
+
 ### Anti-Persona Behavior
--->
+- **Worst intentional**: inflates credits to claim work they didn't do; games the verified-credit graph to manufacture reputation; uses the platform to find collaborators then takes the deal off-platform to dodge fees.
+- **Worst accidental**: signs a split sheet they don't understand and discovers years later they gave away their publishing; uploads a stem containing an uncleared sample and exposes every collaborator downstream.
+
+---
+
+## Persona: Producer (producer / engineer — the session owner)
+
+> **The capture point.** Without this persona the provenance wedge has no mechanism — they are
+> the one who is in the room when the facts become true.
+
+| Field | Detail |
+|-------|--------|
+| **Name + Role** | Producer, mixing engineer, or tracking engineer who runs sessions. Owns the room (physical or remote), coordinates contributors, delivers the finished work. Often the de-facto project manager. |
+| **Primary Pain Point** | They are the person who *knows* who played what — and they have no tool that records it at the moment it's true. They reconstruct credits from memory months later, chasing people who have moved on, for a project they've mentally closed. |
+| **Current Workaround** | DAW session notes, a WhatsApp group, a Dropbox folder named `FINAL_v3_ACTUAL`. Split sheets as unsigned PDFs, or a verbal "we'll sort it out later" that never gets sorted. |
+| **Success Criteria** | Credits and splits captured as a byproduct of running the session — zero extra admin. Everyone confirms on the day. Measurable: split agreed before the session file closes, not after money appears. |
+| **Switching Trigger** | Getting dragged into a dispute over a split they facilitated but can't evidence. Or a client demanding delivery in a form they can't produce (proper metadata, signed splits, clearances). |
+| **Unique Constraint** | Their work happens inside a DAW, not a browser. Any capture flow requiring them to leave the session and go fill in a web form will not be used. Also: they are a **trust broker** — their attestation is worth more than a self-claim, which is precisely what makes counter-attestation valuable. |
+
+### Workflow
+1. Sets up a project; invites contributors
+2. Runs sessions — tracking, comping, revisions
+3. **The moment that matters**: prompts/confirms who did what and what the split is, while everyone is present
+4. Delivers with metadata intact; the record is complete on day one, not reconstructed on day 900
+
+### Anti-Persona Behavior
+- **Worst intentional**: assigns themselves a larger split than agreed and pushes it through while contributors aren't paying attention; withholds stems as leverage in a payment dispute.
+- **Worst accidental**: closes a project without capturing splits ("we'll do it later") — the exact failure the platform exists to prevent, committed by the persona best placed to prevent it. **The design must make the lazy path the correct path.**
+
+---
+
+## Persona: Operator (venue / studio / rehearsal space operator)
+
+> The supply side. Without this persona domains 16, 17 and 19 have no Role Matrix.
+
+| Field | Detail |
+|-------|--------|
+| **Name + Role** | Owns or books a venue, recording studio, or rehearsal space. Sells time and space rather than creative output. Often runs the business on the side of engineering or performing themselves. |
+| **Primary Pain Point** | Their calendar is the business, and it lives in three incompatible places — email enquiries, a paper diary or Google Calendar, and a phone. Double-bookings and no-shows cost real money; advancing a show means chasing riders and tech specs by email. |
+| **Current Workaround** | Email + Google Calendar + a spreadsheet + phone calls. Maybe Studiotime or Prism.fm for one slice. Deposits chased manually; settlement done with a calculator after the show. |
+| **Success Criteria** | Bookings, deposits, riders and settlement in one flow. Nobody arrives expecting a backline that doesn't exist. Measurable: fewer no-shows; advancing takes minutes; settlement is arithmetic the system already did. |
+| **Switching Trigger** | A costly double-booking or a show that failed on a preventable technical mismatch (band needed something the room never had). Or: enough musicians are already on WeJammin that being absent costs them bookings. |
+| **Unique Constraint** | **Their inventory is time and space, not goods or labour** — it is perishable (an unsold Tuesday is gone forever) and physically constrained (capacity, load-in, curfew, gear). They are also frequently *both* buyer and seller, and much of their work is on a phone at a loading dock, not at a desk. |
+
+### Workflow
+1. Lists the space with real specs (capacity, gear, stage plot, access, constraints)
+2. Receives enquiries → holds → confirms → takes deposit
+3. Advances the show/session — riders, tech specs, schedule, crew
+4. Runs it; settles afterward
+5. Reputation accrues from shows that went smoothly
+
+### Anti-Persona Behavior
+- **Worst intentional**: misrepresents the room's specs or capacity to win bookings; keeps deposits on cancellations outside the stated policy.
+- **Worst accidental**: forgets to release a hold, blocking a slot they'd happily have sold; publishes a stale gear list, so a band arrives to a room that can't run their show.
+
+---
+
+## Persona: Fan
+
+> First-class **user**, not a CRM record (D-11). Secondary in priority, primary in volume —
+> fans outnumber professionals by orders of magnitude, which is a load and moderation fact
+> before it is a product one.
+
+| Field | Detail |
+|-------|--------|
+| **Name + Role** | Follows artists, discovers and attends shows, buys music and merch directly. Not a music professional; may be a hobbyist musician too (the boundary is porous). |
+| **Primary Pain Point** | Finds out an artist they love played their city — after the show. Discovery is algorithmic and passive; there's no reliable line from "I care about this artist" to "I knew they were playing." |
+| **Current Workaround** | Bandsintown/Songkick alerts, Instagram stories, a friend mentioning it, Spotify's concert tab. Merch from whichever link is in bio. |
+| **Success Criteria** | Never misses a show by an artist they follow. Money reaches the artist rather than a reseller. Measurable: alert → attendance conversion. |
+| **Switching Trigger** | Missing a show they'd have gone to. Or an artist they follow directing them here for tickets/merch. |
+| **Unique Constraint** | **The only persona with no professional stake** — they will not tolerate professional-tool complexity, will not read a rider, and will never file a split sheet. Their surface must be a different product wearing the same brand. They are also the population that brings statutory duties that scale with reach (age assurance, DSA thresholds) and a moderation profile professionals don't have. |
+
+### Workflow
+1. Follows an artist (or imports who they already listen to)
+2. Gets told when that artist does something they can act on — a show near them, a release, merch
+3. Acts: buys a ticket, buys merch, attends
+4. Attendance/purchase history deepens what the platform can tell them next
+
+### Anti-Persona Behavior
+- **Worst intentional**: bulk-buys tickets to scalp; harasses artists through open contact surfaces; abuses refunds.
+- **Worst accidental**: buys a ticket for the wrong city/date; is a minor and hits an age-gated purchase or an adult venue.
+
+---
+
+## Coverage Check — do 4 personas cover 24 domains?
+
+| Domains | Primary persona | Covered? |
+|---|---|---|
+| 01 Identity · 02 Credits · 03 Community · 04 Opportunities | Musician | ✅ |
+| 05 Services · 07 Projects · 08 Jamming | Musician + Producer | ✅ |
+| 06 Education | Musician (both sides — teacher and student are both Musicians) | ✅ |
+| 09 Rights · 10 Royalties · 11 Licensing · 12 Release | Musician + Producer | ✅ |
+| 13 Gear · 14 Digital Goods · 15 Gear Registry | Musician (as buyer **and** seller) | ⚠️ see Q-01 |
+| 16 Venues/Studios · 17 Live Booking · 18 Show Production · 19 Ticketing | Operator (+ Musician as counterparty) | ✅ |
+| 20 Fanbase · 21 Promotion | Fan + Musician | ✅ |
+| 22 Analytics · 23 Career/Finance | Musician | ✅ |
+| 24 Trust & Safety | All four + Admin | ⚠️ see Q-02 |
 
 ## Open Questions
 
 | # | Question | Owner | Deferred To |
 |---|----------|-------|-------------|
-| Q-01 | Which 2–4 roles are the PRIMARY personas? 40+ candidates is a roster, not a persona set. | User | `/ideate-discover` |
-| Q-02 | Is the beachhead the multi-hyphenate working musician, the band-as-entity, or the venue/studio operator? | User | `/ideate-discover` |
-| Q-03 | Is `fan` a primary persona with full 6-field specification, or a secondary persona? D-11 makes fans users; it does not make them a *primary* persona. | User | `/ideate-discover` |
-| Q-04 | How is the multi-hyphenate modelled — one account with many roles, or many contexts under one identity? | Agent | `/create-prd-architecture` |
+| Q-01 | Domains 13/14/15 are served by "Musician acting as seller". Is a **professional dealer/plugin-developer** a distinct persona, or a Musician in a selling context? The owner chose 4 over 5 — revisit if the Gear/Digital Role Matrices come out thin during drilling. | User | `/ideate-validate` |
+| Q-02 | **Admin/Moderator** is not a persona but domain 24 needs one, and every domain has an admin layer per `vertical-slices.md`. Is Admin a persona, or an internal operator role outside the persona set? | User | `/create-prd` |
+| Q-03 | Teacher and Student are both "Musician" — does domain 06 need them split, or does the Role Lens handle it contextually? | Agent | drilling, domain 06 |
+| Q-04 | How is the multi-hyphenate modelled — one account with many roles, or many contexts under one identity? Personas assume the former. | Agent | `/create-prd-architecture` |

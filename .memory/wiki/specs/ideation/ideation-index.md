@@ -7,9 +7,11 @@
 
 ## Project Overview
 
-**Problem**: _[PENDING — discover shard]_
+**Problem**: A music career is assembled from a dozen disconnected tools that share no identity, no history, and no record of who did what — so the work gets done, but the proof of it evaporates, and splits and credits get reconstructed years later from memory, at the exact moment they become contested and valuable.
 
-**One-liner**: _[PENDING — discover shard]_
+**One-liner**: The platform where music work happens — and where the record of it survives.
+
+**Thesis** (D-18): **Provenance is the wedge; consolidation is the platform.** Consolidation wins the user (the daily reason to show up); provenance keeps them (the reason they can't leave). The two are causally linked — being where the work happens is the *precondition* for capturing the split at source. See [meta/problem-statement.md](meta/problem-statement.md).
 
 ## Expansion Mode
 
@@ -49,23 +51,30 @@
 
 ## Progress Summary
 
+> All counts read from disk, not from agent self-reports.
+
 | Metric | Value |
 |--------|-------|
 | Total surfaces | 1 (web) |
-| Total domains | **24** |
-| Candidate sub-domains (unclassified) | **423** |
-| Total leaf features | 0 — _classification runs in `/ideate-discover`_ |
-| Max depth reached | 1 |
-| Nodes at [SURFACE] | 24 |
-| Nodes at [DEEP] | 0 |
+| Total domains | **24** — all `[BREADTH]` |
+| Total sub-domains | **165** |
+| Total leaf features | **734** |
+| Total ideation files | **1,118** (190 indexes · 190 CX · 734 features · meta · super-index) |
+| Max depth reached | 3 |
+| Domains at [BREADTH] | 24 / 24 |
+| Nodes at [DEEP] | 0 — _Step 5 deepening is gated on MoSCoW_ |
 | Nodes at [EXHAUSTED] | 0 |
-| Cross-cut mechanisms identified | 32 |
-| CX interaction pairs confirmed | 0 — _CX Decision Gate runs in `/ideate-discover`_ |
-| Not-product concerns routed to `/create-prd` | 24 |
-| Candidates demoted from domain status | 21 |
-| Raw concepts swept | 1,545 |
-| Deep Think hypotheses confirmed | 24 domains survived 3× adversarial verification |
-| Deep Think hypotheses rejected | 0 majority-refuted — **see D-17 caveat** |
+| Role Lens coverage | **734 / 734** feature files (2,936 rows = 4 personas × 734, verified) |
+| Invented personas | **0** — only Musician / Producer / Operator / Fan |
+| Placeholder leaks | **0** |
+| Deep Think nodes added beyond the sweep's candidates | **166** |
+| Duplicate candidates merged during classification | **118** |
+| Cross-cut mechanisms surfaced (incl. domain-level) | 175 — _pending consolidation into `ideation-cx.md`_ |
+| Not-product concerns routed to `/create-prd` | 142 |
+| CX interaction pairs confirmed | 0 — _Step 6 synthesis is gated on MoSCoW_ |
+| Candidates demoted from domain status (extract) | 21 |
+| Raw concepts swept (extract) | 1,545 |
+| Independent audit verdicts | 13 clean · 11 minor · **0 major** |
 
 ## Document Map
 
@@ -93,36 +102,37 @@
 
 #### Top-Level Domains
 
-> **24 domains, ratified 2026-07-16 (D-16).** All `[SURFACE]` — identified with rationale and
-> candidate children, not yet drilled. `/ideate-discover` classifies each candidate child
-> through the Node Classification Gate and drills to `[DEEP]`/`[EXHAUSTED]`.
+> **24 domains, ratified 2026-07-16 (D-16).** All at `[BREADTH]` as of 2026-07-16 —
+> children classified through the Node Classification Gate and written to disk.
+> **Counts below are read from disk, not from agent self-reports.**
+> Depth (Step 5 deepening) is allocated by MoSCoW — see `## MoSCoW Summary`.
 
 | # | Domain | Path | Status | Children | Depth | Novelty / Priority |
 |---|--------|------|--------|----------|-------|--------------------|
-| 01 | Identity, Profiles & Organizations | [01-identity-profiles-organizations/](./01-identity-profiles-organizations/) | `[SURFACE]` | 12 candidates | 1 | industry-standard / core |
-| 02 | Credits & Attribution | [02-credits-attribution/](./02-credits-attribution/) | `[SURFACE]` | 11 candidates | 1 | whitespace / core |
-| 03 | Community & Networking | [03-community-networking/](./03-community-networking/) | `[SURFACE]` | 16 candidates | 1 | in-source / core |
-| 04 | Opportunities & Casting | [04-opportunities-casting/](./04-opportunities-casting/) | `[SURFACE]` | 14 candidates | 1 | industry-standard / important |
-| 05 | Services Marketplace | [05-services-marketplace/](./05-services-marketplace/) | `[SURFACE]` | 25 candidates | 1 | in-source / core |
-| 06 | Education, Lessons & Mentorship | [06-education-lessons-mentorship/](./06-education-lessons-mentorship/) | `[SURFACE]` | 9 candidates | 1 | industry-standard / important |
-| 07 | Music Projects & Collaboration | [07-music-projects-collaboration/](./07-music-projects-collaboration/) | `[SURFACE]` | 35 candidates | 1 | in-source / core |
-| 08 | Real-Time Jamming & Remote Sessions | [08-realtime-jamming-remote-sessions/](./08-realtime-jamming-remote-sessions/) | `[SURFACE]` | 6 candidates | 1 | industry-standard / important |
-| 09 | Rights & Ownership | [09-rights-ownership/](./09-rights-ownership/) | `[SURFACE]` | 23 candidates | 1 | industry-standard / core |
-| 10 | Royalties & Collections | [10-royalties-collections/](./10-royalties-collections/) | `[SURFACE]` | 18 candidates | 1 | industry-standard / core |
-| 11 | Music Licensing | [11-music-licensing/](./11-music-licensing/) | `[SURFACE]` | 18 candidates | 1 | industry-standard / core |
-| 12 | Release & Distribution | [12-release-distribution/](./12-release-distribution/) | `[SURFACE]` | 8 candidates | 1 | industry-standard / core |
-| 13 | Gear Marketplace (Physical Goods) | [13-gear-marketplace/](./13-gear-marketplace/) | `[SURFACE]` | 28 candidates | 1 | user-directive / core |
-| 14 | Digital Goods & Plugin Marketplace | [14-digital-goods-marketplace/](./14-digital-goods-marketplace/) | `[SURFACE]` | 24 candidates | 1 | user-directive / core |
-| 15 | Gear Registry & Ownership | [15-gear-registry-ownership/](./15-gear-registry-ownership/) | `[SURFACE]` | 10 candidates | 1 | whitespace / important |
-| 16 | Venues, Studios & Spaces | [16-venues-studios-spaces/](./16-venues-studios-spaces/) | `[SURFACE]` | 22 candidates | 1 | user-directive / core |
-| 17 | Live Booking & Settlement | [17-live-booking-settlement/](./17-live-booking-settlement/) | `[SURFACE]` | 18 candidates | 1 | industry-standard / core |
-| 18 | Show Production & Touring | [18-show-production-touring/](./18-show-production-touring/) | `[SURFACE]` | 33 candidates | 1 | in-source / core |
-| 19 | Ticketing & Box Office | [19-ticketing-box-office/](./19-ticketing-box-office/) | `[SURFACE]` | 11 candidates | 1 | user-directive / important |
-| 20 | Fanbase & Direct-to-Fan | [20-fanbase-direct-to-fan/](./20-fanbase-direct-to-fan/) | `[SURFACE]` | 17 candidates | 1 | industry-standard / important |
-| 21 | Promotion & Marketing | [21-promotion-marketing/](./21-promotion-marketing/) | `[SURFACE]` | 12 candidates | 1 | industry-standard / important |
-| 22 | Analytics & Market Intelligence | [22-analytics-market-intelligence/](./22-analytics-market-intelligence/) | `[SURFACE]` | 8 candidates | 1 | in-source / important |
-| 23 | Career, Finance & Business Management | [23-career-finance-business/](./23-career-finance-business/) | `[SURFACE]` | 16 candidates | 1 | in-source / important |
-| 24 | Trust, Safety & Disputes | [24-trust-safety-disputes/](./24-trust-safety-disputes/) | `[SURFACE]` | 29 candidates | 1 | industry-standard / core |
+| 01 | Identity, Profiles & Organizations | [01-identity-profiles-organizations/](./01-identity-profiles-organizations/) | `[BREADTH]` | 6 sub-domains + 24 features | 3 | industry-standard / core |
+| 02 | Credits & Attribution | [02-credits-attribution/](./02-credits-attribution/) | `[BREADTH]` | 4 sub-domains + 23 features | 3 | whitespace / core |
+| 03 | Community & Networking | [03-community-networking/](./03-community-networking/) | `[BREADTH]` | 7 sub-domains + 29 features | 3 | in-source / core |
+| 04 | Opportunities & Casting | [04-opportunities-casting/](./04-opportunities-casting/) | `[BREADTH]` | 5 sub-domains + 23 features | 3 | industry-standard / important |
+| 05 | Services Marketplace | [05-services-marketplace/](./05-services-marketplace/) | `[BREADTH]` | 7 sub-domains + 32 features | 3 | in-source / core |
+| 06 | Education, Lessons & Mentorship | [06-education-lessons-mentorship/](./06-education-lessons-mentorship/) | `[BREADTH]` | 4 sub-domains + 23 features | 3 | industry-standard / important |
+| 07 | Music Projects & Collaboration | [07-music-projects-collaboration/](./07-music-projects-collaboration/) | `[BREADTH]` | 9 sub-domains + 37 features | 3 | in-source / core |
+| 08 | Real-Time Jamming & Remote Sessions | [08-realtime-jamming-remote-sessions/](./08-realtime-jamming-remote-sessions/) | `[BREADTH]` | 5 sub-domains + 20 features | 3 | industry-standard / important |
+| 09 | Rights & Ownership | [09-rights-ownership/](./09-rights-ownership/) | `[BREADTH]` | 6 sub-domains + 26 features | 3 | industry-standard / core |
+| 10 | Royalties & Collections | [10-royalties-collections/](./10-royalties-collections/) | `[BREADTH]` | 5 sub-domains + 28 features | 3 | industry-standard / core |
+| 11 | Music Licensing | [11-music-licensing/](./11-music-licensing/) | `[BREADTH]` | 8 sub-domains + 34 features | 3 | industry-standard / core |
+| 12 | Release & Distribution | [12-release-distribution/](./12-release-distribution/) | `[BREADTH]` | 6 sub-domains + 25 features | 3 | industry-standard / core |
+| 13 | Gear Marketplace (Physical Goods) | [13-gear-marketplace/](./13-gear-marketplace/) | `[BREADTH]` | 10 sub-domains + 43 features | 3 | user-directive / core |
+| 14 | Digital Goods & Plugin Marketplace | [14-digital-goods-marketplace/](./14-digital-goods-marketplace/) | `[BREADTH]` | 10 sub-domains + 42 features | 3 | user-directive / core |
+| 15 | Gear Registry & Ownership | [15-gear-registry-ownership/](./15-gear-registry-ownership/) | `[BREADTH]` | 5 sub-domains + 24 features | 3 | whitespace / important |
+| 16 | Venues, Studios & Spaces | [16-venues-studios-spaces/](./16-venues-studios-spaces/) | `[BREADTH]` | 5 sub-domains + 35 features | 3 | user-directive / core |
+| 17 | Live Booking & Settlement | [17-live-booking-settlement/](./17-live-booking-settlement/) | `[BREADTH]` | 8 sub-domains + 37 features | 3 | industry-standard / core |
+| 18 | Show Production & Touring | [18-show-production-touring/](./18-show-production-touring/) | `[BREADTH]` | 11 sub-domains + 46 features | 3 | in-source / core |
+| 19 | Ticketing & Box Office | [19-ticketing-box-office/](./19-ticketing-box-office/) | `[BREADTH]` | 9 sub-domains + 38 features | 3 | user-directive / important |
+| 20 | Fanbase & Direct-to-Fan | [20-fanbase-direct-to-fan/](./20-fanbase-direct-to-fan/) | `[BREADTH]` | 6 sub-domains + 27 features | 3 | industry-standard / important |
+| 21 | Promotion & Marketing | [21-promotion-marketing/](./21-promotion-marketing/) | `[BREADTH]` | 6 sub-domains + 27 features | 3 | industry-standard / important |
+| 22 | Analytics & Market Intelligence | [22-analytics-market-intelligence/](./22-analytics-market-intelligence/) | `[BREADTH]` | 8 sub-domains + 26 features | 3 | in-source / important |
+| 23 | Career, Finance & Business Management | [23-career-finance-business/](./23-career-finance-business/) | `[BREADTH]` | 7 sub-domains + 29 features | 3 | in-source / important |
+| 24 | Trust, Safety & Disputes | [24-trust-safety-disputes/](./24-trust-safety-disputes/) | `[BREADTH]` | 8 sub-domains + 36 features | 3 | industry-standard / core |
 
 > **Full per-domain rationale, cross-cuts, not-product routing, and demotions**:
 > [docs/wejammin-domain-map-proposal.md](../../../../docs/wejammin-domain-map-proposal.md)
@@ -150,21 +160,67 @@ Numbered decisions with source references.
 | D-15 | **Real-Time Jamming (08) retained as a domain, narrowed.** Audio transport extracted into the `Real-Time Rooms, Presence & Audio Transport` cross-cut (serves Education, Services, Projects, Community) — this concedes the strongest adversarial objection. What remains domain-owned is unowned elsewhere: the ~25–30 ms desync ceiling caps playable radius at a few hundred miles, making latency-aware collaborator matching a real feature. | User decision, 2026-07-16, domain-map ratification | 08 |
 | D-16 | **Domain map RATIFIED**: 24 domains, 423 candidate sub-domains, 32 cross-cuts, 24 not-product concerns routed to `/create-prd`, 21 candidates demoted. Full proposal with per-domain rationale: [docs/wejammin-domain-map-proposal.md](../../../../docs/wejammin-domain-map-proposal.md). Method: 14-lens sweep → 1,545 raw concepts → consolidation → 3× adversarial verification per candidate → synthesis (88 agents). | User ratification, 2026-07-16 | Global |
 | D-17 | **Verification caveat recorded**: 0 of 24 candidates were majority-refuted. This is a caution flag on the domain COUNT, not proof of correctness — verifiers may have been lenient. Mitigating evidence: adversaries did materially alter the map (21 demotions; boundary narrowing on 01, 03, 08). `/audit-ambiguity ideation` should treat domain-count inflation as a live hypothesis. | Agent, method transparency, 2026-07-16 | Global |
+| D-18 | **THESIS: Provenance is the wedge; consolidation is the platform.** Consolidation wins the user (daily reason to show up); provenance keeps them (reason they can't leave). Rejected framing these as alternatives — they are causally linked: being where the work happens is the *precondition* for capturing splits at source. Provenance alone = the Jaxsta/Muso.AI failure (no daily hook). Consolidation alone = copyable, six incumbent fights, nothing compounds. | User decision, 2026-07-16, `/ideate-discover` | Global |
+| D-19 | **4 primary personas**: `Musician` (multi-hyphenate — feels fragmentation worst), `Producer` (session owner — the provenance capture point), `Operator` (venue/studio — the supply side), `Fan` (per D-11). Band is an **entity** (domain 01), not a persona. Coverage verified across all 24 domains; two gaps flagged as open questions (dealer persona for 13/14/15; Admin for 24). | User decision, 2026-07-16, `/ideate-discover` | All |
+| D-20 | **All 195 Must-haves retained; v1 beachhead sequencing deferred to `/plan-phase`.** Owner declined the session/gear/live spine options. Agent flagged: `/plan-phase` orders by dependency, not strategy — it will not select a beachhead, so this decision is deferred rather than resolved. `/audit-ambiguity ideation` is likely to flag a 195-Must ledger as carrying no priority signal. Options retained in the MoSCoW Summary for re-decision. | User decision, 2026-07-16, `/ideate-discover` | Global |
+| D-21 | **Breadth pass complete**: 165 sub-domains + 734 leaf features written across 24 domains (1,118 files). Deep Think added **166 nodes** the sweep's candidate list missed; **118 duplicate candidates merged**; 142 not-product concerns routed to `/create-prd`; 175 cross-cut mechanisms surfaced pending consolidation. Independent disk audit: 13 clean / 11 minor / **0 major**; Role Lens 734/734 with 0 invented personas; 0 placeholder leaks. | `/ideate-discover` Step 3, verified against disk 2026-07-16 | All |
+| D-22 | **Systemic gap found by audit and fixed**: the drill step never wrote back to the parent `ideation-index.md`, leaving all 24 domains reported as `[SURFACE]`/"N candidates"/Depth 1 while disk showed `[BREADTH]`/real children/Depth 3. Auditors correctly diagnosed this as a workflow gap rather than per-driller negligence. Parent index reconciled **from disk**, not from agent self-reports. | Audit finding, 2026-07-16 | Global |
 
 ## MoSCoW Summary
 
-> Features reference their fractal path. Path format: `{domain}.{sub-domain}.{feature}`
+> **Full ledger with all 734 features, paths and rationale**: [moscow-ledger.md](./moscow-ledger.md)
+> Every row links to a verified file on disk (734/734 resolved, 0 broken).
 
-_[PENDING — discover shard]_
+| Priority | Count | Share |
+|---|---|---|
+| **MUST** | **195** | 26.6% |
+| **SHOULD** | 285 | 38.8% |
+| **COULD** | 201 | 27.4% |
+| **WON'T (now)** | 53 | 7.2% |
+| **TOTAL** | **734** | 100% |
 
-### Must Have
-_pending_
+### Must Have — by domain
 
-### Should Have
-_pending_
+| Domain | Musts | | Domain | Musts |
+|---|---|---|---|---|
+| 19 Ticketing & Box Office | 16 | | 20 Fanbase & D2F | 7 |
+| 13 Gear Marketplace | 15 | | 09 Rights & Ownership | 7 |
+| 16 Venues, Studios & Spaces | 15 | | 22 Analytics & Market Intel | 6 |
+| 17 Live Booking & Settlement | 12 | | 18 Show Production & Touring | 5 |
+| 12 Release & Distribution | 11 | | 03 Community & Networking | 4 |
+| 01 Identity & Organizations | 10 | | 08 Real-Time Jamming | 4 |
+| 05 Services Marketplace | 10 | | 21 Promotion & Marketing | 2 |
+| 14 Digital Goods & Plugins | 10 | | 15 Gear Registry | 1 |
+| 02 Credits & Attribution | 9 | | 23 Career, Finance & Business | 1 |
+| 04 Opportunities & Casting | 9 | | | |
+| 07 Music Projects & Collab | 9 | | | |
+| 06 Education & Mentorship | 8 | | | |
+| 10 Royalties & Collections | 8 | | | |
+| 11 Music Licensing | 8 | | | |
+| 24 Trust, Safety & Disputes | 8 | | | |
 
-### Could Have
-_pending_
+> **⚠️ Sequencing risk — recorded, owner-accepted (D-20).** 195 Musts spanning all 24 domains is
+> not a shippable v1 and carries no priority signal. The proposals were made per-domain by
+> agents with no view of the whole, so each optimised locally; none is wrong in isolation.
+> The owner deferred sequencing to `/plan-phase`.
+>
+> **What `/plan-phase` will and will not do**: it orders by **dependency**, not by strategy. It
+> will not choose a beachhead — it will build the dependency graph and start at the bottom
+> (likely Identity + the Payments cross-cut). The beachhead decision is deferred, not resolved.
+>
+> **Beachhead options presented and declined** (retained for `/plan-phase` and re-decision):
+> - **Session spine** (01+05+07+02+09, ~45 musts) — the only option where acquisition and the
+>   provenance wedge share one funnel: hire → session → split captured at source.
+> - **Gear spine** (01+13+15, ~26 musts) — highest traffic, first directive; but buying gear
+>   never produces a split sheet, so the wedge stays theoretical.
+> - **Live spine** (01+16+17+18+19, ~48 musts) — Operator persona, event directive; gigs produce
+>   credits but rarely splits.
 
-### Won't Have (Now)
-_pending_
+### Should Have — 285
+See [moscow-ledger.md](./moscow-ledger.md#should-285).
+
+### Could Have — 201
+See [moscow-ledger.md](./moscow-ledger.md#could-201).
+
+### Won't Have (Now) — 53
+See [moscow-ledger.md](./moscow-ledger.md#wont-53).
