@@ -2,10 +2,10 @@
 
 ## Summary
 
-- **Total decisions**: 6
-- **Unique decision titles**: 6
+- **Total decisions**: 8
+- **Unique decision titles**: 8
 
-> Full ideation decision log (D-01..D-17) lives in
+> Full ideation decision log (D-01..D-27) lives in
 > `.memory/wiki/specs/ideation/ideation-index.md`. This file records the decisions with
 > **downstream ripple effects** beyond ideation.
 
@@ -53,3 +53,17 @@
 - **Decision**: **Option 2 — removed.** Owner: "that's from an old plan we don't even need that entry in the documents; we are going to move forward with the stack we use."
 - **Downstream**: `meta/constraints.md` states only the locked stack (Astro islands, Cloudflare Pages + Workers, Supabase) plus what remains open for `/create-prd` (auth provider, media storage, styling, payments). **Supabase is the only element carried forward from the predecessor** — Firebase Auth, App Hosting and its deploy pipeline have no equivalent and must not be assumed by `/create-prd-stack`.
 - **Reversibility**: High.
+
+### DEC-007: 08 Real-Time Jamming is the only genuine domain-merge candidate (2026-07-18)
+- **Problem**: Step 6 flagged 101 boundary problems across the 24-domain map. Are any real merge candidates, or is the high cross-domain connectivity (76%) evidence the map is over-split (D-17)?
+- **Options considered**: (1) Keep 24 domains — connectivity is structural. (2) Merge the high-tension seams. (3) Case-by-case.
+- **Decision**: **Keep 24 domains.** ~85 of 101 boundary problems are legitimate seam-work between near-mirror domains; the universal hubs were lifted into the 25-mechanism cross-cut registry rather than left as domain edges. **Only `08 Real-Time Jamming` → `07 Music Projects` is a genuine merge candidate** (Overdub machinery could dissolve 08 into 07; rejected only narrowly). Escalated to `/create-prd` for explicit keep-or-fold.
+- **Downstream**: High-tension seams (17/18 tour object, 17/19 ticket count, 13/15 serial unit, 14/20 delivery, 04/05 demand/supply anchors) get a **named shared owner or an extracted cross-cut**, NOT a merge. `/create-prd` must decide 08's fate before architecture locks.
+- **Reversibility**: Medium — merging 08 later is cheaper than splitting a merged domain.
+
+### DEC-008: The identifier-binding seam is an unowned architectural gap (2026-07-18)
+- **Problem**: Step 6 surfaced that splits and titles attach to a work in Services (domain 05) — often years before an ISRC/ISWC identifier exists — but Royalties (domain 10) collects against those identifiers. No mechanism or domain owns the step that binds the early split-record to the later identifier.
+- **Options considered**: (implicit) leave it to emerge in BE spec vs flag it now.
+- **Decision**: **Flag and persist now.** Recorded in `meta/cross-cut-emergent-capabilities.md` and D-27. This is the highest-risk of 52 emergent cross-cuts / 76 emergent features found in Step 6.
+- **Downstream**: `/create-prd` and `/write-be-spec` must assign an owner to the binding step; a schema that assumes work↔identifier was always linked will be wrong. Intersects the provenance thesis (D-18) directly — the split captured at creation must survive until the identifier exists to collect against it.
+- **Reversibility**: Low if missed (retrofitting the binding after royalty flows exist is expensive); High if handled at architecture time.

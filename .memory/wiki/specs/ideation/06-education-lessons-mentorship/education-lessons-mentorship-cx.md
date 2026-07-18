@@ -2,8 +2,8 @@
 
 > **Level**: domain
 > **Scope**: Connections between children of [Education, Lessons & Mentorship](./education-lessons-mentorship-index.md)
-> **Status**: [BREADTH] — 11 children classified; 12 intra-domain cross-cuts mapped.
-> **Last updated**: 2026-07-16
+> **Status**: [DEEP] — 11 children classified; 14 intra-domain cross-cuts mapped; synthesis resolved against Step 5 drilling of 06.01 (now `[DEEP]`) and 06.02.01.
+> **Last updated**: 2026-07-18
 
 ## Cross-Cut Map
 
@@ -21,6 +21,8 @@
 | CX-10 | [06.06 Mentorship Programmes](./06.06-mentorship-programmes.md) | [06.02 Teacher Discovery, Profiles & Trials](./06.02-teacher-discovery-profiles-trials/) | Mentor credibility is their **career**, evidenced by the same credit block | Musician, Producer | Medium | 06.06's cross-cut notes; the pairing model may reuse 06.02.03's criteria, though scarcity makes search the wrong metaphor |
 | CX-11 | [06.05 Group Lessons](./06.05-group-lessons-workshops-masterclasses.md) | [06.04 Course Marketplace & Authoring](./06.04-course-marketplace-authoring/) | A **recorded masterclass is a course** — the bridge that doubles the format's economics | Musician, Producer | Medium | 06.05 Q-03; unresolved but structurally obvious |
 | CX-12 | [06.09 Exam Board Alignment](./06.09-exam-board-alignment.md) | [06.02 Teacher Discovery, Profiles & Trials](./06.02-teacher-discovery-profiles-trials/) | "Prepares for ABRSM" is a high-intent filter — but does **not** solve the level-taxonomy problem | Musician (both stances) | Medium | 06.09 DT-02 (boards are not commensurable) + 06.02.03 DT-02 (level is not a scalar) |
+| CX-13 | [06.02 Teacher Discovery, Profiles & Trials](./06.02-teacher-discovery-profiles-trials/) | [06.10 Academy & Multi-Teacher Operations](./06.10-academy-multi-teacher-operations.md) | The academy **curates a roster and issues a revocable vouch** — it never unpublishes a person's tuition facet | Musician (both stances), Operator | High | 06.02.01 DT-07/D-10 — an academy holding a departing teacher's public presence hostage is a certainty, not a risk, in a minors-heavy market with high churn |
+| CX-14 | [06.01 Lesson Booking, Packages & Delivery](./06.01-lesson-booking-packages-delivery/) | [06.05 Group Lessons, Workshops & Masterclasses](./06.05-group-lessons-workshops-masterclasses.md) | A group occurrence occupies **one teacher slot at capacity > 1** with **per-seat tenancy** — but 06.01's 1:1 cancellation policy is **not** reusable | Musician (both stances), Operator | High | 06.01.01 (per-seat tenancy against a shared occurrence) + 06.01.03 (1:1 notice window is meaningless for a class that runs regardless) |
 
 > **Confidence levels:** High (confirmed with evidence), Medium (strong signal, needs validation), Low (hypothesis)
 >
@@ -55,7 +57,7 @@ others: the session record, CX-02; the practice log, `06.03-...-cx.md#CX-01`).
 2. **Trigger chain**: Trial delivered → conversion offered in-room → series created + pack purchased + trial fee credited. Sync, and it must be **one action**: a conversion requiring the student to leave the room and complete a purchase flow will lose most of them.
 3. **Permission intersection**: A minor's pool is vetted-only pre-ranking (06.02.03 D-03), so every trial reachable from search is already gated, and conversion inherits the gate.
 4. **Notification fan-out**: Conversion notifies the teacher; the series populates both calendars.
-5. **State transition conflict**: The converted slot must be **held during the trial** — otherwise the student converts to a Tuesday 5pm someone else booked while they were in the lesson. Not currently specified; flagged for Step 5.
+5. **State transition conflict**: The converted slot must be **held during the trial** — otherwise the student converts to a Tuesday 5pm someone else booked while they were in the lesson. **Step 5 resolves the boundary**: a trial materializes an occurrence but **never claims tenancy** — the slot stays `open` and conversion is a **separate claim** (06.01.01 → 06.02.04). The race therefore survives by design: the held slot is the trial occurrence's window only, and the standing-slot tenancy is created at the conversion action, so two warm students who trialled the same Tuesday can still collide. First-to-convert wins the tenancy; the loser is re-offered adjacent slots. This is the atomic-hold requirement 06.01.01 places on the Scheduling cross-cut.
 
 ---
 
@@ -142,10 +144,15 @@ courses and the domain discards its only real answer to YouTube.
 ### CX-05: Academy ↔ Lesson Booking
 
 **Relationship**: The academy layer **bounds** 06.01 in four places: term calendar (bounds published
-availability), house rate card (bounds pricing), floor cancellation policy (bounds what teachers can
-undercut), and **academy-scoped credit packs** — which is how 06.01.02 DT-03's portable-credit problem
-resolves without making the platform a bank. The seam that carries the ethics: **the student belongs to
-the academy; the identity belongs to the teacher** (06.10 D-03).
+availability **and the materialization horizon** — the term boundary is the only point at which a
+recurring series may end, via the **re-enrolment checkpoint**, 06.01.01 D-05/DT-06), house rate card
+(bounds pricing), floor cancellation policy (bounds what teachers can undercut — Step 5 resolves its
+ambiguous direction: it is a **ceiling on harshness, not a mandate**; teachers may always be more
+generous, 06.01.03 → 06.10 D-06), and **academy-scoped credit packs** — which is how 06.01.02 DT-03's
+portable-credit problem resolves without making the platform a bank. A fifth binding surfaced in Step 5:
+the **no-fault closure cascade** — closing the building (06.10 D-11) forces the same-day remedy on every
+in-flight series with no notice period, because the room is gone. The seam that carries the ethics:
+**the student belongs to the academy; the identity belongs to the teacher** (06.10 D-03).
 
 **Role scoping**:
 - **Operator**: sees credit liability across the school — the number that matters when a teacher leaves mid-pack, and when a school closes (06.10 Q-03)
@@ -295,6 +302,62 @@ exam-board data fixes that.
 **Role scoping**: `[PENDING]`.
 
 **Synthesis questions**: Deferred — Medium confidence.
+
+---
+
+### CX-13: Teacher Discovery ↔ Academy (roster, vouch, and the un-unpublishable facet)
+
+**Relationship**: The academy's relationship to a teacher's **public tuition profile** is deliberately
+narrow, and Step 5 (06.02.01 DT-07/D-10) drew a line the early draft had wrong. An academy **curates its
+roster** and **issues a revocable vouch** — an Operator-staked attestation that renders inside the same
+credential block as domain-02 credits. What the academy **cannot** do is unpublish, hide, or 404 the
+person's tuition facet. The reason is a certainty rather than a risk: in a minors-heavy market with high
+teacher churn, an academy that could unpublish a departing teacher's page would hold their livelihood
+hostage — the exact `meta/personas.md` failure ("nothing accumulates, every new client requires
+re-proving who they are") reproduced inside our own product. This is the same ethic as CX-05 (student
+belongs to the academy, identity to the teacher), viewed from the discovery surface instead of the
+booking ledger.
+
+**Role scoping**:
+- **Musician (as Teacher)**: their page, credits and reputation are theirs and survive leaving; the academy vouch appears while employed and **auto-retracts** on departure without touching the page
+- **Operator**: curates who is on the roster; the vouch is revocable and its revocation is a first-class, audited event (a mass vouch revocation is itself a Trust & Safety signal — see cross-domain 24)
+- **Musician (as Student) / Fan**: reads the vouch as one signal among credits, never as the whole page
+- **Producer**: not affected
+
+**Synthesis questions answered**:
+1. **Shared state conflict**: The **profile is the teacher's** (domain 01 identity), the **vouch is the academy's** (a revocable attestation). No merge — the academy writes only its own vouch object; it never mutates the page. This is why R-08 rejects academy-owned profiles outright.
+2. **Trigger chain**: Roster add → vouch issued → renders in the credential block. Departure (voluntary or via ban/vetting lapse) → vouch auto-retracts; the page **stays live**, resolving to the identity. Async retraction is acceptable for the vouch; the **safeguarding vetting** rendered in the same block is **not** async (an expired check gates immediately — CX-04 Q2).
+3. **Permission intersection**: The academy's Operator role (from the Roles & Delegated Authority cross-cut) scopes what it may vouch for; it grants no power over the identity page. A minor teacher's under-18 field is vetting-gated at set-time regardless of academy (06.02.01).
+4. **Notification fan-out**: Vouch issued/revoked notifies the teacher; a **mass** revocation escalates to Trust & Safety (same shape as domain-02 mass retraction).
+5. **State transition conflict**: A teacher departing mid-term while the academy revokes the vouch and the student still holds credits — three sub-systems race. Resolved by the invariant that **each owns its own object**: the page persists (01), the vouch retracts (06.10), the credits refund or transfer per D-06 (06.01.02). None can strand the others.
+
+---
+
+### CX-14: Lesson Booking ↔ Group Lessons (the shared slot, the un-shared policy)
+
+**Relationship**: 06.05 is a **sibling** of 06.01, not a child (R-02) — but they share the teacher's
+calendar, and Step 5 sharpened exactly what is and isn't shared. **Shared**: a group occurrence occupies
+**one teacher slot at capacity > 1**, and tenancy is tracked **per seat against a shared occurrence**,
+not per room — the slot is claimed while the group runs, but by no single student (06.01.01 → 06.05).
+**Not shared**: 06.01's 1:1 cancellation-and-credit policy is meaningless for a group. A cancelled group
+lesson loses **no** slot (the class runs regardless of one absentee), so the 1:1 notice window and the
+credit-burn model do not apply; 06.05 needs its own **viability-threshold** semantics instead (06.01.03
+→ 06.05). Flagging both halves so downstream spec writers neither collapse the two nor duplicate the slot
+primitive.
+
+**Role scoping**:
+- **Musician (as leader)**: publishes a group occurrence that consumes one calendar slot; earns per head, not per hour
+- **Musician (as participant)**: holds a seat, not a tenancy; an absence forfeits nothing a 1:1 no-show would
+- **Operator**: sees the group slot against room capacity (the strongest Operator fit — CX-07)
+- **Producer**: the masterclass format
+- **Fan**: not affected
+
+**Synthesis questions answered**:
+1. **Shared state conflict**: The **occurrence** is shared state owned by 06.01's calendar; the **seat roster** is 06.05's. 06.01 owns *when the slot is claimed*; 06.05 owns *how many seats and whether the group is viable*. No field is co-written.
+2. **Trigger chain**: Group published → one slot claimed at capacity > 1 → seats fill → viability evaluated → runs or refunds. The viability threshold is a semantic 06.01's credit ledger **cannot express** — the concrete reason 06.05 is a sibling, not a child (R-02).
+3. **Permission intersection**: Group safeguarding is **different in kind** from 1:1 (06.05 D-04) — an adult with a room of minors is a different risk profile, not a lesser one. The 1:1 booking-time and join-time gates (06.01.04 CX-07) do not simply carry over.
+4. **Notification fan-out**: Slot-level conflicts (a gig in domain 17 over the group's slot) fan out to the **whole roster**, not one student — a materially larger blast radius than a 1:1 cancellation.
+5. **State transition conflict**: A member dropping mid-term takes the group below viability while the slot is still claimed — the slot must **not** auto-release on a single drop (unlike a 1:1 cancellation which frees the slot). Unresolved viability-recovery rule flagged at 06.05 Q-02.
 
 ---
 

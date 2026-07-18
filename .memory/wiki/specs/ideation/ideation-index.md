@@ -71,9 +71,11 @@
 | Placeholder leaks | **0** |
 | Deep Think nodes added beyond the sweep's candidates | **166** |
 | Duplicate candidates merged during classification | **118** |
-| Cross-cut mechanisms surfaced (incl. domain-level) | 175 — _pending consolidation into `ideation-cx.md`_ |
+| Cross-cut mechanisms (consolidated registry) | **25** — in `ideation-cx.md` |
 | Not-product concerns routed to `/create-prd` | 142 |
-| CX interaction pairs confirmed | 0 — _Step 6 synthesis is gated on MoSCoW_ |
+| Cross-domain interaction pairs synthesized | **206** (184 full synthesis, 22 tracked) — Step 6 complete |
+| Domain CX files at [DEEP] | **24 / 24** |
+| Emergent cross-cuts / features (Step 6) | 52 / 76 — [meta/cross-cut-emergent-capabilities.md](meta/cross-cut-emergent-capabilities.md) |
 | Candidates demoted from domain status (extract) | 21 |
 | Raw concepts swept (extract) | 1,545 |
 | Independent audit verdicts | 13 clean · 11 minor · **0 major** |
@@ -86,10 +88,11 @@
 
 | Document | Path | Status |
 |----------|------|--------|
-| Problem Statement | [problem-statement.md](meta/problem-statement.md) | `[PENDING]` |
-| Personas | [personas.md](meta/personas.md) | `[PENDING]` |
-| Competitive Landscape | [competitive-landscape.md](meta/competitive-landscape.md) | `[PENDING]` |
-| Constraints | [constraints.md](meta/constraints.md) | `[PENDING]` |
+| Problem Statement | [problem-statement.md](meta/problem-statement.md) | `[DEEP]` |
+| Personas | [personas.md](meta/personas.md) | `[DEEP]` (4 primary) |
+| Competitive Landscape | [competitive-landscape.md](meta/competitive-landscape.md) | `[PARTIAL]` |
+| Constraints | [constraints.md](meta/constraints.md) | `[PARTIAL]` |
+| Cross-Cut Emergent Capabilities | [cross-cut-emergent-capabilities.md](meta/cross-cut-emergent-capabilities.md) | `[DEEP]` (Step 6) |
 
 ### Global Cross-Cuts
 
@@ -169,6 +172,9 @@ Numbered decisions with source references.
 | D-22 | **Systemic gap found by audit and fixed**: the drill step never wrote back to the parent `ideation-index.md`, leaving all 24 domains reported as `[SURFACE]`/"N candidates"/Depth 1 while disk showed `[BREADTH]`/real children/Depth 3. Auditors correctly diagnosed this as a workflow gap rather than per-driller negligence. Parent index reconciled **from disk**, not from agent self-reports. | Audit finding, 2026-07-16 | Global |
 | D-23 | **Step 5 deepening of all 195 Musts complete and verified.** Every Must feature taken from `[SURFACE]` to `[DEEP]` with full Behavior/Happy Path/Edge Cases/States/Deep Think, verified by 195 independent adversarial agents (no sampling), 0 real behavior-section PENDING leaks (precise scan), 24 domain index trees reconciled deterministically from disk (109 status cells). Executed across 4 workflow runs spanning 2 session-limit resets; each run's counts cross-checked against disk truth, never trusted from self-reports. Sub-domains stay `[BREADTH]` (mixed Must-[DEEP]/Should-[SURFACE]) per rollup rule. | `/ideate-discover` Step 5, 2026-07-17 | All |
 | D-24 | **Step 5 Should-deepening (Level 1) complete.** All 285 Should features taken from `[SURFACE]` to `[PARTIAL]` — Behavior, Happy Path, primary edge cases, States, Role Lens, ≥2 Deep Think hypotheses each. Structurally verified in code (0 missing sections, 0 invented personas, 0 thin files). Indexes reconciled deterministically (256 status cells). Coulds (201) and Won'ts (53) correctly remain `[SURFACE]` — out of Step 5 scope. **Step 5 is now fully complete**: 195 Must=[DEEP], 285 Should=[PARTIAL], all 24 domains=[BREADTH]. | `/ideate-discover` Step 5, 2026-07-18 | All |
+| D-25 | **Step 6 cross-cut synthesis complete.** From 4,818 harvested cross-cut notes: (a) a **25-mechanism cross-cut registry** consolidated from ~235 raw name-buckets; (b) all **24 domain CX files at `[DEEP]`** with intra-domain sub-domain synthesis (5 questions answered for high-confidence pairs); (c) **`ideation-cx.md` rebuilt** with **206 cross-domain pairs** (184 fully synthesized, 22 medium/low tracked), mechanism registry, and top-25 high-confidence synthesis. Executed in 2 workflow runs; domain 01 and the global assembly were redone after a transient safety-classifier block and an inline-data truncation, both caught by disk cross-check. | `/ideate-discover` Step 6, 2026-07-18 | All |
+| D-26 | **D-17 resolved — keep 24 domains.** Cross-domain connectivity is 211/276 pairs (76%) but judged **structural, not over-splitting**: ~85 of 101 flagged boundary problems are legitimate seam-work between near-mirror domains (the money/show/gear/credit clusters), the universal hubs were lifted into the mechanism registry rather than left as edges, and ~10 flags are explicit clean-seam counter-examples FOR the split. **One genuine merge candidate survives: `08 Real-Time Jamming` → `07 Music Projects`** (Overdub machinery; rejected only narrowly at 08.07 DT-03) — escalated to `/create-prd` for an explicit keep-or-fold. High-tension seams (17/18, 17/19, 13/15, 14/20, 04/05) resolve via a named shared owner or extracted cross-cut, not merger. | `/ideate-discover` Step 6 boundary analysis, 2026-07-18 | Global |
+| D-27 | **Emergent capabilities persisted** to [meta/cross-cut-emergent-capabilities.md](meta/cross-cut-emergent-capabilities.md): **52 new cross-cut mechanisms** and **76 new features** surfaced during synthesis that neither the sweep nor the breadth pass named. Highest-risk: the **identifier-binding seam** — splits/titles attach in Services (05) years before an ISRC/ISWC exists, but Royalties (10) collects against identifiers, and NO mechanism owns the binding step. Routed to `/create-prd` and `/write-be-spec`. | `/ideate-discover` Step 6, 2026-07-18 | 05, 10, Global |
 
 ## MoSCoW Summary
 
