@@ -1,7 +1,7 @@
 # Project Constraints — WeJammin
 
-> Status: `[PARTIAL]` — locked constraints recorded during `/ideate-extract`.
-> Remaining sections are filled by `/ideate-validate`.
+> Status: `[DEEP]` — all constraint categories resolved during `/ideate-validate` 2026-07-18.
+> Budget, Timeline, Team, V1 Scope, Compliance, Performance, and Surfaces all confirmed with owner.
 
 ## Locked Technical Constraints (user-declared)
 
@@ -152,39 +152,110 @@ time. If builds start thrashing, reduce to 2 runners rather than adding memory p
 
 ## Budget
 
-`[PENDING — /ideate-validate]`
+> Confirmed 2026-07-18, `/ideate-validate`.
+
+- **Posture**: **Lean — minimize monthly spend.** Prefer free-tier / usage-based / scale-to-zero
+  services. Pre-revenue.
+- **Implication for `/create-prd-stack`**: the locked stack (Cloudflare Pages + Workers, Supabase)
+  already fits this well. Bias toward managed services that scale to zero over anything
+  self-operated. Avoid fixed monthly costs (dedicated instances, always-on search clusters)
+  where a usage-based equivalent exists. Any capability that would add a fixed monthly floor
+  (e.g. a hosted search cluster, a media-transcode pipeline) must be justified against a
+  cheaper edge/managed alternative.
+- **Not a hard ceiling number** — "keep it cheap" is the rule, no fixed $/month cap set.
 
 ## Timeline
 
-`[PENDING — /ideate-validate]`
+> Confirmed 2026-07-18, `/ideate-validate`.
+
+- **Target**: **Wedge-first, fast — 3–6 months to a first shippable v1.**
+- **Strategy**: ship the provenance wedge + consolidation core; defer the rest to later phases.
+- **Implication**: `/plan-phase` must sequence aggressively. The 195 Musts (D-20) are NOT all v1 —
+  see **V1 Scope** below. Phasing is now a hard planning input, not a deferred question.
 
 ## Team
 
-`[PENDING — /ideate-validate]`
+> Confirmed 2026-07-18, `/ideate-validate`.
+
+- **Composition**: **Solo — the owner plus AI agents** (this pipeline and successors).
+- **Implication**: no parallel human workstreams. Everything is sequential build by one person
+  with AI leverage. This makes ruthless phasing essential and strongly favors managed services
+  (Supabase/Cloudflare do the operational heavy lifting) over anything requiring ops attention.
+  A 24-domain platform is a multi-year road solo; v1 must be a tight, buildable slice.
+
+## V1 Scope (planning constraint — derived, owner-confirmed)
+
+> Confirmed 2026-07-18. This is the single most important input to `/plan-phase`. Derived from
+> Team=solo + Timeline=3–6mo wedge-first + owner's explicit v1 selection.
+
+**v1 = the session spine + all three marketplaces.** Eight domains:
+
+| # | Domain | Role in v1 | Musts |
+|---|---|---|---|
+| 01 | Identity, Profiles & Organizations | the account everything hangs off | 10 |
+| 02 | Credits & Attribution | the wedge — capture at source | 9 |
+| 05 | Services Marketplace | hiring = the funnel into the room | 10 |
+| 07 | Music Projects & Collaboration | where the work happens | 9 |
+| 09 | Rights & Ownership | **split CAPTURE only** (not collection) | 7 |
+| 13 | Gear Marketplace (physical) | traffic + first directive | 15 |
+| 14 | Digital Goods & Plugins | digital marketplace | 10 |
+| 15 | Gear Registry & Ownership | provenance-follows-instrument | 1 |
+| | **v1 total** | | **~71 Musts** |
+
+**Explicitly PHASE 2+** (stay `Must` per D-20, but not v1): Royalties/Collection (10),
+Licensing (11), Release/Distribution (12), Live/Events (16–19), Fanbase (20), Promotion (21),
+Analytics (22), Career/Finance (23), Community (03), Opportunities (04), Education (06),
+Real-Time Jamming (08), Trust & Safety product surface (24 — baseline moderation still needed in v1).
+
+**⚠️ RISK FLAGGED for `/plan-phase` and `/create-prd`** (owner-accepted, not blocking): ~71 Musts
+across 8 domains, **solo, in 3–6 months**, with three marketplaces of different physics (physical
+shipping vs licence-key/DRM vs serial-keyed provenance) AND global-day-one compliance, is a very
+aggressive v1. `/plan-phase` should stress-test whether this fits the timeline or whether the
+marketplaces should themselves be phased behind the session spine. The wedge (01/02/05/07/09-capture)
+is the irreducible core; the marketplaces are additive.
+
+**Rights nuance**: v1 includes split **capture** (cheap — a signed document at the moment of
+creation, which is the unrepeatable wedge), NOT royalty **collection** (PRO/society registration,
+CWR, DDEX — heavy integration, a different company, phase 2+). This resolves the D-10 "thesis"
+tension: capture now, collect later.
 
 ## Compliance
 
-> Not yet interviewed. Flagged early because the owner's directives (multi-vendor marketplace
-> with physical + digital goods, payouts to multiple parties, UGC) trigger obligations that
-> materially shape architecture. `/ideate-validate` must resolve these.
+> Confirmed 2026-07-18, `/ideate-validate`. **Primary market: GLOBAL from day one** (owner choice).
 
-| Area | Trigger | Status |
-|---|---|---|
-| PCI-DSS scope | Payments / marketplace checkout | `[PENDING]` |
-| KYC / AML | Vendor payouts, escrow | `[PENDING]` |
-| Marketplace facilitator tax / VAT / GST | Multi-vendor sales, digital goods cross-border | `[PENDING]` |
-| Tax reporting (1099-K / W-9 / W-8BEN) | Vendor + service-provider payouts | `[PENDING]` |
-| GDPR / CCPA | User data, DSAR, deletion, portability | `[PENDING]` |
-| DMCA / copyright | UGC audio, rights disputes | `[PENDING]` |
-| Consumer protection / distance selling | Physical goods sales, returns | `[PENDING]` |
-| Age gating | UGC + commerce | `[PENDING]` |
+**⚠️ Tension flagged**: global-from-day-one is the heaviest possible compliance surface and is in
+tension with solo + 3–6mo. The agent recommended launching one jurisdiction first; the owner chose
+global. Recorded for `/create-prd-security` to confront. Mitigant: v1 scope excludes the highest-
+compliance domains (payouts/KYC-AML in Royalties, fan age-gating in Fanbase), so v1's *effective*
+compliance load is lighter than the full platform even under a global posture.
+
+| Area | Trigger | v1? | Posture |
+|---|---|---|---|
+| GDPR / UK-GDPR / CCPA / global DP | All user data | **v1** | Global posture: design for DSAR, deletion, portability, consent from day one. Strictest-wins across jurisdictions. |
+| PCI-DSS scope | Marketplace checkout, service payments | **v1** | Minimize scope — use a provider (Stripe/equiv) that keeps card data off WeJammin servers (SAQ-A). `/create-prd-stack`. |
+| Consumer protection / distance selling / withdrawal rights | Physical + digital goods (13/14) | **v1** | Digital-goods withdrawal-waiver (EU CRD Art.16(m)) already specified in 14.09.01. Physical returns in 13. Global = strictest-wins. |
+| DMCA / copyright takedown | UGC audio in Projects (07), gear listings | **v1 (baseline)** | Notice-and-takedown + repeat-infringer policy needed once UGC exists. Full system phase 2 with the marketplaces at scale. |
+| Contracts / e-signature | Split sheets (09), service contracts (05) | **v1** | Core to the wedge — split capture requires enforceable e-sign. |
+| KYC / AML | Vendor payouts, escrow | **phase 2** | Deferred with Royalties/collection and at-scale marketplace payouts. Note: marketplace *sales* in v1 still need seller payouts → minimal KYC via the payments provider's Connect onboarding. |
+| Marketplace facilitator tax / VAT / GST / MOSS | Multi-vendor + cross-border digital | **v1 (via provider)** | Lean approach: use the payments/tax provider's marketplace tax handling (Stripe Tax / equiv) rather than building it. `/create-prd-stack`. |
+| Tax reporting (1099-K / W-9 / W-8BEN) | Provider payouts | **v1 (via provider)** | Provider-handled. |
+| Age gating / children's access | Fan surface, UGC | **phase 2** | Deferred with the Fanbase domain (20). v1 is professional-facing. |
 
 ## Performance
 
-`[PENDING — /ideate-validate]`
+> Confirmed posture 2026-07-18. Hard budget set at `/create-prd-compile`.
 
-> Prior claim from predecessor README: "99.9% uptime". Unvalidated — treat as aspiration, not
-> a locked budget, until `/create-prd-compile` sets a real one.
+- **Scale expectation (v1)**: professional users, not consumer scale — thousands, not millions.
+  Fan/consumer scale (D-13) arrives in phase 2 with domain 20, and *that* is when the budget
+  must account for orders-of-magnitude more traffic.
+- **Latency**: real numbers set at `/create-prd-compile`. Note the one hard physical constraint
+  already surfaced: Real-Time Jamming (08, phase 2) has a ~25–30ms desync ceiling — but that's
+  out of v1 scope.
+- **Availability**: the predecessor's "99.9% uptime" claim is aspiration, not a locked budget.
+  The Cloudflare edge already provides strong baseline availability. Real target at
+  `/create-prd-compile`.
+- **Lean implication**: performance work should ride the edge platform's built-in capabilities
+  (Cloudflare caching, Workers) before adding paid performance infrastructure.
 
 ## Project Surfaces
 
@@ -192,9 +263,19 @@ time. If builds start thrashing, reduce to 2 runners rather than adding memory p
 |---------|------|----------------|-------|
 | Web app | Astro islands — static + SSR via Workers | N/A | **Primary and only declared surface.** Responsive; must serve on-the-go use (gig/venue/studio contexts). |
 | Desktop | — | — | Not in scope. No directive. |
-| Mobile | — | — | **Open question** — no native surface declared. Live/event and studio workflows are strongly mobile-context. `/ideate-validate` should confirm whether responsive web is sufficient or a PWA/native surface is wanted. Changing this alters the Structural Classification. |
-| API | `[PENDING — /create-prd]` | N/A | Multi-vendor marketplace + integrations may require a public API. |
+| Mobile (PWA) | PWA over the Astro web app | N/A | **v1**: web is installable as a PWA (home-screen, web push for gig alerts). Serves the phone-shaped workflows without a separate surface. |
+| Mobile (native) | Native app | Yes | **Phase 2** (owner-confirmed 2026-07-18). Web-first now; a native surface is planned for phase 2, primarily serving Live/Events (16–19) and Fanbase (20) — the phone-context domains. Tracked as a **future surface**, so v1 classification stays `single-surface`; the native port is a separate future project. Per `vertical-slices.md` surface-first strategy. |
+| API | `[PENDING — /create-prd]` | N/A | Marketplace + integrations + a future native mobile client all imply a public/internal API. `/create-prd` should design the data layer API-first so the phase-2 native app consumes the same contracts. |
 | CLI | No | No | Not applicable. |
 
+> **Structural Classification remains `single-surface` for v1** (one Astro web app + PWA). The
+> phase-2 native mobile surface is a tracked FUTURE addition, not a current surface — it does not
+> change today's folder structure (no `surfaces/` folder). When phase 2 begins, the native app is
+> added as a second surface consuming the same backend. Confirmed 2026-07-18. See D-28.
+>
+> **Design-now implication**: because a native surface is coming, `/create-prd` should keep the
+> backend API-first and avoid web-only coupling in the data/API layers, so the phase-2 port is an
+> additive surface rather than a re-architecture.
+>
 > Surface classification drives tech stack in `/create-prd`, folder structure in
 > `/decompose-architecture`, and spec shapes downstream.

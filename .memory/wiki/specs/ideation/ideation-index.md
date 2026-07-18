@@ -142,6 +142,39 @@
 > **Full per-domain rationale, cross-cuts, not-product routing, and demotions**:
 > [docs/wejammin-domain-map-proposal.md](../../../../docs/wejammin-domain-map-proposal.md)
 
+## Ideation Rubric Self-Check (`/ideate-validate`, 2026-07-18)
+
+| # | Dimension | Score | Evidence |
+|---|-----------|-------|----------|
+| 1 | Problem Clarity | ✅ | Single falsifiable sentence naming the multi-hyphenate musician + the "proof evaporates" pain. [problem-statement.md](meta/problem-statement.md) |
+| 2 | Persona Specificity | ✅ | 4 personas, all 6 fields each, no generic "users". [personas.md](meta/personas.md) |
+| 3 | Feature Completeness | ✅ | 195 Musts at `[DEEP]` with edge cases + Role Lens; 285 Shoulds `[PARTIAL]`; MoSCoW mutually exclusive; 734 features in [feature-ledger.md](../feature-ledger.md) |
+| 4 | Constraint Explicitness | ✅ | Budget/timeline/team/compliance/performance/surfaces all have specific values (D-28/29/30). Open stack items explicitly deferred to `/create-prd`. [constraints.md](meta/constraints.md) |
+| 5 | Success Measurability | ✅ | Each metric has a method + target; wedge metrics numeric (split-capture ≥60% @ 6mo, capture <7d); baseline-set + hard SLOs deferred to `/create-prd-compile`. [vision.md](../vision.md) |
+| 6 | Competitive Positioning | ✅ | 17 named competitors, capture-vs-reconstruct differentiation, earned-provenance moat, partner-vs-rival split. [competitive-landscape.md](meta/competitive-landscape.md) |
+| 7 | Open Question Resolution | ✅ | Every open question has owner + target stage (pipeline-stage = deadline). [vision.md](../vision.md) Open Questions |
+| 8 | Structural Compliance | ✅ | 24/24 domains have index+cx; Role Matrix populated in all; 734/734 Role Lens; 0 single-child folders; Structure Map matches disk |
+
+**Result: 8/8 ✅ — no warning or fail dimensions. Ideation ready for review.**
+
+## Domain Exhaustion (`/ideate-validate`, 2026-07-18)
+
+Depth is **deliberately allocated by MoSCoW**, not uniform — this is the exhaustion procedure's
+"intentionally minimal" path, not incompleteness:
+
+| Tier | Count | Depth | Rationale |
+|------|-------|-------|-----------|
+| Must | 195 | `[DEEP]` — full edge cases, states, Deep Think | v1 + phase-2 core |
+| Should | 285 | `[PARTIAL]` — Level 1 | one level, deepened further when reached |
+| Could | 201 | `[SURFACE]` — intentionally minimal | deepened at spec time if pursued |
+| Won't | 53 | `[SURFACE]` — intentionally minimal | retained for traceability, not built |
+
+- **CX exhaustion**: 24/24 domain CX files `[DEEP]`; global `ideation-cx.md` `[DEEP]` with 206
+  synthesized pairs (22 medium/low tracked, not blocking).
+- **Missing-domain reasoning**: the 14-lens sweep + 3× adversarial verification (D-16) and the
+  Step 6 boundary analysis (D-26) both concluded the 24-domain map is complete and correctly split;
+  one merge candidate (08→07) escalated to `/create-prd`. No missing domains identified.
+
 ## Decision Log
 
 Numbered decisions with source references.
@@ -175,6 +208,9 @@ Numbered decisions with source references.
 | D-25 | **Step 6 cross-cut synthesis complete.** From 4,818 harvested cross-cut notes: (a) a **25-mechanism cross-cut registry** consolidated from ~235 raw name-buckets; (b) all **24 domain CX files at `[DEEP]`** with intra-domain sub-domain synthesis (5 questions answered for high-confidence pairs); (c) **`ideation-cx.md` rebuilt** with **206 cross-domain pairs** (184 fully synthesized, 22 medium/low tracked), mechanism registry, and top-25 high-confidence synthesis. Executed in 2 workflow runs; domain 01 and the global assembly were redone after a transient safety-classifier block and an inline-data truncation, both caught by disk cross-check. | `/ideate-discover` Step 6, 2026-07-18 | All |
 | D-26 | **D-17 resolved — keep 24 domains.** Cross-domain connectivity is 211/276 pairs (76%) but judged **structural, not over-splitting**: ~85 of 101 flagged boundary problems are legitimate seam-work between near-mirror domains (the money/show/gear/credit clusters), the universal hubs were lifted into the mechanism registry rather than left as edges, and ~10 flags are explicit clean-seam counter-examples FOR the split. **One genuine merge candidate survives: `08 Real-Time Jamming` → `07 Music Projects`** (Overdub machinery; rejected only narrowly at 08.07 DT-03) — escalated to `/create-prd` for an explicit keep-or-fold. High-tension seams (17/18, 17/19, 13/15, 14/20, 04/05) resolve via a named shared owner or extracted cross-cut, not merger. | `/ideate-discover` Step 6 boundary analysis, 2026-07-18 | Global |
 | D-27 | **Emergent capabilities persisted** to [meta/cross-cut-emergent-capabilities.md](meta/cross-cut-emergent-capabilities.md): **52 new cross-cut mechanisms** and **76 new features** surfaced during synthesis that neither the sweep nor the breadth pass named. Highest-risk: the **identifier-binding seam** — splits/titles attach in Services (05) years before an ISRC/ISWC exists, but Royalties (10) collects against identifiers, and NO mechanism owns the binding step. Routed to `/create-prd` and `/write-be-spec`. | `/ideate-discover` Step 6, 2026-07-18 | 05, 10, Global |
+| D-28 | **Constraints locked** (`/ideate-validate`): **Team** = solo (owner + AI); **Timeline** = wedge-first, 3–6mo to v1; **Budget** = lean (scale-to-zero managed services); **Mobile** = native app is **phase 2** (v1 = web + PWA; classification stays `single-surface`, native tracked as a future surface, backend must be API-first). See [meta/constraints.md](meta/constraints.md). | User, 2026-07-18 | Global |
+| D-29 | **V1 scope = session spine + all 3 marketplaces** (owner-confirmed): domains 01, 02, 05, 07, 09 (split **capture** only), 13, 14, 15 — ~71 Musts. Everything else stays `Must` (D-20) but is **phase 2+**. Split capture is v1; royalty collection (10/11/12) is phase 2 — resolves the D-10 thesis tension (capture now, collect later). ⚠️ Risk flagged: ~71 Musts × 8 domains × 3 marketplace physics, solo, 3–6mo, global compliance — aggressive; `/plan-phase` must stress-test. | User, 2026-07-18 | Global |
+| D-30 | **Primary market = GLOBAL from day one** (owner choice, over agent recommendation to launch one jurisdiction). Heaviest compliance surface; strictest-wins across GDPR/UK-GDPR/CCPA, consumer/withdrawal law, and marketplace tax. Mitigant: v1 scope excludes the highest-compliance domains (KYC-AML payouts in Royalties, age-gating in Fanbase). Escalated to `/create-prd-security`. | User, 2026-07-18 | Global, 24 |
 
 ## MoSCoW Summary
 
