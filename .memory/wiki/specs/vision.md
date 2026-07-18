@@ -62,16 +62,24 @@ music-industry value chain:
 Full ledger: [feature-ledger.md](feature-ledger.md) (734 features). Counts: **195 Must · 285 Should
 · 201 Could · 53 Won't.**
 
-> **All 195 Musts are retained** (D-20). The v1/phase split below is a *sequencing* constraint from
-> the solo + 3–6mo + wedge-first reality (D-28/D-29), not a scope cut.
+> **All 195 Musts are retained** (D-20). The release split below is a *sequencing* constraint from
+> the solo + 3–6mo + wedge-first reality (D-28/D-31), not a scope cut.
 
-### v1 (Phase 1) — the session spine + all marketplaces (~71 Musts, 8 domains)
-Identity (01), Credits/capture (02), Services (05), Projects (07), Rights-**capture** (09), Gear (13),
-Digital Goods (14), Gear Registry (15). This is the only slice that is both buildable solo in the
-timeframe and delivers the unrepeatable wedge: hire a collaborator → do the work → capture the credit
-and split at source → all on one identity.
+### v1 — the session spine (first release, ~45 Musts, 5 domains)
+Identity (01), Credits/capture (02), Services (05), Projects (07), Rights-**capture** (09). The
+irreducible wedge — hire a collaborator → do the work → capture the credit and split at source → all
+on one identity. Buildable solo in the timeframe; ships first and fast (D-31).
 
-### Should Have (Phase 2) — 285
+### v1.5 — the marketplaces (soon after v1, ~26 Musts, 3 domains)
+Gear (13), Digital Goods (14), Gear Registry (15). Physical + digital commerce and gear provenance,
+as a focused second release rather than gating the wedge.
+
+### Phase 2+ — the remaining ~124 Musts
+Royalty collection (10/11/12), live/events (16–19), fanbase (20), promotion (21), analytics (22),
+career/finance (23), community (03), opportunities (04), education (06), jamming (08). Baseline
+moderation (24) is needed from v1.
+
+### Should Have — 285
 Royalty collection, licensing, release/distribution, live/events, fanbase, promotion, analytics,
 career/finance, community, opportunities, education. The full platform expands here.
 
@@ -103,9 +111,9 @@ Full detail: [constraints.md](ideation/meta/constraints.md).
 |---|---|
 | **Stack** | Astro islands · Cloudflare Pages + Workers · Supabase (locked) |
 | **Team** | Solo (owner + AI agents) |
-| **Timeline** | Wedge-first, 3–6 months to v1 |
+| **Timeline** | Wedge-first, 3–6 months to v1 (spine); v1.5 (marketplaces) soon after |
 | **Budget** | Lean — scale-to-zero managed services |
-| **Market** | Global from day one |
+| **Market** | United States to start (jurisdiction-parameterized for later expansion) |
 | **Surfaces** | v1: web + PWA (`single-surface`). Native mobile = phase 2 (backend must be API-first) |
 | **Repo** | `github.com/WeJustJammin/nevrite-music` (private); 3 self-hosted CI runners live |
 
@@ -163,7 +171,7 @@ no point solution can replicate.
 3. **Fans are first-class users** (D-11), modelled now, surfaced phase 2.
 4. **Three separate marketplace domains** (D-14) — gear / digital / services have different physics.
 5. **24 domains confirmed** (D-26) — connectivity is structural; one merge candidate (08→07) for `/create-prd`.
-6. **v1 = session spine + marketplaces** (D-29); **global market** (D-30); **native mobile phase 2** (D-28).
+6. **Release split** (D-31): v1 = session spine (~45 Musts), v1.5 = marketplaces (~26), phase 2+ = rest. **US market to start** (D-32). **Native mobile phase 2** (D-28).
 
 ## Open Questions
 
@@ -171,7 +179,7 @@ no point solution can replicate.
 |---|----------|-------|-------------|
 | Q-01 | `08 Real-Time Jamming` — keep as a domain or fold into `07 Music Projects`? | User | `/create-prd` |
 | Q-02 | The identifier-binding seam — which mechanism/domain owns work↔identifier binding? | Agent | `/create-prd`, `/write-be-spec` |
-| Q-03 | Is ~71 Musts across 8 domains realistic solo in 3–6mo, or should marketplaces phase behind the spine? | User | `/plan-phase` |
+| Q-03 | ~~Is ~71 Musts realistic solo in 3–6mo?~~ **Resolved (D-31): split into v1 spine (~45) + v1.5 marketplaces (~26).** `/plan-phase` sequences within each release. | — | resolved |
 | Q-04 | Auth provider, media storage, payments provider, styling system (open stack decisions) | Agent | `/create-prd-stack` |
 | Q-05 | Is a dedicated dealer/developer persona needed for domains 13/14/15? | User | `/create-prd` |
 | Q-06 | Convert `WeJustJammin` from User account to Organization? | User | infra |

@@ -183,12 +183,18 @@ time. If builds start thrashing, reduce to 2 runners rather than adding memory p
   (Supabase/Cloudflare do the operational heavy lifting) over anything requiring ops attention.
   A 24-domain platform is a multi-year road solo; v1 must be a tight, buildable slice.
 
-## V1 Scope (planning constraint — derived, owner-confirmed)
+## Release Plan (planning constraint — derived, owner-confirmed)
 
-> Confirmed 2026-07-18. This is the single most important input to `/plan-phase`. Derived from
-> Team=solo + Timeline=3–6mo wedge-first + owner's explicit v1 selection.
+> Confirmed 2026-07-18, **revised same day** to split the release. This is the single most
+> important input to `/plan-phase`. Derived from Team=solo + Timeline=3–6mo wedge-first + owner's
+> explicit two-release decision (D-31).
 
-**v1 = the session spine + all three marketplaces.** Eight domains:
+**The v1 marketplace risk was accepted then mitigated by splitting the release into two.**
+
+### v1 — the session spine (first release, ~45 Musts, 5 domains)
+
+The irreducible wedge: hire → do the work → capture credit + split at source → on one identity.
+This is what's genuinely buildable solo in 3–6mo AND delivers the unrepeatable provenance wedge.
 
 | # | Domain | Role in v1 | Musts |
 |---|---|---|---|
@@ -197,49 +203,61 @@ time. If builds start thrashing, reduce to 2 runners rather than adding memory p
 | 05 | Services Marketplace | hiring = the funnel into the room | 10 |
 | 07 | Music Projects & Collaboration | where the work happens | 9 |
 | 09 | Rights & Ownership | **split CAPTURE only** (not collection) | 7 |
+| | **v1 total** | | **~45 Musts** |
+
+### v1.5 — the marketplaces (soon after v1, ~26 Musts, 3 domains)
+
+Released shortly after v1. Physical + digital commerce plus gear provenance. Kept separate because
+the three marketplaces have different physics and their own compliance load — they should not gate
+the wedge's launch.
+
+| # | Domain | Role | Musts |
+|---|---|---|---|
 | 13 | Gear Marketplace (physical) | traffic + first directive | 15 |
 | 14 | Digital Goods & Plugins | digital marketplace | 10 |
 | 15 | Gear Registry & Ownership | provenance-follows-instrument | 1 |
-| | **v1 total** | | **~71 Musts** |
+| | **v1.5 total** | | **~26 Musts** |
 
-**Explicitly PHASE 2+** (stay `Must` per D-20, but not v1): Royalties/Collection (10),
-Licensing (11), Release/Distribution (12), Live/Events (16–19), Fanbase (20), Promotion (21),
-Analytics (22), Career/Finance (23), Community (03), Opportunities (04), Education (06),
-Real-Time Jamming (08), Trust & Safety product surface (24 — baseline moderation still needed in v1).
+### Phase 2+ (stay `Must` per D-20, later releases, ~124 Musts)
 
-**⚠️ RISK FLAGGED for `/plan-phase` and `/create-prd`** (owner-accepted, not blocking): ~71 Musts
-across 8 domains, **solo, in 3–6 months**, with three marketplaces of different physics (physical
-shipping vs licence-key/DRM vs serial-keyed provenance) AND global-day-one compliance, is a very
-aggressive v1. `/plan-phase` should stress-test whether this fits the timeline or whether the
-marketplaces should themselves be phased behind the session spine. The wedge (01/02/05/07/09-capture)
-is the irreducible core; the marketplaces are additive.
+Royalties/Collection (10), Licensing (11), Release/Distribution (12), Live/Events (16–19),
+Fanbase (20), Promotion (21), Analytics (22), Career/Finance (23), Community (03), Opportunities
+(04), Education (06), Real-Time Jamming (08). Trust & Safety (24) product surface phases in, but a
+**baseline moderation capability is needed from v1** (UGC exists the moment Projects ships).
 
-**Rights nuance**: v1 includes split **capture** (cheap — a signed document at the moment of
-creation, which is the unrepeatable wedge), NOT royalty **collection** (PRO/society registration,
-CWR, DDEX — heavy integration, a different company, phase 2+). This resolves the D-10 "thesis"
-tension: capture now, collect later.
+**Why the split resolves the risk** (D-31): the original single-v1 (~71 Musts, 8 domains, all
+marketplace physics at once, solo, 3–6mo) was flagged as over-aggressive. Splitting lets the
+session spine (the thing that proves the thesis) ship first and fast, with the marketplaces
+following as a focused second release rather than gating the wedge.
+
+**Rights nuance (unchanged)**: v1 includes split **capture** (cheap — a signed document at creation,
+the unrepeatable wedge), NOT royalty **collection** (PRO/society registration, CWR, DDEX — heavy
+integration, phase 2+). Resolves the D-10 thesis tension: capture now, collect later.
 
 ## Compliance
 
-> Confirmed 2026-07-18, `/ideate-validate`. **Primary market: GLOBAL from day one** (owner choice).
+> Confirmed 2026-07-18, `/ideate-validate`. **Primary market: UNITED STATES to start** (owner
+> revised from an initial "global from day one" to US-first, resolving the flagged tension).
 
-**⚠️ Tension flagged**: global-from-day-one is the heaviest possible compliance surface and is in
-tension with solo + 3–6mo. The agent recommended launching one jurisdiction first; the owner chose
-global. Recorded for `/create-prd-security` to confront. Mitigant: v1 scope excludes the highest-
-compliance domains (payouts/KYC-AML in Royalties, fan age-gating in Fanbase), so v1's *effective*
-compliance load is lighter than the full platform even under a global posture.
+**Tension resolved**: the initial global-from-day-one choice was flagged as the heaviest possible
+compliance surface, in tension with solo + 3–6mo. The owner revised to **US-first** — one coherent
+federal framework (with a state-privacy patchwork) instead of every jurisdiction at once. Expansion
+to other markets is a later decision; `/create-prd-security` should design the data model so
+international expansion is additive (field-level data-residency awareness) but not build for it now.
 
-| Area | Trigger | v1? | Posture |
+**US compliance model** (baseline for `/create-prd-security`):
+
+| Area | Trigger | Phase | Posture (US) |
 |---|---|---|---|
-| GDPR / UK-GDPR / CCPA / global DP | All user data | **v1** | Global posture: design for DSAR, deletion, portability, consent from day one. Strictest-wins across jurisdictions. |
-| PCI-DSS scope | Marketplace checkout, service payments | **v1** | Minimize scope — use a provider (Stripe/equiv) that keeps card data off WeJammin servers (SAQ-A). `/create-prd-stack`. |
-| Consumer protection / distance selling / withdrawal rights | Physical + digital goods (13/14) | **v1** | Digital-goods withdrawal-waiver (EU CRD Art.16(m)) already specified in 14.09.01. Physical returns in 13. Global = strictest-wins. |
-| DMCA / copyright takedown | UGC audio in Projects (07), gear listings | **v1 (baseline)** | Notice-and-takedown + repeat-infringer policy needed once UGC exists. Full system phase 2 with the marketplaces at scale. |
-| Contracts / e-signature | Split sheets (09), service contracts (05) | **v1** | Core to the wedge — split capture requires enforceable e-sign. |
-| KYC / AML | Vendor payouts, escrow | **phase 2** | Deferred with Royalties/collection and at-scale marketplace payouts. Note: marketplace *sales* in v1 still need seller payouts → minimal KYC via the payments provider's Connect onboarding. |
-| Marketplace facilitator tax / VAT / GST / MOSS | Multi-vendor + cross-border digital | **v1 (via provider)** | Lean approach: use the payments/tax provider's marketplace tax handling (Stripe Tax / equiv) rather than building it. `/create-prd-stack`. |
-| Tax reporting (1099-K / W-9 / W-8BEN) | Provider payouts | **v1 (via provider)** | Provider-handled. |
-| Age gating / children's access | Fan surface, UGC | **phase 2** | Deferred with the Fanbase domain (20). v1 is professional-facing. |
+| CCPA/CPRA + state privacy patchwork | All user data | **v1** | Design for access/deletion/opt-out of sale/portability. CA is strictest — build to CCPA and most states are covered. Keep the model jurisdiction-parameterized for later GDPR without a rewrite. |
+| PCI-DSS scope | Service payments (05), marketplace checkout (v1.5) | **v1** | Minimize scope — provider (Stripe/equiv) keeps card data off WeJammin servers (SAQ-A). `/create-prd-stack`. |
+| Contracts / e-signature (ESIGN Act / UETA) | Split sheets (09), service contracts (05) | **v1** | Core to the wedge. US ESIGN/UETA make click-through + audit-trail e-signatures enforceable — lighter than qualified e-sign. |
+| DMCA §512 notice-and-takedown | UGC audio in Projects (07) | **v1 (baseline)** | Register a DMCA agent, notice-and-takedown + repeat-infringer policy needed the moment UGC ships. Full system scales with v1.5/phase 2. |
+| Marketplace facilitator sales tax (state-by-state) | Multi-vendor sales | **v1.5** | Use the payments/tax provider's marketplace-facilitator handling (Stripe Tax / equiv) — economic-nexus rules vary by state; do NOT build this. `/create-prd-stack`. |
+| Tax reporting (1099-K / W-9) | Seller + service-provider payouts | **v1 (via provider)** | Provider-handled (Stripe Connect issues 1099-Ks). Note the 2024+ lowered 1099-K thresholds. |
+| Consumer protection / returns | Physical + digital goods | **v1.5** | US has no federal 14-day withdrawal right (unlike EU) — returns are policy-driven per seller. Digital-goods no-refund is simpler in the US than the EU CRD path already specified in 14.09.01 (keep that logic, gate it by jurisdiction). |
+| KYC / AML | At-scale payouts, escrow | **phase 2** | Minimal KYC via the payments provider's Connect onboarding covers v1/v1.5 seller payouts; full AML deferred. |
+| COPPA / age gating | Fan surface, UGC with minors | **phase 2** | US COPPA (under-13) deferred with the Fanbase domain (20). v1/v1.5 are professional-facing. |
 
 ## Performance
 
