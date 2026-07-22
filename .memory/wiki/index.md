@@ -16,7 +16,7 @@
 
 ## Knowledge
 
-- [[specs/audits/audit-scope|Audit Scope — Ideation (Vision Layer)]] — audit — spec-vault
+- [[specs/audits/audit-scope|Audit Scope — Ambiguity Audit]] — audit — spec-vault
 - [[specs/audits/decision-queue-drafts/01-credits-rights|Credits & Rights Decision Queue]] — audit — spec-vault
 - [[specs/audits/decision-queue-drafts/02-projects-delivery|Projects, Delivery, Marketplace, and Distribution — Unratified Decision Queue]] — audit — spec-vault
 - [[specs/audits/decision-queue-drafts/03-marketplace-gear|Marketplace, Gear & Registry Decision Queue — Draft]] — audit — spec-vault

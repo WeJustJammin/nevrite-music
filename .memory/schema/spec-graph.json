@@ -1,12 +1,12 @@
 {
-  "builtAt": "2026-07-22T04:27:27.253Z",
-  "nodeCount": 1218,
-  "edgeCount": 7474,
+  "builtAt": "2026-07-22T08:29:19.269Z",
+  "nodeCount": 1219,
+  "edgeCount": 7486,
   "nodes": [
     {
       "id": "audit:audits/audit-scope",
       "type": "audit",
-      "label": "Audit Scope — Ideation (Vision Layer)",
+      "label": "Audit Scope — Ambiguity Audit",
       "path": ".memory/wiki/specs/audits/audit-scope.md",
       "shardId": null
     },
@@ -7963,13 +7963,6 @@
       "shardId": null
     },
     {
-      "id": "decision:d-20",
-      "type": "decision",
-      "label": "D-20",
-      "path": ".memory/wiki/decisions.md#d-20",
-      "shardId": null
-    },
-    {
       "id": "decision:d-15",
       "type": "decision",
       "label": "D-15",
@@ -8068,24 +8061,24 @@
       "shardId": null
     },
     {
-      "id": "decision:d-31",
+      "id": "decision:d-12",
       "type": "decision",
-      "label": "D-31",
-      "path": ".memory/wiki/decisions.md#d-31",
+      "label": "D-12",
+      "path": ".memory/wiki/decisions.md#d-12",
       "shardId": null
     },
     {
-      "id": "decision:d-33",
+      "id": "decision:d-37",
       "type": "decision",
-      "label": "D-33",
-      "path": ".memory/wiki/decisions.md#d-33",
+      "label": "D-37",
+      "path": ".memory/wiki/decisions.md#d-37",
       "shardId": null
     },
     {
-      "id": "decision:d-34",
+      "id": "decision:d-28",
       "type": "decision",
-      "label": "D-34",
-      "path": ".memory/wiki/decisions.md#d-34",
+      "label": "D-28",
+      "path": ".memory/wiki/decisions.md#d-28",
       "shardId": null
     },
     {
@@ -8096,10 +8089,24 @@
       "shardId": null
     },
     {
-      "id": "decision:d-12",
+      "id": "decision:d-19",
       "type": "decision",
-      "label": "D-12",
-      "path": ".memory/wiki/decisions.md#d-12",
+      "label": "D-19",
+      "path": ".memory/wiki/decisions.md#d-19",
+      "shardId": null
+    },
+    {
+      "id": "decision:d-32",
+      "type": "decision",
+      "label": "D-32",
+      "path": ".memory/wiki/decisions.md#d-32",
+      "shardId": null
+    },
+    {
+      "id": "decision:d-number",
+      "type": "decision",
+      "label": "D-number",
+      "path": ".memory/wiki/decisions.md#d-number",
       "shardId": null
     },
     {
@@ -8131,6 +8138,13 @@
       "shardId": null
     },
     {
+      "id": "decision:d-31",
+      "type": "decision",
+      "label": "D-31",
+      "path": ".memory/wiki/decisions.md#d-31",
+      "shardId": null
+    },
+    {
       "id": "decision:d-29",
       "type": "decision",
       "label": "D-29",
@@ -8138,10 +8152,10 @@
       "shardId": null
     },
     {
-      "id": "decision:d-19",
+      "id": "decision:d-20",
       "type": "decision",
-      "label": "D-19",
-      "path": ".memory/wiki/decisions.md#d-19",
+      "label": "D-20",
+      "path": ".memory/wiki/decisions.md#d-20",
       "shardId": null
     },
     {
@@ -8250,13 +8264,6 @@
       "shardId": null
     },
     {
-      "id": "decision:d-28",
-      "type": "decision",
-      "label": "D-28",
-      "path": ".memory/wiki/decisions.md#d-28",
-      "shardId": null
-    },
-    {
       "id": "decision:d-04a",
       "type": "decision",
       "label": "D-04a",
@@ -8292,10 +8299,17 @@
       "shardId": null
     },
     {
-      "id": "decision:d-32",
+      "id": "decision:d-33",
       "type": "decision",
-      "label": "D-32",
-      "path": ".memory/wiki/decisions.md#d-32",
+      "label": "D-33",
+      "path": ".memory/wiki/decisions.md#d-33",
+      "shardId": null
+    },
+    {
+      "id": "decision:d-34",
+      "type": "decision",
+      "label": "D-34",
+      "path": ".memory/wiki/decisions.md#d-34",
       "shardId": null
     },
     {
@@ -8303,13 +8317,6 @@
       "type": "decision",
       "label": "D-36",
       "path": ".memory/wiki/decisions.md#d-36",
-      "shardId": null
-    },
-    {
-      "id": "decision:d-37",
-      "type": "decision",
-      "label": "D-37",
-      "path": ".memory/wiki/decisions.md#d-37",
       "shardId": null
     },
     {
@@ -8532,12 +8539,6 @@
   ],
   "edges": [
     {
-      "from": "audit:audits/audit-scope",
-      "to": "decision:d-20",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
       "from": "audit:audits/decision-queue-drafts/01-credits-rights",
       "to": "decision:d-15",
       "type": "constrained_by",
@@ -8683,25 +8684,19 @@
     },
     {
       "from": "audit:audits/ideation-ambiguity-report",
-      "to": "decision:d-31",
+      "to": "decision:d-10",
       "type": "constrained_by",
       "source": "decision-ref"
     },
     {
       "from": "audit:audits/ideation-ambiguity-report",
-      "to": "decision:d-20",
+      "to": "decision:d-12",
       "type": "constrained_by",
       "source": "decision-ref"
     },
     {
       "from": "audit:audits/ideation-ambiguity-report",
-      "to": "decision:d-33",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/ideation-ambiguity-report",
-      "to": "decision:d-34",
+      "to": "decision:d-01",
       "type": "constrained_by",
       "source": "decision-ref"
     },
@@ -8714,6 +8709,90 @@
     {
       "from": "audit:audits/ideation-ambiguity-report",
       "to": "decision:d-09",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "audit:audits/ideation-ambiguity-report",
+      "to": "decision:d-03",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "audit:audits/ideation-ambiguity-report",
+      "to": "decision:d-06",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "audit:audits/ideation-ambiguity-report",
+      "to": "decision:d-02",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "audit:audits/ideation-ambiguity-report",
+      "to": "decision:d-13",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "audit:audits/ideation-ambiguity-report",
+      "to": "decision:d-07",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "audit:audits/ideation-ambiguity-report",
+      "to": "decision:d-37",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "audit:audits/ideation-ambiguity-report",
+      "to": "decision:d-28",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "audit:audits/ideation-ambiguity-report",
+      "to": "decision:d-04",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "audit:audits/ideation-ambiguity-report",
+      "to": "decision:d-17",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "audit:audits/ideation-ambiguity-report",
+      "to": "decision:d-19",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "audit:audits/ideation-ambiguity-report",
+      "to": "decision:d-05",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "audit:audits/ideation-ambiguity-report",
+      "to": "decision:d-32",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "audit:audits/ideation-ambiguity-report",
+      "to": "decision:d-14",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "audit:audits/ideation-ambiguity-report",
+      "to": "decision:d-number",
       "type": "constrained_by",
       "source": "decision-ref"
     },
@@ -53381,10 +53460,10 @@
       "audit": 10,
       "plan": 6,
       "ideation": 1121,
-      "decision": 81
+      "decision": 82
     },
     "byEdgeType": {
-      "constrained_by": 7474
+      "constrained_by": 7486
     }
   }
 }

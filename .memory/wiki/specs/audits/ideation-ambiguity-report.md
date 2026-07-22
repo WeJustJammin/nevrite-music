@@ -1,97 +1,570 @@
 # Ideation Ambiguity Audit — Report
 
-> Layer: **ideation** (Vision Rubric). Original run: `/audit-ambiguity ideation`, 2026-07-18.
-> Method: 33 auditor agents: 9 vision-level documents under the full 8-dimension rubric and 24
-> domain auditors using per-file implementer simulation. Owner-approved tiered scope covered files
-> feeding downstream; 254 intentionally `[SURFACE]` Could/Won't features were class-ruled-out as
-> minimal-by-design rather than treated as ambiguity.
->
-> **Recovery notice (2026-07-18):** cross-file remediation stopped at a weekly model limit. The
-> authoritative recovery ledger is [remediation-state.md](remediation-state.md). No claim below
-> labelled `applied` is final until an independent verifier reconciles its source manifest.
+> **Layer**: ideation (vision) · **Date**: 2026-07-22
+> **Scope**: `.memory/wiki/specs/audits/audit-scope.md` — all 1,121 `.md` files under `ideation/`
+> **Rubric**: `pipeline-rubrics/references/vision-rubric.md` (8 dimensions) + `scoring.md`
+> **Method**: 191 audit units (full 3a→3b→3c per document) → independent adversarial verification of every finding
 
-## Original Result Summary
+## Headline
 
-| Metric | Original result | Recovery status |
-|--------|-----------------|-----------------|
-| Full-audited files | 867 reported | Coverage record requires reconciliation: the original total plus 254 class-ruled-out files accounts for 1,121 of 1,122 scoped documents. |
-| Files with zero findings | 637 (73%) | Historical, not a final verdict. |
-| Findings | 355 reported: 31 blocking, 324 warning | Bucket accounting below explains 350; fresh run must reconcile the five-finding difference. |
-| Rough ambiguity | ~22.3% | Historical; recompute only from the fresh audit. |
+| Metric | Value |
+|---|---|
+| Documents scoped | 1121 |
+| Documents scored | **1121** |
+| Documents missed | **0** |
+| Applicable checkpoints | 4054 |
+| Rubric points (raw) | 687.5 |
+| Ambiguity — raw, auditor-assigned | 16.96% |
+| **Ambiguity — verified-adjusted** | **5%** |
+| Raw findings | 1449 |
+| Refuted by adversarial verification | 1251 (**86.3%**) |
+| **Confirmed findings** | **198** |
+| — blocking | **20** |
+| — warning | 178 |
+| Unverified (pending) | 0 |
+| Integrity problems | 0 |
 
-The original audit identified contradictions an 8/8 self-check cannot expose: a downstream
-implementer reading two separately plausible files could still be forced into incompatible designs.
+## Coverage Completeness Gate
 
-## Finding Categories (original top counts)
+**PASS** — all 1121 scoped documents were individually processed. No sampling, no skipped units.
 
-`unresolved-decision` 89 · `missing-edge-case` 65 · `contradiction` 59 · `unmeasurable` 36 ·
-`undefined-term` 24 · `ambiguous-behavior` 16 · `broken-cross-reference` 11 · `missing-synthesis` 11
+## Two Ambiguity Numbers — and why the second is the real one
 
-## Triage & Remediation
+`scoring.md` computes `ambiguity% = points / applicable_checkpoints × 100` from per-document
+rubric scores. **Those scores were assigned by the auditors and were never adversarially
+verified** — only their *findings* were. Since 86.3% of findings did not
+survive verification, the raw score carries the same bias by construction: a `[SURFACE]` file
+marked "warn" on dimension 3 for lacking depth it was never required to have still contributes
+its penalty.
 
-### Bucket 1 — Agent cascade errors (5 blocking + 12 warning) — applied, verify in fresh audit
+The **verified-adjusted** figure discounts a document's penalty where every finding citing that
+document was refuted — the score and the finding came from one judgment, so overturning one
+impeaches the other. 615 documents were discounted on that basis.
 
-Mechanical release-split and runner-migration cascades were corrected in the source tree:
 
-- `ideation-index.md`: D-31/D-20 sequencing, 09-capture definition, citation and count repair,
-  Admin-persona canonical question, and Q-namespace clarification.
-- `constraints.md`: system `svc.sh` runner commands, current infrastructure state, organization
-  conversion deadline, and testable baseline moderation scope.
-- `feature-ledger.md`: D-31 phase legend and unphased `—` notation.
+Neither number is the gate on its own. The **confirmed blocking count (20)** is what
+determines whether downstream stages can proceed, because a blocking finding is by definition a
+contract an implementer cannot resolve from the specs.
 
-These edits are source changes, not substitute verification. The fresh audit determines whether every
-original cascade finding is closed.
+## Method Note — why the refute rate is high
 
-### Bucket 2 — Owner architecture decisions (2) — recorded, verify propagation
+86.3% of raw findings were refuted. That is a deliberate design outcome, not
+noise suppression. Every finding was attacked by an independent agent instructed to default to
+*refuted* and to follow every citation before upholding. The dominant refutation classes were:
 
-- **D-33** Split-Capture Trigger: layered ownership — 09 owns sheet/instrument, 02 owns credit
-  record, trigger remains cross-cut; 10 does not own capture.
-- **D-34** Ladder/challenge/expiry engine: 17 Live Booking owns it; 16 owns place records only.
+1. **The answer was in the cited file, or one citation away.** These specs author where they own
+   and reference where they do not, so a reader who does not follow the reference sees a hole that
+   is not there. This was the single largest class.
+2. **Depth is allocated by MoSCoW.** Must = `[DEEP]`, Should = `[PARTIAL]`, Could/Won't =
+   `[SURFACE]` — intentionally minimal. Rubric dimension 3 scopes its depth requirement to Must
+   Haves, so "this Could lacks edge cases" is not a finding.
+3. **The forced decision was not forced** — a safe, obvious reading existed in the file.
 
-The decisions exist in `ideation-index.md`; all claimed downstream propagation remains subject to the
-manifest and fresh-audit checks.
+Both the confirmed and refuted sets were spot-checked by hand against source before this report
+was issued.
 
-### Bucket 3 — Cross-file contradictions + v1/v1.5 warnings (107 findings, 81 files) — PARTIAL
+## Confirmed Findings by Domain
 
-The `wejammin-audit-remediate` workflow reported **33/81 manifests processed and 48 edits applied**
-before a weekly model limit stopped the remaining agents. It therefore did **not** remediate this
-bucket in full.
+| Domain | Confirmed | Blocking |
+|---|---|---|
+| `02-credits-attribution` | 11 | 5 |
+| `16-venues-studios-spaces` | 14 | 3 |
+| `01-identity-profiles-organizations` | 14 | 2 |
+| `19-ticketing-box-office` | 14 | 2 |
+| `11-music-licensing` | 11 | 2 |
+| `20-fanbase-direct-to-fan` | 9 | 2 |
+| `07-music-projects-collaboration` | 10 | 1 |
+| `13-gear-marketplace` | 10 | 1 |
+| `12-release-distribution` | 7 | 1 |
+| `21-promotion-marketing` | 5 | 1 |
+| `17-live-booking-settlement` | 15 | 0 |
+| `18-show-production-touring` | 14 | 0 |
+| `05-services-marketplace` | 8 | 0 |
+| `23-career-finance-business` | 8 | 0 |
+| `15-gear-registry-ownership` | 7 | 0 |
+| `24-trust-safety-disputes` | 7 | 0 |
+| `04-opportunities-casting` | 6 | 0 |
+| `14-digital-goods-marketplace` | 6 | 0 |
+| `06-education-lessons-mentorship` | 5 | 0 |
+| `03-community-networking` | 4 | 0 |
+| `10-royalties-collections` | 4 | 0 |
+| `22-analytics-market-intelligence` | 3 | 0 |
+| `_root` | 3 | 0 |
+| `09-rights-ownership` | 2 | 0 |
+| `08-realtime-jamming-remote-sessions` | 1 | 0 |
 
-| Status | Manifests | Findings | Blocking |
-|--------|----------:|---------:|---------:|
-| Applied but independently unverified | 33 | 48 | 9 |
-| Pending recovery | 48 | 59 | 17 |
-| **Total manifest-backed target** | **81** | **107** | **26** |
+## Blocking Findings (20)
 
-The intended reconciliation rules remain evidence to verify, not proof of completion: contested
-credits stay visible per 02.01.01 D-11; draw count is `scanned_paid` per 17.09.02; domain-04 terms
-set belongs to 04.01.01 D-09; discovery dedup key is `(user, post)`; cold start has no
-`Overdue` qualifier without history; campaign anchor is 21.01.01.
+### B-001 — `01-identity-profiles-organizations/01.01-person-identity-roles/01.01.02-artist-names-aliases-projects.md`
 
-### Bucket 4 — Phase-2 domain warnings (224) — TRACKED
+- **Dimension**: 3
+- **Claim**: The two sibling files that own alias creation state directly contradictory rules for how the implied `performer` facet is added, each explicitly banning the other's answer.
+- **Evidence**: 01.01.02 D-10: "Alias creation adds the `performer` facet inline, one confirm — never silently, never as a separate flow" and Happy Path step 4: "System detects they hold no `performer` facet and adds it inline — one confirm". 01.01.01 D-12: "**Implied facets are auto-added with a visible, undoable notice — never prompted** ... A prompt at alias creation (\"are you a performer?\") is D-01's banned fork in softer words". 01.01.01 Cross-Cut Notes also asserts the resolution is its own: "**Resolved from this side (D-12): auto-add with a visible, undoable notice, never a prompt.** ... Step 6 should carry the resolution back into 01.01.02 so the two files agree" — which never happened.
+- **Forced decision**: Whether the alias-creation flow contains a blocking consent step gated on facet addition (one confirm) or writes the facet unconditionally and renders a post-hoc undoable notice — i.e. whether facet write is a precondition of alias creation or a side effect of it, and whether a user who declines can still create the alias.
+- **Verifier**: CONFIRMED by reading both source files, which are both [DEEP] (not depth-allocated away). 01.01.01-person-record-role-facets.md line 84 and D-12 (line 201): '**Implied facets** are auto-added with a visible, undoable notice — never prompted (D-12). Creating an alias (01.01.02) implies `performer`; a prompt at that moment ("are you a performer?") would be the account fork D-01 bans'. 01.01.02-artist-names-aliases-projects.md D-10 (line 158): 'Alias creation adds the `performer` facet inline, one confirm — never silently, never as a separate flow', Happy Path step 4 (line 54), Fan Role Lens (line 26: 'added inline at creation with one confirm ... never added silently'), and Cross-Cut Notes line 137. Each decision explicitly bans the other's answer, so no safe obvious reading exists — one mandates a consent gate, one mandates unconditional write plus post-hoc undo. 01.01.01 is internally consistent (explicit adds = one confirm per the Facet lifecycle section; implied adds = auto per D-12); the divergence is real and cross-file. 01.01.01's own Cross-Cut Note states 'Step 6 should carry the resolution back into 01.01.02 so the two files agree' — grep confirms 01.01.02 still carries the opposite D-10. Blocking upheld: this is a consent contract, not depth.
 
-Warnings on `[PARTIAL]`/`[SURFACE]` content in phase-2 domains (03, 04, 06, 08, 10, 11, 12, 16–24)
-are retained in [tracked-phase2-warnings.md](tracked-phase2-warnings.md). Their deferral remains an
-explicit scope disposition, not a clean result: the fresh audit must preserve, revise, or retire this
-applicability ruling with reconciled counts.
+### B-002 — `01-identity-profiles-organizations/identity-profiles-organizations-index.md`
+
+- **Dimension**: 7
+- **Claim**: Q-03, which the index itself calls the domain's highest-stakes product decision, is still open and its deferral target has completed.
+- **Evidence**: "Q-03 \| **What is the default mandate for a band that configures nothing?** ... Almost every band will live on this default forever. The highest-stakes product decision in the domain. \| User \| `/ideate-discover` Step 5 (01.03.03 Q-01)". Following the citation: 01.03.03 Q-01 is verbatim still open with the same expired target — "\| User \| `/ideate-discover` Step 5" — and Step 5 completed (commit a4a5b03 "Step 5 fully complete").
+- **Forced decision**: The default authority model for every band that never configures governance — "all members, all authority" or "creator only". This is the seed mandate written at org creation (CX-15: "the creator becomes the first owning mandate") and CX-12 states the skip path is the common one, so the default is the operative rule for most bands. An implementer must pick one, and the two choices produce opposite security postures.
+- **Verifier**: UPHELD as blocking. Verified: identity-profiles-organizations-index.md line 117 (Q-03, User, '/ideate-discover Step 5 (01.03.03 Q-01)'); following the citation, 01.03/01.03.03-mandate-scope-delegated-authority.md line 97 Q-01 is verbatim still open with the same target, and Step 5 completed (session log 2026-07-18-ideate-discover-complete.md, commit a4a5b03). Unlike Q-09 (idx 4) no child resolves it: 01.03.03 line 50 says 'A default applies. What that default is, is the most consequential open question here', line 59 'Default authority applies (Q-01)', and DT-03 confirms 'Neither is right, and the answer is a product decision'. 01.04's index Q-02 depends on it too. 01.02.02 settles only that the creator gets the first owning mandate — not what other members may do by default. User-owned, v1 scope (bands/orgs/governance), opposite security postures. Real forced guess.
+
+### B-003 — `02-credits-attribution/02.01-credit-graph-discography/02.01.05-credit-visibility-embargo.md`
+
+- **Dimension**: 3
+- **Claim**: Evidence-based lift specifies a 72-hour Producer objection window but never says what an objection does, and the outcome directly contradicts D-10's claim that post-release lift needs no permission.
+- **Evidence**: D-11: "any participant may supply proof the recording is publicly available; the platform verifies, notifies the Producer, and lifts after a **72-hour objection window**" ... "unless the Producer objects". D-10: "Post-release the question evaporates: D-11 needs no permission." ABSENT: the state, remedy, re-submission rule, or terminal outcome after a Producer objects to a verified-public lift.
+- **Forced decision**: Whether a Producer objection permanently blocks lift of a demonstrably-public recording (re-arming the payment-dispute weapon DT-10/D-09 claim to have disarmed), merely pauses it, or routes somewhere — and what state the credit sits in afterwards, since no such state exists in the Credit visibility state table.
+- **Verifier**: CONFIRMED by exhaustive grep of every occurrence of 'object' in 02.01.05-credit-visibility-embargo.md (lines 59, 122, 168, 201, 242, 255, 258). Every one states the lift happens 'unless the Producer objects' and the state table row 'Lift pending — objection window' offers the Producer 'object / confirm now' — but no line anywhere states the post-objection state, remedy, re-submission rule, or terminal outcome, and no such state exists in the Credit visibility state table (lines 158-171). The 'safe obvious reading' (objection blocks the lift) is not safe, because it falsifies the file's own load-bearing claims: edge case line 129 asserts that under a payment-dispute weaponisation 'once the work is public they lift it themselves (D-11) without the Producer', and D-11 (line 242) claims it 'removes the Producer from the critical path'. If an objection is terminal, both claims are false and DT-10's anti-persona defence is re-armed. Q-04 (line 258) defers only the *verification mechanism* to /create-prd-architecture, and explicitly leans on the objection window as 'the compensating control ... doing a lot of work' — it does not define what the objection does. Q-02's remaining halves are appeal-of-a-declined-early-lift-request and Confidential, not this. [DEEP] Must-depth file, so dimension 3 fully applies. Blocking severity stands.
+
+### B-004 — `02-credits-attribution/02.03-claiming-cold-start-seeding/02.03.03-claim-adjudication.md`
+
+- **Dimension**: 3
+- **Claim**: This file's core public-visibility rule for contested credits directly contradicts the authoritative reconciliation in 02.01.02, which asserts that this very decision has been superseded.
+- **Evidence**: 02.03.03 states three times that contest hides the credit: Decision "D-03 \| Contested credits are suppressed from public discography pending resolution"; state "Contested \| Second claim on a claimed credit \| Held; both told; suppressed from public"; edge case "Contested credit is on a public discography \| Suppressed while contested ... \| Removed from both pages pending resolution". But 02.01.02-public-discography.md declares: "**Authoritative reconciliation (resolves 02.04.02 Q-06): a contested credit is NEVER suppressed from the public discography.** ... This **supersedes any suppression language in 02.05** ... `02.03.03` D-03 aligns to the same rule. The single winning rule, stated once: **contest = a public marker on the record view for participants only; the public discography line is unchanged and never hidden.**" 02.03.03 was never updated to that rule and still asserts the opposite.
+- **Forced decision**: Whether a claim contest hides the credit from the public discography and the work ledger (02.03.03 as written) or leaves it publicly visible with a participants-only record-view marker (02.01.02 D-06 as written) — and, if the latter, what is publicly shown for a credit whose attributed human is in dispute. The two readings produce opposite public-graph behavior, opposite traversal behavior, and opposite abuse profiles (censorship-by-contest vs. publishing a possibly-misattributed name).
+- **Verifier**: CONFIRMED by reading both files. 02.03.03-claim-adjudication.md D-03 (line 85), the Contested state row (line 58) and the public-discography edge case (line 50) all assert suppression: 'Contested credits are suppressed from public discography pending resolution' / 'Removed from both pages pending resolution'. 02.01.02-public-discography.md line 135 states the opposite as an authoritative reconciliation — 'a contested credit is NEVER suppressed from the public discography' — and explicitly names this file: '`02.03.03` D-03 aligns to the same rule.' The sibling it also names, 02.05-credit-dispute-resolution.md, WAS updated to match (D-02, line 93: 'marked for participants, not suppressed and not publicly annotated'); 02.03.03 was not. Quotes verified verbatim. This is a direct contradiction, not a depth complaint, so the [SURFACE] status does not excuse it. The reconciliation asserts alignment that does not exist, so an implementer reading either file alone builds opposite public-graph behaviour. Blocking upheld.
+
+### B-005 — `02-credits-attribution/02.04-attestation-credit-confidence/02.04.01-attestation-request-confirmation.md`
+
+- **Dimension**: 3
+- **Claim**: Two incompatible attestation-invalidation rules exist for amendments: 02.04.01 D-10 invalidates on any party/role/work change, while 02.04.02 D-13 preserves attestations whenever the amended claim is entailed by the attested one.
+- **Evidence**: 02.04.01 D-10: "A material amendment — party, role or work — invalidates every attestation on the row and requires re-asking. Nothing else does" — versus 02.04.02 D-13: "**An amendment preserves attestations only if the new claim is entailed by the attested one**; anything else invalidates and re-asks" and 02.04.02 edge case "Amendment narrows within a family (\"Drums\" → \"Drums — brushes\") or widens \| Entailed. Attestations carry; rung unchanged". 02.04.01's own cross-cut note concedes the risk: "the materiality boundary must be defined once, in one place, or the two will drift into a hole."
+- **Forced decision**: Whether a role change that is entailed by the attested claim (taxonomy narrowing/widening) invalidates attestations and triggers a re-ask storm, or carries silently — i.e. which of the two stated materiality rules is the authoritative one.
+- **Verifier**: CONFIRMED by reading both files, which are both [DEEP] and both dated 2026-07-16. 02.04.01 D-10 states verbatim 'A material amendment — party, role or work — invalidates every attestation on the row and requires re-asking. Nothing else does', and its edge-case row repeats 'If party, role or work changed → every attestation on the row is invalidated'. 02.04.02 D-13 states 'An amendment preserves attestations only if the new claim is entailed by the attested one', with the explicit edge-case row 'Amendment narrows within a family ("Drums" → "Drums — brushes") or widens \| Entailed. Attestations carry; rung unchanged \| Nothing'. A within-family role narrowing IS a role change, so D-10 invalidates it and D-13 carries it. Neither file marks the other as authoritative; 02.04.01's own cross-cut note names the hazard ('the materiality boundary must be defined once, in one place'). No safe reading: taking D-10 literally contradicts a locked D-13 and its user-visible outcome. Load-bearing — decides whether taxonomy edits trigger a re-ask storm.
+
+### B-006 — `02-credits-attribution/02.04-attestation-credit-confidence/02.04.02-provenance-tiers-credit-confidence.md`
+
+- **Dimension**: 3
+- **Claim**: The file states both that ring-detection demotion is only a score-side multiplier that never crosses a rung boundary, and that demotion lowers the publicly-rendered rung.
+- **Evidence**: Score input table: "Ring-detection demotion (`02.04.04`) \| Negative multiplier, **never a cap** (DT-14) \| Detection never writes the rung or the score directly (CX-03 Q1); it supplies one penalty term the derivation reads" plus "**The score never promotes across a rung.**" Against States: "Demoted \| Ring detection or retraction \| Lower rung." and edge case "Rung drops after being public \| Retraction (`02.04.03`), demotion (`02.04.04`), or amendment invalidation", and 02.04.04 States: "Demoted \| Score above threshold \| Tier drops (`02.04.02`)".
+- **Forced decision**: Whether a collusion demotion changes the credit's public rung label (silently downgrading a page others have cited) or only the internal 0.0–1.0 score consumed by traversal — two materially different products, both asserted.
+- **Verifier**: CONFIRMED in 02.04.02 ([DEEP]). The two-axes table binds the score: 'Rung \| Sets the band \| The score never crosses a rung boundary — a rung-6 credit is never scored below a rung-5 one', and the score-input table places ring demotion inside the score only: 'Ring-detection demotion (02.04.04) \| Negative multiplier, never a cap (DT-14) \| Detection never writes the rung or the score directly'. Rungs are gated on evidence KIND, and a multiplier removes no confirmation, so a demotion cannot lower a rung. Yet the same file's States table says 'Demoted \| Ring detection or retraction \| Lower rung', its edge case is titled 'Rung drops after being public \| Retraction, demotion, or amendment invalidation ... silently for demotion', CX-03 Q4 says a party 'is not told their tier dropped from demotion', and 02.04.04 States says 'Demoted \| Score above threshold \| Tier drops (02.04.02)'. Both readings are asserted in the same DEEP file; one silently changes a public label, the other only an invisible traversal weight. No safe reading.
+
+### B-007 — `02-credits-attribution/02.04-attestation-credit-confidence/02.04.02-provenance-tiers-credit-confidence.md`
+
+- **Dimension**: 3
+- **Claim**: A credit with both a confirmation and a refusal is specified as showing a contradiction marker here, and as showing nothing at all in 02.04.01, which explicitly rejects the unnamed-refusal disclosure as an anonymous accusation.
+- **Evidence**: 02.04.02 edge case: "Two roll members attest contradictorily (confirm + refuse) \| Both recorded. The refusal offsets (DT-05); the contradiction surfaces on the record view and a dispute is offered, never opened \| Contradiction marker on `02.01.01`; nothing on the public page" — versus 02.04.01 edge case: "Two people attest contradictorily \| ... **Not surfaced** — surfacing it would publish the refusal (D-06) \| Nothing. Credit shows its confirmations only", and 02.04.01 DT-05: "Reporting an *unnamed* refusal is worse ... it carries the retaliation risk *and* is an anonymous accusation."
+- **Forced decision**: Whether a contradiction marker is rendered on the record view (and to which parties), or whether contradiction stays purely internal signal — i.e. whether the refusal-silence invariant holds once a confirmation also exists.
+- **Verifier**: CONFIRMED — evidence quoted accurately from both [DEEP] files. 02.04.02 edge case: 'Two roll members attest contradictorily (confirm + refuse) \| Both recorded. The refusal offsets (DT-05); the contradiction surfaces on the record view and a dispute is offered, never opened \| Contradiction marker on 02.01.01; nothing on the public page'. 02.04.01 edge case: 'Two people attest contradictorily \| ... **Not surfaced** — surfacing it would publish the refusal (D-06) \| Nothing. Credit shows its confirmations only', and its States row 'Contradicted \| Confirm + refuse on one row \| **Not surfaced** — internal signal only'. 02.04.01 D-07 makes this an invariant ('a refused credit renders identically to an unanswered one') and DT-05 explicitly rejects the unnamed-refusal disclosure as 'an anonymous accusation'. A contradiction marker on the 02.01.01 record view is exactly that disclosure. Direct contradiction on a privacy/retaliation invariant; no safe reading.
+
+### B-008 — `07-music-projects-collaboration/music-projects-collaboration-index.md`
+
+- **Dimension**: 4
+- **Claim**: The domain declares an entire in-scope sub-domain (07.09 DAW Bridge) whose only possible delivery mechanisms are excluded by the confirmed surface constraint, and no reconciliation exists anywhere.
+- **Evidence**: Index Q-01: "**Does the DAW bridge (`07.09`) contradict the `single-surface` classification?** `meta/constraints.md` declares web as the only surface. A watch folder needs a local agent; a plugin needs native builds." \| Owner: User \| Deferred To: `/ideate-validate` (surface decision)" — but `meta/constraints.md` (owner-confirmed 2026-07-18, i.e. the deferral target already executed) states: "\| Desktop \| — \| — \| Not in scope. No directive. \|" and "Structural Classification remains `single-surface` for v1 (one Astro web app + PWA)"; `ideation-index.md` D-37 states the parsing decision was reached "without choosing DAWs, bridge delivery, or a new surface"; `specs/feature-ledger.md` nevertheless scopes all three children in: "`07.09.01` ... \| Should", "`07.09.02` ... \| Should", "`07.09.03` ... \| Should".
+- **Forced decision**: The implementer must invent how a watch folder, session-file parser and in-session capture surface are delivered on a web+PWA-only surface — i.e. must unilaterally either (a) introduce a desktop/local-agent surface the locked constraints exclude, (b) demote 07.09 out of v1 and re-derive the degraded behaviour of the seven dependent features across 07.04/07.05/07.06/07.08, or (c) invent a browser-only substitute (manual upload) that contradicts the domain's stated thesis.
+- **Verifier**: CONFIRMED by reading four sources. (a) music-projects-collaboration-index.md Q-01 is verbatim as quoted, Owner=User, Deferred To=`/ideate-validate` (surface decision). (b) meta/constraints.md is `[DEEP]` and states 'all constraint categories resolved during /ideate-validate 2026-07-18' — i.e. the deferral target HAS executed — and its Project Surfaces table reads '\| Desktop \| — \| — \| Not in scope. No directive. \|' with 'Structural Classification remains single-surface for v1 (one Astro web app + PWA)'. Nothing in constraints.md, ideation-index D-28, or decisions.md answers Q-01. (c) ideation-index D-37 (2026-07-20, AFTER the deferral target ran) explicitly says the DAW resolution was reached 'without choosing DAWs, bridge delivery, or a new surface', and decisions.md DEC-... for D-37 repeats 'does not ... alter the web-only surface classification'. (d) 07.09-daw-bridge-capture-at-source-index.md Q-01 restates the same unresolved contradiction and D-04 confirms the validation gate 'preserves capture-at-source intent ... without changing the web-surface decision'. So the OQ is deferred to an already-completed stage and was never answered — the explicit exception the verification brief keeps as a real finding. It is load-bearing rather than cosmetic because the dependency runs into v1 Musts: feature-ledger.md marks 07.09.01/02/03 as `Should` while 07.04.01, 07.06.01 and 07.06.02 are `Must` / `v1` / `[DEEP]`, and 07.06.02 D-01 makes 07.09 an INPUT not a peer ('Pre-fill is not a nicety, it is the precondition'), with its own Q-01 stating 'shipping the prompt alone ships nothing'. Note the partial mitigation I checked and rejected as sufficient: 07.09 D-02 and the CX Not-Product table do route the *delivery mechanism* (plugin vs agent vs watch folder) to `/create-prd` — but that routing presupposes a surface the locked constraints exclude, so it defers the 'how' without ever settling the 'whether'. Severity blocking upheld.
+
+### B-009 — `11-music-licensing/11.04-licensing-policy-preferences/11.04.03-policy-conflict-resolution.md`
+
+- **Dimension**: 3
+- **Claim**: The fold's threshold rule ("minimum wins") and 11.04.01's per-share threshold rule are mutually incompatible and yield different auto-approve outcomes on the same request.
+- **Evidence**: 11.04.03 D-02 / Behavior: "**Thresholds take the minimum** — two owners with £500 and £2,000 ceilings yield £500" and edge case "Two owners set £500 and £2,000 ceilings \| Minimum wins: £500". 11.04.01 D-17: "The threshold is absolute and currency-explicit, evaluated on **the party's own share value**" and "**The threshold is on the party's own share.** It therefore requires the split to be resolved."
+- **Forced decision**: Whether the effective ceiling is (a) each owner's own ceiling tested against that owner's own share of the deal, all of which must pass, or (b) a single work-level ceiling equal to the minimum of the owners' ceilings tested against the total deal value. Worked example: deal £1,000, owner A holds 10% with a £500 ceiling, owner B holds 90% with a £2,000 ceiling — reading (a) auto-approves, reading (b) falls through. The implementer must also invent how a multi-hyphenate's several shares enter the threshold fold, since this file says they "must count once in the fold" while 11.04.01 says "**thresholds apply per share** — a £500 publishing ceiling is not a £500 master ceiling".
+- **Verifier**: UPHELD — confirmed a genuine contradiction that produces divergent auto-approve outcomes, and it is internal to 11.04.01 as well as cross-file. 11.04.03 D-02/Behavior line 30 and edge case line 53 define a single work-level effective ceiling ('Thresholds take the minimum — two owners with £500 and £2,000 ceilings yield £500', 'Both see the effective ceiling and whose it is'). 11.04.01 line 62 and D-17 define the ceiling as per-party, tested on that party's own share value ('The threshold is on the party's own share. It therefore requires the split to be resolved'), which is the conjunctive form of 11.04.03's own 'permissions combine restrictively'. 11.04.01's own edge case line 87 then endorses the incompatible rule ('Two owners set different auto-approve ceilings \| Lowest wins (11.04.03)'), so the same [DEEP] file asserts both. The worked example verifies the divergence: deal £1,000, A holds 10% with a £500 ceiling, B holds 90% with a £2,000 ceiling — per-share testing auto-approves (£100≤£500, £900≤£2,000); minimum-work-level testing falls through (£1,000>£500). Under a per-share reading 11.04.03's '£500 and £2,000 yield £500' is only true at equal shares, so the stated example is not a restatement of the same rule. This is a contradiction, not a depth complaint, so 11.04.03's [PARTIAL] status does not excuse it. Note one sub-claim is weaker: the multi-hyphenate point is resolved — 11.04.01 line 109 explicitly qualifies 11.04.03's unqualified cross-cut note ('for veto they count once ... but thresholds apply per share'), and 11.04.02 line 161 agrees for blocks. Severity kept at blocking because the ambiguity decides whether a licence issues with no human involved.
+
+### B-010 — `11-music-licensing/music-licensing-index.md`
+
+- **Dimension**: 2
+- **Claim**: The buy-side actor for the domain's two most valuable sub-domains has no persona and no column in the Role Matrix, and the deferral that owned this gap has already expired unanswered.
+- **Evidence**: Role Matrix rows: "\| 11.01 Sync Licensing \| ✅ Full — tags, pitches, approves holds on own works \| ✅ Full — master-side counterparty; the dual-licence coordinator \| ❌ None \| ❌ None \|" and "\| 11.03 Pricing & Negotiation \| ✅ Full — rate cards, quotes, MFN on their share \| ✅ Full — same, master side \| ❌ None \| ❌ None \|"; index finding: "**1. The licence buyer has no persona.** ⚠️ The music supervisor, brand and agency who drive 11.01 and 11.03 map to **none** of the four ratified personas (D-19). Every row for those sub-domains is a *sell-side* row... **This blocks `/write-fe-spec` for the domain's most valuable surface.**"; Q-01 Owner=User, Deferred To=`/ideate-validate` — but ideation-index.md records "## Ideation Rubric Self-Check (`/ideate-validate`, 2026-07-18)" with "\| 2 \| Persona Specificity \| ✅ \| 4 personas, all 6 fields each" and "**Result: 8/8 ✅**", i.e. the deferral target ran and closed without recording an answer, and meta/personas.md still contains no buyer persona (its coverage check assigns "11 Licensing \| Musician + Producer \| ✅").
+- **Forced decision**: Whether a music supervisor / brand / agency is a fifth persona or a role of an existing one, and — because no ratified persona covers them — what identity, access level, and permission surface a professional licence buyer gets in 11.01 (supervisor search, briefs, holds) and 11.03 (quotes, MFN, negotiation). Every access cell for the buyer across those sub-domains must be invented.
+- **Verifier**: CONFIRMED by reading music-licensing-index.md (Role Matrix rows 11.01/11.03 quoted verbatim, finding #1 at L82-86, Q-01 at L144), meta/personas.md (4 personas only; coverage check L133 assigns '11 Licensing \| Musician + Producer \| ✅'; its own Q-01 also deferred to `/ideate-validate`) and ideation-index.md (L147-160: '## Ideation Rubric Self-Check (`/ideate-validate`, 2026-07-18)' scoring dim 2 ✅ and dim 7 ✅, 'Result: 8/8'). The deferral target ran and closed without recording an answer, so this is the explicitly-permitted 'Open Question deferred to an already-completed stage' case, not a resolved deferral. Tried to refute by searching the whole ideation tree for a fifth-persona resolution: every other domain that hit this gap resolved it locally against a new persona (06.10 D-01 academy=Operator, 03.06 D-05 stewards, 23 D-03 delegation, 22.07 A&R=Producer). Domain 11's buyer does NOT resolve that way — a brand or ad agency is none of Musician/Producer/Operator/Fan, and 11.08.02 DT-04 sharpens it further ('the buyer is **plural**' — purchaser vs licensee). Corroborated by 11.02.01 L29, 11.02-index L52, 11.03-index L43 and 11.04.01 DT-11/Q-05, which all defer their own decisions to this unanswered question. Severity kept blocking: the index itself states it blocks `/write-fe-spec` for the domain's most valuable surface, and no safe default reading exists for the buyer's identity/access cells.
+
+### B-011 — `12-release-distribution/12.02-ddex-delivery-messaging/12.02.02-per-partner-profile-conformance.md`
+
+- **Dimension**: 5
+- **Claim**: 12.02.02 and 12.02.03 each ratify a different, mutually incompatible specification of the expected-response window that makes `Overdue` real — different statistic, different sample floor, different precedence order, different fallback, different resolution key — and each claims to answer the other.
+- **Evidence**: 12.02.02: "\| Partner contract or spec states a window \| That value \| ... \| No stated window, **≥5 acks observed** at that stage \| Observed **P90 of the last 20 acks** \| ... \| Any of the above \| Internal escalation fires at a platform-wide fallback of **10 business days** regardless \|" and DT-14 "*(Answers 12.02.03 Q-01 from this side, since the window is profile data.)*" — versus 12.02.03 D-05: "Response window = observed p95 (N≥30, 180d) > contractual > seeded 5 business days; expectation copy = observed p50 (N≥10)" and "**Observed outranks contractual, and that inversion is intentional.**" 12.02.02 PC-10 keys the window "per stage"; 12.02.03 keys it "per **(partner × message type)**".
+- **Forced decision**: Which of the two ratified window specs governs: contractual-first with P90-of-last-20 at N≥5 and a 10-business-day internal fallback (12.02.02 D-12), or observed-first with p95 at N≥30/180d, p50-at-N≥10 copy and a 5-partner-business-day seed (12.02.03 D-05); and whether the window is keyed per ack stage or per (partner × message type).
+- **Verifier**: CONFIRMED by reading both [DEEP] files in full. 12.02.02 lines 109-120 + D-12 (line 365) ratify: contract-stated window first, else observed P90 of the last 20 acks at >=5 samples, else no norm, with a platform-wide 10-business-day internal escalation fallback; PC-10 (line 81) keys the window 'per stage'. 12.02.03 lines 110-139 + D-05 (line 321) ratify the inverse: observed p95 (N>=30, 180d) OUTRANKS contractual ('that inversion is intentional'), seeded 5 partner-business-days as tier 3, p50 at N>=10 for copy, keyed per (partner x message type). Different precedence, different statistic, different sample floor, different fallback number, different resolution key. Both claim to resolve the same question (12.02.02 DT-14 'Answers 12.02.03 Q-01 from this side'; 12.02.03 heading 'resolves prior Q-01'). I followed every citation: the sub-domain CX file's CX-02 (lines 38-51) only says the window is profile data and does not reconcile the two; neither file records the other as superseded, and both carry the same 2026-07-16 date. An implementer must guess which ratified precedence governs Overdue and the artist-facing copy. Load-bearing, so blocking stands.
+
+### B-012 — `13-gear-marketplace/13.02-condition-originality-disclosure/13.02.01-condition-grading-scale.md`
+
+- **Dimension**: 3
+- **Claim**: The Grade Ceilings table is keyed on a generic severity vocabulary (light/moderate/heavy, repaired-professional/repaired-amateur/unrepaired) that the flaw checklist it consumes explicitly refuses to produce, and no mapping between the two vocabularies exists in either file.
+- **Evidence**: 13.02.01: "\| cosmetic \| `moderate` \| Ceiling: Very Good \|" ... "\| structural \| `repaired` (professional, stable) \| Ceiling: Excellent \|" ... "13.02.02 currently specifies \"presence, severity\" without an axis or a severity vocabulary. Without the axis, this table cannot execute and grading has no functional dimension at all. Flagged in Cross-Cut Notes for Step 6." — vs 13.02.02 D-05: "Severity options are authored per item, never a shared Light/Moderate/Severe scale" with the worked example "`Crack: finish-only / through-timber, stable / through-timber, repaired / active`".
+- **Forced decision**: The implementer must invent the projection from every per-item severity option onto the ceiling table's severity token — including facts the per-item enum never captures (the ceiling distinguishes a professionally-executed stable repair from an amateur/unstable one; the crack enum records only 'through-timber, repaired'). Every ceiling, and therefore every achievable grade, depends on an invented mapping.
+- **Verifier**: CONFIRMED by reading both files plus the sub-domain CX and index. 13.02.01 Grade Ceilings is keyed on `light`/`moderate`/`heavy`, `repaired (professional, stable)`/`repaired (amateur or unstable)`/`unrepaired`, `impaired`/`fails`, `non-essential`/`essential`. 13.02.02 D-05 and DT-11 explicitly reject a shared severity scale ('Severity options are authored per item ... `Crack: finish-only / through-timber, stable / through-timber, repaired / active`'). No projection from a per-item option onto the ceiling token exists in 13.02.01, 13.02.02, 13.02-condition-originality-disclosure-cx.md (whose CX-01 detail never mentions the vocabulary at all) or the sub-domain index. The professional-vs-amateur repair distinction the ceiling table needs is not capturable by the worked crack enum. 13.02.01 self-admits the gap in-file — 'Without the axis, this table cannot execute and grading has no functional dimension at all. Flagged in Cross-Cut Notes for Step 6' — and Step 6 (cross-cut synthesis) has already completed without landing it. Every ceiling, hence every achievable grade and its comp key, depends on an invented mapping. Blocking stands; this is a contradiction between two [DEEP] files, not a depth complaint.
+
+### B-013 — `16-venues-studios-spaces/16.01-place-records-rooms/16.01.02-room-space-first-class-entity.md`
+
+- **Dimension**: 3
+- **Claim**: 16.01.02 D-09 and 16.01.01 D-07 specify two incompatible containment/sublease models — a grant handed out by the place claimant versus an independently claimed room operating org that the claimant explicitly cannot grant or revoke — and 16.01.01 DT-08 rejects by name the exact model 16.01.02 adopts.
+- **Evidence**: 16.01.02 D-09: "The **room is the unit of operational delegation** — one record, one claim, a room granted to another org" and edge case "Delegation revoked while the delegate has live bookings on that room \| Revocation is **effective-dated after the last confirmed booking**". 16.01.01 D-07: "A room's operating org is **claimed, not granted** — via 16.05.02's ladder, anchored to the room operator's own pre-existing facts", and 16.01.01 DT-08 ("The place claimant **grants** the sublessee's room delegation") is "❌ REJECTED, and this is the sharpest consequence of DT-07... A grant makes the venue Operator the gatekeeper of an independent business's entire platform presence". The parent CX is stale in a third direction: CX-01 synthesis Q3 states "There is currently no per-room delegation". Neither file cites the other's decision; 16.01.02's cross-cut note only says "Step 6 must reconcile", and the domain CX (venues-studios-spaces-cx.md line 296) propagates both — "Room-level delegation on a single claim (D-09); one record referencing N operating orgs (D-06)".
+- **Forced decision**: Whether a subleased room's operator obtains authority by an owner-issued, owner-revocable grant (16.01.02) or by an independent proof-of-control claim the place claimant may only dispute and can never revoke (16.01.01) — which determines the claim flow, the permission model, the dispute path, and whether a revocation surface exists at all.
+- **Verifier**: CONFIRMED by reading both files. 16.01.02 (line 244) D-09: 'The room is the unit of operational delegation — one record, one claim, a room granted to another org', with DT-11 stating 'the claimant grants a room to another org' and an edge case for revocation ('Delegation revoked while the delegate has live bookings on that room \| Revocation is effective-dated after the last confirmed booking'). 16.01.01 (line 291) D-07: 'A room's operating org is claimed, not granted — via 16.05.02's ladder, anchored to the room operator's own pre-existing facts', and DT-08 rejects by name the exact model 16.01.02 adopts: 'The place claimant grants the sublessee's room delegation ... REJECTED, and this is the sharpest consequence of DT-07. A grant makes the venue Operator the gatekeeper of an independent business's entire platform presence'. Both files are [DEEP] (no MoSCoW depth exemption applies) and both dated 2026-07-16. I followed every citation: the parent index Q-01 defers containment to '/ideate-discover Step 5' — a stage that has completed — and the two Step-5 outputs answered it incompatibly. 16.01-place-records-rooms-cx.md CX-01 synthesis Q3 is stale in a third direction ('There is currently no per-room delegation, which Q-01 will likely force'). The domain CX (venues-studios-spaces-cx.md line 296) propagates both unreconciled: 'Room-level delegation on a single claim (D-09); one record referencing N operating orgs (D-06)'. Neither file's Open Questions resolves it — 16.01.02 Q-01 only asks about delegated-room *economics* (assuming the grant), and 16.01.01 Q-08 hands 16.01.02 the claimed-org model without either side conceding. No safe reading exists: grant vs claim determines the claim flow, the permission model, the dispute path, and whether a revocation surface exists at all. Blocking stands.
+
+### B-014 — `16-venues-studios-spaces/venues-studios-spaces-index.md`
+
+- **Dimension**: 4
+- **Claim**: The domain index asserts a UK statutory regime as load-bearing product rationale, contradicting the locked primary-market constraint (US-first, D-32), and every consumer of licensed capacity/statutory records inherits the wrong regime.
+- **Evidence**: "PLI is a hard gate on real UK venue bookings; licensed capacity is a statutory ceiling 19 must not exceed." and Q-13: "**Jurisdiction** — 16.01.06 and 16.02.06 assume a UK regime (PRS/PPL/PAT/premises licence). Does the launch market decide these features' shape? \| User \| `/ideate-validate`" — while meta/constraints.md records "**Primary market: UNITED STATES to start**" and ideation-index.md D-32 locks it (2026-07-18, after this index's 2026-07-16 last-updated).
+- **Forced decision**: Which statutory record set and capacity model ships: UK premises licence + PAT + PLI with a *granted* licensed-capacity figure, or the US model where occupant load is *derived* from floor area and egress (16.02.01 Q-01 states the two produce a different ceiling with a different issuer). This determines the field vocabulary of 16.01.06, whether 16.02.06 is PRS/PPL or ASCAP/BMI/SESAC, and whether the capacity ceiling is an ingested figure or a computed one.
+- **Verifier**: CONFIRMED by reading all four sources. venues-studios-spaces-index.md line 80 verbatim: 'PLI is a hard gate on real UK venue bookings; licensed capacity is a statutory ceiling 19 must not exceed.' Q-13 (line 154) verbatim, Owner=User, Deferred To=`/ideate-validate`. meta/constraints.md line 248 records 'Confirmed 2026-07-18, `/ideate-validate`. **Primary market: UNITED STATES to start**' and ideation-index.md line 253 locks D-32 (User, 2026-07-18). The deferral target has therefore COMPLETED, and it completed by locking US-first — while the domain's jurisdiction question went unanswered. This is the explicit 'Open Question deferred to an already-completed stage' case, not a resolved deferral. Downstream is still UK-shaped and still open: 16.01.06 line 65 carries a live `[PENDING — /ideate-validate]` on the jurisdiction field set and its Q-01 (line 108) defers to the same completed stage; 16.02.01 Q-01 (line 262) states outright that 'US fire-code occupant load is derived from floor area and egress, not granted as a figure, which changes what the ceiling *is* and who issues it' and defers to `/ideate-validate` as 'an instance of domain Q-13'. So the forced decision is real and load-bearing: 16.02.01's entire three-layer model, D-14 (an expired declaration does not lift the ceiling), the DT-12 equality detector and 16.01.06's expiry semantics all presuppose a *granted* figure with an issuer and an expiry — none of which exists in the US derived-occupant-load model that D-32 selected. Domain 19 consumes this as a hard ceiling. Partial mitigation noted but not sufficient: 16.02.06 line 10 already names both regimes ('PRS/PPL in the UK; ASCAP/BMI/SESAC in the US'), so that half of the auditor's forcedDecision is softer than stated, and 16.02.01 Q-01 asserts a belief that the three-layer model survives. But 16.01.06's field set (premises licence / PAT / PLI) has no US analogue named anywhere, and whether the capacity ceiling is ingested or computed remains an open guess. Kept blocking.
+
+### B-015 — `16-venues-studios-spaces/16.04-rehearsal-practice-space-specification.md`
+
+- **Dimension**: 3
+- **Claim**: 16.04 declares backline as first-class spec fields typed on the rehearsal spec sheet, contradicting 15.07 D-01 (the room listing reads the asset register and never duplicates it) and 16.02.02 D-06/DT-14, which rejected exactly this shape for venue backline; 16.04 has no cross-cut note to domain 15 at all.
+- **Evidence**: "Fields: - **Backline present** — kit, bass rig, guitar amps, PA/vocal mics, keys — each with an **inclusion model**: `included` / `hire extra` / `bring your own` (D-03)." vs 15.07 D-01 "The room listing (domain 16) **reads** the register; it does not duplicate it" (15.07 explicitly scopes "gear owned by a studio, venue or rehearsal space") and 16.02.02 G7 "**Backline** \| **Read-through** → 15.07.03 ... Not typed here." 16.04's Cross-Cut Notes list 16.06.09, 16.06.03/06, 16.01.01, 16.05.06, 16.03.02 and 08 — domain 15 is absent.
+- **Forced decision**: Whether rehearsal backline is stored as fields on the 16.04 room spec or read through from the 15.07 org asset register (with 16.02.02's inline minimal-detail create path); and, consequently, where the per-item inclusion model (`included`/`hire extra`/`BYO`) and the per-item condition/status flag live — on the 15 asset (15.07.02) or on the 16 room spec. Choosing wrong produces the hand-maintained second list that 15.07 D-01 and personas.md name as a guaranteed rot failure.
+- **Verifier**: CONFIRMED against all three cited files. 16.04 line 38 types backline as a spec field: '**Backline present** — kit, bass rig, guitar amps, PA/vocal mics, keys — each with an **inclusion model**: `included` / `hire extra` / `bring your own` (D-03)', ratified as its own D-03 (line 124), plus a per-item condition flag (line 71, 'Per-item status flag, same pattern as 16.03.02'). This directly contradicts 15.07 index D-01 (line 50): 'The room listing (domain 16) **reads** the register; it does not duplicate it', whose scope explicitly includes rehearsal — 15.07 index line 10: 'gear owned by a studio, venue or rehearsal space'; 15.07.03 D-01/DT-01 rejects the duplicate-and-sync architecture outright. The sibling 16.02.02 decided the identical question the other way: G7 line 83 '**Backline** \| **Read-through** → 15.07.03 ... Not typed here', D-06 line 251 '**Backline and mic/DI stock are read-throughs from 15.07, not fields here.** An inline minimal-detail create path writes to 15.07.01; this feature never holds a second list', with DT-14 rejecting 'House backline is a spec field here' as 'already decided elsewhere, and the sweep nearly duplicated it'. 16.04's Cross-Cut Notes (lines 111-116) list 16.06.09, 16.06.03/06, 16.01.01, 16.05.06, 16.03.02 and 08 — domain 15 is absent, so an implementer working from 16.04 has no signal to look. Not refutable as 'obvious by analogy': 15.07 Q-03 leaves the rehearsal case specifically open ('Does a rehearsal space's backline need per-item identity at all, or is "4 amps, 2 kits" sufficient?', Owner=User, deferred to `/ideate-discover` Step 5 — a stage that has since completed and resolved 16.02.02's Q-03 but not 16.04's), and 16.02.02 DT-14 explicitly propagates its shape only to 16.03, saying '16.03 must confirm that for itself'. Two incompatible storage models for the domain's fastest-decaying field, with the rot failure named in personas.md. Blocking upheld. Not a depth complaint, so the [PARTIAL] allowance does not apply.
+
+### B-016 — `19-ticketing-box-office/19.04-door-scanning-access-control/19.04.01-ticket-scan-validation.md`
+
+- **Dimension**: 5
+- **Claim**: The two sibling features specify directly contradictory replica-staleness behaviour — whether staleness can block a scanner at all, and at what threshold it warns.
+- **Evidence**: 19.04.01 D-06: "Staleness never blocks the door; only a **missing** replica blocks. Amber "stale" warns at a default 60 min since last successful sync (configurable per show)" — versus 19.04.02 D-06: "Replica staleness thresholds: **amber warn at 30 min**, **hard block readiness at 120 min** since last successful sync ... Numbers are per-venue overridable defaults", and 19.04.02 States: "Stale (block) \| Replica older than the hard block threshold (120 min) \| Blocking — ... must re-sync to open". 19.04.01 DT-04 further asserts "the threshold governs a **warning**, never a block".
+- **Forced decision**: The implementer must invent (a) whether a stale-but-present replica ever blocks scanning, (b) the warn threshold (30 or 60 minutes), (c) whether a 120-minute hard block exists, and (d) whether the override scope is per-show or per-venue. Every one of these changes whether a door opens on the night.
+- **Verifier**: CONFIRMED by reading both source files, both of which are [DEEP] (so the depth allowance does not apply) and both last updated 2026-07-17. 19.04.01 D-06 reads verbatim 'Staleness never blocks the door; only a **missing** replica blocks. Amber "stale" warns at a default 60 min since last successful sync (configurable per show)', reinforced by its States row 'Not ready \| Replica not downloaded (no replica at all) \| ... Only a **missing** replica blocks; staleness never does (D-06)' and by DT-04 which explicitly REJECTS blocking ('the threshold governs a **warning**, never a block'). 19.04.02 D-06 reads 'amber warn at 30 min, hard block readiness at 120 min ... Numbers are per-venue overridable defaults' and its States table carries a distinct blocking state 'Stale (block) \| Replica older than the hard block threshold (120 min) \| Blocking — ... must re-sync to open'. I checked the reconciling candidates and none exist: the sub-domain CX file's CX-01 (Offline Sync <-> Scan & Validation) discusses replica staleness and admit-and-reconcile but never states a threshold or a block/no-block rule, and the sub-domain index Decision Log (D-01..D-04) is silent on staleness. Nor is there a safe reading that collapses 'blocks readiness before doors' into 'never blocks': 19.04.01's own blocking-state row reserves blocking exclusively for a missing replica. 19.04.02 Q-03 still ratifies 'warn 30 / block 120' as the live default, showing 19.04.02 was never updated after 19.04.01 DT-04 rejected it. Four load-bearing values conflict (blocks-at-all, 30 vs 60 warn, existence of a 120 hard block, per-show vs per-venue override scope) and each decides whether a scanner opens on the night. Blocking severity stands.
+
+### B-017 — `19-ticketing-box-office/19.05-box-office-counts-drops/19.05.01-live-count-manifest-state.md`
+
+- **Dimension**: 3
+- **Claim**: The canonical counter set has no `admitted` counter and never says which counter a walk-up admit-at-birth increments, yet 19.05.04 writes to `admitted` as if it were canonical state.
+- **Evidence**: 19.05.01 defines the complete counter set as "**Paid** ... **Comp** ... **Scanned** ... **Held** ... **Killed** ... **Remaining**" and its Happy Path step 6 says only "Walk-up sells at the window (19.05.04); paid rises during the scanning window". 19.05.04 Happy Path step 4 says "the system issues the ticket record and, atomically: `paid += 1`, `remaining -= 1`, `admitted += 1` (issue-and-admit, DT-01)" — `admitted` appears in no counter table, and 19.05.04 D-01 states walk-up tickets are "admitted at birth, never scanned", so they cannot reach `scanned` by the scanner path either.
+- **Forced decision**: Whether `admitted` is a distinct canonical counter (with its own provenance, freshness, statement line and settlement meaning) or an alias for `scanned`; and if an alias, by what path an admit-at-birth walk-up increments `scanned` when it is never validated. This is load-bearing: walk-up is stated at "20–50% of the gate", so getting it wrong makes the artist's room-fullness number and the flagship `scanned > paid + comp` alarm wrong by that fraction on every show.
+- **Verifier**: Confirmed by reading both [DEEP] files. 19.05.01 declares an exhaustive canonical counter table (Paid, Comp, Scanned, Held, Killed, Remaining) with a per-counter provenance sentence that assigns scanned exclusively to 'device reconciliation (19.04.03)', and its Happy Path step 6 says walk-up raises only paid. 19.05.04 Happy Path step 4 writes `admitted += 1`, D-11 decrements `admitted`, DT-03 reasons over `admitted`, its Cross-Cut Notes say walk-up 'mutates paid/remaining/admitted', and 19.05.05 close step 3 resolves 'admitted-but-refunded tickets' — yet `admitted` appears in no counter model, no States table, and no statement line (19.05.05 carries 'paid, comp, scanned, killed, gross...'). I checked the sub-domain CX and index: CX-03 also describes walk-up only as mutating 'the count', never defining `admitted`. Since 19.05.04 D-01 states walk-up tickets are 'never scanned', an implementer must invent either a sixth canonical counter or an alias path into `scanned`; with walk-up at '20–50% of the gate' this changes the flagship `scanned > paid + comp` alarm and the artist's room-fullness figure on every show. Load-bearing, unanswered anywhere in the reachable citation chain.
+
+### B-018 — `20-fanbase-direct-to-fan/20.01-fan-graph-owned-audience/20.01.04-fan-list-import-hygiene.md`
+
+- **Dimension**: 3
+- **Claim**: The sendability of the `artist-asserted` provenance tier is specified two contradictory ways across sibling files, and the parent CX explicitly flags the question as unresolved with no owner.
+- **Evidence**: 20.01.04 Happy Path 5: "the new records enter a warm-up tier — first sends are throttled ([20.03.03]...) because a cold blast to 4,335 unwitnessed addresses is how a sending domain gets blocklisted" (for the 4,335 rows "created with provenance `artist-asserted: prior ESP double opt-in`") vs 20.01.02 edge case: "Import completes; records land in the artist-asserted (unmarketable-until-re-permissioned) tier." vs 20.01-...-cx.md CX-01 §3: "`[PENDING — /ideate-discover Step 5 deepening]` on whether weak-provenance records are sendable-with-warning or hard-blocked until re-permissioned."
+- **Forced decision**: Whether a record whose consent provenance is artist-asserted is (a) sendable under warm-up throttling or (b) hard-blocked from marketing until a fresh platform-witnessed re-permission — i.e. whether the entire import→broadcast path exists at all for imported lists, and whether 20.01.04 D-03's 'unmarketable tier' is the same tier as the warm-up tier or a distinct third state.
+- **Verifier**: CONFIRMED by reading all three files. 20.01.04 line 46 (Happy Path 5) puts answered-provenance imports into a warm-up tier that is sendable-but-throttled ('first sends are throttled ([20.03.03]...)'), and 20.01.04 reserves the unmarketable tier for the *unanswered*-provenance case only (D-03, Edge Case row 1, States 'Partial'). 20.01.02 line 88 instead glosses the artist-asserted tier itself as '(unmarketable-until-re-permissioned)' — and 20.01.02 contradicts itself internally, since line 93 places another artist-asserted cohort in the 'artist-asserted, deliverability-downgraded tier' (i.e. sendable). The parent CX file line 41 (CX-01 synthesis Q3) states outright: '[PENDING — /ideate-discover Step 5 deepening] on whether weak-provenance records are sendable-with-warning or hard-blocked until re-permissioned' — no Owner, no Deferred-To stage, and the named stage (ideate-discover Step 5 deepening) is already complete, so this is not a resolved deferral under dimension 7 and not a stale marker answered by the [DEEP] child (20.01.02 is one of the two contradicting sources). Load-bearing: whether ~4,335 imported records can receive marketing at all decides whether the import→broadcast path exists, which DT-01 calls the adoption gate for the whole sub-tree. Severity kept blocking: guessing wrong either kills the domain's migration path or produces sends the consent spec calls unlawful.
+
+### B-019 — `20-fanbase-direct-to-fan/20.04-direct-to-fan-storefront/20.04.03-digital-sales-name-your-price-bundles.md`
+
+- **Dimension**: 3
+- **Claim**: The NYP split basis is specified as two different objects with two different lock points — a per-listing property of the product (20.04.03) and a field on the domain 09 split agreement fixed at split capture (20.04.04) — and 20.04.03 asserts both readings within the same paragraph.
+- **Evidence**: 20.04.03: "The NYP basis is a locked property of the product, set at listing and shown before anyone commits." … "the basis is captured on the product at listing, is immutable for the life of that listing" … but two sentences earlier: "each payee sees the basis rule on the split *before they agree to it*". 20.04.04: "The basis is a field on the split agreement in **domain 09**, chosen at split-capture time … and **immutable after the first sale**."
+- **Forced decision**: Whether the basis is owned by the product/listing or by the domain 09 split agreement; and therefore whether two products selling the same recording may carry different bases, whether a payee's pre-agreement disclosure is per-split or per-listing, and whether the lock fires at listing publish or at first sale.
+- **Verifier**: CONFIRMED by reading both files. 20.04.03 (line 46) 'The NYP basis is a locked property of the product, set at listing' and (line 50-52) 'the basis is captured on the product at listing, is immutable for the life of that listing'; 20.04.04 (line 64-70) 'The basis is a field on the split agreement in domain 09, chosen at split-capture time ... and immutable after the first sale', restated in 20.04.04 D-07 'fixed at capture, immutable after first sale'. Two different owning objects and two different lock triggers (listing-publish vs first-sale), so the window between listing and first sale is mutable under one file and frozen under the other. Followed every citation: -cx.md CX-03 synthesis Q3 does not resolve it, it merely observes 'arguably ... part of the split agreement rather than a store setting. That is the cleanest reading' — an unresolved lean, not a decision. 20.04.01's kind table (line 40) assigns 'Payout basis \| Rights record (domain 09)', and 20.04.01 D-02 / 20.04.04 D-01 both forbid the store copying anything from domain 09 ('referenced ... never copied'), which 20.04.03's 'captured on the product' violates outright. 20.04.04 Q-01 defers only the *value* (ask/paid/paid-net), never the owning object or the lock point, so this is not a resolved deferral. Load-bearing: it determines whether two listings of one recording may carry different bases and whether a pre-first-sale domain 09 basis edit propagates to a live listing. Severity kept blocking — it is a direct contradiction at the one seam the two files declare they share, and it governs payout amounts.
+
+### B-020 — `21-promotion-marketing/promotion-marketing-cx.md`
+
+- **Dimension**: 3
+- **Claim**: CX-05 and CX-08 define the three verification strengths by pitch provenance and by decay state, contradicting 21.07 D-05/DT-03 which defines them by artefact class — the two readings disagree on whether organic coverage can ever be 'verified'.
+- **Evidence**: CX-05: "**verified** (WeJammin sent the pitch and holds the link), **verified-at-timestamp** (was verified, link since changed), and **claimed** (typed by the artist, unverifiable)"  \|\|  CX-08 Q3: "only a pitch the sender actually sent yields a *verified* capture; organic coverage lacks the pitch and is verifiable only to `claimed`/`verified-at-timestamp`"  \|\|  21.07 D-05: "verified (fixed article), verified-at-timestamp (mutable playlist add), claimed (typed / self-attested)"; 21.07 States: "Verified \| Live URL, retrievable, fixed source confirmed (article)"; 21.07 D-03: "Coverage with no pitch parent is fully valid" and "Organic \| No pitch parent \| Fully valid — often the best coverage there is"
+- **Forced decision**: Whether the verified badge is earned by artefact properties (fixed, live, retrievable article) or by platform provenance (we sent the pitch), and consequently whether an organic press review — which 21.07 calls 'often the best coverage there is' — renders as verified or is capped at claimed. This is the domain's thesis rendering and the two source documents give opposite answers.
+- **Verifier**: UPHELD. I confirmed both sides verbatim. promotion-marketing-cx.md (`[DEEP]`) CX-05 lines 174-176 defines the strengths by platform provenance and decay — 'verified (WeJammin sent the pitch and holds the link), verified-at-timestamp (was verified, link since changed), claimed (typed by the artist, unverifiable)' — and CX-08 synthesis Q3 line 269 states flatly 'only a pitch the sender actually sent yields a *verified* capture; organic coverage lacks the pitch and is verifiable only to `claimed`/`verified-at-timestamp`'. 21.07 D-05 and DT-03 define them by artefact class — 'verified (fixed article), verified-at-timestamp (mutable playlist add), claimed (typed / self-attested)' — with States 'Verified \| Live URL, retrievable, fixed source confirmed (article)' and a *separate* 'Decayed \| Source link rotted' state, plus D-03 'Coverage with no pitch parent is fully valid' and States 'Organic \| No pitch parent \| Fully valid — often the best coverage there is'. Two distinct conflicts, mutually reinforcing (so not a typo): (a) an organic live article is Verified under 21.07 and capped below verified under CX-08; (b) verified-at-timestamp means 'mutable playlist add' in 21.07 but 'was verified, link since changed' in CX-05, which is 21.07's distinct Decayed state. This is not a depth complaint and survives the MoSCoW exemption — it is the domain's thesis rendering (D-02, DT-01) and the two documents give opposite answers. Blocking stands.
+
+
+## Warning Findings (178)
+
+| # | File | Dim | Claim |
+|---|---|---|---|
+| W-001 | `01-identity-profiles-organizations/01.01-person-identity-roles/01.01.01-person-record-role-facets.md` | 3 | Holding an active alias is not in the closed live-obligations list, so removing `performer` produces the alias-without-a-professional-facet state that two sibling documents assert cannot exist. |
+| W-002 | `01-identity-profiles-organizations/01.01-person-identity-roles/01.01.04-legal-identity-vs-public-identity.md` | 3 | A legal-name change does not say what happens to counterparties who already hold an active disclosure of the old name — the sub-domain CX file flags it unanswered and no child resolves it. |
+| W-003 | `01-identity-profiles-organizations/01.02-organizations-entity-model/01.02.02-organization-creation-lifecycle.md` | 3 | The duplicate-detection type-class table introduces a `rehearsal` org type that is not one of the six types ratified by the parent index D-01, so the org type enum is undetermined. |
+| W-004 | `01-identity-profiles-organizations/01.02-organizations-entity-model/01.02.02-organization-creation-lifecycle.md` | 3 | The inferred-quietness clock is gated on "zero org activity" but the document never defines what an activity event is, while the consequence is removal from supply-side search. |
+| W-005 | `01-identity-profiles-organizations/01.03-membership-representation-mandate/01.03.02-representation-roster-relationships.md` | 3 | Term expiry is specified as silently removing all authority with no notification behaviour anywhere, and the sub-domain CX flags this as an unspecified gap with no owner and no corresponding Open Question row. |
+| W-006 | `01-identity-profiles-organizations/01.04-band-ensemble-governance/01.04.04-dissolution-succession.md` | 3 | The spec both blocks dissolution on an unsettled balance and defines a durable dissolved-with-unsettled-balance state, so whether `dissolved` can be reached while money is outstanding is undefined. |
+| W-007 | `01-identity-profiles-organizations/01.05-profile-claiming-verification/01.05-profile-claiming-verification-cx.md` | 3 | The merge-during-contest race is explicitly declared unmodelled here while 01.05.01 delegates that exact variant to this file, so no document owns it. |
+| W-008 | `01-identity-profiles-organizations/01.06-portfolio-media-epk/01.06.03-epk-generation-sharing.md` | 3 | The EPK's stated behaviour on a disputed credit contradicts the ratified public-rendering rule it inherits, leaving what the recipient actually sees undetermined. |
+| W-009 | `01-identity-profiles-organizations/identity-profiles-organizations-cx.md` | 7 | CX-08 §5 leaves retroactive address publication on reclassification unmodelled, and its named deferral target has already completed without answering it. |
+| W-010 | `01-identity-profiles-organizations/01.08-trader-status-classification.md` | 7 | Q-01's disposition drives a behavior cell the file leaves unfilled, and its deferral target has already completed. |
+| W-011 | `01-identity-profiles-organizations/01.10-estates-legacy-accounts.md` | 7 | Two of three open questions defer to /ideate-validate, a stage that has already completed without answering them. |
+| W-012 | `01-identity-profiles-organizations/identity-profiles-organizations-index.md` | 8 | The Children table's Status column is stale for three of four leaf features and the index's own status is behind its CX file. |
+| W-013 | `02-credits-attribution/02.01-credit-graph-discography/02.01.02-public-discography.md` | 3 | The audience for the contested marker on a work's ledger conflicts between 02.01.02 D-06 (participants and the credited party only) and 02.01.01's edge case (everyone who can see the work). |
+| W-014 | `02-credits-attribution/02.01-credit-graph-discography/02.01.06-credit-correction-amendment.md` | 3 | 02.01.04 routes conflicting-identifier data errors into amendment, but amendment's entire approval model derives from a credit's attestation set, which a work-node identifier conflict does not have. |
+| W-015 | `02-credits-attribution/02.02-session-capture/02.02-session-capture-cx.md` | 8 | CX-02 still records the sequential wrap-to-confirmation chain that 02.02.03 D-05/DT-04 explicitly rejects as the design's central error, and the child file flags the contradiction as unfixed rather than resolving it, leaving two contradictory orderings inside one unit. |
+| W-016 | `02-credits-attribution/02.03-claiming-cold-start-seeding/02.03.03-claim-adjudication.md` | 3 | Late-contest unwind of downstream effects is left as a bare [PENDING] marker with no owner, no mechanism, and no cross-domain citation, while the same file asserts those effects "must unwind". |
+| W-017 | `02-credits-attribution/02.04-attestation-credit-confidence/02.04.01-attestation-request-confirmation.md` | 3 | The per-recipient outstanding and rolling-window caps have no termination rule, so an unanswered request never stops consuming a slot and queued requests may never be released. |
+| W-018 | `02-credits-attribution/02.10-ai-contribution-disclosure.md` | 2 | The Role Lens grants the Producer Full access and session-level disclosure, which contradicts D-04, the edge-case table and the Partial state, all of which restrict disclosure to the contributor's own contribution. |
+| W-019 | `03-community-networking/03.02-activity-feed-ranking/03.02-activity-feed-ranking-cx.md` | 7 | CX-03's load-bearing structural question is deferred to open questions that do not cover it or do not exist, while two sibling files already assert the opposite as decided. |
+| W-020 | `03-community-networking/03.04-warm-intros-collaboration-graph/03.04.04-reachability-inbound-policy.md` | 5 | The density gate that governs whether the whole feature is active has no definition, threshold, scope, or owning open question. |
+| W-021 | `03-community-networking/03.06-scenes-communities/03.06.03-scene-stewardship-moderation.md` | 5 | Stewardship is declared density-gated but no threshold value exists anywhere, and the citation pointing to where the threshold is owned is wrong. |
+| W-022 | `03-community-networking/03.08-contests-challenges-beat-battles/03.08.01-contest-creation-briefs.md` | 3 | The scene-scoped eligibility dependency cites the wrong open question in 03.06.01, and the cx file cites a different wrong one, so following either reference lands on an unrelated issue. |
+| W-023 | `04-opportunities-casting/04.01-opportunity-posting-targeting/04.01.02-targeting-distribution-controls.md` | 3 | Confidential postings have no defined interaction with the auto-escalation ladder — the feature's own DT-02 calls this a live gap and the edge-case behaviour cell is empty. |
+| W-024 | `04-opportunities-casting/04.02-discovery-matching-alerts/04.02.01-opportunity-board-search.md` | 3 | Freshness marking and auto-tombstoning hang on 'poster activity', which is never defined, yet auto-tombstoning stops a live post accepting submissions. |
+| W-025 | `04-opportunities-casting/04.03-submission-audition/04.03.01-structured-submission.md` | 3 | Draft retention is promised in four separate edge cases and re-offered against a "next matching post", but neither the retention period nor the matching rule is defined. |
+| W-026 | `04-opportunities-casting/04.04-triage-shortlist-decisioning/04.04.01-review-queue-triage.md` | 3 | The 'post's decide-by date' that bounds every hold, every applicant-facing date promise and the dormant trigger is attributed to 04.01.01, which defines no such field. |
+| W-027 | `04-opportunities-casting/04.04-triage-shortlist-decisioning/04.04.03-offer-acceptance.md` | 3 | Every offer must carry a fuse, but the fuse for a non-cascade offer has no default, floor or ceiling — the file routes the bound to 04.04.04 Q-03, which resolved only the per-rung cascade fuse. |
+| W-028 | `04-opportunities-casting/04.04-triage-shortlist-decisioning/04.04-triage-shortlist-decisioning-cx.md` | 8 | CX-03 asserts at High confidence that urgent fill and the review queue are disjoint paths, which its own sibling proves false and flags for an amendment that never landed. |
+| W-029 | `05-services-marketplace/05.01-service-listings-pricing/05.01.02-service-category-taxonomy-attributes.md` | 3 | Seller-initiated craft change on a live listing is specified as permitted here and as blocked in 05.01.01, with no reconciling rule. |
+| W-030 | `05-services-marketplace/05.02-quotes-scope-contracting/05.02.02-nda-confidentiality-ghost-production.md` | 3 | The four-level anonymity spectrum is authored here with its own lift semantics, but domain 02 (which owns credit visibility) authors an incompatible two-axis model with a different embargo-lift rule, and neither file maps to the other. |
+| W-031 | `05-services-marketplace/05.02-quotes-scope-contracting/05.02.03-union-session-contracting.md` | 2 | The document contradicts itself about which party may elect union terms on an engagement — the Happy Path grants it to the buyer, the Role Lens explicitly denies it to the buyer. |
+| W-032 | `05-services-marketplace/05.02-quotes-scope-contracting/05.02-quotes-scope-contracting-cx.md` | 8 | CX-04 (sealed anonymity on a union session) is logged as an unresolved contradiction with no detail section, no owner and no deferral target, unlike CX-01/02/03 which each get a full synthesis. |
+| W-033 | `05-services-marketplace/05.03-engagement-lifecycle/05.03.01-order-lifecycle-requirements-gating.md` | 3 | The on-location gate's hard deadline is derived exclusively from a domain-16 room policy, with no rule for an on-location engagement whose room the buyer booked outside the platform. |
+| W-034 | `05-services-marketplace/05.04-delivery-qc-acceptance/05.04.03-watermarked-previews-draft-protection.md` | 3 | The protection posture for stem and session artifacts is explicitly unanswered, yet the delivery pipeline requires a per-artifact-type posture on every delivery. |
+| W-035 | `05-services-marketplace/05.07-custodial-physical-services/05.07.01-repair-tech-luthier-job-flow.md` | 7 | Who pays return shipping on a declined estimate is a named money obligation on a named terminal state, and its only owner is an Open Question deferred to MoSCoW — a stage that has already run without resolving it. |
+| W-036 | `05-services-marketplace/05.07-custodial-physical-services/05.07.03-custody-chain-liability-damage-claims.md` | 7 | Whether custodial sellers must carry insurance — self-described as the feature's central unresolved question and the sole determinant of whether a damage claim resolves to anything — is deferred to /ideate-validate, a stage that has already run without deciding it. |
+| W-037 | `06-education-lessons-mentorship/06.01-lesson-booking-packages-delivery/06.01.01-lesson-slot-booking-recurring-series.md` | 3 | The series lifecycle has no voluntary termination path — a student who wants to stop lessons (or a teacher who wants to drop one student without quitting) has no specified trigger, state transition, notice rule or credit disposition. |
+| W-038 | `06-education-lessons-mentorship/06.02-teacher-discovery-profiles-trials/06.02.03-teacher-discovery-match-criteria.md` | 3 | Level is a hard filter operating on an ordinal band scale (±1 tolerance) that the document never enumerates, and DT-04 simultaneously denies that such a scale exists. |
+| W-039 | `06-education-lessons-mentorship/06.03-curriculum-assignments-practice/06.03.02-assignments-submissions-timestamped-feedback.md` | 3 | The file both forbids and specifies an out-of-room file-upload submission path, so whether that path exists at all is unresolved. |
+| W-040 | `06-education-lessons-mentorship/06.08-certificates-badges-verification.md` | 3 | The file's Happy Path specifies automatic issuance while its own Cross-Cut Notes and CX-09 state that automatic issuance was rejected. |
+| W-041 | `06-education-lessons-mentorship/education-lessons-mentorship-cx.md` | 8 | CX-07 and CX-14 declare the mid-term viability-recovery rule unresolved and defer it to 06.05 Q-02, but 06.05 Q-02 asks about level divergence and 06.05's edge-case table already states a Level-1 resolution for viability recovery. |
+| W-042 | `07-music-projects-collaboration/07.01-song-release-production-board/07.01.01-song-record-work-entity.md` | 3 | Archive/unarchive authority is unstated for archive and self-contradictory for unarchive. |
+| W-043 | `07-music-projects-collaboration/07.01-song-release-production-board/07.01.03-production-stage-board-milestones.md` | 3 | The Overview declares P-03 unresolved while the same file's Q-02 and edge-case table state the resolved rule, leaving the file self-contradictory about a decided contract. |
+| W-044 | `07-music-projects-collaboration/07.01-song-release-production-board/07.01-song-release-production-board-cx.md` | 8 | CX-02's domain-12 rejection fallback is left [PENDING] with no child or cited spec answering it, and the file also carries a stale claim that P-03 is unresolved. |
+| W-045 | `07-music-projects-collaboration/07.04-audio-version-control-lineage/07.04-audio-version-control-lineage-cx.md` | 7 | CX-02's notification-fan-out question is deferred with no owner, no target stage, and no corresponding open question in the child feature. |
+| W-046 | `07-music-projects-collaboration/07.05-review-feedback-approval/07.05.01-timestamped-waveform-review.md` | 3 | The post-revocation grace window for an in-flight link comment is specified as 60 s here and as 120 s in the sibling feature that owns link revocation, with no tiebreaker in the parent CX. |
+| W-047 | `07-music-projects-collaboration/07.05-review-feedback-approval/07.05.05-revision-round-counting-scope.md` | 5 | D-04 ratifies a batching window as a decision but gives it no value, and the question that would set it is parked on a pipeline stage that has already completed. |
+| W-048 | `07-music-projects-collaboration/07.05-review-feedback-approval/07.05.01-timestamped-waveform-review.md` | 3 | The body's decision citations are offset from the Decisions table, so following a cited D-number lands on an unrelated decision — and a sibling file inherits the wrong numbering. |
+| W-049 | `07-music-projects-collaboration/07.05-review-feedback-approval/07.05-review-feedback-approval-index.md` | 7 | The sub-domain's two agent-owned open questions are deferred to a pipeline stage that has already completed, so the load-bearing 07-vs-05 boundary has no remaining resolution point. |
+| W-050 | `07-music-projects-collaboration/07.08-delivery-readiness-qc/07.08.01-handoff-package-builder-recipient-spec.md` | 3 | The empty-spec edge case offers the user a 'custom handoff' escape hatch that is defined nowhere and contradicts D-01/D-02's spec-driven, least-privilege contents rule. |
+| W-051 | `08-realtime-jamming-remote-sessions/realtime-jamming-remote-sessions-index.md` | 3 | The domain index still asserts that Overdub carries provenance 'intact' — a claim its own [DEEP] child and the domain CX both explicitly declare wrong and requiring correction — so the two documents contradict each other on the domain's load-bearing thesis artifact. |
+| W-052 | `09-rights-ownership/09.01-rights-registry/09.01.02-ownership-ledger-validation.md` | 3 | The deterministic canonical row order is declared over a four-part identity key but the locale-free comparator is fixed for only one part, and the vocabularies of the other three parts are never defined. |
+| W-053 | `09-rights-ownership/09.05-ai-voice-likeness-consent/09.05.03-ai-generated-content-disclosure.md` | 3 | The recursive case — a declared AI-generated work being offered into a training corpus — is marked unresolved with no owner and no deferral stage, leaving the consent-position behavior over AI-declared works undefined. |
+| W-054 | `10-royalties-collections/10.04-disbursement-payee-statements/10.04.04-disputed-royalty-escrow.md` | 7 | Escrow where the platform itself is the disputant is flagged as unresolved against an already-executed stage, with no owner and no entry in the Open Questions table, while D-02 forbids any party from releasing. |
+| W-055 | `10-royalties-collections/royalties-collections-cx.md` | 8 | CX-05 and CX-10 attribute an expected amount to 10.09's in-flight expectation, directly contradicting 10.09 D-02 while 10.09 Q-02 holds the amount question open. |
+| W-056 | `10-royalties-collections/10.06-live-setlist-pro-reporting.md` | 7 | Q-02 (duplicate venue/act returns) is deferred to `/ideate-discover` Step 5, a stage that completed 2026-07-18, leaving a hard CX constraint with no arbitration rule and no remaining owner stage. |
+| W-057 | `10-royalties-collections/royalties-collections-index.md` | 7 | Four Open Questions including the two the file names as the domain's gating decisions are deferred to `/ideate-validate`, which completed on 2026-07-18 without answering them. |
+| W-058 | `11-music-licensing/11.01-sync-licensing/11.01.05-dual-licence-coordination.md` | 3 | The concurrency edge case says a losing second exclusive request is queued, which contradicts the explicit refused-not-queued rule stated in this sub-domain's own CX file and in 11.02.01 D-12. |
+| W-059 | `11-music-licensing/11.01-sync-licensing/11.01.02-supervisor-search-reference-matching.md` | 7 | Q-03 is deferred to a pipeline stage that has already run and completed, so no future stage owns it. |
+| W-060 | `11-music-licensing/11.01-sync-licensing/11.01.04-holds-exclusivity-windows.md` | 7 | The hold-window ceiling and the serial-re-hold deterrent are both deferred to /ideate-discover Step 5, a stage that has completed while this file remained at [SURFACE] depth. |
+| W-061 | `11-music-licensing/11.03-licence-pricing-negotiation/11.03.01-rate-cards-pricing-rules.md` | 7 | Q-03 (card cardinality) is deferred to a stage that has already run for this file and remains unresolved, while the body text implies a copy-based answer the question says is undecided. |
+| W-062 | `11-music-licensing/11.04-licensing-policy-preferences/11.04.01-per-work-licensing-policy.md` | 3 | The Suspended state asserts the UI says "how to clear it" but no exit condition is defined for the two suspensions the platform itself triggers — dormancy and digest bounce. |
+| W-063 | `11-music-licensing/11.04-licensing-policy-preferences/11.04.01-per-work-licensing-policy.md` | 5 | The digest is declared the consent artifact and a suspension trigger is counted in digests, but the digest's cadence is never given a number. |
+| W-064 | `11-music-licensing/11.07-ai-training-licensing/11.07.03-training-compensation-attribution.md` | 3 | An edge case that would change the feature's shape — a rights holder electing attribution without payment — is left as an unowned inline PENDING marker rather than an owned deferral. |
+| W-065 | `11-music-licensing/11.08-licence-instrument-lifecycle/11.08.02-licence-certificate-issuance.md` | 3 | The certificate file states the grammar version pins at issue while citing 11.08.01 D-03, which explicitly refines the rule to pin at request creation — the two files specify different pin moments and different behaviour for the same race. |
+| W-066 | `11-music-licensing/11.08-licence-instrument-lifecycle/11.08-licence-instrument-lifecycle-cx.md` | 7 | The CX-04 notification question is left as a bare [PENDING] marker with no owner and no deferral stage, and neither child file answers it. |
+| W-067 | `12-release-distribution/12.02-ddex-delivery-messaging/12.02-ddex-delivery-messaging-index.md` | 7 | Parent Q-03 (Fan-visible consequence of message state) is answered in opposite directions by its own children — two declare the 'no' assumption confirmed, the third declares it refuted — while the parent still carries it as an open assumption routed to a discovery step that has already run. |
+| W-068 | `12-release-distribution/12.03-dsp-store-territory-management/12.03-dsp-store-territory-management-cx.md` | 3 | CX-05 raises the per-store first-delivery linking risk, marks it unconfirmed with no owner, and no file resolves whether the blocking linking gate keys on identity or on (identity x store). |
+| W-069 | `12-release-distribution/12.03-dsp-store-territory-management/12.03.03-rejection-triage-remediation.md` | 3 | The departed-Producer asset rejection is explicitly marked unhandled with no owner and no deferral stage, and the citation offered to cover it resolves to another unhandled marker. |
+| W-070 | `12-release-distribution/12.03-dsp-store-territory-management/12.03.02-per-store-delivery-status.md` | 3 | The Legal transitions table gives no outbound transitions from `Unknown` while declaring backwards transitions illegal, yet the notification rules require recovery out of `Unknown`. |
+| W-071 | `12-release-distribution/12.04-release-scheduling-windows/12.04.01-release-date-lead-time.md` | 5 | E3, one of the four earliest dates presented to the artist, is bounded by "enough runway for a campaign to exist" — a quantity with no number, no unit and no cited source. |
+| W-072 | `12-release-distribution/12.07-identifier-assignment-at-delivery.md` | 3 | The collision rule — the feature's central contract — has only two branches (same recording, different rights holder) and no branch for a supplied ISRC matching a different recording under the SAME rights holder, which is the ordinary copy-paste error inside one artist's own catalog. |
+| W-073 | `13-gear-marketplace/13.01-canonical-gear-catalog/13.01.02-catalog-contribution-moderation.md` | 3 | The model lifecycle names "the five rejection classes below" and the file never enumerates them; the only enumeration anywhere is 13.01.04 D-07's three subtypes. |
+| W-074 | `13-gear-marketplace/13.02-condition-originality-disclosure/13.02.02-mandatory-flaw-disclosure.md` | 3 | The checklist item schema enumerates four properties and none of them is the `axis` (cosmetic \| functional \| structural \| missing-part) that 13.02.01's grade ceiling function requires as a hard input. |
+| W-075 | `13-gear-marketplace/13.02-condition-originality-disclosure/13.02.03-modification-originality-disclosure.md` | 3 | Two edge-case rows give contradictory answers to whether a registry/disclosure contradiction is surfaced to the buyer — one marks the behaviour unresolved, the other specifies that the buyer sees the flag. |
+| W-076 | `13-gear-marketplace/13.04-price-discovery-market-data/13.04.01-price-guide-comps.md` | 5 | The trend window is explicitly delegated to 13.04.03, but 13.04.03 contains no trend content and no open question covering it, so the delegation lands nowhere. |
+| W-077 | `13-gear-marketplace/13.04-price-discovery-market-data/13.04-price-discovery-market-data-cx.md` | 3 | Two cross-cut state-transition conflicts are left as unowned `[PENDING]` markers with no owner and no deferral stage, unlike every open question in the sibling files. |
+| W-078 | `13-gear-marketplace/13.07-gear-logistics-cross-border/13.07-gear-logistics-cross-border-cx.md` | 7 | CX-03 and CX-04 defer their synthesis to an ideation step that has already run, with no owner and no downstream stage to catch them. |
+| W-079 | `13-gear-marketplace/13.08-returns-rma-warranty/13.08-returns-rma-warranty-cx.md` | 7 | CX-03 states that the registry must distinguish a warranty-authorised part replacement from an owner-commissioned modification — because one preserves warranty and originality standing and the other destroys both — then defers the rule to a stage with no owner, and neither child file supplies it. |
+| W-080 | `13-gear-marketplace/gear-marketplace-cx.md` | 8 | The file assigns the identifier CX-M11 to two different cross-cut mechanisms — routing a gear requirement into 'CX-M11 Messaging & Conversations' in one table while the next section names CX-M11 as 'Real-Time Rooms, Presence & Audio Transport' and declares it does not serve this domain. |
+| W-081 | `13-gear-marketplace/gear-marketplace-index.md` | 7 | The domain Open Questions register still carries the local-pickup settlement question as open and owned by the user, after the child file recorded it resolved with a locked decision on 2026-07-21 — the same pass in which the index's own Q-13 was updated. |
+| W-082 | `14-digital-goods-marketplace/14.01-catalog-compatibility/14.01.04-rig-profile-compatibility-checker.md` | 3 | The Operator's shared room-rig write model is marked PENDING with no owner and no deferral stage, and no other file in the sub-domain supplies it. |
+| W-083 | `14-digital-goods-marketplace/14.03-delivery-versioning-library/14.03.02-versioning-updates-legacy-archive.md` | 7 | Two agent-owned open questions are deferred to `/ideate-discover` Step 5, a stage that has already run and closed, so they have owner and stage but no live deadline — and Q-02 leaves the existence of a per-project version-pin record undecided while another domain's spec already depends on it. |
+| W-084 | `14-digital-goods-marketplace/14.07-monetisation-models-pricing/14.07.05-upgrade-crossgrade-loyalty-credit.md` | 7 | Q-03 (loyalty-credit clawback) is owned by the Agent and deferred to a pipeline step that has already completed without resolving it, so no human review will ever surface it. |
+| W-085 | `14-digital-goods-marketplace/14.09-digital-refunds-revocation/14.09-digital-refunds-revocation-cx.md` | 8 | CX-01 still records the two-limb, waiver-alone evidence model that its own child file rejected, and the sharpening the child flagged as required was never applied. |
+| W-086 | `14-digital-goods-marketplace/14.10-contributor-revenue-royalty-pool/14.10.03-multi-contributor-pack-splits.md` | 3 | The file's entire Behavior/Happy Path/States/D-04 model is written in pool-accrual terms while its own D-05 declares the pool WONT and the file decoupled from it, leaving the surviving direct-sale split with no defined payout trigger or freeze unit. |
+| W-087 | `14-digital-goods-marketplace/digital-goods-marketplace-index.md` | 8 | The index's own summary of the domain CX is stale by roughly 2.5x on every count, and its status metadata contradicts both the CX file and its own children. |
+| W-088 | `15-gear-registry-ownership/15.01-instrument-identity-provenance/15.01-instrument-identity-provenance-cx.md` | 8 | CX-01's two settled synthesis answers cite decision IDs whose actual subjects are unrelated, so following the citations lands the reader on the wrong rules. |
+| W-089 | `15-gear-registry-ownership/15.05-valuation-appraisal-insurance/15.05.01-automated-valuation-comps.md` | 3 | Two Cross-Cut Notes cite domain cross-cut IDs that point at unrelated cross-cuts, so the cited contracts cannot be followed. |
+| W-090 | `15-gear-registry-ownership/15.05-valuation-appraisal-insurance/15.05-valuation-appraisal-insurance-cx.md` | 8 | CX-01's fifth synthesis question is left as an unowned PENDING marker, and the child feature marks the same conflict PENDING, so neither file resolves it. |
+| W-091 | `15-gear-registry-ownership/15.06-rig-profile-compatibility/15.06.01-rig-definition-signal-chain.md` | 3 | The cross-cut citation for rig↔case cardinality points at the wrong domain cross-cut row. |
+| W-092 | `15-gear-registry-ownership/15.06-rig-profile-compatibility/15.06.02-compatibility-oracle.md` | 3 | The citation for the oracle's governing hard dependency points at the wrong domain cross-cut row. |
+| W-093 | `15-gear-registry-ownership/gear-registry-ownership-cx.md` | 8 | The cross-cut set was renumbered during the Step 5 deepening (10 pairs to 19) and the sibling files' `#CX-nn` anchors were not updated, so most in-domain cross-cut pointers now resolve to the wrong pair; the CX file also carries one self-admitted stale pointer and one wrong question citation. |
+| W-094 | `15-gear-registry-ownership/gear-registry-ownership-index.md` | 8 | The domain index — the file downstream workflows read first — carries stale post-Step-5 metadata: child statuses, hypothesis counts, leaf-feature count and cross-cut counts all contradict the actual files. |
+| W-095 | `16-venues-studios-spaces/16.01-place-records-rooms/16.01.06-licences-insurance-statutory-records.md` | 4 | The entire statutory field vocabulary is built on a UK licensing regime and defers the jurisdiction question to a stage that has since run and locked the opposite answer (primary market = United States), leaving no determinate field set for the launch market. |
+| W-096 | `16-venues-studios-spaces/16.01-place-records-rooms/16.01.03-structured-photo-checklist-virtual-tours.md` | 7 | The likeness/privacy rule for photos containing identifiable people is left [PENDING] with no owner and no deferral stage, and the citation that supposedly re-homes it points at a domain CX mechanism table that contains no media or UGC row. |
+| W-097 | `16-venues-studios-spaces/16.01-place-records-rooms/16.01.04-accessibility-profile.md` | 3 | The States table asserts a decision that the same document's Open Questions table records as still open, so the file both decides and defers whether unstated rooms appear in accessibility-filtered search. |
+| W-098 | `16-venues-studios-spaces/16.01-place-records-rooms/16.01-place-records-rooms-cx.md` | 8 | CX-05's synthesis section is the only cross-cut in the file with no answers, and the question it leaves open — whether a licence record emits the at-risk signal or merely correlates with it — is answered by neither child feature. |
+| W-099 | `16-venues-studios-spaces/16.02-venue-technical-specification/16.02.04-hospitality-green-room-backstage.md` | 3 | The concurrent-edit policy stated here (last write wins, silently) directly contradicts the policy its two sibling features assert for the same Operator editing the same room record. |
+| W-100 | `16-venues-studios-spaces/16.02-venue-technical-specification/16.02.06-pro-blanket-licence-setlist-reporting.md` | 7 | The precedence rule between a register-sourced and an Operator-declared licence status is marked PENDING inline with no owner and is not tracked in the Open Questions table. |
+| W-101 | `16-venues-studios-spaces/16.02-venue-technical-specification/16.02-venue-technical-specification-cx.md` | 8 | CX-05's synthesis questions are PENDING and escalated to the sub-domain index, but the index's Open Questions table carries no such question, so the escalation has no owner and no destination. |
+| W-102 | `16-venues-studios-spaces/16.03-studio-technical-specification/16.03.01-studio-rooms-acoustics.md` | 3 | The set of room pairs that carry isolation/sightline/tie-line is defined as exactly the `requires` graph, but the file's own edge cases require isolation between rooms that have no `requires` edge. |
+| W-103 | `16-venues-studios-spaces/16.05-curation-provenance-data-integrity/16.05.01-place-data-seeding-ingestion.md` | 4 | The `statutory` provenance class — the top of the ranking, the only non-contestable class, and the only class permitted to write licensed capacity/curfew — is sourced exclusively from public premises-licence registers, which the ratified US-first launch market does not provide; the deferral that was supposed to settle this has already passed its stage. |
+| W-104 | `16-venues-studios-spaces/16.06-space-booking-reservations/16.06.03-reservation-lifecycle.md` | 3 | The reservation model specifies the deposit and its payment window in full but never says when, how or whether the remaining balance is collected, and the lifecycle state machine has no balance-due state. |
+| W-105 | `16-venues-studios-spaces/venues-studios-spaces-index.md` | 2 | The Role Matrix grants the Musician full (write) access to the rehearsal spec while the 16.04 feature file grants read-only + suggest, so the write permission on the domain's highest-frequency spec is contradicted, not merely underspecified. |
+| W-106 | `17-live-booking-settlement/17.01-availability-holds-confirmation/17.01.04-confirmation-announce-gate.md` | 3 | Confirmation precondition C-05 hard-blocks any second confirmation for the same artist entity on the same venue-local date, while W-03 in the same file and sibling decision 17.01.02 D-05 both assert that two slots on one date are legitimate and non-competing — so the file simultaneously blocks and permits the same booking. |
+| W-107 | `17-live-booking-settlement/17.01-availability-holds-confirmation/17.01.03-challenge-release-expiry.md` | 3 | Every challenge, release and expiry rule in this file is authored for the room-side ladder only (Operator issues, Musician answers), while sibling decision 17.01.02 D-04 ratifies that an artist-side ladder exists and must resolve for any show to exist — leaving the mirror direction of the entire mechanic unspecified. |
+| W-108 | `17-live-booking-settlement/17.01-availability-holds-confirmation/17.01.04-confirmation-announce-gate.md` | 3 | The atomic confirmation write is specified as blocking both calendars with the routing buffer, contradicting both this file's own non-blocking W-02 and 17.01.01 D-14's annotate-never-block rule. |
+| W-109 | `17-live-booking-settlement/17.01-availability-holds-confirmation/17.01.04-confirmation-announce-gate.md` | 3 | The cross-cut note claims to answer 17.01.03's Q-03, but 17.01.03 Q-03 is the artist-side-ladder question, not the destroyed-holder remedy question — so a genuinely open sibling question is falsely recorded as closed, in both directions. |
+| W-110 | `17-live-booking-settlement/17.01-availability-holds-confirmation/17.01.02-hold-ladder-priority.md` | 3 | The Decisions table contains two different decisions both numbered D-14, and the file's own body text cites 'D-14' without qualification. |
+| W-111 | `17-live-booking-settlement/17.01-availability-holds-confirmation/17.01-availability-holds-confirmation-index.md` | 2 | The sub-domain Role Matrix records the Musician as read-only on hold ladders and unable to self-promote, which sibling 17.01.02 D-04 (ratified) contradicts by making the Musician the ranking party on artist-side ladders. |
+| W-112 | `17-live-booking-settlement/17.02-offers-negotiation/17.02.03-offer-approval-chain.md` | 3 | The spend-threshold chain compares a deal's value to an authority ceiling but nothing defines what that value is for any non-flat deal structure (percentage, versus, door split, bonus-laden), which is the majority of the grammar this sub-domain negotiates over. |
+| W-113 | `17-live-booking-settlement/17.02-offers-negotiation/17.02.03-offer-approval-chain.md` | 7 | Q-02 is listed as an open product decision while the same file's edge-case table already rules the question closed in the opposite direction. |
+| W-114 | `17-live-booking-settlement/17.02-offers-negotiation/17.02.02-counteroffer-thread-versions.md` | 7 | Q-04 re-opens as an undecided product question the exact fact that sibling 17.02.01 D-09 locks as a decision, without citing or superseding it. |
+| W-115 | `17-live-booking-settlement/17.03-deal-structures-economics/17.03.02-breakeven-whatif-modelling.md` | 3 | The Behavior section says the modeller shows the outcome for both sides using each side's private cost assumptions, while the edge-case table and D-02 say each side sees only its own outcome and never the counterparty's — the feature's primary render is self-contradictory. |
+| W-116 | `17-live-booking-settlement/17.05-deposits-balances-cancellation/17.05.02-balance-schedule-reminders.md` | 3 | The schedule's Voided state triggers on FM being *declared*, while 17.05.04 voids obligations only on the counterparty *accepting* the declaration — the two files disagree on when payment obligations stop. |
+| W-117 | `17-live-booking-settlement/17.09-settlement-reconciliation/17.09.01-settlement-sheet-computation.md` | 3 | The file mandates that a rounding convention and a residual destination be stated, but never states either, so the settled amount differs between two conforming implementations. |
+| W-118 | `17-live-booking-settlement/17.11-draw-history-market-intelligence/17.11.01-verified-draw-record.md` | 3 | Happy Path step 3 says the record accumulates with the human across every band they play in, directly contradicting D-04 and the multi-hyphenate edge case, which attach the record to the performing entity. |
+| W-119 | `17-live-booking-settlement/live-booking-settlement-cx.md` | 3 | CX-14 contradicts itself on confirm-time radius enforcement — the map row and the relationship prose say confirm is a hard block, the trigger chain says a hard block would be wrong. |
+| W-120 | `17-live-booking-settlement/17.14-bill-construction-support-slots.md` | 3 | 17.14 asserts supports-locked as an announce precondition, which the announce gate that owns the precondition set (17.01.04 D-06) explicitly rejected in favour of lineup honesty allowing TBA slots. |
+| W-121 | `18-show-production-touring/18.03-show-advancing/18.03.02-venue-capability-diff.md` | 3 | The document contains leaked authoring-tool residue immediately after the Open Questions table, indicating the file may have been truncated mid-write. |
+| W-122 | `18-show-production-touring/18.04-riders/18.04-riders-cx.md` | 8 | CX-04 defers the hospitality/access buyout boundary to a "Q-01 below" that does not exist — the file has no Open Questions section, so the boundary is formally unowned. |
+| W-123 | `18-show-production-touring/18.04-riders/18.04-riders-cx.md` | 8 | CX-05 answers only 2 of the 5 mandated synthesis questions and defers the rest to a pipeline step with no owner and no gate. |
+| W-124 | `18-show-production-touring/18.05-stage-plot-input-list/18.05-stage-plot-input-list-index.md` | 7 | The sub-domain's one explicitly unresolved modelling decision — whether wedges are plot items or mix outputs — is declared open in the CX file and pointed at 'Open Questions', but appears in no Open Questions table anywhere, so it has no owner and no deadline. |
+| W-125 | `18-show-production-touring/18.05-stage-plot-input-list/18.05-stage-plot-input-list-cx.md` | 8 | CX-04 answers only 2 of the 5 required synthesis questions and defers the remainder to a stage with no named owner. |
+| W-126 | `18-show-production-touring/18.06-setlist-show-files/18.06.02-stage-ready-output.md` | 3 | The doc asserts the view either auto-advances or does nothing, without saying which, while the parent CX rules out the only stated advance mechanism. |
+| W-127 | `18-show-production-touring/18.06-setlist-show-files/18.06-setlist-show-files-cx.md` | 8 | CX-04 and CX-05 answer only 2 of the 5 required synthesis questions, deferring the rest to a discovery step that has already completed, leaving the stage-view-as-capture-surface question unowned. |
+| W-128 | `18-show-production-touring/18.08-crew-credentials/18.08.02-credentials-passes.md` | 3 | The file contradicts itself on the pass scope model — date-scoped in Behavior, time-window-scoped in the happy path and in the parent CX. |
+| W-129 | `18-show-production-touring/18.09-backline-gear-manifest/18.09-backline-gear-manifest-cx.md` | 7 | The timing of the loss → manifest → re-diff → sourcing cascade (the sub-domain's only automatic forward cascade) is stated as unresolved, with no owner and no deferral target. |
+| W-130 | `18-show-production-touring/18.11-tour-container-routing/18.11-tour-container-routing-cx.md` | 7 | The CX explicitly names an unsolved permission contract — how a contract-term violation is reported to a Producer who may not be entitled to see the contract — and assigns it no owner and no deferral stage, so it is an open question outside the Open Questions discipline. |
+| W-131 | `18-show-production-touring/18.11-tour-container-routing/18.11.03-itinerary-tour-book.md` | 3 | The feature's happy path and the parent CX prescribe opposite re-issue notification scopes. |
+| W-132 | `18-show-production-touring/18.13-tour-finance/18.13-tour-finance-cx.md` | 7 | Whether a late-synced offline receipt reopens an already-closed float reconciliation is explicitly declared unresolved, with no owner and no deferral stage, yet offline capture is a locked decision that guarantees the case occurs. |
+| W-133 | `18-show-production-touring/show-production-touring-cx.md` | 3 | CX-13 builds the advance's resolve-by computation and the freeze precondition on a statutory lead-time model it attributes to 18.16 D-05/D-06, decisions that do not exist in 18.16 (which stops at D-03). |
+| W-134 | `18-show-production-touring/18.10-day-sheet.md` | 3 | An unauthorised viewer of a forwarded day-sheet link is told the sheet exists, contradicting the domain's own existence-concealment rule for the same show. |
+| W-135 | `19-ticketing-box-office/19.01-ticket-config-scaling-allocations/19.01.05-accessible-seating-companion-tickets.md` | 3 | Price parity is enforced against a "comparable general tier" whose selection rule is never defined, so the statutory parity check cannot be implemented. |
+| W-136 | `19-ticketing-box-office/19.04-door-scanning-access-control/19.04.04-door-age-id-verification.md` | 3 | The feature's primary input — the room's licensed age restriction — is asserted to come from domain 16, but domain 16 contains no age-restriction model at all, and the question is deferred to a pipeline stage that has already completed. |
+| W-137 | `19-ticketing-box-office/19.05-box-office-counts-drops/19.05.01-live-count-manifest-state.md` | 2 | The Role Lens grants the Musician `scanned` on the night, but D-05 defines the default deal grant as paid + remaining only. |
+| W-138 | `19-ticketing-box-office/19.05-box-office-counts-drops/19.05.04-walk-up-day-of-show-sales.md` | 3 | Float reconciliation requires an expected cash figure, but the opening float is never captured anywhere in the flow. |
+| W-139 | `19-ticketing-box-office/19.06-refunds-cancellations-rescheduling/19.06.01-individual-refunds-exchanges.md` | 3 | The predicate that separates a policy-excluded request (refused instantly, no human) from a discretionary request (queued to the Operator with a 72h deadline) is never stated — both are defined by the identical condition 'outside the policy'. |
+| W-140 | `19-ticketing-box-office/19.06-refunds-cancellations-rescheduling/19.06.01-individual-refunds-exchanges.md` | 3 | Exchange eligibility is unbounded in both scope and time — the policy object has a refund cutoff but no exchange cutoff, and exchange is offered precisely in the cases the cutoff already excluded. |
+| W-141 | `19-ticketing-box-office/19.07-external-ticketing-integration/19.07.02-count-ingestion-manifest-mapping.md` | 3 | The mapping is scoped to the connection, but its declared target — WeJammin price levels — is an explicitly per-show entity, so the doc never says how a connection-scoped mapping resolves against a show whose price levels it has never seen. |
+| W-142 | `19-ticketing-box-office/19.11-rsvp-free-private-event-admission.md` | 3 | The Event Lifecycle States table asserts a working Overbooked state while DT-01 and Q-01 record deliberate overbooking as unresolved and un-decided. |
+| W-143 | `19-ticketing-box-office/19.11-rsvp-free-private-event-admission.md` | 5 | The document states two different no-show rates for the same phenomenon. |
+| W-144 | `19-ticketing-box-office/19.12-ticket-delivery-fan-wallet.md` | 3 | Print availability is stated as a guaranteed fallback in the Decisions table and as an Operator-toggleable option in the Role Lens. |
+| W-145 | `19-ticketing-box-office/ticketing-box-office-index.md` | 8 | The Children table reports every child as [SURFACE] when 11 of the 12 have advanced past it on disk. |
+| W-146 | `19-ticketing-box-office/ticketing-box-office-index.md` | 8 | The index's summary of the cross-cut file contradicts the cross-cut file's actual contents on all three counts. |
+| W-147 | `20-fanbase-direct-to-fan/20.03-broadcast-fan-messaging/20.03.01-campaign-composer.md` | 3 | The composer spec never mentions the campaign purpose-type tag, even though 20.01.03 assigns compose-time tagging to 20.03 and makes fan delivery eligibility depend on it. |
+| W-148 | `20-fanbase-direct-to-fan/20.03-broadcast-fan-messaging/20.03.03-send-scheduling-throttling.md` | 3 | Over-frequency-cap messages are specified as "deferred or suppressed" here but as "dropped, not queued" in the file that actually owns the policy, and the ownership pointer in this file points at a file containing no frequency policy at all. |
+| W-149 | `20-fanbase-direct-to-fan/20.03-broadcast-fan-messaging/20.03.02-channel-routing-bulk-delivery.md` | 4 | The file asserts a surface constraint — web-only, mobile undecided, push therefore mostly unusable — that the locked constraints file now contradicts, and leaves an open question that constraints.md already answered. |
+| W-150 | `20-fanbase-direct-to-fan/20.04-direct-to-fan-storefront/20.04.04-d2f-revenue-split-payout.md` | 3 | The payout waterfall defines the split basis only in terms of platform cut and payment-processing fees, and never says whether merch cost-of-goods (POD unit cost, shipping) is deducted before an authored merch split is applied. |
+| W-151 | `20-fanbase-direct-to-fan/20.06-fan-experience-discovery/20.06.01-artist-tracking-follow.md` | 2 | The Musician Role Lens and D-07 state opposite things about whether an artist can see the identity of their own followers. |
+| W-152 | `20-fanbase-direct-to-fan/20.06-fan-experience-discovery/20.06.02-gig-alerts-near-me.md` | 7 | Two different open questions are both numbered Q-04 — one open (radius reconciliation), one marked resolved — and two decisions cite "Q-04" ambiguously, so the open radius contradiction reads as closed. |
+| W-153 | `20-fanbase-direct-to-fan/fanbase-direct-to-fan-cx.md` | 8 | The status header's confidence tally contradicts the cross-cut map it summarises, so the document's own completeness claim cannot be taken at face value. |
+| W-154 | `21-promotion-marketing/21.02-pitching-outreach/21.02-pitching-outreach-cx.md` | 8 | CX-04 and CX-05 are the only two Medium-confidence cross-cuts and are the only two with no Cross-Cut Details section, leaving CX-04's DSP-pitch confidentiality guard explicitly unresolved with no owner and no deferral stage. |
+| W-155 | `21-promotion-marketing/21.08-event-tour-marketing/21.08-event-tour-marketing-cx.md` | 8 | CX-04 is listed in the Cross-Cut Map with its relationship explicitly unresolved, has no Cross-Cut Details section (CX-01 to CX-03 all have one), and no Open Questions row anywhere owns it. |
+| W-156 | `21-promotion-marketing/promotion-marketing-index.md` | 2 | The Role Matrix grants Fan read-only access to 21.05 Paid Promotion while the reading note immediately below asserts Fan is None there. |
+| W-157 | `21-promotion-marketing/promotion-marketing-index.md` | 8 | The Children section asserts a uniform [SURFACE] status that contradicts the actual status of its own children and its sibling CX file. |
+| W-158 | `22-analytics-market-intelligence/22.01-source-connections-ingestion/22.01.01-dsp-account-connection-sync.md` | 5 | This feature emits concrete freshness thresholds (26h/50h) that contradict 22.01.03's cadence-multiple state machine (1x = 24h, 3x = 72h) for the same DSP daily-batch source. |
+| W-159 | `22-analytics-market-intelligence/22.02-external-identity-catalog-matching/22.02.01-external-artist-profile-matching-claiming.md` | 3 | The binding-uniqueness key is stated two contradictory ways — unique per external-profile-ID, and simultaneously permitting two subjects (a person identity and a band entity) to both bind one external profile. |
+| W-160 | `22-analytics-market-intelligence/analytics-market-intelligence-cx.md` | 8 | Three cross-cut rows link to child feature filenames that do not exist on disk, so the cited evidence for CX-08, CX-09 and CX-14 cannot be followed by path. |
+| W-161 | `23-career-finance-business/23.01-income-aggregation-financial-identity/23.01.02-off-platform-income-import.md` | 3 | The CSV ingestion approach is marked unresolved with no owner and no deferral stage, leaving the import surface's central mechanism unassigned. |
+| W-162 | `23-career-finance-business/23.02-expenses-tax-readiness/23.02-expenses-tax-readiness-index.md` | 3 | Two children this sub-domain declares as hard prerequisites are tiered below the children that depend on them, so the v1 scope of the sub-domain is undecidable. |
+| W-163 | `23-career-finance-business/23.02-expenses-tax-readiness/23.02-expenses-tax-readiness-cx.md` | 2 | The delegated accountant's write permission is stated as a direct edit in the CX file and as a proposal-with-approval in 23.02.03 — the two contradict. |
+| W-164 | `23-career-finance-business/23.02-expenses-tax-readiness/23.02.01-expense-receipt-capture.md` | 4 | The file asserts the mobile-surface constraint is still open, but `meta/constraints.md` has since locked a v1 installable PWA over the Astro web app. |
+| W-165 | `23-career-finance-business/23.02-expenses-tax-readiness/23.02.02-deduction-categorization-jurisdiction-rules.md` | 4 | Every concrete vocabulary, threshold and worked example in the rule-engine feature is UK, while the locked primary market is US. |
+| W-166 | `23-career-finance-business/23.02-expenses-tax-readiness/23.02.04-cross-border-withholding-reclaim.md` | 3 | Band-vs-member reclaim entitlement is left as an unowned [PENDING] pointing at a deepening stage that has already completed. |
+| W-167 | `23-career-finance-business/23.02-expenses-tax-readiness/23.02-expenses-tax-readiness-index.md` | 7 | Open Questions across the sub-domain defer to `/ideate-validate`, a stage that has already run and closed without resolving them. |
+| W-168 | `23-career-finance-business/23.07-budgeting-project-tour-pl/23.07.03-band-treasury-member-distribution.md` | 3 | This file enumerates the band's distribution rule as exactly three shapes that conflict with the canonical enumeration in 01.04.03 Treasury Mandate, and it never cites that file — so the two definitions of the same object disagree with no reconciliation. |
+| W-169 | `24-trust-safety-disputes/24.01-reporting-moderation/24.01.01-report-intake-notice-and-action.md` | 3 | The dedup key for collapsing multiple reports into one case is stated two different ways — reason-family in the CX file, reason in the feature file — and the difference changes brigading behaviour. |
+| W-170 | `24-trust-safety-disputes/24.01-reporting-moderation/24.01.01-report-intake-notice-and-action.md` | 3 | The `pending-reporter-verification` state for logged-out reporters has an entry condition but no exit condition if the email challenge is never completed. |
+| W-171 | `24-trust-safety-disputes/24.01-reporting-moderation/24.01.04-trusted-flagger-priority-channel.md` | 7 | Q-03 is recorded as open and deferred to a discovery step that has already run, even though 24.01.03 explicitly answers it — the file gives no back-reference, so a reader of 24.01.04 alone sees an unresolved question. |
+| W-172 | `24-trust-safety-disputes/24.01-reporting-moderation/24.01.05-messaging-safety-scam-filtering.md` | 3 | The cross-cut note pointing at the moderation queue cites a filename that does not exist in the sub-domain. |
+| W-173 | `24-trust-safety-disputes/24.02-enforcement-appeals-policy/24.02.04-policy-library-versioned-terms.md` | 3 | A material rule change gates 'the actions the changed rule governs' behind re-acceptance, but no rule-to-governed-action binding is defined. |
+| W-174 | `24-trust-safety-disputes/24.04-transaction-disputes-protection/24.04.01-claims-dispute-filing.md` | 4 | Filing windows are declared to differ per object type and to be externally constrained, but no window value, range or derivation rule is given anywhere in the unit, and no Open Question owns them. |
+| W-175 | `24-trust-safety-disputes/24.06-personal-safety-threat-response/24.06-personal-safety-threat-response-cx.md` | 7 | CX-04 declares the mid-transaction restriction collision explicitly unresolved, but the CX file has no Open Questions table, so the item carries no owner, no deadline and no downstream deferral. |
+| W-176 | `ideation-cx.md` | 8 | The §2 Detail column promises that per-pair 5-question cross-domain synthesis lives in the source domain's CX file, but the domain CX files contain only intra-domain cross-cut maps, so for the 181 pairs not expanded inline in §3 the state/trigger/permission/notification/race contract exists nowhere. |
+| W-177 | `moscow-ledger.md` | 3 | 585 of 734 rationale cells are hard-truncated at exactly 220 characters, cutting several mid-clause at the point where the tier's qualifying condition is stated. |
+| W-178 | `moscow-ledger.md` | 3 | The ledger header states the superseded sequencing position as current, contradicting the v1/v1.5 release split that ideation-index.md records as amending it. |
+
+## Mechanical Findings (deterministic, agent-independent)
+
+These were computed directly from the tree, not inferred by an agent.
+
+### Expired Open-Question deferrals — 1865
+
+`specs/vision.md` declares its 7-entry Open Questions table the canonical namespace and states
+that per-file `Q-NN` markers "roll up to the entries below". The canonical table is clean: every
+entry is owned and targets a **future** stage. But the tree holds **3,524** file-local Open
+Questions, of which **1865 defer to a stage that has already completed** (1,090 →
+`/ideate-validate`, 527 → `/ideate-discover Step 5`, remainder → Step 6/Step 3).
+
+Sampled expired questions map to **no** canonical entry:
+
+| File-local question | Canonical entry covering it |
+|---|---|
+| `21.03.04` Q-02 — "Is contact **import** supported?" | none |
+| `07.06.03` Q-01 — "what makes a session close **meaningful**?" | none |
+| `02.04.03` — mass-**retraction** threshold and window | none |
+
+**The rollup was asserted and never built.** This is the single largest remediation item, and it
+is unaffected by the finding refute rate because it is a deterministic count.
+
+### Broken cross-references — 27
+
+27 of 9,544 relative `.md` links (0.28%) do not
+resolve. All 27 resolve to a unique intended target — no ambiguous or unresolvable
+cases. Causes: one off-by-one path depth, the rest pointing at files that were later renamed.
+Repair list: `scratchpad/broken-links.json`.
+
+### Structural compliance (dimension 8) — clean
+
+| Check | Result |
+|---|---|
+| Domains | 24 |
+| Folders missing `*-index.md` | 0 |
+| Folders missing `*-cx.md` | 0 |
+| Classification Gate violations (1-child folders) | 0 |
+| Structure Map vs disk | matches |
+
+### Feature ledger — verifies exactly
+
+| Check | Result |
+|---|---|
+| Rows | 734 (matches claimed total) |
+| Tiers | Must 195 / Should 285 / Could 201 / Won't 53 — exact match |
+| MoSCoW mutual exclusivity | 0 duplicate IDs |
+| Ledger rows with no file on disk | 0 |
+| Ledger Depth vs policy vs file `Status:` | 0 mismatches across all 734 |
+
+## Scope Defect Found During This Audit
+
+`scoring.md` defines the ideation layer as files under `ideation/`. But `specs/vision.md` and
+`specs/feature-ledger.md` own the evidence for dimensions 3, 5 and 6 and fall **outside** that
+scope — invisible to all 191 auditors. Both were audited directly by the lead agent; see
+`scratchpad/meta-assessment.md`. Auditor findings claiming a *project-level* metric or
+competitive gap is missing are unreliable for this reason and were discounted.
 
 ## Verdict
 
-`[REMEDIATION-PARTIAL — DO NOT ADVANCE]`
+**GAPS FOUND — 20 blocking, 178 warning.** The layer does not pass at 0%
+ambiguity, so `/create-prd` is **not** unblocked by this run.
 
-Complete the 107-row recovery ledger, independently verify every applied edit, resolve or properly
-route remaining product/architecture decisions, refresh the knowledge graph, and run a fresh full
-`/audit-ambiguity ideation`. `/create-prd` remains blocked until that run has a truthful coverage
-record and a compliant final verdict.
+### What passes
+
+- **Coverage**: 1,121/1,121 documents individually audited, 0 missed, 0 integrity problems.
+- **Structural compliance (dim 8)**: 24/24 domains with index+cx, 0 Classification Gate violations,
+  Structure Map matches disk.
+- **Feature ledger**: 734/734 reconciled across three independent sources, 0 MoSCoW violations.
+- **Vision core**: problem statement, personas (all 6 fields × 4 personas), competitive positioning,
+  and the canonical open-question table all pass.
+- **Cross-references**: 27 broken links repaired; 9,544/9,544 now resolve.
+
+### What blocks
+
+**20 confirmed blocking findings.** Eighteen are direct contradictions between sibling or
+parent/child spec files where each side states a rule the other forbids — an implementer cannot
+pick one without inventing a decision the project has not made. Two are high-stakes decisions whose
+deferral target has already completed.
+
+These are **product decisions**, not mechanical fixes. Each requires the owner to choose which of
+two ratified-but-incompatible rules survives. They cannot be auto-resolved.
+
+### What needs reconciliation but does not block
+
+- **1,865 expired open-question deferrals** — the largest single item. The canonical 7-entry table
+  in `vision.md` is clean, but the claimed rollup from 3,424 file-local questions to it was never
+  built. Sampled expired questions map to no canonical entry.
+- **178 warning findings** — real ambiguity with a safe default; these can be carried into
+  `/create-prd` and settled there.
+
+### Recommended next step
+
+1. Triage the 20 blocking findings into an owner decision queue (same shape as the prior
+   `ideation-remediation-decision-queue.md`).
+2. Reconcile the 1,865 expired deferrals — either re-target them at a live stage or mark them
+   answered, and build the rollup `vision.md` claims.
+3. Re-run `/audit-ambiguity ideation` as a fresh invocation once remediation lands.
+
+Do **not** advance to `/create-prd` until the blocking count is zero.
+
+## Integrity Problems (0)
+
+_None._
 
 
 <!-- spec-graph: auto-generated -->
 ## Related Specs
 
 ### Constrained by
-- [[decisions.md#d-31|D-31]]
-- [[decisions.md#d-20|D-20]]
-- [[decisions.md#d-33|D-33]]
-- [[decisions.md#d-34|D-34]]
+- [[decisions.md#d-10|D-10]]
+- [[decisions.md#d-12|D-12]]
+- [[decisions.md#d-01|D-01]]
 - [[decisions.md#d-11|D-11]]
 - [[decisions.md#d-09|D-09]]
+- [[decisions.md#d-03|D-03]]
+- [[decisions.md#d-06|D-06]]
+- [[decisions.md#d-02|D-02]]
+- [[decisions.md#d-13|D-13]]
+- [[decisions.md#d-07|D-07]]
+- [[decisions.md#d-37|D-37]]
+- [[decisions.md#d-28|D-28]]
+- [[decisions.md#d-04|D-04]]
+- [[decisions.md#d-17|D-17]]
+- [[decisions.md#d-19|D-19]]
+- [[decisions.md#d-05|D-05]]
+- [[decisions.md#d-32|D-32]]
+- [[decisions.md#d-14|D-14]]
+- [[decisions.md#d-number|D-number]]

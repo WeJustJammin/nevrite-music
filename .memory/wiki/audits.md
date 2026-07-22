@@ -1,6 +1,6 @@
 # Audits Hub
 
-- [[specs/audits/audit-scope|Audit Scope — Ideation (Vision Layer)]]
+- [[specs/audits/audit-scope|Audit Scope — Ambiguity Audit]]
 - [[specs/audits/decision-queue-drafts/01-credits-rights|Credits & Rights Decision Queue]]
 - [[specs/audits/decision-queue-drafts/02-projects-delivery|Projects, Delivery, Marketplace, and Distribution — Unratified Decision Queue]]
 - [[specs/audits/decision-queue-drafts/03-marketplace-gear|Marketplace, Gear & Registry Decision Queue — Draft]]

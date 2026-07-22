@@ -1,6 +1,12 @@
 {
-  "builtAt": "2026-07-22T04:27:27.253Z",
+  "builtAt": "2026-07-22T08:29:19.269Z",
   "issues": [
+    {
+      "severity": "warning",
+      "code": "ORPHAN_SPEC",
+      "message": ".memory/wiki/specs/audits/audit-scope.md has no graph relationships",
+      "path": ".memory/wiki/specs/audits/audit-scope.md"
+    },
     {
       "severity": "warning",
       "code": "ORPHAN_SPEC",

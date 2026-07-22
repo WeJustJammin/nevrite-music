@@ -1,12 +1,13 @@
 # Spec Graph
 
-- **Nodes**: 1218
-- **Edges**: 7474
+- **Nodes**: 1219
+- **Edges**: 7486
 
 ## Relationship Chains
 
 ## Orphans
 
+- [[specs/audits/audit-scope|Audit Scope — Ambiguity Audit]]
 - [[specs/audits/p01-production-stage-vocabulary-validation|P-01 Production-Stage Vocabulary Validation]]
 - [[specs/be|BE Specs Hub]]
 - [[specs/fe|FE Specs Hub]]
