@@ -395,3 +395,26 @@ Two intra-domain sub-domain boundaries were tested in Step 6 and found **coheren
 - **03.06 (Scenes) vs 03.11 (Conference)** — composition, not duplication (CX-07); kept separate for privacy-posture reasons pending Q-10.
 
 The domain's genuinely *incoherent* boundaries are all **cross-domain** (03↔04 calls-vs-casting, 03↔05 create-vs-hire, 03↔20 professional-follow-vs-fan-follow, 03.09↔17 recurring-jam-vs-one-off-booking) — returned in the cross-domain rows below, not resolvable inside this domain.
+
+
+<!-- spec-graph: auto-generated -->
+## Related Specs
+
+### Constrained by
+- [[decisions.md#d-06|D-06]]
+- [[decisions.md#d-03|D-03]]
+- [[decisions.md#d-10|D-10]]
+- [[decisions.md#d-13|D-13]]
+- [[decisions.md#d-01|D-01]]
+- [[decisions.md#d-07|D-07]]
+- [[decisions.md#d-05|D-05]]
+- [[decisions.md#d-04|D-04]]
+- [[decisions.md#d-18|D-18]]
+- [[decisions.md#d-02|D-02]]
+- [[decisions.md#d-12|D-12]]
+- [[decisions.md#d-13a|D-13a]]
+- [[decisions.md#d-14|D-14]]
+- [[decisions.md#d-11|D-11]]
+- [[decisions.md#d-08|D-08]]
+- [[decisions.md#d-15|D-15]]
+- [[decisions.md#d-17|D-17]]

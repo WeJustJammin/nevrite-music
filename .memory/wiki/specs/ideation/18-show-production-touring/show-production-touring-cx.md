@@ -427,3 +427,19 @@ the settlement itself die silently.
 > - **Three edges depend on the domain's weakest link.** CX-06 (the cascade), CX-08 (the venue-truth loop) and CX-16 (the whole provenance/settlement chain) all require someone to record what actually happened (18.07.03 DT-03 / 18.06.04). CX-16 is the button they all wait on.
 > - **CX-13, CX-14, CX-15 and CX-16 are new in the Step 6 synthesis.** CX-13 adds Safety/Permits as the advance's non-downgradable third source; CX-14 promotes the freeze to an explicit change-control hub spanning three sub-domains; CX-15 resolves the show-state-vs-per-act-completeness tension; CX-16 makes the `performed` press the domain's single point of failure.
 > - The rejected pairs are mostly **subject-matter adjacency**: weather and water, merch and rooms, insurance and insurance, costs and borders. The discipline is shared state or a direct trigger — not "these things co-occur at a show".
+
+
+<!-- spec-graph: auto-generated -->
+## Related Specs
+
+### Constrained by
+- [[decisions.md#d-01|D-01]]
+- [[decisions.md#d-02|D-02]]
+- [[decisions.md#d-03|D-03]]
+- [[decisions.md#d-04|D-04]]
+- [[decisions.md#d-05|D-05]]
+- [[decisions.md#d-06|D-06]]
+- [[decisions.md#d-15|D-15]]
+- [[decisions.md#d-18|D-18]]
+- [[decisions.md#d-14|D-14]]
+- [[decisions.md#d-08|D-08]]

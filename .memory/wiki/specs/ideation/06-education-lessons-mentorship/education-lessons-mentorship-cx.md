@@ -410,3 +410,18 @@ primitive.
 | **Referrals, Invites & Affiliates** | Teacher→student invites; academy roster onboarding | 06.10's cold-start motion |
 | **Follow, Save & Watchlist** | Saving teachers/courses | Standard consumption |
 | **Integrations, Public API & Webhooks** | Exam board entry | Expect these institutions have no usable APIs (06.09 Q-02) |
+
+
+<!-- spec-graph: auto-generated -->
+## Related Specs
+
+### Constrained by
+- [[decisions.md#d-01|D-01]]
+- [[decisions.md#d-03|D-03]]
+- [[decisions.md#d-10|D-10]]
+- [[decisions.md#d-04|D-04]]
+- [[decisions.md#d-02|D-02]]
+- [[decisions.md#d-05|D-05]]
+- [[decisions.md#d-06|D-06]]
+- [[decisions.md#d-11|D-11]]
+- [[decisions.md#d-14|D-14]]

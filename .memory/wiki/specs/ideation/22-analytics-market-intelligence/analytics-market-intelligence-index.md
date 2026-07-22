@@ -140,3 +140,19 @@ uncopyable half is the wedge, and **neither works alone**. 22.05's dashboard has
 | Q-05 | **Do DSP terms permit** storing, redistributing to third parties (22.05.03), bulk export (22.05.03 D-04), cross-user aggregation (22.05.04) and commercial display (22.08.03)? Hit independently by four features. May forbid several outright. | User | `/create-prd-security` |
 | Q-06 | **This domain's answer to problem-statement Q-03 (beachhead)**: 22.05.01's dashboard is the articulated pain and wins users; 22.08 is uncopyable and keeps them but has a circular cold-start (22.08.01 DT-03 — the payoff that motivates credit capture requires the capture to exist). They must ship together, which makes this domain a poor solo beachhead and a strong second move behind a consolidation surface. | User | MoSCoW |
 | Q-07 | **Does 22.07.03 survive?** Domain 05 already offers *consented* search over the same people (they listed themselves for hire). The delta here is precisely the unconsented part (22.07.03 DT-02). That may be a reason to cut it rather than build it carefully. | User | `/ideate-validate` |
+
+
+<!-- spec-graph: auto-generated -->
+## Related Specs
+
+### Constrained by
+- [[decisions.md#d-18|D-18]]
+- [[decisions.md#d-19|D-19]]
+- [[decisions.md#d-02|D-02]]
+- [[decisions.md#d-04|D-04]]
+- [[decisions.md#d-01|D-01]]
+- [[decisions.md#d-16|D-16]]
+- [[decisions.md#d-03|D-03]]
+- [[decisions.md#d-05|D-05]]
+- [[decisions.md#d-06|D-06]]
+- [[decisions.md#d-07|D-07]]

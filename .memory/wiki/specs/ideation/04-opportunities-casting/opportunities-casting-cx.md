@@ -355,3 +355,25 @@ and to `/create-prd-architecture` for the 04↔09 seam. Full synthesis lives in 
 | R-03 | 04.03 Submission & Audition | 04.01 Posting & Targeting (as a *write* path) | Considered letting submission volume auto-tune a post's targeting — no applicants after 24h, so loosen the criteria. Rejected — it silently rewrites what the poster asked for, and criteria may be load-bearing (insurance, certification, right to work). Auto-loosening a legal requirement to fill a queue is a liability transfer disguised as convenience. Escalation of *reach* (04.01.02 D-03) is the safe version and already exists; escalation of *requirements* is not. |
 | R-04 | 04.02 Discovery, Matching & Alerts | 04.06 Band & Member Wanted | Considered material-aware matching for member-wanted ("this bassist knows your back catalogue"). Rejected (R-04, reaffirmed) — it misreads the decision. Joining a band is about whether you want two years of Tuesdays with these people; knowing the songs is table stakes a competent player solves in a week. Optimising the wrong variable would make the feature look clever and be useless. |
 | R-05 | 04.04 Triage, Shortlist & Decisioning | 04.02.03 Material-Aware Dep Matching (as a triage input) | Considered surfacing a material-fit *count* ("18 of 25 songs") in the triage queue. Rejected on a leak: a count discloses the 7 unplayed songs, leaking setlist contents to a reviewer possibly not entitled (04.02.04 D-14 — material copy states only the recipient's own facts). Triage sees fit as a boolean band, never the enumerated gap. |
+
+
+<!-- spec-graph: auto-generated -->
+## Related Specs
+
+### Constrained by
+- [[decisions.md#d-02|D-02]]
+- [[decisions.md#d-13|D-13]]
+- [[decisions.md#d-15|D-15]]
+- [[decisions.md#d-18|D-18]]
+- [[decisions.md#d-01|D-01]]
+- [[decisions.md#d-03|D-03]]
+- [[decisions.md#d-08|D-08]]
+- [[decisions.md#d-07|D-07]]
+- [[decisions.md#d-05|D-05]]
+- [[decisions.md#d-04|D-04]]
+- [[decisions.md#d-11|D-11]]
+- [[decisions.md#d-12|D-12]]
+- [[decisions.md#d-06|D-06]]
+- [[decisions.md#d-10|D-10]]
+- [[decisions.md#d-14|D-14]]
+- [[decisions.md#d-16|D-16]]

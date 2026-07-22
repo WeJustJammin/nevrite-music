@@ -321,3 +321,22 @@ policy is quietly defeated.
 | R-05 | 16.04 Rehearsal | 16.05 Curation | **Inverted into a finding, not a pair**: rehearsal is the best test case for the harvest loop, but lockout produces no completion events (CX-08). Real for hourly rehearsal, absent for lockout — too conditional to record as a confirmed pair, too important to drop (index Q-10). |
 | R-06 | 16.06 Booking | 16.07 Conformance Check | Considered: should a failed check block a booking? Rejected — 16.07 D-05: a conflict is information, never a verdict. The band decides whether 4 monitor mixes is workable; a platform blocking bookings on possibly-stale data overrides two consenting parties. |
 | R-07 | 16.02.03 Curfew/Limiter | 16.01.05 At-Risk Signalling | **Boundary defended, no dependency created** (16.02.03): temporary access loss (roadworks, broken lift) is a field-level date-range exception, not an at-risk signal. At-risk means a room's existence is threatened and is Fan-facing to rally a constituency; reusing it for roadworks would cry wolf. Rejected as a pair to keep the semantics clean. |
+
+
+<!-- spec-graph: auto-generated -->
+## Related Specs
+
+### Constrained by
+- [[decisions.md#d-12|D-12]]
+- [[decisions.md#d-01|D-01]]
+- [[decisions.md#d-05|D-05]]
+- [[decisions.md#d-08|D-08]]
+- [[decisions.md#d-09|D-09]]
+- [[decisions.md#d-10|D-10]]
+- [[decisions.md#d-04|D-04]]
+- [[decisions.md#d-03|D-03]]
+- [[decisions.md#d-02|D-02]]
+- [[decisions.md#d-06|D-06]]
+- [[decisions.md#d-11|D-11]]
+- [[decisions.md#d-18|D-18]]
+- [[decisions.md#d-20|D-20]]

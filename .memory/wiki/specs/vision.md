@@ -175,11 +175,31 @@ no point solution can replicate.
 
 ## Open Questions
 
+> **Canonical open-question list for ideation.** Q-numbers here are the authoritative namespace;
+> per-file `Q-NN` markers inside `personas.md` / domain files are file-local and roll up to the
+> entries below. Downstream stages resolve against this table.
+
 | # | Question | Owner | Target Stage |
 |---|----------|-------|-------------|
+| Q-00 | **Admin / Moderator actor**: none of the 4 personas (Musician/Producer/Operator/Fan) is platform staff, but Trust & Safety (24) and every domain's admin layer need one. Is Admin a 5th persona or an internal operator role outside the persona set? | User | `/create-prd` |
 | Q-01 | `08 Real-Time Jamming` — keep as a domain or fold into `07 Music Projects`? | User | `/create-prd` |
 | Q-02 | The identifier-binding seam — which mechanism/domain owns work↔identifier binding? | Agent | `/create-prd`, `/write-be-spec` |
 | Q-03 | ~~Is ~71 Musts realistic solo in 3–6mo?~~ **Resolved (D-31): split into v1 spine (~45) + v1.5 marketplaces (~26).** `/plan-phase` sequences within each release. | — | resolved |
 | Q-04 | Auth provider, media storage, payments provider, styling system (open stack decisions) | Agent | `/create-prd-stack` |
 | Q-05 | Is a dedicated dealer/developer persona needed for domains 13/14/15? | User | `/create-prd` |
 | Q-06 | Convert `WeJustJammin` from User account to Organization? | User | infra |
+
+
+<!-- spec-graph: auto-generated -->
+## Related Specs
+
+### Constrained by
+- [[decisions.md#d-20|D-20]]
+- [[decisions.md#d-28|D-28]]
+- [[decisions.md#d-31|D-31]]
+- [[decisions.md#d-10|D-10]]
+- [[decisions.md#d-18|D-18]]
+- [[decisions.md#d-11|D-11]]
+- [[decisions.md#d-14|D-14]]
+- [[decisions.md#d-26|D-26]]
+- [[decisions.md#d-32|D-32]]

@@ -219,3 +219,17 @@ Handover terms (stems, session files) are declared **per tier** and are orthogon
 > - CX entries connect the seven **sub-domains** of this domain to each other. Feature-level detail lives in each sub-domain's own CX file.
 > - CX-01 / CX-12 / CX-16 all connect 05.01 ↔ 05.02 but are distinct mechanisms (snapshot, capacity race, union floor) — kept separate deliberately.
 > - The four domain principles (P-01..P-04) are reached from multiple sub-domains and are properties of the domain, not of any feature.
+
+
+<!-- spec-graph: auto-generated -->
+## Related Specs
+
+### Constrained by
+- [[decisions.md#d-01|D-01]]
+- [[decisions.md#d-02|D-02]]
+- [[decisions.md#d-03|D-03]]
+- [[decisions.md#d-05|D-05]]
+- [[decisions.md#d-04|D-04]]
+- [[decisions.md#d-07|D-07]]
+- [[decisions.md#d-09|D-09]]
+- [[decisions.md#d-12|D-12]]

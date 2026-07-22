@@ -30,6 +30,7 @@
 | CX-15 | [02.06 Taxonomy](./02.06-credit-role-instrument-taxonomy.md) | [02.02 Session Capture](./02.02-session-capture/02.02-session-capture-index.md) | Capture is where role and instrument bind as separate axes; pending aliases are accepted and never block, and the taxonomy must express *doubling* (one party, two instruments, one date) because it is a payment-relevant fact | Musician, Producer | High | 02.02.02→02.06 (D-02, D-03); 02.02.01→02.06 (DT-05 doubling) |
 | CX-16 | [02.05 Dispute Resolution](./02.05-credit-dispute-resolution.md) | [02.01 Credit Graph & Discography](./02.01-credit-graph-discography/02.01-credit-graph-discography-index.md) | "Contested" is a state of the *record*: a filed dispute produces no public page state, and contest marks/zero-weights a credit but never suppresses it | Musician, Producer, Fan | High | 02.01.02→02.05 (D-06); 02.01.01→contested (D-11) |
 | CX-17 | [02.07 Union Reporting](./02.07-union-performer-session-reporting.md) | [02.02 Session Capture](./02.02-session-capture/02.02.01-session-roll-call.md) (Roll Call) | Union filings are paid by the hour — the temporal roll (personnel, instruments, doubles, window) *is* their billable substance | Musician, Producer | Medium | 02.07 DT-02; 02.02.01→02.07 (D-14) |
+| CX-18 | [02.04.04 Ring Detection](./02.04-attestation-credit-confidence/02.04.04-attestation-ring-collusion-detection.md) | [02.05 Dispute Resolution](./02.05-credit-dispute-resolution.md) | `CollusionEvidenceConstraintV1` supplies `contractVersion`, opaque `attestationEdgeId`, per-attestation-edge `negativeMultiplier`, and `requiresNonTopologicalCorroboration: true`; topology never identifies a party, hard-excludes testimony, or opens/advances a case | None (internal only) | High | CQ-03 Option B; 02.04.04 D-07; 02.05 D-06 |
 
 > **Confidence levels:** High (confirmed with evidence), Medium (strong signal, needs validation), Low (hypothesis)
 
@@ -311,6 +312,21 @@
 
 ---
 
+### CX-18: Ring Detection ↔ Dispute Resolution
+
+**Relationship**: `02.04.04` and `02.05` join at a narrow, versioned internal boundary: `CollusionEvidenceConstraintV1`. Detection supplies an opaque attestation-edge identifier, its negative multiplier, and literal `requiresNonTopologicalCorroboration: true`; it never transfers a raw score, a cluster or witness identity, a ring flag, a trust score, a hard-exclusion instruction, or an enforcement recommendation. `02.05` applies the multiplier only to that edge's attested-evidence contribution. The constraint does not block ordinary filing, direct resolution, or witness resolution on other evidence. It instead prohibits the detection signal from independently opening or advancing a Domain 24 factual-dispute case: that transition requires separately captured non-topological corroboration.
+
+**Role scoping**: None. Both sides are internal-only. Participants see the ordinary dispute state; they never see a detector payload, a topology rationale, or an inferred collusion label.
+
+**Synthesis questions answered**:
+1. **Shared-state owner + merge**: `02.04.04` owns derivation of the multiplier and immutable edge reference; `02.05` owns its use in credit-specific evidence weighting. Domain 24 owns case workflow and due process. No system writes another's state.
+2. **Trigger chain + rollback + sync/async**: A v1 payload adjusts a referenced evidence-edge contribution during dispute confidence derivation. It does not start a case. Separately captured non-topological corroboration may route a factual dispute into Domain 24; a later payload update re-derives the edge weight without retroactively creating an accusation.
+3. **Permission intersection**: No persona receives read or write access. Domain 24 reviewers receive the case evidence necessary for due process, not raw topology. Unknown payload versions are excluded rather than guessed over.
+4. **Notification fan-out**: None from detection or the v1 payload. Normal dispute and Domain 24 case notices fire only when an independently valid case transition occurs.
+5. **State-transition race**: A v1 payload may arrive while an ordinary dispute is open; it re-derives the one edge contribution but cannot independently advance the case. A corroborating non-topological evidence event and the payload may arrive in either order; the case transition occurs only after both requirements are present.
+
+---
+
 ## Cross-Cuts Routed to the Global CX
 
 > Mechanisms that are **not** nodes in this domain. Recorded here so `ideation-cx.md` can absorb
@@ -339,3 +355,25 @@
 | R-05 | 02.06 Taxonomy | 02.05 Dispute Resolution | A dispute about which role someone held is about the *fact*, not the vocabulary. The taxonomy supplies the words both parties argue in; it has no stake in the argument. |
 | R-06 | 02.08 Export | 02.05 Dispute Resolution | Contested credits are marked and zero-weighted but export reads a frozen projection; the genuine problem is post-emission change (CX-07, domain Q-08), not a standing interaction. |
 | R-07 | 02.09 Gear Linkage | 02.06 Taxonomy | Instrument (a functional axis in `02.06`) and gear object (`02.09`, backed by domains 13/15) look like one taxonomy problem and are two things (`02.06` D-08, DT-06). Absorbing make/model into the instrument axis would turn the vocabulary into a product catalogue and duplicate 13/15. A boundary, not an interaction. |
+
+
+<!-- spec-graph: auto-generated -->
+## Related Specs
+
+### Constrained by
+- [[decisions.md#d-12|D-12]]
+- [[decisions.md#d-01|D-01]]
+- [[decisions.md#d-07|D-07]]
+- [[decisions.md#d-02|D-02]]
+- [[decisions.md#d-03|D-03]]
+- [[decisions.md#d-04|D-04]]
+- [[decisions.md#d-06|D-06]]
+- [[decisions.md#d-11|D-11]]
+- [[decisions.md#d-14|D-14]]
+- [[decisions.md#d-13|D-13]]
+- [[decisions.md#d-05|D-05]]
+- [[decisions.md#d-15|D-15]]
+- [[decisions.md#d-09|D-09]]
+- [[decisions.md#d-08|D-08]]
+- [[decisions.md#d-17|D-17]]
+- [[decisions.md#d-18|D-18]]

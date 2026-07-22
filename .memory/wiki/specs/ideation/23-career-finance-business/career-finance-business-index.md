@@ -126,3 +126,20 @@ Running the business of a music career — total income across every lumpy sourc
 | Q-06 | **Is "tax jurisdiction" an attribute of identity (01) rather than of 23?** 23.01.03, 23.02.02 and 23.02.04 all need it, and a touring musician may hold more than one simultaneously — which breaks the scalar assumption everywhere it is used. | Agent | `/create-prd-architecture` |
 | Q-07 | **Financial-record retention vs GDPR erasure.** Statutory retention (commonly 5–7 years) outlives account deletion, and a contract is a *mutual* document the user cannot unilaterally delete. Affects 23.01, 23.02.01 and 23.04.01 alike. | User | `/create-prd-security` |
 | Q-08 | **Q-01 from `meta/personas.md` restated from this domain**: the Musician persona's Role Lens here holds up, but 23.06's features (advances, commission, recoupment, catalogue stakes) serve a musician **with a manager, an agent or a label** — a minority of the persona. Is 23.06 built for the industry's middle class rather than the persona at the structural centre? | User | `/ideate-validate` |
+
+
+<!-- spec-graph: auto-generated -->
+## Related Specs
+
+### Constrained by
+- [[decisions.md#d-04|D-04]]
+- [[decisions.md#d-02|D-02]]
+- [[decisions.md#d-13|D-13]]
+- [[decisions.md#d-11|D-11]]
+- [[decisions.md#d-01|D-01]]
+- [[decisions.md#d-16|D-16]]
+- [[decisions.md#d-03|D-03]]
+- [[decisions.md#d-19|D-19]]
+- [[decisions.md#d-05|D-05]]
+- [[decisions.md#d-06|D-06]]
+- [[decisions.md#d-17|D-17]]

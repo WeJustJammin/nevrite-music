@@ -152,3 +152,20 @@ Three things materially changed the picture, and they are recorded as D-02, D-03
 | Q-08 | **Can fan data build ad audiences?** (21.05.01 DT-03.) The most obvious value of holding a fan graph and the most direct route to breaking it. Per D-11 fans are users; per D-13 statutory duties scale with reach. There is a legitimate version (explicit, granular, revocable consent) and a lucrative one. | User | `/ideate-validate` |
 | Q-09 | **Is this domain's priority right?** Rated `important`, and everything here is downstream of a release (12), which is downstream of rights and credits (09/02). `meta/problem-statement.md` Q-03 asks which consolidation surface is the beachhead — 21 is almost certainly not it, and the MoSCoW proposals reflect that. | User | MoSCoW |
 | Q-10 | Do Operators need release-independent promo tooling (club nights, their own calendar) and their own local-press CRM? Real behaviour, currently homeless — it fits neither 21.03 (release-cycle media) nor cleanly into 21.08. | Agent | `/ideate-discover` Step 5 |
+
+
+<!-- spec-graph: auto-generated -->
+## Related Specs
+
+### Constrained by
+- [[decisions.md#d-02|D-02]]
+- [[decisions.md#d-03|D-03]]
+- [[decisions.md#d-04|D-04]]
+- [[decisions.md#d-11|D-11]]
+- [[decisions.md#d-13|D-13]]
+- [[decisions.md#d-01|D-01]]
+- [[decisions.md#d-16|D-16]]
+- [[decisions.md#d-18|D-18]]
+- [[decisions.md#d-05|D-05]]
+- [[decisions.md#d-06|D-06]]
+- [[decisions.md#d-07|D-07]]

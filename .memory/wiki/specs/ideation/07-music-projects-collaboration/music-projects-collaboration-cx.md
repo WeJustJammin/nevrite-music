@@ -322,3 +322,22 @@ the transfer confirmation must say so and route anyone who meant a rights transf
 | R-04 | 07.07 Mix & Master | 07.06 Sessions | Linking the mastering stage to a session record. Rejected: mastering is frequently done by an **outside engineer not on the platform** (`07.07.03` edge cases) — no session, no attendance, the master arrives as an email attachment. Forcing a session entity around it models a fiction. The mastering *credit* is captured by the ordinary roster machinery (unclaimed identities), which is sufficient and honest. |
 | R-05 | 07.05 Review & Approval | 07.08 Delivery & QC | Gating delivery on unresolved review comments. Rejected on D-04 (non-blocking) + D-05 (measure, never judge): an unresolved comment is craft, and QC checks only objective faults (`07.08.02` D-04). Coupling them would make the platform adjudicate taste — the precise thing every domain decision refuses. The legitimate link runs through readiness (CX-07), which *shows* an open comment count without blocking on it. |
 | R-06 | 07.01 Song & Board | 07.02 Composition | Treating the composition workspace as a stage on the board (writing → tracking → mix). Rejected: composition is not a board stage but a parallel workspace with its own read-only-by-default access (R-03) and its own lifecycle; a lyric can change after `mix`. The board reads the Song's stage; it does not own the lyric's state. Folding composition into the stage machine would force a linear order the craft does not obey. |
+
+
+<!-- spec-graph: auto-generated -->
+## Related Specs
+
+### Constrained by
+- [[decisions.md#d-04|D-04]]
+- [[decisions.md#d-02|D-02]]
+- [[decisions.md#d-03|D-03]]
+- [[decisions.md#d-08|D-08]]
+- [[decisions.md#d-15|D-15]]
+- [[decisions.md#d-05|D-05]]
+- [[decisions.md#d-10|D-10]]
+- [[decisions.md#d-01|D-01]]
+- [[decisions.md#d-12|D-12]]
+- [[decisions.md#d-14|D-14]]
+- [[decisions.md#d-18|D-18]]
+- [[decisions.md#d-11|D-11]]
+- [[decisions.md#d-06|D-06]]

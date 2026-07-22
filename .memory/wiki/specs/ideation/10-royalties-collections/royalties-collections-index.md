@@ -159,3 +159,27 @@ Registering with the bodies that collect and turning what arrives into correct, 
 | Q-11 | **D-10 is a threat to the domain's premise.** Capture-at-creation gives facts; societies need IPIs the platform cannot mint or look up. If there is no plan for getting a co-writer's IPI, registration only ever works for fully-onboarded, fully-affiliated rosters — i.e. almost nobody at launch. | User | `/create-prd` |
 | Q-12 | **Do societies consume evidence, or only forms?** (`10.05.02` Q-01.) The highest-value cheap question in the domain: one conversation with the MLC answers it, and it determines whether the platform's thesis has any purchase on claiming or is merely a nicer way to fill in the same form. | User | `/create-prd` |
 | Q-13 | Does the platform **charge a commission** on recovered money? It is the industry's model and it works. It is also a fee on money that was always the user's, charged by the platform that criticises the institutions holding it. | User | `/ideate-validate` |
+
+
+<!-- spec-graph: auto-generated -->
+## Related Specs
+
+### Constrained by
+- [[decisions.md#d-10|D-10]]
+- [[decisions.md#d-07|D-07]]
+- [[decisions.md#d-11|D-11]]
+- [[decisions.md#d-12|D-12]]
+- [[decisions.md#d-01|D-01]]
+- [[decisions.md#d-13|D-13]]
+- [[decisions.md#d-02|D-02]]
+- [[decisions.md#d-05|D-05]]
+- [[decisions.md#d-06|D-06]]
+- [[decisions.md#d-14|D-14]]
+- [[decisions.md#d-19|D-19]]
+- [[decisions.md#d-16|D-16]]
+- [[decisions.md#d-03|D-03]]
+- [[decisions.md#d-04|D-04]]
+- [[decisions.md#d-08|D-08]]
+- [[decisions.md#d-18|D-18]]
+- [[decisions.md#d-09|D-09]]
+- [[decisions.md#d-15|D-15]]

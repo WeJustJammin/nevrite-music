@@ -398,3 +398,24 @@ So the wedge feature *is* the acquisition mechanism, and the provenance graph *i
 | R-04 | 01.10 Estates | 01.08 Trader Status | A deceased trader's legal obligations pass to their estate in law, but on-platform the account simply stops selling. No live interaction worth modelling — the estate administers a catalogue (01.10's real subject), not a shop. |
 | R-05 | 01.02 Organizations | 01.01.02 Aliases | Considered modelling aliases as single-member orgs to unify the party model (01.01.02 DT-03). Rejected for the common case: a solo alias has no members, no treasury, no governance and no dissolution, so every alias would carry four empty concepts. **Reopened for the shared-alias case** (a duo) — which has all four, and is 01.01.02 Q-01/domain Q-08. The promotion path in CX-11 is how the two models connect without merging them. |
 | R-06 | 01.07 Credential Verification | 01.01.01 Role Facets | Both describe "what you do professionally", so gating facets on credentials looks tidy. Rejected (01.01.01 D-02): facets are self-asserted and unverified *by design* — gating them would make the platform unusable for the long tail who hold no union card, which is most working musicians. The cost of a false facet is an empty portfolio, not a false credential. (The *non-gating* relationship — a badge decorating a facet — is real and kept as CX-19.) |
+
+
+<!-- spec-graph: auto-generated -->
+## Related Specs
+
+### Constrained by
+- [[decisions.md#d-01|D-01]]
+- [[decisions.md#d-03|D-03]]
+- [[decisions.md#d-02|D-02]]
+- [[decisions.md#d-17|D-17]]
+- [[decisions.md#d-05|D-05]]
+- [[decisions.md#d-04|D-04]]
+- [[decisions.md#d-07|D-07]]
+- [[decisions.md#d-16|D-16]]
+- [[decisions.md#d-14|D-14]]
+- [[decisions.md#d-08|D-08]]
+- [[decisions.md#d-09|D-09]]
+- [[decisions.md#d-18|D-18]]
+- [[decisions.md#d-11|D-11]]
+- [[decisions.md#d-15|D-15]]
+- [[decisions.md#d-10|D-10]]

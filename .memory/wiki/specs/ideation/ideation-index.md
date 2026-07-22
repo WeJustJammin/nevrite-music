@@ -59,7 +59,7 @@
 | Total domains | **24** — all `[BREADTH]` |
 | Total sub-domains | **165** |
 | Total leaf features | **734** |
-| Total ideation files | **1,118** (190 indexes · 190 CX · 734 features · meta · super-index) |
+| Total ideation files | **1,120** (734 features · 190 indexes · 190 CX · 5 meta · 1 super-index (`ideation-index.md`) · not counted: `../vision.md`, `../feature-ledger.md`, `../moscow-ledger.md` live one level up) |
 | Max depth reached | 3 |
 | Domains at [BREADTH] | 24 / 24 (mixed: Musts [DEEP], Shoulds/Coulds [SURFACE]) |
 | Must features at [DEEP] | **195 / 195** — Step 5 complete |
@@ -139,8 +139,10 @@
 | 23 | Career, Finance & Business Management | [23-career-finance-business/](./23-career-finance-business/) | `[BREADTH]` | 7 sub-domains + 29 features | 3 | in-source / important |
 | 24 | Trust, Safety & Disputes | [24-trust-safety-disputes/](./24-trust-safety-disputes/) | `[BREADTH]` | 8 sub-domains + 36 features | 3 | industry-standard / core |
 
-> **Full per-domain rationale, cross-cuts, not-product routing, and demotions**:
-> [docs/wejammin-domain-map-proposal.md](../../../../docs/wejammin-domain-map-proposal.md)
+> **Ratified recovery provenance, per-domain rationale, cross-cuts, not-product routing, and demotions**:
+> [domain-map-proposal.md](domain-map-proposal.md)
+>
+> The earlier [historical pre-ratification proposal](../../../../docs/wejammin-domain-map-proposal.md) is retained for traceability only. It does not override this index, the numbered domain tree, or D-35.
 
 ## Ideation Rubric Self-Check (`/ideate-validate`, 2026-07-18)
 
@@ -149,7 +151,7 @@
 | 1 | Problem Clarity | ✅ | Single falsifiable sentence naming the multi-hyphenate musician + the "proof evaporates" pain. [problem-statement.md](meta/problem-statement.md) |
 | 2 | Persona Specificity | ✅ | 4 personas, all 6 fields each, no generic "users". [personas.md](meta/personas.md) |
 | 3 | Feature Completeness | ✅ | 195 Musts at `[DEEP]` with edge cases + Role Lens; 285 Shoulds `[PARTIAL]`; MoSCoW mutually exclusive; 734 features in [feature-ledger.md](../feature-ledger.md) |
-| 4 | Constraint Explicitness | ✅ | Budget/timeline/team/compliance/performance/surfaces all have specific values (D-28/29/30). Open stack items explicitly deferred to `/create-prd`. [constraints.md](meta/constraints.md) |
+| 4 | Constraint Explicitness | ✅ | Budget/timeline/team/compliance/performance/surfaces all have specific values (D-28/**31/32** — supersedes D-29/30). Open stack items explicitly deferred to `/create-prd`. [constraints.md](meta/constraints.md) |
 | 5 | Success Measurability | ✅ | Each metric has a method + target; wedge metrics numeric (split-capture ≥60% @ 6mo, capture <7d); baseline-set + hard SLOs deferred to `/create-prd-compile`. [vision.md](../vision.md) |
 | 6 | Competitive Positioning | ✅ | 17 named competitors, capture-vs-reconstruct differentiation, earned-provenance moat, partner-vs-rival split. [competitive-landscape.md](meta/competitive-landscape.md) |
 | 7 | Open Question Resolution | ✅ | Every open question has owner + target stage (pipeline-stage = deadline). [vision.md](../vision.md) Open Questions |
@@ -200,7 +202,7 @@ Numbered decisions with source references.
 | D-17 | **Verification caveat recorded**: 0 of 24 candidates were majority-refuted. This is a caution flag on the domain COUNT, not proof of correctness — verifiers may have been lenient. Mitigating evidence: adversaries did materially alter the map (21 demotions; boundary narrowing on 01, 03, 08). `/audit-ambiguity ideation` should treat domain-count inflation as a live hypothesis. | Agent, method transparency, 2026-07-16 | Global |
 | D-18 | **THESIS: Provenance is the wedge; consolidation is the platform.** Consolidation wins the user (daily reason to show up); provenance keeps them (reason they can't leave). Rejected framing these as alternatives — they are causally linked: being where the work happens is the *precondition* for capturing splits at source. Provenance alone = the Jaxsta/Muso.AI failure (no daily hook). Consolidation alone = copyable, six incumbent fights, nothing compounds. | User decision, 2026-07-16, `/ideate-discover` | Global |
 | D-19 | **4 primary personas**: `Musician` (multi-hyphenate — feels fragmentation worst), `Producer` (session owner — the provenance capture point), `Operator` (venue/studio — the supply side), `Fan` (per D-11). Band is an **entity** (domain 01), not a persona. Coverage verified across all 24 domains; two gaps flagged as open questions (dealer persona for 13/14/15; Admin for 24). | User decision, 2026-07-16, `/ideate-discover` | All |
-| D-20 | **All 195 Must-haves retained; v1 beachhead sequencing deferred to `/plan-phase`.** Owner declined the session/gear/live spine options. Agent flagged: `/plan-phase` orders by dependency, not strategy — it will not select a beachhead, so this decision is deferred rather than resolved. `/audit-ambiguity ideation` is likely to flag a 195-Must ledger as carrying no priority signal. Options retained in the MoSCoW Summary for re-decision. | User decision, 2026-07-16, `/ideate-discover` | Global |
+| D-20 | **All 195 Must-haves retained** (still live). ~~v1 beachhead sequencing deferred to `/plan-phase`~~ **— the "defer the beachhead" half is AMENDED by D-31**, which chose v1 = session spine + v1.5 = marketplaces. The retention of all 195 Musts stands; only the sequencing-deferral is superseded. | User decision, 2026-07-16, `/ideate-discover`; amended 2026-07-18 by D-31 | Global |
 | D-21 | **Breadth pass complete**: 165 sub-domains + 734 leaf features written across 24 domains (1,118 files). Deep Think added **166 nodes** the sweep's candidate list missed; **118 duplicate candidates merged**; 142 not-product concerns routed to `/create-prd`; 175 cross-cut mechanisms surfaced pending consolidation. Independent disk audit: 13 clean / 11 minor / **0 major**; Role Lens 734/734 with 0 invented personas; 0 placeholder leaks. | `/ideate-discover` Step 3, verified against disk 2026-07-16 | All |
 | D-22 | **Systemic gap found by audit and fixed**: the drill step never wrote back to the parent `ideation-index.md`, leaving all 24 domains reported as `[SURFACE]`/"N candidates"/Depth 1 while disk showed `[BREADTH]`/real children/Depth 3. Auditors correctly diagnosed this as a workflow gap rather than per-driller negligence. Parent index reconciled **from disk**, not from agent self-reports. | Audit finding, 2026-07-16 | Global |
 | D-23 | **Step 5 deepening of all 195 Musts complete and verified.** Every Must feature taken from `[SURFACE]` to `[DEEP]` with full Behavior/Happy Path/Edge Cases/States/Deep Think, verified by 195 independent adversarial agents (no sampling), 0 real behavior-section PENDING leaks (precise scan), 24 domain index trees reconciled deterministically from disk (109 status cells). Executed across 4 workflow runs spanning 2 session-limit resets; each run's counts cross-checked against disk truth, never trusted from self-reports. Sub-domains stay `[BREADTH]` (mixed Must-[DEEP]/Should-[SURFACE]) per rollup rule. | `/ideate-discover` Step 5, 2026-07-17 | All |
@@ -212,6 +214,42 @@ Numbered decisions with source references.
 | D-29 | ~~V1 scope = session spine + all 3 marketplaces (~71 Musts)~~ **SUPERSEDED by D-31.** Original single-v1 covering 8 domains including all marketplaces; flagged as over-aggressive for solo/3–6mo. Retained for history. | User, 2026-07-18 | Global |
 | D-30 | ~~Primary market = GLOBAL from day one~~ **SUPERSEDED by D-32.** Original global-day-one choice; flagged as heaviest-possible compliance surface. Retained for history. | User, 2026-07-18 | Global |
 | D-31 | **Release split into v1 + v1.5** (owner revision, resolving the D-29 risk): **v1 = session spine** (01, 02, 05, 07, 09-capture) ~45 Musts — the wedge, shipped first and fast. **v1.5 = the 3 marketplaces** (13, 14, 15) ~26 Musts — released soon after, not gating the wedge. Phase 2+ = the remaining ~124 Musts. This is the mitigation the agent recommended for the marketplace risk; the owner adopted it. | User, 2026-07-18 | Global |
+| D-33 | **Split-Capture Trigger ownership layered** (audit remediation): **09 Rights owns the split SHEET** (instrument + %); **02 Credits owns the credit record**; the **capture trigger is a cross-cut** fired from 05/07 at creation — no single domain owns it. **10 Royalties does NOT own capture** (collection is phase 2). Term "split machinery" retired. Corrects a contradiction where the cross-cut registry wrongly assigned owner=10. | User decision, 2026-07-18, `/audit-ambiguity` | 02, 09, 10, cross-cut |
+| D-34 | **Ladder/challenge/expiry engine owned by 17 Live Booking** (audit remediation): the mechanic for competing holds on a bookable slot is a booking-transaction behavior. 16 Venues/Studios owns the place's existence, specs, and base calendar only. Resolves a 16-vs-17 boundary contradiction that blocked IA sharding. | User decision, 2026-07-18, `/audit-ambiguity` | 16, 17 |
+| D-35 | **24-domain map reaffirmed after restart/recovery.** Owner confirmed all 24 domains on 2026-07-19 following recovery of the 14-lens / 1,545-concept sweep. Four fresh independent audits found no missing required domain, cross-cut, blocker, or major boundary defect. Existing 24-folder fractal tree is authoritative; the recovery proposal is ratified evidence, not a competing structure. Scope remains governed by existing MoSCoW and release decisions (D-20/D-31), not by deleting domains. | User confirmation + recovery/audit evidence, 2026-07-19 | Global |
+| D-36 | **A-02 review-link recipient-isolation contract ratified.** Domain 07 preserves CX-01, D-13, D-14, and 07.05.02 D-10: an unauthenticated/private-link recipient sees only their own thread and replies, never roster/internal or other-recipient feedback, other versions, project content, hidden counts, or teasers; audience is immutable at post and link comments notify the roster. Queue A-02 and ledger `r-51[0]` are resolved; no new ACL, visibility widening, or v1 scope change. | Owner ratification + source-contract recheck, 2026-07-19 | 07 |
+| D-37 | **A-03 DAW parsing support is validation-gated.** Before a DAW can be selected for a parser or track-mapping integration, validate representative real sessions and complete DAW-specific legal review. Person-free track names retain available track/instrument context but produce no contributor guess; the existing Producer prompt asks explicitly. Ambiguity does not infer, and unsupported/unreadable formats remain non-blocking. This resolves queue A-03 / ledger `r-52[0]` without choosing DAWs, bridge delivery, or a new surface. | Owner decision + source-contract recheck, 2026-07-20 | 07 |
+| D-38 | **A-04 vault default profiles are validation-gated.** The proposed per-song × sensitivity-class, role-derived profiles require practitioner validation and an approved profile version before v1 enforcement. Validation may refine grants but cannot replace least-privilege role derivation with manual per-asset ACLs, project-wide grants, or owner-configured-only access. First-access NDA evidence, immediate fail-closed revocation, terms-not-grants separation, version-pinned ordinary acceptance, and explained denial remain locked. NDA legal force and master-owner precedence remain separately open. | Owner decision + source-contract recheck, 2026-07-20 | 07, 09 |
+| D-39 | **A-05 mixed DSP outcomes use attached rejected-item details.** One `(release × store × territory)` row retains its identity. Under mixed partner evidence, a `Partial acceptance` projection exposes accepted/rejected/pending counts and actionable details; each rejected item preserves stable item ID, partner plus original delivery/message correlation, evidence, triage/remediation state, and successor-delivery correlation. Parent health returns only when evidence supports the full release; redelivery remains rejecting-partner-scoped. | Owner decision + source-contract recheck, 2026-07-20 | 12 |
+| D-40 | **DQ-04.06 hold-ladder consistency uses optimistic version checks.** Each bookable-slot ladder has server-assigned dense ordering and receipt-time ties. Every mutation is version-conditional: stale intents reject before mutation and are re-offered against the authoritative ladder. No merge, automatic replay, queue-behind, lock, or last-write-wins path exists. A successful mutation atomically preserves ordering, version, required attribution/reason, terminal action semantics, and audit/notification intent; release beats a simultaneous challenge. | Owner decision + source-contract recheck, 2026-07-20 | 17 |
+| D-41 | **CQ-02 comped-out credits render transparently when otherwise public.** A retained not-in-final-master contribution remains tier-unchanged and renders once in its ordinary public discography position with the plain-language qualifier "not in final master." Ordinary visibility/publication gates still win; visitors receive no trigger date, reason, or delivery history. This display contract decides no Domain 10 registration, ownership, royalty, payment, union, or neighbouring-rights outcome. | Owner decision + source-contract recheck, 2026-07-20 | 02, 10 |
+| D-42 | **CQ-04 suspected-ring demotion changes ordinary traversal rank, not presentation.** An otherwise eligible traversal edge consumes its silently demoted per-edge-derived weight and, if returned through ordinary gates and ordinary result-window ranking, renders normally. No collusion-specific threshold, hiding, label, rationale, notification, detector metadata, or topology-only Domain 24 action exists. | Owner decision + source-contract recheck, 2026-07-20 | 02, 24 |
+| D-43 | **CQ-06 recorded master `majority-by-share` requires strict `>50%` exact ownership approval.** A specific master action needs affirmative exact nominal master-owner share strictly greater than half of the full current consented pool; equality fails closed. Absent rule remains unanimous; invalid/stale records, silence, unreachability, points, or rounding do not manufacture approval. This affects no separate licensing-policy veto, publishing/performer/sample permission, release/takedown decision, payout calculation, or Domain 24 case. | Owner decision + source-contract recheck, 2026-07-20 | 09, 11, 12, 24 |
+| D-44 | **CQ-07 overlapping mashup work weights are declarant-entered, never inferred.** Every embodied overlapping work has a positive exact Recording→Work weight, with the full set totaling 100%; duration proration remains an editable proposal only for declared disjoint spans. Domain 10 consumes the valid as-of allocation but never calculates duration, normalizes, equal-splits, infers a remainder/contribution, or repairs it. Works remain separate and source-master lineage/sample declarations remain independently required. | Owner decision + source-contract recheck, 2026-07-20 | 09, 10 |
+| D-45 | **CQ-08 unclaimed-stub auto-merge requires exact canonical asserted writer-name-set equality, never identity inference.** `writer-name-canonical-v1` pins Unicode 15.1 NFC → Default Case Folding → trim/collapse Unicode whitespace → NFD/remove marks/NFC, compares order-independent sets exactly, and retains original assertions as evidence. It applies only to current unclaimed, unconsented, conflict-free stubs with no distinct-person or unresolved identity/alias evidence; fuzzy, title, audio, identifier, legal/stage identity, or alias signals can nominate but never authorize action. Commit rechecks atomically and retains provenance/lineage. Later incompatible claims use ordinary detection/dispute routing without auto-unmerge, case, freeze, or identity adjudication. | Owner decision + source-contract recheck, 2026-07-21 | 01, 09 |
+| D-46 | **CQ-09 v1 term and moral-right status is bounded to `US`, `FR`, `DE`, and `GB`.** Each determinate jurisdictional result requires its source-attributed facts and applicable rule; missing/insufficient evidence and every other territory are explicit `unknown` / not determined. Copyright term/public-domain status remains territory-scoped and is never global clearance, licensing approval, ownership adjudication, or release authorization. Economic transfers never transfer moral rights; France/Germany non-waivability, UK waiver treatment, and US music non-applicability remain jurisdiction-specific. | Owner decision + source-contract recheck, 2026-07-21 | 09, 11, 12 |
+| D-47 | **P-01 production-stage vocabulary uses a validation-gated shared-enum policy.** The owner selected one platform-owned, fixed, music-specific vocabulary as the only permissible stage model, but no candidate labels, stage order, initial state, terminal approved-master semantic, or prompt mapping becomes enforceable until the validation packet records complete beatmaker and session-player workflow traces, dispositions for every mismatch, a passing result, and explicit product-owner approval of one immutable enum version. Validation may refine the candidate; it may not introduce configurable columns, production-model-specific vocabularies, a second state machine, or unnormalised exceptions. `Song.current_stage` ownership, non-blocking capture, completeness debt, and P-02/P-03 boundaries remain unchanged. | Owner-selected Option B + source-contract recheck, 2026-07-21 | 07 |
+| D-48 | **P-02 large catalogues render as a dense table, never a second lifecycle.** The selected scope counts unique visible authorized Songs before local filtering: `0–59` renders the craft board and `60+` automatically renders a catalogue table. Both project the same `Song.current_stage`, and a table row action invokes the identical per-Song transition — same authorization, non-blocking capture, completeness debt, LWW attributed notice, and derived Release-readiness recomputation. No bulk stage write, configurable column, per-card assignee, table-owned stage, or Release-local state exists in v1; pagination and view mechanics defer to `/write-be-spec` and `/write-fe-spec`. | Owner decision + source-contract recheck, 2026-07-21 | 07 |
+| D-49 | **P-03 superseded approvals reinstate on version identity, never on judgement.** A backward stage transition marks later-stage approvals superseded, never deleted. On re-advance they reinstate iff no new immutable version landed in between; any intervening version re-collects against the current approver set — which D-01's "an approval never transfers to a later version" already implied. The predicate is the append-only version timeline, so no materiality classifier, human judge, or certified zero-delta is introduced, and nothing in the append-only trail is retracted. Presentation-agnostic across the P-02 board/table split; Release re-readiness stays derived. | Owner decision + source-contract recheck, 2026-07-21 | 07 |
+| D-50 | **P-04 handoff specs are authored where owned and referenced where not.** `07.08.01` originates `mastering`, `mix`, and `archive`'s asset half; `sync` references domain 11, DSP destination references domain 12, and engagement-purchased handover references `05.04.02`/`05.04.04`. Referencing validates presence and surfaces the owner's verdict, never restating the requirement — generalising `07.07.03` D-04. `live` and `remix` are defined nowhere and become an ownership question, not authoring work; the Empty state advertises only specs with contents behind them. Every requirement warns, with integrity failure the sole hard stop. | Owner decision + source-contract recheck, 2026-07-21 | 07, 05, 11, 12 |
+| D-51 | **P-05 readiness targets follow P-04's ownership rule; pin-vs-live is dissolved.** `07.08.01` authors `ready-for-mastering` and `ready-for-mix-handoff`; `ready-for-DSP-release` references domain 12 and `ready-for-sync-pitch` domain 11, consuming their severities as weights rather than re-deriving them. An unowned target is not offerable — readiness ships per target as each becomes available, which is build order, never a user gate. One target-spec store with one version identity: the score is a live view, the package a pinned record that also pins its spec version. Only DSP-release is fully scoreable today. | Owner decision + source-contract recheck, 2026-07-21 | 07, 11, 12 |
+| D-52 | **P-06 a mis-typed source declaration is flagged, never reclassified.** A "preset" that is really a full melodic loop keeps its declared type; a disputed type uses the existing attributed conflict path where both are kept and surfaced. Mitigation is upstream — the capture prompt asks enumeratively (loop / one-shot / break / stem / bought beat). No detector, no reclassification, no rejection: 07 owns capture while 09/11 own clearance, the type axes belong to domain 14, and the capture prompt never blocks. | Owner decision + source-contract recheck, 2026-07-21 | 07, 11, 14 |
+| D-53 | **P-07a vault re-gating fires only on an owner-declared material change.** Terms re-versions do not re-gate existing holders by default and acceptance records stay version-pinned; an owner-flagged material change re-gates at next access, never mid-transfer. Materiality is declared by the owner who authored the change, never platform-detected — so it does not repeat the semantic reading P-03 rejected. Vault fail-closed revocation is untouched: domain D-04's absolute non-blocking rule governs creative surfaces, not the vault. | Owner decision + source-contract recheck, 2026-07-21 | 07 |
+| D-54 | **P-07b an access downgrade notifies the affected person and the roster.** A downgrade is an instance of D-09 ("every roster write is announced"), not an exception; the roster audience is scoped by D-16 to those who can already see that person's entry. Work is rostered rather than assigned, so the roster is the coordination record — and the downgraded party's live URLs are already dead. Audience only; cadence stays with the notification cross-cut. | Owner decision + source-contract recheck, 2026-07-21 | 07 |
+| D-55 | **P-08a originality aggregates into a nominal enum.** `13.02.03` D-05 derives an enumerated aggregate from the component vector to fill the locked comp key `model × condition × originality`. The enum is explicitly unordered — D-04 makes originality a factual axis, not a quality scale — so it partitions comp sets without ranking units. Authored on the owning axis, consumed by 13.04. | Owner decision + source-contract recheck, 2026-07-21 | 13 |
+| D-56 | **P-08b an originality change voids a live offer in either direction.** `13.02.03` D-06 applies 13.03.02 principle 3 literally. A direction test was unavailable: the axis is non-ordinal and mandates no photo evidence, so "downgrade" is uncomputable. Framed as seller-protection with a re-offer path so late honest disclosure is not punished. | Owner decision + source-contract recheck, 2026-07-21 | 13 |
+| D-57 | **P-09 local-pickup settlement is a per-listing seller choice.** `13.11` D-04 confirms what the tree already implements. A global settled rule imposes facilitator tax and 1099-K duties on every cash handshake; a global off-platform rule strands the escrow and chain machinery. The chain follows the money: settled writes the transfer, off-platform uses 15.01.03's manual handshake. | Owner decision + source-contract recheck, 2026-07-21 | 13, 15 |
+| D-58 | **P-10a/P-10b a rights takedown preserves the holder record; an ordinary revision appends.** `14.03.02` D-04 states both paths. Takedown stops onward delivery while the entitlement row persists with date and reason; revision appends and notifies while every prior entitled version stays fetchable. Two paths, never one — 14.04.01 already said so. | Owner decision + source-contract recheck, 2026-07-21 | 14 |
+| D-59 | **P-11 a departed contributor's confirmed split row survives unchanged.** `14.10.03` D-05 — never zeroed, redistributed or forfeited. The question's *accruing* premise is out of scope: pool funding and download accrual are WONT. Redistribution is foreclosed by 09.02.04 D-14 and forfeiture by 10.04.03 D-01. | Owner decision + source-contract recheck, 2026-07-21 | 14, 09, 10 |
+| D-60 | **P-12 a host-update break is an external change — flag, disclose, never revoke.** `14.04.02` D-04 ratifies the pattern locked at 14.07.01 D-04/D-06: perpetual promises the entitlement and artifact, not function. One story for OS drift, lapsed dependencies and host breaks. No default refund, no vendor obligation for a third party's act. | Owner decision + source-contract recheck, 2026-07-21 | 14 |
+| D-61 | **DQ-MG-01 the bulk-import quality bar does not bend; the evidence moment moves.** Four axes resolve independently: model binding unrelaxed (bulk raises it), grading bounded-and-disclosed with reduced comp weight, disclosure unrelaxed with no substitute, unit media unrelaxed with capture moved to label print. Absence is disclosed, never gated — and there is no shadow listing tier. | Owner decision + source-contract recheck, 2026-07-21 | 13 |
+| D-62 | **DQ-MG-02 stolen-serial review consumes domain 24's severity.** The listing is held not deleted, neither party accused; severity, SLA and escalation come from `24.01.03` and domain 13 authors no number. The seller's remedy is the locked `reported → contested` dispute path, not a support queue. | Owner decision + source-contract recheck, 2026-07-21 | 13, 15, 24 |
+| D-63 | **DQ-MG-03 approval-required licence transfers freeze on vendor exit.** The platform never substitutes for a departed vendor's discretionary approval and never invents consent. Auto-approval was rejected as commissioning a mechanism that does not exist — the registry stores a policy, not an evaluator. | Owner decision + source-contract recheck, 2026-07-21 | 14 |
+| D-64 | **DQ-MG-04 theft-report standing binds to enumerated custody states.** The owner or a party in a `15.08` custody state may file, with capacity recorded; the platform never adjudicates title. "Documented custody" was rejected as undefined — it would have locked out the loan and consignment cases the answer exists to serve. | Owner decision + source-contract recheck, 2026-07-21 | 15 |
+| D-65 | **DQ-MG-05/06 identity-confidence and collision rules move to the owning file.** `15.01.05` authors the canonical confidence set and `15.01.01` renders it; colliding records never auto-merge — both retained, both notified, merge only on mutual consent, following CQ-08's precedent. CX-01 blocks the mint pending disambiguation; it does not fork. | Owner decision + source-contract recheck, 2026-07-21 | 15 |
+| D-66 | **DQ-MG-07 unclaimed-record suggestions auto-apply by field class.** Factual classes apply immediately with community provenance; higher-stakes classes queue; commercial stays Operator-only. Uses `16.01.01`'s existing class model and mirrors "automation may propose, never dispose". | Owner decision + source-contract recheck, 2026-07-21 | 16 |
+| D-67 | **DQ-04.01/.02/.03/.04/.05/.07 the live-booking block resolves by consuming rules its own files already point to.** Held dates stay available with an aggregate hold state (never identities); band governance is consumed from domain 01, so with no rule configured no offer is approved; offers expire with no implicit grace and extensions are explicit and pre-expiry; conflicting counts stay provisional while undisputed portions settle; `scanned_paid` is the verified draw; alerts fire for announced first-party shows at on-sale. | Owner decision + source-contract recheck, 2026-07-21 | 17, 20, 01 |
+| D-68 | **P-01 closes on its policy; its validation evidence is implementation work.** The finding was "exact stage vocabulary still explicitly owner-open" and no longer is — the model, gate, cohort minima, pass conditions and owner-approval requirement are all decided and propagated. Candidate labels stay non-enforceable because the gate is **in force**, not because a decision is pending. Same disposition as A-03 and A-04, which also closed on their gate rather than their evidence. **All 107 remediation findings are now `verified-fixed`.** | Owner decision, 2026-07-22 | 07 |
 | D-32 | **Primary market = UNITED STATES to start** (owner revision from D-30's global). One coherent federal framework + state-privacy patchwork instead of every jurisdiction at once — resolves the global-vs-solo tension. US model: CCPA/CPRA, ESIGN/UETA e-sign, DMCA §512, state marketplace-facilitator sales tax (provider-handled), 1099-K, COPPA deferred. `/create-prd-security` keeps the data model jurisdiction-parameterized so later international expansion is additive, not a rewrite. | User, 2026-07-18 | Global, 24 |
 
 ## MoSCoW Summary
@@ -247,22 +285,26 @@ Numbered decisions with source references.
 | 11 Music Licensing | 8 | | | |
 | 24 Trust, Safety & Disputes | 8 | | | |
 
-> **⚠️ Sequencing risk — recorded, owner-accepted (D-20).** 195 Musts spanning all 24 domains is
-> not a shippable v1 and carries no priority signal. The proposals were made per-domain by
-> agents with no view of the whole, so each optimised locally; none is wrong in isolation.
-> The owner deferred sequencing to `/plan-phase`.
+> **✅ Sequencing RESOLVED by D-31 (2026-07-18).** All 195 Musts are retained (D-20), but the
+> release is now **split into v1 / v1.5 / phase-2+** — this supersedes the earlier "defer the
+> beachhead to `/plan-phase`" position recorded under D-20.
 >
-> **What `/plan-phase` will and will not do**: it orders by **dependency**, not by strategy. It
-> will not choose a beachhead — it will build the dependency graph and start at the bottom
-> (likely Identity + the Payments cross-cut). The beachhead decision is deferred, not resolved.
+> - **v1 — session spine** (01, 02, 05, 07, **09-capture**), ~45 Musts. The provenance wedge:
+>   hire → session → split captured at source, on one identity.
+> - **v1.5 — marketplaces** (13, 14, 15), ~26 Musts. Released soon after v1.
+> - **phase 2+** — the remaining ~124 Musts (still `Must` per D-20).
 >
-> **Beachhead options presented and declined** (retained for `/plan-phase` and re-decision):
-> - **Session spine** (01+05+07+02+09, ~45 musts) — the only option where acquisition and the
->   provenance wedge share one funnel: hire → session → split captured at source.
-> - **Gear spine** (01+13+15, ~26 musts) — highest traffic, first directive; but buying gear
->   never produces a split sheet, so the wedge stays theoretical.
-> - **Live spine** (01+16+17+18+19, ~48 musts) — Operator persona, event directive; gigs produce
->   credits but rarely splits.
+> **`09-capture`** = the split-**capture** slice of Rights & Ownership: sub-domains
+> **09.01 rights-registry + 09.02 split-capture-agreements + 09.03 chain-of-title-lifecycle**
+> (the record + the signed split + provenance of title). Royalty **collection** and the rest of
+> domain 09/10/11/12 are phase 2 (capture now, collect later — D-10). This defines the "~45 Musts"
+> arithmetic: 01(10) + 02(9) + 05(10) + 07(9) + 09-capture(7) = 45.
+>
+> **What `/plan-phase` does now**: it orders **within each release** by dependency. The beachhead
+> is chosen (v1 = the spine); `/plan-phase` sequences the ~45 v1 Musts, then the ~26 v1.5 Musts.
+> It no longer needs to pick a beachhead — D-31 did.
+>
+> See [meta/constraints.md § Release Plan](meta/constraints.md) for the full per-domain breakdown.
 
 ### Should Have — 285
 See [moscow-ledger.md](./moscow-ledger.md#should-285).
@@ -272,3 +314,77 @@ See [moscow-ledger.md](./moscow-ledger.md#could-201).
 
 ### Won't Have (Now) — 53
 See [moscow-ledger.md](./moscow-ledger.md#wont-53).
+
+
+<!-- spec-graph: auto-generated -->
+## Related Specs
+
+### Constrained by
+- [[decisions.md#d-18|D-18]]
+- [[decisions.md#d-16|D-16]]
+- [[decisions.md#d-35|D-35]]
+- [[decisions.md#d-28|D-28]]
+- [[decisions.md#d-29|D-29]]
+- [[decisions.md#d-26|D-26]]
+- [[decisions.md#d-01|D-01]]
+- [[decisions.md#d-02|D-02]]
+- [[decisions.md#d-03|D-03]]
+- [[decisions.md#d-04|D-04]]
+- [[decisions.md#d-05|D-05]]
+- [[decisions.md#d-06|D-06]]
+- [[decisions.md#d-07|D-07]]
+- [[decisions.md#d-08|D-08]]
+- [[decisions.md#d-09|D-09]]
+- [[decisions.md#d-10|D-10]]
+- [[decisions.md#d-11|D-11]]
+- [[decisions.md#d-12|D-12]]
+- [[decisions.md#d-13|D-13]]
+- [[decisions.md#d-14|D-14]]
+- [[decisions.md#d-15|D-15]]
+- [[decisions.md#d-17|D-17]]
+- [[decisions.md#d-19|D-19]]
+- [[decisions.md#d-20|D-20]]
+- [[decisions.md#d-31|D-31]]
+- [[decisions.md#d-21|D-21]]
+- [[decisions.md#d-22|D-22]]
+- [[decisions.md#d-23|D-23]]
+- [[decisions.md#d-24|D-24]]
+- [[decisions.md#d-25|D-25]]
+- [[decisions.md#d-27|D-27]]
+- [[decisions.md#d-30|D-30]]
+- [[decisions.md#d-32|D-32]]
+- [[decisions.md#d-33|D-33]]
+- [[decisions.md#d-34|D-34]]
+- [[decisions.md#d-36|D-36]]
+- [[decisions.md#d-37|D-37]]
+- [[decisions.md#d-38|D-38]]
+- [[decisions.md#d-39|D-39]]
+- [[decisions.md#d-40|D-40]]
+- [[decisions.md#d-41|D-41]]
+- [[decisions.md#d-42|D-42]]
+- [[decisions.md#d-43|D-43]]
+- [[decisions.md#d-44|D-44]]
+- [[decisions.md#d-45|D-45]]
+- [[decisions.md#d-46|D-46]]
+- [[decisions.md#d-47|D-47]]
+- [[decisions.md#d-48|D-48]]
+- [[decisions.md#d-49|D-49]]
+- [[decisions.md#d-50|D-50]]
+- [[decisions.md#d-51|D-51]]
+- [[decisions.md#d-52|D-52]]
+- [[decisions.md#d-53|D-53]]
+- [[decisions.md#d-54|D-54]]
+- [[decisions.md#d-55|D-55]]
+- [[decisions.md#d-56|D-56]]
+- [[decisions.md#d-57|D-57]]
+- [[decisions.md#d-58|D-58]]
+- [[decisions.md#d-59|D-59]]
+- [[decisions.md#d-60|D-60]]
+- [[decisions.md#d-61|D-61]]
+- [[decisions.md#d-62|D-62]]
+- [[decisions.md#d-63|D-63]]
+- [[decisions.md#d-64|D-64]]
+- [[decisions.md#d-65|D-65]]
+- [[decisions.md#d-66|D-66]]
+- [[decisions.md#d-67|D-67]]
+- [[decisions.md#d-68|D-68]]

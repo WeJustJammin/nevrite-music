@@ -16,6 +16,1143 @@
 
 ## Knowledge
 
+- [[specs/audits/audit-scope|Audit Scope — Ideation (Vision Layer)]] — audit — spec-vault
+- [[specs/audits/decision-queue-drafts/01-credits-rights|Credits & Rights Decision Queue]] — audit — spec-vault
+- [[specs/audits/decision-queue-drafts/02-projects-delivery|Projects, Delivery, Marketplace, and Distribution — Unratified Decision Queue]] — audit — spec-vault
+- [[specs/audits/decision-queue-drafts/03-marketplace-gear|Marketplace, Gear & Registry Decision Queue — Draft]] — audit — spec-vault
+- [[specs/audits/decision-queue-drafts/04-live-fan|Decision Queue Draft 04 — Live Booking and Fan Alerts]] — audit — spec-vault
+- [[specs/audits/ideation-ambiguity-report|Ideation Ambiguity Audit — Report]] — audit — spec-vault
+- [[specs/audits/ideation-remediation-decision-queue|Ideation Remediation — Canonical Decision Queue]] — audit — spec-vault
+- [[specs/audits/p01-production-stage-vocabulary-validation|P-01 Production-Stage Vocabulary Validation]] — audit — spec-vault
+- [[specs/audits/remediation-state|Remediation State]] — audit — spec-vault
+- [[specs/audits/tracked-phase2-warnings|Tracked Phase-2 Ambiguity Warnings]] — audit — spec-vault
+- [[specs/be|BE Specs Hub]] — spec — spec-vault
+- [[specs/fe|FE Specs Hub]] — spec — spec-vault
+- [[specs/feature-ledger|Feature Tracking Ledger — WeJammin]] — spec — spec-vault
+- [[specs/ia|IA Specs Hub]] — spec — spec-vault
+- [[specs/ideation/01-identity-profiles-organizations/01.01-person-identity-roles/01.01-person-identity-roles-cx|Person Identity & Roles — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/01-identity-profiles-organizations/01.01-person-identity-roles/01.01-person-identity-roles-index|Person Identity & Roles — Index]] — ideation — spec-vault
+- [[specs/ideation/01-identity-profiles-organizations/01.01-person-identity-roles/01.01.01-person-record-role-facets|Feature: Person Record & Multi-Role Facets]] — ideation — spec-vault
+- [[specs/ideation/01-identity-profiles-organizations/01.01-person-identity-roles/01.01.02-artist-names-aliases-projects|Feature: Artist Names, Aliases & Projects]] — ideation — spec-vault
+- [[specs/ideation/01-identity-profiles-organizations/01.01-person-identity-roles/01.01.03-acting-context-switcher|Feature: Acting Context Switcher]] — ideation — spec-vault
+- [[specs/ideation/01-identity-profiles-organizations/01.01-person-identity-roles/01.01.04-legal-identity-vs-public-identity|Feature: Legal Identity vs Public Identity]] — ideation — spec-vault
+- [[specs/ideation/01-identity-profiles-organizations/01.02-organizations-entity-model/01.02-organizations-entity-model-cx|Organizations & Entity Model — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/01-identity-profiles-organizations/01.02-organizations-entity-model/01.02-organizations-entity-model-index|Organizations & Entity Model — Index]] — ideation — spec-vault
+- [[specs/ideation/01-identity-profiles-organizations/01.02-organizations-entity-model/01.02.01-organization-types-attributes|Feature: Organization Types & Type-Specific Attributes]] — ideation — spec-vault
+- [[specs/ideation/01-identity-profiles-organizations/01.02-organizations-entity-model/01.02.02-organization-creation-lifecycle|Feature: Organization Creation & Lifecycle]] — ideation — spec-vault
+- [[specs/ideation/01-identity-profiles-organizations/01.02-organizations-entity-model/01.02.03-organization-type-transitions|Feature: Organization Type Transitions & Multi-Type Entities]] — ideation — spec-vault
+- [[specs/ideation/01-identity-profiles-organizations/01.03-membership-representation-mandate/01.03-membership-representation-mandate-cx|Membership, Representation & Mandate — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/01-identity-profiles-organizations/01.03-membership-representation-mandate/01.03-membership-representation-mandate-index|Membership, Representation & Mandate — Index]] — ideation — spec-vault
+- [[specs/ideation/01-identity-profiles-organizations/01.03-membership-representation-mandate/01.03.01-membership-records-lifecycle|Feature: Membership Records & Lifecycle]] — ideation — spec-vault
+- [[specs/ideation/01-identity-profiles-organizations/01.03-membership-representation-mandate/01.03.02-representation-roster-relationships|Feature: Representation & Roster Relationships]] — ideation — spec-vault
+- [[specs/ideation/01-identity-profiles-organizations/01.03-membership-representation-mandate/01.03.03-mandate-scope-delegated-authority|Feature: Mandate Scope & Delegated Authority]] — ideation — spec-vault
+- [[specs/ideation/01-identity-profiles-organizations/01.04-band-ensemble-governance/01.04-band-ensemble-governance-cx|Band & Ensemble Governance — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/01-identity-profiles-organizations/01.04-band-ensemble-governance/01.04-band-ensemble-governance-index|Band & Ensemble Governance — Index]] — ideation — spec-vault
+- [[specs/ideation/01-identity-profiles-organizations/01.04-band-ensemble-governance/01.04.01-partnership-terms-decision-rules|Feature: Partnership Terms & Decision Rules]] — ideation — spec-vault
+- [[specs/ideation/01-identity-profiles-organizations/01.04-band-ensemble-governance/01.04.02-name-trademark-ownership|Feature: Name & Trademark Ownership]] — ideation — spec-vault
+- [[specs/ideation/01-identity-profiles-organizations/01.04-band-ensemble-governance/01.04.03-treasury-mandate|Feature: Treasury Mandate]] — ideation — spec-vault
+- [[specs/ideation/01-identity-profiles-organizations/01.04-band-ensemble-governance/01.04.04-dissolution-succession|Feature: Dissolution & Succession]] — ideation — spec-vault
+- [[specs/ideation/01-identity-profiles-organizations/01.05-profile-claiming-verification/01.05-profile-claiming-verification-cx|Profile Claiming & Ownership Verification — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/01-identity-profiles-organizations/01.05-profile-claiming-verification/01.05-profile-claiming-verification-index|Profile Claiming & Ownership Verification — Index]] — ideation — spec-vault
+- [[specs/ideation/01-identity-profiles-organizations/01.05-profile-claiming-verification/01.05.01-shadow-party-creation-invitation|Feature: Shadow Party Creation & Invitation]] — ideation — spec-vault
+- [[specs/ideation/01-identity-profiles-organizations/01.05-profile-claiming-verification/01.05.02-claim-initiation-proof-methods|Feature: Claim Initiation & Proof Methods]] — ideation — spec-vault
+- [[specs/ideation/01-identity-profiles-organizations/01.05-profile-claiming-verification/01.05.03-contested-claims-ownership-transfer|Feature: Contested Claims & Ownership Transfer]] — ideation — spec-vault
+- [[specs/ideation/01-identity-profiles-organizations/01.06-portfolio-media-epk/01.06-portfolio-media-epk-cx|Portfolio, Media Reel & EPK — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/01-identity-profiles-organizations/01.06-portfolio-media-epk/01.06-portfolio-media-epk-index|Portfolio, Media Reel & EPK — Index]] — ideation — spec-vault
+- [[specs/ideation/01-identity-profiles-organizations/01.06-portfolio-media-epk/01.06.01-profile-page-composition|Feature: Profile Page Composition]] — ideation — spec-vault
+- [[specs/ideation/01-identity-profiles-organizations/01.06-portfolio-media-epk/01.06.02-credit-backed-portfolio|Feature: Credit-Backed Portfolio]] — ideation — spec-vault
+- [[specs/ideation/01-identity-profiles-organizations/01.06-portfolio-media-epk/01.06.03-epk-generation-sharing|Feature: EPK Generation & Sharing]] — ideation — spec-vault
+- [[specs/ideation/01-identity-profiles-organizations/01.07-professional-credential-verification|Feature: Professional, Union & Credential Verification]] — ideation — spec-vault
+- [[specs/ideation/01-identity-profiles-organizations/01.08-trader-status-classification|Feature: Trader vs Private Seller Classification]] — ideation — spec-vault
+- [[specs/ideation/01-identity-profiles-organizations/01.09-party-identifier-resolution|Feature: Party Identifier Resolution]] — ideation — spec-vault
+- [[specs/ideation/01-identity-profiles-organizations/01.10-estates-legacy-accounts|Feature: Estates, Deceased Users & Legacy Accounts]] — ideation — spec-vault
+- [[specs/ideation/01-identity-profiles-organizations/identity-profiles-organizations-cx|Identity, Profiles & Organizations — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/01-identity-profiles-organizations/identity-profiles-organizations-index|Identity, Profiles & Organizations — Index]] — ideation — spec-vault
+- [[specs/ideation/02-credits-attribution/02.01-credit-graph-discography/02.01-credit-graph-discography-cx|Credit Graph & Discography — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/02-credits-attribution/02.01-credit-graph-discography/02.01-credit-graph-discography-index|Credit Graph & Discography — Index]] — ideation — spec-vault
+- [[specs/ideation/02-credits-attribution/02.01-credit-graph-discography/02.01.01-credit-record-contribution-ledger|Feature: Credit Record & Contribution Ledger]] — ideation — spec-vault
+- [[specs/ideation/02-credits-attribution/02.01-credit-graph-discography/02.01.02-public-discography|Feature: Public Discography]] — ideation — spec-vault
+- [[specs/ideation/02-credits-attribution/02.01-credit-graph-discography/02.01.03-credit-search-graph-traversal|Feature: Credit Search & Graph Traversal]] — ideation — spec-vault
+- [[specs/ideation/02-credits-attribution/02.01-credit-graph-discography/02.01.04-identifier-resolution-duplicate-merge|Feature: Identifier Resolution & Duplicate Merge]] — ideation — spec-vault
+- [[specs/ideation/02-credits-attribution/02.01-credit-graph-discography/02.01.05-credit-visibility-embargo|Feature: Credit Visibility & Embargo]] — ideation — spec-vault
+- [[specs/ideation/02-credits-attribution/02.01-credit-graph-discography/02.01.06-credit-correction-amendment|Feature: Credit Correction & Amendment]] — ideation — spec-vault
+- [[specs/ideation/02-credits-attribution/02.02-session-capture/02.02-session-capture-cx|Session Capture — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/02-credits-attribution/02.02-session-capture/02.02-session-capture-index|Session Capture — Index]] — ideation — spec-vault
+- [[specs/ideation/02-credits-attribution/02.02-session-capture/02.02.01-session-roll-call|Feature: Session Roll Call]] — ideation — spec-vault
+- [[specs/ideation/02-credits-attribution/02.02-session-capture/02.02.02-per-track-contribution-log|Feature: Per-Track Contribution Log]] — ideation — spec-vault
+- [[specs/ideation/02-credits-attribution/02.02-session-capture/02.02.03-session-close-capture-prompt|Feature: Session Close Capture Prompt]] — ideation — spec-vault
+- [[specs/ideation/02-credits-attribution/02.02-session-capture/02.02.04-session-attendance-proof|Feature: Session Attendance Proof]] — ideation — spec-vault
+- [[specs/ideation/02-credits-attribution/02.03-claiming-cold-start-seeding/02.03-claiming-cold-start-seeding-cx|Claiming & Cold-Start Seeding — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/02-credits-attribution/02.03-claiming-cold-start-seeding/02.03-claiming-cold-start-seeding-index|Claiming & Cold-Start Seeding — Index]] — ideation — spec-vault
+- [[specs/ideation/02-credits-attribution/02.03-claiming-cold-start-seeding/02.03.01-external-catalog-import|Feature: External Catalog Import]] — ideation — spec-vault
+- [[specs/ideation/02-credits-attribution/02.03-claiming-cold-start-seeding/02.03.02-claim-inbox-suggested-claims|Feature: Claim Inbox & Suggested Claims]] — ideation — spec-vault
+- [[specs/ideation/02-credits-attribution/02.03-claiming-cold-start-seeding/02.03.03-claim-adjudication|Feature: Claim Adjudication]] — ideation — spec-vault
+- [[specs/ideation/02-credits-attribution/02.04-attestation-credit-confidence/02.04-attestation-credit-confidence-cx|Attestation & Credit Confidence — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/02-credits-attribution/02.04-attestation-credit-confidence/02.04-attestation-credit-confidence-index|Attestation & Credit Confidence — Index]] — ideation — spec-vault
+- [[specs/ideation/02-credits-attribution/02.04-attestation-credit-confidence/02.04.01-attestation-request-confirmation|Feature: Attestation Request & Confirmation]] — ideation — spec-vault
+- [[specs/ideation/02-credits-attribution/02.04-attestation-credit-confidence/02.04.02-provenance-tiers-credit-confidence|Feature: Provenance Tiers & Credit Confidence]] — ideation — spec-vault
+- [[specs/ideation/02-credits-attribution/02.04-attestation-credit-confidence/02.04.03-attestation-retraction|Feature: Attestation Retraction]] — ideation — spec-vault
+- [[specs/ideation/02-credits-attribution/02.04-attestation-credit-confidence/02.04.04-attestation-ring-collusion-detection|Feature: Attestation-Ring & Collusion Detection]] — ideation — spec-vault
+- [[specs/ideation/02-credits-attribution/02.05-credit-dispute-resolution|Feature: Credit Dispute Resolution]] — ideation — spec-vault
+- [[specs/ideation/02-credits-attribution/02.06-credit-role-instrument-taxonomy|Feature: Credit Role & Instrument Taxonomy]] — ideation — spec-vault
+- [[specs/ideation/02-credits-attribution/02.07-union-performer-session-reporting|Feature: Union & Performer Session Reporting]] — ideation — spec-vault
+- [[specs/ideation/02-credits-attribution/02.08-credit-export-ddex-rin|Feature: Credit Export & DDEX RIN Emission]] — ideation — spec-vault
+- [[specs/ideation/02-credits-attribution/02.09-gear-credit-linkage|Feature: Gear ↔ Credit Linkage]] — ideation — spec-vault
+- [[specs/ideation/02-credits-attribution/02.10-ai-contribution-disclosure|Feature: AI Contribution Disclosure]] — ideation — spec-vault
+- [[specs/ideation/02-credits-attribution/credits-attribution-cx|Credits & Attribution — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/02-credits-attribution/credits-attribution-index|Credits & Attribution — Index]] — ideation — spec-vault
+- [[specs/ideation/03-community-networking/03.01-connections-follows-endorsements/03.01-connections-follows-endorsements-cx|Connections, Follows & Endorsements — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/03-community-networking/03.01-connections-follows-endorsements/03.01-connections-follows-endorsements-index|Connections, Follows & Endorsements — Index]] — ideation — spec-vault
+- [[specs/ideation/03-community-networking/03.01-connections-follows-endorsements/03.01.01-follows|Feature: Follows (Asymmetric)]] — ideation — spec-vault
+- [[specs/ideation/03-community-networking/03.01-connections-follows-endorsements/03.01.02-professional-connections|Feature: Professional Connections & Request Controls]] — ideation — spec-vault
+- [[specs/ideation/03-community-networking/03.01-connections-follows-endorsements/03.01.03-endorsements-skill-vouching|Feature: Endorsements & Skill Vouching]] — ideation — spec-vault
+- [[specs/ideation/03-community-networking/03.02-activity-feed-ranking/03.02-activity-feed-ranking-cx|Activity Feed & Ranking — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/03-community-networking/03.02-activity-feed-ranking/03.02-activity-feed-ranking-index|Activity Feed & Ranking — Index]] — ideation — spec-vault
+- [[specs/ideation/03-community-networking/03.02-activity-feed-ranking/03.02.01-feed-composition-event-sources|Feature: Feed Composition & Event Sources]] — ideation — spec-vault
+- [[specs/ideation/03-community-networking/03.02-activity-feed-ranking/03.02.02-ranking-relevance-controls|Feature: Ranking, Relevance & Feed Controls]] — ideation — spec-vault
+- [[specs/ideation/03-community-networking/03.02-activity-feed-ranking/03.02.03-native-posts-reactions|Feature: Native Posts & Reactions]] — ideation — spec-vault
+- [[specs/ideation/03-community-networking/03.03-collaborator-discovery-matchmaking/03.03-collaborator-discovery-matchmaking-cx|Collaborator Discovery & Matchmaking — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/03-community-networking/03.03-collaborator-discovery-matchmaking/03.03-collaborator-discovery-matchmaking-index|Collaborator Discovery & Matchmaking — Index]] — ideation — spec-vault
+- [[specs/ideation/03-community-networking/03.03-collaborator-discovery-matchmaking/03.03.01-collaborator-search-browse|Feature: Collaborator Search & Browse]] — ideation — spec-vault
+- [[specs/ideation/03-community-networking/03.03-collaborator-discovery-matchmaking/03.03.02-match-scoring-fit-signals|Feature: Match Scoring & Fit Signals]] — ideation — spec-vault
+- [[specs/ideation/03-community-networking/03.03-collaborator-discovery-matchmaking/03.03.03-open-to-status-availability-signals|Feature: Open-To Status & Availability Signals]] — ideation — spec-vault
+- [[specs/ideation/03-community-networking/03.03-collaborator-discovery-matchmaking/03.03.04-open-collaboration-calls|Feature: Open Collaboration Calls]] — ideation — spec-vault
+- [[specs/ideation/03-community-networking/03.04-warm-intros-collaboration-graph/03.04-warm-intros-collaboration-graph-cx|Warm Intros & the Collaboration Graph — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/03-community-networking/03.04-warm-intros-collaboration-graph/03.04-warm-intros-collaboration-graph-index|Warm Intros & the Collaboration Graph — Index]] — ideation — spec-vault
+- [[specs/ideation/03-community-networking/03.04-warm-intros-collaboration-graph/03.04.01-collaboration-graph-path-finding|Feature: Collaboration Graph Derivation & Path Finding]] — ideation — spec-vault
+- [[specs/ideation/03-community-networking/03.04-warm-intros-collaboration-graph/03.04.02-warm-intro-requests-brokering|Feature: Warm Intro Requests & Brokering]] — ideation — spec-vault
+- [[specs/ideation/03-community-networking/03.04-warm-intros-collaboration-graph/03.04.03-referral-recommendation-requests|Feature: Referral & Recommendation Requests]] — ideation — spec-vault
+- [[specs/ideation/03-community-networking/03.04-warm-intros-collaboration-graph/03.04.04-reachability-inbound-policy|Feature: Reachability & Inbound Contact Policy]] — ideation — spec-vault
+- [[specs/ideation/03-community-networking/03.05-private-rolodex-crm/03.05-private-rolodex-crm-cx|Private Industry Rolodex & Contact CRM — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/03-community-networking/03.05-private-rolodex-crm/03.05-private-rolodex-crm-index|Private Industry Rolodex & Contact CRM — Index]] — ideation — spec-vault
+- [[specs/ideation/03-community-networking/03.05-private-rolodex-crm/03.05.01-contact-records-shadow-contacts|Feature: Contact Records & Off-Platform Shadow Contacts]] — ideation — spec-vault
+- [[specs/ideation/03-community-networking/03.05-private-rolodex-crm/03.05.02-private-notes-tags-lists|Feature: Private Notes, Tags & Lists]] — ideation — spec-vault
+- [[specs/ideation/03-community-networking/03.05-private-rolodex-crm/03.05.03-follow-ups-reminders|Feature: Follow-Ups & Relationship Reminders]] — ideation — spec-vault
+- [[specs/ideation/03-community-networking/03.06-scenes-communities/03.06-scenes-communities-cx|Scenes & Communities — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/03-community-networking/03.06-scenes-communities/03.06-scenes-communities-index|Scenes & Communities — Index]] — ideation — spec-vault
+- [[specs/ideation/03-community-networking/03.06-scenes-communities/03.06.01-scene-definition-membership|Feature: Scene Definition, Membership & Joining]] — ideation — spec-vault
+- [[specs/ideation/03-community-networking/03.06-scenes-communities/03.06.02-scene-graph-density-map|Feature: Scene Graph & Density Map]] — ideation — spec-vault
+- [[specs/ideation/03-community-networking/03.06-scenes-communities/03.06.03-scene-stewardship-moderation|Feature: Scene Stewardship & Local Moderation]] — ideation — spec-vault
+- [[specs/ideation/03-community-networking/03.06-scenes-communities/03.06.04-scene-seeding-claiming-cold-start|Feature: Scene Seeding, Claiming & Cold Start]] — ideation — spec-vault
+- [[specs/ideation/03-community-networking/03.07-forums-craft-qa|Feature: Forums & Craft Q&A]] — ideation — spec-vault
+- [[specs/ideation/03-community-networking/03.08-contests-challenges-beat-battles/03.08-contests-challenges-beat-battles-cx|Contests, Challenges & Beat Battles — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/03-community-networking/03.08-contests-challenges-beat-battles/03.08-contests-challenges-beat-battles-index|Contests, Challenges & Beat Battles — Index]] — ideation — spec-vault
+- [[specs/ideation/03-community-networking/03.08-contests-challenges-beat-battles/03.08.01-contest-creation-briefs|Feature: Contest Creation & Briefs]] — ideation — spec-vault
+- [[specs/ideation/03-community-networking/03.08-contests-challenges-beat-battles/03.08.02-submissions-eligibility|Feature: Submissions & Eligibility]] — ideation — spec-vault
+- [[specs/ideation/03-community-networking/03.08-contests-challenges-beat-battles/03.08.03-judging-voting-anti-gaming|Feature: Judging, Voting & Anti-Gaming]] — ideation — spec-vault
+- [[specs/ideation/03-community-networking/03.08-contests-challenges-beat-battles/03.08.04-prizes-payouts-submission-rights|Feature: Prizes, Payouts & Submission Rights]] — ideation — spec-vault
+- [[specs/ideation/03-community-networking/03.09-local-jam-open-mic-discovery|Feature: Local Jam & Open Mic Discovery]] — ideation — spec-vault
+- [[specs/ideation/03-community-networking/03.10-peer-scene-listening-rooms|Feature: Peer & Scene Listening Rooms]] — ideation — spec-vault
+- [[specs/ideation/03-community-networking/03.11-conference-event-networking-mode|Feature: Conference & Industry Event Networking Mode]] — ideation — spec-vault
+- [[specs/ideation/03-community-networking/community-networking-cx|Community & Networking — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/03-community-networking/community-networking-index|Community & Networking — Index]] — ideation — spec-vault
+- [[specs/ideation/04-opportunities-casting/04.01-opportunity-posting-targeting/04.01-opportunity-posting-targeting-cx|Opportunity Posting & Targeting — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/04-opportunities-casting/04.01-opportunity-posting-targeting/04.01-opportunity-posting-targeting-index|Opportunity Posting & Targeting — Index]] — ideation — spec-vault
+- [[specs/ideation/04-opportunities-casting/04.01-opportunity-posting-targeting/04.01.01-opportunity-post-type-taxonomy|Feature: Opportunity Post & Type Taxonomy]] — ideation — spec-vault
+- [[specs/ideation/04-opportunities-casting/04.01-opportunity-posting-targeting/04.01.02-targeting-distribution-controls|Feature: Targeting & Distribution Controls]] — ideation — spec-vault
+- [[specs/ideation/04-opportunities-casting/04.01-opportunity-posting-targeting/04.01.03-compensation-spec-work-guardrails|Feature: Compensation Disclosure & Spec-Work Guardrails]] — ideation — spec-vault
+- [[specs/ideation/04-opportunities-casting/04.01-opportunity-posting-targeting/04.01.04-eligibility-requirement-criteria|Feature: Eligibility & Requirement Criteria]] — ideation — spec-vault
+- [[specs/ideation/04-opportunities-casting/04.02-discovery-matching-alerts/04.02-discovery-matching-alerts-cx|Discovery, Matching & Alerts — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/04-opportunities-casting/04.02-discovery-matching-alerts/04.02-discovery-matching-alerts-index|Discovery, Matching & Alerts — Index]] — ideation — spec-vault
+- [[specs/ideation/04-opportunities-casting/04.02-discovery-matching-alerts/04.02.01-opportunity-board-search|Feature: Opportunity Board & Search]] — ideation — spec-vault
+- [[specs/ideation/04-opportunities-casting/04.02-discovery-matching-alerts/04.02.02-availability-geo-aware-matching|Feature: Availability & Geo-Aware Matching]] — ideation — spec-vault
+- [[specs/ideation/04-opportunities-casting/04.02-discovery-matching-alerts/04.02.03-material-aware-dep-matching|Feature: Material-Aware Dep Matching]] — ideation — spec-vault
+- [[specs/ideation/04-opportunities-casting/04.02-discovery-matching-alerts/04.02.04-alert-subscriptions-delivery|Feature: Alert Subscriptions & Delivery]] — ideation — spec-vault
+- [[specs/ideation/04-opportunities-casting/04.03-submission-audition/04.03-submission-audition-cx|Submission & Audition — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/04-opportunities-casting/04.03-submission-audition/04.03-submission-audition-index|Submission & Audition — Index]] — ideation — spec-vault
+- [[specs/ideation/04-opportunities-casting/04.03-submission-audition/04.03.01-structured-submission|Feature: Structured Submission]] — ideation — spec-vault
+- [[specs/ideation/04-opportunities-casting/04.03-submission-audition/04.03.02-evidence-backed-application|Feature: Evidence-Backed Application]] — ideation — spec-vault
+- [[specs/ideation/04-opportunities-casting/04.03-submission-audition/04.03.03-audition-tasks-media-submission|Feature: Audition Tasks & Media Submission]] — ideation — spec-vault
+- [[specs/ideation/04-opportunities-casting/04.03-submission-audition/04.03.04-blind-review-mode|Feature: Blind Review Mode]] — ideation — spec-vault
+- [[specs/ideation/04-opportunities-casting/04.03-submission-audition/04.03.05-outbound-pitch-unsolicited|Feature: Outbound Pitch (Unsolicited)]] — ideation — spec-vault
+- [[specs/ideation/04-opportunities-casting/04.04-triage-shortlist-decisioning/04.04-triage-shortlist-decisioning-cx|Triage, Shortlist & Decisioning — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/04-opportunities-casting/04.04-triage-shortlist-decisioning/04.04-triage-shortlist-decisioning-index|Triage, Shortlist & Decisioning — Index]] — ideation — spec-vault
+- [[specs/ideation/04-opportunities-casting/04.04-triage-shortlist-decisioning/04.04.01-review-queue-triage|Feature: Review Queue & Triage]] — ideation — spec-vault
+- [[specs/ideation/04-opportunities-casting/04.04-triage-shortlist-decisioning/04.04.02-shortlist-multi-reviewer-scoring|Feature: Shortlist & Multi-Reviewer Scoring]] — ideation — spec-vault
+- [[specs/ideation/04-opportunities-casting/04.04-triage-shortlist-decisioning/04.04.03-offer-acceptance|Feature: Offer & Acceptance]] — ideation — spec-vault
+- [[specs/ideation/04-opportunities-casting/04.04-triage-shortlist-decisioning/04.04.04-urgent-fill-first-accept-cascade|Feature: Urgent Fill & First-Accept Cascade]] — ideation — spec-vault
+- [[specs/ideation/04-opportunities-casting/04.05-outcome-response-handoff/04.05-outcome-response-handoff-cx|Outcome, Response & Handoff — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/04-opportunities-casting/04.05-outcome-response-handoff/04.05-outcome-response-handoff-index|Outcome, Response & Handoff — Index]] — ideation — spec-vault
+- [[specs/ideation/04-opportunities-casting/04.05-outcome-response-handoff/04.05.01-disposition-close-out-obligation|Feature: Disposition & Close-Out Obligation]] — ideation — spec-vault
+- [[specs/ideation/04-opportunities-casting/04.05-outcome-response-handoff/04.05.02-response-reputation-signals|Feature: Response Reputation Signals]] — ideation — spec-vault
+- [[specs/ideation/04-opportunities-casting/04.05-outcome-response-handoff/04.05.03-won-opportunity-handoff|Feature: Won-Opportunity Handoff]] — ideation — spec-vault
+- [[specs/ideation/04-opportunities-casting/04.05-outcome-response-handoff/04.05.04-applicant-pipeline-history|Feature: Applicant Pipeline & History]] — ideation — spec-vault
+- [[specs/ideation/04-opportunities-casting/04.06-band-member-wanted|Feature: Band & Member Wanted]] — ideation — spec-vault
+- [[specs/ideation/04-opportunities-casting/04.07-open-calls-festival-showcase-competition|Feature: Open Calls — Festival, Showcase & Competition Submissions]] — ideation — spec-vault
+- [[specs/ideation/04-opportunities-casting/opportunities-casting-cx|Opportunities & Casting — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/04-opportunities-casting/opportunities-casting-index|Opportunities & Casting — Index]] — ideation — spec-vault
+- [[specs/ideation/05-services-marketplace/05.01-service-listings-pricing/05.01-service-listings-pricing-cx|Service Listings & Music Pricing — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/05-services-marketplace/05.01-service-listings-pricing/05.01-service-listings-pricing-index|Service Listings & Music Pricing — Index]] — ideation — spec-vault
+- [[specs/ideation/05-services-marketplace/05.01-service-listings-pricing/05.01.01-service-listings-packages-rate-cards|Feature: Service Listings, Tiered Packages & Rate Cards]] — ideation — spec-vault
+- [[specs/ideation/05-services-marketplace/05.01-service-listings-pricing/05.01.02-service-category-taxonomy-attributes|Feature: Service Category Taxonomy & Attributes]] — ideation — spec-vault
+- [[specs/ideation/05-services-marketplace/05.01-service-listings-pricing/05.01.03-music-pricing-model-library|Feature: Music Pricing Model Library]] — ideation — spec-vault
+- [[specs/ideation/05-services-marketplace/05.01-service-listings-pricing/05.01.04-rate-benchmarking-price-transparency|Feature: Rate Benchmarking & Price Transparency]] — ideation — spec-vault
+- [[specs/ideation/05-services-marketplace/05.01-service-listings-pricing/05.01.05-remote-vs-on-location-service-mode|Feature: Remote vs On-Location Service Mode]] — ideation — spec-vault
+- [[specs/ideation/05-services-marketplace/05.01-service-listings-pricing/05.01.06-turnaround-rush-service-levels|Feature: Turnaround, Rush & Service Level Guarantees]] — ideation — spec-vault
+- [[specs/ideation/05-services-marketplace/05.01-service-listings-pricing/05.01.07-seller-capacity-queue-intake-limits|Feature: Seller Capacity, Queue & Intake Limits]] — ideation — spec-vault
+- [[specs/ideation/05-services-marketplace/05.02-quotes-scope-contracting/05.02-quotes-scope-contracting-cx|Quotes, Scope & Contracting — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/05-services-marketplace/05.02-quotes-scope-contracting/05.02-quotes-scope-contracting-index|Quotes, Scope & Contracting — Index]] — ideation — spec-vault
+- [[specs/ideation/05-services-marketplace/05.02-quotes-scope-contracting/05.02.01-custom-quotes-proposals-scope|Feature: Custom Quotes, Proposals & Scope Negotiation]] — ideation — spec-vault
+- [[specs/ideation/05-services-marketplace/05.02-quotes-scope-contracting/05.02.02-nda-confidentiality-ghost-production|Feature: NDA, Confidentiality & Ghost-Production Anonymity]] — ideation — spec-vault
+- [[specs/ideation/05-services-marketplace/05.02-quotes-scope-contracting/05.02.03-union-session-contracting|Feature: Union & Session Contracting]] — ideation — spec-vault
+- [[specs/ideation/05-services-marketplace/05.03-engagement-lifecycle/05.03-engagement-lifecycle-cx|Engagement Lifecycle — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/05-services-marketplace/05.03-engagement-lifecycle/05.03-engagement-lifecycle-index|Engagement Lifecycle — Index]] — ideation — spec-vault
+- [[specs/ideation/05-services-marketplace/05.03-engagement-lifecycle/05.03.01-order-lifecycle-requirements-gating|Feature: Order/Engagement Lifecycle & Requirements Gating]] — ideation — spec-vault
+- [[specs/ideation/05-services-marketplace/05.03-engagement-lifecycle/05.03.02-milestones-staged-deliverables|Feature: Milestones & Staged Deliverables]] — ideation — spec-vault
+- [[specs/ideation/05-services-marketplace/05.03-engagement-lifecycle/05.03.03-revisions-limits-change-orders|Feature: Revisions, Revision Limits & Change Orders]] — ideation — spec-vault
+- [[specs/ideation/05-services-marketplace/05.03-engagement-lifecycle/05.03.04-retainers-recurring-engagements|Feature: Retainers & Recurring Engagements]] — ideation — spec-vault
+- [[specs/ideation/05-services-marketplace/05.03-engagement-lifecycle/05.03.05-cancellation-abandonment-kill-fee|Feature: Cancellation, Abandonment & Kill Fee]] — ideation — spec-vault
+- [[specs/ideation/05-services-marketplace/05.03-engagement-lifecycle/05.03.06-post-delivery-support-recall|Feature: Post-Delivery Support Window & Recall]] — ideation — spec-vault
+- [[specs/ideation/05-services-marketplace/05.04-delivery-qc-acceptance/05.04-delivery-qc-acceptance-cx|Delivery, QC & Acceptance — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/05-services-marketplace/05.04-delivery-qc-acceptance/05.04-delivery-qc-acceptance-index|Delivery, QC & Acceptance — Index]] — ideation — spec-vault
+- [[specs/ideation/05-services-marketplace/05.04-delivery-qc-acceptance/05.04.01-delivery-acceptance-auto-accept|Feature: Delivery, Acceptance & Auto-Accept Window]] — ideation — spec-vault
+- [[specs/ideation/05-services-marketplace/05.04-delivery-qc-acceptance/05.04.02-deliverable-spec-automated-audio-qc|Feature: Deliverable Technical Spec & Automated Audio QC]] — ideation — spec-vault
+- [[specs/ideation/05-services-marketplace/05.04-delivery-qc-acceptance/05.04.03-watermarked-previews-draft-protection|Feature: Watermarked Previews & Draft Protection]] — ideation — spec-vault
+- [[specs/ideation/05-services-marketplace/05.04-delivery-qc-acceptance/05.04.04-source-file-session-handover|Feature: Source File & Session Handover]] — ideation — spec-vault
+- [[specs/ideation/05-services-marketplace/05.05-multi-party-supply/05.05-multi-party-supply-cx|Multi-Party Supply — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/05-services-marketplace/05.05-multi-party-supply/05.05-multi-party-supply-index|Multi-Party Supply — Index]] — ideation — spec-vault
+- [[specs/ideation/05-services-marketplace/05.05-multi-party-supply/05.05.01-deps-substitutes-emergency-cover|Feature: Deps, Substitutes & Emergency Cover]] — ideation — spec-vault
+- [[specs/ideation/05-services-marketplace/05.05-multi-party-supply/05.05.02-fixers-ensemble-contracting|Feature: Fixers & Ensemble Contracting]] — ideation — spec-vault
+- [[specs/ideation/05-services-marketplace/05.05-multi-party-supply/05.05.03-subcontracting-agency-brokered-engagements|Feature: Subcontracting & Agency-Brokered Engagements]] — ideation — spec-vault
+- [[specs/ideation/05-services-marketplace/05.05-multi-party-supply/05.05.04-multi-seller-bundles-curated-packages|Feature: Multi-Seller Bundles & Curated Packages]] — ideation — spec-vault
+- [[specs/ideation/05-services-marketplace/05.06-rights-warranties-transfer/05.06-rights-warranties-transfer-cx|Rights, Warranties & Transfer — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/05-services-marketplace/05.06-rights-warranties-transfer/05.06-rights-warranties-transfer-index|Rights, Warranties & Transfer — Index]] — ideation — spec-vault
+- [[specs/ideation/05-services-marketplace/05.06-rights-warranties-transfer/05.06.01-engagement-rights-posture|Feature: Engagement Rights Posture & Work-for-Hire Election]] — ideation — spec-vault
+- [[specs/ideation/05-services-marketplace/05.06-rights-warranties-transfer/05.06.02-producer-points-backend-participation|Feature: Producer Points & Backend Participation]] — ideation — spec-vault
+- [[specs/ideation/05-services-marketplace/05.06-rights-warranties-transfer/05.06.03-rights-transfer-split-execution|Feature: Rights Transfer & Split Execution on Acceptance]] — ideation — spec-vault
+- [[specs/ideation/05-services-marketplace/05.06-rights-warranties-transfer/05.06.04-sample-clearance-originality-warranty|Feature: Sample, Clearance & Originality Warranty]] — ideation — spec-vault
+- [[specs/ideation/05-services-marketplace/05.06-rights-warranties-transfer/05.06.05-ai-disclosure-human-performance-warranty|Feature: AI Disclosure & Human-Performance Warranty]] — ideation — spec-vault
+- [[specs/ideation/05-services-marketplace/05.07-custodial-physical-services/05.07-custodial-physical-services-cx|Custodial & Physical Services — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/05-services-marketplace/05.07-custodial-physical-services/05.07-custodial-physical-services-index|Custodial & Physical Services — Index]] — ideation — spec-vault
+- [[specs/ideation/05-services-marketplace/05.07-custodial-physical-services/05.07.01-repair-tech-luthier-job-flow|Feature: Repair, Tech & Luthier Job Flow]] — ideation — spec-vault
+- [[specs/ideation/05-services-marketplace/05.07-custodial-physical-services/05.07.02-third-party-inspection-verification|Feature: Third-Party Inspection & Verification Reports]] — ideation — spec-vault
+- [[specs/ideation/05-services-marketplace/05.07-custodial-physical-services/05.07.03-custody-chain-liability-damage-claims|Feature: Custody Chain, Liability & Damage Claims]] — ideation — spec-vault
+- [[specs/ideation/05-services-marketplace/services-marketplace-cx|Services Marketplace — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/05-services-marketplace/services-marketplace-index|Services Marketplace — Index]] — ideation — spec-vault
+- [[specs/ideation/06-education-lessons-mentorship/06.01-lesson-booking-packages-delivery/06.01-lesson-booking-packages-delivery-cx|Lesson Booking, Packages & Delivery — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/06-education-lessons-mentorship/06.01-lesson-booking-packages-delivery/06.01-lesson-booking-packages-delivery-index|Lesson Booking, Packages & Delivery — Index]] — ideation — spec-vault
+- [[specs/ideation/06-education-lessons-mentorship/06.01-lesson-booking-packages-delivery/06.01.01-lesson-slot-booking-recurring-series|Feature: Lesson Slot Booking & Recurring Series]] — ideation — spec-vault
+- [[specs/ideation/06-education-lessons-mentorship/06.01-lesson-booking-packages-delivery/06.01.02-lesson-packages-credits-rate-cards|Feature: Lesson Packages, Credits & Rate Cards]] — ideation — spec-vault
+- [[specs/ideation/06-education-lessons-mentorship/06.01-lesson-booking-packages-delivery/06.01.03-cancellation-makeup-no-show-policy|Feature: Cancellation, Make-Up & No-Show Policy]] — ideation — spec-vault
+- [[specs/ideation/06-education-lessons-mentorship/06.01-lesson-booking-packages-delivery/06.01.04-lesson-delivery-session-record|Feature: Lesson Delivery & Session Record]] — ideation — spec-vault
+- [[specs/ideation/06-education-lessons-mentorship/06.02-teacher-discovery-profiles-trials/06.02-teacher-discovery-profiles-trials-cx|Teacher Discovery, Profiles & Trials — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/06-education-lessons-mentorship/06.02-teacher-discovery-profiles-trials/06.02-teacher-discovery-profiles-trials-index|Teacher Discovery, Profiles & Trials — Index]] — ideation — spec-vault
+- [[specs/ideation/06-education-lessons-mentorship/06.02-teacher-discovery-profiles-trials/06.02.01-teacher-tuition-profile|Feature: Teacher & Tuition Profile]] — ideation — spec-vault
+- [[specs/ideation/06-education-lessons-mentorship/06.02-teacher-discovery-profiles-trials/06.02.02-verified-credentials-credit-backed-credibility|Feature: Verified Credentials & Credit-Backed Credibility]] — ideation — spec-vault
+- [[specs/ideation/06-education-lessons-mentorship/06.02-teacher-discovery-profiles-trials/06.02.03-teacher-discovery-match-criteria|Feature: Teacher Discovery & Match Criteria]] — ideation — spec-vault
+- [[specs/ideation/06-education-lessons-mentorship/06.02-teacher-discovery-profiles-trials/06.02.04-trial-lessons-conversion|Feature: Trial Lessons & Conversion]] — ideation — spec-vault
+- [[specs/ideation/06-education-lessons-mentorship/06.03-curriculum-assignments-practice/06.03-curriculum-assignments-practice-cx|Curriculum, Assignments & Practice — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/06-education-lessons-mentorship/06.03-curriculum-assignments-practice/06.03-curriculum-assignments-practice-index|Curriculum, Assignments & Practice — Index]] — ideation — spec-vault
+- [[specs/ideation/06-education-lessons-mentorship/06.03-curriculum-assignments-practice/06.03.01-curriculum-lesson-plans|Feature: Curriculum & Lesson Plans]] — ideation — spec-vault
+- [[specs/ideation/06-education-lessons-mentorship/06.03-curriculum-assignments-practice/06.03.02-assignments-submissions-timestamped-feedback|Feature: Assignments, Submissions & Timestamped Feedback]] — ideation — spec-vault
+- [[specs/ideation/06-education-lessons-mentorship/06.03-curriculum-assignments-practice/06.03.03-practice-logging-streaks-goals|Feature: Practice Logging, Streaks & Goals]] — ideation — spec-vault
+- [[specs/ideation/06-education-lessons-mentorship/06.03-curriculum-assignments-practice/06.03.04-practice-room-tools|Feature: Practice Room Tools]] — ideation — spec-vault
+- [[specs/ideation/06-education-lessons-mentorship/06.03-curriculum-assignments-practice/06.03.05-progress-reports-skill-tracking|Feature: Progress Reports & Skill Tracking]] — ideation — spec-vault
+- [[specs/ideation/06-education-lessons-mentorship/06.04-course-marketplace-authoring/06.04-course-marketplace-authoring-cx|Course Marketplace & Authoring — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/06-education-lessons-mentorship/06.04-course-marketplace-authoring/06.04-course-marketplace-authoring-index|Course Marketplace & Authoring — Index]] — ideation — spec-vault
+- [[specs/ideation/06-education-lessons-mentorship/06.04-course-marketplace-authoring/06.04.01-course-authoring-publishing|Feature: Course Authoring & Publishing]] — ideation — spec-vault
+- [[specs/ideation/06-education-lessons-mentorship/06.04-course-marketplace-authoring/06.04.02-course-catalog-pricing-enrollment|Feature: Course Catalog, Pricing & Enrollment]] — ideation — spec-vault
+- [[specs/ideation/06-education-lessons-mentorship/06.04-course-marketplace-authoring/06.04.03-course-consumption-completion|Feature: Course Consumption & Completion]] — ideation — spec-vault
+- [[specs/ideation/06-education-lessons-mentorship/06.05-group-lessons-workshops-masterclasses|Feature: Group Lessons, Workshops & Masterclasses]] — ideation — spec-vault
+- [[specs/ideation/06-education-lessons-mentorship/06.06-mentorship-programmes|Feature: Mentorship Programmes]] — ideation — spec-vault
+- [[specs/ideation/06-education-lessons-mentorship/06.07-learning-paths|Feature: Learning Paths]] — ideation — spec-vault
+- [[specs/ideation/06-education-lessons-mentorship/06.08-certificates-badges-verification|Feature: Certificates, Badges & Verification]] — ideation — spec-vault
+- [[specs/ideation/06-education-lessons-mentorship/06.09-exam-board-alignment|Feature: Exam Board Alignment]] — ideation — spec-vault
+- [[specs/ideation/06-education-lessons-mentorship/06.10-academy-multi-teacher-operations|Feature: Academy & Multi-Teacher Operations]] — ideation — spec-vault
+- [[specs/ideation/06-education-lessons-mentorship/06.11-music-therapy-practice|Feature: Music Therapy Practice]] — ideation — spec-vault
+- [[specs/ideation/06-education-lessons-mentorship/education-lessons-mentorship-cx|Education, Lessons & Mentorship — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/06-education-lessons-mentorship/education-lessons-mentorship-index|Education, Lessons & Mentorship — Index]] — ideation — spec-vault
+- [[specs/ideation/07-music-projects-collaboration/07.01-song-release-production-board/07.01-song-release-production-board-cx|Song, Release & Production Board — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/07-music-projects-collaboration/07.01-song-release-production-board/07.01-song-release-production-board-index|Song, Release & Production Board — Index]] — ideation — spec-vault
+- [[specs/ideation/07-music-projects-collaboration/07.01-song-release-production-board/07.01.01-song-record-work-entity|Feature: Song Record & Work Entity]] — ideation — spec-vault
+- [[specs/ideation/07-music-projects-collaboration/07.01-song-release-production-board/07.01.02-release-container-sequencing-assembly|Feature: Release Container, Sequencing & Assembly]] — ideation — spec-vault
+- [[specs/ideation/07-music-projects-collaboration/07.01-song-release-production-board/07.01.03-production-stage-board-milestones|Feature: Production Stage Board, Milestones & Creative Deadlines]] — ideation — spec-vault
+- [[specs/ideation/07-music-projects-collaboration/07.02-songwriting-composition-workspace/07.02-songwriting-composition-workspace-cx|Songwriting & Composition Workspace — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/07-music-projects-collaboration/07.02-songwriting-composition-workspace/07.02-songwriting-composition-workspace-index|Songwriting & Composition Workspace — Index]] — ideation — spec-vault
+- [[specs/ideation/07-music-projects-collaboration/07.02-songwriting-composition-workspace/07.02.01-idea-capture-inbox|Feature: Idea Capture Inbox]] — ideation — spec-vault
+- [[specs/ideation/07-music-projects-collaboration/07.02-songwriting-composition-workspace/07.02.02-lyric-workspace-per-line-attribution|Feature: Lyric Workspace with Per-Line Attribution]] — ideation — spec-vault
+- [[specs/ideation/07-music-projects-collaboration/07.02-songwriting-composition-workspace/07.02.03-chord-arrangement-chart-workspace|Feature: Chord, Arrangement & Chart Workspace]] — ideation — spec-vault
+- [[specs/ideation/07-music-projects-collaboration/07.03-contributors-access-confidentiality/07.03-contributors-access-confidentiality-cx|Contributors, Access & Confidentiality — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/07-music-projects-collaboration/07.03-contributors-access-confidentiality/07.03-contributors-access-confidentiality-index|Contributors, Access & Confidentiality — Index]] — ideation — spec-vault
+- [[specs/ideation/07-music-projects-collaboration/07.03-contributors-access-confidentiality/07.03.01-contributor-roster-role-assignment|Feature: Contributor Roster & Per-Song Role Assignment]] — ideation — spec-vault
+- [[specs/ideation/07-music-projects-collaboration/07.03-contributors-access-confidentiality/07.03.02-contributor-invitation-scoped-onboarding|Feature: Contributor Invitation & Scoped Onboarding]] — ideation — spec-vault
+- [[specs/ideation/07-music-projects-collaboration/07.03-contributors-access-confidentiality/07.03.03-rights-aware-asset-vault-nda-gating|Feature: Rights-Aware Asset Vault & NDA Gating]] — ideation — spec-vault
+- [[specs/ideation/07-music-projects-collaboration/07.04-audio-version-control-lineage/07.04-audio-version-control-lineage-cx|Audio Version Control & Lineage — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/07-music-projects-collaboration/07.04-audio-version-control-lineage/07.04-audio-version-control-lineage-index|Audio Version Control & Lineage — Index]] — ideation — spec-vault
+- [[specs/ideation/07-music-projects-collaboration/07.04-audio-version-control-lineage/07.04.01-audio-version-control-lineage-timeline|Feature: Audio Version Control, Lineage & Immutable Timeline]] — ideation — spec-vault
+- [[specs/ideation/07-music-projects-collaboration/07.04-audio-version-control-lineage/07.04.02-canonical-version-resolver|Feature: Canonical Version Resolver]] — ideation — spec-vault
+- [[specs/ideation/07-music-projects-collaboration/07.04-audio-version-control-lineage/07.04.03-take-comp-management|Feature: Take & Comp Management]] — ideation — spec-vault
+- [[specs/ideation/07-music-projects-collaboration/07.04-audio-version-control-lineage/07.04.04-stem-export-standards-naming|Feature: Stem Export Standards & Naming Enforcement]] — ideation — spec-vault
+- [[specs/ideation/07-music-projects-collaboration/07.04-audio-version-control-lineage/07.04.05-file-integrity-missing-media|Feature: File Integrity & Missing Media Detection]] — ideation — spec-vault
+- [[specs/ideation/07-music-projects-collaboration/07.04-audio-version-control-lineage/07.04.06-stem-player-version-ab-compare|Feature: Stem Player & Version A/B Compare]] — ideation — spec-vault
+- [[specs/ideation/07-music-projects-collaboration/07.05-review-feedback-approval/07.05-review-feedback-approval-cx|Review, Feedback & Approval — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/07-music-projects-collaboration/07.05-review-feedback-approval/07.05-review-feedback-approval-index|Review, Feedback & Approval — Index]] — ideation — spec-vault
+- [[specs/ideation/07-music-projects-collaboration/07.05-review-feedback-approval/07.05.01-timestamped-waveform-review|Feature: Timestamped Waveform Review]] — ideation — spec-vault
+- [[specs/ideation/07-music-projects-collaboration/07.05-review-feedback-approval/07.05.02-private-share-links-listen-analytics|Feature: Private Share Links & Listen Analytics]] — ideation — spec-vault
+- [[specs/ideation/07-music-projects-collaboration/07.05-review-feedback-approval/07.05.03-feedback-consolidation-triage|Feature: Multi-Stakeholder Feedback Consolidation & Triage]] — ideation — spec-vault
+- [[specs/ideation/07-music-projects-collaboration/07.05-review-feedback-approval/07.05.04-approval-gates-signoff-trail|Feature: Formal Approval Gates & Sign-Off Trail]] — ideation — spec-vault
+- [[specs/ideation/07-music-projects-collaboration/07.05-review-feedback-approval/07.05.05-revision-round-counting-scope|Feature: Revision Round Counting & Scope Enforcement]] — ideation — spec-vault
+- [[specs/ideation/07-music-projects-collaboration/07.06-sessions-documentation-recall/07.06-sessions-documentation-recall-cx|Sessions, Documentation & Recall — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/07-music-projects-collaboration/07.06-sessions-documentation-recall/07.06-sessions-documentation-recall-index|Sessions, Documentation & Recall — Index]] — ideation — spec-vault
+- [[specs/ideation/07-music-projects-collaboration/07.06-sessions-documentation-recall/07.06.01-session-record-attendance|Feature: Session Record & Attendance]] — ideation — spec-vault
+- [[specs/ideation/07-music-projects-collaboration/07.06-sessions-documentation-recall/07.06.02-session-close-capture-prompt|Feature: Session Close & Capture Prompt]] — ideation — spec-vault
+- [[specs/ideation/07-music-projects-collaboration/07.06-sessions-documentation-recall/07.06.03-session-snapshot-archival-manifest|Feature: Session Snapshot, Archival & Environment Manifest]] — ideation — spec-vault
+- [[specs/ideation/07-music-projects-collaboration/07.06-sessions-documentation-recall/07.06.04-track-sheet-channel-map-recall|Feature: Track Sheet, Channel Map & Recall Sheet]] — ideation — spec-vault
+- [[specs/ideation/07-music-projects-collaboration/07.07-mix-master-workflow/07.07-mix-master-workflow-cx|Mix & Master Workflow — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/07-music-projects-collaboration/07.07-mix-master-workflow/07.07-mix-master-workflow-index|Mix & Master Workflow — Index]] — ideation — spec-vault
+- [[specs/ideation/07-music-projects-collaboration/07.07-mix-master-workflow/07.07.01-mix-brief-reference-board|Feature: Mix Brief & Reference Board]] — ideation — spec-vault
+- [[specs/ideation/07-music-projects-collaboration/07.07-mix-master-workflow/07.07.02-alternate-version-matrix|Feature: Alternate Version Matrix]] — ideation — spec-vault
+- [[specs/ideation/07-music-projects-collaboration/07.07-mix-master-workflow/07.07.03-mastering-workflow-loudness-targets|Feature: Mastering Workflow & DSP Loudness Targets]] — ideation — spec-vault
+- [[specs/ideation/07-music-projects-collaboration/07.07-mix-master-workflow/07.07.04-format-specific-masters|Feature: Format-Specific Masters (DDP, vinyl pre-master, Apple Digital Masters)]] — ideation — spec-vault
+- [[specs/ideation/07-music-projects-collaboration/07.07-mix-master-workflow/07.07.05-immersive-atmos-deliverables|Feature: Immersive / Dolby Atmos Deliverables]] — ideation — spec-vault
+- [[specs/ideation/07-music-projects-collaboration/07.08-delivery-readiness-qc/07.08-delivery-readiness-qc-cx|Delivery, Readiness & QC — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/07-music-projects-collaboration/07.08-delivery-readiness-qc/07.08-delivery-readiness-qc-index|Delivery, Readiness & QC — Index]] — ideation — spec-vault
+- [[specs/ideation/07-music-projects-collaboration/07.08-delivery-readiness-qc/07.08.01-handoff-package-builder-recipient-spec|Feature: Handoff Package Builder & Recipient-Spec Validation]] — ideation — spec-vault
+- [[specs/ideation/07-music-projects-collaboration/07.08-delivery-readiness-qc/07.08.02-automated-audio-qc-spec-validation|Feature: Automated Audio QC & Technical Spec Validation]] — ideation — spec-vault
+- [[specs/ideation/07-music-projects-collaboration/07.08-delivery-readiness-qc/07.08.03-metadata-completeness-readiness-score|Feature: Song Metadata Completeness & Readiness Score]] — ideation — spec-vault
+- [[specs/ideation/07-music-projects-collaboration/07.08-delivery-readiness-qc/07.08.04-source-declaration-samples-ai|Feature: Source Declaration — Samples, Interpolations & AI Content]] — ideation — spec-vault
+- [[specs/ideation/07-music-projects-collaboration/07.08-delivery-readiness-qc/07.08.05-remix-stems-delivery-programs|Feature: Remix Stems Delivery & Remix Programs]] — ideation — spec-vault
+- [[specs/ideation/07-music-projects-collaboration/07.09-daw-bridge-capture-at-source/07.09-daw-bridge-capture-at-source-cx|DAW Bridge & Capture-at-Source — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/07-music-projects-collaboration/07.09-daw-bridge-capture-at-source/07.09-daw-bridge-capture-at-source-index|DAW Bridge & Capture-at-Source — Index]] — ideation — spec-vault
+- [[specs/ideation/07-music-projects-collaboration/07.09-daw-bridge-capture-at-source/07.09.01-bounce-watch-folder-auto-ingest|Feature: Bounce Watch-Folder & Auto-Ingest]] — ideation — spec-vault
+- [[specs/ideation/07-music-projects-collaboration/07.09-daw-bridge-capture-at-source/07.09.02-daw-session-parsing-track-mapping|Feature: DAW Session File Parsing & Track-to-Contributor Mapping]] — ideation — spec-vault
+- [[specs/ideation/07-music-projects-collaboration/07.09-daw-bridge-capture-at-source/07.09.03-in-session-capture-surface|Feature: In-Session Capture Surface]] — ideation — spec-vault
+- [[specs/ideation/07-music-projects-collaboration/music-projects-collaboration-cx|Music Projects & Collaboration — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/07-music-projects-collaboration/music-projects-collaboration-index|Music Projects & Collaboration — Index]] — ideation — spec-vault
+- [[specs/ideation/08-realtime-jamming-remote-sessions/08.01-latency-budget-playability/08.01-latency-budget-playability-cx|Latency Budget & Playability — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/08-realtime-jamming-remote-sessions/08.01-latency-budget-playability/08.01-latency-budget-playability-index|Latency Budget & Playability — Index]] — ideation — spec-vault
+- [[specs/ideation/08-realtime-jamming-remote-sessions/08.01-latency-budget-playability/08.01.01-latency-measurement-decomposition|Feature: Latency Measurement, Decomposition & Remediation]] — ideation — spec-vault
+- [[specs/ideation/08-realtime-jamming-remote-sessions/08.01-latency-budget-playability/08.01.02-playability-verdict-tempo-ceiling|Feature: Playability Verdict & Tempo Ceiling]] — ideation — spec-vault
+- [[specs/ideation/08-realtime-jamming-remote-sessions/08.01-latency-budget-playability/08.01.03-shared-clock-click-countin|Feature: Shared Clock, Click & Count-In]] — ideation — spec-vault
+- [[specs/ideation/08-realtime-jamming-remote-sessions/08.02-playable-radius-peer-matching/08.02-playable-radius-peer-matching-cx|Playable Radius & Peer Matching — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/08-realtime-jamming-remote-sessions/08.02-playable-radius-peer-matching/08.02-playable-radius-peer-matching-index|Playable Radius & Peer Matching — Index]] — ideation — spec-vault
+- [[specs/ideation/08-realtime-jamming-remote-sessions/08.02-playable-radius-peer-matching/08.02.01-playable-radius-map-discovery|Feature: Playable-Radius Map & Partner Discovery]] — ideation — spec-vault
+- [[specs/ideation/08-realtime-jamming-remote-sessions/08.02-playable-radius-peer-matching/08.02.02-route-aware-radius-correction|Feature: Route-Aware Radius Correction]] — ideation — spec-vault
+- [[specs/ideation/08-realtime-jamming-remote-sessions/08.02-playable-radius-peer-matching/08.02.03-latency-aware-match-filter|Feature: Latency-Aware Match Filter]] — ideation — spec-vault
+- [[specs/ideation/08-realtime-jamming-remote-sessions/08.03-remote-monitoring-session-attendance/08.03-remote-monitoring-session-attendance-cx|Remote Monitoring & Session Attendance — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/08-realtime-jamming-remote-sessions/08.03-remote-monitoring-session-attendance/08.03-remote-monitoring-session-attendance-index|Remote Monitoring & Session Attendance — Index]] — ideation — spec-vault
+- [[specs/ideation/08-realtime-jamming-remote-sessions/08.03-remote-monitoring-session-attendance/08.03.01-hifi-monitor-stream-quality-contract|Feature: High-Fidelity Monitor Stream & Quality Contract]] — ideation — spec-vault
+- [[specs/ideation/08-realtime-jamming-remote-sessions/08.03-remote-monitoring-session-attendance/08.03.02-listener-roster-invite-access|Feature: Listener Roster, Invite Links & Access Windows]] — ideation — spec-vault
+- [[specs/ideation/08-realtime-jamming-remote-sessions/08.03-remote-monitoring-session-attendance/08.03.03-live-listener-feedback-notes|Feature: Live Listener Feedback & Timestamped Notes]] — ideation — spec-vault
+- [[specs/ideation/08-realtime-jamming-remote-sessions/08.03-remote-monitoring-session-attendance/08.03.04-monitoring-trust-playback-context|Feature: Monitoring Trust & Playback Context]] — ideation — spec-vault
+- [[specs/ideation/08-realtime-jamming-remote-sessions/08.04-talkback-cue-mixes/08.04-talkback-cue-mixes-cx|Talkback & Cue Mixes — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/08-realtime-jamming-remote-sessions/08.04-talkback-cue-mixes/08.04-talkback-cue-mixes-index|Talkback & Cue Mixes — Index]] — ideation — spec-vault
+- [[specs/ideation/08-realtime-jamming-remote-sessions/08.04-talkback-cue-mixes/08.04.01-talkback-channel-ducking|Feature: Talkback Channel & Ducking]] — ideation — spec-vault
+- [[specs/ideation/08-realtime-jamming-remote-sessions/08.04-talkback-cue-mixes/08.04.02-per-performer-cue-mixes|Feature: Per-Performer Cue Mixes]] — ideation — spec-vault
+- [[specs/ideation/08-realtime-jamming-remote-sessions/08.04-talkback-cue-mixes/08.04.03-cue-mix-recall-portable-profile|Feature: Cue Mix Recall & Portable Monitoring Profile]] — ideation — spec-vault
+- [[specs/ideation/08-realtime-jamming-remote-sessions/08.05-session-capture-recall/08.05-session-capture-recall-cx|Session Capture & Recall — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/08-realtime-jamming-remote-sessions/08.05-session-capture-recall/08.05-session-capture-recall-index|Session Capture & Recall — Index]] — ideation — spec-vault
+- [[specs/ideation/08-realtime-jamming-remote-sessions/08.05-session-capture-recall/08.05.01-local-first-multitrack-capture|Feature: Local-First Multitrack Capture & Upload]] — ideation — spec-vault
+- [[specs/ideation/08-realtime-jamming-remote-sessions/08.05-session-capture-recall/08.05.02-take-alignment-drift-correction|Feature: Take Alignment & Clock Drift Correction]] — ideation — spec-vault
+- [[specs/ideation/08-realtime-jamming-remote-sessions/08.05-session-capture-recall/08.05.03-auto-highlights-moment-flagging|Feature: Auto-Highlights & In-the-Moment Flagging]] — ideation — spec-vault
+- [[specs/ideation/08-realtime-jamming-remote-sessions/08.05-session-capture-recall/08.05.04-session-attendance-provenance|Feature: Session Attendance Record & Provenance Capture]] — ideation — spec-vault
+- [[specs/ideation/08-realtime-jamming-remote-sessions/08.06-session-preflight-rig-readiness|Feature: Session Pre-Flight & Rig Readiness Check]] — ideation — spec-vault
+- [[specs/ideation/08-realtime-jamming-remote-sessions/08.07-overdub-mode|Feature: Overdub Mode (Latency-Independent Tracking)]] — ideation — spec-vault
+- [[specs/ideation/08-realtime-jamming-remote-sessions/08.08-interruption-reconnect-continuity|Feature: Interruption, Reconnect & Session Continuity]] — ideation — spec-vault
+- [[specs/ideation/08-realtime-jamming-remote-sessions/realtime-jamming-remote-sessions-cx|Real-Time Jamming & Remote Sessions — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/08-realtime-jamming-remote-sessions/realtime-jamming-remote-sessions-index|Real-Time Jamming & Remote Sessions — Index]] — ideation — spec-vault
+- [[specs/ideation/09-rights-ownership/09.01-rights-registry/09.01-rights-registry-cx|Rights Registry — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/09-rights-ownership/09.01-rights-registry/09.01-rights-registry-index|Rights Registry — Index]] — ideation — spec-vault
+- [[specs/ideation/09-rights-ownership/09.01-rights-registry/09.01.01-work-recording-duality|Feature: Work & Recording Records (composition/master duality)]] — ideation — spec-vault
+- [[specs/ideation/09-rights-ownership/09.01-rights-registry/09.01.02-ownership-ledger-validation|Feature: Ownership Percentage Ledger & Share Validation]] — ideation — spec-vault
+- [[specs/ideation/09-rights-ownership/09.01-rights-registry/09.01.03-master-rights-ownership|Feature: Master Rights Ownership]] — ideation — spec-vault
+- [[specs/ideation/09-rights-ownership/09.01-rights-registry/09.01.04-publishing-rights|Feature: Publishing Rights & Deal Structures]] — ideation — spec-vault
+- [[specs/ideation/09-rights-ownership/09.01-rights-registry/09.01.05-performer-neighbouring-rights|Feature: Performer & Neighbouring Rights Eligibility]] — ideation — spec-vault
+- [[specs/ideation/09-rights-ownership/09.01-rights-registry/09.01.06-sample-interpolation-provenance|Feature: Sample & Interpolation Provenance]] — ideation — spec-vault
+- [[specs/ideation/09-rights-ownership/09.02-split-capture-agreements/09.02-split-capture-agreements-cx|Split Capture & Agreements — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/09-rights-ownership/09.02-split-capture-agreements/09.02-split-capture-agreements-index|Split Capture & Agreements — Index]] — ideation — spec-vault
+- [[specs/ideation/09-rights-ownership/09.02-split-capture-agreements/09.02.01-moment-of-creation-split-capture|Feature: Moment-of-Creation Split Capture]] — ideation — spec-vault
+- [[specs/ideation/09-rights-ownership/09.02-split-capture-agreements/09.02.02-producer-points-agreements|Feature: Producer Points & Producer Agreements]] — ideation — spec-vault
+- [[specs/ideation/09-rights-ownership/09.02-split-capture-agreements/09.02.03-work-for-hire-buyout|Feature: Work-for-Hire & Buyout Designation]] — ideation — spec-vault
+- [[specs/ideation/09-rights-ownership/09.02-split-capture-agreements/09.02.04-split-amendment-reconsent|Feature: Split Amendment & Re-Consent]] — ideation — spec-vault
+- [[specs/ideation/09-rights-ownership/09.03-chain-of-title-lifecycle/09.03-chain-of-title-lifecycle-cx|Chain of Title & Rights Lifecycle — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/09-rights-ownership/09.03-chain-of-title-lifecycle/09.03-chain-of-title-lifecycle-index|Chain of Title & Rights Lifecycle — Index]] — ideation — spec-vault
+- [[specs/ideation/09-rights-ownership/09.03-chain-of-title-lifecycle/09.03.01-chain-of-title-ledger|Feature: Chain of Title Ledger]] — ideation — spec-vault
+- [[specs/ideation/09-rights-ownership/09.03-chain-of-title-lifecycle/09.03.02-term-territory-reversion|Feature: Term, Territory & Reversion]] — ideation — spec-vault
+- [[specs/ideation/09-rights-ownership/09.03-chain-of-title-lifecycle/09.03.03-termination-rights-notice-windows|Feature: Copyright Termination Rights & Notice Windows]] — ideation — spec-vault
+- [[specs/ideation/09-rights-ownership/09.03-chain-of-title-lifecycle/09.03.04-estate-succession-catalog-legacy|Feature: Estate, Succession & Catalog Legacy]] — ideation — spec-vault
+- [[specs/ideation/09-rights-ownership/09.03-chain-of-title-lifecycle/09.03.05-copyright-term-public-domain|Feature: Copyright Term & Public Domain Determination]] — ideation — spec-vault
+- [[specs/ideation/09-rights-ownership/09.03-chain-of-title-lifecycle/09.03.06-moral-rights-attribution|Feature: Moral Rights & Attribution Rights]] — ideation — spec-vault
+- [[specs/ideation/09-rights-ownership/09.04-rights-conflicts-disputes/09.04-rights-conflicts-disputes-cx|Rights Conflicts & Disputes — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/09-rights-ownership/09.04-rights-conflicts-disputes/09.04-rights-conflicts-disputes-index|Rights Conflicts & Disputes — Index]] — ideation — spec-vault
+- [[specs/ideation/09-rights-ownership/09.04-rights-conflicts-disputes/09.04.01-conflicting-claim-detection|Feature: Conflicting Claim Detection]] — ideation — spec-vault
+- [[specs/ideation/09-rights-ownership/09.04-rights-conflicts-disputes/09.04.02-split-ownership-dispute-cases|Feature: Split & Ownership Dispute Cases]] — ideation — spec-vault
+- [[specs/ideation/09-rights-ownership/09.04-rights-conflicts-disputes/09.04.03-rights-freeze-royalty-escrow|Feature: Rights Freeze & Royalty Escrow]] — ideation — spec-vault
+- [[specs/ideation/09-rights-ownership/09.05-ai-voice-likeness-consent/09.05-ai-voice-likeness-consent-cx|AI, Voice & Likeness Consent — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/09-rights-ownership/09.05-ai-voice-likeness-consent/09.05-ai-voice-likeness-consent-index|AI, Voice & Likeness Consent — Index]] — ideation — spec-vault
+- [[specs/ideation/09-rights-ownership/09.05-ai-voice-likeness-consent/09.05.01-ai-training-consent-registry|Feature: AI Training Consent Registry]] — ideation — spec-vault
+- [[specs/ideation/09-rights-ownership/09.05-ai-voice-likeness-consent/09.05.02-voice-name-likeness-rights|Feature: Voice, Name & Likeness (NIL) Rights]] — ideation — spec-vault
+- [[specs/ideation/09-rights-ownership/09.05-ai-voice-likeness-consent/09.05.03-ai-generated-content-disclosure|Feature: AI-Generated Content Disclosure & Provenance]] — ideation — spec-vault
+- [[specs/ideation/09-rights-ownership/09.06-rights-evidence-public-record/09.06-rights-evidence-public-record-cx|Rights Evidence & Public Record — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/09-rights-ownership/09.06-rights-evidence-public-record/09.06-rights-evidence-public-record-index|Rights Evidence & Public Record — Index]] — ideation — spec-vault
+- [[specs/ideation/09-rights-ownership/09.06-rights-evidence-public-record/09.06.01-identifier-issuance-reconciliation|Feature: Work & Recording Identifier Issuance & Reconciliation]] — ideation — spec-vault
+- [[specs/ideation/09-rights-ownership/09.06-rights-evidence-public-record/09.06.02-proof-of-creation-timestamping|Feature: Proof-of-Creation Timestamping]] — ideation — spec-vault
+- [[specs/ideation/09-rights-ownership/09.06-rights-evidence-public-record/09.06.03-copyright-office-registration|Feature: Copyright Office Registration Filing]] — ideation — spec-vault
+- [[specs/ideation/09-rights-ownership/09.06-rights-evidence-public-record/09.06.04-public-rights-lookup|Feature: Public Rights Lookup ("Who owns this?")]] — ideation — spec-vault
+- [[specs/ideation/09-rights-ownership/rights-ownership-cx|Rights & Ownership — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/09-rights-ownership/rights-ownership-index|Rights & Ownership — Index]] — ideation — spec-vault
+- [[specs/ideation/10-royalties-collections/10.01-society-registration-delivery/10.01-society-registration-delivery-cx|Society Registration & Delivery — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/10-royalties-collections/10.01-society-registration-delivery/10.01-society-registration-delivery-index|Society Registration & Delivery — Index]] — ideation — spec-vault
+- [[specs/ideation/10-royalties-collections/10.01-society-registration-delivery/10.01.01-society-affiliation-party-identifiers|Feature: Society Affiliation & Party Identifiers]] — ideation — spec-vault
+- [[specs/ideation/10-royalties-collections/10.01-society-registration-delivery/10.01.02-work-registration-payload-validation|Feature: Work Registration Payload & Validation]] — ideation — spec-vault
+- [[specs/ideation/10-royalties-collections/10.01-society-registration-delivery/10.01.03-cwr-society-file-exchange|Feature: CWR & Society File Exchange]] — ideation — spec-vault
+- [[specs/ideation/10-royalties-collections/10.01-society-registration-delivery/10.01.04-registration-status-rejection-loop|Feature: Registration Status, Acknowledgement & Rejection Loop]] — ideation — spec-vault
+- [[specs/ideation/10-royalties-collections/10.01-society-registration-delivery/10.01.05-mechanical-rights-administration|Feature: Mechanical Rights Administration]] — ideation — spec-vault
+- [[specs/ideation/10-royalties-collections/10.01-society-registration-delivery/10.01.06-neighbouring-rights-performer-registration|Feature: Neighbouring Rights & Performer Registration]] — ideation — spec-vault
+- [[specs/ideation/10-royalties-collections/10.01-society-registration-delivery/10.01.07-sub-publishing-territory-administration|Feature: Sub-Publishing & Territory Administration]] — ideation — spec-vault
+- [[specs/ideation/10-royalties-collections/10.02-statement-ingestion-normalization/10.02-statement-ingestion-normalization-cx|Statement Ingestion & Normalization — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/10-royalties-collections/10.02-statement-ingestion-normalization/10.02-statement-ingestion-normalization-index|Statement Ingestion & Normalization — Index]] — ideation — spec-vault
+- [[specs/ideation/10-royalties-collections/10.02-statement-ingestion-normalization/10.02.01-statement-source-ingestion|Feature: Statement Source Connection & Ingestion]] — ideation — spec-vault
+- [[specs/ideation/10-royalties-collections/10.02-statement-ingestion-normalization/10.02.02-statement-parsing-format-adapters|Feature: Statement Parsing & Format Adapters]] — ideation — spec-vault
+- [[specs/ideation/10-royalties-collections/10.02-statement-ingestion-normalization/10.02.03-line-matching-catalogue-resolution|Feature: Line Matching & Catalogue Resolution]] — ideation — spec-vault
+- [[specs/ideation/10-royalties-collections/10.02-statement-ingestion-normalization/10.02.04-currency-fx-period-normalization|Feature: Currency, FX & Period Normalization]] — ideation — spec-vault
+- [[specs/ideation/10-royalties-collections/10.02-statement-ingestion-normalization/10.02.05-unmatched-line-exception-queue|Feature: Unmatched Line & Exception Queue]] — ideation — spec-vault
+- [[specs/ideation/10-royalties-collections/10.03-calculation-recoupment/10.03-calculation-recoupment-cx|Royalty Calculation & Recoupment — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/10-royalties-collections/10.03-calculation-recoupment/10.03-calculation-recoupment-index|Royalty Calculation & Recoupment — Index]] — ideation — spec-vault
+- [[specs/ideation/10-royalties-collections/10.03-calculation-recoupment/10.03.01-royalty-calculation-engine|Feature: Royalty Calculation Engine]] — ideation — spec-vault
+- [[specs/ideation/10-royalties-collections/10.03-calculation-recoupment/10.03.02-deal-terms-rate-application|Feature: Deal Terms → Royalty Rate Application]] — ideation — spec-vault
+- [[specs/ideation/10-royalties-collections/10.03-calculation-recoupment/10.03.03-advances-recoupment-position|Feature: Advances & Recoupment Position]] — ideation — spec-vault
+- [[specs/ideation/10-royalties-collections/10.03-calculation-recoupment/10.03.04-restatement-adjustment-overpayment|Feature: Restatement, Adjustment & Overpayment]] — ideation — spec-vault
+- [[specs/ideation/10-royalties-collections/10.04-disbursement-payee-statements/10.04-disbursement-payee-statements-cx|Disbursement & Payee Statements — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/10-royalties-collections/10.04-disbursement-payee-statements/10.04-disbursement-payee-statements-index|Disbursement & Payee Statements — Index]] — ideation — spec-vault
+- [[specs/ideation/10-royalties-collections/10.04-disbursement-payee-statements/10.04.01-royalty-payout-run|Feature: Royalty Payout Run & Split Disbursement]] — ideation — spec-vault
+- [[specs/ideation/10-royalties-collections/10.04-disbursement-payee-statements/10.04.02-payee-royalty-statements|Feature: Payee Royalty Statements]] — ideation — spec-vault
+- [[specs/ideation/10-royalties-collections/10.04-disbursement-payee-statements/10.04.03-thresholds-holds-unpayable-balances|Feature: Thresholds, Holds & Unpayable Balances]] — ideation — spec-vault
+- [[specs/ideation/10-royalties-collections/10.04-disbursement-payee-statements/10.04.04-disputed-royalty-escrow|Feature: Disputed-Royalty Escrow & Withholding]] — ideation — spec-vault
+- [[specs/ideation/10-royalties-collections/10.05-recovery-leakage/10.05-recovery-leakage-cx|Recovery & Leakage — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/10-royalties-collections/10.05-recovery-leakage/10.05-recovery-leakage-index|Recovery & Leakage — Index]] — ideation — spec-vault
+- [[specs/ideation/10-royalties-collections/10.05-recovery-leakage/10.05.01-black-box-unclaimed-search|Feature: Black Box & Unclaimed Royalty Search]] — ideation — spec-vault
+- [[specs/ideation/10-royalties-collections/10.05-recovery-leakage/10.05.02-claim-submission-evidence-pack|Feature: Claim Submission & Evidence Pack]] — ideation — spec-vault
+- [[specs/ideation/10-royalties-collections/10.05-recovery-leakage/10.05.03-royalty-leakage-detection|Feature: Royalty Leakage Detection]] — ideation — spec-vault
+- [[specs/ideation/10-royalties-collections/10.06-live-setlist-pro-reporting|Feature: Live Performance Setlist → PRO Reporting]] — ideation — spec-vault
+- [[specs/ideation/10-royalties-collections/10.07-cue-sheets-broadcast-reporting|Feature: Cue Sheets & Broadcast Performance Reporting]] — ideation — spec-vault
+- [[specs/ideation/10-royalties-collections/10.08-statement-disputes-audit-rights|Feature: Statement Disputes & Audit Rights]] — ideation — spec-vault
+- [[specs/ideation/10-royalties-collections/10.09-distribution-calendar-money-in-flight|Feature: Distribution Calendar & Money-in-Flight]] — ideation — spec-vault
+- [[specs/ideation/10-royalties-collections/10.10-royalty-forecasting|Feature: Royalty Forecasting]] — ideation — spec-vault
+- [[specs/ideation/10-royalties-collections/royalties-collections-cx|Royalties & Collections — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/10-royalties-collections/royalties-collections-index|Royalties & Collections — Index]] — ideation — spec-vault
+- [[specs/ideation/11-music-licensing/11.01-sync-licensing/11.01-sync-licensing-cx|Sync Licensing — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/11-music-licensing/11.01-sync-licensing/11.01-sync-licensing-index|Sync Licensing — Index]] — ideation — spec-vault
+- [[specs/ideation/11-music-licensing/11.01-sync-licensing/11.01.01-sync-catalogue-tagging|Feature: Sync Catalogue Tagging & Metadata]] — ideation — spec-vault
+- [[specs/ideation/11-music-licensing/11.01-sync-licensing/11.01.02-supervisor-search-reference-matching|Feature: Supervisor Search & Reference-Track Matching]] — ideation — spec-vault
+- [[specs/ideation/11-music-licensing/11.01-sync-licensing/11.01.03-sync-briefs-pitching|Feature: Sync Briefs & Pitching]] — ideation — spec-vault
+- [[specs/ideation/11-music-licensing/11.01-sync-licensing/11.01.04-holds-exclusivity-windows|Feature: Holds & Exclusivity Windows]] — ideation — spec-vault
+- [[specs/ideation/11-music-licensing/11.01-sync-licensing/11.01.05-dual-licence-coordination|Feature: Master + Publishing Dual Licence Coordination]] — ideation — spec-vault
+- [[specs/ideation/11-music-licensing/11.02-clearance-one-stop-status/11.02-clearance-one-stop-status-cx|Clearance & One-Stop Status — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/11-music-licensing/11.02-clearance-one-stop-status/11.02-clearance-one-stop-status-index|Clearance & One-Stop Status — Index]] — ideation — spec-vault
+- [[specs/ideation/11-music-licensing/11.02-clearance-one-stop-status/11.02.01-clearance-computation-one-stop|Feature: Clearance Computation, One-Stop Determination & Gate]] — ideation — spec-vault
+- [[specs/ideation/11-music-licensing/11.02-clearance-one-stop-status/11.02.02-catalogue-completeness-attestation|Feature: Catalogue Completeness Attestation]] — ideation — spec-vault
+- [[specs/ideation/11-music-licensing/11.02-clearance-one-stop-status/11.02.03-encumbrance-declaration|Feature: Encumbrance & Uncleared-Sample Declaration]] — ideation — spec-vault
+- [[specs/ideation/11-music-licensing/11.02-clearance-one-stop-status/11.02.04-multi-party-consent-routing|Feature: Multi-Party Consent Routing & Approval]] — ideation — spec-vault
+- [[specs/ideation/11-music-licensing/11.03-licence-pricing-negotiation/11.03-licence-pricing-negotiation-cx|Licence Pricing & Negotiation — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/11-music-licensing/11.03-licence-pricing-negotiation/11.03-licence-pricing-negotiation-index|Licence Pricing & Negotiation — Index]] — ideation — spec-vault
+- [[specs/ideation/11-music-licensing/11.03-licence-pricing-negotiation/11.03.01-rate-cards-pricing-rules|Feature: Rate Cards & Pricing Rules]] — ideation — spec-vault
+- [[specs/ideation/11-music-licensing/11.03-licence-pricing-negotiation/11.03.02-quote-requests-negotiation|Feature: Quote Requests & Negotiation]] — ideation — spec-vault
+- [[specs/ideation/11-music-licensing/11.03-licence-pricing-negotiation/11.03.03-most-favoured-nation|Feature: Most-Favoured-Nation (MFN) Handling]] — ideation — spec-vault
+- [[specs/ideation/11-music-licensing/11.04-licensing-policy-preferences/11.04-licensing-policy-preferences-cx|Licensing Policy & Rights-Holder Preferences — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/11-music-licensing/11.04-licensing-policy-preferences/11.04-licensing-policy-preferences-index|Licensing Policy & Rights-Holder Preferences — Index]] — ideation — spec-vault
+- [[specs/ideation/11-music-licensing/11.04-licensing-policy-preferences/11.04.01-per-work-licensing-policy|Feature: Per-Work Licensing Policy & Auto-Approve]] — ideation — spec-vault
+- [[specs/ideation/11-music-licensing/11.04-licensing-policy-preferences/11.04.02-co-owner-veto-approval|Feature: Co-Owner Veto & Approval Requirements]] — ideation — spec-vault
+- [[specs/ideation/11-music-licensing/11.04-licensing-policy-preferences/11.04.03-policy-conflict-resolution|Feature: Policy Conflict Resolution Across Co-Owners]] — ideation — spec-vault
+- [[specs/ideation/11-music-licensing/11.05-sample-derivative-clearance/11.05-sample-derivative-clearance-cx|Sample & Derivative Clearance — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/11-music-licensing/11.05-sample-derivative-clearance/11.05-sample-derivative-clearance-index|Sample & Derivative Clearance — Index]] — ideation — spec-vault
+- [[specs/ideation/11-music-licensing/11.05-sample-derivative-clearance/11.05.01-sample-declaration-identification|Feature: Sample Declaration & Source Identification]] — ideation — spec-vault
+- [[specs/ideation/11-music-licensing/11.05-sample-derivative-clearance/11.05.02-programmatic-instant-clearance|Feature: Programmatic Instant Clearance]] — ideation — spec-vault
+- [[specs/ideation/11-music-licensing/11.05-sample-derivative-clearance/11.05.03-negotiated-clearance-revenue-share|Feature: Negotiated Clearance & Revenue-Share Terms]] — ideation — spec-vault
+- [[specs/ideation/11-music-licensing/11.05-sample-derivative-clearance/11.05.04-interpolation-replay-clearance|Feature: Interpolation & Replay Clearance]] — ideation — spec-vault
+- [[specs/ideation/11-music-licensing/11.05-sample-derivative-clearance/11.05.05-remix-stem-bootleg-licensing|Feature: Remix, Stem & Bootleg Licensing]] — ideation — spec-vault
+- [[specs/ideation/11-music-licensing/11.06-creator-micro-licensing/11.06-creator-micro-licensing-cx|Creator Micro-Licensing — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/11-music-licensing/11.06-creator-micro-licensing/11.06-creator-micro-licensing-index|Creator Micro-Licensing — Index]] — ideation — spec-vault
+- [[specs/ideation/11-music-licensing/11.06-creator-micro-licensing/11.06.01-creator-licence-catalogue|Feature: Creator Licence Catalogue & Instant Purchase]] — ideation — spec-vault
+- [[specs/ideation/11-music-licensing/11.06-creator-micro-licensing/11.06.02-content-id-whitelisting|Feature: Content ID Whitelisting & Channel Registration]] — ideation — spec-vault
+- [[specs/ideation/11-music-licensing/11.06-creator-micro-licensing/11.06.03-claim-release-dispute|Feature: Claim Release & Dispute Escalation]] — ideation — spec-vault
+- [[specs/ideation/11-music-licensing/11.06-creator-micro-licensing/11.06.04-licence-persistence-after-subscription|Feature: Licence Persistence After Subscription Ends]] — ideation — spec-vault
+- [[specs/ideation/11-music-licensing/11.07-ai-training-licensing/11.07-ai-training-licensing-cx|AI Training Licensing — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/11-music-licensing/11.07-ai-training-licensing/11.07-ai-training-licensing-index|AI Training Licensing — Index]] — ideation — spec-vault
+- [[specs/ideation/11-music-licensing/11.07-ai-training-licensing/11.07.01-ai-training-consent-opt-out|Feature: AI Training Consent & Opt-Out Registry]] — ideation — spec-vault
+- [[specs/ideation/11-music-licensing/11.07-ai-training-licensing/11.07.02-corpus-assembly-dataset-deals|Feature: Corpus Assembly & Dataset Licensing Deals]] — ideation — spec-vault
+- [[specs/ideation/11-music-licensing/11.07-ai-training-licensing/11.07.03-training-compensation-attribution|Feature: Training-Use Compensation & Attribution]] — ideation — spec-vault
+- [[specs/ideation/11-music-licensing/11.08-licence-instrument-lifecycle/11.08-licence-instrument-lifecycle-cx|Licence Instrument & Lifecycle — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/11-music-licensing/11.08-licence-instrument-lifecycle/11.08-licence-instrument-lifecycle-index|Licence Instrument & Lifecycle — Index]] — ideation — spec-vault
+- [[specs/ideation/11-music-licensing/11.08-licence-instrument-lifecycle/11.08.01-licence-scope-grammar|Feature: Licence Scope Grammar]] — ideation — spec-vault
+- [[specs/ideation/11-music-licensing/11.08-licence-instrument-lifecycle/11.08.02-licence-certificate-issuance|Feature: Licence Certificate Issuance]] — ideation — spec-vault
+- [[specs/ideation/11-music-licensing/11.08-licence-instrument-lifecycle/11.08.03-third-party-licence-verification|Feature: Third-Party Licence Verification]] — ideation — spec-vault
+- [[specs/ideation/11-music-licensing/11.08-licence-instrument-lifecycle/11.08.04-licence-amendment-expiry-lifecycle|Feature: Licence Amendment, Expiry & Termination]] — ideation — spec-vault
+- [[specs/ideation/11-music-licensing/11.09-cover-song-compulsory-mechanical|Feature: Cover Songs & Compulsory Mechanical Licensing]] — ideation — spec-vault
+- [[specs/ideation/11-music-licensing/11.10-print-lyric-rights|Feature: Print & Lyric Rights]] — ideation — spec-vault
+- [[specs/ideation/11-music-licensing/11.11-grand-rights-dramatic-performance|Feature: Grand Rights & Dramatic Performance]] — ideation — spec-vault
+- [[specs/ideation/11-music-licensing/music-licensing-cx|Music Licensing — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/11-music-licensing/music-licensing-index|Music Licensing — Index]] — ideation — spec-vault
+- [[specs/ideation/12-release-distribution/12.01-release-builder/12.01-release-builder-cx|Release Builder & Delivery Readiness — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/12-release-distribution/12.01-release-builder/12.01-release-builder-index|Release Builder & Delivery Readiness — Index]] — ideation — spec-vault
+- [[specs/ideation/12-release-distribution/12.01-release-builder/12.01.01-release-composition-sequencing|Feature: Release Composition & Track Sequencing]] — ideation — spec-vault
+- [[specs/ideation/12-release-distribution/12.01-release-builder/12.01.02-metadata-validation-conformance|Feature: Metadata Validation & Store Conformance]] — ideation — spec-vault
+- [[specs/ideation/12-release-distribution/12.01-release-builder/12.01.03-delivery-readiness-gate|Feature: Delivery Readiness Gate]] — ideation — spec-vault
+- [[specs/ideation/12-release-distribution/12.01-release-builder/12.01.04-audio-artwork-asset-conformance|Feature: Audio & Artwork Asset Conformance]] — ideation — spec-vault
+- [[specs/ideation/12-release-distribution/12.01-release-builder/12.01.05-label-copy-distributor-of-record|Feature: Label Copy & Distributor of Record]] — ideation — spec-vault
+- [[specs/ideation/12-release-distribution/12.02-ddex-delivery-messaging/12.02-ddex-delivery-messaging-cx|DDEX Delivery Messaging — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/12-release-distribution/12.02-ddex-delivery-messaging/12.02-ddex-delivery-messaging-index|DDEX Delivery Messaging — Index]] — ideation — spec-vault
+- [[specs/ideation/12-release-distribution/12.02-ddex-delivery-messaging/12.02.01-ern-message-generation|Feature: ERN Message Generation]] — ideation — spec-vault
+- [[specs/ideation/12-release-distribution/12.02-ddex-delivery-messaging/12.02.02-per-partner-profile-conformance|Feature: Per-Partner Profile Conformance]] — ideation — spec-vault
+- [[specs/ideation/12-release-distribution/12.02-ddex-delivery-messaging/12.02.03-delivery-choreography-acknowledgement|Feature: Delivery Choreography & Acknowledgement]] — ideation — spec-vault
+- [[specs/ideation/12-release-distribution/12.02-ddex-delivery-messaging/12.02.04-mead-enrichment-delivery|Feature: MEAD Enrichment Delivery]] — ideation — spec-vault
+- [[specs/ideation/12-release-distribution/12.03-dsp-store-territory-management/12.03-dsp-store-territory-management-cx|DSP Store & Territory Management — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/12-release-distribution/12.03-dsp-store-territory-management/12.03-dsp-store-territory-management-index|DSP Store & Territory Management — Index]] — ideation — spec-vault
+- [[specs/ideation/12-release-distribution/12.03-dsp-store-territory-management/12.03.01-store-selection-territory-scoping|Feature: Store Selection & Territory Scoping]] — ideation — spec-vault
+- [[specs/ideation/12-release-distribution/12.03-dsp-store-territory-management/12.03.02-per-store-delivery-status|Feature: Per-Store Delivery Status]] — ideation — spec-vault
+- [[specs/ideation/12-release-distribution/12.03-dsp-store-territory-management/12.03.03-rejection-triage-remediation|Feature: Rejection Triage & Remediation]] — ideation — spec-vault
+- [[specs/ideation/12-release-distribution/12.03-dsp-store-territory-management/12.03.04-artist-profile-linking-disambiguation|Feature: Artist Profile Linking & Disambiguation]] — ideation — spec-vault
+- [[specs/ideation/12-release-distribution/12.04-release-scheduling-windows/12.04-release-scheduling-windows-cx|Release Scheduling & Windows — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/12-release-distribution/12.04-release-scheduling-windows/12.04-release-scheduling-windows-index|Release Scheduling & Windows — Index]] — ideation — spec-vault
+- [[specs/ideation/12-release-distribution/12.04-release-scheduling-windows/12.04.01-release-date-lead-time|Feature: Release Date & DSP Lead Time]] — ideation — spec-vault
+- [[specs/ideation/12-release-distribution/12.04-release-scheduling-windows/12.04.02-editorial-pitch-windows|Feature: Editorial Pitch Windows]] — ideation — spec-vault
+- [[specs/ideation/12-release-distribution/12.04-release-scheduling-windows/12.04.03-pre-save-pre-add-links|Feature: Pre-Save & Pre-Add Links]] — ideation — spec-vault
+- [[specs/ideation/12-release-distribution/12.04-release-scheduling-windows/12.04.04-rollout-plan-deadline-timeline|Feature: Rollout Plan & Deadline Timeline]] — ideation — spec-vault
+- [[specs/ideation/12-release-distribution/12.05-catalog-lifecycle-after-release/12.05-catalog-lifecycle-after-release-cx|Catalog Lifecycle After Release — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/12-release-distribution/12.05-catalog-lifecycle-after-release/12.05-catalog-lifecycle-after-release-index|Catalog Lifecycle After Release — Index]] — ideation — spec-vault
+- [[specs/ideation/12-release-distribution/12.05-catalog-lifecycle-after-release/12.05.01-voluntary-takedown|Feature: Voluntary Takedown]] — ideation — spec-vault
+- [[specs/ideation/12-release-distribution/12.05-catalog-lifecycle-after-release/12.05.02-metadata-update-redelivery|Feature: Metadata Update & Redelivery]] — ideation — spec-vault
+- [[specs/ideation/12-release-distribution/12.05-catalog-lifecycle-after-release/12.05.03-involuntary-takedown-suspension|Feature: Involuntary Takedown & Delivery Suspension]] — ideation — spec-vault
+- [[specs/ideation/12-release-distribution/12.06-content-id-ugc-claiming/12.06-content-id-ugc-claiming-cx|Content ID & UGC Claiming — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/12-release-distribution/12.06-content-id-ugc-claiming/12.06-content-id-ugc-claiming-index|Content ID & UGC Claiming — Index]] — ideation — spec-vault
+- [[specs/ideation/12-release-distribution/12.06-content-id-ugc-claiming/12.06.01-fingerprint-registration|Feature: Fingerprint Registration]] — ideation — spec-vault
+- [[specs/ideation/12-release-distribution/12.06-content-id-ugc-claiming/12.06.02-claim-whitelist-management|Feature: Claim & Whitelist Management]] — ideation — spec-vault
+- [[specs/ideation/12-release-distribution/12.06-content-id-ugc-claiming/12.06.03-claim-disputes-ownership-conflicts|Feature: Claim Disputes & Ownership Conflicts]] — ideation — spec-vault
+- [[specs/ideation/12-release-distribution/12.07-identifier-assignment-at-delivery|Feature: Identifier Assignment at Delivery]] — ideation — spec-vault
+- [[specs/ideation/12-release-distribution/12.08-catalog-migration-exit|Feature: Catalog Migration & Exit]] — ideation — spec-vault
+- [[specs/ideation/12-release-distribution/release-distribution-cx|Release & Distribution — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/12-release-distribution/release-distribution-index|Release & Distribution — Index]] — ideation — spec-vault
+- [[specs/ideation/13-gear-marketplace/13.01-canonical-gear-catalog/13.01-canonical-gear-catalog-cx|Canonical Gear Catalog — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/13-gear-marketplace/13.01-canonical-gear-catalog/13.01-canonical-gear-catalog-index|Canonical Gear Catalog — Index]] — ideation — spec-vault
+- [[specs/ideation/13-gear-marketplace/13.01-canonical-gear-catalog/13.01.01-model-records-taxonomy-attributes|Feature: Model Records, Taxonomy & Attribute Schemas]] — ideation — spec-vault
+- [[specs/ideation/13-gear-marketplace/13.01-canonical-gear-catalog/13.01.02-catalog-contribution-moderation|Feature: Catalog Contribution & Moderation]] — ideation — spec-vault
+- [[specs/ideation/13-gear-marketplace/13.01-canonical-gear-catalog/13.01.03-serial-decoding-dating|Feature: Serial Number Decoding & Dating]] — ideation — spec-vault
+- [[specs/ideation/13-gear-marketplace/13.01-canonical-gear-catalog/13.01.04-listing-model-matching|Feature: Listing↔Model Matching & Entity Resolution]] — ideation — spec-vault
+- [[specs/ideation/13-gear-marketplace/13.01-canonical-gear-catalog/13.01.05-fitment-compatibility-voltage|Feature: Fitment, Compatibility & Region/Voltage Warnings]] — ideation — spec-vault
+- [[specs/ideation/13-gear-marketplace/13.02-condition-originality-disclosure/13.02-condition-originality-disclosure-cx|Condition, Originality & Disclosure — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/13-gear-marketplace/13.02-condition-originality-disclosure/13.02-condition-originality-disclosure-index|Condition, Originality & Disclosure — Index]] — ideation — spec-vault
+- [[specs/ideation/13-gear-marketplace/13.02-condition-originality-disclosure/13.02.01-condition-grading-scale|Feature: Condition Grading Scale]] — ideation — spec-vault
+- [[specs/ideation/13-gear-marketplace/13.02-condition-originality-disclosure/13.02.02-mandatory-flaw-disclosure|Feature: Mandatory Flaw Disclosure]] — ideation — spec-vault
+- [[specs/ideation/13-gear-marketplace/13.02-condition-originality-disclosure/13.02.03-modification-originality-disclosure|Feature: Modification & Originality Disclosure]] — ideation — spec-vault
+- [[specs/ideation/13-gear-marketplace/13.02-condition-originality-disclosure/13.02.04-condition-evidence-pack|Feature: Condition Evidence Pack & Dispute Baseline]] — ideation — spec-vault
+- [[specs/ideation/13-gear-marketplace/13.03-listings-inventory/13.03-listings-inventory-cx|Listings & Inventory — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/13-gear-marketplace/13.03-listings-inventory/13.03-listings-inventory-index|Listings & Inventory — Index]] — ideation — spec-vault
+- [[specs/ideation/13-gear-marketplace/13.03-listings-inventory/13.03.01-listing-creation-media-demo|Feature: Listing Creation, Media & Unit Demo]] — ideation — spec-vault
+- [[specs/ideation/13-gear-marketplace/13.03-listings-inventory/13.03.02-listing-lifecycle-relisting|Feature: Listing Lifecycle & Relisting]] — ideation — spec-vault
+- [[specs/ideation/13-gear-marketplace/13.03-listings-inventory/13.03.03-inventory-oversell-prevention|Feature: Inventory & Oversell Prevention]] — ideation — spec-vault
+- [[specs/ideation/13-gear-marketplace/13.03-listings-inventory/13.03.04-bulk-listing-channel-sync|Feature: Bulk Listing & Multi-Channel Inventory Sync]] — ideation — spec-vault
+- [[specs/ideation/13-gear-marketplace/13.03-listings-inventory/13.03.05-parts-bundles-bstock|Feature: Parts, Consumables, Bundles & B-Stock]] — ideation — spec-vault
+- [[specs/ideation/13-gear-marketplace/13.03-listings-inventory/13.03.06-provenance-session-history-display|Feature: Provenance & Session-History Display]] — ideation — spec-vault
+- [[specs/ideation/13-gear-marketplace/13.03-listings-inventory/13.03.07-stolen-serial-screening|Feature: Stolen-Serial Screening at Listing & Checkout]] — ideation — spec-vault
+- [[specs/ideation/13-gear-marketplace/13.04-price-discovery-market-data/13.04-price-discovery-market-data-cx|Price Discovery & Market Data — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/13-gear-marketplace/13.04-price-discovery-market-data/13.04-price-discovery-market-data-index|Price Discovery & Market Data — Index]] — ideation — spec-vault
+- [[specs/ideation/13-gear-marketplace/13.04-price-discovery-market-data/13.04.01-price-guide-comps|Feature: Gear Price Guide & Comps]] — ideation — spec-vault
+- [[specs/ideation/13-gear-marketplace/13.04-price-discovery-market-data/13.04.02-pricing-suggestions-repricing|Feature: Pricing Suggestions & Repricing]] — ideation — spec-vault
+- [[specs/ideation/13-gear-marketplace/13.04-price-discovery-market-data/13.04.03-valuation-confidence-thin-market|Feature: Valuation Confidence & Thin-Market Handling]] — ideation — spec-vault
+- [[specs/ideation/13-gear-marketplace/13.05-offers-auctions-negotiation/13.05-offers-auctions-negotiation-cx|Offers, Auctions & Negotiation — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/13-gear-marketplace/13.05-offers-auctions-negotiation/13.05-offers-auctions-negotiation-index|Offers, Auctions & Negotiation — Index]] — ideation — spec-vault
+- [[specs/ideation/13-gear-marketplace/13.05-offers-auctions-negotiation/13.05.01-offers-counter-offers|Feature: Offers & Counter-Offers]] — ideation — spec-vault
+- [[specs/ideation/13-gear-marketplace/13.05-offers-auctions-negotiation/13.05.02-auctions-bidding|Feature: Auctions & Bidding]] — ideation — spec-vault
+- [[specs/ideation/13-gear-marketplace/13.05-offers-auctions-negotiation/13.05.03-wanted-iso-reverse-marketplace|Feature: Wanted/ISO Reverse Marketplace]] — ideation — spec-vault
+- [[specs/ideation/13-gear-marketplace/13.06-cart-checkout-orders/13.06-cart-checkout-orders-cx|Cart, Checkout & Orders — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/13-gear-marketplace/13.06-cart-checkout-orders/13.06-cart-checkout-orders-index|Cart, Checkout & Orders — Index]] — ideation — spec-vault
+- [[specs/ideation/13-gear-marketplace/13.06-cart-checkout-orders/13.06.01-cart-multivendor-checkout|Feature: Cart & Multi-Vendor Checkout]] — ideation — spec-vault
+- [[specs/ideation/13-gear-marketplace/13.06-cart-checkout-orders/13.06.02-order-management-lifecycle|Feature: Order Management & Lifecycle]] — ideation — spec-vault
+- [[specs/ideation/13-gear-marketplace/13.06-cart-checkout-orders/13.06.03-layaway-staged-payment|Feature: Layaway & Staged Payment on Held Inventory]] — ideation — spec-vault
+- [[specs/ideation/13-gear-marketplace/13.06-cart-checkout-orders/13.06.04-pos-service-addons|Feature: Point-of-Sale Service Add-Ons]] — ideation — spec-vault
+- [[specs/ideation/13-gear-marketplace/13.06-cart-checkout-orders/13.06.05-ownership-transfer-on-settlement|Feature: Ownership Transfer on Settlement]] — ideation — spec-vault
+- [[specs/ideation/13-gear-marketplace/13.07-gear-logistics-cross-border/13.07-gear-logistics-cross-border-cx|Gear Logistics & Cross-Border — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/13-gear-marketplace/13.07-gear-logistics-cross-border/13.07-gear-logistics-cross-border-index|Gear Logistics & Cross-Border — Index]] — ideation — spec-vault
+- [[specs/ideation/13-gear-marketplace/13.07-gear-logistics-cross-border/13.07.01-freight-oversize-packing|Feature: Freight, Oversize Handling & Packing Standards]] — ideation — spec-vault
+- [[specs/ideation/13-gear-marketplace/13.07-gear-logistics-cross-border/13.07.02-international-customs-landed-cost|Feature: International Shipping, Customs, Duties & Landed Cost]] — ideation — spec-vault
+- [[specs/ideation/13-gear-marketplace/13.07-gear-logistics-cross-border/13.07.03-cites-export-compliance|Feature: Restricted Materials (CITES) & Export Compliance]] — ideation — spec-vault
+- [[specs/ideation/13-gear-marketplace/13.07-gear-logistics-cross-border/13.07.04-shipping-insurance-damage-claims|Feature: Shipping Insurance & High-Value Damage Claims]] — ideation — spec-vault
+- [[specs/ideation/13-gear-marketplace/13.08-returns-rma-warranty/13.08-returns-rma-warranty-cx|Returns, RMA & Warranty — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/13-gear-marketplace/13.08-returns-rma-warranty/13.08-returns-rma-warranty-index|Returns, RMA & Warranty — Index]] — ideation — spec-vault
+- [[specs/ideation/13-gear-marketplace/13.08-returns-rma-warranty/13.08.01-returns-refunds|Feature: Returns & Refunds]] — ideation — spec-vault
+- [[specs/ideation/13-gear-marketplace/13.08-returns-rma-warranty/13.08.02-rma-repair-routing|Feature: RMA & Repair Routing]] — ideation — spec-vault
+- [[specs/ideation/13-gear-marketplace/13.08-returns-rma-warranty/13.08.03-warranty-registration-transfer-claims|Feature: Warranty Registration, Transfer & Claims]] — ideation — spec-vault
+- [[specs/ideation/13-gear-marketplace/13.09-tradein-consignment/13.09-tradein-consignment-cx|Trade-In, Part-Exchange & Consignment — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/13-gear-marketplace/13.09-tradein-consignment/13.09-tradein-consignment-index|Trade-In, Part-Exchange & Consignment — Index]] — ideation — spec-vault
+- [[specs/ideation/13-gear-marketplace/13.09-tradein-consignment/13.09.01-tradein-part-exchange|Feature: Trade-In & Part-Exchange]] — ideation — spec-vault
+- [[specs/ideation/13-gear-marketplace/13.09-tradein-consignment/13.09.02-consignment-sales-custody|Feature: Consignment Sales & Custody]] — ideation — spec-vault
+- [[specs/ideation/13-gear-marketplace/13.09-tradein-consignment/13.09.03-inspection-intake-grading|Feature: Inspection & Intake Grading]] — ideation — spec-vault
+- [[specs/ideation/13-gear-marketplace/13.10-gear-rental-backline/13.10-gear-rental-backline-cx|Gear Rental & Backline Hire — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/13-gear-marketplace/13.10-gear-rental-backline/13.10-gear-rental-backline-index|Gear Rental & Backline Hire — Index]] — ideation — spec-vault
+- [[specs/ideation/13-gear-marketplace/13.10-gear-rental-backline/13.10.01-rental-listings-rate-cards|Feature: Rental Listings & Rate Cards]] — ideation — spec-vault
+- [[specs/ideation/13-gear-marketplace/13.10-gear-rental-backline/13.10.02-rental-availability-reservation|Feature: Rental Availability & Reservation]] — ideation — spec-vault
+- [[specs/ideation/13-gear-marketplace/13.10-gear-rental-backline/13.10.03-deposits-damage-return-condition|Feature: Deposits, Damage Assessment & Return Condition]] — ideation — spec-vault
+- [[specs/ideation/13-gear-marketplace/13.11-local-pickup-meetup-safety|Feature: Local Pickup & Meetup Safety]] — ideation — spec-vault
+- [[specs/ideation/13-gear-marketplace/13.12-gear-seller-storefront-policies|Feature: Gear Seller Storefront & Commerce Policies]] — ideation — spec-vault
+- [[specs/ideation/13-gear-marketplace/13.13-authorized-dealer-map-pricing|Feature: Authorized Dealer Program & MAP Pricing]] — ideation — spec-vault
+- [[specs/ideation/13-gear-marketplace/gear-marketplace-cx|Gear Marketplace (Physical Goods) — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/13-gear-marketplace/gear-marketplace-index|Gear Marketplace (Physical Goods) — Index]] — ideation — spec-vault
+- [[specs/ideation/14-digital-goods-marketplace/14.01-catalog-compatibility/14.01-catalog-compatibility-cx|Digital Product Catalog & Compatibility — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/14-digital-goods-marketplace/14.01-catalog-compatibility/14.01-catalog-compatibility-index|Digital Product Catalog & Compatibility — Index]] — ideation — spec-vault
+- [[specs/ideation/14-digital-goods-marketplace/14.01-catalog-compatibility/14.01.01-digital-product-listing-spec-sheet|Feature: Digital Product Listing & Spec Sheet]] — ideation — spec-vault
+- [[specs/ideation/14-digital-goods-marketplace/14.01-catalog-compatibility/14.01.02-format-os-daw-compatibility-matrix|Feature: Format, OS/CPU & DAW Host Compatibility Matrix]] — ideation — spec-vault
+- [[specs/ideation/14-digital-goods-marketplace/14.01-catalog-compatibility/14.01.03-host-dependency-graph|Feature: Host-Dependency & Required-Product Graph]] — ideation — spec-vault
+- [[specs/ideation/14-digital-goods-marketplace/14.01-catalog-compatibility/14.01.04-rig-profile-compatibility-checker|Feature: Rig Profile & Compatibility Checker]] — ideation — spec-vault
+- [[specs/ideation/14-digital-goods-marketplace/14.02-licensing-activation-entitlement/14.02-licensing-activation-entitlement-cx|Licensing, Activation & Entitlement — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/14-digital-goods-marketplace/14.02-licensing-activation-entitlement/14.02-licensing-activation-entitlement-index|Licensing, Activation & Entitlement — Index]] — ideation — spec-vault
+- [[specs/ideation/14-digital-goods-marketplace/14.02-licensing-activation-entitlement/14.02.01-licence-issuance-entitlement-record|Feature: Licence Issuance & Entitlement Record]] — ideation — spec-vault
+- [[specs/ideation/14-digital-goods-marketplace/14.02-licensing-activation-entitlement/14.02.02-activation-seats-machine-authorisation|Feature: Activation, Seats & Machine Authorisation]] — ideation — spec-vault
+- [[specs/ideation/14-digital-goods-marketplace/14.02-licensing-activation-entitlement/14.02.03-offline-activation-drm-bridges|Feature: Offline Activation & Third-Party DRM Bridges]] — ideation — spec-vault
+- [[specs/ideation/14-digital-goods-marketplace/14.02-licensing-activation-entitlement/14.02.04-serial-blacklisting-anti-piracy|Feature: Serial Blacklisting & Anti-Piracy Enforcement]] — ideation — spec-vault
+- [[specs/ideation/14-digital-goods-marketplace/14.02-licensing-activation-entitlement/14.02.05-licence-terms-registry|Feature: Machine-Readable Licence Terms Registry]] — ideation — spec-vault
+- [[specs/ideation/14-digital-goods-marketplace/14.02-licensing-activation-entitlement/14.02.06-trials-demos-freeware|Feature: Trials, Demos & Freeware Entitlements]] — ideation — spec-vault
+- [[specs/ideation/14-digital-goods-marketplace/14.03-delivery-versioning-library/14.03-delivery-versioning-library-cx|Delivery, Versioning & Library — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/14-digital-goods-marketplace/14.03-delivery-versioning-library/14.03-delivery-versioning-library-index|Delivery, Versioning & Library — Index]] — ideation — spec-vault
+- [[specs/ideation/14-digital-goods-marketplace/14.03-delivery-versioning-library/14.03.01-download-delivery-resumable-transfer|Feature: Download Delivery & Resumable Transfer]] — ideation — spec-vault
+- [[specs/ideation/14-digital-goods-marketplace/14.03-delivery-versioning-library/14.03.02-versioning-updates-legacy-archive|Feature: Versioning, Updates & Legacy Archive]] — ideation — spec-vault
+- [[specs/ideation/14-digital-goods-marketplace/14.03-delivery-versioning-library/14.03.03-licence-portal-purchased-library|Feature: Licence Portal & Purchased Library]] — ideation — spec-vault
+- [[specs/ideation/14-digital-goods-marketplace/14.03-delivery-versioning-library/14.03.04-creative-asset-library-tagging-sync|Feature: Creative Asset Library — Tagging, Search & Sync]] — ideation — spec-vault
+- [[specs/ideation/14-digital-goods-marketplace/14.03-delivery-versioning-library/14.03.05-per-buyer-forensic-watermarking|Feature: Per-Buyer Forensic Watermarking]] — ideation — spec-vault
+- [[specs/ideation/14-digital-goods-marketplace/14.04-sound-content-catalogs/14.04-sound-content-catalogs-cx|Sound Content Catalogs — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/14-digital-goods-marketplace/14.04-sound-content-catalogs/14.04-sound-content-catalogs-index|Sound Content Catalogs (Samples, Presets, Templates) — Index]] — ideation — spec-vault
+- [[specs/ideation/14-digital-goods-marketplace/14.04-sound-content-catalogs/14.04.01-sample-loop-pack-catalog|Feature: Sample & Loop Pack Catalog]] — ideation — spec-vault
+- [[specs/ideation/14-digital-goods-marketplace/14.04-sound-content-catalogs/14.04.02-preset-patch-catalog|Feature: Preset & Patch Catalog]] — ideation — spec-vault
+- [[specs/ideation/14-digital-goods-marketplace/14.04-sound-content-catalogs/14.04.03-project-template-catalog-dependency-manifest|Feature: Project Template Catalog & Dependency Manifest]] — ideation — spec-vault
+- [[specs/ideation/14-digital-goods-marketplace/14.04-sound-content-catalogs/14.04.04-musical-metadata-index-search|Feature: Musical Metadata Index & Key/BPM-Aware Search]] — ideation — spec-vault
+- [[specs/ideation/14-digital-goods-marketplace/14.05-beat-instrumental-licensing/14.05-beat-instrumental-licensing-cx|Beat & Instrumental Licensing — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/14-digital-goods-marketplace/14.05-beat-instrumental-licensing/14.05-beat-instrumental-licensing-index|Beat & Instrumental Licensing — Index]] — ideation — spec-vault
+- [[specs/ideation/14-digital-goods-marketplace/14.05-beat-instrumental-licensing/14.05.01-beat-catalog-tiered-leases|Feature: Beat Catalog & Tiered Lease Options]] — ideation — spec-vault
+- [[specs/ideation/14-digital-goods-marketplace/14.05-beat-instrumental-licensing/14.05.02-exclusive-rights-purchase-auto-delist|Feature: Exclusive Rights Purchase & Auto-Delist]] — ideation — spec-vault
+- [[specs/ideation/14-digital-goods-marketplace/14.05-beat-instrumental-licensing/14.05.03-lease-lifecycle-caps-expiry|Feature: Lease Lifecycle, Caps & Expiry]] — ideation — spec-vault
+- [[specs/ideation/14-digital-goods-marketplace/14.05-beat-instrumental-licensing/14.05.04-tagged-preview-untagged-delivery|Feature: Tagged Preview & Untagged Delivery]] — ideation — spec-vault
+- [[specs/ideation/14-digital-goods-marketplace/14.06-used-licence-transfer/14.06-used-licence-transfer-cx|Used Licence Transfer & Resale — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/14-digital-goods-marketplace/14.06-used-licence-transfer/14.06-used-licence-transfer-index|Used Licence Transfer & Resale — Index]] — ideation — spec-vault
+- [[specs/ideation/14-digital-goods-marketplace/14.06-used-licence-transfer/14.06.01-vendor-transfer-policy-registry|Feature: Vendor Transfer Policy Registry]] — ideation — spec-vault
+- [[specs/ideation/14-digital-goods-marketplace/14.06-used-licence-transfer/14.06.02-licence-transfer-escrow|Feature: Licence Transfer Escrow & Conditional Settlement]] — ideation — spec-vault
+- [[specs/ideation/14-digital-goods-marketplace/14.06-used-licence-transfer/14.06.03-bundled-software-with-used-hardware|Feature: Bundled Software Licences with Used Hardware]] — ideation — spec-vault
+- [[specs/ideation/14-digital-goods-marketplace/14.07-monetisation-models-pricing/14.07-monetisation-models-pricing-cx|Monetisation Models & Pricing — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/14-digital-goods-marketplace/14.07-monetisation-models-pricing/14.07-monetisation-models-pricing-index|Monetisation Models & Pricing — Index]] — ideation — spec-vault
+- [[specs/ideation/14-digital-goods-marketplace/14.07-monetisation-models-pricing/14.07.01-perpetual-purchase-ownership|Feature: Perpetual Purchase & Ownership]] — ideation — spec-vault
+- [[specs/ideation/14-digital-goods-marketplace/14.07-monetisation-models-pricing/14.07.02-subscription-credit-economy|Feature: Subscription & Credit Economy]] — ideation — spec-vault
+- [[specs/ideation/14-digital-goods-marketplace/14.07-monetisation-models-pricing/14.07.03-rent-to-own|Feature: Rent-to-Own]] — ideation — spec-vault
+- [[specs/ideation/14-digital-goods-marketplace/14.07-monetisation-models-pricing/14.07.04-bundles-promotional-sales|Feature: Bundles & Promotional Sales]] — ideation — spec-vault
+- [[specs/ideation/14-digital-goods-marketplace/14.07-monetisation-models-pricing/14.07.05-upgrade-crossgrade-loyalty-credit|Feature: Upgrade, Crossgrade & Loyalty Credit]] — ideation — spec-vault
+- [[specs/ideation/14-digital-goods-marketplace/14.08-vendor-portal-build-qa/14.08-vendor-portal-build-qa-cx|Vendor Portal, Build Submission & QA — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/14-digital-goods-marketplace/14.08-vendor-portal-build-qa/14.08-vendor-portal-build-qa-index|Vendor Portal, Build Submission & QA — Index]] — ideation — spec-vault
+- [[specs/ideation/14-digital-goods-marketplace/14.08-vendor-portal-build-qa/14.08.01-vendor-onboarding-product-submission|Feature: Vendor Onboarding & Product Submission]] — ideation — spec-vault
+- [[specs/ideation/14-digital-goods-marketplace/14.08-vendor-portal-build-qa/14.08.02-automated-build-qa|Feature: Automated Build QA (malware, code signing, pluginval/auval)]] — ideation — spec-vault
+- [[specs/ideation/14-digital-goods-marketplace/14.08-vendor-portal-build-qa/14.08.03-audio-content-qc|Feature: Audio Content QC & Metadata Verification]] — ideation — spec-vault
+- [[specs/ideation/14-digital-goods-marketplace/14.08-vendor-portal-build-qa/14.08.04-release-channels-staged-rollout|Feature: Release Channels, Staged Rollout & Rollback]] — ideation — spec-vault
+- [[specs/ideation/14-digital-goods-marketplace/14.08-vendor-portal-build-qa/14.08.05-vendor-exit-licence-continuity|Feature: Vendor Exit & Perpetual Licence Continuity]] — ideation — spec-vault
+- [[specs/ideation/14-digital-goods-marketplace/14.09-digital-refunds-revocation/14.09-digital-refunds-revocation-cx|Digital Refunds, Withdrawal & Revocation — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/14-digital-goods-marketplace/14.09-digital-refunds-revocation/14.09-digital-refunds-revocation-index|Digital Refunds, Withdrawal & Revocation — Index]] — ideation — spec-vault
+- [[specs/ideation/14-digital-goods-marketplace/14.09-digital-refunds-revocation/14.09.01-withdrawal-right-waiver-capture|Feature: Withdrawal-Right Waiver Capture (EU/UK)]] — ideation — spec-vault
+- [[specs/ideation/14-digital-goods-marketplace/14.09-digital-refunds-revocation/14.09.02-digital-refund-eligibility-adjudication|Feature: Digital Refund Eligibility & Adjudication]] — ideation — spec-vault
+- [[specs/ideation/14-digital-goods-marketplace/14.09-digital-refunds-revocation/14.09.03-licence-revocation-entitlement-clawback|Feature: Licence Revocation & Entitlement Clawback]] — ideation — spec-vault
+- [[specs/ideation/14-digital-goods-marketplace/14.10-contributor-revenue-royalty-pool/14.10-contributor-revenue-royalty-pool-cx|Contributor Revenue & Per-Download Royalty Pool — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/14-digital-goods-marketplace/14.10-contributor-revenue-royalty-pool/14.10-contributor-revenue-royalty-pool-index|Contributor Revenue & Per-Download Royalty Pool — Index]] — ideation — spec-vault
+- [[specs/ideation/14-digital-goods-marketplace/14.10-contributor-revenue-royalty-pool/14.10.01-pool-funding-rate-model|Feature: Pool Funding & Rate Model]] — ideation — spec-vault
+- [[specs/ideation/14-digital-goods-marketplace/14.10-contributor-revenue-royalty-pool/14.10.02-download-attribution-accrual|Feature: Download Attribution & Accrual]] — ideation — spec-vault
+- [[specs/ideation/14-digital-goods-marketplace/14.10-contributor-revenue-royalty-pool/14.10.03-multi-contributor-pack-splits|Feature: Multi-Contributor Pack Splits]] — ideation — spec-vault
+- [[specs/ideation/14-digital-goods-marketplace/digital-goods-marketplace-cx|Digital Goods & Plugin Marketplace — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/14-digital-goods-marketplace/digital-goods-marketplace-index|Digital Goods & Plugin Marketplace — Index]] — ideation — spec-vault
+- [[specs/ideation/15-gear-registry-ownership/15.01-instrument-identity-provenance/15.01-instrument-identity-provenance-cx|Instrument Identity & Provenance — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/15-gear-registry-ownership/15.01-instrument-identity-provenance/15.01-instrument-identity-provenance-index|Instrument Identity & Provenance — Index]] — ideation — spec-vault
+- [[specs/ideation/15-gear-registry-ownership/15.01-instrument-identity-provenance/15.01.01-gear-record-serial-identity|Feature: Gear Record & Serial Identity]] — ideation — spec-vault
+- [[specs/ideation/15-gear-registry-ownership/15.01-instrument-identity-provenance/15.01.02-ownership-claim-verification|Feature: Ownership Claim & Verification]] — ideation — spec-vault
+- [[specs/ideation/15-gear-registry-ownership/15.01-instrument-identity-provenance/15.01.03-ownership-transfer-handshake|Feature: Ownership Transfer Handshake]] — ideation — spec-vault
+- [[specs/ideation/15-gear-registry-ownership/15.01-instrument-identity-provenance/15.01.04-provenance-chain-view|Feature: Provenance Chain View]] — ideation — spec-vault
+- [[specs/ideation/15-gear-registry-ownership/15.01-instrument-identity-provenance/15.01.05-non-serialized-contested-identity|Feature: Non-Serialized & Contested Serial Identity]] — ideation — spec-vault
+- [[specs/ideation/15-gear-registry-ownership/15.01-instrument-identity-provenance/15.01.06-identity-continuity-modification|Feature: Identity Continuity Through Modification]] — ideation — spec-vault
+- [[specs/ideation/15-gear-registry-ownership/15.02-stolen-gear-registry-recovery/15.02-stolen-gear-registry-recovery-cx|Stolen Gear Registry & Recovery — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/15-gear-registry-ownership/15.02-stolen-gear-registry-recovery/15.02-stolen-gear-registry-recovery-index|Stolen Gear Registry & Recovery — Index]] — ideation — spec-vault
+- [[specs/ideation/15-gear-registry-ownership/15.02-stolen-gear-registry-recovery/15.02.01-theft-report-serial-flagging|Feature: Theft Report & Serial Flagging]] — ideation — spec-vault
+- [[specs/ideation/15-gear-registry-ownership/15.02-stolen-gear-registry-recovery/15.02.02-point-of-sale-serial-screening|Feature: Point-of-Sale Serial Screening]] — ideation — spec-vault
+- [[specs/ideation/15-gear-registry-ownership/15.02-stolen-gear-registry-recovery/15.02.03-sighting-reports-recovery-coordination|Feature: Sighting Reports & Recovery Coordination]] — ideation — spec-vault
+- [[specs/ideation/15-gear-registry-ownership/15.02-stolen-gear-registry-recovery/15.02.04-false-flag-dispute-lifecycle|Feature: False-Flag Dispute & Flag Lifecycle]] — ideation — spec-vault
+- [[specs/ideation/15-gear-registry-ownership/15.03-service-repair-modification-history|Feature: Service, Repair & Modification History]] — ideation — spec-vault
+- [[specs/ideation/15-gear-registry-ownership/15.04-gear-collection-visibility|Feature: Gear Collection & Visibility]] — ideation — spec-vault
+- [[specs/ideation/15-gear-registry-ownership/15.05-valuation-appraisal-insurance/15.05-valuation-appraisal-insurance-cx|Valuation, Appraisal & Insurance — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/15-gear-registry-ownership/15.05-valuation-appraisal-insurance/15.05-valuation-appraisal-insurance-index|Valuation, Appraisal & Insurance — Index]] — ideation — spec-vault
+- [[specs/ideation/15-gear-registry-ownership/15.05-valuation-appraisal-insurance/15.05.01-automated-valuation-comps|Feature: Automated Valuation from Marketplace Comps]] — ideation — spec-vault
+- [[specs/ideation/15-gear-registry-ownership/15.05-valuation-appraisal-insurance/15.05.02-appraisal-record|Feature: Appraisal Record]] — ideation — spec-vault
+- [[specs/ideation/15-gear-registry-ownership/15.05-valuation-appraisal-insurance/15.05.03-insurance-schedule-claim-pack|Feature: Insurance Schedule & Claim Pack]] — ideation — spec-vault
+- [[specs/ideation/15-gear-registry-ownership/15.06-rig-profile-compatibility/15.06-rig-profile-compatibility-cx|Rig Profile & Compatibility — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/15-gear-registry-ownership/15.06-rig-profile-compatibility/15.06-rig-profile-compatibility-index|Rig Profile & Compatibility — Index]] — ideation — spec-vault
+- [[specs/ideation/15-gear-registry-ownership/15.06-rig-profile-compatibility/15.06.01-rig-definition-signal-chain|Feature: Rig Definition & Signal Chain]] — ideation — spec-vault
+- [[specs/ideation/15-gear-registry-ownership/15.06-rig-profile-compatibility/15.06.02-compatibility-oracle|Feature: Compatibility Oracle]] — ideation — spec-vault
+- [[specs/ideation/15-gear-registry-ownership/15.06-rig-profile-compatibility/15.06.03-rig-spec-sheet-source-data|Feature: Rig Spec Sheet & Stage Plot Source Data]] — ideation — spec-vault
+- [[specs/ideation/15-gear-registry-ownership/15.07-studio-backline-asset-register/15.07-studio-backline-asset-register-cx|Studio & Backline Asset Register — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/15-gear-registry-ownership/15.07-studio-backline-asset-register/15.07-studio-backline-asset-register-index|Studio & Backline Asset Register — Index]] — ideation — spec-vault
+- [[specs/ideation/15-gear-registry-ownership/15.07-studio-backline-asset-register/15.07.01-org-owned-asset-register|Feature: Org-Owned Asset Register]] — ideation — spec-vault
+- [[specs/ideation/15-gear-registry-ownership/15.07-studio-backline-asset-register/15.07.02-asset-condition-availability-state|Feature: Asset Condition & Availability State]] — ideation — spec-vault
+- [[specs/ideation/15-gear-registry-ownership/15.07-studio-backline-asset-register/15.07.03-backline-list-publication|Feature: Backline List Publication]] — ideation — spec-vault
+- [[specs/ideation/15-gear-registry-ownership/15.08-custody-loans-consignment|Feature: Custody, Loans & Consignment]] — ideation — spec-vault
+- [[specs/ideation/15-gear-registry-ownership/15.09-gear-discography|Feature: Gear Discography]] — ideation — spec-vault
+- [[specs/ideation/15-gear-registry-ownership/15.10-cases-manifests-carnet-source-data|Feature: Cases, Manifests & Carnet Source Data]] — ideation — spec-vault
+- [[specs/ideation/15-gear-registry-ownership/gear-registry-ownership-cx|Gear Registry & Ownership — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/15-gear-registry-ownership/gear-registry-ownership-index|Gear Registry & Ownership — Index]] — ideation — spec-vault
+- [[specs/ideation/16-venues-studios-spaces/16.01-place-records-rooms/16.01-place-records-rooms-cx|Place Records & Rooms — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/16-venues-studios-spaces/16.01-place-records-rooms/16.01-place-records-rooms-index|Place Records & Rooms — Index]] — ideation — spec-vault
+- [[specs/ideation/16-venues-studios-spaces/16.01-place-records-rooms/16.01.01-place-record-type-taxonomy|Feature: Place Record & Type Taxonomy]] — ideation — spec-vault
+- [[specs/ideation/16-venues-studios-spaces/16.01-place-records-rooms/16.01.02-room-space-first-class-entity|Feature: Room / Space as First-Class Child Entity]] — ideation — spec-vault
+- [[specs/ideation/16-venues-studios-spaces/16.01-place-records-rooms/16.01.03-structured-photo-checklist-virtual-tours|Feature: Structured Photo Checklist & Virtual Tours]] — ideation — spec-vault
+- [[specs/ideation/16-venues-studios-spaces/16.01-place-records-rooms/16.01.04-accessibility-profile|Feature: Accessibility Profile (Audience & Performer)]] — ideation — spec-vault
+- [[specs/ideation/16-venues-studios-spaces/16.01-place-records-rooms/16.01.05-place-status-at-risk-signalling|Feature: Place Status & At-Risk Signalling]] — ideation — spec-vault
+- [[specs/ideation/16-venues-studios-spaces/16.01-place-records-rooms/16.01.06-licences-insurance-statutory-records|Feature: Licences, Insurance & Statutory Records]] — ideation — spec-vault
+- [[specs/ideation/16-venues-studios-spaces/16.01-place-records-rooms/16.01.07-industry-trades-facilities-directory|Feature: Industry Trades & Facilities Directory]] — ideation — spec-vault
+- [[specs/ideation/16-venues-studios-spaces/16.02-venue-technical-specification/16.02-venue-technical-specification-cx|Venue Technical Specification — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/16-venues-studios-spaces/16.02-venue-technical-specification/16.02-venue-technical-specification-index|Venue Technical Specification — Index]] — ideation — spec-vault
+- [[specs/ideation/16-venues-studios-spaces/16.02-venue-technical-specification/16.02.01-capacity-configuration-model|Feature: Capacity & Configuration Model]] — ideation — spec-vault
+- [[specs/ideation/16-venues-studios-spaces/16.02-venue-technical-specification/16.02.02-stage-pa-backline-spec|Feature: Stage, PA & Backline Spec]] — ideation — spec-vault
+- [[specs/ideation/16-venues-studios-spaces/16.02-venue-technical-specification/16.02.03-access-logistics-curfew-limiter|Feature: Access & Logistics (Load-In, Parking, Curfew, Sound Limiter)]] — ideation — spec-vault
+- [[specs/ideation/16-venues-studios-spaces/16.02-venue-technical-specification/16.02.04-hospitality-green-room-backstage|Feature: Hospitality, Green Room & Backstage]] — ideation — spec-vault
+- [[specs/ideation/16-venues-studios-spaces/16.02-venue-technical-specification/16.02.05-standing-deal-model-commercial-terms|Feature: Standing Deal Model & Commercial Terms]] — ideation — spec-vault
+- [[specs/ideation/16-venues-studios-spaces/16.02-venue-technical-specification/16.02.06-pro-blanket-licence-setlist-reporting|Feature: PRO Blanket Licence & Setlist Reporting Status]] — ideation — spec-vault
+- [[specs/ideation/16-venues-studios-spaces/16.03-studio-technical-specification/16.03-studio-technical-specification-cx|Studio Technical Specification — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/16-venues-studios-spaces/16.03-studio-technical-specification/16.03-studio-technical-specification-index|Studio Technical Specification — Index]] — ideation — spec-vault
+- [[specs/ideation/16-venues-studios-spaces/16.03-studio-technical-specification/16.03.01-studio-rooms-acoustics|Feature: Studio Rooms & Acoustics]] — ideation — spec-vault
+- [[specs/ideation/16-venues-studios-spaces/16.03-studio-technical-specification/16.03.02-signal-chain-mic-locker-inventory|Feature: Signal Chain, Mic Locker & Instrument Inventory]] — ideation — spec-vault
+- [[specs/ideation/16-venues-studios-spaces/16.03-studio-technical-specification/16.03.03-engineer-staffing-model|Feature: Engineer Staffing Model]] — ideation — spec-vault
+- [[specs/ideation/16-venues-studios-spaces/16.03-studio-technical-specification/16.03.04-session-archive-recall-policy|Feature: Session Archive & Recall Policy]] — ideation — spec-vault
+- [[specs/ideation/16-venues-studios-spaces/16.04-rehearsal-practice-space-specification|Feature: Rehearsal & Practice Space Specification]] — ideation — spec-vault
+- [[specs/ideation/16-venues-studios-spaces/16.05-curation-provenance-data-integrity/16.05-curation-provenance-data-integrity-cx|Curation, Provenance & Data Integrity — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/16-venues-studios-spaces/16.05-curation-provenance-data-integrity/16.05-curation-provenance-data-integrity-index|Curation, Provenance & Data Integrity — Index]] — ideation — spec-vault
+- [[specs/ideation/16-venues-studios-spaces/16.05-curation-provenance-data-integrity/16.05.01-place-data-seeding-ingestion|Feature: Place Data Seeding & Ingestion]] — ideation — spec-vault
+- [[specs/ideation/16-venues-studios-spaces/16.05-curation-provenance-data-integrity/16.05.02-claim-ownership-verification|Feature: Claim & Ownership Verification]] — ideation — spec-vault
+- [[specs/ideation/16-venues-studios-spaces/16.05-curation-provenance-data-integrity/16.05.03-suggested-edits-field-provenance|Feature: Suggested Edits & Field-Level Provenance]] — ideation — spec-vault
+- [[specs/ideation/16-venues-studios-spaces/16.05-curation-provenance-data-integrity/16.05.04-owner-vs-community-conflict-resolution|Feature: Owner-vs-Community Conflict Resolution]] — ideation — spec-vault
+- [[specs/ideation/16-venues-studios-spaces/16.05-curation-provenance-data-integrity/16.05.05-verification-decay-freshness-scoring|Feature: Verification Decay & Freshness Scoring]] — ideation — spec-vault
+- [[specs/ideation/16-venues-studios-spaces/16.05-curation-provenance-data-integrity/16.05.06-post-gig-session-data-harvesting|Feature: Post-Gig / Post-Session Data Harvesting]] — ideation — spec-vault
+- [[specs/ideation/16-venues-studios-spaces/16.05-curation-provenance-data-integrity/16.05.07-duplicate-detection-merge|Feature: Duplicate Detection & Merge]] — ideation — spec-vault
+- [[specs/ideation/16-venues-studios-spaces/16.06-space-booking-reservations/16.06-space-booking-reservations-cx|Space Booking & Reservations — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/16-venues-studios-spaces/16.06-space-booking-reservations/16.06-space-booking-reservations-index|Space Booking & Reservations — Index]] — ideation — spec-vault
+- [[specs/ideation/16-venues-studios-spaces/16.06-space-booking-reservations/16.06.01-availability-calendar-holds|Feature: Availability Calendar & Holds]] — ideation — spec-vault
+- [[specs/ideation/16-venues-studios-spaces/16.06-space-booking-reservations/16.06.02-external-calendar-sync|Feature: External Calendar Sync]] — ideation — spec-vault
+- [[specs/ideation/16-venues-studios-spaces/16.06-space-booking-reservations/16.06.03-reservation-lifecycle|Feature: Reservation Lifecycle]] — ideation — spec-vault
+- [[specs/ideation/16-venues-studios-spaces/16.06-space-booking-reservations/16.06.04-waitlist-backfill|Feature: Waitlist & Backfill]] — ideation — spec-vault
+- [[specs/ideation/16-venues-studios-spaces/16.06-space-booking-reservations/16.06.05-compound-multi-resource-booking|Feature: Compound / Multi-Resource Booking]] — ideation — spec-vault
+- [[specs/ideation/16-venues-studios-spaces/16.06-space-booking-reservations/16.06.06-booking-posture-enquiry-rfq-routing|Feature: Booking Posture & Enquiry/RFQ Routing]] — ideation — spec-vault
+- [[specs/ideation/16-venues-studios-spaces/16.06-space-booking-reservations/16.06.07-rate-cards-inclusions-extras|Feature: Rate Cards, Inclusions & Extras]] — ideation — spec-vault
+- [[specs/ideation/16-venues-studios-spaces/16.06-space-booking-reservations/16.06.08-off-peak-seasonal-dynamic-pricing|Feature: Off-Peak, Seasonal & Dynamic Pricing]] — ideation — spec-vault
+- [[specs/ideation/16-venues-studios-spaces/16.06-space-booking-reservations/16.06.09-recurring-bookings-lockout-tenancy|Feature: Recurring Bookings & Lockout Tenancy]] — ideation — spec-vault
+- [[specs/ideation/16-venues-studios-spaces/16.07-spec-conformance-check-rider-room|Feature: Spec Conformance Check (Rider ↔ Room)]] — ideation — spec-vault
+- [[specs/ideation/16-venues-studios-spaces/venues-studios-spaces-cx|Venues, Studios & Spaces — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/16-venues-studios-spaces/venues-studios-spaces-index|Venues, Studios & Spaces — Index]] — ideation — spec-vault
+- [[specs/ideation/17-live-booking-settlement/17.01-availability-holds-confirmation/17.01-availability-holds-confirmation-cx|Availability, Holds & Confirmation — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/17-live-booking-settlement/17.01-availability-holds-confirmation/17.01-availability-holds-confirmation-index|Availability, Holds & Confirmation — Index]] — ideation — spec-vault
+- [[specs/ideation/17-live-booking-settlement/17.01-availability-holds-confirmation/17.01.01-availability-calendar-avails|Feature: Availability Calendar & Avails Publishing]] — ideation — spec-vault
+- [[specs/ideation/17-live-booking-settlement/17.01-availability-holds-confirmation/17.01.02-hold-ladder-priority|Feature: Hold Ladder & Priority Positions]] — ideation — spec-vault
+- [[specs/ideation/17-live-booking-settlement/17.01-availability-holds-confirmation/17.01.03-challenge-release-expiry|Feature: Challenge, Release & Expiry]] — ideation — spec-vault
+- [[specs/ideation/17-live-booking-settlement/17.01-availability-holds-confirmation/17.01.04-confirmation-announce-gate|Feature: Confirmation & Announce Readiness Gate]] — ideation — spec-vault
+- [[specs/ideation/17-live-booking-settlement/17.02-offers-negotiation/17.02-offers-negotiation-cx|Offers & Negotiation — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/17-live-booking-settlement/17.02-offers-negotiation/17.02-offers-negotiation-index|Offers & Negotiation — Index]] — ideation — spec-vault
+- [[specs/ideation/17-live-booking-settlement/17.02-offers-negotiation/17.02.01-offer-sheet-composition|Feature: Offer Sheet Composition]] — ideation — spec-vault
+- [[specs/ideation/17-live-booking-settlement/17.02-offers-negotiation/17.02.02-counteroffer-thread-versions|Feature: Counteroffer Thread & Version History]] — ideation — spec-vault
+- [[specs/ideation/17-live-booking-settlement/17.02-offers-negotiation/17.02.03-offer-approval-chain|Feature: Offer Approval Chain & Entity Authority]] — ideation — spec-vault
+- [[specs/ideation/17-live-booking-settlement/17.02-offers-negotiation/17.02.04-offer-expiry-withdrawal|Feature: Offer Expiry & Withdrawal]] — ideation — spec-vault
+- [[specs/ideation/17-live-booking-settlement/17.03-deal-structures-economics/17.03-deal-structures-economics-cx|Deal Structures & Economics — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/17-live-booking-settlement/17.03-deal-structures-economics/17.03-deal-structures-economics-index|Deal Structures & Economics — Index]] — ideation — spec-vault
+- [[specs/ideation/17-live-booking-settlement/17.03-deal-structures-economics/17.03.01-deal-term-grammar-types|Feature: Deal Term Grammar & Deal Types]] — ideation — spec-vault
+- [[specs/ideation/17-live-booking-settlement/17.03-deal-structures-economics/17.03.02-breakeven-whatif-modelling|Feature: Breakeven & What-If Modelling]] — ideation — spec-vault
+- [[specs/ideation/17-live-booking-settlement/17.03-deal-structures-economics/17.03.03-multishow-cross-collateralization|Feature: Multi-Show Deals & Cross-Collateralization]] — ideation — spec-vault
+- [[specs/ideation/17-live-booking-settlement/17.04-performance-contracts-deal-memos|Feature: Performance Contracts & Deal Memos]] — ideation — spec-vault
+- [[specs/ideation/17-live-booking-settlement/17.05-deposits-balances-cancellation/17.05-deposits-balances-cancellation-cx|Deposits, Balances & Cancellation — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/17-live-booking-settlement/17.05-deposits-balances-cancellation/17.05-deposits-balances-cancellation-index|Deposits, Balances & Cancellation — Index]] — ideation — spec-vault
+- [[specs/ideation/17-live-booking-settlement/17.05-deposits-balances-cancellation/17.05.01-deposit-invoice-collection|Feature: Deposit Invoice & Collection]] — ideation — spec-vault
+- [[specs/ideation/17-live-booking-settlement/17.05-deposits-balances-cancellation/17.05.02-balance-schedule-reminders|Feature: Balance Schedule & Payment Reminders]] — ideation — spec-vault
+- [[specs/ideation/17-live-booking-settlement/17.05-deposits-balances-cancellation/17.05.03-cancellation-tiers-forfeit|Feature: Cancellation Tiers & Forfeit Computation]] — ideation — spec-vault
+- [[specs/ideation/17-live-booking-settlement/17.05-deposits-balances-cancellation/17.05.04-force-majeure|Feature: Force Majeure Declaration & Resolution]] — ideation — spec-vault
+- [[specs/ideation/17-live-booking-settlement/17.06-radius-clause-exclusivity|Feature: Radius Clause & Exclusivity Tracking]] — ideation — spec-vault
+- [[specs/ideation/17-live-booking-settlement/17.07-booking-enquiry-inbox-rfq|Feature: Booking Enquiry Inbox & RFQ]] — ideation — spec-vault
+- [[specs/ideation/17-live-booking-settlement/17.08-agency-representation-commission/17.08-agency-representation-commission-cx|Agency Representation & Commission — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/17-live-booking-settlement/17.08-agency-representation-commission/17.08-agency-representation-commission-index|Agency Representation & Commission — Index]] — ideation — spec-vault
+- [[specs/ideation/17-live-booking-settlement/17.08-agency-representation-commission/17.08.01-representation-commission-terms|Feature: Representation & Commission Terms]] — ideation — spec-vault
+- [[specs/ideation/17-live-booking-settlement/17.08-agency-representation-commission/17.08.02-commission-accrual-deduction|Feature: Commission Accrual & Deduction at Settlement]] — ideation — spec-vault
+- [[specs/ideation/17-live-booking-settlement/17.08-agency-representation-commission/17.08.03-roster-booking-pipeline|Feature: Roster Booking Pipeline]] — ideation — spec-vault
+- [[specs/ideation/17-live-booking-settlement/17.09-settlement-reconciliation/17.09-settlement-reconciliation-cx|Settlement & Reconciliation — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/17-live-booking-settlement/17.09-settlement-reconciliation/17.09-settlement-reconciliation-index|Settlement & Reconciliation — Index]] — ideation — spec-vault
+- [[specs/ideation/17-live-booking-settlement/17.09-settlement-reconciliation/17.09.01-settlement-sheet-computation|Feature: Settlement Sheet Computation]] — ideation — spec-vault
+- [[specs/ideation/17-live-booking-settlement/17.09-settlement-reconciliation/17.09.02-box-office-count-reconciliation|Feature: Box Office Count Reconciliation]] — ideation — spec-vault
+- [[specs/ideation/17-live-booking-settlement/17.09-settlement-reconciliation/17.09.03-show-expense-receipt-capture|Feature: Show Expense & Receipt Capture]] — ideation — spec-vault
+- [[specs/ideation/17-live-booking-settlement/17.09-settlement-reconciliation/17.09.04-merch-settlement-venue-cut|Feature: Merch Settlement & Venue Merch Cut]] — ideation — spec-vault
+- [[specs/ideation/17-live-booking-settlement/17.09-settlement-reconciliation/17.09.05-settlement-signoff-variance|Feature: Settlement Signoff & Variance Explanation]] — ideation — spec-vault
+- [[specs/ideation/17-live-booking-settlement/17.09-settlement-reconciliation/17.09.06-settlement-audit-trail-disputes|Feature: Settlement Audit Trail & Line Disputes]] — ideation — spec-vault
+- [[specs/ideation/17-live-booking-settlement/17.09-settlement-reconciliation/17.09.07-settlement-statement-export|Feature: Settlement Statement & Export]] — ideation — spec-vault
+- [[specs/ideation/17-live-booking-settlement/17.10-live-income-payout-tax/17.10-live-income-payout-tax-cx|Live Income Payout & Tax — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/17-live-booking-settlement/17.10-live-income-payout-tax/17.10-live-income-payout-tax-index|Live Income Payout & Tax — Index]] — ideation — spec-vault
+- [[specs/ideation/17-live-booking-settlement/17.10-live-income-payout-tax/17.10.01-live-income-split-definition|Feature: Live Income Split Definition]] — ideation — spec-vault
+- [[specs/ideation/17-live-booking-settlement/17.10-live-income-payout-tax/17.10.02-disbursement-execution|Feature: Disbursement Execution & Payment Status]] — ideation — spec-vault
+- [[specs/ideation/17-live-booking-settlement/17.10-live-income-payout-tax/17.10.03-withholding-tax-vat|Feature: Withholding Tax & VAT on Live Income]] — ideation — spec-vault
+- [[specs/ideation/17-live-booking-settlement/17.11-draw-history-market-intelligence/17.11-draw-history-market-intelligence-cx|Draw History & Market Intelligence — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/17-live-booking-settlement/17.11-draw-history-market-intelligence/17.11-draw-history-market-intelligence-index|Draw History & Market Intelligence — Index]] — ideation — spec-vault
+- [[specs/ideation/17-live-booking-settlement/17.11-draw-history-market-intelligence/17.11.01-verified-draw-record|Feature: Verified Draw Record]] — ideation — spec-vault
+- [[specs/ideation/17-live-booking-settlement/17.11-draw-history-market-intelligence/17.11.02-market-comparables-benchmarks|Feature: Market Comparables & Benchmarks]] — ideation — spec-vault
+- [[specs/ideation/17-live-booking-settlement/17.11-draw-history-market-intelligence/17.11.03-offer-guidance-guarantee-sizing|Feature: Offer Guidance & Guarantee Sizing]] — ideation — spec-vault
+- [[specs/ideation/17-live-booking-settlement/17.12-counterparty-relationship-payment-reliability|Feature: Counterparty Relationship & Payment Reliability]] — ideation — spec-vault
+- [[specs/ideation/17-live-booking-settlement/17.13-fan-demand-signals|Feature: Fan Demand Signals & Routing Requests]] — ideation — spec-vault
+- [[specs/ideation/17-live-booking-settlement/17.14-bill-construction-support-slots|Feature: Bill Construction & Support Slot Offers]] — ideation — spec-vault
+- [[specs/ideation/17-live-booking-settlement/live-booking-settlement-cx|Live Booking & Settlement — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/17-live-booking-settlement/live-booking-settlement-index|Live Booking & Settlement — Index]] — ideation — spec-vault
+- [[specs/ideation/18-show-production-touring/18.01-event-record-lifecycle|Feature: Event Record & Lifecycle States]] — ideation — spec-vault
+- [[specs/ideation/18-show-production-touring/18.02-bill-support-acts|Feature: Bill & Support Act Management]] — ideation — spec-vault
+- [[specs/ideation/18-show-production-touring/18.03-show-advancing/18.03-show-advancing-cx|Show Advancing — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/18-show-production-touring/18.03-show-advancing/18.03-show-advancing-index|Show Advancing — Index]] — ideation — spec-vault
+- [[specs/ideation/18-show-production-touring/18.03-show-advancing/18.03.01-advance-checklist|Feature: Advance Checklist & Two-Sided Completion Tracking]] — ideation — spec-vault
+- [[specs/ideation/18-show-production-touring/18.03-show-advancing/18.03.02-venue-capability-diff|Feature: Venue Capability Diff & Requirement Reconciliation]] — ideation — spec-vault
+- [[specs/ideation/18-show-production-touring/18.03-show-advancing/18.03.03-rider-redlines|Feature: Rider Redlines & Negotiated Exceptions]] — ideation — spec-vault
+- [[specs/ideation/18-show-production-touring/18.03-show-advancing/18.03.04-advance-sheet|Feature: Auto-Generated Advance Sheet]] — ideation — spec-vault
+- [[specs/ideation/18-show-production-touring/18.03-show-advancing/18.03.05-advance-freeze-change-control|Feature: Advance Freeze & Late-Change Control]] — ideation — spec-vault
+- [[specs/ideation/18-show-production-touring/18.04-riders/18.04-riders-cx|Riders — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/18-show-production-touring/18.04-riders/18.04-riders-index|Riders — Index]] — ideation — spec-vault
+- [[specs/ideation/18-show-production-touring/18.04-riders/18.04.01-technical-rider|Feature: Technical Rider]] — ideation — spec-vault
+- [[specs/ideation/18-show-production-touring/18.04-riders/18.04.02-hospitality-rider|Feature: Hospitality Rider]] — ideation — spec-vault
+- [[specs/ideation/18-show-production-touring/18.04-riders/18.04.03-access-rider|Feature: Access Rider & Performer Accessibility]] — ideation — spec-vault
+- [[specs/ideation/18-show-production-touring/18.04-riders/18.04.04-rider-templates-versioning|Feature: Rider Templates, Versioning & Per-Date Overrides]] — ideation — spec-vault
+- [[specs/ideation/18-show-production-touring/18.05-stage-plot-input-list/18.05-stage-plot-input-list-cx|Stage Plot & Input List — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/18-show-production-touring/18.05-stage-plot-input-list/18.05-stage-plot-input-list-index|Stage Plot & Input List — Index]] — ideation — spec-vault
+- [[specs/ideation/18-show-production-touring/18.05-stage-plot-input-list/18.05.01-stage-plot-builder|Feature: Stage Plot Builder]] — ideation — spec-vault
+- [[specs/ideation/18-show-production-touring/18.05-stage-plot-input-list/18.05.02-input-list-patch|Feature: Input List & Patch Sheet]] — ideation — spec-vault
+- [[specs/ideation/18-show-production-touring/18.05-stage-plot-input-list/18.05.03-monitor-iem-requirements|Feature: Monitor & IEM Requirements]] — ideation — spec-vault
+- [[specs/ideation/18-show-production-touring/18.06-setlist-show-files/18.06-setlist-show-files-cx|Setlist & Show Files — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/18-show-production-touring/18.06-setlist-show-files/18.06-setlist-show-files-index|Setlist & Show Files — Index]] — ideation — spec-vault
+- [[specs/ideation/18-show-production-touring/18.06-setlist-show-files/18.06.01-setlist-builder|Feature: Setlist Builder]] — ideation — spec-vault
+- [[specs/ideation/18-show-production-touring/18.06-setlist-show-files/18.06.02-stage-ready-output|Feature: Stage-Ready Setlist Output & Performer View]] — ideation — spec-vault
+- [[specs/ideation/18-show-production-touring/18.06-setlist-show-files/18.06.03-show-file-custody|Feature: Backing Tracks, Click, Timecode & Show File Custody]] — ideation — spec-vault
+- [[specs/ideation/18-show-production-touring/18.06-setlist-show-files/18.06.04-performed-setlist-capture|Feature: Performed Setlist Capture & Live Performance Log]] — ideation — spec-vault
+- [[specs/ideation/18-show-production-touring/18.07-show-day-schedule/18.07-show-day-schedule-cx|Show Day Schedule & Timing — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/18-show-production-touring/18.07-show-day-schedule/18.07-show-day-schedule-index|Show Day Schedule & Timing — Index]] — ideation — spec-vault
+- [[specs/ideation/18-show-production-touring/18.07-show-day-schedule/18.07.01-run-of-show|Feature: Run of Show & Day Schedule Builder]] — ideation — spec-vault
+- [[specs/ideation/18-show-production-touring/18.07-show-day-schedule/18.07.02-curfew-conflict-checking|Feature: Curfew, Sound Limit & Conflict Checking]] — ideation — spec-vault
+- [[specs/ideation/18-show-production-touring/18.07-show-day-schedule/18.07.03-live-slippage|Feature: Live Schedule Slippage & Real-Time Updates]] — ideation — spec-vault
+- [[specs/ideation/18-show-production-touring/18.08-crew-credentials/18.08-crew-credentials-cx|Crew, Call Times & Credentials — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/18-show-production-touring/18.08-crew-credentials/18.08-crew-credentials-index|Crew, Call Times & Credentials — Index]] — ideation — spec-vault
+- [[specs/ideation/18-show-production-touring/18.08-crew-credentials/18.08.01-crew-roster-call-times|Feature: Crew Roster, Roles & Call Times]] — ideation — spec-vault
+- [[specs/ideation/18-show-production-touring/18.08-crew-credentials/18.08.02-credentials-passes|Feature: Credentials, Passes & Access Levels]] — ideation — spec-vault
+- [[specs/ideation/18-show-production-touring/18.08-crew-credentials/18.08.03-local-crew-hire|Feature: Local Crew & Stagehand Hire]] — ideation — spec-vault
+- [[specs/ideation/18-show-production-touring/18.09-backline-gear-manifest/18.09-backline-gear-manifest-cx|Backline & Gear Manifest — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/18-show-production-touring/18.09-backline-gear-manifest/18.09-backline-gear-manifest-index|Backline & Gear Manifest — Index]] — ideation — spec-vault
+- [[specs/ideation/18-show-production-touring/18.09-backline-gear-manifest/18.09.01-gear-manifest|Feature: Backline & Gear Manifest]] — ideation — spec-vault
+- [[specs/ideation/18-show-production-touring/18.09-backline-gear-manifest/18.09.02-backline-sourcing|Feature: Backline Sourcing & Rental Requests]] — ideation — spec-vault
+- [[specs/ideation/18-show-production-touring/18.09-backline-gear-manifest/18.09.03-load-out-loss-damage|Feature: Load-Out Check & Gear Loss/Damage Log]] — ideation — spec-vault
+- [[specs/ideation/18-show-production-touring/18.10-day-sheet|Feature: Day Sheet Generation & Distribution]] — ideation — spec-vault
+- [[specs/ideation/18-show-production-touring/18.11-tour-container-routing/18.11-tour-container-routing-cx|Tour Container & Routing — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/18-show-production-touring/18.11-tour-container-routing/18.11-tour-container-routing-index|Tour Container & Routing — Index]] — ideation — spec-vault
+- [[specs/ideation/18-show-production-touring/18.11-tour-container-routing/18.11.01-tour-container|Feature: Tour Container & Date Sequencing]] — ideation — spec-vault
+- [[specs/ideation/18-show-production-touring/18.11-tour-container-routing/18.11.02-routing-feasibility|Feature: Routing Feasibility & Constraint Checking]] — ideation — spec-vault
+- [[specs/ideation/18-show-production-touring/18.11-tour-container-routing/18.11.03-itinerary-tour-book|Feature: Itinerary & Tour Book]] — ideation — spec-vault
+- [[specs/ideation/18-show-production-touring/18.12-travel-logistics/18.12-travel-logistics-cx|Travel, Accommodation & Ground — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/18-show-production-touring/18.12-travel-logistics/18.12-travel-logistics-index|Travel, Accommodation & Ground — Index]] — ideation — spec-vault
+- [[specs/ideation/18-show-production-touring/18.12-travel-logistics/18.12.01-travel-accommodation|Feature: Travel & Accommodation]] — ideation — spec-vault
+- [[specs/ideation/18-show-production-touring/18.12-travel-logistics/18.12.02-rooming-lists|Feature: Rooming Lists]] — ideation — spec-vault
+- [[specs/ideation/18-show-production-touring/18.12-travel-logistics/18.12.03-ground-transport-driver-hours|Feature: Ground Transport, Vehicles & Driver Hours]] — ideation — spec-vault
+- [[specs/ideation/18-show-production-touring/18.13-tour-finance/18.13-tour-finance-cx|Tour Finance — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/18-show-production-touring/18.13-tour-finance/18.13-tour-finance-index|Tour Finance — Index]] — ideation — spec-vault
+- [[specs/ideation/18-show-production-touring/18.13-tour-finance/18.13.01-per-diems-float|Feature: Per Diems & Tour Float]] — ideation — spec-vault
+- [[specs/ideation/18-show-production-touring/18.13-tour-finance/18.13.02-tour-budget-actual|Feature: Tour Budget vs Actual]] — ideation — spec-vault
+- [[specs/ideation/18-show-production-touring/18.13-tour-finance/18.13.03-expense-receipt-capture|Feature: Tour Expense & Receipt Capture]] — ideation — spec-vault
+- [[specs/ideation/18-show-production-touring/18.14-border-visas-carnets/18.14-border-visas-carnets-cx|Border, Visas & Carnets — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/18-show-production-touring/18.14-border-visas-carnets/18.14-border-visas-carnets-index|Border, Visas & Carnets — Index]] — ideation — spec-vault
+- [[specs/ideation/18-show-production-touring/18.14-border-visas-carnets/18.14.01-visas-work-permits|Feature: Immigration, Visas & Work Permits]] — ideation — spec-vault
+- [[specs/ideation/18-show-production-touring/18.14-border-visas-carnets/18.14.02-carnets-customs|Feature: Carnets & Gear Customs]] — ideation — spec-vault
+- [[specs/ideation/18-show-production-touring/18.14-border-visas-carnets/18.14.03-withholding-tax|Feature: Foreign Withholding Tax & Treaty Relief]] — ideation — spec-vault
+- [[specs/ideation/18-show-production-touring/18.15-tour-merch-inventory|Feature: Tour Merch Inventory & Per-Show Counts]] — ideation — spec-vault
+- [[specs/ideation/18-show-production-touring/18.16-show-safety-permits-insurance|Feature: Show Safety, Permits & Insurance Certificates]] — ideation — spec-vault
+- [[specs/ideation/18-show-production-touring/18.17-weather-contingency|Feature: Weather Monitoring & Contingency]] — ideation — spec-vault
+- [[specs/ideation/18-show-production-touring/18.18-post-show-report|Feature: Post-Show Report & Notes]] — ideation — spec-vault
+- [[specs/ideation/18-show-production-touring/18.19-rehearsal-management|Feature: Rehearsal & Production Rehearsal Management]] — ideation — spec-vault
+- [[specs/ideation/18-show-production-touring/18.20-green-touring-carbon|Feature: Green Touring & Carbon Reporting]] — ideation — spec-vault
+- [[specs/ideation/18-show-production-touring/show-production-touring-cx|Show Production & Touring — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/18-show-production-touring/show-production-touring-index|Show Production & Touring — Index]] — ideation — spec-vault
+- [[specs/ideation/19-ticketing-box-office/19.01-ticket-config-scaling-allocations/19.01-ticket-config-scaling-allocations-cx|Ticket Configuration, Scaling & Allocations — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/19-ticketing-box-office/19.01-ticket-config-scaling-allocations/19.01-ticket-config-scaling-allocations-index|Ticket Configuration, Scaling & Allocations — Index]] — ideation — spec-vault
+- [[specs/ideation/19-ticketing-box-office/19.01-ticket-config-scaling-allocations/19.01.01-ticket-types-price-scaling|Feature: Ticket Types & Price Scaling]] — ideation — spec-vault
+- [[specs/ideation/19-ticketing-box-office/19.01-ticket-config-scaling-allocations/19.01.02-capacity-manifest-allocations-holds|Feature: Capacity Manifest, Holds & Allocations]] — ideation — spec-vault
+- [[specs/ideation/19-ticketing-box-office/19.01-ticket-config-scaling-allocations/19.01.03-fee-structure-all-in-pricing|Feature: Fee Structure & All-In Price Display]] — ideation — spec-vault
+- [[specs/ideation/19-ticketing-box-office/19.01-ticket-config-scaling-allocations/19.01.04-seating-model-ga-reserved-seat-maps|Feature: Seating Model — GA, Reserved & Seat Maps]] — ideation — spec-vault
+- [[specs/ideation/19-ticketing-box-office/19.01-ticket-config-scaling-allocations/19.01.05-accessible-seating-companion-tickets|Feature: Accessible Seating & Companion Tickets]] — ideation — spec-vault
+- [[specs/ideation/19-ticketing-box-office/19.02-on-sale-announce-presale/19.02-on-sale-announce-presale-cx|On-Sale, Announce & Presale Access — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/19-ticketing-box-office/19.02-on-sale-announce-presale/19.02-on-sale-announce-presale-index|On-Sale, Announce & Presale Access — Index]] — ideation — spec-vault
+- [[specs/ideation/19-ticketing-box-office/19.02-on-sale-announce-presale/19.02.01-announce-on-sale-scheduling|Feature: Announce & On-Sale Scheduling]] — ideation — spec-vault
+- [[specs/ideation/19-ticketing-box-office/19.02-on-sale-announce-presale/19.02.02-presale-windows-tiered-access|Feature: Presale Windows & Tiered Access]] — ideation — spec-vault
+- [[specs/ideation/19-ticketing-box-office/19.02-on-sale-announce-presale/19.02.03-access-code-issuance-redemption|Feature: Access Code Issuance & Redemption]] — ideation — spec-vault
+- [[specs/ideation/19-ticketing-box-office/19.02-on-sale-announce-presale/19.02.04-queue-waiting-room-cart-hold|Feature: Queue, Waiting Room & Cart Hold]] — ideation — spec-vault
+- [[specs/ideation/19-ticketing-box-office/19.02-on-sale-announce-presale/19.02.05-sold-out-waitlist-demand-capture|Feature: Sold-Out Waitlist & Demand Capture]] — ideation — spec-vault
+- [[specs/ideation/19-ticketing-box-office/19.03-guest-list-comps/19.03-guest-list-comps-cx|Guest List & Comps — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/19-ticketing-box-office/19.03-guest-list-comps/19.03-guest-list-comps-index|Guest List & Comps — Index]] — ideation — spec-vault
+- [[specs/ideation/19-ticketing-box-office/19.03-guest-list-comps/19.03.01-guest-list-allocation-submission|Feature: Guest List Allocation & Submission]] — ideation — spec-vault
+- [[specs/ideation/19-ticketing-box-office/19.03-guest-list-comps/19.03.02-comp-issuance-manifest-impact|Feature: Comp Issuance & Manifest Impact]] — ideation — spec-vault
+- [[specs/ideation/19-ticketing-box-office/19.03-guest-list-comps/19.03.03-door-time-guest-list-changes|Feature: Door-Time Guest List Changes & Conflict Resolution]] — ideation — spec-vault
+- [[specs/ideation/19-ticketing-box-office/19.04-door-scanning-access-control/19.04-door-scanning-access-control-cx|Door Scanning & Access Control — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/19-ticketing-box-office/19.04-door-scanning-access-control/19.04-door-scanning-access-control-index|Door Scanning & Access Control — Index]] — ideation — spec-vault
+- [[specs/ideation/19-ticketing-box-office/19.04-door-scanning-access-control/19.04.01-ticket-scan-validation|Feature: Ticket Scan & Validation]] — ideation — spec-vault
+- [[specs/ideation/19-ticketing-box-office/19.04-door-scanning-access-control/19.04.02-offline-manifest-sync-reconciliation|Feature: Offline Manifest Sync & Reconciliation]] — ideation — spec-vault
+- [[specs/ideation/19-ticketing-box-office/19.04-door-scanning-access-control/19.04.03-multi-scanner-coordination-re-entry|Feature: Multi-Scanner Coordination & Re-Entry]] — ideation — spec-vault
+- [[specs/ideation/19-ticketing-box-office/19.04-door-scanning-access-control/19.04.04-door-age-id-verification|Feature: Door Age & ID Verification]] — ideation — spec-vault
+- [[specs/ideation/19-ticketing-box-office/19.05-box-office-counts-drops/19.05-box-office-counts-drops-cx|Box Office Counts, Drops & Day-of-Show — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/19-ticketing-box-office/19.05-box-office-counts-drops/19.05-box-office-counts-drops-index|Box Office Counts, Drops & Day-of-Show — Index]] — ideation — spec-vault
+- [[specs/ideation/19-ticketing-box-office/19.05-box-office-counts-drops/19.05.01-live-count-manifest-state|Feature: Live Count & Manifest State]] — ideation — spec-vault
+- [[specs/ideation/19-ticketing-box-office/19.05-box-office-counts-drops/19.05.02-drop-reports-counterparty-distribution|Feature: Drop Reports & Counterparty Distribution]] — ideation — spec-vault
+- [[specs/ideation/19-ticketing-box-office/19.05-box-office-counts-drops/19.05.03-sales-pacing-on-sale-health|Feature: Sales Pacing & On-Sale Health]] — ideation — spec-vault
+- [[specs/ideation/19-ticketing-box-office/19.05-box-office-counts-drops/19.05.04-walk-up-day-of-show-sales|Feature: Walk-Up & Day-of-Show Sales]] — ideation — spec-vault
+- [[specs/ideation/19-ticketing-box-office/19.05-box-office-counts-drops/19.05.05-box-office-close-certified-statement|Feature: Box Office Close & Certified Statement]] — ideation — spec-vault
+- [[specs/ideation/19-ticketing-box-office/19.06-refunds-cancellations-rescheduling/19.06-refunds-cancellations-rescheduling-cx|Refunds, Cancellations & Rescheduling — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/19-ticketing-box-office/19.06-refunds-cancellations-rescheduling/19.06-refunds-cancellations-rescheduling-index|Refunds, Cancellations & Rescheduling — Index]] — ideation — spec-vault
+- [[specs/ideation/19-ticketing-box-office/19.06-refunds-cancellations-rescheduling/19.06.01-individual-refunds-exchanges|Feature: Individual Refunds & Exchanges]] — ideation — spec-vault
+- [[specs/ideation/19-ticketing-box-office/19.06-refunds-cancellations-rescheduling/19.06.02-event-cancellation-mass-refund|Feature: Event Cancellation & Mass Refund Cascade]] — ideation — spec-vault
+- [[specs/ideation/19-ticketing-box-office/19.06-refunds-cancellations-rescheduling/19.06.03-reschedule-postponement-handling|Feature: Reschedule & Postponement Handling]] — ideation — spec-vault
+- [[specs/ideation/19-ticketing-box-office/19.07-external-ticketing-integration/19.07-external-ticketing-integration-cx|External Ticketing Integration & Count Reconciliation — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/19-ticketing-box-office/19.07-external-ticketing-integration/19.07-external-ticketing-integration-index|External Ticketing Integration & Count Reconciliation — Index]] — ideation — spec-vault
+- [[specs/ideation/19-ticketing-box-office/19.07-external-ticketing-integration/19.07.01-external-ticketing-connectors|Feature: External Ticketing Connectors & Onboarding]] — ideation — spec-vault
+- [[specs/ideation/19-ticketing-box-office/19.07-external-ticketing-integration/19.07.02-count-ingestion-manifest-mapping|Feature: Count Ingestion & Manifest Mapping]] — ideation — spec-vault
+- [[specs/ideation/19-ticketing-box-office/19.07-external-ticketing-integration/19.07.03-count-discrepancy-reconciliation|Feature: Count Discrepancy Detection & Reconciliation]] — ideation — spec-vault
+- [[specs/ideation/19-ticketing-box-office/19.07-external-ticketing-integration/19.07.04-manual-count-entry-attestation|Feature: Manual Count Entry & Attestation]] — ideation — spec-vault
+- [[specs/ideation/19-ticketing-box-office/19.08-vip-packages-meet-and-greet/19.08-vip-packages-meet-and-greet-cx|VIP Packages & Meet-and-Greet — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/19-ticketing-box-office/19.08-vip-packages-meet-and-greet/19.08-vip-packages-meet-and-greet-index|VIP Packages & Meet-and-Greet — Index]] — ideation — spec-vault
+- [[specs/ideation/19-ticketing-box-office/19.08-vip-packages-meet-and-greet/19.08.01-package-composition-inventory|Feature: Package Composition & Cross-Domain Inventory]] — ideation — spec-vault
+- [[specs/ideation/19-ticketing-box-office/19.08-vip-packages-meet-and-greet/19.08.02-meet-and-greet-scheduling|Feature: Meet-and-Greet Scheduling & Slots]] — ideation — spec-vault
+- [[specs/ideation/19-ticketing-box-office/19.08-vip-packages-meet-and-greet/19.08.03-vip-redemption-fulfilment|Feature: VIP Redemption & Fulfilment]] — ideation — spec-vault
+- [[specs/ideation/19-ticketing-box-office/19.09-ticketing-fraud-bot-resale-controls/19.09-ticketing-fraud-bot-resale-controls-cx|Ticketing Fraud, Bot & Resale Controls — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/19-ticketing-box-office/19.09-ticketing-fraud-bot-resale-controls/19.09-ticketing-fraud-bot-resale-controls-index|Ticketing Fraud, Bot & Resale Controls — Index]] — ideation — spec-vault
+- [[specs/ideation/19-ticketing-box-office/19.09-ticketing-fraud-bot-resale-controls/19.09.01-purchase-limits-bot-mitigation|Feature: Purchase Limits & Bot Mitigation]] — ideation — spec-vault
+- [[specs/ideation/19-ticketing-box-office/19.09-ticketing-fraud-bot-resale-controls/19.09.02-ticket-transfer-delivery-controls|Feature: Ticket Transfer & Delivery Controls]] — ideation — spec-vault
+- [[specs/ideation/19-ticketing-box-office/19.09-ticketing-fraud-bot-resale-controls/19.09.03-resale-price-caps-face-value-exchange|Feature: Resale, Price Caps & Face-Value Exchange]] — ideation — spec-vault
+- [[specs/ideation/19-ticketing-box-office/19.10-attendee-data-capture-consent|Feature: Attendee Data Capture & Event-Party Consent]] — ideation — spec-vault
+- [[specs/ideation/19-ticketing-box-office/19.11-rsvp-free-private-event-admission|Feature: RSVP & Free/Private Event Admission]] — ideation — spec-vault
+- [[specs/ideation/19-ticketing-box-office/19.12-ticket-delivery-fan-wallet|Feature: Ticket Delivery & Fan Ticket Wallet]] — ideation — spec-vault
+- [[specs/ideation/19-ticketing-box-office/ticketing-box-office-cx|Ticketing & Box Office — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/19-ticketing-box-office/ticketing-box-office-index|Ticketing & Box Office — Index]] — ideation — spec-vault
+- [[specs/ideation/20-fanbase-direct-to-fan/20.01-fan-graph-owned-audience/20.01-fan-graph-owned-audience-cx|Fan Graph & Owned Audience — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/20-fanbase-direct-to-fan/20.01-fan-graph-owned-audience/20.01-fan-graph-owned-audience-index|Fan Graph & Owned Audience — Index]] — ideation — spec-vault
+- [[specs/ideation/20-fanbase-direct-to-fan/20.01-fan-graph-owned-audience/20.01.01-unified-fan-record|Feature: Unified Fan Record & Identity Resolution]] — ideation — spec-vault
+- [[specs/ideation/20-fanbase-direct-to-fan/20.01-fan-graph-owned-audience/20.01.02-consent-legal-basis|Feature: Consent, Legal Basis & Proof-of-Consent]] — ideation — spec-vault
+- [[specs/ideation/20-fanbase-direct-to-fan/20.01-fan-graph-owned-audience/20.01.03-fan-preference-centre|Feature: Fan Preference Centre & Unsubscribe]] — ideation — spec-vault
+- [[specs/ideation/20-fanbase-direct-to-fan/20.01-fan-graph-owned-audience/20.01.04-fan-list-import-hygiene|Feature: Fan List Import & Hygiene]] — ideation — spec-vault
+- [[specs/ideation/20-fanbase-direct-to-fan/20.01-fan-graph-owned-audience/20.01.05-fan-list-ownership-transfer|Feature: Fan List Ownership, Band Splits & Roster Transfer]] — ideation — spec-vault
+- [[specs/ideation/20-fanbase-direct-to-fan/20.02-segmentation-superfan-intelligence/20.02-segmentation-superfan-intelligence-cx|Segmentation & Superfan Intelligence — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/20-fanbase-direct-to-fan/20.02-segmentation-superfan-intelligence/20.02-segmentation-superfan-intelligence-index|Segmentation & Superfan Intelligence — Index]] — ideation — spec-vault
+- [[specs/ideation/20-fanbase-direct-to-fan/20.02-segmentation-superfan-intelligence/20.02.01-segment-builder|Feature: Segment Builder & Saved Audiences]] — ideation — spec-vault
+- [[specs/ideation/20-fanbase-direct-to-fan/20.02-segmentation-superfan-intelligence/20.02.02-superfan-score|Feature: Superfan Score]] — ideation — spec-vault
+- [[specs/ideation/20-fanbase-direct-to-fan/20.02-segmentation-superfan-intelligence/20.02.03-perk-entitlements-presale-eligibility|Feature: Perk Entitlements & Presale Eligibility]] — ideation — spec-vault
+- [[specs/ideation/20-fanbase-direct-to-fan/20.03-broadcast-fan-messaging/20.03-broadcast-fan-messaging-cx|Broadcast & Fan Messaging — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/20-fanbase-direct-to-fan/20.03-broadcast-fan-messaging/20.03-broadcast-fan-messaging-index|Broadcast & Fan Messaging — Index]] — ideation — spec-vault
+- [[specs/ideation/20-fanbase-direct-to-fan/20.03-broadcast-fan-messaging/20.03.01-campaign-composer|Feature: Campaign Composer & Templates]] — ideation — spec-vault
+- [[specs/ideation/20-fanbase-direct-to-fan/20.03-broadcast-fan-messaging/20.03.02-channel-routing-bulk-delivery|Feature: Channel Routing & Bulk Delivery (Email / SMS / Push)]] — ideation — spec-vault
+- [[specs/ideation/20-fanbase-direct-to-fan/20.03-broadcast-fan-messaging/20.03.03-send-scheduling-throttling|Feature: Send Scheduling, Throttling & Timezone-Aware Delivery]] — ideation — spec-vault
+- [[specs/ideation/20-fanbase-direct-to-fan/20.03-broadcast-fan-messaging/20.03.04-deliverability-sender-reputation|Feature: Deliverability, Sender Reputation & Suppression]] — ideation — spec-vault
+- [[specs/ideation/20-fanbase-direct-to-fan/20.04-direct-to-fan-storefront/20.04-direct-to-fan-storefront-cx|Direct-to-Fan Storefront — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/20-fanbase-direct-to-fan/20.04-direct-to-fan-storefront/20.04-direct-to-fan-storefront-index|Direct-to-Fan Storefront — Index]] — ideation — spec-vault
+- [[specs/ideation/20-fanbase-direct-to-fan/20.04-direct-to-fan-storefront/20.04.01-storefront-product-catalog|Feature: Storefront & Product Catalog]] — ideation — spec-vault
+- [[specs/ideation/20-fanbase-direct-to-fan/20.04-direct-to-fan-storefront/20.04.02-merch-variants-print-on-demand|Feature: Merch Products, Variants & Print-on-Demand]] — ideation — spec-vault
+- [[specs/ideation/20-fanbase-direct-to-fan/20.04-direct-to-fan-storefront/20.04.03-digital-sales-name-your-price-bundles|Feature: Digital Music Sales, Name-Your-Price & Bundles]] — ideation — spec-vault
+- [[specs/ideation/20-fanbase-direct-to-fan/20.04-direct-to-fan-storefront/20.04.04-d2f-revenue-split-payout|Feature: D2F Revenue Split & Collaborator Payout]] — ideation — spec-vault
+- [[specs/ideation/20-fanbase-direct-to-fan/20.05-memberships-patronage-campaigns/20.05-memberships-patronage-campaigns-cx|Memberships, Patronage & Campaigns — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/20-fanbase-direct-to-fan/20.05-memberships-patronage-campaigns/20.05-memberships-patronage-campaigns-index|Memberships, Patronage & Campaigns — Index]] — ideation — spec-vault
+- [[specs/ideation/20-fanbase-direct-to-fan/20.05-memberships-patronage-campaigns/20.05.01-membership-tiers-benefits|Feature: Membership Tiers & Benefits]] — ideation — spec-vault
+- [[specs/ideation/20-fanbase-direct-to-fan/20.05-memberships-patronage-campaigns/20.05.02-exclusive-content-vault|Feature: Exclusive Content Vault & Entitlement Gating]] — ideation — spec-vault
+- [[specs/ideation/20-fanbase-direct-to-fan/20.05-memberships-patronage-campaigns/20.05.03-tipping-micro-patronage|Feature: Tipping & Micro-Patronage]] — ideation — spec-vault
+- [[specs/ideation/20-fanbase-direct-to-fan/20.05-memberships-patronage-campaigns/20.05.04-crowdfunding-preorder-campaigns|Feature: Crowdfunding & Pre-order Campaigns]] — ideation — spec-vault
+- [[specs/ideation/20-fanbase-direct-to-fan/20.05-memberships-patronage-campaigns/20.05.05-backer-funds-fulfilment|Feature: Backer Funds, Escrow & Reward Fulfilment]] — ideation — spec-vault
+- [[specs/ideation/20-fanbase-direct-to-fan/20.05-memberships-patronage-campaigns/20.05.06-virtual-fan-events|Feature: Virtual Fan Events (Livestreams & Listening Parties)]] — ideation — spec-vault
+- [[specs/ideation/20-fanbase-direct-to-fan/20.06-fan-experience-discovery/20.06-fan-experience-discovery-cx|Fan Experience & Discovery — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/20-fanbase-direct-to-fan/20.06-fan-experience-discovery/20.06-fan-experience-discovery-index|Fan Experience & Discovery — Index]] — ideation — spec-vault
+- [[specs/ideation/20-fanbase-direct-to-fan/20.06-fan-experience-discovery/20.06.01-artist-tracking-follow|Feature: Artist Tracking & Follow]] — ideation — spec-vault
+- [[specs/ideation/20-fanbase-direct-to-fan/20.06-fan-experience-discovery/20.06.02-gig-alerts-near-me|Feature: Gig Alerts & Near-Me Show Notifications]] — ideation — spec-vault
+- [[specs/ideation/20-fanbase-direct-to-fan/20.06-fan-experience-discovery/20.06.03-fan-library-collection|Feature: Fan Library & Purchase Collection]] — ideation — spec-vault
+- [[specs/ideation/20-fanbase-direct-to-fan/20.06-fan-experience-discovery/20.06.04-listening-history-import-bootstrap|Feature: Listening History Import & Follow Bootstrap]] — ideation — spec-vault
+- [[specs/ideation/20-fanbase-direct-to-fan/20.07-fan-demand-show-requests|Feature: Fan Demand & Show Requests]] — ideation — spec-vault
+- [[specs/ideation/20-fanbase-direct-to-fan/fanbase-direct-to-fan-cx|Fanbase & Direct-to-Fan — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/20-fanbase-direct-to-fan/fanbase-direct-to-fan-index|Fanbase & Direct-to-Fan — Index]] — ideation — spec-vault
+- [[specs/ideation/21-promotion-marketing/21.01-release-campaign-planner/21.01-release-campaign-planner-cx|Release Campaign Planner — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/21-promotion-marketing/21.01-release-campaign-planner/21.01-release-campaign-planner-index|Release Campaign Planner — Index]] — ideation — spec-vault
+- [[specs/ideation/21-promotion-marketing/21.01-release-campaign-planner/21.01.01-backward-planned-campaign-grid|Feature: Backward-Planned Campaign Grid]] — ideation — spec-vault
+- [[specs/ideation/21-promotion-marketing/21.01-release-campaign-planner/21.01.02-asset-readiness-gate|Feature: Asset Readiness Gate]] — ideation — spec-vault
+- [[specs/ideation/21-promotion-marketing/21.01-release-campaign-planner/21.01.03-content-calendar-beat-sheet|Feature: Content Calendar & Beat Sheet]] — ideation — spec-vault
+- [[specs/ideation/21-promotion-marketing/21.01-release-campaign-planner/21.01.04-date-change-cascade|Feature: Date-Change Cascade]] — ideation — spec-vault
+- [[specs/ideation/21-promotion-marketing/21.02-pitching-outreach/21.02-pitching-outreach-cx|Pitching & Outreach — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/21-promotion-marketing/21.02-pitching-outreach/21.02-pitching-outreach-index|Pitching & Outreach — Index]] — ideation — spec-vault
+- [[specs/ideation/21-promotion-marketing/21.02-pitching-outreach/21.02.01-dsp-editorial-pitch|Feature: DSP Editorial Pitch]] — ideation — spec-vault
+- [[specs/ideation/21-promotion-marketing/21.02-pitching-outreach/21.02.02-playlist-curator-pitching|Feature: Playlist & Curator Pitching]] — ideation — spec-vault
+- [[specs/ideation/21-promotion-marketing/21.02-pitching-outreach/21.02.03-press-blog-outreach|Feature: Press, Blog & Media Outreach]] — ideation — spec-vault
+- [[specs/ideation/21-promotion-marketing/21.02-pitching-outreach/21.02.04-radio-plugging|Feature: Radio Plugging & Add Dates]] — ideation — spec-vault
+- [[specs/ideation/21-promotion-marketing/21.02-pitching-outreach/21.02.05-embargo-premiere-exclusives|Feature: Embargo, Premiere & Exclusive Windows]] — ideation — spec-vault
+- [[specs/ideation/21-promotion-marketing/21.02-pitching-outreach/21.02.06-pitch-rate-limits-curator-protection|Feature: Pitch Rate Limits & Curator Inbox Protection]] — ideation — spec-vault
+- [[specs/ideation/21-promotion-marketing/21.03-pitch-targets-crm/21.03-pitch-targets-crm-cx|Pitch Targets & Relationship CRM — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/21-promotion-marketing/21.03-pitch-targets-crm/21.03-pitch-targets-crm-index|Pitch Targets & Relationship CRM — Index]] — ideation — spec-vault
+- [[specs/ideation/21-promotion-marketing/21.03-pitch-targets-crm/21.03.01-media-target-directory|Feature: Media & Pitch Target Directory]] — ideation — spec-vault
+- [[specs/ideation/21-promotion-marketing/21.03-pitch-targets-crm/21.03.02-private-contact-crm|Feature: Private Contact CRM & Relationship History]] — ideation — spec-vault
+- [[specs/ideation/21-promotion-marketing/21.03-pitch-targets-crm/21.03.03-pitch-tracking-response-log|Feature: Pitch Tracking & Response Log]] — ideation — spec-vault
+- [[specs/ideation/21-promotion-marketing/21.03-pitch-targets-crm/21.03.04-contact-ownership-portability|Feature: Contact Ownership & Portability]] — ideation — spec-vault
+- [[specs/ideation/21-promotion-marketing/21.04-smart-links-presave-attribution/21.04-smart-links-presave-attribution-cx|Smart Links, Pre-Save & Attribution — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/21-promotion-marketing/21.04-smart-links-presave-attribution/21.04-smart-links-presave-attribution-index|Smart Links, Pre-Save & Attribution — Index]] — ideation — spec-vault
+- [[specs/ideation/21-promotion-marketing/21.04-smart-links-presave-attribution/21.04.01-smart-link-builder|Feature: Smart Link Builder & DSP Routing]] — ideation — spec-vault
+- [[specs/ideation/21-promotion-marketing/21.04-smart-links-presave-attribution/21.04.02-presave-preadd-authorization|Feature: Pre-Save / Pre-Add Authorization]] — ideation — spec-vault
+- [[specs/ideation/21-promotion-marketing/21.04-smart-links-presave-attribution/21.04.03-campaign-attribution|Feature: Campaign Attribution]] — ideation — spec-vault
+- [[specs/ideation/21-promotion-marketing/21.04-smart-links-presave-attribution/21.04.04-link-lifecycle-retirement|Feature: Link Lifecycle & Retirement]] — ideation — spec-vault
+- [[specs/ideation/21-promotion-marketing/21.05-paid-promotion/21.05-paid-promotion-cx|Paid Promotion — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/21-promotion-marketing/21.05-paid-promotion/21.05-paid-promotion-index|Paid Promotion — Index]] — ideation — spec-vault
+- [[specs/ideation/21-promotion-marketing/21.05-paid-promotion/21.05.01-paid-ad-campaigns|Feature: Paid Ad Campaigns]] — ideation — spec-vault
+- [[specs/ideation/21-promotion-marketing/21.05-paid-promotion/21.05.02-creator-seeding|Feature: Creator & Influencer Seeding]] — ideation — spec-vault
+- [[specs/ideation/21-promotion-marketing/21.05-paid-promotion/21.05.03-payola-guardrail|Feature: Payola Guardrail & Paid-Consideration Policy]] — ideation — spec-vault
+- [[specs/ideation/21-promotion-marketing/21.06-social-publishing-cross-post|Feature: Social Publishing & Cross-Post]] — ideation — spec-vault
+- [[specs/ideation/21-promotion-marketing/21.07-coverage-clipping-log|Feature: Coverage & Clipping Log]] — ideation — spec-vault
+- [[specs/ideation/21-promotion-marketing/21.08-event-tour-marketing/21.08-event-tour-marketing-cx|Event & Tour Marketing — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/21-promotion-marketing/21.08-event-tour-marketing/21.08-event-tour-marketing-index|Event & Tour Marketing — Index]] — ideation — spec-vault
+- [[specs/ideation/21-promotion-marketing/21.08-event-tour-marketing/21.08.01-tour-announce-onsale|Feature: Tour Announce & On-Sale Campaign]] — ideation — spec-vault
+- [[specs/ideation/21-promotion-marketing/21.08-event-tour-marketing/21.08.02-geo-date-promotion-soft-seat|Feature: Geo-Targeted Date Promotion & Soft-Seat Response]] — ideation — spec-vault
+- [[specs/ideation/21-promotion-marketing/21.08-event-tour-marketing/21.08.03-ticket-sale-attribution|Feature: Ticket-Sale Attribution]] — ideation — spec-vault
+- [[specs/ideation/21-promotion-marketing/21.09-campaign-press-kit-epk|Feature: Campaign Press Kit (EPK) & Asset Pack]] — ideation — spec-vault
+- [[specs/ideation/21-promotion-marketing/promotion-marketing-cx|Promotion & Marketing — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/21-promotion-marketing/promotion-marketing-index|Promotion & Marketing — Index]] — ideation — spec-vault
+- [[specs/ideation/22-analytics-market-intelligence/22.01-source-connections-ingestion/22.01-source-connections-ingestion-cx|Source Connections & Ingestion — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/22-analytics-market-intelligence/22.01-source-connections-ingestion/22.01-source-connections-ingestion-index|Source Connections & Ingestion — Index]] — ideation — spec-vault
+- [[specs/ideation/22-analytics-market-intelligence/22.01-source-connections-ingestion/22.01.01-dsp-account-connection-sync|Feature: DSP Account Connection & Sync]] — ideation — spec-vault
+- [[specs/ideation/22-analytics-market-intelligence/22.01-source-connections-ingestion/22.01.02-social-account-connection-sync|Feature: Social Account Connection & Sync]] — ideation — spec-vault
+- [[specs/ideation/22-analytics-market-intelligence/22.01-source-connections-ingestion/22.01.03-ingestion-health-gaps-freshness|Feature: Ingestion Health, Gaps & Data Freshness]] — ideation — spec-vault
+- [[specs/ideation/22-analytics-market-intelligence/22.01-source-connections-ingestion/22.01.04-manual-file-based-metric-import|Feature: Manual & File-Based Metric Import]] — ideation — spec-vault
+- [[specs/ideation/22-analytics-market-intelligence/22.02-external-identity-catalog-matching/22.02-external-identity-catalog-matching-cx|External Identity & Catalog Matching — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/22-analytics-market-intelligence/22.02-external-identity-catalog-matching/22.02-external-identity-catalog-matching-index|External Identity & Catalog Matching — Index]] — ideation — spec-vault
+- [[specs/ideation/22-analytics-market-intelligence/22.02-external-identity-catalog-matching/22.02.01-external-artist-profile-matching-claiming|Feature: External Artist Profile Matching & Claiming]] — ideation — spec-vault
+- [[specs/ideation/22-analytics-market-intelligence/22.02-external-identity-catalog-matching/22.02.02-recording-release-catalog-matching|Feature: Recording & Release Catalog Matching]] — ideation — spec-vault
+- [[specs/ideation/22-analytics-market-intelligence/22.02-external-identity-catalog-matching/22.02.03-match-conflict-disambiguation-resolution|Feature: Match Conflict & Disambiguation Resolution]] — ideation — spec-vault
+- [[specs/ideation/22-analytics-market-intelligence/22.03-playlist-chart-tracking/22.03-playlist-chart-tracking-cx|Playlist & Chart Tracking — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/22-analytics-market-intelligence/22.03-playlist-chart-tracking/22.03-playlist-chart-tracking-index|Playlist & Chart Tracking — Index]] — ideation — spec-vault
+- [[specs/ideation/22-analytics-market-intelligence/22.03-playlist-chart-tracking/22.03.01-playlist-placement-tracking|Feature: Playlist Placement Tracking]] — ideation — spec-vault
+- [[specs/ideation/22-analytics-market-intelligence/22.03-playlist-chart-tracking/22.03.02-chart-position-monitoring|Feature: Chart Position Monitoring]] — ideation — spec-vault
+- [[specs/ideation/22-analytics-market-intelligence/22.03-playlist-chart-tracking/22.03.03-curator-playlist-intelligence|Feature: Curator & Playlist Intelligence]] — ideation — spec-vault
+- [[specs/ideation/22-analytics-market-intelligence/22.04-audience-geography-routing-insight/22.04-audience-geography-routing-insight-cx|Audience Geography & Tour Routing Insight — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/22-analytics-market-intelligence/22.04-audience-geography-routing-insight/22.04-audience-geography-routing-insight-index|Audience Geography & Tour Routing Insight — Index]] — ideation — spec-vault
+- [[specs/ideation/22-analytics-market-intelligence/22.04-audience-geography-routing-insight/22.04.01-audience-geography-map|Feature: Audience Geography Map]] — ideation — spec-vault
+- [[specs/ideation/22-analytics-market-intelligence/22.04-audience-geography-routing-insight/22.04.02-routing-market-opportunity-insight|Feature: Routing & Market Opportunity Insight]] — ideation — spec-vault
+- [[specs/ideation/22-analytics-market-intelligence/22.04-audience-geography-routing-insight/22.04.03-show-impact-attribution|Feature: Show Impact Attribution]] — ideation — spec-vault
+- [[specs/ideation/22-analytics-market-intelligence/22.05-cross-source-dashboard-reporting/22.05-cross-source-dashboard-reporting-cx|Cross-Source Dashboard & Reporting — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/22-analytics-market-intelligence/22.05-cross-source-dashboard-reporting/22.05-cross-source-dashboard-reporting-index|Cross-Source Dashboard & Reporting — Index]] — ideation — spec-vault
+- [[specs/ideation/22-analytics-market-intelligence/22.05-cross-source-dashboard-reporting/22.05.01-unified-performance-dashboard|Feature: Unified Performance Dashboard]] — ideation — spec-vault
+- [[specs/ideation/22-analytics-market-intelligence/22.05-cross-source-dashboard-reporting/22.05.02-alert-rules-scheduled-digests|Feature: Alert Rules & Scheduled Digests]] — ideation — spec-vault
+- [[specs/ideation/22-analytics-market-intelligence/22.05-cross-source-dashboard-reporting/22.05.03-report-sharing-export|Feature: Report Sharing & Export]] — ideation — spec-vault
+- [[specs/ideation/22-analytics-market-intelligence/22.05-cross-source-dashboard-reporting/22.05.04-peer-benchmarking-cohort-comparison|Feature: Peer Benchmarking & Cohort Comparison]] — ideation — spec-vault
+- [[specs/ideation/22-analytics-market-intelligence/22.06-streaming-fraud-detection/22.06-streaming-fraud-detection-cx|Streaming Fraud & Fake Engagement Detection — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/22-analytics-market-intelligence/22.06-streaming-fraud-detection/22.06-streaming-fraud-detection-index|Streaming Fraud & Fake Engagement Detection — Index]] — ideation — spec-vault
+- [[specs/ideation/22-analytics-market-intelligence/22.06-streaming-fraud-detection/22.06.01-artificial-streaming-anomaly-detection-evidence|Feature: Artificial-Streaming Anomaly Detection & Evidence]] — ideation — spec-vault
+- [[specs/ideation/22-analytics-market-intelligence/22.06-streaming-fraud-detection/22.06.02-promo-vendor-risk-scoring|Feature: Promo Vendor Risk Scoring]] — ideation — spec-vault
+- [[specs/ideation/22-analytics-market-intelligence/22.07-ar-scouting-watchlists/22.07-ar-scouting-watchlists-cx|A&R Scouting Signals & Watchlists — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/22-analytics-market-intelligence/22.07-ar-scouting-watchlists/22.07-ar-scouting-watchlists-index|A&R Scouting Signals & Watchlists — Index]] — ideation — spec-vault
+- [[specs/ideation/22-analytics-market-intelligence/22.07-ar-scouting-watchlists/22.07.01-artist-watchlists|Feature: Artist Watchlists]] — ideation — spec-vault
+- [[specs/ideation/22-analytics-market-intelligence/22.07-ar-scouting-watchlists/22.07.02-momentum-breakout-signals|Feature: Momentum & Breakout Signals]] — ideation — spec-vault
+- [[specs/ideation/22-analytics-market-intelligence/22.07-ar-scouting-watchlists/22.07.03-scouting-discovery-search|Feature: Scouting Discovery Search]] — ideation — spec-vault
+- [[specs/ideation/22-analytics-market-intelligence/22.07-ar-scouting-watchlists/22.07.04-scouted-artist-visibility-consent|Feature: Scouted-Artist Visibility & Consent]] — ideation — spec-vault
+- [[specs/ideation/22-analytics-market-intelligence/22.08-credit-linked-performance/22.08-credit-linked-performance-cx|Credit-Linked Performance — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/22-analytics-market-intelligence/22.08-credit-linked-performance/22.08-credit-linked-performance-index|Credit-Linked Performance — Index]] — ideation — spec-vault
+- [[specs/ideation/22-analytics-market-intelligence/22.08-credit-linked-performance/22.08.01-contribution-catalog-performance|Feature: Contribution Catalog Performance]] — ideation — spec-vault
+- [[specs/ideation/22-analytics-market-intelligence/22.08-credit-linked-performance/22.08.02-role-sliced-performance-attribution|Feature: Role-Sliced Performance Attribution]] — ideation — spec-vault
+- [[specs/ideation/22-analytics-market-intelligence/22.08-credit-linked-performance/22.08.03-verified-performance-proof-service-listings|Feature: Verified Performance Proof for Service Listings]] — ideation — spec-vault
+- [[specs/ideation/22-analytics-market-intelligence/analytics-market-intelligence-cx|Analytics & Market Intelligence — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/22-analytics-market-intelligence/analytics-market-intelligence-index|Analytics & Market Intelligence — Index]] — ideation — spec-vault
+- [[specs/ideation/23-career-finance-business/23.01-income-aggregation-financial-identity/23.01-income-aggregation-financial-identity-cx|Income Aggregation & Financial Identity — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/23-career-finance-business/23.01-income-aggregation-financial-identity/23.01-income-aggregation-financial-identity-index|Income Aggregation & Financial Identity — Index]] — ideation — spec-vault
+- [[specs/ideation/23-career-finance-business/23.01-income-aggregation-financial-identity/23.01.01-income-event-ledger|Feature: Income Event Ledger]] — ideation — spec-vault
+- [[specs/ideation/23-career-finance-business/23.01-income-aggregation-financial-identity/23.01.02-off-platform-income-import|Feature: Off-Platform Income Import]] — ideation — spec-vault
+- [[specs/ideation/23-career-finance-business/23.01-income-aggregation-financial-identity/23.01.03-multi-currency-fx|Feature: Multi-Currency Normalization & FX]] — ideation — spec-vault
+- [[specs/ideation/23-career-finance-business/23.01-income-aggregation-financial-identity/23.01.04-verified-income-statement|Feature: Verified Income Statement & Proof of Earnings]] — ideation — spec-vault
+- [[specs/ideation/23-career-finance-business/23.01-income-aggregation-financial-identity/23.01.05-income-to-work-linkage|Feature: Income-to-Work Linkage]] — ideation — spec-vault
+- [[specs/ideation/23-career-finance-business/23.02-expenses-tax-readiness/23.02-expenses-tax-readiness-cx|Expenses & Tax Readiness — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/23-career-finance-business/23.02-expenses-tax-readiness/23.02-expenses-tax-readiness-index|Expenses & Tax Readiness — Index]] — ideation — spec-vault
+- [[specs/ideation/23-career-finance-business/23.02-expenses-tax-readiness/23.02.01-expense-receipt-capture|Feature: Expense & Receipt Capture]] — ideation — spec-vault
+- [[specs/ideation/23-career-finance-business/23.02-expenses-tax-readiness/23.02.02-deduction-categorization-jurisdiction-rules|Feature: Deduction Categorization & Jurisdiction Rules]] — ideation — spec-vault
+- [[specs/ideation/23-career-finance-business/23.02-expenses-tax-readiness/23.02.03-tax-pack-accountant-handoff|Feature: Tax Pack Generation & Accountant Handoff]] — ideation — spec-vault
+- [[specs/ideation/23-career-finance-business/23.02-expenses-tax-readiness/23.02.04-cross-border-withholding-reclaim|Feature: Cross-Border Withholding & Treaty Reclaim]] — ideation — spec-vault
+- [[specs/ideation/23-career-finance-business/23.03-invoicing-receivables/23.03-invoicing-receivables-cx|Invoicing & Receivables — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/23-career-finance-business/23.03-invoicing-receivables/23.03-invoicing-receivables-index|Invoicing & Receivables — Index]] — ideation — spec-vault
+- [[specs/ideation/23-career-finance-business/23.03-invoicing-receivables/23.03.01-quote-estimate-builder|Feature: Quote & Estimate Builder]] — ideation — spec-vault
+- [[specs/ideation/23-career-finance-business/23.03-invoicing-receivables/23.03.02-invoice-issuance-compliance|Feature: Invoice Issuance & Compliance Fields]] — ideation — spec-vault
+- [[specs/ideation/23-career-finance-business/23.03-invoicing-receivables/23.03.03-payment-chasing-dunning-aging|Feature: Payment Chasing, Dunning & Receivables Aging]] — ideation — spec-vault
+- [[specs/ideation/23-career-finance-business/23.04-deal-contract-vault/23.04-deal-contract-vault-cx|Deal & Contract Vault — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/23-career-finance-business/23.04-deal-contract-vault/23.04-deal-contract-vault-index|Deal & Contract Vault — Index]] — ideation — spec-vault
+- [[specs/ideation/23-career-finance-business/23.04-deal-contract-vault/23.04.01-contract-vault-document-store|Feature: Contract Vault & Document Store]] — ideation — spec-vault
+- [[specs/ideation/23-career-finance-business/23.04-deal-contract-vault/23.04.02-key-term-extraction-deal-summary|Feature: Key Term Extraction & Deal Summary]] — ideation — spec-vault
+- [[specs/ideation/23-career-finance-business/23.04-deal-contract-vault/23.04.03-option-reversion-obligation-alerts|Feature: Option, Reversion & Obligation Alerts]] — ideation — spec-vault
+- [[specs/ideation/23-career-finance-business/23.04-deal-contract-vault/23.04.04-deal-to-rights-reconciliation|Feature: Deal-to-Rights Reconciliation]] — ideation — spec-vault
+- [[specs/ideation/23-career-finance-business/23.05-career-progression-benchmarking/23.05-career-progression-benchmarking-cx|Career Progression & Benchmarking — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/23-career-finance-business/23.05-career-progression-benchmarking/23.05-career-progression-benchmarking-index|Career Progression & Benchmarking — Index]] — ideation — spec-vault
+- [[specs/ideation/23-career-finance-business/23.05-career-progression-benchmarking/23.05.01-career-goals-roadmap-templates|Feature: Career Goals & Roadmap Templates]] — ideation — spec-vault
+- [[specs/ideation/23-career-finance-business/23.05-career-progression-benchmarking/23.05.02-auto-milestone-timeline|Feature: Auto-Milestone Timeline]] — ideation — spec-vault
+- [[specs/ideation/23-career-finance-business/23.05-career-progression-benchmarking/23.05.03-peer-cohort-benchmarking|Feature: Peer Cohort Benchmarking]] — ideation — spec-vault
+- [[specs/ideation/23-career-finance-business/23.06-advances-commission-recoupment/23.06-advances-commission-recoupment-cx|Advances, Commission & Recoupment — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/23-career-finance-business/23.06-advances-commission-recoupment/23.06-advances-commission-recoupment-index|Advances, Commission & Recoupment — Index]] — ideation — spec-vault
+- [[specs/ideation/23-career-finance-business/23.06-advances-commission-recoupment/23.06.01-advance-underwriting-offers|Feature: Advance Underwriting & Offers]] — ideation — spec-vault
+- [[specs/ideation/23-career-finance-business/23.06-advances-commission-recoupment/23.06.02-commission-representation-deductions|Feature: Commission & Representation Deductions]] — ideation — spec-vault
+- [[specs/ideation/23-career-finance-business/23.06-advances-commission-recoupment/23.06.03-recoupment-netting-ledger|Feature: Recoupment & Netting Ledger]] — ideation — spec-vault
+- [[specs/ideation/23-career-finance-business/23.06-advances-commission-recoupment/23.06.04-cashflow-smoothing-runway|Feature: Cashflow Smoothing & Runway Forecast]] — ideation — spec-vault
+- [[specs/ideation/23-career-finance-business/23.06-advances-commission-recoupment/23.06.05-catalogue-stake-sale-rights-finance|Feature: Catalogue Stake Sale & Rights Finance]] — ideation — spec-vault
+- [[specs/ideation/23-career-finance-business/23.07-budgeting-project-tour-pl/23.07-budgeting-project-tour-pl-cx|Budgeting & Project/Tour P&L — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/23-career-finance-business/23.07-budgeting-project-tour-pl/23.07-budgeting-project-tour-pl-index|Budgeting & Project/Tour P&L — Index]] — ideation — spec-vault
+- [[specs/ideation/23-career-finance-business/23.07-budgeting-project-tour-pl/23.07.01-budget-actuals-tracking|Feature: Budget & Actuals Tracking]] — ideation — spec-vault
+- [[specs/ideation/23-career-finance-business/23.07-budgeting-project-tour-pl/23.07.02-project-tour-pl|Feature: Project & Tour P&L]] — ideation — spec-vault
+- [[specs/ideation/23-career-finance-business/23.07-budgeting-project-tour-pl/23.07.03-band-treasury-member-distribution|Feature: Band Entity Treasury & Member Distribution]] — ideation — spec-vault
+- [[specs/ideation/23-career-finance-business/23.08-point-of-need-insurance|Feature: Point-of-Need Insurance]] — ideation — spec-vault
+- [[specs/ideation/23-career-finance-business/23.09-career-sustainability-signals|Feature: Career Sustainability Signals]] — ideation — spec-vault
+- [[specs/ideation/23-career-finance-business/career-finance-business-cx|Career, Finance & Business Management — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/23-career-finance-business/career-finance-business-index|Career, Finance & Business Management — Index]] — ideation — spec-vault
+- [[specs/ideation/24-trust-safety-disputes/24.01-reporting-moderation/24.01-reporting-moderation-cx|Reporting, Moderation & Notice-and-Action — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/24-trust-safety-disputes/24.01-reporting-moderation/24.01-reporting-moderation-index|Reporting, Moderation & Notice-and-Action — Index]] — ideation — spec-vault
+- [[specs/ideation/24-trust-safety-disputes/24.01-reporting-moderation/24.01.01-report-intake-notice-and-action|Feature: Report Intake & Notice-and-Action Flow]] — ideation — spec-vault
+- [[specs/ideation/24-trust-safety-disputes/24.01-reporting-moderation/24.01.02-automated-content-classification|Feature: Automated Content Classification & Proactive Detection]] — ideation — spec-vault
+- [[specs/ideation/24-trust-safety-disputes/24.01-reporting-moderation/24.01.03-moderation-queue-reviewer-ops|Feature: Moderation Queue Routing & Reviewer Operations]] — ideation — spec-vault
+- [[specs/ideation/24-trust-safety-disputes/24.01-reporting-moderation/24.01.04-trusted-flagger-priority-channel|Feature: Trusted Flagger & Rights-Holder Priority Channel]] — ideation — spec-vault
+- [[specs/ideation/24-trust-safety-disputes/24.01-reporting-moderation/24.01.05-messaging-safety-scam-filtering|Feature: Messaging Safety & Scam Filtering]] — ideation — spec-vault
+- [[specs/ideation/24-trust-safety-disputes/24.02-enforcement-appeals-policy/24.02-enforcement-appeals-policy-cx|Enforcement, Appeals & Policy — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/24-trust-safety-disputes/24.02-enforcement-appeals-policy/24.02-enforcement-appeals-policy-index|Enforcement, Appeals & Policy — Index]] — ideation — spec-vault
+- [[specs/ideation/24-trust-safety-disputes/24.02-enforcement-appeals-policy/24.02.01-enforcement-ladder-sanctions|Feature: Enforcement Ladder & Sanctions]] — ideation — spec-vault
+- [[specs/ideation/24-trust-safety-disputes/24.02-enforcement-appeals-policy/24.02.02-appeals-internal-complaints|Feature: Appeals & Internal Complaint Handling]] — ideation — spec-vault
+- [[specs/ideation/24-trust-safety-disputes/24.02-enforcement-appeals-policy/24.02.03-statements-of-reasons|Feature: Statements of Reasons]] — ideation — spec-vault
+- [[specs/ideation/24-trust-safety-disputes/24.02-enforcement-appeals-policy/24.02.04-policy-library-versioned-terms|Feature: Policy Library & Versioned Terms Acceptance]] — ideation — spec-vault
+- [[specs/ideation/24-trust-safety-disputes/24.02-enforcement-appeals-policy/24.02.05-prohibited-restricted-items-engine|Feature: Prohibited & Restricted Items Policy Engine]] — ideation — spec-vault
+- [[specs/ideation/24-trust-safety-disputes/24.02-enforcement-appeals-policy/24.02.06-transparency-reporting|Feature: Transparency Reporting]] — ideation — spec-vault
+- [[specs/ideation/24-trust-safety-disputes/24.03-fraud-risk-operations/24.03-fraud-risk-operations-cx|Fraud & Risk Operations — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/24-trust-safety-disputes/24.03-fraud-risk-operations/24.03-fraud-risk-operations-index|Fraud & Risk Operations — Index]] — ideation — spec-vault
+- [[specs/ideation/24-trust-safety-disputes/24.03-fraud-risk-operations/24.03.01-risk-scoring-rules-engine|Feature: Risk Scoring & Rules Engine]] — ideation — spec-vault
+- [[specs/ideation/24-trust-safety-disputes/24.03-fraud-risk-operations/24.03.02-ato-ban-evasion-ring-detection|Feature: Account Takeover, Ban Evasion & Fraud Ring Detection]] — ideation — spec-vault
+- [[specs/ideation/24-trust-safety-disputes/24.03-fraud-risk-operations/24.03.03-seller-buyer-fraud-return-abuse|Feature: Seller Fraud, Buyer Fraud & Return Abuse Controls]] — ideation — spec-vault
+- [[specs/ideation/24-trust-safety-disputes/24.03-fraud-risk-operations/24.03.04-triangulation-card-testing-defense|Feature: Triangulation & Card-Testing Defense]] — ideation — spec-vault
+- [[specs/ideation/24-trust-safety-disputes/24.03-fraud-risk-operations/24.03.05-sanctions-aml-screening|Feature: Sanctions, AML & High-Value Transaction Screening]] — ideation — spec-vault
+- [[specs/ideation/24-trust-safety-disputes/24.03-fraud-risk-operations/24.03.06-review-rating-integrity|Feature: Review & Rating Integrity]] — ideation — spec-vault
+- [[specs/ideation/24-trust-safety-disputes/24.04-transaction-disputes-protection/24.04-transaction-disputes-protection-cx|Transaction Disputes & Protection — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/24-trust-safety-disputes/24.04-transaction-disputes-protection/24.04-transaction-disputes-protection-index|Transaction Disputes & Protection — Index]] — ideation — spec-vault
+- [[specs/ideation/24-trust-safety-disputes/24.04-transaction-disputes-protection/24.04.01-claims-dispute-filing|Feature: Claims & Dispute Filing]] — ideation — spec-vault
+- [[specs/ideation/24-trust-safety-disputes/24.04-transaction-disputes-protection/24.04.02-mediation-resolution-center|Feature: Mediation & Resolution Center]] — ideation — spec-vault
+- [[specs/ideation/24-trust-safety-disputes/24.04-transaction-disputes-protection/24.04.03-buyer-seller-protection-programs|Feature: Buyer & Seller Protection Programs]] — ideation — spec-vault
+- [[specs/ideation/24-trust-safety-disputes/24.04-transaction-disputes-protection/24.04.04-chargeback-management-representment|Feature: Chargeback Management & Representment]] — ideation — spec-vault
+- [[specs/ideation/24-trust-safety-disputes/24.05-copyright-authenticity-enforcement/24.05-copyright-authenticity-enforcement-cx|Copyright & Authenticity Enforcement — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/24-trust-safety-disputes/24.05-copyright-authenticity-enforcement/24.05-copyright-authenticity-enforcement-index|Copyright & Authenticity Enforcement — Index]] — ideation — spec-vault
+- [[specs/ideation/24-trust-safety-disputes/24.05-copyright-authenticity-enforcement/24.05.01-dmca-notice-counter-notice-repeat-infringer|Feature: DMCA Notice, Counter-Notice & Repeat Infringer Policy]] — ideation — spec-vault
+- [[specs/ideation/24-trust-safety-disputes/24.05-copyright-authenticity-enforcement/24.05.02-audio-fingerprinting-content-matching|Feature: Audio Fingerprinting & Content Matching]] — ideation — spec-vault
+- [[specs/ideation/24-trust-safety-disputes/24.05-copyright-authenticity-enforcement/24.05.03-authenticity-counterfeit-brand-protection|Feature: Authenticity, Counterfeit & Brand/IP Protection]] — ideation — spec-vault
+- [[specs/ideation/24-trust-safety-disputes/24.05-copyright-authenticity-enforcement/24.05.04-pre-release-leak-detection-response|Feature: Pre-Release Leak Detection & Response]] — ideation — spec-vault
+- [[specs/ideation/24-trust-safety-disputes/24.06-personal-safety-threat-response/24.06-personal-safety-threat-response-cx|Personal Safety & Threat Response — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/24-trust-safety-disputes/24.06-personal-safety-threat-response/24.06-personal-safety-threat-response-index|Personal Safety & Threat Response — Index]] — ideation — spec-vault
+- [[specs/ideation/24-trust-safety-disputes/24.06-personal-safety-threat-response/24.06.01-harassment-stalking-doxxing|Feature: Harassment, Stalking & Doxxing Enforcement]] — ideation — spec-vault
+- [[specs/ideation/24-trust-safety-disputes/24.06-personal-safety-threat-response/24.06.02-meetup-safety-safe-exchange|Feature: Meetup Safety & Safe Exchange]] — ideation — spec-vault
+- [[specs/ideation/24-trust-safety-disputes/24.06-personal-safety-threat-response/24.06.03-crisis-welfare-escalation|Feature: Crisis & Welfare Escalation]] — ideation — spec-vault
+- [[specs/ideation/24-trust-safety-disputes/24.07-identity-abuse-ownership-disputes/24.07-identity-abuse-ownership-disputes-cx|Identity Abuse & Ownership Disputes — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/24-trust-safety-disputes/24.07-identity-abuse-ownership-disputes/24.07-identity-abuse-ownership-disputes-index|Identity Abuse & Ownership Disputes — Index]] — ideation — spec-vault
+- [[specs/ideation/24-trust-safety-disputes/24.07-identity-abuse-ownership-disputes/24.07.01-impersonation-fake-profile|Feature: Impersonation & Fake Profile Enforcement]] — ideation — spec-vault
+- [[specs/ideation/24-trust-safety-disputes/24.07-identity-abuse-ownership-disputes/24.07.02-entity-ownership-account-recovery-disputes|Feature: Entity Ownership & Account Recovery Disputes]] — ideation — spec-vault
+- [[specs/ideation/24-trust-safety-disputes/24.07-identity-abuse-ownership-disputes/24.07.03-deceased-incapacitated-succession|Feature: Deceased & Incapacitated Account Succession]] — ideation — spec-vault
+- [[specs/ideation/24-trust-safety-disputes/24.08-illegal-content-legal-process/24.08-illegal-content-legal-process-cx|Illegal Content & Legal Process — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/24-trust-safety-disputes/24.08-illegal-content-legal-process/24.08-illegal-content-legal-process-index|Illegal Content & Legal Process — Index]] — ideation — spec-vault
+- [[specs/ideation/24-trust-safety-disputes/24.08-illegal-content-legal-process/24.08.01-csam-detection-preservation-reporting|Feature: CSAM Detection, Preservation & Mandatory Reporting]] — ideation — spec-vault
+- [[specs/ideation/24-trust-safety-disputes/24.08-illegal-content-legal-process/24.08.02-tvec-removal|Feature: Terrorist & Violent Extremist Content Removal]] — ideation — spec-vault
+- [[specs/ideation/24-trust-safety-disputes/24.08-illegal-content-legal-process/24.08.03-law-enforcement-legal-process-portal|Feature: Law Enforcement & Legal Process Portal]] — ideation — spec-vault
+- [[specs/ideation/24-trust-safety-disputes/24.08-illegal-content-legal-process/24.08.04-safety-governance-risk-assessment|Feature: Safety Governance & Illegal-Harms Risk Assessment]] — ideation — spec-vault
+- [[specs/ideation/24-trust-safety-disputes/24.09-case-evidence-locker|Feature: Case Evidence Locker & Chain of Custody]] — ideation — spec-vault
+- [[specs/ideation/24-trust-safety-disputes/trust-safety-disputes-cx|Trust, Safety & Disputes — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/24-trust-safety-disputes/trust-safety-disputes-index|Trust, Safety & Disputes — Index]] — ideation — spec-vault
+- [[specs/ideation/domain-map-proposal|WeJammin — Proposed Domain Map]] — ideation — spec-vault
+- [[specs/ideation/ideation-cx|Global Cross-Cuts — WeJammin]] — ideation — spec-vault
+- [[specs/ideation/ideation-index|Ideation Index — WeJammin]] — ideation — spec-vault
+- [[specs/ideation/meta/competitive-landscape|Competitive Landscape — WeJammin]] — ideation — spec-vault
+- [[specs/ideation/meta/constraints|Project Constraints — WeJammin]] — ideation — spec-vault
+- [[specs/ideation/meta/cross-cut-emergent-capabilities|Cross-Cut Emergent Capabilities — Step 6 Synthesis]] — ideation — spec-vault
+- [[specs/ideation/meta/personas|User Personas — WeJammin]] — ideation — spec-vault
+- [[specs/ideation/meta/problem-statement|Problem Statement — WeJammin]] — ideation — spec-vault
+- [[specs/ideation/moscow-ledger|WeJammin — MoSCoW Ledger]] — ideation — spec-vault
+- [[specs/index|Specs Hub]] — spec — spec-vault
+- [[specs/vision|WeJammin — Vision]] — spec — spec-vault
 
 ## Structured Memory
 

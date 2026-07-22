@@ -91,3 +91,13 @@ for provenance.
 | Q-01 | Which "Why Now" signal is the real trigger — or is it situational rather than market-driven? | User | `/ideate-validate` |
 | Q-02 | Is the lock-in **earned** or **hostile**? If a user leaves, what do they take? (Data portability is a cross-cut — and a values decision.) | User | `/ideate-validate` |
 | Q-03 | If consolidation is what wins users, which single consolidation surface is the **beachhead**? All 24 domains cannot ship first. | User | MoSCoW, this shard |
+
+
+<!-- spec-graph: auto-generated -->
+## Related Specs
+
+### Constrained by
+- [[decisions.md#d-18|D-18]]
+- [[decisions.md#d-10|D-10]]
+- [[decisions.md#d-05|D-05]]
+- [[decisions.md#d-08|D-08]]

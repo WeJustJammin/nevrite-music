@@ -134,3 +134,22 @@ Session Attendance & Provenance**, 08.06 Pre-Flight, **08.07 Overdub Mode**, 08.
 | Q-05 | Is the ~25–30 ms ceiling from D-15's rationale a real constant? 08.01.02 DT-02 rejected it as instrument-dependent — a drummer/bassist lock is far tighter than a vocalist over a bed. This does not weaken D-15; it means the playable radius is a *set* of radii by instrument pair, which makes matching richer. But the thresholds have no source yet. | User + Agent | `/ideate-discover` Step 5 |
 | Q-06 | Two probable merges surfaced: (a) live "keep this" note (08.03.03) vs highlight flag (08.05.03) — same gesture from opposite ends, both files raised it independently; (b) monitoring profile (08.04.03) vs playback context (08.03.04) — possibly one entity. | Agent | `/ideate-discover` Step 5 |
 | Q-07 | Consent to recording: a jam room that silently records everyone is a surveillance product, but asking every time destroys the "byproduct of the session" property the thesis depends on. This tension is unresolved and it sits directly on the wedge. | User | `/create-prd-security` |
+
+
+<!-- spec-graph: auto-generated -->
+## Related Specs
+
+### Constrained by
+- [[decisions.md#d-01|D-01]]
+- [[decisions.md#d-09|D-09]]
+- [[decisions.md#d-18|D-18]]
+- [[decisions.md#d-06|D-06]]
+- [[decisions.md#d-15|D-15]]
+- [[decisions.md#d-13|D-13]]
+- [[decisions.md#d-16|D-16]]
+- [[decisions.md#d-02|D-02]]
+- [[decisions.md#d-03|D-03]]
+- [[decisions.md#d-04|D-04]]
+- [[decisions.md#d-05|D-05]]
+- [[decisions.md#d-17|D-17]]
+- [[decisions.md#d-07|D-07]]

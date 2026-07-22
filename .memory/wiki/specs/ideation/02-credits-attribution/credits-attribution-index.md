@@ -135,3 +135,21 @@ The verified graph of who did what on every session, work and recording — capt
 | Q-10 | **Source licensing for import** (`02.03` Q-01). MusicBrainz, Discogs, DDEX and PRO data have materially different terms; some may prohibit exactly what `02.03.01` proposes. A legal gate on a whole sub-domain. | User | `/create-prd` |
 | Q-11 | **Consent for shells** (`02.02.01` Q-02, `02.03.02` Q-02/Q-03). Roll call and import create public-ish records about people who never signed up. What is visible pre-claim, and can a person refuse a shell whose credits are other people's true assertions? | User | `/create-prd-security` |
 | Q-12 | Q-03 from `personas.md` (teacher/student split) has a sibling here: does the **Band as entity** hold credits directly, or only its members? Liner notes do both. | Agent | `/ideate-discover` Step 5 |
+
+
+<!-- spec-graph: auto-generated -->
+## Related Specs
+
+### Constrained by
+- [[decisions.md#d-02|D-02]]
+- [[decisions.md#d-03|D-03]]
+- [[decisions.md#d-05|D-05]]
+- [[decisions.md#d-04|D-04]]
+- [[decisions.md#d-06|D-06]]
+- [[decisions.md#d-07|D-07]]
+- [[decisions.md#d-01|D-01]]
+- [[decisions.md#d-16|D-16]]
+- [[decisions.md#d-08|D-08]]
+- [[decisions.md#d-09|D-09]]
+- [[decisions.md#d-10|D-10]]
+- [[decisions.md#d-18|D-18]]

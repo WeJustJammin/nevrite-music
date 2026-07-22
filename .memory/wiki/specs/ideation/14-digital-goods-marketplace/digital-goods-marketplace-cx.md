@@ -570,3 +570,23 @@
 | EU software-resale law (*UsedSoft v Oracle*, C-128/11) | `/create-prd` | 14.06.01 DT-02 — may override the registry's "vendor decides" model in a major territory. |
 | Withdrawal-waiver wording (Consumer Rights Directive Art. 16(m)); waiver retention under GDPR Art. 17(3)(e) | `/create-prd` / `/create-prd-security` | 14.09.01 — a legal artifact. The waiver survives a GDPR erasure request (defence of legal claims), minimised, bounded at 7 years; DSAR handling must know the record exists and why it stays. |
 | Chargeback / dispute-network integration (120-day card, 13-month SEPA windows) | `/create-prd` | CX-19 — the async, months-later reversal that arrives after payout is a payment-rail integration concern; the *policy* (propagation gates auto-refund) is product. |
+
+
+<!-- spec-graph: auto-generated -->
+## Related Specs
+
+### Constrained by
+- [[decisions.md#d-03|D-03]]
+- [[decisions.md#d-02|D-02]]
+- [[decisions.md#d-04|D-04]]
+- [[decisions.md#d-05|D-05]]
+- [[decisions.md#d-01|D-01]]
+- [[decisions.md#d-08|D-08]]
+- [[decisions.md#d-12|D-12]]
+- [[decisions.md#d-07|D-07]]
+- [[decisions.md#d-10|D-10]]
+- [[decisions.md#d-11|D-11]]
+- [[decisions.md#d-09|D-09]]
+- [[decisions.md#d-06|D-06]]
+- [[decisions.md#d-18|D-18]]
+- [[decisions.md#d-14|D-14]]

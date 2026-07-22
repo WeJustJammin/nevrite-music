@@ -252,3 +252,18 @@
 | R-04 | Any domain 08 child | Fan persona | Deliberate: **no child of domain 08 has a Fan surface.** Rejected at three points — fan listening rooms (08.03 D-04), fan-facing "musicians near you" (08.02.01 DT-03), live fan reactions (08.03 CX R-03). All belong to Community (03) and Fanbase (20). Per `meta/personas.md` the Fan has no professional stake; per D-13 they bring a moderation population with no business near unreleased masters. The uniform `❌ None` is a finding, not an oversight. |
 | R-05 | 08.06 Pre-Flight | 08.02 Playable Radius | Considered: pre-flight results as radius input. Rejected as a *pair* — pre-flight is pass/fail on a rig; the radius is a measured latency model. The shared input is the measurement (08.01.01), which already pairs with each; this edge would double-count it. |
 | R-06 | 08.07 Overdub | 08.04 Talkback | Considered (again, from the overdub side): route talkback into an attended overdub. Rejected — even when a Producer attends an overdub live (CX-09), the talkback→capture wall (CX-02) is unconditional; an attended overdub is still a take being protected, so the witness hears via monitoring, never via a path that can reach the record. |
+
+
+<!-- spec-graph: auto-generated -->
+## Related Specs
+
+### Constrained by
+- [[decisions.md#d-08|D-08]]
+- [[decisions.md#d-11|D-11]]
+- [[decisions.md#d-15|D-15]]
+- [[decisions.md#d-02|D-02]]
+- [[decisions.md#d-03|D-03]]
+- [[decisions.md#d-04|D-04]]
+- [[decisions.md#d-18|D-18]]
+- [[decisions.md#d-01|D-01]]
+- [[decisions.md#d-13|D-13]]

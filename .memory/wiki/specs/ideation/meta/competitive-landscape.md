@@ -81,3 +81,10 @@ to them downstream. Strong candidates: **DistroKid/TuneCore** (distribution), **
 | Q-01 | Which competitor is the one to BEAT first? For v1 (session spine + marketplaces), the direct rivals are **SoundBetter** (services) and **Reverb** (gear); the wedge competitor is **Sound Credit/Jaxsta**. | User | `/create-prd` |
 | Q-02 | Angle is confirmed as **both** (D-18): consolidation wins users, provenance keeps them. No further decision needed — recorded for traceability. | — | resolved |
 | Q-03 | Which of these become integration partners vs rivals in v1? (DistroKid, Songtrust, Stripe are partners, not v1 competitors anyway — they're phase-2 adjacent.) | User | `/create-prd-stack` |
+
+
+<!-- spec-graph: auto-generated -->
+## Related Specs
+
+### Constrained by
+- [[decisions.md#d-18|D-18]]

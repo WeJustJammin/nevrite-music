@@ -143,3 +143,20 @@ Getting finished music onto stores and streaming services — release building, 
 | Q-07 | **Physical formats** — vinyl, cassette, CD. Pressing, catalog numbers, retail barcodes, distribution to record stores. Genuinely part of "release" for independent artists and a completely different machine from DDEX. No directive points either way. | User | `/ideate-validate` |
 | Q-08 | How does **export work for multi-party provenance**? (12.08 Q-02.) A split sheet is not one user's data; GDPR erasure by one party damages three people's record. No precedent — no competitor holds facts worth this problem. | User | `/create-prd-security` |
 | Q-09 | Should **witnessed** and **imported** records carry a visible confidence tier across the product? (12.06.03 Q-03, 12.01.01 Q-02.) Honest, protects the record's value, and tells users their imported catalog is second-class — which is true and unwelcome. | User | `/ideate-validate` |
+
+
+<!-- spec-graph: auto-generated -->
+## Related Specs
+
+### Constrained by
+- [[decisions.md#d-10|D-10]]
+- [[decisions.md#d-04|D-04]]
+- [[decisions.md#d-02|D-02]]
+- [[decisions.md#d-05|D-05]]
+- [[decisions.md#d-03|D-03]]
+- [[decisions.md#d-01|D-01]]
+- [[decisions.md#d-16|D-16]]
+- [[decisions.md#d-06|D-06]]
+- [[decisions.md#d-07|D-07]]
+- [[decisions.md#d-18|D-18]]
+- [[decisions.md#d-11|D-11]]

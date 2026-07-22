@@ -133,4 +133,21 @@ The same gap arrives from a fourth direction as a **compliance** question: [13.0
 | Q-10 | Can a cart mix gear (13) and digital goods (14)? D-14 separated the domains at schema level and said nothing about the cart. | User | `/create-prd` |
 | Q-11 | Should CX-M04 (Atomic Payment ↔ Rights Transfer) be extended to serve gear-marketplace and gear-registry? The mechanism is structurally identical to the rights transfers it already covers. Likely a gap in the ratified cross-cut list. | Agent | `/ideate-validate` |
 | Q-12 | Should CX-M31 (Safeguarding & Minor Protection) be extended to serve gear-marketplace? 13.11 puts a possibly-minor Fan in a room with a stranger and cash; CX-M31 does not currently list this domain. | Agent | `/ideate-validate` |
-| Q-13 | How do bulk listings (13.03.04) satisfy per-unit model binding, grading, disclosure and unit media? Either the quality bar bends for bulk, or bulk fails the Operator persona it exists to serve. | User | `/ideate-discover` Step 5 |
+| Q-13 | ~~How do bulk listings satisfy per-unit model binding, grading, disclosure and unit media?~~ **Resolved by DQ-MG-01 (2026-07-21) — and the dilemma was false.** The four axes resolve independently, not as one scalar: **model binding does not relax** (`13.01.04` D-05/D-08, DT-11 — bulk raises the bar); **grading relaxes in a bounded, disclosed way** (`13.02.01` D-11 — seller-set per-upload default, `bulk_defaulted`, reduced comp weight, never an exemption); **disclosure does not relax and admits no substitute** (`13.02.02` D-08, DT-14 — templating prohibited, absence priced not gated); **unit media does not relax but its capture moment moves** to label print (`13.03.01` D-06, DT-09). The bar does not bend; the evidence moment moves; absence is disclosed, never gated. | Owner | ✅ `/ideate-validate`, 2026-07-21 |
+
+
+<!-- spec-graph: auto-generated -->
+## Related Specs
+
+### Constrained by
+- [[decisions.md#d-05|D-05]]
+- [[decisions.md#d-18|D-18]]
+- [[decisions.md#d-01|D-01]]
+- [[decisions.md#d-16|D-16]]
+- [[decisions.md#d-02|D-02]]
+- [[decisions.md#d-03|D-03]]
+- [[decisions.md#d-04|D-04]]
+- [[decisions.md#d-06|D-06]]
+- [[decisions.md#d-14|D-14]]
+- [[decisions.md#d-08|D-08]]
+- [[decisions.md#d-11|D-11]]

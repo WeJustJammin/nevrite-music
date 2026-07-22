@@ -394,3 +394,19 @@ passive render.
 | R-03 | 20.07 Fan Demand | 20.03 Broadcast | Considered: an artist who sees demand in Leeds would surely email Leeds. True — and that path is 20.07 → 20.02 (segment) → 20.03, already modelled as CX-10 + CX-03. A direct edge would let a demand cluster become an audience without passing through consent, which is the same error as R-01. |
 | R-04 | 20.01 Fan Graph | 20.05 Memberships | A member is a fan record — but every child of this domain writes fan observations; that is CX-04's generalisation, not a distinct pair. The membership-specific interaction runs through segmentation (CX-07, tenure as score signal) and the library (CX-14, lapse lock). No behaviour lives on the direct 20.01↔20.05 edge that is not already elsewhere. |
 | R-05 | 20.04 Storefront | 20.03 Broadcast | Announcing a product is a campaign — but it is a campaign like any other: 20.04 supplies the *object* to [20.03.01](./20.03-broadcast-fan-messaging/20.03.01-campaign-composer.md)'s object-first composer, exactly as 17 supplies shows and 12 supplies releases. That is the composer's general pre-fill mechanism ([20.03.01](./20.03-broadcast-fan-messaging/20.03.01-campaign-composer.md) DT-01), not a domain-20-specific pair. Modelling it would imply the store has a privileged broadcast path it does not have. |
+
+
+<!-- spec-graph: auto-generated -->
+## Related Specs
+
+### Constrained by
+- [[decisions.md#d-08|D-08]]
+- [[decisions.md#d-01|D-01]]
+- [[decisions.md#d-07|D-07]]
+- [[decisions.md#d-03|D-03]]
+- [[decisions.md#d-05|D-05]]
+- [[decisions.md#d-18|D-18]]
+- [[decisions.md#d-02|D-02]]
+- [[decisions.md#d-06|D-06]]
+- [[decisions.md#d-04|D-04]]
+- [[decisions.md#d-15|D-15]]

@@ -109,3 +109,20 @@ Buying and selling human music work — mixing, mastering, production, remote se
 | Q-10 | **Does a repair write to Gear Registry (15)?** Service history is what a registry is for, and 15's declared-value record would fix custody's weakest field (05.07.03 DT-01). The strongest argument for 15 found in this drilling arrived from a repair workflow. | Agent | `/create-prd-architecture` — coordinate with 15 |
 | Q-11 | Which candidate children are sub-domains vs features? | Agent | ✅ **RESOLVED** — see Children table and D-02 |
 | Q-12 | Are any candidate children actually cross-cuts? | Agent | ✅ **RESOLVED** — one (candidate 13, escrow → Payments cross-cut). See D-03 and [services-marketplace-cx.md](./services-marketplace-cx.md) |
+
+
+<!-- spec-graph: auto-generated -->
+## Related Specs
+
+### Constrained by
+- [[decisions.md#d-07|D-07]]
+- [[decisions.md#d-19|D-19]]
+- [[decisions.md#d-01|D-01]]
+- [[decisions.md#d-16|D-16]]
+- [[decisions.md#d-02|D-02]]
+- [[decisions.md#d-03|D-03]]
+- [[decisions.md#d-04|D-04]]
+- [[decisions.md#d-05|D-05]]
+- [[decisions.md#d-06|D-06]]
+- [[decisions.md#d-08|D-08]]
+- [[decisions.md#d-09|D-09]]

@@ -150,3 +150,22 @@ narrow and deliberate: a published *performed* setlist (18.06.04), public doors/
 | Q-08 | **One vocabulary or four?** The gear taxonomy and equivalence model is needed by 18.04.01 (rider), 16 (venue specs), 13 (marketplace) and 15 (registry). Same question asked four times — answer it once. | User | `/create-prd-architecture` |
 | Q-09 | **Data requirements this domain creates for others**: 16 must model performer-side accessibility (18.04.03 DT-03), console vs stage-box channels separately (18.05.02 D-03), and curfew as several distinct constraints (18.07.02 D-02). 15 must hold serials, values, weight and country of manufacture (18.14.02 D-02). These originate here and land elsewhere. | Agent | `/ideate-validate` |
 | Q-10 | Depth limit — no node exceeded 4 levels, and none felt like it wanted to. The 4-level soft limit was not stressed by this domain. | — | ✅ No action |
+
+
+<!-- spec-graph: auto-generated -->
+## Related Specs
+
+### Constrained by
+- [[decisions.md#d-08|D-08]]
+- [[decisions.md#d-18|D-18]]
+- [[decisions.md#d-19|D-19]]
+- [[decisions.md#d-02|D-02]]
+- [[decisions.md#d-01|D-01]]
+- [[decisions.md#d-16|D-16]]
+- [[decisions.md#d-03|D-03]]
+- [[decisions.md#d-04|D-04]]
+- [[decisions.md#d-05|D-05]]
+- [[decisions.md#d-06|D-06]]
+- [[decisions.md#d-07|D-07]]
+- [[decisions.md#d-09|D-09]]
+- [[decisions.md#d-10|D-10]]

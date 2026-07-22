@@ -131,3 +131,20 @@ The artist's relationship with their audience and its monetization — owned fan
 | Q-08 | **Does holding collaborator payouts and backer funds make WeJammin a regulated money transmitter?** [20.04.04](./20.04-direct-to-fan-storefront/20.04.04-d2f-revenue-split-payout.md) Q-05 + [20.05.05](./20.05-memberships-patronage-campaigns/20.05.05-backer-funds-fulfilment.md) Q-01/Q-04. `meta/constraints.md` flags KYC/AML `[PENDING]`; this domain is the trigger. Insolvency protection for backer funds is a corporate-structure decision, cheapest now while the company is empty. | User | `/create-prd-security` |
 | Q-09 | **Does the alert product ship without domain 19?** [20.02.02](./20.02-segmentation-superfan-intelligence/20.02.02-superfan-score.md) Q-04 + [20.06.02](./20.06-fan-experience-discovery/20.06.02-gig-alerts-near-me.md) DT-03. Without door scans the superfan score is Mailchimp; without shows booked here the alert has nothing to announce and a fan cannot tell "no show" from "we don't know". **A sequencing fact with MoSCoW consequences**, and the strongest argument in this domain for a supply-side-first beachhead (`meta/problem-statement.md` Q-03). | User | MoSCoW |
 | Q-10 | Shared sending domain or per-artist authenticated domains? [20.03.04](./20.03-broadcast-fan-messaging/20.03.04-deliverability-sender-reputation.md) DT-02 — no clean answer. Isolation vs asking musicians to configure DKIM. | User | `/create-prd-architecture` |
+
+
+<!-- spec-graph: auto-generated -->
+## Related Specs
+
+### Constrained by
+- [[decisions.md#d-11|D-11]]
+- [[decisions.md#d-03|D-03]]
+- [[decisions.md#d-01|D-01]]
+- [[decisions.md#d-16|D-16]]
+- [[decisions.md#d-02|D-02]]
+- [[decisions.md#d-04|D-04]]
+- [[decisions.md#d-05|D-05]]
+- [[decisions.md#d-06|D-06]]
+- [[decisions.md#d-07|D-07]]
+- [[decisions.md#d-08|D-08]]
+- [[decisions.md#d-13|D-13]]

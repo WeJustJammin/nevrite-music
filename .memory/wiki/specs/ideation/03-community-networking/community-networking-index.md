@@ -140,3 +140,22 @@ The social layer — connections and follows, the activity feed, collaborator ma
 |---|---|---|
 | **Graph storage + 2-hop traversal on a hot path** | Per `#CX-02`, reachability makes graph traversal run on **every inbound contact attempt**, and per `#CX-01` matching runs it per-candidate per-query. Recursive CTEs over Supabase Postgres at this frequency is an architecture decision, not a product one — and it is the largest technical consequence of this domain. | `/create-prd-architecture` |
 | **Feed fan-out on read vs write** | Per D-13a a band with 40k fan followers sets the platform's write amplification; per `#CX-03` a suppression control that stops fan-out (rather than filtering at render) changes the model again. | `/create-prd-architecture` |
+
+
+<!-- spec-graph: auto-generated -->
+## Related Specs
+
+### Constrained by
+- [[decisions.md#d-15|D-15]]
+- [[decisions.md#d-19|D-19]]
+- [[decisions.md#d-18|D-18]]
+- [[decisions.md#d-01|D-01]]
+- [[decisions.md#d-16|D-16]]
+- [[decisions.md#d-02|D-02]]
+- [[decisions.md#d-03|D-03]]
+- [[decisions.md#d-04|D-04]]
+- [[decisions.md#d-05|D-05]]
+- [[decisions.md#d-06|D-06]]
+- [[decisions.md#d-07|D-07]]
+- [[decisions.md#d-08|D-08]]
+- [[decisions.md#d-13a|D-13a]]

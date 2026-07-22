@@ -129,3 +129,19 @@ A persistent identity for every individual instrument and piece of gear that out
 | Q-07 | **Boundary with domain 16**: a venue listing could carry a free-text gear list and satisfy most Operators. 15.07 adds serial identity, condition, valuation and custody. Is that wanted, or does 16 own a simple list and 15.07 serve a minority? This decides whether 15.07 exists. | User | `/ideate-validate` |
 | Q-08 | **Cold start governs three of this domain's best features.** Screening needs flags that predate thefts; gear discography needs sessions that happened here; the chain needs transfers. All are worth ~zero at launch and compound thereafter. Is that an acceptable shape, or does something need seeding? | User | `/ideate-validate` |
 | Q-09 | Is there a **gear catalogue** (maker/model/era/spec reference data)? 15.01.01, 15.01.05 and 15.06 all lean on it, and building it is a large, unglamorous data problem nobody has scoped. | User | `/create-prd` |
+
+
+<!-- spec-graph: auto-generated -->
+## Related Specs
+
+### Constrained by
+- [[decisions.md#d-18|D-18]]
+- [[decisions.md#d-01|D-01]]
+- [[decisions.md#d-16|D-16]]
+- [[decisions.md#d-02|D-02]]
+- [[decisions.md#d-03|D-03]]
+- [[decisions.md#d-04|D-04]]
+- [[decisions.md#d-05|D-05]]
+- [[decisions.md#d-06|D-06]]
+- [[decisions.md#d-07|D-07]]
+- [[decisions.md#d-08|D-08]]

@@ -117,11 +117,12 @@ interim user unit file deleted, `systemctl --user daemon-reload` confirms no res
 single live runner. Toolchain reachable, Cloudflare API egress confirmed **from the runner**,
 checkout succeeded, **0 minutes billable**.
 
-**Operator commands**:
+**Operator commands** (system-level `svc.sh` units — the fleet was migrated off the interim
+`systemd --user` units, see the runner-fleet section above):
 ```bash
-systemctl --user status  'github-runner@wejammin-*'   # health
-systemctl --user restart 'github-runner@wejammin-1'   # bounce one
-journalctl --user -u 'github-runner@*' -f             # live logs
+systemctl status  'actions.runner.WeJustJammin-nevrite-music.wejammin-*'   # health
+sudo systemctl restart actions.runner.WeJustJammin-nevrite-music.wejammin-1  # bounce one (scoped NOPASSWD)
+sudo journalctl -u 'actions.runner.*' -f                                    # live logs
 gh api repos/WeJustJammin/nevrite-music/actions/runners --jq '.runners[].status'
 ```
 
@@ -131,12 +132,14 @@ time. If builds start thrashing, reduce to 2 runners rather than adding memory p
 
 ### Open Infrastructure Actions
 
+> Updated 2026-07-18 (audit remediation). Completed items retained with ✅ for traceability.
+
 | Item | Status | Owner | Blocks |
 |---|---|---|---|
+| `gh auth login` as `WeJustJammin` | ✅ **DONE** — active account, `admin:true` on the repo | — | (was: push + runner registration) |
+| Install 3 self-hosted runners as systemd services | ✅ **DONE** — `actions.runner.*` system units, autostart, verified by smoke test | — | — |
 | Point `wejamm.in` DNS at Cloudflare | **NOT DONE** — domain not yet forwarding to Cloudflare | User | `/setup-workspace-hosting` |
-| `gh auth login` as `WeJustJammin` | **NOT DONE** — currently authed as personal account `NEVRITERob` | User (interactive; agent cannot handle credentials) | Initial `git push`; self-hosted runner registration |
-| Install 2–3 self-hosted runners as systemd services | **NOT DONE** — blocked on gh reauth | User + Agent | `/setup-workspace-cicd` |
-| Convert `WeJustJammin` from User account → Organization | **OPEN QUESTION** — currently `type: User` (id 305953066). Orgs give teams, scoped repo roles, and runner groups. Cheapest to do now while the repo is empty. | User | — |
+| Convert `WeJustJammin` from User account → Organization | **OPEN — decide before `/setup-workspace-cicd`** — currently `type: User` (id 305953066). Orgs give teams, scoped repo roles, and runner groups; cheapest while the repo is small. **Deadline: before CI/CD is wired, since runner groups depend on it.** | User | `/setup-workspace-cicd` |
 
 ## Architecture Concerns Reclassified Out of the Product
 
@@ -225,6 +228,12 @@ Fanbase (20), Promotion (21), Analytics (22), Career/Finance (23), Community (03
 (04), Education (06), Real-Time Jamming (08). Trust & Safety (24) product surface phases in, but a
 **baseline moderation capability is needed from v1** (UGC exists the moment Projects ships).
 
+**"Baseline moderation" (v1) is defined as**: (1) a **report/flag** control on user content and
+profiles; (2) an **admin takedown** action (remove content, suspend account); (3) **DMCA §512**
+notice-and-takedown intake + repeat-infringer tracking; (4) a minimal **audit log** of moderation
+actions. NOT in v1 baseline: automated content classification, dispute-resolution workflows, trust
+scoring, appeals — those arrive with the full domain-24 surface in phase 2.
+
 **Why the split resolves the risk** (D-31): the original single-v1 (~71 Musts, 8 domains, all
 marketplace physics at once, solo, 3–6mo) was flagged as over-aggressive. Splitting lets the
 session spine (the thing that proves the thesis) ship first and fast, with the marketplaces
@@ -297,3 +306,14 @@ international expansion is additive (field-level data-residency awareness) but n
 >
 > Surface classification drives tech stack in `/create-prd`, folder structure in
 > `/decompose-architecture`, and spec shapes downstream.
+
+
+<!-- spec-graph: auto-generated -->
+## Related Specs
+
+### Constrained by
+- [[decisions.md#d-20|D-20]]
+- [[decisions.md#d-31|D-31]]
+- [[decisions.md#d-10|D-10]]
+- [[decisions.md#d-13|D-13]]
+- [[decisions.md#d-28|D-28]]

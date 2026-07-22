@@ -266,3 +266,17 @@ placement tracker (22.03.01) supplies the classified event.
 | R-03 | 22.06 Fraud Detection | 22.02 Matching | Fraud concerns the *numbers* on a correct match; matching concerns *whose* numbers they are. Conflating them merges "we disagree who this is" with "these streams look fake" — three distinct epistemic states (unknown, contested, suspect), each with a different remedy, must stay distinct (`22.02-external-identity-catalog-matching-cx.md#R-02`). |
 | R-04 | 22.07 Scouting | 22.01 Ingestion | Scouting reads ingested data but has no relationship to connection lifecycle. A scout connects nothing — the *subject's* connections supply the data. Modelling it would imply scouts have standing over subjects' connections, the exact inversion 22.07.04 prevents. |
 | R-05 | 22.05.04 Benchmarking | 22.04 Geography & Routing | Both need cohorts, but "artists like me" and "artists with a following near here" share the **k-anonymity mechanism**, not an interaction. Recorded as a mechanism above. Wiring them opens a second aggregation attack alongside CX-07's. |
+
+
+<!-- spec-graph: auto-generated -->
+## Related Specs
+
+### Constrained by
+- [[decisions.md#d-05|D-05]]
+- [[decisions.md#d-06|D-06]]
+- [[decisions.md#d-07|D-07]]
+- [[decisions.md#d-01|D-01]]
+- [[decisions.md#d-04|D-04]]
+- [[decisions.md#d-18|D-18]]
+- [[decisions.md#d-03|D-03]]
+- [[decisions.md#d-11|D-11]]

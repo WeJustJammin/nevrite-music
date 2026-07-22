@@ -327,3 +327,13 @@ door onto the shared inbox commons.
 - **CX-03 has a cross-domain twin**: the payola classifier must also gate the services marketplace
   (05) listing path (D-06) and must NOT fire on WeJammin's own promoted surfaces (Q-07) — the
   recorded endogenous-payola contradiction.
+
+
+<!-- spec-graph: auto-generated -->
+## Related Specs
+
+### Constrained by
+- [[decisions.md#d-02|D-02]]
+- [[decisions.md#d-01|D-01]]
+- [[decisions.md#d-06|D-06]]
+- [[decisions.md#d-07|D-07]]

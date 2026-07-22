@@ -148,3 +148,21 @@ domain's and currently has no home (Q-05).
 | Q-05 | **Venue PRO blanket licensing has no home.** Real Operator work, genuinely licensing, and not this domain's (it is domain 10 collections or domain 16 compliance). Surfaced because 11.11 made the Operator's absence visible. | Agent | `/ideate-validate` |
 | Q-06 | **Does WeJammin train on user audio?** Not 11.07's product, and the most consequential AI question the project faces: the platform holds the industry's most attractive training corpus (labelled multi-track stems, per 11.07.01) and sells its owners a consent control. Silence is itself an answer. | User | `/create-prd-security` (values + ToS) |
 | Q-07 | Is "the old record always survives" (P-02 in the CX file) a **platform-level invariant** rather than a domain-11 rule? Three independent instances found. | Agent | global CX / `/create-prd-architecture` |
+
+
+<!-- spec-graph: auto-generated -->
+## Related Specs
+
+### Constrained by
+- [[decisions.md#d-10|D-10]]
+- [[decisions.md#d-05|D-05]]
+- [[decisions.md#d-07|D-07]]
+- [[decisions.md#d-19|D-19]]
+- [[decisions.md#d-01|D-01]]
+- [[decisions.md#d-16|D-16]]
+- [[decisions.md#d-02|D-02]]
+- [[decisions.md#d-03|D-03]]
+- [[decisions.md#d-04|D-04]]
+- [[decisions.md#d-06|D-06]]
+- [[decisions.md#d-08|D-08]]
+- [[decisions.md#d-09|D-09]]

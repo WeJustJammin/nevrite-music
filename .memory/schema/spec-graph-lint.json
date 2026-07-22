@@ -1,4 +1,179 @@
 {
-  "builtAt": "2026-07-16T15:55:11.144Z",
-  "issues": []
+  "builtAt": "2026-07-22T04:14:34.188Z",
+  "issues": [
+    {
+      "severity": "warning",
+      "code": "ORPHAN_SPEC",
+      "message": ".memory/wiki/specs/audits/p01-production-stage-vocabulary-validation.md has no graph relationships",
+      "path": ".memory/wiki/specs/audits/p01-production-stage-vocabulary-validation.md"
+    },
+    {
+      "severity": "warning",
+      "code": "ORPHAN_SPEC",
+      "message": ".memory/wiki/specs/be.md has no graph relationships",
+      "path": ".memory/wiki/specs/be.md"
+    },
+    {
+      "severity": "warning",
+      "code": "ORPHAN_SPEC",
+      "message": ".memory/wiki/specs/fe.md has no graph relationships",
+      "path": ".memory/wiki/specs/fe.md"
+    },
+    {
+      "severity": "warning",
+      "code": "ORPHAN_SPEC",
+      "message": ".memory/wiki/specs/ia.md has no graph relationships",
+      "path": ".memory/wiki/specs/ia.md"
+    },
+    {
+      "severity": "warning",
+      "code": "ORPHAN_SPEC",
+      "message": ".memory/wiki/specs/ideation/09-rights-ownership/09.03-chain-of-title-lifecycle/09.03-chain-of-title-lifecycle-cx.md has no graph relationships",
+      "path": ".memory/wiki/specs/ideation/09-rights-ownership/09.03-chain-of-title-lifecycle/09.03-chain-of-title-lifecycle-cx.md"
+    },
+    {
+      "severity": "warning",
+      "code": "ORPHAN_SPEC",
+      "message": ".memory/wiki/specs/ideation/09-rights-ownership/09.05-ai-voice-likeness-consent/09.05-ai-voice-likeness-consent-cx.md has no graph relationships",
+      "path": ".memory/wiki/specs/ideation/09-rights-ownership/09.05-ai-voice-likeness-consent/09.05-ai-voice-likeness-consent-cx.md"
+    },
+    {
+      "severity": "warning",
+      "code": "ORPHAN_SPEC",
+      "message": ".memory/wiki/specs/ideation/11-music-licensing/11.01-sync-licensing/11.01-sync-licensing-cx.md has no graph relationships",
+      "path": ".memory/wiki/specs/ideation/11-music-licensing/11.01-sync-licensing/11.01-sync-licensing-cx.md"
+    },
+    {
+      "severity": "warning",
+      "code": "ORPHAN_SPEC",
+      "message": ".memory/wiki/specs/ideation/11-music-licensing/11.02-clearance-one-stop-status/11.02-clearance-one-stop-status-cx.md has no graph relationships",
+      "path": ".memory/wiki/specs/ideation/11-music-licensing/11.02-clearance-one-stop-status/11.02-clearance-one-stop-status-cx.md"
+    },
+    {
+      "severity": "warning",
+      "code": "ORPHAN_SPEC",
+      "message": ".memory/wiki/specs/ideation/11-music-licensing/11.03-licence-pricing-negotiation/11.03-licence-pricing-negotiation-cx.md has no graph relationships",
+      "path": ".memory/wiki/specs/ideation/11-music-licensing/11.03-licence-pricing-negotiation/11.03-licence-pricing-negotiation-cx.md"
+    },
+    {
+      "severity": "warning",
+      "code": "ORPHAN_SPEC",
+      "message": ".memory/wiki/specs/ideation/11-music-licensing/11.06-creator-micro-licensing/11.06-creator-micro-licensing-cx.md has no graph relationships",
+      "path": ".memory/wiki/specs/ideation/11-music-licensing/11.06-creator-micro-licensing/11.06-creator-micro-licensing-cx.md"
+    },
+    {
+      "severity": "warning",
+      "code": "ORPHAN_SPEC",
+      "message": ".memory/wiki/specs/ideation/14-digital-goods-marketplace/14.01-catalog-compatibility/14.01-catalog-compatibility-cx.md has no graph relationships",
+      "path": ".memory/wiki/specs/ideation/14-digital-goods-marketplace/14.01-catalog-compatibility/14.01-catalog-compatibility-cx.md"
+    },
+    {
+      "severity": "warning",
+      "code": "ORPHAN_SPEC",
+      "message": ".memory/wiki/specs/ideation/14-digital-goods-marketplace/14.02-licensing-activation-entitlement/14.02-licensing-activation-entitlement-cx.md has no graph relationships",
+      "path": ".memory/wiki/specs/ideation/14-digital-goods-marketplace/14.02-licensing-activation-entitlement/14.02-licensing-activation-entitlement-cx.md"
+    },
+    {
+      "severity": "warning",
+      "code": "ORPHAN_SPEC",
+      "message": ".memory/wiki/specs/ideation/14-digital-goods-marketplace/14.03-delivery-versioning-library/14.03-delivery-versioning-library-cx.md has no graph relationships",
+      "path": ".memory/wiki/specs/ideation/14-digital-goods-marketplace/14.03-delivery-versioning-library/14.03-delivery-versioning-library-cx.md"
+    },
+    {
+      "severity": "warning",
+      "code": "ORPHAN_SPEC",
+      "message": ".memory/wiki/specs/ideation/14-digital-goods-marketplace/14.06-used-licence-transfer/14.06-used-licence-transfer-cx.md has no graph relationships",
+      "path": ".memory/wiki/specs/ideation/14-digital-goods-marketplace/14.06-used-licence-transfer/14.06-used-licence-transfer-cx.md"
+    },
+    {
+      "severity": "warning",
+      "code": "ORPHAN_SPEC",
+      "message": ".memory/wiki/specs/ideation/14-digital-goods-marketplace/14.10-contributor-revenue-royalty-pool/14.10-contributor-revenue-royalty-pool-cx.md has no graph relationships",
+      "path": ".memory/wiki/specs/ideation/14-digital-goods-marketplace/14.10-contributor-revenue-royalty-pool/14.10-contributor-revenue-royalty-pool-cx.md"
+    },
+    {
+      "severity": "warning",
+      "code": "ORPHAN_SPEC",
+      "message": ".memory/wiki/specs/ideation/15-gear-registry-ownership/15.06-rig-profile-compatibility/15.06-rig-profile-compatibility-cx.md has no graph relationships",
+      "path": ".memory/wiki/specs/ideation/15-gear-registry-ownership/15.06-rig-profile-compatibility/15.06-rig-profile-compatibility-cx.md"
+    },
+    {
+      "severity": "warning",
+      "code": "ORPHAN_SPEC",
+      "message": ".memory/wiki/specs/ideation/17-live-booking-settlement/17.01-availability-holds-confirmation/17.01-availability-holds-confirmation-cx.md has no graph relationships",
+      "path": ".memory/wiki/specs/ideation/17-live-booking-settlement/17.01-availability-holds-confirmation/17.01-availability-holds-confirmation-cx.md"
+    },
+    {
+      "severity": "warning",
+      "code": "ORPHAN_SPEC",
+      "message": ".memory/wiki/specs/ideation/17-live-booking-settlement/17.02-offers-negotiation/17.02-offers-negotiation-cx.md has no graph relationships",
+      "path": ".memory/wiki/specs/ideation/17-live-booking-settlement/17.02-offers-negotiation/17.02-offers-negotiation-cx.md"
+    },
+    {
+      "severity": "warning",
+      "code": "ORPHAN_SPEC",
+      "message": ".memory/wiki/specs/ideation/17-live-booking-settlement/17.03-deal-structures-economics/17.03-deal-structures-economics-cx.md has no graph relationships",
+      "path": ".memory/wiki/specs/ideation/17-live-booking-settlement/17.03-deal-structures-economics/17.03-deal-structures-economics-cx.md"
+    },
+    {
+      "severity": "warning",
+      "code": "ORPHAN_SPEC",
+      "message": ".memory/wiki/specs/ideation/19-ticketing-box-office/19.01-ticket-config-scaling-allocations/19.01-ticket-config-scaling-allocations-cx.md has no graph relationships",
+      "path": ".memory/wiki/specs/ideation/19-ticketing-box-office/19.01-ticket-config-scaling-allocations/19.01-ticket-config-scaling-allocations-cx.md"
+    },
+    {
+      "severity": "warning",
+      "code": "ORPHAN_SPEC",
+      "message": ".memory/wiki/specs/ideation/19-ticketing-box-office/19.02-on-sale-announce-presale/19.02-on-sale-announce-presale-cx.md has no graph relationships",
+      "path": ".memory/wiki/specs/ideation/19-ticketing-box-office/19.02-on-sale-announce-presale/19.02-on-sale-announce-presale-cx.md"
+    },
+    {
+      "severity": "warning",
+      "code": "ORPHAN_SPEC",
+      "message": ".memory/wiki/specs/ideation/19-ticketing-box-office/19.03-guest-list-comps/19.03-guest-list-comps-cx.md has no graph relationships",
+      "path": ".memory/wiki/specs/ideation/19-ticketing-box-office/19.03-guest-list-comps/19.03-guest-list-comps-cx.md"
+    },
+    {
+      "severity": "warning",
+      "code": "ORPHAN_SPEC",
+      "message": ".memory/wiki/specs/ideation/19-ticketing-box-office/19.04-door-scanning-access-control/19.04-door-scanning-access-control-cx.md has no graph relationships",
+      "path": ".memory/wiki/specs/ideation/19-ticketing-box-office/19.04-door-scanning-access-control/19.04-door-scanning-access-control-cx.md"
+    },
+    {
+      "severity": "warning",
+      "code": "ORPHAN_SPEC",
+      "message": ".memory/wiki/specs/ideation/21-promotion-marketing/21.01-release-campaign-planner/21.01-release-campaign-planner-cx.md has no graph relationships",
+      "path": ".memory/wiki/specs/ideation/21-promotion-marketing/21.01-release-campaign-planner/21.01-release-campaign-planner-cx.md"
+    },
+    {
+      "severity": "warning",
+      "code": "ORPHAN_SPEC",
+      "message": ".memory/wiki/specs/ideation/21-promotion-marketing/21.04-smart-links-presave-attribution/21.04-smart-links-presave-attribution-cx.md has no graph relationships",
+      "path": ".memory/wiki/specs/ideation/21-promotion-marketing/21.04-smart-links-presave-attribution/21.04-smart-links-presave-attribution-cx.md"
+    },
+    {
+      "severity": "warning",
+      "code": "ORPHAN_SPEC",
+      "message": ".memory/wiki/specs/ideation/24-trust-safety-disputes/24.01-reporting-moderation/24.01-reporting-moderation-cx.md has no graph relationships",
+      "path": ".memory/wiki/specs/ideation/24-trust-safety-disputes/24.01-reporting-moderation/24.01-reporting-moderation-cx.md"
+    },
+    {
+      "severity": "warning",
+      "code": "ORPHAN_SPEC",
+      "message": ".memory/wiki/specs/ideation/24-trust-safety-disputes/24.02-enforcement-appeals-policy/24.02-enforcement-appeals-policy-cx.md has no graph relationships",
+      "path": ".memory/wiki/specs/ideation/24-trust-safety-disputes/24.02-enforcement-appeals-policy/24.02-enforcement-appeals-policy-cx.md"
+    },
+    {
+      "severity": "warning",
+      "code": "ORPHAN_SPEC",
+      "message": ".memory/wiki/specs/ideation/24-trust-safety-disputes/24.05-copyright-authenticity-enforcement/24.05-copyright-authenticity-enforcement-cx.md has no graph relationships",
+      "path": ".memory/wiki/specs/ideation/24-trust-safety-disputes/24.05-copyright-authenticity-enforcement/24.05-copyright-authenticity-enforcement-cx.md"
+    },
+    {
+      "severity": "warning",
+      "code": "ORPHAN_SPEC",
+      "message": ".memory/wiki/specs/index.md has no graph relationships",
+      "path": ".memory/wiki/specs/index.md"
+    }
+  ]
 }

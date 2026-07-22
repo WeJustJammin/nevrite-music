@@ -254,3 +254,20 @@ See CX-04 / CX-16. Retained as a distinct map row because the mechanism (store r
 | R-05 | 12.06 Content ID | 12.02 DDEX Delivery | Considered because both are partner integrations with asset submission. Rejected — Content ID platforms do not consume DDEX. Different protocol, partners, assertion. "Both are integrations" is a category, not a relationship. Recorded because integration-shaped things attract false coupling. |
 | R-06 | 12.05 Catalog Lifecycle | 12.06 Content ID | Considered: does taking down a release withdraw its fingerprint? Rejected — independent by design. A recording can be withdrawn from stores and still claim on YouTube (off sale; UGC revenue continues). Coupling them would silently destroy an income stream on an unrelated commercial decision. |
 | R-07 | 12.01.02 Metadata Validation | 12.01.04 Asset Conformance | Considered again at depth: asset duration feeds a metadata rule (RC-10), so are they coupled? Rejected — reading an asset-derived value is a metadata rule *consuming* a value, not a coupling. D-06 draws the line: 12.01.04 owns measured-vs-spec, 12.01.02 owns measured-vs-declared. One measures and publishes; the other adjudicates a human's claim. Recorded so spec writers do not re-invent the coupling. |
+
+
+<!-- spec-graph: auto-generated -->
+## Related Specs
+
+### Constrained by
+- [[decisions.md#d-01|D-01]]
+- [[decisions.md#d-07|D-07]]
+- [[decisions.md#d-02|D-02]]
+- [[decisions.md#d-06|D-06]]
+- [[decisions.md#d-12|D-12]]
+- [[decisions.md#d-03|D-03]]
+- [[decisions.md#d-10|D-10]]
+- [[decisions.md#d-18|D-18]]
+- [[decisions.md#d-08|D-08]]
+- [[decisions.md#d-09|D-09]]
+- [[decisions.md#d-11|D-11]]

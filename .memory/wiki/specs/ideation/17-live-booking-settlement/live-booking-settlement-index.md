@@ -140,3 +140,24 @@ in domain 02 evidenced rather than claimed.
 | Q-08 | **Is the deal grammar a closed vocabulary or an open expression language?** (17.03 Q-01.) Closed settles cleanly and will not cover every deal; open covers the long tail and is a spreadsheet. **This sets the ceiling on the domain's entire automation claim.** | User | `/ideate-discover` Step 5 |
 | Q-09 | Settlement happens in a back room at 1am, with cash on the table and frequently no connectivity. **Is offline capture in scope?** This is the strongest argument in the domain for resolving the open mobile-surface question in `meta/constraints.md`. | User | `/ideate-validate` |
 | Q-10 | The domain index flags an alternative boundary: **fold Ticketing (19) in**, giving "commerce of a show" vs "operations of a show". Q-04 strengthens the case materially — the count is 19's and the settlement cannot be trustworthy without it. Worth re-testing at validate. | User | `/ideate-validate` |
+
+
+<!-- spec-graph: auto-generated -->
+## Related Specs
+
+### Constrained by
+- [[decisions.md#d-18|D-18]]
+- [[decisions.md#d-19|D-19]]
+- [[decisions.md#d-11|D-11]]
+- [[decisions.md#d-01|D-01]]
+- [[decisions.md#d-16|D-16]]
+- [[decisions.md#d-02|D-02]]
+- [[decisions.md#d-03|D-03]]
+- [[decisions.md#d-04|D-04]]
+- [[decisions.md#d-05|D-05]]
+- [[decisions.md#d-06|D-06]]
+- [[decisions.md#d-07|D-07]]
+- [[decisions.md#d-08|D-08]]
+- [[decisions.md#d-14|D-14]]
+- [[decisions.md#d-09|D-09]]
+- [[decisions.md#d-10|D-10]]

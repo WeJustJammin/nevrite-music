@@ -321,3 +321,19 @@ fixed.
 | R-04 | [09.05 AI, Voice & Likeness](./09.05-ai-voice-likeness-consent/) | [09.01.05 Performer & Neighbouring Rights](./09.01-rights-registry/09.01.05-performer-neighbouring-rights.md) | Tempting to fuse "performer identity for neighbouring-rights payout" with "performer NIL consent" — but one is a **money entitlement paid by an exploiter via a society**, the other a **veto over use of the person**. Fusing them would imply consenting to AI use forfeits neighbouring-rights income, or vice versa. Disjoint by design. |
 | R-05 | [09.03 Chain of Title & Lifecycle](./09.03-chain-of-title-lifecycle/) | [09.05 AI, Voice & Likeness](./09.05-ai-voice-likeness-consent/) | An AI training grant transfers no ownership, creates no encumbrance on title, and does not appear in a title search — a revocable permission that leaves the ownership record untouched. Recording grants in the chain would make every consent look like an assignment. |
 | R-06 | [09.01.05 Performer & Neighbouring Rights](./09.01-rights-registry/09.01.05-performer-neighbouring-rights.md) | [09.01.02 Ownership Ledger](./09.01-rights-registry/09.01.02-ownership-ledger-validation.md) | *Intra-09.01, recorded to prevent re-linking.* Disjoint records over one human: a session drummer is a 0%-or-absent ledger row **and** a full performer record. Ledger presence must not imply performer presence, or vice versa — neighbouring-rights entitlement is explicitly **not** an encumbrance on the master (paid by the exploiter via a society, DT-06 REJECTED). |
+
+
+<!-- spec-graph: auto-generated -->
+## Related Specs
+
+### Constrained by
+- [[decisions.md#d-04|D-04]]
+- [[decisions.md#d-01|D-01]]
+- [[decisions.md#d-03|D-03]]
+- [[decisions.md#d-02|D-02]]
+- [[decisions.md#d-10|D-10]]
+- [[decisions.md#d-07|D-07]]
+- [[decisions.md#d-05|D-05]]
+- [[decisions.md#d-11|D-11]]
+- [[decisions.md#d-08|D-08]]
+- [[decisions.md#d-06|D-06]]

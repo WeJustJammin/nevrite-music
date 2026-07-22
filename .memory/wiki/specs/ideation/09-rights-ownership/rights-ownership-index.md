@@ -132,3 +132,19 @@ The authoritative record of who owns what — the work/recording duality, splits
 | Q-08 | **Is this domain a catalogue play or a new-work play?** Chain of title, termination, estates and public domain serve users arriving with decades of existing rights. A new-work-first platform barely needs them at launch — which is what makes them cheap to skip and expensive to retrofit. Drives MoSCoW across all of 09.03. | User | MoSCoW / `/ideate-validate` |
 | Q-09 | **Escrow implies regulated fund-holding.** A records domain quietly requiring a payments licence. Activates the KYC/AML and payments items already `[PENDING]` in [meta/constraints.md](../meta/constraints.md) and constrains an open `/create-prd-stack` decision. See [09.04.03 DT-02](./09.04-rights-conflicts-disputes/09.04.03-rights-freeze-royalty-escrow.md). | User | `/create-prd-stack` |
 | Q-10 | **Does WeJammin become an ISRC registrant?** Cheap in money; a **perpetual** obligation in practice — allocated codes outlive the company and orphaned codes leave permanent ambiguity on real recordings. An exit plan is needed before the first allocation. See [09.06.01 DT-03](./09.06-rights-evidence-public-record/09.06.01-identifier-issuance-reconciliation.md). | User | `/ideate-validate` |
+
+
+<!-- spec-graph: auto-generated -->
+## Related Specs
+
+### Constrained by
+- [[decisions.md#d-01|D-01]]
+- [[decisions.md#d-16|D-16]]
+- [[decisions.md#d-02|D-02]]
+- [[decisions.md#d-03|D-03]]
+- [[decisions.md#d-18|D-18]]
+- [[decisions.md#d-04|D-04]]
+- [[decisions.md#d-05|D-05]]
+- [[decisions.md#d-06|D-06]]
+- [[decisions.md#d-07|D-07]]
+- [[decisions.md#d-08|D-08]]

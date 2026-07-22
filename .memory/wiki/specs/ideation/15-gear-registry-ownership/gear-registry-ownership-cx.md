@@ -516,3 +516,15 @@ someone else's responsibility while it was worked on.
 | **Formal document generation** | 09, 15, 18, 23 | This domain alone produces five (claim pack, appraisal, insurance schedule, rig spec sheet, carnet source data). Split sheets, riders and invoices are the same mechanism elsewhere. |
 | **Custody / possession-vs-ownership tracking** | 05, 13, 15, 16, 18 | Custody (15.08) is modelled here but leaks outward: listing/consignment rights (13) derive from it, a service booking (05) creates it, room-resident gear (16) depends on it, and touring gear (18) moves through it. The concept is broader than one domain — flagged for the platform. |
 | **Entity ownership (person vs band vs studio vs label)** | 01, 09, 13, 15, 16 | personas.md establishes entities as first-class owners. Every gear record needs one; domain 01 defines it. |
+
+
+<!-- spec-graph: auto-generated -->
+## Related Specs
+
+### Constrained by
+- [[decisions.md#d-04|D-04]]
+- [[decisions.md#d-06|D-06]]
+- [[decisions.md#d-01|D-01]]
+- [[decisions.md#d-02|D-02]]
+- [[decisions.md#d-03|D-03]]
+- [[decisions.md#d-08|D-08]]

@@ -289,3 +289,20 @@ eventually disagree about refusal.** Routed to `/create-prd-architecture`.
 | R-06 | 11.02.02 Attestation | 11.02.04 Consent Routing | An attestation is a **claim about a fact**; a consent is a **decision about a permission**. Different failure modes (false claim vs withheld permission), remedies (contest vs escalate), actors (the knower vs the owner). Merging them makes "I confirm nobody is missing" and "I agree to this deal" one object — how consent theatre gets built. |
 | R-07 | 11.10 Print & Lyric | 11.05 Sample & Derivative | The *rights basis* is the same (composition) but the transaction is not: print/lyric licenses the work **as text or notation to be reproduced**, not as material to be built on. A lyric aggregator displays the original; they are not making a derivative. Moving 11.10 under derivatives would imply an interaction it does not have (11.10 DT-02). |
 | R-08 | 11.04.01 Category policy | 11.04.02 Buyer blocks (single "policy" object) | Considered — both are refusals set in advance. Rejected: category blocks key on the scope grammar and **fold** across owners; buyer blocks key on party identity (01) and are only evaluable at request time (the grammar has no counterparty axis, CX-16). Merging would force a counterparty axis into the grammar (breaking the fold, CX-04) or force the fold to operate over identity (structurally impossible, CX-18). They share the block **engine**, not the key space. |
+
+
+<!-- spec-graph: auto-generated -->
+## Related Specs
+
+### Constrained by
+- [[decisions.md#d-04|D-04]]
+- [[decisions.md#d-02|D-02]]
+- [[decisions.md#d-03|D-03]]
+- [[decisions.md#d-05|D-05]]
+- [[decisions.md#d-15|D-15]]
+- [[decisions.md#d-01|D-01]]
+- [[decisions.md#d-09|D-09]]
+- [[decisions.md#d-12|D-12]]
+- [[decisions.md#d-13|D-13]]
+- [[decisions.md#d-06|D-06]]
+- [[decisions.md#d-18|D-18]]

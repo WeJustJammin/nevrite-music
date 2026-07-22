@@ -153,3 +153,23 @@ Two findings from breadth classification strengthen the domain-status argument b
 | Q-12 | Is 16.01.07 Trades genuinely in this domain? It passes the address test, exercises no spec and no calendar, and has **no freshness mechanism at all** (no transaction → no harvest). | User | `/ideate-validate` |
 | Q-13 | **Jurisdiction** — 16.01.06 and 16.02.06 assume a UK regime (PRS/PPL/PAT/premises licence). Does the launch market decide these features' shape? | User | `/ideate-validate` |
 | Q-14 | Does a business have the right to be **delisted** from an unclaimed record it never created? That is most of the registry at launch. | User | `/create-prd-security` |
+
+
+<!-- spec-graph: auto-generated -->
+## Related Specs
+
+### Constrained by
+- [[decisions.md#d-07|D-07]]
+- [[decisions.md#d-18|D-18]]
+- [[decisions.md#d-11|D-11]]
+- [[decisions.md#d-02|D-02]]
+- [[decisions.md#d-01|D-01]]
+- [[decisions.md#d-16|D-16]]
+- [[decisions.md#d-03|D-03]]
+- [[decisions.md#d-17|D-17]]
+- [[decisions.md#d-04|D-04]]
+- [[decisions.md#d-05|D-05]]
+- [[decisions.md#d-06|D-06]]
+- [[decisions.md#d-08|D-08]]
+- [[decisions.md#d-09|D-09]]
+- [[decisions.md#d-10|D-10]]

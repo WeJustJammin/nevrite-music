@@ -124,3 +124,21 @@ Who exists on the platform: humans holding several simultaneous professional rol
 | Q-10 | **Does a Fan have a public profile at all?** D-11 makes them first-class users; that does not settle whether they are *visible*. Determines whether 01.06 needs a fourth, radically thinner page archetype. | User | `/ideate-validate` (01.01 Q-03, 01.06 Q-01) |
 | Q-11 | **Does the platform hold band money (a balance) or only route it?** Holding is a regulated activity; routing avoids it and makes a band treasury impossible. Constrains the payments provider choice already open in `meta/constraints.md`. | User | `/create-prd-stack` (01.04.03 Q-02) |
 | Q-12 | Personas Q-01 asked whether a **professional dealer** is a distinct persona, to be revisited "if the Gear/Digital Role Matrices come out thin". This domain's evidence: 01.08's Role Lens is not thin — Musician-as-trader is the *hard* case and the reason trader status lives in identity (D-01 on 01.08). It reads as a Musician in a selling context, not a fifth persona. | User | `/ideate-validate` |
+
+
+<!-- spec-graph: auto-generated -->
+## Related Specs
+
+### Constrained by
+- [[decisions.md#d-19|D-19]]
+- [[decisions.md#d-01|D-01]]
+- [[decisions.md#d-16|D-16]]
+- [[decisions.md#d-02|D-02]]
+- [[decisions.md#d-03|D-03]]
+- [[decisions.md#d-04|D-04]]
+- [[decisions.md#d-18|D-18]]
+- [[decisions.md#d-05|D-05]]
+- [[decisions.md#d-06|D-06]]
+- [[decisions.md#d-07|D-07]]
+- [[decisions.md#d-08|D-08]]
+- [[decisions.md#d-11|D-11]]

@@ -124,3 +124,19 @@ Teaching and learning — lesson booking and packages, curriculum and practice t
 | Q-06 | **Is in-person delivery in scope?** (06.01 Q-03.) Everything assumes it can be, which drags in address exchange, travel time — and a physical adult↔minor meeting surface far heavier than a recorded video room. It also leaves the no-show rule with **no evidence** and therefore two implementations (06.01.03 DT-02). | User | `/ideate-discover` Step 5 |
 | Q-07 | **Are lesson credits money or entitlements?** (06.01.02 Q-01.) Refundable stored value may touch e-money/prepaid rules; expiring entitlements hit consumer-protection limits on forfeiture. `meta/constraints.md`'s compliance table has no line for it. Made urgent by 06.10 Q-03 (an academy closing with prepaid credits outstanding — which has happened to real schools and real parents). | User | `/create-prd-security` |
 | Q-08 | **Does the domain have any success metric it can measure?** Three features hit the same wall: the platform cannot measure musicianship (06.03.05 DT-02), completion is not learning (06.04.03 DT-02/Q-04), and certificates assert what we cannot verify (06.08 DT-02). The only honest external measure found is an **exam grade** (06.09 DT-01) — which is why exam boards have survived a century. Worth admitting explicitly rather than proxying. | User | `/ideate-validate` |
+
+
+<!-- spec-graph: auto-generated -->
+## Related Specs
+
+### Constrained by
+- [[decisions.md#d-02|D-02]]
+- [[decisions.md#d-05|D-05]]
+- [[decisions.md#d-19|D-19]]
+- [[decisions.md#d-06|D-06]]
+- [[decisions.md#d-01|D-01]]
+- [[decisions.md#d-16|D-16]]
+- [[decisions.md#d-03|D-03]]
+- [[decisions.md#d-07|D-07]]
+- [[decisions.md#d-04|D-04]]
+- [[decisions.md#d-08|D-08]]

@@ -140,3 +140,20 @@ Three findings reshaped the domain and belong at the top of it:
 | Q-05 | **Every DSA scale-gate reading in this domain is an agent's reading.** Art 16 (Section 2, no carve-out) vs Art 19 disapplying Section 3 for micro/small; Art 17 SoR vs Art 15(2) transparency. This reasoning moves four features between Must and Could and **must be confirmed by counsel**, not by an agent. | User + counsel | `/create-prd-security` |
 | Q-06 | **`meta/constraints.md` describes no platform team — so the owner is the first moderator.** That makes reviewer wellbeing a business-continuity control ([24.01.03](./24.01-reporting-moderation/24.01.03-moderation-queue-reviewer-ops.md) DT-01), makes conflict-of-interest recusal structurally impossible (24.01.03 Q-02), and puts CSAM and crisis review on one unrotatable person. **This is a founder-welfare question, not only a staffing one.** | User | `/ideate-validate` |
 | Q-07 | Music adjudication needs **domain literacy** ("is that a sample or an interpolation?", "is that NSBM or Nordic folk?", "is that refinished?"). Skill-routed queues conflict with a small team, which may mean: only launch the domains whose queues you can staff. That makes the beachhead a Trust & Safety decision, not only a growth one. | User | `/ideate-validate` |
+
+
+<!-- spec-graph: auto-generated -->
+## Related Specs
+
+### Constrained by
+- [[decisions.md#d-10|D-10]]
+- [[decisions.md#d-18|D-18]]
+- [[decisions.md#d-11|D-11]]
+- [[decisions.md#d-01|D-01]]
+- [[decisions.md#d-16|D-16]]
+- [[decisions.md#d-02|D-02]]
+- [[decisions.md#d-03|D-03]]
+- [[decisions.md#d-04|D-04]]
+- [[decisions.md#d-05|D-05]]
+- [[decisions.md#d-06|D-06]]
+- [[decisions.md#d-07|D-07]]

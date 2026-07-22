@@ -428,3 +428,23 @@
 | R-08 | 13.05 Offers & Auctions | 13.13 Authorized Dealer & MAP | MAP might floor an accepted offer. Rejected — MAP governs *advertised* price on **new** gear; offers/auctions operate on the used, qty=1 inventory that has no MAP. No overlap in the objects each touches. |
 
 > **Notes:** CX-14 through CX-21 are Step 6 additions from the deep-think intra pass; CX-01/02/03/15/18 were enriched with resolutions to previously-`[PENDING]` synthesis questions. Intra-*sub-domain* feature pairs (13.01.04↔13.01.05 fitment, 13.01.01↔13.01.02 contribution, 13.02.01↔13.02.02 grade-ceiling) are resolved in their respective sub-domain CX files, not here.
+
+
+<!-- spec-graph: auto-generated -->
+## Related Specs
+
+### Constrained by
+- [[decisions.md#d-01|D-01]]
+- [[decisions.md#d-07|D-07]]
+- [[decisions.md#d-02|D-02]]
+- [[decisions.md#d-03|D-03]]
+- [[decisions.md#d-04|D-04]]
+- [[decisions.md#d-05|D-05]]
+- [[decisions.md#d-08|D-08]]
+- [[decisions.md#d-10|D-10]]
+- [[decisions.md#d-11|D-11]]
+- [[decisions.md#d-09|D-09]]
+- [[decisions.md#d-14|D-14]]
+- [[decisions.md#d-12|D-12]]
+- [[decisions.md#d-16|D-16]]
+- [[decisions.md#d-4a|D-4a]]

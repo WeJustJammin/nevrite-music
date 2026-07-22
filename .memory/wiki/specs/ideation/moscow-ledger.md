@@ -767,3 +767,27 @@
 | 23.06.01 | Advance Underwriting & Offers | [23.06.01](./23-career-finance-business/23.06-advances-commission-recoupment/23.06.01-advance-underwriting-offers.md) | First-party origination is a licensed activity requiring regulatory permission, capital adequacy and KYC/AML — a legal-capability constraint, not an effort one, so the cost-blind rule does not rescue it. Wont for origina |
 | 23.06.05 | Catalogue Stake Sale & Rights Finance | [23.06.05](./23-career-finance-business/23.06-advances-commission-recoupment/23.06.05-catalogue-stake-sale-rights-finance.md) | A securities venue with a music skin — the sweep's own flag was correct. Highest-regulation, narrowest-population feature in a domain already marked `important` not `core`. DT-02 is the reason it is dangerous rather than |
 | 23.09 | Career Sustainability Signals | [23.09](./23-career-finance-business/23.09-career-sustainability-signals.md) | Three independent reasons: (1) the load→wellbeing step is a health inference from behavioural data — GDPR Art. 9 special-category territory that would reclassify the platform's data wholesale; (2) surfacing a crisis crea |
+
+
+<!-- spec-graph: auto-generated -->
+## Related Specs
+
+### Constrained by
+- [[decisions.md#d-20|D-20]]
+- [[decisions.md#d-05|D-05]]
+- [[decisions.md#d-08|D-08]]
+- [[decisions.md#d-14|D-14]]
+- [[decisions.md#d-18|D-18]]
+- [[decisions.md#d-01|D-01]]
+- [[decisions.md#d-11|D-11]]
+- [[decisions.md#d-04|D-04]]
+- [[decisions.md#d-07|D-07]]
+- [[decisions.md#d-19|D-19]]
+- [[decisions.md#d-03|D-03]]
+- [[decisions.md#d-09|D-09]]
+- [[decisions.md#d-10|D-10]]
+- [[decisions.md#d-02|D-02]]
+- [[decisions.md#d-13|D-13]]
+- [[decisions.md#d-15|D-15]]
+- [[decisions.md#d-13c|D-13c]]
+- [[decisions.md#d-12|D-12]]

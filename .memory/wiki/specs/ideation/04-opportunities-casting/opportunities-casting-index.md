@@ -94,3 +94,18 @@ The demand side of work — posted gigs, dep calls, auditions, band vacancies, c
 | Q-10 | **Is the close-out obligation enforced or encouraged (04.05 Q-01)?** A gate has teeth and costs supply; a nag is ignored by the posters who ghost most. | User | `/ideate-validate` |
 | Q-11 | Is the board **public/SEO-indexable** or login-walled? Public aids cold start and makes the Fan read-only lens load-bearing; it also exposes the pool to scraping. | User | `/ideate-validate` |
 | Q-12 | **The sweep's blind spot is informative.** None of the 14 candidates connected casting to the credit graph — the domain's single most thesis-aligned feature (04.03.02) was absent. A category sweep finds category features; the differentiator is by definition not in the category yet. Worth testing whether other domains share this blind spot. | Agent | `/audit-ambiguity ideation` |
+
+
+<!-- spec-graph: auto-generated -->
+## Related Specs
+
+### Constrained by
+- [[decisions.md#d-03|D-03]]
+- [[decisions.md#d-01|D-01]]
+- [[decisions.md#d-16|D-16]]
+- [[decisions.md#d-02|D-02]]
+- [[decisions.md#d-04|D-04]]
+- [[decisions.md#d-05|D-05]]
+- [[decisions.md#d-18|D-18]]
+- [[decisions.md#d-06|D-06]]
+- [[decisions.md#d-07|D-07]]

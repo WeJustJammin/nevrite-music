@@ -411,3 +411,17 @@ default everywhere in this domain — here, non-disclosure is mandatory.
 | **CSAM hash-set access & NCMEC pipeline integration** | cand. 22 → product half is [24.08.01](./24.08-illegal-content-legal-process/24.08.01-csam-detection-preservation-reporting.md) | `/create-prd-security` + `/create-prd-stack` | Access to industry hash sets is a **vetted vendor relationship with strict handling rules**, not an API signup. May gate the launch of image upload entirely. |
 | **Credential architecture: MFA, session, device binding, recovery mechanics** | cand. 08 → product half is [24.03.02](./24.03-fraud-risk-operations/24.03.02-ato-ban-evasion-ring-detection.md) and [24.07.02](./24.07-identity-abuse-ownership-disputes/24.07.02-entity-ownership-account-recovery-disputes.md) | `/create-prd-security` | Trust owns **detection and contested recovery**; architecture owns the credential and the forgot-password flow. |
 | **Data retention schedules & legal-hold machinery** | cands. 22/24 → product half is [24.08.03](./24.08-illegal-content-legal-process/24.08.03-law-enforcement-legal-process-portal.md) and [24.09](./24.09-case-evidence-locker.md) | `/create-prd-security` | Trust owns the **decision** to place a hold; the machinery that enforces it across every store is architecture — and `Privacy` already flags the erasure-vs-retention collision as an architecture-time decision. |
+
+
+<!-- spec-graph: auto-generated -->
+## Related Specs
+
+### Constrained by
+- [[decisions.md#d-02|D-02]]
+- [[decisions.md#d-01|D-01]]
+- [[decisions.md#d-18|D-18]]
+- [[decisions.md#d-03|D-03]]
+- [[decisions.md#d-13|D-13]]
+- [[decisions.md#d-07|D-07]]
+- [[decisions.md#d-06|D-06]]
+- [[decisions.md#d-05|D-05]]

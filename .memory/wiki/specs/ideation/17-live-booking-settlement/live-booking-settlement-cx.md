@@ -695,3 +695,23 @@ a knowing simplification (DT-05), not an oversight.
 | R-06 | 17.12 Counterparty Reliability | 17.02 Offers & Negotiation | Rejected as an automatic edge. Reliability could plausibly *shape an offer* — shakier promoter, bigger deposit ask — but that path runs through **17.05's deposit terms**, not offer composition. **Reliability informs humans; it does not price deals.** A direct edge would let a derived score alter deal terms silently (the automated-judgement failure 17.01.02 DT-02 rejects). |
 | R-07 | 17.13 Fan Demand Signals | 17.07 Booking Enquiry Inbox | Rejected, load-bearing. Both are inbound "someone wants a show" signals, so a merge looks natural. But an enquiry is a **professional, addressed, structured request that converts into a deal**; a demand signal is an **aggregate, unaddressed, one-way count that converts into nothing**. Merging them would put a consumer-scale pipe into a professional inbox — the harassment vector `meta/personas.md` names and 17.07 DT-03 rejects. |
 | R-08 | 17.09 Settlement & Reconciliation | 17.13 Gear/Merch inventory (17.09.04 ↔ 13) | Recorded to prevent a false entity merge: **merch inventory is not gear inventory** ([13 cross]). A settlement's merch reconciliation shares no entity with the gear marketplace's stock; the resemblance is nominal only. |
+
+
+<!-- spec-graph: auto-generated -->
+## Related Specs
+
+### Constrained by
+- [[decisions.md#d-01|D-01]]
+- [[decisions.md#d-13|D-13]]
+- [[decisions.md#d-15|D-15]]
+- [[decisions.md#d-11|D-11]]
+- [[decisions.md#d-05|D-05]]
+- [[decisions.md#d-03|D-03]]
+- [[decisions.md#d-09|D-09]]
+- [[decisions.md#d-04|D-04]]
+- [[decisions.md#d-20|D-20]]
+- [[decisions.md#d-02|D-02]]
+- [[decisions.md#d-18|D-18]]
+- [[decisions.md#d-14|D-14]]
+- [[decisions.md#d-08|D-08]]
+- [[decisions.md#d-07|D-07]]

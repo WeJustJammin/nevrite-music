@@ -142,3 +142,19 @@ Multi-vendor sale and delivery of DAW plugins, sample packs, presets, beats, MID
 | Q-10 | **Which monetisation models ship?** (14.07 Q-01.) Five models is a mature market's end-state. At £10–£50 creator content, subscription/credits/rent-to-own all solve a capital problem that doesn't exist. Recommend perpetual only at launch — which also means 14.10 does not exist (14.10 Q-01), since the pool has no funding source. | User | `/ideate-validate` |
 | Q-11 | **Does selling subscriptions contradict the thesis?** (14.07 Q-03.) personas.md: the Musician "cannot afford per-tool subscriptions across six products" — that fragmentation *is* the pain WeJammin exists to end. Selling them a seventh is at best ironic. Counter: one subscription replacing six is consolidation — but only if it's a *platform membership*, not a domain-14 sample plan. | User | `/ideate-validate` |
 | Q-12 | **Reviews & ratings never appeared in the sweep's 24 candidates for this domain**, which is itself a finding — a store with no reviews is not a store. Presumed a platform cross-cut (05/13/14/16). Confirm it is owned somewhere. | Agent | `/ideate-validate` |
+
+
+<!-- spec-graph: auto-generated -->
+## Related Specs
+
+### Constrained by
+- [[decisions.md#d-06|D-06]]
+- [[decisions.md#d-02|D-02]]
+- [[decisions.md#d-12|D-12]]
+- [[decisions.md#d-19|D-19]]
+- [[decisions.md#d-01|D-01]]
+- [[decisions.md#d-16|D-16]]
+- [[decisions.md#d-03|D-03]]
+- [[decisions.md#d-04|D-04]]
+- [[decisions.md#d-05|D-05]]
+- [[decisions.md#d-18|D-18]]

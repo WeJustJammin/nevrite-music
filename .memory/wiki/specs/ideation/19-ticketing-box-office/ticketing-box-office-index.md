@@ -108,3 +108,19 @@ Selling and controlling admission — ticket configuration, on-sales and presale
 | Q-10 | **Who certifies a box office statement?** The Operator certifies the number that determines what they pay the artist. Counter-attestation by the Musician is the provenance-shaped answer (`personas.md` treats the Producer as a "trust broker" for exactly this reason) — but the artist has usually left the building. Required, optional, or async-with-a-deadline? | User | `/ideate-discover` Step 5 |
 | Q-11 | Do deal terms (comp allocations, presale allocations, announce timing, reporting cadence, break-even count) **flow from domain 17**, or are they re-keyed here? Re-keying is where the artist's and venue's understanding diverge, and the divergence surfaces at 7pm with people at the door. This question recurs in 19.01.02, 19.02.02, 19.03.01, 19.05.02 and 19.05.03 — it is one question, not five. | Agent | `/ideate-discover` Step 5 |
 | Q-12 | Does domain 16 model rooms structurally enough to feed this domain? Three features need data 16 may hold as free text: **per-configuration** licensed capacity (19.01.04 DT-02), accessible provision (19.01.05 Q-02), and licensed age restriction (19.04.04 Q-04). All three are requirements discovered here that land on 16. | Agent | `/ideate-discover` Step 5 (domain 16 owner) |
+
+
+<!-- spec-graph: auto-generated -->
+## Related Specs
+
+### Constrained by
+- [[decisions.md#d-01|D-01]]
+- [[decisions.md#d-16|D-16]]
+- [[decisions.md#d-02|D-02]]
+- [[decisions.md#d-03|D-03]]
+- [[decisions.md#d-04|D-04]]
+- [[decisions.md#d-05|D-05]]
+- [[decisions.md#d-06|D-06]]
+- [[decisions.md#d-07|D-07]]
+- [[decisions.md#d-08|D-08]]
+- [[decisions.md#d-13|D-13]]

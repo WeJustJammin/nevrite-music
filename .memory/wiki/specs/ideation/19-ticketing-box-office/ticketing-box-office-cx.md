@@ -398,3 +398,19 @@ The cheapest and most effective controls have **no false positives**, because th
 | R-05 | 19.12 Ticket Delivery & Wallet | 19.05 Counts & Drops | The wallet knows what a fan holds; the count knows what the room holds. Rejected: the wallet is a per-fan view of their own tickets, the count a per-show aggregate of everyone's. No shared state beyond the ticket itself, independent lifecycles — a fan's wallet does not change when the count does. |
 | R-06 | 19.01 Ticket Config | 19.04 Door Scanning (as a *direct config/pricing* link) | The door validates against a **replica of the count** (19.05.01), not against the configuration — scaling, fees and seat maps are invisible at the door. Modelling a direct pricing→door link would suggest the scanner needs pricing data it must never have. **Narrow rejection**: the *accessible-routing* link (CX-15) is a genuine 19.01→19.04 dependency, because a companion-to-position pairing is admission data, not pricing data. |
 | R-07 | 19.08 VIP Packages | 19.01 Ticket Config (as a plain price level) | Considered folding VIP into ticket scaling as a high-priced tier. Rejected: a VIP package bundles a physical/experiential component with its own fulfilment and cancellation lifecycle (CX-11) — it is a product, not a price point on the seat map. |
+
+
+<!-- spec-graph: auto-generated -->
+## Related Specs
+
+### Constrained by
+- [[decisions.md#d-03|D-03]]
+- [[decisions.md#d-06|D-06]]
+- [[decisions.md#d-09|D-09]]
+- [[decisions.md#d-04|D-04]]
+- [[decisions.md#d-02|D-02]]
+- [[decisions.md#d-01|D-01]]
+- [[decisions.md#d-08|D-08]]
+- [[decisions.md#d-05|D-05]]
+- [[decisions.md#d-07|D-07]]
+- [[decisions.md#d-18|D-18]]

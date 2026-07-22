@@ -125,3 +125,18 @@ seven features across four sub-domains independently named it as a hard dependen
 | Q-08 | **Is `07.09.02` DT-01's premise true?** The elegant claim — that producers already encode attribution in track names (`Sam Drums OH`) and the platform need only read it — is asserted from reasoning, not verified. In electronic production (`Kick In`, `Bass 3`) there may be no people in the names at all, and that is a large share of the market. **The strongest single assumption in this domain, and it should be tested against real sessions before Step 5 invests here.** | User | `/ideate-discover` Step 5 |
 | Q-09 | **Do specialist engineers need their own persona?** `07.07.03` Q-02 (mastering) and `07.07.05` Q-03 (Atmos) both argue that distinct professionals are folded into "Producer". Two features raising it independently echoes `meta/personas.md` Q-01's dealer question. | User | `/ideate-validate` |
 | Q-10 | **Two features argue themselves out of existence**: `07.07.04` DT-01 (format masters — no provenance value, entrenched incumbents) and `07.07.05` DT-03 (Atmos — serves almost nobody in phase one). Both are proposed `Won't`. Two of five features dissolving in `07.07` is a signal about that sub-domain's scope, not just its features. | User | MoSCoW |
+
+
+<!-- spec-graph: auto-generated -->
+## Related Specs
+
+### Constrained by
+- [[decisions.md#d-04|D-04]]
+- [[decisions.md#d-01|D-01]]
+- [[decisions.md#d-16|D-16]]
+- [[decisions.md#d-02|D-02]]
+- [[decisions.md#d-03|D-03]]
+- [[decisions.md#d-05|D-05]]
+- [[decisions.md#d-06|D-06]]
+- [[decisions.md#d-07|D-07]]
+- [[decisions.md#d-13|D-13]]
