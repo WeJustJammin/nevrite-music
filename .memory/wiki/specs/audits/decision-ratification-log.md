@@ -1,18 +1,17 @@
 # Blocking Decision Queue — Ratification Log
 
 > Owner decisions on the 57 open sub-decisions from `blocking-decision-queue.md`.
-> Each records the choice, the reasoning, what it preserves, and what it commits downstream.
 
-**Ratified: 10 / 57**
-
-## Progress by entry
+**Ratified: 17 / 57**
 
 | Entry | Domain | Axes ratified |
 |---|---|---|
-| DQ-03 | 02 Credits & Attribution | 4 — DQ-03.A3, DQ-03.A4, DQ-03.A2, DQ-03.A5 |
-| DQ-04 | 02 Credits & Attribution | 2 — DQ-04.1, DQ-04.2 |
-| DQ-05 | 02 Credits & Attribution | 2 — DQ-05.1, DQ-05.2 |
-| DQ-06 | 02 Credits & Attribution | 2 — DQ-06.1, DQ-06.2 |
+| DQ-03 | 02 Credits | 4 — DQ-03.A3, DQ-03.A4, DQ-03.A2, DQ-03.A5 |
+| DQ-04 | 02 Credits | 2 — DQ-04.1, DQ-04.2 |
+| DQ-05 | 02 Credits | 2 — DQ-05.1, DQ-05.2 |
+| DQ-06 | 02 Credits | 2 — DQ-06.1, DQ-06.2 |
+| DQ-01 | 01 Identity | 2 — DQ-01.A, DQ-01.B |
+| DQ-02 | 01 Identity | 5 — DQ-02.3, DQ-02.4, DQ-02.5, DQ-02.6, DQ-02.7 |
 
 ---
 
@@ -195,4 +194,130 @@
 - If this outcome is later judged unacceptable, per-consumer contracts (option 3) is the better remedy — its shape is already ratified as DEC-010 and it keeps each domain deciding its own gate.
 
 **Precedent**: DEC-010 / 02.04.04 D-07 — the per-consumer constrained-contract shape exists and is ratified, which is why option 3 remains the designated fallback rather than a new invention.
+
+
+## DQ-01.A — Disclosure shape for the implied facet at alias creation
+
+> **Entry**: DQ-01 · **Ratified**: 2026-07-22
+
+**Chosen**: D — Pre-write disclosure inside the single Create action (auto-add plus one disclosure line; no gate, no decline branch)
+
+**Why**: The only option leaving both ratified rules intact: 01.01.01 line 84 forbids a PROMPT and D has none; 01.01.02 D-10 objects to SILENCE and D is not silent. Those are different axes, so the apparent contradiction dissolves. Every other option either overturns one file outright or invents a decline branch no source defines — and CX-04 states "there is no state where someone holds an alias but no professional facet", so a refusal has nowhere to sit against the all-or-nothing creation contract (E-14/E-15). Note also that D-10's cited precedent is miscited: step 3's seller add is user-initiated ("They hit 'Sell something'"), and 01.01.01 separates explicit adds from implied adds, placing alias creation on the implied side by name.
+
+**Preserves**: 01.01.01 D-12 (implied facets auto-added, never prompted); 01.01.02 D-10 (never silently); 01.01.02 E-14/E-15 all-or-nothing creation; 01.01.01 D-06 (live obligations block removal, history never does); 01.01.01 D-07 (facet, visibility, permission are independent axes); DT-03 (Fan->Musician crossing stays non-destructive)
+
+**Commits us to**:
+- Both children are edited: 01.01.01 D-12 gains a pre-write disclosure it does not currently mention; 01.01.02 D-10 loses its "one confirm" framing and its miscited precedent.
+- Disclosure copy reuses the ratified seller sentence pattern: "Creating this name adds Performing to your account. Nothing you already have changes."
+- No decline branch, no refusal state, no conditional — nothing new is commissioned.
+- CX-04 §2 in 01.01-person-identity-roles-cx.md can now be closed; it is currently "[PENDING — Step 5]".
+- Accepted limit: a user who reads nothing on the creation screen ends up where auto-add would have left them. The disclosure improves the informed case only.
+
+**Precedent**: 01.01.01 Happy Path step 3 supplies the disclosure sentence without the blocking confirm (line 80 reserves confirms for explicit adds). 01.01.02 E-18 supplies the distinction that keeps it non-blocking: E-18 blocks before publication because "after delivery the inference is permanent and un-retractable" — a facet add is reversible, so it does not qualify.
+
+
+## DQ-01.B — Which facet alias creation implies
+
+> **Entry**: DQ-01 · **Ratified**: 2026-07-22
+
+**Chosen**: B1 — Always `performer`, explicitly ratified; the production-only-alias case recorded as a residual open question
+
+**Why**: B1 is the status quo of both ratified children and the only option needing no new signal and contradicting no ratified statement. B2 requires a purpose signal alias creation does not carry — obtainable only by asking, which collides with the axis A prohibition on role prompts — and a wrong inference reveals the WRONG markets under D-05, worse than an over-assertion the user can trim. B3 contradicts both 01.01.02 ("there is no fan-with-an-alias state") and CX-04, and inverts its own gate-at-the-act precedent, which gates the act while leaving the claim free.
+
+**Preserves**: 01.01.01 line 84 (creating an alias implies performer); 01.01.02 Happy Path step 4; 01.01.01 D-02 (facets are self-asserted, not credentials); 01.01.01 D-06 (removal blocked only by live obligations); CX-04 (no alias without a professional facet)
+
+**Commits us to**:
+- The parent CX map row is CORRECTED from "implies a performer/writer facet" to `performer` only, so all three files agree. That row is Medium confidence and its own detail section already says performer only.
+- RESIDUAL OPEN QUESTION recorded: a production-only alias (the industry norm per 01.01.02 Role Lens — production credits under one name, artist releases under another) receives a `performer` claim it did not ask for, with the discoverability that follows.
+- That cost is bounded by D-02 and D-06: the user can drop the facet in one act, since a fresh performer has no live obligations.
+
+
+## DQ-02.3 — Coarse activity enum — seven or four
+
+> **Entry**: DQ-02 · **Ratified**: 2026-07-22 · **Decided by**: agent (spec hygiene, not a product choice — flagged to owner)
+
+**Chosen**: 3a — Ratify seven (book / sign / spend / list / release / settle / administer); correct DT-02 prose to "a handful of coarse activities"
+
+**Why**: D-01 is the ratified Decision and 01.03.03 Behavior independently repeats the same seven, so two of three mentions already agree. DT-02 is a rejection annotation arguing against a granular permission matrix; its count is incidental to that argument. 3b would contradict a ratified decision to match a non-ratified annotation, no source says WHICH four, DT-02 own illustrative triple names three not four, and folding settle into spend collides with 01.04.03 which treats receive/spend/distribute as distinct money authorities.
+
+**Commits us to**:
+- Enum fixed at seven; axes 4 and 5 are stated over it.
+- DT-02 closing line edited from "four coarse activities" to "a handful of coarse activities".
+- release and settle stay individually addressable, which the split-seed option on axis 4 requires.
+- Accepted: seven plain-language statements per member is closer to DT-02 disliked matrix than four would be.
+
+
+## DQ-02.4 — Activity set seeded on a non-creator confirmed band membership edge
+
+> **Entry**: DQ-02 · **Ratified**: 2026-07-22
+
+**Chosen**: 4a — Peer seed: every confirmed band membership edge carries the full seven-activity set; the creator owning mandate is the first instance of the same set, not a superior grade
+
+**Why**: 01.03.03 DT-03 is the sub-domain own verdict on the alternative: custodial seeding makes whoever typed the name first the owner of the band, a structural injustice the platform would be inventing. personas.md states the rule directly (the design must make the lazy path the correct path) and CX-01 confirms the lazy path is dominant (most bands will never open the mandate surface). 01.03.01 costed the alternative operationally: every band is one death away from unadministrable. Directionally consistent with the equal-shares partnership default 01.04.01 already commits to disclosing.
+
+**Preserves**: 01.02.02 D-07 (creator of a band they are in holds an owning mandate); 01.03.01 Behavior rule 2 (unconfirmed edge carries zero mandate); 01.04.03 D-01 (authority and visibility decoupled; every member sees every movement); sub-domain CX-01 s4 (silently gaining authority is a security event)
+
+**Commits us to**:
+- ACCEPTED COST: maximally enables the personas.md Producer anti-persona split-push; detection is after the fact via 01.04.03 D-01 transparency and the audit trail.
+- Seeding administer means any confirmed member can alter another member mandate or invite/remove — WIDER than the partnership default the disclosure screen describes. The disclosure copy and the mandate screen must be reconciled so they say the same thing.
+- D-06 over-limit escalation is INERT unless axis 5 supplies a default ceiling — with no ceiling nothing is ever over limit.
+- Bands formed from a shared alias capture (CX-12) inherit peer authority for everyone named at capture; the skip must be legible, not silent.
+- 01.03.01 D-14 succession machinery is NOT load-bearing for multi-member bands — no sole holder means death never orphans the org.
+
+**Precedent**: personas.md Producer worst-accidental entry: the design must make the lazy path the correct path. CX-01 establishes the lazy path is the dominant path.
+
+
+## DQ-02.5 — Default value ceiling on seeded authority
+
+> **Entry**: DQ-02 · **Ratified**: 2026-07-22
+
+**Chosen**: 5b — Default value ceiling of USD 1,000 per act, configurable per band; over-ceiling acts escalate to the owning-mandate holder
+
+**Why**: Repairs peer seeding one structural defect (D-06 inert by construction) using only ratified parts: value ceiling is already a first-class scope dimension in 01.03.03 Behavior, and the escalation target is guaranteed to exist by 01.02.02 D-07 plus 01.03.03 D-04. 5c is more elegant but has no threshold to read in the unconfigured state, commissions an approval flow and timeout no source defines, amends D-06 stated target, and pre-empts 01.04 index Q-02. The USD 1,000 figure was authored by the owner: no source supplies one, and the illustrative GBP 300 / GBP 30k / GBP 2,000 figures predate the US-first revision and are one example band agreed threshold, not a platform default.
+
+**Preserves**: 01.03.03 D-06 (over-limit escalates to a capable holder, never dead-ends); 01.03.03 D-04 (every org retains at least one full mandate holder); 01.02.02 D-07 (creator owning mandate is uncapped); 01.03.03 Behavior (activity and value ceiling are the two scope dimensions); 01.04 index Q-02 left open (governance stays optional)
+
+**Commits us to**:
+- USD 1,000 per act is the platform default; each band may configure its own figure.
+- Denominated in USD per meta/constraints.md US-first revision. The GBP figures in 01.03.03 and 01.04.01 are illustrative narrative and must not be read as defaults.
+- D-06 escalation and 01.03.03 Happy Path steps 3-5 plus its first Edge Case row are now REACHABLE in the default state rather than only after configuration.
+- ACCEPTED: asymmetry returns above the ceiling — the creator is the only uncapped holder, so 01.03.01 D-14 succession offer and Q-04 selection rule stay live for the over-ceiling half rather than becoming dead code.
+- Revisit 5c once 01.04.01 governance capture ships — it takes none of the DT-03 objection and tracks what bands actually agree.
+
+**Precedent**: 01.03.03 Behavior names value ceiling as a first-class scope dimension; D-06 supplies the escalation semantics; D-07/D-04 guarantee the target exists.
+
+
+## DQ-02.6 — Which membership capacities the seed attaches to
+
+> **Entry**: DQ-02 · **Ratified**: 2026-07-22
+
+**Chosen**: 6b — Seed attaches to `permanent` capacity only, as a REBUTTABLE DEFAULT; touring / staff / honorary carry presence with zero authority until explicitly granted. R-02 amended in the same pass.
+
+**Why**: The axis-4 justification is symmetry among the people who constitute the band; it does not reach a hired touring player or an honorary name. 01.03.01 touring row confirms their governance standing is treated differently. IMPORTANT HONESTY NOTE carried from the revision round: an earlier draft claimed this qualification was inherited from ratified content — that was false. R-02 is the on-point ratified item and it cuts the other way ("Considered deriving mandate from capacity ('drummers can't sign')" — rejected). 6b is therefore genuine new content, coherent only if R-02 is amended to distinguish DERIVATION (barred) from a REBUTTABLE DEFAULT keyed to capacity (permitted).
+
+**Preserves**: 01.03.01 D-03 (four capacities: permanent/touring/staff/honorary); 01.03.03 D-02 (plain-language authority statements)
+
+**Commits us to**:
+- R-02 MUST be amended in the same pass — derivation of mandate from capacity stays barred; a rebuttable capacity-keyed default is permitted. Without that amendment this decision contradicts a ratified item.
+- A band may still grant a touring member the full set explicitly, and the surface must say so.
+- Every plain-language default statement gains a second sentence.
+- A touring hire does not inherit settle authority over band money on day one.
+
+
+## DQ-02.7 — Whether non-band org types inherit the seed
+
+> **Entry**: DQ-02 · **Ratified**: 2026-07-22
+
+**Chosen**: 7a — Band only; studio / venue / label / shop / agency default to the owning mandate plus explicit grants
+
+**Why**: The entire case for a peer seed is the invisible general-partnership default 01.04.01 D-04 commits the platform to disclosing, and 01.04 index D-01 scopes that to bands in terms while denying it for other orgs ("a limited company has directors and articles; a studio has an owner"). A studio, venue or shop already has an owner in the sense the seed would otherwise invent. Uniform seeding would push settle and sign onto every confirmed staff edge of a venue or shop, contradicting the Operator Role Lens in spirit. CX-15 uniformity claim was checked and does not support 7b: it is about scope across the types of one multi-type org, not about defaults across org types.
+
+**Preserves**: 01.04 index D-01 (governance modelled for the band specifically, not orgs generally); 01.03.03 Role Lens (Operators configure staff mandates explicitly); sub-domain D-01 (one merged membership/representation model)
+
+**Commits us to**:
+- HONESTY NOTE: no source states what a non-band org defaults to when nothing is configured. This is a ratification, not an inheritance — an earlier draft smuggled it in as part of another option's definition rather than surfacing it as a choice.
+- Two default models to explain: band = peer seed with ceiling; every other org type = owning mandate plus explicit grants.
+- Avoids the trader-status and payments unwinding that uniform seeding would force.
+
+**Precedent**: 01.04 index D-01, read at its real strength: it governs whether GOVERNANCE is modelled per type, which is supporting reasoning for scoping the seed to bands rather than a direct precedent on mandate defaults.
 
