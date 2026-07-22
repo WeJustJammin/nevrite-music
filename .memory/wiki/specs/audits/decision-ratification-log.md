@@ -1,10 +1,11 @@
 # Blocking Decision Queue — Ratification Log
 
 > Owner decisions on the 57 open sub-decisions from `blocking-decision-queue.md`.
+> Each records the choice, the reasoning, what it preserves, and what it commits downstream.
 
-**Ratified: 17 / 57**
+**Ratified: 21 / 57**
 
-| Entry | Domain | Axes ratified |
+| Entry | Domain | Axes |
 |---|---|---|
 | DQ-03 | 02 Credits | 4 — DQ-03.A3, DQ-03.A4, DQ-03.A2, DQ-03.A5 |
 | DQ-04 | 02 Credits | 2 — DQ-04.1, DQ-04.2 |
@@ -12,6 +13,7 @@
 | DQ-06 | 02 Credits | 2 — DQ-06.1, DQ-06.2 |
 | DQ-01 | 01 Identity | 2 — DQ-01.A, DQ-01.B |
 | DQ-02 | 01 Identity | 5 — DQ-02.3, DQ-02.4, DQ-02.5, DQ-02.6, DQ-02.7 |
+| DQ-08 | 07 Music Projects | 4 — DQ-08.2, DQ-08.3, DQ-08.4, DQ-08.5 |
 
 ---
 
@@ -320,4 +322,76 @@
 - Avoids the trader-status and payments unwinding that uniform seeding would force.
 
 **Precedent**: 01.04 index D-01, read at its real strength: it governs whether GOVERNANCE is modelled per type, which is supporting reasoning for scoping the seed to bands rather than a direct precedent on mandate defaults.
+
+
+## DQ-08.2 — Is a non-web client on the producer machine ever authorised
+
+> **Entry**: DQ-08 · **Ratified**: 2026-07-22
+
+**Chosen**: C — Defer behind a named, surface-specific evidence gate. No client authorised; the Desktop row becomes "not authorised; reopens only on the enumerated evidence".
+
+**Why**: A and B decide the same strategic question in opposite directions on the same missing evidence — domain Q-08 and 07.09.02 Q-03 both state the track-name premise is "asserted from reasoning, not verified" and call it the strongest single assumption in the domain. D genuinely changes the cost profile but is unspecified anywhere in the tree, keeps the parser cost, kills 07.09.03 ratified delivery surface, and widens the read-scope problem D-06 exists to control. C closes the ambiguity without spending a commitment on unevidenced ground, and costs nothing in v1 because no 07.09 feature is phased.
+
+**Preserves**: 07.09 D-02 (delivery shape routed to /create-prd); 07.09 D-04 / ideation-index D-37 (evidence before commitment); feature-ledger rows 273-275 (07.09.* Should, unphased); constraints.md single-surface v1 classification
+
+**Commits us to**:
+- THE CONTENT IS THE DECISION: the Desktop row must enumerate the four reopen-evidence items in full. Written without them it reproduces the exact ambiguity this finding names.
+- Reopen evidence: (a) can producers on locked-down commercial studio machines install anything at all (07.09.01 Q-02 / DT-03(b)); (b) does real-session evidence support the track-name premise (domain Q-08, 07.09.02 Q-03); plus the two further items enumerated in the entry.
+- "Not in scope. No directive." is REPLACED — the current row is an absence that any future reader can re-read as permission.
+- Nobody is currently assigned to gather the reopen evidence; these are owner-decision inputs, not tracked work. Flag as a follow-on.
+- /create-prd-stack can now proceed: no agent distribution, signing, notarisation or auto-update design is required for v1.
+
+**Precedent**: 07.09 D-04 / ideation-index D-37 (Owner, 2026-07-20) — evidence before commitment, already set on this sub-domain. C matches the SHAPE of that gate without borrowing its content.
+
+
+## DQ-08.3 — What delivers the 07.06.02 capture prompt in v1
+
+> **Entry**: DQ-08 · **Ratified**: 2026-07-22
+
+**Chosen**: PWA web push + in-app, ratified as the v1 delivery of the Tier 1 contributor card and Tier 2 Producer card
+
+**Why**: Uses only a capability D-28 (User, 2026-07-18) already locked into v1 — the capability needs no new authorisation, only the assignment is new. It is the only v1-available surface that can meet 07.06.02 D-09 Tier 1 requirement (<=5 s after close, ungated). 07.09.03 DT-01 rejected the web app as a prompt surface by name; its only objection to phone push was that constraints.md lacked a mobile surface — written 2026-07-17, one day before D-28 supplied one.
+
+**Preserves**: 07.06.02 D-09 (Tier 1 <=5 s, ungated); 07.06.02 D-11 (an ask with an empty pre-fill does not fire); 07.09.03 DT-01 (the web app is not a prompt surface); constraints.md Mobile (PWA) row, D-28
+
+**Commits us to**:
+- Closes 07.06.02 Q-09 and 07.09.03 Q-03.
+- PAYLOAD CAVEAT ratified with it: with no parse in v1 the pre-fill sources are the session roll (07.06.01) and roster (07.03.01) only, and D-11 suppresses cards with neither. "Push is decided" must not be read downstream as "the card is full".
+- The close SIGNAL is still limited in v1: producer tap, booked end and the 72 h backstop apply, but DAW close is unavailable as a trigger.
+- VERIFY BEFORE RELYING ON IT: iOS Safari web push requires the PWA installed to the home screen. No source in the tree states this platform fact.
+
+**Precedent**: constraints.md Mobile (PWA) row locked by D-28.
+
+
+## DQ-08.4 — Does 07.09 keep Should or become Won't
+
+> **Entry**: DQ-08 · **Ratified**: 2026-07-22 · **Decided by**: determined by DQ-08.2 (defer with a reopen gate)
+
+**Chosen**: Keep `Should`, unphased — no ledger change
+
+**Why**: This axis was explicitly conditional on the client-surface axis. Demoting 07.09.01/.02/.03 to `Won't` would close the door the evidence gate exists to hold open — the two are incompatible. `Should` + unphased is already the ledger state (feature-ledger rows 273-275, under the header rule that phasing applies to Must-haves only), so this is a confirmation rather than a change.
+
+**Commits us to**:
+- No change to moscow-ledger.md or feature-ledger.md.
+- The six bridge-dependent features are NOT re-scoped; 07.04.01 Q-05 ("if the bridge is a Won't, this feature should be re-scoped honestly rather than shipped hollow") does not fire.
+- If the gate later closes without reopening, this axis must be revisited to `Won't` together with that re-scope.
+
+
+## DQ-08.5 — Is the v1 thesis restated to match what v1 can do
+
+> **Entry**: DQ-08 · **Ratified**: 2026-07-22
+
+**Chosen**: Restate for the v1 window — capture at the first sharing moment; capture-at-source described as the direction, not the current claim
+
+**Why**: No 07.09 feature ships in v1 under any answer, so for the entire v1 window the product captures at first sharing (the review link, 07.05.02) plus the close prompt. Domain 07 D-06 makes this an obligation, not a preference: "the platform never overclaims what it cannot do ... these users are professionals; an overclaim discovered later is an unrecoverable trust breach." 07.09 Q-02 asks the question directly. Restating is cheap now and expensive later.
+
+**Preserves**: Domain 07 D-06 (honest claims over false assurance); The thesis itself as DIRECTION — provenance is the wedge, consolidation is the platform
+
+**Commits us to**:
+- Edits three positioning documents: vision.md thesis wording, meta/problem-statement.md framing, meta/competitive-landscape.md capture-vs-reconstruct differentiation.
+- Reversible if the evidence gate reopens and the bridge is built — two edits instead of none, accepted as cheaper than carrying the overclaim.
+- OPEN FOLLOW-ON: whether the restated claim is still competitively differentiating is a market judgement no source in the tree makes. competitive-landscape.md must be re-read against the new wording before the edit is finalised.
+- Closes 07.09 Q-02.
+
+**Precedent**: Domain 07 D-06, which states the obligation directly.
 
