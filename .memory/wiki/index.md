@@ -1156,3 +1156,60 @@
 
 ## Structured Memory
 
+- pattern: PAT-006: Never hand-author a derived file, and read a build script before running it (2026-07-22) — 2026-07-22T16:00:00.000Z
+- blocker: BLOCKER-004: Ideation remediation decisions await owner selection (2026-07-19) — 2026-07-22T15:30:00.000Z
+- decision: DEC-047: P-01 closes on its policy; validation evidence is implementation work (2026-07-22) — 2026-07-22T15:00:00.000Z
+- decision: DEC-040: The bulk-import quality bar does not bend — the evidence moment moves (2026-07-21) — 2026-07-21T15:00:00.000Z
+- decision: DEC-041: Stolen-serial review consumes domain 24's severity, and authors none (2026-07-21) — 2026-07-21T15:00:00.000Z
+- decision: DEC-042: Approval-required licence transfers freeze on vendor exit (2026-07-21) — 2026-07-21T15:00:00.000Z
+- decision: DEC-043: Theft-report standing binds to enumerated custody states (2026-07-21) — 2026-07-21T15:00:00.000Z
+- decision: DEC-044: Identity-confidence and collision rules move to the file that owns them (2026-07-21) — 2026-07-21T15:00:00.000Z
+- decision: DEC-045: Unclaimed-record suggestions auto-apply by field class (2026-07-21) — 2026-07-21T15:00:00.000Z
+- decision: DEC-046: The live-booking block resolves by consuming rules its own files already point to (2026-07-21) — 2026-07-21T15:00:00.000Z
+- decision: DEC-033: Originality aggregates into a nominal enum for comp matching (2026-07-21) — 2026-07-21T14:00:00.000Z
+- decision: DEC-034: An originality change voids a live offer in either direction (2026-07-21) — 2026-07-21T14:00:00.000Z
+- decision: DEC-035: Local-pickup settlement is a per-listing seller choice (2026-07-21) — 2026-07-21T14:00:00.000Z
+- decision: DEC-036: A rights takedown preserves the holder record; a revision appends (2026-07-21) — 2026-07-21T14:00:00.000Z
+- decision: DEC-037: A departed contributor's confirmed split row survives unchanged (2026-07-21) — 2026-07-21T14:00:00.000Z
+- decision: DEC-038: A host-update break is an external change — flag, disclose, never revoke (2026-07-21) — 2026-07-21T14:00:00.000Z
+- decision: DEC-039: Several queue entries were mis-framed, and the ratifications correct them (2026-07-21) — 2026-07-21T14:00:00.000Z
+- decision: DEC-025: Production-stage vocabulary is validation-gated before approval (2026-07-21) — 2026-07-21T13:00:00.000Z
+- decision: DEC-026: Large catalogues get a dense table, never a second lifecycle (2026-07-21) — 2026-07-21T13:00:00.000Z
+- decision: DEC-027: Superseded approvals reinstate on version identity, never on judgement (2026-07-21) — 2026-07-21T13:00:00.000Z
+- decision: DEC-028: A handoff spec is authored where owned and referenced where not (2026-07-21) — 2026-07-21T13:00:00.000Z
+- decision: DEC-029: Readiness targets follow the same ownership rule, and pin-vs-live is dissolved (2026-07-21) — 2026-07-21T13:00:00.000Z
+- decision: DEC-030: A mis-typed source declaration is flagged, never reclassified (2026-07-21) — 2026-07-21T13:00:00.000Z
+- decision: DEC-031: Vault re-gating fires only on an owner-declared material change (2026-07-21) — 2026-07-21T13:00:00.000Z
+- decision: DEC-032: An access downgrade notifies the affected person and the roster (2026-07-21) — 2026-07-21T13:00:00.000Z
+- decision: DEC-023: Unclaimed stubs merge only on exact canonical writer-name sets (2026-07-21) — 2026-07-21T12:00:00.000Z
+- decision: DEC-024: Term and moral-right status is bounded to four v1 jurisdictions (2026-07-21) — 2026-07-21T12:00:00.000Z
+- pattern: PAT-005: Do not conflate a validation-gate decision with validation completion (2026-07-21) — 2026-07-21T12:00:00.000Z
+- decision: DEC-015: DAW parsing support is validation-gated before selection (2026-07-20) — 2026-07-20T12:00:00.000Z
+- decision: DEC-016: Rights-aware vault defaults require practitioner validation (2026-07-20) — 2026-07-20T12:00:00.000Z
+- decision: DEC-017: Mixed DSP acceptance uses attached rejected-item details (2026-07-20) — 2026-07-20T12:00:00.000Z
+- decision: DEC-018: Hold ladders use optimistic version checks and reject-and-reoffer (2026-07-20) — 2026-07-20T12:00:00.000Z
+- decision: DEC-019: Public comped-out credits retain transparent qualification (2026-07-20) — 2026-07-20T12:00:00.000Z
+- decision: DEC-020: Suspected-ring demotion changes traversal rank, not presentation (2026-07-20) — 2026-07-20T12:00:00.000Z
+- decision: DEC-021: Recorded master majority requires strictly more than half (2026-07-20) — 2026-07-20T12:00:00.000Z
+- decision: DEC-022: Overlapping mashup work weights require declarant allocation (2026-07-20) — 2026-07-20T12:00:00.000Z
+- decision: DEC-009: Taxonomy selection and proposals use constrained Config access (2026-07-19) — 2026-07-19T12:00:00.000Z
+- decision: DEC-010: Collusion evidence uses a constrained versioned edge contract (2026-07-19) — 2026-07-19T12:00:00.000Z
+- decision: DEC-011: Ownership-ledger ordering uses a portable bytewise party-ID collation (2026-07-19) — 2026-07-19T12:00:00.000Z
+- decision: DEC-012: V1 feedback contradictions use bounded positional candidates and human flags (2026-07-19) — 2026-07-19T12:00:00.000Z
+- decision: DEC-013: Reaffirmed 24-domain ideation map after independent recovery audit (2026-07-19) — 2026-07-19T12:00:00.000Z
+- decision: DEC-014: Ratified immutable private-link recipient isolation for review feedback (2026-07-19) — 2026-07-19T12:00:00.000Z
+- pattern: PAT-004: Recover pipeline state from the tree before rerunning a staged workflow (2026-07-19) — 2026-07-19T12:00:00.000Z
+- decision: DEC-007: 08 Real-Time Jamming is the only genuine domain-merge candidate (2026-07-18) — 2026-07-18T12:00:00.000Z
+- decision: DEC-008: The identifier-binding seam is an unowned architectural gap (2026-07-18) — 2026-07-18T12:00:00.000Z
+- decision: DEC-001: The rights stack is the thesis, not an adjacency (2026-07-16) — 2026-07-16T12:00:00.000Z
+- decision: DEC-002: Fans are first-class users, not CRM records (2026-07-16) — 2026-07-16T12:00:00.000Z
+- decision: DEC-003: Structural classification remains `single-surface` despite the fan decision (2026-07-16) — 2026-07-16T12:00:00.000Z
+- decision: DEC-004: Three separate marketplace domains, not one (2026-07-16) — 2026-07-16T12:00:00.000Z
+- decision: DEC-005: Commit identity is the business account, set repo-local (2026-07-16) — 2026-07-16T12:00:00.000Z
+- decision: DEC-006: Firebase removed entirely from project documents (2026-07-16) — 2026-07-16T12:00:00.000Z
+- pattern: PAT-001: Verify a generated claim against the kit's own reference before propagating it (2026-07-16) — 2026-07-16T12:00:00.000Z
+- pattern: PAT-002: Check the actual blocker before answering with the policy reason (2026-07-16) — 2026-07-16T12:00:00.000Z
+- pattern: PAT-003: A verification pass that refutes nothing is a signal, not a success (2026-07-16) — 2026-07-16T12:00:00.000Z
+- blocker: BLOCKER-001: `gh` authenticated as personal account, not business account (2026-07-16) — 2026-07-16T12:00:00.000Z
+- blocker: BLOCKER-002: `wejamm.in` DNS not pointed at Cloudflare (2026-07-16) — 2026-07-16T12:00:00.000Z
+- blocker: BLOCKER-003: Self-hosted GitHub runners not installed (2026-07-16) — 2026-07-16T12:00:00.000Z
