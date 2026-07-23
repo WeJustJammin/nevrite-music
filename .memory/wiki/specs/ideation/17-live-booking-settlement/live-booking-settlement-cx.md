@@ -3,7 +3,7 @@
 > **Level**: domain
 > **Scope**: Connections between children of [Live Booking & Settlement](./live-booking-settlement-index.md)
 > **Status**: [DEEP] — 14 children; 24 intra-domain cross-cuts synthesised, 7 rejected pairs held.
-> **Last updated**: 2026-07-18
+> **Last updated**: 2026-07-23
 
 > **Reading note.** This file connects the domain's **14 children** (8 sub-domains + 6 features) to
 > each other. Leaf-to-leaf edges that live *inside* one child — e.g. `17.01.01 ↔ 17.01.02` (both under
@@ -222,7 +222,8 @@ box-office number — and that is a clawback from an agency that has been paid a
 
 **Relationship**: **Settlement is the generator, not a consumer.** A signed settlement emits a draw record
 (17.11.01) that exists nowhere else in the industry — verified, slot-qualified (CX-13), and unfalsifiable
-because both parties agreed the show happened and how many came. The domain's clearest expression of the
+because both parties agreed the show happened and how many **paid to be there** — the draw is `admissions_paid`,
+not the all-bodies total (17.11.01 D-06, D-07). The domain's clearest expression of the
 D-18 provenance thesis.
 
 **Role scoping**:

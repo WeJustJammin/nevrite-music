@@ -3,7 +3,7 @@
 > **Level**: domain
 > **Scope**: Connections between children of [Trust, Safety & Disputes](./trust-safety-disputes-index.md)
 > **Status**: [DEEP] — 9 children; intra-domain cross-cuts synthesised from Step 6 edge evidence
-> **Last updated**: 2026-07-18
+> **Last updated**: 2026-07-23
 
 This domain is a single adjudication machine wearing nine faces. Its cross-cuts are not incidental
 couplings — they are the machine's own wiring. One decision record is authored at the queue, sealed by
@@ -424,7 +424,7 @@ default everywhere in this domain — here, non-disclosure is mandatory.
 
 | Case class | Source | What domain 24 absorbs | Budget status |
 |---|---|---|---|
-| **Contested evidence-based lift objection** | [02.01.05](../02-credits-attribution/02.01-credit-graph-discography/02.01.05-credit-visibility-embargo.md) D-19/D-20/D-21/D-22 → [02.05](../02-credits-attribution/02.05-credit-dispute-resolution.md) D-07, riding the `Dispute Case Engine` cross-cut (serves 02, 05, 09, 13, 14, 17, 19, 24) | Human adjudication **per objection**, under a **mandatory resolution SLA** — the credit stays embargoed at the status quo while contested, so an embargoed status quo plus an unbounded resolver is a de facto Producer veto, the outcome the axis was decided to avoid. Plus the appeal path, and the serial-objector pattern: re-submission of evidence after an objection is deliberately **uncapped** (no cap, no cooldown, no escalation counter), so a repeat objector must keep losing on the merits *here* rather than being stopped by a counting rule nobody sourced | **Unbudgeted.** No current 24 spec allocates per-objection reviewer capacity for this class. It is **not** general-queue load — it never enters the moderation queue, so CX-06's carve-out holds — but it is reviewer time on the same unrotatable one-person team ([index](./trust-safety-disputes-index.md) Q-06, Q-07). The SLA *value* is deferred, not the requirement: `02.01.05` Q-06 — Owner: User, `/create-prd` |
+| **Contested evidence-based lift objection** | [02.01.05](../02-credits-attribution/02.01-credit-graph-discography/02.01.05-credit-visibility-embargo.md) D-19/D-20/D-21/D-22 → [02.05](../02-credits-attribution/02.05-credit-dispute-resolution.md) D-07, riding the `Dispute Case Engine` cross-cut (serves 02, 05, 09, 13, 14, 17, 19, 24) | Human adjudication **per objection**, under a **mandatory resolution SLA** — the credit stays embargoed at the status quo while contested, so an embargoed status quo plus an unbounded resolver is a de facto Producer veto, the outcome the axis was decided to avoid. Plus the appeal path, and the serial-objector pattern: re-submission of evidence after an objection is deliberately **uncapped** (no cap, no cooldown, no escalation counter), so a repeat objector must keep **winning on the merits** *here* rather than blocking for free — the resolver bounds the loop, not a counting rule nobody sourced | **Unbudgeted.** No current 24 spec allocates per-objection reviewer capacity for this class. It is **not** general-queue load — it never enters the moderation queue, so CX-06's carve-out holds — but it is reviewer time on the same unrotatable one-person team ([index](./trust-safety-disputes-index.md) Q-06, Q-07). The SLA *value* is deferred, not the requirement: `02.01.05` Q-06 — Owner: User, `/create-prd` |
 
 **What the adjudicator is and is not asked.** The question is a **predicate check on a closed ground list**
 (`02.01.05` D-19): (i) the evidence identifies a different recording; (ii) the URL/identifier is not publicly

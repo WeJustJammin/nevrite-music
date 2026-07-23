@@ -3,7 +3,7 @@
 > **Level**: domain
 > **Scope**: Connections between children of [Credits & Attribution](./credits-attribution-index.md)
 > **Status**: [DEEP] — children deepened (Step 5); intra-domain cross-cuts synthesised with rollback, race, and per-field permission detail.
-> **Last updated**: 2026-07-18
+> **Last updated**: 2026-07-23
 
 ## Cross-Cut Map
 
@@ -292,7 +292,7 @@
 **Role scoping**: Musician/Producer see the contested marker on the record-view; Fan sees the unchanged public page (no contest state leaks); Operator corroborates only.
 
 **Synthesis questions answered**:
-1. **Shared-state owner + merge**: The credit is `02.01`'s; `02.05` sets a contested flag that is a participant-view affordance, never a public page mutation. Dispute outputs (amendment, removal) change the page; pendency does not.
+1. **Shared-state owner + merge**: The credit is `02.01`'s; `02.05` sets a contested flag that is a participant-view affordance, never a public page mutation. Dispute outputs (amendment, removal) change the page; pendency does not. **The same rule now governs a claim contest** (`02.03.03` D-03 corrected to match): no public marker, no public suppression — and there the credit additionally **stays attached to the first claimant** until the contest closes, detaching only on `Unresolvable`, when it returns to the unclaimed shell it came from (`02.03.03` D-05/D-06).
 2. **Trigger chain + rollback + sync/async**: File dispute → mark record contested (participant view) + zero-weight in traversal → adjudicate → amendment/removal or dismissal. Dismissal clears the flag with no public trace.
 3. **Permission intersection**: Anyone with standing may file; only participants see the contested marker; the adjudicator gets a logged, non-publishing scoped read (D-18) even of embargoed records.
 4. **Notification fan-out**: Parties are notified on file and on outcome; the public is never notified of a mere filing.
@@ -337,7 +337,7 @@
 
 | Mechanism | Serves | Domain 02's relationship |
 |---|---|---|
-| **DAW / Plugin Host Integration Channel** | 02, 05, 07, 09, 12 | The channel carries stems (07), split capture (09) and service delivery (05) as well as credits. `02.02` owns the *payload* (roll, log, prompt); the channel is platform-wide. Sub-domain `02.02` D-01. **Q-02 makes the wedge depend on this cross-cut's answer.** |
+| **DAW / Plugin Host Integration Channel** | 02, 05, 07, 09, 12 | The channel carries stems (07), split capture (09) and service delivery (05) as well as credits. `02.02` owns the *payload* (roll, log, prompt); the channel is platform-wide. Sub-domain `02.02` D-01. **Q-02 makes the wedge depend on this cross-cut's answer.** **NO v1 CHANNEL (owner decision 2026-07-22, D-70 / DQ-08.2)**: no non-web client on the producer's machine is authorised, so this mechanism has **no v1 implementation** and every consumer above must degrade to its no-channel branch for the whole v1 window. Retained as a mechanism, not deleted — it reactivates only if the Desktop row reopens on its enumerated evidence. |
 | **Dispute Case Engine** | 02, 05, 09, 13, 14, 17, 19, 24 | `02.05` rides it; only credit-specific evidence semantics and contested-credit behavior (CX-16) are domain-owned. Must carry a general privileged-read grant (D-18). `02.05` D-01, DT-01. |
 | **Reputation, Endorsement & Vouching** | 01, 02, 03, 04, 05 | Credit-derived *weight* lands in `02.04.02`; the endorsement *surface* is a platform reputation mechanism. The pull toward a party-level "verified %" badge (strongest on a 05 marketplace profile) is exactly the reputation score routed OUT of domain 02 (D-07). |
 | **Music Role & Instrument Taxonomy** _(owner: 02)_ | 02, 03, 04, 05, 06, 08, 13, 15, 16 | Shared vocabulary with a domain owner. Consumers (03, 04, 05, 06, 08) *map* rather than extend (`02.06` D-14); rights outcomes (featured-performer pay) belong to 10 not the vocabulary (D-15); gear objects belong to 13/15 (D-08). |

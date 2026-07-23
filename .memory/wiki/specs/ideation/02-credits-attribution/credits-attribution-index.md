@@ -3,7 +3,7 @@
 > **Level**: domain
 > **Parent**: [WeJammin Ideation Index](../ideation-index.md)
 > **Status**: [BREADTH]
-> **Last updated**: 2026-07-17
+> **Last updated**: 2026-07-23
 > **Novelty**: `whitespace` | **Priority**: `core`
 
 ## Overview
@@ -130,7 +130,7 @@ The verified graph of who did what on every session, work and recording — capt
 | Q-01 | ~~Which candidate children are sub-domains vs features?~~ | Agent | ✅ Resolved this pass — see Candidate Disposition |
 | Q-02 | ~~Are any candidate children actually cross-cuts?~~ | Agent | ✅ Resolved — 4 routed out (D-02, D-03, D-05, D-07) |
 | Q-03 | **Who owns the `session` entity — domain 02 or domain 07?** Both need it. Duplicating it is the single worst structural error available in this domain. | User | `/ideate-validate` |
-| Q-04 | **Is there a DAW plugin?** `02.02` Q-02 and CX-02 converge on this: without a reliable wrap signal the close prompt mistimes, the in-room tap does not happen, and the domain degrades to an async attestation chase — which is Sound Credit, which already exists and already failed. **The plugin question is not downstream of the wedge; it is the wedge.** | User | `/create-prd` |
+| Q-04 | **Is there a DAW plugin?** `02.02` Q-02 and CX-02 converge on this: without a reliable wrap signal the close prompt mistimes, the in-room tap does not happen, and the domain degrades to an async attestation chase — which is Sound Credit, which already exists and already failed. **The plugin question is not downstream of the wedge; it is the wedge.** — **ANSWERED FOR v1 (owner decision 2026-07-22, `ideation-index` D-70, queue entry DQ-08.2): no.** No non-web client on the producer's machine is authorised, so there is no plugin, no watch-folder agent and no DAW-close signal in v1. The domain's v1 wrap ladder is rungs 1, 4 and 5 (`02.02.03`), the cards ship on **PWA web push + in-app** (`07.06.02` D-17), and the v1 thesis is restated to **capture at the first sharing moment** (`vision.md`; D-70(d)). The question reopens **only** on the four enumerated evidence items in `meta/constraints.md` § Desktop Surface — Reopen Evidence; `07.09` D-04's parser gate is separate and additional. | User | `/create-prd` (post-gate only) |
 | Q-05 | **What is the actual invitation channel for unclaimed shells?** (`02.03.02` Q-01, CX-04.) Shells have no notification channel, so the growth loop depends on a Producer telling a human — an act the platform can prompt but never perform. The growth model's load-bearing unknown. | User | `/ideate-validate` |
 | Q-06 | **Credit vs split at the close prompt** (`02.02.03` DT-02). `personas.md` pairs them in one moment; they are different facts with different weight, and domain 09 owns the split. The highest-risk intersection on the map, and it runs through one UI. | User | `/create-prd` |
 | Q-07 | **Ring detection's false positives are unappealable** (`02.04.04` Q-02). A real tight scene is topologically near-identical to a collusion ring, and demotion is silent. **Narrowed by D-11**: the harm no longer reaches the public label, the rung, or any rung-gated consumer — it is bounded to traversal rank, search placement and per-edge dispute weighting. Still invisible, still unappealable, still the domain's hardest open question; what is open is whether *that* bounded harm is acceptable. | User | `/ideate-validate` |

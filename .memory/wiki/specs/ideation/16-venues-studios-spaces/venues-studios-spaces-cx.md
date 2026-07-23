@@ -82,7 +82,7 @@ policy (16.05.04 D-02).
 **Synthesis questions answered**:
 1. **Shared-state owner + merge**: The record owns the field; the provenance ranking (16.05.03 D-02) settles most. What reaches 16.05.04 is owner-vs-first-hand, both credible — last-agreed stands, contest visible.
 2. **Trigger chain + rollback**: Harvest contradiction → contest → corroboration → `[PENDING]` flip or escalate to 24. Async; no rollback (append-only revision history).
-3. **Permission intersection**: Inverted for statutory fields — the owner cannot write curfew/dB-limit/licensed-capacity (16.01.06 D-02); a rival Operator's false edit routes through the suggested-edit queue, never a unilateral write.
+3. **Permission intersection**: Inverted for statutory fields — the owner cannot write the operating-hours limit, the dB limit or the occupancy ceiling **where the record's regime profile declares an instrument that imposes them** (16.01.06 D-02/D-05). Where it declares none — as the US launch profile does not for the operating conditions — the same numbers are the Operator's own claims labelled as claims (16.02.03 D-01/D-13) and the inversion has no input. A rival Operator's false edit routes through the suggested-edit queue either way, never a unilateral write.
 4. **Notification fan-out**: Contests notify the Operator. A stream of "more people say you're wrong" is a real defection risk — a product tension, not just a mechanism.
 5. **State-transition race**: **A large share of "conflicts" are conditionality failures** (16.05.04 DT-05) — the ramp was out one week and not the next; both parties told the truth and the flat spec model could not hold it. Fixing conditionality (index Q-03) would *remove* conflicts, not resolve them.
 
@@ -94,7 +94,9 @@ policy (16.05.04 D-02).
 `[venue, studio]` does not carry two spec sheets — its **rooms** do, individually. Model the spec on the
 place instead of the room and a band books "the venue" and arrives at the wrong room. Step 6 added the
 supply chain that feeds capacity: the **statutory ceiling is date-scoped, not scalar** (a temporary
-permission at 499 for one weekend is a second, time-bounded ceiling — 16.02.01 DT-06), and a **wheelchair
+permission at 499 for one weekend is a second, time-bounded ceiling — 16.02.01 DT-06 — **where the
+regime profile declares a temporary-permission instrument**, 16.01.06 D-05 / 16.02.03 D-13; where it
+does not, the date-scoping machinery is unchanged and has one ceiling to resolve), and a **wheelchair
 bay physically displaces standing places** (16.02.01 DT-15), so accessible provision is a term in the
 capacity subtraction chain, not a parallel concern — a fact currently owned by nobody. Configurations
 belong to the room (D-04); a **divisible room** (airwall / combinable rehearsal rooms) is not a
@@ -111,7 +113,7 @@ simultaneously and no capacity property can express that.
 2. **Trigger chain + rollback**: Claim → write access to all rooms. A ceiling drop while a hold exists **suspends the configuration but never voids the hold** (no tickets exist yet); the holder is notified to decide before conversion.
 3. **Permission intersection**: Write access is record-level and inherited **except on a room carrying its own operating org**. That authority now has **two origins** (16.01.01 D-12): a **grant** (16.01.02 D-09 — instant, no claim unit, the cooperative default) and a **room-scoped claim** (16.05.02 D-16 — L7 on the sublease, Provisional until reviewed, for the landlord who will not cooperate). A grant is **not unilaterally revocable**: revocation is adjudicated, and the room stays live and bookable throughout (16.01.02 D-16).
 4. **Notification fan-out**: Record-level events (closure) reach everyone with a reservation on any room.
-5. **State-transition race**: Closure racing a booking — closure wins and rolls back; a licence-condition change must cascade to confirmed reservations the way closure does, and currently nothing does (16.02.03 gap).
+5. **State-transition race**: Closure racing a booking — closure wins and rolls back; a **statutory-condition** change must cascade to confirmed reservations the way closure does, and currently nothing does (16.02.03 gap, Q-04). Where the profile declares no such condition (16.01.06 D-05) the cascade has no trigger — the equivalent Operator-claim edit is 16.02.03 D-08's "the negotiation holds the value it was quoted against", which is a different rule with a different owner.
 
 ---
 
@@ -226,7 +228,7 @@ statute demands of the place.
 **Synthesis questions answered**:
 1. **Shared-state owner + merge**: The room graph is owned by 16.01.02; the calendar state is owned by 16.06.01. One graph, two readings — no merge conflict by construction.
 2. **Trigger chain + rollback**: Hold evaluates the graph → confirm re-evaluates → first commit wins → loser rolled back with a named reason. Closure → cascade → live bookings cancelled with the inverted refund ladder.
-3. **Permission intersection**: Live/bookable is gated on the place being claimed (D-11); room-level delegation (D-09) grants booking authority on one room without a partial-claim concept.
+3. **Permission intersection**: Live/bookable is gated on the place being claimed (D-11); room-level **grant** (16.01.02 D-09) confers booking authority on one room instantly and with no claim unit — **and, since DQ-13.1, a room-scoped claim (16.05.02 D-16) is the second origin** for the operator whose landlord will not cooperate, which runs L7 and is Provisional (no calendar, no rate card) until reviewed. So the "no partial-claim concept" framing is superseded: the room *is* a claim unit, it is simply not the fast path.
 4. **Notification fan-out**: Hold-loss notifies the loser; closure notifies every reservation holder; Out-of-Service notifies only this room's holders.
 5. **State-transition race**: The domain's central race — two exclusive siblings confirming simultaneously; resolved by evaluate-at-hold + re-evaluate-at-confirm, first commit wins.
 

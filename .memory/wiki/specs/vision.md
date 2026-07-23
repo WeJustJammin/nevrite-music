@@ -4,7 +4,8 @@
 
 > **This is a human-readable project summary.** For pipeline-grade detail, see
 > [ideation-index.md](ideation/ideation-index.md) and the fractal domain tree it references
-> (24 domains, 734 features, 1,120 files).
+> (24 domains, 734 features, 1,121 files — meta went 5 → 6 on 2026-07-22 with
+> [meta/counterparties.md](ideation/meta/counterparties.md), D-71).
 
 ## Problem Statement
 

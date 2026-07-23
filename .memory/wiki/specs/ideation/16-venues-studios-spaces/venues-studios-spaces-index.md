@@ -77,7 +77,7 @@ Two findings from breadth classification strengthen the domain-status argument b
 | [16.05.07 Duplicate Detection & Merge](./16.05-curation-provenance-data-integrity/16.05.07-duplicate-detection-merge.md) | Named in this index's own rationale ("dedup/merge"), absent from the candidates. Seeding from 3+ sources without it produces a registry **worse than empty** — it splits calendars. |
 | [16.07 Spec Conformance Check](./16.07-spec-conformance-check-rider-room.md) | Asserted in this index's rationale as the domain's headline capability, owned by nobody. It sits between 16's spec and 18's rider and would fall down the gap. |
 | [16.06.09 Recurring & Lockout Tenancy](./16.06-space-booking-reservations/16.06.09-recurring-bookings-lockout-tenancy.md) | Lockout appears in the sweep only as a word in a parenthetical. It is a **tenancy, not a booking** — and a large share of rehearsal revenue. |
-| [16.01.06 Licences, Insurance & Statutory Records](./16.01-place-records-rooms/16.01.06-licences-insurance-statutory-records.md) | PLI is a hard gate on real UK venue bookings; licensed capacity is a statutory ceiling 19 must not exceed. Entirely absent from the sweep. |
+| [16.01.06 Licences, Insurance & Statutory Records](./16.01-place-records-rooms/16.01.06-licences-insurance-statutory-records.md) | Liability cover is a hard gate on real venue bookings; the occupancy ceiling is a statutory ceiling 19 must not exceed **where the record's regime profile declares that slot** (D-13). Entirely absent from the sweep. |
 | [16.03.04 Session Archive & Recall Policy](./16.03-studio-technical-specification/16.03.04-session-archive-recall-policy.md) | Split out of candidate 17, where it was bundled with invoicing. The session archive is **where provenance physically lives**. |
 
 ## Role Matrix
@@ -85,7 +85,7 @@ Two findings from breadth classification strengthen the domain-status argument b
 | Child | Musician | Producer | Operator | Fan |
 |-------|----------|----------|----------|-----|
 | 16.01 Place Records & Rooms | 👁️ View + suggest | 👁️ View + suggest | ✅ Full | 👁️ View (venue-type only) |
-| 16.02 Venue Technical Specification | 👁️ View + suggest | 👁️ View | ⚙️ Config (licence-derived fields not writable) | ❌ None (doors/transport only) |
+| 16.02 Venue Technical Specification | 👁️ View + suggest | 👁️ View | ⚙️ Config (statutory-derived fields not writable, where the profile declares them — D-13) | ❌ None (doors/transport only) |
 | 16.03 Studio Technical Specification | 👁️ View + suggest | 👁️ View + suggest (primary) | ✅ Full | ❌ None |
 | 16.04 Rehearsal & Practice Spaces | ✅ Full (primary) | 👁️ View | ✅ Full | ❌ None |
 | 16.05 Curation, Provenance & Data Integrity | ✅ Contribute (primary) | ✅ Contribute (primary) | ✅ Full / 📊 Reports (harvest) | ⚙️ Suggest (limited, unresolved) |
@@ -101,8 +101,11 @@ Two findings from breadth classification strengthen the domain-status argument b
 >    page, an accessibility route, an at-risk signal to rally around). This is the platform's most
 >    professional domain. Per D-11 the Fan is a first-class user; here that means a small, deliberate
 >    surface, not a shrunken version of the professional one.
-> 2. **The Operator is `⚙️ Config`, not `✅ Full`, on the venue spec** — licence-derived facts
->    (curfew, dB limit, licensed capacity) are not theirs to write (16.01.06 D-02).
+> 2. **The Operator is `⚙️ Config`, not `✅ Full`, on the venue spec** — statutory-derived facts
+>    (operating-hours limit, dB limit, occupancy ceiling) are not theirs to write **where the record's
+>    regime profile declares an instrument that imposes them** (16.01.06 D-02/D-05, D-13). Where it
+>    declares none, the same numbers are Operator claims labelled as claims (16.02.03 D-01) — the
+>    `⚙️ Config` posture holds because the *rule* is unchanged; only its input is absent.
 > 3. **On 16.05 the Operator is `📊 Reports` for the harvest while Musician and Producer are `✅`** —
 >    the party who owns the record is not the party who supplies its most trustworthy facts. That
 >    inversion is the domain's defining property.

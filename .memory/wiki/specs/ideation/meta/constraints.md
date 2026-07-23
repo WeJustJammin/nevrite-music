@@ -202,7 +202,7 @@ This is what's genuinely buildable solo in 3–6mo AND delivers the unrepeatable
 | # | Domain | Role in v1 | Musts |
 |---|---|---|---|
 | 01 | Identity, Profiles & Organizations | the account everything hangs off | 10 |
-| 02 | Credits & Attribution | the wedge — capture at source | 9 |
+| 02 | Credits & Attribution | the wedge — capture at the **first sharing moment** (D-70, 2026-07-22; capture-at-source is the *direction*, not the v1 claim — see § Project Surfaces, Desktop row) | 9 |
 | 05 | Services Marketplace | hiring = the funnel into the room | 10 |
 | 07 | Music Projects & Collaboration | where the work happens | 9 |
 | 09 | Rights & Ownership | **split CAPTURE only** (not collection) | 7 |

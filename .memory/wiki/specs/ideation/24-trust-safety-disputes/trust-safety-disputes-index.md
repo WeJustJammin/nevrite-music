@@ -3,7 +3,7 @@
 > **Level**: domain
 > **Parent**: [WeJammin Ideation Index](../ideation-index.md)
 > **Status**: [BREADTH]
-> **Last updated**: 2026-07-16
+> **Last updated**: 2026-07-23
 > **Novelty**: `industry-standard` | **Priority**: `core`
 
 ## Overview
@@ -138,7 +138,7 @@ Three findings reshaped the domain and belong at the top of it:
 | Q-03 | **Admin/Moderator is not a persona** (`personas.md` Q-02) and this domain has *five* non-persona actors. Three of nine children have an all-`❌` Role Matrix row. **This domain cannot be specified until Q-02 is resolved.** | User | `/create-prd` |
 | Q-04 | **MoSCoW here is a function of the beachhead** (`problem-statement.md` Q-03). Gear-marketplace fraud, chargebacks and CITES are irrelevant if gear does not launch; CSAM reporting and DMCA are not, because they bind from user one regardless. The domain cannot be prioritised before the beachhead is chosen. | User | MoSCoW / `/ideate-validate` |
 | Q-05 | **Every DSA scale-gate reading in this domain is an agent's reading.** Art 16 (Section 2, no carve-out) vs Art 19 disapplying Section 3 for micro/small; Art 17 SoR vs Art 15(2) transparency. This reasoning moves four features between Must and Could and **must be confirmed by counsel**, not by an agent. | User + counsel | `/create-prd-security` |
-| Q-06 | **`meta/constraints.md` describes no platform team — so the owner is the first moderator.** That makes reviewer wellbeing a business-continuity control ([24.01.03](./24.01-reporting-moderation/24.01.03-moderation-queue-reviewer-ops.md) DT-01), makes conflict-of-interest recusal structurally impossible (24.01.03 Q-02), and puts CSAM and crisis review on one unrotatable person. **This is a founder-welfare question, not only a staffing one.** | User | `/ideate-validate` |
+| Q-06 | **`meta/constraints.md` describes no platform team — so the owner is the first moderator.** That makes reviewer wellbeing a business-continuity control ([24.01.03](./24.01-reporting-moderation/24.01.03-moderation-queue-reviewer-ops.md) DT-01), makes conflict-of-interest recusal structurally impossible (24.01.03 Q-02), and puts CSAM and crisis review on one unrotatable person. **This is a founder-welfare question, not only a staffing one.** It now also carries a **new, unbudgeted inbound load**: every contested evidence-based lift objection that survives inline platform re-verification becomes per-objection human adjudication under a *mandatory* resolution SLA (`02.01.05` D-21 → `02.05` D-07; SLA value deferred to `02.01.05` Q-06). See **Inbound Adjudication Load** in [trust-safety-disputes-cx.md](./trust-safety-disputes-cx.md). | User | `/ideate-validate` |
 | Q-07 | Music adjudication needs **domain literacy** ("is that a sample or an interpolation?", "is that NSBM or Nordic folk?", "is that refinished?"). Skill-routed queues conflict with a small team, which may mean: only launch the domains whose queues you can staff. That makes the beachhead a Trust & Safety decision, not only a growth one. | User | `/ideate-validate` |
 
 

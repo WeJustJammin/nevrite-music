@@ -4,6 +4,11 @@
 > **Scope**: Connections between children of [Promotion & Marketing](./promotion-marketing-index.md)
 > **Status**: [DEEP]
 > **Last updated**: 2026-07-23
+> **Note**: the `[DEEP]` body was authored **2026-07-18**. The 2026-07-23 revision is the DQ-20.1 /
+> DQ-20.3 in-place correction only (CX-05, CX-08 synthesis Q3, and the recurring-facts and
+> downstream notes that restated the same rule). **2026-07-18 is the date cited** by
+> [domain D-08](./promotion-marketing-index.md) and [21.07 D-06](./21.07-coverage-clipping-log.md)
+> when they record that this file was overruled on **ownership, not recency**.
 
 This domain is one machine, not eight features. The **release date** is the spine (owned by
 21.01), the **pitch** is the projectile (21.02), the **target/CRM** is the aiming system (21.03),
@@ -175,9 +180,9 @@ pitch→coverage link is optional; forcing it would corrupt the honest-attributi
 
 **Relationship**: The EPK's credibility depends entirely on the three-strength distinction the
 coverage log produces: **verified** (a fixed artefact — an article at a live, retrievable URL —
-*whether or not a WeJammin pitch produced it*), **verified-at-timestamp** (live but mutable source,
-e.g. a playlist add, or a fixed source since changed), and **claimed** (typed by the artist,
-unverifiable). Quotes flow from 21.07 into the EPK, which renders the distinction visibly — and
+*whether or not a WeJammin pitch produced it*), **verified-at-timestamp** (was verified, link since
+changed), and **claimed** (typed by the artist, unverifiable). Quotes flow from 21.07 into the EPK,
+which renders the distinction visibly — and
 renders **only** the strength: pitch provenance (`Attributed` / `Organic`) stays a log state in
 21.07 and never appears on the EPK (DQ-20.3; 21.07 D-07, 21.09 D-05). Badge decay — a verified link
 that later rots — must propagate to every EPK that embedded the quote, or the EPK asserts a
@@ -188,8 +193,12 @@ verification it can no longer stand behind.
 > retrievability and nothing else**; pitch provenance never affects it. 21.07 owns the taxonomy —
 > as §1 below already concedes — and its D-03 (parentless coverage fully valid), D-04 (we verify the
 > link, not the reading) and `Verified` trigger contain no pitch condition. This file is `[DEEP]`
-> and 21.07 is `[PARTIAL]`; the correction was ratified on **ownership, not recency**. See 21.07
-> D-06 and domain D-08.
+> (body authored 2026-07-18, per the header `Note`) and 21.07 is `[PARTIAL]` (body authored
+> 2026-07-17, per its header `Note`); the correction was ratified on **ownership, not recency**.
+> See 21.07 D-06 and domain D-08. The superseded phrase is preserved as a quotation above rather
+> than struck in place because this is flowing prose — form 2 of the correction convention authored
+> in [21.07](./21.07-coverage-clipping-log.md) (Deep Think Annotations header); CX-08 synthesis Q3
+> below uses form 1, strikethrough in a table-adjacent list item.
 
 **Role scoping**:
 - **Musician**: ✅ selects quotes into the EPK.
@@ -285,7 +294,7 @@ what makes the quote verifiable.
    any step can stall without corrupting the others.
 3. **Permission intersection**: ~~only a pitch the sender actually sent yields a *verified* capture;
    organic coverage lacks the pitch and is verifiable only to `claimed`/`verified-at-timestamp`.~~
-   **CORRECTED (owner ratification, DQ-20.1)** — provenance is not a permission over the badge. A
+   **⚠️ CORRECTED (owner ratification, DQ-20.1)** — provenance is not a permission over the badge. A
    parentless organic article at a live, retrievable URL captures as `verified` exactly as a pitched
    one does; strength is decided by artefact class + retrievability alone (21.07 D-06, domain D-08).
    What the held pitch actually governs is the *join*: it is what lets the capture flip the pitch
