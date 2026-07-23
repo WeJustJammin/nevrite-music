@@ -2,8 +2,8 @@
 
 ## Summary
 
-- **Total patterns**: 8
-- **Unique pattern titles**: 8
+- **Total patterns**: 9
+- **Unique pattern titles**: 9
 
 ## PAT-001: Verify a generated claim against the kit's own reference before propagating it (2026-07-16)
 
@@ -120,6 +120,21 @@
 - **Pattern**: A propagation agent rewriting a Happy Path to match a new decision filled the deliberately-empty US statutory profile with an invented `23:00` operating-hours limit and `98 dB`, complete with "each carrying the issuing authority" — plausible, well-formed, and contradicting **two** ratified decisions at once (one deferred the instrument names; the other says that profile declares no such instrument at all). The pressure is grammatical, not careless: prose needs a noun, and "the slot deferred to a later stage" reads worse than a number. **Make "did anyone fill in a value a decision deferred?" an explicit, separately-reported verification check** — it will not surface as a contradiction, because the invented value is internally consistent. The fix instruction that works: name the SLOT, never an instrument.
 - **Source**: 2026-07-23 propagation; caught by the independent verify pass, removed in a third cleanup pass.
 
+## PAT-009: Main loop completes a subagent phase the session limit dropped (2026-07-23)
+
+- **Occurrences**: 1
+- **Latest timestamp**: 2026-07-23T19:08:13.240Z
+- **Agents**: claude
+- **Sources**: expired-deferral-triage
+- **Index**: [[index]]
+
+### PAT-009: When a subagent Workflow dies on the session limit, finish its deterministic parts in the main loop (2026-07-23)
+- **Type**: best-practice
+- **Confidence**: 0.6
+- **Context**: A large Workflow (triage + 177-unit check phase) died mid-run on `You've hit your session limit · resets 9am (America/New_York)`. The main loop is NOT subject to the same cap and kept operating.
+- **Pattern**: Before declaring "blocked until reset", split the dropped phase into deterministic sub-jobs the main loop can do with code/Read/Edit, and only defer the parts that truly need parallel judgment. Concretely, three moves paid off: (1) the check phase's most important job — "does any 'already answered' row cite a fabricated D-NN?" — is a pure citation-existence check; done in code it found 0 fabrications across 770 struck rows (resolve same-file, then dotted spec-number refs like `05.01.03 DT-01`, then the CQ canonical namespace). (2) The residual "142 expired rows" were 87% measurement artifact: 123 were already-resolved rows whose Deferred-To cell cosmetically retained the completed stage name; only 19 were genuinely open. Always split resolved-cosmetic from genuinely-open before assuming unfinished work. (3) Hand-triage the small genuine remainder (19 rows) directly. Only the semantic re-check of bucket-A resolutions and the fresh full `/audit-ambiguity` truly needed the reset.
+- **Source**: expired-deferral triage, run wf_884d11c7-65a. Related: [[BLOCKER-009]], PAT-006 (raw-record durability), PAT-007 (domain-wide scope).
+
 ## Full Log
 
 ### PAT-001: Verify a generated claim against the kit's own reference before propagating it (2026-07-16)
@@ -228,3 +243,17 @@
 - **Context**: Applying a decision that deliberately defers a value (an instrument name, a threshold, an enum) to a later pipeline stage.
 - **Pattern**: A propagation agent rewriting a Happy Path to match a new decision filled the deliberately-empty US statutory profile with an invented `23:00` operating-hours limit and `98 dB`, complete with "each carrying the issuing authority" — plausible, well-formed, and contradicting **two** ratified decisions at once (one deferred the instrument names; the other says that profile declares no such instrument at all). The pressure is grammatical, not careless: prose needs a noun, and "the slot deferred to a later stage" reads worse than a number. **Make "did anyone fill in a value a decision deferred?" an explicit, separately-reported verification check** — it will not surface as a contradiction, because the invented value is internally consistent. The fix instruction that works: name the SLOT, never an instrument.
 - **Source**: 2026-07-23 propagation; caught by the independent verify pass, removed in a third cleanup pass.
+
+### PAT-009: Main loop completes a subagent phase the session limit dropped (2026-07-23)
+
+- **Timestamp**: 2026-07-23T19:08:13.240Z
+- **Agent**: claude
+- **Source**: expired-deferral-triage
+- **Tags**: pattern, best-practice, session-limit, audit, triage
+
+### PAT-009: When a subagent Workflow dies on the session limit, finish its deterministic parts in the main loop (2026-07-23)
+- **Type**: best-practice
+- **Confidence**: 0.6
+- **Context**: A large Workflow (triage + 177-unit check phase) died mid-run on `You've hit your session limit · resets 9am (America/New_York)`. The main loop is NOT subject to the same cap and kept operating.
+- **Pattern**: Before declaring "blocked until reset", split the dropped phase into deterministic sub-jobs the main loop can do with code/Read/Edit, and only defer the parts that truly need parallel judgment. Concretely, three moves paid off: (1) the check phase's most important job — "does any 'already answered' row cite a fabricated D-NN?" — is a pure citation-existence check; done in code it found 0 fabrications across 770 struck rows (resolve same-file, then dotted spec-number refs like `05.01.03 DT-01`, then the CQ canonical namespace). (2) The residual "142 expired rows" were 87% measurement artifact: 123 were already-resolved rows whose Deferred-To cell cosmetically retained the completed stage name; only 19 were genuinely open. Always split resolved-cosmetic from genuinely-open before assuming unfinished work. (3) Hand-triage the small genuine remainder (19 rows) directly. Only the semantic re-check of bucket-A resolutions and the fresh full `/audit-ambiguity` truly needed the reset.
+- **Source**: expired-deferral triage, run wf_884d11c7-65a. Related: [[BLOCKER-009]], PAT-006 (raw-record durability), PAT-007 (domain-wide scope).

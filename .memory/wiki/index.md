@@ -1160,6 +1160,7 @@
 
 ## Structured Memory
 
+- pattern: PAT-009: Main loop completes a subagent phase the session limit dropped (2026-07-23) — 2026-07-23T19:08:13.240Z
 - blocker: BLOCKER-009: Session limit truncated triage check phase (2026-07-23) — 2026-07-23T18:53:15.125Z
 - pattern: PAT-008: An agent asked to apply a decision will invent the value the decision withheld (2026-07-23) — 2026-07-23T03:06:00.000Z
 - pattern: PAT-007: A spec's declared affectedFiles under-declares — sweep the whole tree (2026-07-23) — 2026-07-23T03:05:00.000Z

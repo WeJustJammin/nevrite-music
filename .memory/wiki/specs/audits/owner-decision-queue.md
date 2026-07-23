@@ -1121,3 +1121,38 @@ pipeline stage resolves on its own. `/create-prd` is the stage at which they are
 |---|---|---|
 | `problem-statement.md` | Q-01 | Which "Why Now" signal is the real trigger — or is it situational rather than market-driven? |
 | `problem-statement.md` | Q-02 | Is the lock-in **earned** or **hostile**? If a user leaves, what do they take? (Data portability is a cross-cut — and a values decision.) |
+
+
+<!-- spec-graph: auto-generated -->
+## Related Specs
+
+### Constrained by
+- [[decisions.md#d-11|D-11]]
+- [[decisions.md#d-04|D-04]]
+- [[decisions.md#d-05|D-05]]
+- [[decisions.md#d-09|D-09]]
+- [[decisions.md#d-08|D-08]]
+- [[decisions.md#d-06|D-06]]
+- [[decisions.md#d-03|D-03]]
+- [[decisions.md#d-14|D-14]]
+- [[decisions.md#d-02|D-02]]
+- [[decisions.md#d-07|D-07]]
+- [[decisions.md#d-01|D-01]]
+- [[decisions.md#d-10|D-10]]
+- [[decisions.md#d-0|D-0]]
+- [[decisions.md#d-20|D-20]]
+- [[decisions.md#d-16|D-16]]
+- [[decisions.md#d-22|D-22]]
+- [[decisions.md#d-13b|D-13b]]
+- [[decisions.md#d-13a|D-13a]]
+- [[decisions.md#d-17|D-17]]
+- [[decisions.md#d-71|D-71]]
+- [[decisions.md#d-18|D-18]]
+- [[decisions.md#d-15|D-15]]
+- [[decisions.md#d-1|D-1]]
+- [[decisions.md#d-12|D-12]]
+- [[decisions.md#d-13|D-13]]
+- [[decisions.md#d-26|D-26]]
+- [[decisions.md#d-19|D-19]]
+- [[decisions.md#d-72|D-72]]
+- [[decisions.md#d-32|D-32]]
