@@ -110,7 +110,7 @@ moment) and how close the direction goes (rung 2, at source).
 |---|----------|-------|-------------|
 | Q-01 | [OWNER] Which "Why Now" signal is the real trigger — or is it situational rather than market-driven? | User | `/create-prd` |
 | Q-02 | [OWNER] Is the lock-in **earned** or **hostile**? If a user leaves, what do they take? (Data portability is a cross-cut — and a values decision.) | User | `/create-prd` |
-| Q-03 | If consolidation is what wins users, which single consolidation surface is the **beachhead**? All 24 domains cannot ship first. | User | MoSCoW, this shard |
+| Q-03 | ~~If consolidation is what wins users, which single consolidation surface is the **beachhead**? All 24 domains cannot ship first.~~ **RESOLVED (D-31):** the **session spine** (domains 01, 02, 05, 07, 09-capture; ~45 Musts) is the v1 beachhead — the provenance wedge, shipped first and fast; the 3 marketplaces (13, 14, 15) follow at v1.5. | User | ✅ Resolved — [ideation-index.md](../ideation-index.md) D-31 (amends D-20) |
 
 
 <!-- spec-graph: auto-generated -->
