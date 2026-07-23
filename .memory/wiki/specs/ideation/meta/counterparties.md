@@ -5,6 +5,14 @@
 > Companion to: [personas.md](./personas.md) — read that file first.
 > Consumed by: buyer-facing Role Lens notes in `11.01.02`, `11.02.01`, `11.01-sync-licensing-index`,
 > `11.06` and `11.08.02`.
+>
+> **⚠️ Two identifiers, one decision.** The ratification that authored this file is registered
+> **twice**: globally as **D-71** in [`ideation-index.md`](../ideation-index.md), and locally as
+> **D-10** in [`11-music-licensing/music-licensing-index.md`](../11-music-licensing/music-licensing-index.md),
+> whose D-10 row and resolved Q-01 row both carry the same identity note. **D-10 = D-71.** A reader
+> arriving by either identifier should land on the other; neither is a second decision, and neither
+> supersedes the other. Do not confuse domain-11's local D-10 with the **global** D-10 in
+> `ideation-index.md`, which is the unrelated rights-stack priority decision.
 
 ## ⚠️ These are NOT personas
 

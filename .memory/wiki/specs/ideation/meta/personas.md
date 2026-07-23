@@ -17,6 +17,13 @@
 > exists. D-71 is narrow: it closes the licence buyer only. Every other non-persona actor —
 > dealer, Admin/Moderator, curator, stagehand, insurer, accountant, manager, fee-paying parent —
 > remains open; see Q-01, Q-02 and Q-05 below and the non-closure table in `counterparties.md`.
+>
+> **Identifier note — D-71 = domain-11 D-10.** The same ratification is registered in two registers:
+> globally as **D-71** here and in [`ideation-index.md`](../ideation-index.md), and locally as
+> **D-10** in [`11-music-licensing/music-licensing-index.md`](../11-music-licensing/music-licensing-index.md).
+> One decision, two identifiers — a reader arriving by either should land on the other. Domain-11's
+> local D-10 is **not** the global D-10 in `ideation-index.md` (rights-stack priority), which is
+> unrelated.
 
 ## The Structural Fact
 

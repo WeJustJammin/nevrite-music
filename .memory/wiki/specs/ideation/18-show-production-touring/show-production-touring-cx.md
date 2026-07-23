@@ -93,7 +93,7 @@ anyone computes it.
 
 **Synthesis questions answered**:
 1. **Shared state conflict**: The setlist owns durations; the schedule owns times. The schedule reads and never writes — but measured durations from the performed setlist (18.06.04) flow back into the plan, so the loop closes through a third object.
-2. **Trigger chain**: Setlist change → set duration → schedule → curfew re-check. A song added at 17:00 can breach a licence condition, and nobody currently makes that connection.
+2. **Trigger chain**: Setlist change → set duration → schedule → curfew re-check. A song added at 17:00 can breach the room's hard stop — a statutory condition where the regime profile declares an instrument, the Operator's own stated ceiling where it does not (18.07.02 D-06; `16.02.03` D-01/D-13) — and nobody currently makes that connection.
 3. **Permission intersection**: Band members have Full access to the setlist; a re-order by a member can therefore move a venue's curfew margin. **Permission in the act's most private document reaches into the venue's legal exposure** — a genuinely surprising path.
 4. **Notification fan-out**: A margin change should reach the Operator, because they pay the fine (18.07.02 DT-05).
 5. **State transition conflict**: Estimated durations produce an estimated margin (±8 min on a 4-min margin means nobody knows). The uncertainty must propagate visibly and is the strongest argument for CX-12.
