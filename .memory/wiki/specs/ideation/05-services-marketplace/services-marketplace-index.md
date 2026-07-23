@@ -126,3 +126,5 @@ Buying and selling human music work — mixing, mastering, production, remote se
 - [[decisions.md#d-06|D-06]]
 - [[decisions.md#d-08|D-08]]
 - [[decisions.md#d-09|D-09]]
+- [[decisions.md#d-17|D-17]]
+- [[decisions.md#d-28|D-28]]

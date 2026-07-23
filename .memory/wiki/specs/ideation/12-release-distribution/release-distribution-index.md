@@ -159,4 +159,6 @@ Getting finished music onto stores and streaming services — release building, 
 - [[decisions.md#d-06|D-06]]
 - [[decisions.md#d-07|D-07]]
 - [[decisions.md#d-18|D-18]]
+- [[decisions.md#d-13|D-13]]
+- [[decisions.md#d-09|D-09]]
 - [[decisions.md#d-11|D-11]]

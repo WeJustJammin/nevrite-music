@@ -144,4 +144,6 @@ Who exists on the platform: humans holding several simultaneous professional rol
 - [[decisions.md#d-08|D-08]]
 - [[decisions.md#d-09|D-09]]
 - [[decisions.md#d-10|D-10]]
+- [[decisions.md#d-15|D-15]]
 - [[decisions.md#d-11|D-11]]
+- [[decisions.md#d-71|D-71]]

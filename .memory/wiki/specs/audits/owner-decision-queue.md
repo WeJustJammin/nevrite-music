@@ -1094,3 +1094,38 @@ pipeline stage resolves on its own. `/create-prd` is the stage at which they are
 | `24.08-illegal-content-legal-process/24.08.04-safety-governance-risk-assessment.md` | Q-03 | Who performs the assessment, on a one-person team, and is a self-assessment by the person who built the thing worth anything? The "who" is fixed — [meta/constraints.md](../../meta/constraints.md) § Team is *"Solo — the owner plus AI agen… |
 | `trust-safety-disputes-index.md` | Q-06 | **meta/constraints.md describes no platform team — so the owner is the first moderator.** That makes reviewer wellbeing a business-continuity control ([24.01.03](./24.01-reporting-moderation/24.01.03-moderation-queue-reviewer-ops.md) DT-… |
 | `trust-safety-disputes-index.md` | Q-07 | Music adjudication needs **domain literacy** ("is that a sample or an interpolation?", "is that NSBM or Nordic folk?", "is that refinished?"). Skill-routed queues conflict with a small team, which may mean: only launch the domains whose … |
+
+
+<!-- spec-graph: auto-generated -->
+## Related Specs
+
+### Constrained by
+- [[decisions.md#d-11|D-11]]
+- [[decisions.md#d-04|D-04]]
+- [[decisions.md#d-05|D-05]]
+- [[decisions.md#d-09|D-09]]
+- [[decisions.md#d-08|D-08]]
+- [[decisions.md#d-06|D-06]]
+- [[decisions.md#d-03|D-03]]
+- [[decisions.md#d-14|D-14]]
+- [[decisions.md#d-02|D-02]]
+- [[decisions.md#d-07|D-07]]
+- [[decisions.md#d-01|D-01]]
+- [[decisions.md#d-10|D-10]]
+- [[decisions.md#d-0|D-0]]
+- [[decisions.md#d-20|D-20]]
+- [[decisions.md#d-16|D-16]]
+- [[decisions.md#d-22|D-22]]
+- [[decisions.md#d-13b|D-13b]]
+- [[decisions.md#d-13a|D-13a]]
+- [[decisions.md#d-17|D-17]]
+- [[decisions.md#d-71|D-71]]
+- [[decisions.md#d-18|D-18]]
+- [[decisions.md#d-15|D-15]]
+- [[decisions.md#d-1|D-1]]
+- [[decisions.md#d-12|D-12]]
+- [[decisions.md#d-13|D-13]]
+- [[decisions.md#d-26|D-26]]
+- [[decisions.md#d-19|D-19]]
+- [[decisions.md#d-72|D-72]]
+- [[decisions.md#d-32|D-32]]

@@ -169,3 +169,6 @@ narrow and deliberate: a published *performed* setlist (18.06.04), public doors/
 - [[decisions.md#d-07|D-07]]
 - [[decisions.md#d-09|D-09]]
 - [[decisions.md#d-10|D-10]]
+- [[decisions.md#d-71|D-71]]
+- [[decisions.md#d-28|D-28]]
+- [[decisions.md#d-70|D-70]]

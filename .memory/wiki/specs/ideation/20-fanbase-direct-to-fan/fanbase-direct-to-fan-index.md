@@ -147,4 +147,7 @@ The artist's relationship with their audience and its monetization — owned fan
 - [[decisions.md#d-06|D-06]]
 - [[decisions.md#d-07|D-07]]
 - [[decisions.md#d-08|D-08]]
+- [[decisions.md#d-28|D-28]]
+- [[decisions.md#d-31|D-31]]
+- [[decisions.md#d-20|D-20]]
 - [[decisions.md#d-13|D-13]]

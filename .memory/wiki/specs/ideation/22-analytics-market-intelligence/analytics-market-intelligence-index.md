@@ -156,3 +156,6 @@ uncopyable half is the wedge, and **neither works alone**. 22.05's dashboard has
 - [[decisions.md#d-05|D-05]]
 - [[decisions.md#d-06|D-06]]
 - [[decisions.md#d-07|D-07]]
+- [[decisions.md#d-71|D-71]]
+- [[decisions.md#d-31|D-31]]
+- [[decisions.md#d-20|D-20]]

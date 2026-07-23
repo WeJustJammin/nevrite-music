@@ -109,3 +109,6 @@ The demand side of work — posted gigs, dep calls, auditions, band vacancies, c
 - [[decisions.md#d-18|D-18]]
 - [[decisions.md#d-06|D-06]]
 - [[decisions.md#d-07|D-07]]
+- [[decisions.md#d-71|D-71]]
+- [[decisions.md#d-10|D-10]]
+- [[decisions.md#d-14|D-14]]

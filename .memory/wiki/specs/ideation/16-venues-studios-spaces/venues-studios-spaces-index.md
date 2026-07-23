@@ -185,3 +185,5 @@ Two findings from breadth classification strengthen the domain-status argument b
 - [[decisions.md#d-32|D-32]]
 - [[decisions.md#d-14|D-14]]
 - [[decisions.md#d-25|D-25]]
+- [[decisions.md#d-20|D-20]]
+- [[decisions.md#d-19|D-19]]

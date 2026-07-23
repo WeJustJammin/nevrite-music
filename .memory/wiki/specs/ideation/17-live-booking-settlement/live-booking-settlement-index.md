@@ -161,3 +161,7 @@ in domain 02 evidenced rather than claimed.
 - [[decisions.md#d-14|D-14]]
 - [[decisions.md#d-09|D-09]]
 - [[decisions.md#d-10|D-10]]
+- [[decisions.md#d-28|D-28]]
+- [[decisions.md#d-70|D-70]]
+- [[decisions.md#d-17|D-17]]
+- [[decisions.md#d-35|D-35]]

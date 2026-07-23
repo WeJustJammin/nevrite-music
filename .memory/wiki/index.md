@@ -25,6 +25,7 @@
 - [[specs/audits/decision-ratification-log|Blocking Decision Queue — Ratification Log]] — audit — spec-vault
 - [[specs/audits/ideation-ambiguity-report|Ideation Ambiguity Audit — Report]] — audit — spec-vault
 - [[specs/audits/ideation-remediation-decision-queue|Ideation Remediation — Canonical Decision Queue]] — audit — spec-vault
+- [[specs/audits/owner-decision-queue|Owner Decision Queue — expired-deferral triage, bucket C]] — audit — spec-vault
 - [[specs/audits/p01-production-stage-vocabulary-validation|P-01 Production-Stage Vocabulary Validation]] — audit — spec-vault
 - [[specs/audits/remediation-state|Remediation State]] — audit — spec-vault
 - [[specs/audits/tracked-phase2-warnings|Tracked Phase-2 Ambiguity Warnings]] — audit — spec-vault
@@ -1159,6 +1160,7 @@
 
 ## Structured Memory
 
+- blocker: BLOCKER-009: Session limit truncated triage check phase (2026-07-23) — 2026-07-23T18:53:15.125Z
 - pattern: PAT-008: An agent asked to apply a decision will invent the value the decision withheld (2026-07-23) — 2026-07-23T03:06:00.000Z
 - pattern: PAT-007: A spec's declared affectedFiles under-declares — sweep the whole tree (2026-07-23) — 2026-07-23T03:05:00.000Z
 - decision: DEC-048: All 57 blocking sub-decisions ratified and propagated to source (2026-07-23) — 2026-07-23T03:00:00.000Z

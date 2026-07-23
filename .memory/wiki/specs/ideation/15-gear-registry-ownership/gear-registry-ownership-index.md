@@ -147,3 +147,4 @@ A persistent identity for every individual instrument and piece of gear that out
 - [[decisions.md#d-07|D-07]]
 - [[decisions.md#d-08|D-08]]
 - [[decisions.md#d-09|D-09]]
+- [[decisions.md#d-71|D-71]]

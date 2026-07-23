@@ -158,4 +158,5 @@ The social layer — connections and follows, the activity feed, collaborator ma
 - [[decisions.md#d-06|D-06]]
 - [[decisions.md#d-07|D-07]]
 - [[decisions.md#d-08|D-08]]
+- [[decisions.md#d-13|D-13]]
 - [[decisions.md#d-13a|D-13a]]

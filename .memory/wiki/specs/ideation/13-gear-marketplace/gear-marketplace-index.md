@@ -149,5 +149,8 @@ The same gap arrives from a fourth direction as a **compliance** question: [13.0
 - [[decisions.md#d-04|D-04]]
 - [[decisions.md#d-06|D-06]]
 - [[decisions.md#d-14|D-14]]
+- [[decisions.md#d-71|D-71]]
+- [[decisions.md#d-20|D-20]]
+- [[decisions.md#d-07|D-07]]
 - [[decisions.md#d-08|D-08]]
 - [[decisions.md#d-11|D-11]]

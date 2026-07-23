@@ -9,6 +9,7 @@
 - [[specs/audits/decision-ratification-log|Blocking Decision Queue — Ratification Log]]
 - [[specs/audits/ideation-ambiguity-report|Ideation Ambiguity Audit — Report]]
 - [[specs/audits/ideation-remediation-decision-queue|Ideation Remediation — Canonical Decision Queue]]
+- [[specs/audits/owner-decision-queue|Owner Decision Queue — expired-deferral triage, bucket C]]
 - [[specs/audits/p01-production-stage-vocabulary-validation|P-01 Production-Stage Vocabulary Validation]]
 - [[specs/audits/remediation-state|Remediation State]]
 - [[specs/audits/tracked-phase2-warnings|Tracked Phase-2 Ambiguity Warnings]]

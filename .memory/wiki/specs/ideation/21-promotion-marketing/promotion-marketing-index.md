@@ -179,3 +179,4 @@ Three things materially changed the picture, and they are recorded as D-02, D-03
 - [[decisions.md#d-06|D-06]]
 - [[decisions.md#d-07|D-07]]
 - [[decisions.md#d-09|D-09]]
+- [[decisions.md#d-31|D-31]]

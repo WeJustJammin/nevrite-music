@@ -153,3 +153,5 @@ Session Attendance & Provenance**, 08.06 Pre-Flight, **08.07 Overdub Mode**, 08.
 - [[decisions.md#d-05|D-05]]
 - [[decisions.md#d-17|D-17]]
 - [[decisions.md#d-07|D-07]]
+- [[decisions.md#d-24|D-24]]
+- [[decisions.md#d-26|D-26]]

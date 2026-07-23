@@ -172,3 +172,4 @@ The verified graph of who did what on every session, work and recording — capt
 - [[decisions.md#d-22|D-22]]
 - [[decisions.md#d-14|D-14]]
 - [[decisions.md#d-70|D-70]]
+- [[decisions.md#d-15|D-15]]

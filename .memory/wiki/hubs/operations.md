@@ -2,7 +2,7 @@
 
 - **Decisions**: 48
 - **Patterns**: 8
-- **Blockers**: 4
+- **Blockers**: 5
 
 - [[decisions]]
 - [[patterns]]

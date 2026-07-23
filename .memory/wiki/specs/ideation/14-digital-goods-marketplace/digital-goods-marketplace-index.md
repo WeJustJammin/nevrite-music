@@ -158,3 +158,7 @@ Multi-vendor sale and delivery of DAW plugins, sample packs, presets, beats, MID
 - [[decisions.md#d-04|D-04]]
 - [[decisions.md#d-05|D-05]]
 - [[decisions.md#d-18|D-18]]
+- [[decisions.md#d-71|D-71]]
+- [[decisions.md#d-70|D-70]]
+- [[decisions.md#d-32|D-32]]
+- [[decisions.md#d-31|D-31]]

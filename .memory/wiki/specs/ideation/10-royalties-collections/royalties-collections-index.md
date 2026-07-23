@@ -183,3 +183,4 @@ Registering with the bodies that collect and turning what arrives into correct, 
 - [[decisions.md#d-18|D-18]]
 - [[decisions.md#d-09|D-09]]
 - [[decisions.md#d-15|D-15]]
+- [[decisions.md#d-31|D-31]]

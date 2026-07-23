@@ -157,4 +157,7 @@ Three findings reshaped the domain and belong at the top of it:
 - [[decisions.md#d-05|D-05]]
 - [[decisions.md#d-06|D-06]]
 - [[decisions.md#d-07|D-07]]
+- [[decisions.md#d-31|D-31]]
+- [[decisions.md#d-20|D-20]]
 - [[decisions.md#d-21|D-21]]
+- [[decisions.md#d-28|D-28]]
