@@ -3,7 +3,7 @@
 > **Level**: domain
 > **Parent**: [WeJammin Ideation Index](../ideation-index.md)
 > **Status**: [BREADTH]
-> **Last updated**: 2026-07-16
+> **Last updated**: 2026-07-23
 > **Novelty**: `industry-standard` | **Priority**: `core` _(raised to core by D-10 — rights stack is the thesis)_
 
 ## Overview
@@ -60,6 +60,10 @@ Intra-domain cross-cuts, domain-wide patterns and rejected pairs: [music-licensi
 ## Role Matrix
 
 > Personas from [meta/personas.md](../meta/personas.md) (D-19). Referenced, never redefined.
+>
+> Buy-side actors are **not** personas and add **no column** here: they are described by two counterparty
+> profiles in `meta/counterparties.md` (D-10). This matrix stays four-column, so a reader skimming only the
+> table still sees no buyer — the prose beneath it is the correction, and it has to be read.
 
 | Child | Musician | Producer | Operator | Fan |
 |-------|----------|----------|----------|-----|
@@ -79,16 +83,27 @@ Intra-domain cross-cuts, domain-wide patterns and rejected pairs: [music-licensi
 
 ### Three persona findings this matrix records
 
-**1. The licence buyer has no persona.** ⚠️ The music supervisor, brand and agency who drive 11.01 and 11.03 map
-to **none** of the four ratified personas (D-19). Every row for those sub-domains is a *sell-side* row.
-personas.md's coverage check assigns domain 11 to "Musician + Producer" ✅ — which is correct for the sell side
-and for the sampling buyer (a producer clearing a sample **is** a Producer), and silently omits the professional
-buyer entirely. See Q-01. **This blocks `/write-fe-spec` for the domain's most valuable surface.**
+**1. The licence buyer has no persona — and now has a profile.** ✅ **Resolved (D-10).** The music supervisor,
+brand and agency who drive 11.01 and 11.03 still map to **none** of the four ratified personas (D-19,
+unamended), and every row for those sub-domains is still a *sell-side* row. What changed is that the buy side is
+now **described**: `meta/counterparties.md` carries a **professional licence buyer** counterparty profile —
+personas.md's six fields plus Workflow and Anti-Persona Behavior, under a header stating it is **not** a persona
+and adds **no Role Matrix column**. personas.md's coverage check assigns domain 11 to "Musician + Producer" ✅ —
+correct for the sell side and for the sampling buyer (a producer clearing a sample **is** a Producer), and it
+still silently omits the professional buyer, which is why personas.md must carry a pointer to the profile. See
+Q-01 (resolved). **`/write-fe-spec` for 11.01/11.03 is unblocked.**
 
-**2. The creator buyer maps to Fan, badly.** ⚠️ A podcaster with a monetised channel is a small business, not a
-music enthusiast. Fan fits only because it is the one persona defined by having *no professional music stake*.
-This is more dangerous than gap #1: a spec writer reading "Fan: Full" will build for a listener. Same structural
-question as personas.md Q-01 (the dealer persona for 13/14/15) — **answer them together**.
+**2. The creator buyer maps to Fan, badly.** ✅ **Resolved (D-10) — with a second profile, not one broad one.** A
+podcaster with a monetised channel is a small business, not a music enthusiast; Fan fits only because it is the
+one persona defined by having *no professional music stake*. That remains true, and it is more dangerous than
+gap #1 — a spec writer reading "Fan: Full" will build for a listener. The answer is the **creator micro-licence
+buyer** counterparty profile (`meta/counterparties.md`), kept **separate** from the professional buyer profile
+because the two differ in **kind**, not degree: there the buyer matches *no* persona, here they match one
+*badly*. One artifact broad enough for both would diverge on almost every field (pain, workaround, budget,
+tolerance for professional-tool complexity) and produce exactly the generic text the Persona Specificity rubric
+rejects. The Fan ✅ Full cells in 11.06 stand — that is the account the buyer holds — but the profile is what a
+spec writer must read first. This is **not** the same question as personas.md Q-01 (the dealer persona for
+13/14/15): a dealer is a *seller*, and D-10 deliberately declines to generalise (see Q-01's non-closure list).
 
 **3. Operator's near-total absence is a confirmation, not a gap.** ✅ Operator appears twice in 34 features:
 verification (11.08.03) and grand rights (11.11). They sell time and space; they hold no recording or composition
@@ -109,6 +124,7 @@ domain's and currently has no home (Q-05).
 | D-07 | **The one-stop catalogue is cold-start-empty**, and this is recorded as a domain-level fact rather than three local caveats. | Found independently in sync (11.01.05 DT-03), samples (11.05.01 DT-03 — sampling skews to *catalogue*, which predates the platform) and covers (11.09 DT-02). Split-at-creation only reaches works made on-platform after the ritual existed. | Deep Think ×3 |
 | D-08 | **Clearance is per-(work, scope), never per-work.** | The sweep's candidate 03 read as a work-level flag. A work that clears for a podcast and is blocked for a tobacco ad has no single truth value — a work-level flag is right most of the time and catastrophically wrong exactly where the money and the offence are. Propagates into 11.01.02, 11.04, 11.06, 11.08.01. | Deep Think (11.02.01 DT-01) |
 | D-09 | **Everything in this domain fails closed.** No verdict, no licence. | Asymmetric costs: a false negative loses one sale; a false positive sells a licence the platform cannot honour — a lawsuit naming *the platform* as the party that asserted clearability. Applied in 11.02.01 D-02, 11.04.01 D-04, 11.04.03 D-05, 11.05.02 D-01, 11.07.01 D-04, 11.08.01 D-05. | Deep Think (11.02.01 DT-03) |
+| D-10 | **The commercial licence buyer is described by two non-persona counterparty profiles in `meta/counterparties.md`**: a **professional licence buyer** (supervisor / brand / agency) and a **creator micro-licence buyer** (podcaster / streamer / small-business channel). Each carries personas.md's six fields plus **Workflow** and **Anti-Persona Behavior**, under a header stating it is **not** a persona and adds **no Role Matrix column**. personas.md must carry a pointer to it, or the profile is easy to miss. Buyer-facing Role Lens notes **reference** the profile; they never restate it. **Closes**: this index's Q-01, 11.06 Q-01, 11.01.02 Q-01, and the 11.02.01 Role Lens block. **Explicitly does not close**: personas.md Q-01 (professional dealer, 13/14/15 — a *seller*, not a buyer), personas.md Q-02 with 24.01.03 Q-01 (Admin), 21.02 Q-01 with 21 D-03 (curator / journalist / radio / DSP gatekeeper), 13.09 D-03 with 13.13 (dealer counterparty), and the stagehand, insurer, accountant, manager and fee-paying-parent questions. | D-19's four-persona model stays unamended and all 24 Role Matrices stay four-column — the smallest edit surface that gives the blocked Role Lenses a described primary user. Authoring nothing was refuted by disk: the same name-it-don't-describe-it treatment was applied to Admin, and 24.01.03 Q-01 records that the actor still cannot be specified. Deferring again is the mechanism that already failed — Q-01 went to `/ideate-validate`, which ran 2026-07-18, scored Persona Specificity green and closed 8/8 without recording an answer. A fifth persona is defensible but costs a full 24-domain column pass and creates precedent pressure toward personas for eight other non-persona actors that existing decisions resolved by refusing exactly that. Two profiles rather than one because 11.06's buyer matches a persona *badly* while 11.01/11.03's matches none — a difference in kind, and one artifact broad enough for both reproduces the defect one level up. The nine remaining actor questions are not buyers and are not alike (a curator receives pitches, a stagehand sells four hours of labour, an insurer is off-platform, Admin is internal); applying one form to ten heterogeneous actors in a single pass is the axis-collapse defect this revision round exists to remove, and each is owned in another domain's index, so a domain-11 ratification can make them answerable but cannot close them. | Ratified by user 2026-07-23 (DQ-10.A1 / A2 / A3) |
 
 ## Cross-Cuts Contributed
 
@@ -141,13 +157,14 @@ domain's and currently has no home (Q-05).
 
 | # | Question | Owner | Deferred To |
 |---|----------|-------|-------------|
-| Q-01 | **The licence buyer has no persona.** Supervisors, brands and agencies drive this domain's most valuable surfaces and match none of the four (D-19). Same structural question as personas.md Q-01 (dealer persona) and 11.06 Q-01 (creator buyer as strained Fan) — **all three are one question: does the 4-persona model cover non-musician commercial users?** Blocks `/write-fe-spec` for 11.01/11.03. | User | `/ideate-validate` |
+| Q-01 | ~~**The licence buyer has no persona.**~~ **RESOLVED → D-10** (DQ-10.A1/A2/A3): the buyer is not a persona and does not become one. Two non-persona **counterparty profiles** in `meta/counterparties.md` — professional licence buyer, and creator micro-licence buyer — describe the buy side and add no Role Matrix column. `/write-fe-spec` for 11.01/11.03 is unblocked. **This row asserted that its own question, personas.md Q-01 and 11.06 Q-01 were "all three one question"; the ratification declines that bundling** and answers only the buyer. **Still open elsewhere, and not closed by this**: personas.md Q-01 (professional dealer, 13/14/15 — a seller), personas.md Q-02 with 24.01.03 Q-01 (Admin — the sharpest of the nine, independently blocking its own surface), 21.02 Q-01 with 21 D-03 (curator / journalist / radio / DSP gatekeeper), 13.09 D-03 with 13.13 (dealer counterparty), plus the stagehand, insurer, accountant, manager and fee-paying-parent questions. | User | Resolved 2026-07-23 (D-10) |
 | Q-02 | **Is the one-stop flag a warranty, an indemnity, or best-effort?** It determines whether the flag is an asset or a liability. Per 11.08.04 DT-03 the only coherent remedy for a wrongly-issued licence is liability rather than revocation — which makes this **the question that decides whether the domain has a business model**, not a legal footnote. | User | `/create-prd-security` (legal escalation) |
 | Q-03 | **Domain-wide: does silence mean yes or no?** The same question arises in 11.02.02 (attestation), 11.02.04 (consent) and 11.04.03 (policy folding). **They must be answered together** — a platform where silence means yes for policy and no for consent is not expressing a principle, it is expressing whichever answer was convenient. | User | `/ideate-validate` |
 | Q-04 | **Given cold-start (D-07), what is this domain's beachhead?** Drilling found that the two nodes whose demand survives an empty registry — creator micro-licensing (11.06.01 DT-03, demand is *substitutable*) and cover/compulsory (11.09 DT-03, the compulsory regime needs no counterparty) — are the two the domain rationale treats as peripheral. That may be backwards. Feeds problem-statement Q-03. | User | MoSCoW / `/ideate-validate` |
 | Q-05 | **Venue PRO blanket licensing has no home.** Real Operator work, genuinely licensing, and not this domain's (it is domain 10 collections or domain 16 compliance). Surfaced because 11.11 made the Operator's absence visible. | Agent | `/ideate-validate` |
 | Q-06 | **Does WeJammin train on user audio?** Not 11.07's product, and the most consequential AI question the project faces: the platform holds the industry's most attractive training corpus (labelled multi-track stems, per 11.07.01) and sells its owners a consent control. Silence is itself an answer. | User | `/create-prd-security` (values + ToS) |
 | Q-07 | Is "the old record always survives" (P-02 in the CX file) a **platform-level invariant** rather than a domain-11 rule? Three independent instances found. | Agent | global CX / `/create-prd-architecture` |
+| Q-08 | **Which buyer profile covers a small production company?** D-10 ratified two counterparty profiles — professional (supervisor / brand / agency) and creator (podcaster / streamer / small-business channel). A small production company is neither, and sits between them. Recorded as the **accepted open boundary case** of choosing two artifacts over one: a single broader artifact would have absorbed it at the cost of the generic-text failure D-10 rejects. Not a defect in D-10; a gap D-10 knowingly leaves. | User | `/ideate-validate` |
 
 
 <!-- spec-graph: auto-generated -->

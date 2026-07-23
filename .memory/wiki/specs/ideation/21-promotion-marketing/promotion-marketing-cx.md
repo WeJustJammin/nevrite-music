@@ -3,7 +3,7 @@
 > **Level**: domain
 > **Scope**: Connections between children of [Promotion & Marketing](./promotion-marketing-index.md)
 > **Status**: [DEEP]
-> **Last updated**: 2026-07-18
+> **Last updated**: 2026-07-23
 
 This domain is one machine, not eight features. The **release date** is the spine (owned by
 21.01), the **pitch** is the projectile (21.02), the **target/CRM** is the aiming system (21.03),
@@ -19,7 +19,10 @@ stating once:
   21.01.04 date-change cascade.
 - **Provenance pays a marketing dividend.** Verified credits (02) and captured coverage (21.07)
   are the reason a rights platform owns a marketing domain (D-02). The credibility loop
-  (pitch → coverage → verified quote → EPK) is the thesis, not an accessory.
+  (pitch → coverage → verified quote → EPK) is the thesis, not an accessory. **Read "provenance"
+  here as the platform's capture of credits and links — *pitch* provenance specifically does NOT
+  set a coverage item's verification strength** (ratified DQ-20.1; domain D-08, 21.07 D-06). The
+  loop is how coverage most often arrives; it is not what makes it verifiable.
 - **Attention is a commons.** Rate limits (21.02.06) and the payola guardrail (21.05.03) both
   protect gatekeeper goodwill from being burned by one user at everyone else's cost. Neither is
   inherited automatically — each enforcement point must instantiate it or it has a back door.
@@ -32,7 +35,7 @@ stating once:
 | CX-02 | [21.02 Pitching & Outreach](./21.02-pitching-outreach/) | [21.03 Pitch Targets & CRM](./21.03-pitch-targets-crm/) | Targeting and relationship history ARE the pitch's substance: directory supplies coverage-filtered targets, CRM logs every send, and the durable cross-campaign pitch object (D-02) lives against this data. | Musician | High | 21.02.03→21.03 (directory supplies targets, consumes bounces as contact-rot, CRM logs every send); 21.02.06→21.03.01 (opt-out + accepted-genre state lives on the target record) |
 | CX-03 | [21.05 Paid Promotion](./21.05-paid-promotion/) | [21.02 Pitching & Outreach](./21.02-pitching-outreach/) | The payola guardrail (21.05.03) classifies the same playlist/radio placement offer that 21.02 pitches; the classifier is single source of truth and the stricter verdict wins. The "sell higher rate limits" trap is adjacent to the payola line — both monetise gatekeeper attention. | Musician, Operator (👁️), Fan (report path) | High | 21.05.03→21.02.02 (primary enforcement vector, playlist placement); 21.05.03→21.02.04 (statutory hardest line, 47 USC 317); 21.02.06→21.05.03 (rate-limit-sell trap adjacent to payola, shared not-selling-access values) |
 | CX-04 | [21.07 Coverage & Clipping Log](./21.07-coverage-clipping-log.md) | [21.03 Pitch Targets & CRM](./21.03-pitch-targets-crm/) | Logging coverage flips a pitch outcome to `covered` and records the journalist in the CRM timeline; the log MUST also accept organic coverage with no pitch parent, so attribution is optional, not required. | Musician, Producer (👁️) | High | 21.07→21.03.03 (coverage flips pitch to 'covered', records journalist); 21.03.03→21.07 (coverage links back to close attribution, but organic coverage accepted parentless) |
-| CX-05 | [21.07 Coverage & Clipping Log](./21.07-coverage-clipping-log.md) | [21.09 Campaign Press Kit (EPK)](./21.09-campaign-press-kit-epk.md) | Verified / verified-at-timestamp / claimed quotes flow from the log into the EPK, which renders the three-strength distinction; badge decay on link rot must propagate to every EPK that embedded the quote. | Musician, Producer (👁️) | High | 21.07→21.09 (three-strength quotes flow, badge decay propagates); 21.09→21.07 (EPK consumes verified quotes, renders verified/claimed distinction) |
+| CX-05 | [21.07 Coverage & Clipping Log](./21.07-coverage-clipping-log.md) | [21.09 Campaign Press Kit (EPK)](./21.09-campaign-press-kit-epk.md) | Verified / verified-at-timestamp / claimed quotes flow from the log into the EPK, which renders the three-strength distinction **and nothing about sourcing** (DQ-20.3); badge decay on link rot must propagate to every EPK that embedded the quote. | Musician, Producer (👁️) | High | 21.07→21.09 (three-strength quotes flow, badge decay propagates); 21.09→21.07 (EPK consumes verified quotes, renders verified/claimed distinction) |
 | CX-06 | [21.02 Pitching & Outreach](./21.02-pitching-outreach/) | [21.09 Campaign Press Kit (EPK)](./21.09-campaign-press-kit-epk.md) | The EPK is the artefact every pitch attaches; the embargo (21.02.05) governs whether unreleased audio inside the EPK is playable and defines the leak/forward vector. | Musician | High | 21.02.03→21.09 (every pitch attaches the EPK); 21.09→21.02/21.02.05 (embargo governs playable unreleased audio, leak vector Q-02) |
 | CX-07 | [21.01 Release Campaign Planner](./21.01-release-campaign-planner/) | [21.04 Smart Links & Pre-Save](./21.04-smart-links-presave-attribution/) | A moved anchor fires the pre-save library-write grant on a different day than the fan authorised against — a consent obligation, not a UX detail. | Musician, Fan (✅ own authorisation) | High | 21.01.04→21.04.02 (moved anchor fires pre-save on different day, notify = consent obligation); 21.04.02→21.01.04 (grant fires on release event not stated date) |
 | CX-08 | [21.02 Pitching & Outreach](./21.02-pitching-outreach/) | [21.07 Coverage & Clipping Log](./21.07-coverage-clipping-log.md) | The capture leg of the credibility loop: a sent pitch's published coverage is captured here and its quote flows back to the EPK — pitch → coverage → EPK closes on itself (DT-01). | Musician | High | 21.02.03→21.07+21.09 (self-closing credibility loop, coverage captured into 21.07, quote flows back to EPK) |
@@ -171,11 +174,22 @@ pitch→coverage link is optional; forcing it would corrupt the honest-attributi
 ### CX-05: Coverage & Clipping Log ↔ Campaign Press Kit (EPK)
 
 **Relationship**: The EPK's credibility depends entirely on the three-strength distinction the
-coverage log produces: **verified** (WeJammin sent the pitch and holds the link),
-**verified-at-timestamp** (was verified, link since changed), and **claimed** (typed by the
-artist, unverifiable). Quotes flow from 21.07 into the EPK, which renders the distinction visibly.
-Badge decay — a verified link that later rots — must propagate to every EPK that embedded the
-quote, or the EPK asserts a verification it can no longer stand behind.
+coverage log produces: **verified** (a fixed artefact — an article at a live, retrievable URL —
+*whether or not a WeJammin pitch produced it*), **verified-at-timestamp** (live but mutable source,
+e.g. a playlist add, or a fixed source since changed), and **claimed** (typed by the artist,
+unverifiable). Quotes flow from 21.07 into the EPK, which renders the distinction visibly — and
+renders **only** the strength: pitch provenance (`Attributed` / `Organic`) stays a log state in
+21.07 and never appears on the EPK (DQ-20.3; 21.07 D-07, 21.09 D-05). Badge decay — a verified link
+that later rots — must propagate to every EPK that embedded the quote, or the EPK asserts a
+verification it can no longer stand behind.
+
+> **⚠️ CORRECTED (owner ratification, DQ-20.1).** This paragraph previously defined **verified** as
+> "WeJammin sent the pitch and holds the link". Verification strength is set by **artefact class +
+> retrievability and nothing else**; pitch provenance never affects it. 21.07 owns the taxonomy —
+> as §1 below already concedes — and its D-03 (parentless coverage fully valid), D-04 (we verify the
+> link, not the reading) and `Verified` trigger contain no pitch condition. This file is `[DEEP]`
+> and 21.07 is `[PARTIAL]`; the correction was ratified on **ownership, not recency**. See 21.07
+> D-06 and domain D-08.
 
 **Role scoping**:
 - **Musician**: ✅ selects quotes into the EPK.
@@ -253,7 +267,10 @@ obligation to notify, not a UX nicety (open Q-01).
 recipient publishes gets its coverage captured into 21.07, and the quote flows back into the EPK
 (21.09) — pitch → coverage → verified quote → EPK → next pitch, closing on itself (DT-01). This is
 the mechanism that makes a rights platform's marketing domain defensible: WeJammin can verify the
-quote because it sent the pitch and holds the link.
+quote because it **holds a retrievable link to a fixed artefact and performs the verification act
+on it at capture time** — an act equally performable on coverage no pitch produced (corrected per
+DQ-20.1; 21.07 D-04/D-06, domain D-02 as amended). The pitch is how the loop usually *starts*, not
+what makes the quote verifiable.
 
 **Role scoping**:
 - **Musician**: ✅ pitches, captures coverage.
@@ -266,8 +283,18 @@ quote because it sent the pitch and holds the link.
 2. **Trigger chain**: `pitch sent` → (later) `coverage published` → capture into 21.07 → verify
    against held link → flip pitch to `covered` (CX-04) → quote to EPK (CX-05). Async, multi-step;
    any step can stall without corrupting the others.
-3. **Permission intersection**: only a pitch the sender actually sent yields a *verified* capture;
-   organic coverage lacks the pitch and is verifiable only to `claimed`/`verified-at-timestamp`.
+3. **Permission intersection**: ~~only a pitch the sender actually sent yields a *verified* capture;
+   organic coverage lacks the pitch and is verifiable only to `claimed`/`verified-at-timestamp`.~~
+   **CORRECTED (owner ratification, DQ-20.1)** — provenance is not a permission over the badge. A
+   parentless organic article at a live, retrievable URL captures as `verified` exactly as a pitched
+   one does; strength is decided by artefact class + retrievability alone (21.07 D-06, domain D-08).
+   What the held pitch actually governs is the *join*: it is what lets the capture flip the pitch
+   outcome to `covered` (CX-04) and sets the item's `Attributed` log state — a record fact the
+   Musician sees, never a badge input and never rendered on the EPK (21.07 D-07). The original
+   reading would have demoted 21.07 D-03's own best case ("often the best coverage there is") and
+   penalised the artists with the strongest unsolicited press. Accepted residue: on a self-logged
+   organic item the platform observed less of the chain — the artist chose the URL and the
+   pull-quote — and the only mitigation is the retrievability check.
 4. **Notification fan-out**: coverage capture notifies the Musician and updates the CRM contact.
 5. **State transition conflict**: the same coverage could be captured twice (via pitch link and
    organically); dedup on the coverage URL prevents double-credit.
@@ -323,7 +350,18 @@ door onto the shared inbox commons.
   social publishing, and the EPK — not four unrelated features.
 - **CX-04 → CX-08 → CX-05 → CX-06 form the credibility loop**: pitch → coverage capture → verified
   quote → EPK → next pitch. This loop is the domain's thesis (D-02); breaking any link breaks the
-  reason a rights platform owns marketing.
+  reason a rights platform owns marketing. **But the loop is not the badge's ground.** Ratified
+  DQ-20.1: a coverage item's verification strength comes from **artefact class + retrievability**
+  and never from pitch provenance, so an item that entered the log outside the loop carries the
+  same badge as one that came through it. Two places in this file asserted otherwise and are
+  corrected in place — CX-05's Relationship paragraph and CX-08 synthesis Q3 — on **ownership, not
+  recency**: 21.07 owns the verification taxonomy (its D-06), and CX-05 §1 already said so. Domain
+  D-02's defensibility claim is re-founded on the link-verification act (domain D-08).
+- **Provenance is a log state, not a rendered one** (ratified DQ-20.3; 21.07 D-07, 21.09 D-05).
+  `Attributed` / `Organic` drives the CX-04 CRM flip and the 21.03.01 denominator and is visible to
+  the Musician; the EPK shows one strength badge per item and says nothing about sourcing. A spec
+  writer must not invent a provenance label on any public surface — if the owner wants one later it
+  is an additive change on 21.09 (its Q-04), which is still `[PARTIAL]`.
 - **CX-03 has a cross-domain twin**: the payola classifier must also gate the services marketplace
   (05) listing path (D-06) and must NOT fire on WeJammin's own promoted surfaces (Q-07) — the
   recorded endogenous-payola contradiction.

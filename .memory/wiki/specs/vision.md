@@ -29,19 +29,49 @@ Four primary personas (full detail in [personas.md](ideation/meta/personas.md)):
 - **Fan** — first-class user (not a CRM record). Follows artists, discovers shows, buys direct.
   Phase 2, but modelled from day one.
 
+**Non-persona counterparties** (D-71, 2026-07-22): some real users of the platform are deliberately
+**not** personas. The commercial licence buyer is described in
+[counterparties.md](ideation/meta/counterparties.md) as two profiles — the professional licence
+buyer and the creator micro-licence buyer. That file adds **no** Role Matrix column and leaves D-19's
+four primary personas unamended. Other non-persona actors (dealer, curator, Admin/Moderator,
+stagehand, insurer, accountant, manager, fee-paying parent) remain **undescribed and open** — see
+Q-05 and Q-09 below.
+
 ## Solution Overview
 
 WeJammin is one platform for the whole music career, built on a single thesis: **provenance is the
 wedge, consolidation is the platform.** Consolidation — gear, gigs, services, projects, releases in
-one place — is the daily reason to show up. Provenance — credits and splits captured at the moment
-of creation — is the reason you can't leave.
+one place — is the daily reason to show up. Provenance — credits and splits captured while the work
+is still fresh and everyone is still in contact — is the reason you can't leave.
 
 The two are causally linked, not merely bundled. Nobody opens an app to file a split sheet. But they
 *will* confirm one inside the app they're already using to book the session, pay the engineer, and
-share the stems. Consolidation is what puts WeJammin **in the room**; being in the room is the only
-way the split can be captured at source — truthfully, on the day, while everyone is still friendly.
-That captured record is unrepeatable: no competitor who wasn't present can manufacture it later at
+share the stems. Consolidation is what puts WeJammin **in the workflow**; being in the workflow is
+what makes the split capturable at all — truthfully, on the day, while everyone is still friendly.
+That captured record is unrepeatable: no competitor who was not there can manufacture it later at
 any price. It is the earned lock-in the whole product is built to create.
+
+### What v1 claims — and what it does not
+
+> **Restated for the v1 window** — owner decision 2026-07-22 (D-70). Domain 07 D-06 is binding
+> here: *the platform never overclaims what it cannot do; these users are professionals, and an
+> overclaim discovered later is an unrecoverable trust breach.*
+
+**In v1, capture happens at the FIRST SHARING MOMENT — not inside the DAW.** No DAW-bridge feature
+(`07.09`) is phased into v1 under any current decision, and no non-web client is authorised
+([constraints.md § Project Surfaces](ideation/meta/constraints.md)). For the whole v1 window the
+capture points are exactly two:
+
+1. **The review link** (`07.05.02`) — the first moment the work leaves the producer's machine.
+2. **The session-close prompt** (`07.06.02`) — delivered by PWA web push plus the in-app surface,
+   fired by a producer tap, a booked session end, or the 72-hour backstop.
+
+**"Capture at source" — inside the DAW, at the instant the take exists — is the stated DIRECTION,
+not a current claim.** It becomes claimable only if the Desktop surface reopens on its enumerated
+evidence and the bridge is built. v1 positioning, marketing and in-product copy must therefore say
+*captured at the first sharing moment*, and must not say *captured at source* or *present at the
+moment of creation*. The restatement is reversible if the gate reopens — two edits are cheaper than
+carrying an overclaim.
 
 ## Domain Map
 
@@ -114,7 +144,7 @@ Full detail: [constraints.md](ideation/meta/constraints.md).
 | **Timeline** | Wedge-first, 3–6 months to v1 (spine); v1.5 (marketplaces) soon after |
 | **Budget** | Lean — scale-to-zero managed services |
 | **Market** | United States to start (jurisdiction-parameterized for later expansion) |
-| **Surfaces** | v1: web + PWA (`single-surface`). Native mobile = phase 2 (backend must be API-first) |
+| **Surfaces** | v1: web + PWA (`single-surface`). Native mobile = phase 2 (backend must be API-first). **Desktop / any locally-installed client = NOT AUTHORISED** (D-70) — reopens only on four named evidence items |
 | **Repo** | `github.com/WeJustJammin/nevrite-music` (private); 3 self-hosted CI runners live |
 
 ## Success Metrics
@@ -161,12 +191,16 @@ they are stated here as the direction and the method so they are testable, not v
 Full analysis: [competitive-landscape.md](ideation/meta/competitive-landscape.md). Every competitor
 is a point solution — Reverb, SoundBetter, Bandsintown, Splice, DistroKid, and the credits databases
 (Jaxsta, Muso.AI, Sound Credit) that all fail identically by *reconstructing* credits after the fact.
-WeJammin's moat is being present at the session: earned lock-in from an accumulating, verified record
-no point solution can replicate.
+WeJammin's moat is being **in the workflow** — hosting the hire, the project and the delivery, so the
+record is captured at the first sharing moment rather than reconstructed years later. That is earned
+lock-in from an accumulating, verified record no point solution can replicate. (D-70: the stronger
+"present at the session, inside the DAW" claim is the direction, not the v1 position.)
 
 ## Key Decisions
 
-1. **Rights stack is the thesis** (D-10) — capture at creation is the differentiator.
+1. **Rights stack is the thesis** (D-10) — early, evidenced capture is the differentiator.
+   *(D-70 qualifies the v1 claim: capture at the first sharing moment; capture-at-source is the
+   direction.)*
 2. **Provenance is the wedge, consolidation the platform** (D-18).
 3. **Fans are first-class users** (D-11), modelled now, surfaced phase 2.
 4. **Three separate marketplace domains** (D-14) — gear / digital / services have different physics.
@@ -181,13 +215,16 @@ no point solution can replicate.
 
 | # | Question | Owner | Target Stage |
 |---|----------|-------|-------------|
-| Q-00 | **Admin / Moderator actor**: none of the 4 personas (Musician/Producer/Operator/Fan) is platform staff, but Trust & Safety (24) and every domain's admin layer need one. Is Admin a 5th persona or an internal operator role outside the persona set? | User | `/create-prd` |
+| Q-00 | **Admin / Moderator actor**: none of the 4 personas (Musician/Producer/Operator/Fan) is platform staff, but Trust & Safety (24) and every domain's admin layer need one. Is Admin a 5th persona or an internal operator role outside the persona set? **Explicitly NOT closed by D-71** — and now the nearest-neighbour question to it, blocking 24.01.03 Q-01 most sharply. | User | `/create-prd` |
 | Q-01 | `08 Real-Time Jamming` — keep as a domain or fold into `07 Music Projects`? | User | `/create-prd` |
 | Q-02 | The identifier-binding seam — which mechanism/domain owns work↔identifier binding? | Agent | `/create-prd`, `/write-be-spec` |
 | Q-03 | ~~Is ~71 Musts realistic solo in 3–6mo?~~ **Resolved (D-31): split into v1 spine (~45) + v1.5 marketplaces (~26).** `/plan-phase` sequences within each release. | — | resolved |
 | Q-04 | Auth provider, media storage, payments provider, styling system (open stack decisions) | Agent | `/create-prd-stack` |
-| Q-05 | Is a dedicated dealer/developer persona needed for domains 13/14/15? | User | `/create-prd` |
+| Q-05 | Is a dedicated dealer/developer persona needed for domains 13/14/15? **Explicitly NOT closed by D-71** — a dealer is a *seller*, not a buyer, so the licence-buyer counterparty profiles are not their answer. | User | `/create-prd` |
 | Q-06 | Convert `WeJustJammin` from User account to Organization? | User | infra |
+| Q-07 | **Desktop reopen evidence is unassigned.** D-70 prohibits any locally-installed client and names four evidence items (a)–(d) that would reopen it ([constraints.md § Desktop Surface — Reopen Evidence](ideation/meta/constraints.md)). Nobody is tasked with gathering them; they are owner-decision inputs, not tracked work. Who gathers them, and when? | User | `/create-prd-stack` |
+| Q-08 | **Is the restated v1 claim still competitively differentiating?** D-70 restated the v1 thesis to "capture at the first sharing moment". Whether that still beats the credits-database incumbents on positioning is a market judgement no source in the ideation tree makes. Re-read [competitive-landscape.md](ideation/meta/competitive-landscape.md) against the new wording before v1 positioning copy is written. | User | `/create-prd` |
+| Q-09 | **Non-persona actors beyond the licence buyer remain undescribed.** D-71 was ratified narrowly and explicitly does NOT close: the professional dealer (13/14/15, = Q-05); Admin/Moderator (= Q-00, with 24.01.03 Q-01); the curator / journalist / radio / DSP gatekeeper (21.02 Q-01 with 21 D-03); the dealer counterparty (13.09 D-03 with 13.13); plus the stagehand, insurer, accountant, manager and fee-paying-parent questions. Each is owned in another domain index; a domain-11 ratification can make them answerable but cannot close them. | User | `/create-prd` |
 
 
 <!-- spec-graph: auto-generated -->

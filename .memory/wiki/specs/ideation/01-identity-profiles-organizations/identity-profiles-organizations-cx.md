@@ -2,8 +2,8 @@
 
 > **Level**: domain
 > **Scope**: Connections between children of [Identity, Profiles & Organizations](./identity-profiles-organizations-index.md)
-> **Status**: [DEEP] — sub-domain cross-cuts synthesised; 5-question synthesis answered for High-confidence entries; Step-5 pendings resolved where downstream evidence now exists.
-> **Last updated**: 2026-07-18
+> **Status**: [DEEP] — sub-domain cross-cuts synthesised; 5-question synthesis answered for High-confidence entries; Step-5 pendings resolved where downstream evidence now exists; owner ratifications DQ-01.A/B and DQ-02.3–.7 propagated.
+> **Last updated**: 2026-07-23
 
 ## Cross-Cut Map
 
@@ -53,8 +53,8 @@
 **Synthesis questions answered**:
 1. **Shared state conflict**: The graph (01.03) owns the edges; 01.01.03 holds no state and only reads. Nothing to merge.
 2. **Trigger chain**: Mandate granted → context appears. Revoked/expired → context vanishes, and any in-flight action fails authorisation at the call site rather than silently succeeding.
-3. **Permission intersection**: Yes, fundamentally — a membership without a mandate is presence without authority, and does not yield an actable context.
-4. **Notification fan-out**: Mandate changes notify the affected member. Silently *gaining* authority is a security event, not a convenience.
+3. **Permission intersection**: Yes, fundamentally — a membership without a mandate is presence without authority, and does not yield an actable context. **Made concrete by the ratified default (01.03.03 D-07/D-09)**: in a **band**, a `confirmed` `permanent` edge is seeded with authority, so the band becomes an actable context at the moment of confirmation with nobody configuring anything; a `touring`, `staff` or `honorary` edge is seeded with nothing, so those members are in the lineup and have **no band context at all** until the band grants something. Outside a band nothing is seeded (D-10 there), so the rule reads exactly as before.
+4. **Notification fan-out**: Mandate changes notify the affected member. Silently *gaining* authority is a security event, not a convenience. **Under the seed, confirmation *is* the gain** — so the invitation and the acceptance screen must state what is being received (01.03.01 Happy Path step 4), or the default becomes the silent gain this rule forbids.
 5. **State transition conflict**: Revocation mid-action is the live race; it fails closed (01.03.03 D-05) and preserves the draft.
 
 ---
@@ -140,6 +140,8 @@ So the wedge feature *is* the acquisition mechanism, and the provenance graph *i
 ### CX-06: Band Governance ↔ Membership/Mandate
 
 **Relationship**: The domain's sharpest unresolved conflict. Governance terms say "£2,000+ needs three of four"; the mandate graph says "the bassist can spend £500". Both are recorded, both display as true, and nothing reconciles them. Governance *ought* to be the source and mandate the derived enforcement — but mandate exists from org creation (01.02.02) while governance arrives years later, so the dependency currently runs backwards.
+
+**Sharpened, not resolved, by the ratified default (DQ-02.4/.5).** Mandate now exists on *every* confirmed permanent edge from the moment of confirmation, not just on the creator's — so the surface area for a terms-vs-mandate contradiction is every member rather than one, and the platform default (all seven activities to USD 1,000, including `administer`) is **wider** than the equal-shares partnership the governance disclosure describes. Two obligations follow immediately and are already recorded: both surfaces must state the same authority in the same words (01.04.01 D-05), and the flat ceiling is to be revisited against band-agreed thresholds once governance capture ships (01.03.03 Q-03). The precedence rule itself is still 01.04.03 Q-01's and still open.
 
 **Role scoping**: Musician (members) primarily. Producer where a member, or where relying on a band's ability to bind itself at the capture moment. Operator/Fan unaffected.
 
@@ -238,7 +240,7 @@ So the wedge feature *is* the acquisition mechanism, and the provenance graph *i
 
 **Synthesis questions answered**:
 1. **Shared state conflict**: The band org (01.02) is the entity; governance terms (01.04), the membership graph (01.03) and the alias origin (01.01.02) are all views over it. Governance attaches to the promoted party — nothing merges.
-2. **Trigger chain**: Shared alias created / alias promoted → governance capture offered **inline** (never forced). Skipping leaves the default mandate (Q-03) — so the design must make the skip legible, not silent.
+2. **Trigger chain**: Shared alias created / alias promoted → governance capture offered **inline** (never forced). Skipping leaves the default mandate — **now a known and consequential default** (Q-03 RESOLVED; domain D-09, 01.03.03 D-07..D-10): everyone named at capture who becomes a confirmed permanent member is seeded with all seven activities up to USD 1,000, including the authority to remove the others. So the skip must be **legible, not silent**, and the capture screen must say what skipping leaves in place — a band formed sideways out of a shared name inherits peer authority for everyone in it, which is exactly the population least likely to have discussed it.
 3. **Permission intersection**: Capturing governance terms is a member act; the alias creator seeds the first membership and mandate (CX-15).
 4. **Notification fan-out**: Bandmates named during capture are invited (the shared invitation cross-cut).
 5. **State transition conflict**: Governance captured while the alias is still solo-owned is safe; the live conflict is terms-vs-mandate (CX-06), which this seam **feeds** but does not itself create.
@@ -292,7 +294,7 @@ So the wedge feature *is* the acquisition mechanism, and the provenance graph *i
 **Synthesis questions answered**:
 1. **Shared state conflict**: The membership graph (01.03) owns the edges; the org (01.02) reads lineup from it. Nothing is stored twice, so nothing can drift.
 2. **Trigger chain**: Org created → creator's owning mandate created (and, if org creation happened *in* a context, the context must not capture the mandate — that would smuggle org-owns-org back in, 01.02.02 DT-12). Member added → lineup view changes with no write to the org.
-3. **Permission intersection**: A mandate covers the org UNIFORMLY today — a member mandated for the shop can also edit the venue. Per-type mandates are not defined, left as Q-04 rather than invented.
+3. **Permission intersection**: A mandate covers the org UNIFORMLY today — a member mandated for the shop can also edit the venue. Per-type mandates are not defined, left as an open question (01.03 index Q-02 / 01.03.03 Q-02) rather than invented. **Narrowed by DQ-02.7**: the question no longer touches *defaults*, because only bands are seeded (01.03.03 D-10) — a shop, venue or studio grants everything explicitly, and a band+label's seed is a fact about the band. What remains open is whether an *explicit* grant on a multi-type party can be scoped per type. Note the CX-15 uniformity claim was checked during ratification and does **not** support uniform seeding across org types: it is about scope across the types of one multi-type org, not about defaults across org types.
 4. **Notification fan-out**: Mandate grants/revocations notify the affected member; silently gaining authority is a security event (CX-01).
 5. **State transition conflict**: The cross-sub-domain race is departure-vs-mandate-recovery, which mortality forces open (CX-16); the intra-01.02 attribute-write-vs-type-removal race is handled at 01.02.03 D-04 (write rejected, value retained).
 

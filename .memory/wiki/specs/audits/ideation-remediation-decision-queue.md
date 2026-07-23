@@ -136,6 +136,8 @@
 
 **Preserved architecture follow-through:** `/create-prd-architecture` selects any validation candidates and delivery shape only after this gate; the current single-web-surface classification remains unchanged unless a later owner decision changes it.
 
+> **SUPERSEDED IN PART — 2026-07-22 (D-70, queue entry DQ-08.2).** "Unless a later owner decision changes it" has now happened, and the surface rule no longer lives in this audit file. `meta/constraints.md` § Project Surfaces states it directly: **no non-web client is authorised**, and the Desktop row carries four enumerated reopen-evidence items (§ Desktop Surface — Reopen Evidence). The classification stays `single-surface` for v1. A-03's parser gate above is **unchanged** and remains a *separate, additional* gate applying after the surface question — satisfying the surface evidence does not authorise a parser.
+
 ---
 
 ### A-04 — Rights-aware vault and NDA-gating access contract — RESOLVED

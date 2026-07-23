@@ -289,8 +289,8 @@ international expansion is additive (field-level data-residency awareness) but n
 | Surface | Type | Cross-Platform? | Notes |
 |---------|------|----------------|-------|
 | Web app | Astro islands — static + SSR via Workers | N/A | **Primary and only declared surface.** Responsive; must serve on-the-go use (gig/venue/studio contexts). |
-| Desktop | — | — | Not in scope. No directive. |
-| Mobile (PWA) | PWA over the Astro web app | N/A | **v1**: web is installable as a PWA (home-screen, web push for gig alerts). Serves the phone-shaped workflows without a separate surface. |
+| Desktop | — | — | **NOT AUTHORISED** (owner decision 2026-07-22, D-70). No WeJammin-installed client software runs on a user's own machine — no watch-folder agent, no DAW plugin, no other locally-installed binary. This is a rule, not an absence: it replaces the previous "Not in scope. No directive.", which a future reader could re-read as permission. **Reopens only on the four evidence items enumerated below** — see § Desktop Surface — Reopen Evidence. |
+| Mobile (PWA) | PWA over the Astro web app | N/A | **v1**: web is installable as a PWA (home-screen, web push for gig alerts **and — assigned 2026-07-22, D-70 — the 07.06.02 session-close capture prompt**: the Tier 1 contributor card and the Tier 2 Producer card are delivered in v1 by PWA web push plus the in-app surface). Serves the phone-shaped workflows without a separate surface. |
 | Mobile (native) | Native app | Yes | **Phase 2** (owner-confirmed 2026-07-18). Web-first now; a native surface is planned for phase 2, primarily serving Live/Events (16–19) and Fanbase (20) — the phone-context domains. Tracked as a **future surface**, so v1 classification stays `single-surface`; the native port is a separate future project. Per `vertical-slices.md` surface-first strategy. |
 | API | `[PENDING — /create-prd]` | N/A | Marketplace + integrations + a future native mobile client all imply a public/internal API. `/create-prd` should design the data layer API-first so the phase-2 native app consumes the same contracts. |
 | CLI | No | No | Not applicable. |
@@ -306,6 +306,70 @@ international expansion is additive (field-level data-residency awareness) but n
 >
 > Surface classification drives tech stack in `/create-prd`, folder structure in
 > `/decompose-architecture`, and spec shapes downstream.
+
+> **⚠️ VERIFY BEFORE RELYING ON IT** (D-70): web push on **iOS Safari requires the PWA to be
+> installed to the home screen**. No source in the ideation tree states this platform fact, and the
+> v1 capture-prompt assignment above depends on it. Verify at `/create-prd-stack` before treating
+> PWA push delivery as guaranteed for iOS contributors.
+>
+> **Payload caveat, ratified with the assignment** (D-70): deciding the pipe does not fill it. With
+> no DAW parse in v1, the capture card's pre-fill sources are the session roll (`07.06.01`) and the
+> roster (`07.03.01`) only, and `07.06.02` D-11 suppresses a card with neither. "Push is decided"
+> must not be read downstream as "the card is full". The close **signal** is likewise limited in v1
+> — producer tap, booked end and the 72 h backstop apply; DAW close is unavailable as a trigger.
+
+### Desktop Surface — Reopen Evidence
+
+> Owner decision 2026-07-22 (D-70, from queue entry DQ-08.2). The Desktop row above is a
+> **prohibition with a named exit**, not a deferral to a stage. Nothing reopens it except the
+> four evidence items below, each of which is an **owner-decision input**.
+
+| # | Evidence required before the Desktop row may be reopened | Source question |
+|---|---|---|
+| (a) | Can producers on locked-down commercial studio machines install anything at all, or are the highest-value users permanently unreachable by a client? | `07.09.01` Q-02 / DT-03(b) |
+| (b) | Does real-session evidence show DAW track names carrying person signal often enough to be worth a client? (The track-name premise is currently "asserted from reasoning, not verified" and is the strongest single assumption in domain 07.) | domain 07 Q-08 / `07.09.02` Q-03 |
+| (c) | A **costed** statement of a local agent's builds, updates, code signing, notarisation and support load, weighed against Team = Solo and Budget = Lean. | `07.09.01` DT-03(a) |
+| (d) | A read-scope model that is **verifiable, not asserted**, for studios holding confidential client material. | `07.09.01` D-06 / DT-03(c) |
+
+**The parser gate is separate and additional.** `07.09` D-04 / D-37 (representative real-session
+validation + DAW-specific legal review) applies *after* the surface question, never instead of it.
+Satisfying (a)–(d) reopens the surface; it does not authorise a parser.
+
+**Consequence for `/create-prd-stack`**: no agent distribution, code signing, notarisation or
+auto-update design is required for v1. The domain-07 CX "Local Agent Distribution, Signing,
+Auto-Update & Security Model" not-product row has no v1 brief.
+
+**Follow-on, unassigned**: nobody is currently tasked with gathering (a)–(d). They are owner-decision
+inputs, not tracked work. Recorded as `vision.md` Q-07.
+
+### Jurisdiction Parameterization — launch profile
+
+> Owner decision 2026-07-22 (D-72, from queue entry DQ-14). Applies D-32's second half
+> ("keeps the data model jurisdiction-parameterized so later international expansion is additive,
+> not a rewrite") to the statutory-record vocabulary that domain 16 and its consumers depend on.
+
+- **The regime axis exists and is retained.** Statutory facts are held against a named
+  **jurisdiction profile**, never against a hard-coded national vocabulary.
+- **Exactly one profile is authored at launch: `US`.** Every other territory — including the UK,
+  whose vocabulary the specs were originally drafted in — is an **UNAUTHORED profile**. Its
+  statutory fields resolve to an explicit `unknown`, never to a silent UK default. This follows
+  the precedent D-46 set for term and moral-right status: author the determinate jurisdictions,
+  make every other territory an explicit unknown rather than a guess.
+- **Profiles declare capabilities, not instruments.** A place, room or record names a statutory
+  **capability** the profile declares; it does not name a national instrument as *the* instrument.
+  The capability vocabulary is deliberately small — it must not grow into a rules engine.
+- **The US profile's five statutory slots are locked** (occupancy ceiling, liability cover,
+  electrical/fire safety record, performing-rights licence status, hirer requirements), each with an
+  **issuer** and an **expiry**, and each a *declaration* — never a platform-verified certificate.
+- **The US instrument NAMES are deferred to `/create-prd-security`**, which owns the empirical
+  legal work under D-32. No ideation source contains them, and this pipeline will not assert them.
+  The `[PENDING]` marker in `16.01.06` stays **live** and is re-pointed at that stage.
+- **Register availability is per licensing authority, not per profile.** The profile names the
+  register *class* that applies; actual availability resolves per licensing authority for the
+  record's address, and renders `unknown` where unresolved.
+- **No statutory temporary permission exists where there is no statutory condition.** Where a
+  profile declares no per-venue licence capability, there is no temporary-permission analogue to
+  map; date-ranged conditions survive as Operator claims labelled as claims.
 
 
 <!-- spec-graph: auto-generated -->

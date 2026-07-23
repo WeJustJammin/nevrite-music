@@ -3,7 +3,7 @@
 > **Level**: domain
 > **Parent**: [WeJammin Ideation Index](../ideation-index.md)
 > **Status**: [BREADTH]
-> **Last updated**: 2026-07-16
+> **Last updated**: 2026-07-23
 > **Novelty**: `user-directive` | **Priority**: `core`
 
 ## Overview
@@ -122,6 +122,9 @@ Two findings from breadth classification strengthen the domain-status argument b
 | D-09 | **Dynamic pricing proposed `wont`** — for a positive reason, not scheduling | No demand data exists at cold start; surge-pricing a community's rehearsal room is a relationship decision; serves neither half of D-18 | 16.06.08 D-02 |
 | D-10 | Two capabilities routed **out of the product** to `/create-prd` | ODbL share-alike contamination (legal); calendar sync protocol layer; virtual tour hosting | 16.05.01 DT-03; 16.06.02 DT-05; 16.01.03 DT-03 |
 | D-11 | 16 publishes **standing terms**; 17 negotiates and settles the **deal** | The domain's sharpest seam. Standing terms are a room property; the deal is a show property | 16.02.05 DT-01 |
+| D-12 | **A room's operating org arrives by grant *or* by room-scoped claim; a grant is never revoked by an act, only adjudicated as a dispute** | The cooperative sublease should cost nobody anything; the uncooperative landlord is precisely the case a fast path cannot serve. Revocability, not the grant itself, was the leverage problem | 16.01.01 D-12/D-13; 16.01.02 D-15/D-16; 16.05.02 D-16/D-17 |
+| D-13 | **Statutory records are a regime profile of *capabilities*; only the US profile is authored, and register availability resolves per licensing authority** | Ideation D-32 keeps the model jurisdiction-parameterized while shipping one market. Every rule that reads a statutory field is capability-gated and has **no input** rather than a default where the regime supplies none | 16.01.06 D-05/D-06; 16.05.01 D-16; 16.02.01 D-16; 16.02.03 D-13/D-14; 16.05.07 D-08; 16.06.03 D-25 |
+| D-14 | **Rehearsal backline is a read-through from 15, quantity-tracked by default, with the provision posture typed on the room spec** | Confirms 15.07 D-01 for the third room type; a duplicated list rots by construction. Ceremony is what kills the rehearsal path, so commodity stock is counted, not identified | 16.04 D-06/D-07/D-08; 16.06.07 D-06 |
 
 ### Merges & Splits Applied to the Sweep's Candidates
 
@@ -143,7 +146,7 @@ Two findings from breadth classification strengthen the domain-status argument b
 | Q-02 | **The field-class → conflict-policy map**: who does the platform believe when an Operator and a band disagree about a physical fact? A values decision that defines what kind of registry this is. | **User** | Step 5 — **owner decision** |
 | Q-03 | **The spec is not a set of constants.** Four features independently hit this: day-varying curfew (16.02.03 DT-04), production-dependent capacity (16.02.01 Q-02), billing-dependent hospitality (16.02.04 DT-04), conditional accessibility (16.01.04 DT-02). Does the spec need a general conditionality model? **16.05.04 DT-05 suggests fixing this would remove conflicts rather than resolve them.** | Agent | Step 5 — highest-value structural question |
 | Q-04 | **Enum vs free text per spec field** (16.02 Q-01). Enums enable 16.07; free text is honest and uncheckable. **The domain's headline capability rests on this.** | Agent | Step 5 |
-| Q-05 | **Is the mic locker a view over 15 Gear Registry scoped to the studio's org?** Decides whether there is one gear taxonomy or two. | Agent | Step 5 · **cross-check with 15 mandatory** |
+| Q-05 | **Is the mic locker a view over 15 Gear Registry scoped to the studio's org?** Decides whether there is one gear taxonomy or two. **Answered per feature, three times now** — 16.02.02 D-06 (venue backline), 16.03.02 D-04/D-05 (studio locker), 16.04 D-06 (rehearsal backline): yes, a read-through, never a second store. What remains is the population 15 cannot serve — an Operator with **no org entity** cannot publish at all (16.03.02 Q-02 / 16.04 Q-04), which now blocks supply in all three room types. | **User** | `/ideate-validate` · **cross-check with 15 mandatory** |
 | Q-06 | **Can ODbL sources be used at all?** Share-alike may reach a derived database; OSM is simultaneously the best venue geodata and the heaviest obligation. | User | `/create-prd` (legal + architecture) |
 | Q-07 | **Studio supply has no seeding story** — public data knows venues, not studios. Does 16.03's supply need a wholly different acquisition strategy, and does that change the launch sequence? | User | `/ideate-validate` |
 | Q-08 | **Who owns the cross-domain compound** (dry-hire room + a 05 freelance engineer)? The platform's clearest structural cross-sell, currently nobody's feature. | **User** | `/ideate-validate` · cross-check with 05 |
@@ -151,7 +154,7 @@ Two findings from breadth classification strengthen the domain-status argument b
 | Q-10 | **Lockout generates no completion events**, so the harvest never fires on the supply used most (16.06 CX-08). The freshest data comes from the least-used rooms. Real hole, no proposed fix. | Agent | Step 5 |
 | Q-11 | **Is rehearsal the domain's beachhead?** Highest frequency, lowest stakes, fastest feedback, simplest spec — and `problem-statement.md` Q-03 asks which consolidation surface goes first. | User | `/ideate-validate` · MoSCoW |
 | Q-12 | Is 16.01.07 Trades genuinely in this domain? It passes the address test, exercises no spec and no calendar, and has **no freshness mechanism at all** (no transaction → no harvest). | User | `/ideate-validate` |
-| Q-13 | **Jurisdiction** — 16.01.06 and 16.02.06 assume a UK regime (PRS/PPL/PAT/premises licence). Does the launch market decide these features' shape? | User | `/ideate-validate` |
+| Q-13 | ~~**Jurisdiction** — 16.01.06 and 16.02.06 assume a UK regime.~~ — **RESOLVED → D-13.** A record resolves a **regime profile** from its address; the profile declares which statutory slots exist, what instrument fills each, whether a per-premises register class exists, and whether a temporary-permission instrument exists. **Only the US profile is authored**; every other territory is an unauthored profile rendering explicit unknowns, and the UK vocabulary retires into one rather than being deleted or defaulted to. Register availability then resolves **per licensing authority** (16.05.01 D-16). **Residuals now tracked separately**: the US instrument names (16.01.06 Q-04, live `[PENDING]` to `/create-prd-security`), who maintains the per-authority coverage record (16.05.01 Q-06), and the unsizable Tier 1 dedup load that follows from it (16.05.07 Q-05). | — | Closed |
 | Q-14 | Does a business have the right to be **delisted** from an unclaimed record it never created? That is most of the registry at launch. | User | `/create-prd-security` |
 
 

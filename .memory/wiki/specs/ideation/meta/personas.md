@@ -4,6 +4,20 @@
 > Consumed by: every domain index Role Matrix (24), every feature file Role Lens.
 > Short names for Role Matrix columns: **Musician** · **Producer** · **Operator** · **Fan**
 
+> ### 👉 Companion file: [counterparties.md](./counterparties.md)
+>
+> **Some real users of WeJammin are deliberately not personas.** The commercial licence buyer — the
+> music supervisor / brand / agency, and the monetised creator — is described in
+> [counterparties.md](./counterparties.md) as two **counterparty profiles**, authored 2026-07-22 by
+> owner decision **D-71**.
+>
+> Those profiles use the same six fields as the personas below, plus Workflow and Anti-Persona
+> Behavior — but they are **not personas**: D-19 stays at **four**, and they add **no Role Matrix
+> column** anywhere. A reader who consults only this file will miss them, which is why this pointer
+> exists. D-71 is narrow: it closes the licence buyer only. Every other non-persona actor —
+> dealer, Admin/Moderator, curator, stagehand, insurer, accountant, manager, fee-paying parent —
+> remains open; see Q-01, Q-02 and Q-05 below and the non-closure table in `counterparties.md`.
+
 ## The Structural Fact
 
 Music's defining identity characteristic is the **multi-hyphenate**: one human simultaneously
@@ -131,7 +145,8 @@ and Producer personas — it is not a fifth persona.
 | 01 Identity · 02 Credits · 03 Community · 04 Opportunities | Musician | ✅ |
 | 05 Services · 07 Projects · 08 Jamming | Musician + Producer | ✅ |
 | 06 Education | Musician (both sides — teacher and student are both Musicians) | ✅ |
-| 09 Rights · 10 Royalties · 11 Licensing · 12 Release | Musician + Producer | ✅ |
+| 09 Rights · 10 Royalties · 12 Release | Musician + Producer | ✅ |
+| 11 Licensing | Musician + Producer on the **sell** side. The **buy** side is served by two non-persona counterparty profiles ([counterparties.md](./counterparties.md), D-71) — no Role Matrix column added. | ✅ (sell) · ✅ by reference (buy) |
 | 13 Gear · 14 Digital Goods · 15 Gear Registry | Musician (as buyer **and** seller) | ⚠️ see Q-01 |
 | 16 Venues/Studios · 17 Live Booking · 18 Show Production · 19 Ticketing | Operator (+ Musician as counterparty) | ✅ |
 | 20 Fanbase · 21 Promotion | Fan + Musician | ✅ |
@@ -142,10 +157,11 @@ and Producer personas — it is not a fifth persona.
 
 | # | Question | Owner | Deferred To |
 |---|----------|-------|-------------|
-| Q-01 | Domains 13/14/15 are served by "Musician acting as seller". Is a **professional dealer/plugin-developer** a distinct persona, or a Musician in a selling context? The owner chose 4 over 5 — revisit if the Gear/Digital Role Matrices come out thin during drilling. | User | `/ideate-validate` |
-| Q-02 | **Admin/Moderator** is not a persona but domain 24 needs one, and every domain has an admin layer per `vertical-slices.md`. Is Admin a persona, or an internal operator role outside the persona set? | User | `/create-prd` |
+| Q-01 | Domains 13/14/15 are served by "Musician acting as seller". Is a **professional dealer/plugin-developer** a distinct persona, or a Musician in a selling context? The owner chose 4 over 5 — revisit if the Gear/Digital Role Matrices come out thin during drilling. **Explicitly NOT closed by D-71**: a dealer is a *seller*; the counterparty profiles describe *buyers*. Deferral target re-pointed from the completed `/ideate-validate` to `/create-prd`; canonical entry `vision.md` Q-05. | User | `/create-prd` |
+| Q-02 | **Admin/Moderator** is not a persona but domain 24 needs one, and every domain has an admin layer per `vertical-slices.md`. Is Admin a persona, or an internal operator role outside the persona set? **Explicitly NOT closed by D-71**, and now the nearest-neighbour question to it — `24.01.03` Q-01 records that the actor's identity, permission model and console endpoints cannot be specified until this resolves. Canonical entry `vision.md` Q-00. | User | `/create-prd` |
 | Q-03 | Teacher and Student are both "Musician" — does domain 06 need them split, or does the Role Lens handle it contextually? | Agent | drilling, domain 06 |
 | Q-04 | How is the multi-hyphenate modelled — one account with many roles, or many contexts under one identity? Personas assume the former. | Agent | `/create-prd-architecture` |
+| Q-05 | **Which remaining non-persona actors get a counterparty profile, a persona, or neither?** D-71 authored profiles for the commercial licence buyer only and listed nine actors it explicitly does not close (dealer, Admin/Moderator, curator/journalist/radio/DSP gatekeeper, dealer counterparty, stagehand, insurer, accountant, manager, fee-paying parent). Each is owned in another domain index. Canonical entry `vision.md` Q-09. | User | `/create-prd` |
 
 
 <!-- spec-graph: auto-generated -->

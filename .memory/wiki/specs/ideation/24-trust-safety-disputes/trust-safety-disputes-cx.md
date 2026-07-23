@@ -207,7 +207,9 @@ that must be un-softenable *by design*.
 
 **Relationship**: A carve-out defined at intake, executed downstream. Three reason families leave the general
 queue before any classifier touches them: CSAM (→ 24.08.01, preservation duty), factual rights/credit
-disputes (→ domains 02/09, wrong remedy), and **self-harm (→ 24.06.03, no sanction ever)**. The self-harm
+disputes (→ domains 02/09, wrong remedy — the *remedy* leaves, the *adjudication work* does not: those cases
+return as case classes on the shared `Dispute Case Engine`, see **Inbound Adjudication Load** below), and
+**self-harm (→ 24.06.03, no sanction ever)**. The self-harm
 bypass must fire *before* any queue enqueue (24.01.01 → 24.06.03) so a welfare case can never be sanctioned.
 
 **Role scoping**:
@@ -411,6 +413,38 @@ default everywhere in this domain — here, non-disclosure is mandatory.
 | **CSAM hash-set access & NCMEC pipeline integration** | cand. 22 → product half is [24.08.01](./24.08-illegal-content-legal-process/24.08.01-csam-detection-preservation-reporting.md) | `/create-prd-security` + `/create-prd-stack` | Access to industry hash sets is a **vetted vendor relationship with strict handling rules**, not an API signup. May gate the launch of image upload entirely. |
 | **Credential architecture: MFA, session, device binding, recovery mechanics** | cand. 08 → product half is [24.03.02](./24.03-fraud-risk-operations/24.03.02-ato-ban-evasion-ring-detection.md) and [24.07.02](./24.07-identity-abuse-ownership-disputes/24.07.02-entity-ownership-account-recovery-disputes.md) | `/create-prd-security` | Trust owns **detection and contested recovery**; architecture owns the credential and the forgot-password flow. |
 | **Data retention schedules & legal-hold machinery** | cands. 22/24 → product half is [24.08.03](./24.08-illegal-content-legal-process/24.08.03-law-enforcement-legal-process-portal.md) and [24.09](./24.09-case-evidence-locker.md) | `/create-prd-security` | Trust owns the **decision** to place a hold; the machinery that enforces it across every store is architecture — and `Privacy` already flags the erasure-vs-retention collision as an architecture-time decision. |
+
+---
+
+## Inbound Adjudication Load
+
+> Case classes **owned elsewhere but adjudicated here**. The deciding semantics stay with the source domain;
+> the reviewer time, the SLA and the appeal path land on this domain's machinery. Recorded so capacity
+> planning sees the load rather than discovering it.
+
+| Case class | Source | What domain 24 absorbs | Budget status |
+|---|---|---|---|
+| **Contested evidence-based lift objection** | [02.01.05](../02-credits-attribution/02.01-credit-graph-discography/02.01.05-credit-visibility-embargo.md) D-19/D-20/D-21/D-22 → [02.05](../02-credits-attribution/02.05-credit-dispute-resolution.md) D-07, riding the `Dispute Case Engine` cross-cut (serves 02, 05, 09, 13, 14, 17, 19, 24) | Human adjudication **per objection**, under a **mandatory resolution SLA** — the credit stays embargoed at the status quo while contested, so an embargoed status quo plus an unbounded resolver is a de facto Producer veto, the outcome the axis was decided to avoid. Plus the appeal path, and the serial-objector pattern: re-submission of evidence after an objection is deliberately **uncapped** (no cap, no cooldown, no escalation counter), so a repeat objector must keep losing on the merits *here* rather than being stopped by a counting rule nobody sourced | **Unbudgeted.** No current 24 spec allocates per-objection reviewer capacity for this class. It is **not** general-queue load — it never enters the moderation queue, so CX-06's carve-out holds — but it is reviewer time on the same unrotatable one-person team ([index](./trust-safety-disputes-index.md) Q-06, Q-07). The SLA *value* is deferred, not the requirement: `02.01.05` Q-06 — Owner: User, `/create-prd` |
+
+**What the adjudicator is and is not asked.** The question is a **predicate check on a closed ground list**
+(`02.01.05` D-19): (i) the evidence identifies a different recording; (ii) the URL/identifier is not publicly
+reachable; (iii) other — free text. It is never a factual argument about who contributed what; that is
+`02.05`'s ordinary credit dispute, and `02.05` D-07 keeps the two case classes distinct precisely so a
+predicate check is not run as a contribution argument. Inline platform re-verification runs first, *outside*
+this domain, and reaches a human only when it fails to settle the stated ground — grounds (i)/(ii) give the
+re-check something the first automated pass did not have. A ground-(iii) objection has nothing for the
+re-check to check, so it is logged, shown and routed straight to a human here: **never auto-handled, never
+auto-resolved**.
+
+**A known gap arrives with the load.** A recording that is publicly reachable but **unauthorised** (a leak or
+bootleg) has no ground on the closed list — no source in the corpus defines an authorised-vs-unauthorised
+predicate, and inventing one would make domain 12 the authority for what counts as an authorised release.
+Such an objection can only be filed under ground (iii), which lands on a domain-24 human **with no defined
+test to apply**. Recorded as an accepted gap, not an oversight: `02.01.05` Q-07 — Owner: User, `/create-prd`.
+
+**Reading the embargoed record.** The adjudicator is not a session participant and must still read the
+credit under `02.01.05` D-18's logged, non-publishing, case-scoped grant — the same shape as CX-02's
+case-scoped, read-only locker access: a privileged read that never publishes.
 
 
 <!-- spec-graph: auto-generated -->

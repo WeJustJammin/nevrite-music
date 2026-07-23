@@ -24,13 +24,31 @@ the exact moment they become contested and valuable.
 | Half | What it does | Why it matters |
 |---|---|---|
 | **Consolidation** | One platform for gear, gigs, services, projects, venues, releases | The **daily reason to show up**. It is the pain musicians actually feel and can articulate. It wins the user. |
-| **Provenance** | Credits, splits, and ownership captured at the moment of creation | The **reason they cannot leave**. It is the value they cannot take with them and no competitor can retroactively manufacture. It keeps the user. |
+| **Provenance** | Credits, splits, and ownership captured while the work is still fresh and the parties are still in contact | The **reason they cannot leave**. It is the value they cannot take with them and no competitor can retroactively manufacture. It keeps the user. |
 
 **Why the pairing is coherent, not a hedge**: the two halves are causally linked, not merely
 bundled. A platform earns the right to capture a split *because it is already where the work
 happens*. Nobody opens an app to file a split sheet — but they will confirm one in the app
 they are already using to book the session, pay the engineer, and share the stems. Consolidation
-is what puts WeJammin **in the room**; being in the room is the only way provenance is capturable.
+is what puts WeJammin **in the workflow**; being in the workflow is what makes provenance
+capturable at all.
+
+### Where capture actually happens in v1 (D-70, 2026-07-22)
+
+> Restated so the framing above matches what the product does. Domain 07 D-06: *the platform never
+> overclaims what it cannot do — an overclaim discovered later is an unrecoverable trust breach.*
+
+The **root cause** below — absence at the point of truth — is the industry's problem and remains
+correctly stated. WeJammin's answer to it is graded, and v1 sits on the first rung:
+
+| Rung | Where the fact is captured | Status |
+|---|---|---|
+| **1 — first sharing moment** | The review link (`07.05.02`) and the session-close prompt (`07.06.02`, delivered by PWA web push + in-app) | **This is v1.** Days after the take, not years — and while everyone is still reachable and still friendly. |
+| **2 — at source, inside the DAW** | The DAW bridge (`07.09`) — watch folder, session parse, in-session prompt | **Not v1, and not authorised.** No non-web client surface exists (constraints.md § Project Surfaces). The **direction**, not the current claim. |
+
+The honest v1 statement is therefore **"capture at the first sharing moment"**. That is still a
+structural advantage over reconstruction — the gap it closes is *years*, not *hours* — but it is
+not "present at the moment of creation", and nothing v1 ships may say that it is.
 
 Neither half stands alone:
 - **Provenance alone** is a slow burn with no daily hook — the Jaxsta / Muso.AI / Sound Credit
@@ -71,9 +89,11 @@ liner notes, label submissions, and self-asserted claims, then try to reconcile 
 of them inherits the same defect: **they are asking people to remember**, and memory is
 contested, lossy, and self-interested.
 
-The root cause is not bad databases. It is **absence at the point of truth**. The only fix is to
-be in the room — which is why consolidation is not a separate ambition but the *precondition*
-for provenance.
+The root cause is not bad databases. It is **absence at the point of truth**. The fix is to be in
+the workflow, close enough to the point of truth that the fact is confirmed rather than
+remembered — which is why consolidation is not a separate ambition but the *precondition* for
+provenance. See the two-rung table above for how close v1 actually gets (rung 1, the first sharing
+moment) and how close the direction goes (rung 2, at source).
 
 ## Deep Think Annotations
 
