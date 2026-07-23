@@ -140,4 +140,8 @@ Teaching and learning — lesson booking and packages, curriculum and practice t
 - [[decisions.md#d-03|D-03]]
 - [[decisions.md#d-07|D-07]]
 - [[decisions.md#d-04|D-04]]
+- [[decisions.md#d-71|D-71]]
 - [[decisions.md#d-08|D-08]]
+- [[decisions.md#d-09|D-09]]
+- [[decisions.md#d-20|D-20]]
+- [[decisions.md#d-14|D-14]]

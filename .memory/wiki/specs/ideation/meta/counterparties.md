@@ -146,5 +146,11 @@ dealer half. Rolled up canonically as [`vision.md` Q-09](../../vision.md).
 ## Related Specs
 
 ### Constrained by
+- [[decisions.md#d-71|D-71]]
+- [[decisions.md#d-10|D-10]]
 - [[decisions.md#d-19|D-19]]
 - [[decisions.md#d-50|D-50]]
+- [[decisions.md#d-11|D-11]]
+- [[decisions.md#d-03|D-03]]
+- [[decisions.md#d-04|D-04]]
+- [[decisions.md#d-07|D-07]]

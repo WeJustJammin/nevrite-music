@@ -440,6 +440,7 @@ the settlement itself die silently.
 - [[decisions.md#d-05|D-05]]
 - [[decisions.md#d-06|D-06]]
 - [[decisions.md#d-15|D-15]]
+- [[decisions.md#d-13|D-13]]
 - [[decisions.md#d-18|D-18]]
 - [[decisions.md#d-14|D-14]]
 - [[decisions.md#d-08|D-08]]

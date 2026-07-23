@@ -435,6 +435,10 @@ A 24-domain graph has 276 possible unordered domain pairs. This map records **20
 
 ### Constrained by
 - [[decisions.md#d-16|D-16]]
+- [[decisions.md#d-28|D-28]]
+- [[decisions.md#d-70|D-70]]
+- [[decisions.md#d-11|D-11]]
+- [[decisions.md#d-69|D-69]]
 - [[decisions.md#d-15|D-15]]
 - [[decisions.md#d-03|D-03]]
 - [[decisions.md#d-05|D-05]]
@@ -446,7 +450,6 @@ A 24-domain graph has 276 possible unordered domain pairs. This map records **20
 - [[decisions.md#d-07|D-07]]
 - [[decisions.md#d-01|D-01]]
 - [[decisions.md#d-08|D-08]]
-- [[decisions.md#d-11|D-11]]
 - [[decisions.md#d-12|D-12]]
 - [[decisions.md#d-13|D-13]]
 - [[decisions.md#d-02|D-02]]

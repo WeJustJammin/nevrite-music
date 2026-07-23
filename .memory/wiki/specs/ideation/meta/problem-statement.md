@@ -118,6 +118,8 @@ moment) and how close the direction goes (rung 2, at source).
 
 ### Constrained by
 - [[decisions.md#d-18|D-18]]
+- [[decisions.md#d-70|D-70]]
+- [[decisions.md#d-06|D-06]]
 - [[decisions.md#d-10|D-10]]
 - [[decisions.md#d-05|D-05]]
 - [[decisions.md#d-08|D-08]]

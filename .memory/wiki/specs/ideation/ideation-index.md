@@ -331,6 +331,7 @@ See [moscow-ledger.md](./moscow-ledger.md#wont-53).
 
 ### Constrained by
 - [[decisions.md#d-18|D-18]]
+- [[decisions.md#d-71|D-71]]
 - [[decisions.md#d-16|D-16]]
 - [[decisions.md#d-35|D-35]]
 - [[decisions.md#d-28|D-28]]
@@ -398,3 +399,8 @@ See [moscow-ledger.md](./moscow-ledger.md#wont-53).
 - [[decisions.md#d-66|D-66]]
 - [[decisions.md#d-67|D-67]]
 - [[decisions.md#d-68|D-68]]
+- [[decisions.md#d-69|D-69]]
+- [[decisions.md#d-70|D-70]]
+- [[decisions.md#d-72|D-72]]
+- [[decisions.md#d-73|D-73]]
+- [[decisions.md#d-74|D-74]]

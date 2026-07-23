@@ -1256,6 +1256,7 @@ The struck clause ("escalation only on evidence of imminent sale or hardship") w
 - [[decisions.md#d-13|D-13]]
 - [[decisions.md#d-14|D-14]]
 - [[decisions.md#d-10|D-10]]
+- [[decisions.md#d-70|D-70]]
 - [[decisions.md#d-04|D-04]]
 - [[decisions.md#d-05|D-05]]
 - [[decisions.md#d-17|D-17]]

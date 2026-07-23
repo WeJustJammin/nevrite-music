@@ -2,8 +2,8 @@
 
 ## Summary
 
-- **Total patterns**: 6
-- **Unique pattern titles**: 6
+- **Total patterns**: 8
+- **Unique pattern titles**: 8
 
 ## PAT-001: Verify a generated claim against the kit's own reference before propagating it (2026-07-16)
 
@@ -92,6 +92,34 @@
   The rules: **write to the source, never the artifact** — use `flushEntry()` from `.memory/pipeline/flush.mjs`, then compile. And **read a script before running it**, especially before a command whose name suggests it only generates. "Derived" in a README is a *warning*, not a description. Commit first when a large working tree is uncommitted.
 - **Source**: 2026-07-22 — self-inflicted, disclosed immediately, recovered by reconstructing DEC-009–047 / PAT-004–005 / BLOCKER-004 as raw records. Also drove the correction of `.claude/rules/memory-capture.md`, which had instructed exactly the failing write path.
 
+## PAT-007: A spec's declared affectedFiles under-declares — sweep the whole tree (2026-07-23)
+
+- **Occurrences**: 1
+- **Latest timestamp**: 2026-07-23T03:05:00.000Z
+- **Agents**: claude
+- **Sources**: audit-ambiguity
+- **Index**: [[index]]
+
+- **Type**: anti-pattern
+- **Confidence**: 0.7
+- **Context**: Propagating a ratified decision into a spec tree, where each decision entry carries a list of files it claims to affect.
+- **Pattern**: Scoping propagation agents to each decision's **declared** `affectedFiles` list left 22 places still asserting the reading the decision had rejected — including self-contradictions inside a single file, where a Decisions table was correctly rewritten while a Role Lens row, Happy Path step or user-facing copy string three sections down kept the old rule. Re-running with **domain-wide** scope found **229 further** stale readings, i.e. the declared lists under-declared by roughly 4x. **Never scope a propagation pass to a declared file list. Grep the whole tree for the wording of the reading being rejected.** The blind spots are consistent: Role Lens rows, Happy Path steps, copy strings, edge-case cells, Cross-Cut Notes, index/CX footers, and Deep Think rows restating a changed rule — agents edit Decisions tables and stop. Corollary: a verifier's finding list is a *sample*, not a complete set — always re-sweep after fixing what it listed.
+- **Source**: 2026-07-23 propagation of 57 ratified decisions into the WeJammin ideation tree. Self-inflicted; the audit that produced the decisions exists precisely to catch stale downstream copies, and the propagation reproduced the defect while fixing it.
+
+## PAT-008: An agent asked to apply a decision will invent the value the decision withheld (2026-07-23)
+
+- **Occurrences**: 1
+- **Latest timestamp**: 2026-07-23T03:06:00.000Z
+- **Agents**: claude
+- **Sources**: audit-ambiguity
+- **Index**: [[index]]
+
+- **Type**: anti-pattern
+- **Confidence**: 0.6
+- **Context**: Applying a decision that deliberately defers a value (an instrument name, a threshold, an enum) to a later pipeline stage.
+- **Pattern**: A propagation agent rewriting a Happy Path to match a new decision filled the deliberately-empty US statutory profile with an invented `23:00` operating-hours limit and `98 dB`, complete with "each carrying the issuing authority" — plausible, well-formed, and contradicting **two** ratified decisions at once (one deferred the instrument names; the other says that profile declares no such instrument at all). The pressure is grammatical, not careless: prose needs a noun, and "the slot deferred to a later stage" reads worse than a number. **Make "did anyone fill in a value a decision deferred?" an explicit, separately-reported verification check** — it will not surface as a contradiction, because the invented value is internally consistent. The fix instruction that works: name the SLOT, never an instrument.
+- **Source**: 2026-07-23 propagation; caught by the independent verify pass, removed in a third cleanup pass.
+
 ## Full Log
 
 ### PAT-001: Verify a generated claim against the kit's own reference before propagating it (2026-07-16)
@@ -174,3 +202,29 @@
   (2) **Running a build command without reading it.** `node .memory/pipeline/compile.mjs` was run against 1,100+ uncommitted files on the assumption it *derived* a graph. It also **overwrites** all three wiki files from `raw/`, which was empty. The three files were regenerated as empty stubs and every hand-authored entry was gone.
   The rules: **write to the source, never the artifact** — use `flushEntry()` from `.memory/pipeline/flush.mjs`, then compile. And **read a script before running it**, especially before a command whose name suggests it only generates. "Derived" in a README is a *warning*, not a description. Commit first when a large working tree is uncommitted.
 - **Source**: 2026-07-22 — self-inflicted, disclosed immediately, recovered by reconstructing DEC-009–047 / PAT-004–005 / BLOCKER-004 as raw records. Also drove the correction of `.claude/rules/memory-capture.md`, which had instructed exactly the failing write path.
+
+### PAT-007: A spec's declared affectedFiles under-declares — sweep the whole tree (2026-07-23)
+
+- **Timestamp**: 2026-07-23T03:05:00.000Z
+- **Agent**: claude
+- **Source**: audit-ambiguity
+- **Tags**: pattern, anti-pattern, propagation
+
+- **Type**: anti-pattern
+- **Confidence**: 0.7
+- **Context**: Propagating a ratified decision into a spec tree, where each decision entry carries a list of files it claims to affect.
+- **Pattern**: Scoping propagation agents to each decision's **declared** `affectedFiles` list left 22 places still asserting the reading the decision had rejected — including self-contradictions inside a single file, where a Decisions table was correctly rewritten while a Role Lens row, Happy Path step or user-facing copy string three sections down kept the old rule. Re-running with **domain-wide** scope found **229 further** stale readings, i.e. the declared lists under-declared by roughly 4x. **Never scope a propagation pass to a declared file list. Grep the whole tree for the wording of the reading being rejected.** The blind spots are consistent: Role Lens rows, Happy Path steps, copy strings, edge-case cells, Cross-Cut Notes, index/CX footers, and Deep Think rows restating a changed rule — agents edit Decisions tables and stop. Corollary: a verifier's finding list is a *sample*, not a complete set — always re-sweep after fixing what it listed.
+- **Source**: 2026-07-23 propagation of 57 ratified decisions into the WeJammin ideation tree. Self-inflicted; the audit that produced the decisions exists precisely to catch stale downstream copies, and the propagation reproduced the defect while fixing it.
+
+### PAT-008: An agent asked to apply a decision will invent the value the decision withheld (2026-07-23)
+
+- **Timestamp**: 2026-07-23T03:06:00.000Z
+- **Agent**: claude
+- **Source**: audit-ambiguity
+- **Tags**: pattern, anti-pattern, propagation
+
+- **Type**: anti-pattern
+- **Confidence**: 0.6
+- **Context**: Applying a decision that deliberately defers a value (an instrument name, a threshold, an enum) to a later pipeline stage.
+- **Pattern**: A propagation agent rewriting a Happy Path to match a new decision filled the deliberately-empty US statutory profile with an invented `23:00` operating-hours limit and `98 dB`, complete with "each carrying the issuing authority" — plausible, well-formed, and contradicting **two** ratified decisions at once (one deferred the instrument names; the other says that profile declares no such instrument at all). The pressure is grammatical, not careless: prose needs a noun, and "the slot deferred to a later stage" reads worse than a number. **Make "did anyone fill in a value a decision deferred?" an explicit, separately-reported verification check** — it will not surface as a contradiction, because the invented value is internally consistent. The fix instruction that works: name the SLOT, never an instrument.
+- **Source**: 2026-07-23 propagation; caught by the independent verify pass, removed in a third cleanup pass.

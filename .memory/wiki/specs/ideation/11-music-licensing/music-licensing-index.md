@@ -183,3 +183,4 @@ domain's and currently has no home (Q-05).
 - [[decisions.md#d-06|D-06]]
 - [[decisions.md#d-08|D-08]]
 - [[decisions.md#d-09|D-09]]
+- [[decisions.md#d-71|D-71]]

@@ -459,3 +459,7 @@ case-scoped, read-only locker access: a privileged read that never publishes.
 - [[decisions.md#d-07|D-07]]
 - [[decisions.md#d-06|D-06]]
 - [[decisions.md#d-05|D-05]]
+- [[decisions.md#d-19|D-19]]
+- [[decisions.md#d-20|D-20]]
+- [[decisions.md#d-21|D-21]]
+- [[decisions.md#d-22|D-22]]

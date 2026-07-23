@@ -787,6 +787,7 @@
 - [[decisions.md#d-09|D-09]]
 - [[decisions.md#d-10|D-10]]
 - [[decisions.md#d-02|D-02]]
+- [[decisions.md#d-71|D-71]]
 - [[decisions.md#d-13|D-13]]
 - [[decisions.md#d-15|D-15]]
 - [[decisions.md#d-13c|D-13c]]

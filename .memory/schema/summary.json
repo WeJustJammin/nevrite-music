@@ -1,13 +1,13 @@
 {
-  "compiledAt": "2026-07-22T08:29:25.484Z",
-  "rawFiles": 1,
-  "knowledgeEntries": 1194,
-  "chunkEntries": 46959,
-  "semanticEntries": 46959,
-  "specGraphNodes": 1219,
-  "specGraphEdges": 7486,
-  "specGraphLintIssues": 30,
-  "patterns": 6,
-  "decisions": 47,
+  "compiledAt": "2026-07-23T07:04:06.057Z",
+  "rawFiles": 2,
+  "knowledgeEntries": 1200,
+  "chunkEntries": 49689,
+  "semanticEntries": 49689,
+  "specGraphNodes": 1229,
+  "specGraphEdges": 8086,
+  "specGraphLintIssues": 29,
+  "patterns": 8,
+  "decisions": 48,
   "blockers": 4
 }

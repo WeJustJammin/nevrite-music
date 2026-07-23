@@ -1,7 +1,7 @@
 # Spec Graph
 
-- **Nodes**: 1219
-- **Edges**: 7486
+- **Nodes**: 1229
+- **Edges**: 8086
 
 ## Relationship Chains
 
@@ -30,7 +30,6 @@
 - [[specs/ideation/19-ticketing-box-office/19.01-ticket-config-scaling-allocations/19.01-ticket-config-scaling-allocations-cx|Ticket Configuration, Scaling & Allocations — Cross-Cuts]]
 - [[specs/ideation/19-ticketing-box-office/19.02-on-sale-announce-presale/19.02-on-sale-announce-presale-cx|On-Sale, Announce & Presale Access — Cross-Cuts]]
 - [[specs/ideation/19-ticketing-box-office/19.03-guest-list-comps/19.03-guest-list-comps-cx|Guest List & Comps — Cross-Cuts]]
-- [[specs/ideation/19-ticketing-box-office/19.04-door-scanning-access-control/19.04-door-scanning-access-control-cx|Door Scanning & Access Control — Cross-Cuts]]
 - [[specs/ideation/21-promotion-marketing/21.01-release-campaign-planner/21.01-release-campaign-planner-cx|Release Campaign Planner — Cross-Cuts]]
 - [[specs/ideation/21-promotion-marketing/21.04-smart-links-presave-attribution/21.04-smart-links-presave-attribution-cx|Smart Links, Pre-Save & Attribution — Cross-Cuts]]
 - [[specs/ideation/24-trust-safety-disputes/24.01-reporting-moderation/24.01-reporting-moderation-cx|Reporting, Moderation & Notice-and-Action — Cross-Cuts]]

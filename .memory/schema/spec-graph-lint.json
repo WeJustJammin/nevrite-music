@@ -1,5 +1,5 @@
 {
-  "builtAt": "2026-07-22T08:29:19.269Z",
+  "builtAt": "2026-07-23T07:02:55.864Z",
   "issues": [
     {
       "severity": "warning",
@@ -138,12 +138,6 @@
       "code": "ORPHAN_SPEC",
       "message": ".memory/wiki/specs/ideation/19-ticketing-box-office/19.03-guest-list-comps/19.03-guest-list-comps-cx.md has no graph relationships",
       "path": ".memory/wiki/specs/ideation/19-ticketing-box-office/19.03-guest-list-comps/19.03-guest-list-comps-cx.md"
-    },
-    {
-      "severity": "warning",
-      "code": "ORPHAN_SPEC",
-      "message": ".memory/wiki/specs/ideation/19-ticketing-box-office/19.04-door-scanning-access-control/19.04-door-scanning-access-control-cx.md has no graph relationships",
-      "path": ".memory/wiki/specs/ideation/19-ticketing-box-office/19.04-door-scanning-access-control/19.04-door-scanning-access-control-cx.md"
     },
     {
       "severity": "warning",

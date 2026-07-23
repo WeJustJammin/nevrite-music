@@ -17,10 +17,12 @@
 ## Knowledge
 
 - [[specs/audits/audit-scope|Audit Scope — Ambiguity Audit]] — audit — spec-vault
+- [[specs/audits/blocking-decision-queue|Blocking Ambiguity — Owner Decision Queue]] — audit — spec-vault
 - [[specs/audits/decision-queue-drafts/01-credits-rights|Credits & Rights Decision Queue]] — audit — spec-vault
 - [[specs/audits/decision-queue-drafts/02-projects-delivery|Projects, Delivery, Marketplace, and Distribution — Unratified Decision Queue]] — audit — spec-vault
 - [[specs/audits/decision-queue-drafts/03-marketplace-gear|Marketplace, Gear & Registry Decision Queue — Draft]] — audit — spec-vault
 - [[specs/audits/decision-queue-drafts/04-live-fan|Decision Queue Draft 04 — Live Booking and Fan Alerts]] — audit — spec-vault
+- [[specs/audits/decision-ratification-log|Blocking Decision Queue — Ratification Log]] — audit — spec-vault
 - [[specs/audits/ideation-ambiguity-report|Ideation Ambiguity Audit — Report]] — audit — spec-vault
 - [[specs/audits/ideation-remediation-decision-queue|Ideation Remediation — Canonical Decision Queue]] — audit — spec-vault
 - [[specs/audits/p01-production-stage-vocabulary-validation|P-01 Production-Stage Vocabulary Validation]] — audit — spec-vault
@@ -1147,6 +1149,7 @@
 - [[specs/ideation/ideation-index|Ideation Index — WeJammin]] — ideation — spec-vault
 - [[specs/ideation/meta/competitive-landscape|Competitive Landscape — WeJammin]] — ideation — spec-vault
 - [[specs/ideation/meta/constraints|Project Constraints — WeJammin]] — ideation — spec-vault
+- [[specs/ideation/meta/counterparties|Counterparty Profiles — WeJammin]] — ideation — spec-vault
 - [[specs/ideation/meta/cross-cut-emergent-capabilities|Cross-Cut Emergent Capabilities — Step 6 Synthesis]] — ideation — spec-vault
 - [[specs/ideation/meta/personas|User Personas — WeJammin]] — ideation — spec-vault
 - [[specs/ideation/meta/problem-statement|Problem Statement — WeJammin]] — ideation — spec-vault
@@ -1156,6 +1159,9 @@
 
 ## Structured Memory
 
+- pattern: PAT-008: An agent asked to apply a decision will invent the value the decision withheld (2026-07-23) — 2026-07-23T03:06:00.000Z
+- pattern: PAT-007: A spec's declared affectedFiles under-declares — sweep the whole tree (2026-07-23) — 2026-07-23T03:05:00.000Z
+- decision: DEC-048: All 57 blocking sub-decisions ratified and propagated to source (2026-07-23) — 2026-07-23T03:00:00.000Z
 - pattern: PAT-006: Never hand-author a derived file, and read a build script before running it (2026-07-22) — 2026-07-22T16:00:00.000Z
 - blocker: BLOCKER-004: Ideation remediation decisions await owner selection (2026-07-19) — 2026-07-22T15:30:00.000Z
 - decision: DEC-047: P-01 closes on its policy; validation evidence is implementation work (2026-07-22) — 2026-07-22T15:00:00.000Z

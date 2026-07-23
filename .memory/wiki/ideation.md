@@ -1117,6 +1117,7 @@
 - [[specs/ideation/ideation-index|Ideation Index — WeJammin]]
 - [[specs/ideation/meta/competitive-landscape|Competitive Landscape — WeJammin]]
 - [[specs/ideation/meta/constraints|Project Constraints — WeJammin]]
+- [[specs/ideation/meta/counterparties|Counterparty Profiles — WeJammin]]
 - [[specs/ideation/meta/cross-cut-emergent-capabilities|Cross-Cut Emergent Capabilities — Step 6 Synthesis]]
 - [[specs/ideation/meta/personas|User Personas — WeJammin]]
 - [[specs/ideation/meta/problem-statement|Problem Statement — WeJammin]]

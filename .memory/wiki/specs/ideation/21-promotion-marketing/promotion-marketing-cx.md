@@ -380,7 +380,11 @@ door onto the shared inbox commons.
 ## Related Specs
 
 ### Constrained by
+- [[decisions.md#d-08|D-08]]
+- [[decisions.md#d-06|D-06]]
 - [[decisions.md#d-02|D-02]]
 - [[decisions.md#d-01|D-01]]
-- [[decisions.md#d-06|D-06]]
 - [[decisions.md#d-07|D-07]]
+- [[decisions.md#d-05|D-05]]
+- [[decisions.md#d-03|D-03]]
+- [[decisions.md#d-04|D-04]]

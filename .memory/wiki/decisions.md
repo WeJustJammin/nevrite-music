@@ -2,8 +2,8 @@
 
 ## Summary
 
-- **Total decisions**: 47
-- **Unique decision titles**: 47
+- **Total decisions**: 48
+- **Unique decision titles**: 48
 
 ## DEC-001: The rights stack is the thesis, not an adjacency (2026-07-16)
 
@@ -664,6 +664,20 @@
 - **Downstream**: Matches the disposition already applied to **A-03** (DAW parsing) and **A-04** (vault profiles), both of which closed on their validation gate rather than on their evidence — consistent precedent, not a new leniency. Option 3 was rejected because it discards the reason Option B was chosen: the draft is explicitly unvalidated for beatmakers and session players. Fabricating traces was never available — the packet's only purpose is to prove the vocabulary was tested against reality, so inventing its contents would destroy the artifact it is meant to be. `Song.current_stage` keeps its semantic roles, no draft label is a downstream contract, and the packet remains the authority for when an enum becomes enforceable. **The ledger now reads 107/107 `verified-fixed`.** Recorded as ideation D-68.
 - **Reversibility**: High — if validation fails or the owner rejects every candidate, the packet records the failure and the next iteration; nothing downstream hardened in the meantime.
 
+## DEC-048: All 57 blocking sub-decisions ratified and propagated to source (2026-07-23)
+
+- **Occurrences**: 1
+- **Latest timestamp**: 2026-07-23T03:00:00.000Z
+- **Agents**: claude
+- **Sources**: audit-ambiguity
+- **Index**: [[index]]
+
+- **Problem**: A fresh full ambiguity audit of all 1,121 ideation documents confirmed 20 blocking findings — contradictions where two ratified specs give an implementer opposite instructions. Each had to be decided by the owner and then made true in the source.
+- **Options considered**: Present all findings at once for bulk review; work domain by domain; or decompose each finding into independently-lockable axes first. The third was chosen after an adversarial challenge round found that nearly every first-pass entry collapsed several axes into one scalar question.
+- **Decision**: **20 blocking findings → 2 already-resolved → 18 entries → 94 axes → 57 open sub-decisions, all ratified** (43 owner-decided, 14 agent-decided as spec hygiene or technically determined, each flagged). Full record with reasoning, preserved invariants and downstream commitments: `.memory/wiki/specs/audits/decision-ratification-log.md`. Options each was chosen from: `blocking-decision-queue.md`.
+- **Downstream**: The 37 axes found already-locked are the load-bearing result — a scalar answer to any of them would have silently reversed a ratified decision. Propagated into source across three passes (144 files, then 144, then 41). Verification: every decision findable in source, zero broken invariants, and the two invented values that appeared were removed. Notable outcomes: v1 positioning restated from "capture at source" to "capture at the first sharing moment" (domain 07 D-06 made this obligatory, not optional); the UK statutory vocabulary retired to an unauthored profile yielding explicit `unknown`; `scanned` renamed to `admissions_total`/`admissions_paid` because one name could not carry two quantities.
+- **Reversibility**: Medium. Each sub-decision is individually recorded with its rejected alternatives, so any one can be revisited; but several are now load-bearing across domains.
+
 ## Full Log
 
 ### DEC-001: The rights stack is the thesis, not an adjacency (2026-07-16)
@@ -1277,3 +1291,16 @@
 - **Decision**: **Option 1.** The finding's text was "exact stage vocabulary still explicitly owner-open", and it is no longer open: the model, the gate, its cohort minima, its pass conditions and the owner-approval requirement are all decided and propagated. Candidate labels remain non-enforceable **because the gate is in force**, not because a decision is pending.
 - **Downstream**: Matches the disposition already applied to **A-03** (DAW parsing) and **A-04** (vault profiles), both of which closed on their validation gate rather than on their evidence — consistent precedent, not a new leniency. Option 3 was rejected because it discards the reason Option B was chosen: the draft is explicitly unvalidated for beatmakers and session players. Fabricating traces was never available — the packet's only purpose is to prove the vocabulary was tested against reality, so inventing its contents would destroy the artifact it is meant to be. `Song.current_stage` keeps its semantic roles, no draft label is a downstream contract, and the packet remains the authority for when an enum becomes enforceable. **The ledger now reads 107/107 `verified-fixed`.** Recorded as ideation D-68.
 - **Reversibility**: High — if validation fails or the owner rejects every candidate, the packet records the failure and the next iteration; nothing downstream hardened in the meantime.
+
+### DEC-048: All 57 blocking sub-decisions ratified and propagated to source (2026-07-23)
+
+- **Timestamp**: 2026-07-23T03:00:00.000Z
+- **Agent**: claude
+- **Source**: audit-ambiguity
+- **Tags**: decision, ideation, audit, remediation
+
+- **Problem**: A fresh full ambiguity audit of all 1,121 ideation documents confirmed 20 blocking findings — contradictions where two ratified specs give an implementer opposite instructions. Each had to be decided by the owner and then made true in the source.
+- **Options considered**: Present all findings at once for bulk review; work domain by domain; or decompose each finding into independently-lockable axes first. The third was chosen after an adversarial challenge round found that nearly every first-pass entry collapsed several axes into one scalar question.
+- **Decision**: **20 blocking findings → 2 already-resolved → 18 entries → 94 axes → 57 open sub-decisions, all ratified** (43 owner-decided, 14 agent-decided as spec hygiene or technically determined, each flagged). Full record with reasoning, preserved invariants and downstream commitments: `.memory/wiki/specs/audits/decision-ratification-log.md`. Options each was chosen from: `blocking-decision-queue.md`.
+- **Downstream**: The 37 axes found already-locked are the load-bearing result — a scalar answer to any of them would have silently reversed a ratified decision. Propagated into source across three passes (144 files, then 144, then 41). Verification: every decision findable in source, zero broken invariants, and the two invented values that appeared were removed. Notable outcomes: v1 positioning restated from "capture at source" to "capture at the first sharing moment" (domain 07 D-06 made this obligatory, not optional); the UK statutory vocabulary retired to an unauthored profile yielding explicit `unknown`; `scanned` renamed to `admissions_total`/`admissions_paid` because one name could not carry two quantities.
+- **Reversibility**: Medium. Each sub-decision is individually recorded with its rejected alternatives, so any one can be revisited; but several are now load-bearing across domains.

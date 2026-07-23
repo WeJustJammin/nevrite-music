@@ -109,4 +109,6 @@ to them downstream. Strong candidates: **DistroKid/TuneCore** (distribution), **
 ## Related Specs
 
 ### Constrained by
+- [[decisions.md#d-70|D-70]]
+- [[decisions.md#d-06|D-06]]
 - [[decisions.md#d-18|D-18]]

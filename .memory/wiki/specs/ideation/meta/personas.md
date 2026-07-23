@@ -176,4 +176,6 @@ and Producer personas — it is not a fifth persona.
 
 ### Constrained by
 - [[decisions.md#d-19|D-19]]
+- [[decisions.md#d-71|D-71]]
+- [[decisions.md#d-10|D-10]]
 - [[decisions.md#d-11|D-11]]

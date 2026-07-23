@@ -232,6 +232,10 @@ lock-in from an accumulating, verified record no point solution can replicate. (
 ## Related Specs
 
 ### Constrained by
+- [[decisions.md#d-71|D-71]]
+- [[decisions.md#d-19|D-19]]
+- [[decisions.md#d-70|D-70]]
+- [[decisions.md#d-06|D-06]]
 - [[decisions.md#d-20|D-20]]
 - [[decisions.md#d-28|D-28]]
 - [[decisions.md#d-31|D-31]]
@@ -241,3 +245,4 @@ lock-in from an accumulating, verified record no point solution can replicate. (
 - [[decisions.md#d-14|D-14]]
 - [[decisions.md#d-26|D-26]]
 - [[decisions.md#d-32|D-32]]
+- [[decisions.md#d-03|D-03]]
