@@ -1,9 +1,8 @@
 # Blocking Decision Queue — Ratification Log
 
 > Owner decisions on the 57 open sub-decisions from `blocking-decision-queue.md`.
-> Each records the choice, the reasoning, what it preserves, and what it commits downstream.
 
-**Ratified: 21 / 57**
+**Ratified: 35 / 57**
 
 | Entry | Domain | Axes |
 |---|---|---|
@@ -14,6 +13,10 @@
 | DQ-01 | 01 Identity | 2 — DQ-01.A, DQ-01.B |
 | DQ-02 | 01 Identity | 5 — DQ-02.3, DQ-02.4, DQ-02.5, DQ-02.6, DQ-02.7 |
 | DQ-08 | 07 Music Projects | 4 — DQ-08.2, DQ-08.3, DQ-08.4, DQ-08.5 |
+| DQ-09 | 11 Licensing | 3 — DQ-09.A, DQ-09.B, DQ-09.C |
+| DQ-10 | 11 Licensing | 3 — DQ-10.A1, DQ-10.A2, DQ-10.A3 |
+| DQ-11 | 12 Release & Distribution | 5 — DQ-11.A2, DQ-11.A3, DQ-11.A4, DQ-11.A6, DQ-11.A7 |
+| DQ-12 | 13 Gear Marketplace | 3 — DQ-12.O1, DQ-12.O2, DQ-12.O3 |
 
 ---
 
@@ -394,4 +397,236 @@
 - Closes 07.09 Q-02.
 
 **Precedent**: Domain 07 D-06, which states the obligation directly.
+
+
+## DQ-09.A — Gate denominator — what an auto-approve ceiling is a ceiling on
+
+> **Entry**: DQ-09 · **Ratified**: 2026-07-22
+
+**Chosen**: A1 — Own share: each owner ceiling is tested against that owner own share of the deal value; auto-approve still requires every owner to pass (permissions stay conjunctive per 11.04.03 D-02)
+
+**Why**: Both texts are ratified, so the tie breaks on ownership and load-bearing-ness. The per-share base is stated four times in the [DEEP] file that owns the policy object (Behavior twice, Happy Path 7, D-17), is the literal product promise in its Role Lens (up to GBP 500 of my share), and carries a dependent rule (unresolved splits fall through). The minimum clause appears once in the sub-domain only [PARTIAL] file, has no Deep Think derivation behind it, and its two apparent corroborations are citations back to it rather than independent findings. It is also not well formed on its own terms: min(500, 2000) only names a work-level ceiling if both ceilings were denominated on the deal to begin with, which is the very thing in dispute. Independent argument: 11.04.02 D-02/DT-02 draw the ratified line between a policy and a veto — a policy governs its author share; a veto constrains everyone shares. A2 makes every policy behave like a veto.
+
+**Preserves**: 11.04.01 D-17 and both Behavior statements (per-share base); 11.04.01 Musician Role Lens copy (up to GBP 500 of my share); 11.04.02 D-02/DT-02 policy-vs-veto distinction; 11.04.03 D-02 conjunctive permissions (untouched by this axis); 11.04.01 master-vs-publishing order-of-magnitude economics
+
+**Commits us to**:
+- THREE ratified sentences are corrected as WRONG, not refined: 11.04.03 Behavior minimum clause, its edge-case row, and the sub-domain CX synthesis Q5.
+- Also corrects 11.04.01 own edge-case row (Two owners set different auto-approve ceilings | Lowest wins (11.04.03)) — a citation back to the clause being removed.
+- ACCEPTED: this is the strictly MORE PERMISSIVE reading. Everything the alternative auto-approves, this auto-approves too, plus more. Exposure is wider.
+- Threshold force becomes proportional to share size — the instinct 11.04.03 DT-02 rejected in its own file.
+- A resolved split is required for every threshold test, so cold-start and provisional-split works keep falling through (already ratified in D-17; this makes it load-bearing).
+- 11.04.01 DT-05 salami-slicing exposure (ten GBP 450 requests against a GBP 500 ceiling) is unchanged by this axis and remains governed by the D-06 trailing 90-day window.
+
+**Precedent**: P-04/P-05 author-where-owned, applied narrowly to the denominator only: the unit a ceiling is denominated in is an attribute of the policy object, which 11.04.01 owns via D-01 (Policy attaches to a share, never to a work).
+
+
+## DQ-09.B — What the fold emits and displays for thresholds
+
+> **Entry**: DQ-09 · **Ratified**: 2026-07-22
+
+**Chosen**: B2 — No synthetic work-level ceiling. An attributed per-owner threshold set, plus a per-request pass/fall-through answer naming the binding owner.
+
+**Why**: B3 (literal minimum) is foreclosed by the per-share choice on axis A: min(500, 2000) would compare quantities in different denominations, producing a figure that is arithmetically meaningless and materially misleading. Between the remaining two, B2 invents nothing — per-owner thresholds are already the fold inputs, and naming the binding owner is exactly 11.04.03 D-04 (Owners are told when their own policy is inert, and by whom). B1 formula is arithmetically correct but appears in no source file, and adopting a divisor-derived quantity silently reopens D-04 attribution guarantee, which attributes a CONSTRAINT to an owner rather than a derived number.
+
+**Preserves**: 11.04.03 D-04 attribution in its ratified form; 11.04.03 D-01 (the aggregate is derived and never editable); 11.02.01 cross-cut note (consumes the fold verdict, never individual share policies)
+
+**Commits us to**:
+- 11.04.03 Populated state and its edge-case row must be REWRITTEN: they currently promise a single effective ceiling figure (Both see the effective ceiling and whose it is); they now promise an attributed threshold set plus a per-request binding-owner answer.
+- ACCEPTED comprehension cost: an owner asking what can this work auto-clear gets a rule, not a figure, and must supply a deal value to get an answer.
+- The fold API must expose per-owner threshold data to the CO-OWNER VIEW. This is a display surface, not 11.02.01 gate path — the boundary must be stated explicitly or it risks reading as a licence to consume individual policies.
+- Survives the D-06 trailing 90-day window without contortion: no standing number has to stay true across buyers and media.
+
+**Precedent**: 11.04.03 D-04, read at full strength: attribution is of a constraint to an owner, which B2 preserves and B1 would have replaced with a derived quantity.
+
+
+## DQ-09.C — Denomination and share-basis of the D-06 trailing 90-day window
+
+> **Entry**: DQ-09 · **Ratified**: 2026-07-22
+
+**Chosen**: C0 (forced consequence) plus C1 — Historic: the window is per-owner and share-denominated, and each past auto-approval keeps the share value it had when it cleared
+
+**Why**: C0 is arithmetic necessity, not a choice: 11.04.01 Happy Path 7 adds the running total to the request share value and compares the sum to one ceiling, so the window must be denominated the same way the ceiling is. Under the per-share gate that makes it per-owner and share-denominated. The genuinely open part — historic vs current share — is decided by D-06 own purpose (the window is a record of what actually cleared; DT-05 exploit is about what cleared) and by DT-14 read in the direction the source states it: revaluing at a reduced current share lowers the running total and silently widens headroom under a ceiling the owner never touched.
+
+**Preserves**: 11.04.01 D-06 (trailing 90-day cumulative window); 11.04.01 DT-05 (salami-slicing defence); 11.04.01 DT-14 (a ceiling that moves without the owner acting silently widens); 11.04.01 D-15 (dispute suspension)
+
+**Commits us to**:
+- The auto-approval record must PERSIST the share value used at approval, not only the deal value.
+- ACCEPTED: an owner whose share GREW mid-window carries a total computed at their old smaller stake, so their headroom is proportionally generous for up to 90 days.
+- History is never restated — the digest record of what was approved always matches the figures the gate uses.
+- No split-history reconstruction is needed at gate time.
+
+**Precedent**: 11.04.01 DT-14, applied in the direction the source states: revaluation that widens headroom without the owner acting is the harm the rule names.
+
+
+## DQ-10.A1 — What written artifact describes the commercial licence buyer
+
+> **Entry**: DQ-10 · **Ratified**: 2026-07-22
+
+**Chosen**: A1-b — Buyer counterparty profile authored in meta/ (e.g. meta/counterparties.md), six fields plus Workflow and Anti-Persona Behavior, explicitly NOT a persona, adding no Role Matrix column
+
+**Why**: The blocked files ask for one specific thing — a described primary user for the Role Lens to consume — and this delivers exactly that at the smallest edit surface, leaving D-19 and 24 Role Matrices untouched. Authoring nothing is refuted by disk: the same name-it-do-not-describe-it treatment was applied to Admin, and 24.01.03 Q-01 records that the actor still cannot be specified. Deferring is the mechanism that already failed — Q-01 went to /ideate-validate, which ran 2026-07-18, scored Persona Specificity green and closed 8/8 without recording an answer. A fifth persona is defensible but costs a full 24-domain column pass and creates precedent pressure toward personas for eight other non-persona actors that existing decisions resolved by refusing exactly that.
+
+**Preserves**: D-19 (4 primary personas) unamended; personas.md coverage-verified-across-24-domains invariant; 11.08.02 D-11 (licensee is not the purchaser) — expressible in prose, not in a single column; 06 D-07 escalation left recorded but not resolved here, as that row itself states
+
+**Commits us to**:
+- New file authored in meta/ describing the commercial licence buyer with the same six fields personas.md uses, plus Workflow and Anti-Persona Behavior, under a header stating it is NOT a persona and adds no Role Matrix column.
+- Buyer-facing Role Lens notes in 11.01.02, 11.02.01, 11.01-sync-licensing-index, 11.06 and 11.08.02 change from this feature primary user is unspecified to a REFERENCE to the profile — authored once, never restated.
+- personas.md MUST carry a pointer to the new file, or the profile is easy to miss — this is the option own stated weakness.
+- Role Matrix tables stay four-column: a reader skimming only the table still sees no buyer, and the correction depends on the prose note beneath being read.
+- Closes 11.01.02 Q-01, 11.02.01 Role Lens block, 11 Q-01 and 11.06 Q-01.
+- Does NOT close vision.md Q-00 (Admin/Moderator as a fifth persona) — that remains open and is now the nearest neighbour question.
+
+**Precedent**: personas.md Q-02 with 02.06 D-20 and 05.01.02 Q-02 — an actor genuinely needed can sit outside the persona set BY DECISION rather than by omission. Plus D-50/P-04 author-where-owned: the buyer is described once in meta/ and referenced by each 11.x Role Lens.
+
+
+## DQ-10.A2 — Granularity — one buyer artifact or two
+
+> **Entry**: DQ-10 · **Ratified**: 2026-07-22
+
+**Chosen**: A2-b — Two artifacts: a professional licence buyer (supervisor/brand/agency) and a creator micro-licence buyer (podcaster/streamer/small-business channel)
+
+**Why**: 11.06 index does not record a difference of degree but a difference in KIND: there the buyer matches no persona; here they match one badly, which is more dangerous. It also names the concrete downstream harm of blurring them — a spec writer reading Fan: Full builds for a music enthusiast instead of a small-business operator. One artifact broad enough to cover both would reproduce that defect one level up, and its six fields would diverge on almost every row (pain, workaround, budget, tolerance for professional-tool complexity), producing exactly the generic text the Persona Specificity rubric rejects.
+
+**Preserves**: 11.06 index characterisation of the creator buyer as running a business that happens not to be a music business; Persona Specificity rubric standard applied to non-persona profiles too
+
+**Commits us to**:
+- Professional buyer profile referenced by 11.01, 11.02, 11.03 and 11.08.
+- Creator micro-licence buyer profile referenced by 11.06 AND by 11.02.01 Fan row, which currently describes that population as silently governed.
+- Two documents must be kept consistent where the buy side is genuinely common (checkout, verdict rendering, the licence instrument).
+- OPEN BOUNDARY CASE recorded: a small production company that is neither agency nor creator sits between the two artifacts; a single broader artifact would have absorbed it.
+
+
+## DQ-10.A3 — Scope of the ratification — licence buyer only, or all non-persona actors
+
+> **Entry**: DQ-10 · **Ratified**: 2026-07-22 · **Decided by**: agent (anti-axis-collapse scoping call — flagged to owner)
+
+**Chosen**: A3-a — Narrow: commercial licence buyer only, with an explicit non-closure list written into the decision
+
+**Why**: The nine other non-persona actors are not buyers and are not alike — a curator receives pitches, a stagehand sells four hours of labour, an insurer is off-platform, Admin is internal — so a buyer artifact is not their answer. Several already have contrary domain rulings. Applying one form to ten heterogeneous actors in a single pass is precisely the axis-collapse defect this entire revision round was run to remove. Each of those questions is owned in another domain index, so a domain-11 ratification can make them answerable but cannot close them without a propagation pass; claiming closure would leave them silently unaddressed.
+
+**Commits us to**:
+- CLOSES: 11 Q-01, 11.06 Q-01, 11.01.02 Q-01.
+- EXPLICITLY DOES NOT CLOSE (must be written into the decision): personas.md Q-01 (professional dealer, 13/14/15 — a seller, not a buyer); personas.md Q-02 with 24.01.03 Q-01 (Admin); 21.02 Q-01 with 21 D-03 (curator/journalist/radio/DSP gatekeeper); 13.09 D-03 with 13.13 (dealer counterparty); plus the stagehand, insurer, accountant, manager and fee-paying-parent questions.
+- ACCEPTED: 11 Q-01 own text bundles itself with personas.md Q-01 and 11.06 Q-01 (all three are one question), so this narrow ratification explicitly declines part of what that row asks.
+- Nine open actor questions remain, several independently blocking their own surfaces — 24.01.03 Q-01 (Admin) most sharply.
+- The non-closure list is what stops a downstream reader treating this as THE persona-gap decision and assuming dealer, curator and Admin were handled.
+
+**Precedent**: The axis-decomposition rule applied throughout this queue: name what is locked, decide only what is genuinely open, and never let one answer silently overwrite heterogeneous cases.
+
+
+## DQ-11.A2 — Precedence — observed vs contractual window
+
+> **Entry**: DQ-11 · **Ratified**: 2026-07-22
+
+**Chosen**: A2-i — Observed outranks contractual. Where enough observations exist the window is the observed value (marked measured); a stated SLA is used only where observation is insufficient (marked stated).
+
+**Why**: Supported from inside the file that argues the other way: 12.02.02 DT-07 (a profile certified in March is wrong in July and nothing tells us) and DT-15 both find partner documentation stale, thin and changed without announcement — precisely the argument against treating a stated SLA as authoritative. 12.02.03 D-05 already specifies what to do with the divergent case rather than dropping it. EXPLICIT NON-SUPPORT recorded: 12.02.02 contested-entry rule is only an analogy, not an argument — it fires on 2 independent rejections on 2 distinct releases, a falsification EVENT, and a timing divergence produces no rejection. The first draft cited it as if it decided the matter.
+
+**Preserves**: 12.02.03 D-05 divergence routing (recorded, routed to partner management, never surfaced to the artist); 12.02.02 DT-07 / DT-15 staleness findings
+
+**Commits us to**:
+- A partner inside our observed window but outside their own written SLA is NOT late by the window.
+- The contractual comparison becomes a second path routed to partner management — described in 12.02.03 D-05 but with NO OWNER, NO SURFACE and NO THRESHOLD anywhere. Flag as a follow-on gap.
+- For a partner with a published SLA but few deliveries we ignore a real number we already have until the sample floor is met.
+
+
+## DQ-11.A3 — Alarm statistic, sample floor and recency bound
+
+> **Entry**: DQ-11 · **Ratified**: 2026-07-22
+
+**Chosen**: A3-i — p95 over >=30 completed signal-complete -> first terminal ack observations per (partner x message type) within the last 180 days, rounded up to the next whole partner-business-day, floor 1 day
+
+**Why**: The rival formulation (P90 over the last 20 acks once >=5 are seen) is not buildable as written: at its own floor the statistic is the sample maximum, it carries no recency bound in a file whose DT-07 makes staleness the central hazard, and it specifies neither rounding nor a minimum. A3-i is the only formulation an implementer can code without inventing a rule. The owner chose the higher floor (30 over 20) accepting longer silence for low-volume partners in exchange for a statistic resistant to a single slow week.
+
+**Commits us to**:
+- ACCEPTED: a low-volume partner or uncommon message type may never reach 30 observations in a rolling 180 days and sits permanently on the tier-3 seeded window with no measured value.
+- Rounding up to whole partner-business-days with a 1-day floor is part of the ratified rule, not an implementation detail.
+
+
+## DQ-11.A4 — Artist-facing expectation copy statistic
+
+> **Entry**: DQ-11 · **Ratified**: 2026-07-22 · **Decided by**: agent (technically determined — flagged to owner)
+
+**Chosen**: A4-i — p50 (median) at N>=10, DISTINCT from the alarm statistic; below N=10 no expectation clause is shown at all
+
+**Why**: Using one number for both is the single option that produces an actually wrong sentence: quoting a p95 or P90 after the word usually misdescribes the partner. Between the two median options the statistic is identical and only the floor differs, and 12.03.02 own text calls its 20 a default, not a law whose exact number is tunable — so adopting 10 overrides nothing that file defends, and it reaches evidence sooner than the alarm does, which is the right asymmetry for a reassurance clause.
+
+**Commits us to**:
+- Two distinct statistics coexist by design: p95@30 fires the ladder, p50@10 backs the usually N days copy.
+- Below N=10 the artist sees no expectation clause rather than a guess.
+
+
+## DQ-11.A6 — Unconditional escalation ceiling
+
+> **Entry**: DQ-11 · **Ratified**: 2026-07-22 · **Decided by**: agent (safety backstop, no artist-facing cost — flagged to owner)
+
+**Chosen**: A6-i — Keep the unconditional internal escalation ceiling (10 business days) alongside the tiered window, restated in partner business days per the locked counting clock
+
+**Why**: The ceiling and the tier-3 seed answer different questions and only look like rivals: regardless makes 12.02.02 row an always-on backstop, while 12.02.03 5 partner-business-days applies only when neither a stated nor an observed window exists. Keeping both preserves a real safety property at no artist-facing cost, and it is the part of 12.02.02 D-12 that survives the other axes going the other way.
+
+**Commits us to**:
+- The ceiling wakes an operator even when the tiered window is silent or wrong.
+- Its numeric value (10) is a guess by its own file admission (12.02.02 Q-05) — recorded as tunable, not as evidenced.
+- Restated on the partner-business-day clock per the locked A5, not wall-clock.
+
+
+## DQ-11.A7 — Resolution key for the window
+
+> **Entry**: DQ-11 · **Ratified**: 2026-07-22 · **Decided by**: agent (technically determined — flagged to owner)
+
+**Chosen**: A7-i — Per (partner x message type); the accepted-but-not-live wait stays with 12.03.02 as a separate concern
+
+**Why**: The only option that does not require inventing an observation model. The argument that the per-stage axis is orthogonal and therefore free does not hold: the axes are orthogonal but the statistic is not axis-neutral, because 12.02.03 tier-1 interval is end-to-end (signal-complete -> first terminal ack) and per-stage intervals are defined nowhere. The third-source support usually cited for per-stage keying (12.03.02 DT-15) is actually about ack-wait versus live-wait, which is a different distinction.
+
+**Commits us to**:
+- A takedown and a new release get separate windows for the same partner — correct, since takedowns are frequently expedited for legal reasons while new releases queue.
+- 12.02.02 PC-10 per-ack-stage axis is DROPPED, not merged.
+- Live-wait (accepted but not yet live) remains 12.03.02 concern and is not folded into this window.
+
+
+## DQ-12.O1 — Carrier — what projects a severity option onto a grade ceiling
+
+> **Entry**: DQ-12 · **Ratified**: 2026-07-22 · **Decided by**: agent (technically determined — flagged to owner)
+
+**Chosen**: A — An authored (axis, severity-token) pair on each severity option, drawn from 13.02.01 vocabulary (axis: cosmetic | functional | structural | missing-part); 13.02.01 keeps one ceiling table
+
+**Why**: The only carrier that leaves every locked decision standing. L1 (per-item severity language) is untouched because the pair is never seller-facing. L2 is satisfied because the checklist author decides it once per category — literally what D-06 already says that actor does with this same pair. L3 is untouched because the table still caps rather than sets. 13.02.01 Scale table and its versioned grade definitions survive UNEDITED, which neither alternative achieves: authoring the ceiling grade directly rewrites six Requires cells, and keying off the materiality verdict deletes three.
+
+**Commits us to**:
+- Each authored severity option gains one authored (axis, severity-token) property alongside the materiality verdict it already produces.
+- The pair is never seller-facing — sellers continue to see per-item plain language only.
+- 13.02.01 versioned grade definitions and Scale table need no edit and no version bump.
+
+
+## DQ-12.O2 — Ownership — which artifact authors the projection
+
+> **Entry**: DQ-12 · **Ratified**: 2026-07-22
+
+**Chosen**: E — The shared per-category structured-attribute schema authors it; catalog moderation holds the standing
+
+**Why**: The only option that names an accountable writer for a field that caps what every seller in a category may claim. It ratifies a direction three files have already taken rather than inventing one — 13.02.02 Behavior already asserts the checklist rides that same per-category mechanism, and its Cross-Cut Notes count itself as the third vote for yes. Authoring a per-category mapping table in 13.02.01 was eliminated by DEC-028: it is the one option creating a second copy of a set another file owns.
+
+**Preserves**: DEC-028 author-where-owned (no second copy of another file set); 13.02.02 Behavior binding of the checklist to the per-category mechanism
+
+**Commits us to**:
+- PRE-ANSWERS 13.02.03 Q-02 — the open question about the shared per-category mechanism is decided in the affirmative as a side effect. Must be recorded there explicitly, not left to be discovered.
+- Commissions the schema field as new work.
+- Catalog moderation gains standing over a field that caps seller condition claims — a real authority grant, consistent with the ratified rule that Config permits taxonomy selection and proposals but never vocabulary curation.
+
+
+## DQ-12.O3 — Grade semantics — may a professionally-repaired unit still be Excellent
+
+> **Entry**: DQ-12 · **Ratified**: 2026-07-22
+
+**Chosen**: H — Keep the split (professional/stable -> Excellent, amateur/unstable -> Good), seller-asserted, with first-party records pre-filling and contradictions surfaced but never auto-asserted
+
+**Why**: This axis changes what a grade MEANS, which is versioned content under 13.02.01 D-07, so it was decided on its own rather than as a side effect of the carrier question. Collapsing both rows to Good is the tempting default and was rejected: it deletes a live Scale-table allowance on the false premise that no source supplies repair quality, when three do for on-platform repairs (13.08.02 records the repairer and what was replaced; 13.09.03 is a professional bench assessment; 13.02.02 DT-04 models a repair as a fact). H reuses the pre-fill-never-auto-assert pattern already specified for this exact class of fact and degrades gracefully where no record exists.
+
+**Preserves**: 13.02.01 Scale table grade-3 allowance (at most one professionally-executed, stable, disclosed structural repair); 13.02.01 D-07 immutable versioned grade definitions — NO version bump required; 13.02.02 D-07 pre-fill-never-auto-assert pattern; 13.02.02 D-06 (the seller is not asked to assess their own liability) — respected via corroboration
+
+**Commits us to**:
+- The severity option splits where a category admits it; the seller picks, and the pick is a signed claim carrying their liability.
+- Where the platform holds a first-party record for the unit, the option is pre-filled and corroborated; contradictions are SURFACED, never auto-asserted.
+- DEPENDENCY: the corroboration half is not implementable until 13.08.02 Q-02 resolves (whether off-platform repairs can be recorded, and how a self-reported one is treated). Degrades to seller-asserted-only until then.
+- Most vintage repairs predate the platform, so corroboration will be absent in the common case.
 
