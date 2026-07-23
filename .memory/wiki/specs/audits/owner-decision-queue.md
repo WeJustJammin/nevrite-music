@@ -1,24 +1,30 @@
 # Owner Decision Queue — expired-deferral triage, bucket C
 
-> **Status**: PROVISIONAL — generated 2026-07-23 from the expired-deferral triage working tree.
+> **Status**: COMPLETE for expired-deferral coverage — generated 2026-07-23.
 > **Source**: every Open-Question row marked `[OWNER]` and repointed to `/create-prd` by the triage pass.
-> **Total owner-decision rows**: **923** across 24 domains.
+> **Total owner-decision rows**: **938** across 25 domains.
 
-## ⚠️ Provisionality caveats
+## Status and provenance
 
-This queue is a snapshot of an **incomplete** triage, not a final artifact:
+The expired-deferral triage is **complete for coverage**: **0 genuinely-open expired rows remain**
+across the whole ideation tree.
 
-1. **142 expired rows remain untriaged** (12 triage units + scattered rows died on the session
-   limit, reset 9am ET). Completing them will add more `[OWNER]` rows to this queue.
-2. **The citation-check phase never ran.** Triage also produced **566 "already answered"
-   resolutions citing a `D-`/`DEC-`/`DT-` decision**. Those citations are **unverified** — the
-   177-unit check phase that was to confirm none is fabricated died on the same session limit.
-   If any "already answered" row is overturned by the check, it re-enters as an owner decision.
-3. Question text below is extracted mechanically from each table row and truncated to 240 chars.
-   The authoritative wording lives in the cited file.
+- The subagent triage ran 177/189 units before the session limit; the 12 failed units + scattered
+  rows left **19 genuinely-open expired rows**, which were hand-triaged directly (15 → owner /
+  `/create-prd`, 4 → mechanical: 3 `/create-prd-architecture`, 1 `/create-prd-security`).
+- **Citation check — done deterministically in code** (the 177-unit subagent check phase died on
+  the session limit): of **770** struck "already answered" rows citing a decision, **768** resolve
+  to a real decision definition (636 same-file, 48 cited-path, 84 elsewhere); the remaining **2**
+  both cite `CQ-09` — a genuine User-ratified decision (2026-07-21, US/FR/DE/GB only). **Zero
+  fabricated citations.**
+
+**Residual caveat**: ~123 already-resolved rows still show a completed stage name in their
+Deferred-To cell (e.g. "Closed, `/ideate-discover` Step 5"). These are accurate provenance
+markers on struck-and-cited rows, **not** open deferrals — deliberately left unchanged. Question
+text below is a mechanical extract truncated to 240 chars; the authoritative wording is in the file.
 
 **Headline for `/create-prd` planning**: the genuine owner-decision surface after re-targeting is
-**~923 rows**, materially smaller than the ~1,473 the raw expired count implied, but
+**938 rows**, materially smaller than the ~1,473 the raw expired count implied, but
 still large. Re-targeting does not shrink this further — these are product choices no later
 pipeline stage resolves on its own. `/create-prd` is the stage at which they are answered.
 
@@ -30,15 +36,15 @@ pipeline stage resolves on its own. `/create-prd` is the stage at which they are
 | `02-credits-attribution` | 25 |
 | `03-community-networking` | 37 |
 | `04-opportunities-casting` | 47 |
-| `05-services-marketplace` | 11 |
+| `05-services-marketplace` | 20 |
 | `06-education-lessons-mentorship` | 28 |
 | `07-music-projects-collaboration` | 36 |
-| `08-realtime-jamming-remote-sessions` | 14 |
+| `08-realtime-jamming-remote-sessions` | 16 |
 | `09-rights-ownership` | 44 |
 | `10-royalties-collections` | 29 |
 | `11-music-licensing` | 62 |
 | `12-release-distribution` | 34 |
-| `13-gear-marketplace` | 38 |
+| `13-gear-marketplace` | 40 |
 | `14-digital-goods-marketplace` | 70 |
 | `15-gear-registry-ownership` | 33 |
 | `16-venues-studios-spaces` | 68 |
@@ -50,6 +56,7 @@ pipeline stage resolves on its own. `/create-prd` is the stage at which they are
 | `22-analytics-market-intelligence` | 23 |
 | `23-career-finance-business` | 37 |
 | `24-trust-safety-disputes` | 34 |
+| `meta` | 2 |
 
 
 ## 01-identity-profiles-organizations (37)
@@ -218,7 +225,7 @@ pipeline stage resolves on its own. `/create-prd` is the stage at which they are
 | `opportunities-casting-index.md` | Q-10 | **** **Is the close-out obligation enforced or encouraged (04.05 Q-01)?** A gate has teeth and costs supply; a nag is ignored by the posters who ghost most. **Sharpened at Step 5**: 04.05.01 Q-01 moves the lever off *closing* — a close g… |
 | `opportunities-casting-index.md` | Q-11 | **** Is the board **public/SEO-indexable** or login-walled? Public aids cold start and makes the Fan read-only lens load-bearing; it also exposes the pool to scraping — 04.02.04 DT-09 adds that a public board turns the alert pipe into a … |
 
-## 05-services-marketplace (11)
+## 05-services-marketplace (20)
 
 | File | Q | Question (mechanical extract) |
 |---|---|---|
@@ -227,6 +234,15 @@ pipeline stage resolves on its own. `/create-prd` is the stage at which they are
 | `05.01-service-listings-pricing/05.01.02-service-category-taxonomy-attributes.md` | Q-04 | ** Which locales are seeded for craft aliases?** D-03's proposal path plus 02.06 D-22's locale-tagging mechanism means an unseeded locale sends every non-English seller down the proposal path on their first listing — a first-run failure … |
 | `05.01-service-listings-pricing/05.01.03-music-pricing-model-library.md` | Q-04 | **** Is a **£0 / free listing** legal? Free work is real (portfolio-building), but free + rights transfer is the exploitation pattern, and a £0 fee is operationally indistinguishable from spec. Current behavior rejects it and routes the … |
 | `05.01-service-listings-pricing/05.01.03-music-pricing-model-library.md` | Q-06 | ** Points-only deals generate no take rate and no escrow** (DT-08). Is a deal shape that is both unmonetised and unprotected accepted, or does it need a non-points fee (listing fee, registration fee) — and does an unmonetised path become… |
+| `05.02-quotes-scope-contracting/05.02-quotes-scope-contracting-index.md` | Q-01 | Ghost production requires the credit graph to record a **suppressed** credit rather than **no** credit (05.02.02 DT-01). Is the platform willing to hold a credit it will not display — and for how long, and who can ever unseal it? This is… |
+| `05.03-engagement-lifecycle/05.03.04-retainers-recurring-engagements.md` | Q-01 | Retainers and points-only deals both dissolve the escrow↔rights leverage (DT-02, 05.01.03 DT-01). Does the platform accept that its flagship mechanism does not cover these shapes, or does it require something else in their place? |
+| `05.03-engagement-lifecycle/05.03.05-cancellation-abandonment-kill-fee.md` | Q-02 | **Which rights disposition is the platform's proposed default**, and may a listing pre-declare one rather than leaving it per-quote? The mechanism is settled (D-09, DT-04); this is the values dial. Clean unwind favours the seller and is … |
+| `05.05-multi-party-supply/05.05-multi-party-supply-index.md` | Q-01 | When a fixer or agency stands between the buyer and the players, **who is the credit graph's counterparty**? If the platform records the engagement's seller, a string section of twelve becomes one credit for a contractor who did not play… |
+| `05.05-multi-party-supply/05.05.01-deps-substitutes-emergency-cover.md` | Q-02 | **The best dep usually has no account.** Can an off-platform dep be brought in — and if so, how do they get paid, sign anything, or be credited? Refusing them makes the feature useless in its most common case; allowing them punches a hol… |
+| `05.05-multi-party-supply/05.05.02-fixers-ensemble-contracting.md` | Q-03 | Off-platform players (the fixer's thirty-year phone book) — same gap as 05.05.01 Q-02, and more acute here because it is N people at once. |
+| `05.06-rights-warranties-transfer/05.06-rights-warranties-transfer-index.md` | Q-01 | **The escrow↔rights leverage is absent from two significant deal shapes**: points-only engagements (05.01.03 DT-01 — no cash to hold) and retainers (05.03.04 DT-02 — paid in advance). The domain's stated differentiator does not cover the… |
+| `05.06-rights-warranties-transfer/05.06.02-producer-points-backend-participation.md` | Q-01 | Points-only deals have no escrow leverage. Should the platform allow them, allow-with-warning, or require a minimum cash component? Points-only is how new producers break in **and** how they get exploited — and the two are the same trans… |
+| `05.06-rights-warranties-transfer/05.06.05-ai-disclosure-human-performance-warranty.md` | Q-01 | Where does **AI-assisted composition** sit? Authorship genuinely blurs, the law is moving, and a wrong answer either excludes legitimate writers or admits false authorship credits into 09. |
 | `05.07-custodial-physical-services/05.07-custodial-physical-services-index.md` | Q-01 | **** **Does the platform require sellers to carry insurance for custodial work?** Requiring it excludes most independent luthiers (who often carry none) and is the only thing that makes a damage claim collectable. Not requiring it means … |
 | `05.07-custodial-physical-services/05.07.02-third-party-inspection-verification.md` | Q-02 | **** Should an inspector be barred from quoting the repair they just recommended? Removes a real conflict (DT-02) and removes the natural expert. The MOT-centre problem; the trade has never solved it. Per DT-02 the conflict is **structur… |
 | `05.07-custodial-physical-services/05.07.03-custody-chain-liability-damage-claims.md` | Q-01 | **** **Does the platform require custodial sellers to carry insurance?** It is the only thing that makes a claim collectable — and requiring it excludes most independent luthiers, who are often the best ones and carry none. Values decisi… |
@@ -308,11 +324,13 @@ pipeline stage resolves on its own. `/create-prd` is the stage at which they are
 | `music-projects-collaboration-index.md` | Q-02 | **** ⚠️ **PARTIALLY RESOLVED 2026-07-22 → D-09.** *(Four features independently argue for a phone.)* **Answered**: 07.06.02 Q-04/Q-09 (the close prompt fires while packing up) and 07.09.03 Q-03 (push may beat a desktop notification) — bo… |
 | `music-projects-collaboration-index.md` | Q-09 | **** **Do specialist engineers need their own persona?** 07.07.03 Q-02 (mastering) and 07.07.05 Q-03 (Atmos) both argue that distinct professionals are folded into "Producer". Two features raising it independently echoes meta/personas.md… |
 
-## 08-realtime-jamming-remote-sessions (14)
+## 08-realtime-jamming-remote-sessions (16)
 
 | File | Q | Question (mechanical extract) |
 |---|---|---|
 | `08.01-latency-budget-playability/08.01.02-playability-verdict-tempo-ceiling.md` | Q-03 | **** Does a red verdict on a *paid* remote session (booked via domain 05) trigger any automatic commercial consequence — a warning at booking, a cancellation right? D-02 settles the *room* flow (a red verdict informs, records and offers … |
+| `08.02-playable-radius-peer-matching/08.02.01-playable-radius-map-discovery.md` | Q-02 | Does the map show *candidates* (people who might play) or *availability* (people free right now)? The second is far more useful and far harder, and overlaps Community (03) and Opportunities (04). |
+| `08.02-playable-radius-peer-matching/08.02.02-route-aware-radius-correction.md` | Q-01 | Which error does the owner prefer — false shrink (users invisibly lose work) or false grow (sessions attempted and fail)? This sets the asymmetric threshold and is a product values call, not a tuning parameter. |
 | `08.03-remote-monitoring-session-attendance/08.03-remote-monitoring-session-attendance-index.md` | Q-01 | **** Is 08.03.04 (Monitoring Trust) a real product or an interesting idea? Nobody in the category does it, which is either whitespace or evidence that clients do not want to be told their speakers are lying. Genuinely unvalidated. **MoSC… |
 | `08.03-remote-monitoring-session-attendance/08.03.03-live-listener-feedback-notes.md` | Q-02 | **** Do performers see notes about their own performance, and when? Real-time critique of a person while they play is destructive; hiding it entirely is paternalistic and they will hear about it anyway. D-02 already fixes the hard floor … |
 | `08.03-remote-monitoring-session-attendance/08.03.04-monitoring-trust-playback-context.md` | Q-01 | **** **Is this a real product?** Its absence across a mature category is evidence against it (DT-03). Does the owner recognise this problem from their own experience, or is it an agent's clever idea? If the latter, cut it. **MoSCoW scope… |
@@ -516,7 +534,7 @@ pipeline stage resolves on its own. `/create-prd` is the stage at which they are
 | `release-distribution-index.md` | Q-07 | **Physical formats** — vinyl, cassette, CD. Pressing, catalog numbers, retail barcodes, distribution to record stores. Genuinely part of "release" for independent artists and a completely different machine from DDEX. No directive points … |
 | `release-distribution-index.md` | Q-09 | Should **witnessed** and **imported** records carry a visible confidence tier across the product? (12.06.03 Q-03, 12.01.01 Q-02.) Honest, protects the record's value, and tells users their imported catalog is second-class — which is true… |
 
-## 13-gear-marketplace (38)
+## 13-gear-marketplace (40)
 
 | File | Q | Question (mechanical extract) |
 |---|---|---|
@@ -531,6 +549,7 @@ pipeline stage resolves on its own. `/create-prd` is the stage at which they are
 | `13.03-listings-inventory/13.03.02-listing-lifecycle-relisting.md` | Q-03 | **** **Does a bid bind the seller, or only the bidder?** D-10's 12h no-end window assumes it binds both — eBay's model. If a bid only binds the bidder, the entire block is unjustified and a seller may walk at any time. This is a market-c… |
 | `13.03-listings-inventory/13.03.03-inventory-oversell-prevention.md` | Q-04 | **** **Does the marketplace favour reaction time?** Per DT-08, first-claim-wins hands every underpriced vintage listing to a bot, permanently, and the Musician persona never wins. The alternative — a randomised claim window (e.g. 60 s) o… |
 | `13.03-listings-inventory/13.03.03-inventory-oversell-prevention.md` | Q-05 | **** **Is unit registration (domain 15) required to list?** Per DT-05, unregistered units cannot be defended from on-platform oversell, and no cancellation is anyone's fault. Requiring registration closes the hole and starts CX-07's loop… |
+| `13.04-price-discovery-market-data/13.04.02-pricing-suggestions-repricing.md` | Q-01 | Does the platform accept that suggestions shape the market it measures (DT-01)? If yes, that's a stated position; if no, suggestions may not belong at listing time at all. |
 | `13.05-offers-auctions-negotiation/13.05.01-offers-counter-offers.md` | Q-03 | **** **Should declined-offer data feed the price guide (13.04)** as thin-market evidence, per DT-02? It is genuine willingness-to-pay information that comps cannot capture — and it is also exactly the kind of data whose publication chang… |
 | `13.05-offers-auctions-negotiation/13.05.01-offers-counter-offers.md` | Q-04 | **** **Who is D-03's bulk-rules persona?** Per DT-10 — the Operator sells time and space, not guitars; "fleet stock with auto-accept floors" is dealer behaviour and no ratified persona is a dealer. **Fourth independent arrival** of domai… |
 | `13.05-offers-auctions-negotiation/13.05.02-auctions-bidding.md` | Q-01 | **** Do auctions belong in this product at all? Per DT-02 — a market-culture and thesis question, not a feature question. **MoSCoW ran and declined to settle it**: [moscow-ledger.md](../../moscow-ledger.md) places 13.05.02 in **COULD**, … |
@@ -541,6 +560,7 @@ pipeline stage resolves on its own. `/create-prd` is the stage at which they are
 | `13.06-cart-checkout-orders/13.06.04-pos-service-addons.md` | Q-01 | **** When a pre-dispatch inspection contradicts the seller's disclosure, what is the buyer's remedy — cancel, renegotiate, or return-on-arrival? Per DT-01 this is the feature's most valuable moment and it has no defined outcome. **Partly… |
 | `13.06-cart-checkout-orders/13.06.05-ownership-transfer-on-settlement.md` | Q-01 | **** **Ratify D-02's always-record half**: the chain records every settled transfer, and the owner controls only visibility. Narrowed since the breadth pass — 15.04 D-01/D-02 already settle the visibility half, so what remains is solely … |
 | `13.06-cart-checkout-orders/13.06.05-ownership-transfer-on-settlement.md` | Q-02 | **** **Ratify D-07** (ownership follows the object, not the money) for the chargeback case specifically: a buyer who charges back and keeps the guitar remains its recorded owner. Correct as a record of fact, and it will read as the platf… |
+| `13.07-gear-logistics-cross-border/13.07.02-international-customs-landed-cost.md` | Q-03 | How is duty reclaimed on a returned import, and who does the paperwork? |
 | `13.08-returns-rma-warranty/13.08.01-returns-refunds.md` | Q-01 | **** **Private seller vs. dealer: two return regimes on one marketplace?** Per DT-01 (legal) and **now DT-11 (commercial)** — two orthogonal lines of reasoning reached the same seam independently, which is strong evidence it is real. Thi… |
 | `13.08-returns-rma-warranty/13.08.01-returns-refunds.md` | Q-06 | **** **Does an exemption category list exist that the catalog can carry** (D-11 / DT-04), and who authors it? The mechanism is settled; the content is domain-expert and jurisdiction-specific work. This is the **third** capability landing… |
 | `13.09-tradein-consignment/13.09-tradein-consignment-index.md` | Q-01 | **** **Who is the dealer?** Trade-in and consignment need a commercial counterparty. Operator is defined as a venue/studio/rehearsal-space operator — "sells time and space rather than creative output" — which is explicitly *not* a gear d… |
@@ -1095,37 +1115,9 @@ pipeline stage resolves on its own. `/create-prd` is the stage at which they are
 | `trust-safety-disputes-index.md` | Q-06 | **meta/constraints.md describes no platform team — so the owner is the first moderator.** That makes reviewer wellbeing a business-continuity control ([24.01.03](./24.01-reporting-moderation/24.01.03-moderation-queue-reviewer-ops.md) DT-… |
 | `trust-safety-disputes-index.md` | Q-07 | Music adjudication needs **domain literacy** ("is that a sample or an interpolation?", "is that NSBM or Nordic folk?", "is that refinished?"). Skill-routed queues conflict with a small team, which may mean: only launch the domains whose … |
 
+## meta (2)
 
-<!-- spec-graph: auto-generated -->
-## Related Specs
-
-### Constrained by
-- [[decisions.md#d-11|D-11]]
-- [[decisions.md#d-04|D-04]]
-- [[decisions.md#d-05|D-05]]
-- [[decisions.md#d-09|D-09]]
-- [[decisions.md#d-08|D-08]]
-- [[decisions.md#d-06|D-06]]
-- [[decisions.md#d-03|D-03]]
-- [[decisions.md#d-14|D-14]]
-- [[decisions.md#d-02|D-02]]
-- [[decisions.md#d-07|D-07]]
-- [[decisions.md#d-01|D-01]]
-- [[decisions.md#d-10|D-10]]
-- [[decisions.md#d-0|D-0]]
-- [[decisions.md#d-20|D-20]]
-- [[decisions.md#d-16|D-16]]
-- [[decisions.md#d-22|D-22]]
-- [[decisions.md#d-13b|D-13b]]
-- [[decisions.md#d-13a|D-13a]]
-- [[decisions.md#d-17|D-17]]
-- [[decisions.md#d-71|D-71]]
-- [[decisions.md#d-18|D-18]]
-- [[decisions.md#d-15|D-15]]
-- [[decisions.md#d-1|D-1]]
-- [[decisions.md#d-12|D-12]]
-- [[decisions.md#d-13|D-13]]
-- [[decisions.md#d-26|D-26]]
-- [[decisions.md#d-19|D-19]]
-- [[decisions.md#d-72|D-72]]
-- [[decisions.md#d-32|D-32]]
+| File | Q | Question (mechanical extract) |
+|---|---|---|
+| `problem-statement.md` | Q-01 | Which "Why Now" signal is the real trigger — or is it situational rather than market-driven? |
+| `problem-statement.md` | Q-02 | Is the lock-in **earned** or **hostile**? If a user leaves, what do they take? (Data portability is a cross-cut — and a values decision.) |
