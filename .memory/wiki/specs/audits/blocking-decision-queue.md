@@ -11,12 +11,16 @@
 
 ## Status
 
+> **ALL 57 OPEN SUB-DECISIONS RATIFIED 2026-07-22.** Choices, reasoning and downstream
+> commitments are recorded in [decision-ratification-log.md](decision-ratification-log.md).
+> This file remains the source of the options each decision was chosen from.
+
 | | |
 |---|---|
 | Entries | 18 |
 | Open sub-decisions | 57 |
 | Axes already locked (no decision needed) | 37 |
-| Ratified so far | **0 / 57** |
+| Ratified so far | **57 / 57 — COMPLETE** |
 
 ## Index
 
@@ -75,7 +79,7 @@
 | C — Reversibility of the implied facet (whether the add can be undone, and what may block the undo) | 01.01.01-person-record-role-facets.md D-06 (line 195): "**Live obligations block facet removal; history never does** \| DT-06. Blocking on history means the users with the longest careers can never remove a facet... The obligation list is closed and per-facet, and is re-evaluated atomically at confirm time". The per-facet table (line 94) gives `performer` exactly one blocker: "Any confirmed booking is future-dated". Facet lifecycle line 83: "**Removing does not delete.** Nothing done under a facet is touched (D-03...)". |
 | D — Whether the implied facet authorises anything, or a permission gate is built at this seam | 01.01.01-person-record-role-facets.md D-07 (line 196): "**Facet, visibility and permission are three independent axes**", and Behavior line 52: "A facet **reveals** surfaces and makes the person discoverable in that capacity. It never authorises anything." Reinforced at the sub-domain level by 01.01-person-identity-roles-cx.md rejected pair R-02 (line 104): "An alias does not grant or require a facet-as-permission. CX-04 records the *implication* (holding an alias implies a professional self); it is not a permission dependency. Kept distinct so downstream spec writers do not build a gate here." Note R-02 rejects a *permission* gate; it says nothing about a consent step, which is Axis A. |
 
-#### DQ-01.1 — A — Disclosure shape: how the user learns the implied facet is being written at alias creation  `[ ] UNRATIFIED`
+#### DQ-01.1 — A — Disclosure shape: how the user learns the implied facet is being written at alias creation  `[x] RATIFIED`
 
 **At alias creation, is the implied facet written with a notice AFTER the write (01.01.01 D-12), with a disclosure BEFORE the write inside the same single Create action, or behind a blocking consent step that can be declined (01.01.02 D-10)?**
 
@@ -88,7 +92,7 @@
 
 **Recommendation**: D — Pre-write disclosure inside the single Create action — D is the only option that leaves both ratified rules intact. 01.01.01 line 84 forbids a prompt; D has no prompt. 01.01.02 D-10 objects to a silent add; D is not silent. Every other option requires overturning one file's rule outright (A overturns D-10, B narrows D-12) or inventing a branch no source defines (B and C both need a decline path, and 01.01.02 Happy Path step 6 with E-14/E-15 commit alias creation to all-or-nothing, so a refusal state has nowhere to sit). D's incremental cost over A is one sentence of copy — the same sentence 01.01.01 Happy Path step 3 already specifies for `seller`. Two supporting notes, stated at their real strength rather than harder: (1) D-10's cited precedent is genuinely miscited — step 3's `seller` add is user-initiated ("They hit 'Sell something'", line 102), and 01.01.01 separates explicit adds (line 80) from implied adds (line 84), placing alias creation on the implied side by name; that removes D-10's authority for a blocking gate but does not by itself establish that nothing may be disclosed beforehand, which is why D rather than A. (2) The `personas.md` line D-12 leans on — "The design must make the lazy path the correct path" (line 70) — is real, but its source context is the Producer anti-persona failing to capture splits, not facet UX; D-12 generalises it. The friction argument stands on 01.01.01 DT-03 and Role Lens line 21 without needing that generalisation. If the owner prefers to change only one file, Option A is the fallback and is defensible; if the owner wants a separable yes, Option B is available only at the price of commissioning a decline branch and reconciling it with the all-or-nothing contract. *(precedent: 01.01.01 Happy Path step 3 supplies the disclosure sentence ("This adds Selling to your account. Nothing you already have changes.") without supplying the blocking confirm, which line 80 reserves for explicit adds. 01.01.02 E-18 (line 82) supplies the distinction that keeps the disclosure non-blocking: it blocks before publication precisely because "after delivery the inference is permanent and un-retractable", whereas a facet add is reversible under D-06 and unblockable here (line 94). On ownership, the author-where-owned rule points at 01.01.01 in this direction: 01.01.01's own axes table assigns "Facet (claim) — Does this person do X?" to "this file", and 01.01.02's Cross-Cut Note (line 137) calls its relationship to 01.01.01 a "trigger dependency", i.e. 01.01.02 triggers something 01.01.01 owns. So the rule for HOW a facet is written belongs in 01.01.01 and 01.01.02 should reference it — the reverse claim (that 01.01.02 owns the rule because it owns the flow) inverts the rule and should not be used to support Option B.)*
 
-#### DQ-01.2 — B — Facet identity: which facet alias creation implies  `[ ] UNRATIFIED`
+#### DQ-01.2 — B — Facet identity: which facet alias creation implies  `[x] RATIFIED`
 
 **Does alias creation always imply `performer`, or does the implied facet depend on what the alias is for?**
 
@@ -118,7 +122,7 @@
 | 1. Does the creator of a band they are in hold a full (owning) mandate? | 01.02-organizations-entity-model/01.02.02-organization-creation-lifecycle.md, D-07 and the creation-mode table. Table row: '\| **For myself** \| "I'm in this band" / "I run this studio" \| Membership edge (01.03.01) + **owning mandate** (01.03.03) \| `owned` \|'. D-07: 'Creating an org you are not in is not an exception — it is one of three creation modes, and modes 2/3 are shadow-org creation (01.05.01) with a **custodial** mandate, not ownership'. Reinforced by identity-profiles-organizations-cx.md CX-15: 'The creator becomes the first owning mandate (01.02.02)', and by 01.02.02 D-12: 'The first owning mandate always lands on a human, never on the acting-context org'. |
 | 2. Does any seed attach to an unconfirmed (asserted or disputed) membership edge? | 01.03-membership-representation-mandate/01.03.01-membership-records-lifecycle.md, Behavior rule 2: 'an unconfirmed edge is a **claim about the past**, never a **grant of power**. It carries zero mandate, yields no acting context, and is invisible on the named party's own profile until they confirm it (D-08, DT-05).' D-02: 'Membership requires **consent to authority**; consent may be pending. Authority never precedes it'. D-08: 'An asserted membership is **invisible on the named party's profile** until they confirm it'. |
 
-#### DQ-02.1 — 3. Reconcile the coarse activity enum — seven activities or four?  `[ ] UNRATIFIED`
+#### DQ-02.1 — 3. Reconcile the coarse activity enum — seven activities or four?  `[x] RATIFIED`
 
 **Is the coarse activity enum the seven items named in 01.03.03 D-01 (book / sign / spend / list / release / settle / administer), or the 'four coarse activities' that DT-02 in the same file argues for?**
 
@@ -129,7 +133,7 @@
 
 **Recommendation**: 3a — Ratify seven — D-01 is the ratified item and Behavior independently repeats the seven. DT-02's count is incidental to its argument. This is a spec-hygiene reconciliation, not a product choice, but it must be closed first because axes 4 and 5 are stated over the enum. *(precedent: The Decisions table is the ratified surface of a feature file; Deep Think annotations record reasoning. Same relationship the tree uses throughout (e.g. 01.02.02 DT-11 → D-07).)*
 
-#### DQ-02.2 — 4. What activity set is seeded on a non-creator confirmed band membership edge?  `[ ] UNRATIFIED`
+#### DQ-02.2 — 4. What activity set is seeded on a non-creator confirmed band membership edge?  `[x] RATIFIED`
 
 **On a `band`-type org with no explicit mandates, does a confirmed member other than the creator hold the full coarse activity set, none of it, or a named subset?**
 
@@ -141,7 +145,7 @@
 
 **Recommendation**: 4a — Peer seed (paired with a default ceiling from axis 5) — The direction is carried by three items that survive re-reading. First, 01.03.03 DT-03 is the sub-domain's own verdict on the alternative — 'a structural injustice the platform would be inventing' — and it is the on-point objection to 4b/4c, not 01.02.02 DT-02, which D-07 rules out as a precedent here. Second, personas.md's Producer entry states the design rule directly: 'The design must make the lazy path the correct path', and CX-01 confirms the lazy path is the dominant path ('most bands will never open the mandate surface'). Third, 01.03.01's cross-cut note is the only place in the tree that costed the alternative operationally, and it costed it as 'every band is one death away from unadministrable'. The abuse objection is answered by machinery that is already ratified and free: 01.04.03 D-01 ('Authority and visibility are decoupled — every member sees every movement'), sub-domain CX-01 §4 ('silently *gaining* it is a security event'), and 01.03.03's own Edge Case that a member acting within mandate against the band's wishes is 'Not a platform failure — the mandate was granted. Governance (01.04.01) is the remedy, and the audit trail is the evidence'. 4a alone leaves D-06 inert, which is why this recommendation is conditional on choosing a default ceiling at axis 5 rather than 5a. *(precedent: personas.md (Producer worst-accidental: 'The design must make the lazy path the correct path') and 01.03.03 DT-03. It does NOT follow 01.02.02 D-01/DT-02 — that precedent points at parties the creator is not in, and D-07 grants the mode-1 creator an owning mandate outright. It also does not follow 01.03.03 D-05's fail-closed instinct: D-05 governs an unresolvable mandate (an error state, per the Error row of the States table), not an unconfigured one.)*
 
-#### DQ-02.3 — 5. Does the seed carry a default value ceiling?  `[ ] UNRATIFIED`
+#### DQ-02.3 — 5. Does the seed carry a default value ceiling?  `[x] RATIFIED`
 
 **Is seeded authority unbounded, or bounded by a default value ceiling above which the act escalates — and if bounded, to whom does it escalate?**
 
@@ -153,7 +157,7 @@
 
 **Recommendation**: 5b — Default ceiling, escalating to the owning-mandate holder — It repairs 4a's one structural defect (D-06 inert by construction) using only ratified parts: the value-ceiling dimension is already first-class in 01.03.03 Behavior, and the escalation target is already guaranteed to exist by 01.02.02 D-07 plus 01.03.03 D-04 ('Every org must retain at least one full mandate holder'). 5c is the more elegant answer on paper and should be revisited once 01.04.01 governance capture ships, but in the un-configured state it has no threshold to read and therefore commissions a default threshold, an approval flow and a timeout that no source defines — and it amends D-06's stated target. The honest cost of 5b, which the owner should weigh, is that 01.03.01 D-14's succession path stays live for the over-ceiling half instead of becoming dead code. *(precedent: 01.03.03 Behavior (value ceiling as a named scope dimension) and D-06 (escalate to a capable holder). No precedent supports a default figure — that is authored content the owner must supply.)*
 
-#### DQ-02.4 — 6. Which membership capacities does the seed attach to?  `[ ] UNRATIFIED`
+#### DQ-02.4 — 6. Which membership capacities does the seed attach to?  `[x] RATIFIED`
 
 **Does the seed attach to every confirmed member regardless of capacity, or only to `permanent` capacity, with `touring` / `staff` / `honorary` carrying presence until explicitly granted?**
 
@@ -164,7 +168,7 @@
 
 **Recommendation**: 6b — `permanent` only, conditional on amending R-02 — The justification for a peer seed at axis 4 is symmetry among the people who constitute the band; it does not reach a touring hire or an honorary name, and 01.03.01's touring row confirms at least that their standing is treated differently (for governance). But the earlier draft of this entry claimed this qualification was 'inherited from ratified content rather than invented' — that claim was wrong. The touring row speaks only to governance standing, and the on-point ratified item, R-02, cuts the other way and was not cited at all. So 6b is a genuine new ratification, and it is only coherent if R-02 is amended in the same pass to distinguish derivation (barred) from a rebuttable default keyed to tenure type (permitted). If the owner does not want to touch R-02, 6a is the consistent choice and its cost is bounded by axis 5's ceiling. *(precedent: None cleanly. 01.03.01's touring row is directional evidence about governance standing only; R-02 is contrary ratified content that must be reconciled rather than cited in support.)*
 
-#### DQ-02.5 — 7. Do non-band org types inherit the same seed?  `[ ] UNRATIFIED`
+#### DQ-02.5 — 7. Do non-band org types inherit the same seed?  `[x] RATIFIED`
 
 **Does the seed apply to `band`-type orgs only — with studio / venue / label / shop / agency defaulting to the owning-mandate holder plus explicit grants — or to every org type uniformly?**
 
@@ -193,7 +197,7 @@
 | L1 — Whether an objection can affect what the credited party themselves sees or exports | 02.01.05 D-09 (line 240): "**Embargo never hides a credit from the party it names.** The credited party always sees and can export their own credit". Reinforced by 02.01.05 D-18 (line 249, privileged non-publishing reads incl. "the credited party's own legal use") and the export edge row (line 132): "a participant may export the embargoed credits of sessions they participated in, and their own credits always". No option below may touch this: whatever an objection does, it acts only on public publication, never on self-view or participant-scoped export. This axis is named here because the superseded entry wrongly listed D-09 among the ratified items a Producer veto would contradict — a veto does not contradict D-09; it leaves both halves of D-09 intact. |
 | L2 — Where a non-evidence ground ('the recording really is public, but this specific credit must never be') is allowed to land | 02.02.01 D-10 (line 217): "**Self-removal is an objection, not a delete**, and it asks which objection is meant: \"I wasn't there\" -> dispute (`02.05`); \"don't name me\" -> embargo (`02.01.05`)". The destination inside 02.01.05 is the Axis A table (line 39): "**Confidential** \| Per credit, permanent \| The credited party + the work's ledger owner \| Never, unless both parties agree to lift", and the ghost-production edge row (line 150): "Axis A's `Confidential` level is where it lands — per credit, permanent, requiring the assent of both the credited party and the work's ledger owner". So a permanent non-credit ALWAYS requires the credited party's assent and can never be produced unilaterally by a Producer's objection. Residual and NOT part of DQ-03: whether WeJammin supports `Confidential` at all is 02.01.05 Q-02(b), owner-owned, already deferred to `/ideate-validate`, with Q-05 gated on it. This lock is what makes the superseded entry's Option C unnecessary as a package option — its destination was never open; only whether the objection form offers that ground (axis A2 below) is. |
 
-#### DQ-03.1 — A2 — Must a Producer objection state a ground, and is the ground space open or closed?  `[ ] UNRATIFIED`
+#### DQ-03.1 — A2 — Must a Producer objection state a ground, and is the ground space open or closed?  `[x] RATIFIED`
 
 **Does the objection control require the Producer to say why, and if so, is the reason free text or a closed list of grounds?**
 
@@ -206,7 +210,7 @@
 
 **Recommendation**: G3a — Closed ground list, restricted to grounds about D-03's existing predicate — It is the cheapest structure that makes the remaining axes decidable, and every ground it admits is a challenge to a check D-11 already assigns the platform, so it takes on no new adjudication. G3b should be a separate, explicit yes from the owner, because choosing it commissions an authorised-vs-unauthorised test that no file in the tree defines and that D-03's predicate does not license. *(precedent: 02.01.05 D-10 (line 241): a decline in the adjacent early-lift flow is "logged and shown to the requester" with its reason — the file already treats a Producer's refusal as an accountable, reasoned act rather than an anonymous one. This precedent supports requiring a reason; it does not by itself support enumerating grounds, which is the increment G3a adds over G2.)*
 
-#### DQ-03.2 — A3 — What a timely objection does to the pending lift  `[ ] UNRATIFIED`
+#### DQ-03.2 — A3 — What a timely objection does to the pending lift  `[x] RATIFIED`
 
 **Does a Producer objection filed inside the 72 hours cancel the lift outright, pause it pending a resolution, or merely get logged while the lift proceeds?**
 
@@ -218,7 +222,7 @@
 
 **Recommendation**: E2 — Pause at the status quo pending resolution — The file is internally inconsistent here and BOTH E1 and E2 rewrite ratified text — that is the honest framing, and the superseded entry got it backwards by presenting only the veto as the rewrite. E1 rewrites D-11's rationale, the payment-dispute edge row and DT-10's summary; E2 rewrites line 59 plus two user-facing copy strings. The tie-break is that E1's casualties are the reasoning the feature was built on (the anti-persona defence D-11 exists to provide), while E2's casualties are one clause and two strings whose replacement is a copy change. E2 also keeps Q-04's compensating control intact, which E3 destroys. Owners who weight 'the platform must never judge anything' above the anti-persona defence should pick E1 — it is defensible and it is what the shipped copy currently promises — and then must pick S3 on axis A5 to stop the indefinite-veto loop. *(precedent: credits-attribution CX-16 and 02.05 D-02, read strictly and in the correct direction: a unilateral filing produces no state change while pending, and the outcome changes only after due process. Note this precedent supports pausing toward the STATUS QUO ANTE, and here the status quo ante is embargoed — so it supports E2's hold-at-embargo, and it does NOT support the superseded entry's use of it as a pro-lift argument.)*
 
-#### DQ-03.3 — A4 — Who resolves a contested objection (live only if axis A3 = E2)  `[ ] UNRATIFIED`
+#### DQ-03.3 — A4 — Who resolves a contested objection (live only if axis A3 = E2)  `[x] RATIFIED`
 
 **If an objection pauses the lift, who decides whether it stands — the platform re-running its own check, or the dispute engine?**
 
@@ -230,7 +234,7 @@
 
 **Recommendation**: R2 — Route to the dispute engine, with R1 as the free first rung — It is the only resolver that names an accountable decider without inventing one, and every part of it already exists in the tree: the engine (02.05 D-01, domain cross-cut), the privileged non-publishing read over embargoed records (02.01.05 D-18), and the routing habit (02.02.01 D-10). R1 alone cannot resolve anything an automated check did not already resolve on the first pass; R3 is an invented timer that decides by silence. The cost to accept honestly is latency: a contested lift stops being a three-day matter. *(precedent: 02.02.01 D-10 and its edge row: a participant objection is classified by kind and, unresolved, "becomes a dispute (`02.05`)". This precedent points the right way for routing an objection into 02.05; it does NOT speak to whether the paused record should sit embargoed or published while the dispute runs — that comes from CX-16 / 02.05 D-02 (pendency changes nothing), which is why E2 holds at embargo.)*
 
-#### DQ-03.4 — A5 — Whether re-submission of evidence after an objection is bounded  `[ ] UNRATIFIED`
+#### DQ-03.4 — A5 — Whether re-submission of evidence after an objection is bounded  `[x] RATIFIED`
 
 **After an objection defeats an evidence submission, may participants re-submit without limit, or does the path bound or escalate after repeated objections?**
 
@@ -261,7 +265,7 @@
 | Public disclosure of the contest itself (does a visitor ever see that a claim is contested?) | 02-credits-attribution/02.01-credit-graph-discography/02.01.02-public-discography.md D-06: "**A contest is not published.** A contested credit stays on the public page at its existing derived tier with no public marker; the contested marker is a record-view affordance for participants and the credited party." And credits-attribution-cx.md CX-16: "'Contested' is a state of the *record*: a filed dispute produces no public page state". 02.03.03 asks for nothing more public than this — its Contested state says "Held; both told" (the two claimants), and its Q-02 treats even claimant-to-claimant identity disclosure as unresolved. |
 | Terminal attachment when a contest closes as Unresolvable | 02-credits-attribution/02.03-claiming-cold-start-seeding/02.03.03-claim-adjudication.md D-02: "Unresolvable contests leave the credit unattached \| Awarding on weak evidence hands one person the other's career on a guess. Unattached is honest and reversible; wrongly awarded is neither." Its States table agrees: "Unresolvable \| No corroborator exists (import) \| Unattached, permanently marked contested". 02.03-cx CX-03 makes this the majority outcome ("Imported credits produce contests that are structurally unresolvable — no corroborator exists inside the platform") and its interim rule holds `unresolvable` terminal pending OQ-01. |
 
-#### DQ-04.1 — Attachment during pendency — while the contest is open and a corroborator path may still resolve it  `[ ] UNRATIFIED`
+#### DQ-04.1 — Attachment during pendency — while the contest is open and a corroborator path may still resolve it  `[x] RATIFIED`
 
 **While a claim contest is open, does the credit stay attached to the first claimant (public line unchanged, contest visible only on the record view) until the contest closes, or does it detach from them the moment the second claim is filed?**
 
@@ -272,7 +276,7 @@
 
 **Recommendation**: P1 — Stay attached until close — With the terminal axis locked to unattached (D-02), P1 can no longer permanently award a credit to whoever clicked first, which was the only serious objection to leaving it in place. What remains is a straight comparison of two exposures: under P2 a free unilateral filing strips a line from a professional's public page with no evidence and no abuse control defined anywhere in the specs; under P1 a possibly-wrong line stays up for the length of a corroboration round-trip — explicitly priced as acceptable in 02.01.02 D-06 ("the status quo ante") and short by construction, since a captured credit's corroborator "knows. Ask them. Resolved" and an imported credit reaches Unresolvable with no window at all. Stated plainly, and against the original entry's framing: this is not a reading under which nothing is reversed. P1 reverses 02.03.03 Happy Path step 2 and 02.03.02's Contested row for the pendency window; P2 reverses the 02.01.02 reconciliation clause for claim contests. One of the two must give, and the owner should pick which. *(precedent: 02.03.03 DT-02 — the file's own reasoning that claim adjudication and credit dispute "share the contested state and the suppression behavior" — read together with 02.05 D-02, whose suppression language was corrected to "marked for participants, not suppressed and not publicly annotated". The shared behaviour was corrected on one side only; P1 finishes the correction. Note what this precedent does not cover: 02.05's reciprocal note holds this feature at arm's length ("different question (who is this person, versus what happened)") and scopes its rule to "Credit-dispute pendency", so it is evidence, not a lock.)*
 
-#### DQ-04.2 — Party-side public render of an unattached credit (reached under every branch, because Unresolvable is locked to unattached)  `[ ] UNRATIFIED`
+#### DQ-04.2 — Party-side public render of an unattached credit (reached under every branch, because Unresolvable is locked to unattached)  `[x] RATIFIED`
 
 **When a credit is unattached because of a claim contest, does it fall back to the public unclaimed-shell page it arrived on, or does it render publicly only on the work's ledger until someone successfully claims it?**
 
@@ -301,7 +305,7 @@
 | 2. Sequencing — does the amendment land first and then invalidate, or must the attesters agree before it lands? | `02.01.06-credit-correction-amendment.md` — D-01 ("Amendment is supersession, never in-place edit"), the Behavior approval rule ("Correcting an **attested** credit — everyone who attested it must agree. Their attestation was of the *old* fact; it cannot silently transfer to a new one."), D-05 ("Successor's provenance tier is re-derived from who agrees, never inherited"), DT-03 ("when a required attester *agrees* to the successor, that agreement **is** a fresh attestation of the new fact, so the successor's tier is **re-derived** from who agreed — not carried over"), D-06 (non-response reminders day 3 / day 10, auto-escalation to dispute day 14, "it never auto-applies and never freezes"), and the ratified state machine Proposed → Awaiting approval → Applied / Escalated. 02.04.01's own cross-cut note assigns this ownership: "02.01.06 owns the amendment, this feature owns the invalidation." |
 | 4. The PARTY facet named in 02.04.01 D-10 | `02.01.06-credit-correction-amendment.md` D-03: "Changing the credited *party* is never an amendment — It moves reputation (and potentially income) between two humans. That is definitionally contested even when both parties are agreeable." Echoed at `02.01.01-credit-record-contribution-ledger.md`: "Removal is an amendment (`02.01.06`) requiring the credited party's agreement — and changing the *party* is never an amendment at all (`02.01.06` D-03), it is a dispute", and at 02.01.06's own edge case "Correction changes the *party* (wrong person credited) \| Not an amendment — it is a deletion plus a new credit ... Forced through dispute". |
 
-#### DQ-05.1 — 1. The materiality test on the ROLE facet of an attested credit  `[ ] UNRATIFIED`
+#### DQ-05.1 — 1. The materiality test on the ROLE facet of an attested credit  `[x] RATIFIED`
 
 **When an amendment changes the role on a credit that already carries attestations, is the invalidation test a flat identity test (any role change invalidates every attestation on the row), a containment test over 02.06 D-06's base+modifier structure (dropping a modifier within one base carries; anything else invalidates), or a semantic strength test (the attestation carries whenever the new role claim is strictly weaker than or equal to the attested one)?**
 
@@ -313,7 +317,7 @@
 
 **Recommendation**: A1 — Flat identity test; 02.04.01 D-10 is the single boundary — A3 is the only option that requires inventing machinery, and the machinery is a semantic strength ordering over role names that 02.06 does not define, does not decide toward, and would have to maintain against what its own axis table calls High deprecation pressure. A2 avoids that invention but carries in the wrong direction — dropping a modifier ("Assistant Engineer" → "Engineer") is a strengthening, so A2 re-opens the exact hole D-10 and DT-07 were written to close, while still invalidating 02.01.06's own worked correction ("Producer" → "Additional Production", which ADDS a modifier). A1 also makes three files agree instead of two: 02.01.06 D-05 already rules that a successor's tier is "re-derived from who agrees, never inherited", which is D-10's position and not D-13's. And A1 is the reading 02.04.02's own worked example already supports — its carrying pair "Drums" → "Drums — brushes" is an instrument change, and instrument is excluded from the (party, role, work) key by 02.01.01 D-03 and 02.06 D-16, so D-10's "nothing else does" already lets it stand with no entailment rule at all. The re-ask cost A1 accepts is bounded by machinery that exists: 02.04.01 D-09's cadence and per-recipient caps and D-21's collapsing of concurrent requests. *(precedent: DEC-027 (P-03, 2026-07-21) and DEC-031 (P-07a, 2026-07-21), both ratified on the same question shape. DEC-027 chose a mechanical predicate over a semantic materiality judgement, its downstream reading verbatim: "Rejecting the semantic reading also avoids minting a third project-wide materiality definition alongside `07.03.03` D-07 and `02.04.01` D-10" — which both rejects the semantic reading and names 02.04.01 D-10 as one of the project's two existing materiality definitions. DEC-031 reads verbatim: "Materiality is **owner-declared, never platform-detected**" and "it reuses D-07's existing definition rather than minting a fourth materiality concept." DEC-028 (P-04, "authored where owned and referenced where not ... Referencing validates presence and surfaces the owner's verdict; it never restates the requirement") also applies, and it points at 02.04.01, not 02.01.01: 02.04.01's own cross-cut note assigns ownership — "02.01.06 owns the amendment, this feature owns the invalidation" — so the boundary is authored in 02.04.01 D-10 and referenced, never restated, in 02.04.02, 02.01.06, 07.03.01 and 12.01.03.)*
 
-#### DQ-05.2 — 3. Does 02.06 D-11's one retroactive role re-resolution (first mapping of a pending alias) invalidate attestations?  `[ ] UNRATIFIED`
+#### DQ-05.2 — 3. Does 02.06 D-11's one retroactive role re-resolution (first mapping of a pending alias) invalidate attestations?  `[x] RATIFIED`
 
 **When the platform performs the single retroactive re-resolution 02.06 D-11 permits — the first mapping of a pending alias onto a canonical role, which changes the stored role on credits that already exist — does that count as a material role change that invalidates the attestations on those credits, or is it a label completion that leaves attestations untouched?**
 
@@ -344,7 +348,7 @@
 | Axis 5 — What may cross the 02.04.04 -> 02.05 dispute boundary? | .memory/wiki/decisions.md DEC-010 (CQ-03 Option B, ratified 2026-07-19), recorded at 02.04.04 D-07, 02.04 index D-05 and credits-attribution-cx CX-18: 'CollusionEvidenceConstraintV1 contains only contractVersion, opaque attestationEdgeId, per-edge negativeMultiplier, and literal requiresNonTopologicalCorroboration: true. Unknown versions are excluded. No raw score, topology signal, cluster/witness identity, trust score, ring flag, hard exclusion, or enforcement recommendation crosses the boundary.' The field's own consumer rule reads 'Multiplies this edge's contribution to dispute confidence.' This contract is dispute-facing only and neither governs nor is governed by the tier question in Axis 1. |
 | Axis 6 — What SHAPE does the demotion signal have (per-edge vs per-cluster; weight vs cap)? | 02.04.04 D-05: 'Demotion is per attestation edge, never per cluster... A per-edge penalty devalues only the specific edges the topology implicates, and the tier reads it as one negative multiplier term.' And 02.04.02 D-12: 'Demotion is a weight, never a cap' (DT-14: 'A cap makes new evidence a no-op for a flagged cluster — which is a probe oracle'). Both are settled; DQ-06 decides only WHICH derivation reads that per-edge weight, not its shape. |
 
-#### DQ-06.1 — Axis 1 — Does ring-detection demotion enter the RUNG derivation, or only the internal score?  `[ ] UNRATIFIED`
+#### DQ-06.1 — Axis 1 — Does ring-detection demotion enter the RUNG derivation, or only the internal score?  `[x] RATIFIED`
 
 **Does 02.04.02's rung derivation read 02.04.04's per-edge negative multiplier (so a demoted credit's categorical rung falls), or does the multiplier enter only the continuous internal score, leaving the rung a pure function of the kind of active evidence?**
 
@@ -356,7 +360,7 @@
 
 **Recommendation**: A — Score-only: the rung is invariant to detection; only the internal score moves — A is the only option that adds no machinery and no contradiction with a ratified rule. 02.04.02 files ring demotion in its score-input table, not its rung table, and every rung gate is written as a kind of evidence rather than a quantity — a multiplier removes no evidence of any kind. B needs a rung-gate cut value that exists nowhere in the tree (02.04.04 Q-04 defers only the score-side demotion cut), and a gate an edge can fall out of is a cap on the rung, which 02.04.02 D-12 / DT-14 forbid on the tier side. B also converts the public label into the probe oracle DT-14 and D-12 were written to prevent, and lands it on the false positive 02.04.04 calls dominant by a wide margin. C is directionally right but breaks the traversal demotion path that DEC-020 ratified, because traversal consumes the score. The nine rows that say 'lower rung' each bundle demotion with retraction or amendment-invalidation — triggers that genuinely delete active attestations and so genuinely change the evidence kind — and then state the consequence of the bundle. That is an editing defect, but only the owner can say which side of it is the product. *(precedent: DEC-020 / 02.01.03 D-05 / 02.04 index D-06 (CQ-04 Option C, ratified 2026-07-20) is a POSTURE precedent, not a governing one: it answers the same shape of question for the sibling consumer — 'An otherwise eligible edge follows ordinary publication, viewer-visibility, embargo, provenance-floor, role, query-shape, fan-safety, and normal result-window gates. If returned, its path renders normally while the existing per-attestation-edge-derived demotion affects only ordinary ranking. No collusion-specific threshold, hiding, label, annotation, rationale, tooltip, notification, detector metadata, or unweighted bypass exists.' Its stated problem is traversal presentation and its downstream names only 02.01.03 D-05/Q-03 and 02.04 D-06/CX-03; it does not decide the discography rung. Extending the same posture to the rung is the consistent extension, not a resolution. Also genuinely applicable: 02.04.04 D-01 ('Demote silently; never accuse'), D-02 ('Invisible to all four personas'), and 02.04.02 D-02. NOT applicable, and previously mis-cited: 02.04.04 D-07 / CollusionEvidenceConstraintV1 — its negativeMultiplier field reads 'Multiplies this edge's contribution to dispute confidence', and D-07 scopes it as 'the only dispute-facing detection contract'. It governs the 02.04.04 -> 02.05 boundary, not the 02.04.04 -> 02.04.02 tier boundary, and carries no force here.)*
 
-#### DQ-06.2 — Axis 2 — If the public rung is invariant to detection (Axis 1 = A), do the surfaces that GATE on rung also become invariant?  `[ ] UNRATIFIED`
+#### DQ-06.2 — Axis 2 — If the public rung is invariant to detection (Axis 1 = A), do the surfaces that GATE on rung also become invariant?  `[x] RATIFIED`
 
 **The rung is simultaneously a public label and a gate value read by non-presentation consumers. If demotion no longer moves the rung, do those gates read the same invariant rung, or does a separate demotion-adjusted value exist for them?**
 
@@ -385,7 +389,7 @@
 |---|---|
 | 1. v1 build content — does any 07.09 bridge feature ship in v1? | specs/feature-ledger.md rows 273–275 read `\| Should \| [PARTIAL] \| — \| — \| — \| — \| — \| — \|` for 07.09.01/.02/.03, against the file's own header rule (line 5, governed by D-31): "`—` = not phased (phasing applies to Must-haves only; Should/Could/Won't get no release assignment)". Reinforced by ideation-index.md D-28 (User, 2026-07-18): "**Mobile** = native app is **phase 2** (v1 = web + PWA; classification stays `single-surface`, native tracked as a future surface, backend must be API-first)". CONSEQUENCE, and it reframes this whole decision: no bridge feature reaches v1 under ANY answer to the axes below. This decision is about post-v1 authorisation and about what v1 is allowed to claim — it is not about v1 build content. Any option that presents itself as 'protecting v1' is describing a state that already holds. |
 
-#### DQ-08.1 — 2. Is a non-web client on the producer's machine ever authorised — and if so, on what evidence?  `[ ] UNRATIFIED`
+#### DQ-08.1 — 2. Is a non-web client on the producer's machine ever authorised — and if so, on what evidence?  `[x] RATIFIED`
 
 **Does WeJammin authorise software that runs on the producer's own machine (a watch-folder agent, later possibly a DAW plugin) as a post-v1 surface — prohibit it outright — defer it behind a named surface-specific evidence gate — or decline the client and instead commission a server-side ingest path that never touches the producer's machine?**
 
@@ -398,7 +402,7 @@
 
 **Recommendation**: C — Defer behind a named, surface-specific evidence gate — A and B decide the same strategic question in opposite directions on the same missing evidence: domain Q-08 and 07.09.02 Q-03 both state that the track-name premise — the thing that makes a client worth buying — is unverified and should be tested against real sessions. D changes the cost profile genuinely (it removes the signing/notarisation/install costs outright), but it is unspecified anywhere in the tree, keeps the parser cost, kills 07.09.03's ratified delivery surface, and widens the read-scope problem D-06 exists to control — so choosing it should be a deliberate commissioning act, not a default. C is the only option that closes the ambiguity (the Desktop row stops being an absence) without spending a commitment on unevidenced ground, and it costs nothing in v1 because axis 1 already excludes every 07.09 feature from v1. If you would rather not carry an open gate at all, B is the honest second choice — but pick B only together with axis 4 = `Won't` and axis 5 = restate, or you have prohibited the mechanism while still shipping its promise. *(precedent: Shape only, and stated as such: 07.09 D-04 / ideation-index D-37 (Owner, 2026-07-20) gates DAW support on evidence — and the P-01 stage-vocabulary ratification (audits/remediation-state.md r-44[0], owner 2026-07-21) gates enum enforcement on practitioner evidence plus explicit owner approval. Both establish that this project defers commitments behind named evidence rather than guessing. Their CONTENT does not transfer: D-37 resolves "without choosing DAWs, bridge delivery, or a new surface", so its parser gate says nothing about the surface, which is why C's reopen trigger enumerates its own four items.)*
 
-#### DQ-08.2 — 3. What delivers the 07.06.02 capture prompt in v1?  `[ ] UNRATIFIED`
+#### DQ-08.2 — 3. What delivers the 07.06.02 capture prompt in v1?  `[x] RATIFIED`
 
 **Is the v1 delivery of the close-capture prompt ratified as PWA web push (a capability constraints.md already grants for v1) plus the in-app surface, or in-app only with everything else routed to the async attestation chase?**
 
@@ -409,7 +413,7 @@
 
 **Recommendation**: PWA web push + in-app — ratify it as the v1 delivery of the prompt — It uses only a capability D-28 already locked into v1, it is the only v1-available surface that can meet 07.06.02 D-09's ≤5 s ungated Tier 1 requirement, and it closes 07.06.02 Q-09 and 07.09.03 Q-03 without touching axis 2. Ratify it with the payload caveat written in — that with no parse in v1 the pre-fill sources are the roll and the roster, and D-11 will suppress cards that have neither — so nobody downstream reads 'push is decided' as 'the card is full'. *(precedent: constraints.md Mobile (PWA) row + D-28 (User, 2026-07-18) — the capability is already v1. No precedent is needed for the assignment beyond 07.06.02 D-09's own latency requirement.)*
 
-#### DQ-08.3 — 4. Does 07.09 keep `Should`, or become `Won't` with its dependents re-scoped?  `[ ] UNRATIFIED`
+#### DQ-08.3 — 4. Does 07.09 keep `Should`, or become `Won't` with its dependents re-scoped?  `[x] RATIFIED`
 
 **Do 07.09.01/.02/.03 stay `Should` and unphased in moscow-ledger.md and feature-ledger.md, or are they demoted to `Won't` with an honest re-scope of the six bridge-dependent features?**
 
@@ -420,7 +424,7 @@
 
 **Recommendation**: Keep `Should`, unphased — conditional on axis 2 — Under the recommended axis 2 = C, keeping `Should` is the consistent record: the mechanism is parked on evidence, not rejected, which is exactly what moscow-ledger's own rationale says the `Should` means. Flip this axis to `Won't` if and only if you choose axis 2 = B, in which case 07.04.01 Q-05 makes the dependent re-scope mandatory rather than optional.
 
-#### DQ-08.4 — 5. Is the v1 thesis wording restated to match what v1 can actually do?  `[ ] UNRATIFIED`
+#### DQ-08.4 — 5. Is the v1 thesis wording restated to match what v1 can actually do?  `[x] RATIFIED`
 
 **For the v1 window — in which no 07.09 feature ships under any answer above — is the public claim restated from 'capture at source / present at the moment of creation' to 'capture at the first sharing moment', or does the capture-at-source claim stand?**
 
@@ -442,7 +446,7 @@
 
 **Why it blocks**: An implementer cannot write the auto-approve gate at all. Given a £1,000 request on a work where owner A holds 10% with a £500 ceiling and owner B holds 90% with a £2,000 ceiling, the two ratified texts return opposite verdicts (auto-approve vs fall through to a human), so the gate has no defined behaviour. Downstream: 11.02.01 consumes the fold's output and cannot be typed until it is known whether the fold emits one comparable number or a per-owner verdict; 11.04.01 D-06's trailing 90-day cumulative total cannot be summed with the request value until both are in the same denomination; and the authoring copy ('up to £500 of my share') cannot be written.
 
-#### DQ-09.1 — A. Gate denominator — what value each owner's authored ceiling is compared against  `[ ] UNRATIFIED`
+#### DQ-09.1 — A. Gate denominator — what value each owner's authored ceiling is compared against  `[x] RATIFIED`
 
 **When the auto-approve gate tests an owner's authored ceiling, is it tested against that owner's own share of the deal value, or against the deal's total value?**
 
@@ -454,7 +458,7 @@
 
 **Recommendation**: A1 — Own share — Both texts are ratified, so the tie breaks on ownership and load-bearing-ness, not on force of principle. The per-share base is stated four times in the [DEEP] file that owns the policy object (Behavior twice, Happy Path 7, D-17), is the literal product promise in its Role Lens ('up to £500 of my share'), and carries a dependent rule (unresolved splits fall through). The minimum clause appears once in the sub-domain's only [PARTIAL] file, has no Deep Think derivation behind it (11.04.03's DT-01/02/03 concern the fold's product surface, the rejection of tiebreaks, and silence), and its two apparent corroborations are citations back to it rather than independent findings. It is also not well formed on its own terms: min(£500, £2,000) only names a work-level ceiling if both ceilings were denominated on the deal to begin with, which is the very thing in dispute. The independent argument is 11.04.02 D-02/DT-02: the ratified line between a policy and a veto is that 'a policy governs its author's share; a veto constrains everyone's', and A1 is the reading that keeps each authored quantity applied to its author's own share. Note the honest cost, which is not small: A1 is the more permissive reading, it makes threshold force share-proportional in a file whose DT-02 rejected share-weighted tiebreaks, and if parent Q-02 lands restrictively on auto-approve-as-consent, A2 is the safer place to have been standing. Explicitly NOT relied on: DT-14 and DT-03, both of which the previous draft used and neither of which discriminates between A1 and A2 (see challengeResponses). *(precedent: P-04/P-05 (author where owned, reference where not — never a second copy of another domain's requirement), applied narrowly to the denominator only: the unit a ceiling is denominated in is an attribute of the policy object, which 11.04.01 owns via its D-01 ('Policy attaches to a share, never to a work'); 11.04.03 owns the fold and legitimately owns how thresholds combine, but restated a base it does not own, and the restatement drifted. This precedent settles which file's sentence governs the denominator. It does not by itself settle what the fold emits — that is axis B.)*
 
-#### DQ-09.2 — B. What 11.04.03 emits and displays for thresholds  `[ ] UNRATIFIED`
+#### DQ-09.2 — B. What 11.04.03 emits and displays for thresholds  `[x] RATIFIED`
 
 **Does the fold publish a single work-level ceiling figure to co-owners, and if so is it a literal authored number or a derived one?**
 
@@ -466,7 +470,7 @@
 
 **Recommendation**: B2 if axis A resolves to A1; B3 if axis A resolves to A2 — B2 is the only option that requires no new object and no reopening of a ratified guarantee, and it is the option that stays valid whichever way axis A lands — which is the point of severing the axes. B1's formula is arithmetically correct but is a new display object being introduced inside a gate-semantics decision, and it reopens D-04's attribution in the same way A3 does. Under A2, B3 is free and correct and B2 is unnecessary. *(precedent: 11.04.03 D-04 ('Owners are told when their own policy is inert, and by whom') and D-01 ('The aggregate is derived and never editable'), plus 11.02.01's cross-cut note that the consumer reads the fold and never the individual policies — B2 satisfies all three without adding a quantity none of them defines.)*
 
-#### DQ-09.3 — C. Denomination and share-basis of the D-06 trailing 90-day cumulative window  `[ ] UNRATIFIED`
+#### DQ-09.3 — C. Denomination and share-basis of the D-06 trailing 90-day cumulative window  `[x] RATIFIED`
 
 **Under per-share gating, are an owner's past auto-approved deals valued at the share they held when each was approved, or revalued at their current share?**
 
@@ -497,7 +501,7 @@
 | A5 — Whether the buyer is one party or two (purchaser vs licensee) | 11-music-licensing/11.08-licence-instrument-lifecycle/11.08.02-licence-certificate-issuance.md D-11: "**Licensee ≠ purchaser.** The instrument names both; the purchaser warrants authority to bind the licensee", per DT-04: "an ad agency purchases on behalf of a brand; the party who must be licensed is the brand ... So the instrument names purchaser **and** licensee, separately (D-11)." |
 | A6 — Release phase of the buy-side surfaces | ideation-index.md D-31: "**Release split into v1 + v1.5** ... **v1 = session spine** (01, 02, 05, 07, 09-capture) ~45 Musts ... **v1.5 = the 3 marketplaces** (13, 14, 15) ~26 Musts ... Phase 2+ = the remaining ~124 Musts." Domain 11 is in neither v1 nor v1.5. |
 
-#### DQ-10.1 — A1 — What written artifact describes the commercial licence buyer (and does D-19's persona count change)?  `[ ] UNRATIFIED`
+#### DQ-10.1 — A1 — What written artifact describes the commercial licence buyer (and does D-19's persona count change)?  `[x] RATIFIED`
 
 **Do we mint a fifth persona for the commercial licence buyer, author a six-field buyer profile that is explicitly NOT a persona, author nothing and let each feature describe its own buyer, or defer the question again?**
 
@@ -510,7 +514,7 @@
 
 **Recommendation**: A1-b — Buyer counterparty profile in meta/, explicitly not a persona — The blocked files ask for one specific thing — a described primary user for the Role Lens to consume — and A1-b delivers exactly that at the smallest edit surface, leaving D-19 and 24 Role Matrices untouched. A1-c is refuted by disk: the same 'name it, don't describe it' treatment was applied to Admin and 24.01.03 Q-01 records that the actor still cannot be specified. A1-d is the mechanism that already failed at /ideate-validate on 2026-07-18. A1-a is defensible and the owner may prefer it — it is the only option that puts the buyer in the table rather than in a note — but it costs a full 24-domain column pass and creates precedent pressure toward personas for eight other non-persona actors that existing decisions resolved by refusing exactly that. Honesty note on the strongest-sounding argument for A1-a: 06 D-07's headline does read "A persona gap is escalated: the fee-paying parent is a BUYER, and buyers are personas", but the same row ends "**Not resolved here** — D-19 is ratified and the owner chose 4 over 5 deliberately", and 06 Q-01 carries it forward as still open, owner = User. It is an agent-authored escalation stating a principle, not an owner ratification of it, and it should be weighed as an argument rather than cited as settled law. *(precedent: personas.md Q-02 with 02.06 D-20 and 05.01.02 Q-02 — an actor that is genuinely needed can sit outside the persona set by decision rather than by omission ('an admin/governance role that is not a persona'). And D-50 / P-04, author-where-owned: the buyer description is authored once in meta/, which owns actor definitions, and referenced by each 11.x Role Lens rather than restated in seven files. 23.02.03 DT-03 is cited only for the narrower point that non-persona users of WeJammin are an accepted category — its delegation mechanism does not transfer, because a licence buyer acts for themselves and is not delegated authority by any platform user.)*
 
-#### DQ-10.2 — A2 — Granularity: is the professional licence buyer the same lens as the creator micro-licence buyer?  `[ ] UNRATIFIED`
+#### DQ-10.2 — A2 — Granularity: is the professional licence buyer the same lens as the creator micro-licence buyer?  `[x] RATIFIED`
 
 **Does one buyer artifact cover both the supervisor/brand/agency buyer of 11.01–11.03 and the monetised-creator buyer of 11.06, or do they get two?**
 
@@ -521,7 +525,7 @@
 
 **Recommendation**: A2-b — Two artifacts — The 11.06 index does not merely note a difference of degree; it records the two gaps as different in kind and names the concrete downstream harm of blurring them. Writing one artifact broad enough to cover both would reproduce the Fan mapping's defect one level up. If the owner picks A1-a instead, the same reasoning argues for two personas rather than one — which is a further cost of A1-a worth weighing before choosing it.
 
-#### DQ-10.3 — A3 — Scope of the ratification: the licence buyer only, or a general rule for every non-persona actor?  `[ ] UNRATIFIED`
+#### DQ-10.3 — A3 — Scope of the ratification: the licence buyer only, or a general rule for every non-persona actor?  `[x] RATIFIED`
 
 **Does this decision resolve the commercial licence buyer alone, or is it ratified as the general answer to 'does the 4-persona model cover non-musician users?' and applied to all the other non-persona actors on disk?**
 
@@ -551,7 +555,7 @@
 | A5 — Counting clock for the window | 12.02.03 D-07: 'Windows count partner business days in the partner's timezone; artist-facing elapsed time is wall-clock' — context: 'An elapsed-hours window cries wolf every weekend — on the domain's flagship honesty feature, at peak load, because Friday is global release day (DT-13).' The underlying calendar is profile data per 12.02.03's cross-cut note ('response windows and partner non-working days (DT-13) are all profile data, pinned per delivery'), which is consistent with the A1 lock. This is not in dispute: 12.02.02 does not contradict it — its '10 business days' simply names no time base at all, which is an omission rather than a rival rule. Consequence for the owner: every number settled on A3, A4 and A6 is denominated in partner business days in the partner's timezone, and the 10-business-day figure in 12.02.02 must be restated on that clock when it moves into PC-10. |
 | A8 — What an unevidenced window may drive: internal chase yes, artist-facing claim no | All three files already agree, so this is not a choice. 12.02.02 D-12: 'Expected-response windows carry evidence; absence yields no norm. Internal escalation uses a fallback (10 business days); artist-facing claims never do' — and its table: 'The fallback exists to wake an operator, never to make an artist-facing claim.' 12.02.03 D-05: 'no expectation claimed when unmeasured'; its ladder row states 'Automated chase via the partner's stated support channel, quoting the message reference. `Overdue` is surfaced only where the window is observed or contractual; a seeded cold-start window remains internal.' 12.03.02 D-11: 'On cold start: elapsed time only, no `. overdue` flag, and we say we don't know yet' — its table: 'Neither — cold start \| "Received by Apple 6 days ago. We don't have enough history with Apple to say whether that's normal yet." Elapsed time only. No `overdue` flag is raised, because there is nothing to be over.' This is also the domain's ratified 'Never claim more than you know' pattern in release-distribution-index.md. NOTE for the owner: this axis was previously presented as an option to choose ('formalise the internal/artist-facing split'). It is not open. It is already ratified in all three files, and the 2026-07-22 pass (f5f6d17) is what aligned 12.02.03's ladder and cold-start edge case to 12.03.02 D-11. The only real work here is that PC-10 must record two values (the escalation-window and the evidenced expectation) plus its evidence marking, which is a field-shape edit to 12.02.02, not a policy decision. |
 
-#### DQ-11.1 — A2 — Precedence: when a partner's stated SLA and our own observations disagree, which one is the window?  `[ ] UNRATIFIED`
+#### DQ-11.1 — A2 — Precedence: when a partner's stated SLA and our own observations disagree, which one is the window?  `[x] RATIFIED`
 
 **Does the observed window outrank the partner's contractually stated window, or does the stated window outrank observation?**
 
@@ -563,7 +567,7 @@
 
 **Recommendation**: A2-i — Observed outranks contractual — The direction is supported from inside the file that argues the other way: 12.02.02 DT-07 and DT-15 both say partner documentation is stale, thin and changes without announcement, which is precisely the argument against treating a stated SLA as authoritative. 12.02.03 D-05 also already specifies what to do with the divergent case rather than dropping it. Note explicitly what does NOT support this: 12.02.02's contested-entry rule ('the observed behaviour takes effect after human review, the documented value is retained alongside it') is only an analogy here, not an argument — it fires on '2 independent rejections on 2 distinct releases', a falsification EVENT, and a timing divergence produces no rejection, so the rule does not literally reach the window. Anyone citing it as if it decided this axis is overreaching.
 
-#### DQ-11.2 — A3 — Alarm statistic, sample floor and recency bound for the evidenced window  `[ ] UNRATIFIED`
+#### DQ-11.2 — A3 — Alarm statistic, sample floor and recency bound for the evidenced window  `[x] RATIFIED`
 
 **What statistic, over how many observations, within what recency bound, produces the window that fires the chase and escalation ladder?**
 
@@ -575,7 +579,7 @@
 
 **Recommendation**: A3-i — p95 over >=30 observations in 180 days, with rounding and the 1-business-day floor — A3-ii is not buildable as written: its statistic is the sample maximum at its own floor, it has no recency bound in a file whose DT-07 says staleness is the central hazard, and it specifies neither rounding nor a minimum. A3-i is the only formulation in the cluster that an implementer can code without inventing a rule. A3-iii is a legitimate owner call if the permanent-silence con of A3-i is judged worse than a weaker statistic — but note the harmony it buys with 12.03.02's 20 is cosmetic, because that 20 is a floor for a median. Whichever is chosen, one number must be written once in 12.02.02 PC-10 per the locked A1, or this defect recurs.
 
-#### DQ-11.3 — A4 — Artist-facing expectation copy: statistic and sample floor for the 'usually N days' clause  `[ ] UNRATIFIED`
+#### DQ-11.3 — A4 — Artist-facing expectation copy: statistic and sample floor for the 'usually N days' clause  `[x] RATIFIED`
 
 **What statistic, over how many observations, backs the artist-facing 'usually N days' clause — and is that number the same one that fires the alarm?**
 
@@ -587,7 +591,7 @@
 
 **Recommendation**: A4-i — p50 at N>=10, distinct from the alarm statistic — A4-iii is the one option that produces an actually wrong sentence: quoting a p95 or P90 after the word 'usually' misdescribes the partner. Between A4-i and A4-ii the statistic is identical (median) and only the floor differs, and 12.03.02's own text calls its 20 'a default, not a law' whose 'exact number is tunable' — so adopting 10 overrides nothing that file defends. This axis is cheap to settle and settling it removes one of the three competing sample floors outright.
 
-#### DQ-11.4 — A6 — The unconditional escalation ceiling: keep it or drop it  `[ ] UNRATIFIED`
+#### DQ-11.4 — A6 — The unconditional escalation ceiling: keep it or drop it  `[x] RATIFIED`
 
 **Does an absolute internal escalation fire at a fixed platform-wide elapsed threshold regardless of the partner's window, or does internal escalation fire only off the tiered window?**
 
@@ -599,7 +603,7 @@
 
 **Recommendation**: A6-i — Keep the unconditional ceiling, restated in partner business days per the locked A5 — The ceiling and the tier-3 seed answer different questions and only look like rivals: 'regardless' makes 12.02.02's row an always-on backstop, while 12.02.03's 5 partner-business-days applies only when 'Neither exists'. Keeping both preserves a real safety property at no artist-facing cost, and it is the part of 12.02.02 D-12 that survives A2 and A3 going the other way. Its numeric value is a guess by its own file's admission (12.02.02 Q-05), so it should be recorded as tunable alongside 12.02.03 Q-03's seeded 5 rather than ratified as final.
 
-#### DQ-11.5 — A7 — Resolution key: what the window is computed per  `[ ] UNRATIFIED`
+#### DQ-11.5 — A7 — Resolution key: what the window is computed per  `[x] RATIFIED`
 
 **Is the expected-response window held per (partner x message type), per (partner x ack stage), or per (partner x message type x ack stage)?**
 
@@ -630,7 +634,7 @@
 | L2 — Who adjudicates what a severity means | 13.02.02-mandatory-flaw-disclosure.md D-06: "**Materiality is computed from the `(item, severity)` pair by the structural / functional / concealed test — the seller never decides it** \| Resolves Q-02. Asking a seller \"is this serious?\" asks them to assess their own liability, which no honest answer survives. The checklist author decides once, per category, for everyone." Any option that asks the seller to pick an axis, a severity token, or a ceiling is foreclosed by this. Note its literal scope is materiality; it does not by itself settle axis O3 (repair quality), which is adjacent rather than identical. |
 | L3 — Whether the flaw set sets the grade or caps it | 13.02.01-condition-grading-scale.md D-08: "**`functional: fails` forces Non-Functioning; every other flaw sets a ceiling**", and DT-06 which rejects computing the grade outright on three independent grounds, including "The flaw set yields a **ceiling, not a value**: two units with identical disclosed flaws can honestly differ, and only the person holding the unit knows. Compute the ceiling, let the human choose beneath it, keep the liability where the knowledge is." No option may compute the grade from the flaw set. |
 
-#### DQ-12.1 — O1 — Carrier: what data element projects a per-item severity option onto a grade ceiling  `[ ] UNRATIFIED`
+#### DQ-12.1 — O1 — Carrier: what data element projects a per-item severity option onto a grade ceiling  `[x] RATIFIED`
 
 **What does an authored severity option carry so that 13.02.01's Grade Ceilings table can execute against it?**
 
@@ -642,7 +646,7 @@
 
 **Recommendation**: A — An authored (axis, severity-token) pair on each severity option; 13.02.01 keeps one ceiling table — It is the only carrier that leaves every locked decision standing. L1 (per-item severity language) is untouched because the pair is never seller-facing. L2 is satisfied because the checklist author decides it once per category, which is literally what D-06 already says that actor does with this same pair. L3 is untouched because the table still caps rather than sets. 13.02.01's Scale table and its versioned grade definitions survive unedited, which neither B nor C achieves — B rewrites six Requires cells and C deletes three. B's cost is a fragmented policy plus a second price-relevant version stream colliding with D-07; C's cost is deleting the cosmetic gradient that 13.02.01's grade definitions are written in and disarming the cross-check for the exact persona CX-01 names. A's real cost is honest and should be stated to the owner: the axis is **not** substantially derivable from the materiality test (only two of four axes overlap, and the test is a disjunctive boolean, not a classifier), so this is genuinely one new authored property per severity option, not a formalisation of something already computed. *(precedent: 13.02.02 D-06 — an in-file, exact-shape precedent: a shared classification authored once per category off the `(item, severity)` pair, with the seller kept out of it. The tie-break test itself follows 13.02.03 D-06, which reasons verbatim that voiding on any change "needs **no ordering and no materiality definition** — zero invention", and DEC-041, which struck an escalation clause because "no source defines how the platform would observe" its trigger. Note the limit of that test here: A does author something new, so it wins on *fewest* new mechanisms rather than none.)*
 
-#### DQ-12.2 — O2 — Ownership: which artifact authors the projection, and therefore who has standing to write it  `[ ] UNRATIFIED`
+#### DQ-12.2 — O2 — Ownership: which artifact authors the projection, and therefore who has standing to write it  `[x] RATIFIED`
 
 **Where is the axis/severity projection authored — as 13.02.02 checklist content, as a field of the shared per-category structured-attribute schema owned by catalog moderation, or as a per-category table in 13.02.01?**
 
@@ -654,7 +658,7 @@
 
 **Recommendation**: E — The shared per-category structured-attribute schema authors it; catalog moderation holds the standing — Option F is eliminated by DEC-028 — it is the one option that creates a second copy of a set another file owns. Between D and E, D is cheaper today and E is the only one that actually names a writer. E's blocking objection is that it pre-answers 13.02.03 Q-02, but 13.02.02's Behavior section already asserts the checklist uses that same mechanism and its Cross-Cut Notes count itself as "the third vote for yes", so E ratifies a direction three files have already taken rather than inventing one. The owner should choose D instead if they want 13.02.03 Q-02 preserved for `/create-prd-architecture` and are willing to leave the projection authored by an unassigned role until 13.02.02 Q-05 resolves. If E is chosen, two follow-ups are commissioned and must be recorded: a consequence class (or explicit carve-out) under 13.01.01 D-02, and a correction to gear-marketplace-cx.md CX-14 Q1, which cites "13.01.02 D-09/DT-10" for the moderation boundary when the ratified text is 13.01.01 D-09/DT-10 (13.01.02's own D-09 is about bulk contribution batches and its DT-10 rejects gamification). *(precedent: 13.01.01 D-09 — ratified, exact, and pointing this way: it locks that only moderation adds attributes, so if the projection is a schema field, moderation owns it. DEC-028 is cited here only in the direction it genuinely runs: it forbids a second copy (eliminating F) but does **not** by itself select an owner between D and E — author-where-owned presupposes ownership, which is the very thing this axis decides.)*
 
-#### DQ-12.3 — O3 — Grade semantics: may a professionally-repaired unit still be Excellent, and what determines "professional"?  `[ ] UNRATIFIED`
+#### DQ-12.3 — O3 — Grade semantics: may a professionally-repaired unit still be Excellent, and what determines "professional"?  `[x] RATIFIED`
 
 **Do 13.02.01's two structural-`repaired` ceiling rows (professional/stable -> Excellent, amateur/unstable -> Good) and the matching Scale-table allowance survive, and if so what evidence resolves which one applies?**
 
@@ -683,7 +687,7 @@
 |---|---|
 | Axis 0 — Is containment one record or two? | 16.01.01-place-record-type-taxonomy.md · D-06: "**Containment is room-level operating org, not a second record.** A studio subleasing a room inside a venue is one record whose subleased room carries a different operating org \| A record is a building (D-04) and there is one building. Two records would duplicate the address, load-in and **premises licence** — one document about one building — and disagree the moment any of them changes (DT-07)". Corroborated, not contradicted, by the file on the other side of this conflict: 16.01.02 DT-11 rejects two records because it "duplicates one building and re-splits the calendar D-01 exists to keep whole"; and by 16.05.07 N-4, which offers "containment migration (16.01.01 D-06 — fold the contained record's rooms into the premises record, transferring their operating org)". No option below reopens it. |
 
-#### DQ-13.1 — Axis 1 — Origin: how does the second org's authority over the room come into existence?  `[ ] UNRATIFIED`
+#### DQ-13.1 — Axis 1 — Origin: how does the second org's authority over the room come into existence?  `[x] RATIFIED`
 
 **Does a room operating org come into existence by the place claimant granting the room, by that org independently proving control of the room, or by both paths being available?**
 
@@ -695,7 +699,7 @@
 
 **Recommendation**: A3 — Both — The two source files are not arguing about the same thing. 16.01.02 DT-11's whole argument is about origin cost — that a second claim on one record "requires a partial-claim concept 16.05.02 does not have". 16.01.01 DT-08's whole argument is about dependency and leverage — that a grant makes the landlord the gatekeeper and "in a rent dispute the grant is a lever". A3 is the only option that answers both rather than picking a loser. It also matches the real distribution of cases: most subleases are cooperative and should cost nobody anything (A1 charges every one of them a permanent L7 document review, because 16.05.02 DT-10 establishes a studio can never have an anchor set), while the uncooperative landlord is precisely the case a fast path cannot serve (A2 gives that sublessee nothing at all). Drafting consequence, not a directional argument: whichever option is chosen, the room-authority rule should be authored in 16.01.02 and referenced from 16.01.01 and 16.05.02, because both other owners nominate 16.01.02 — 16.01.01 Q-08 ("a room carries an operating org that may differ from the place's claimant, which is a new permission axis on the room" ... "theirs to absorb, not mine to write") and 16.05.02 DT-11 ("whether the place record supports per-room claims by different orgs is 16.01.02's to answer (Q-03)", Q-03 deferred to "16.01.02 · /create-prd-architecture"). *(precedent: 16.05.02 D-10 — the cooperative-transfer-plus-challenge-path shape, applied to the same problem (an authority held by a party who may or may not cooperate) in the file that owns claims: "The cooperative path is one action ... The challenge path exists for the uncooperative or absent incumbent." This precedent points at A3 directly. The P-04 author-where-owned rule is deliberately NOT used here as a directional precedent — see challengeResponses.)*
 
-#### DQ-13.2 — Axis 2 — Extinguishment: can the place claimant end a granted room operator's authority unilaterally?  `[ ] UNRATIFIED`
+#### DQ-13.2 — Axis 2 — Extinguishment: can the place claimant end a granted room operator's authority unilaterally?  `[x] RATIFIED`
 
 **Where a room operating org's authority came from the place claimant's grant, may the claimant end it unilaterally, only through an adjudicated dispute, or only until the room operator has independently proved control?**
 
@@ -707,7 +711,7 @@
 
 **Recommendation**: B2 — Adjudicated — 16.01.01 DT-08's rejection of the grant is, read closely, entirely a rejection of unilateral revocation: the words are "the grant is a lever" and "revoking it takes a trading studio offline". B2 removes that and leaves the grant, which is why the two source files stop conflicting once this axis is separated from Axis 1. B2 also costs the room operator nothing, which is what distinguishes it from B3 — 16.05.02 DT-10/DT-11 establish that the sublessee studio is structurally unable to complete any strong rung, so any option that conditions protection on proof gives that population nothing. Be explicit with the implementer that B2 is new machinery: 16.05.02 D-03 and D-10 are defined over claims and anchor snapshots, and a revocation dispute over a granted authority has nothing to re-prove against, so the counter-window's evidence test must be specified rather than inherited. Note also that if Axis 1 = A1, this axis does not arise at all: there is no grant to revoke, and authority ends only the way a claim ends under 16.05.02 D-11 (24 overturns, a challenger wins, or the proof is shown forged). *(precedent: 16.05.02 D-03 — "A contested claim freezes the **claim**, never the record \| Freezing takes a trading business offline over the platform's inability to adjudicate (DT-03)" — together with D-10's 14-day counter-window. Both point the same way: a disagreement about who runs something must not take that something off the market. They are precedent for the shape, not for the evidence test, which does not transfer.)*
 
-#### DQ-13.3 — Axis 3 — Proof: what does a room operator use to independently establish control, given 16.05.02's anchor set is empty for this population by construction?  `[ ] UNRATIFIED`
+#### DQ-13.3 — Axis 3 — Proof: what does a room operator use to independently establish control, given 16.05.02's anchor set is empty for this population by construction?  `[x] RATIFIED`
 
 **If a room operator can establish itself without the place claimant (Axis 1 = A1 or A3), which rung of 16.05.02's ladder does a room claim run on?**
 
@@ -737,7 +741,7 @@
 | 5. Which PRO set 16.02.06 treats as normative | ideation-index.md D-32 — '**Primary market = UNITED STATES to start** (owner revision from D-30's global)' — combined with 16.02.06-pro-blanket-licence-setlist-reporting.md, Overview line 10: 'Whether the venue holds a performing-rights blanket licence (PRS/PPL in the UK; ASCAP/BMI/SESAC in the US)'. The feature already names both sets; once D-32 fixes the launch market to the US, ASCAP/BMI/SESAC is the normative set by construction. There is no product choice remaining, so folding this into the owner question inflates the decision. 16.02.06's Unknown state is unaffected and remains 'the honest default for most of the registry'. |
 | 6. Whether the licensed-capacity ceiling is a declared figure or a platform-derived one | Three ratified decisions foreclose a platform-derived ceiling. (a) 16.05.01-place-data-seeding-ingestion.md field table: 'Licensed capacity, curfew, licensable activities \| — \| — \| — \| **never** \| Statutory class. Only a register may write these (D-05)', reinforced by D-13: 'A `seeded`-class source may never write a statutory-class field — even when it has the data'. A platform-computed occupant load would be a non-register write into a statutory field. (b) 16.01.06 D-01: 'Licences/insurance are declarations with expiry, never platform-verified certificates \| Certification is liability the product cannot carry; the honest label is the feature (DT-03)'. (c) 16.02.01 D-02: 'Licensed capacity is a hard ceiling the Operator cannot raise \| It is imposed, not chosen'. No source anywhere proposes the platform computing a figure from floor area and egress; 16.02.01 Q-01 only observes that the US regime computes occupancy that way, which is a statement about the external authority, not a proposal for the platform. |
 
-#### DQ-14.1 — 1. Parameterization shape — does a jurisdiction/regime axis exist, and how many profiles are authored at launch?  `[ ] UNRATIFIED`
+#### DQ-14.1 — 1. Parameterization shape — does a jurisdiction/regime axis exist, and how many profiles are authored at launch?  `[x] RATIFIED`
 
 **Does the place record carry a jurisdiction-keyed statutory-regime profile, and if so is more than one profile authored for launch?**
 
@@ -750,7 +754,7 @@
 
 **Recommendation**: B-minus — D-32 does not merely say US-first; it ends '`/create-prd-security` keeps the data model jurisdiction-parameterized so later international expansion is additive, not a rewrite', which rules out A and C. Between B and B-minus the question is whether a fully authored UK profile earns its maintenance, and the sources say most of what it would protect is already written as capability-absence rather than as UK text — 16.05.02's no-register edge case, 16.05.07 Q-05, 16.02.03 D-01 and 16.02.01's `Claimed` state all already author the degraded branch. So the axis is what must be kept; the second vocabulary is not. Live/Events is Phase 2+ per meta/constraints.md, so there is no launch urgency arguing for the cheaper-but-lossy A either. *(precedent: D-46 (CQ-09): 'CQ-09 v1 term and moral-right status is bounded to `US`, `FR`, `DE`, and `GB`. … missing/insufficient evidence and every other territory are explicit `unknown` / not determined.' That is the same shape — parameterize by jurisdiction, author only the determinate ones, make the rest explicitly unknown — and it points the same direction as B-minus. (The author-where-owned rule D-50/D-51 is NOT cited: it governs which spec file authors a requirement across domains, and a regime profile is not a spec-owning file.))*
 
-#### DQ-14.2 — 2. Contents of the US launch profile's statutory slots  `[ ] UNRATIFIED`
+#### DQ-14.2 — 2. Contents of the US launch profile's statutory slots  `[x] RATIFIED`
 
 **Does this decision name the US instruments that fill 16.01.06's statutory slots, or lock the slots and hand the instrument names to `/create-prd-security`?**
 
@@ -762,7 +766,7 @@
 
 **Recommendation**: Lock the slots, defer the instrument names — The slot set, the issuer requirement, the expiry semantics and the declared-not-verified rule are product decisions and are all decidable now. The instrument names are per-state legal facts that no ideation source contains, and asserting them here would be an unsourced claim wearing a ratified decision's clothes. *(precedent: D-32 itself performs this split: it locks the market and then hands the parameterization work forward — '`/create-prd-security` keeps the data model jurisdiction-parameterized so later international expansion is additive, not a rewrite.' Same handoff, same recipient stage.)*
 
-#### DQ-14.3 — 3. Where external-register availability is modelled (this is the axis that actually carries the downstream weight)  `[ ] UNRATIFIED`
+#### DQ-14.3 — 3. Where external-register availability is modelled (this is the axis that actually carries the downstream weight)  `[x] RATIFIED`
 
 **Is the availability of an external statutory register modelled as a per-regime-profile capability, as a per-authority fact resolved per record, or not modelled at all?**
 
@@ -774,7 +778,7 @@
 
 **Recommendation**: Per-authority capability, resolved per record — It is the only option that neither asserts an unverified fact about US registers nor pretends registers are uniform within a jurisdiction, and it is the granularity 16.05.01 already uses for the same sources. It also keeps 16.05.01 D-05/D-13's writer rule coherent: statutory class has exactly one permitted writer ('Only a register may write these'; 'a `seeded`-class source may never write a statutory-class field'), so where no register resolves, the statutory class has NO writer and those fields can exist only as owner declarations carrying the declared-not-verified label. That consequence must be written into the profile definition — it is the real structural effect of a US-first launch, and it is what 16.02.01's `Claimed` state already describes ('no licence record to check against … No contradiction detection is possible in this state'). *(precedent: 16.02.06's Unknown state — 'Status unknown (the default for every seeded record) \| "Unknown" must be visible as unknown, not absent' — and 16.05.02's stated-rather-than-papered-over treatment of the no-register territory. Unresolved availability renders as unknown, never as available.)*
 
-#### DQ-14.4 — 4. The temporary-permission analogue in a profile with no per-venue statutory licence (16.02.03 D-02)  `[ ] UNRATIFIED`
+#### DQ-14.4 — 4. The temporary-permission analogue in a profile with no per-venue statutory licence (16.02.03 D-02)  `[x] RATIFIED`
 
 **Where a profile has no per-venue statutory licence condition, does the statutory temporary-permission exception exist at all? (Note: the provenance fallback is NOT open — 16.02.03 D-01 already decides it.)**
 
@@ -804,7 +808,7 @@
 | A4 — Who sets the price of a backline hire-extra | 16-venues-studios-spaces/16.06-space-booking-reservations/16.06.07-rate-cards-inclusions-extras.md — D-03: "Rates are **Operator-only** — the domain's one absolute write rule \| The community corrects facts; a community-suggested rate fabricates a term (DT-03)", with the extras taxonomy row "Gear / backline hire \| Rhodes, valve amp, extra mic pair \| per-item per-session \| optional, or compound-implied (16.03.02 inventory status)". Reinforced by 16.05.03 D-03: "The community corrects **facts**; only the Operator sets **terms**", and by 16.03.02 D-05, which assigns the commercial facet to 16.06.07 because "rates are Operator-only — that domain's one absolute write rule". |
 | A5 — Who owns per-item functional condition of org-owned gear | 15-gear-registry-ownership/15.07-studio-backline-asset-register/15.07-studio-backline-asset-register-index.md — D-04: "This sub-domain owns 'the asset exists and works'; domains 16/17 own 'it's free on Tuesday' \| Availability-as-condition (is it functional?) and availability-as-booking (is it reserved?) are different questions with different owners." Implemented as 15.07.02 D-01 ("Condition is graded with a note, not a boolean") and D-02 ("Fault reporting must be near-zero effort for non-owners"), and applied in 16.03.02 D-05, which lists "Functional condition \| functional · degraded (+note) · faulty · out for service \| Owner: 15.07.02". |
 
-#### DQ-15.1 — A1 — Item store: does the rehearsal backline item list read through from 15.07, or stay typed on the 16.04 spec sheet?  `[ ] UNRATIFIED`
+#### DQ-15.1 — A1 — Item store: does the rehearsal backline item list read through from 15.07, or stay typed on the 16.04 spec sheet?  `[x] RATIFIED`
 
 **Does 16.04 confirm 15.07 D-01 for rehearsal rooms (the item list is a projection of the register), keep a 16.04-local typed list as a declared rehearsal exemption, or defer until the open parent question — whether 15.07 exists at all — is answered?**
 
@@ -816,7 +820,7 @@
 
 **Recommendation**: A1-a — Read-through, recorded explicitly as conditional on domain-15 Q-07 / 15.07 Q-01 remaining unanswered — Every mechanism A1-a needs already exists and is exercised twice; A1-b needs a condition store, a fault-reporting surface and a permission model that no source defines, and contradicts two ratified 15.07 decisions. A1-c is the cleanest sequencing but pays for it by leaving 16.04 internally inconsistent through a stage it could clear. Take A1-a, and record on the decision that (i) it is a per-feature confirmation in the sibling convention, not a closure of domain-15 Q-07 or 15.07 Q-01, and (ii) the org-entity precondition (16.03.02 Q-02 / DT-12) is unresolved and blocks a sole-trader rehearsal Operator from publishing at all. *(precedent: The sibling-confirmation convention set by 16.02.02 DT-14 — it resolves backline for the venue and says of the studio 'the same shape answers domain Q-05 for the studio mic locker, though 16.03 must confirm that for itself'. 16.03.02 D-04 duly confirmed it ('RESOLVED — gear taxonomy ownership is domain 15's ... One taxonomy, one register, one publication path'). 16.04 is the third room type and has never performed that confirmation. Also P-04 author-where-owned / reference-where-not, pointing in this direction for the ITEM list specifically: the gear object is domain 15's, so 16 references it. (P-04 points the opposite way on axis A3 — see there.))*
 
-#### DQ-15.2 — A2 — Granularity: is rehearsal commodity backline identity-tracked or quantity-tracked in the register? (= 15.07 Q-03, open, Owner=User)  `[ ] UNRATIFIED`
+#### DQ-15.2 — A2 — Granularity: is rehearsal commodity backline identity-tracked or quantity-tracked in the register? (= 15.07 Q-03, open, Owner=User)  `[x] RATIFIED`
 
 **If A1 resolves to read-through, does a rehearsal space's backline need per-item serial-keyed identity, or is '4 amps, 2 kits' sufficient?**
 
@@ -828,7 +832,7 @@
 
 **Recommendation**: A2-a — Quantity-tracked mode, with identity-tracking retained per item — It is the only option consistent with what two other specs already publish (15.07.03's counts edge case and 16.03.02's commodity row both cite 15.07.01 DT-03 as settled), and it is the option DT-03 itself proposes for this exact room type. It does commission a model addition inside domain 15 — 15.07.01 DT-03 says so in terms — and that should be on the record when the decision is taken, together with the two things it degrades: condition-on-a-count under 15.07.02 D-01, and the per-item booking dependency under 16.03.02 D-08.
 
-#### DQ-15.3 — A3 — Provision fact: does 16.04 keep a typed per-category backline provision field, so 'bring your own' and 'there is none' are assertable, or are they inferred from the register and the rate card?  `[ ] UNRATIFIED`
+#### DQ-15.3 — A3 — Provision fact: does 16.04 keep a typed per-category backline provision field, so 'bring your own' and 'there is none' are assertable, or are they inferred from the register and the rate card?  `[x] RATIFIED`
 
 **Under a read-through, where does the commercial/provision posture of rehearsal backline live — a typed 16.04 field on the 16.02.02 field-triple model, an inference from register emptiness plus 16.06.07 rate lines, or an extension of 16.06.07's inclusion element?**
 
@@ -859,7 +863,7 @@
 | 2. Does a missing or incomplete replica block the scanner? | 19.04.02-offline-manifest-sync-reconciliation.md D-10: 'A device with no valid replica is blocked from scanning — there is no permissive "admit everyone" fallback.' Agreed verbatim by 19.04.01 States row 'Not ready': 'Replica not downloaded (no replica at all) \| Blocking state before doors ... Only a **missing** replica blocks; staleness never does (D-06)'. 19.04.02's 'Incomplete replica (blocking)' row extends the same rule to a truncated download. |
 | 7. Does the 19.05.01 offline-alarm freshness threshold inherit whatever number is chosen here? | 19.05.01-live-count-manifest-state.md Not-product line: 'real-time count propagation (websocket / polling / edge caching), snapshot-isolation mechanism, and the exact staleness threshold value are architecture → /create-prd-architecture.' |
 
-#### DQ-16.1 — 3. Can a present-but-stale replica block a device from becoming ready to scan? (the actual contradiction)  `[ ] UNRATIFIED`
+#### DQ-16.1 — 3. Can a present-but-stale replica block a device from becoming ready to scan? (the actual contradiction)  `[x] RATIFIED`
 
 **Does an old-but-complete replica ever stop the scanner opening — never (19.04.01), past a hard threshold (19.04.02), or past a hard threshold that the Operator can override on the record?**
 
@@ -871,7 +875,7 @@
 
 **Recommendation**: A — Staleness never blocks. — A is the only position formed with the opposing numbers in view: 19.04.01 DT-04 names 'the staleness threshold in 19.04.02' as its Source and rejects it, so B reverses a Deep Think outcome using an argument the tree does not contain. Its core reasoning survives re-reading — because 19.04.01 D-02 admit-and-reconcile already absorbs the refunded-after-sync case, a stale replica's only residual error is falsely refusing a ticket issued after sync, and a hard block converts that rare false-refusal into a total one at exactly the venues index D-02 says the sub-domain exists for. B's weakness is narrower than the earlier draft of this entry claimed, and the correction matters: 19.04.02 does define two exits from a blocking readiness screen (sync in signal, or peer manifest transfer), so the block is not literally exit-less. But both exits are conditional — one on signal the premise denies, one on a fresher peer that a fleet provisioned together before doors will usually not have — and what genuinely has no definition anywhere is an Operator override of readiness. C is the only forcing function with an unconditional exit and is the right fallback if you want the manifest lag bounded, but it commissions a readiness-override authority no source grants and still does not deliver the bound.
 
-#### DQ-16.2 — 4. What is the amber 'stale' warning default — 30 or 60 minutes?  `[ ] UNRATIFIED`
+#### DQ-16.2 — 4. What is the amber 'stale' warning default — 30 or 60 minutes?  `[x] RATIFIED`
 
 **Which single number is the shippable amber default: 30 minutes (19.04.02 D-06) or 60 minutes (19.04.01 D-06, echoed by domain CX-14)?**
 
@@ -883,7 +887,7 @@
 
 **Recommendation**: 60 minutes. — It is the only number that already appears at both the seam (19.04.01's cross-cut note) and at domain level (CX-14 Q1), so choosing it reconciles three files by editing one row, while choosing 30 requires correcting the domain CX as well. Either way, 19.04.02 Q-03 survives as numeric ratification at /create-prd-compile — this axis only fixes which default it ratifies. If axis 3 = B or C, the hard number (120 min) is also in scope and no source offers an alternative to it.
 
-#### DQ-16.3 — 5. Is the threshold overridable per show, per venue, or both?  `[ ] UNRATIFIED`
+#### DQ-16.3 — 5. Is the threshold overridable per show, per venue, or both?  `[x] RATIFIED`
 
 **At what scope is the staleness threshold configurable — per show (19.04.01: 'configurable per show'), per venue (19.04.02: 'per-venue overridable defaults'), or a venue default that a show may override?**
 
@@ -895,7 +899,7 @@
 
 **Recommendation**: Per show — conditional on axis 3 = A. — This axis's answer depends on axis 3 and should be taken after it, not with it. If staleness only ever warns (A), the thing being scoped is a warning whose stake DT-04 explicitly relocates to newly-issued tickets — comp, transfer and sales batches, all show-level — so per-show is the matching scope. If staleness blocks (B or C), the blocking threshold prices connectivity and belongs on the venue, and per-venue should be taken instead. 'Venue default, show override' is the only option that serves both stakes, but it is the one option here that writes a rule no source contains.
 
-#### DQ-16.4 — 6. Which file authors the reconciled rule, and which references it?  `[ ] UNRATIFIED`
+#### DQ-16.4 — 6. Which file authors the reconciled rule, and which references it?  `[x] RATIFIED`
 
 **Does 19.04.02 author the staleness rule and thresholds with 19.04.01 reducing D-06 to a reference plus the scan-side consequence, or the reverse?**
 
@@ -923,7 +927,7 @@
 |---|---|
 | Axis 0 — Does the canonical count carry a single all-bodies-admitted total at all (vs. leaving walk-up admissions out of every room-level counter)? | ticketing-box-office-cx.md CX-04 (domain cross-cut, [DEEP], last updated 2026-07-18 — later than both 19.05.01 and 19.05.04 at 2026-07-17), verified verbatim: "The reconciled, deduplicated scanned count is simultaneously the fire officer's capacity number and settlement's admitted number." Reinforced by 17.09.02-box-office-count-reconciliation.md D-08 ("Three counts, not two: `sold` -> money; `scanned_paid` -> draw; `scanned_total` -> merch per-head and occupancy") whose six-number table defines row 5 as "**Scanned — paid** \| Paying customers who came through the door" and row 6 as "**Scanned — total** \| Every body admitted, paid or comped", and states "Walk-ups are not a seventh number — they are **sold units acquired at the window on the night** (19.05.04)". A walk-up buyer is by definition a paying customer who came through the door and a body admitted, so the canonical count must contain a number they are inside. Also constrained by 19.05.01 D-01: "The count is one canonical state with distinct counters, not a per-consumer computation." CONSEQUENCE: the original entry's Option C (walk-up admission is a ticket-record property only; no aggregate room counter moves) is foreclosed — not by arithmetic, but because it makes 17.09.02 D-08 row 6 and CX-04 false by construction. NOTE — the original entry's stated reason for foreclosing C was wrong and is withdrawn: it claimed INV-02 (`scanned_total <= sold + comps`) and INV-08 (`occupancy_count >= scanned_total`) would 'fail by construction on every walk-up show'. Both are inequalities that an under-count satisfies more easily, not less; they would pass vacuously while measuring nothing. The correct objection is definitional, not arithmetic. |
 
-#### DQ-17.1 — Axis 1 — Storage shape: is the window admission written into the existing `scanned` counter, or into its own stored counter with the canonical admissions total derived from both?  `[ ] UNRATIFIED`
+#### DQ-17.1 — Axis 1 — Storage shape: is the window admission written into the existing `scanned` counter, or into its own stored counter with the canonical admissions total derived from both?  `[x] RATIFIED`
 
 **Does a walk-up admit-at-birth increment the existing `scanned` counter (one stored counter, two provenance sources), or its own stored window-admission counter with the canonical all-bodies total expressed as a derived counter in 19.05.01's table?**
 
@@ -934,7 +938,7 @@
 
 **Recommendation**: A2 — split with a derived canonical total — Both options land the walk-up inside the admissions family, which Axis 0 already requires, so the choice is purely about which body of ratified text gets rewritten. A1 preserves one sentence (CX-04) and rewrites 19.05.04's D-01, D-11, DT-03, the at-window-refund row, the skim edge case and two cross-cut notes; A2 preserves all of those verbatim and rewrites one cross-cut sentence plus a set of downstream name bindings that Axis 2 has to touch under either option anyway. A2 also avoids the only genuinely dangerous residual in A1: two opposite refund rules living as scoped conditionals on a single counter, which is precisely the failure mode 19.03.02 DT-02 rejects a type-flagged counter for ("a single counter with a flag makes every consumer filter correctly every time — and the one place someone forgets is the place the artist is underpaid"). Under A2 the composition is arithmetic, not a rule anyone applies. *(precedent: 19.05.01's own counter table already contains a derived canonical counter — "\| **Remaining** \| Sellable right now (= capacity - killed - held - paid - comp) \|" — with a named consumer, and D-08 ("Remaining decomposes on demand into free vs recoverable-from-holds for the Operator") establishes that a derived counter in this table is expected to decompose into its parts on demand. That is the exact shape A2 needs, in the exact file. This precedent points toward A2 and away from the original entry's claim that a derived counter is machinery 'no source defines'.)*
 
-#### DQ-17.2 — Axis 2 — Vocabulary: what is the canonical all-bodies-admitted number called, and does domain 17's `scanned_paid`/`scanned_total` vocabulary rebind to it?  `[ ] UNRATIFIED`
+#### DQ-17.2 — Axis 2 — Vocabulary: what is the canonical all-bodies-admitted number called, and does domain 17's `scanned_paid`/`scanned_total` vocabulary rebind to it?  `[x] RATIFIED`
 
 **Does the canonical admissions total keep the name `scanned` (with 17.09.02's `scanned_paid`/`scanned_total` and 19.07.03/19.07.04's comparisons unchanged), or is it renamed to `admissions_total`/`admissions_paid` with `scanned` demoted to the gate-observed source or sub-counter?**
 
@@ -945,7 +949,7 @@
 
 **Recommendation**: Rename the canonical total to `admissions_total` / `admissions_paid` — Under the recommended Axis 1 = A2 this is forced, not optional: two distinct quantities exist (gate-observed admissions and all admissions) and one name cannot carry both. It also fixes the one place the current text is genuinely load-bearing on the ambiguity — 19.07.03 DT-01 says WeJammin's *independently observed* count is the door scan, which after any merge is no longer the same quantity as a counter that includes WeJammin's own window sales; keeping one name for both would let a reconciliation compare a number against a component of itself. If the owner instead picks Axis 1 = A1, this axis flips to a genuine judgement call with no forcing argument, and keeping `scanned` is the cheaper answer.
 
-#### DQ-17.3 — Axis 3 — Refund semantics: does a walk-up refund reduce the canonical admissions total, given that an already-scanned advance ticket's refund does not?  `[ ] UNRATIFIED`
+#### DQ-17.3 — Axis 3 — Refund semantics: does a walk-up refund reduce the canonical admissions total, given that an already-scanned advance ticket's refund does not?  `[x] RATIFIED`
 
 **Is the canonical admissions total 'bodies that entered the room, ever' (so no refund reduces it and 19.05.04 D-11's un-admission is dropped), or 'bodies the venue is accountable for as present' (so an at-window un-admission reduces it while a post-scan online refund does not)?**
 
@@ -974,7 +978,7 @@
 | Ownership of the split percentages and the payout-plan source | 20-fanbase-direct-to-fan/20.04-direct-to-fan-storefront/20.04.04-d2f-revenue-split-payout.md D-01: 'Splits are referenced from domain 09 read-only, never copied or store-authored \| A copied split drifts. A drifted split is the reconstruction failure the platform exists to prevent — committing it in our own storefront would be self-refuting. Store-side override rejected as not store-authored.' Reinforced by 20.04.01-storefront-product-catalog.md D-02: 'The split is referenced from domain 09, never copied; the plan **version at sale time** governs each sale.' |
 | Disclosure timing — when the payee must be told which basis will be applied | Locked by the *agreement* of the two otherwise-conflicting decisions, so it survives whichever one is overturned. 20.04.03 D-07: '...and shown to every payee before they agree the split \| ... A basis discovered on a statement is a dispute (24); a basis shown before agreement is a contract.' 20.04.04 D-07 context: 'Deterministic and pre-agreed; never discovered on a statement.' 20.04.04 Q-01: 'Must be settled and shown **before** any collaborator agrees a split.' 20.04-direct-to-fan-storefront-cx.md CX-03 role scoping, Producer: 'Whichever way this resolves, they must be told *before* they agree to the split, not after the first payout.' Enforced at listing by 20.04.03 D-10: 'A listing cannot go live without: resolved basis, encoded formats, and (for multi-owner works) sale authority.' |
 
-#### DQ-19.1 — AXIS 1 (open) — Granularity: how many distinct basis values can exist on the platform, and which record holds them  `[ ] UNRATIFIED`
+#### DQ-19.1 — AXIS 1 (open) — Granularity: how many distinct basis values can exist on the platform, and which record holds them  `[x] RATIFIED`
 
 **Is the ask/paid/paid-net basis a single platform-wide constant, one value per split agreement in domain 09, or one value per storefront listing?**
 
@@ -986,7 +990,7 @@
 
 **Recommendation**: D — Platform-wide constant — B is disqualified rather than merely weaker: the locked disclosure axis requires the basis be shown before the split is agreed, and 20.04.04's own happy path agrees the split a year before the listing exists, so a listing-time field cannot satisfy it — and the per-listing consent flow that would rescue it exists in no file (CX-02 synthesis Q4 provides notification, not consent). That leaves D versus A/C, and the deciding fact is that domain 09 has no payout-basis field and its capture screen has an absolute budget against acquiring one: 09.02.01 states 'it must be faster than not doing it', fixes '≤ 8 interactions and ≤ 90 s' for a 4-contributor sheet, and rules that anything that does not fit 'is not capture, it is paperwork.' A negotiated ask/paid/net term is a poor candidate for that budget, and adding it means real authoring edits to 09.02.01, 09.02.04 and the 09.02 index — cross-domain scope the owner should agree to deliberately, not inherit from a domain 20 cross-cut note. D avoids all of it, satisfies the disclosure lock by construction, and dissolves the no-rights-record case (20.04.01 D-06 / 20.04.04 DT-02) that A/C must specify separately. It also matches how both Q-01s are phrased — one owner ruling on one default, 'confirm or reset', settled 'before any collaborator agrees a split'. Choose A/C instead if you want per-record variation or a per-payee consent artefact naming the basis; that is a real benefit, and it is what you are buying with the domain 09 edits. Be clear about the cost either way: D overturns the location clause of BOTH D-07s, A/C overturns 20.04.03 D-07's, B overturns 20.04.04 D-07's. No option leaves both intact — they contradict each other, so one of them is going down whatever you choose. *(precedent: The platform cut (20.04 index Q-01, 'Does the platform take a cut of D2F sales, and how much?') is already a single platform-wide money constant the owner sets once and the platform discloses rather than negotiates — 20.04.03 D-02, 'Show the line from fan to artist, including our cut'. The basis sits inside that same arithmetic (paid-net = paid − platform cut − processor fees) and on the same disclosure surfaces, so treating it the same way is consistent rather than novel. P-04 (author where owned, reference where not) is also load-bearing here, but it points AGAINST the entry's earlier use of it: 20.04.04 saying 'the **basis** field (ask/paid/paid-net) is authored here as a domain 09 property' is a domain 20 file originating another domain's spec, which is the violation P-04 names. P-04 does not favour placing the field in domain 09 — it says that if you place it there, domain 09 must author it and domain 20 must only reference it.)*
 
-#### DQ-19.2 — AXIS 2 (open) — Lock trigger: when the basis stops being changeable  `[ ] UNRATIFIED`
+#### DQ-19.2 — AXIS 2 (open) — Lock trigger: when the basis stops being changeable  `[x] RATIFIED`
 
 **Once a basis applies to a work, what event freezes it — the first settled sale, nothing special (it simply rides the plan version bound at settlement, like every other split field), the life of the listing, or a platform terms-change policy?**
 
@@ -999,7 +1003,7 @@
 
 **Recommendation**: L4 — Platform terms-change policy — Conditional on Axis 1: L4 is the coherent partner of D, L1 of A, L2 of C, L3 of B — so answer Axis 1 first and this axis mostly follows. Recommending L4 because it is the only option that keeps the locked disclosure axis intact under change while adding just one versioned record, and because it avoids the structural complaint that sinks L1: a lock trigger private to one field, on an object where 20.04.01 D-02 already binds every other field at sale time. If you pick A on Axis 1, take L1 rather than L2 — L2's gain is uniformity, and it pays for that by retiring a ratified decision and by making the fan-facing basis line time-varying under a live listing, which 20.04.03 D-02's 'show the line' principle argues against. *(precedent: 20.04.01 D-02 — 'the plan **version at sale time** governs each sale' — and 20.04.03's edge case 'The payout plan **version** is bound at **payment settlement**, not at add-to-cart, and the entitlement records that version.' L4 applies the same versioned-governance shape to a platform term instead of a plan. No precedent supports a lock trigger private to a single field, which is what L1 and L3 each are.)*
 
-#### DQ-19.3 — AXIS 3 (open) — The value itself: ask, paid, or paid-net-of-fees  `[ ] UNRATIFIED`
+#### DQ-19.3 — AXIS 3 (open) — The value itself: ask, paid, or paid-net-of-fees  `[x] RATIFIED`
 
 **Which amount do the split percentages multiply — the asking price, the amount the fan actually paid, or the amount paid net of the platform cut and processor fees?**
 
@@ -1028,7 +1032,7 @@
 |---|---|
 | Axis 2 — What `verified-at-timestamp` means: the mutable-source artefact class, or the post-rot decay state | `.memory/wiki/specs/ideation/21-promotion-marketing/21.07-coverage-clipping-log.md` — D-05: "Coverage carries **three** verification strengths, not two — verified (fixed article), verified-at-timestamp (mutable playlist add), claimed (typed / self-attested)"; DT-03: "**verified-at-timestamp** (playlist add, live-but-mutable, badge names the confirmation date and evidence)"; and the States table, which carries BOTH "Verified-at-timestamp \| Live but mutable source confirmed (playlist add)" AND a separate "Decayed \| Source link rotted \| Verification lapses; the artist is told before the EPK quietly weakens". Corroborated by the contradicting file's own ownership concession, promotion-marketing-cx.md CX-05 synthesis Q1: "the quote's verification strength is owned by 21.07 ... not an independent copy of the verdict." |
 
-#### DQ-20.1 — Axis 1 — What input determines the verification-strength badge: artefact class, or pitch provenance  `[ ] UNRATIFIED`
+#### DQ-20.1 — Axis 1 — What input determines the verification-strength badge: artefact class, or pitch provenance  `[x] RATIFIED`
 
 **Is a coverage item's verification strength determined by what the source artefact is and whether it can be retrieved now, or by whether WeJammin sent the pitch that produced it?**
 
@@ -1039,7 +1043,7 @@
 
 **Recommendation**: A — Artefact class determines strength; pitch provenance never affects it — 21.07 is the owner of the verification taxonomy, and the contradicting file says so itself: CX-05 synthesis Q1 states the strength "is owned by 21.07 ... not an independent copy of the verdict", which makes the provenance gloss in the same section's Relationship paragraph a non-owning duplicate rather than a competing ruling. On the text, 21.07's Verified trigger contains no pitch condition, D-03 declares parentless coverage fully valid, and D-04 commits verification to a link act. Option B would require the feature's own stated best case to be incapable of its best badge, would flatten a fixed article and a mutable playlist add onto one badge against DT-03, and would reopen a decision already recorded. Two cautions the owner should weigh: the CX is the later, deeper document, so this is an ownership cut and not a recency cut; and A is not a pure repair — it requires a new 21.07 D-06 asserting that strength and provenance are orthogonal, because 21.07 currently lists both sets of states in one undifferentiated table and nowhere says they are independent. That D-06 is load-bearing: without it a downstream reader can re-derive the provenance reading from the same flat table. *(precedent: P-04, author-where-owned / reference-where-not (ratified 2026-07-21, from 07.08.01 D-06, generalising 07.07.03 D-04: "two copies of third-party requirements would drift, and one would be wrong"). It points at 21.07 here because 21.07 is the feature that produces the verification verdict and CX-05 synthesis Q1 explicitly concedes that ownership; the parent CX should reference the taxonomy, not carry a second differing copy. Deliberately NOT cited: the stale-parent-CX pattern from Domain 07. That pattern covers a parent holding an unanswered `[PENDING]` marker against a `[DEEP]` child; here the parent is itself `[DEEP]`, is the later document, and makes an affirmative contradicting claim against a `[PARTIAL]` child. The shape does not match and it cuts the other way on recency and depth.)*
 
-#### DQ-20.2 — Axis 3 — Whether the pitched-vs-organic fact is rendered to the EPK reader alongside the strength badge  `[ ] UNRATIFIED`
+#### DQ-20.2 — Axis 3 — Whether the pitched-vs-organic fact is rendered to the EPK reader alongside the strength badge  `[x] RATIFIED`
 
 **Does the Attributed / Organic provenance fact stay an internal log state, or does it also render publicly on the EPK as a second qualifier next to the strength badge?**
 

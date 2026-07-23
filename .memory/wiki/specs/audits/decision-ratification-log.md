@@ -1,8 +1,9 @@
 # Blocking Decision Queue — Ratification Log
 
 > Owner decisions on the 57 open sub-decisions from `blocking-decision-queue.md`.
+> Each records the choice, the reasoning, what it preserves, and what it commits downstream.
 
-**Ratified: 35 / 57**
+**Ratified: 57 / 57 — COMPLETE**
 
 | Entry | Domain | Axes |
 |---|---|---|
@@ -15,8 +16,32 @@
 | DQ-08 | 07 Music Projects | 4 — DQ-08.2, DQ-08.3, DQ-08.4, DQ-08.5 |
 | DQ-09 | 11 Licensing | 3 — DQ-09.A, DQ-09.B, DQ-09.C |
 | DQ-10 | 11 Licensing | 3 — DQ-10.A1, DQ-10.A2, DQ-10.A3 |
-| DQ-11 | 12 Release & Distribution | 5 — DQ-11.A2, DQ-11.A3, DQ-11.A4, DQ-11.A6, DQ-11.A7 |
-| DQ-12 | 13 Gear Marketplace | 3 — DQ-12.O1, DQ-12.O2, DQ-12.O3 |
+| DQ-11 | 12 Release | 5 — DQ-11.A2, DQ-11.A3, DQ-11.A4, DQ-11.A6, DQ-11.A7 |
+| DQ-12 | 13 Gear | 3 — DQ-12.O1, DQ-12.O2, DQ-12.O3 |
+| DQ-13 | 16 Venues | 3 — DQ-13.1, DQ-13.2, DQ-13.3 |
+| DQ-14 | 16 Venues | 4 — DQ-14.1, DQ-14.2, DQ-14.3, DQ-14.4 |
+| DQ-15 | 16 Venues | 3 — DQ-15.A1, DQ-15.A2, DQ-15.A3 |
+| DQ-16 | 19 Ticketing | 4 — DQ-16.3, DQ-16.4, DQ-16.5, DQ-16.6 |
+| DQ-17 | 19 Ticketing | 3 — DQ-17.1, DQ-17.2, DQ-17.3 |
+| DQ-19 | 20 Fanbase | 3 — DQ-19.1, DQ-19.2, DQ-19.3 |
+| DQ-20 | 21 Promotion | 2 — DQ-20.1, DQ-20.3 |
+
+**Owner-decided**: 43 · **Agent-decided (flagged, spec hygiene or technically determined)**: 14
+
+- `DQ-02.3` — Coarse activity enum — seven or four _(agent (spec hygiene, not a product choice — flagged to owner))_
+- `DQ-10.A3` — Scope of the ratification — licence buyer only, or all non-persona actors _(agent (anti-axis-collapse scoping call — flagged to owner))_
+- `DQ-11.A4` — Artist-facing expectation copy statistic _(agent (technically determined — flagged to owner))_
+- `DQ-11.A6` — Unconditional escalation ceiling _(agent (safety backstop, no artist-facing cost — flagged to owner))_
+- `DQ-11.A7` — Resolution key for the window _(agent (technically determined — flagged to owner))_
+- `DQ-12.O1` — Carrier — what projects a severity option onto a grade ceiling _(agent (technically determined — flagged to owner))_
+- `DQ-13.3` — Proof — which rung a room claim runs on _(agent (technically determined — flagged to owner))_
+- `DQ-14.2` — Contents of the US launch profile statutory slots _(agent (refuses an unsourced empirical claim — flagged to owner))_
+- `DQ-14.3` — Where external-register availability is modelled _(agent (refuses an unsourced empirical claim — flagged to owner))_
+- `DQ-14.4` — Temporary-permission analogue where no per-venue statutory licence exists _(agent (a statutory exception with no statutory source is a contradiction — flagged to owner))_
+- `DQ-15.A3` — Provision fact — where the commercial/provision posture of rehearsal backline lives _(agent (the alternatives fail against source — flagged to owner))_
+- `DQ-16.4` — Amber stale warning default — 30 or 60 minutes _(agent (reconciles three files by editing one row — flagged to owner))_
+- `DQ-16.5` — Scope at which the staleness threshold is overridable _(agent (determined by axis 3 — flagged to owner))_
+- `DQ-16.6` — Which file authors the reconciled staleness rule _(agent (author-where-owned, already-ratified rule — flagged to owner))_
 
 ---
 
@@ -629,4 +654,351 @@
 - Where the platform holds a first-party record for the unit, the option is pre-filled and corroborated; contradictions are SURFACED, never auto-asserted.
 - DEPENDENCY: the corroboration half is not implementable until 13.08.02 Q-02 resolves (whether off-platform repairs can be recorded, and how a self-reported one is treated). Degrades to seller-asserted-only until then.
 - Most vintage repairs predate the platform, so corroboration will be absent in the common case.
+
+
+## DQ-13.1 — Origin — how a room operating org authority comes into existence
+
+> **Entry**: DQ-13 · **Ratified**: 2026-07-22
+
+**Chosen**: A3 — Both: the place claimant may GRANT a room (cooperative default, instant, no claim unit), and a room operator may independently PROVE control via 16.05.02 ladder scoped to the room when the claimant will not cooperate or has vanished
+
+**Why**: The two source files are not arguing about the same thing. 16.01.02 DT-11 is entirely about ORIGIN COST (a second claim requires a partial-claim concept 16.05.02 does not have). 16.01.01 DT-08 is entirely about DEPENDENCY AND LEVERAGE (a grant makes the landlord the gatekeeper; in a rent dispute the grant is a lever). A3 answers both rather than picking a loser, and matches the real distribution: most subleases are cooperative and should cost nobody anything, while the uncooperative landlord is precisely the case a fast path cannot serve. The two-path shape is already ratified in the file that owns claims (16.05.02 D-10: the cooperative path is one action, no review).
+
+**Preserves**: 16.01.01 D-06 (containment is room-level operating org, not a second record); 16.01.01 D-07 and DT-08 (no landlord gatekeeping); 16.01.02 D-09 (room as the unit of operational delegation); 16.05.07 D-17 premise (a sublessee is not at the landlord mercy)
+
+**Commits us to**:
+- 16.05.02 Q-03 is answered YES (a room can be a claim unit) and D-14 (the claim unit is the place record) is AMENDED.
+- Commissions both the grantable power 16.05.02 does not currently model AND the room-scoped claim unit D-14 currently forbids — the most machinery of the three options.
+- UNSPECIFIED COLLISION recorded: two authority provenances can exist on one room. No source defines what happens when a granted room operator later claims, or when a room claim lands on an already-granted room. This MUST be specified.
+- Carries 16.01.01 Q-09 hostile-room-claim exposure — the claim path is the vector.
+
+
+## DQ-13.2 — Extinguishment — can the place claimant end a grant unilaterally
+
+> **Entry**: DQ-13 · **Ratified**: 2026-07-22
+
+**Chosen**: B2 — Adjudicated: revocation is a dispute, not an act. Initiating it opens a counter-window with escalation to domain 24, and the room stays live and bookable throughout.
+
+**Why**: 16.01.01 DT-08 rejection of the grant is, read closely, entirely a rejection of UNILATERAL REVOCATION — the words are the grant is a lever and revoking it takes a trading studio offline. Removing that and leaving the grant is why the two source files stop conflicting once this axis is separated from origin. B2 also costs the room operator nothing, which distinguishes it from the two-tier option: 16.05.02 DT-10/DT-11 establish the sublessee studio is structurally unable to complete any strong rung, so any option conditioning protection on proof gives that population nothing.
+
+**Preserves**: 16.05.02 D-03 (a contested claim freezes the claim, never the record); 16.05.02 D-10 (14-day counter-window, maximal notification, silence is what closes it); 16.01.02 revocation booking-safety rule (never orphan a paid deposit) — carried into the dispute path; the room stays live and bookable throughout — clause of 16.01.01 D-07 and 16.05.07 D-17, inherited from 16.05.02 D-03 per 16.05.07 DT-13
+
+**Commits us to**:
+- NO SOURCE DEFINES A DISPUTE PATH FOR A GRANT. 16.05.02 D-03/D-10 machinery is defined over claims and anchor snapshots; a revocation dispute over a non-claim authority has no anchor to re-derive. This must be specified.
+- The platform is placed inside the landlord/tenant row that 16.01.01 DT-08 itself says it has no business adjudicating — domain 24 becomes arbiter of whether a sublease genuinely ended. Accepted deliberately.
+- A landlord whose tenant has genuinely vacated must wait out a dispute window before re-letting their own room on the platform.
+- Adjudication load lands on domain 24, unbudgeted.
+
+
+## DQ-13.3 — Proof — which rung a room claim runs on
+
+> **Entry**: DQ-13 · **Ratified**: 2026-07-22 · **Decided by**: agent (technically determined — flagged to owner)
+
+**Chosen**: C1 — L7 document review, with the sublease/licence agreement as the document and the place claimant org as the external cross-check
+
+**Why**: It commissions nothing: the rung, the reviewer checks and the claimant notification all exist in 16.05.02 and 16.01.01 today. The only new statement is that a sublease agreement is an acceptable L7 document for a room-scoped claim and that the named landlord is checked against the record claimant org — which is a genuine strengthening of L7, since 16.05.02 says that where the register cross-check is unavailable L7 is a human reading a forgeable PDF. Adding a claimant-attestation anchor rung was rejected on its own terms: under the both-paths origin a cooperative landlord already has the grant path, so it buys nothing and costs the independence the claim path exists to provide. Deferring the rung set would leave the escape hatch declared and unbuildable.
+
+**Commits us to**:
+- L7 is PERMANENT for this population, not a fallback — 16.05.02 Q-01 already flags this as unresourced: the weakest, slowest, forgeable, human-operated rung becomes the primary rung.
+- 5-business-day review SLA applies, and Provisional grants no calendar and no rate card — so a room operator on the CLAIM path cannot trade until a human clears the document. The grant path remains instant.
+- No new rung and no new provenance class is added to 16.05.03 ranking.
+
+
+## DQ-14.1 — Parameterization shape — jurisdiction axis and how many profiles at launch
+
+> **Entry**: DQ-14 · **Ratified**: 2026-07-22
+
+**Chosen**: B-minus — Regime axis exists, US profile only authored. The UK vocabulary retires into an UNAUTHORED profile whose statutory fields resolve to explicit unknown, never a silent UK default.
+
+**Why**: D-32 does not merely say US-first; it ends with keeps the data model jurisdiction-parameterized so later international expansion is additive, not a rewrite — which rules out deleting the axis and rules out the labels-only abstraction. Between authoring one profile and two, the sources say most of what a second vocabulary would protect is already written as CAPABILITY-ABSENCE rather than UK text: 16.05.02 no-register edge case, 16.05.07 Q-05, 16.02.03 D-01 and 16.02.01 Claimed state all already author the degraded branch. So the axis is what must be kept; the second vocabulary is not. Follows the precedent D-46 set for the identical class of problem — author the determinate jurisdictions, make every other territory an explicit unknown rather than a guess.
+
+**Preserves**: D-32 both halves (US-first AND jurisdiction-parameterized); 16.05.01 D-05/D-13 statutory-class single-writer rule; 16.05.02 authored degradation branch; 16.02.03 D-01 provenance fallback
+
+**Commits us to**:
+- Every place naming a premises licence, PAT, PLI or TEN as THE instrument must be restated against a profile CAPABILITY — in 16.01.06, 16.02.01, 16.02.03 and 16.05.*. Larger prose edit than retaining both profiles.
+- 16.05.07 D-08 becomes: where the profile declares a decisive statutory building key, equality proves and inequality refutes. Where it does not, that rule has no input.
+- The worked UK example is LOST — if the second market is the UK its vocabulary must be re-derived rather than un-flagged.
+- The capability vocabulary (what a profile may declare) is new structure and MUST be kept small, or it grows into a rules engine.
+- Live/Events is Phase 2+, so no launch urgency argues against the larger edit.
+
+
+## DQ-14.2 — Contents of the US launch profile statutory slots
+
+> **Entry**: DQ-14 · **Ratified**: 2026-07-22 · **Decided by**: agent (refuses an unsourced empirical claim — flagged to owner)
+
+**Chosen**: Lock the five slots (occupancy ceiling, liability cover, electrical/fire safety record, performing-rights licence status, hirer requirements) each with an issuer and expiry; DEFER the US instrument names to /create-prd-security
+
+**Why**: The slot set, the issuer requirement, the expiry semantics and the declared-not-verified rule are product decisions and are all decidable now. The instrument names are per-state legal facts that no ideation source contains — a full-tree grep for occupant load, certificate of occupancy and the rest returns nothing — so asserting them here would be an unsourced claim wearing a ratified decision clothes. It is also exactly the class of empirical work D-32 hands to /create-prd-security. Dropping the electrical/fire-safety slot was rejected: it removes a stated role need (the Producer reads PAT status because they are the person plugging in) and saves nothing structurally, since the slot shares the same expiry engine as the other four.
+
+**Preserves**: 16.01.06 D-01 (licences/insurance are declarations with expiry, never platform-verified certificates); 16.01.06 Role Lens dependencies — Musician reads hirer PLI requirement, Producer reads electrical-safety status
+
+**Commits us to**:
+- A [PENDING] marker stays live in 16.01.06 through the rest of ideation, re-pointed at /create-prd-security — a LIVE deferral, not an expired one.
+- 16.05.01 ingest mapping row for the register class stays provisional until the instrument names land.
+
+
+## DQ-14.3 — Where external-register availability is modelled
+
+> **Entry**: DQ-14 · **Ratified**: 2026-07-22 · **Decided by**: agent (refuses an unsourced empirical claim — flagged to owner)
+
+**Chosen**: Per-authority capability, resolved per record: the profile names the register CLASS that applies; actual availability resolves per licensing authority for the record address. L2 and D-08 gate on the resolved value; unresolved renders as unknown.
+
+**Why**: The only option that neither asserts an unverified fact about US registers nor pretends registers are uniform within a jurisdiction. It is the granularity 16.05.01 already uses for these same sources (per-authority formats). A per-profile boolean is contradicted by 16.05.01 own source row describing licensing registers as public records with patchy machine access and per-authority formats. Declaring L2 and D-08 unavailable at launch is unsourced — no cited file states the US lacks per-premises public records — and irreversible in the wrong direction, since it would delete the only rule the specs call decisive. NOTE: 16.05.01 D-15 (re-ingest cadence monthly per source per region) does NOT support this option — it sets an ingest cadence, not a per-region coverage model. That gloss was corrected during confirmation.
+
+**Preserves**: 16.05.01 D-05/D-13 (statutory class has exactly one permitted writer; a seeded source may never write a statutory field); 16.05.02 authored no-register degradation; 16.05.07 D-08 decisive-key rule, restated as capability-gated
+
+**Commits us to**:
+- A per-authority coverage record must be MAINTAINED — this is new structure, not an existing modelled concept.
+- At cold start most authorities will be unresolved, so L2 is unavailable in practice for most records at launch even though it is not deleted.
+- 16.05.07 Tier 1 review load is unpredictable until coverage is known, so the operational cost of D-08 absence cannot be sized during ideation.
+
+
+## DQ-14.4 — Temporary-permission analogue where no per-venue statutory licence exists
+
+> **Entry**: DQ-14 · **Ratified**: 2026-07-22 · **Decided by**: agent (a statutory exception with no statutory source is a contradiction — flagged to owner)
+
+**Chosen**: No statutory temporary permission where there is no statutory condition. The date-range exception type survives unchanged under D-05; curfew and dB limits are Operator claims labelled as claims per D-01.
+
+**Why**: 16.02.03 D-01 already ratifies the provenance outcome, so the only genuinely open part is whether the STATUTORY exception type survives — and it cannot, because a statutory exception with no statutory source is a contradiction. The date-range exception itself survives under D-05 closed vocabulary of exactly three condition types, so nothing is lost mechanically. Mapping a US analogue was rejected: no such instrument is named anywhere in the tree, and choosing it would commission research plus a per-municipality permission model, reopening 16.02.03 Q-03 in the launch market.
+
+**Preserves**: 16.02.03 D-01 (provenance fallback — Operator claims labelled as claims); 16.02.03 D-05 closed vocabulary of exactly three condition types; field machine-resolvability, which 16.07 depends on
+
+**Commits us to**:
+- MUST BE WRITTEN EXPLICITLY: 16.06.03 D-22 (the premises licence is a hard ceiling on overrun the Operator cannot lift in the app) has NO INPUT in a licence-less profile. Leaving this unstated leaves D-22 pointing at an unspecified field.
+- Resolves 16.02.03 Q-03 (tracking remaining temporary-permission allowance) for the US profile without a separate mechanism.
+- ACCEPTED GAP: a real US venue may still be bound by a municipal ordinance the platform now cannot represent as statutory.
+
+
+## DQ-15.A1 — Item store — read-through from the register, or typed on the 16.04 spec sheet
+
+> **Entry**: DQ-15 · **Ratified**: 2026-07-22
+
+**Chosen**: A1-a — Read-through: 16.04 confirms 15.07 D-01 for rehearsal rooms. Backline items render from 15.07.03 filtered by 15.07.02 condition; 16.04 stops typing an item list.
+
+**Why**: Every mechanism this needs already exists and is exercised twice — both sibling room types (16.02.02 D-06, 16.03.02 D-04/D-05) have already confirmed it locally, and 15.07 D-01 names rehearsal inside its own scope line. The local-list alternative contradicts two ratified 15.07 decisions rather than filling a gap, needs a condition store, fault-reporting surface and permission model that no source defines, and reproduces the exact failure 15.07.03 DT-01 exists to prevent (a duplicated list rots by construction: two stores, two update paths). It also breaks on a venue+rehearsal record, which would hold register-backed backline for one type and typed backline for the other.
+
+**Preserves**: 15.07 D-01 and D-04; 15.07.02 D-01 graded condition; 16.02.02 D-06 One store, two doors inline create path; 16.05.06 post-session correction target
+
+**Commits us to**:
+- RECORDED AS A PER-FEATURE CONFIRMATION in the sibling convention — this does NOT close domain-15 Q-07 or 15.07 Q-01, both open and Owner=User.
+- UNRESOLVED PRECONDITION: 15.07 publishes ORG registers, and 16.03.02 DT-12 found this structurally excludes supply with no org entity — a sole-trader rehearsal Operator cannot publish at all. Blocks a real population; must be tracked.
+- Partly answers 16.04 Q-01 (condition vocabulary between a kit and a shell pack with no snare) by inheriting the graded-with-note model instead of inventing one.
+
+
+## DQ-15.A2 — Granularity — identity-tracked or quantity-tracked rehearsal backline (= 15.07 Q-03)
+
+> **Entry**: DQ-15 · **Ratified**: 2026-07-22
+
+**Chosen**: A2-a — Quantity-tracked mode for commodity rehearsal stock, with identity-tracking retained per item where the Operator wants it
+
+**Why**: The only option consistent with what two other specs already publish: 15.07.03 commodity edge case and 16.03.02 commodity row both state counts, not identity, and both cite 15.07.01 DT-03 as settled. It is also the option DT-03 itself proposes for this exact room type, rejecting per-object identity for a rehearsal room with 40 mic stands, 200 cables and four interchangeable practice amps. Identity-only would load the highest onboarding cost onto the lowest-value room type, against the finding that ceremony is what kills the rehearsal path.
+
+**Preserves**: 15.07.01 DT-03; 15.07.03 commodity publication row; 16.03.02 commodity row; 16.06.01 D-19 / DT-15 rehearsal speed posture
+
+**Commits us to**:
+- COMMISSIONS A MODEL ADDITION INSIDE DOMAIN 15 — 15.07.01 DT-03 calls it a genuine model addition rather than a UI concession. This ratifies work in domain 15, not only domain 16.
+- DEGRADES 15.07.02 D-01: per-asset graded condition becomes condition-on-a-count (4 amps, 1 faulty cannot say which one). The condition model now carries two shapes.
+- DEGRADES 16.03.02 D-08: a reservation captures its gear dependency from the filter that produced it and notifies when that item goes faulty — on a count, the item you booked for has no referent. Must be respecified for quantity lines.
+
+
+## DQ-15.A3 — Provision fact — where the commercial/provision posture of rehearsal backline lives
+
+> **Entry**: DQ-15 · **Ratified**: 2026-07-22 · **Decided by**: agent (the alternatives fail against source — flagged to owner)
+
+**Chosen**: A3-a — 16.04 owns a typed per-category provision enum (included | hire-extra | bring-your-own-only | none, with unstated as a distinct non-value); 15 owns the items, 16.06.07 owns the price
+
+**Why**: The only option under which the two facts a rehearsal buyer actually decides on — is a kit included, must we bring one — can be STATED rather than inferred. Inference fails against source in both directions: an empty register renders unstated, not none (16.02.02 States, Read-through unavailable), so bring-your-own-only is unassertable; and included as the absence of a rate line is indistinguishable from an Operator who has not built a rate card. Extending the rate-card feature was rejected because it puts a non-commercial fact (the band must bring a kit) inside the feature whose one absolute rule is that only the Operator sets terms, and a room with no rate card would then have no provision posture at all. This mirrors what the venue sibling already does structurally: 16.02.02 G2 types a provision-model enum HERE while its read-throughs sit beside it.
+
+**Preserves**: 16.02.02 D-05 field-triple model and D-04 unstated as a distinct non-value; 16.03.02 D-05 decomposition (condition to 15.07.02, price to 16.06.07, provision posture to the room spec); 16.06.07 D-03 / 16.05.03 D-03 (only the Operator sets terms)
+
+**Commits us to**:
+- ONE EXPLICIT BOUNDARY SENTENCE REQUIRED: 16.06.07 owns the price and the rate-card term; 16.04 owns the provision posture. Without it the two enums overlap.
+- Duplication risk at TERM level between 16.04 provision and 16.06.07 inclusion facet — the kind 15.07.03 DT-01 warns about, one level up from items.
+- NOTED INCONSISTENCY in the cited precedent: 16.02.02 G7 says backline is Not typed here while its Checkable tier lists backline present y/n as a core field. The precedent is real but the source is not fully self-consistent.
+
+
+## DQ-16.3 — Can a present-but-stale replica block a scanner from becoming ready
+
+> **Entry**: DQ-16 · **Ratified**: 2026-07-22
+
+**Chosen**: A — Staleness NEVER blocks. Only a missing or incomplete replica blocks. A present, complete replica of any age enters ready; an amber stale state is raised before doors and whenever the device learns inventory changed after its replica timestamp.
+
+**Why**: The only position on the record formed with the opposing numbers in hand: 19.04.01 DT-04 names the staleness threshold in 19.04.02 as its Source and rejects it, so blocking would reverse a Deep Think outcome using an argument the tree does not contain. Its reasoning survives re-reading — because admit-and-reconcile already absorbs the refunded-after-sync case, a stale replica residual error is falsely refusing a ticket issued after sync, and a hard block converts that rare false-refusal into a total one at exactly the venues index D-02 says the sub-domain exists for (an online-only door does not work in the target market at all). The same instinct was independently rejected one sub-domain over: refusing is the loud-offline anti-pattern wearing a safety costume.
+
+**Preserves**: 19.04.01 D-02 admit-and-reconcile; 19.04.01 DT-04; 19.04.01 D-05 (Operator override of a refusal is permitted and recorded); index D-02 (offline-capable is a precondition, not a feature); locked: staleness never turns a scan into a refusal
+
+**Commits us to**:
+- 19.04.02 States row Stale (block) and its 120-minute hard threshold are DELETED.
+- REMOVES the only forcing function that makes an Operator re-sync — the amber warning is now the sole signal.
+- LOSES the bound 19.04.02 D-06 claimed (30/120 keeps the manifest at most ~2h behind money movements). Nothing replaces it.
+- NO SOURCE defines any escalation from an ignored amber — flag as a follow-on gap, since refunds after sync are the main source of staleness with money attached.
+
+
+## DQ-16.4 — Amber stale warning default — 30 or 60 minutes
+
+> **Entry**: DQ-16 · **Ratified**: 2026-07-22 · **Decided by**: agent (reconciles three files by editing one row — flagged to owner)
+
+**Chosen**: 60 minutes
+
+**Why**: 60 is the only number that already appears at BOTH the seam (19.04.01 cross-cut note: the 60-minute staleness warning and no-block-on-stale posture live at this seam) and at domain level (CX-14 Q1: the replica freshness gate, amber at 60 min). Choosing 30 would additionally require correcting the domain CX. Under the never-blocks rule a tighter amber on a fleet that is normally offline risks the desensitisation 19.04.01 DT-03 warns about (an alarming offline indicator trains the Operator to ignore it). 19.04.02 Q-03 survives unchanged as numeric ratification at /create-prd-compile — this axis only fixes which default that stage ratifies.
+
+**Commits us to**:
+- ACCEPTED: 19.04.02 reasoned 30 as half of a 30/120 pair; taking 60 alone discards the ratio that pair was reasoned as — but the 120 half is deleted anyway under axis 3.
+- Under never-blocks the amber is the ONLY signal the Operator gets, and a longer fuse means a later first warning.
+
+
+## DQ-16.5 — Scope at which the staleness threshold is overridable
+
+> **Entry**: DQ-16 · **Ratified**: 2026-07-22 · **Decided by**: agent (determined by axis 3 — flagged to owner)
+
+**Chosen**: Per show
+
+**Why**: This axis answer depends on axis 3. Since staleness only ever warns, the thing being scoped is a WARNING whose stake DT-04 explicitly relocates to newly-issued tickets — comp batches, transfers and sales batches, all show-level properties. Per-venue would be correct only if staleness blocked, because a blocking threshold prices connectivity, which is a room property. One scope means one config surface and no precedence rule to define.
+
+**Commits us to**:
+- A venue running 200 nights a year must set the same override per show if it wants a non-default threshold — accepted, since the default should fit most shows.
+- The venue-default-with-show-override shape was rejected: no source defines a precedence rule between the two scopes, and it runs against 19.04.02 D-05 (the Operator thinks about sync once, before doors).
+
+
+## DQ-16.6 — Which file authors the reconciled staleness rule
+
+> **Entry**: DQ-16 · **Ratified**: 2026-07-22 · **Decided by**: agent (author-where-owned, already-ratified rule — flagged to owner)
+
+**Chosen**: 19.04.02 authors the staleness rule and thresholds; 19.04.01 reduces its D-06 to a reference plus the scan-side consequence
+
+**Why**: The governing rule is already ratified; only its application was open, and the ownership facts are unambiguous. 19.04.02 owns the object being governed — readiness is gated on replica freshness, and its States table holds every replica state — while 19.04.01 own cross-cut note defers the threshold and posture to that seam. Two independently authored D-06 entries drifting apart is exactly what produced this contradiction.
+
+**Preserves**: author-where-owned (D-50/P-04)
+
+**Commits us to**:
+- The authored decision in 19.04.02 will cite a Deep Think entry (DT-04) that lives in a sibling file — acceptable, and preferable to duplicate authorship.
+- Removes the duplication that produced this contradiction: exactly one file states the rule.
+
+
+## DQ-17.1 — Storage shape for a walk-up window admission
+
+> **Entry**: DQ-17 · **Ratified**: 2026-07-22
+
+**Chosen**: A2 — Split with a derived canonical total: `scanned` stays gate-only, window admits get their own stored counter, and the canonical all-bodies total is a DERIVED counter (gate scans net of reversals + window admits net of un-admissions), modelled as `Remaining` already is
+
+**Why**: Both options land the walk-up inside the admissions family, so the choice is purely which body of ratified text gets rewritten. The split preserves 19.05.04 D-01 ("walk-up tickets are admitted at birth, never scanned"), D-11, DT-03, the at-window refund row, the skim edge case and two cross-cut notes VERBATIM, rewriting one cross-cut sentence plus name bindings that axis 2 touches under either option anyway. The merge would rewrite six-plus items and collapse two ratified rules pointing OPPOSITE ways onto one counter. It also applies 19.03.02 DT-02's own test rather than overriding it: DT-02 rejects one counter with a type flag because the parts have different arrival times and different consumers.
+
+**Preserves**: 19.05.04 D-01, D-11, DT-03, at-window refund row, skim edge case; 19.05.01 D-01 (canonical state, not per-consumer computation) — D-01 forbids consumers computing their own count, not derived counters; 19.05.01 D-03 alarm (scanned > paid + comp) operating on a gate-pure counter; 19.03.02 DT-02
+
+**Commits us to**:
+- ticketing-box-office-cx.md CX-04 becomes FALSE as written (scanned is no longer settlement admitted number) and must be edited — the domain cross-cut is the later-dated file.
+- 19.05.01 counter table grows from six rows to eight.
+- The derived total needs a STATED FRESHNESS RULE — it is only as fresh as its stalest input. D-02 does not spell this out for derived counters, though  is the precedent.
+- Musician Role Lens (On the night, sees scanned vs paid) must be re-pointed at the derived total or the artist reads a gate-only number.
+
+
+## DQ-17.2 — Vocabulary for the canonical admissions total
+
+> **Entry**: DQ-17 · **Ratified**: 2026-07-22 · **Decided by**: forced by DQ-17.1 (two distinct quantities cannot share one name)
+
+**Chosen**: Rename the canonical total to `admissions_total` / `admissions_paid`, reserving `scanned` for gate-observed admissions only
+
+**Why**: Under the split storage shape this is forced, not optional: two distinct quantities exist (gate-observed admissions and all admissions) and one name cannot carry both. It also fixes the one place the current text is genuinely load-bearing on the ambiguity — 19.07.03 DT-01 says WeJammin's independently observed count is the door scan, which is no longer the same quantity as a counter including WeJammin's own window sales; keeping one name would let a reconciliation compare a number against a component of itself. The name `scanned` is also literally false for 20-50% of the gate at the beachhead venues (19.05.04 Overview).
+
+**Commits us to**:
+- CROSS-DOMAIN EDIT: 17.09.02 D-08 rows 5 and 6 and INV-02/INV-03/INV-04/INV-08 rebind to admissions_paid/admissions_total; 17.11.01 draw record and 19.05.05 statement line likewise.
+- CAUTION: 17.09.02 D-08 is itself flagged as not fully settled (Refines D-02 and contradicts 17.11.01 DT-01 — escalated, not unilaterally applied, Q-03). This rename lands on contested text and must not be read as settling Q-03.
+- The earlier verified-draw ratification is UNAFFECTED in substance — scanned_paid becomes admissions_paid; the quantity and its role as the verified draw are unchanged, only the name binds correctly.
+- CX-04, the domain most-cited count sentence, is edited.
+- 19.07.04 door floor is restated so it compares against the GATE count, which is what DT-01 means by independently observed.
+
+
+## DQ-17.3 — Refund semantics for the canonical admissions total
+
+> **Entry**: DQ-17 · **Ratified**: 2026-07-22
+
+**Chosen**: Exit-scoped — an at-window un-admission reduces the total; a post-scan online refund does not
+
+**Why**: The only option leaving both ratified statements standing. 19.05.04 D-11/DT-03 apply to the walk-up refunded at the window minutes later, who either never entered or has left — leaving the admission stale over-states occupancy for capacity, the statement, and the split. 19.05.01 rule applies to a scanned advance ticket refunded online, because that person is in the room. Keeps the safety number honest in both directions. Its one weakness — becoming a forgettable conditional — existed only under the merge option and disappears under the split, where the two stored counters compose the correct answer with no rule to apply.
+
+**Preserves**: 19.05.04 D-11 and DT-03; 19.05.01 refund edge case (a post-scan refund does not reduce the gate count); 19.05.04 skim signal (depends on the count tracking actual bodies)
+
+**Commits us to**:
+- The exit-scoped distinction MUST BE WRITTEN DOWN EXPLICITLY — today it is implicit in two files that never reference each other on this point.
+- No conditional rule is needed at runtime: the two stored counters compose.
+
+
+## DQ-19.1 — Granularity — where the NYP split basis rule lives
+
+> **Entry**: DQ-19 · **Ratified**: 2026-07-22
+
+**Chosen**: D — Platform-wide constant. No basis field on any record; the platform states one rule as a term of service, printed on the split-capture screen beside the percentages.
+
+**Why**: Per-listing was disqualified rather than merely weaker: the locked disclosure axis requires the basis be shown before the split is agreed, and 20.04.04 own happy path agrees the split a year before the listing exists, so a listing-time field cannot satisfy it — and the per-listing payee consent flow that would rescue it exists in no file (CX-02 provides notification, not consent). That left the constant versus a domain 09 field, and the deciding fact is that domain 09 defines NO payout-basis field anywhere (verified by grep), so that option is both new machinery and, as currently written in 20.04.04 cross-cut note, a P-04 violation — domain 20 authoring a domain 09 property. The constant satisfies disclosure by construction and spends nothing on 09.02.01 absolute design budget.
+
+**Preserves**: locked: domain 09 owns the split percentages and the payout-plan source; locked: the payee must be told the basis before the split is agreed; 09.02.01 design budget (<=8 interactions, <=90s for 4 contributors); 20.04.01 D-06 / 20.04.04 DT-02 no-rights-record listing path
+
+**Commits us to**:
+- NO per-record variation is possible without reopening this decision — a charity listing on ask, or a one-off arrangement, cannot be expressed.
+- CONTRADICTS how both authors modelled it: 20.04.03 D-07 (captured and locked at listing) and 20.04.04 (a field on the split agreement) are both replaced.
+- The no-rights-record case dissolves for free: a lister taking 100% with no split agreement has nowhere to put a per-agreement field, and needs none.
+- Concentrates a money rule in platform terms rather than in an agreement each payee signed — a weaker consent artefact if a payee later disputes.
+
+
+## DQ-19.2 — Lock trigger — when the basis stops being changeable
+
+> **Entry**: DQ-19 · **Ratified**: 2026-07-22 · **Decided by**: determined by DQ-19.1 (coherent partner of the platform-wide constant)
+
+**Chosen**: L4 — Platform terms-change policy: no per-record lock because there is no per-record field. The constant is fixed at launch; any change is versioned as a platform term, applies only to splits agreed after the change date, and existing agreements keep the version live when they were agreed.
+
+**Why**: This axis was explicitly conditional on granularity. It is the only option that keeps the locked disclosure axis intact ACROSS a change — no payee is ever paid on a rule they were not shown — while adding just one versioned record. It keeps a single lock model, the same version-live-when-agreed shape 20.04.01 D-02 already uses for the plan, and avoids the structural complaint that sinks the first-sale lock: a lock trigger private to one field on an object where every other field binds at settlement.
+
+**Commits us to**:
+- NEW SPECIFICATION WORK, small but real: a versioned platform-terms record. This is why the constant is the cheapest option and not a free one.
+- The payout engine must resolve a TERMS VERSION per agreement date — a second version dimension alongside the plan version.
+- Both D-07 lock clauses (locked at listing; immutable after first sale) are REPLACED rather than preserved.
+
+
+## DQ-19.3 — The value itself — ask, paid, or paid-net
+
+> **Entry**: DQ-19 · **Ratified**: 2026-07-22
+
+**Chosen**: paid-net — the amount the fan actually paid, net of platform cut and processor fees
+
+**Why**: Already the specified default (20.04.04 D-07) with its arithmetic and statement line worked through, and the only value consistent with the fan-facing claim the storefront makes: DT-04 promise is that the over-payment was shared with the people who made the record. Gross-paid would make the lister carry 100% of the platform cut and processor fees on behalf of every other payee, worsening with each additional payee, and on a low-margin sale the percentages could exceed what the platform actually collected. Ask-basis directly contradicts the fan-facing promise, makes the NYP over-payment invisible to every payee except the lister, and incentivises a zero floor — colliding with the co-owner-consent gate 20.04.03 already had to build for exactly that.
+
+**Preserves**: 20.04.04 D-07 default value; 20.04.04 DT-04 fan-facing promise; 20.04.03 co-owner consent gate on low floors; 20.05.03 D-03 tips-attach-to-the-person (untouched — tips remain outside splits)
+
+**Commits us to**:
+- A payee effective take moves with fee structures: if the platform cut or processor rates change, so does the basis. Couples this to the platform-cut decision in the 20.04 index.
+- CLOSES Q-01 in BOTH 20.04.03 and 20.04.04 — both were owner-assigned and deferred to a stage that has already run.
+- Worked arithmetic stands as written in 20.04.04 happy path and statement line.
+
+
+## DQ-20.1 — What input determines the coverage verification-strength badge
+
+> **Entry**: DQ-20 · **Ratified**: 2026-07-22
+
+**Chosen**: A — Artefact class plus retrievability determines strength; pitch provenance NEVER affects it. A fixed, live, retrievable article renders verified whether or not a pitch produced it.
+
+**Why**: 21.07 owns the verification taxonomy, and the contradicting file says so itself: CX-05 synthesis Q1 states the strength is owned by 21.07 and is not an independent copy of the verdict — which makes the provenance gloss three paragraphs above it a non-owning duplicate rather than a competing ruling. On the text, 21.07 Verified trigger contains no pitch condition, D-03 declares parentless coverage fully valid (often the best coverage there is), and D-04 commits verification to a LINK act (we verify the link, not the reading), which is performable on any URL regardless of provenance. The alternative would demote the domain own stated best case and systematically disadvantage the artists with the strongest real press, since unsolicited coverage is by definition unpitched.
+
+**Preserves**: 21.07 D-03 and the Organic state; 21.07 D-04 (we verify the link, not the reading); 21.07 D-05 / DT-03 and Q-03 (already resolved — not reopened); 21.07 Decayed state and the link-rot edge case
+
+**Commits us to**:
+- OVERRULES the later, deeper file: promotion-marketing-cx.md is [DEEP] (2026-07-18) while 21.07 is [PARTIAL] (2026-07-17). Ratified deliberately on ownership, not recency.
+- EDITS ratified [DEEP] CX prose in TWO places (CX-05 Relationship paragraph and CX-08 synthesis Q3) — a correction of existing text, not an additive change.
+- WEAKENS what the badge proves about WeJammin specifically: index D-02 rests the domain existence on it sent the pitch, it holds the link. That defensibility claim must be re-founded on the link-verification act rather than on provenance.
+- A self-logged organic item is chosen entirely by the artist (their URL, their pull-quote), so the platform observed less of the chain than for a pitched item — accepted, and mitigated only by the retrievability check.
+
+
+## DQ-20.3 — Whether pitched-vs-organic renders publicly on the EPK
+
+> **Entry**: DQ-20 · **Ratified**: 2026-07-22
+
+**Chosen**: 3-A — Provenance stays a log state. Attributed/Organic remains a record state visible to the Musician and driving the CRM flip and directory denominator; the EPK renders ONE strength badge per item and nothing about sourcing.
+
+**Why**: The compound-label option is the only one in this entry requiring spec no source has written — no provenance vocabulary, no compound-label layout — and it would land that new surface on 21.09, which is [PARTIAL] with [PENDING] pin/retention mechanics and an unresolved leak-control question. The fact it would render is already captured as the Attributed/Organic state, so nothing is lost by deferring, and if the owner wants it later it is ADDITIVE to this choice, whereas unwinding a compound badge is not. A single label also matches 21.07 stated reason for badges at all: nobody checks, because checking is tedious.
+
+**Preserves**: 21.07 Attributed / Organic states; 21.09 badge surface left unchanged while [PARTIAL]; 21.07 rationale for single-label badges
+
+**Commits us to**:
+- ACCEPTED: the journalist reading the EPK cannot distinguish a platform-observed capture from an artist-self-logged one — exactly the distinction index D-02 leans on.
+- If provenance rendering is wanted later it is a new spec change on 21.09, designed additively rather than retrofitted.
+- Kept as its own axis deliberately, so the badge-input decision did not silently decide the EPK surface.
 
