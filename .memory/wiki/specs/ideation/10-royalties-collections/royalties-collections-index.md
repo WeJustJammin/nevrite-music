@@ -3,7 +3,7 @@
 > **Level**: domain
 > **Parent**: [WeJammin Ideation Index](../ideation-index.md)
 > **Status**: [BREADTH]
-> **Last updated**: 2026-07-16
+> **Last updated**: 2026-07-30
 > **Novelty**: `industry-standard` | **Priority**: `core` _(raised to core by D-10 — rights stack is the thesis)_
 
 ## Overview
@@ -25,19 +25,23 @@ Registering with the bodies that collect and turning what arrives into correct, 
 
 > Classified 2026-07-16 through the Node Classification Gate. 18 sweep candidates → **5 sub-domains
 > + 5 top-level features** (28 leaf features in total), with 1 candidate split, 2 re-cut, and
-> 7 Deep Think additions. 81 Deep Think hypotheses logged. All `[SURFACE]`.
+> 7 Deep Think additions. 81 Deep Think hypotheses logged at classification, every node `[SURFACE]`.
+> **That sentence is a record of 2026-07-16, not a claim about today** — deepening has since carried
+> the domain to **163 hypotheses**, and the Status and Deep Think columns below carry the current
+> figures, not the classification-pass ones. Where this table and a child disagree, **the child's own
+> `> **Status**:` header wins**: the node declares its depth, the index only restates it.
 
 | # | Name | Type | Path | Status | Deep Think |
 |---|------|------|------|--------|------------|
 | 10.01 | Society Registration & Delivery | sub-domain | [10.01-society-registration-delivery/](./10.01-society-registration-delivery/) | `[BREADTH]` | 19 hypotheses (7 children) |
-| 10.02 | Statement Ingestion & Normalization | sub-domain | [10.02-statement-ingestion-normalization/](./10.02-statement-ingestion-normalization/) | `[DEEP]` | 15 hypotheses (5 children) |
-| 10.03 | Royalty Calculation & Recoupment | sub-domain | [10.03-calculation-recoupment/](./10.03-calculation-recoupment/) | `[BREADTH]` | 12 hypotheses (4 children) |
+| 10.02 | Statement Ingestion & Normalization | sub-domain | [10.02-statement-ingestion-normalization/](./10.02-statement-ingestion-normalization/) | `[DEEP]` | 68 hypotheses (5 children) |
+| 10.03 | Royalty Calculation & Recoupment | sub-domain | [10.03-calculation-recoupment/](./10.03-calculation-recoupment/) | `[BREADTH]` | 32 hypotheses (4 children) |
 | 10.04 | Disbursement & Payee Statements | sub-domain | [10.04-disbursement-payee-statements/](./10.04-disbursement-payee-statements/) | `[BREADTH]` | 11 hypotheses (4 children) |
-| 10.05 | Recovery & Leakage | sub-domain | [10.05-recovery-leakage/](./10.05-recovery-leakage/) | `[BREADTH]` | 9 hypotheses (3 children) |
-| 10.06 | Live Performance Setlist → PRO Reporting | feature | [10.06-live-setlist-pro-reporting.md](./10.06-live-setlist-pro-reporting.md) | `[SURFACE]` | 3 hypotheses |
+| 10.05 | Recovery & Leakage | sub-domain | [10.05-recovery-leakage/](./10.05-recovery-leakage/) | `[BREADTH]` | 18 hypotheses (3 children) |
+| 10.06 | Live Performance Setlist → PRO Reporting | feature | [10.06-live-setlist-pro-reporting.md](./10.06-live-setlist-pro-reporting.md) | `[PARTIAL]` | 3 hypotheses |
 | 10.07 | Cue Sheets & Broadcast Performance Reporting | feature | [10.07-cue-sheets-broadcast-reporting.md](./10.07-cue-sheets-broadcast-reporting.md) | `[SURFACE]` | 3 hypotheses |
 | 10.08 | Statement Disputes & Audit Rights | feature | [10.08-statement-disputes-audit-rights.md](./10.08-statement-disputes-audit-rights.md) | `[SURFACE]` | 3 hypotheses |
-| 10.09 | Distribution Calendar & Money-in-Flight | feature | [10.09-distribution-calendar-money-in-flight.md](./10.09-distribution-calendar-money-in-flight.md) | `[SURFACE]` | 3 hypotheses |
+| 10.09 | Distribution Calendar & Money-in-Flight | feature | [10.09-distribution-calendar-money-in-flight.md](./10.09-distribution-calendar-money-in-flight.md) | `[PARTIAL]` | 3 hypotheses |
 | 10.10 | Royalty Forecasting | feature | [10.10-royalty-forecasting.md](./10.10-royalty-forecasting.md) | `[SURFACE]` | 3 hypotheses |
 
 > **Type column values:**

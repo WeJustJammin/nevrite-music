@@ -170,7 +170,7 @@
 
 ### CX-09: Local Pickup ↔ Cart & Orders
 
-**Relationship**: 13.11 DT-01 — a hole through the middle of the domain. Local pickup dissolves **three** mechanisms: escrow has no delivery proof to release against, the evidence pack has no dispatch/arrival baseline, and **ownership transfer (13.06.05) never fires** because a cash meetup never settles. The domain's entire provenance contribution is silently skipped on what may be the category's most common transaction shape.
+**Relationship**: 13.11 DT-01 — a hole through the middle of the domain, since narrowed to one branch by **13.11 D-04 (P-09)**: settlement on a pickup is a per-listing seller choice, so pickup comes in a platform-settled shape and an off-platform one. On the **off-platform** branch local pickup dissolves **three** mechanisms: escrow has no delivery proof to release against, the evidence pack has no dispatch/arrival baseline, and **ownership transfer (13.06.05) never fires** because a cash meetup never settles — the domain's provenance contribution falls back to 15.01.03 D-01's manual handshake rather than being recorded (13.06.05 DT-11). On the **platform-settled** branch the handover is the delivery (13.06.02) and the transfer writes as normal. The hole is therefore per-listing and disclosed, not categorical.
 
 **Role scoping**:
 - **Musician**: cheap-gear transactions are mostly local, therefore mostly invisible to the chain.
@@ -179,10 +179,10 @@
 
 **Synthesis questions answered**:
 1. **Shared state conflict**: If money doesn't move through the platform, there is no settlement event and no shared state — the platform introduced two people and learned nothing.
-2. **Trigger chain**: **Broken by design.** Purchase → meetup → (nothing).
+2. **Trigger chain**: **Broken by design on the off-platform branch** (D-04). Purchase → meetup → (nothing). On the settled branch the chain is intact: purchase → meetup → pickup confirmation → settlement → transfer.
 3. **Permission intersection**: n/a.
 4. **Notification fan-out**: n/a.
-5. **State transition conflict**: The strategic one. **13.11 Q-01 ("does money move through the platform on local pickup?") is the most consequential open question in the domain** — copying the incumbent's fee-free local product copies a hole through the thesis.
+5. **State transition conflict**: The strategic one, and now **answered**: 13.11 Q-01 ("does money move through the platform on local pickup?") is resolved by **13.11 D-04 (P-09)** — settlement on a pickup is a **per-listing seller choice**, platform-settled or off-platform, never a single global rule. So the hole through the thesis is real but bounded: it exists only on the branch a seller opted out on, and there it degrades to 15.01.03 D-01's manual handshake rather than to nothing (13.06.05 DT-11). What is left of this conflict is presentation — never implying the off-platform branch produced an equivalent chain (13.11 Q-04).
 
 ### CX-10: Trade-In & Consignment ↔ Ownership Transfer
 

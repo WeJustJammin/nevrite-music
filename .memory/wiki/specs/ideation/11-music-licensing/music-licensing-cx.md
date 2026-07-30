@@ -3,7 +3,7 @@
 > **Level**: domain
 > **Scope**: Connections between children of [Music Licensing](./music-licensing-index.md)
 > **Status**: [DEEP] — 8 sub-domains + 3 features; intra-domain cross-cuts mapped and synthesised after the deepening pass.
-> **Last updated**: 2026-07-18
+> **Last updated**: 2026-07-30
 
 ## Cross-Cut Map
 
@@ -61,10 +61,10 @@ certificate (candidate 17) but never the language the certificate is written in.
 
 **Synthesis questions answered**:
 1. **Shared state conflict**: The grammar is platform-owned; every other node holds instances or predicates over it. No node may extend it locally — a domain-specific axis value would silently break the fold.
-2. **Trigger chain**: Grammar evolution → new instances only. Instances pin their version at issue (11.08.01 D-03). A grammar change must never retroactively alter what an issued licence means.
+2. **Trigger chain**: Grammar evolution → new instances only. Instances pin their version at **request creation** and carry it unchanged through pricing to issue (11.08.01 D-03). A grammar change must never retroactively alter what an issued licence means — and must never reach an instrument mid-flight between quote and issue either.
 3. **Permission intersection**: Policy and grammar must share the vocabulary or 11.04.03's fold has nothing to project onto. The exception is the counterparty axis, which does not exist — CX-16/CX-18.
 4. **Notification fan-out**: None — it is infrastructure.
-5. **State transition conflict**: Same pinning rule as 11.03.01 D-02 (card pins at read) and 11.08.02 (instrument pins at issue) — three instances of one pattern (P-02).
+5. **State transition conflict**: Same pinning rule as 11.03.01 D-02 (card pins at read) and 11.08.02 (the instrument carries the version pinned at **request creation**, per 11.08.01 D-03) — three instances of one pattern (P-02), and the grammar's pin sits upstream of the card's so the two cannot disagree.
 
 ### CX-12: The gate is the domain's single serialization point
 
@@ -143,10 +143,17 @@ removed the human MFN would otherwise have alerted. This edge did not exist in t
 
 **Relationship**: 11.04.01 asserts the policy key space *is* the scope grammar. That holds for **category blocks**
 ("no tobacco", "no political ads") — they are predicates over the media/usage axes. It is **false for buyer
-blocks** ("never license to BrandCo"), because the grammar's six axes (media/territory/term/exclusivity/usage/
-scale) contain **no counterparty axis**. Buyer blocks key on *party identity*, which lives in 01, not in the
-grammar. This is a correction owed on the 11.04.01 text, not a design gap — but it must be written down or two
-files contradict.
+blocks** ("never license to BrandCo"), because the grammar carries **no counterparty axis** an owner can key a
+refusal on. Buyer blocks key on *party identity*, which lives in 01, not in the grammar. This is a correction
+owed on the 11.04.01 text, not a design gap — but it must be written down or two files contradict.
+
+**The axis count in the breadth-pass version of this entry ("six axes: media/territory/term/exclusivity/usage/
+scale") is superseded** — 11.08.01's depth pass carries **nine** (adding data use, extent of use and grantee
+scope; D-06/D-15/D-17). The correction is not only arithmetic: **grantee scope** is an axis over party identity
+(licensee plus permitted assignees/sublicensees), which is the thing this entry and 11.04.02 D-09/DT-07 assert
+the grammar does not have. Whether a grantee axis that names *who a grant runs to* also gives an owner a place
+to key *who they refuse* — and therefore whether buyer blocks become foldable after all — is **11.04.02 Q-07**,
+owner's call at `/create-prd`. Until it lands, the two-key-space behaviour below stands as written.
 
 **Role scoping**:
 - **Musician / Producer**: experience one "block" surface but two evaluation regimes underneath
@@ -303,6 +310,7 @@ eventually disagree about refusal.** Routed to `/create-prd-architecture`.
 - [[decisions.md#d-01|D-01]]
 - [[decisions.md#d-09|D-09]]
 - [[decisions.md#d-12|D-12]]
-- [[decisions.md#d-13|D-13]]
 - [[decisions.md#d-06|D-06]]
+- [[decisions.md#d-17|D-17]]
+- [[decisions.md#d-13|D-13]]
 - [[decisions.md#d-18|D-18]]

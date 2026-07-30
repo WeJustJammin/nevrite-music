@@ -1,0 +1,52 @@
+{
+  "shard": "root",
+  "generatedAt": "2026-07-30",
+  "findingsProcessed": 1,
+  "counts": { "mechanical": 1, "owner": 0, "notADefect": 0 },
+  "items": [
+    {
+      "findingId": "(root)#005",
+      "unit": "(root)",
+      "severity": "warning",
+      "dimension": 3,
+      "classification": "mechanical",
+      "summary": "Confirmed and fixed as a presentation/traceability defect, not a contradiction. The audit's arithmetic reproduces exactly: moscow-ledger.md carries 734 data rows; 521 Rationale cells are exactly 220 characters and 598 end without terminal punctuation. Re-measured with the generator's true cut band (>=210 chars and no sentence terminator, since trailing partial words were whitespace-trimmed to 219), 608 of the 734 digests are hard cuts, 515 of them landing on 220 exactly; 126 are whole. Verified against git: the cut is present in all four commits that ever touched the file (9adaaaf, 1a5c34c, 4ff98b5, adc142e) at identical counts, so the lost tails exist in no committed artifact. The auditor's conclusion is overstated in one respect and understated in another. Overstated: the reason for a tier placement is largely legible in what survives — 220 characters is roughly 35 words, and the sampled cuts lose a trailing supporting clause rather than the reason itself (22.03.02 states its full WONT reasoning and is cut mid-second-point). Understated: nothing marked the cells as fragments, so a reader could not tell a complete reason from a clipped one, and ideation-index.md:265 restated the ledger as carrying 'rationale' in full. FIX APPLIED (invents nothing): (1) every one of the 608 cut cells now ends in a trailing ellipsis, inserted immediately after the last non-space character, whitespace and column counts preserved byte-for-byte; (2) moscow-ledger.md gained a header note quantifying the cut, stating that the tier is the decision and the Rationale only a digest of it, and naming the canonical intact source — the leaf feature file each row already links to, in its DT/D tables, which is where the digest was drawn from; (3) ideation-index.md:265's promise of full rationale is now qualified in place. The residual (restore or retire the 608 digests) is left as a tracked question with an owner and a deferral target per the tree's convention.",
+      "canonicalSource": ".memory/wiki/specs/ideation/01-identity-profiles-organizations/01.01-person-identity-roles/01.01.02-artist-names-aliases-projects.md:115-116 — DT-01 'A field holds one value, so the second alias forces a second account, which fragments the credit graph — the exact failure this platform exists to fix.' and DT-02 'This is an ontology decision with catastrophic retrofit cost — hence the Must proposal.' The leaf DT/D tables are the canonical reasoning the ledger's Rationale column digests; they are intact for every affected row, one hop away through the link the row already carries.",
+      "filesChanged": [
+        "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/moscow-ledger.md",
+        "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/ideation-index.md"
+      ],
+      "measurements": {
+        "dataRows": 734,
+        "exactly220Chars": 521,
+        "noTerminalPunctuation": 598,
+        "markedAsTruncated": 608,
+        "markedAt220Exactly": 515,
+        "leftIntact": 126,
+        "rowsExceeding220": 1,
+        "rowsExceeding220Note": "11.01.02 at 539 chars, hand-authored under D-71 — proves the column has no width limit; the 220 was the generator's, not the format's",
+        "gitVersionsChecked": ["9adaaaf", "1a5c34c", "4ff98b5", "adc142e"],
+        "tailsRecoverableFromHistory": false
+      },
+      "invariantsVerified": [
+        "734 feature rows before and after",
+        "all 4-column rows still split to 6 pipe fields (745 six-field lines, 7 five-field lines = the 3-column priority summary table, unchanged)",
+        "line count unchanged by the sweep",
+        "tier section counts still match their declared headings: MUST 195/195, SHOULD 285/285, COULD 201/201, WONT 53/53",
+        "byte delta equals exactly one ellipsis character per marked row",
+        "the single unmarked sub-threshold cell without a trailing period (01.01.01, 192 chars) ends '...fails them immediately.' inside a closing quote — genuinely complete, correctly left alone"
+      ],
+      "trackedQuestion": {
+        "location": "moscow-ledger.md § Open Questions, Q-01",
+        "owner": "[OWNER]",
+        "deferredTo": "/plan-phase — the first consumer that reads tier and rationale together",
+        "question": "Restore the 608 truncated digests by re-deriving each from its leaf file's DT/D tables, or retire the column and let the leaf link carry the reason alone? Restoring is not a sweep — the tails exist in no commit, so re-deriving means re-authoring the stated reason for an owner-owned MoSCoW placement, and MoSCoW placement is the owner's call per .claude/rules/decision-classification.md. Retiring is cheap and honest but costs the one-screen scan of 734 reasons that is this ledger's whole point."
+      },
+      "whyNotOwner": "The fix applied changes no product behaviour and states no value neither side states: it marks fragments as fragments and redirects readers to a canonical source that is intact and already linked from every affected row. The part that would have required invention — writing new justification prose for 608 owner-owned tier placements — was deliberately not done, and is instead the tracked owner question.",
+      "whyNotNotADefect": "The truncation is objectively real and reproducible (521 cells at exactly 220 characters is not chance), it was unmarked, and ideation-index.md:265 actively overclaimed the column as full rationale."
+    }
+  ],
+  "crossDomainNotes": [
+    "Checked the two sibling ledgers one level up that share this generator lineage — .memory/wiki/specs/feature-ledger.md (8,085 table cells) and .memory/wiki/specs/vision.md (60 cells): zero cells at exactly 220 characters and zero unterminated cells in the 210-220 cut band. The 220-character cut is isolated to moscow-ledger.md. No action needed outside this shard."
+  ]
+}

@@ -1,0 +1,80 @@
+{
+  "shard": "07-music-projects-collaboration",
+  "generated": "2026-07-30",
+  "findingsIn": 1,
+  "mechanical": 1,
+  "owner": 0,
+  "notADefect": 0,
+  "items": [
+    {
+      "findingId": "07-music-projects-collaboration#007",
+      "unit": "07.01-song-release-production-board",
+      "severity": "warning",
+      "dimension": 8,
+      "classification": "mechanical",
+      "summary": "All five broken relative links confirmed against disk and repaired. Verified by resolving every relative link in the domain: before, 601 links with 5 unresolvable; after, 601 links with 0 unresolvable. Three were wrong-depth intra-domain sibling links (`../../07.0N-` from a leaf file resolves to the ideation root, not the domain root); two pointed at pre-rename domain directory names (`24-trust-safety`, `20-fanbase-community`) that no longer exist on disk.",
+      "canonicalSource": [
+        "Path convention (leaf files at ideation/07-.../07.0N-.../file.md): intra-domain sibling = `../07.0N-name/` (129 correct uses in the domain vs the 3 broken 2x-dotdot uses); cross-domain = `../../NN-name/` (164 correct uses).",
+        "Directory names on disk: /home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/24-trust-safety-disputes/ and /home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/20-fanbase-direct-to-fan/.",
+        "Display-name convention inside domain 07: '**24 Trust, Safety & Disputes**' (14 uses, incl. 07.03.01-contributor-roster-role-assignment.md:234 — the line directly above one of the defects, in the same file) and '**20 Fanbase & Direct-to-Fan**' (07.03.02-contributor-invitation-scoped-onboarding.md)."
+      ],
+      "filesChanged": [
+        "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/07-music-projects-collaboration/07.01-song-release-production-board/07.01.01-song-record-work-entity.md",
+        "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/07-music-projects-collaboration/07.01-song-release-production-board/07.01.02-release-container-sequencing-assembly.md",
+        "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/07-music-projects-collaboration/07.01-song-release-production-board/07.01.03-production-stage-board-milestones.md",
+        "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/07-music-projects-collaboration/07.03-contributors-access-confidentiality/07.03.01-contributor-roster-role-assignment.md"
+      ],
+      "edits": [
+        {
+          "file": "07.01-song-release-production-board/07.01.01-song-record-work-entity.md",
+          "line": 264,
+          "before": "- Touches **[24 Trust & Safety](../../24-trust-safety/)** — *permission*.",
+          "after": "- Touches **[24 Trust, Safety & Disputes](../../24-trust-safety-disputes/)** — *permission*.",
+          "reason": "Stale pre-rename directory AND stale short display name. Both swept to the form used 14 times elsewhere in the domain."
+        },
+        {
+          "file": "07.01-song-release-production-board/07.01.02-release-container-sequencing-assembly.md",
+          "line": 90,
+          "before": "([../../07.07-mix-master-workflow/](../../07.07-mix-master-workflow/))",
+          "after": "([../07.07-mix-master-workflow/](../07.07-mix-master-workflow/))",
+          "reason": "Wrong depth — `../..` from a leaf file lands at the ideation root. Sibling features take one `..`."
+        },
+        {
+          "file": "07.01-song-release-production-board/07.01.03-production-stage-board-milestones.md",
+          "line": 141,
+          "before": "([../../07.06-sessions-documentation-recall/](../../07.06-sessions-documentation-recall/))",
+          "after": "([../07.06-sessions-documentation-recall/](../07.06-sessions-documentation-recall/))",
+          "reason": "Wrong depth, same class."
+        },
+        {
+          "file": "07.01-song-release-production-board/07.01.03-production-stage-board-milestones.md",
+          "line": 142,
+          "before": "([../../07.08-delivery-readiness-qc/](../../07.08-delivery-readiness-qc/))",
+          "after": "([../07.08-delivery-readiness-qc/](../07.08-delivery-readiness-qc/))",
+          "reason": "Wrong depth, same class."
+        },
+        {
+          "file": "07.03-contributors-access-confidentiality/07.03.01-contributor-roster-role-assignment.md",
+          "line": 235,
+          "before": "- Touches **20 Fanbase** ([../../20-fanbase-community/](../../20-fanbase-community/)) and **02.01.02 Public Discography**",
+          "after": "- Touches **20 Fanbase & Direct-to-Fan** ([../../20-fanbase-direct-to-fan/](../../20-fanbase-direct-to-fan/)) and **02.01.02 Public Discography**",
+          "reason": "Stale pre-rename directory AND stale short display name; swept to the canonical domain title."
+        }
+      ],
+      "semanticImpact": "None. Every repaired link already named the correct target symbolically (07.07.02, 07.06.01, 07.08.03, domain 24, domain 20) and the surrounding prose was untouched — only the href and two stale domain titles moved. No decision, threshold, or product behaviour changed.",
+      "verification": {
+        "method": "Resolved all relative markdown links under the domain against the filesystem, before and after.",
+        "before": "601 relative links, 5 unresolvable",
+        "after": "601 relative links, 0 unresolvable",
+        "tablesTouched": 0,
+        "note": "All five edits are on prose bullet lines; no markdown table column counts were affected."
+      },
+      "openQuestionsAdded": [],
+      "canonicalSourceModified": false
+    }
+  ],
+  "crossDomainNotes": [
+    "The two rename misses (24-trust-safety -> 24-trust-safety-disputes, 20-fanbase-community -> 20-fanbase-direct-to-fan) are almost certainly not confined to domain 07 — a directory rename that left stragglers here likely left them in other domains too. A tree-wide sweep for `](../../24-trust-safety/` and `](../../20-fanbase-community/` (and for any other pre-rename domain slug) is worth running outside this shard. Not actioned: those files are owned by other agents.",
+    "The wrong-depth pattern (`../../07.0N-` used from a leaf file, where the correct form is `../07.0N-`) is a generic authoring slip, not a 07-specific one. Every domain with the same three-level layout can carry it. A cheap tree-wide guard is to resolve every relative link against disk in CI — the check that found and confirmed all five here ran in well under a second over 601 links."
+  ]
+}

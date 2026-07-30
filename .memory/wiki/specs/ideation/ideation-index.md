@@ -264,6 +264,10 @@ Numbered decisions with source references.
 
 > **Full ledger with all 734 features, paths and rationale**: [moscow-ledger.md](./moscow-ledger.md)
 > Every row links to a verified file on disk (734/734 resolved, 0 broken).
+> **Caveat on "rationale"**: the ledger's Rationale column is a *digest*, and 608 of its 734 digests
+> were hard-cut at 220 characters by the generator that wrote them. They are marked with a trailing
+> `…` and the full reasoning is intact in the leaf file each row links to — see the ledger's own
+> header note and its Q-01. Tiers, counts and paths are unaffected; only the digest tails were lost.
 
 | Priority | Count | Share |
 |---|---|---|

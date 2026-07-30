@@ -90,7 +90,7 @@ Session Attendance & Provenance**, 08.06 Pre-Flight, **08.07 Overdub Mode**, 08.
 |-------|----------|----------|----------|-----|
 | 08.01 Latency Budget & Playability | ✅ Full | ✅ Full | ⚙️ Config | ❌ None |
 | 08.02 Playable Radius & Peer Matching | ✅ Full | ✅ Full | ⚙️ Config | ❌ None |
-| 08.03 Remote Monitoring & Session Attendance | 👁️ Read-only | ✅ Full | ⚙️ Config | ❌ None |
+| 08.03 Remote Monitoring & Session Attendance | ✅ Full | ✅ Full | ⚙️ Config | ❌ None |
 | 08.04 Talkback & Cue Mixes | ✅ Full | ✅ Full | ⚙️ Config | ❌ None |
 | 08.05 Session Capture & Recall | ✅ Full | ✅ Full | ⚙️ Config | ❌ None |
 | 08.06 Session Pre-Flight & Rig Readiness | ✅ Full | ✅ Full | ⚙️ Config | ❌ None |
@@ -110,6 +110,14 @@ Session Attendance & Provenance**, 08.06 Pre-Flight, **08.07 Overdub Mode**, 08.
 > sells remote-session capability as an amenity. They configure their room's participation; they do not
 > run other people's sessions. Where an Operator runs a session, they are acting as Producer — per
 > `meta/personas.md`, personas are lenses on behaviour, not account types.
+>
+> **Every cell in this table is the widest grant any child confers — read the child matrix for the
+> per-feature truth.** The roll-up flatters 08.03 in particular: the Musician's `Full` there comes from
+> **08.03.03 Live Listener Feedback** alone (*"Can leave notes as a listener — a bandmate attending a mix
+> they are not playing on"*). On the stream itself (08.03.01) and the roster (08.03.02) the Musician is
+> `Read-only` — they are owed the fact that a stream of their performance is going somewhere, they do not
+> configure it — and on 08.03.04 they hold `Config` over their own declared playback chain and nothing
+> else. See the [08.03 Role Matrix](./08.03-remote-monitoring-session-attendance/08.03-remote-monitoring-session-attendance-index.md#role-matrix).
 
 ## Decision Log
 

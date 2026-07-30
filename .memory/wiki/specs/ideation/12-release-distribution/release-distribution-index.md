@@ -23,8 +23,10 @@ Getting finished music onto stores and streaming services — release building, 
 
 ## Children
 
-> Classified through the Node Classification Gate during `/ideate-discover` Step 3. All `[SURFACE]`
-> — breadth pass; depth is allocated by MoSCoW in Step 5.
+> Classified through the Node Classification Gate during `/ideate-discover` Step 3, where every
+> child was seeded `[SURFACE]`. The Status column below carries each child's **current** depth after
+> MoSCoW allocated it in Step 5, and it mirrors the status in that child's own header — the child
+> file is the owning statement, this column is the restatement.
 
 | # | Name | Type | Path | Status | Deep Think |
 |---|------|------|------|--------|------------|
@@ -33,9 +35,9 @@ Getting finished music onto stores and streaming services — release building, 
 | 12.03 | DSP Store & Territory Management | sub-domain | [12.03-dsp-store-territory-management/](./12.03-dsp-store-territory-management/12.03-dsp-store-territory-management-index.md) | `[BREADTH]` | 39 hypotheses (4 features) |
 | 12.04 | Release Scheduling & Windows | sub-domain | [12.04-release-scheduling-windows/](./12.04-release-scheduling-windows/12.04-release-scheduling-windows-index.md) | `[BREADTH]` | 26 hypotheses (4 features) |
 | 12.05 | Catalog Lifecycle After Release | sub-domain | [12.05-catalog-lifecycle-after-release/](./12.05-catalog-lifecycle-after-release/12.05-catalog-lifecycle-after-release-index.md) | `[BREADTH]` | 10 hypotheses (3 features) |
-| 12.06 | Content ID & UGC Claiming | sub-domain | [12.06-content-id-ugc-claiming/](./12.06-content-id-ugc-claiming/12.06-content-id-ugc-claiming-index.md) | `[BREADTH]` | 9 hypotheses (3 features) |
+| 12.06 | Content ID & UGC Claiming | sub-domain | [12.06-content-id-ugc-claiming/](./12.06-content-id-ugc-claiming/12.06-content-id-ugc-claiming-index.md) | `[SURFACE]` | 9 hypotheses (3 features) |
 | 12.07 | Identifier Assignment at Delivery | feature | [12.07-identifier-assignment-at-delivery.md](./12.07-identifier-assignment-at-delivery.md) | `[DEEP]` | 13 hypotheses |
-| 12.08 | Catalog Migration & Exit | feature | [12.08-catalog-migration-exit.md](./12.08-catalog-migration-exit.md) | `[SURFACE]` | 3 hypotheses |
+| 12.08 | Catalog Migration & Exit | feature | [12.08-catalog-migration-exit.md](./12.08-catalog-migration-exit.md) | `[PARTIAL]` | 3 hypotheses |
 
 > **Type column values:**
 > - `sub-domain` — a grouping with 2+ interacting capabilities (folder with index + CX)
@@ -70,12 +72,12 @@ Getting finished music onto stores and streaming services — release building, 
 
 | Child | Musician | Producer | Operator | Fan |
 |-------|----------|----------|----------|-----|
-| 12.01 Release Builder & Delivery Readiness | ✅ Full | ⚙️ Config | ❌ None | ❌ None |
-| 12.02 DDEX Delivery Messaging | 👁️ Read-only | ❌ None | ❌ None | ❌ None |
-| 12.03 DSP Store & Territory Management | ✅ Full | 👁️ Read-only | ❌ None | ❌ None |
+| 12.01 Release Builder & Delivery Readiness | ✅ Full | ✅ Full | ❌ None | ❌ None |
+| 12.02 DDEX Delivery Messaging | ⚙️ Config | ⚙️ Config | ❌ None | ❌ None |
+| 12.03 DSP Store & Territory Management | ✅ Full | ⚙️ Config | ❌ None | ❌ None |
 | 12.04 Release Scheduling & Windows | ✅ Full | ⚙️ Config | 👁️ Read-only | ✅ Full |
-| 12.05 Catalog Lifecycle After Release | ✅ Full | 👁️ Read-only | ❌ None | ❌ None |
-| 12.06 Content ID & UGC Claiming | ✅ Full | 👁️ Read-only | ❌ None | ❌ None |
+| 12.05 Catalog Lifecycle After Release | ✅ Full | ⚙️ Config | ❌ None | ❌ None |
+| 12.06 Content ID & UGC Claiming | ✅ Full | ⚙️ Config | ❌ None | ❌ None |
 | 12.07 Identifier Assignment at Delivery | ✅ Full | 👁️ Read-only | ❌ None | ❌ None |
 | 12.08 Catalog Migration & Exit | ✅ Full | 👁️ Read-only | ❌ None | ❌ None |
 
@@ -87,13 +89,24 @@ Getting finished music onto stores and streaming services — release building, 
 
 ### Reading the matrix — the shape of this domain
 
-- **Musician is the protagonist**, except in 12.02 (read-only) and 12.05.03 (read-only — the only
-  place in the domain where they cannot act on their own release, which is what "involuntary" means).
-- **Producer is high-power, low-authority throughout.** Their *facts* are load-bearing — the
-  attestation that clears the gate (12.01.03), the master that passes conformance (12.01.04), the
-  knowledge that settles an ownership conflict (12.06.03) — while their *permissions* are mostly
-  read-only. This is an unusual shape and it recurs in every sub-domain. Per personas.md they are
-  the trust broker; the domain depends on them and grants them almost nothing.
+- **These rows are maximums, and a maximum is often one child wide.** The 12.02 row reads `Config`
+  for both Musician and Producer solely because of 12.02.04 (MEAD enrichment, where the artist and
+  the producer genuinely hold the authoritative descriptors); the sub-domain's other three children
+  are read-only or `None` and 12.02.02 has no persona surface at all. Read a row as "the ceiling
+  somewhere inside this node", never as "what this node feels like". The per-child matrices are the
+  owning statements; this table only takes their max.
+- **Musician is the protagonist**, except in 12.02 (where their only write is a MEAD descriptor —
+  they never touch the message) and 12.05.03 (read-only — the only place in the domain where they
+  cannot act on their own release, which is what "involuntary" means).
+- **Producer is high-power, low-authority throughout.** Their *facts* are load-bearing and their
+  permissions are scoped to exactly the facts that are theirs alone: `Config` in five of the six
+  sub-domains, narrowed each time to one thing — the asset-caused rejection they and nobody else can
+  fix (12.03.03), the corrected master (12.05.02), the knowledge that settles an ownership conflict
+  (12.06.03), the session descriptors the artist does not remember (12.02.04). They reach `Full` in
+  exactly two children, and both are the same case: the readiness gate whose blocking facts only
+  they can supply (12.01.03) and asset conformance, where the fix is a re-render in their DAW
+  (12.01.04). Per personas.md they are the trust broker — the domain depends on them everywhere and
+  grants them authority over their own contribution and nothing else.
 - **Operator is `None` almost everywhere, and that is correct, not a gap.** An Operator has no
   stake in a release object. The single exception is a read-only lens on the rollout plan (12.04.04)
   where it contains a booking they are already party to via 16/17 — Medium confidence, gated by

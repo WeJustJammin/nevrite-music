@@ -88,6 +88,13 @@ The authoritative record of who owns what — the work/recording duality, splits
 > Personas from [meta/personas.md](../meta/personas.md) — referenced, never redefined.
 >
 > **Legend**: ✅ Full access · ⚙️ Configuration only · 👁️ Read-only · 📊 Reports only · ❌ No access
+>
+> **How to read a domain-level row**: each cell is the **highest access any child grants that persona** — a
+> ceiling, not a typical value. A ✅ Full here means *at least one* child is Full, never that all of them are;
+> the sub-domain Role Matrix is where the per-feature truth lives, and it is the binding one. This is why
+> 09.02 shows Operator ⚙️ Config on the strength of [09.02.03](./09.02-split-capture-agreements/09.02.03-work-for-hire-buyout.md)
+> alone, and why 09.05 shows Fan 👁️ Read-only on the strength of [09.05.03](./09.05-ai-voice-likeness-consent/09.05.03-ai-generated-content-disclosure.md)
+> alone. Read a row as permission that exists *somewhere* below it, then go find where.
 
 | Child | Musician | Producer | Operator | Fan |
 |-------|----------|----------|----------|-----|
@@ -95,13 +102,13 @@ The authoritative record of who owns what — the work/recording duality, splits
 | 09.02 Split Capture & Agreements | ✅ Full | ✅ Full | ⚙️ Config | ❌ None |
 | 09.03 Chain of Title & Rights Lifecycle | ✅ Full | 👁️ Read-only | ❌ None | ❌ None |
 | 09.04 Rights Conflicts & Disputes | ✅ Full | ✅ Full | ❌ None | ❌ None |
-| 09.05 AI, Voice & Likeness Consent | ✅ Full | ⚙️ Config | ❌ None | 👁️ Read-only |
+| 09.05 AI, Voice & Likeness Consent | ✅ Full | ✅ Full | ❌ None | 👁️ Read-only |
 | 09.06 Rights Evidence & Public Record | ✅ Full | ✅ Full | 👁️ Read-only | 👁️ Read-only |
 
 **Reading the matrix — the shape is the finding:**
 
 - **Musician** is Full everywhere. This is their domain; they are the owner, the author, the person.
-- **Producer** is Full where the work is *made* (09.01, 09.02, 09.04, 09.06) and Read-only/Config where it is *transferred* (09.03) or *consented over* (09.05). They are in the room, not on the deed.
+- **Producer** is Full where the work is *made* (09.01, 09.02, 09.04, 09.06) and Read-only where it is *transferred* (09.03). They are in the room, not on the deed. **09.05 is the instructive exception**: the Producer is ⚙️ Config on the two children that dispose of someone else's right — training consent ([09.05.01](./09.05-ai-voice-likeness-consent/09.05.01-ai-training-consent-registry.md)) and NIL ([09.05.02](./09.05-ai-voice-likeness-consent/09.05.02-voice-name-likeness-rights.md), a right held only by the person) — but ✅ Full on AI disclosure ([09.05.03](./09.05-ai-voice-likeness-consent/09.05.03-ai-generated-content-disclosure.md)), because a disclosure is a statement of what *they did*, not a consent over what someone else owns. They ran the tools; they are "usually the only person who knows", and they declare at session close. Consenting over a right you do not hold is Config; reporting a fact only you possess is Full.
 - **Operator** is ❌ None in 4 of 6. Their only genuine stakes: a studio entity holding work-for-hire over its staff engineer ([09.02.03](./09.02-split-capture-agreements/09.02.03-work-for-hire-buyout.md)), the resulting ownership it confers ([09.01.03](./09.01-rights-registry/09.01.03-master-rights-ownership.md)), and resolving a recording in the public lookup. **The explicit absence is the useful output** — do not build Operator surfaces in this domain.
 - **Fan** is ❌ None in 4 of 6, with exactly two exceptions, both outward-facing by nature: AI disclosure ([09.05.03](./09.05-ai-voice-likeness-consent/09.05.03-ai-generated-content-disclosure.md) — a disclosure nobody can see is not a disclosure) and the public lookup ([09.06.04](./09.06-rights-evidence-public-record/09.06.04-public-rights-lookup.md) — the credits-curiosity case). Per `meta/personas.md`, the Fan will not tolerate professional-tool complexity: both are separate projections, not filtered professional views.
 

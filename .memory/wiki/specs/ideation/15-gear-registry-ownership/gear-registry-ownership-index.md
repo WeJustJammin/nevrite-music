@@ -26,33 +26,35 @@ A persistent identity for every individual instrument and piece of gear that out
 ## Children
 
 > 10 children classified through the Node Classification Gate: **5 sub-domains** (folders with index + CX)
-> and **5 features** (leaf files). 21 leaf features total. All `[SURFACE]` pending Step 5 deepening.
+> and **5 features** (leaf files). 24 leaf features total — 19 inside the sub-domains (6 + 4 + 3 + 3 + 3)
+> plus the 5 flat features. Step 5 deepening has run; the Status column below restates each child's
+> own header, which is authoritative for that child.
 
 | # | Name | Type | Path | Status | Deep Think |
 |---|------|------|------|--------|------------|
 | 15.01 | Instrument Identity & Provenance | sub-domain | [15.01-instrument-identity-provenance/](./15.01-instrument-identity-provenance/) | `[BREADTH]` | 19 hypotheses (6 features) |
 | 15.02 | Stolen Gear Registry & Recovery | sub-domain | [15.02-stolen-gear-registry-recovery/](./15.02-stolen-gear-registry-recovery/) | `[BREADTH]` | 13 hypotheses (4 features) |
 | 15.03 | Service, Repair & Modification History | feature | [15.03-service-repair-modification-history.md](./15.03-service-repair-modification-history.md) | `[SURFACE]` | 4 hypotheses |
-| 15.04 | Gear Collection & Visibility | feature | [15.04-gear-collection-visibility.md](./15.04-gear-collection-visibility.md) | `[SURFACE]` | 4 hypotheses |
-| 15.05 | Valuation, Appraisal & Insurance | sub-domain | [15.05-valuation-appraisal-insurance/](./15.05-valuation-appraisal-insurance/) | `[BREADTH]` | 9 hypotheses (3 features) |
-| 15.06 | Rig Profile & Compatibility | sub-domain | [15.06-rig-profile-compatibility/](./15.06-rig-profile-compatibility/) | `[BREADTH]` | 9 hypotheses (3 features) |
-| 15.07 | Studio & Backline Asset Register | sub-domain | [15.07-studio-backline-asset-register/](./15.07-studio-backline-asset-register/) | `[BREADTH]` | 9 hypotheses (3 features) |
-| 15.08 | Custody, Loans & Consignment | feature | [15.08-custody-loans-consignment.md](./15.08-custody-loans-consignment.md) | `[SURFACE]` | 4 hypotheses — **Deep Think addition** |
-| 15.09 | Gear Discography | feature | [15.09-gear-discography.md](./15.09-gear-discography.md) | `[SURFACE]` | 4 hypotheses |
+| 15.04 | Gear Collection & Visibility | feature | [15.04-gear-collection-visibility.md](./15.04-gear-collection-visibility.md) | `[PARTIAL]` | 4 hypotheses |
+| 15.05 | Valuation, Appraisal & Insurance | sub-domain | [15.05-valuation-appraisal-insurance/](./15.05-valuation-appraisal-insurance/) | `[SURFACE]` | 9 hypotheses (3 features) |
+| 15.06 | Rig Profile & Compatibility | sub-domain | [15.06-rig-profile-compatibility/](./15.06-rig-profile-compatibility/) | `[SURFACE]` | 9 hypotheses (3 features) |
+| 15.07 | Studio & Backline Asset Register | sub-domain | [15.07-studio-backline-asset-register/](./15.07-studio-backline-asset-register/) | `[SURFACE]` | 9 hypotheses (3 features) |
+| 15.08 | Custody, Loans & Consignment | feature | [15.08-custody-loans-consignment.md](./15.08-custody-loans-consignment.md) | `[PARTIAL]` | 4 hypotheses — **Deep Think addition** |
+| 15.09 | Gear Discography | feature | [15.09-gear-discography.md](./15.09-gear-discography.md) | `[PARTIAL]` | 4 hypotheses |
 | 15.10 | Cases, Manifests & Carnet Source Data | feature | [15.10-cases-manifests-carnet-source-data.md](./15.10-cases-manifests-carnet-source-data.md) | `[SURFACE]` | 3 hypotheses |
 
 > **Type column values:**
 > - `sub-domain` — a grouping with 2+ interacting capabilities (folder with index + CX)
 > - `feature` — a leaf node describing a single capability (.md file)
 
-**Cross-cuts**: [gear-registry-ownership-cx.md](./gear-registry-ownership-cx.md) — 10 confirmed pairs, 5 rejected, 5 mechanisms escalated to the platform level.
+**Cross-cuts**: [gear-registry-ownership-cx.md](./gear-registry-ownership-cx.md) — 19 confirmed pairs (CX-01…CX-19), 6 rejected (R-01…R-06), 6 mechanisms escalated to the platform level. The counts are the CX file's own tables; an earlier 10-pair numbering is superseded and no longer resolves.
 
 ## Role Matrix
 
 | Child | Musician | Producer | Operator | Fan |
 |-------|----------|----------|----------|-----|
 | 15.01 Instrument Identity & Provenance | ✅ Full | ✅ Full | ✅ Full | 👁️ Read-only |
-| 15.02 Stolen Gear Registry & Recovery | ✅ Full | ✅ Full | ✅ Full | 👁️ Read-only |
+| 15.02 Stolen Gear Registry & Recovery | ✅ Full | ✅ Full | ✅ Full | ⚙️ Config |
 | 15.03 Service, Repair & Modification History | ✅ Full | ✅ Full | ✅ Full | ❌ None |
 | 15.04 Gear Collection & Visibility | ✅ Full | ✅ Full | ✅ Full | 👁️ Read-only |
 | 15.05 Valuation, Appraisal & Insurance | ✅ Full | ✅ Full | ✅ Full | 👁️ Read-only |
@@ -67,7 +69,7 @@ A persistent identity for every individual instrument and piece of gear that out
 > Persona definitions live in [meta/personas.md](../meta/personas.md) — referenced, never redefined here.
 > Per-role behaviour is in each feature file's **Role Lens**.
 
-**Reading the matrix — two findings worth downstream attention:**
+**Reading the matrix — three findings worth downstream attention:**
 
 1. **Musician and Producer are near-identical across this domain.** Both are gear owners registering
    objects, and the multi-hyphenate fact (personas.md) means they are frequently the same human. The
@@ -79,6 +81,14 @@ A persistent identity for every individual instrument and piece of gear that out
 2. **The Operator's row is the one that diverges** — read-only on rigs (they are the compatibility
    *target*, not an author) and full on the asset register (their business inventory). This
    asymmetry is why 15.06 and 15.07 are separate sub-domains rather than one with two modes.
+3. **The Fan's only write in this domain is a sighting.** Every row here rolls up the *most* access
+   any child grants, and 15.02 is ⚙️ Config solely because of
+   [15.02.03](./15.02-stolen-gear-registry-recovery/15.02.03-sighting-reports-recovery-coordination.md):
+   a fan browsing a marketplace can be the person who spots a flagged instrument for sale, and their
+   observation is a first-class input to the recovery flow. It is read-only on the other three
+   children ([15.02 index](./15.02-stolen-gear-registry-recovery/15.02-stolen-gear-registry-recovery-index.md)
+   Role Matrix), and the write is submitting an observation, nothing more — never the reporter's
+   contact details and never a direct line to the seller.
 
 ## Decision Log
 
@@ -121,11 +131,11 @@ A persistent identity for every individual instrument and piece of gear that out
 
 | # | Question | Owner | Deferred To |
 |---|----------|-------|-------------|
-| Q-01 | ~~Which candidate children are sub-domains vs features?~~ **RESOLVED** — 5 sub-domains, 5 features, 21 leaf features. See Children. | Agent | ✅ `/ideate-discover` Step 3 |
-| Q-02 | ~~Are any candidate children actually cross-cuts?~~ **RESOLVED** — none of the 10 candidates was a cross-cut, but 5 *mechanisms* discovered during drilling belong at the platform level. See the CX file's escalation table. | Agent | ✅ `/ideate-discover` Step 3 |
+| Q-01 | ~~Which candidate children are sub-domains vs features?~~ **RESOLVED** — 5 sub-domains, 5 features, 24 leaf features. See Children. | Agent | ✅ `/ideate-discover` Step 3 |
+| Q-02 | ~~Are any candidate children actually cross-cuts?~~ **RESOLVED** — none of the 10 candidates was a cross-cut, but 6 *mechanisms* discovered during drilling belong at the platform level. See the CX file's escalation table, which is the count's source. | Agent | ✅ `/ideate-discover` Step 3 |
 | Q-03 | **[OWNER]** **The dealer-persona gap is real.** personas.md Q-01 asked whether a professional dealer is a distinct persona or a Musician in a selling context, and said to revisit "if the Gear Role Matrices come out thin". They did not come out thin — but consignment (15.08 DT-03), appraisal (15.05.02) and a dealer's stock register (15.07 Q-02) all have an actor with no persona. The gap is not Musician-vs-Producer thinness; it is a missing fifth actor. Explicitly **not** closed by D-71, which authored counterparty profiles for licence *buyers* only: *"a dealer is a seller; the counterparty profiles describe buyers."* `meta/personas.md` Q-01 has itself been re-pointed to `/create-prd` (canonical entry `vision.md` Q-05); this row follows it. | User | `/create-prd` |
 | Q-04 | **[OWNER]** **Provenance is not authenticity.** A counterfeit with a long, genuinely-recorded chain reads as *more* trustworthy than a real instrument with no chain — so the registry, unqualified, makes fakes more saleable. Does the platform assert authenticity at all, or only record assertions and disclose that it does not verify them? A liability decision. The **disclosure half is already settled** — 15.01.04 D-02 requires the chain to state what it does not prove — but whether the platform makes any authenticity assertion at all is an owner call, carried identically at [15.01](./15.01-instrument-identity-provenance/15.01-instrument-identity-provenance-index.md) Q-03 (already `[OWNER]` → `/create-prd`). | User | `/create-prd` |
-| Q-05 | **The composed-exposure hazard needs an owner.** Public collection + public tour dates + public city = a targeting package for endemic gear theft (CX-07). No single domain can see the composition. This domain has closed its own four holes; the platform-level mechanism has no home. | User | `/create-prd-security` |
+| Q-05 | **The composed-exposure hazard needs an owner.** Public collection + public tour dates + public city = a targeting package for endemic gear theft (CX-06). No single domain can see the composition. This domain has closed its own four holes; the platform-level mechanism has no home. | User | `/create-prd-security` |
 | Q-06 | **[OWNER]** **Valuation conflict of interest.** WeJammin runs the marketplace whose comps feed the valuation and takes a fee on the resulting sales — and inflated estimates become the comps for the next estimate. Disclosure, independent method, or don't offer valuation? A values decision, not a technical one. Carried identically at [15.05](./15.05-valuation-appraisal-insurance/15.05-valuation-appraisal-insurance-index.md) Q-01 and 15.05.01 Q-01; 15.05.01 D-02 (sample size and recency rendered with the estimate) is the only mitigation so far ratified and does not answer whether the product is offered at all. | User | `/create-prd` |
 | Q-07 | **[OWNER]** **Boundary with domain 16**: a venue listing could carry a free-text gear list and satisfy most Operators. 15.07 adds serial identity, condition, valuation and custody. Is that wanted, or does 16 own a simple list and 15.07 serve a minority? This decides whether 15.07 exists. **Still open.** 16.04 (rehearsal rooms) confirmed the read-through for its own room type — backline renders from 15.07.03 filtered by 15.07.02 condition and 16.04 types no item list (16.04 D-06, owner decision DQ-15.A1). That is a **per-feature confirmation** in the sibling convention (16.02.02 D-06, 16.03.02 D-04/D-05), not an answer to this question. Carried identically at [15.07](./15.07-studio-backline-asset-register/15.07-studio-backline-asset-register-index.md) Q-01, also still open; a scope call on whether a whole sub-domain exists. | User | `/create-prd` |
 | Q-08 | **[OWNER]** **Cold start governs three of this domain's best features.** Screening needs flags that predate thefts; gear discography needs sessions that happened here; the chain needs transfers. All are worth ~zero at launch and compound thereafter. Is that an acceptable shape, or does something need seeding? Accept-the-slow-burn vs seed is a product-strategy call the owner takes; only once it is taken can the mechanics follow (external-registry federation is already queued at [15.02](./15.02-stolen-gear-registry-recovery/15.02-stolen-gear-registry-recovery-index.md) Q-02 → `/create-prd`). | User | `/create-prd` |

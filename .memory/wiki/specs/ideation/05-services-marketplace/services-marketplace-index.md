@@ -2,7 +2,7 @@
 
 > **Level**: domain
 > **Parent**: [WeJammin Ideation Index](../ideation-index.md)
-> **Status**: [BREADTH]
+> **Status**: [BREADTH] — all 7 sub-domains and 32 leaves enumerated; **deepening is partial**: 10 leaves `[DEEP]`, 13 `[PARTIAL]`, 9 `[SURFACE]`. Each leaf's own file is authoritative for its status; the Children table below restates its sub-domain index.
 > **Last updated**: 2026-07-16
 > **Novelty**: `in-source` | **Priority**: `core`
 
@@ -26,7 +26,8 @@ Buying and selling human music work — mixing, mastering, production, remote se
 > **Classification complete.** 25 sweep candidates ran through the Node Classification Gate:
 > 24 became nodes, 1 routed to a cross-cut, 2 were narrowed against other domains' boundaries.
 > 8 Deep Think additions were created that the sweep did not surface. Result: **7 sub-domains,
-> 32 leaf features**, all `[SURFACE]`.
+> 32 leaf features**, all `[SURFACE]` at the close of the breadth pass. Deepening since has moved
+> 10 to `[DEEP]` and 13 to `[PARTIAL]`; 9 are still `[SURFACE]`, including all three of 05.07's.
 
 | # | Name | Type | Path | Status | Deep Think |
 |---|------|------|------|--------|------------|
@@ -36,7 +37,7 @@ Buying and selling human music work — mixing, mastering, production, remote se
 | 05.04 | Delivery, QC & Acceptance | sub-domain | [05.04-delivery-qc-acceptance/](./05.04-delivery-qc-acceptance/) | `[BREADTH]` | 12 hypotheses across 4 features |
 | 05.05 | Multi-Party Supply | sub-domain | [05.05-multi-party-supply/](./05.05-multi-party-supply/) | `[BREADTH]` | 10 hypotheses across 4 features |
 | 05.06 | Rights, Warranties & Transfer | sub-domain | [05.06-rights-warranties-transfer/](./05.06-rights-warranties-transfer/) | `[BREADTH]` | 15 hypotheses across 5 features |
-| 05.07 | Custodial & Physical Services | sub-domain | [05.07-custodial-physical-services/](./05.07-custodial-physical-services/) | `[BREADTH]` | 9 hypotheses across 3 features |
+| 05.07 | Custodial & Physical Services | sub-domain | [05.07-custodial-physical-services/](./05.07-custodial-physical-services/) | `[SURFACE]` | 9 hypotheses across 3 features |
 
 > **Type column values:**
 > - `domain` — a top-level grouping within a surface (folder with index + CX)

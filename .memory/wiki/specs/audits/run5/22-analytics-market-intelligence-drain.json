@@ -1,0 +1,92 @@
+{
+  "shard": "22-analytics-market-intelligence",
+  "run": "run5",
+  "findingsProcessed": 4,
+  "counts": { "mechanical": 3, "owner": 1, "not-a-defect": 0 },
+  "items": [
+    {
+      "findingId": "22-analytics-market-intelligence#004",
+      "unit": "22.01-source-connections-ingestion",
+      "severity": "warning",
+      "dimension": 3,
+      "classification": "mechanical",
+      "canonicalSource": ".memory/wiki/specs/ideation/22-analytics-market-intelligence/22.01-source-connections-ingestion/22.01.03-ingestion-health-gaps-freshness.md:75-76 — \"Let `dominant-loss` = the largest single-source share of the rollup's total in the last **complete** prior window, among sources currently in `A`'s complement (i.e. missing/broken/terminal/claim-only).\" The complement of `A` is canonically enumerated as missing/broken/terminal/claim-only and does not contain `degraded`; corroborated in the same file at :60-62 (\"`degraded` never opens a gap — the data is late, not missing\"), :40, :105, :135 (\"deliberately no alarm\"), :157 (\"only `broken`/`terminal`, never `degraded`\"), and at domain level in analytics-market-intelligence-cx.md:103 (\"Degraded/transient never notify\").",
+      "summary": "Set `A` positively enumerated `fresh` or `stale`, silently placing `degraded` in the loss complement — contradicting the same paragraph's complement gloss (missing/broken/terminal/claim-only) and the file's four other statements that `degraded` is lateness, not absence, and raises no alarm. Under the literal reading one HTTP 429 could drop `c` below 0.80, or make the rate-limited source the dominant-loss, and flip a headline number into a refusal: the loudest alarm the feature can emit, triggered by the one state the file insists must be silent. Rewrote the definition of `A` as the gap-based test the rest of the file already applies — no open gap overlapping the window, attested value, i.e. `fresh`, `stale`, or `degraded` — and added the rationale keyed to the untouched complement gloss and D-07's cry-wolf reasoning. Thresholds, D-06 and the complement gloss are unchanged.",
+      "filesChanged": [
+        "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/22-analytics-market-intelligence/22.01-source-connections-ingestion/22.01.03-ingestion-health-gaps-freshness.md"
+      ],
+      "edits": [
+        "Coverage Rule (:72-84) — `A` redefined as sources with no open gap overlapping the window contributing an attested value, i.e. state `fresh`, `stale`, or `degraded`; rationale paragraph added citing the complement gloss, the gap rule, and D-07.",
+        "Edge Cases (:new row after the two existing **Partial data** rows) — concrete case: 1 of 5 sources rate-limited mid-window, no gap open → `c = 1.0`, dominant-loss = 0 → number states plainly; 3 columns preserved.",
+        "Open Questions — Q-04 added (4 columns preserved) for the sub-question the file genuinely does not answer."
+      ],
+      "residualQuestion": {
+        "id": "22.01.03 Q-04",
+        "owner": "User",
+        "deferredTo": "/create-prd-compile",
+        "why": "`degraded` has no age exit — the state machine leaves it only on a success, a 401/403 or a connector withdrawal — and it never opens a gap, so a source failing transiently forever now stays inside `A` indefinitely. Two days of 429s is lateness; four weeks of 5xx is absence wearing lateness's clothes, and the Coverage Rule cannot tell them apart. D-08's \"absence of evidence is not freshness\" points away from indefinite attestation but sets no trigger. Filed as a threshold question on the same record as Q-03 rather than resolved by invention."
+      }
+    },
+    {
+      "findingId": "22-analytics-market-intelligence#011",
+      "unit": "22.06-streaming-fraud-detection",
+      "severity": "warning",
+      "dimension": 7,
+      "classification": "owner",
+      "canonicalSource": "None exists. Searched the whole shard for a governing rule: 22.06 index D-01/D-02/D-03 and Q-01/Q-02/Q-03 do not cover it; 22.05.02 (Alerts & Digests) D-01 establishes the shared noise budget but enumerates no alert classes and leaves defaults open at its own Q-02; the domain index D-06/D-07 and Q-04 are about the celebration path and monetisation. The behaviour was never specified by anyone.",
+      "summary": "Whether a deteriorating vendor score warns artists is deferred in a closed circle: 22.06.02's edge case pointed at `#CX-01` Q4, and CX-01 Q4 was itself `[PENDING — Step 5]` on a stage that has since completed — while the same file's Role Lens promises the warning as fact. No Open Question in either file covered it. Classified OWNER: nobody ever specified it, it creates a new outbound message class against a named non-user business, and it spends a shared noise budget. I did not decide it. I did break the circle and make the gap visible: the edge case now reads **Unspecified** and points at a real tracked question, the Role Lens promise is marked conditional on it, the CX entry re-points at the same question instead of at the edge case, and 22.06.02 Q-05 records the decision with owner User and deferral to /create-prd.",
+      "ownerBrief": "DECISION NEEDED — does a deteriorating promo-vendor risk score send a warning, and to whom?\n\nWHERE IT SITS: 22.06.02 Promo Vendor Risk Scoring (feature status [SURFACE]; the domain's only `wont` proposal per its DT-01, and 22.06 as a whole is listed \"Contested\" in the domain index). So this is not a v1 build-blocker — but it is a promise currently made to the user in writing, and it should be settled before the feature is ever scheduled.\n\nTHE CONTRADICTION AS FOUND: the Role Lens told the Musician they get \"a warning if a vendor they've used deteriorates\". The Edge Cases table said only \"Arguably owed a warning\" and deferred to CX-01 Q4. CX-01 Q4 deferred to Step 5, which has completed without deciding. Each pointer led to the other; the feature promised a behaviour no part of the spec defined.\n\nTHREE THINGS TO DECIDE:\n\n1. Does the warning exist at all? Arguments for: the sub-domain's D-01 is explicit that \"the product is the warning, not the detection\" — the artist's actionable moment is before a distributor strike. A score that silently worsens while the artist's money is with that vendor delivers the detection and withholds the product. Arguments against: DT-02 already names 22.06.02 as the domain's highest legal-exposure feature — the vendor is a real business, not our user, who never consented to be measured and can afford a lawyer. An observed-coincidence rate sitting on a page a user chose to visit is one exposure profile; the same claim pushed unrequested into that user's inbox is a materially louder one, and it is the version that gets screenshotted and forwarded to the vendor.\n\n2. If it exists — who receives it? The two source files disagree, and the difference is a different product:\n   - Live campaigns only (CX-01 Q4's framing): a narrow, time-critical \"you can still cancel this\". Small volume, high value per message, closest to D-01's actionable-moment logic.\n   - Anyone who ever used the vendor (what the Role Lens actually promises): a standing reputational feed about businesses the artist has finished dealing with. Much higher volume, mostly unactionable — the campaign is over and the money is spent — and it re-notifies about a third party's reputation indefinitely.\n   My read: if you build it at all, live campaigns only. The wider version spends the noise budget on messages the recipient can do nothing about, which is exactly the failure 22.05.02 D-01 exists to prevent. But this is your call, not mine, and the Role Lens is currently written for the wider one.\n\n3. What does the message actually say? D-03 (sub-domain) forbids accusation — \"detects and warns; never accuses\". D-01/D-02 (feature) require observed coincidence with sample size attached. A warning has to survive being read by the vendor's lawyer, which in practice means it can say \"the observed coincidence rate for this vendor has moved from 6 of 30 to 22 of 34 campaigns\" and cannot say anything resembling a recommendation to cancel — even though cancelling is the action the warning exists to enable. Worth confirming you are comfortable with a warning that deliberately stops short of advice.\n\nCOST IF YOU SAY YES: this is a new alert class, and 22.05.02 D-01 is explicit that alerts and digests share ONE noise budget across the whole platform surface — \"independently-reasonable rules collectively mute the channel, taking the fraud warning with them\". Adding this class competes directly with 22.06.01's anomaly alerts, which are the higher-value message from the same sub-domain.\n\nCOST IF YOU SAY NO: acceptable and cheap — but the Role Lens must then be corrected, because it currently promises the warning. I left that line marked conditional rather than deleting the promise, so whichever way you decide, one edit closes it.\n\nTRACKED AT: 22.06.02 Q-05, owner User, deferred to /create-prd. Related and worth deciding on the same sitting: Q-01 (does a vendor get a right of reply?) and the GDPR/defamation record the domain CX already schedules for /create-prd-security — a push notification about a non-user's reputation is squarely inside that assessment.",
+      "filesChanged": [
+        "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/22-analytics-market-intelligence/22.06-streaming-fraud-detection/22.06.02-promo-vendor-risk-scoring.md",
+        "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/22-analytics-market-intelligence/22.06-streaming-fraud-detection/22.06-streaming-fraud-detection-cx.md"
+      ],
+      "edits": [
+        "22.06.02 Role Lens (:20) — Musician warning promise marked conditional on Q-05 rather than stated as fact; 3 columns preserved. No behaviour decided.",
+        "22.06.02 Edge Cases (:57) — `[PENDING — Step 5]` / \"See #CX-01 Q4\" replaced with **Unspecified** + pointer to Q-05; 3 columns preserved.",
+        "22.06.02 Open Questions — Q-05 added (owner User, /create-prd), 4 columns preserved.",
+        "22.06 CX-01 synthesis question 4 (:36) — `[PENDING — Step 5]` replaced with a pointer to 22.06.02 Q-05, breaking the circular deferral. Question left open."
+      ],
+      "notDecided": "Whether the warning exists, its audience, and its wording are all untouched — those are the owner's."
+    },
+    {
+      "findingId": "22-analytics-market-intelligence#013",
+      "unit": "22.02-external-identity-catalog-matching",
+      "severity": "warning",
+      "dimension": 8,
+      "classification": "mechanical",
+      "canonicalSource": "Disk: the sub-domain is 22.08-credit-linked-performance/ and the feature file is 22.08.03-verified-performance-proof-service-listings.md. The tree's own convention for this exact target appears twice: 22.01.04-manual-file-based-metric-import.md:83 and 22.05.03-report-sharing-export.md:87 both render it as \"**22.08.03 Verified Performance Proof** ([22.08.03](../22.08-credit-linked-performance/22.08.03-verified-performance-proof-service-listings.md))\".",
+      "summary": "Dangling cross-reference: `../22.08-credit-rollup-proof/` does not resolve — a pre-rename directory name that was never swept. Repointed to the real file path and aligned the label with the canonical feature title used by both sibling references. The \"why\" clause and the Q-01 citation are unchanged.",
+      "filesChanged": [
+        "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/22-analytics-market-intelligence/22.02-external-identity-catalog-matching/22.02.01-external-artist-profile-matching-claiming.md"
+      ],
+      "edits": [
+        ":119 — \"**22.08.03 Exported Proof** ([22.08.03](../22.08-credit-rollup-proof/))\" → \"**22.08.03 Verified Performance Proof** ([22.08.03](../22.08-credit-linked-performance/22.08.03-verified-performance-proof-service-listings.md))\"."
+      ]
+    },
+    {
+      "findingId": "22-analytics-market-intelligence#014",
+      "unit": "22.08-credit-linked-performance",
+      "severity": "warning",
+      "dimension": 8,
+      "classification": "mechanical",
+      "canonicalSource": "Disk: the sub-domain directory is 22.06-streaming-fraud-detection/ with index 22.06-streaming-fraud-detection-index.md. Sibling convention for sub-domain-level references: 22.03.01:87, 22.03.03:78, 22.04.01:88 and 22.07.02:70 all render it as \"([22.06](../22.06-streaming-fraud-detection/22.06-streaming-fraud-detection-index.md))\".",
+      "summary": "Dangling cross-reference: `../22.06-fraud-anomaly/` does not resolve. Repointed to the sub-domain index using the form the other four references in this shard use, and aligned the label to the canonical sub-domain title. The \"why\" clause and the cx `R-02` citation are unchanged.",
+      "filesChanged": [
+        "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/22-analytics-market-intelligence/22.08-credit-linked-performance/22.08.01-contribution-catalog-performance.md"
+      ],
+      "edits": [
+        ":126 — \"**22.06 Fraud / Anomaly** ([22.06](../22.06-fraud-anomaly/))\" → \"**22.06 Streaming Fraud Detection** ([22.06](../22.06-streaming-fraud-detection/22.06-streaming-fraud-detection-index.md))\"."
+      ]
+    }
+  ],
+  "verification": {
+    "danglingRelativeLinksInShard": 0,
+    "markdownTableColumnCounts": "unchanged in every edited file (header-vs-row check across all tables in all 5 touched files)",
+    "canonicalSourcesEdited": "none — 22.01.03's gap rule, complement gloss, D-06 and all thresholds untouched; 22.06 D-01/D-02/D-03 untouched"
+  },
+  "crossDomainNotes": [
+    "22.05.02 Q-03 (Agent, /create-prd-architecture) asks whether the platform-wide notification cross-cut supports a per-domain noise budget or whether every domain independently spends the same user's tolerance. 22.06.02 Q-05 (added this pass) is a new alert class charged against that same budget. If Q-03 resolves to 'no shared budget', 22.05.02 D-01 is — in its own words — 'locally correct and globally useless', and Q-05's cost argument weakens considerably. Both belong on one record. 22.05 is another agent's shard; no edit made there.",
+    "22.01.03 Q-04 (added this pass, User, /create-prd-compile) sets a bound on how long a source may sit in `degraded` before it stops counting as attested coverage. 22.08.01:51-58 names 22.01.03's Coverage Rule as 'the sole authority' for whether the credit-linked rollup may state a number, so Q-04's answer directly governs 22.08 output. 22.08 is inside this shard and needs no edit — the authority pointer already resolves correctly — but /create-prd-compile should answer Q-03 and Q-04 together since both are constants on the same gate.",
+    "22.06.02 Q-05's legal half (an unrequested outbound message carrying a reputational claim about a named non-user business) is inside the scope of the GDPR/defamation assessment the domain CX already schedules for /create-prd-security alongside 22.03.03 DT-02 and 22.06.02 DT-02. analytics-market-intelligence-cx.md is the shard's own file but sits above the sub-domains; no edit was made there this pass."
+  ]
+}

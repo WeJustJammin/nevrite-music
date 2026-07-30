@@ -1,0 +1,117 @@
+{
+  "domain": "01-identity-profiles-organizations",
+  "verdicts": [
+    {
+      "findingId": "01-identity-profiles-organizations#001",
+      "upheld": true,
+      "finalSeverity": "warning",
+      "refutationReason": "not-refuted",
+      "reason": "All quotes verify verbatim. 01.01.02:152 (D-04, [DEEP], 2026-07-23) and 01.01.02:165 close Q-01 — aliases are single-owner by construction — and identity-profiles-organizations-index.md:123 ratifies the same at domain level (Q-08 RESOLVED). 01.01.02:135 states the correction explicitly: 'Since aliases are single-owner (D-04), CX-02's shared-alias race condition and its permission-intersection question both dissolve — two people can never act as one alias.' 01.01.03 ([DEEP], same 2026-07-23 date) nonetheless carries three unmarked sites treating shared aliases as live and Q-01 as open: :34 admits 'shared aliases, subject to 01.01.02 Q-01' in the context derivation, :123 specifies 'shared aliases get the same presence indicator | Presence indicator on shared-alias contexts', and :179 calls the collision 'fresh evidence for their Q-01'. I grepped 01.01.03 for any reference to D-04 or single-owner: none exists (its own D-04 at :199 is about reattribution, unrelated). The correction is in the tree and was not applied. Downgraded from blocking to warning: the two statements are not strictly incompatible (the presence-indicator rule holds vacuously over an empty set) and a ratified RESOLVED decision plainly outranks a reference to a question stated as closed, so an implementer has an unambiguous tie-break. Still upheld because 01.01.03 attaches concrete shippable behaviour (presence indicators, concurrent occupancy, alias-context derivation admitting two owners) to a party type D-04 abolished, at three sites, with no marker on any."
+    },
+    {
+      "findingId": "01-identity-profiles-organizations#002",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "Quotes verify, but both halves dissolve on the surrounding text. (a) Enum names: 01.03.01:71 itself bridges them — 'an ownerless org is unadministrable (01.03.03 D-04). See domain CX-06' — and 01.02.02:249 D-08 makes the ownership axis (`unclaimed`/`owned`/`ownerless`) explicitly orthogonal to lifecycle state, so `ownerless` is the ownership enum and 'Unadministrable' at 01.03.01:114 is a row in that file's lineup-surface States table, not a competing enum value. (b) 'Frozen': 01.03.01:114's cell says 'no one can act for this org' — the org's own agency — while 01.02.02:163 and identity-profiles-organizations-cx.md:305 say the org is not frozen commercially. identity-profiles-organizations-cx.md:314 answers the load-bearing question outright and without any marker: 'An incoming booking arriving while the org is `ownerless` — the org must still accept it; who settles it waits on succession.' That is fully consistent with 01.03.01 (accepting is the counterparty's act; settling requires acting for the org and waits). The domain CX is [DEEP] with owner ratifications propagated (identity-profiles-organizations-cx.md:5) and 01.03.01 already points readers to it. No implementer is forced to invent the booking behaviour."
+    },
+    {
+      "findingId": "01-identity-profiles-organizations#003",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "tracked-deferral",
+      "reason": "Quotes verify, but the authority question is tracked with an owner and a live target at 01.03.03:125 Q-02 ('Can a mandate be scoped per-capability on a multi-type org... | Agent | `/create-prd-security`') and mirrored at 01.02.01:87 (routed to Q-04) and 01.03-membership-representation-mandate-index.md:58. 01.01.03:129 does not pre-answer it: read in full with its neighbour at :128 ('Mandate is narrow (can read the band's inbox, cannot spend) → unavailable actions are absent, not shown-and-denied'), :129 applies that same general surface rule and says so — 'identical to the narrow-mandate row above'. Its normative content is 'the switcher lists parties, not capabilities; one org = one context', which is the switcher's own scope and contradicts nothing in 01.02.01. The 'shop surfaces present, venue surfaces absent' cell is the rendering consequence conditional on such a mandate existing, not an assertion that per-type mandates exist."
+    },
+    {
+      "findingId": "01-identity-profiles-organizations#004",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "All four cited lines verify (01.01-person-identity-roles-cx.md:53, :54, :56, :74), but the finding concedes and I confirmed that three of the four are dead: the orphaned-drafts pending is answered twice in children that name the CX note — 01.01.02:70 E-06 ('This answers the orphaning risk flagged in sub-domain CX-02') and 01.01.03:131 ('resolves the CX-02 §2 pending') — and the two shared-alias entries (:54, :56) are voided by 01.01.02:152 D-04, which is already the substance of finding #001 and is not independently chargeable here. The only residual is :74, the legal-name-change counterparty notification. That sits on 01.01.04, whose own header (01.01.04-legal-identity-vs-public-identity.md:5) declares `[PARTIAL]` — the file is self-declared not-yet-deepened, so a `[PENDING — Step 5]` against it is an in-band marker, not an expired one. A single unowned notification-fan-out line on an explicitly incomplete file does not force product invention."
+    },
+    {
+      "findingId": "01-identity-profiles-organizations#005",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "All three markers verify (01.02-organizations-entity-model-cx.md:66, :34, :35), but none forces invention. (1) :66 is resolved by 01.02.02:258 D-17, which names it verbatim — 'DT-15 — resolves the sub-domain CX file's sharpest open question' — and states the rule: one lifecycle state, on the party. (2) :34 is the per-type mandate question, tracked with an owner and target at 01.03.03:125 Q-02 (Agent → `/create-prd-security`) and at 01.02.01:87 Q-04. (3) :35 is not an open question at all — the line states the behaviour affirmatively, 'Type addition notifies members (their org gained a capability)', and the trailing marker is a confirm-flag on a stated rule. Two competent implementers read 'notifies members' and converge."
+    },
+    {
+      "findingId": "01-identity-profiles-organizations#006",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "Quotes verify at 01.02-organizations-entity-model-cx.md:32, 01.02.01:110 and 01.02.01:166. But this is the opposite of a silent contradiction: the child that owns organization attributes names the offending sentence exactly and states the correct rule — 01.02.01:110 DT-04 'the collision is a symptom of under-qualified attributes, not a naming clash', with a `scope` property distinguishing party-scoped from type-scoped attributes, and 01.02.01:166 records the reconciliation for Step 6 including the explicit note that parent files were not edited. Attribute modelling is owned by 01.02.01, not by a cross-cut synthesis file, and any implementer building the attribute model reads the owning file. The failure mode described (collapsing a studio hourly rate and a venue hire fee) requires reading only a synthesis file while ignoring the file that owns and explicitly corrects it."
+    },
+    {
+      "findingId": "01-identity-profiles-organizations#007",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "no-real-divergence",
+      "reason": "Quotes verify — the ceiling sentence is at the tail of the long line 01.03-membership-representation-mandate-cx.md:69, and :92 and :81 are as quoted. But neither claimed invention is open. (a) The union arithmetic is stated, not asked: ':69 reads 'The union is deliberately not additive beyond the ceiling either — the higher of two value ceilings applies, not their sum', with a trailing `[PENDING — Step 5: confirm]` — a confidence flag on a stated rule, not a blank. Both implementers apply 'higher, not sum'. The genuinely open adjacent item, the representation edge's default ceiling, is tracked with an owner at 01.03.03:127 Q-04 [OWNER]. (b) :92 likewise states its rule outright: 'the first authorised response wins and the second sees it resolved'. (c) The expiry-warning item at :81 is a self-labelled gap in a notification-timing behaviour, unowned but downstream-shapeable; 01.03.02:91 D-04 fixes the substantive rule (expiry removes the acting context automatically). No divergence with product consequence."
+    },
+    {
+      "findingId": "01-identity-profiles-organizations#008",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "The row verifies at 01.04.02-name-trademark-ownership.md:48, and 01.01.02:152 D-04 plus identity-profiles-organizations-index.md:123 (Q-08 RESOLVED) do close the question it is predicated on. But the row is explicitly conditional — 'Band is a shared alias rather than an org (01.01.02 Q-01)' — and the referenced question is marked RESOLVED in bold in two places, so the branch is visibly unreachable and no implementer builds a governance-less name-ownership path. The file additionally declares `[SURFACE]` (01.04.02:5, last updated 2026-07-16) and is listed `[SURFACE]` in its parent's Children table (01.04-band-ensemble-governance-index.md:21), so its `[PENDING — /ideate-discover Step 5 deepening]` marker is in-band for a node deepening has not reached. This is a stale cross-reference in an undeepened file, not a forced invention."
+    },
+    {
+      "findingId": "01-identity-profiles-organizations#009",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "All four rows verify (01.04.04:46, :49; 01.04.01:51, :52). Two refutations compound. First, all three files declare `[SURFACE]` in their own headers (01.04.01:5, 01.04.02:5, 01.04.04:5) and are listed `[SURFACE]` in the parent Children table (01.04-band-ensemble-governance-index.md:20-23) — deepening has not run on this sub-domain, so `[PENDING — Step 5 deepening]` is a live in-band marker, not an expired one. Second, the item the finding calls a self-contradiction is answered in the same file: 01.04.04:95 Q-02 is struck through and RESOLVED — 'they are told who it moved from and to, at the moment it moves, and yes: the same one-click exit they always had' — with the follow graph routed to domain 20 (20.01.05). A reader who consults the file's own Open Questions table, which is the normal path, gets the answer."
+    },
+    {
+      "findingId": "01-identity-profiles-organizations#010",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "All five CX lines verify. The finding itself concedes two are closed by children that name the notes verbatim — 01.05.02:234 D-11 'Answers sub-domain CX-01 note 4' and 01.05.02:231 D-08 'Closes the gap left open at sub-domain CX-02 note 3' — and the Q-01 predication at :71 is stale against 01.05-profile-claiming-verification-index.md:57 (RESOLVED). The two residuals are derivable from stated rules rather than invented: a contested party is frozen (01.05.03:38 — 'Weak or absent evidence still freezes the party'), which settles whether a merge proceeds against a contested shadow; and 01.05.02's tier thresholds condition attester weight on independence and tier, not on the attester's own contest state, so the default is unchanged. 01.05.03 carries six open questions (:126-:131), every one with an owner and a target, which is what live tracking in this unit looks like — these two edge-race notes are not of that class."
+    },
+    {
+      "findingId": "01-identity-profiles-organizations#011",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "Quotes verify at 01.06-portfolio-media-epk-cx.md:86 and :54. The primary claim self-refutes: the alias-linkage leak is resolved twice, by children that name the cross-cut — 01.06.01:215 D-13 ('The public page aggregates only the aliases whose public linkage is on. Fail closed... Resolves domain CX-04's flagged leak from this side') and 01.06.02:216 D-07, which supplies a testable invariant ('nothing derived from a privately-linked alias may vary observably on the public portfolio'). A stale synthesis-summary line is documentation drift, not an ambiguity. The residual at :54 is not open either — the line states its answer and its reasoning ('Do the credited parties know their credits are being used in someone else's pitch? Probably not, and probably fine — but unstated'), so both implementers ship no fan-out, and notification fan-out on an EPK open event is in any case shaped downstream."
+    },
+    {
+      "findingId": "01-identity-profiles-organizations#012",
+      "upheld": true,
+      "finalSeverity": "warning",
+      "refutationReason": "not-refuted",
+      "reason": "Verified and genuinely unowned. 01.06-portfolio-media-epk-cx.md:53 states 'A band EPK foregrounding a member's personal credits is a real and unmodelled question' with no marker, no owner and no deferral target. I checked the two files that could own it. 01.06.03 owns the EPK and addresses only who may send (:53, 'It is the band pitching; sending requires a mandate'); its three open questions (:103 RESOLVED, :104 exportable artifact, :105 share-link expiry) do not touch composition, and it is `[PARTIAL]`. 01.06-portfolio-media-epk-index.md:57-59 likewise carries nothing on it. The only adjacent rule, 01.06.02:144, bars the inverse direction (no roll-up from band credit to member credit) and is silent on band-EPK composition. The second half compounds it: 01.06.02:197 calls the human-scoped EPK's per-recipient alias disclosure 'unmodelled', and D-07's fail-closed invariant at :216 is scoped to the public portfolio, so it does not reach a named-recipient disclosure. Two consent/privacy questions with no owner and no target."
+    },
+    {
+      "findingId": "01-identity-profiles-organizations#013",
+      "upheld": true,
+      "finalSeverity": "warning",
+      "refutationReason": "not-refuted",
+      "reason": "Verified against the locked constraint, which settles it. meta/constraints.md:248-249 records 'Primary market: UNITED STATES to start', :353 states 'Exactly one profile is authored at launch: `US`' with every other territory unauthored, and :267 says outright 'US has no federal 14-day withdrawal right (unlike EU) — returns are policy-driven per seller'. 01.08 (`[PARTIAL]`, last updated 2026-07-17, i.e. before the 2026-07-18 US-first confirmation) states the EU/UK regime and its 14-day withdrawal as operative at :10 and makes the classification a hard fail-closed listing precondition at :85 D-04, with no marker anywhere on those normative statements. Its two later-dated siblings both rewrote themselves for exactly this — 01.07:12 D-06 and 01.02.01:155 D-14, each citing constraints.md's US-first revision — so the correction exists and 01.08 was not touched. Its Q-02 (:93, User → `/create-prd-security`) asks only whether classification *varies* by jurisdiction; nothing states which regime is operative at launch. The 14-day figure also leaks into user-facing copy at 01.02.01:82 while 01.02.01:163 Q-03 says no source states which floors apply. Warning rather than blocking: the launch profile is unambiguous once constraints.md is read, so the defect is an unrefreshed file rather than an unanswerable question."
+    },
+    {
+      "findingId": "01-identity-profiles-organizations#014",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "no-real-divergence",
+      "reason": "The mismatch is real but inconsequential. identity-profiles-organizations-index.md:38-40 lists 01.07/01.08/01.09 as `[SURFACE]` while all three declare `[PARTIAL]` (01.07:5, 01.08:5, 01.09:5) — but both values sit below any consumption threshold, so no downstream stage gating on 'is this node specified enough' behaves differently between them. The other two limbs fail outright. Domain index `[BREADTH]` (:5) versus domain CX `[DEEP]` (identity-profiles-organizations-cx.md:5) compares two different nodes: the CX status describes cross-cut synthesis depth, and its own text scopes itself ('sub-domain cross-cuts synthesised'). And the sub-domain indexes at `[BREADTH]` are correct roll-ups, not stale: 01.01 has a `[PARTIAL]` child (01.01.04:5), 01.04's children are `[SURFACE]` (01.04-band-ensemble-governance-index.md:20-23), so those units are genuinely not deep. The finding also concedes every other column matches disk."
+    },
+    {
+      "findingId": "01-identity-profiles-organizations#015",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "The three markers verify (identity-profiles-organizations-cx.md:77, :187, :325), and two of them are the same item cross-referenced to each other. But the substance is determined by a stated decision: 01.08:82 D-01 fixes classification as 'a party attribute owned by identity, not a listing attribute'. A party attribute applies to that party's listings as a class, so a reclassified trader's listings carry trader details — there is no per-listing grandfathering to invent, and the surrounding disclosure rule (01.08:86 D-05, address publication disclosed prominently before listing) governs what the user is told. The disposition that triggers the reclassification is tracked with an owner and a target at 01.08:92 Q-01 ([OWNER], User → `/create-prd`), and 01.08:43 carries the matching edge case with its own `[PENDING — Q-01 owner decision]` marker. The remaining defect is an expired deferral target on a reconciliation file, not an unanswered product question."
+    },
+    {
+      "findingId": "01-identity-profiles-organizations#016",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "downstream-detail",
+      "reason": "All four lines verify (01.07:49, :55, :56, :79). But the ideation-level commitments are stated and testable: a reminder at 60 days before expiry (:49), the badge flipping to 'expired {date}' rather than vanishing (:55), and the affected booking flagged to the parties who relied on it (:56, per D-02). What the finding wants — how many reminders after the 60-day mark, at what intervals, on what channels, and whether they continue past expiry — is notification cadence, which is settled in BE/FE specs, not in ideation. The genuinely product-level question on this path, whether the platform also blocks new bookings on a lapse, is explicitly tracked with an owner at 01.07:106 Q-01 (User → `/create-prd-security`), and :56 marks that fork in-line. No implementer is forced to invent product behaviour from 'escalating'."
+    }
+  ]
+}

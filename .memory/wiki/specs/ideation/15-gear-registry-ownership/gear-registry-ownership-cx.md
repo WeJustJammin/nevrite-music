@@ -2,7 +2,7 @@
 
 > **Level**: domain
 > **Scope**: Connections between children of [Gear Registry & Ownership](./gear-registry-ownership-index.md)
-> **Status**: [DEEP] — 10 children; 19 intra-domain cross-cuts synthesised, 6 pairs rejected, 5 mechanisms escalated to the platform level.
+> **Status**: [DEEP] — 10 children; 19 intra-domain cross-cuts synthesised, 6 pairs rejected, 6 mechanisms escalated to the platform level.
 > **Last updated**: 2026-07-18
 
 ## Reading this file
@@ -158,7 +158,7 @@ describe already-registered gear, gutting it at cold start (Q-08).
 
 **Synthesis questions answered**:
 1. **Shared state conflict**: Discography writes session-link events; identity owns the chain. No merge — links are appended.
-2. **Trigger chain**: A `observed` attestation mints no ownership claim; it appends a session-link event. A new link does **not** trigger revaluation (see CX-08 in the old numbering / the deliberate half-connection to valuation).
+2. **Trigger chain**: A `observed` attestation mints no ownership claim; it appends a session-link event. A new link does **not** trigger revaluation — the provenance premium is *surfaced, never priced* (15.05.01 DT-03), and the claim-pack path is severed outright at `#R-04`. No CX pair records valuation ↔ discography, and that absence is the deliberate half-connection, not an omission.
 3. **Permission intersection**: The link inherits the credit's visibility (15.09 D-02); the chain must never leak a hidden session. `observed`/`held` mints are rate-limited (5/account/24h) against fabrication.
 4. **Notification fan-out**: A near-collision at mint notifies the existing record-holder.
 5. **State transition conflict**: A disputed credit (domain 02) changes a chain fact — the chain renders the disputed state honestly, never as clean.

@@ -60,19 +60,27 @@ Three things materially changed the picture, and they are recorded as D-02, D-03
 ## Children
 
 > 8 children from 12 candidates: 6 sub-domains, 2 features, plus 1 Deep Think addition (21.09).
-> All `[SURFACE]` — classified and outlined, not yet deepened.
+> The Status column mirrors each child's own header — it is not a summary and never overrides the
+> node. Five of the six sub-domains have completed their breadth pass and read `[BREADTH]`; 21.08
+> is still `[SURFACE]`. The two features track [ideation-index.md](../ideation-index.md)'s depth
+> allocation exactly, because depth is **allocated by MoSCoW rather than spread evenly** (Should →
+> `[PARTIAL]`, Could → `[SURFACE]`): 21.07 and 21.09 are `Should` and read `[PARTIAL]`, 21.06 is
+> `Could` and stays `[SURFACE]`. The same rule is why this domain's only two `[DEEP]` nodes are
+> leaves the table does not list — **21.02.06** Pitch Rate Limits and **21.05.03** Payola Guardrail,
+> the domain's 2 of 195 Musts (Q-09), deepened inside 21.02 and 21.05. Nothing here is
+> `[EXHAUSTED]`, and a reader deciding what still needs deepening must open the child, not this row.
 
 | # | Name | Type | Path | Status | Deep Think |
 |---|------|------|------|--------|------------|
-| 01 | Release Campaign Planner | sub-domain | [21.01-release-campaign-planner/](./21.01-release-campaign-planner/) | `[SURFACE]` | 10 hypotheses |
-| 02 | Pitching & Outreach | sub-domain | [21.02-pitching-outreach/](./21.02-pitching-outreach/) | `[SURFACE]` | 15 hypotheses |
-| 03 | Pitch Targets & Relationship CRM | sub-domain | [21.03-pitch-targets-crm/](./21.03-pitch-targets-crm/) | `[SURFACE]` | 10 hypotheses |
-| 04 | Smart Links, Pre-Save & Attribution | sub-domain | [21.04-smart-links-presave-attribution/](./21.04-smart-links-presave-attribution/) | `[SURFACE]` | 10 hypotheses |
-| 05 | Paid Promotion | sub-domain | [21.05-paid-promotion/](./21.05-paid-promotion/) | `[SURFACE]` | 9 hypotheses |
+| 01 | Release Campaign Planner | sub-domain | [21.01-release-campaign-planner/](./21.01-release-campaign-planner/) | `[BREADTH]` | 10 hypotheses |
+| 02 | Pitching & Outreach | sub-domain | [21.02-pitching-outreach/](./21.02-pitching-outreach/) | `[BREADTH]` | 15 hypotheses |
+| 03 | Pitch Targets & Relationship CRM | sub-domain | [21.03-pitch-targets-crm/](./21.03-pitch-targets-crm/) | `[BREADTH]` | 10 hypotheses |
+| 04 | Smart Links, Pre-Save & Attribution | sub-domain | [21.04-smart-links-presave-attribution/](./21.04-smart-links-presave-attribution/) | `[BREADTH]` | 10 hypotheses |
+| 05 | Paid Promotion | sub-domain | [21.05-paid-promotion/](./21.05-paid-promotion/) | `[BREADTH]` | 9 hypotheses |
 | 06 | Social Publishing & Cross-Post | feature | [21.06-social-publishing-cross-post.md](./21.06-social-publishing-cross-post.md) | `[SURFACE]` | 2 hypotheses |
-| 07 | Coverage & Clipping Log | feature | [21.07-coverage-clipping-log.md](./21.07-coverage-clipping-log.md) | `[SURFACE]` | 3 hypotheses |
+| 07 | Coverage & Clipping Log | feature | [21.07-coverage-clipping-log.md](./21.07-coverage-clipping-log.md) | `[PARTIAL]` | 3 hypotheses |
 | 08 | Event & Tour Marketing | sub-domain | [21.08-event-tour-marketing/](./21.08-event-tour-marketing/) | `[SURFACE]` | 9 hypotheses |
-| 09 | Campaign Press Kit (EPK) & Asset Pack | feature | [21.09-campaign-press-kit-epk.md](./21.09-campaign-press-kit-epk.md) | `[SURFACE]` | 3 hypotheses |
+| 09 | Campaign Press Kit (EPK) & Asset Pack | feature | [21.09-campaign-press-kit-epk.md](./21.09-campaign-press-kit-epk.md) | `[PARTIAL]` | 3 hypotheses |
 
 ### Candidate disposition
 

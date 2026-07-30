@@ -3,7 +3,7 @@
 > **Level**: domain
 > **Parent**: [WeJammin Ideation Index](../ideation-index.md)
 > **Status**: [BREADTH]
-> **Last updated**: 2026-07-23
+> **Last updated**: 2026-07-30
 > **Novelty**: `industry-standard` | **Priority**: `core` _(raised to core by **global** D-10 in `ideation-index.md` — rights stack is the thesis; not this file's local D-10, which is the buyer counterparty ratification)_
 
 ## Overview
@@ -37,23 +37,29 @@ Two claims above survived; two did not, and both matter more than the ones that 
 ## Children
 
 > 8 sub-domains and 3 features, classified from 18 sweep candidates through the Node Classification Gate.
-> All `[SURFACE]` — breadth pass only; depth is allocated by MoSCoW in `/ideate-discover` Step 5.
+> **The depth pass has run** (`/ideate-discover` Step 5, allocated by MoSCoW — 11.03.01 Q-03 records it as
+> completed, and `music-licensing-cx.md` was synthesised after it). The Status column carries each child's own
+> status **as it stands on disk**: the eight sub-domain indexes are `[BREADTH]`, the three domain-level leaves
+> are `[SURFACE]`. Depth landed unevenly *inside* the sub-domains, which is the point of a MoSCoW allocation —
+> across the 34 leaves, **8 are `[DEEP]`** (11.02.01–03, 11.04.01–02, 11.05.01, 11.08.01–02), **17 `[PARTIAL]`**
+> and **9 `[SURFACE]`**. The Deep Think column counts the hypotheses actually logged in each subtree.
 
 | # | Name | Type | Path | Status | Deep Think |
 |---|------|------|------|--------|------------|
-| 11.01 | Sync Licensing | sub-domain | [11.01-sync-licensing/](./11.01-sync-licensing/) | `[SURFACE]` | 15 hypotheses (5 features) |
-| 11.02 | Clearance & One-Stop Status | sub-domain | [11.02-clearance-one-stop-status/](./11.02-clearance-one-stop-status/) | `[SURFACE]` | 13 hypotheses (4 features) |
-| 11.03 | Licence Pricing & Negotiation | sub-domain | [11.03-licence-pricing-negotiation/](./11.03-licence-pricing-negotiation/) | `[SURFACE]` | 9 hypotheses (3 features) |
-| 11.04 | Licensing Policy & Rights-Holder Preferences | sub-domain | [11.04-licensing-policy-preferences/](./11.04-licensing-policy-preferences/) | `[SURFACE]` | 9 hypotheses (3 features) |
-| 11.05 | Sample & Derivative Clearance | sub-domain | [11.05-sample-derivative-clearance/](./11.05-sample-derivative-clearance/) | `[SURFACE]` | 15 hypotheses (5 features) |
-| 11.06 | Creator Micro-Licensing | sub-domain | [11.06-creator-micro-licensing/](./11.06-creator-micro-licensing/) | `[SURFACE]` | 12 hypotheses (4 features) |
-| 11.07 | AI Training Licensing | sub-domain | [11.07-ai-training-licensing/](./11.07-ai-training-licensing/) | `[SURFACE]` | 9 hypotheses (3 features) |
-| 11.08 | Licence Instrument & Lifecycle | sub-domain | [11.08-licence-instrument-lifecycle/](./11.08-licence-instrument-lifecycle/) | `[SURFACE]` | 12 hypotheses (4 features) |
+| 11.01 | Sync Licensing | sub-domain | [11.01-sync-licensing/](./11.01-sync-licensing/) | `[BREADTH]` | 15 hypotheses (5 features) |
+| 11.02 | Clearance & One-Stop Status | sub-domain | [11.02-clearance-one-stop-status/](./11.02-clearance-one-stop-status/) | `[BREADTH]` | 39 hypotheses (4 features) |
+| 11.03 | Licence Pricing & Negotiation | sub-domain | [11.03-licence-pricing-negotiation/](./11.03-licence-pricing-negotiation/) | `[BREADTH]` | 9 hypotheses (3 features) |
+| 11.04 | Licensing Policy & Rights-Holder Preferences | sub-domain | [11.04-licensing-policy-preferences/](./11.04-licensing-policy-preferences/) | `[BREADTH]` | 30 hypotheses (3 features) |
+| 11.05 | Sample & Derivative Clearance | sub-domain | [11.05-sample-derivative-clearance/](./11.05-sample-derivative-clearance/) | `[BREADTH]` | 24 hypotheses (5 features) |
+| 11.06 | Creator Micro-Licensing | sub-domain | [11.06-creator-micro-licensing/](./11.06-creator-micro-licensing/) | `[BREADTH]` | 12 hypotheses (4 features) |
+| 11.07 | AI Training Licensing | sub-domain | [11.07-ai-training-licensing/](./11.07-ai-training-licensing/) | `[BREADTH]` | 10 hypotheses (3 features) |
+| 11.08 | Licence Instrument & Lifecycle | sub-domain | [11.08-licence-instrument-lifecycle/](./11.08-licence-instrument-lifecycle/) | `[BREADTH]` | 39 hypotheses (4 features) |
 | 11.09 | Cover Songs & Compulsory Mechanical Licensing | feature | [11.09-cover-song-compulsory-mechanical.md](./11.09-cover-song-compulsory-mechanical.md) | `[SURFACE]` | 3 hypotheses |
 | 11.10 | Print & Lyric Rights | feature | [11.10-print-lyric-rights.md](./11.10-print-lyric-rights.md) | `[SURFACE]` | 3 hypotheses |
 | 11.11 | Grand Rights & Dramatic Performance | feature | [11.11-grand-rights-dramatic-performance.md](./11.11-grand-rights-dramatic-performance.md) | `[SURFACE]` | 3 hypotheses |
 
-**Totals**: 8 sub-domains · 34 leaf features · 187 Deep Think hypotheses logged · max depth 3.
+**Totals**: 8 sub-domains · 34 leaf features · **187 Deep Think hypotheses logged** (the rows above sum to it —
+15+39+9+30+24+12+10+39+3+3+3) · max depth 3.
 
 Intra-domain cross-cuts, domain-wide patterns and rejected pairs: [music-licensing-cx.md](./music-licensing-cx.md).
 
@@ -123,7 +129,7 @@ domain's and currently has no home (Q-05).
 | D-06 | **Licences are irrevocable instruments** — a domain-wide invariant, owned by 11.08. | Relied on by 11.02.03 (post-issue encumbrance), 11.04.02 D-04 (veto after issue), 11.05.02 (splits change after issue), 11.06.04 (persistence). A revocable licence is worth nothing to a buyer, which makes the domain unsellable. | `/ideate-discover` Step 3 |
 | D-07 | **The one-stop catalogue is cold-start-empty**, and this is recorded as a domain-level fact rather than three local caveats. | Found independently in sync (11.01.05 DT-03), samples (11.05.01 DT-03 — sampling skews to *catalogue*, which predates the platform) and covers (11.09 DT-02). Split-at-creation only reaches works made on-platform after the ritual existed. | Deep Think ×3 |
 | D-08 | **Clearance is per-(work, scope), never per-work.** | The sweep's candidate 03 read as a work-level flag. A work that clears for a podcast and is blocked for a tobacco ad has no single truth value — a work-level flag is right most of the time and catastrophically wrong exactly where the money and the offence are. Propagates into 11.01.02, 11.04, 11.06, 11.08.01. | Deep Think (11.02.01 DT-01) |
-| D-09 | **Everything in this domain fails closed.** No verdict, no licence. | Asymmetric costs: a false negative loses one sale; a false positive sells a licence the platform cannot honour — a lawsuit naming *the platform* as the party that asserted clearability. Applied in 11.02.01 D-02, 11.04.01 D-04, 11.04.03 D-05, 11.05.02 D-01, 11.07.01 D-04, 11.08.01 D-05. | Deep Think (11.02.01 DT-03) |
+| D-09 | **Everything in this domain fails closed.** No verdict, no licence. | Asymmetric costs: a false negative loses one sale; a false positive sells a licence the platform cannot honour — a lawsuit naming *the platform* as the party that asserted clearability. Applied in 11.02.01 D-02, 11.04.01 D-04, 11.04.03 D-05, 11.05.02 D-01, 11.07.01 D-04, 11.08.01 D-04. | Deep Think (11.02.01 DT-03) |
 | D-10 | **The commercial licence buyer is described by two non-persona counterparty profiles in `meta/counterparties.md`**: a **professional licence buyer** (supervisor / brand / agency) and a **creator micro-licence buyer** (podcaster / streamer / small-business channel). Each carries personas.md's six fields plus **Workflow** and **Anti-Persona Behavior**, under a header stating it is **not** a persona and adds **no Role Matrix column**. personas.md must carry a pointer to it, or the profile is easy to miss. Buyer-facing Role Lens notes **reference** the profile; they never restate it. **Closes**: this index's Q-01, 11.06 Q-01, 11.01.02 Q-01, and the 11.02.01 Role Lens block. **Explicitly does not close**: personas.md Q-01 (professional dealer, 13/14/15 — a *seller*, not a buyer), personas.md Q-02 with 24.01.03 Q-01 (Admin), 21.02 Q-01 with 21 D-03 (curator / journalist / radio / DSP gatekeeper), 13.09 D-03 with 13.13 (dealer counterparty), and the stagehand, insurer, accountant, manager and fee-paying-parent questions. | D-19's four-persona model stays unamended and all 24 Role Matrices stay four-column — the smallest edit surface that gives the blocked Role Lenses a described primary user. Authoring nothing was refuted by disk: the same name-it-don't-describe-it treatment was applied to Admin, and 24.01.03 Q-01 records that the actor still cannot be specified. Deferring again is the mechanism that already failed — Q-01 went to `/ideate-validate`, which ran 2026-07-18, scored Persona Specificity green and closed 8/8 without recording an answer. A fifth persona is defensible but costs a full 24-domain column pass and creates precedent pressure toward personas for eight other non-persona actors that existing decisions resolved by refusing exactly that. Two profiles rather than one because 11.06's buyer matches a persona *badly* while 11.01/11.03's matches none — a difference in kind, and one artifact broad enough for both reproduces the defect one level up. The nine remaining actor questions are not buyers and are not alike (a curator receives pitches, a stagehand sells four hours of labour, an insurer is off-platform, Admin is internal); applying one form to ten heterogeneous actors in a single pass is the axis-collapse defect this revision round exists to remove, and each is owned in another domain's index, so a domain-11 ratification can make them answerable but cannot close them. **Identity note**: this domain-level D-10 is the domain-11 record of the *same* ratification the global decision log carries as **D-71** (`ideation-index.md`), under which `meta/counterparties.md` and the `meta/personas.md` pointer were authored on 2026-07-22. One decision, two registers — a reader arriving by either identifier should land on the other. | Ratified by user 2026-07-22 (DQ-10.A1 / A2 / A3) = global **D-71** |
 
 ## Cross-Cuts Contributed

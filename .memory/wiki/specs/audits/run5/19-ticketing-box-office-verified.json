@@ -1,0 +1,117 @@
+{
+  "domain": "19-ticketing-box-office",
+  "verdicts": [
+    {
+      "findingId": "19-ticketing-box-office#001",
+      "upheld": true,
+      "finalSeverity": "warning",
+      "refutationReason": "not-refuted",
+      "reason": "Quotes verified verbatim: 19.11-rsvp-free-private-event-admission.md:56 (\"Someone RSVPs for 6 ... Cap counts heads, not RSVPs (D-05)\"), :57, :93 (DT-03), :113 (D-02), :116 (D-05), :117 (D-06). The claimed BLOCKING framing is overstated and downgraded: D-05 and D-06 are not strictly incompatible — \"one head per person\" is a de-dup rule about repeat taps, and a party of 6 counting as 6 heads satisfies both. But the underlying gap survives every refutation test. grep across the whole of domain 19 for party/party-size/plus-one/group RSVP returns only :56 and :116 inside 19.11 — the mechanism is never specified. No open question covers it: 19.11's Q-01 (overbooking), Q-02 (no venue), Q-03 (domain-07 boundary) and Q-04 (free show becoming ticketed, :126) are all unrelated, so it is not a tracked deferral. It is not answered elsewhere: the domain index, ticketing-box-office-cx.md and 19.12 are silent, and the nearest analogue — 19.03.01-guest-list-allocation-submission.md:96 DT-03, which rejects the \"+1 rides free\" model for comps — is a different feature that 19.11 never cites. Divergence is real: the edge-case row exists precisely because a party size is contemplated (under a strictly one-person-per-RSVP model, \"cap counts heads, not RSVPs\" is a tautology and the row would need no answer), yet Role Lens :21 and Happy Path :41 (\"each person RSVPs with one tap\") describe individual RSVP only. Implementer A builds no party-size field; implementer B builds +N and must then invent how D-02's \"real admission record that scans\" (:113) and DT-03's identity-keyed record (:93) issue for five unidentified guests. Untracked forced invention, but not a normative collision — warning."
+    },
+    {
+      "findingId": "19-ticketing-box-office#002",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "tracked-deferral",
+      "reason": "Quotes are accurate (19.11-rsvp-free-private-event-admission.md:84 Overbooked state row; :92 DT-01 DEFERRED; :123 Q-01 [OWNER] -> /create-prd), but this is a properly tracked deferral, not a silent contradiction. Q-01 at :123 carries an explicit [OWNER] marker, a named owner (User) and a live target (/create-prd), and narrates why MoSCoW deliberately left it open. DT-01 at :92 is flagged with a loud DEFERRED verdict. The same file flags the capability a third time in the edge-case table at :51 (\"Overbooked against expected no-show, everyone turns up ... See DT-01\"). Three prominent deferral signals in a 139-line file mean nothing is silent. The States row at :84 gives no configuration surface, no ratio semantics and no threshold — it describes what the state would mean, not a build instruction, and it is one of seven lifecycle rows. No implementer reaching :92 and :123 builds an overbooking configuration off :84."
+    },
+    {
+      "findingId": "19-ticketing-box-office#003",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "no-real-divergence",
+      "reason": "Quotes verified: ticketing-box-office-index.md:70 gives 19.12 Operator \"Config\", the legend at :55 does carry a distinct Reports symbol, and 19.12-ticket-delivery-fan-wallet.md:22 grants \"Config + Reports\" with D-05 at :140 making delivery-failure surfacing load-bearing. But the matrix is structurally single-symbol: every one of the twelve rows at :59-:70 carries exactly one glyph, so a compound \"Config + Reports\" grant is not expressible in it at all — the notation is lossy by construction, not silently wrong on this row. The index states its own subordination at :53 (\"Personas from meta/personas.md — referenced, never redefined\") and its reading note at :74 uses the cell only to make the point that 19.12 is the one non-Operator-Full child, which is true under either glyph. The leaf file is the spec of record and is unambiguous — Role Lens :22 enumerates the delivery-status view and the failure list, D-05 :140 specifies the 3x/~24h retry and the Delivery Failed state, and D-01/D-02 make Operator visibility the feature's reason to exist. No competent implementer drops a surface specified in that much detail on the strength of a one-glyph summary cell one level up."
+    },
+    {
+      "findingId": "19-ticketing-box-office#004",
+      "upheld": true,
+      "finalSeverity": "blocking",
+      "refutationReason": "not-refuted",
+      "reason": "Every quote verified verbatim and the contradiction is real, normative and on a money path. 19.01.03-fee-structure-all-in-pricing.md:66 states \"no per-ticket booking fee on the companion line\", ratified at :117 D-06 (\"Companion ticket is a zero-fee entitlement\") and reinforced at :93 DT-06, which REJECTS the companion carrying \"the same per-ticket booking fee\". 19.01.05-accessible-seating-companion-tickets.md:27 states the opposite as normative Behavior — \"Per-ticket fees on the companion equal those on a comparable general ticket at the same face tier\" — ratified at :110 D-05 (\"companion per-ticket fees equal the comparable general tier; enforced at fee-config save\"). Where a comparable general ticket carries a non-zero booking fee, the two rules produce different charges; they cannot both hold. Both files claim to author the CX-05 resolution, and the cross-cut file does not adjudicate: 19.01-ticket-config-scaling-allocations-cx.md:14 still records CX-05 as \"exact fee treatment unconfirmed\" and its detail section at :84 reads \"[PENDING — /ideate-discover Step 5 deepening]\", so there is no third source to break the tie and no tracked deferral covering it. Both rules are additionally enforced at save under different names (FEE_PARITY_BREACH at 19.01.03:66 vs \"enforced at fee-config save\" at 19.01.05:110), so the two save-time validators would reject each other's valid configurations. The self-contradiction inside 19.01.03:66 also holds as quoted: an order with one booking fee suppressed cannot have an all-in that \"equals comparable general all-in\" when the parity check is stated as equality."
+    },
+    {
+      "findingId": "19-ticketing-box-office#005",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "no-real-divergence",
+      "reason": "All four quotes verified (19.01.02-capacity-manifest-allocations-holds.md:68, :101, :65, :155), but the file does not actually leave the anchor open. Behavior at :68 is unambiguous and unqualified: \"The owner is prompted 7 days and 24 hours before the deadline.\" The States row at :155 names the prompts as bare \"-7d / -24h\" hung off \"A hold's deadline arrives\", with no doors reference. DT-13 at :181 describes them as \"prompts at -7d and -24h ... a courtesy that precedes the release\", again relative to the deadline. The Happy Path sentence at :101 is the only place the \"doors -\" prefix appears, and that same sentence closes with \"relative to each hold's deadline\" — the qualifier governs and identifies the prefix as a notation slip. Four statements, three unambiguous and the fourth self-correcting within its own clause. A reader who took the doors anchor literally would immediately hit the arithmetic the finding itself describes (prompts firing after the release under the :65 default of doors - 14 days) and reject the reading. Both competent implementers land on deadline-anchored; this is a copy-paste artefact, not a divergence."
+    },
+    {
+      "findingId": "19-ticketing-box-office#006",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "tracked-deferral",
+      "reason": "Quotes verified (19.01.04-seating-model-ga-reserved-seat-maps.md:31 and :94 Q-01; ticketing-box-office-index.md:110 Q-12), but the collision is explicitly and doubly tracked — including by the very sentence the finding says is uncorrected. Q-01 at :94 names the offending assertion in quotation marks, declares it wrong (\"so this file's assertion that 'seat maps are a room asset (domain 16)' is wrong\"), states the reason from 16.01.02 DT-04, and routes the reconciliation to a named target (\"16.01.02 Q-02\") with a named owner (Agent). The parent index repeats the identical correction and routing at :110. That is a tracked cross-domain deferral, not a silent contradiction. Consequence is further bounded: the same file's Q-02 at :95 records the MoSCoW outcome as \"GA only for the beachhead; reserved/mixed is could\", so the seat-map sourcing question does not reach v1 at all. The Behavior line at :31 is stale prose that the file's own Open Questions table corrects by direct quotation — the strongest form of in-file tracking available."
+    },
+    {
+      "findingId": "19-ticketing-box-office#007",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "Both quotes verified verbatim (19.01.04-seating-model-ga-reserved-seat-maps.md:54 inline \"[PENDING — Q-03, /write-be-spec]\" and :96 Q-03 struck through and RESOLVED). The marker is stale, but it is self-resolving: it names Q-03 explicitly, and Q-03 sits fourteen lines below in the same short file, struck through, marked \"RESOLVED — no optimiser\", citing 19.01.02 D-13's edges-inward release rule and stating that adjacency is protected at purchase selection. Any implementer who follows the pointer the marker supplies arrives at the answer before reaching /write-be-spec. There is no reading under which two implementers build different release behaviour — one path yields the answer and the other yields the same answer via the pointer. Cosmetic staleness, not a divergence."
+    },
+    {
+      "findingId": "19-ticketing-box-office#008",
+      "upheld": true,
+      "finalSeverity": "warning",
+      "refutationReason": "not-refuted",
+      "reason": "Verified. 19.02-on-sale-announce-presale-index.md:51 and :52, and 19.02.01-announce-on-sale-scheduling.md:127 and :128, each carry a bare \"MoSCoW\" in the Deferred To column. The stage is demonstrably spent: moscow-ledger.md exists (generated 2026-07-16, 734 rows) and eleven sibling questions across domain 19 have been re-pointed off it with explicit narration — e.g. 19.01-ticket-config-scaling-allocations-index.md:48/:49, 19.01.03-fee-structure-all-in-pricing.md:126/:128, 19.09.02-ticket-transfer-delivery-controls.md:111, 19.10-attendee-data-capture-consent.md:117, all reading \"MoSCoW ran and did not settle it\" and routing to /create-prd. The convention exists and these rows were missed. The ledger tiers features, not sub-questions, and carries no row for either surviving item: the 19.02.01 row at moscow-ledger.md:180 addresses embargo-as-a-state and says nothing about tour-wide on-sale or a leak-recovery affordance. Tour-wide on-sale is a genuine entity-model call — 19.02.01:94 DT-06 records it as \"DEFERRED to product ... a MoSCoW decision (parent Q-01/Q-02)\", so the only stage that could settle it has run without doing so. Partially conceded: index Q-02 (is a queue needed at all) is effectively settled by moscow-ledger.md:659, which tiers 19.02.04 COULD and splits \"cart hold is must, the queue/waiting room is could\". Two of the four rows (tour-wide, appearing twice, and the embargo-leak affordance) are genuinely ownerless."
+    },
+    {
+      "findingId": "19-ticketing-box-office#009",
+      "upheld": true,
+      "finalSeverity": "warning",
+      "refutationReason": "not-refuted",
+      "reason": "Verified. 19.03.02-comp-issuance-manifest-impact.md:148 (Q-02, facility-fee-on-comp toggle) and :149 (Q-03, oversell against expected comp no-show) both carry a bare \"MoSCoW\" target after the stage has produced moscow-ledger.md. Neither is covered by a ledger row: moscow-ledger.md:182 tiers 19.03.02 MUST on the three-counter settlement model alone and is silent on both. Both are substantive product calls that decide whether a flow exists — Q-02 explicitly frames it as \"whether to build the guest-pays-a-fee-on-a-free-ticket flow in v1\", and Q-03 asks for an oversell capability the file's own D-01 currently forbids. Not answered elsewhere: the direct analogue was re-pointed rather than left on the spent stage — 19.11-rsvp-free-private-event-admission.md:123 carries the RSVP overbooking question as [OWNER] with the narration \"MoSCoW ran and deliberately left it open\" and routes it to /create-prd, which is exactly the treatment Q-03 did not receive despite Q-03 referencing that same RSVP proposal. The contrast citations hold: 19.03-guest-list-comps-index.md:48 and :50 both read \"Re-pointed from the completed /ideate-discover Step 5\", and 19.03.03-door-time-guest-list-changes.md:98 does the same — the correction was applied twice in the parent index and once in a sibling leaf, and missed here."
+    },
+    {
+      "findingId": "19-ticketing-box-office#010",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "All quotes verified verbatim (19.04.04-door-age-id-verification.md:27, :35, :93, :115; ticketing-box-office-index.md:110), but the claimed forced invention does not survive contact with the file. The finding asks \"whether the Operator must declare it per show\" — and Q-04 at :115 answers that exact question in its own text: \"There is therefore no upstream default to inherit, and the restriction is Operator-declared per show here.\" The question is struck through, marked RESOLVED, cites 16.01.06 D-06's locked five-slot set, explains why the one age reference in domain 16 is a hirer requirement rather than an audience restriction, and routes the only residual (whether a sixth room-level slot should be added) to /create-prd with a named owner. Nothing is left to invent and nothing is untracked. The parent index at :110 corroborates the same resolution rather than contradicting it — its phrase \"lands on nobody\" refers to the residual requirement on domain 16, not to the age restriction itself, and it too routes that residual (to /create-prd-security). The Behavior, Happy Path and Cross-Cut lines are stale prose describing an inheritance the file's own resolved question deletes; a reader reaching :115 gets the rule, and a reader who built the inheritance would find no such field in domain 16 and be sent straight back to it. Blocking severity is unsupportable when the answer is stated explicitly in the same file."
+    },
+    {
+      "findingId": "19-ticketing-box-office#011",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "Quotes verified (19.04-door-scanning-access-control-index.md:54 and 19.04.01-ticket-scan-validation.md:119 both bare \"MoSCoW\"), but the finding's own core claim — that the question is unowned — is contradicted by evidence it cites itself. The same question is live and fully owned two levels up at ticketing-box-office-index.md:103 Q-05, marked [OWNER], owned by User, routed to /create-prd, with narration explaining that \"MoSCoW ran and did not settle it\" and citing the ledger placements for 19.04.01 and 19.07.03. The child rows are explicit pointers into that chain, not independent orphans: 19.04.01:119 ends \"See parent Q-03\", and 19.04 index Q-03 is that parent. A later stage following either child row arrives at a question that /create-prd will surface. Nothing lands on nobody — the domain's single biggest scope question has exactly the owner and target it should, and the stale stage labels on two derivative copies do not remove it."
+    },
+    {
+      "findingId": "19-ticketing-box-office#012",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "Both quotes verified (19.05.04-walk-up-day-of-show-sales.md:139 Q-03 bare \"MoSCoW\"; :125 D-07), and the stage is spent, but this row forces no invention and leaves no behaviour undefined. D-07 at :125 authors both branches of the question outright: \"Walk-up does not run on purely externally-ticketed shows; where a WeJammin-held allocation exists, the window sells only from that allocation.\" Whichever way the scope call falls, an implementer has a complete rule — no allocation means no walk-up, an allocation means the window sells from it and nothing else. What remains is a pure build-or-defer scope call, and the feature itself is already tiered: moscow-ledger.md:186 places 19.05.04 in MUST on walk-up's centrality to the club-level gate. Unlike the genuinely unowned rows in this domain (tour-wide on-sale as a first-class entity; the facility-fee-on-comp flow; comp oversell), nothing here adds an unspecified flow or entity. Stale stage label on a question whose behaviour is already ratified in the same decision table."
+    },
+    {
+      "findingId": "19-ticketing-box-office#013",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "All three quotes verified (19.07-external-ticketing-integration-index.md:53 and :54; 19.07.03-count-discrepancy-reconciliation.md:107), but each of the three legs dissolves. Q-03 is the same question as ticketing-box-office-index.md:103 Q-05 — the row says so itself (\"This is parent Q-03 for 19.04\") — and Q-05 is live, [OWNER], routed to /create-prd. 19.07.03 Q-02 is conditional on that same question (\"If WeJammin cannot scan externally-ticketed shows (parent Q-03)\"), so it rides the same live owner. Q-04 (hybrid shows) is refuted by the finding's own supporting evidence: hybrid support is not an open scope question but ratified authored behaviour. 19.07.02-count-ingestion-manifest-mapping.md:108 Q-02 is struck through and RESOLVED (\"as a per-source breakdown, each source carrying its own freshness, with the total marked blended\"); 19.05.01-live-count-manifest-state.md:120 D-02 ratifies it; :39 and the partial-data edge case at :67 work the hybrid case in full (\"paid = 140 WeJammin + 260 DICE\"); and ticketing-box-office-cx.md CX-12 binds the rule across the 19.05/19.07 boundary. The specification models hybrid shows as an existing configuration, so the index row asking whether they are supported is stale rather than unowned."
+    },
+    {
+      "findingId": "19-ticketing-box-office#014",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "Both quotes verified (19.08.02-meet-and-greet-scheduling.md:49 edge case with bare [PENDING]; :102 Q-02 RESOLVED). The marker is stale, but the answer sits in the same file's four-row Open Questions table, struck through in the exact words of the edge case (\"whose packages get refunded — last-in-first-out, random, or the artist's choice?\"), resolved to 19.01.02 D-12's four-rung ladder and quoted in full. The claimed divergence also misreads the row: \"the artist's call stands\" at :49 refers to the capacity cut itself, not the refund order — the row then separately marks the order as pending, which is precisely what Q-02 answers. An implementer reading only :49 finds a bare [PENDING] and builds nothing; they do not build a competing unwind order, so the stated failure scenario (two implementers building different orders) does not arise. Contrast the genuinely orphaned markers in 19.09 (finding #016), which have no corresponding question anywhere — here the corresponding question exists, is resolved, and quotes the edge case verbatim."
+    },
+    {
+      "findingId": "19-ticketing-box-office#015",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "Both quotes verified verbatim (19.08.03-vip-redemption-fulfilment.md:80 DT-01 and :109 Q-02). The refutation is explicit, in the same file, and directly addressed to DT-01: Q-02 is struck through, names DT-01 in its question text, states \"RESOLVED for the launch jurisdiction — no\", records that \"The compliance table is no longer [PENDING]\", cites meta/constraints.md's US-first confirmation, and closes \"there is no two-regime split through the middle of it.\" A Deep Think annotation is a dated record of reasoning, not a normative rule — nothing in the spec is built from DT-01's regulatory premise. Its only forward consequence is an argument (\"a genuine reason to consider the ticket-only VIP shape\") whose decision is owned elsewhere at 19.08.01 Q-01, and weakening that argument changes no authored behaviour. No implementer builds a distance-selling path off a hypothesis the same file's Open Questions table refutes twenty-nine lines later."
+    },
+    {
+      "findingId": "19-ticketing-box-office#016",
+      "upheld": true,
+      "finalSeverity": "warning",
+      "refutationReason": "not-refuted",
+      "reason": "Verified on both counts, including the negative checks. 19.09.02-ticket-transfer-delivery-controls.md:58 carries a bare [PENDING] with no owner and no target, and the file's Open Questions at :110-:113 cover holding decrement (Q-01), rotating delivery (Q-02), notification addressee (Q-03) and chain visibility (Q-04) — none touches accessible-ticket transfer. 19.09.03-resale-price-caps-face-value-exchange.md:53 likewise carries a bare [PENDING], and its Q-01 (face value with fees), Q-02/Q-03 (both resolved) and Q-04 (venue vs fan sell order) do not cover it. The contrast within the same files is sharp: every other deferral names an owner and a target, and even the neighbouring bare marker at 19.09.03:51 was subsequently picked up by Q-04, which quotes it directly (\"the Edge Cases row still reads 'probably the venue's inventory sells first'\") — proving the tree's own convention and that these two were missed. The accessible-transfer gap is substantive and unowned: whether an accessible ticket may be transferred at all is undecided, and it collides with 19.01.05-accessible-seating-companion-tickets.md:54, which flags any resale of an accessible ticket to domain 24, and with D-04/:85 DT-03's no-proof-of-disability posture, which forecloses checking the recipient. Partially conceded: the 19.09.03:53 atomicity case states its own rule (\"Must be atomic\"), so the residual there is closer to BE-layer recovery mechanics than product behaviour. The accessible-transfer marker alone sustains the finding at warning."
+    }
+  ]
+}

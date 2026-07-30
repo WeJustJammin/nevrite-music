@@ -1,0 +1,107 @@
+{
+  "domain": "06-education-lessons-mentorship",
+  "verifiedAt": "2026-07-30",
+  "inputFindings": 14,
+  "upheld": 2,
+  "refuted": 12,
+  "verdicts": [
+    {
+      "findingId": "06-education-lessons-mentorship#001",
+      "upheld": true,
+      "finalSeverity": "warning",
+      "refutationReason": "not-refuted",
+      "reason": "Quotes verified verbatim. 06.02.01-teacher-tuition-profile.md:67 ratifies intake status `waitlist` whose page effect is \"CTA becomes \\\"Join waitlist\\\"\", and :186 (States, Books-closed) makes that CTA normative (\"the CTA changes rather than disappears\"), backed by D-05 at :239. Nothing in 06.02.01, the 06.02 index or the 06.02 CX defines what joining does. Against that, 06.01.01-lesson-slot-booking-recurring-series.md:244 (Q-01) states \"No waitlist node exists anywhere in domain 06 ... new scope, not a deferral\" with owner User and target `/evolve-feature`, and 06.02.03-teacher-discovery-match-criteria.md:305 (D-08) and :316 (Q-03) both say partition 3 is resolved \"deliberately **without a waitlist**\" / \"without any waitlist\". A ratified profile CTA that two ratified decisions say is out-of-scope machinery is a genuine unmarked divergence: implementer A ships the control, implementer B omits it. DOWNGRADED from blocking because the auditor overstates two supporting points. (a) The ladder floor is reconcilable: 06.02.03:136 reads \"Waitlist / **notify-me**\" and :266 lists it as a CX-M07 dependency (\"the waitlist/notify at relaxation step 10, which must decay and go quiet\") — a criteria-level saved-search alert satisfies step 10 and the Exhausted state at :227 without any per-teacher waitlist, so D-08 and step 10 do not actually collide. (b) The claimed card-level conflict is wrong: 06.02.01:67's Match-effect column says only \"Ranked, labelled\", not a CTA on the result card, so it does not contradict D-08's \"No trial CTA\" on partition 3. The residue — one un-re-pointed CTA string against a tracked `/evolve-feature` deferral — is a warning, not a blocker."
+    },
+    {
+      "findingId": "06-education-lessons-mentorship#002",
+      "upheld": true,
+      "finalSeverity": "warning",
+      "refutationReason": "not-refuted",
+      "reason": "Quotes verified. 06.01.02-lesson-packages-credits-rate-cards.md:200 (edge 12) mandates the copy \"Credits are with {teacher}. To stop lessons with them, request a refund\" — \"with the refund path stated, not hidden\". A repo-wide grep for \"refund\" across all of domain 06 confirms the word appears in only one tuition file (06.01.02) plus course-side files; :150-159 scopes the remedy flow strictly to teacher departure, :78's `granted ──refund──> refunded` transition carries no trigger condition, and edge 25 (:213) specifies routing only (\"a refund is due\"), never eligibility. So the mandated copy promises a path no file defines. DOWNGRADED from blocking on two grounds the finding did not check. (1) The refundability axis IS tracked one level up: 06.01-lesson-booking-packages-delivery-index.md:71 (Q-01) still carries the unnarrowed framing — \"Are lesson credits **money** (refundable, a stored-value liability) or **entitlements** (non-refundable, expiring)?\" — owner User, target `/create-prd-security`, mirrored at education-lessons-mentorship-index.md:126 (domain Q-07). The finding only rebutted 06.01.02's own narrowed Q-01. (2) The series-termination half is largely answered: 06.01.01:162/230 (At Risk → Lapsed on non-payment) and :151-168 give a defined exit for an abandoned series, so \"no way to end a series\" overstates. What survives is real and untracked: present-tense user copy promising a refund route with no eligibility rule, fee, or slot-release consequence anywhere in the domain."
+    },
+    {
+      "findingId": "06-education-lessons-mentorship#003",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "The reconciliation sits in the sentence immediately after the auditor's own quote, and was omitted. 06.01.02-lesson-packages-credits-rate-cards.md:143-145 reads: \"This feature owns the signal and its timing. Whether a zero balance **suspends** or **releases** the standing slot is 06.01.01's call ... and is not decided here; the ledger's contribution is that the teacher's forward book and the student's slot risk are both visible **before the balance hits zero, not after**.\" That is an explicit warning-tier/state-tier split — exactly what the finding asserts the files are not. 06.01.02 owns an early at-risk *signal* (≤2 credits / 21-day projection) on the pack ledger; 06.01.01:162 and D-03 at :230 own the series *state* at balance 0 that starts the 2-occurrence / 14-day release clock. Both are implementable together and the release clock is unambiguously anchored to zero balance by D-03, so the claimed two-occurrence divergence in tenancy release cannot arise from a competent reading."
+    },
+    {
+      "findingId": "06-education-lessons-mentorship#004",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "All four quotes verified, but the cited 06.01.02 text carries its own resolution pointer. 06.01.02-lesson-packages-credits-rate-cards.md:223 (edge 35) states the limbo outcome is \"**pending 06.01.03's rule (their Q-03)**\" — it explicitly disclaims ownership and names the exact question id. Following that pointer gives 06.01.03-cancellation-makeup-no-show-policy.md:268: \"Q-03 ... **RESOLVED** ... the credit returns, no signal on either party\", ratified at DT-09 (:213) and rendered at :144 (\"credit returns, no signal either side\") and :179 (repeats flag the series as possibly off-platform). 06.01.04-lesson-delivery-session-record.md:246 does the same thing — it defers the ledger effect to 06.01.03 rather than deciding. Divergence therefore requires ignoring an explicit same-sentence cross-reference to the named owner. What remains is stale interim wording in a deferring file, below warning threshold."
+    },
+    {
+      "findingId": "06-education-lessons-mentorship#005",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "Quotes verified (06.01.03:178 and :227 do route the serial-late-canceller pattern to a stale 06.01.01 Q-01 framing, and 06.01.01:181 DT-08 rejects that lever with D-03 at :230). But the predicted failure — an implementer building a per-student missed-lesson counter with a reclaim action — is foreclosed twice, once inside the very file that carries the stale pointer. 06.01.03-cancellation-makeup-no-show-policy.md:218 (DT-12) rejects student attendance records \"❌ REJECTED — it violates the domain's own law ... An accumulating 'you have missed 3 lessons' record is exactly that pattern\", and :263 (D-17) plus the cross-cut note at :230 (\"Student-side reliability is **rejected outright** (DT-12) — a hard boundary\") repeat it. 06.01.01:142 independently rules the squatting case out (\"No countermeasure needed, deliberately\"). Every reasonable reading converges on 'no miss counter'; the defect is a stale question id, not a divergence."
+    },
+    {
+      "findingId": "06-education-lessons-mentorship#006",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "Both CX statements are verified verbatim (06.01-lesson-booking-packages-delivery-cx.md:134-140 and :105) and both are stale — but both are explicitly answered by ratified decisions that name the CX ids themselves, so nothing is left to invent or diverge over. 06.01.01-lesson-slot-booking-recurring-series.md:230 (D-03) states: \"Also answers sub-domain **CX-06** (`[PARTIAL]` — does a zero balance suspend or release?): **both, in that order, with a stated date**\", and :202 declares the note supersedes the face-value CX reading. The CX-04 waitlist-promotion line is closed at :235 (D-08, \"No waitlist auto-promotion ... Backfill is achieved with no waitlist machinery at all\") and at :182 (DT-09, rejected). The residual `[PENDING]` role-scoping line is a Medium-confidence CX entry under the file's own stated template rule (\"Synthesis questions: Deferred — Medium confidence, per the CX template's rule\"), and role coverage for this seam exists in the sub-domain Role Matrix and each child's Role Lens. Stale-marker hygiene, not an implementable gap."
+    },
+    {
+      "findingId": "06-education-lessons-mentorship#007",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "All five rows exist as quoted, but four of the five already have their answer or a live secondary target, which collapses the claimed 'no route to resolution'. (1) 06.04.02-course-catalog-pricing-enrollment.md Q-01 (which pricing models ship) is answered by that file's own D-02 at :124 — \"**One-off purchase** is the launch model; subscription is later\" — and restated in Q-03 (\"launch is one-off only (D-02), so it does not block this feature\"), directly refuting the failure scenario about subscription entitlements. (2) 06.04 index Q-03 (certificates) is answered by the pass it defers to: moscow-ledger.md:727 bands 06.08 Certificates, Badges & Verification in the **WONT** section. (3) 06.04.02 Q-04 (courses as first slice) is answered by the same ledger (06.04.* all SHOULD at :273-275 vs 06.01.* MUST at :63-66) and is carried live at domain Q-03 → `/plan-phase`, as 06.04 index Q-04 itself records. (4) 06.04.03-course-consumption-completion.md:63 tracks offline download as `[PENDING — MoSCoW / **/create-prd-security**]`, i.e. with a live target, not a dead one. Only 06.04 index Q-01 (open vs curated) points solely at the closed pass, and it still names an owner (User). One stale target out of five does not sustain the finding."
+    },
+    {
+      "findingId": "06-education-lessons-mentorship#008",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "no-real-divergence",
+      "reason": "Quotes verified, but the Role Lens tables are stance descriptions, not entitlement gates, and the domain says so explicitly. education-lessons-mentorship-index.md:107 (D-02) ratifies \"the Role Lens handles teacher/student **contextually** — no split\", and 06.01.02-lesson-packages-credits-rate-cards.md:32 applies exactly this rule to the mirror case: \"A Fan who wants lessons is acting as a Musician (student) and **is lensed as one from that moment**\". 06.04.03-course-consumption-completion.md:23 settles the buyer case outright — \"Fan | Full | Consumes what they bought, **exactly as any learner. No distinction, and no reason for one.**\" — and its D-05 at :109 keys access to the entitlement (\"Consumption is gated on the **entitlement**\"). 06.04.02 grants the Producer `Full` on the buy/enroll feature and notes \"No persona is **None** here\". No competent implementer gates playback on a persona label against an entitlement the same sub-domain says is the gate; the locked-out-paying-customer scenario does not arise."
+    },
+    {
+      "findingId": "06-education-lessons-mentorship#009",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "no-real-divergence",
+      "reason": "Quotes verified, but the pending marker and the resolution issue the *same* instruction, so the predicted failure is impossible. 06.03.05-progress-reports-skill-tracking.md:37-39 ends with \"...and **inventing a skill taxonomy at breadth would be fabrication**\" — which is precisely the outcome Q-02 (:106, \"**RESOLVED — no, there is not**\") and D-03 (:98, \"measures **coverage**, never **musicianship**\") exist to prevent. A reader who obeys the marker and a reader who obeys the decision both ship no skill taxonomy. The alternative failure (blocking the shard) is foreclosed by the file's normative D-03 and by domain Q-08 being closed on the identical question, which 06.04.03 Q-04 (:120) also cites. The 06.03 CX-07 bare `[PENDING]` role-scoping line sits under the file's own stated convention (\"Synthesis questions: Deferred — Medium confidence, per the CX template's rule\", :151/:169) and duplicates coverage already in the sub-domain Role Matrix. Stale status wording only."
+    },
+    {
+      "findingId": "06-education-lessons-mentorship#010",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "no-real-divergence",
+      "reason": "Quotes verified, but the observable behaviour is fully pinned, leaving the unstated allowance size with no user-visible consequence. 06.03.03-practice-logging-streaks-goals.md:60 forbids the loss event, :58 forbids \"broken-streak drama\", and the Recovered state at :76 specifies the render exhaustively: \"the lapse renders as a neutral gap in the week strip and a return prompt — 'Good to see you back' — **with no zeroed counter and no loss-framed alert**. This state exists precisely so the lapse is a resume point, not a quit trigger.\" Under that rule both of the auditor's implementers produce identical output — a neutral gap, no reset — so the freeze size is not a decision with divergent outcomes. The on/off half is a tracked deferral: Q-03 (:116) carries owner User and cites domain D-04 as the ratified values half, with only 'is the optional surface built at all' outstanding."
+    },
+    {
+      "findingId": "06-education-lessons-mentorship#011",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "tracked-deferral",
+      "reason": "Quotes verified at education-lessons-mentorship-cx.md:231, :274, :287 and :302, but each seam's real gate is tracked with an owner and a live target in its owning file. CX-08 names 06.07 Q-01, which at 06.07-learning-paths.md:112 is `[OWNER]`, User-owned and explicitly re-pointed; CX-10 names 06.06 Q-01, which at 06.06-mentorship-programmes.md:112 carries its own re-pointed target; CX-11's object boundary is 06.05 Q-03, re-pointed at 06.05-group-lessons-workshops-masterclasses.md:121 to `/create-prd-architecture`; CX-12's substance is stated completely in its own Relationship paragraph and its level-taxonomy limit is ratified at 06.02.03 D-02/D-06. The bare `[PENDING]` on role scoping accompanies \"Synthesis questions: Deferred — **Medium confidence**\" in every case, which the tree states is the CX template's own rule for non-High entries — a documented convention, not a lost decision. Role coverage for the named surfaces already exists in 06.02.03's Role Lens and Restricted state (minors-facing search) and the domain Role Matrix, so no spec writer is left inventing role scoping."
+    },
+    {
+      "findingId": "06-education-lessons-mentorship#012",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "no-real-divergence",
+      "reason": "Quotes verified (06.02.04-trial-lessons-conversion.md:20 grants the monthly cap; :27-28 enumerates only three differences; no cap-exhausted state at :67-75). But the three claimed builds do not survive contact with the rest of the tree. Queueing requests past the cap is a per-teacher waitlist, which 06.01.01 Q-01 (:244) and 06.02.03 D-08 (:305) both put outside scope; an advisory-only cap contradicts the word 'caps'. That leaves exactly one consistent build — suppress the trial offer — and its copy is already specified at :70: \"Empty | Teacher offers no trials | 'This teacher doesn't offer trials — book a first lesson at {rate}'. Not an error\", which is also what 06.02.03's result card falls back to. The residue the auditor lists (calendar month vs rolling 30 days, whether a cancelled trial returns the allowance) is contract-shaped detail for `/write-be-spec`, the same layer 06.02.04 Q-04 already routes penalty weighting to."
+    },
+    {
+      "findingId": "06-education-lessons-mentorship#013",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "The two statements are compatible, and the scoping that makes them compatible is inside the auditor's own quote. 06.02.02-verified-credentials-credit-backed-credibility.md:305 (D-03) bans \"no completeness nudge **for credits**\" — credits being precisely the evidence kind the teacher cannot add (D-01: the block is not authorable; credits arrive from domain 02). The Role Lens at :34 grants \"a private 'what's thin' view listing **evidence they could add**\", and the Role Lens's own items (a) enumerate what is addable: qualifications and a DBS/background check submitted for verification, plus an academy vouch. Edge case :211 shows the permitted teacher-facing prompt in practice (\"3 credits aren't confirmed yet. Ask someone who was there\"), and :212 fixes the protected case (\"an explanation of the ceiling, never a deficiency marker\"). The sibling profile decision 06.02.01 D-11 (:249) establishes the same permitted shape platform-wide — \"No completeness score. **Named missing items with concrete effects**, dismissible\". A view listing addable evidence kinds while never rendering credit absence satisfies both."
+    },
+    {
+      "findingId": "06-education-lessons-mentorship#014",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "downstream-detail",
+      "reason": "Quotes verified (education-lessons-mentorship-index.md:13 and :113; 06.03.03:85; 06.02.03:308). But no implementation decision branches on a KPI threshold, so nothing is invented and nothing diverges — the objection is to strategic rationale prose in an index, not to a spec item. D-08's condition is in fact stated and testable in structural terms, not left directional: \"conditionally confirmed (a) — but **only if practice is a byproduct of a practice tool rather than self-reported** (06.03.03 DT-01), which is why 06.03.04 was added\", and that condition is tracked as a live owner question at 06.03.03 Q-01 (detected vs reported). 06.02.03 D-11 names the metric and its rationale; attaching a numeric target is an owner/business decision the tree consistently routes to `/create-prd` (06.02.03 records its weights as \"platform defaults, owner-overridable at `/create-prd`\"). Target-setting is a later-layer artifact, not an ideation-layer ambiguity."
+    }
+  ]
+}

@@ -2,7 +2,7 @@
 
 > **Level**: domain
 > **Scope**: Connections between children of [Services Marketplace](./services-marketplace-index.md)
-> **Status**: [DEEP] — 7 sub-domains, deepening pass complete; intra-domain cross-cuts synthesised with contradictions, omissions and naming defects resolved.
+> **Status**: [DEEP] — **this cross-cut file** is complete: all 7 sub-domains synthesised, with contradictions, omissions and naming defects resolved. The **domain's** deepening pass is not: 10 of 32 leaves are `[DEEP]`, 13 `[PARTIAL]`, 9 `[SURFACE]` (all three of 05.07's among them). That is why deferrals across this tree still point at Step 5 deepening — they point at open work, not a closed pass. Per-sub-domain status: [services-marketplace-index.md](./services-marketplace-index.md).
 > **Last updated**: 2026-07-18
 
 ## Cross-Cut Map
@@ -20,7 +20,7 @@
 | CX-09 | [05.01 Listings & Pricing](./05.01-service-listings-pricing/) | [05.03 Engagement Lifecycle](./05.03-engagement-lifecycle/) | Turnaround is declared on the listing; its clock is **started by the requirements gate** (the gate pass IS the clock's start event). A buyer-declared `date` gate item cannot silently re-date the committed due date — the mismatch surfaces at the gate. | Musician, Producer | High | 05.01.06 D-01, 05.03.01 D-02. Domain principle P-03. |
 | CX-10 | [05.02 Quotes & Contracting](./05.02-quotes-scope-contracting/) | [05.04 Delivery, QC & Acceptance](./05.04-delivery-qc-acceptance/) | The NDA gates the buyer's material going in; watermarking protects the seller's draft coming out. Ghost anonymity then suppresses the credit acceptance emits. | Musician, Producer | High | 05.04.03 DT-02 (the mirror), 05.02.02 DT-01 (the suppression). Same window, opposite directions. |
 | CX-11 | [05.01 Listings & Pricing](./05.01-service-listings-pricing/) | [05.05 Multi-Party Supply](./05.05-multi-party-supply/) | Whether a listing's seller is a **person or an entity** determines the consent rule for substitution. | Musician, Producer, Operator | High | 05.05.03 DT-01 refines 05.05.01 DT-02. Same unanswered question as 05.01 Q-02, from a second direction. |
-| CX-12 | [05.01 Listings & Pricing](./05.01-service-listings-pricing/) | [05.02 Quotes & Contracting](./05.02-quotes-scope-contracting/) | **Capacity ceiling vs immutable offer** — the two collide at acceptance. Capacity (05.01.07) is a hard concurrency cap; an issued quote (05.02.01) is a live offer. The ceiling CANNOT block acceptance of an already-issued offer. | Musician, Producer, Operator | High | DT-04 contradiction found. 05.01.07 D-01 vs 05.02.01 D-02. Resolved: the cap gates quote *issuance*, not acceptance. |
+| CX-12 | [05.01 Listings & Pricing](./05.01-service-listings-pricing/) | [05.02 Quotes & Contracting](./05.02-quotes-scope-contracting/) | **Capacity ceiling vs immutable offer** — the two collide at acceptance. Capacity (05.01.07) is a hard concurrency cap; an issued quote (05.02.01) is a live offer. The ceiling CANNOT block acceptance of an already-issued offer. | Musician, Producer, Operator | High | DT-04 contradiction found. 05.01.07 D-01 vs 05.02.01 D-02. Resolved by 05.02.01 DT-04: the cap gates **ordering** (05.01.07 D-03 — at-capacity listings stay visible and non-orderable), never quote issuance and never acceptance. At issue the obligation is legibility, not a gate. |
 | CX-13 | [05.01 Listings & Pricing](./05.01-service-listings-pricing/) | [05.03 Engagement Lifecycle](./05.03-engagement-lifecycle/) | **A contracted retainer rate is PINNED against rate-card bulk mutation.** A rate card that silently repriced a live retainer client would breach a contract from a UI with no confirmation step. | Musician, Producer | High | DT-07. 05.03.04 exposes a pinned-rate flag; the rate card's blast radius must exclude it. |
 | CX-14 | [05.01 Listings & Pricing](./05.01-service-listings-pricing/) | [05.03 Engagement Lifecycle](./05.03-engagement-lifecycle/) | **Structured exclusions drawn from the add-on/deliverable vocabulary are what let a change order be generated MECHANICALLY** when a buyer requests an excluded item. Free-text exclusions are unparseable. | Musician, Producer | High | DT-06/D-07. The listing's typed add-on vocabulary (05.01.01) is the source; 05.03.03 is the consumer that prices the change order. |
 | CX-15 | [05.03 Engagement Lifecycle](./05.03-engagement-lifecycle/) | [05.06 Rights, Warranties & Transfer](./05.06-rights-warranties-transfer/) | **The buyer's INPUT material is unwarranted** — 05.06.04 warrants the seller's deliverable, but an uncleared sample entering at the requirements gate gets mixed and acceptance permanently writes the producer's credit onto an infringing master. | Musician, Producer | High | Gap closed. 05.03.01 clearance acknowledgement (D-09) + 05.06.04. The buyer's clearance acknowledgement is the missing warranty on the input side. |
@@ -101,7 +101,7 @@ The failure mode is concrete: reading 05.01.03's "reconcile at acceptance" as *q
 2. **Trigger chain + failure/sync**: One acceptance → N settlements + N+1 credits. Per 05.05.02 DT-03 the workers settle **from the same escrow release** (Split-Capture Trigger fan-out), not from the intermediary's cashflow — fixing the fixer profession's oldest failure using the platform's position as both rail and record.
 3. **Permission intersection**: The intermediary controls *composition* (who is in the section) but must not control *settlement*. Separating those two is the whole mechanism.
 4. **Notification fan-out**: Every downstream worker learns of their engagement and payment from the platform, without asking the fixer. That is the part that changes the relationship, not just the accounting.
-5. **State-transition race**: A downstream engagement disputed while the buyer's acceptance fires. The buyer's release must not be hostage to a fixer-player dispute, but the disputed tranche must be — needing a **per-payee freeze**, not a whole-escrow freeze. `[PENDING]`.
+5. **State-transition race**: A downstream engagement disputed while the buyer's acceptance fires. The buyer's release must not be hostage to a fixer-player dispute, but the disputed tranche must be — needing a **per-payee freeze**, not the whole-escrow freeze that is the only freeze rule the domain states (05.04.01: *"Escrow frozen; routed to domain 24. Nothing transfers while frozen"*). `[PENDING — /create-prd-architecture]` — tracked as 05.05 Q-04, mirrored at 05.05.02 Q-04.
 
 ---
 
@@ -133,10 +133,10 @@ The failure mode is concrete: reading 05.01.03's "reconcile at acceptance" as *q
 - **Fan**: none.
 
 **Synthesis questions answered**:
-1. **Shared-state owner + merge**: Capacity count is owned by 05.01.07; the quote is owned by 05.02.01. The count is advisory at the acceptance boundary — it gates *issuance*, never acceptance of an already-issued offer.
-2. **Trigger chain + failure/sync**: Acceptance of a live offer always succeeds and increments the accepted-engagement count; issuance of a *new* quote is what the ceiling blocks. Failure surfaces at issuance ("you're at capacity"), never at the buyer's acceptance.
+1. **Shared-state owner + merge**: Capacity count is owned by 05.01.07; the quote is owned by 05.02.01. The count is advisory everywhere a quote is concerned — it gates *ordering* (05.01.07 D-03), never issuance and never acceptance of an already-issued offer.
+2. **Trigger chain + failure/sync**: Acceptance of a live offer always succeeds and increments the accepted-engagement count; what the ceiling blocks is the **Order** path on the listing, which is the only place 05.01.07 D-03 puts it. Issuing at or over ceiling is permitted — 05.02.01 DT-04 tested and rejected slot-reservation-at-issue, because a seller with a ceiling of 4 and 9 live quotes could then take no orders at all, and quoting is free while ordering is not. The seller goes over ceiling and is told; expiry (05.02.01 D-06) does the reaping. 05.02.01 D-10 makes this closed rather than incidental: reaching the ceiling is explicitly in the column of things that do **not** end an offer.
 3. **Permission intersection**: Neither party can be denied the transaction they were already offered.
-4. **Notification fan-out**: The seller is warned at issuance when near capacity; the buyer never sees a capacity-related block.
+4. **Notification fan-out**: The seller sees their live-offer exposure in workload terms while drafting, and is told when an acceptance puts them over ("you're now at 5 of 4 concurrent — two quotes are still live, withdraw them?"). The buyer never sees a capacity-related block on a quote at all.
 5. **State-transition race**: DT-08 (05.03.01) — a stalled gate consumes a capacity slot for an uncommitted party with no escrow to settle against, worse than the ordinary case; hence the gate must terminate (D-12) and pre-payment staging (DT-10) is refused.
 
 ---
@@ -232,5 +232,7 @@ Handover terms (stems, session files) are declared **per tier** and are orthogon
 - [[decisions.md#d-04|D-04]]
 - [[decisions.md#d-07|D-07]]
 - [[decisions.md#d-09|D-09]]
+- [[decisions.md#d-06|D-06]]
+- [[decisions.md#d-10|D-10]]
 - [[decisions.md#d-12|D-12]]
 - [[decisions.md#d-15|D-15]]

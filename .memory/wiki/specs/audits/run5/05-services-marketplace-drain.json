@@ -1,0 +1,81 @@
+{
+  "shard": "05-services-marketplace",
+  "generated": "2026-07-30",
+  "findingsTotal": 6,
+  "classificationCounts": { "mechanical": 6, "owner": 0, "not-a-defect": 0 },
+  "items": [
+    {
+      "findingId": "05-services-marketplace#001",
+      "severity": "blocking",
+      "classification": "mechanical",
+      "canonicalSource": ".memory/wiki/specs/ideation/05-services-marketplace/05.02-quotes-scope-contracting/05.02.01-custom-quotes-proposals-scope.md:170 (DT-04) + :239 (D-10) + .memory/wiki/specs/ideation/05-services-marketplace/05.01-service-listings-pricing/05.01.07-seller-capacity-queue-intake-limits.md:94 (D-03)",
+      "summary": "The domain CX restated DT-04's resolution as 'the cap gates quote issuance'. Both owning files say otherwise: 05.02.01 DT-04 explicitly tested and REJECTED option (a) 'an issued quote reserves a concurrency slot' ('fails immediately, because a seller with a ceiling of 4 and 9 live quotes could take no orders at all') and concluded 'the design obligation is therefore not a gate but legibility'; 05.01.07 D-03 puts the ceiling only on orderability ('At-capacity listings stay visible and non-orderable'); and 05.02.01 D-10 lists reaching the ceiling in the closed column of things that do NOT end an offer. The CX was the only location asserting an issuance gate — grep for 'issuance' across the whole shard hits nothing else. Rewrote the CX-12 evidence cell and synthesis answers 1, 2 and 4 to state the ordering gate, the permitted at-ceiling issuance, and expiry as the reaper.",
+      "filesChanged": [
+        "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/05-services-marketplace/services-marketplace-cx.md"
+      ]
+    },
+    {
+      "findingId": "05-services-marketplace#002",
+      "severity": "warning",
+      "classification": "mechanical",
+      "canonicalSource": ".memory/wiki/specs/ideation/05-services-marketplace/05.03-engagement-lifecycle/05.03.06-post-delivery-support-recall.md:89 (D-03), :90 (D-04), :99 (Q-04); .memory/wiki/specs/ideation/05-services-marketplace/05.02-quotes-scope-contracting/05.02.01-custom-quotes-proposals-scope.md:246 (D-17)",
+      "summary": "The Carried Terms table is declared exhaustive-by-intent ('A term that is not on the accepted version is not agreed, is not enforceable, and is not measurable') and omitted two terms its own tree requires. Added two rows restating their owners: the post-delivery support/recall window (05.03.06 D-03 bounds it in duration AND count, D-04 makes the length a retention obligation, per-craft default still open at 05.03.06 Q-04 — so the quote states it explicitly, no value invented) and the trial scope (this file's own D-17 calls it 'a first-class quote term'). Also extended D-07's context so the omission ledger records the sweep rather than leaving the same class of gap undocumented. No value was invented and no owning file was touched.",
+      "filesChanged": [
+        "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/05-services-marketplace/05.02-quotes-scope-contracting/05.02.01-custom-quotes-proposals-scope.md"
+      ]
+    },
+    {
+      "findingId": "05-services-marketplace#004",
+      "severity": "warning",
+      "classification": "mechanical",
+      "canonicalSource": ".memory/wiki/specs/ideation/05-services-marketplace/05.01-service-listings-pricing/05.01.01-service-listings-packages-rate-cards.md:183 (D-02) + :74; .memory/wiki/specs/ideation/05-services-marketplace/05.06-rights-warranties-transfer/05.06.01-engagement-rights-posture.md:33 and :220 (D-05)",
+      "summary": "The taxonomy axis table set rights posture at 'Exactly 1' per listing while citing 05.01.01 D-02, which says the opposite ('an explicit election per tier ... Per tier rather than per listing because tiers routinely differ in what they hand over'), and 05.06.01 D-05 makes it two elections per tier (master + composition). Corrected the cardinality cell to '2 per tier — a master posture and a composition posture, never one value per listing (05.06.01 D-05)', extended the example values with composition's 'creates none', and added a short paragraph under the table naming this as the one tier-scoped axis, so the publish gate at 05.01.01:74 (blocked when tier 2 has no election) is implementable. Cross-cut note at :146 updated to match. Column count preserved (5).",
+      "filesChanged": [
+        "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/05-services-marketplace/05.01-service-listings-pricing/05.01.02-service-category-taxonomy-attributes.md"
+      ]
+    },
+    {
+      "findingId": "05-services-marketplace#014",
+      "severity": "warning",
+      "classification": "mechanical",
+      "canonicalSource": ".memory/wiki/specs/ideation/05-services-marketplace/05.05-multi-party-supply/05.05.02-fixers-ensemble-contracting.md:94 (D-02); .memory/wiki/specs/ideation/05-services-marketplace/05.04-delivery-qc-acceptance/05.04.01-delivery-acceptance-auto-accept.md:133",
+      "summary": "The per-payee escrow freeze was recorded twice as a bare [PENDING] with no owner, no stage and no question. The requirement's INTENT is already settled in both CX files (release the buyer, freeze the disputed tranche); what is missing is the ledger mechanism and 24's position on a partial freeze — so the fix is tracking, not invention. Added 05.05 index Q-04 and mirrored 05.05.02 Q-04, both Owner: Agent, deferred to /create-prd-architecture coordinating with domain 24 and the Payments, Escrow & Payouts cross-cut, quoting the only stated rule (05.04.01: 'Escrow frozen; routed to domain 24. Nothing transfers while frozen'). Both [PENDING] markers now carry the stage and point at the tracked question. No freeze semantics were decided here.",
+      "ownerBrief": "Multi-party settlement (fixers, agencies, bundles) pays N+1 people out of ONE escrow release in one transaction (05.05.02 D-02). The only dispute rule the domain states is whole-pot: 05.04.01 — 'Buyer disputes rather than accepts | Escrow frozen; routed to domain 24. Nothing transfers while frozen.' Applied literally to a twelve-piece string session, one player's quarrel with the fixer freezes the other eleven players, the fixer's margin, and the buyer's own release — over a dispute the buyer is not a party to. Both CX files already say that outcome is wrong and that the disputed player's tranche alone must be held. What nobody has specified is (a) whether the escrow ledger can express a partial freeze at all, (b) whether domain 24's dispute flow accepts a per-payee scope rather than a per-engagement one, and (c) what the buyer sees when their engagement is 'complete' but one payee is frozen. Same shape recurs at 05.05.04 DT-02 (a bundle's escrow as shared hostage). Tracked as 05.05 Q-04 / 05.05.02 Q-04, Agent-owned, deferred to /create-prd-architecture with 24 and the Payments cross-cut — but if the answer is that partial freezes are not buildable on the chosen rail, that is an owner-visible product consequence: multi-party supply then ships with the hostage behaviour, or does not ship.",
+      "filesChanged": [
+        "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/05-services-marketplace/05.05-multi-party-supply/05.05-multi-party-supply-cx.md",
+        "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/05-services-marketplace/05.05-multi-party-supply/05.05-multi-party-supply-index.md",
+        "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/05-services-marketplace/05.05-multi-party-supply/05.05.02-fixers-ensemble-contracting.md",
+        "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/05-services-marketplace/services-marketplace-cx.md"
+      ]
+    },
+    {
+      "findingId": "05-services-marketplace#016",
+      "severity": "warning",
+      "classification": "mechanical",
+      "canonicalSource": ".memory/wiki/specs/ideation/05-services-marketplace/05.07-custodial-physical-services/05.07-custodial-physical-services-cx.md:41; resolved analogues at 05.03.05 D-16, 05.05.01 D-05, 05.04.01 D-04",
+      "summary": "Two custodial races carried a bare [PENDING] with no owner and no stage. Neither can be resolved mechanically — a precedence rule is a design decision, and all three 05.07 leaves are still [SURFACE], i.e. the deepening pass that writes such rules has not run here. So the fix is tracking to the correct stage: added 05.07 index Q-04 covering both races, mirrored as 05.07.01 Q-05 (revised estimate issued while the item is in return transit — amend or lapse against 05.07.03 D-04's permitted-change specification) and 05.07.03 Q-05 (damage found at the return hand-off while the ticket still reads in-progress — the claim record vs the state that closes the ticket and releases escrow). Owner: Agent, deferred to Step 5 deepening, matching the sibling questions in the same tables. The CX marker now names the resolved analogues and points at the tracked questions.",
+      "filesChanged": [
+        "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/05-services-marketplace/05.07-custodial-physical-services/05.07-custodial-physical-services-cx.md",
+        "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/05-services-marketplace/05.07-custodial-physical-services/05.07-custodial-physical-services-index.md",
+        "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/05-services-marketplace/05.07-custodial-physical-services/05.07.01-repair-tech-luthier-job-flow.md",
+        "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/05-services-marketplace/05.07-custodial-physical-services/05.07.03-custody-chain-liability-damage-claims.md"
+      ]
+    },
+    {
+      "findingId": "05-services-marketplace#017",
+      "severity": "warning",
+      "classification": "mechanical",
+      "canonicalSource": "Each leaf file's own Status line (authoritative); .memory/wiki/specs/ideation/05-services-marketplace/05.07-custodial-physical-services/05.07-custodial-physical-services-index.md:5",
+      "summary": "Verified every status token in the shard programmatically. All seven sub-domain Children tables match their leaf files exactly — that half of the claim does not hold, and a sub-domain index reading [BREADTH] is its OWN status, not a claim about its children. Three real drifts did hold and are fixed: (1) the domain Children table listed 05.07 as [BREADTH] while 05.07's own index says [SURFACE] — corrected to [SURFACE]; (2) the classification note still read '32 leaf features, all [SURFACE]', now stated as the breadth-pass close plus the current distribution; (3) the CX declared 'deepening pass complete' while 22 of 32 leaves are below [DEEP] — rescoped so [DEEP] describes the cross-cut file itself and the leaf distribution (10 [DEEP] / 13 [PARTIAL] / 9 [SURFACE]) is stated, which also re-legitimises the ~dozen deferrals pointing at Step 5 deepening: they point at open work, not a closed pass. Domain index Status line now carries the same distribution.",
+      "filesChanged": [
+        "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/05-services-marketplace/services-marketplace-index.md",
+        "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/05-services-marketplace/services-marketplace-cx.md"
+      ]
+    }
+  ],
+  "crossDomainNotes": [
+    "05.05 Q-04 / 05.05.02 Q-04 (per-payee escrow freeze) needs domain 24 (trust-safety-disputes) to state whether a dispute can be scoped to one payee rather than one engagement, and the Payments, Escrow & Payouts cross-cut to state whether the ledger supports a partial freeze. Both are outside this shard; the questions here are written to be answered by that coordination at /create-prd-architecture.",
+    "05.04.01:133 ('Escrow frozen; routed to domain 24. Nothing transfers while frozen') is the single-party statement now quoted by the 05.05 questions. It is inside this shard and was deliberately left unchanged — it is correct for a one-seller engagement, and narrowing it is the architecture decision the tracked question exists to force.",
+    "The 05.01.02 cardinality correction implies a tier-scoped posture field pair in any downstream data model (2 x tier count), not a listing-level enum. 05.01.01 D-02 and 05.06.01 D-05 are the canonical sources and were not modified."
+  ]
+}

@@ -82,7 +82,7 @@ visas and carnets.
 | 18.03 Show Advancing | 👁️ Read-only | ✅ Full | ✅ Full (own side) | ❌ None |
 | 18.04 Riders | ⚙️ Config (own needs) | ✅ Full | 👁️ Read-only | ❌ None |
 | 18.05 Stage Plot & Input List | ⚙️ Config (own gear) | ✅ Full | ⚙️ Config (patch column) | ❌ None |
-| 18.06 Setlist & Show Files | ✅ Full | ✅ Full | ❌ None | 👁️ Read-only (published setlist only) |
+| 18.06 Setlist & Show Files | ✅ Full | ✅ Full | 👁️ Read-only (durations only) + occurrence attest | 👁️ Read-only (published setlist only) |
 | 18.07 Show Day Schedule | 👁️ Read-only | ✅ Full | ✅ Full (venue-side items) | 👁️ Read-only (public times) |
 | 18.08 Crew & Credentials | 👁️ Read-only (own) | ✅ Full | ⚙️ Config (venue rules) | ❌ None |
 | 18.09 Backline & Gear Manifest | ⚙️ Config (own gear) | ✅ Full | 👁️ Read-only | ❌ None |
@@ -104,6 +104,18 @@ visas and carnets.
 > - Persona names come from `meta/personas.md` — use short names
 > - NEVER redefine a persona here — reference only
 > - Access icons are shorthand; detailed per-role behavior lives in each feature file's **Role Lens**
+
+> **On the 18.06 Operator cell.** The setlist itself is closed to the venue — 18.06 D-03, *"The
+> setlist is private to the act"* — but "no access to the sub-domain" is not what that decision
+> says, and the row must not overstate it. Two children give the Operator a surface:
+> [18.06.03 Show File Custody](./18.06-setlist-show-files/18.06.03-show-file-custody.md) shows them
+> *"only that tracks exist and their durations, because that affects set timing and their curfew"*,
+> and [18.06.04 Performed Setlist Capture](./18.06-setlist-show-files/18.06.04-performed-setlist-capture.md)
+> **DT-06** gives them the one write in the sub-domain — a counter-attestation of **occurrence, not
+> content**: the venue confirms the show happened in their room on that date and never sees the
+> songs, the personnel splits or the deps. That write is load-bearing, not cosmetic —
+> [CX-16](./show-production-touring-cx.md) makes the disinterested third party's occurrence attest
+> the difference between an attested show record and a self-asserted one.
 
 ### Persona Mapping (D-02 below)
 
@@ -159,10 +171,10 @@ narrow and deliberate: a published *performed* setlist (18.06.04), public doors/
 - [[decisions.md#d-08|D-08]]
 - [[decisions.md#d-18|D-18]]
 - [[decisions.md#d-19|D-19]]
+- [[decisions.md#d-03|D-03]]
 - [[decisions.md#d-02|D-02]]
 - [[decisions.md#d-01|D-01]]
 - [[decisions.md#d-16|D-16]]
-- [[decisions.md#d-03|D-03]]
 - [[decisions.md#d-04|D-04]]
 - [[decisions.md#d-05|D-05]]
 - [[decisions.md#d-06|D-06]]

@@ -1,7 +1,7 @@
 # Spec Graph
 
 - **Nodes**: 1243
-- **Edges**: 8873
+- **Edges**: 8925
 
 ## Relationship Chains
 
@@ -18,8 +18,6 @@
 - [[specs/ideation/11-music-licensing/11.02-clearance-one-stop-status/11.02-clearance-one-stop-status-cx|Clearance & One-Stop Status — Cross-Cuts]]
 - [[specs/ideation/11-music-licensing/11.03-licence-pricing-negotiation/11.03-licence-pricing-negotiation-cx|Licence Pricing & Negotiation — Cross-Cuts]]
 - [[specs/ideation/11-music-licensing/11.06-creator-micro-licensing/11.06-creator-micro-licensing-cx|Creator Micro-Licensing — Cross-Cuts]]
-- [[specs/ideation/14-digital-goods-marketplace/14.01-catalog-compatibility/14.01-catalog-compatibility-cx|Digital Product Catalog & Compatibility — Cross-Cuts]]
-- [[specs/ideation/14-digital-goods-marketplace/14.02-licensing-activation-entitlement/14.02-licensing-activation-entitlement-cx|Licensing, Activation & Entitlement — Cross-Cuts]]
 - [[specs/ideation/14-digital-goods-marketplace/14.03-delivery-versioning-library/14.03-delivery-versioning-library-cx|Delivery, Versioning & Library — Cross-Cuts]]
 - [[specs/ideation/14-digital-goods-marketplace/14.06-used-licence-transfer/14.06-used-licence-transfer-cx|Used Licence Transfer & Resale — Cross-Cuts]]
 - [[specs/ideation/14-digital-goods-marketplace/14.10-contributor-revenue-royalty-pool/14.10-contributor-revenue-royalty-pool-cx|Contributor Revenue & Per-Download Royalty Pool — Cross-Cuts]]

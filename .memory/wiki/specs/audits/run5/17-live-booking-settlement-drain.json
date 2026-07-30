@@ -1,0 +1,87 @@
+{
+  "shard": "17-live-booking-settlement",
+  "generated": "2026-07-30",
+  "findingsProcessed": 6,
+  "classification": { "mechanical": 6, "owner": 0, "not-a-defect": 0 },
+  "items": [
+    {
+      "findingId": "17-live-booking-settlement#001",
+      "severity": "blocking",
+      "classification": "mechanical",
+      "canonicalSource": ".memory/wiki/specs/ideation/17-live-booking-settlement/17.09-settlement-reconciliation/17.09.01-settlement-sheet-computation.md:240 (D-05) — \"resolved only by an amount plus counter-attestation from the other party; the sheet is Incomplete and unsignable until then\"; corroborated at :83-86, :149, :180 (States, Incomplete: \"Signature refused\"), :217 (\"The Incomplete state refuses signature\")",
+      "summary": "17.09.01 D-05 is the numbered decision in the file that owns sheet state and the un-evaluated-term concept; 17.09.05 carried no decision authorising signature-with-acknowledgement — only an edge-case row and a surface-state row, both contradicting 17.09.01 D-05 and 17.09.05's own invalidation rule 2 (\"a signature against an incomplete computation is not an agreement to anything\"). Rewrote both drifted rows to refuse the signature and cite D-05; replaced the dead \"17.09.01 Q-03\" pointer (that Q-03 is now the negative-settlement question) with D-05; converted the cross-cut's \"live tension\" note into a hard constraint quoting D-05 and 17.09.01's boundary statement. Canonical file untouched.",
+      "filesChanged": [
+        ".memory/wiki/specs/ideation/17-live-booking-settlement/17.09-settlement-reconciliation/17.09.05-settlement-signoff-variance.md"
+      ],
+      "linesChanged": [228, 267, 289]
+    },
+    {
+      "findingId": "17-live-booking-settlement#002",
+      "severity": "blocking",
+      "classification": "mechanical",
+      "canonicalSource": ".memory/wiki/specs/ideation/17-live-booking-settlement/17.01-availability-holds-confirmation/17.01.04-confirmation-announce-gate.md:274 (D-07) — \"Confirmation requires an accepted offer version, not an executed contract\"; :55 — \"C-01 through C-05 have no override of any kind, by any party, ever\"; :230 (DT-06) — \"This also answers 17.01.03's DT-02 hazard as far as it can be answered: a defensive confirm under a 48h clock at least has terms attached\"",
+      "summary": "17.01.04 owns the confirm preconditions by mutual declaration (17.01.03:198 — \"17.01.04 owns the confirm transition\"; 17.01.04:20 — \"This feature owns two authorisation gates and nothing else\"), so 17.01.03 D-14 asserting a precondition it does not own is the drift. D-14's own rationale already argues the contract case, not the offer case — \"the industry genuinely confirms-then-papers\" is verbatim 17.01.04 DT-06's confirmed-not-contracted reasoning. Also decisive: when the owner reconciled these two files in run-3 (D6) they created exactly one override at this seam — radius break-glass, C-06 — and left C-01 with none. Changed D-14 to \"without an executed contract\" with C-01 restated as the floor and D-07 cited; re-pointed Q-01, whose \"same question as 17.01.04 Q-03\" reference was dead (that Q-03 now reads \"~~Is a party owed anything beyond first refusal...~~ RESOLVED — no\"); updated 17.01.04's reciprocal cross-cut so it no longer restates the old Q-01 framing.",
+      "filesChanged": [
+        ".memory/wiki/specs/ideation/17-live-booking-settlement/17.01-availability-holds-confirmation/17.01.03-challenge-release-expiry.md",
+        ".memory/wiki/specs/ideation/17-live-booking-settlement/17.01-availability-holds-confirmation/17.01.04-confirmation-announce-gate.md"
+      ],
+      "linesChanged": [228, 237, 245]
+    },
+    {
+      "findingId": "17-live-booking-settlement#006",
+      "severity": "warning",
+      "classification": "mechanical",
+      "canonicalSource": ".memory/wiki/specs/ideation/17-live-booking-settlement/17.01-availability-holds-confirmation/17.01.02-hold-ladder-priority.md:262 (D-14, requests lapse) — the only reading every citation in the corpus quotes: this file's Edge Cases :148 and Q-07 :277, its 17.01.03 cross-cut :230, and 17.07-booking-enquiry-inbox-rfq.md:138 (\"`17.01.02-hold-ladder-priority.md` **D-14** resolves exactly that: 'Requests lapse; holds expire...'\")",
+      "summary": "Two rows shared the id D-14. The DQ-04.01 held-date-stays-available row was the intruder — inserted out of sequence between D-12 and D-13, and cited by nobody, anywhere, by id. Re-numbered it D-20 and moved it to the end of the table after D-19, so D-14 keeps the meaning all four citations rely on. Added a one-sentence note in its Context recording the re-number and why. Verified across all 55 shard files: zero duplicate row ids remain.",
+      "filesChanged": [
+        ".memory/wiki/specs/ideation/17-live-booking-settlement/17.01-availability-holds-confirmation/17.01.02-hold-ladder-priority.md"
+      ],
+      "linesChanged": [260, 268]
+    },
+    {
+      "findingId": "17-live-booking-settlement#007",
+      "severity": "warning",
+      "classification": "mechanical",
+      "canonicalSource": ".memory/wiki/specs/ideation/17-live-booking-settlement/17.09-settlement-reconciliation/17.09.05-settlement-signoff-variance.md Decisions table — D-06 (variance baseline), D-07 (\"Settlement signing is a second authority slot in domain 01's existing model — one authority model, two rules\"), D-08 (\"Self-dealt settlements are permitted and flagged\")",
+      "summary": "Confirmed and fixed: the prose ran one id low against the Decisions table wherever it touched D-06..D-08, because the variance-baseline decision was inserted at D-06 and pushed the rest down without a sweep. Corrected 9 citations — signing authority D-06→D-07 at :30 and :161, self-dealing D-07→D-08 at :176, :178, :221, :292, :299, :303, plus the two inherited mis-cites at 17.06:97, :150 and 17.01.03:201. Two sub-claims did not survive: (a) the '(D-18)' citations at :116 and :282 are NOT defects — bare '(D-18)' is the corpus-wide convention for the global thesis at ideation-index.md:204 (\"D-18 | THESIS: Provenance is the wedge; consolidation is the platform\"), used in 112 citations tree-wide including 17.01.02 D-06, 17.01.03 D-10 and 17.09.01:225 — left unchanged. (b) The sweep missed a third casualty of the same shift: the two '(D-08)' citations for 'a protested settlement accrues commission as provisional' (:175, :298). That rule has no numbered decision anywhere — 17.08.02 is still [SURFACE] and carries only D-01..D-03, none of them this — so pointing them at any existing id would invent a decision. Re-pointed both at the section that states the rule and opened Q-07 (Agent → /write-be-spec with 17.08.02) to ratify it in one place, noting that a local D-18 is unavailable as its id.",
+      "filesChanged": [
+        ".memory/wiki/specs/ideation/17-live-booking-settlement/17.09-settlement-reconciliation/17.09.05-settlement-signoff-variance.md",
+        ".memory/wiki/specs/ideation/17-live-booking-settlement/17.06-radius-clause-exclusivity.md",
+        ".memory/wiki/specs/ideation/17-live-booking-settlement/17.01-availability-holds-confirmation/17.01.03-challenge-release-expiry.md"
+      ],
+      "linesChanged": [30, 161, 175, 176, 178, 221, 292, 298, 299, 303, 338]
+    },
+    {
+      "findingId": "17-live-booking-settlement#009",
+      "severity": "warning",
+      "classification": "mechanical",
+      "canonicalSource": ".memory/wiki/specs/ideation/17-live-booking-settlement/17.02-offers-negotiation/17.02.03-offer-approval-chain.md:73 (Edge Cases) — \"| Member approves, then the band's lineup changes before the show | `[PENDING — Q-03 → /write-architecture-spec]` | — |\", the file's only citation of Q-03 by id",
+      "summary": "Two open questions both numbered Q-03. Resolved by the single internal consumer: the Edge Cases deferral resolves only by its /write-architecture-spec target, which is the lineup-change question — so that row keeps Q-03 and the deferral needed no edit. The DQ-04.03 extension-clock question became Q-04, and the two rows were re-ordered so the table reads in sequence. No citation of it exists anywhere in the corpus, so nothing else moves. Each row records the re-number in its own text.",
+      "filesChanged": [
+        ".memory/wiki/specs/ideation/17-live-booking-settlement/17.02-offers-negotiation/17.02.03-offer-approval-chain.md"
+      ],
+      "linesChanged": [125, 126]
+    },
+    {
+      "findingId": "17-live-booking-settlement#010",
+      "severity": "warning",
+      "classification": "mechanical",
+      "canonicalSource": ".memory/wiki/specs/ideation/17-live-booking-settlement/17.02-offers-negotiation/17.02.01-offer-sheet-composition.md:61-72 (§ The Economic-Signal Lint, ratified at D-06 :235) — four number-anchored signal classes including \"an economic noun/verb within 40 characters of a number\", with the ≥95%-recall design target stated",
+      "summary": "17.03.01 D-09 decides only that economic content in free text is detected and must be acknowledged — it specifies no trigger conditions and no keywords. The trigger spec exists solely in 17.02.01's ratified lint section, and 17.03.01's own cross-cut already assigns the mechanism to that feature (\"The economic-content detector (D-09) fires at that feature's send action\"). The edge-case cell was therefore a compressed restatement that dropped the number-proximity qualifier from all four classes at once — drift, not a second design. Replaced the restated conditions and duplicate keyword list with a reference to 17.02.01 D-06, stating explicitly that a money keyword with no adjacent number does not fire, and clarified the ownership split in the cross-cut (which also carried a stale pointer to 17.02.01's renumbered Q-02). Did not touch the canonical list: the three keywords the local copy carried and 17.02.01 lacks (`less`, `owed`, `guarantee` — `guarantee` being this vocabulary's most load-bearing term) are recorded in a new Q-07 (Agent → /write-be-spec with 17.02.01) rather than dropped or silently merged into another file's ratified decision.",
+      "filesChanged": [
+        ".memory/wiki/specs/ideation/17-live-booking-settlement/17.03-deal-structures-economics/17.03.01-deal-term-grammar-types.md"
+      ],
+      "linesChanged": [172, 244, 280]
+    }
+  ],
+  "crossDomainNotes": [
+    "Domain 01 (out of shard): 17.09.05 D-07, 17.01.03 D-15 and 17.06 D-05 now consistently name three authority slots for 01 to model — offer-binding (17.02.03 D-03), settlement-signing (17.09.05 D-07) and radius break-glass (artist principal in person). Before this pass the settlement-signing slot was cited as 17.09.05 D-06 in three files, which resolves to the variance-baseline decision. If domain 01's files carry that citation, it needs the same sweep.",
+    "17.08.02 Commission Accrual & Deduction (in shard but [SURFACE], untouched): it does not carry the protested-commission-provisional rule that 17.09.05 fans out to it, and its own Q-03 asks the sibling question for cross-collateralized runs. 17.09.05 Q-07 defers the ratification decision; whichever file takes it, the other must not restate it.",
+    "17.02.01 (in shard, deliberately not edited as canonical source): its Economic-Signal Lint keyword list is now the single copy in the tree. 17.03.01 Q-07 proposes three additions to it. Any future edit to that list must not be mirrored back into 17.03.01 — the duplicate is what produced this finding."
+  ],
+  "verification": {
+    "tableColumnCounts": "All edited table blocks re-checked programmatically; no column-count change in any edited row. (Two pre-existing escaped-pipe cells in 17.03.01:81,84 trip a naive counter and were not touched.)",
+    "duplicateRowIds": "Zero duplicate D-/Q-/C-/P-/DT- row ids across all 55 shard files after the pass.",
+    "canonicalFilesUnmodified": "17.09.01-settlement-sheet-computation.md and 17.02.01-offer-sheet-composition.md were cited as canonical and were not written to."
+  }
+}

@@ -1,0 +1,103 @@
+{
+  "domain": "23-career-finance-business",
+  "verdicts": [
+    {
+      "findingId": "23-career-finance-business#001",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "Quotes exist verbatim, but the claim misreads what the resolved questions assert. 23.05-career-progression-benchmarking-index.md:49 Q-03 does NOT say 'no public artist timeline may exist' — it says 'there is no public artist **profile** timeline' in 01/20, which is the premise-falsifying answer to 'is 23.05.02 the same entity as the 01/20 profile timeline'. The same line then affirms the surface the finding says is deleted: '23.05.02 stays one entity under one visibility rule (23.05.02 D-02), and its public projection is bound by 01.06.02 D-06'. 23.05.02:85 Q-01 repeats it: '23 therefore keeps the whole node ... and any public projection is bound by 01.06.02 D-06'. So the forcedInvention ('is the Fan cell built or deleted') is explicitly answered: built, with a named rendering constraint. Verified at source that 01.06.02:215 D-06 and :68 constrain chronological density/timeline spine, not the existence of publishable milestones — and 23.05.02:23 never says the public projection is chronological ('a private form ... and a public projection (curated, artist-controlled)'), while the one chronological rendering (:52 States Populated, 'Chronological, grouped by year, with public/private markers') is the owner's view, since only the owner sees public/private markers. What remains is the rendering form of a curated public projection under a stated constraint — a design detail with a governing rule, not two normative statements in collision."
+    },
+    {
+      "findingId": "23-career-finance-business#002",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "no-real-divergence",
+      "reason": "Quotes verified at 23.01.03-multi-currency-fx.md:39, :63, :79, :80. The two decisions are complements, not alternatives. The edge case at :39 scopes the estimate, not the actual rate: 'the provider's actual rate is the truth for what hit the account; ours is only an estimate where no real conversion happened'. Nothing restricts the actual rate to the net leg only. Combining D-02 (prefer the real rate) with D-03 (one rate/date across gross, deductions, net) yields exactly one reading: apply the provider's actual realised rate to the whole row. That reading uses no estimate where a real conversion exists (D-02 satisfied) and keeps net = gross - deductions after conversion (D-03 satisfied). 23.06.03-recoupment-netting-ledger.md:42 independently restates the same combined rule for cross-currency netting ('Gross/deductions/net must convert at one rate/date or the row will not balance (23.01.03 DT-03)'), with no carve-out. The claimed option (b) 'mix actual and estimated rates on one row' is not offered by any line in the file."
+    },
+    {
+      "findingId": "23-career-finance-business#003",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "Quotes exist at 23.02.01-expense-receipt-capture.md:43 and :55 (bolding in the finding is added; content matches) and at 23.02.03-tax-pack-accountant-handoff.md:31 and :33. But 23.02.01:43's 'Allowed' governs capture, not issuance — it says nothing about blocking, and 'the pack is honest about it' is a disclosure statement, so the claimed three-way split collapses to two. The owning file defines the blocking set closed: 23.02.03:31 'The exceptions list — every item the platform could not resolve: uncategorized receipts, unadjudicated import duplicates, unresolved FX, entity-attribution ambiguities' and :49 'Uncategorized expenses / unresolved FX / unadjudicated import duplicates | **Blocks** a final pack'. An evidence-less row is not an unresolved item — it is a fully-resolved row with weak evidence. 23.02-expenses-tax-readiness-cx.md:38 puts 'receipts without evidence' in the be-explicit-about set, and :48 keeps the categories separate ('Generate → validate completeness → block or warn ... refuse to present a final figure while **blocking** gaps exist'). Three of four sources converge on disclose-not-block; only 23.02.01:55's loose phrase 'blocker list' points the other way."
+    },
+    {
+      "findingId": "23-career-finance-business#004",
+      "upheld": true,
+      "finalSeverity": "warning",
+      "refutationReason": "not-refuted",
+      "reason": "Verified at 23.01.05-income-to-work-linkage.md:25 — the income-type enumeration literally ends '... sync fee, backend/points, advance' and is explicitly a property carried on the ledger row and rendered as a breakdown of the work's 'total to date'. Verified contra at career-finance-business-cx.md:15 (CX-04, 'an advance taken is a liability that must never re-enter the ledger as income'), :90 ('Liabilities and income are separate records, never merged ... must net rather than count'), 23.01.02-off-platform-income-import.md:42 ('Routed to advances, not income') and 23.06.01-advance-underwriting-offers.md:23 ('recorded as a liability, never as income'). Grep confirms 23.01.05:25 is the only income-type enumeration anywhere in the domain, so an implementer deriving the enum has exactly one list and it contains the forbidden member. Nothing anywhere flags, scopes or reconciles it — a genuine silent contradiction. Downgraded from blocking: the second horn of the claimed forced invention is false (career-finance-business-cx.md:91 already sources the gross/net-to-me legs from the recoupment position — 'Recoupment state must be readable by the income-to-work projection (23.01.05) so a fully-recouped work still renders both gross and net-to-me'), and four independent statements outweigh one list item, so the correct resolution is discoverable rather than invented."
+    },
+    {
+      "findingId": "23-career-finance-business#005",
+      "upheld": true,
+      "finalSeverity": "warning",
+      "refutationReason": "not-refuted",
+      "reason": "Both enumerations verified as closed sets in the same file. 23.07.03-band-treasury-member-distribution.md:29-32 — 'Remainder divides by the distribution rule — one of three shapes ... Equal ... Weighted ... Per-role'. 23.07.03:102 Q-02 (RESOLVED) — 'The rule's shapes are fixed by [01.04.03] Behavior: \"exactly three shapes: equal (split N ways), by income share (the percentages fixed in 01.04.01), or manual per event\"', repeated at 23.07-budgeting-project-tour-pl-index.md:48. Confirmed at source: 01.04.03-treasury-mandate.md:25 says exactly that, and spells out that manual-per-event is a distinct capability with its own governance gate ('the mandate holder proposes a split, members see it, and — above the spend ceiling — governance's threshold from 01.04.01 must clear it'). 'Weighted' and 'Per-role' both reduce to a percentage set, but 'manual per event' has no counterpart in 23.07.03's closed list and carries a capture and approval flow the downstream file never mentions, while 'Per-role' has no counterpart upstream. Nothing marks the Behavior list as superseded. Downgraded from blocking because the file's own resolved Q-02 names 01.04.03 as the authority and quotes it, giving an implementer an explicit tie-break."
+    },
+    {
+      "findingId": "23-career-finance-business#006",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "no-real-divergence",
+      "reason": "The finding's ellipsis removes the clause that reconciles the line. 23.01.01-income-event-ledger.md:43 in full ends: '... both are held and the user is asked to confirm — matching **proposes, never silently auto-merges**, because a wrong merge deletes real income (CX-04)'. The same cell therefore restates D-04 rather than contradicting it. D-04 (:97) forbids *silent* auto-merge; the above-threshold path is explicitly not silent ('At most a \"we linked two records of the same payment\" note'). The above-threshold action is also not a merge of two income rows: 'the platform-authoritative event (D-02) is kept, the other is linked as a corroborating reference, not a second income row' — no income row is destroyed, which is the harm D-04/DT-04/CX-04 exist to prevent. 23.01-income-aggregation-financial-identity-cx.md:82 uses the same 'never auto-merge silently' formulation. Every reasonable reading converges: auto-link above threshold with a visible note, confirm prompt below it."
+    },
+    {
+      "findingId": "23-career-finance-business#007",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "Quotes verified at 23.02.02-deduction-categorization-jurisdiction-rules.md:27-28, :38, :76 and 23.02-expenses-tax-readiness-index.md:48. The jurisdiction question is answered unambiguously and in two places: the sub-domain index Q-01 ('RESOLVED — the United States only ... v1 encodes US sole-trader (Schedule C) rules and nothing else') and the feature's own Q-01 at 23.02.02:83 ('~~Which jurisdictions at launch~~ is RESOLVED — the United States only ... so v1 encodes US musician/sole-trader rules alone'), both sourced to ideation-index D-32. The UK Happy Path is a stale illustrative walkthrough, not a normative rule — no decision, state or edge case prescribes a UK vocabulary — and an implementer holding an explicit US-only lock plus D-02's honest-refusal rule will not ship it. The residual (who supplies and maintains the concrete US category set) is explicitly tracked in the same row: 23.02.02:83 '[OWNER] Who maintains the rule set? ... a staffing or sourcing commitment ... that no later stage resolves on its own' | User | /create-prd. The rule-set table itself is jurisdiction data, not product behaviour invented at this layer."
+    },
+    {
+      "findingId": "23-career-finance-business#008",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "no-real-divergence",
+      "reason": "Quotes verified at 23.06.02-commission-representation-deductions.md:38, :54, :79, :87. D-02's two clauses are sequential, not alternative: interpret scope as narrowly as defensible, and where even that leaves the scope undetermined, do not deduct. What is 'held' is the deduction, not the musician's money — 23.06.02:54 States/Partial reads 'Row held, flagged; **never deducted on a guess**', and :38 reads 'An unresolved scope holds the row **rather than deducting wrongly**'. Both clauses therefore produce the same cashflow outcome the finding calls the opposite outcome: no commission comes off the row. The finding's premise that holding withholds £2,000 from the user also presumes the platform moves the money, which is itself an open [OWNER] question — 23.06.02:88 Q-02 'Does the platform route commission (parent Q-02), or only calculate and show it?' | User | /create-prd, mirrored at 23.06-advances-commission-recoupment-index.md:52. career-finance-business-cx.md:177 INV-05 cites the same rule as one behaviour ('hold the row, name the gap, block the export'), not two competing ones."
+    },
+    {
+      "findingId": "23-career-finance-business#009",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "tracked-deferral",
+      "reason": "Verified at 23.03.03-payment-chasing-dunning-aging.md:89 — 'Q-02 | **[OWNER]** Does the ladder ever escalate to a real collections process or a formal legal demand, or does it stop at reminders? ... A scope-and-liability posture only the owner can set; no later stage decides whether the ladder has a terminal rung. | User | `/create-prd`'. That is a well-formed tracked deferral: explicit [OWNER] marker, named owner (User), named target stage (/create-prd), and an explicit statement that no downstream stage may decide it. The Behavior line at :23 and the edge case at :43 ('formal demand **or write-off**' — the alternative the finding omits) describe the ladder's maximal shape; the terminal rung is precisely what Q-02 holds open, which is the tracking working as designed rather than a silent contradiction."
+    },
+    {
+      "findingId": "23-career-finance-business#010",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "tracked-deferral",
+      "reason": "Quotes verified at 23.04.01-contract-vault-document-store.md:23, :28, :50, :51. The deletion question is tracked twice with owner and target: 23.04.01:98 'Q-03 | Retention vs erasure for a **mutual** contract: it is not solely the user's document, so their deletion right is not unilateral. | User | `/create-prd-security`', and at domain level career-finance-business-index.md:127 'Q-07 | Financial-record retention vs GDPR erasure ... Affects 23.01, 23.02.01 and 23.04.01 alike. | User | `/create-prd-security`'. The immutability rule is also scoped, not universal: D-02 (:89) is 'Documents are immutable; **deals are chains of instruments over time**' and :28 forbids overwrite/deletion **from the chain** — a rule about version-chain integrity, not about whether a statutory-erasure path exists outside it. The :50 delegate hazard is a rationale phrase ('could delete it') supporting per-document scoping, not a normative grant of a delete capability."
+    },
+    {
+      "findingId": "23-career-finance-business#011",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "tracked-deferral",
+      "reason": "Quotes verified at 23.05.03-peer-cohort-benchmarking.md:23, :37, :51, :80, and it is true that k is not stated here. But the file explicitly does not own the computation — :23 'Computation belongs to 22 Analytics; the career framing belongs here (parent D-04)', 23.05-career-progression-benchmarking-index.md:41 D-04, and :89 Q-02 'Is this a feature of 23 or a view of 22 Analytics? | User | /create-prd-architecture'. In the owning domain the threshold is a tracked question with owner and target: 22.05-cross-source-dashboard-reporting/22.05.04-peer-benchmarking-cohort-comparison.md:102 'Q-02 | What is the k-anonymity floor, and is it the same as 22.04.01 D-05's? Two different floors for the same mechanism would be an incoherence. | Agent | `/create-prd-security`', plus 22.04-audience-geography-routing-insight/22.04.01-audience-geography-map.md:105 Q-01 (same target). analytics-market-intelligence-cx.md:240 registers 'Anonymised Cohort Construction & k-Anonymity Floor' as a shared mechanism serving domains 05, 16, 22, 23 that must resolve to one floor. The parameter is tracked, cross-domain, at the security stage."
+    },
+    {
+      "findingId": "23-career-finance-business#012",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "Quotes verified at career-finance-business-cx.md:40 and career-finance-business-index.md:78, :97-99. The CX line is not a domain-wide role declaration: it sits inside CX-01, whose subject is 'Income Aggregation ↔ All Other Children' (:32) and whose sibling bullets are all ledger-scoped ('Musician: every child touches their ledger'; 'Operator: reads it, but their books of record are elsewhere'). Read in its own section it asserts the Fan never touches the income ledger — which is exactly what 23.05.02-auto-milestone-timeline.md:19 independently confirms for the one Fan cell ('They see the public projection; **nothing financial**, nothing unreleased'). The authoritative role source says so explicitly and prominently in the same domain index the finding cites, and the index closes with 'Per-role behavioural detail lives in each feature file's Role Lens' (:104). No implementer deletes a Role Matrix cell that the index singles out for scrutiny on the strength of one bullet inside a cross-cut's income-scoping list."
+    },
+    {
+      "findingId": "23-career-finance-business#013",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "Quotes verified at career-finance-business-index.md:128, 23.06-advances-commission-recoupment-index.md:51, 23.06.01-advance-underwriting-offers.md:87 and :78. Scope is not in doubt: moscow-ledger.md:767 carries 23.06.01 in WONT, and feature-ledger.md:742 records '`23.06.01` ... | Won't | [SURFACE] | — '. Both ledgers are the authoritative MoSCoW record, so a planner reading them cannot conclude the feature is live scope. A retained [OWNER] question on a Won't node is the documented pattern, not an inconsistency — ideation-index Domain Exhaustion (quoted at 23.06.05:81) defines Won't as 'retained for traceability, not built', and 23.06 index Q-01 asks a posture question ('does WeJammin broker at all') that only the owner can reverse a Won't with. The unclosed Q-01 on 23.06.01 versus the closed one on 23.06.05 is a housekeeping asymmetry, not a divergence in what gets built."
+    },
+    {
+      "findingId": "23-career-finance-business#014",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "downstream-detail",
+      "reason": "Quotes verified at 23.08-point-of-need-insurance.md:28, :37, :79, and the threshold and re-offer cadence are indeed absent. Both are tunable parameters of a referral surface, not product behaviour the ideation layer must fix: a currency threshold on gear value and a suppression/frequency policy are FE/BE spec settings, and 'the trigger must be a fact, not a guess' constrains the *evidence* for the trigger (registry-confirmed ownership and cover status), which is what the file actually specifies, not its numeric cutoff. The file also ranks the gear-purchase trigger below the venue-requirement one (D-02, :77) and defers trigger ownership entirely — :87 'Q-03 | Should the trigger live in **17 Live Booking** rather than in 23 (DT-02)? ... which shard owns the trigger | User | `/decompose-architecture`' — so the surface that would carry any threshold is not yet assigned. Above that, :85 Q-01 is an [OWNER] keep-or-cut on the whole node, routed to /create-prd, with MoSCoW holding it at `Could`."
+    }
+  ]
+}

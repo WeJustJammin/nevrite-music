@@ -41,7 +41,7 @@ Multi-vendor sale and delivery of DAW plugins, sample packs, presets, beats, MID
 | 14.09 | Digital Refunds, Withdrawal & Revocation | sub-domain | [14.09-digital-refunds-revocation/](./14.09-digital-refunds-revocation/) | `[BREADTH]` | 6 hypotheses (3 features) |
 | 14.10 | Contributor Revenue & Per-Download Royalty Pool | sub-domain | [14.10-contributor-revenue-royalty-pool/](./14.10-contributor-revenue-royalty-pool/) | `[BREADTH]` | 7 hypotheses (3 features) |
 
-> **Intra-domain cross-cuts**: [digital-goods-marketplace-cx.md](./digital-goods-marketplace-cx.md) — 11 confirmed pairs, 5 rejected pairs, 9 cross-cuts escalated to the global CX, 11 not-product concerns routed out.
+> **Intra-domain cross-cuts**: [digital-goods-marketplace-cx.md](./digital-goods-marketplace-cx.md) — 27 confirmed pairs (CX-01…CX-27), 7 rejected pairs (R-01…R-07), 10 cross-cuts escalated to the global CX, 13 not-product concerns routed out.
 
 ### Classification Ledger
 
