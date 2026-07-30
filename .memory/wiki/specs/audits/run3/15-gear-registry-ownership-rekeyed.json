@@ -1,0 +1,139 @@
+{
+  "domain": "15-gear-registry-ownership",
+  "verdicts": [
+    {
+      "findingId": "15-gear-registry-ownership#001",
+      "upheld": true,
+      "finalSeverity": "warning",
+      "refutationReason": "not-refuted",
+      "reason": "Quotes verify verbatim. 15.02.02-point-of-sale-serial-screening.md:67 States row reads \"| Partial | Identity partially resolved (no era, no serial) | \\\"Limited check — we matched on maker and model only\\\" |\" while the same file's Edge Cases row :54 gives the same input (\"Serial-less gear (15.01.05)\") the output \"Screening cannot match\" / \"we can't check it against the registry\". Two user-visible outputs for one input, in one file, with no marker on either — a real silent inconsistency. Downgraded from blocking: 15.02-stolen-gear-registry-recovery-index.md:51 D-02 and the same file's DT-02 (:74, \"❌ REJECTED\") make the composite-key rule normative and unambiguous, so no implementer is forced to invent the dangerous maker+model matching behaviour; what is unresolved is only which copy string the Partial state renders."
+    },
+    {
+      "findingId": "15-gear-registry-ownership#002",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "no-real-divergence",
+      "reason": "Quotes verify (15.01.05-non-serialized-contested-identity.md:93 D-03; 15.01.01-gear-record-serial-identity.md:87-95 and :96-98), and it is true that 15.01.05 contains no enumeration. But D-03 itself pins the set by reference: 15.01.05:93 — \"The values are the six already in use on disk; relocating them costs nothing because no downstream literal binds to them today.\" Exactly one six-value table exists on disk (15.01.01:89-94: serial-confirmed, serial-typed, serial-reconstructed, photo-bound (no serial), era-unknown, numbers-disagree), so the vocabulary is determinate and every implementer converges on the same enum. What remains is a file-ownership relocation and a stale render-side note (\"flagged for Step 6 synthesis\", :98) — editorial hygiene, not an ambiguity that forces invented product behaviour."
+    },
+    {
+      "findingId": "15-gear-registry-ownership#003",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "Quotes verify (gear-registry-ownership-cx.md:228 and :239 do say standing is unresolved, and the \"(Q-04)\" pointer is wrong — 15.02-stolen-gear-registry-recovery-index.md:62 Q-04 is the unregistered-gear question and states of itself \"is not standing authority\"). But the rule an implementer builds against is carried in the owning leaves and the platform index: 15.08-custody-loans-consignment.md:114 Q-01 (\"RESOLVED (D-64 / DQ-MG-04, ratified 2026-07-21)\"), :60 edge row (\"the split-standing problem — resolved\"), 15.02.01-theft-report-serial-flagging.md:99 Q-01, and ideation-index.md:249 D-64. Stale parent-CX prose above a ratified leaf resolution is answered-elsewhere, not a missing decision."
+    },
+    {
+      "findingId": "15-gear-registry-ownership#004",
+      "upheld": true,
+      "finalSeverity": "warning",
+      "refutationReason": "not-refuted",
+      "reason": "All three counts verify as contradictory and unmarked. gear-registry-ownership-index.md:28-29 — \"21 leaf features total. All `[SURFACE]` pending Step 5 deepening\" — against the same file's MoSCoW table :105-107 (1 Must + 10 Should + 13 Could = 24 leaves), against ideation-index.md:132 (\"5 sub-domains + 24 features\"), and against its own Status column :33-42 where five children read `[BREADTH]`. The cross-cut line :48 (\"10 confirmed pairs, 5 rejected\") contradicts gear-registry-ownership-cx.md:5 (\"19 intra-domain cross-cuts synthesised, 6 pairs rejected\") and the 19 CX rows (:26-44) plus R-01..R-06 (:497-502) actually present. Non-behavioural, so warning, but it is a genuine silent contradiction in the domain's designated entry-point file."
+    },
+    {
+      "findingId": "15-gear-registry-ownership#005",
+      "upheld": true,
+      "finalSeverity": "warning",
+      "refutationReason": "not-refuted",
+      "reason": "Every cited anchor checks out against the live CX numbering (gear-registry-ownership-cx.md:26-44 header table and :52-471 section headings). 15.03-service-repair-modification-history.md:56 and :82 cite `#CX-04` for Service↔Valuation, but CX-04 (:122) is Identity↔Custody and the pair is CX-10 (:267). 15.04-gear-collection-visibility.md:86, gear-registry-ownership-index.md:128 and 15.09-gear-discography.md:74 cite CX-07 for the exposure hazard, but CX-07 (:199) is Stolen↔Valuation and the exposure hazard is CX-06 (:168). 15.08-custody-loans-consignment.md:93 cites `#CX-05` for standing (Stolen↔Custody is CX-08, :222) and :94 cites `#CX-06` for rig/register (CX-15 :379 and CX-18 :448). 15.10-cases-manifests-carnet-source-data.md:81 cites `#CX-09` for rig↔cases (CX-16, :401). Nothing marks these as stale; the file's own renumbering note at :161 covers a different row."
+    },
+    {
+      "findingId": "15-gear-registry-ownership#006",
+      "upheld": true,
+      "finalSeverity": "warning",
+      "refutationReason": "not-refuted",
+      "reason": "Both statements verify and cannot both hold for the same surface. 15.09-gear-discography.md:120 D-05 — \"a disputed credit yields a suppressed link, failing safe toward non-disclosure\" — reinforced at :71 (\"Public surfaces show nothing for that link until the dispute resolves\") and :86 (\"Only visible, undisputed links shown\"). Against gear-registry-ownership-cx.md:164 (CX-05 synthesis 5) — \"A disputed credit (domain 02) changes a chain fact — the chain renders the disputed state honestly, never as clean.\" The chain does render 15.09 events (15.01.04-provenance-chain-view.md:82) and its sibling treatment of contested facts is explicitly render-not-suppress (:54, :57). Neither statement carries a marker. Warning rather than blocking: the leaf Decisions table is the normative artifact and states suppression three times, so the safe default is discoverable — but a competent implementer reading the domain CX would build the opposite public output."
+    },
+    {
+      "findingId": "15-gear-registry-ownership#007",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "no-real-divergence",
+      "reason": "Quotes are substantively accurate (15.01.01-gear-record-serial-identity.md:47 reads \"Cannot be listed, insured, transferred or valued by the holder\" — the finding adds bold that is not in the file). The two statements reconcile without invention: 15.01.01:47 scopes the bar to the holder acting alone on a fresh `held` mint that carries \"**no claim**\", and 15.08-custody-loans-consignment.md:107 D-04 states \"A self-asserted custody claim carries no rights until the owner confirms.\" D-02 (:105) then grants listing rights on \"custody + granted selling rights\". Default bar, lifted by an owner-confirmed grant, is the only reading consistent with both files, so no implementer diverges."
+    },
+    {
+      "findingId": "15-gear-registry-ownership#008",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "Markers verify (15.01-instrument-identity-provenance-cx.md:79 and :120 both carry `[PENDING — /ideate-discover Step 5 deepening]`; 15.01.03-ownership-transfer-handshake.md:58 carries `[PENDING — Step 5 Must-depth or /write-be-spec]`). Each item is nonetheless carried live with an owner and a downstream stage: the handshake timeout at 15.01.03:100 Q-01 (User → `/create-prd-compile`), the serial-fork question at 15.01.06-identity-continuity-modification.md:96 Q-01 (`[OWNER]` User → `/create-prd`), and the estate path at 15.01.03:102 Q-03 (User → `/create-prd-security`, which explicitly states it \"carries parent Q-04's residual\"). The finding concedes nothing behavioural is invented; a duplicated stale pointer above a live tracked row is answered-elsewhere."
+    },
+    {
+      "findingId": "15-gear-registry-ownership#009",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "Both quotes verify (15.01.05-non-serialized-contested-identity.md:54 says the discriminator \"is Q-01, deferred to Step 5 Must-depth\"; :101 records Q-01 as \"**RESOLVED** — the **secondary identifying numbers with their locations**\" citing 15.01.01 DT-06 + D-05). The Open Questions table is the canonical tracking record and it carries a concrete, sourced answer, so the discriminator is settled and no implementer builds the demoted nickname/WJ-ID-suffix alternatives. Stale prose in an Edge Cases cell above a resolved Q row in the same file is answered-elsewhere."
+    },
+    {
+      "findingId": "15-gear-registry-ownership#010",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "Quotes verify, but read together they are consistent rather than contradictory. 15.02.01-theft-report-serial-flagging.md:51 says \"Final standing rules deferred — see Q-01 and 15.08 Q-01\", and following that pointer gives exactly the picture: the general rule is ratified (:99 Q-01, \"the owner **or** a party in a custody state `15.08` already enumerates may file\"; 15.08-custody-loans-consignment.md:60 and :114; ideation-index.md:249 D-64) while a named residue remains — 15.08:114, \"Standing under `stale` and `disputed` custody remains open\" — which is precisely what the edge row's \"final standing rules\" clause defers. The row's own cited destination names the residue and an owner (User), so the item is tracked where it is answered."
+    },
+    {
+      "findingId": "15-gear-registry-ownership#011",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "Both markers verify (15.02-stolen-gear-registry-recovery-cx.md:57 and :105). Both items are fully answered in the leaves: the payout/flag question at 15.02.01-theft-report-serial-flagging.md:101 Q-03 (\"Resolved (2026-07-23): the flag survives the payout and is never cleared ... claimant identity ... reassigned owner → insurer\") with its representation residue tracked at 15.02.04-false-flag-dispute-lifecycle.md:96 (`[PENDING — /write-be-spec, with 15.02.01 Q-03]`), and both mid-checkout races specified in full at 15.02.02-point-of-sale-serial-screening.md:56-57. The finding itself states \"Nothing behavioural — both items are answered elsewhere.\""
+    },
+    {
+      "findingId": "15-gear-registry-ownership#012",
+      "upheld": true,
+      "finalSeverity": "warning",
+      "refutationReason": "not-refuted",
+      "reason": "Most of the cited rows are answered-elsewhere hygiene — 15.05.03-insurance-schedule-claim-pack.md:57 and :58 are superseded by the same file's Q-01 (:101, \"The ownership/flag half is now settled\", residue → `/write-be-spec`), :60 by Q-02 (:102, User → `/create-prd-security` + legal review), and 15.05.02-appraisal-record.md:54 by Q-02 (:95). One row survives verification: 15.05.02:53 — \"| Appraisal commissioned by a seller mid-sale | Conflict — the seller chose and paid the appraiser | `[PENDING — /ideate-discover Step 5 deepening]` |\" — is covered by none of that file's three Q rows (:94 recency window, :95 discredited appraiser, :96 appraiser-as-category), so its only tracking is a marker naming a completed stage: an owner-less, target-less deferral on a live conflict-of-interest question. 15.05-valuation-appraisal-insurance-cx.md:39 (appraisal landing mid-listing) has the same defect. Malformed tracking is the stated Dimension-7 exception; warning, since the tree elsewhere shows the fix convention (15.06-rig-profile-compatibility-index.md:58 and 15.06.03:98, \"Deferral re-pointed from the completed ...\")."
+    },
+    {
+      "findingId": "15-gear-registry-ownership#013",
+      "upheld": true,
+      "finalSeverity": "warning",
+      "refutationReason": "not-refuted",
+      "reason": "Verified. 15.06.03-rig-spec-sheet-source-data.md:54 — \"| Rig contains gear the user doesn't own (15.08) | The sheet discloses someone else's asset | `[PENDING — /ideate-discover Step 5 deepening]` |\" — and that file's three Q rows cover other items (:97 Q-01 live-read vs snapshot → `/create-prd-architecture`; :98 Q-02 stage plot → `/create-prd`; :99 Q-03 serial stripping → `/create-prd-security`). The domain CX independently confirms it is open and unowned: gear-registry-ownership-cx.md:395 — \"discloses someone else's asset — real and unresolved (CX-18 sibling)\" — while the room-side equivalent does have an owner and a stage (15.07.03-backline-list-publication.md:120 Q-02). A live third-party-disclosure question whose only pointer is a completed stage. Warning rather than blocking: the CX marks it unresolved, so an implementer is warned rather than silently misled."
+    },
+    {
+      "findingId": "15-gear-registry-ownership#014",
+      "upheld": true,
+      "finalSeverity": "warning",
+      "refutationReason": "not-refuted",
+      "reason": "The empty synthesis slot verifies and is the substance: 15.06-rig-profile-compatibility-cx.md:79 reads \"5. **State transition conflict**: `[PENDING — /ideate-discover Step 5 deepening]`\" with no statement at all, on a completed stage — no answer and no live owner anywhere. The remaining cited markers are stale duplicates rather than gaps (15.06.01-rig-definition-signal-chain.md:53 and :57 are carried live at :99 Q-02 and :100 Q-03, both explicitly \"Deferral re-pointed from the completed `/ideate-discover` Step 5\" → `/create-prd-architecture`; 15.06.03:53/:56/:57 map to that file's Q-01/Q-02/Q-03), so the finding is upheld only on the contentless slot and the surrounding dead pointers. Warning."
+    },
+    {
+      "findingId": "15-gear-registry-ownership#015",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "Quotes verify, but the behaviour is stated in the same cell the finding calls deferred: 15.07.02-asset-condition-availability-state.md:63 reads \"| Conflicting reports from two staff | Both are logged; neither auto-wins | `[PENDING — ...]` |\" — the What Happens column already types it, which is exactly why Q-03 (:114) cites it as its authority (\"**RESOLVED — both stand**\"), reinforced by domain D-07's non-adjudication posture. The other markers duplicate live Q rows: :66 (condition rot) → Q-02 (:113), :68 (quantity-line notification) → Q-05 (:116, Agent → `/write-architecture-spec`), :65 (stale advance document) mirrors 15.06.03:97 Q-01 → `/create-prd-architecture`. The finding concedes nothing behavioural. Stale duplicate pointers above live tracked rows."
+    },
+    {
+      "findingId": "15-gear-registry-ownership#016",
+      "upheld": true,
+      "finalSeverity": "warning",
+      "refutationReason": "not-refuted",
+      "reason": "All three anchors verify as wrong against the live numbering. 15.07.03-backline-list-publication.md:98 — \"**Hard dependency of 15.06.02 Compatibility Oracle** ... `#CX-10`\" — but gear-registry-ownership-cx.md:267 CX-10 is \"Service & Mod History ↔ Automated Valuation\"; the register→oracle coupling is CX-17 (:423). 15.07-studio-backline-asset-register-cx.md:122 repeats it verbatim (\"The genuine coupling is register → publication → oracle target, which is recorded at the domain level as CX-10\"). And 15.07.03:103 cites `#CX-07` for the exposure composition, but CX-07 (:199) is Stolen↔Valuation while the exposure hazard is CX-06 (:168). Non-behavioural but real: the pointer for the dependency 15.06-rig-profile-compatibility-index.md:58 Q-01 says decides whether the oracle ships lands on an unrelated cross-cut."
+    }
+  ],
+  "adjustedUnits": [
+    {
+      "unit": "15-gear-registry-ownership (domain root: index, cx, 15.03, 15.04, 15.08, 15.09, 15.10)",
+      "applicableCheckpoints": 7,
+      "adjustedPoints": 1
+    },
+    {
+      "unit": "15.01-instrument-identity-provenance",
+      "applicableCheckpoints": 6,
+      "adjustedPoints": 0
+    },
+    {
+      "unit": "15.02-stolen-gear-registry-recovery",
+      "applicableCheckpoints": 6,
+      "adjustedPoints": 0.5
+    },
+    {
+      "unit": "15.07-studio-backline-asset-register",
+      "applicableCheckpoints": 6,
+      "adjustedPoints": 0.5
+    }
+  ]
+}

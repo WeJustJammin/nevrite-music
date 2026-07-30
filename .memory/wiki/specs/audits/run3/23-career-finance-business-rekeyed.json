@@ -1,0 +1,140 @@
+{
+  "domain": "23-career-finance-business",
+  "verdicts": [
+    {
+      "findingId": "23-career-finance-business#001",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "no-real-divergence",
+      "reason": "Quotes are accurate (23.02.02:27-28 UK Happy Path; :83 Q-01 'RESOLVED — the United States only … so v1 encodes US musician/sole-trader rules alone'; 23.02-expenses-tax-readiness-index.md:48 same lock). But only one side is normative: the Behavior statement at 23.02.02:23 is jurisdiction-agnostic ('A jurisdiction rule set defines: the category vocabulary, per-category apportionment rules, capital thresholds…'), and the UK text is an illustrative Happy Path walk-through, not a category enum the product must ship. The scope side carries an explicit RESOLVED marker citing ideation-index D-32, so no implementer converges on a UK vocabulary. The residual — who sources and maintains the US rule content — is tracked with owner and target at 23.02.02:83 ('[OWNER] Who maintains the rule set? … | User | /create-prd'). The unit is additionally a COULD at [SURFACE] (moscow-ledger.md:690; 23.02-expenses-tax-readiness-index.md:19), i.e. correctly outside Step 5 deepening per ideation-index.md:67. Stale worked example, not a forced invention."
+    },
+    {
+      "findingId": "23-career-finance-business#002",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "Quotes exist (23.05.02:19,23,30,52; 01.06.02:68,106,215). The claimed silent contradiction is not silent: 23.05.02:85 Q-01 is a RESOLVED entry that explicitly states 'any public projection is bound by 01.06.02 D-06' and quotes D-06 verbatim — that is the constraint being carried one file over, not a missing one. The finding also overreads :52: the Populated state 'Chronological, grouped by year, with public/private markers' is the owner's view (a Fan cannot see private markers), and D-06 (01.06.02:215) forbids chronological density only 'on a public surface'. D-06 bans a timeline spine and per-year counts publicly; it does not ban a curated public projection of individual milestones, which is what 23.05.02:30 describes ('joins their artist profile story'). Unit is a COULD at [SURFACE] (moscow-ledger.md:696; 23.05-career-progression-benchmarking-index.md:19), never Step-5 deepened by design."
+    },
+    {
+      "findingId": "23-career-finance-business#003",
+      "upheld": true,
+      "finalSeverity": "warning",
+      "refutationReason": "not-refuted",
+      "reason": "Verified on both sides and genuinely divergent. 23.07.03-band-treasury-member-distribution.md:29-32 states a closed set — 'one of three shapes … Equal / Weighted / Per-role'. The owning spec 01.04.03-treasury-mandate.md:25 states a different closed set — 'The distribution rule is one of exactly three shapes: equal (split N ways), by income share (the percentages fixed in 01.04.01), or manual per event' — and 23.07.03:102 plus 23.07-budgeting-project-tour-pl-index.md:48 both quote that enum as governing. 'Per-role' (a standing rule keyed to role) and 'manual per event' (an ad-hoc per-distribution entry) are not the same object, so the two enumerations cannot both be exhaustive. Downgraded from blocking because the conflict is not unmarked: 23.07.03:102 explicitly says 'The rule's shapes are fixed by [01.04.03] Behavior', which names the authority an implementer must follow — the defect is a stale Behavior section, not an absent decision. Unit is a SHOULD (moscow-ledger.md:485) at [PARTIAL], so it is in Step-5 scope."
+    },
+    {
+      "findingId": "23-career-finance-business#004",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "no-real-divergence",
+      "reason": "Both quotes verified (23.04-deal-contract-vault-cx.md:31 and :51). They reconcile on the word the finding itself flags: CX-01 forbids an unconfirmed extraction from 'silently' driving an alert; CX-02 requires the alert to fire 'flagged as unconfirmed', which is by construction not silent. The owning feature states the same non-silent behaviour three times (23.04.03:45 'Fire anyway, flagged as unconfirmed', :61 'Unconfirmed dates alert anyway, flagged', :86 D-02), and 23.04.02:23 constrains only reconciliation findings, not alerts. Every reasonable reading builds one thing: alert fires, carrying an unconfirmed flag."
+    },
+    {
+      "findingId": "23-career-finance-business#005",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "The Edge Case at 23.07.03:49 does still phrase the case as an open parent question, as quoted. But the behaviour it leaves open is settled in the same file: 23.07.03:102 Q-02 is RESOLVED — 'it discloses the default that already governs them rather than prompting a negotiation, and it never guesses a rule' — and the Edge Case's own 'What Happens' cell already states 'Nothing can be computed'. Those two together answer the finding's forced-invention question directly: no provisional distribution is computed, the legal default is disclosed (01.04.01 D-04, quoted at :102, 'disclosure of the default, not an agreement builder'), and the Empty state at :64 confirms this is a normal, non-error condition. Stale cross-reference wording, not an open product decision."
+    },
+    {
+      "findingId": "23-career-finance-business#006",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "no-real-divergence",
+      "reason": "Cell values verified (career-finance-business-index.md:75,77,80 vs 23.02-expenses-tax-readiness-index.md:27, 23.04-deal-contract-vault-index.md:27, 23.07-budgeting-project-tour-pl-index.md:26, and Role Lens rows 23.02.01:18, 23.04.01:18). But the two matrices address different objects: the domain matrix rows are sub-domains (23.02, 23.04, 23.07), the sub-domain matrices rows are features (23.02.01, 23.04.01, 23.07.01). A coarser row about a heterogeneous sub-domain is not a competing access grant for a specific feature, and the fractal convention plus the explicit pointer at career-finance-business-index.md:104 ('Per-role behavioural detail lives in each feature file's Role Lens') both direct the implementer to the most specific statement, which each feature file supplies unambiguously (23.02.01:18 'Operator | Full … WeJammin is a feed'). No feature is left without a definite Operator level."
+    },
+    {
+      "findingId": "23-career-finance-business#007",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "tracked-deferral",
+      "reason": "Quotes verified (23.02.04:29 UK–Germany; 23.02-expenses-tax-readiness-cx.md:12 'the UK return', :58 'UK FEU'). The file itself documents the supersession and tracks the residue with a well-formed marker: 23.02.04:86 — '[OWNER] Which treaty pairs at launch? D-32 fixes the home side — the US is the only launch market, so the corridors are US→X, superseding this row's original UK→US / UK→EU framing … | User | /create-prd'. Owner and target both present; the corridor choice is exactly what is deferred. The normative behaviour at :23 (record withholding as a deduction on the income row, identify route/deadline/evidence, prepare not file) is corridor-independent. Unit is a COULD at [SURFACE] (moscow-ledger.md:691; 23.02-expenses-tax-readiness-index.md:21)."
+    },
+    {
+      "findingId": "23-career-finance-business#008",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "downstream-detail",
+      "reason": "Quotes verified (23.05.03:23,37,43,80). The vision-layer rule is fully stated and testable in kind — D-03 at :80 'Hard minimum cohort size, enforced; show nothing below it', reinforced by D-04 'Verified income only in aggregates' and D-05 per-role cohorts. What is missing is the numeric k and the dimension budget: privacy parameters that belong to the security layer, where the file already routes the governing question — 23.05.03:90 Q-03 (consent/purpose limitation for aggregation) | User | /create-prd-security — and :88 Q-01 [OWNER] 'Who sees benchmarks?' | User | /create-prd. The dimensionality marker at :43 sits in a COULD feature at [SURFACE] (moscow-ledger.md:697; 23.05-career-progression-benchmarking-index.md:20), which ideation-index.md:67 records as 'correctly out of Step 5 scope', so a deepening-stage PENDING there is the documented boundary rather than a dangling tracker."
+    },
+    {
+      "findingId": "23-career-finance-business#009",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "downstream-detail",
+      "reason": "Quote verified (23.01.01:46 '… if the original never arrives within the reconciliation window, the orphan is surfaced for review rather than silently applied or dropped'; D-06 at :99). The product behaviour is completely specified — park keyed to the missing idempotency key, reconcile on arrival, surface for review otherwise, show an 'N records pending reconciliation' marker, never self-correct invisibly. The only missing item is a duration constant, which is a backend tuning parameter of exactly the class the same file routes downstream at :108 Q-04 ('The precise rule is a downstream contract decision but the policy … is locked here' | Agent | /write-be-spec). Two implementers build the same behaviour and read the window from config."
+    },
+    {
+      "findingId": "23-career-finance-business#010",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "tracked-deferral",
+      "reason": "Quote verified (23.01.02:44 'CSV format unrecognized (every bank differs) | [PENDING — /ideate-discover Step 5 deepening] — column-mapping UI vs per-bank parsers is unresolved | Mapping step'). The user-visible product answer is already in the row's own 'User Sees' cell — a Mapping step — and the Error state at :56 specifies its failure semantics ('Row-level errors — never reject a whole file for one bad row'). Per-bank parsers versus a generic mapper is an ingestion-implementation optimisation behind that same surface, not divergent product behaviour. The marker's stage is also not spent for this node: 23.01.02 is a SHOULD at [PARTIAL] (moscow-ledger.md:475; 23.01-income-aggregation-financial-identity-index.md:19), and ideation-index.md:66 records Shoulds as 'Step 5 Level-1 complete' — deeper levels deliberately not run — so a further-deepening PENDING matches the recorded state of the node."
+    },
+    {
+      "findingId": "23-career-finance-business#011",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "tracked-deferral",
+      "reason": "Quote verified (23.02.04:42 'Band entity performed, individuals taxed | … | [PENDING — /ideate-discover Step 5 deepening] — genuinely complex and jurisdiction-dependent'). The stage is not spent for this node: 23.02.04 is a COULD at [SURFACE] (moscow-ledger.md:691; 23.02-expenses-tax-readiness-index.md:21), and ideation-index.md:67 records Could/Won't features at [SURFACE] as 'correctly out of Step 5 scope' — the marker names precisely the deepening pass this node was excluded from, which is the documented boundary. The corridor scope it would sit inside is itself still an owner call (23.02.04:86 Q-02, User → /create-prd), so entity-vs-member entitlement is not yet due."
+    },
+    {
+      "findingId": "23-career-finance-business#012",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "tracked-deferral",
+      "reason": "Quote verified (23.06.02:44 'Band has a manager; members have their own | Overlapping commissions on the same income at different levels | [PENDING — /ideate-discover Step 5 deepening]'). Same boundary as #011: 23.06.02 is a COULD at [SURFACE] (moscow-ledger.md:698; 23.06-advances-commission-recoupment-index.md:19), which ideation-index.md:67 records as correctly outside Step 5. The safety behaviour meanwhile is already locked in the sibling that owns sequencing — 23.06.03:23, 'The sequence is a contract term, not a default — and if it is unspecified, the row blocks rather than nets (parent D-02)' — which by its own terms covers an unspecified stacking order, and 23.06.03:87 Q-02 tracks the residual priority rule with owner and target (Agent | /create-prd-architecture). Nothing is silently defaulted."
+    },
+    {
+      "findingId": "23-career-finance-business#013",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "tracked-deferral",
+      "reason": "All five lines exist as quoted (23.01-…-cx.md:67, 23.02-…-cx.md:33, 23.04-…-cx.md:33, 23.05-…-cx.md:61, 23.06-…-cx.md:69) — though the fifth is the 'State transition conflict' item, not a notification fan-out, so the claimed identical pattern is four, not five. The completeness argument does not hold: ideation-index.md:77 records 'Domain CX files at [DEEP] — 24/24', which is the domain-level CX file (career-finance-business-cx.md), not these sub-domain CX files, and ideation-index.md:66-67 records Shoulds at Level-1 only and Coulds correctly out of Step-5 scope. Each marker names the deepening pass these nodes were not carried through. Notification channel/recipient design is also downstream product-surface work the domain routes per-feature (e.g. 23.05.01:85 Q-03 on notification tone, User → /create-prd), and the one cross-cut where notification is load-bearing is answered rather than deferred (23.04-…-cx.md:50, 'Multi-channel and escalating')."
+    },
+    {
+      "findingId": "23-career-finance-business#014",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "tracked-deferral",
+      "reason": "Quote verified (23.05.01:42 'Band-level goals | The band's goals vs the member's are different objects (01) | [PENDING — /ideate-discover Step 5 deepening]'). 23.05.01 is a COULD at [SURFACE] (moscow-ledger.md:695; 23.05-career-progression-benchmarking-index.md:18), and its own Q-02 at :84 records that placement explicitly ('RESOLVED — yes, at Could, unphased … Retained and de-prioritised, not cut'). ideation-index.md:67 records Could/[SURFACE] features as correctly out of Step 5 scope, so the marker names the pass this node was deliberately excluded from — a documented depth boundary, not an unowned gap. The entity dimension it points at is owned by domain 01's entity model, which the row itself cites."
+    }
+  ],
+  "adjustedUnits": [
+    {
+      "unit": "23-career-finance-business (domain root: career-finance-business-index.md, career-finance-business-cx.md, 23.08-point-of-need-insurance.md, 23.09-career-sustainability-signals.md)",
+      "applicableCheckpoints": 5,
+      "adjustedPoints": 0
+    },
+    {
+      "unit": "23.01-income-aggregation-financial-identity",
+      "applicableCheckpoints": 6,
+      "adjustedPoints": 0
+    },
+    {
+      "unit": "23.02-expenses-tax-readiness",
+      "applicableCheckpoints": 6,
+      "adjustedPoints": 0
+    },
+    {
+      "unit": "23.04-deal-contract-vault",
+      "applicableCheckpoints": 6,
+      "adjustedPoints": 0
+    },
+    {
+      "unit": "23.05-career-progression-benchmarking",
+      "applicableCheckpoints": 6,
+      "adjustedPoints": 0
+    },
+    {
+      "unit": "23.06-advances-commission-recoupment",
+      "applicableCheckpoints": 6,
+      "adjustedPoints": 0
+    },
+    {
+      "unit": "23.07-budgeting-project-tour-pl",
+      "applicableCheckpoints": 6,
+      "adjustedPoints": 0.5
+    }
+  ]
+}

@@ -1,0 +1,135 @@
+{
+  "domain": "01-identity-profiles-organizations",
+  "verdicts": [
+    {
+      "findingId": "01-identity-profiles-organizations#001",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "tracked-deferral",
+      "reason": "Quotes exist verbatim (01.08-trader-status-classification.md:10, :25, :85; meta/constraints.md:248, :267, :353), but the gap they describe is a live, owned deferral. 01.08:93 Q-02 — 'Does the classification vary by jurisdiction? Thresholds and duties differ, and the marketplace is cross-border by default.' | Owner: User | Deferred To: /create-prd-security — which is exactly the stage meta/constraints.md:364 assigns the empirical legal work to ('The US instrument NAMES are deferred to /create-prd-security ... No ideation source contains them, and this pipeline will not assert them'). 01.08:43 additionally routes the numeric threshold there. The Dimension-4 framing also misreads the file: :10 is Overview rationale ('Under EU/UK consumer law the distinction decides...'), not a normative rule, and :29 explicitly disclaims ownership of exactly the content cited as contradictory — 'It does not own: consumer rights mechanics (returns, withdrawal windows, warranties), which belong to 13/14/05, or tax/VAT treatment'. The only normative publication list at :25 is jurisdiction-neutral ('legal name, geographic address, contact details, and (where applicable) a company or VAT number' — 'where applicable' is the hedge), and the buyer-facing disclosure copy at :19 is 'this seller is a private individual; consumer protections do not apply', which names no 14-day right. Two implementers converge on: party-level classification, fail-closed precondition (:85), trader publishes name/address/contact, jurisdictional thresholds unresolved and tracked."
+    },
+    {
+      "findingId": "01-identity-profiles-organizations#002",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "no-real-divergence",
+      "reason": "All three quotes exist (identity-profiles-organizations-cx.md:305, :314; 01.03.01-membership-records-lifecycle.md:114; 01.02.02-organization-creation-lifecycle.md:163), but this is a terminology clash, not two normative statements that cannot both hold. 01.03.01:114's 'the org is frozen, not broken' contrasts frozen with BROKEN in a States/what-user-sees row — its operative content is 'Read paths continue working' and a banner; it states no rule about booking acceptance. The same file uses the CX sense one screen earlier: 01.03.01:72 — 'short enough that the org is not frozen through a release cycle'. So 01.03.01 does not take a side against CX-16; it is loose prose in the same direction. The behavioural rule is stated once, in the file whose job is this cross-cut, and echoed by the owning lifecycle file: CX-16 §5 ('the org must still accept it; who settles it waits on succession ... it closes the gap CX-09 §5 flagged') and 01.02.02:163 ('It is not frozen — other people's bookings depend on it'). Fail-closed (01.03.03:112 D-05) is not violated: 'accept' here is the org not rejecting an inbound request while settlement authority waits on succession — no actor exercises elevated authority, which is precisely what CX-16 §2 describes ('the org keeps operating unadministrable'). Refuted at blocking severity; nothing is invented."
+    },
+    {
+      "findingId": "01-identity-profiles-organizations#003",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "Quotes verified (01.01.02-artist-names-aliases-projects.md:152 D-04, :165 Q-01; 01.01-person-identity-roles-cx.md:54-56; 01.01.03-acting-context-switcher.md:34, :123). But every stale statement carries an explicit pointer to the question that closes it, and following that pointer gives the answer in one hop: :34 says 'including shared aliases, subject to 01.01.02 Q-01' and :123 says 'Recorded as evidence for 01.01.02 Q-01' — and 01.01.02:165 reads '~~Q-01~~ ... RESOLVED — D-04: it is a band org. Aliases are single-owner.' The tree even documents why the number survives: '(Number retained: sub-domain CX-02 and the sub-domain index Q-02 both reference \"Q-01 on 01.01.02\".)'. The normative rule is stated flatly and un-hedged in Behavior, not only in a decision row: 01.01.02:32 — 'An alias is a named professional identity owned by exactly one person record (D-04 — co-ownership is a band, not an alias).' The closure is mirrored at three more places (01.01-person-identity-roles-index.md Q-02 'RESOLVED — 01.01.02 D-04'; identity-profiles-organizations-index.md Q-08 'RESOLVED — it is a band org'; identity-profiles-organizations-cx.md:237 CX-12). No competent implementer builds alias→owner as 1:N; what remains is a dead presence-indicator row, i.e. editorial residue, not a forced product invention."
+    },
+    {
+      "findingId": "01-identity-profiles-organizations#004",
+      "upheld": true,
+      "finalSeverity": "warning",
+      "refutationReason": "not-refuted",
+      "reason": "Verified verbatim: identity-profiles-organizations-cx.md:77, :187, :325 each carry `[PENDING — /ideate-validate]`, and the file header at :6 dates it 'Last updated: 2026-07-23' — five days AFTER the stage it defers to closed (ideation-index.md:148 '## Ideation Rubric Self-Check (`/ideate-validate`, 2026-07-18)' and :163 '## Domain Exhaustion (`/ideate-validate`, 2026-07-18)'). The markers carry no owner and their target has run, so they satisfy the malformed-tracking exception rather than the tracked-deferral rule. I checked coverage directly: identity-profiles-organizations-index.md Q-01..Q-12, 01.05-profile-claiming-verification-index.md Q-01..Q-03 and 01.08-trader-status-classification.md:92-94 Q-01..Q-03 contain no entry for retroactive publication of a reclassified seller's address on live listings, nor for merge-vs-claim ordering on person records. The tree treats this exact defect as fixable and fixed it elsewhere in the same pass — 01.02-organizations-entity-model-index.md Q-02 'Re-targeted 2026-07-23: `/ideate-validate` has already run without taking it' and 01.02.01-organization-types-attributes.md:164 Q-04 'Re-targeted 2026-07-23' — which is what makes these three stranded rather than merely stale. Warning, not blocking: 01.08:57 ('Populated | Declared | Status on their listings; trader details public if trader') gives an implementer a defensible default, so the consequence is an untracked owner decision, not a build stoppage."
+    },
+    {
+      "findingId": "01-identity-profiles-organizations#005",
+      "upheld": true,
+      "finalSeverity": "warning",
+      "refutationReason": "not-refuted",
+      "reason": "Verified verbatim: 01.01-person-identity-roles-cx.md:74 — 'A legal name change notifies nobody publicly. Counterparties with an active disclosure `[PENDING — Step 5: do they get told?]`' and :95 — 'Medium confidence — 1, 4, 5 deferred to Step 5.' Step 5 is closed: ideation-index.md:210 D-24 'Step 5 is now fully complete ... 2026-07-18'. No owner on either marker, target stage already run. Coverage checked and absent: 01.01-person-identity-roles-index.md carries only Q-01 (multi-hyphenate account model) and Q-03 (Fan profile visibility); 01.01.04-legal-identity-vs-public-identity.md has no notification rule anywhere — grep for notif/told/counterpart returns only :16, :28, :30, :40, :48 and D-02:84 ('Disclosure is scoped to a transaction's counterparties and logged'), none of which say whether a holder of an active disclosure is told when the disclosed name changes. Warning rather than blocking: the divergence is notify-vs-don't-notify on an existing disclosure record, which does not stop an implementer building the disclosure model itself."
+    },
+    {
+      "findingId": "01-identity-profiles-organizations#006",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "no-real-divergence",
+      "reason": "The quote is verbatim (01.02-organizations-entity-model-cx.md:35) but it refutes the finding's own forcedInvention. The line reads 'Notification fan-out: Type addition notifies members (their org gained a capability) `[PENDING — Step 5]`' — the behaviour is ASSERTED in the same sentence as the marker. The finding's stated invention is 'Whether adding a type to an existing org notifies its members', and the file answers exactly that: it does. The residual marker covers unstated detail (channel, copy, timing), which is downstream of the vision layer. :80's 'Medium confidence — 1, 3, 5 deferred to Step 5' does not touch fan-out (that is item 4, which is answered). Compare the genuinely open one in the same file at :34, which asks a real question ('could a member be mandated for only the shop and not the venue?') and IS live-tracked — 01.02.01-organization-types-attributes.md:164 Q-04 re-targeted 2026-07-23 to /create-prd-security via 01.03.03 Q-02. Stale marker hygiene, no divergence in build."
+    },
+    {
+      "findingId": "01-identity-profiles-organizations#007",
+      "upheld": true,
+      "finalSeverity": "warning",
+      "refutationReason": "not-refuted",
+      "reason": "The load-bearing quote is verbatim at 01.03-membership-representation-mandate-cx.md:81 — 'Gap: expiry should warn ahead of time and on lapse; currently unspecified. Flagged for Step 5.' (the CX-04 relationship text the finding cites as ':78' is at :77, an off-by-one that does not change the content). Step 5 closed 2026-07-18 (ideation-index.md:210 D-24); the marker carries no owner. The gap is real and unanswered in the owning file: 01.03.02-representation-roster-relationships.md:91 D-04 says only 'Expiry removes the acting context automatically', :37 'On expiry the edge lapses and the contexts disappear. No cleanup step, no lingering access', and :45 'Context absent; deep link offers nothing' — no warning, no lead time, no lapse notice. Its live questions do not cover it either: :101 Q-04 is the overlap key, :102 Q-05 is the untyped attribute table; 01.03-membership-representation-mandate-index.md Q-02/Q-03 are per-type mandate scoping and signed representation terms. Downgraded to warning (as filed): an implementer can ship expiry without a warning and the CX file itself names that outcome as the UX defect, so the divergence is a missing product decision rather than an unbuildable one. Note the second half of the claim is weaker — :69's '`[PENDING — Step 5: confirm]`' sits on a stated rule ('the higher of two value ceilings applies, not their sum'), so nothing is invented there."
+    },
+    {
+      "findingId": "01-identity-profiles-organizations#008",
+      "upheld": true,
+      "finalSeverity": "warning",
+      "refutationReason": "not-refuted",
+      "reason": "Both markers verified verbatim: 01.05-profile-claiming-verification-cx.md:74 — 'Two shadows merging while one is contested. Unmodelled. `[PENDING — Step 5]`' and :93 — 'An attester's own party being contested while they act as a witness — their evidentiary weight during that period is unspecified. `[PENDING — Step 5]`'. Step 5 closed 2026-07-18 (ideation-index.md:210). The finding's contrast evidence also checks out — 01.05.02-claim-initiation-proof-methods.md:70 '> Closes the live gap recorded at sub-domain CX-02 note 3' and :99 '> Answers sub-domain CX-01 note 4' — so children in this unit do close CX notes explicitly, and nothing performs that service for :74 or :93. Coverage confirmed absent: 01.05.01-shadow-party-creation-invitation.md:136 handles merge-during-CLAIM and explicitly pushes the other case away ('the merge-during-contest variant is the cross-cut's'), and 01.05.03-contested-claims-ownership-transfer.md mentions merge only once, at :104, as a Canonical Data touch-point. The nearest adjacent rule, 01.05.01:138 (a creator's own party contested → their dispatch tier drops to 0), is about shadow-creation reach, not an attester's weight against 01.05.02's Tier C thresholds. Warning: both are races at the edges of an otherwise fully specified claim model."
+    },
+    {
+      "findingId": "01-identity-profiles-organizations#009",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "Every quote checks out (01.02-organizations-entity-model-cx.md:32 and :66; 01.02.01-organization-types-attributes.md:41, :74, :166; 01.02.02-organization-creation-lifecycle.md:112), but the correction is declared, not silent, and it is declared in the file that owns the model. 01.02.01:41 carries the precedence marker inline in its Resolves column — 'DT-04; corrects parent CX-01 Q1' — with the full rule at :74 ('No collision. Both are `type`-scoped, so both values exist') and :75 for the party-scoped case, and 01.02.02:112 states 'A multi-type entity has one lifecycle state, on the party (D-17, DT-15) — resolving the sub-domain CX file's sharpest open question'. 01.02.01:166 is an explicit reconciliation ledger naming every parent statement superseded. Attribute scope is 01.02.01's to define (it is the Types & Attributes file) and lifecycle is 01.02.02's; a CX synthesis line is a derived summary of children, so where they disagree the child governs and here the child says so in writing. Rule-3 refutation: the answer is one file over, sign-posted from both ends. Residual editorial debt in the parent CX file is real but is not a forced invention."
+    },
+    {
+      "findingId": "01-identity-profiles-organizations#010",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "tracked-deferral",
+      "reason": "Quotes verified (01.02.01-organization-types-attributes.md:82 and D-14:155; meta/constraints.md:267), but the same file carries this exact gap as a live, owned question fifteen lines below the decision the finding says it violates. 01.02.01:163 Q-03 — 'RESOLVED for `constrained` authority → D-14 ... Still open for `floored` authority (DT-10): the statutory returns floor is a property of the *buyer's* jurisdiction, not the record's address, so it does not resolve against the place-record regime profile D-14 uses, and no source states which floors apply.' | Owner: User | Deferred To: '/create-prd-security, with 13/14'. That is a precise statement of why D-14 does NOT govern the :82 row (D-14 is scoped to `constrained` authority resolved against a place-record regime profile; returns floor is `floored` authority keyed to the buyer's jurisdiction), so the 'reproduces the silent-default failure D-14 forbids' framing does not hold — the file distinguishes the two authorities and tracks the open one. The :82 copy is illustrative of the `floored` mechanism, and the row's own text defers the value ('the statutory floor for the buyer's jurisdiction'), naming no jurisdiction as fixed."
+    },
+    {
+      "findingId": "01-identity-profiles-organizations#011",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "no-real-divergence",
+      "reason": "All quotes verified (01.02.02-organization-creation-lifecycle.md:84, :163, D-16:257; 01.03.01-membership-records-lifecycle.md:72, :114, D-14:173; identity-profiles-organizations-cx.md:305), but the two names are two axes of one condition, and the tree states the relation explicitly: 01.03.03-mandate-scope-delegated-authority.md:111 D-04 — 'Every org must retain at least one full mandate holder | Enforced at departure (01.03.01) and creation (01.02.02); an ownerless org is unadministrable' — echoed at 01.03.01:71 ('an ownerless org is unadministrable (01.03.03 D-04)'). `ownerless` is the party's ownership-axis value (01.02.02:84); `unadministrable` is the consequence for acting. The succession paths are also sequenced, contrary to the claim: 01.03.01:72 runs the offer to the longest-tenured confirmed member with a 14-day contest and then states 'No remaining members → the party stays unadministrable and exits to 01.10 (estates)', while 01.02.02:163 names the same two outward routes ('succession routes via 01.10 (estate) and 01.05.03 (transfer)') — 01.05.03 being the transfer machinery the offer vests through, 01.10 the no-members case. D-14:173's narrowing ('(a) single-member orgs, (b) every non-band org type ... (c) the uncapped owning mandate') is consistent with that, not opposed to it. What is left — one enum or two, which name is canonical — is a representation question for the data model, i.e. downstream of vision."
+    },
+    {
+      "findingId": "01-identity-profiles-organizations#012",
+      "upheld": true,
+      "finalSeverity": "warning",
+      "refutationReason": "not-refuted",
+      "reason": "Verified verbatim on both sides, with no marker on either: 01.05.01-shadow-party-creation-invitation.md:43 — 'Name | Yes | 1–120 characters, counted and compared after the name is normalized' — reinforced at D-09:210 ('a name (≤120 chars, no URLs, no markup)'), against 01.01.02-artist-names-aliases-projects.md:36 — 'Display name | 1–100 characters, full Unicode'. The conversion between them is specified as mandatory, twice: 01.05.01:53 ('the name on a shadow party is alias-shaped: on claim it becomes an alias of a person (01.01.02)') and D-13:214 ('Claiming binds it as an alias of a person'). Neither file references the other's bound, and no open question in 01.05-profile-claiming-verification-index.md (Q-01..Q-03) or 01.01-person-identity-roles-index.md (Q-01, Q-03) touches it. So for a 101–120 character shadow name the claim event has no defined outcome and the four available answers (truncate, reject, widen the alias cap, write out of spec) produce different products. Warning rather than blocking: the band is narrow and rare, and the rest of the claim→alias flow is fully specified, so an implementer is not stopped — but the choice is a product one and is currently unmade."
+    },
+    {
+      "findingId": "01-identity-profiles-organizations#013",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "The row exists verbatim at 01.04.02-name-trademark-ownership.md:48, and the file is dated 2026-07-16 (:6) at status `[SURFACE]` (:5). But the row is self-cancelling on its own reference: its premise is stated as a condition on an open question — 'Band is a shared alias rather than an org (01.01.02 Q-01)' — and it labels itself 'real evidence for 01.01.02 Q-01'. Following that pointer one hop gives 01.01.02-artist-names-aliases-projects.md:165 '~~Q-01~~ ... RESOLVED — D-04: it is a band org. Aliases are single-owner', with the rule at :152 and in Behavior at :32. The consequence is then written out in the direction the finding says is missing: identity-profiles-organizations-cx.md:237 CX-12 — 'Because D-04 makes a shared name a band, 01.04's governance capture must be reachable from alias creation'. An implementer following the row's own citation learns the premise is unreachable and builds nothing; no governance-less shared-name path is forced. Stale row in a deliberately-minimal `[SURFACE]` file, not a live contradiction."
+    },
+    {
+      "findingId": "01-identity-profiles-organizations#014",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "tracked-deferral",
+      "reason": "Quotes verified (01.06.03-epk-generation-sharing.md D-06:97, :51, :52, Role Lens :17, Behavior :25), and the finding is even right that :52's pointer is mis-numbered — but the question it should point at exists, is live, and covers the exact concern: :105 Q-03 — 'Do share links expire or get revoked, given an EPK may carry rates and contact routes?' | Owner: Agent | Deferred To: `/create-prd-security`. There is also no contradiction to resolve. D-06 settles one axis only — whether the link is an ACCESS GATE (it is not; a stranger with no account must be able to open a forward, per D-03:94 and :55) — while expiry/revocation is an orthogonal axis: an unguessable, expiring link is still not an account wall. :51 and :52 are consistent readings of that split, and Q-02:104 restates it explicitly ('D-06 makes the per-recipient link \"a tracking wrapper over public content, not an access gate\", so forwarding already works for a stranger with no account'). The confidentiality posture that remains open is tracked with owner and target stage."
+    }
+  ],
+  "adjustedUnits": [
+    {
+      "unit": "01-identity-profiles-organizations",
+      "applicableCheckpoints": 7,
+      "adjustedPoints": 0.5
+    },
+    {
+      "unit": "01.01-person-identity-roles",
+      "applicableCheckpoints": 6,
+      "adjustedPoints": 0.5
+    },
+    {
+      "unit": "01.02-organizations-entity-model",
+      "applicableCheckpoints": 7,
+      "adjustedPoints": 0
+    },
+    {
+      "unit": "01.03-membership-representation-mandate",
+      "applicableCheckpoints": 6,
+      "adjustedPoints": 0.5
+    },
+    {
+      "unit": "01.04-band-ensemble-governance",
+      "applicableCheckpoints": 6,
+      "adjustedPoints": 0
+    },
+    {
+      "unit": "01.06-portfolio-media-epk",
+      "applicableCheckpoints": 6,
+      "adjustedPoints": 0
+    }
+  ]
+}

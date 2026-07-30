@@ -1,0 +1,158 @@
+{
+  "domain": "02-credits-attribution",
+  "verdicts": [
+    {
+      "findingId": "02-credits-attribution#001",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "no-real-divergence",
+      "reason": "Both quotes exist verbatim, but they govern two different objects and neither file is silent about its own. 02.02.01:216 (D-09) is scoped explicitly to the ROLL — 'A Musician sees only the roll entries whose intervals overlap their own, plus the session owner' — and 02.02.01:20 repeats it as 'Sees only the roll entries whose presence intervals overlap their own (D-09)'. 02.01.05:278 (D-14) is scoped explicitly to embargoed CREDIT reads — 'Participant status is per session, binary, and permanent ... DT-13 (no interval scoping)'. An implementer builds interval-scoped roll reads and participant-scoped credit reads; nothing is invented, and 02.01.05 (the owner of credit visibility) states its rule and its rejection of interval scoping unambiguously. What actually conflicts is a rationale clause in an edge-case row (02.02.01:145 'They cannot learn the unreleased personnel'), which is commentary on the roll rule, not a normative statement about credit visibility."
+    },
+    {
+      "findingId": "02-credits-attribution#002",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "Quotes verified: 02.02-session-capture-cx.md:56 does carry the sequential chain, and 02.02.03:206 (D-05) makes the two halves independent. But the owning file states the correction verbatim and names the stale line: 02.02.03:185 'CX-02 records \"wrap → reconcile → prompt → confirmations\", which is the sequential model DT-04 rejects. The corrected chain is \"wrap → {contributor asks ∥ reconciliation} → confirmations\", with the two halves running concurrently.' The sub-domain index also carries the ratified form at 02.02-session-capture-index.md:49 ('the deepening pass hardened 02.02.03 D-01's provisional answer into its D-05 ... neither gates the other'). Nothing is left to invent: the correct ordering is written down twice outside the CX file, and the CX line is explicitly identified as superseded. Stale summary text in a non-owning CX file, not a live fork."
+    },
+    {
+      "findingId": "02-credits-attribution#003",
+      "upheld": true,
+      "finalSeverity": "warning",
+      "refutationReason": "not-refuted",
+      "reason": "Verified on both sides. 02.01.02:155 (D-07) and :134 place a 'hard requirement on 02.06: a stable family/leaf hierarchy, every leaf in exactly one family', and credits-attribution-cx.md:21/:138 (CX-06) repeat it. 02.06 does not deliver it: 02.06:44 gives the role axis 'base + optional modifier' and the instrument axis 'A functional hierarchy: Rhodes → Electric Piano → Keys (D-07)'; 02.06:209 (D-07) is instrument-only; and 02.06's open questions (:232-236) do not own a role-family tier. The grouping key is genuinely underdetermined because 02.01.02's own worked header mixes axes — :37 'Drums 1,612 · Engineering 201 · Production 34' and :31 leaf examples 'Drums — brushes', 'Percussion — congas' — so 'family' cannot be read consistently as either the role base or the instrument family, and 02.06:39/D-02 keeps the axes orthogonal with no role hierarchy. Downgraded from blocking: the constraint direction is registered as a cross-cut (02.01.02:134 'Flagged for Step 6 synthesis', CX-06 row cites '02.01.02→02.06 (D-07, hard structural req)'), so the dependency is carried forward rather than silently dropped, and 02.06's canonical-core seeding is itself an open question (02.06:236 Q-05, owner User, /create-prd)."
+    },
+    {
+      "findingId": "02-credits-attribution#004",
+      "upheld": true,
+      "finalSeverity": "warning",
+      "refutationReason": "not-refuted",
+      "reason": "Quotes verified at 02.10:19 ('Producer | Full | Discloses at the session level and per contribution'), 02.10:122 (D-04 'You disclose your own contribution only'), 02.02.02:109 (Producer write on another party's disclosure axis 'Refused ... Disclosure control is absent on rows the Producer does not own'), credits-attribution-cx.md:29 (CX-14) and credits-attribution-index.md:85. The write-permission half of the claim is refuted: 02.02.02:109 answers it operationally and explicitly, so no implementer invents a Producer write path. What survives is narrower and real — 'the session level' names an object that exists nowhere else in the corpus (grep of 02.10 returns line 19 only), while the normative v1 model at 02.10:33 attaches a disclosure to a contribution ('A disclosure attached to a contribution is zero or more involvement entries') and no session-level entity, state, or render is defined. Warning, not blocking: D-04 plus the v1 schema plus 02.02.02:109 converge on a buildable per-contribution model; the residual is one unelaborated Role Lens phrase and an over-coarse 'Full' grade in the Role Matrix."
+    },
+    {
+      "findingId": "02-credits-attribution#005",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "The quote is real — 02.01.01:37 '| **Visibility** | Public / Embargoed / Private (`02.01.05`). Enforced at the record, evaluated at query. |' — but the row cites 02.01.05 as its authority in the same cell, and 02.01.05 is the owning feature: :270 (D-06) defines the two orthogonal axes and the rename, :31 explains the supersession of the three-value ladder, and :231 (DT-12) rejects the old model outright. The field row is a one-line summary that delegates; the shape an implementer builds is fully specified one file over, in the file the row points at. Stale summary terminology, not a forced invention."
+    },
+    {
+      "findingId": "02-credits-attribution#006",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "Counts verified (02.01.02: 'Private' 17 occurrences, 'Unlisted' 0), and 02.01.05:50 does mandate the label and the co-contributor disclosure string. But every one of 02.01.02's usages delegates to the owner in the same clause — :20 'sets per-credit visibility via `02.01.05` (Private hides a line from the page without deleting the record)', :69 'they set the credit **Private** on their own page unilaterally (`02.01.05`)', :154 (D-06) 'sets it Private unilaterally (`02.01.05`)'. 02.01.05 owns the control, its label (:270 D-06 '\"Private\" is renamed **Unlisted**') and its mandated copy (:50). An implementer building the control reads the cited owner and ships 'Unlisted' with the disclosure string; the consuming page's naming is doc debt, not a divergence in what gets built."
+    },
+    {
+      "findingId": "02-credits-attribution#007",
+      "upheld": true,
+      "finalSeverity": "warning",
+      "refutationReason": "not-refuted",
+      "reason": "Verified verbatim and confirmed unique: 02.01.01:206 (D-12) 'Billing/display order is a property of the ledger, asserted by the work owner', :163 (DT-04) repeats 'asserted by the work owner', :152 'Ledger in the work owner's billing order (D-12)' — while :93 (Happy Path 8) says 'in the Producer's declared billing order (D-12)'. A repo-wide grep for 'work owner' returns only these three lines in the whole domain; the term is nowhere defined, and no persona in the domain Role Matrix (credits-attribution-index.md:74-85) maps to it. Two normative readings of the same decision name two different parties, which on a hired session are different humans, so the reorder permission genuinely diverges. Warning rather than blocking: the ledger-not-record placement, non-attestability and RIN precondition (02.01.01:163; credits-attribution-cx.md:22 CX-07) are all settled, so only the holder of the pen and the unasserted-default are open."
+    },
+    {
+      "findingId": "02-credits-attribution#008",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "downstream-detail",
+      "reason": "Quotes verified at 02.01.04:35, :56 and :47. Both unquantified values are tuning parameters behind fully specified product behaviour. The floor only decides whether a *proposal* is raised for human adjudication — 02.01.04:35 'raises a merge proposal — it does not merge', :36 routes it to a named adjudicator, and :66 (DT-01) rejects auto-merge 'at any threshold', so no irreversible behaviour hangs on the number. The unmerge affordance is likewise fully specified as behaviour (:47 'Unmerge exists as a first-class inverse: it splits the collapsed node back into the two originals, restores each original's pre-merge credit set and identifiers, and re-activates the loser's URL'), with the genuinely hard corner tracked at Q-01 (:90, routed to the sub-domain storage-model question). Scoring thresholds and window durations belong to the BE/architecture layers, not to the vision layer."
+    },
+    {
+      "findingId": "02-credits-attribution#009",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "tracked-deferral",
+      "reason": "The quotes exist (02.01.06:104 D-07, :65, :20 Role Lens), but the authority question is explicitly and well-formedly tracked: 02.01.06:111 'Q-02 | Interim behavior resolved (D-07: orphaned credit enters `correction-blocked`, flagged for Operator review, never auto-corrected). Open only for the final authority policy — who may ultimately authorize a correction on an orphaned credit (Operator override, quorum of adjacent session participants, or permanent lock)? | User | /create-prd' — owner and target stage both present, and 'Operator override' is named as one candidate, which is exactly the tension the finding describes. The interim state is fail-safe and inert (nothing applies, the credit 'stays readable and unchanged in place'), so no product behaviour has to be invented before the tracked decision lands."
+    },
+    {
+      "findingId": "02-credits-attribution#010",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "The quote at 02.01.06:64 is accurate, but the record's provenance inputs are enumerated in the owning file — 02.01.01:33 assertion date, :34 asserter, :35 origin — and 02.01.01:36 fixes that the tier itself is 'Derived, never stamped ... not a field this feature sets', with 02.01.06:102 (D-05) making a successor's tier 're-derived from who agrees, never inherited' and exempting cosmetic changes. The behaviour an implementer must build is stated in the same row: the correction applies, the named party is notified ('Corrected — <named party> notified'), and the self-only case is marked so it cannot silently self-upgrade. The remaining detail — which queue consumes an anti-abuse flag — is a later-layer routing decision, not a vision-layer product behaviour."
+    },
+    {
+      "findingId": "02-credits-attribution#011",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "Quotes verified at 02.02.02:27, :81 and :204. The v1 branch the finding says is missing is specified in this very file and ratified in two others. 02.02.02:95 gives the whole no-channel behaviour concretely — 'No session environment at all — no parts are known | Manual capture only. The log's axis inverts: it asks \"who did what\" against the roll ... | Roll-first list; free-text part label per contribution, capped at 120 plain-text characters' — with :94 covering the nothing-logged case. The v1 fact is carried at 02.02-session-capture-index.md:48 ('CLOSED FOR THE v1 WINDOW ... none of them'), 02.02.03:45-52 (the boxed v1 ladder note) and credits-attribution-cx.md:340 ('every consumer above must degrade to its no-channel branch for the whole v1 window'). The implementer reads a ratified 'no channel' and an explicitly specified no-channel path; the defect is emphasis, not a missing decision."
+    },
+    {
+      "findingId": "02-credits-attribution#012",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "no-real-divergence",
+      "reason": "Both quotes are accurate (02.02.01:219 D-12, 02.02.03:41 rung 5), and both mechanisms coexist without conflict: D-12 bounds the session ENTITY, rung 5 is a wrap-signal backstop conditioned on 'no wrap signal'. The two questions the finding says are forced are both answered. Editability between 6h and 72h: 02.02.01:162 'Closed | Wrap signal, or 6h inactivity auto-close (D-12) | Read-only roll ... Changes now route through 02.01.06', with :163 giving a 24h reopen. Whether auto-close emits a wrap signal: 02.02.01:119 states it does not ('No wrap signal fires, so no prompt fires'), which is precisely the case rung 5 exists to cover — 02.02.03:43 'Signal 5 is not a close prompt. The room emptied three days ago. It fires the Producer's reconciliation half only'. What is left is loose prose ('open for weeks'), not two build-affecting rules."
+    },
+    {
+      "findingId": "02-credits-attribution#013",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "The marker is real (02.02.04:49, in a file whose header is '**Status**: [SURFACE]' at :5), but the user-visible answer is stated explicitly elsewhere and the row's own What-Happens column already carries it: ring demotion 'is score-only ... so it bites on traversal rank, search ordering and dispute weighting and never on the credit's public label'. 02.01.02:133 says the same from the rendering side — 'Demotion is score-only and the rung is invariant to detection (02.04.02 D-19), so nothing on this page moves: no label change, no notification, no reordering. ... The accepted cost is that a fully corroborated fiction keeps its top-rung label indefinitely.' The answer to 'what does the user see' is therefore: nothing changes. A dangling marker over an already-answered cell is doc hygiene, not a gap that forces invention."
+    },
+    {
+      "findingId": "02-credits-attribution#014",
+      "upheld": true,
+      "finalSeverity": "warning",
+      "refutationReason": "not-refuted",
+      "reason": "Verified at 02.03.03:69 — the row asserts an obligation ('downstream effects (royalty registration, reputation, traversal edges) that must unwind') and then leaves the user-visible half as '[PENDING — Step 5]' with no owner and no downstream stage. The tracking is malformed by the file's own local standard: every other deferral in this sub-domain names a stage (02.03.01:42 '[PENDING — /create-prd]', :46 '[PENDING — /write-be-spec]', 02.03.02:48 '[PENDING — /create-prd-security]'), and the file's six open questions (:114-119) cover ownership, claimant disclosure, unattachability, the powerless true owner, unbounded pendency and the disputed-identity shell — none of them the unwind. Nor is it covered adjacently: 02.01.06:66 tracks re-emission after export/royalty registration for AMENDMENTS, but 02.01.06:100 (D-03) puts a change of credited party outside amendment entirely ('never an amendment'), so the re-attachment case falls between the two markers. Warning, not blocking: the adjudication path itself is fully specified and the file is [SURFACE] status."
+    },
+    {
+      "findingId": "02-credits-attribution#015",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "downstream-detail",
+      "reason": "Quotes verified at 02.03.02:46, :89 (D-02) and :73 (DT-03). The product decision is made and stated normatively — precision over recall, permanently, with the failure mode named ('a user shown forty strangers' credits learns the product doesn't know them') and the direction fixed ('show few, show confident'). What is absent is a numeric score cut-off and a page size, which are ranking-model tuning parameters owned by later layers; no product behaviour branches on their values, and no user-visible state depends on them. Vision-layer specificity is satisfied by the stated precision-over-recall rule."
+    },
+    {
+      "findingId": "02-credits-attribution#016",
+      "upheld": true,
+      "finalSeverity": "warning",
+      "refutationReason": "not-refuted",
+      "reason": "Verified verbatim: 02.04.01:181 '| Attested | Confirmed | Verified marker; tier reflects who attested |' in the What-User-Sees column, with no citation or qualifier. It is directly contradicted by the label owner: 02.04.02:198 (D-02) 'Labels describe the evidence, not the conclusion ... \"verified\" is a claim the platform cannot support', 02.04.02:124 '\"unconfirmed\" defames and \"verified\" lies', and the rule as consumed at 02.01.01:138 'Evidence-describing label (\"confirmed by 4 people present\") — never the word \"verified\" (02.04.02 D-02)'. The domain also treats the word as consequential rather than cosmetic: 02.04-attestation-credit-confidence-index.md:55 (Q-03) calls the tier label 'a liability surface, not just a UI string'. Unlike the visibility-terminology cases in 02.01, this row cites nothing and asserts the forbidden string as the user-visible outcome. Warning: the copy rule is recoverable from the owning file, so the risk is shipping the forbidden word, not an unbuildable state."
+    },
+    {
+      "findingId": "02-credits-attribution#017",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "no-real-divergence",
+      "reason": "All four quotes are accurate but they are not in tension once the derivation model is read. 02.04.02:71 fixes that rung is 'Derived, never stamped (D-01). Rung and score are a pure function of the *current* evidence set', and :76 states the flicker invariant in exactly those terms — 'Concurrent confirmations at close converge to one derivation. An observer sees rung 3 → rung 6, never 3→4→5→6.' The 3→6 statements describe rendered transitions when the session-log evidence (rung 4's gate) and the independent confirmations land in the same derivation at close; they do not claim rung 6 was reached without rung-4 evidence. :53 keeps rung 6's gate intact ('Rung 4 and >=1 independent co-present confirmation with lag <= 7 days') and Happy Path :92's '3 → 5, or 4 → 6' is the ordinary nudge-then-confirm path for credits that do and do not carry contemporaneous observation. Every reasonable implementer computes the rung from the evidence set and gets the same answer."
+    },
+    {
+      "findingId": "02-credits-attribution#018",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "The CX-02 corollary at credits-attribution-cx.md:65 is quoted correctly, but the ratified answer and its consequences are carried in the same file and in the domain index. credits-attribution-cx.md:340 records 'NO v1 CHANNEL (owner decision 2026-07-22, D-70 / DQ-08.2) ... every consumer above must degrade to its no-channel branch for the whole v1 window', and credits-attribution-index.md:133 (Q-04) gives the full replacement position: 'ANSWERED FOR v1 ... no. ... The domain's v1 wrap ladder is rungs 1, 4 and 5 (02.02.03), the cards ship on PWA web push + in-app (07.06.02 D-17), and the v1 thesis is restated to capture at the first sharing moment'. 02.02.03:45-52 carries the same boxed ratification at the point of use. CX-02's sentence is unreconciled strategic commentary; nothing an implementer builds is left undetermined by it."
+    }
+  ],
+  "adjustedUnits": [
+    {
+      "unit": "02-credits-attribution",
+      "applicableCheckpoints": 8,
+      "adjustedPoints": 0.5
+    },
+    {
+      "unit": "02.01-credit-graph-discography",
+      "applicableCheckpoints": 8,
+      "adjustedPoints": 0.5
+    },
+    {
+      "unit": "02.02-session-capture",
+      "applicableCheckpoints": 8,
+      "adjustedPoints": 0
+    },
+    {
+      "unit": "02.03-claiming-cold-start-seeding",
+      "applicableCheckpoints": 8,
+      "adjustedPoints": 0.5
+    },
+    {
+      "unit": "02.04-attestation-credit-confidence",
+      "applicableCheckpoints": 8,
+      "adjustedPoints": 0.5
+    }
+  ]
+}

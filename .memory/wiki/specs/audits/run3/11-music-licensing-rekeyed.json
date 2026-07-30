@@ -1,0 +1,79 @@
+{
+  "domain": "11-music-licensing",
+  "verdicts": [
+    {
+      "findingId": "11-music-licensing#001",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "The quoted lines exist verbatim, but the finding's load-bearing negative evidence is false. It asserts \"grep for 'declar' across 11.02.01 returns no normative use\" and that the verdict engine has \"no declaration test, no input for it and no verdict value for its absence\". 11.02.01 carries all three: 11.02.01:54 lists \"**The encumbrance set** (11.02.03)\" as one of the engine's inputs; 11.02.01:92 evaluates \"no encumbrance in this work or any ancestor (11.02.03)\" in the per-side order, delegating the test to the file whose D-02 (11.02.03:207) answers it; 11.02.01:130 (edge case, single-owner work) states such a work \"may have an undeclared sample\" and is therefore \"**Not automatically one-stop**\"; 11.02.01:159 (DT-14, rejected) maps the case to an existing enum value — \"an undeclared Splice loop or an uncleared sample (11.02.03 — `encumbered` with a perfect ownership record)\"; and 11.02.01:214 (Q-07) is marked RESOLVED on exactly this question — \"Domain-wide: does silence mean yes or no? RESOLVED — no. Silence never improves state … Declaration takes the same shape (11.02.03 D-02, 'Silence is not cleanliness')\". The 11.02.02:200 counter-evidence is also misread: D-03's \"One-stop floor = ≥1 valid, uncontested attestation per gating side\" is scoped to the attestation input (its rationale contrasts unanimity and grade), not a statement of the complete one-stop precondition set — 11.02.01:92 shows attestation is one of four sequential tests. Finally, 11.02-clearance-one-stop-status-cx.md:82 is a `[PENDING — /ideate-discover Step 5 deepening]` marker that already carries the provisional answer (\"both required\") matching the ratified leaves. Every reasonable implementer converges: undeclared work fails the 11.02.03 encumbrance test and is not one-stop, verdict `encumbered` (11.02.01:67).",
+      "adjustedPoints": null
+    },
+    {
+      "findingId": "11-music-licensing#002",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "no-real-divergence",
+      "reason": "Quotes verified (11.08.01:55, :104, :229; 11.04.02:63, :66-70, :240; music-licensing-cx.md:65, :146-147, :158, :291). But the grantee axis and the buyer-block key space are different objects, and no normative statement is displaced. 11.08.01:55 defines the axis's value domain as \"the licensee **+ permitted assignees / sublicensees**, bounded by a stated purpose\" — an assignability/reach dimension (DT-15's worry is \"an agency licence that does not run to the brand\"), not an enumeration of parties. 11.04.02:63 says party *identity* \"— *not* an axis of the scope grammar\", which remains literally true: no axis takes a party identity as a value; the named party at 11.08.01:104 (`grantee:{Buyer Ltd, no sublicence}`) is the instantiated licensee of one issued instrument, while the lattice-relevant value is \"no sublicence\". A policy predicate over the grantee axis expresses \"no sublicensing\" — it cannot express \"never BrandCo\", so 11.04.02:240 (D-09, two key spaces, buyer blocks request-time-only and non-folding) is untouched and stands as the single ratified statement of the block architecture. Nothing in 11.08.01 asserts that buyer blocks fold or that policies key on identity. Two implementers building the policy engine both land on D-09. What is genuinely stale is the parenthetical \"six axes\" enumeration in the CX rationale — that is finding #004's subject, and it is a stale gloss on a referenced canonical definition, not a second policy-engine model.",
+      "adjustedPoints": null
+    },
+    {
+      "findingId": "11-music-licensing#003",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "no-real-divergence",
+      "reason": "Quotes verified. The normative rule is stated identically in the owning feature and in a ratified decision: 11.01.04:51 (holds is the owner of the serialization) — \"Hold record is the serialization point; the second fails closed. Never both-granted\"; 11.02.01:198 (D-12) — \"A concurrent second exclusive attempt is refused, not queued … Queueing sells a buyer a wait for a certainty they cannot get\"; 11.08.02:123 — \"First to commit wins; the second is refused, never queued (11.02.01 D-12)\"; 11.01-sync-licensing-cx.md:36 — \"the second must fail closed, not queue\". The single outlier, 11.01.05:64, is a non-owning file's edge-case row whose own cell resolves the word: the granted behaviour rendered in the same row is \"[Notify me if it releases]\" — the identical notify-me affordance as 11.01.04:51's \"Notify me if it lapses?\" — and the qualifier is \"not silently lost\", i.e. the loser is told rather than dropped. No auto-promotion is granted anywhere. The finding itself concedes the user-visible strings are \"the resolving evidence\". Four-to-one against a loose word in a delegating file is not a silent contradiction.",
+      "adjustedPoints": null
+    },
+    {
+      "findingId": "11-music-licensing#004",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "Quotes verified: 11.08.01:47-55 defines nine axes (Media, Data use, Territory, Term, Exclusivity, Usage, Scale, Extent of use, Grantee scope), added by explicit deepening decisions D-06 (:220), D-15 (:229), D-17 (:231); 11.02.01:46, 11.04.01:31, 11.04.02:62 and music-licensing-cx.md:146-147 gloss six. But every one of those four sites names 11.08.01 as the owner of the grammar in the same sentence (\"a point in the 11.08.01 grammar\", \"the licence scope grammar (11.08.01)\", \"The scope grammar (11.08.01)\", \"the grammar's six axes\" inside a CX row whose right-hand party *is* 11.08.01). The grammar therefore has exactly one definitional home, which is [DEEP] and current; the parentheticals are stale glosses on a referenced definition, which is detail carried one file over. The claimed consequence is also contradicted in the same file: 11.02.01:90 already routes AI training as a scope (\"AI training needs both (11.07)\"), so the gate demonstrably does not treat its own parenthetical as the exhaustive axis set. An implementer needing the axis list reads 11.08.01 — no product behaviour must be invented.",
+      "adjustedPoints": null
+    },
+    {
+      "findingId": "11-music-licensing#005",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "Quotes verified (music-licensing-cx.md:265-276, :28; 11.04.02:74-81, :182, :243). The substantive question — what the per-category default is — is answered by a ratified decision in the owning feature: 11.04.02:243 (D-12) \"**The block table's default is empty/permissive — except AI training, which defaults to refused**\", rendered in prose at 11.04.02:77-81 and in the empty state at 11.04.02:182. The finding itself states \"forcedInvention: None on the default itself — D-12 fixes it\", so nothing at the vision layer is unspecified. The residual is that P-04's summary sentence names 11.04.01 where 11.04.02 owns the block table (confirmed: 11.04.01's only defaults are owner-level policy defaults at :32, :71, :174 — no block-table default anywhere) — while P-04's own bullets at :270-271 attribute both block shapes to 11.04.02 correctly. A one-word file-reference slip in a pattern note that is explicitly \"Routed to `/create-prd-architecture`\" is documentation hygiene, not an ambiguity an implementer must resolve.",
+      "adjustedPoints": null
+    },
+    {
+      "findingId": "11-music-licensing#006",
+      "upheld": true,
+      "finalSeverity": "warning",
+      "refutationReason": "not-refuted",
+      "reason": "Independently reproduced against disk. music-licensing-index.md:40 states \"> All `[SURFACE]` — breadth pass only; depth is allocated by MoSCoW in `/ideate-discover` Step 5\", and every one of the 11 Children rows (lines 44-54) carries `[SURFACE]`; the file's own header (line 5) reads `[BREADTH]`. A status sweep of all 52 files under 11-music-licensing returns DEEP 9 (11.02.01, 11.02.02, 11.02.03, 11.04.01, 11.04.02, 11.05.01, 11.08.01, 11.08.02 plus music-licensing-cx.md), PARTIAL 17, SURFACE 9 leaves, BREADTH 9 (all eight sub-domain indexes plus the domain index) — exactly the counts claimed. No marker anywhere tracks the index as stale, and the eight sub-domain indexes each carry accurate per-leaf statuses, so the defect is confined to the domain entry point. Held at warning, not blocking: no product behaviour must be invented (the finding concedes this), the cost is that the first file a downstream stage reads under-reports where authoritative detail lives.",
+      "adjustedPoints": null
+    }
+  ],
+  "adjustedUnits": [
+    {
+      "unit": ".",
+      "applicableCheckpoints": 6,
+      "adjustedPoints": 0.5,
+      "note": "#005 (dim 0) refuted; #006 (dim 8, warning) survives — ⚠️ 0.5 on the traceability dimension only."
+    },
+    {
+      "unit": "11.01-sync-licensing",
+      "applicableCheckpoints": 5,
+      "adjustedPoints": 0,
+      "note": "#003 refuted; no findings survive."
+    },
+    {
+      "unit": "11.02-clearance-one-stop-status",
+      "applicableCheckpoints": 5,
+      "adjustedPoints": 0,
+      "note": "#001 refuted; no findings survive."
+    },
+    {
+      "unit": "11.08-licence-instrument-lifecycle",
+      "applicableCheckpoints": 5,
+      "adjustedPoints": 0,
+      "note": "#002 and #004 both refuted; no findings survive."
+    }
+  ]
+}

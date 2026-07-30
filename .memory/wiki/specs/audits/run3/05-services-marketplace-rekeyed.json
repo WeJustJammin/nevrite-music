@@ -1,0 +1,173 @@
+{
+  "domain": "05-services-marketplace",
+  "verifier": "adversarial",
+  "verdicts": [
+    {
+      "findingId": "05-services-marketplace#001",
+      "upheld": true,
+      "finalSeverity": "blocking",
+      "refutationReason": "not-refuted",
+      "reason": "Quotes verified verbatim. 05.01.01-service-listings-packages-rate-cards.md:191 D-10 'Craft is immutable on a live listing — archive and republish' and :82 'Blocked. ... You can't change the craft of a live listing.' vs 05.01.02-service-category-taxonomy-attributes.md:105 'The edit is permitted; the reputation does not follow' + buyer copy 'This listing starts fresh in Mastering.', reinforced by 05.01.02:95 which presumes a craft change on a live listing. Grepped the whole domain for reconciliation: 05.01-service-listings-pricing-cx.md and -index.md carry no craft-mutability entry, and neither statement carries a marker or cites the other. Two normative statements, both with finished user copy for the same Mixing->Mastering example, that cannot both hold."
+    },
+    {
+      "findingId": "05-services-marketplace#002",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "Quotes exist, but the owning feature resolves the split. 05.01.03-music-pricing-model-library.md:76 defers to 05.02.03, and 05.02.03-union-session-contracting.md:34/:36 separates the two events explicitly ('System renders the price and floors it at scale' / 'Quote issues ...; below-scale issue is blocked'), with the two states named at :58 'Floored | Rendered price below scale | Price raised to scale' and :59 'Blocked | Attempted below-scale issue'. 05.02.01-custom-quotes-proposals-scope.md:102 states the same pairing. Render auto-floors; manual below-scale issue is blocked — detail carried one file over, not a contradiction."
+    },
+    {
+      "findingId": "05-services-marketplace#003",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "05.01.03-music-pricing-model-library.md:49 cites its own authorities '(D-03, D-04, D-05)', and D-04 at :186 scopes the currency/tax pair to cash models: 'Every cash model declares currency and tax treatment'. The decisions table is the normative layer the prose defers to, so a points-only or spec listing is not caught by currency/tax at publish; minimum (D-03 :185) and rounding (D-05 :187) are expressible for a percentage-based term. No implementer is forced to invent, and nothing states a points listing cannot publish — :129 explicitly renders a points-only/spec listing ('Rendered — zero cash')."
+    },
+    {
+      "findingId": "05-services-marketplace#004",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "tracked-deferral",
+      "reason": "05.01.04-rate-benchmarking-price-transparency.md:96 Q-03 is a resolved-question row that names the superseded text verbatim, records the governing decision ('Resolved — 05.01.01 D-05 ... Sellers only.'), carries an Owner column value (User) and an explicit target ('they should be corrected at /write-fe-spec when the pricing-step surface is specified'). Owner plus target on a not-yet-due correction is the documented tracking mechanism, and the tracking is well-formed."
+    },
+    {
+      "findingId": "05-services-marketplace#005",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "no-real-divergence",
+      "reason": "05.01.01-service-listings-packages-rate-cards.md:43 names the permitted model 'percentage-of-subtotal', and :39 gives the arithmetic as 'Fee total = subtotal + percentage add-ons' — each percentage is taken on the frozen subtotal and the amounts are summed, which is order-independent. 'in declared order' at :38 governs evaluation/display order within the ordered-evaluation frame at :33, not a compounding base. Every reasonable reading of :39 converges on GBP 2,000 in the auditor's own example; the GBP 2,250 reading contradicts the named model."
+    },
+    {
+      "findingId": "05-services-marketplace#006",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "no-real-divergence",
+      "reason": "Both state rows disable exactly one control and say so: 05.01.07-seller-capacity-queue-intake-limits.md:64 'Listings visible, order disabled, next-available date, waitlist CTA' and 05.01.01-service-listings-packages-rate-cards.md:117 'Live listing, Order disabled, waitlist CTA, next-available date', against D-03 at 05.01.07:94 'At-capacity listings stay visible and non-orderable'. What is not disabled remains; an implementer keeps Request Quote and drops Order. The genuinely contested half — whether the seller may issue — is finding #008, which is where it is scored."
+    },
+    {
+      "findingId": "05-services-marketplace#007",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "The behaviour is fully specified across the two files that own it. 05.01.02-service-category-taxonomy-attributes.md:118 states what the user sees in 'Action needed' (old label, named missing item, day-30 countdown) and :93 routes it to a state the lifecycle machine does own — 'at day 30 the listing pauses — an existing 05.01.01 state', present at 05.01.01:120. Orderability is settled by the feature that owns rendering: 05.01.03-music-pricing-model-library.md:116 'new orders are gated pending remap', which is compatible with 05.01.02's 'stay live' (findability, per the DT-07 rationale at :92). 05.01.02:185 Q-03 records the migration policy as resolved. No forced invention; at most a state-table completeness nit."
+    },
+    {
+      "findingId": "05-services-marketplace#008",
+      "upheld": true,
+      "finalSeverity": "warning",
+      "refutationReason": "not-refuted",
+      "reason": "Quotes verified. services-marketplace-cx.md:137 'issuance of a new quote is what the ceiling blocks. Failure surfaces at issuance (\"you're at capacity\")' imposes a hard block that neither owning feature carries: 05.01.07-seller-capacity-queue-intake-limits.md contains zero occurrences of 'quote' or 'issu*' (grepped) and D-03 :94 gates orderability only; 05.02.01-custom-quotes-proposals-scope.md:112 says 'The ceiling binds ordering (05.01.07 D-03), not acceptance', :68 lists the ceiling under 'Does not end the offer', and :77 renders capacity as an advisory exposure figure while :78 shows what a real issue-block looks like (union scale). An implementer building from the feature files ships no issuance block. Downgraded from blocking: the CX is the domain's synthesis layer and is at least arguably the resolving authority, and the claimed self-contradiction at :139 is a misread — 'warned at issuance when near capacity' is consistent with blocking at capacity."
+    },
+    {
+      "findingId": "05-services-marketplace#009",
+      "upheld": true,
+      "finalSeverity": "warning",
+      "refutationReason": "not-refuted",
+      "reason": "Verified verbatim at services-marketplace-cx.md:104 and repeated at 05.05-multi-party-supply-cx.md:73 — a money-affecting requirement ('needing a per-payee freeze, not a whole-escrow freeze') left with a bare `[PENDING]` carrying no owner and no target. Checked every Open Questions table in the 05.05 unit (index Q-01..Q-03, 05.05.01 Q-01..Q-04, 05.05.02 Q-01..Q-03, 05.05.03 Q-01..Q-05, 05.05.04 Q-01..Q-03): none covers per-payee escrow freeze. Malformed tracking, which is the Dimension-7 exception to the tracked-deferral refutation."
+    },
+    {
+      "findingId": "05-services-marketplace#010",
+      "upheld": true,
+      "finalSeverity": "blocking",
+      "refutationReason": "not-refuted",
+      "reason": "All five citations verified. 05.02.01-custom-quotes-proposals-scope.md:244 D-15 'rendered on a live quote symmetrically to both parties, or to neither', enacted at :77 where the seller sees the band while drafting the quote — which under D-15 means the buyer sees it too. Directly against 05.01.01-service-listings-packages-rate-cards.md:186 D-05 ('never in the buyer preview'), 05.01.04-rate-benchmarking-price-transparency.md:96 Q-03 whose resolution treats 'Buyer viewing a quote sees the same band' as superseded text to be deleted, 05.01-service-listings-pricing-cx.md:89 R-04, and services-marketplace-cx.md:216 R-06. Two [DEEP] decisions, opposite outcomes on the same surface, neither flagging the other."
+    },
+    {
+      "findingId": "05-services-marketplace#011",
+      "upheld": true,
+      "finalSeverity": "warning",
+      "refutationReason": "not-refuted",
+      "reason": "Quotes verified. 05.03.02-milestones-staged-deliverables.md:107 D-06, :36 and :73 all emit a credit at milestone acceptance, and 05.06.03-rights-transfer-split-execution.md:59 and :131 agree. 05.03.05-cancellation-abandonment-kill-fee.md:274 D-06 asserts the opposite premise as fact ('no credit is emitted at a milestone at all') and makes cancellation the emission point, restated at :302 'Credits were never emitted at milestones at all. A cancelled engagement now emits them'; 05.06.03:130 says the opposite for the same event ('Credits already earned on accepted milestones stand'). Built literally, a cancelled staged engagement double-emits into the credit graph. Downgraded from blocking: the emission point is stated consistently by the two owning features (05.03.02 D-06, 05.06.03's trigger table twice), so the timing is buildable; what survives is the unresolved cancellation-side re-emission."
+    },
+    {
+      "findingId": "05-services-marketplace#012",
+      "upheld": true,
+      "finalSeverity": "warning",
+      "refutationReason": "not-refuted",
+      "reason": "Verified. 05.03.01-order-lifecycle-requirements-gating.md:157 gives Closed the trigger 'Support/recall window expired (05.03.06)', while :101 in the same file has 'Engagement enters Closed, with the support/recall window still open', and 05.03.06-post-delivery-support-recall.md:87 D-01 assumes the latter ('a recall is a post-terminal state — the engagement stays closed'). Same-file contradiction on a state's entry trigger, unmarked. Downgraded from blocking: the recall behaviour itself is fully specified (05.03.06:57-62 window states, :59 'Work reopens; no escrow, no rights change'), so what diverges is the state label/trigger, not the product behaviour — 'read-only' plainly scopes to escrow/rights/evidence given D-01."
+    },
+    {
+      "findingId": "05-services-marketplace#013",
+      "upheld": true,
+      "finalSeverity": "warning",
+      "refutationReason": "not-refuted",
+      "reason": "Verified verbatim. 05.03.01-order-lifecycle-requirements-gating.md:107 'Buyer nudged at T+24h, T+72h, T+7d, T+14d' (repeated at :211 in the Notifications consume line) against 05.03.05-cancellation-abandonment-kill-fee.md:121 '| 7 | First nudge — informational | Buyer only |', :122 second nudge at 14, and D-04 at :272 'Buyer: 7/14/30 notices, close at 45'. Both are [DEEP] files describing the same stalled requirements gate, both give exact numbers, and day 7 cannot be the first nudge if 24h and 72h nudges exist. The CX-01 boundary at 05.03.01:194 delegates the abandonment threshold to 05.03.05, not the nudge cadence."
+    },
+    {
+      "findingId": "05-services-marketplace#014",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "The obligation is specified in full one file over, in the artifact whose job is exactly this. services-marketplace-cx.md:24 CX-13 and :151-155 state the owner split ('the retainer (05.03.04) owns a pinned copy ... the retainer exposes a pinned-rate flag and the card's blast radius must exclude any listing under an active retainer'), the pre-commit enumeration, the permission rule and the race resolution; 05.01.01-service-listings-packages-rate-cards.md:47 already carries the 'pinned-by-contract flag' in the rate-card field list. 05.03.04 does omit it, but cross-cut obligations living in the CX file is the documented structure, not a gap."
+    },
+    {
+      "findingId": "05-services-marketplace#015",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "no-real-divergence",
+      "reason": "The composition rule is stated. 05.03.03-revisions-limits-change-orders.md:63 and D-15 (:227) make the per-craft table at :65-79 the seed ('a starting value, never a cap or a floor'), and :81 gives the rush interaction explicitly: 'if a rush tier is bought (05.01.06) ... the notes window halves'. A rush mastering single is therefore 24h seed halved to 12h — determinate. D-08's parenthetical '(48h; 24h on rush)' at :220 restates the modal mixing default, not a competing rule."
+    },
+    {
+      "findingId": "05-services-marketplace#016",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "no-real-divergence",
+      "reason": "The override is not an exception to D-01, it is a different terminal state. 05.04.02-deliverable-spec-automated-audio-qc.md:75 'Failed | Fatal breach | Seller-only' vs :76 'Overridden | Seller overrides with a reason | Buyer sees the override and the reason at delivery' — a file the seller overrode is no longer in Failed, so 05.04.01-delivery-acceptance-auto-accept.md:210 D-01 ('A file that fails QC is not a delivery') and :152 still hold. 05.04.01 knows about the path and states it in its own happy path at :96 ('or the seller overrides with a recorded reason, which the buyer will see'), and 05.04.02:105 D-03 already establishes warn-or-fail rather than binary. Every reasonable implementer builds the same thing."
+    },
+    {
+      "findingId": "05-services-marketplace#017",
+      "upheld": true,
+      "finalSeverity": "warning",
+      "refutationReason": "not-refuted",
+      "reason": "Verified: 05.05.04-multi-seller-bundles-curated-packages.md:55 'Cancellation mid-chain | ... | `[PENDING]`' and :67 'Broken | A seller exits mid-chain | `[PENDING]`' are bare, while the neighbouring :53 in the same table demonstrates the well-formed mechanism ('[PENDING — /ideate-discover Step 5 deepening]'). The file's Q-01..Q-03 (:102-104) cover counterparty, cross-seller SLA and assembler margin — none covers settlement or the Broken state. Warning rather than blocking because 05.05-multi-party-supply-index.md:47 D-03 proposes the whole feature `wont` for MoSCoW, so nothing is forced to be built on the invention."
+    },
+    {
+      "findingId": "05-services-marketplace#018",
+      "upheld": true,
+      "finalSeverity": "blocking",
+      "refutationReason": "not-refuted",
+      "reason": "Verified. 05.06.01-engagement-rights-posture.md:70-74 gives exactly three pricing-model rows (Cash-only, Points-only, Fee + points); spec has no row, while D-01 (:202) forbids a default ('an explicit election is required to publish a tier'), D-05 (:206) requires both postures on every tier, and D-07 (:208) closes the vocabulary against free text and against riders qualifying execution. Spec's defining property — 'the term that vests on trigger' (05.01.03-music-pricing-model-library.md:43) — is inexpressible in Assignment/Licence/Co-ownership/Points/Creates none, and 05.01.03:150 DT-10 rejects mapping spec onto points precisely because points vest at acceptance. Grepped the entire 05.06 unit: no occurrence of spec/speculative. 05.01.03:206 Q-07 tracks only who detects the vesting trigger, explicitly not the posture mapping. A spec listing cannot publish without an invented posture."
+    },
+    {
+      "findingId": "05-services-marketplace#019",
+      "upheld": true,
+      "finalSeverity": "warning",
+      "refutationReason": "not-refuted",
+      "reason": "Verified verbatim at 05.06.02-producer-points-backend-participation.md:62 '| Points on a recording later re-recorded | The 2020s' favourite manoeuvre | `[PENDING]` |' — bare, while :57 in the same table carries a target ('[PENDING — /ideate-discover Step 5 deepening]'), which is the contrast that makes this malformed rather than merely deferred. Q-01..Q-04 (:122-125) cover points-only permissibility, grant authority, aggregate-check location and expected-value disclosure; none covers re-recording, and 05.06.03's Open Questions do not either. Royalty-affecting requirement with no route to a decision."
+    },
+    {
+      "findingId": "05-services-marketplace#020",
+      "upheld": true,
+      "finalSeverity": "warning",
+      "refutationReason": "not-refuted",
+      "reason": "Verified: 05.07.01-repair-tech-luthier-job-flow.md:59 '| Warranty on the work | Trade norm: 6–12 months on labour | Different from a mix recall (05.03.06) — this is a defect warranty on physical work |'. The outcome column names a trade norm and a contrast, never a platform behaviour, and carries no marker — unlike :56 in the same table, which does ('`[PENDING]` ... See Q-02'). Grepped 'warrant' across the whole 05.07 unit: the only other hits are 05.07.02:49/:99 disclaiming inspector warranty. No decision in 05.07.01, 05.07.03 or the sub-domain index and no open question owns it, while the analogous creative window is bounded and owner-tracked at 05.03.06 D-03/D-04."
+    },
+    {
+      "findingId": "05-services-marketplace#021",
+      "upheld": true,
+      "finalSeverity": "warning",
+      "refutationReason": "not-refuted",
+      "reason": "Upheld on its first half only, which is enough. 05.07-custodial-physical-services-cx.md:41 verified verbatim — two races ('Damage discovered at return while the job is still marked in progress; or a revised estimate issued while the item is already being returned. Both need a defined precedence; `[PENDING]`') with no owner, no target, and no covering question in the unit, where comparable races elsewhere in the domain are decided (05.03.05 D-16, 05.03.03 D-10). The second half is weaker: 05.07.02-third-party-inspection-verification.md:67's bare `[PENDING]` on the Disputed state mirrors :54, which does carry a target ('[PENDING — /ideate-discover Step 5 deepening] — right of reply?'), so that behaviour is tracked one row away."
+    }
+  ],
+  "adjustedUnits": [
+    {
+      "unit": "05.01-service-listings-pricing",
+      "applicableCheckpoints": 5,
+      "adjustedPoints": 0.5,
+      "note": "6 of 7 findings refuted. Dimension 1 (#002, #005) fully refuted -> 0. Dimension 3 retains #001 only, a genuine unmarked two-way contradiction -> 0.5. Was 1.0."
+    },
+    {
+      "unit": "05.03-engagement-lifecycle",
+      "applicableCheckpoints": 5,
+      "adjustedPoints": 1.0,
+      "note": "2 of 5 refuted (#014, #015), and #011/#012 downgraded blocking->warning. Both scored dimensions still carry surviving findings (dim 1: #013; dim 3: #011, #012), so both stay 0.5. Unchanged at 1.0."
+    },
+    {
+      "unit": "05.04-delivery-qc-acceptance",
+      "applicableCheckpoints": 5,
+      "adjustedPoints": 0.0,
+      "note": "Sole finding (#016) refuted. Dimension 3 -> 0. Was 0.5."
+    }
+  ]
+}

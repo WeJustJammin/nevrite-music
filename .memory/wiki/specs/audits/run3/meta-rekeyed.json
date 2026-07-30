@@ -1,0 +1,61 @@
+{
+  "domain": "meta",
+  "verdicts": [
+    {
+      "findingId": "meta#001",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "Quotes are verbatim (personas.md:81; constraints.md:292-293; problem-statement.md:47), but the reconciliation the finding says an implementer must invent is written down twice, explicitly. 07.09.03-in-session-capture-surface.md:38 assigns the personas.md prohibition to the **Browser tab** row only ('It is the flow `meta/personas.md` says will not be used'), while :41 ratifies a different row — 'Phone push (PWA web push) ... ✅ The ratified v1 surface (D-08)' — and :42 records in-app as shipping with push, never instead of it. 07.06.02-session-close-capture-prompt.md:228 (D-17) states the reconciliation in full: the v1 delivery is PWA web push + in-app, it 'Uses only a capability already locked into v1', and '`07.09.03` DT-01 is preserved: the web app on its own is not a prompt surface — push is the delivery, in-app is its companion.' The persona rule bites on a browser form the Producer must go to; the v1 mechanism is a push that comes to them. The 'go fill in a form' reading is further foreclosed by constraints.md:315-319 and 07.06.02:229 (D-18), which limit the card to roster + session-roll pre-fill and have D-11 suppress a card with neither — so the v1 surface is a confirm-or-nothing card, never a blank form. 02.02.02:145 rejects a *blank end-of-session web form* on the same reasoning, which is consistent with, not contrary to, D-17."
+    },
+    {
+      "findingId": "meta#002",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "tracked-deferral",
+      "reason": "Quotes verify (competitive-landscape.md:82-89; problem-statement.md:112; cross-cut-emergent-capabilities.md:167), but the open side carries well-formed tracking: problem-statement.md:112 is '| Q-02 | [OWNER] Is the lock-in **earned** or **hostile**? ... | User | `/create-prd` |' — owner (User) and target stage (/create-prd) both present — and problem-statement.md:105 marks DT-04 '⏳ DEFERRED ... See Q-02', pointing at it. That is the tree's documented mechanism for a not-yet-due decision. The Moat text asserts no export feature: competitive-landscape.md:84-85 says a leaver 'doesn't lose access to *data they could export*', a statement about what the moat is **not** built on, not a commitment that an export surface is specified. Nothing at the vision layer forces an implementer to invent portability behaviour while Q-02 is live."
+    },
+    {
+      "findingId": "meta#003",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "tracked-deferral",
+      "reason": "Both rows carry owner and target: problem-statement.md:111 '| Q-01 | [OWNER] Which \"Why Now\" signal ... | User | `/create-prd` |' and :112 '| Q-02 | ... | User | `/create-prd` |'. Tracking is well-formed, so per the deferral test this is not a Dimension-7 defect. The finding's load-bearing premise is also false on the file: it claims these are unique among meta open questions in lacking a canonical entry, but competitive-landscape.md:102 (Q-01, which competitor to beat first) and :104 (Q-03, integration partners vs rivals) likewise name no canonical entry and carry no 'Canonical entry' annotation — so the pattern the finding contrasts against does not exist. vision.md:213-215 further scopes its roll-up to 'per-file `Q-NN` markers inside `personas.md` / domain files', which does not name problem-statement.md. And ideation-index.md:158 states the tree's actual criterion — 'Every open question has owner + target stage (pipeline-stage = deadline)' — which both rows satisfy. Nothing is abandoned and nothing must be invented; /create-prd is named on the rows themselves."
+    },
+    {
+      "findingId": "meta#004",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "tracked-deferral",
+      "reason": "The factual core checks out — cross-cut-emergent-capabilities.md:135-219 is an 83-row table with columns 'Feature | Owning domain | Why it's new / uncovered' and no priority or phase, and sampled rows ('Rights-Orphan Detector', 'Postponement as a first-class booking state', 'Formula / contingent receivable', 'Band-formation-from-class-roster', 'Identity-page composition-by-arrival-context') return 0 hits in specs/feature-ledger.md and specs/ideation/moscow-ledger.md. But the routing that makes them not-yet-due is recorded as a ratified decision: ideation-index.md:213 (D-27) persists the emergent set and closes 'Routed to `/create-prd` and `/write-be-spec`.', and cross-cut-emergent-capabilities.md:7-9 names /create-prd, /decompose-architecture and /audit-ambiguity as inheriting the file. Routing to a named stage is this tree's tracking mechanism (cf. ideation-index.md:75, 'Not-product concerns routed to `/create-prd` | 142'). The index claim at :154 is also narrower than quoted against: 'MoSCoW mutually exclusive; 734 features in feature-ledger.md' asserts internal consistency of the 2026-07-16 breadth-pass ledger (moscow-ledger.md:3 dates it there), not that every capability named in the later 2026-07-18 Step 6 synthesis is ledgered. MoSCoW/phase for the emergent set is downstream work with a named owner stage, not an invention forced now."
+    },
+    {
+      "findingId": "meta#005",
+      "upheld": true,
+      "finalSeverity": "warning",
+      "refutationReason": "not-refuted",
+      "reason": "Confirmed by counting the file from disk. ideation-index.md:78 reads '| Emergent cross-cuts / features (Step 6) | 52 / 76 — ...|' and ideation-index.md:213 (D-27) repeats '**52 new cross-cut mechanisms** and **76 new features**'. The actual file holds 54 mechanism rows across the eight § 1 subsections (1a=7, 1b=3, 1c=8, 1d=9, 1e=7, 1f=4, 1g=8, 1h=8) and 83 feature rows in § 2 (cross-cut-emergent-capabilities.md:137-219). Neither number carries a marker, an amendment note, or a reconciliation. Two numeric statements about the same artifact that cannot both hold. Downgraded from the raw report's framing to warning: the file is the content and the index is a rollup, so no implementer is blocked — the defect is traceability, since D-27 is the ratified record downstream stages cite and it undercounts by 2 mechanisms and 7 features."
+    },
+    {
+      "findingId": "meta#006",
+      "upheld": true,
+      "finalSeverity": "warning",
+      "refutationReason": "not-refuted",
+      "reason": "Confirmed, and stronger than reported. competitive-landscape.md:3 self-declares 'Status: `[DEEP]` — completed `/ideate-validate` 2026-07-18' and constraints.md:3-4 self-declares '`[DEEP]` — all constraint categories resolved during `/ideate-validate` 2026-07-18', while ideation-index.md:94-95 marks both `[PARTIAL]`. The other four meta files' self-headers match their index rows (problem-statement.md:3, personas.md:3, counterparties.md:3 all `[DEEP]`, index :91-93; cross-cut-emergent-capabilities index row :96 `[DEEP]`), so no file-wide convention explains the divergence, and no note on either side reconciles it. The same index also contradicts its own rows: ideation-index.md:155 scores Constraint Explicitness ✅ citing constraints.md and :157 scores Competitive Positioning ✅ citing competitive-landscape.md. Warning, not blocking: it misleads a completeness gate rather than forcing any product behaviour to be invented."
+    },
+    {
+      "findingId": "meta#007",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "Quotes verify (constraints.md:293, :226-228, :269, :203-209), but the exact question is resolved on the record by the feature that owns gig alerts. 04.02.04-alert-subscriptions-delivery.md:257 (Q-03) is struck through and closed: '✅ **RESOLVED — a device-level channel is in scope; the tier is not dropped.**', quoting the very constraints.md:293 clause at issue, and states the phasing reconciliation explicitly — '**Domain 04 is itself Phase 2+ (D-31), so both channels exist by the time this pipe ships.**' The PWA row locks a *capability* into v1 (ideation-index D-28); it does not schedule an alert product. 07.06.02:228 (D-17) applies the same reading to the capture prompt — 'Uses only a capability already locked into v1 ... the capability needed no new authorisation; only the assignment is new.' Under that reading the two statements do not conflict, and the only residual (iOS Safari PWA-install dependency) is already tracked at constraints.md:310-313 with target /create-prd-stack."
+    }
+  ],
+  "adjustedUnits": [
+    {
+      "unit": "meta",
+      "applicableCheckpoints": 8,
+      "adjustedPoints": 0.5
+    }
+  ]
+}

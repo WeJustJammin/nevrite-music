@@ -1,0 +1,165 @@
+{
+  "domain": "06-education-lessons-mentorship",
+  "verdicts": [
+    {
+      "findingId": "06-education-lessons-mentorship#001",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "Quotes are verbatim, but the 'limbo' statement is not a competing normative rule — it is an explicit deferral to a named owner and question. 06.01.02:223 reads '...pending 06.01.03's rule (their Q-03)', and 06.01.04:246 likewise routes the ledger effect to '06.01.03'. Following that pointer, 06.01.03:268 Q-03 is 'RESOLVED -> DT-09 / D-11 ... the credit returns', restated normatively in the edge table at 06.01.03:144. The word 'limbo' appears exactly once in 06.01.02 (grep: only line 223) and is NOT a state in the file's own machinery: the credit lifecycle at 06.01.02:70-79 has no limbo transition and already carries 'reserved --policy return (06.01.03)--> granted', and the States table at 06.01.02:228-241 has no limbo row. Both implementers following the file's own pointer land on the same build: return the reserved credit to granted, no signal. Stale wording in a deferring file, not a forced invention."
+    },
+    {
+      "findingId": "06-education-lessons-mentorship#002",
+      "upheld": true,
+      "finalSeverity": "blocking",
+      "refutationReason": "not-refuted",
+      "reason": "Every quote verified verbatim and the conflict is between normative statements with no marker on either side. 06.02.02:313 D-11: 'Vetting renders as a dated statement naming the check and its jurisdiction, never as a badge, tick or shield', reinforced at 06.02.02:161 ('No green tick. No shield. No word \"safe\"') and 06.02.02:270 DT-07, which rejects the badge as 'the most dangerous design in the file' and specifically names status grammar like 'current' as unknowable after issue date. Against that, 06.02.03:162 (happy path card spec), 06.02.03:223 (Populated state) and 06.02.03:229 all specify a 'vetting badge' as a rendered card element, and 06.02.01:124 gives the public-tier worked example as '\"DBS checked, current\"' with 06.02.01:32 repeating 'credential claims and badges' in the Fan lens. Neither 06.02.01 nor 06.02.03 carries a seam statement ceding vetting *rendering* to 06.02.02 (their cross-cut notes at 06.02.03:270 and 06.02.03:258 cede only the gate/signal semantics), so the highest-traffic surface in the sub-domain has two incompatible ratified renderings of the safeguarding signal on a minors-facing page."
+    },
+    {
+      "findingId": "06-education-lessons-mentorship#003",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "no-real-divergence",
+      "reason": "Quotes verified at 06.01.04:192-193, :88 and :229 — but the edge row is an explicitly signposted exception, not a silent contradiction: 06.01.04:229 states the escape hatch 'regardless of the 50% rule', naming the rule it overrides, and it fires only on an offered user choice ('End — no credit used'). The general predicate at :88 and the exception at :229 compose deterministically for any implementer. The 'seam breach' half also fails: the same file states ledger consequences in several rows the finding does not contest (06.01.04:88 '06.01.02 consumes the reserved credit', :227, :231), and 06.01.03:168 independently prices platform-caused failure as no-fault, matching the :229 outcome rather than contradicting it."
+    },
+    {
+      "findingId": "06-education-lessons-mentorship#004",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "06.08:50 exists verbatim, but it sits inside a happy path that the file writes against itself — the sequence ends at 06.08:53 '5. Nobody does (DT-01)', and 06.08:99 D-01 records that the whole feature 'is written honestly against itself and proposed as `wont`'. The rejection the finding says is missing is stated in the same file at 06.08:86 ('Note 06.04 CX R-04 already rejected auto-issuance'), and again at 06.04-course-marketplace-authoring-cx.md:152 and education-lessons-mentorship-cx.md:257. An implementer reading the file end to end finds the trigger answered inside it; no product behaviour must be invented."
+    },
+    {
+      "findingId": "06-education-lessons-mentorship#005",
+      "upheld": true,
+      "finalSeverity": "warning",
+      "refutationReason": "not-refuted",
+      "reason": "All four quotes verified. 06.02-teacher-discovery-profiles-trials-cx.md:176 R-02 ends 'They may co-render; they must not merge', restated at 06.02.02:294 ('Per sub-domain R-02 they may co-render; they must not merge'). 06.08:101 D-03 states 'Certificates must never render beside verified credits, nor feed the credential block', and education-lessons-mentorship-cx.md:20 CX-09 repeats 'must never render beside verified credits'. Permitting co-render and forbidding rendering beside are directly opposed on the same surface question, with no marker on either. The misattribution is also real: 06.08:60 cites '06.02 CX R-02 rejects the co-render' while R-02 at :176 permits it, so following the citation leads to the opposite rule. Warning rather than blocking: 06.08 is proposed `wont` (06.08:99 D-01), so the live exposure is limited to whether 06.02.02's surface may host a certificate at all."
+    },
+    {
+      "findingId": "06-education-lessons-mentorship#006",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "The dangling-id observation is literally true (06.10-academy-multi-teacher-operations.md:110-113 has only D-01..D-04), but the substance is one file over and the CX names that file in the same clause ('06.01.03 -> 06.10 D-06'). 06.01.03:248 D-06 reads verbatim 'The academy floor is a ceiling on harshness, not a mandate', 06.01.03:253 D-11 reads 'Operator closure cascades automatically to every lesson in the affected rooms', and 06.01.03:235 states the seam explicitly: 'The academy floor policy (D-06) and the no-fault closure cascade (D-11) are Operator powers exercised here but owned there.' Closure behaviour is fully specified at 06.01.03:161 (every lesson in the affected rooms cascades to no-fault, credits return, no signals, no make-up caps), and the one genuinely undecided variant — permanent closure with prepaid credits outstanding — is a tracked question at 06.10:70/06.10:121 Q-03 (`/create-prd-security`) and 06.01.02:311 Q-08. Nothing must be invented."
+    },
+    {
+      "findingId": "06-education-lessons-mentorship#007",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "06.10:50 exists verbatim, but the content it defers is largely specified in the owning files, contradicting 'an implementer must invent all of it'. Revenue share and the credit-liability report: 06.01.02:30 ('sets the revenue share, and sees aggregate credit liability across all their teachers, split into unearned ... and earned-unpaid'), 06.01.02:198 ('Operator: liability report'), 06.01.02:210 (share pinned at purchase). Roster: 06.02.01:31 (Operator curates the academy roster page, cannot author or unpublish a teacher's facet). Room allocation: 06.10:120 Q-02 is RESOLVED — '16 owns the room, this feature consumes it', a read against domain 16's inventory. Term calendar, house rate card and floor policy are specified at 06.01.02:121, 06.01.02:30 and 06.01.03:248 respectively. What remains unelaborated is a deliberately shallow `[SURFACE]` node banded COULD (06.10:119)."
+    },
+    {
+      "findingId": "06-education-lessons-mentorship#008",
+      "upheld": true,
+      "finalSeverity": "warning",
+      "refutationReason": "not-refuted",
+      "reason": "Verified at 06.06:41, :59, :60 and :76. Three of the four markers carry neither an owner nor coverage by any open-question row: the four rows at 06.06:112-115 cover pairing (Q-01, re-pointed to `/write-fe-spec`), the services boundary (Q-02), promotion (Q-03) and the adult power-imbalance risk (Q-04) — none covers application caps, expectation-setting, or the Lapsed state. 06.06:76 is the sharpest instance: the States table declares 'Lapsed | Cadence missed repeatedly' and puts a bare '`[PENDING — Step 5]` — surface it gently or let it die quietly?' in the What-User-Sees column, i.e. a declared state whose entire user-visible behaviour is an unowned question. This is malformed tracking (no owner, no live target, no covering row), not a well-formed deferral. Warning, not blocking: the feature is a single non-transactional flow and the gap is one state's presentation."
+    },
+    {
+      "findingId": "06-education-lessons-mentorship#009",
+      "upheld": true,
+      "finalSeverity": "warning",
+      "refutationReason": "not-refuted",
+      "reason": "education-lessons-mentorship-cx.md:287 and :302 read exactly '**Role scoping**: `[PENDING]`.' — no owner, no stage, no blocking question named. That is the malformed-tracking case, not the documented deferral mechanism; the same file demonstrates the well-formed shape two entries away at :231 and :274, which name both a stage and the blocking question ('pending 06.07 Q-01', 'pending 06.06 Q-01'). The Step-5-targeted half of the claim is not upheld — those two markers do carry a target and a named blocking question — but the two bare markers stand on their own as unassignable per-role behaviour at CX-11 and CX-12."
+    },
+    {
+      "findingId": "06-education-lessons-mentorship#010",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "no-real-divergence",
+      "reason": "Both lines verified (06.02.03:64 'Weekly window | Yes', 06.02.03:207), but they do not conflict on any reasonable reading. The edge row's scenario is a student *answering* the window question with 'any time works' — the quoted student text is itself an answer — and the row then specifies the exact ranking consequence (S1's 30 points 'redistributes proportionally across S2-S8'). A required field satisfied by an 'any' value is the convergent build for both implementers; nothing in the file offers a skip that bypasses intake. The S5 sub-question is answered at 06.02.03:63, where mode 'Drives whether S5 contributes at all', under the same proportional-redistribution rule the file states at :207."
+    },
+    {
+      "findingId": "06-education-lessons-mentorship#011",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "tracked-deferral",
+      "reason": "All five rows verified, and all five carry both an owner and a target — the documented deferral mechanism. Three of the five in fact name a live downstream stage as a second target: 06.01-lesson-booking-packages-delivery-index.md:72 Q-02 'User | MoSCoW / `/create-prd`', 06.01.02:305 Q-02 'User | MoSCoW / `/create-prd`', 06.01.03:270 Q-05 'User | MoSCoW / `/create-prd`', so the finding's claim that these 'will not be surfaced for ratification by any live pipeline step' is false for the two revenue-policy calls it leads with. The remaining two (06.01.03:266 Q-01, :267 Q-02) name a stale primary stage but are fully formed rows with Owner = User, and the finding itself concedes 'Nothing in the specified behaviour is missing (the preset numbers exist as platform defaults)' — 06.01.03:266 carries the recommended default '24h notice, 1 make-up per 10 credits, no-show burns, refill-reversal on'."
+    },
+    {
+      "findingId": "06-education-lessons-mentorship#012",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "tracked-deferral",
+      "reason": "Every cited row verified and every one carries Owner = User plus an explicit target (06.04-course-marketplace-authoring-index.md:76, :78; 06.04.02:136, :139; 06.04.03:117 — all 'User | MoSCoW'), with the in-body marker at 06.04.03:63 naming a live second stage ('`[PENDING — MoSCoW / /create-prd-security]` (Q-02)'). Tracking is well-formed; the objection is only that the primary stage name is stale. The finding concedes 'No behaviour gap'. The one row it calls 'the clearest defect' (06.04.02:139 Q-04, first slice) is already answered at domain level — education-lessons-mentorship-index.md:122 Q-03 re-points the same question to `/plan-phase` and records MoSCoW's banding of all three candidates — so the decision has a live owner and stage one file up."
+    },
+    {
+      "findingId": "06-education-lessons-mentorship#013",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "tracked-deferral",
+      "reason": "Quotes verified, but the headline consequence is wrong on its own evidence: 06.02.04:116 Q-01 reads 'User | MoSCoW / `/write-be-spec`', a live target, so the trial-farming threshold the finding says has 'no live ratification path' has exactly one. 06.02.04:118 Q-03 is a fully formed row (Owner = User, target named). 06.02-teacher-discovery-profiles-trials-cx.md:123 carries a stage in its marker rather than the bare `[PENDING]` form that would make it malformed. All three are the documented mechanism for a not-yet-due decision, and the agent recommendation at :116 ('~5 un-converted free trials -> free offers stop') means no behaviour is missing in the interim."
+    },
+    {
+      "findingId": "06-education-lessons-mentorship#014",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "no-real-divergence",
+      "reason": "Both quotes verified (06.01.03:83 'grace = min(15 min, 50% x duration), floor 5 min. A 20-minute beginner's lesson gets 10 minutes, not 15.'; 06.01.02:28 'duration in {30, 45, 60, 90 min}'), but nothing is undecidable. The formula is duration-general and every implementer codes the same expression; the illustrative example simply exercises a duration the current rate card cannot express. The bookable set is stated as a closed membership at 06.01.02:28 and pinned to a rate-card line, so 'are sub-30-minute occurrences bookable?' already has one answer: no. Unreachable branches in a general formula are not a forced product invention."
+    },
+    {
+      "findingId": "06-education-lessons-mentorship#015",
+      "upheld": true,
+      "finalSeverity": "warning",
+      "refutationReason": "not-refuted",
+      "reason": "Verified at 06.01.02:141-143 ('When available credits reach <= 2, or when reserved occurrences would exhaust the balance within 21 days ... the ledger raises an at-risk signal on the series ... This feature owns the signal and its timing'), 06.01.02:239 (States row 'At risk | Available <= 2, or ... within 21 days'), against 06.01.01:162 (States row 'At Risk | Balance 0, next occurrence unreserved') and 06.01.01:230 D-03 ('Zero balance -> At Risk (slot held) for 2 occurrences or 14 days -> Lapsed'). Two sibling features put a same-named state on the same object (the series) with different entry conditions and different user-visible copy, and 06.01.02 asserts ownership of 'the signal and its timing' while 06.01.01's ratified D-03 keys the state and its release clock to zero. Nothing in either file, or in 06.01-lesson-booking-packages-delivery-cx.md, marks the two as distinct signals — so whether a series with 2 credits left renders At Risk is genuinely open."
+    },
+    {
+      "findingId": "06-education-lessons-mentorship#016",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "Quotes verified (06.01.02:143-144 and :269 route suspend-vs-release to '06.01.01's call (its Q-01, CX-06)'; 06.01.01:244 Q-01 is a different question; 06.01-lesson-booking-packages-delivery-cx.md:134-138 still reads `[PARTIAL]` / unresolved). But the pointer sends the reader to the right file, and that file decides it and says so by name: 06.01.01:230 D-03 'Slot tenure binds to paid-through status... Zero balance -> At Risk (slot held) for 2 occurrences or 14 days -> Lapsed (slot released) ... Also answers sub-domain CX-06 (`[PARTIAL]` — does a zero balance suspend or release?): both, in that order, with a stated date.' The residue is an un-refreshed parent-CX marker and a mis-typed question id, not missing policy — 06.01.01:247 Q-04 even tracks the remaining knob (the 2-occurrence/14-day default) with Owner = User at `/create-prd`."
+    },
+    {
+      "findingId": "06-education-lessons-mentorship#017",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "downstream-detail",
+      "reason": "The transition exists as quoted (06.01.02:79 'lapsed --redeem at current list--> consumed (student tops up the delta)'), but whether redemption re-enters the reserve step is transaction mechanics for the architecture layer, not vision-layer product behaviour — the product outcome (redeem at current list price, student pays the delta) is identical either way, per 06.01.02:296 D-12 and the D-04 residual rule. The invariant the finding worries about is already stated normatively and unconditionally at 06.01.02:20 ('no operation can drive negative or double-count — one lesson's credit is spent once and only once') and reinforced at 06.01-lesson-booking-packages-delivery-cx.md:36 (fail closed) and :39 (the ledger must serialize reservation, explicitly 'Routed to `/create-prd-architecture`'), so no implementer is licensed to build a path that double-books a residual."
+    },
+    {
+      "findingId": "06-education-lessons-mentorship#018",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "The id collision is real as quoted (06.01.02:82 and :271 point at '06.01.04 Q-04 (over-run)'; 06.01.04:383 Q-04 is the interrupted-lesson compensation question; 06.01.04:362 D-05 says 'Over-run is free ... Per DT-14, resolving Q-04'), but the behaviour it points at is decided and stated in three places with no ambiguity: 06.01.04:362 D-05 ('hard-stopped by the next commitment — never by a charge ... No automatic second charge, ever'), the full edge row at 06.01.04:230 (room open until the earlier of next-occurrence-minus-buffer or scheduled end + 30 min, with the warning ladder), and 06.01.02:82 itself, which bounds the ledger answer to 'zero or one additional credit, never a fraction'. A reader cannot end up inventing over-run behaviour; they end up on a stale pointer with the answer visible in both files."
+    },
+    {
+      "findingId": "06-education-lessons-mentorship#019",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "06.03.05:37-39 exists verbatim, but the answer is in the same file 69 lines below and is unambiguous: 06.03.05:106 Q-02 '~~Is there any honest skill model beyond exam grades and a teacher's prose?~~ **RESOLVED — no, there is not.**', citing the closed domain Q-08 at education-lessons-mentorship-index.md:127, with the consequence ratified at 06.03.05:98 D-03 ('The platform measures coverage, never musicianship'). A stale in-body marker whose own file resolves it in the Open Questions table is not a gap an implementer must fill; the surviving open item (Q-03, plateau framing) is correctly re-pointed to `/write-fe-spec` at 06.03.05:107."
+    }
+  ],
+  "adjustedUnits": [
+    {
+      "unit": "06-education-lessons-mentorship (domain root)",
+      "applicableCheckpoints": 8,
+      "adjustedPoints": 1.0
+    },
+    {
+      "unit": "06.01-lesson-booking-packages-delivery",
+      "applicableCheckpoints": 6,
+      "adjustedPoints": 0.5
+    },
+    {
+      "unit": "06.02-teacher-discovery-profiles-trials",
+      "applicableCheckpoints": 6,
+      "adjustedPoints": 1.0
+    },
+    {
+      "unit": "06.03-curriculum-assignments-practice",
+      "applicableCheckpoints": 6,
+      "adjustedPoints": 0
+    },
+    {
+      "unit": "06.04-course-marketplace-authoring",
+      "applicableCheckpoints": 6,
+      "adjustedPoints": 0
+    }
+  ]
+}

@@ -1,0 +1,203 @@
+{
+  "domain": "21-promotion-marketing",
+  "verdicts": [
+    {
+      "findingId": "21-promotion-marketing#001",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "no-real-divergence",
+      "reason": "Quote is accurate but the reading is not. 21.09-campaign-press-kit-epk.md:63 offers the two handlings joined by 'Or' under a single closing invariant ('Never silently rendered as verified'), and D-03 at :116 locks that same disjunction as one normative rule. The States row at :79 does not reject the claimed option: it explains why the blocker is *named* ('the alternative is claiming what we cannot verify'), i.e. it is the pre-decision state. The same file's :69 ('Artist wants a quote we cannot verify | Their EPK, their call | Included, marked **claimed**') establishes the file's own convention that unverifiable material is includable when visibly distinguished. Both paths can and do coexist: name the blocker with a link to 02, and permit inclusion marked claimed. Nothing is invented, so this is not blocking and not a contradiction."
+    },
+    {
+      "findingId": "21-promotion-marketing#002",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "The decay target is stated in the owning file. 21.07-coverage-clipping-log.md:72 ('Link rots ... The verification claim decays with the link') and :81 ('badge decays toward claimed unless a snapshot was captured') both name `claimed` as the decay floor, and D-05 at :143 closes the vocabulary with `claimed` as the weakest of three. `verified-at-timestamp` is class-bound to a live-but-mutable source (:90), which a 404'd article is not, so it is excluded by definition rather than left open. 21.07:92's `Decayed` is the log state; the rendered strength it maps to is `claimed`. No fourth label is forced and no implementer divergence survives reading the owning file."
+    },
+    {
+      "findingId": "21-promotion-marketing#003",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "Both quotes are verbatim (promotion-marketing-cx.md:142-144; 21.05.03-payola-guardrail.md:40), and PAYOLA_PLACEMENT_BLOCKED does exist at 21.05.03:41 and is absent from the CX parenthetical. But the CX sentence's own verdict enum already contains `allow-with-disclosure`, and the immediately preceding synthesis answer at promotion-marketing-cx.md:140-141 states the resolution explicitly: 'the payola *policy* is owned solely by 21.05.03; 21.02 holds no copy, it calls the classifier. This prevents the two from diverging into two definitions of payola.' The authoritative classification table is 21.05.03:37-44. An implementer wiring the send path calls the classifier and gets the owning verdicts; the loose code-grouping in a parenthetical does not create a second definition."
+    },
+    {
+      "findingId": "21-promotion-marketing#004",
+      "upheld": true,
+      "finalSeverity": "warning",
+      "refutationReason": "not-refuted",
+      "reason": "Verified on disk. promotion-marketing-index.md:62-63 asserts 'All `[SURFACE]` — classified and outlined, not yet deepened' and the Children table at :67-75 marks all nine rows `[SURFACE]`. Contradicted by the files themselves: 21.01-release-campaign-planner-index.md:5 is '[BREADTH]', 21.07-coverage-clipping-log.md:5 and 21.09-campaign-press-kit-epk.md:5 are both '[PARTIAL]', and 21.01's own Children table at :27-30 lists four `[PARTIAL]` leaves. Worse, the same index contradicts itself: D-08 at :144 rests its ownership-not-recency ratification on '21.07 is `[PARTIAL]` (body authored 2026-07-17)'. Two statements in one document about the same status, neither marked. Not blocking — nothing product-level is invented — but the status column is load-bearing for D-08's argument and for deciding what still needs deepening."
+    },
+    {
+      "findingId": "21-promotion-marketing#005",
+      "upheld": true,
+      "finalSeverity": "warning",
+      "refutationReason": "not-refuted",
+      "reason": "Verified verbatim on both sides. promotion-marketing-index.md:101 gives the Producer '👁️ Read-only' for all of 21.01, and the reading note at :118-119 makes that a substantive claim, not a rounding ('Producer's `👁️` rows are narrow and real, never courtesy access. They see the deadline that binds them (21.01)'). Against 21.01-release-campaign-planner-index.md:37 ('21.01.02 Asset Readiness Gate | ✅ Full | ⚙️ Config') and 21.01.02-asset-readiness-gate.md:20 ('Producer | Config | Owns and marks state on **their** rows only — master final ... Can flag a recall'), a write the happy path at :41 depends on ('Producer uploads/links the master and marks it final'). The domain legend at :111 includes ⚙️ Config, so the rollup could have expressed it and did not. No note reconciles the levels. Warning rather than blocking: the child feature file governs the build, so the write gets implemented either way."
+    },
+    {
+      "findingId": "21-promotion-marketing#006",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "tracked-deferral",
+      "reason": "Both markers are verbatim (21.09-campaign-press-kit-epk.md:68, :71) and both gaps are tracked with an owner and a live target in the same file's Q table. :68 names Q-02 inline, and Q-02 at :125 carries 'User | `/create-prd-security`'; :71's photo-clearance gap is carried by Q-03 at :126, also 'User | `/create-prd-security`'. The tree treats a stale inline stage name as a known artefact of its re-target convention rather than as lost tracking — 21.03.01-media-target-directory.md:106 quotes the stale marker text verbatim inside the re-targeted Q row ('the edge case still reads `[PENDING — /ideate-discover Step 5 deepening]`'). The finding itself concedes 'Nothing product-level'. Pointer hygiene, not an ambiguity."
+    },
+    {
+      "findingId": "21-promotion-marketing#007",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "tracked-deferral",
+      "reason": "21.07-coverage-clipping-log.md:151 is verbatim and does carry a stale target, but the deferral is not empty: it names an owner (User), and the behaviour the row gates is fully specified in the same file — D-02 at :140 ('Monitoring suggests; it never auto-inserts'), the `Detected` state at :88 ('Suggested, never auto-added'), and the false-positive edge row at :79 ('Detection must be suggestion-with-confirmation, never auto-insertion'). Manual logging is likewise specified. So both the manual-first and the monitoring product are described; what is left is a build-scope call, and the MoSCoW pass did place the unit (moscow-ledger.md:463 carries the 21.07 row) and its outcome for the domain is recorded at promotion-marketing-index.md:159. No implementer invents behaviour here."
+    },
+    {
+      "findingId": "21-promotion-marketing#008",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "Both citations are verbatim (promotion-marketing-cx.md:252, :269) and both underlying questions are tracked with owner and target in 21.04.02. The references are resolvable from their own context rather than ambiguous: :252 sits inside the section headed 'CX-07: Release Campaign Planner ↔ Smart Links & Pre-Save' (:247) and the sentence is about the pre-save grant, which points unambiguously at 21.04.02's Q-01; :269 carries its own target inline ('Q-04 → create-prd-compile'), which uniquely identifies the row since the domain-index Q-04 at :154 is deferred to `/create-prd`, not `/create-prd-compile`. A wrong landing is self-correcting on the first read of the cited row. Navigation friction, not forced invention."
+    },
+    {
+      "findingId": "21-promotion-marketing#009",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "no-real-divergence",
+      "reason": "The row is quoted correctly (promotion-marketing-index.md:160, `[OWNER]` marker with Owner column 'Agent'; twin at 21.03-pitch-targets-crm-index.md:69). But two of the three signals agree and the third is a single cell: the `[OWNER]` marker and the row's own prose ('Whether to admit a new Operator-facing scope at all is a feature-inclusion choice, not a structural one') both classify it as an owner call, and the domain's Agent-owned rows are all structural by contrast (Q-05 at :155, campaign polymorphism → `/create-prd-architecture`). Every reasonable reading converges on escalating to the owner at `/create-prd`, which is what the deferral target already is. No divergent build."
+    },
+    {
+      "findingId": "21-promotion-marketing#010",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "downstream-detail",
+      "reason": "21.01.02-asset-readiness-gate.md:69 is verbatim, but the vision-layer behaviour is complete: an asset that is red or not-started as a hard deadline approaches enters `At risk` and escalates in the roll-up and to the Musician, and the mirror row at 21.01.01-backward-planned-campaign-grid.md:73 states the same behaviour qualitatively. What is missing is one tunable numeric window, which is exactly the class this tree routes downstream — the finding's own comparator, 21.03.03-pitch-tracking-response-log.md:74, sets N at `/write-be-spec`, and 21.02.06-pitch-rate-limits-curator-protection.md:30-31 states the principle for the whole domain: 'the numeric values below are **design defaults** — behavioural starting points, not architecture'. Two implementers converge on a configurable threshold; neither invents product behaviour."
+    },
+    {
+      "findingId": "21-promotion-marketing#011",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "tracked-deferral",
+      "reason": "All three markers are verbatim (21.01.01-backward-planned-campaign-grid.md:56, :59; 21.01.04-date-change-cascade.md:59) and each gap has a live, owned target. :56 names its Q inline and 21.01-release-campaign-planner-index.md:55 carries it as 'User | `/create-prd`'; :59's one-campaign-per-release case is carried by 21.01.01:107 → 'User | `/create-prd`' and by 21.01.01:106 → `/create-prd-stack`; 21.01.04:59's fan-notification case is carried by 21.01.04:99 → 'User | `/create-prd-security`', which explicitly pairs itself with 21.04.02 Q-01 ('answer both together'). The stale stage name inside the bracket is a known artefact of the re-target convention — 21.03.01:106 quotes such a marker verbatim as the record of the gap. The finding concedes 'No product invention'."
+    },
+    {
+      "findingId": "21-promotion-marketing#012",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "21.02-pitching-outreach-cx.md:54 is verbatim, but it is a one-line synthesis gloss whose own sentence immediately narrows to the mechanism that matters ('The global counter is the one that protects the gatekeeper'), and the CX map row it belongs to (:11) describes the relationship as 'per target and per sender' generically. The enforceable mechanism list is owned and enumerated by 21.02.06-pitch-rate-limits-curator-protection.md:33-47 (per-sender per-channel; per-target global; opt-out), with D-05 naming which is load-bearing. Repeat pitching of one target by one sender is already bounded by both of those counters, so the abuse case the finding names is covered. An implementer builds the owning feature's list; the CX prose adds no third enforceable object."
+    },
+    {
+      "findingId": "21-promotion-marketing#013",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "no-real-divergence",
+      "reason": "Both rows are verbatim (21.02.05-embargo-premiere-exclusives.md:58, :64) and they do not conflict once read on their own terms. :58 blocks a second promise of *the same exclusive*; :64 permits two embargoes whose parenthetical names the discriminator itself — 'print exclusive + radio first-play', i.e. different promised rights. The object definition at :26-27 carries that discriminator: 'bound content, lift timestamp, bound parties, the outlet holding the exclusive, and **the terms**'. Uniqueness enforces on the promised exclusive, not on a bare asset key, and :64's 'the earliest lift governs what is actually public' presumes exactly that model. The CX restatement at 21.02-pitching-outreach-cx.md:36 is consistent with both."
+    },
+    {
+      "findingId": "21-promotion-marketing#014",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "tracked-deferral",
+      "reason": "Quotes verified (21.02-pitching-outreach-cx.md:13, :14). Both rows carry an explicit `Medium` value in the map's Confidence column, and the file's own convention is that only High-confidence rows receive a Cross-Cut Details section (CX-01/02/03 at :20ff are High; CX-04/CX-05 are Medium and have none). That convention is stated in the domain file: promotion-marketing-cx.md:334-338 — 'CX-09 and CX-10 (**Medium confidence**) ... their 5-question synthesis is **deferred** to sub-domain drilling.' The unit is also not yet deepened (21.02-pitching-outreach-index.md is a `[BREADTH]`-tier sub-domain), so an open Medium cross-cut is the tree's marked expected state, carried by a visible column, not a silent gap."
+    },
+    {
+      "findingId": "21-promotion-marketing#015",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "tracked-deferral",
+      "reason": "The six markers exist as quoted, and the finding's own evidence supplies the refutation: each names or sits beside a re-targeted Q row with an owner and a live stage (21.02.01:109, 21.02.02:104, 21.02.04:98, 21.02.05:107), and two of the six carry an inline cross-reference as well (21.02.01:67 'see 21.01 Q-01/Q-02'). The stale stage string inside the bracket is a recognised artefact of the re-target convention rather than lost tracking — 21.03.01-media-target-directory.md:106 cites such a marker verbatim inside its live Q row. The finding claims no forced product invention, only that 'three of the six markers do not name that row', which is a navigation cost, not an ambiguity."
+    },
+    {
+      "findingId": "21-promotion-marketing#016",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "21.02.03-press-blog-outreach.md:21 is verbatim and the pointer is indeed imprecise. But the same cell already routes the reader to the right place before the citation — 'A venue pitching local press about a show at their room does exist — and **it lives in 21.08**, where the Operator has full access scoped to their own events' — and the gap is carried with owner and target at promotion-marketing-index.md:160 (Q-10, `/create-prd`) and mirrored at 21.08-event-tour-marketing-index.md Q-03. A reader following the sentence lands in 21.08 regardless of the Q number. No product behaviour is invented and nothing untracked is exposed."
+    },
+    {
+      "findingId": "21-promotion-marketing#017",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "downstream-detail",
+      "reason": "The evidence is also truncated: 21.03.01-media-target-directory.md:60 actually ends '...one artist's outcome exposed **(see 21.03 CX-01 synthesis Q3)**', a cross-reference the finding drops, and that section (21.03-pitch-targets-crm-cx.md:34) is where the mechanism and its rationale are authored. The vision-layer behaviour is fully specified — suppress below a threshold, render 'Not enough data', locked as D-02 at :96 — and only the numeric parameter is open, which is the class this domain explicitly routes downstream (21.02.06:30-31: 'numeric values ... are **design defaults** — behavioural starting points, not architecture'; 21.03.03:74 sets its N at `/write-be-spec`). The adjacent privacy work is already routed: 21.03.01 sends 'GDPR lawful basis ... retention' to `/create-prd-security` (quoted at :106)."
+    },
+    {
+      "findingId": "21-promotion-marketing#018",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "tracked-deferral",
+      "reason": "Markers verified (21.03.01-media-target-directory.md:62; 21.03.02-private-contact-crm.md:53, :56; 21.03.03-pitch-tracking-response-log.md:60). The finding's own citation is the strongest evidence against it: 21.03.01:106 re-targets Q-03 to 'Agent | `/create-prd-security`' while quoting the stale marker verbatim as the tracked record — 'the edge case still reads `[PENDING — /ideate-discover Step 5 deepening]`'. That is the tree deliberately preserving the marker and moving the actionable pointer, which is the documented mechanism, not malformed tracking. The finding names the covering Q rows itself (21.03.01 Q-03, 21.03.02 Q-01, 21.03.03 Q-02), each with an owner and a live stage."
+    },
+    {
+      "findingId": "21-promotion-marketing#019",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "Both child rows are verbatim (21.04-smart-links-presave-attribution-index.md:70; 21.04.01-smart-link-builder.md:128, which is a pure pointer to the first). The finding then quotes the answer: promotion-marketing-index.md:159 records 'RESOLVED — the MoSCoW pass ran and confirmed the row's own suspicion', cites the ledger and D-31's release split, and concludes 'the beachhead is decided and is not this domain'. The parent index is the pipeline-key file downstream stages read first, so the answer sits one file up with citations to `ideation-index.md` § MoSCoW Summary and `moscow-ledger.md`. Stale child rows that a resolved parent already answers are not an ambiguity."
+    },
+    {
+      "findingId": "21-promotion-marketing#020",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "tracked-deferral",
+      "reason": "21.05-paid-promotion-cx.md:12 is verbatim, including its `Medium` Confidence value and the 'unresolved' prose. The absent synthesis section is the file's stated convention rather than an omission — only the High-confidence rows CX-01/CX-02 carry Cross-Cut Details (:18, :42) — and the domain file authors that convention explicitly at promotion-marketing-cx.md:334-338 ('CX-09 and CX-10 (**Medium confidence**) ... their 5-question synthesis is **deferred** to sub-domain drilling'). The row also names its own blocker in place ('modelling it requires claiming a comparative effectiveness we cannot measure (21.04.03 DT-01)'), which points at an already-locked discipline. Marked, visible, and pointed at a decided constraint."
+    },
+    {
+      "findingId": "21-promotion-marketing#021",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "The finding quotes its own refutation. 21.08.02-geo-date-promotion-soft-seat.md:109 reconciles the live edge row in place: 'The \"Ticketing is off-platform → no data, no loop\" edge case above is the *no-connector, no-attestation* case, **not every off-platform date**', and states what changes ('the input, not the existence of the loop'), citing 19.07 D-04 / 19.07.02 / 19.07.04. On the attribution side, 21.08.03-ticket-sale-attribution.md:34-38 already specifies the degraded path in the Behavior section itself — 'If ticketing is off-platform ... this feature degrades to 21.04.03's honest-but-limited click reporting. That is not a bug' — so both branches are specified and neither is invented. Q-01 at :108 is struck through and marked RESOLVED, which is precisely the correction convention the finding says is violated; 'specified degraded-first' is an instruction about emphasis, not a second incompatible behaviour."
+    },
+    {
+      "findingId": "21-promotion-marketing#022",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "tracked-deferral",
+      "reason": "21.08-event-tour-marketing-cx.md:13 is verbatim, and it carries `Medium` in the Confidence column while CX-01/CX-02/CX-03 (all `High`) are the only rows with Cross-Cut Details sections (:19, :42, :59) — the same convention the domain file states at promotion-marketing-cx.md:334-338, where Medium rows' 5-question synthesis is explicitly deferred. The adjacent behaviour is not blank either: CX-02 synthesis Q5 at :57 ('A date added after announce has no baseline and no comparable history — it cannot be assessed by the same rule') and CX-03 synthesis Q5 at :75 ('A date added post-announce needs its links created too') both govern post-announce dates. The reveal-semantics question is flagged, visible and confidence-scored in a sub-domain that is not yet deepened."
+    },
+    {
+      "findingId": "21-promotion-marketing#023",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "tracked-deferral",
+      "reason": "21.08.01-tour-announce-onsale.md:59 is verbatim and the gap is marked, greppable and anchored: the marker itself routes to the owning domain — 'ties to **17's booking states**' — and the What Happens column already states the normative position ('The reveal is a commitment; renegotiating an announced date is a public failure'). Renegotiation state is owned by 17, not by 21, so the vision layer here correctly defers rather than inventing a booking state machine. The stale stage string is the same recognised artefact the tree records elsewhere in its re-target rows (21.03.01-media-target-directory.md:106 quotes such a marker verbatim as the tracked record; 21.08.01:103 and 21.08-event-tour-marketing-index.md:64 both record that Step 5 has run)."
+    }
+  ],
+  "adjustedUnits": [
+    {
+      "unit": "21-promotion-marketing (domain root: promotion-marketing-index.md, promotion-marketing-cx.md, 21.06, 21.07, 21.09)",
+      "applicableCheckpoints": 7,
+      "adjustedPoints": 0.5
+    },
+    {
+      "unit": "21.01-release-campaign-planner",
+      "applicableCheckpoints": 6,
+      "adjustedPoints": 0
+    },
+    {
+      "unit": "21.02-pitching-outreach",
+      "applicableCheckpoints": 6,
+      "adjustedPoints": 0
+    },
+    {
+      "unit": "21.03-pitch-targets-crm",
+      "applicableCheckpoints": 6,
+      "adjustedPoints": 0
+    },
+    {
+      "unit": "21.04-smart-links-presave-attribution",
+      "applicableCheckpoints": 6,
+      "adjustedPoints": 0
+    },
+    {
+      "unit": "21.05-paid-promotion",
+      "applicableCheckpoints": 6,
+      "adjustedPoints": 0
+    },
+    {
+      "unit": "21.08-event-tour-marketing",
+      "applicableCheckpoints": 6,
+      "adjustedPoints": 0
+    }
+  ]
+}
