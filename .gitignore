@@ -51,6 +51,13 @@ playwright-report/
 Thumbs.db
 desktop.ini
 
+# === Generated memory indexes ===
+# Regenerated from .memory/raw/ by .memory/pipeline/compile.mjs on every compile.
+# semantic-index.json reached 154 MB and exceeded GitHub's 100 MB per-file limit,
+# which silently blocked every push for 25 commits. Derived artifacts, never sources.
+.memory/schema/semantic-index.json
+.memory/schema/chunks.jsonl
+
 # === Editor ===
 .vscode/*
 !.vscode/extensions.json
