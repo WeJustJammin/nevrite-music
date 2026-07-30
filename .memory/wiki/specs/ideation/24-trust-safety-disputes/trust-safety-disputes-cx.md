@@ -60,7 +60,9 @@ feeder into this pipe.
 1. **Shared state conflict**: intake owns the case; enforcement owns the sanction; both reference **one**
    structured decision record whose schema is fixed by Art 17's required fields — which is why it must exist
    before the first sanction, not after the first regulator. The record is authored progressively (queue
-   captures cited rule + evidence ref + reviewer + concurrence; enforcement seals it) and is never
+   captures cited rule + evidence ref + reviewer + concurrence — the last of these
+   optional-with-a-reason since the concurrence requirement was scale-gated, never blank, 24.02.03 D-08;
+   enforcement seals it) and is never
    double-authored. Concurrent sanctions on one object serialise via the enforcement-state machine (409 on
    conflict, 24.02.03 → 24.02.01).
 2. **Trigger chain**: report → dedup → route → review → decide → sanction + SoR (atomic) → appeal window.
@@ -453,6 +455,7 @@ case-scoped, read-only locker access: a privileged read that never publishes.
 ### Constrained by
 - [[decisions.md#d-02|D-02]]
 - [[decisions.md#d-01|D-01]]
+- [[decisions.md#d-08|D-08]]
 - [[decisions.md#d-18|D-18]]
 - [[decisions.md#d-03|D-03]]
 - [[decisions.md#d-13|D-13]]

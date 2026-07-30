@@ -1,0 +1,34 @@
+{
+  "shard": "22-analytics-market-intelligence",
+  "generated": "2026-07-30",
+  "findingsProcessed": 1,
+  "mechanical": 1,
+  "owner": 0,
+  "items": [
+    {
+      "findingId": "22-analytics-market-intelligence#001",
+      "unit": "22.01-source-connections-ingestion",
+      "classification": "mechanical",
+      "canonicalSource": "22.01.03-ingestion-health-gaps-freshness.md:49-58 (the freshness state machine: \"Cadence = the source's declared expected sync interval (DSP daily-batch ≈ 24h ...)\"; \"| `fresh` | Last successful sync age ≤ 1× cadence |\"; \"| `stale` | 1× < age ≤ 3× cadence, **no** auth failure recorded |\"), corroborated by 22.01.01-dsp-account-connection-sync.md:48 which itself names 22.01.03 as the classifier, and by 22.01-source-connections-ingestion-cx.md:25-26 \"the connection emits per-attempt outcomes (ok / auth-failed / rate-limited / source-error); health aggregates them into a per-source freshness state and a named gap range.\"",
+      "whyMechanical": "One side is the numbered, owning state machine in the file whose entire subject is freshness (22.01.03, [DEEP]); the other is a restatement inside 22.01.01 that disclaims ownership of the classification in the same sentence that then emits its own thresholds. The CX-01 relationship is explicitly one-way derivation, so 22.01.01 has no standing to emit classification thresholds at all. 26h/50h and the state name `healthy` appear nowhere else in domain 22 — no downstream consumer depends on them, so this is orphaned drift, not a second authority.",
+      "summary": "22.01.01 emitted its own freshness thresholds (healthy < 26h, stale 26h–50h) and a state name `healthy` that is not in 22.01.03's five-state enum, contradicting the state machine it names as owner. Rewrote 22.01.01 to emit only the timestamp and a declared 24h cadence, deferring classification to 22.01.03, and renamed every `healthy` state token to `fresh`.",
+      "fixApplied": "1. Rewrote the 'Freshness cadence' paragraph (22.01.01:46-57): the feature now emits `last_successful_sync` plus a **declared cadence of 24h** for DSP daily-batch sources and explicitly does not restate thresholds, citing 22.01-source-connections-ingestion-cx.md#CX-01 for the one-way derivation; it states 22.01.03's own values (`fresh` ≤ 1× cadence, `stale` 1×–3×, named gap past 3×) rather than competing ones. Auth failure is re-framed as an emitted `auth-failed` outcome that 22.01.03 classifies as `broken` regardless of age — which is exactly 22.01.03's `broken` entry condition. 2. Replaced all five normative `healthy` state tokens with `fresh`: happy-path step 7 (now cites 22.01.03's state machine), the two-delegated-holders edge row (now 'its next successful sync returns the connection to `fresh`', matching 22.01.03's `broken` exit condition verbatim), the partial-backfill row, the renamed-entity row, and the Populated States row (now '≥1 live canonical connection ... its freshness state is 22.01.03's to compute and render' — deliberately not asserting a fresh/stale/degraded boundary neither file states). Unbackticked colloquial 'healthy connection' prose was left alone; the tree uses it that way in 22.01.02:66,77 and 22.01.03:132 without it being a state token. 3. Added Q-03 to 22.01.01's Open Questions for the residual sub-question the deleted 26h implied but nothing settles: whether the declared daily cadence carries a delivery-jitter margin. Owner User, deferred to `/create-prd-compile`, cross-referenced to 22.01.03 Q-03 where the sibling threshold constants already sit. No Q-number collision — nothing in the tree references a 22.01.01 Q-03.",
+      "residualQuestion": {
+        "id": "22.01.01 Q-03",
+        "question": "Does the declared DSP daily cadence carry a delivery-jitter margin — a flat 24h, or 24h plus an allowance for DSPs that publish a 'daily' batch a few hours late?",
+        "owner": "User",
+        "deferredTo": "/create-prd-compile",
+        "note": "Rule shape is not open (22.01.03 owns fresh ≤ 1× / stale 1×–3× and 22.01.01 only declares the multiplicand); only the declared constant is."
+      },
+      "filesChanged": [
+        "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/22-analytics-market-intelligence/22.01-source-connections-ingestion/22.01.01-dsp-account-connection-sync.md"
+      ],
+      "canonicalSourceUnchanged": true,
+      "verification": {
+        "tableColumnCounts": "unchanged — zero mismatches across all tables in the edited file",
+        "residualDrift": "grep for `healthy` (backticked), 26h, 50h across domain 22 returns zero hits",
+        "contradictionCheck": "every value now stated in 22.01.01 (24h cadence, fresh ≤ 1×, stale 1×–3×, gap past 3×, broken on auth failure, re-auth → next successful sync → fresh) is quoted from 22.01.03:49-58; no new value invented"
+      }
+    }
+  ]
+}

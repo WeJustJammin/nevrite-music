@@ -25,7 +25,7 @@ member-wanted reviewer-conflict (CX-10).
 | CX-07 | [04.02 Discovery, Matching & Alerts](./04.02-discovery-matching-alerts/) | [04.05 Outcome, Response & Handoff](./04.05-outcome-response-handoff/) | **The domain's anti-rot loop (DT-03).** The board renders every listing's response-reputation signal and its `filled/closed` landing state; the close-out obligation is what keeps the board from filling with dead ads — the incumbents' cause of death | Musician, Producer, Operator, Fan (read-only) | High | 04.02.01→04.05.01 (DT-03, D-04); 04.02.01→04.05.02 (D-13); 04.02.04→04.05 (D-11) |
 | CX-08 | [04.03 Submission & Audition](./04.03-submission-audition/) | [04.05 Outcome, Response & Handoff](./04.05-outcome-response-handoff/) | A submission *creates* the close-out obligation, and 04.03.01 D-05 (one submission may carry two roles) makes the obligation's arithmetic **two dispositions owed per applicant**; the applicant-pipeline mirror is the source of truth for "did it send?" | Musician, Producer, Operator | High | 04.03.01→04.05.01 (DT-01, D-05); 04.03.01→04.05.04 (D-03) |
 | CX-09 | [04.06 Band & Member Wanted](./04.06-band-member-wanted.md) | [04.01 Posting & Targeting](./04.01-opportunity-posting-targeting/) | Member-wanted is why the compensation gate must be **type-scoped** — a global gate blocks the most common amateur post; the collision is sharper than breadth had it: member-wanted comp can flow *from* the applicant (rehearsal-room chip-in), which the gate's original D-02 called unrepresentable | Musician, Producer | High | 04.01 CX-04; 04.06 DT-01; 04.01.03↔04.06 D-12 collision |
-| CX-10 | [04.06 Band & Member Wanted](./04.06-band-member-wanted.md) | [04.03 Submission & Audition](./04.03-submission-audition/) | Band submissions: to a band, from a band, reviewed by band members who may themselves want the chair — the sharpest consumer of the decider-cannot-be-candidate rule; the guitarist reviewing applicants for a singer they'd rather be | Musician, Producer | High | 04.03.01→04.06 (DT-09); 04.01.01 D-07 |
+| CX-10 | [04.06 Band & Member Wanted](./04.06-band-member-wanted.md) | [04.03 Submission & Audition](./04.03-submission-audition/) | Band submissions: to a band, from a band, reviewed by band members who may themselves want the chair — the sharpest consumer of the decider-cannot-be-candidate rule; the guitarist reviewing applicants for a singer they'd rather be — and applying **costs them the review seat outright**, it does not merely cost them the vote | Musician, Producer | High | 04.03.01→04.06 (DT-09); **04.03.01 D-10** (mutual exclusion, one-way); **04.04.01 D-11** (total concealment, overrides 01); 04.01.01 D-07 |
 | CX-11 | [04.07 Open Calls](./04.07-open-calls-festival-showcase-competition.md) | [04.04 Triage, Shortlist & Decisioning](./04.04-triage-shortlist-decisioning/) | Batch/portfolio review inverts rolling triage; the 25-slot soft ceiling routes here — past it, a post is a hiring round the spine deliberately lacks the batch tooling for | Operator, Musician | Medium | 04.07 DT-03; 04.01.01→04.07 (25-slot ceiling); depends on 18 |
 | CX-12 | [04.04.03 Offer](./04.04-triage-shortlist-decisioning/) · [04.05.03 Handoff](./04.05-outcome-response-handoff/) · [04.06 Member Wanted](./04.06-band-member-wanted.md) | **09 Rights & Ownership** ([../09-rights-ownership/](../09-rights-ownership/)) _(cross-level)_ | The **split-capture trigger** recurs at three independent points — the cross-cut signature. This domain owns the trigger + timing; 09 owns the instrument. Routed to the global CX; detail in the cross rows | Musician, Producer | High | 04.04.03 DT-02; 04.05.03 DT-02; 04.06 DT-02; domain D-06 |
 
@@ -296,13 +296,14 @@ applicant-side-fee door the anti-fee thesis (D-03) forecloses everywhere else.
 **Relationship**: New Step 6 seam. Band submissions are polymorphic in a way the spine's
 single-applicant model strains: a submission **to** a band, **from** a band (04.03.01 D-04 submit
 authority), reviewed **by** band members who may themselves want the chair. This is the sharpest real
-case of the decider-cannot-be-candidate rule (DT-09): a band posts for a singer and the guitarist,
+case of the decider-cannot-be-candidate rule, and DT-09 is that rule in its widest form — what goes
+is the whole **review** seat, not only the vote: a band posts for a singer and the guitarist,
 who is a reviewer, would rather be the singer — making them a reviewer of their own competition.
 Everything 04.03.01 decides about identity keying (D-05), supersede (D-02/D-11) and withdrawal (D-12)
 must hold for a band-anchored submission or the polymorphism is a lie.
 
 **Role scoping**:
-- **Musician**: the applicant and the conflicted reviewer are both Musicians.
+- **Musician**: the applicant and the member who must trade the review seat for the chair are both Musicians.
 - **Producer**: project bands; the member-who-also-engineers.
 - **Operator / Fan**: no access.
 
@@ -312,11 +313,20 @@ must hold for a band-anchored submission or the polymorphism is a lie.
    (D-05) apply here too.
 2. **Trigger chain**: band posts → members become reviewers → conflict detection (needs decider field,
    CX-05) excludes the wanting member from deciding their own chair.
-3. **Permission intersection**: Review access is entity-inherited; commit authority is strictly
-   narrower; a member wanting the chair keeps review but loses decide on that slot.
+3. **Permission intersection**: Review access is entity-inherited and commit authority is strictly
+   narrower — but neither survives the member becoming a candidate. **04.03.01 D-10 is authoritative**:
+   review access and submission on the same post are *mutually exclusive*, applicant-side and one-way.
+   **04.04.01 D-11 is authoritative on the queue side**: "a candidate can never triage — or see — a
+   queue they are a candidate in", and that exclusion overrides any grant from 01. So the guitarist
+   does not keep review and lose decide; they trade the review seat for the chair, and the queue goes
+   *absent*, not greyed out — concealment is total because reading the competition's evidence is the
+   worse harm and a greyed-out card confirms who else applied.
 4. **Notification fan-out**: A band submission notifies the band's alert delegates (01, DT-04), deduped per human.
-5. **State transition conflict**: A reviewing member self-nominating mid-review — must convert them to
-   candidate and strip their decide right on that slot atomically, or they vote themselves in.
+5. **State transition conflict**: A reviewing member self-nominating mid-review — converting them to a
+   candidate and revoking their **review** access on that post are one atomic act (04.03.01 D-10,
+   04.04.01 D-11), not a narrowing of their decide right on the slot. The choice is put to them before
+   the submission is sent — "Applying means you can't review this post. Continue?" — and it is one-way,
+   because a reversible revocation is not a control: they would read the queue, revert, and review.
 
 ### CX-11: Open Calls ↔ Triage
 
@@ -378,7 +388,7 @@ and to `/create-prd-architecture` for the 04↔09 seam. Full synthesis lives in 
 - [[decisions.md#d-05|D-05]]
 - [[decisions.md#d-04|D-04]]
 - [[decisions.md#d-11|D-11]]
-- [[decisions.md#d-06|D-06]]
 - [[decisions.md#d-10|D-10]]
+- [[decisions.md#d-06|D-06]]
 - [[decisions.md#d-14|D-14]]
 - [[decisions.md#d-16|D-16]]

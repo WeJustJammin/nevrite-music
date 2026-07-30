@@ -52,7 +52,7 @@ email tool) fails silently at exactly the fans it most wants to find.
 **Synthesis questions answered**:
 1. **Shared state conflict**: [20.01.01](./20.01-fan-graph-owned-audience/20.01.01-unified-fan-record.md) owns the fan record; segmentation is a pure reader. No merge conflict — the write direction is one-way.
 2. **Trigger chain**: A new observation (purchase, scan) → fan record update → segments re-resolve on next read (segments are live, not materialised). No rollback surface — reads are idempotent. When the score recompute fails, segments **resolve on last-good score, never null**, or a saved audience silently empties.
-3. **Permission intersection**: A segment's *contactable* count is the intersection of its members with consent state (CX-02/CX-03); *counting/record-view* is unfloored, but individually-targeted send/export is floored by the k-anonymity rule escalated to domain 24.
+3. **Permission intersection**: A segment's *contactable* count is the intersection of its members with consent state (CX-02/CX-03); *counting/record-view* is unfloored, but individually-targeted send/export is floored by the k-anonymity rule escalated to domain 24. The one carve-out is geographic rendering: the demand map suppresses sparse cells ([20.07](./20.07-fan-demand-show-requests.md) D-05, restated at CX-10) — a count of a city is not a disclosure, a pin on a hamlet is.
 4. **Notification fan-out**: None on this edge — segmentation is read-only over the graph.
 5. **State transition conflict**: Identity resolution is write-then-resolve (D-05); a segment read during a pending merge sees the pre-merge fragments. Acceptable — segments are advisory snapshots, not transactional gates.
 
@@ -252,7 +252,7 @@ the demand product degrades to a petition.
 **Synthesis questions answered**:
 1. **Shared state conflict**: The demand map reads the scored fan graph (CX-01) plus explicit requests; it owns the request object, segmentation owns the score.
 2. **Trigger chain**: Requests + scored fans + geo → weighted map → (cross-domain) tour routing in 18. Read-only over the graph; no rollback surface.
-3. **Permission intersection**: Individually-targeted reads inherit the k-anonymity floor (domain 24); aggregate geo-density is unfloored map data.
+3. **Permission intersection**: Individually-targeted reads inherit the k-anonymity floor (domain 24) — and so does the map's aggregate geo-density, which is *not* unfloored data. [20.07](./20.07-fan-demand-show-requests.md) D-05 puts the floor on the map itself: a sparse cell is suppressed rather than drawn, because "3 fans in Inverness" is a disclosure of three nameable people's whereabouts to an artist, not a statistic. The floor lands on the **geographic rendering only** — segment counting and the fan record view stay unfloored (CX-01 above; [20.02.01](./20.02-segmentation-superfan-intelligence/20.02.01-segment-builder.md) D-04), which is the same line D-05 draws when it floors the map and not the record.
 4. **Notification fan-out**: None on this edge — the map is analytical; the alert output is CX-11.
 5. **State transition conflict**: A map read mid-routing is a live-graph snapshot. Acceptable — tours are not booked per-second.
 
@@ -405,8 +405,8 @@ passive render.
 - [[decisions.md#d-07|D-07]]
 - [[decisions.md#d-03|D-03]]
 - [[decisions.md#d-05|D-05]]
+- [[decisions.md#d-04|D-04]]
 - [[decisions.md#d-18|D-18]]
 - [[decisions.md#d-02|D-02]]
 - [[decisions.md#d-06|D-06]]
-- [[decisions.md#d-04|D-04]]
 - [[decisions.md#d-15|D-15]]

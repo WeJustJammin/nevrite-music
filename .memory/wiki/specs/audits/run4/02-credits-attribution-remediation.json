@@ -1,0 +1,96 @@
+{
+  "shard": "02-credits-attribution",
+  "generated": "2026-07-30",
+  "findingsProcessed": 1,
+  "items": [
+    {
+      "findingId": "02-credits-attribution#001",
+      "unit": "02.02-session-capture",
+      "classification": "mechanical",
+      "summary": "02.02.03 called the contributor's own-row tap at the close prompt 'the attestation', contradicting 02.04.01 D-11 (the attester may never be the credited party; excluded from the addressable set) and 02.04.02 D-03/D-08 (self-assertion never raises the rung; an attestation counts only if the attester is neither asserter nor credited party). 02.04.01 owns 'who may answer'; 02.02.03 owns only 'when the in-room ask fires'. The drifted label was corrected in five places across 02.02.03 plus the two CX restatements, a new D-17 records the corrected rule locally, and the genuine residual product question was left as tracked Q-06.",
+      "canonicalSource": "02.04-attestation-credit-confidence/02.04.01-attestation-request-confirmation.md:251 (D-11) — \"The attester may never be the credited party — including through a band entity they are a member of | Self-attestation is self-assertion, and `02.04.02` D-03 says self-assertion never raises the tier. Excluded from the addressable set rather than rejected at answer time.\"; reinforced by 02.04.01:12 (\"What this feature owns: the attestation record and the request/answer cycle — who may ask, who may answer, what the answer means... What it does not own: *when* the in-room ask fires (`02.02.03`)\"), 02.04.01:154 (\"Their own rows are excluded (D-11) | Their own row shows \\\"waiting on others\\\", never a self-confirm control\"), 02.04.02:52 (rung 5 gate: \"≥1 co-present party, who is neither the asserter nor the credited party\"), 02.04.02:204 (D-08), 02.04.02:199 (D-03).",
+      "whyMechanicalNotOwner": "Four independent signals put the canonical answer on 02.04.01's side, and none of them is a summary: (1) 02.04.01:12 is an explicit ownership declaration — it owns 'who may answer', 02.02.03 owns only 'when the ask fires', so 02.02.03's 'This tap is the attestation (`02.04.01`)' is a cross-reference to the owning file that misstates it; (2) the sub-domain's OWN synthesis file already sides with 02.04.01 — 02.02-session-capture-cx.md:67, 'a contributor confirming *their own* row is a self-assertion, not corroboration'; (3) 02.02.03 already applies the rule elsewhere in its own text — line 126 ('Multi-hyphenate: the Producer also played... They cannot raise their own tier by asserting harder') and DT-11 ('a person confirming to themselves what they just typed — it raises no tier (self-asserted stays self-asserted, `02.04.02`)'); (4) no value had to be invented — 'the own-row tap raises no rung' is a direct entailment of two numbered decisions in the owning file (02.04.02 D-03 and D-08), not a new product rule. The finding's stronger claim — that rungs 5 and 6 are 'structurally unreachable from the capture flow' — is an overstatement and was NOT accepted: unconfirmed rows already hand off to 02.04.01's request cycle (02.02.03 happy path 7), whose addressable set is the session roll minus the credited party (02.04.01:126), and rung 6's ≤7 d lag window stays open there. What is genuinely open is narrower and is a product judgement, so it was left as a tracked question rather than answered.",
+      "filesChanged": [
+        "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/02-credits-attribution/02.02-session-capture/02.02.03-session-close-capture-prompt.md",
+        "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/02-credits-attribution/credits-attribution-cx.md",
+        "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/02-credits-attribution/02.02-session-capture/02.02-session-capture-cx.md"
+      ],
+      "edits": [
+        {
+          "file": "02.02-session-capture/02.02.03-session-close-capture-prompt.md",
+          "location": "Role Lens, Musician row (line 20)",
+          "before": "This tap is the attestation (`02.04.01`) that separates WeJammin's graph from every self-asserted database.",
+          "after": "**That tap is a confirmation, not an attestation** (D-17): `02.04.01` D-11 excludes the credited party from attesting their own credit, and `02.04.02` D-03 says self-assertion never raises the rung. It still earns its place — it carries the inline correction the async chase never collects (DT-06), it records the subject's agreement beside the Producer's assertion, and across the set the taps are the mutual presence corroboration `02.02.04` rests on (sub-domain CX-04). What separates WeJammin's graph from every self-asserted database is the second, optional and unchecked line — the reciprocal ask (D-08) — because there the tapper is neither the asserter nor the credited party, which is the only shape `02.04.02` rung 5 accepts.",
+          "note": "The 'separates WeJammin's graph from every self-asserted database' claim was relocated onto the reciprocal line rather than deleted — that is the one tap on the card which satisfies 02.04.02 rung 5's gate. Three sourced values were kept for the own-row tap: the correction (DT-06), the recorded agreement, and set-level presence corroboration (02.02-session-capture-cx.md:67). No new value invented."
+        },
+        {
+          "file": "02.02-session-capture/02.02.03-session-close-capture-prompt.md",
+          "location": "Behavior, attestation-attachment paragraph (line 68)",
+          "before": "**Attestations attach to a claim, not to a row.** ... the attestation does not transfer ...",
+          "after": "**A tap attaches to a claim, not to a row** — confirmation and reciprocal attestation alike. ... the tap does not transfer ...",
+          "note": "Noun generalised so D-07's rule still covers the own-row tap now that it is not an attestation. The rule itself is unchanged."
+        },
+        {
+          "file": "02.02-session-capture/02.02.03-session-close-capture-prompt.md",
+          "location": "Happy Path step 6 (line 97)",
+          "before": "6. Confirmed claims become session-captured + attested credits (`02.01.01`, `02.04.02`); every other row still commits, at producer-asserted tier",
+          "after": "6. Confirmed claims commit as session-captured credits (`02.01.01`, `02.04.02`) — the own-row tap is a confirmation, never an attestation, and lifts no rung by itself (D-17, `02.04.01` D-11); what it commits is the subject's agreement and any correction riding with it. The reciprocal line's taps (D-08) are the only attestations the prompt itself collects; every other row still commits, at producer-asserted tier",
+          "note": "The trailing 'producer-asserted tier' clause was deliberately left untouched — restating it as a rung number would have been a re-decision, not a fix."
+        },
+        {
+          "file": "02.02-session-capture/02.02.03-session-close-capture-prompt.md",
+          "location": "Edge Cases, 'Contributor taps, then the Producer edits that row' (line 115)",
+          "before": "The attestation does not transfer — it stays on the claim that was shown (D-07).",
+          "after": "The tap does not transfer — confirmation or reciprocal attestation, it stays on the claim that was shown (D-07).",
+          "note": "3-column table, column count preserved."
+        },
+        {
+          "file": "02.02-session-capture/02.02.03-session-close-capture-prompt.md",
+          "location": "Deep Think DT-05 (line 171)",
+          "before": "Every contributor's tap attests their *own* row. Nobody's tap attests \"produced by X\".",
+          "after": "Every contributor's tap only *confirms* their own row, and `02.04.01` D-11 bars a credited party from attesting their own credit at all — so the own-row taps attest nothing (D-17), and nobody's tap attests \"produced by X\".",
+          "note": "DT-05's conclusion is not weakened by this — it is strengthened. Its rejection ('the trust broker cannot broker their own credit') and its derived fix (D-08's reciprocal line) both survive intact, and the reciprocal line is now the card's only attestation rather than one of two kinds. 4-column table, column count preserved."
+        },
+        {
+          "file": "02.02-session-capture/02.02.03-session-close-capture-prompt.md",
+          "location": "Decisions D-07 (line 208)",
+          "before": "| D-07 | An attestation attaches to the **claim shown**, not to the row. ... |",
+          "after": "| D-07 | A tap — confirmation or reciprocal attestation — attaches to the **claim shown**, not to the row. ... |",
+          "note": "3-column table, column count preserved."
+        },
+        {
+          "file": "02.02-session-capture/02.02.03-session-close-capture-prompt.md",
+          "location": "Decisions — new D-17",
+          "after": "| D-17 | **A contributor's own-row tap is a confirmation, never an attestation, and raises no rung on its own.** The only attestation this prompt collects is the reciprocal line (D-08) | Corrects a drift, not a design: `02.04.01` owns who may answer and its D-11 excludes the credited party from the addressable set — \"their own row shows *waiting on others*, never a self-confirm control\" — while `02.04.02` D-03/D-08 make self-assertion structurally incapable of moving the rung. The sub-domain's own synthesis already read it this way (CX-04: \"a contributor confirming *their own* row is a self-assertion, not corroboration\"), as do this file's own DT-11 and the multi-hyphenate edge case. The tap keeps three real jobs — the inline correction (DT-06), the subject's agreement recorded beside the Producer's assertion, and the set's mutual presence corroboration feeding `02.02.04`. What it does not do is put a Musician's credit at rung 5; that is Q-06. |",
+          "note": "Records the canonical rule locally and makes the correction greppable. Decisions table now D-01..D-17, 3 columns, verified."
+        },
+        {
+          "file": "02.02-session-capture/02.02.03-session-close-capture-prompt.md",
+          "location": "Open Questions — new Q-06 (appended after Q-05)",
+          "after": "| Q-06 | **[OWNER]** **Should the close prompt harvest cross-contributor attestations, or keep routing them to `02.04.01`'s request cycle?** D-17 leaves the prompt collecting exactly one attestation — the reciprocal line on the Producer's row — because every other tap is a contributor confirming their own row, which `02.04.01` D-11 excludes. A Musician's credit therefore leaves the room session-logged, and `02.04.02` rung 5 is reached only once a co-present party is *asked*, through `02.04.01`'s request cycle (rung 6's ≤ 7 d lag window is still open there, but the in-room conversion advantage is spent). Adding one line to each card — \"did <other contributor> play drums?\" — would harvest those attestations free at the single moment they convert. It costs the three things this design rests on: D-04's one-card-one-tap-no-scroll rule, `02.02.01` D-09's rule that a contributor sees only the roll entries overlapping their own, and `02.04.01` DT-04's insistence that a per-session confirm \"is not an act anyone can honestly perform\". **Recommendation: no in v1** — the private one-card design is what makes the tap land at 4am, and the chase already reaches rung 6 inside 7 days. Not a gap in the rules; a product call on what the in-room wedge is worth. | User | `/create-prd` |",
+          "note": "This is the residual sub-question the mechanical fix exposes. Left tracked with an owner (User) and a deferral target (`/create-prd`) per the tree's convention. 4-column table, column count preserved."
+        },
+        {
+          "file": "credits-attribution-cx.md",
+          "location": "CX-02, Relationship + Evidence columns (line 17)",
+          "before": "The in-room tap at close *is* the attestation — same act, best conversion moment; ... | Evidence: 02.04.01 DT-03; 02.02.03 D-01; 02.02.02→02.04.02 (DT-04, DT-10)",
+          "after": "The in-room **reciprocal** tap at close *is* an attestation — same act, best conversion moment — but a contributor's own-row tap is not one and lifts no rung (`02.04.01` D-11, `02.04.02` D-03; `02.02.03` D-17); ... | Evidence: 02.04.01 DT-03, D-11; 02.02.03 D-01, D-08, D-17; 02.02.02→02.04.02 (DT-04, DT-10)",
+          "note": "7-column table, column count preserved and verified."
+        },
+        {
+          "file": "02.02-session-capture/02.02-session-capture-cx.md",
+          "location": "CX-04, Relationship + Evidence columns (line 13)",
+          "before": "Confirmation taps at the prompt *are* co-sign corroboration — the strongest honest signal, collected free",
+          "after": "Confirmation taps at the prompt *are* co-sign corroboration of **presence** — the strongest honest signal, collected free. Of presence and not of the contribution: an own-row tap is a self-assertion (below, and `02.02.03` D-17), so the co-sign lives in the *set*, never in the individual tap",
+          "note": "Header row was ambiguous where its own body (line 67) was already precise; scoped to match. 7-column table, column count preserved."
+        }
+      ],
+      "notEdited": [
+        "02.04-attestation-credit-confidence/02.04.01-attestation-request-confirmation.md — canonical source, untouched.",
+        "02.04-attestation-credit-confidence/02.04.02-provenance-tiers-credit-confidence.md — canonical source, untouched.",
+        "02.02-session-capture/02.02-session-capture-cx.md:67 — already correct; left verbatim and now cited by D-17."
+      ],
+      "verification": "All seven tables in 02.02.03, all three in credits-attribution-cx.md, and both in 02.02-session-capture-cx.md re-parsed after editing: column counts unchanged, no row mismatches. Grep for the drifted phrasings ('tap is the attestation', 'attests their *own*', 'attested credits') returns zero hits across the shard. No edited line asserts anything 02.04.01 D-11, 02.04.02 D-03 or 02.04.02 D-08 does not already state."
+    }
+  ]
+}

@@ -14,7 +14,7 @@
 | # | Source | Target | Relationship | Roles Affected | Confidence | Evidence |
 |---|--------|--------|--------------|----------------|------------|----------|
 | CX-01 | [02.02 Session Capture](./02.02-session-capture/02.02-session-capture-index.md) | [02.01 Credit Graph & Discography](./02.01-credit-graph-discography/02.01-credit-graph-discography-index.md) | The close prompt commits working session data into immutable credit records; the commit is the mutable→fact boundary, and visibility intent (incl. permanent ghosting) is captured *at* the contribution | Musician, Producer, Operator | High | 02.02.03→02.01.01; 02.02.02→02.01.05 (D-12/DT-07); 02.01.01 happy path |
-| CX-02 | [02.02 Session Capture](./02.02-session-capture/02.02-session-capture-index.md) | [02.04 Attestation & Confidence](./02.04-attestation-credit-confidence/02.04-attestation-credit-confidence-index.md) | The in-room tap at close *is* the attestation — same act, best conversion moment; the log also supplies asserter identity + assertion timing, tier inputs that exist nowhere else | Musician, Producer, Operator | High | 02.04.01 DT-03; 02.02.03 D-01; 02.02.02→02.04.02 (DT-04, DT-10) |
+| CX-02 | [02.02 Session Capture](./02.02-session-capture/02.02-session-capture-index.md) | [02.04 Attestation & Confidence](./02.04-attestation-credit-confidence/02.04-attestation-credit-confidence-index.md) | The in-room **reciprocal** tap at close *is* an attestation — same act, best conversion moment — but a contributor's own-row tap is not one and lifts no rung (`02.04.01` D-11, `02.04.02` D-03; `02.02.03` D-17); the log also supplies asserter identity + assertion timing, tier inputs that exist nowhere else | Musician, Producer, Operator | High | 02.04.01 DT-03, D-11; 02.02.03 D-01, D-08, D-17; 02.02.02→02.04.02 (DT-04, DT-10) |
 | CX-03 | [02.03 Claiming & Seeding](./02.03-claiming-cold-start-seeding/02.03-claiming-cold-start-seeding-index.md) | [02.04 Attestation & Confidence](./02.04-attestation-credit-confidence/02.04-attestation-credit-confidence-index.md) | Imported credits are permanently tier-capped; claiming verifies the *person*, never the *fact* | Musician, Producer, Operator | High | 02.03 D-01; 02.03.02 D-01 |
 | CX-04 | [02.02 Session Capture](./02.02-session-capture/02.02-session-capture-index.md) | [02.03 Claiming & Seeding](./02.03-claiming-cold-start-seeding/02.03-claiming-cold-start-seeding-index.md) | Roll call creates unclaimed shells; the claim inbox is where they become users — the growth loop's two halves, joined by a broken notification channel | Musician, Producer | High | 02.02.01 DT-03; 02.02.01→02.03.02; 02.03.02 DT-01 |
 | CX-05 | [02.04 Attestation & Confidence](./02.04-attestation-credit-confidence/02.04-attestation-credit-confidence-index.md) | [02.01 Credit Graph & Discography](./02.01-credit-graph-discography/02.01-credit-graph-discography-index.md) | The tier renders per discography line (viewer-relative) and weights every traversal edge; unweighted traversal is the laundering exploit | All four | High | 02.01.02→02.04.02; 02.01.03 D-01; 02.04.02 DT-01, DT-03 |
@@ -365,22 +365,22 @@
 
 ### Constrained by
 - [[decisions.md#d-12|D-12]]
+- [[decisions.md#d-11|D-11]]
+- [[decisions.md#d-03|D-03]]
+- [[decisions.md#d-17|D-17]]
 - [[decisions.md#d-01|D-01]]
+- [[decisions.md#d-08|D-08]]
 - [[decisions.md#d-07|D-07]]
 - [[decisions.md#d-02|D-02]]
-- [[decisions.md#d-03|D-03]]
 - [[decisions.md#d-04|D-04]]
 - [[decisions.md#d-06|D-06]]
-- [[decisions.md#d-11|D-11]]
 - [[decisions.md#d-05|D-05]]
 - [[decisions.md#d-14|D-14]]
 - [[decisions.md#d-19|D-19]]
 - [[decisions.md#d-22|D-22]]
 - [[decisions.md#d-20|D-20]]
-- [[decisions.md#d-08|D-08]]
 - [[decisions.md#d-09|D-09]]
 - [[decisions.md#d-10|D-10]]
-- [[decisions.md#d-17|D-17]]
 - [[decisions.md#d-18|D-18]]
 - [[decisions.md#d-23|D-23]]
 - [[decisions.md#d-24|D-24]]

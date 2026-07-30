@@ -1,7 +1,7 @@
 {
-  "builtAt": "2026-07-30T09:16:18.894Z",
+  "builtAt": "2026-07-30T16:41:26.466Z",
   "nodeCount": 1243,
-  "edgeCount": 8855,
+  "edgeCount": 8873,
   "nodes": [
     {
       "id": "audit:audits/audit-scope",
@@ -12260,6 +12260,12 @@
     },
     {
       "from": "ideation:ideation/01-identity-profiles-organizations/01.06-portfolio-media-epk/01.06.03-epk-generation-sharing",
+      "to": "decision:d-02",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/01-identity-profiles-organizations/01.06-portfolio-media-epk/01.06.03-epk-generation-sharing",
       "to": "decision:d-01",
       "type": "constrained_by",
       "source": "decision-ref"
@@ -12267,12 +12273,6 @@
     {
       "from": "ideation:ideation/01-identity-profiles-organizations/01.06-portfolio-media-epk/01.06.03-epk-generation-sharing",
       "to": "decision:d-05",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "ideation:ideation/01-identity-profiles-organizations/01.06-portfolio-media-epk/01.06.03-epk-generation-sharing",
-      "to": "decision:d-02",
       "type": "constrained_by",
       "source": "decision-ref"
     },
@@ -13238,6 +13238,12 @@
     },
     {
       "from": "ideation:ideation/02-credits-attribution/02.02-session-capture/02.02-session-capture-cx",
+      "to": "decision:d-17",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/02-credits-attribution/02.02-session-capture/02.02-session-capture-cx",
       "to": "decision:d-09",
       "type": "constrained_by",
       "source": "decision-ref"
@@ -13496,6 +13502,24 @@
     },
     {
       "from": "ideation:ideation/02-credits-attribution/02.02-session-capture/02.02.03-session-close-capture-prompt",
+      "to": "decision:d-17",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/02-credits-attribution/02.02-session-capture/02.02.03-session-close-capture-prompt",
+      "to": "decision:d-11",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/02-credits-attribution/02.02-session-capture/02.02.03-session-close-capture-prompt",
+      "to": "decision:d-03",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/02-credits-attribution/02.02-session-capture/02.02.03-session-close-capture-prompt",
       "to": "decision:d-08",
       "type": "constrained_by",
       "source": "decision-ref"
@@ -13520,12 +13544,6 @@
     },
     {
       "from": "ideation:ideation/02-credits-attribution/02.02-session-capture/02.02.03-session-close-capture-prompt",
-      "to": "decision:d-17",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "ideation:ideation/02-credits-attribution/02.02-session-capture/02.02.03-session-close-capture-prompt",
       "to": "decision:d-18",
       "type": "constrained_by",
       "source": "decision-ref"
@@ -13544,12 +13562,6 @@
     },
     {
       "from": "ideation:ideation/02-credits-attribution/02.02-session-capture/02.02.03-session-close-capture-prompt",
-      "to": "decision:d-11",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "ideation:ideation/02-credits-attribution/02.02-session-capture/02.02.03-session-close-capture-prompt",
       "to": "decision:d-02",
       "type": "constrained_by",
       "source": "decision-ref"
@@ -13557,12 +13569,6 @@
     {
       "from": "ideation:ideation/02-credits-attribution/02.02-session-capture/02.02.03-session-close-capture-prompt",
       "to": "decision:d-01",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "ideation:ideation/02-credits-attribution/02.02-session-capture/02.02.03-session-close-capture-prompt",
-      "to": "decision:d-03",
       "type": "constrained_by",
       "source": "decision-ref"
     },
@@ -14660,7 +14666,31 @@
     },
     {
       "from": "ideation:ideation/02-credits-attribution/credits-attribution-cx",
+      "to": "decision:d-11",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/02-credits-attribution/credits-attribution-cx",
+      "to": "decision:d-03",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/02-credits-attribution/credits-attribution-cx",
+      "to": "decision:d-17",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/02-credits-attribution/credits-attribution-cx",
       "to": "decision:d-01",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/02-credits-attribution/credits-attribution-cx",
+      "to": "decision:d-08",
       "type": "constrained_by",
       "source": "decision-ref"
     },
@@ -14678,12 +14708,6 @@
     },
     {
       "from": "ideation:ideation/02-credits-attribution/credits-attribution-cx",
-      "to": "decision:d-03",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "ideation:ideation/02-credits-attribution/credits-attribution-cx",
       "to": "decision:d-04",
       "type": "constrained_by",
       "source": "decision-ref"
@@ -14691,12 +14715,6 @@
     {
       "from": "ideation:ideation/02-credits-attribution/credits-attribution-cx",
       "to": "decision:d-06",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "ideation:ideation/02-credits-attribution/credits-attribution-cx",
-      "to": "decision:d-11",
       "type": "constrained_by",
       "source": "decision-ref"
     },
@@ -14732,12 +14750,6 @@
     },
     {
       "from": "ideation:ideation/02-credits-attribution/credits-attribution-cx",
-      "to": "decision:d-08",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "ideation:ideation/02-credits-attribution/credits-attribution-cx",
       "to": "decision:d-09",
       "type": "constrained_by",
       "source": "decision-ref"
@@ -14745,12 +14757,6 @@
     {
       "from": "ideation:ideation/02-credits-attribution/credits-attribution-cx",
       "to": "decision:d-10",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "ideation:ideation/02-credits-attribution/credits-attribution-cx",
-      "to": "decision:d-17",
       "type": "constrained_by",
       "source": "decision-ref"
     },
@@ -15320,6 +15326,12 @@
     },
     {
       "from": "ideation:ideation/03-community-networking/03.02-activity-feed-ranking/03.02.01-feed-composition-event-sources",
+      "to": "decision:d-08",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/03-community-networking/03.02-activity-feed-ranking/03.02.01-feed-composition-event-sources",
       "to": "decision:d-14",
       "type": "constrained_by",
       "source": "decision-ref"
@@ -15380,6 +15392,18 @@
     },
     {
       "from": "ideation:ideation/03-community-networking/03.02-activity-feed-ranking/03.02.02-ranking-relevance-controls",
+      "to": "decision:d-03",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/03-community-networking/03.02-activity-feed-ranking/03.02.02-ranking-relevance-controls",
+      "to": "decision:d-08",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/03-community-networking/03.02-activity-feed-ranking/03.02.02-ranking-relevance-controls",
       "to": "decision:d-01",
       "type": "constrained_by",
       "source": "decision-ref"
@@ -15387,12 +15411,6 @@
     {
       "from": "ideation:ideation/03-community-networking/03.02-activity-feed-ranking/03.02.02-ranking-relevance-controls",
       "to": "decision:d-02",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "ideation:ideation/03-community-networking/03.02-activity-feed-ranking/03.02.02-ranking-relevance-controls",
-      "to": "decision:d-03",
       "type": "constrained_by",
       "source": "decision-ref"
     },
@@ -16197,6 +16215,12 @@
     {
       "from": "ideation:ideation/03-community-networking/03.06-scenes-communities/03.06-scenes-communities-index",
       "to": "decision:d-19",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/03-community-networking/03.06-scenes-communities/03.06-scenes-communities-index",
+      "to": "decision:d-08",
       "type": "constrained_by",
       "source": "decision-ref"
     },
@@ -16898,6 +16922,12 @@
     },
     {
       "from": "ideation:ideation/03-community-networking/community-networking-cx",
+      "to": "decision:d-08",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/03-community-networking/community-networking-cx",
       "to": "decision:d-13",
       "type": "constrained_by",
       "source": "decision-ref"
@@ -16959,12 +16989,6 @@
     {
       "from": "ideation:ideation/03-community-networking/community-networking-cx",
       "to": "decision:d-11",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "ideation:ideation/03-community-networking/community-networking-cx",
-      "to": "decision:d-08",
       "type": "constrained_by",
       "source": "decision-ref"
     },
@@ -17522,6 +17546,12 @@
     },
     {
       "from": "ideation:ideation/04-opportunities-casting/04.02-discovery-matching-alerts/04.02.01-opportunity-board-search",
+      "to": "decision:d-16",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/04-opportunities-casting/04.02-discovery-matching-alerts/04.02.01-opportunity-board-search",
       "to": "decision:d-10",
       "type": "constrained_by",
       "source": "decision-ref"
@@ -17559,12 +17589,6 @@
     {
       "from": "ideation:ideation/04-opportunities-casting/04.02-discovery-matching-alerts/04.02.01-opportunity-board-search",
       "to": "decision:d-15",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "ideation:ideation/04-opportunities-casting/04.02-discovery-matching-alerts/04.02.01-opportunity-board-search",
-      "to": "decision:d-16",
       "type": "constrained_by",
       "source": "decision-ref"
     },
@@ -18908,13 +18932,13 @@
     },
     {
       "from": "ideation:ideation/04-opportunities-casting/opportunities-casting-cx",
-      "to": "decision:d-06",
+      "to": "decision:d-10",
       "type": "constrained_by",
       "source": "decision-ref"
     },
     {
       "from": "ideation:ideation/04-opportunities-casting/opportunities-casting-cx",
-      "to": "decision:d-10",
+      "to": "decision:d-06",
       "type": "constrained_by",
       "source": "decision-ref"
     },
@@ -39338,6 +39362,12 @@
     },
     {
       "from": "ideation:ideation/14-digital-goods-marketplace/14.01-catalog-compatibility/14.01.01-digital-product-listing-spec-sheet",
+      "to": "decision:d-11",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/14-digital-goods-marketplace/14.01-catalog-compatibility/14.01.01-digital-product-listing-spec-sheet",
       "to": "decision:d-04",
       "type": "constrained_by",
       "source": "decision-ref"
@@ -48242,6 +48272,12 @@
     },
     {
       "from": "ideation:ideation/17-live-booking-settlement/17.14-bill-construction-support-slots",
+      "to": "decision:d-06",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/17-live-booking-settlement/17.14-bill-construction-support-slots",
       "to": "decision:d-02",
       "type": "constrained_by",
       "source": "decision-ref"
@@ -51158,6 +51194,12 @@
     },
     {
       "from": "ideation:ideation/19-ticketing-box-office/19.01-ticket-config-scaling-allocations/19.01.02-capacity-manifest-allocations-holds",
+      "to": "decision:d-06",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/19-ticketing-box-office/19.01-ticket-config-scaling-allocations/19.01.02-capacity-manifest-allocations-holds",
       "to": "decision:d-15",
       "type": "constrained_by",
       "source": "decision-ref"
@@ -51165,12 +51207,6 @@
     {
       "from": "ideation:ideation/19-ticketing-box-office/19.01-ticket-config-scaling-allocations/19.01.02-capacity-manifest-allocations-holds",
       "to": "decision:d-18",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "ideation:ideation/19-ticketing-box-office/19.01-ticket-config-scaling-allocations/19.01.02-capacity-manifest-allocations-holds",
-      "to": "decision:d-06",
       "type": "constrained_by",
       "source": "decision-ref"
     },
@@ -52112,13 +52148,13 @@
     },
     {
       "from": "ideation:ideation/19-ticketing-box-office/19.05-box-office-counts-drops/19.05.01-live-count-manifest-state",
-      "to": "decision:d-10",
+      "to": "decision:d-06",
       "type": "constrained_by",
       "source": "decision-ref"
     },
     {
       "from": "ideation:ideation/19-ticketing-box-office/19.05-box-office-counts-drops/19.05.01-live-count-manifest-state",
-      "to": "decision:d-06",
+      "to": "decision:d-10",
       "type": "constrained_by",
       "source": "decision-ref"
     },
@@ -55016,6 +55052,12 @@
     },
     {
       "from": "ideation:ideation/20-fanbase-direct-to-fan/fanbase-direct-to-fan-cx",
+      "to": "decision:d-04",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/20-fanbase-direct-to-fan/fanbase-direct-to-fan-cx",
       "to": "decision:d-18",
       "type": "constrained_by",
       "source": "decision-ref"
@@ -55029,12 +55071,6 @@
     {
       "from": "ideation:ideation/20-fanbase-direct-to-fan/fanbase-direct-to-fan-cx",
       "to": "decision:d-06",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "ideation:ideation/20-fanbase-direct-to-fan/fanbase-direct-to-fan-cx",
-      "to": "decision:d-04",
       "type": "constrained_by",
       "source": "decision-ref"
     },
@@ -59072,7 +59108,25 @@
     },
     {
       "from": "ideation:ideation/24-trust-safety-disputes/24.01-reporting-moderation/24.01.03-moderation-queue-reviewer-ops",
+      "to": "decision:d-09",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/24-trust-safety-disputes/24.01-reporting-moderation/24.01.03-moderation-queue-reviewer-ops",
       "to": "decision:d-03",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/24-trust-safety-disputes/24.01-reporting-moderation/24.01.03-moderation-queue-reviewer-ops",
+      "to": "decision:d-04",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/24-trust-safety-disputes/24.01-reporting-moderation/24.01.03-moderation-queue-reviewer-ops",
+      "to": "decision:d-07",
       "type": "constrained_by",
       "source": "decision-ref"
     },
@@ -59090,12 +59144,6 @@
     },
     {
       "from": "ideation:ideation/24-trust-safety-disputes/24.01-reporting-moderation/24.01.03-moderation-queue-reviewer-ops",
-      "to": "decision:d-04",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "ideation:ideation/24-trust-safety-disputes/24.01-reporting-moderation/24.01.03-moderation-queue-reviewer-ops",
       "to": "decision:d-05",
       "type": "constrained_by",
       "source": "decision-ref"
@@ -59103,12 +59151,6 @@
     {
       "from": "ideation:ideation/24-trust-safety-disputes/24.01-reporting-moderation/24.01.03-moderation-queue-reviewer-ops",
       "to": "decision:d-06",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "ideation:ideation/24-trust-safety-disputes/24.01-reporting-moderation/24.01.03-moderation-queue-reviewer-ops",
-      "to": "decision:d-07",
       "type": "constrained_by",
       "source": "decision-ref"
     },
@@ -59234,13 +59276,31 @@
     },
     {
       "from": "ideation:ideation/24-trust-safety-disputes/24.02-enforcement-appeals-policy/24.02.01-enforcement-ladder-sanctions",
-      "to": "decision:d-01",
+      "to": "decision:d-08",
       "type": "constrained_by",
       "source": "decision-ref"
     },
     {
       "from": "ideation:ideation/24-trust-safety-disputes/24.02-enforcement-appeals-policy/24.02.01-enforcement-ladder-sanctions",
       "to": "decision:d-04",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/24-trust-safety-disputes/24.02-enforcement-appeals-policy/24.02.01-enforcement-ladder-sanctions",
+      "to": "decision:d-07",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/24-trust-safety-disputes/24.02-enforcement-appeals-policy/24.02.01-enforcement-ladder-sanctions",
+      "to": "decision:d-09",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/24-trust-safety-disputes/24.02-enforcement-appeals-policy/24.02.01-enforcement-ladder-sanctions",
+      "to": "decision:d-01",
       "type": "constrained_by",
       "source": "decision-ref"
     },
@@ -59253,18 +59313,6 @@
     {
       "from": "ideation:ideation/24-trust-safety-disputes/24.02-enforcement-appeals-policy/24.02.01-enforcement-ladder-sanctions",
       "to": "decision:d-06",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "ideation:ideation/24-trust-safety-disputes/24.02-enforcement-appeals-policy/24.02.01-enforcement-ladder-sanctions",
-      "to": "decision:d-07",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "ideation:ideation/24-trust-safety-disputes/24.02-enforcement-appeals-policy/24.02.01-enforcement-ladder-sanctions",
-      "to": "decision:d-08",
       "type": "constrained_by",
       "source": "decision-ref"
     },
@@ -59294,6 +59342,30 @@
     },
     {
       "from": "ideation:ideation/24-trust-safety-disputes/24.02-enforcement-appeals-policy/24.02.02-appeals-internal-complaints",
+      "to": "decision:d-09",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/24-trust-safety-disputes/24.02-enforcement-appeals-policy/24.02.02-appeals-internal-complaints",
+      "to": "decision:d-07",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/24-trust-safety-disputes/24.02-enforcement-appeals-policy/24.02.02-appeals-internal-complaints",
+      "to": "decision:d-04",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/24-trust-safety-disputes/24.02-enforcement-appeals-policy/24.02.02-appeals-internal-complaints",
+      "to": "decision:d-03",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/24-trust-safety-disputes/24.02-enforcement-appeals-policy/24.02.02-appeals-internal-complaints",
       "to": "decision:d-18",
       "type": "constrained_by",
       "source": "decision-ref"
@@ -59305,12 +59377,6 @@
       "source": "decision-ref"
     },
     {
-      "from": "ideation:ideation/24-trust-safety-disputes/24.02-enforcement-appeals-policy/24.02.02-appeals-internal-complaints",
-      "to": "decision:d-03",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
       "from": "ideation:ideation/24-trust-safety-disputes/24.02-enforcement-appeals-policy/24.02.03-statements-of-reasons",
       "to": "decision:d-03",
       "type": "constrained_by",
@@ -59319,6 +59385,30 @@
     {
       "from": "ideation:ideation/24-trust-safety-disputes/24.02-enforcement-appeals-policy/24.02.03-statements-of-reasons",
       "to": "decision:d-18",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/24-trust-safety-disputes/24.02-enforcement-appeals-policy/24.02.03-statements-of-reasons",
+      "to": "decision:d-09",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/24-trust-safety-disputes/24.02-enforcement-appeals-policy/24.02.03-statements-of-reasons",
+      "to": "decision:d-07",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/24-trust-safety-disputes/24.02-enforcement-appeals-policy/24.02.03-statements-of-reasons",
+      "to": "decision:d-08",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/24-trust-safety-disputes/24.02-enforcement-appeals-policy/24.02.03-statements-of-reasons",
+      "to": "decision:d-04",
       "type": "constrained_by",
       "source": "decision-ref"
     },
@@ -59336,12 +59426,6 @@
     },
     {
       "from": "ideation:ideation/24-trust-safety-disputes/24.02-enforcement-appeals-policy/24.02.03-statements-of-reasons",
-      "to": "decision:d-04",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "ideation:ideation/24-trust-safety-disputes/24.02-enforcement-appeals-policy/24.02.03-statements-of-reasons",
       "to": "decision:d-05",
       "type": "constrained_by",
       "source": "decision-ref"
@@ -59349,12 +59433,6 @@
     {
       "from": "ideation:ideation/24-trust-safety-disputes/24.02-enforcement-appeals-policy/24.02.03-statements-of-reasons",
       "to": "decision:d-06",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "ideation:ideation/24-trust-safety-disputes/24.02-enforcement-appeals-policy/24.02.03-statements-of-reasons",
-      "to": "decision:d-07",
       "type": "constrained_by",
       "source": "decision-ref"
     },
@@ -59487,6 +59565,30 @@
     {
       "from": "ideation:ideation/24-trust-safety-disputes/24.02-enforcement-appeals-policy/24.02.06-transparency-reporting",
       "to": "decision:d-18",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/24-trust-safety-disputes/24.02-enforcement-appeals-policy/24.02.06-transparency-reporting",
+      "to": "decision:d-08",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/24-trust-safety-disputes/24.02-enforcement-appeals-policy/24.02.06-transparency-reporting",
+      "to": "decision:d-09",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/24-trust-safety-disputes/24.02-enforcement-appeals-policy/24.02.06-transparency-reporting",
+      "to": "decision:d-07",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/24-trust-safety-disputes/24.02-enforcement-appeals-policy/24.02.06-transparency-reporting",
+      "to": "decision:d-04",
       "type": "constrained_by",
       "source": "decision-ref"
     },
@@ -60585,6 +60687,12 @@
     {
       "from": "ideation:ideation/24-trust-safety-disputes/trust-safety-disputes-cx",
       "to": "decision:d-01",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/24-trust-safety-disputes/trust-safety-disputes-cx",
+      "to": "decision:d-08",
       "type": "constrained_by",
       "source": "decision-ref"
     },
@@ -61845,7 +61953,7 @@
       "decision": 93
     },
     "byEdgeType": {
-      "constrained_by": 8855
+      "constrained_by": 8873
     }
   }
 }
