@@ -24,9 +24,9 @@
 | CX-13 | [11.02.02 Attestation](./11.02-clearance-one-stop-status/11.02.02-catalogue-completeness-attestation.md) | [11.02.01 Verdict](./11.02-clearance-one-stop-status/11.02.01-clearance-computation-one-stop.md) | Attestation supplies the **only verdict input computation cannot derive** (the party set is closed); it pins the party-list version it was made against — an addition always wins, a stale attestation is rejected invalid-on-arrival with a diff, never silently reattached. | Musician, Producer | High | 11.02.01→11.02.02; 11.02.02→verdict (state-race) |
 | CX-14 | [11.02.03 Encumbrance](./11.02-clearance-one-stop-status/11.02.03-encumbrance-declaration.md) | [11.08.01 Grammar](./11.08-licence-instrument-lifecycle/11.08.01-licence-scope-grammar.md) · [11.02.01 Gate](./11.02-clearance-one-stop-status/11.02.01-clearance-computation-one-stop.md) | **Scope-intersection invariant**: a downstream licence's scope must be a subset of the intersection of upstream clearance scopes; the gate refuses any licence exceeding the ceiling, naming it ("available for up to 3 years, not 10"). | Musician, Producer | High | 11.02.03→11.08.01 (DT-04/D-05); 11.02.03→11.02.01 |
 | CX-15 | [11.04.01 Policy auto-approve](./11.04-licensing-policy-preferences/11.04.01-per-work-licensing-policy.md) | [11.03.03 MFN](./11.03-licence-pricing-negotiation/11.03.03-most-favoured-nation.md) | **NEW edge**: under MFN one share's deal terms propagate to another's, so an owner's auto-approve can set the economics of co-owners who never saw the deal — auto-approve removes exactly the human MFN would have alerted. | Musician, Producer | High | 11.04.01→11.03.03 (DT-07) |
-| CX-16 | [11.04.02 Buyer blocks](./11.04-licensing-policy-preferences/11.04.02-co-owner-veto-approval.md) | [11.08.01 Scope Grammar](./11.08-licence-instrument-lifecycle/11.08.01-licence-scope-grammar.md) | **Contradiction / correction owed**: the grammar's six axes carry NO counterparty axis, so buyer blocks live *outside* the grammar. 11.04.01's claim "the policy key space is the scope grammar" is true for category blocks, false for buyer blocks. | Musician, Producer | High | 11.04.02→11.08.01; 11.04.02→11.04.01 |
+| CX-16 | [11.04.02 Buyer blocks](./11.04-licensing-policy-preferences/11.04.02-co-owner-veto-approval.md) | [11.08.01 Scope Grammar](./11.08-licence-instrument-lifecycle/11.08.01-licence-scope-grammar.md) | **Correction, now ratified**: of the grammar's nine axes only **eight are policy-bearing**; the ninth, `grantee scope`, is **grant-side only** and no policy carries it (11.08.01 D-18), so buyer blocks live *outside* the grammar. 11.04.01's claim "the policy key space is the scope grammar" is true for category blocks over those eight, false for buyer blocks. | Musician, Producer | High | 11.04.02→11.08.01; 11.04.02→11.04.01 |
 | CX-17 | [11.04.02 Category block](./11.04-licensing-policy-preferences/11.04.02-co-owner-veto-approval.md) | [11.07.01 AI consent](./11.07-ai-training-licensing/11.07.01-ai-training-consent-opt-out.md) | Same mechanism, **opposite default** — 11.07.01 is opt-in/refused-by-default; 11.04.02's block table defaults empty (permitted). "Never AI training" is an 11.04.02 category block with a louder name, but the two must reconcile the default or they contradict. | Musician, Producer | High | 11.04.02→11.07.01 |
-| CX-18 | [11.04.02 Buyer blocks](./11.04-licensing-policy-preferences/11.04.02-co-owner-veto-approval.md) | [11.04.03 Policy fold](./11.04-licensing-policy-preferences/11.04.03-policy-conflict-resolution.md) | The fold operates over the grammar and therefore **cannot fold buyer blocks** (they key on party identity, evaluable only at request time when a buyer exists); the effective-work-policy aggregate is incomplete by construction. | Musician, Producer | High | 11.04.02→11.04.03 (D-09/DT-07) |
+| CX-18 | [11.04.02 Buyer blocks](./11.04-licensing-policy-preferences/11.04.02-co-owner-veto-approval.md) | [11.04.03 Policy fold](./11.04-licensing-policy-preferences/11.04.03-policy-conflict-resolution.md) | The fold operates over the grammar's **eight policy-bearing axes** and therefore **cannot fold buyer blocks** (they key on party identity, evaluable only at request time when a buyer exists); the grant-side `grantee` axis does not change this (11.08.01 D-18), and the effective-work-policy aggregate is incomplete by construction. | Musician, Producer | High | 11.04.02→11.04.03 (D-09/DT-07) |
 | CX-19 | [11.05.01 Declaration](./11.05-sample-derivative-clearance/11.05.01-sample-declaration-identification.md) | [11.05.04 Interpolation](./11.05-sample-derivative-clearance/11.05.04-interpolation-replay-clearance.md) | Declaration is the **sole route in** — fingerprinting is structurally blind to a replayed/interpolated melody; the "a melody you played from another song" element type is the only mechanism by which an interpolation ever enters the system. | Musician, Producer | High | 11.05.01→11.05.04 (#CX-03) |
 | CX-20 | [11.05.01 Declaration](./11.05-sample-derivative-clearance/11.05.01-sample-declaration-identification.md) | [11.05.05 Remix & Stem](./11.05-sample-derivative-clearance/11.05.05-remix-stem-bootleg-licensing.md) | Remixes are how derivation **cycles** become real (A samples B; B is a remix of A); the declaration layer must accept a cycle-creating declaration (D-12), not reject it. | Musician, Producer | Medium | 11.05.01→11.05.05 (state-race) |
 | CX-21 | [11.02.03 Encumbrance](./11.02-clearance-one-stop-status/11.02.03-encumbrance-declaration.md) | [11.05.03 Negotiated clearance](./11.05-sample-derivative-clearance/11.05.03-negotiated-clearance-revenue-share.md) | **Clearance is not terminal** (correcting the breadth pass): a lapsing clearance re-encumbers a work with no user action and routes to 11.05.03 as a *renewal*, with pre-expiry warnings at 90/30/7 days — a Scheduled-Jobs consumer the breadth pass omitted. | Musician, Producer | High | 11.02.03→11.05.03 (DT-06) |
@@ -49,7 +49,11 @@ happen to reference — it is the **shared vocabulary the entire domain is writt
 predicates over it. Rate cards (11.03.01) are functions from it. Clearance verdicts (11.02.01) are computed
 per-(work, **scope**). MFN comparability (11.03.03) is a distance within it. The policy fold (11.04.03) can
 only reconcile owners who "disagree in kind" because both project onto the same lattice. **The one thing the
-grammar does *not* express is a counterparty (see CX-16) — which is why buyer blocks live outside it.**
+grammar does *not* express is a refusal keyed on a counterparty (see CX-16) — which is why buyer blocks live
+outside it.** It does name a party: `grantee scope` is its ninth axis. That axis is **grant-side only** — who
+*an instrument* runs to — and **policies do not carry it**, so containment is evaluated over the **eight
+policy-bearing axes** only (11.08.01 D-18, ratified 2026-07-30). The domain's type system therefore has two
+lists, and both belong in any restatement of it: nine axes an instrument may carry, eight a policy may.
 
 This is the domain's most load-bearing structural finding, and **the sweep did not contain it** — it listed the
 certificate (candidate 17) but never the language the certificate is written in.
@@ -62,7 +66,7 @@ certificate (candidate 17) but never the language the certificate is written in.
 **Synthesis questions answered**:
 1. **Shared state conflict**: The grammar is platform-owned; every other node holds instances or predicates over it. No node may extend it locally — a domain-specific axis value would silently break the fold.
 2. **Trigger chain**: Grammar evolution → new instances only. Instances pin their version at **request creation** and carry it unchanged through pricing to issue (11.08.01 D-03). A grammar change must never retroactively alter what an issued licence means — and must never reach an instrument mid-flight between quote and issue either.
-3. **Permission intersection**: Policy and grammar must share the vocabulary or 11.04.03's fold has nothing to project onto. The exception is the counterparty axis, which does not exist — CX-16/CX-18.
+3. **Permission intersection**: Policy and grammar must share the vocabulary or 11.04.03's fold has nothing to project onto — and the shared vocabulary is the **eight policy-bearing axes** (11.08.01 D-18). The exception is party identity: no axis lets an owner key a refusal on it, and the grant-side `grantee` axis is not one policies carry — CX-16/CX-18.
 4. **Notification fan-out**: None — it is infrastructure.
 5. **State transition conflict**: Same pinning rule as 11.03.01 D-02 (card pins at read) and 11.08.02 (the instrument carries the version pinned at **request creation**, per 11.08.01 D-03) — three instances of one pattern (P-02), and the grammar's pin sits upstream of the card's so the two cannot disagree.
 
@@ -143,17 +147,24 @@ removed the human MFN would otherwise have alerted. This edge did not exist in t
 
 **Relationship**: 11.04.01 asserts the policy key space *is* the scope grammar. That holds for **category blocks**
 ("no tobacco", "no political ads") — they are predicates over the media/usage axes. It is **false for buyer
-blocks** ("never license to BrandCo"), because the grammar carries **no counterparty axis** an owner can key a
-refusal on. Buyer blocks key on *party identity*, which lives in 01, not in the grammar. This is a correction
-owed on the 11.04.01 text, not a design gap — but it must be written down or two files contradict.
+blocks** ("never license to BrandCo"), because the grammar carries **no axis an owner can key a refusal on a
+counterparty with**. Buyer blocks key on *party identity*, which lives in 01, not in the grammar. This is a
+correction owed on the 11.04.01 text, not a design gap — but it must be written down or two files contradict.
 
 **The axis count in the breadth-pass version of this entry ("six axes: media/territory/term/exclusivity/usage/
 scale") is superseded** — 11.08.01's depth pass carries **nine** (adding data use, extent of use and grantee
-scope; D-06/D-15/D-17). The correction is not only arithmetic: **grantee scope** is an axis over party identity
-(licensee plus permitted assignees/sublicensees), which is the thing this entry and 11.04.02 D-09/DT-07 assert
-the grammar does not have. Whether a grantee axis that names *who a grant runs to* also gives an owner a place
-to key *who they refuse* — and therefore whether buyer blocks become foldable after all — is **11.04.02 Q-07**,
-owner's call at `/create-prd`. Until it lands, the two-key-space behaviour below stands as written.
+scope; D-06/D-15/D-17). The correction is not only arithmetic: **grantee scope** names a party (licensee plus
+permitted assignees/sublicensees), which is the thing this entry and 11.04.02 D-09/DT-07 assert the grammar
+does not have. **Resolved 2026-07-30 by [11.08.01 D-18](./11.08-licence-instrument-lifecycle/11.08.01-licence-scope-grammar.md),
+answering 11.04.02 Q-07: the grantee axis is GRANT-SIDE ONLY.** It says who *this instrument* runs to and is
+not a value space an owner authors refusals in; **policies do not carry it**, so of nine axes only **eight are
+policy-bearing** and containment is evaluated over those eight. The rationale is 11.08.01 DT-15's own — it
+argues the axis end to end from **delivery** failure (an agency licence that does not run to the brand is
+worthless paper) and never from refusal. **Every behaviour below stands unchanged**; only the premise under it
+is restated. Two things travel with the resolution and are recorded in 11.08.01 rather than here: the
+**asymmetry** — the grammar carries an axis policies deliberately ignore, and leaving that implicit is what
+raised Q-07 — and the **containment rule**, without which 11.08.01 D-04 (`unspecified` fails containment)
+would make a grantee-less policy, which is every policy, contain no request at all.
 
 **Role scoping**:
 - **Musician / Producer**: experience one "block" surface but two evaluation regimes underneath
@@ -162,7 +173,7 @@ owner's call at `/create-prd`. Until it lands, the two-key-space behaviour below
 **Synthesis questions answered**:
 1. **Shared state conflict**: Category blocks fold over the grammar (11.04.03); buyer blocks cannot fold (CX-18) — they resolve against a buyer identity (01) at request time.
 2. **Trigger chain**: category block → evaluable at policy-set time and foldable into effective-work-policy; buyer block → evaluable only when a named buyer exists.
-3. **Permission intersection**: Both share the *block engine*, not the *key space*. Adding a counterparty axis to the grammar would break the fold; making the fold operate over identity is structurally impossible (identity is not a lattice point).
+3. **Permission intersection**: Both share the *block engine*, not the *key space*. Making a policy key on a counterparty would break the fold; making the fold operate over identity is structurally impossible (identity is not a lattice point). 11.08.01 D-18 forecloses the first by keeping `grantee scope` out of every policy, so this stays a statement about the design rather than a risk to manage.
 4. **Notification fan-out**: A buyer block's free-text reason is disclosed to co-owners (D-13) → it is UGC on a surface with a named target and is reportable to 24 (though the block itself is never moderated, only the prose).
 5. **State transition conflict**: A buyer block survives its author's death (01.10 tombstone); the estate's scoped access is what makes lifting possible.
 
@@ -274,8 +285,8 @@ as a spite vector. **One architectural requirement, not four bugs** — flagged 
 Category blocks, buyer blocks, and AI-training consent all reuse one refusal engine but **disagree on the
 default and the key space**:
 
-- **Category blocks** (11.04.02) — key on the grammar; default *empty* (permitted); foldable
-- **Buyer blocks** (11.04.02) — key on party identity (01); default *empty*; **not** foldable (CX-16, CX-18)
+- **Category blocks** (11.04.02) — key on the grammar's eight policy-bearing axes; default *empty* (permitted); foldable
+- **Buyer blocks** (11.04.02) — key on party identity (01), never on the grant-side `grantee` axis (11.08.01 D-18); default *empty*; **not** foldable (CX-16, CX-18)
 - **AI-training consent** (11.07.01) — same engine, default *refused* (opt-in) (CX-17)
 
 Two files (11.04.01 and 11.07.01) currently describe the same engine with contradictory defaults. **The consent
@@ -295,7 +306,7 @@ eventually disagree about refusal.** Routed to `/create-prd-architecture`.
 | R-05 | 11.11 Grand Rights | 11.08.01 Scope Grammar (as a media value) | Rejected (11.11 DT-02): grand rights carry **treatment approval** — a subjective, ongoing creative veto the grammar cannot express and no machine can check. Adding it as a media axis value would let the system auto-approve a licence whose defining term it cannot represent. The one licence type not reducible to scope. |
 | R-06 | 11.02.02 Attestation | 11.02.04 Consent Routing | An attestation is a **claim about a fact**; a consent is a **decision about a permission**. Different failure modes (false claim vs withheld permission), remedies (contest vs escalate), actors (the knower vs the owner). Merging them makes "I confirm nobody is missing" and "I agree to this deal" one object — how consent theatre gets built. |
 | R-07 | 11.10 Print & Lyric | 11.05 Sample & Derivative | The *rights basis* is the same (composition) but the transaction is not: print/lyric licenses the work **as text or notation to be reproduced**, not as material to be built on. A lyric aggregator displays the original; they are not making a derivative. Moving 11.10 under derivatives would imply an interaction it does not have (11.10 DT-02). |
-| R-08 | 11.04.01 Category policy | 11.04.02 Buyer blocks (single "policy" object) | Considered — both are refusals set in advance. Rejected: category blocks key on the scope grammar and **fold** across owners; buyer blocks key on party identity (01) and are only evaluable at request time (the grammar has no counterparty axis, CX-16). Merging would force a counterparty axis into the grammar (breaking the fold, CX-04) or force the fold to operate over identity (structurally impossible, CX-18). They share the block **engine**, not the key space. |
+| R-08 | 11.04.01 Category policy | 11.04.02 Buyer blocks (single "policy" object) | Considered — both are refusals set in advance. Rejected, and the rejection **survives 11.08.01 D-15's grantee axis**: category blocks key on the grammar's **eight policy-bearing** axes and **fold** across owners; buyer blocks key on party identity (01) and are only evaluable at request time. The grantee axis does not merge them — it is **grant-side only** and no policy carries it (11.08.01 D-18, CX-16). Merging would force a policy-keyable counterparty into the grammar (breaking the fold, CX-04) or force the fold to operate over identity (structurally impossible, CX-18). They share the block **engine**, not the key space. |
 
 
 <!-- spec-graph: auto-generated -->
@@ -308,9 +319,9 @@ eventually disagree about refusal.** Routed to `/create-prd-architecture`.
 - [[decisions.md#d-05|D-05]]
 - [[decisions.md#d-15|D-15]]
 - [[decisions.md#d-01|D-01]]
+- [[decisions.md#d-18|D-18]]
 - [[decisions.md#d-09|D-09]]
 - [[decisions.md#d-12|D-12]]
 - [[decisions.md#d-06|D-06]]
 - [[decisions.md#d-17|D-17]]
 - [[decisions.md#d-13|D-13]]
-- [[decisions.md#d-18|D-18]]

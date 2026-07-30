@@ -1,7 +1,7 @@
 {
-  "builtAt": "2026-07-30T19:07:55.458Z",
+  "builtAt": "2026-07-30T19:30:59.349Z",
   "nodeCount": 1243,
-  "edgeCount": 8925,
+  "edgeCount": 8930,
   "nodes": [
     {
       "id": "audit:audits/audit-scope",
@@ -17582,6 +17582,12 @@
     },
     {
       "from": "ideation:ideation/04-opportunities-casting/04.02-discovery-matching-alerts/04.02.01-opportunity-board-search",
+      "to": "decision:d-16",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/04-opportunities-casting/04.02-discovery-matching-alerts/04.02.01-opportunity-board-search",
       "to": "decision:d-13",
       "type": "constrained_by",
       "source": "decision-ref"
@@ -17589,12 +17595,6 @@
     {
       "from": "ideation:ideation/04-opportunities-casting/04.02-discovery-matching-alerts/04.02.01-opportunity-board-search",
       "to": "decision:d-07",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "ideation:ideation/04-opportunities-casting/04.02-discovery-matching-alerts/04.02.01-opportunity-board-search",
-      "to": "decision:d-16",
       "type": "constrained_by",
       "source": "decision-ref"
     },
@@ -18812,7 +18812,19 @@
     },
     {
       "from": "ideation:ideation/04-opportunities-casting/04.06-band-member-wanted",
+      "to": "decision:d-05",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/04-opportunities-casting/04.06-band-member-wanted",
       "to": "decision:d-18",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/04-opportunities-casting/04.06-band-member-wanted",
+      "to": "decision:d-06",
       "type": "constrained_by",
       "source": "decision-ref"
     },
@@ -18842,6 +18854,12 @@
     },
     {
       "from": "ideation:ideation/04-opportunities-casting/04.06-band-member-wanted",
+      "to": "decision:d-13",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/04-opportunities-casting/04.06-band-member-wanted",
       "to": "decision:d-09",
       "type": "constrained_by",
       "source": "decision-ref"
@@ -18849,18 +18867,6 @@
     {
       "from": "ideation:ideation/04-opportunities-casting/04.06-band-member-wanted",
       "to": "decision:d-12",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "ideation:ideation/04-opportunities-casting/04.06-band-member-wanted",
-      "to": "decision:d-06",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "ideation:ideation/04-opportunities-casting/04.06-band-member-wanted",
-      "to": "decision:d-05",
       "type": "constrained_by",
       "source": "decision-ref"
     },
@@ -27932,6 +27938,12 @@
     },
     {
       "from": "ideation:ideation/09-rights-ownership/09.01-rights-registry/09.01.02-ownership-ledger-validation",
+      "to": "decision:d-18",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/09-rights-ownership/09.01-rights-registry/09.01.02-ownership-ledger-validation",
       "to": "decision:d-03",
       "type": "constrained_by",
       "source": "decision-ref"
@@ -28448,13 +28460,13 @@
     },
     {
       "from": "ideation:ideation/09-rights-ownership/09.02-split-capture-agreements/09.02.01-moment-of-creation-split-capture",
-      "to": "decision:d-11",
+      "to": "decision:d-12",
       "type": "constrained_by",
       "source": "decision-ref"
     },
     {
       "from": "ideation:ideation/09-rights-ownership/09.02-split-capture-agreements/09.02.01-moment-of-creation-split-capture",
-      "to": "decision:d-12",
+      "to": "decision:d-11",
       "type": "constrained_by",
       "source": "decision-ref"
     },
@@ -32780,13 +32792,7 @@
     },
     {
       "from": "ideation:ideation/11-music-licensing/11.04-licensing-policy-preferences/11.04.01-per-work-licensing-policy",
-      "to": "decision:d-05",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "ideation:ideation/11-music-licensing/11.04-licensing-policy-preferences/11.04.01-per-work-licensing-policy",
-      "to": "decision:d-09",
+      "to": "decision:d-18",
       "type": "constrained_by",
       "source": "decision-ref"
     },
@@ -32798,7 +32804,13 @@
     },
     {
       "from": "ideation:ideation/11-music-licensing/11.04-licensing-policy-preferences/11.04.01-per-work-licensing-policy",
-      "to": "decision:d-18",
+      "to": "decision:d-05",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/11-music-licensing/11.04-licensing-policy-preferences/11.04.01-per-work-licensing-policy",
+      "to": "decision:d-09",
       "type": "constrained_by",
       "source": "decision-ref"
     },
@@ -32888,7 +32900,19 @@
     },
     {
       "from": "ideation:ideation/11-music-licensing/11.04-licensing-policy-preferences/11.04.02-co-owner-veto-approval",
+      "to": "decision:d-18",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/11-music-licensing/11.04-licensing-policy-preferences/11.04.02-co-owner-veto-approval",
       "to": "decision:d-09",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/11-music-licensing/11.04-licensing-policy-preferences/11.04.02-co-owner-veto-approval",
+      "to": "decision:d-15",
       "type": "constrained_by",
       "source": "decision-ref"
     },
@@ -32901,12 +32925,6 @@
     {
       "from": "ideation:ideation/11-music-licensing/11.04-licensing-policy-preferences/11.04.02-co-owner-veto-approval",
       "to": "decision:d-12",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "ideation:ideation/11-music-licensing/11.04-licensing-policy-preferences/11.04.02-co-owner-veto-approval",
-      "to": "decision:d-15",
       "type": "constrained_by",
       "source": "decision-ref"
     },
@@ -32959,12 +32977,6 @@
       "source": "decision-ref"
     },
     {
-      "from": "ideation:ideation/11-music-licensing/11.04-licensing-policy-preferences/11.04.02-co-owner-veto-approval",
-      "to": "decision:d-18",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
       "from": "ideation:ideation/11-music-licensing/11.04-licensing-policy-preferences/11.04.03-policy-conflict-resolution",
       "to": "decision:d-17",
       "type": "constrained_by",
@@ -33003,6 +33015,12 @@
     {
       "from": "ideation:ideation/11-music-licensing/11.04-licensing-policy-preferences/11.04.03-policy-conflict-resolution",
       "to": "decision:d-02",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/11-music-licensing/11.04-licensing-policy-preferences/11.04.03-policy-conflict-resolution",
+      "to": "decision:d-09",
       "type": "constrained_by",
       "source": "decision-ref"
     },
@@ -33662,6 +33680,12 @@
     },
     {
       "from": "ideation:ideation/11-music-licensing/11.08-licence-instrument-lifecycle/11.08-licence-instrument-lifecycle-index",
+      "to": "decision:d-18",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/11-music-licensing/11.08-licence-instrument-lifecycle/11.08-licence-instrument-lifecycle-index",
       "to": "decision:d-10",
       "type": "constrained_by",
       "source": "decision-ref"
@@ -33758,6 +33782,18 @@
     },
     {
       "from": "ideation:ideation/11-music-licensing/11.08-licence-instrument-lifecycle/11.08.01-licence-scope-grammar",
+      "to": "decision:d-18",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/11-music-licensing/11.08-licence-instrument-lifecycle/11.08.01-licence-scope-grammar",
+      "to": "decision:d-04",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/11-music-licensing/11.08-licence-instrument-lifecycle/11.08.01-licence-scope-grammar",
       "to": "decision:d-05",
       "type": "constrained_by",
       "source": "decision-ref"
@@ -33771,12 +33807,6 @@
     {
       "from": "ideation:ideation/11-music-licensing/11.08-licence-instrument-lifecycle/11.08.01-licence-scope-grammar",
       "to": "decision:d-02",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "ideation:ideation/11-music-licensing/11.08-licence-instrument-lifecycle/11.08.01-licence-scope-grammar",
-      "to": "decision:d-04",
       "type": "constrained_by",
       "source": "decision-ref"
     },
@@ -34160,6 +34190,12 @@
     },
     {
       "from": "ideation:ideation/11-music-licensing/music-licensing-cx",
+      "to": "decision:d-18",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/11-music-licensing/music-licensing-cx",
       "to": "decision:d-09",
       "type": "constrained_by",
       "source": "decision-ref"
@@ -34185,12 +34221,6 @@
     {
       "from": "ideation:ideation/11-music-licensing/music-licensing-cx",
       "to": "decision:d-13",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "ideation:ideation/11-music-licensing/music-licensing-cx",
-      "to": "decision:d-18",
       "type": "constrained_by",
       "source": "decision-ref"
     },
@@ -62265,7 +62295,7 @@
       "decision": 93
     },
     "byEdgeType": {
-      "constrained_by": 8925
+      "constrained_by": 8930
     }
   }
 }
