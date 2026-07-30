@@ -1,0 +1,210 @@
+{
+  "domain": "20-fanbase-direct-to-fan",
+  "treeRoot": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/20-fanbase-direct-to-fan",
+  "unitsAudited": 7,
+  "filesRead": 41,
+  "coverageNote": "Enumeration from disk matched the expected 7 units / 41 files exactly (domain root + 20.01..20.06; 20.07 is a domain-level flat feature inside the root unit). Every file was read in full; Deep Think tables were read with per-row truncation at 320-500 chars for bulk reading and re-read in full where a verdict was load-bearing (20.02.01 DT-03). Rubric dimensions 1, 2, 4, 5 and 6 were scored N/A for every unit: problem statement, personas, constraints, success metrics and competitive landscape live in .memory/wiki/specs/ideation/meta/ and are referenced, never redefined, by these units (e.g. 20-fanbase-direct-to-fan-index.md:86 'Personas from meta/personas.md — referenced, never redefined'). Applicable checkpoints are counted as (files in unit) x 3 applicable dimensions (3, 7, 8). meta/constraints.md was read only to verify a quoted platform-surface claim (finding #007); no file under .memory/wiki/specs/audits/ outside run4/ was opened.",
+  "units": [
+    {
+      "unit": "20-fanbase-direct-to-fan",
+      "files": 3,
+      "applicableCheckpoints": 9,
+      "points": 1.5,
+      "naDimensions": [1, 2, 4, 5, 6],
+      "scoring": {
+        "fanbase-direct-to-fan-index.md": { "3": "OK", "7": "OK", "8": "OK" },
+        "fanbase-direct-to-fan-cx.md": { "3": "FAIL (two silent contradictions with children: CX-10 k-anonymity, CX-14 vault lapse)", "7": "OK", "8": "OK" },
+        "20.07-fan-demand-show-requests.md": { "3": "WARN (D-05 map floor contradicts CX-10)", "7": "OK", "8": "OK" }
+      }
+    },
+    {
+      "unit": "20.01-fan-graph-owned-audience",
+      "files": 7,
+      "applicableCheckpoints": 21,
+      "points": 2.5,
+      "naDimensions": [1, 2, 4, 5, 6],
+      "scoring": {
+        "20.01.02-consent-legal-basis.md": { "3": "FAIL (artist-asserted tier described as both unmarketable and merely downgraded; `service` purpose has no campaign carrier)", "7": "OK", "8": "OK" },
+        "20.01.03-fan-preference-centre.md": { "3": "WARN (Highlights cap stated per-email and per-send)", "7": "OK", "8": "OK" },
+        "20.01.04-fan-list-import-hygiene.md": { "3": "WARN (happy path sends to artist-asserted records)", "7": "OK", "8": "OK" },
+        "20.01-fan-graph-owned-audience-cx.md": { "3": "OK", "7": "WARN (CX-01 q3 pending, no owner, target stage already completed)", "8": "OK" },
+        "20.01-fan-graph-owned-audience-index.md": { "3": "OK", "7": "OK", "8": "OK" },
+        "20.01.01-unified-fan-record.md": { "3": "OK", "7": "OK", "8": "OK" },
+        "20.01.05-fan-list-ownership-transfer.md": { "3": "OK", "7": "OK", "8": "OK" }
+      }
+    },
+    {
+      "unit": "20.02-segmentation-superfan-intelligence",
+      "files": 5,
+      "applicableCheckpoints": 15,
+      "points": 0.5,
+      "naDimensions": [1, 2, 4, 5, 6],
+      "scoring": {
+        "20.02.01-segment-builder.md": { "3": "WARN (Membership dimension family cites source domain 20.04; memberships are 20.05)", "7": "OK", "8": "OK" },
+        "20.02-segmentation-superfan-intelligence-index.md": { "3": "OK", "7": "OK", "8": "OK" },
+        "20.02-segmentation-superfan-intelligence-cx.md": { "3": "OK", "7": "OK", "8": "OK" },
+        "20.02.02-superfan-score.md": { "3": "OK", "7": "OK", "8": "OK" },
+        "20.02.03-perk-entitlements-presale-eligibility.md": { "3": "OK", "7": "OK", "8": "OK" }
+      }
+    },
+    {
+      "unit": "20.03-broadcast-fan-messaging",
+      "files": 6,
+      "applicableCheckpoints": 18,
+      "points": 1.5,
+      "naDimensions": [1, 2, 4, 5, 6],
+      "scoring": {
+        "20.03.03-send-scheduling-throttling.md": { "3": "FAIL (dispatch-time frequency-cap gate whose owning policy does not exist in the cited location or anywhere in the domain)", "7": "OK", "8": "OK" },
+        "20.03.02-channel-routing-bulk-delivery.md": { "3": "WARN (Behavior asserts web-only surface / mobile open, contradicting its own resolved Q-04 and D-28)", "7": "OK", "8": "OK" },
+        "20.03-broadcast-fan-messaging-index.md": { "3": "OK", "7": "OK", "8": "OK" },
+        "20.03-broadcast-fan-messaging-cx.md": { "3": "OK", "7": "OK", "8": "OK" },
+        "20.03.01-campaign-composer.md": { "3": "OK", "7": "OK", "8": "OK" },
+        "20.03.04-deliverability-sender-reputation.md": { "3": "OK", "7": "OK", "8": "OK" }
+      }
+    },
+    {
+      "unit": "20.04-direct-to-fan-storefront",
+      "files": 6,
+      "applicableCheckpoints": 18,
+      "points": 0.5,
+      "naDimensions": [1, 2, 4, 5, 6],
+      "scoring": {
+        "20.04.04-d2f-revenue-split-payout.md": { "3": "WARN (plan-version binding moment conflicts with 20.04.03)", "7": "OK", "8": "OK" },
+        "20.04-direct-to-fan-storefront-index.md": { "3": "OK", "7": "OK", "8": "OK" },
+        "20.04-direct-to-fan-storefront-cx.md": { "3": "OK", "7": "OK", "8": "OK" },
+        "20.04.01-storefront-product-catalog.md": { "3": "OK", "7": "OK", "8": "OK" },
+        "20.04.02-merch-variants-print-on-demand.md": { "3": "OK", "7": "OK", "8": "OK" },
+        "20.04.03-digital-sales-name-your-price-bundles.md": { "3": "OK", "7": "OK", "8": "OK" }
+      }
+    },
+    {
+      "unit": "20.05-memberships-patronage-campaigns",
+      "files": 8,
+      "applicableCheckpoints": 24,
+      "points": 0,
+      "naDimensions": [1, 2, 4, 5, 6],
+      "scoring": {
+        "note": "All eight files scored OK on 3, 7 and 8. Every open question carries an owner and a deferral target; the bare [PENDING] cells in 20.05.01 (artist dies), 20.05.03 (laundering), 20.05.04 (cannibalisation) and 20.05.05 (insolvency, milestone verification) are each mirrored by a tracked Open Question row in the same file or its index. The lapse-policy conflict is recorded against the domain-root CX file, whose claim diverges from these files rather than the reverse."
+      }
+    },
+    {
+      "unit": "20.06-fan-experience-discovery",
+      "files": 6,
+      "applicableCheckpoints": 18,
+      "points": 0.5,
+      "naDimensions": [1, 2, 4, 5, 6],
+      "scoring": {
+        "20.06.02-gig-alerts-near-me.md": { "3": "OK", "7": "WARN (two distinct rows both numbered Q-04; D-06 and D-07 reference 'Q-04' ambiguously)", "8": "OK" },
+        "20.06-fan-experience-discovery-index.md": { "3": "OK", "7": "OK", "8": "OK" },
+        "20.06-fan-experience-discovery-cx.md": { "3": "OK", "7": "OK", "8": "OK" },
+        "20.06.01-artist-tracking-follow.md": { "3": "OK", "7": "OK", "8": "OK" },
+        "20.06.03-fan-library-collection.md": { "3": "OK", "7": "OK", "8": "OK" },
+        "20.06.04-listening-history-import-bootstrap.md": { "3": "OK", "7": "OK", "8": "OK" }
+      }
+    }
+  ],
+  "totals": {
+    "applicableCheckpoints": 123,
+    "points": 7.0,
+    "ambiguityPercent": 5.69
+  },
+  "findings": [
+    {
+      "findingId": "20-fanbase-direct-to-fan#001",
+      "unit": "20-fanbase-direct-to-fan",
+      "severity": "blocking",
+      "dimension": 0,
+      "claim": "The demand map's k-anonymity floor is both mandated and denied. 20.07 makes suppressing sparse map cells a Decision (D-05); the domain CX file's synthesis for the very same edge (CX-10, 20.07 <-> Segmentation) states that aggregate geo-density is unfloored. Neither statement carries a pending/deferred marker, and the sibling authority they both lean on (20.02.01 DT-03) puts the floor on send and export only, explicitly excluding counting and record viewing.",
+      "evidence": "20.07-fan-demand-show-requests.md:69 — '| Demand map reveals individuals in a sparse region | \"3 fans in Inverness\" is close to naming them, and it is a real disclosure of a person's location to an artist. | k-anonymity floor on the **map**, not on the fan record. Ties to [20.02.01](...) DT-03. |'  AND  20.07-fan-demand-show-requests.md:110 — '| D-05 | k-anonymity floor on the map | \"3 fans in Inverness\" names people. The floor belongs on the map, not on the fan record'  VS  fanbase-direct-to-fan-cx.md:255 (CX-10 synthesis Q3) — '**Permission intersection**: Individually-targeted reads inherit the k-anonymity floor (domain 24); aggregate geo-density is unfloored map data.'  AND  fanbase-direct-to-fan-cx.md:55 (CX-01 synthesis Q3) — '*counting/record-view* is unfloored, but individually-targeted send/export is floored by the k-anonymity rule escalated to domain 24.'  AND the cited support, 20.02.01-segment-builder.md:99 (DT-03) — 'My read: the floor belongs on **send** and on **export**, not on counting or record viewing.'",
+      "forcedInvention": "Whether the demand map suppresses a cell like '3 fans in Inverness' at all, and if so at what k. One reading ships a map that hides sparse regions from the artist; the other ships a map that shows every cluster down to n=1. Both are specified as decided.",
+      "failureScenario": "An artist opens the demand map for Scotland. Implementer A (following 20.07 D-05) renders 'Inverness — fewer than 5 fans, hidden'; implementer B (following CX-10) renders 'Inverness — 3 fans'. B has disclosed three named individuals' locations to a third party in a privacy-sensitive surface that 20.07's own edge case identifies as a real disclosure; A has withheld routing data the CX file says is unfloored. There is no third statement to arbitrate."
+    },
+    {
+      "findingId": "20-fanbase-direct-to-fan#002",
+      "unit": "20.01-fan-graph-owned-audience",
+      "severity": "blocking",
+      "dimension": 0,
+      "claim": "Whether an imported, artist-asserted fan list can be emailed at all is specified two incompatible ways. 20.01.02 names the artist-asserted tier 'unmarketable-until-re-permissioned' (i.e. no sends until fresh consent), while 20.01.04's happy path sends to exactly such records under a warm-up throttle; 20.01.02 itself elsewhere calls the same tier merely 'deliverability-downgraded'. The parent CX file records this precise question as still open, with no owner and a deferral target (`/ideate-discover Step 5 deepening`) that has already run — the children are [DEEP]/[PARTIAL] and dated after it.",
+      "evidence": "20.01.02-consent-legal-basis.md:88 — '| Owner-supplied import claims the strongest, platform-witnessed provenance ... | Downgraded to artist-asserted; the claimed strength is **rejected, never trusted** (CX-01). | Import completes; records land in the artist-asserted (unmarketable-until-re-permissioned) tier. |'  VS  20.01.04-fan-list-import-hygiene.md:45-46 — '4,335 created with provenance `artist-asserted: prior ESP double opt-in` / 5. Musician sees the breakdown and the consequence stated plainly: the new records enter a warm-up tier — first sends are throttled ... because a cold blast to 4,335 unwitnessed addresses is how a sending domain gets blocklisted'  AND, inconsistently within one file, 20.01.02-consent-legal-basis.md:93 — 'the fan sits in the artist-asserted, deliverability-downgraded tier.'  AND the unresolved tracker, 20.01-fan-graph-owned-audience-cx.md:41 — '3. **Permission intersection**: Yes. Import permission does not confer send permission. `[PENDING — /ideate-discover Step 5 deepening]` on whether weak-provenance records are sendable-with-warning or hard-blocked until re-permissioned.'",
+      "forcedInvention": "Whether artist-asserted imported records are sendable under a warm-up ramp, or hard-blocked until a re-permission campaign succeeds — and, if hard-blocked, how a re-permission campaign itself reaches them (20.01.04 Q-01 records that its lawfulness is unsettled).",
+      "failureScenario": "An artist imports 4,812 Mailchimp addresses, answers the provenance question, and presses send. Implementer A (20.01.04) throttles the send over six hours and it goes out; implementer B (20.01.02) blocks it entirely with 'not yet sendable'. A ships the domain's stated adoption gate; B ships a product where an imported list is unusable at launch. The two builds differ on the single behaviour 20.01.04 calls 'the adoption gate for the entire domain' (DT-01)."
+    },
+    {
+      "findingId": "20-fanbase-direct-to-fan#003",
+      "unit": "20.03-broadcast-fan-messaging",
+      "severity": "blocking",
+      "dimension": 0,
+      "claim": "20.03.03 specifies a dispatch-time per-fan frequency-cap gate, states it does not own the policy, and routes ownership to a location that does not contain it. Neither 20.02 (any file) nor 20.03's own CX file mentions frequency or fatigue anywhere. The nearest real mechanism — 20.01.03's frequency tiers — caps only fans who chose 'Highlights' (<=1/month) and explicitly admits every permitted send for fans on the default 'All' tier, so it cannot produce the same-day deferral 20.03.03 describes.",
+      "evidence": "20.03.03-send-scheduling-throttling.md:61 — '| Two campaigns scheduled to overlapping segments in the same window | Both would buzz the same fan. A per-fan **frequency cap** (owned outside this node) governs: the second message is deferred or suppressed for the overlapping fans ... | \"1,090 fans already got a message today — deferred for them.\" |'  AND 20.03.03-send-scheduling-throttling.md:93 — '- **Gated by** per-fan **frequency capping** (owned in [20.02 Segmentation & Superfan Intelligence](../20.02-segmentation-superfan-intelligence/)) — this node checks the cap at dispatch and defers/suppresses over-limit fans (DT-04); it does not set the cap. `-cx.md` frequency-fatigue thread.'  AND DT-04 at 20.03.03-send-scheduling-throttling.md:81 — 'This node **consumes** the frequency cap as a gate at dispatch ... but does not own the policy — that lives with segmentation/fan-fatigue.'  Verification: `grep -rn \"frequency|fatigue\"` over the whole domain returns zero hits in any 20.02 file and zero hits in 20.03-broadcast-fan-messaging-cx.md; the only real mechanism is 20.01.03-fan-preference-centre.md:49-50 — '| **All** (default) | Every marketing send the entity is otherwise permitted to make | — | The unchanged relationship. | ... | **Highlights** | At most **1 marketing email per calendar month** from this entity |'.",
+      "forcedInvention": "The entire cap policy the dispatch gate is specified to consume: its window (the edge case implies a daily one), its limit, its scope (per entity or platform-wide), and which spec owns it. Both cited homes ('20.02', the '-cx.md frequency-fatigue thread') are empty.",
+      "failureScenario": "An artist schedules a tour announcement and a merch drop to overlapping Manchester segments on the same afternoon. Implementer A finds no cap anywhere, ships no gate, and 1,090 fans receive two messages within an hour — the outcome 20.03.03 states must not happen. Implementer B invents a cap (say one marketing message per fan per entity per 24h) and silently suppresses the second campaign for those fans, breaking 20.01.03's 'All' tier promise that every permitted send is delivered. Neither can point to a rule."
+    },
+    {
+      "findingId": "20-fanbase-direct-to-fan#004",
+      "unit": "20-fanbase-direct-to-fan",
+      "severity": "warning",
+      "dimension": 3,
+      "claim": "The domain CX file's vault-lapse edge (CX-14) states that membership-gated vault items lock the instant a membership lapses and that the library must never show an unlocked state after a lapse, while the two owning feature files and the library feature all state the opposite interim rule: items released/opened while the fan was paying stay accessible and only future items lock. CX-14 defers only the narrower 'previously downloaded copies' half to 20.05.02 Q-01, so the divergence on accessible-but-not-downloaded items is unmarked on both sides.",
+      "evidence": "fanbase-direct-to-fan-cx.md:340-341 (CX-14) — 'Membership-gated vault items ([20.05.02](...)) **lock the instant a membership lapses**, and that lock is *felt in the fan's library*'  AND fanbase-direct-to-fan-cx.md:356 (CX-14 synthesis Q2) — 'Must be atomic-enough that the library never shows a stale *unlocked* state after a lapse — fail-closed to locked on ambiguity.'  VS  20.05.02-exclusive-content-vault.md:73 — 'until ratified, the safe default is no retroactive removal (matches D-05); items opened while entitled stay accessible.'  AND 20.05.01-membership-tiers-benefits.md:78 — 'so a lapsed fan keeps what they opened and loses only future items.'  AND 20.06.03-fan-library-collection.md:120 — 'on lapse, per [20.05.02](...) DT-02's leaning, items **released while the fan was paying stay accessible** and future items lock.'",
+      "forcedInvention": "What the library renders for a member-gated vault item the fan opened last year, the day after their membership lapses: locked with 'Renew to access', or still playable.",
+      "failureScenario": "A member of two years lapses on a failed card. Implementer A follows CX-14 and locks every membership-gated row at the lapse event; implementer B follows 20.05.02/20.06.03 and keeps the twelve months of demos the fan already opened playable. A produces exactly the 'lost a year of demos, feels robbed' outcome 20.05.02 DT-02 identifies as the churn-and-trust failure; B produces the 'library shows an unlocked state after a lapse' condition CX-14 says must never occur."
+    },
+    {
+      "findingId": "20-fanbase-direct-to-fan#005",
+      "unit": "20.01-fan-graph-owned-audience",
+      "severity": "warning",
+      "dimension": 0,
+      "claim": "The consent tuple carries three purposes (marketing / transactional / service) and the artist can configure reliance on all three, but the send-resolution model defines a four-value campaign purpose-type enum (transactional / general / release / live-event-geo) in which nothing maps to `service`. A `service` grant or revocation therefore gates nothing that this domain can send, while 20.01.02 DT-04 insists the purposes are orthogonal and non-substitutable.",
+      "evidence": "20.01.02-consent-legal-basis.md:23 — 'Selects, per channel (email / SMS / push), which purposes (marketing / transactional / service) they intend to rely on'  AND 20.01.02-consent-legal-basis.md:38-39 — 'which channel it covers (email, SMS, or push), which purpose it authorises (marketing, transactional, or service)'  AND DT-04 at 20.01.02-consent-legal-basis.md:115 — 'they are **orthogonal**, not nested. A `marketing` grant does not imply a right to send `service` messages'  VS the resolution rules, 20.01.03-fan-preference-centre.md:57-63 — 'each campaign carries a purpose-type — `transactional`, `general`, `release`, or `live-event-geo` ... (1) `transactional` always passes ... (2) marketing passes only if ... A campaign left **untagged defaults to `general`**'  (no branch, mapping or default exists for `service`; 20.01.02 Q-03 tracks only 'the line between `transactional` and `marketing`').",
+      "forcedInvention": "Which campaign purpose-type (if any) resolves against a `service` consent grant, and what a `service` revocation suppresses. An implementer must either fold `service` into transactional (contradicting DT-04) or leave a consent dimension that can never be exercised.",
+      "failureScenario": "A fan revokes `service` on email while keeping `transactional`. Implementer A treats service messages as transactional and keeps sending them (the fan's revocation does nothing); implementer B blocks a class of message that no campaign tag can produce (the revocation is inert either way). The artist's configuration screen, which offers `service` as a purpose to rely on, is unbuildable as specified."
+    },
+    {
+      "findingId": "20-fanbase-direct-to-fan#006",
+      "unit": "20.01-fan-graph-owned-audience",
+      "severity": "warning",
+      "dimension": 0,
+      "claim": "The Highlights frequency tier is defined per-email in its Admits column and per-send in its Suppresses column, with no rule for the multi-channel case the same domain explicitly supports (email / SMS / push, one message per fan per campaign on the fan's preferred channel).",
+      "evidence": "20.01.03-fan-preference-centre.md:50 — '| **Highlights** | At most **1 marketing email per calendar month** from this entity | The 2nd+ marketing send in a month is **dropped, not queued** | \"Monthly digest\". Cap is per-entity, not global. |'  AND D-05 at 20.01.03-fan-preference-centre.md:163 — 'Frequency tiers are **All / Highlights (<=1 email/month) / ...**, orthogonal to per-channel toggles'  read against 20.03.02-channel-routing-bulk-delivery.md:59 — 'One message on the **fan-preferred** channel (D-06) ... Never three copies.'",
+      "forcedInvention": "Whether the Highlights cap counts sends per channel or across channels — i.e. whether a Highlights fan whose preferred channel is SMS is capped at one marketing SMS per month, is uncapped on SMS, or shares one monthly allowance across email and SMS.",
+      "failureScenario": "An artist on a Highlights-tier fan's list sends a release campaign on 3 March and a tour campaign on 20 March; the fan's preferred channel is SMS. Implementer A reads 'email' literally and delivers both SMS messages; implementer B reads 'send' and drops the second. The fan either gets the monthly cap they chose or does not, from the same spec row."
+    },
+    {
+      "findingId": "20-fanbase-direct-to-fan#007",
+      "unit": "20.03-broadcast-fan-messaging",
+      "severity": "warning",
+      "dimension": 3,
+      "claim": "20.03.02's Behavior section states as current fact that the platform declares web as the only surface with mobile still open, and concludes that push is a channel the domain mostly cannot use — while the same file's Q-04 records that decision as taken (D-28: v1 is web + PWA with web push, native in phase 2) and its own happy path routes 40 recipients to push. The stale premise is unmarked and is quoted onward by 20.05-cx CX-03 and 20.06.02.",
+      "evidence": "20.03.02-channel-routing-bulk-delivery.md:40-44 — 'Push is only available where the fan has an app — and `meta/constraints.md` declares **web as the only surface**, with mobile an open question. Web push exists but is weak on iOS. This means push is, today, a channel this domain mostly cannot use.'  VS the same file's Q-04 at line 119 — '**RESOLVED** — yes, and the decision was taken. `meta/constraints.md` § Project Surfaces now declares **Mobile (PWA)** in **v1** (\"web is installable as a PWA (home-screen, web push for gig alerts…)\") ... So push is not lost: it arrives in v1 as PWA web push'  AND the same file's happy path at line 49 — 'channel chosen (2,890 email, 410 SMS, 40 push)'.  Verified against meta/constraints.md § Project Surfaces, Mobile (PWA) row: '**v1**: web is installable as a PWA (home-screen, web push for gig alerts ...)'.",
+      "failureScenario": "A planner reading Behavior descopes push from the broadcast channel set for v1 ('a channel this domain mostly cannot use') and builds a two-channel router; a planner reading Q-04 and constraints.md builds three, because PWA web push is the v1 delivery channel for the gig-alert product that domain 20.06 depends on. The same file supports both reads and the Role Matrix, happy path and channel table all assume push exists."
+    },
+    {
+      "findingId": "20-fanbase-direct-to-fan#008",
+      "unit": "20.04-direct-to-fan-storefront",
+      "severity": "warning",
+      "dimension": 0,
+      "claim": "Two [DEEP] sibling files, both last updated 2026-07-22, bind the payout plan version at different moments of the payment lifecycle: 20.04.04 binds at payment authorization (stated four times, including a decision-grade edge case), 20.04.03 binds at payment settlement and says the entitlement records that version. 20.04.01 D-02 uses a third, vaguer phrase ('the plan version at sale time'). Authorization and settlement are distinct instants, and the whole point of the rule is which split version pays real people.",
+      "evidence": "20.04.04-d2f-revenue-split-payout.md:115 — 'Prior sales pay the plan version live at their payment authorization; later sales pay the new. Each sale is locked to the split version live at the moment it is authorized — a domain 09 edit mid-checkout does not re-bind an in-flight sale.'  AND 20.04.04:99 — 'Split applied at payment authorization against the plan version live at that instant'  AND 20.04.04:121 — 'the accrual applies the split version that was live when the sale was authorized'  VS  20.04.03-digital-sales-name-your-price-bundles.md:108 — '| **Split changes between add-to-cart and settlement (a dispute resolves mid-checkout)** | The payout plan **version** is bound at **payment settlement**, not at add-to-cart, and the entitlement records that version. |'  AND the third phrasing, 20.04.01-storefront-product-catalog.md:192 (D-02) — 'the plan **version at sale time** governs each sale'.",
+      "forcedInvention": "Which instant binds the plan version — authorization or settlement — for a sale whose split changes in between.",
+      "failureScenario": "A rights dispute resolves in domain 09 at 14:02; a fan's card was authorized at 14:00 and the charge settles at 14:05. Implementer A pays the pre-dispute split (authorization); implementer B pays the post-dispute split (settlement). Two different collaborators receive the money, and the payee statement — which both files require to name the governing version — asserts a different version in each build."
+    },
+    {
+      "findingId": "20-fanbase-direct-to-fan#009",
+      "unit": "20.06-fan-experience-discovery",
+      "severity": "warning",
+      "dimension": 7,
+      "claim": "20.06.02's Open Questions table contains two different rows both numbered Q-04 — one live [OWNER] question (are the 25 mi alert radius and 20.01.03's 50 mi radius one setting or two?) and one resolved row (multi-artist aggregate alerts) — and two decisions in the same file reference 'Q-04' without disambiguation, so the tracking cannot be resolved to a single question.",
+      "evidence": "20.06.02-gig-alerts-near-me.md:127 — '| Q-04 | **[OWNER]** **Per DQ-04.07 / D-06 — is the alert radius the same setting as `20.01.03`'s?** ... | User | `/create-prd` |'  immediately followed by 20.06.02-gig-alerts-near-me.md:128 — '| Q-04 | ✅ Resolved Step 5 → D-07. One aggregate, event-keyed alert ... | Agent | Resolved |'.  The ambiguous references: D-06 at line 116 — 'so this needs an explicit owner ruling on whether alert radius and the 20.01.03 radius are one setting or two. See Q-04.'  and D-07 at line 117 — 'A multi-artist single event is one aggregate alert, not one per artist | Resolves Q-04.'",
+      "failureScenario": "A downstream stage collecting unresolved [OWNER] questions for /create-prd greps 20.06.02 for Q-04, finds a row marked 'Resolved', and drops the live radius-reconciliation question — the one the file itself calls a recorded contradiction needing an owner ruling. The 25 mi vs 50 mi radius conflict then reaches implementation unarbitrated despite having been correctly identified."
+    },
+    {
+      "findingId": "20-fanbase-direct-to-fan#010",
+      "unit": "20.02-segmentation-superfan-intelligence",
+      "severity": "warning",
+      "dimension": 3,
+      "claim": "The segment builder's dimension table routes the Membership family's source to domain 20.04 (the storefront). Membership tier, join date and lapse state are owned by 20.05.01; 20.04 contains no membership state at all, and the sub-domain's own CX file correctly cites 20.05 for the same data.",
+      "evidence": "20.02.01-segment-builder.md:44 — '| **Membership** | tier / joined-since date / active vs lapsed (no activity in N days) | 20.04 |'  VS the correct owner, 20.05.01-membership-tiers-benefits.md:26-28 — 'What lives here is what a music membership *is*: a ladder of tiers, each granting entitlements'  AND the sibling CX row, 20.02-segmentation-superfan-intelligence-cx.md:18 (CX-07) — 'Membership state is owned by [20.05.01](../20.05-memberships-patronage-campaigns/20.05.01-membership-tiers-benefits.md) (billing engine is CX-M24); the score reads it.'",
+      "failureScenario": "An implementer specifying the segment builder's membership conditions follows the cited source and reads 20.04's four storefront files, which define product kinds, price rules, merch variants and payout plans and contain no tier, join-date or lapse state. They either invent a membership model inside the storefront or stall on a dimension family the spec says is settled."
+    }
+  ]
+}

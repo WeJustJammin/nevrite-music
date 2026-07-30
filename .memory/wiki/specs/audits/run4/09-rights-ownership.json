@@ -1,0 +1,170 @@
+{
+  "domain": "09-rights-ownership",
+  "unitsAudited": 7,
+  "filesRead": 40,
+  "coverageNote": "Enumeration from disk matched the expected 7 units / 40 files exactly. Units: the domain directory itself (rights-ownership-index.md + rights-ownership-cx.md) plus 09.01-rights-registry (8 files), 09.02-split-capture-agreements (6), 09.03-chain-of-title-lifecycle (8), 09.04-rights-conflicts-disputes (5), 09.05-ai-voice-likeness-consent (5), 09.06-rights-evidence-public-record (6). Every file was read in full; no sampling. Dimensions 2 (Persona Specificity), 5 (Success Measurability) and 6 (Competitive Positioning) are N/A on most units: personas are referenced-never-redefined from meta/personas.md by explicit convention, product success metrics live in vision.md / moscow-ledger.md, and competitor analysis lives in meta/competitive-landscape.md. Dim 5 is scored on 09.02 (which carries a genuinely testable 8-interaction/90-second design budget) and dim 6 on 09.06 (which names Jaxsta, Muso.AI and Sound Credit with a specific capability gap and a defensible moat). Several findings are cross-unit contradictions where two units each hold one side; each is reported once, attributed to the unit holding the statement that most implementers would treat as authoritative, and the counterpart unit is scored for the divergence.",
+  "units": [
+    { "unit": "09-rights-ownership (domain root)", "applicableCheckpoints": 5, "points": 0.5, "naDimensions": [2, 5, 6] },
+    { "unit": "09.01-rights-registry", "applicableCheckpoints": 5, "points": 1.5, "naDimensions": [2, 5, 6] },
+    { "unit": "09.02-split-capture-agreements", "applicableCheckpoints": 6, "points": 0.5, "naDimensions": [2, 6] },
+    { "unit": "09.03-chain-of-title-lifecycle", "applicableCheckpoints": 5, "points": 0.5, "naDimensions": [2, 5, 6] },
+    { "unit": "09.04-rights-conflicts-disputes", "applicableCheckpoints": 5, "points": 0.5, "naDimensions": [2, 5, 6] },
+    { "unit": "09.05-ai-voice-likeness-consent", "applicableCheckpoints": 5, "points": 0.5, "naDimensions": [2, 5, 6] },
+    { "unit": "09.06-rights-evidence-public-record", "applicableCheckpoints": 6, "points": 0.5, "naDimensions": [2, 5] }
+  ],
+  "findings": [
+    {
+      "findingId": "09-rights-ownership#001",
+      "unit": "09.01-rights-registry",
+      "severity": "blocking",
+      "dimension": 3,
+      "claim": "A work-for-hire / fee contributor is specified as a retained 0% ledger row by 09.01.02 and as absent from the ledger entirely by all four files in 09.02. Both statements are unmarked and cannot both hold.",
+      "evidence": "09.01.02-ownership-ledger-validation.md:56 INV-6 — \"Zero rows are rows | All | A 0% party (work-for-hire contributor, non-featured performer) is a valid row and is not pruned. Absence and zero are different statements\"; :188 — \"Party listed with 0% | Valid and important (INV-6) — a work-for-hire contributor or non-featured performer is a real 0% party. | Row shown with '0% — paid by fee, not by share' ... Not pruned, not hidden.\"; :260 — \"WFH is why INV-6 exists. A 0% row that says 'paid by fee' is the difference between a contributor who was paid and a contributor who was forgotten.\" AGAINST 09.02.03-work-for-hire-buyout.md:48 — \"Extinguishment (no beneficiary) | ... | Nothing moves. They are absent from the ledger by agreement\"; :70 — \"Records the party's absence from — or another party's presence on — the ownership ledger. They are not a 0% row by accident\"; :176 DT-01 — \"A WFH party should be a 0% row in the ledger rather than absent from it ... a bare 0% row cannot [distinguish 0%-by-agreement from 0%-because-nobody-said]\"; 09.02.04-split-amendment-reconsent.md:149 — \"An amendment cannot produce a 0% row.\"; :277 D-14 — \"An amendment cannot produce a 0% row; zeroing a party is removal-by-agreement or a WFH designation\"; 09.02.01-moment-of-creation-split-capture.md:252 D-09 — \"A bought-out drummer is not a ledger party ([09.02.03] removes fee parties from the ledger)\"; 09.02-split-capture-agreements-cx.md:10 CX-01 — \"Designating someone WFH removes them from the ledger and replaces their share with a fee obligation.\"",
+      "forcedInvention": "Whether the WFH contributor is a party of the ledger — which decides whether they are inside whole-ledger consent (09.01.02 D-01), whether they see every other party's percentages (09.02.01 D-09 says they must not), whether they are in the ledger-change notification fan-out, and whether they are a required consenter on every future amendment (09.02.04 consent set)."
+    },
+    {
+      "findingId": "09-rights-ownership#002",
+      "unit": "09.01-rights-registry",
+      "severity": "blocking",
+      "dimension": 3,
+      "claim": "09.01.01 D-07 makes an edit-of / remaster-of / alternate-take-of recording share its parent's consented master ledger by reference, while 09.01.02 defines a ledger as attached to exactly one rights object and opens a fresh unallocated ledger on every object creation. The file itself flags the reconciliation as unfinished and the flagged milestone has already passed.",
+      "evidence": "09.01.01-work-recording-duality.md:91 — \"Inheritance is by reference, not by copy: an `edit-of` shares its parent's consented master ledger until someone forks it, at which point it becomes an independent ledger requiring its own consent.\"; :390 D-07 — \"Lineage kinds that add no new party (`edit-of`, `remaster-of`, `alternate-take-of`) inherit the parent's consented master ledger by reference ... Obliges 09.01.02 — flagged for Step 6.\"; :363 — \"(b) is the live one — 09.01.02 D-01 says consent is to the whole ledger, and inheritance means a ledger consented once is now binding on a second object. This file's position: the parties are unchanged by construction, so no new consent is owed; if 09.01.02 disagrees, the radio edit costs five signatures and capture loses.\" AGAINST 09.01.02-ownership-ledger-validation.md:35 — \"A ledger is a set of `(party, pool, role, contribution-basis, share, consent-state, entered-by)` rows attached to exactly one rights object.\"; :152 — \"A rights object is created ([09.01.01]); its ledger opens in `unallocated` with zero rows\". 09.01.02 contains no mention of lineage inheritance anywhere, including in its Cross-Cut Note to 09.01.01 (:253), and no open question in either file covers it.",
+      "forcedInvention": "Whether a radio edit / remaster / alternate take is created with its own empty `unallocated` ledger (blocking release and licensing until re-consented by all parties) or resolves reads through the parent's consented ledger. No owner and no deferral target exists for the unreconciled obligation; the stated target (Step 6) has already run — the 09.01 and domain CX files are both labelled as Step-6 syntheses."
+    },
+    {
+      "findingId": "09-rights-ownership#003",
+      "unit": "09-rights-ownership (domain root)",
+      "severity": "blocking",
+      "dimension": 3,
+      "claim": "The domain CX states that a term-limited buyout's scheduled reversion is notify-not-execute, while 09.03.02 D-02 states that fixed-term reversion auto-executes and D-04 requires the chain and registry ownership rows to update atomically. Both cite domain D-05 as their authority.",
+      "evidence": "rights-ownership-cx.md:238 CX-09 — \"Buyout/WFH designation at capture → chain transfer event + registry row move (sync, atomic). A term-limited buyout additionally schedules a future reversion event (async, notify-not-execute).\" AGAINST 09.03.02-term-territory-reversion.md:99 D-02 — \"Conditional reversion: notify, never auto-execute. Fixed-term reversion: auto-execute | Interpreting a clause is a judgement the platform can get wrong; a date passing is arithmetic.\"; :101 D-04 — \"Reversion writes to the chain and the registry atomically\"; :36 — \"Term expiry produces a reversion event with no actor — the passage of time writes to the chain\". Domain D-05 (rights-ownership-index.md:116) is the shared authority both cite: \"Arithmetic (a date passing) executes; interpretation notifies.\" 09.02.03-work-for-hire-buyout.md:130 takes the CX side: \"Term-limited buyout reaches its expiry | ... Routes to [09.03.02], which per [09 D-05] notifies rather than executes\".",
+      "forcedInvention": "Whether a bought-out contributor's share returns to them automatically on the buyout's expiry date (with an atomic registry write and a payee change in domain 10) or whether the expiry only emits a notification and the share stays with the acquirer until a human acts."
+    },
+    {
+      "findingId": "09-rights-ownership#004",
+      "unit": "09.06-rights-evidence-public-record",
+      "severity": "blocking",
+      "dimension": 0,
+      "claim": "The public trust badge — the feature the domain calls its only differentiator — is defined by two incompatible three-value enums that the tree explicitly asserts are the same attribute.",
+      "evidence": "09.03.01-chain-of-title-ledger.md:100 D-01 — \"Every event carries a trust level: `platform-witnessed` / `evidence-attached` / `asserted`\". 09.06.04-public-rights-lookup.md:50 — \"Every record shows its trust level — the same attribute as the chain of title ([09.03.01] D-01)\"; :92 DT-03 — \"trust level is the first-class differentiator, inherited from [09.03.01] D-01\". AGAINST rights-ownership-cx.md:25 CX-07 — \"Trust level is defined by the chain (provenance class: captured / asserted / imported) and rendered by the lookup\"; :181 — \"Every rendered record carries its provenance class (captured / asserted / imported, 09.06.04 DT-03 / 09.01.03 DT-08)\"; 09.01.03-master-rights-ownership.md:197-199 defines `captured` / `asserted` / `imported`; :335 Q-08 RESOLVED \"registry-wide\" citing CX-07. `evidence-attached` has no counterpart in the second set and `imported` has none in the first.",
+      "forcedInvention": "Which enum the public badge renders, and how a record that is `evidence-attached` (off-platform transfer with attached evidence) or `imported` (ingested from a DSP/CMS feed) maps into the other vocabulary. CX-07 makes this user-visible and unfakeable (\"the badge is not editable content\"), so the value set is product behaviour, not storage."
+    },
+    {
+      "findingId": "09-rights-ownership#005",
+      "unit": "09.01-rights-registry",
+      "severity": "warning",
+      "dimension": 0,
+      "claim": "09.01.03 states without qualification that every Control Summary block is overridable by an owner, but the action table it governs includes blocks that other units state are not overridable — the dispute freeze and the consent-rule block.",
+      "evidence": "09.01.03-master-rights-ownership.md:159 — \"Every block is overridable by an owner with an attested reason, recorded as a chain event and notified to the encumbrance holder (D-06 below).\"; :316 D-06 — \"Every block is overridable by an owner, attested, recorded, and notified to the holder\". The governed action table includes blocks with no encumbrance holder to notify: :147 \"Release / distribute | ... `unallocated` or `disputed` ledger\"; :153 \"Create an encumbrance | The deterministic recorded master-action consent evaluator\"; :266 \"Disputed / frozen | ... Control Summary blocks every exploitation action naming the dispute\". AGAINST 09.01.03:230-231 which state two of those blocks are absolute — \"An owner attempts to delete an encumbrance | Blocked.\" and \"Minority owner (10%) adds an encumbrance to sabotage a release | Blocked under the default rule.\" — and 09.04.03-rights-freeze-royalty-escrow.md:101 D-02 — \"Nobody can release their own escrow — read-only to all parties | A freeze anyone can lift is a suggestion.\"",
+      "forcedInvention": "The scope of the override. Read literally, a 10% owner overrides the consent-rule block and lands the sabotage encumbrance 09.01.03:231 says is blocked, and any owner overrides the `disputed` block and releases a contested work while its share sits in escrow."
+    },
+    {
+      "findingId": "09-rights-ownership#006",
+      "unit": "09.01-rights-registry",
+      "severity": "warning",
+      "dimension": 3,
+      "claim": "09.01.04 places a publishing ledger with an undeclared publishing position in `proposed`, while its own rule and 09.01.02's Propose gate place the same ledger in `unallocated` with Propose disabled.",
+      "evidence": "09.01.04-publishing-rights.md:196 States — \"Partial | Writers set, one or more publishing positions undeclared | ... Ledger cannot leave `proposed`\"; :182 — \"Work has a writer who is not on WeJammin | Invited stub; ledger stays `proposed`; no publisher row can be anchored to them until they declare\". AGAINST the same file's :162 — \"Publisher rows anchored to W total ≠ W's writer share | Draft saves; the ledger stays `unallocated` and Propose is disabled\"; :148 Happy Path 6 — \"The anchoring invariant validates per writer ... the validator passes; the ledger moves to `proposed`\"; :250 D-05 — \"Invariant: `∀W: Σ(publisher rows anchored to W) = writer_share(W)`\"; 09.01.02-ownership-ledger-validation.md:163 — \"When the pools satisfy INV-1..INV-7, the Propose action unlocks.\" An undeclared writer has zero anchored publisher rows, so the invariant fails and the ledger cannot be `proposed`.",
+      "forcedInvention": "Whether an undeclared publishing position leaves the ledger in the alarm state `unallocated` (which per 09.01.02:134 blocks release, licence and payout and starts no consent chase) or in `proposed` (which starts consent collection and the 'Waiting on N of M' chase)."
+    },
+    {
+      "findingId": "09-rights-ownership#007",
+      "unit": "09.04-rights-conflicts-disputes",
+      "severity": "warning",
+      "dimension": 3,
+      "claim": "Whether a dispute blocks release and licensing is asserted as decided in 09.01.03 and the domain CX, and simultaneously carried as an undecided owner call in two 09.04 open questions that do not acknowledge the assertion.",
+      "evidence": "rights-ownership-cx.md:21 CX-03 — \"`disputed` freezes payouts and blocks every exploitation verdict.\"; :91 — \"`disputed` is a registry state that freezes payouts and blocks every exploitation verdict in a master's Control Summary\"; 09.01.03-master-rights-ownership.md:147 lists `disputed` as a Blocked-by for \"Release / distribute\", :148-149 for granting master licences, and :266 — \"Control Summary blocks every exploitation action naming the dispute\". AGAINST 09.04.03-rights-freeze-royalty-escrow.md:112 Q-04 — \"[OWNER] Does a freeze also block licensing and release of the contested work, or only payment? ... the live-release and licensing halves are an unresolved values trade\"; 09.04-rights-conflicts-disputes-index.md:61 Q-02 — \"[OWNER] Does a dispute make the work unusable (release-blocked, licence-blocked) or only unpaid (escrowed)? ... A values trade, not a derivable fact\".",
+      "failure_scenario": "An implementer building the Control Summary from 09.01.03 ships release and licence blocks on `disputed`; an implementer building the freeze from 09.04.03 leaves both unblocked pending the owner call. The same contested master is releasable in one build and not the other."
+    },
+    {
+      "findingId": "09-rights-ownership#008",
+      "unit": "09.01-rights-registry",
+      "severity": "warning",
+      "dimension": 3,
+      "claim": "Interpolation dilution is stated as automatic pro rata in 09.01.04 and the 09.01 CX, while 09.02.04 — which owns the amendment machinery both route to — makes the dilution basis a proposer choice that is never a silent default.",
+      "evidence": "09.01-rights-registry-cx.md:49 CX-02 — \"declaring an interpolation is a ledger-mutating event: everyone already on the sheet gets diluted pro rata\"; 09.01.04-publishing-rights.md:178 — \"Interpolation declared, diluting writer shares | Writer shares shrink pro rata (CX-02); every anchored publisher row shrinks with its anchor\". AGAINST 09.02.04-split-amendment-reconsent.md:139 — \"The proposer chooses the dilution basis — pro rata across all parties, from named parties, or equal — and the record names who chose it ... it is never a silent default and never the only option\"; :234 DT-07 — \"applying it as a silent default would breach [09.02.01] D-02 in spirit ... The resolution is that pro rata is offered as an arithmetic transform, the proposer picks the dilution basis\". 09.01.06-sample-interpolation-provenance.md routes the mechanism to 09.02.04 and does not restate pro rata.",
+      "failure_scenario": "A sample declared post-release dilutes a four-writer sheet. One build shrinks all four proportionally with no choice offered; the other presents the declarant with a dilution-basis picker that lets them source the whole 20% from one named co-writer. Different parties lose different money from the same declaration."
+    },
+    {
+      "findingId": "09-rights-ownership#009",
+      "unit": "09.01-rights-registry",
+      "severity": "warning",
+      "dimension": 3,
+      "claim": "The 09.01 CX states ledger writes must never be last-write-wins, while 09.01.02 specifies field-level last-write-wins for concurrent draft edits.",
+      "evidence": "09.01-rights-registry-cx.md:42 CX-01 synthesis 5 — \"Two parties editing shares concurrently can produce a ledger that totals correctly but that neither agreed to. Ledger writes must be proposals requiring consent, never last-write-wins.\" AGAINST 09.01.02-ownership-ledger-validation.md:196 — \"Two Producers edit the same draft simultaneously | Field-level last-write-wins within `unallocated` only — nobody has consented, so there is nothing to protect — with every change attributed in a visible edit trail.\" The carve-out is stated only in the feature file; the CX statement is unqualified and is cited as authority by 09.01.01 D-12 (:395) and by 09.01.04:184.",
+      "failure_scenario": "Two producers edit an unallocated draft from the same session. One build silently applies the later keystroke per field; the other rejects the second write and re-presents the decision. The first produces the exact 'a ledger neither agreed to' outcome the CX names, mitigated only by the edit trail."
+    },
+    {
+      "findingId": "09-rights-ownership#010",
+      "unit": "09.01-rights-registry",
+      "severity": "warning",
+      "dimension": 7,
+      "claim": "The Control Summary action table defers takedown governance with no owner and no deferral target, leaving one row of a normative verdict table undecidable.",
+      "evidence": "09.01.03-master-rights-ownership.md:154 — \"Take down / withdraw | An exclusive grant's delivery obligations; separate takedown governance remains unresolved\"; restated at :94 — the majority-by-share rule \"does not replace ... release consent, takedown governance, payout calculation\". No open question in 09.01.03 covers it: Q-04 is territory, Q-05 security interests, Q-06 override remedy, Q-07 asset custody. No Q in the 09.01 index covers it either.",
+      "failure_scenario": "An implementer rendering the Control Summary reaches the 'Take down / withdraw' row and has no rule producing any of the three mandated verdicts. Every available choice is an invention: emit `Unknown` permanently, omit the row (breaking the enumerated action list), or invent a governance rule."
+    },
+    {
+      "findingId": "09-rights-ownership#011",
+      "unit": "09.01-rights-registry",
+      "severity": "warning",
+      "dimension": 0,
+      "claim": "The `captured` provenance class — the badge the domain says carries its entire evidentiary value — is defined with an unquantified temporal qualifier, and a common case falls into neither `captured` nor `asserted`.",
+      "evidence": "09.01.03-master-rights-ownership.md:197 — \"`captured` | All parties consented at or near creation, in the room. The wedge.\"; :198 — \"`asserted` | Entered retroactively by one party; no counterparty consented, because there is none reachable or none joined.\"; :210 Happy Path 8 — \"Every named party consents to the whole master ledger plus its encumbrance list. Provenance class is set to `captured`.\" A ledger consented by all parties three years after creation satisfies neither definition: it is not \"at or near creation\" and it is not \"no counterparty consented\". :279 DT-08 makes the stakes explicit — \"If a retroactive self-assertion about a 20-year-old master renders with the same signed badge as a split four people consented to in the room, then the badge means nothing.\"",
+      "forcedInvention": "The classification predicate — either a time window between fixation and last consent (no value is stated anywhere in the tree) or a consent-completeness test that makes 'at or near creation, in the room' inert. The two rules disagree on late-but-unanimous consent, which is exactly the case DT-08 says the badge exists to separate."
+    },
+    {
+      "findingId": "09-rights-ownership#012",
+      "unit": "09.02-split-capture-agreements",
+      "severity": "warning",
+      "dimension": 3,
+      "claim": "The domain imposes two different, unreconciled notification schedules on the one shared Consent Chase mechanism it declares requirements for.",
+      "evidence": "rights-ownership-cx.md:289 — \"Consent Chase & Escalating Notification | ... Requirements this domain imposes: schedule T+0/1d/3d/7d/14d/30d → monthly to 12mo → quarterly indefinitely; no expiry\"; restated identically at 09.02.01-moment-of-creation-split-capture.md:112-118 and :235. AGAINST 09.02.04-split-amendment-reconsent.md:172 — \"A party is unreachable ... Notices at day 0, day 7, day 21 on every channel on file. At day 45 with zero interaction the proposal is badged `blocked`.\"; :221 States — \"Blocked | 45 days with zero interaction from a required consenter\". Neither file acknowledges the other's cadence, and both are consent chases run by domain 09 over the same shared mechanism.",
+      "failure_scenario": "Amendment consent and capture consent are the same mechanism with two entry points (09.02.01:229 says so explicitly). An implementer building one chase service must pick a cadence; either the capture sheet stops chasing at day 45 or the amendment proposal keeps chasing quarterly forever and never reaches the `blocked` badge its States table requires."
+    },
+    {
+      "findingId": "09-rights-ownership#013",
+      "unit": "09.04-rights-conflicts-disputes",
+      "severity": "warning",
+      "dimension": 0,
+      "claim": "09.04.02's States table promises a response deadline on a dispute, but no deadline value or consequence exists anywhere, and any consequence would contradict the sub-domain's own never-adjudicate spine.",
+      "evidence": "09.04.02-split-ownership-dispute-cases.md:71 States — \"Partial | Asserted, other party has not responded | 'Awaiting X's position' with a deadline\". Nothing else in the file, the sub-domain index or the CX defines it. The same file's :57 states the opposite behaviour — \"Both parties dig in; nobody withdraws | Escrow accumulates on the contested share and does not release ... The share stays frozen until one party withdraws, a court judgment is recorded, or an agreed end-mechanism is chosen\" — and 09.04.03-rights-freeze-royalty-escrow.md:85 DT-03 names a deadline-with-default as \"the platform adjudicating by timeout, wearing a disguise\", left explicitly unsolved at Q-01.",
+      "forcedInvention": "The deadline's length and what happens when it passes. A deadline with a consequence is the adjudication-by-timeout DT-03 forecloses; a deadline with no consequence is a countdown to nothing displayed on a legal record."
+    },
+    {
+      "findingId": "09-rights-ownership#014",
+      "unit": "09.01-rights-registry",
+      "severity": "warning",
+      "dimension": 0,
+      "claim": "09.01.06 declares that it owns the clearance status flag, then names the flag's values three different and non-overlapping ways.",
+      "evidence": "09.01.06-sample-interpolation-provenance.md:16 — \"This feature owns the fact ('this contains that') and the status flag ('cleared / uncleared / pending').\"; :52 Happy Path 3 — \"the status resolves to `cleared-by-licence` automatically\"; :54 step 4 — \"Otherwise, status is `uncleared`\"; :55 step 5 — \"on success the status flips\" (to an unnamed value); :62 — \"Declaration accepted with `source-unknown`\"; :64 — \"Status is `cleared-by-licence` within scope only\". `pending` never reappears; plain `cleared` never appears as a value; whether `source-unknown` is a status or an orthogonal field is never stated. The States table (:71-77) enumerates render states, not status values.",
+      "forcedInvention": "The status enum and its cardinality — whether `cleared-by-licence` and `cleared` are one value or two, whether `pending` exists, and whether `source-unknown` occupies the same axis as `uncleared` (both are stated to be release-blocking, so an implementer cannot tell them apart by effect)."
+    },
+    {
+      "findingId": "09-rights-ownership#015",
+      "unit": "09.05-ai-voice-likeness-consent",
+      "severity": "warning",
+      "dimension": 7,
+      "claim": "The recursive case — a declared AI-generated work entering a training corpus — is deferred with a bare marker carrying no owner, and its only stated target is a workflow stage that has already run.",
+      "evidence": "09.05.03-ai-generated-content-disclosure.md:70 — \"Declared AI work later enters a training corpus | The recursive case: can consent be granted over an output whose inputs are unknown? | `[PENDING]` — CX-04, low confidence, unresolved.\" The referenced CX-04 (09.05-ai-voice-likeness-consent-cx.md:13) is itself a Low-confidence hypothesis — \"the recursive case ... is real but its handling is unresolved\" — and its only deferral target is expired: :69 — \"CX-03 and CX-04 synthesis questions are deferred to `/ideate-discover` Step 5, per the CX gate.\" No open question in 09.05.03 (Q-01 assisted/generated line, Q-02 statutory duty, Q-03 resolved) or in the 09.05 index covers it. The same expired-stage pattern with no owner appears at 09.05-ai-voice-likeness-consent-cx.md:67 for a withdrawn NIL grant after release.",
+      "failure_scenario": "An owner sets a training-consent position on a work whose instrumental is declared AI-generated. 09.05.01 D-01 requires unanimity of all owners of the right, and 09.05.03's type table says AI-generated material is \"likely unprotectable\" — so there may be no owner of that element to grant. The implementer must invent whether the position is grantable, blocked, or partial, with no tracked question to escalate to."
+    },
+    {
+      "findingId": "09-rights-ownership#016",
+      "unit": "09.06-rights-evidence-public-record",
+      "severity": "warning",
+      "dimension": 3,
+      "claim": "ISRC canonicalisation names its decision-makers as the recording's owners and then defines them as the rights holders on the work — two different parties under the domain's own founding axiom.",
+      "evidence": "09.06.01-identifier-issuance-reconciliation.md:52-58 — \"When two ISRCs are found on one recording, the platform does not choose — it surfaces the evidence and lets the recording's owners decide ... The owners (the rights holders on the work per [09.01.01]) confirm the canonical code\". An ISRC identifies a recording (:36 \"ISRC | One recording\"), whose owners are the master pool in 09.01.03; the rights holders on the work are the writers and publishers in 09.01.04. 09.01.01-work-recording-duality.md:18 names the conflation as the domain's most expensive error — \"the single most expensive mistake in the domain is a musician who edits the master split believing they edited the publishing split\" — and :302/:352 (DT-08) ban unifying the two positions in any view.",
+      "failure_scenario": "A recording with two ISRCs is owned 100% by a label that wrote none of the song, with three co-writers on the composition. One build routes the canonical-code confirmation to the label; the other routes it to the three writers, and 'no consensus' escalates to dispute against the wrong party set. D-05 states canonicalisation reassigns royalty streams, so the wrong consent set moves real money."
+    },
+    {
+      "findingId": "09-rights-ownership#017",
+      "unit": "09.01-rights-registry",
+      "severity": "warning",
+      "dimension": 3,
+      "claim": "The live-set suggestion threshold excludes the exact scenario the same table row says it fires on.",
+      "evidence": "09.01.01-work-recording-duality.md:308 — \"Live set recorded as one continuous file containing 12 songs | Supported as a 12-work medley, but the system suggests the better shape first. | Above 12 linked works: 'This looks like a set, not a medley. Splitting it into one recording per song will pay everyone more accurately.' Suggestion only — never forced.\" A 12-work medley is not above 12 linked works, so the suggestion the scenario column promises does not fire under the trigger the user-sees column states.",
+      "failure_scenario": "A user links a 12-song live set. One implementer builds `> 12` and the user gets no suggestion — the documented scenario silently fails. The other builds `>= 12` to satisfy the scenario and the stated trigger is wrong instead."
+    }
+  ]
+}

@@ -1,0 +1,263 @@
+{
+  "domain": "01-identity-profiles-organizations",
+  "treeRoot": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/01-identity-profiles-organizations",
+  "unitsAudited": 7,
+  "filesRead": 38,
+  "coverageNote": "Enumerated from disk: 7 units (the domain directory itself + 6 sub-domain directories, each containing an *-index.md), 38 .md files. Matches the expected 7 units / 38 files exactly; no orphan files outside a unit directory. Every file was read in full through the 3a (implementer simulation) -> 3b (rubric scoring) -> 3c (devil's advocate) cycle. Cross-checks were run against meta/constraints.md (jurisdiction/compliance ratifications D-72 and the US-first revision) because two units cite it normatively; that file is outside this domain and was read only as a referenced constraint, not audited. A programmatic relative-link check found 3 dead cross-domain directory references (01.01.01:181 -> ../../18-show-production/, 01.06.01:191 -> ../../08-real-time-jamming/, 01.06.01:195 -> ../../20-fanbase-community/); these are reference hygiene, not ambiguity that changes what gets built, and are recorded here rather than as findings. Devil's-advocate pass dropped 4 candidate findings that did not survive: (a) 01.01-cx CX-02 co-owner-alias staleness, because 01.01.02:135 explicitly records both sub-questions as dissolved; (b) 01.02-cx CX-03 stale divergent-terminal-state marker, because 01.02.02 D-17/DT-15 resolves it and names the CX file; (c) 01.05.03 D-05 'credits never transfer with a party' vs 01.01.02 D-03's ownership-period model, because the ownership-period model delivers exactly D-05's stated intent; (d) 01.03.03 D-07's decision text omitting the `permanent` qualifier, because the rule table, D-09 and every cross-reference in the tree state it unambiguously.",
+  "dimensionApplicability": {
+    "note": "Dimensions 1 (Problem Clarity), 2 (Persona Specificity) and 6 (Competitive Positioning) are N/A across every unit in this domain: problem-statement.md, personas.md and competitive-landscape.md own them, and every Role Matrix in this tree carries the explicit rule 'NEVER redefine a persona here - reference only'. Dimension 4 (Constraint Explicitness) is applicable only where the unit sets constraint values of its own (the domain root via 01.07/01.08 jurisdiction compliance; 01.02 via 01.02.01 D-14's regime-profile parameterisation; 01.05 via 01.05.01/01.05.02's numeric abuse and challenge defaults) and N/A elsewhere, where the axes are owned by meta/constraints.md and referenced. Dimensions 3, 5, 7 and 8 are applicable in every unit."
+  },
+  "units": [
+    {
+      "unit": "01-identity-profiles-organizations",
+      "files": [
+        "identity-profiles-organizations-index.md",
+        "identity-profiles-organizations-cx.md",
+        "01.07-professional-credential-verification.md",
+        "01.08-trader-status-classification.md",
+        "01.09-party-identifier-resolution.md",
+        "01.10-estates-legacy-accounts.md"
+      ],
+      "applicableCheckpoints": 5,
+      "naDimensions": [1, 2, 6],
+      "scores": {
+        "3": "PASS",
+        "4": "PARTIAL",
+        "5": "PASS",
+        "7": "PASS",
+        "8": "PARTIAL"
+      },
+      "points": 1.0,
+      "notes": "D3 PASS: 10 children, 24 leaf files, Candidate Disposition accounts for all 12 sweep candidates with nothing dropped silently; every leaf has Edge Cases and States tables. D4 PARTIAL: finding #006. D5 PASS: 01.07's 60-day expiry reminder, 01.05-style numeric defaults, 01.09's per-namespace capacity rules all carry units. D7 PASS: Q-01..Q-12 each carry an owner and a deferral target, with resolved ones struck through and sourced; the two `[PENDING - /ideate-validate]` markers in the CX file (lines 77, 187) name a live stage. D8 PARTIAL: finding #010."
+    },
+    {
+      "unit": "01.01-person-identity-roles",
+      "files": [
+        "01.01-person-identity-roles-index.md",
+        "01.01-person-identity-roles-cx.md",
+        "01.01.01-person-record-role-facets.md",
+        "01.01.02-artist-names-aliases-projects.md",
+        "01.01.03-acting-context-switcher.md",
+        "01.01.04-legal-identity-vs-public-identity.md"
+      ],
+      "applicableCheckpoints": 4,
+      "naDimensions": [1, 2, 4, 6],
+      "scores": {
+        "3": "FAIL",
+        "5": "PASS",
+        "7": "PARTIAL",
+        "8": "PASS"
+      },
+      "points": 1.5,
+      "notes": "D3 FAIL: finding #004. D5 PASS: the quantitative surface is exemplary - 60 s undo, 12 h revert, >=8 contexts for type-ahead, 5 pinned max, 5 aliases / 30 days, 2 handle changes / 12 months, 1-100 char display names, 3-30 char handles, 7-day transfer acceptance, 30-day transfer banner. D7 PARTIAL: 01.01-cx CX-04 (line 85) and CX-05 (line 95) defer synthesis questions with no owner, and CX-05's target ('Step 5') is a stage that has completed - malformed tracking, distinct from the substantive contradiction in #004. D8 PASS: index + cx present, Role Matrix populated for all 4 children, Role Lens in every leaf."
+    },
+    {
+      "unit": "01.02-organizations-entity-model",
+      "files": [
+        "01.02-organizations-entity-model-index.md",
+        "01.02-organizations-entity-model-cx.md",
+        "01.02.01-organization-types-attributes.md",
+        "01.02.02-organization-creation-lifecycle.md",
+        "01.02.03-organization-type-transitions.md"
+      ],
+      "applicableCheckpoints": 5,
+      "naDimensions": [1, 2, 6],
+      "scores": {
+        "3": "PARTIAL",
+        "4": "PASS",
+        "5": "PASS",
+        "7": "PARTIAL",
+        "8": "PASS"
+      },
+      "points": 1.0,
+      "notes": "D3 PARTIAL: finding #005. D4 PASS: 01.02.01 D-14 parameterises `constrained` authority against a named regime profile, authors the US launch profile only, and resolves every unauthored profile to explicit `unknown` rather than a silent default - the constraint axis carries a specific value and an explicit not-applicable. D5 PASS: freshness cadences 365/182/180/90/30 days, detection budget P95 < 500 ms with a 2 s hard bound, anti-abuse >3/24 h and >10 lifetime. D7 PARTIAL: 01.02-cx carries four expired deferral markers (lines 34, 35, 66, 80) and one 'Flagged for Step 5' (line 53) pointed at a stage that has completed; three are tracked forward at 01.02.01 Q-04 and 01.02.02 D-17, but the markers themselves carry no owner and no live target. D8 PASS."
+    },
+    {
+      "unit": "01.03-membership-representation-mandate",
+      "files": [
+        "01.03-membership-representation-mandate-index.md",
+        "01.03-membership-representation-mandate-cx.md",
+        "01.03.01-membership-records-lifecycle.md",
+        "01.03.02-representation-roster-relationships.md",
+        "01.03.03-mandate-scope-delegated-authority.md"
+      ],
+      "applicableCheckpoints": 4,
+      "naDimensions": [1, 2, 4, 6],
+      "scores": {
+        "3": "FAIL",
+        "5": "PASS",
+        "7": "PARTIAL",
+        "8": "PASS"
+      },
+      "points": 1.5,
+      "notes": "D3 FAIL: findings #003, #007, #008. D5 PASS on the quantities that are well-formed - 14-day succession contest window, 180-day departure embargo cap, 3 invite-delivery retries with exponential backoff, two date precisions (instant for authority-bearing transitions, date-only for display). D7 PARTIAL: 01.03-cx CX-03 note 3 carries `[PENDING - Step 5: confirm]` (line 69) against a completed stage, and CX-04 (line 81) defers questions 1 and 5 with no owner and no target; the leaf-level questions (01.03.01 Q-02..Q-05, 01.03.02 Q-01..Q-05, 01.03.03 Q-02..Q-04) are all exemplary, each with owner, target and a statement of what it blocks. D8 PASS."
+    },
+    {
+      "unit": "01.04-band-ensemble-governance",
+      "files": [
+        "01.04-band-ensemble-governance-index.md",
+        "01.04-band-ensemble-governance-cx.md",
+        "01.04.01-partnership-terms-decision-rules.md",
+        "01.04.02-name-trademark-ownership.md",
+        "01.04.03-treasury-mandate.md",
+        "01.04.04-dissolution-succession.md"
+      ],
+      "applicableCheckpoints": 4,
+      "naDimensions": [1, 2, 4, 6],
+      "scores": {
+        "3": "PARTIAL",
+        "5": "PASS",
+        "7": "PARTIAL",
+        "8": "PASS"
+      },
+      "points": 1.0,
+      "notes": "D3 PARTIAL: finding #009. D5 PASS: the unit is deliberately and correctly unquantified - governance thresholds are the band's own, and every illustrative figure in the tree is explicitly marked illustrative with the single platform default (01.03.03 D-08's USD 1,000) named as the only asserted number. That is an explicit not-applicable rather than a vague one. D7 PARTIAL: five expired `[PENDING - Step 5]` markers (01.04.01:51, 01.04.01:52, 01.04.04:46, 01.04.04:48, 01.04.04:49) point at a completed stage; each maps to a properly tracked Q, and the index questions were explicitly re-pointed from the completed /ideate-validate run to /create-prd, so the substance is tracked and only the markers are stale. D8 PASS."
+    },
+    {
+      "unit": "01.05-profile-claiming-verification",
+      "files": [
+        "01.05-profile-claiming-verification-index.md",
+        "01.05-profile-claiming-verification-cx.md",
+        "01.05.01-shadow-party-creation-invitation.md",
+        "01.05.02-claim-initiation-proof-methods.md",
+        "01.05.03-contested-claims-ownership-transfer.md"
+      ],
+      "applicableCheckpoints": 5,
+      "naDimensions": [1, 2, 6],
+      "scores": {
+        "3": "FAIL",
+        "4": "PASS",
+        "5": "PASS",
+        "7": "PARTIAL",
+        "8": "PASS"
+      },
+      "points": 1.5,
+      "notes": "D3 FAIL: finding #002. D4 PASS: every numeric default is stated with its basis and explicitly labelled agent-set and overridable per decision-classification.md (01.05.01 line 68). D5 PASS - the strongest quantitative surface in the domain: Tier 0/1 dispatch 10 and 100 per rolling 24 h, >=2 unrelated attesters for independent promotion, 3 dispatch attempts at day 0/3/14 with a lifetime cap of 6, 24 h retraction window, 6-digit single-use codes valid 15 minutes (30 days postal) with 5 attempts, 5 code requests/route/hour and 15/24 h, 5 claims/account/24 h and 20/30 days, 400 ms suggestion budget, 14-day incumbent timeout, 1 open contest per target and 3 per 90 days, proposed reversibility windows of 30 days (person) and 14 days (org). D7 PARTIAL: 01.05-cx CX-04 note 5 (line 93) leaves an attester's evidentiary weight during their own contest unspecified against an expired 'Step 5' target and is not picked up anywhere downstream; the other three CX pendings are all answered (01.05.02 section 4 closes CX-02 note 3, section 6 closes CX-01 note 4, and line 147 closes CX-03 note 5). D8 PASS."
+    },
+    {
+      "unit": "01.06-portfolio-media-epk",
+      "files": [
+        "01.06-portfolio-media-epk-index.md",
+        "01.06-portfolio-media-epk-cx.md",
+        "01.06.01-profile-page-composition.md",
+        "01.06.02-credit-backed-portfolio.md",
+        "01.06.03-epk-generation-sharing.md"
+      ],
+      "applicableCheckpoints": 4,
+      "naDimensions": [1, 2, 4, 6],
+      "scores": {
+        "3": "FAIL",
+        "5": "PASS",
+        "7": "PARTIAL",
+        "8": "PASS"
+      },
+      "points": 1.5,
+      "notes": "D3 FAIL: finding #001. D5 PASS: 60-second publish-on-release, truncation stated with an explicit total ('Showing 20 of 412'), <=3 primary role families, rung labels sourced to 02.04.02. D7 PARTIAL: finding #011, plus 01.06-cx CX-04 (line 86) deferring questions 1, 3 and 5 to a completed stage with no owner - though its substance was subsequently resolved at 01.06.01 D-13 and 01.06.02 D-07. D8 PASS: index + cx present, Role Matrix populated, Role Lens in every leaf; 01.06.01 Q-03 explicitly closes the 'does the reel need a fourth child' structural question against the actual folder tree."
+    }
+  ],
+  "findings": [
+    {
+      "findingId": "01-identity-profiles-organizations#001",
+      "unit": "01.06-portfolio-media-epk",
+      "severity": "blocking",
+      "dimension": 3,
+      "claim": "Whether the public portfolio names the attester of each credit is specified in two mutually exclusive ways inside one sub-domain, with no marker on either. 01.06.02 D-02 forbids publishing attester identity to anyone under any circumstances; 01.06.01 and 01.06.03 both specify naming the attester as normative rendering, including to an unauthenticated stranger.",
+      "evidence": "01.06.02-credit-backed-portfolio.md:63 — table row: \"| **Attester identity** | ❌ **Never, at any tier, to any viewer including authenticated professionals** | `02.01.02` DT-04 |\". 01.06.02-credit-backed-portfolio.md:211 — D-02: \"**Evidence class and count publish; attester identity never does — at any tier, to any viewer.** Co-contributors are public (a collaborator is not an attester)\". 01.06.02-credit-backed-portfolio.md:117 — Happy Path step 6: \"Booker sees the work, and sees **how well it is known**: \\\"Confirmed by 3 people who were there.\\\" Not who.\" — CONTRADICTED BY — 01.06.01-profile-page-composition.md:97 — Happy Path step 8: \"Record: 30 works, each showing what this person did on it and **who said so**. They stop reading at the fifth credit and send a message.\"; 01.06.01-profile-page-composition.md:41 — provenance-state table: \"| **Attested** | A named other party said it, on the record, at the time | Nobody on this page — only the attester, via domain 02 |\"; 01.06.01-profile-page-composition.md:135 — Edge Case 'Reel clip laundering' User Sees column: \"\\\"Tambourine — 'Song', attested by Sam Reeves\\\". Cheap, and it closes the laundering\"; 01.06.03-epk-generation-sharing.md:42 — Happy Path step 5: \"Promoter opens it on their phone. Credits are cited, not claimed — they can see who attested each one.\"",
+      "failureScenario": "Implementer A builds the Record layer and the EPK from 01.06.01/01.06.03 and renders each credit as \"Drums on 'Song' — attested by Sam Reeves\". Implementer B builds them from 01.06.02 D-02 and renders \"Drums on 'Song' — confirmed by 3 people who were there\". These are different products on the platform's most-visited surface. The 01.06.03 case is the worst instance: D-03 requires the EPK to work for \"a recipient with no account, on a phone\" and D-06 makes the per-recipient link \"a tracking wrapper over public content, not an access gate\", so building it per 01.06.03 step 5 publishes the full attester graph to any forwarded stranger — precisely the outcome 01.06.02 D-02 says \"hands a scraper the moat\" and \"turns a private act into a public endorsement\". 01.06.01 D-18 is worse still: it makes the attester's name part of the reel caption, which 01.06.01 DT-08 separately identifies as the caption that \"identifies the infringing use, the work, and the rightsholder to serve\". No file carries a marker, a deferral or a superseding note; 01.06.02 (updated 2026-07-23) simply post-dates 01.06.01 and 01.06.03 (2026-07-16 and 2026-07-17) and the reconciliation was never propagated."
+    },
+    {
+      "findingId": "01-identity-profiles-organizations#002",
+      "unit": "01.05-profile-claiming-verification",
+      "severity": "blocking",
+      "dimension": 0,
+      "forcedInvention": "What a provisional owner may do when adding a member to a band party — whether member-adding is barred outright, whether added members are exempted from the ratified peer seed, or whether the seed applies and the stated prohibition is simply violated. No text in the tree decides it.",
+      "claim": "01.05.02's provisional-control powers table permits adding members without signing authority and, in the adjacent cell, forbids adding a member with one. For a band party those two cells are jointly unsatisfiable, because 01.03.03 D-07's ratified peer seed grants `sign` automatically to every confirmed permanent member.",
+      "evidence": "01.05.02-claim-initiation-proof-methods.md:80 — the powers table row, both cells: \"| Add members/mandates **without** signing authority | Grant a **signing mandate** or add a member with one (01.03) — a laundering route |\". 01.05.02-claim-initiation-proof-methods.md:231 — D-08: \"**Provisional control may do anything the platform can undo, and nothing it cannot** | DT-07. Closes the gap left open at sub-domain CX-02 note 3. A derivation rule, not a list\". — CONTRADICTED BY — 01.03.03-mandate-scope-delegated-authority.md:40 — the ratified default rule table: \"| **Peer seed** (D-07) | Every **`confirmed`** membership edge whose current capacity period is `permanent` carries the **full seven-activity set**\"; 01.03.03-mandate-scope-delegated-authority.md:47 — \"**Confirmation is the moment authority arrives.** ... acceptance now *is* a grant of authority\"; 01.03.03-mandate-scope-delegated-authority.md:25 — the seven activities: \"a closed set of **seven**: book / sign / spend / list / release / settle / administer (D-01, ratified at DQ-02.3)\".",
+      "failureScenario": "A provisional owner of a band party (granted on Tier B proof from a single attester — 01.05.02 D-07) invites a confederate as a permanent member. The confederate confirms. Under 01.03.03 D-07 the confirmation seeds them with all seven activities including `sign` and `administer`, so the provisional owner has done exactly what 01.05.02's own table calls \"a laundering route\", using only the permission the same table grants. The confederate can then sign and administer before the 01.05.03 reversibility window closes, and 01.05.03 D-03's reversibility — the sole reason 01.05.02 D-02 can offer weak-but-fast proof at all — no longer bounds the blast radius. An implementer must invent one of three unstated rules to proceed: bar provisional owners from adding members entirely (breaking nothing stated but contradicting the 'may' cell), exempt provisional-added members from the peer seed (inventing a second seeding model), or add members only at `touring`/`staff` capacity (an inference no text makes — 01.03.03 D-09 keys the seed to capacity but nothing connects that to provisional control). Nothing in 01.05.02's Open Questions, 01.05.03's, or 01.03.03's covers this: 01.05.02 was last updated 2026-07-16, before the DQ-02.4 seed ratification, and was never revisited."
+    },
+    {
+      "findingId": "01-identity-profiles-organizations#003",
+      "unit": "01.03-membership-representation-mandate",
+      "severity": "blocking",
+      "dimension": 0,
+      "forcedInvention": "How the USD 1,000 per-act value ceiling applies to an act that carries no monetary value — whether unvalued acts are treated as zero-value (always permitted), as unbounded (always escalated), or are exempt from the ceiling entirely. Four of the seven seeded verbs routinely have no monetary value, and the ceiling is their only stated bound.",
+      "claim": "The ratified band default bounds all seven seeded activities by a per-act figure denominated in money, but `administer`, `list`, `release` and non-monetary `book` acts have no monetary value, and no text defines how the bound resolves for them. The tree then states the unbounded reading as fact in three places without ever deriving it.",
+      "evidence": "01.03.03-mandate-scope-delegated-authority.md:41 — the ceiling rule: \"| **Value ceiling** (D-08) | Seeded authority is capped at **USD 1,000 per act**, configurable per band. Acts above the ceiling escalate to the owning-mandate holder, who is uncapped | Band orgs |\". 01.03.03-mandate-scope-delegated-authority.md:48 — stated with no ceiling qualification at all: \"**The seed includes `administer`.** Any confirmed permanent member can therefore alter another member's mandate, invite, and remove.\" 01.03-membership-representation-mandate-cx.md:35 — CX-01 note 3, also unqualified: \"**Widened by 01.03.03 D-07**: in a band, `administer` is seeded on every confirmed permanent edge, so the recursion is peer-to-peer rather than creator-down — any permanent member may alter any other's mandate.\" 01.03.02-representation-roster-relationships.md:46 — the opposite framing, ceiling applied to a non-monetary act: \"for a band, *any* `confirmed` `permanent` member can accept, because `sign` and `administer` are seeded — subject to the USD 1,000 per-act ceiling, above which it escalates to the uncapped owning-mandate holder\". 01.03.03-mandate-scope-delegated-authority.md:64 — the escalation edge case presumes every act has a comparable value: \"| Action exceeds the mandate's value ceiling | Blocked at the call site (cross-cut) and **escalated** ... every seeded mandate carries the USD 1,000 ceiling, so there is always a threshold to exceed |\".",
+      "failureScenario": "A four-piece band runs on the default. The drummer opens the people surface and removes the guitarist from the band. Implementer A, reading 01.03.03 line 48 and 01.03-cx line 35 literally, permits it: removal has no monetary value, the ceiling cannot be exceeded, so any permanent member may remove any other. Implementer B, reading 01.03.02 line 46's framing that even accepting representation is 'subject to the USD 1,000 per-act ceiling', treats an unvalued act as unbounded and escalates it to the uncapped owning-mandate holder — so only the band's creator can remove anyone. The same divergence decides whether any permanent member can unilaterally appoint the band's manager for two years worldwide (01.03.02 Happy Path), publish a release (`release`), or add a `shop` type and thereby incur statutory trader duties (01.02.03 / 01.08). These are the highest-stakes acts in the domain, and 01.03.03's own Edge Cases (line 69) concede there is \"no pre-act gate below the ceiling\" while never saying what 'below the ceiling' means for an act with no price. No tracked question covers it: Q-03 asks whether the flat ceiling should become the band's own agreed threshold (still monetary), and Q-04 asks what a representation edge's ceiling is when unset (a different dimension, explicitly scoped to representation edges)."
+    },
+    {
+      "findingId": "01-identity-profiles-organizations#004",
+      "unit": "01.01-person-identity-roles",
+      "severity": "blocking",
+      "dimension": 3,
+      "claim": "01.01.03 enumerates 'shared aliases' as a source of acting contexts and specifies behaviour for shared-alias contexts in four places, each time deferring to 01.01.02 Q-01 as an open ontology question. That question is resolved in the opposite direction: 01.01.02 D-04 makes aliases single-owner by construction, so a shared-alias context cannot exist. Neither file carries a marker.",
+      "evidence": "01.01.03-acting-context-switcher.md:34 — the derivation, the single most load-bearing statement in the file: \"2. Each alias they own (01.01.02) — **including shared aliases, subject to 01.01.02 Q-01**.\" 01.01.03-acting-context-switcher.md:123 — an Edge Case specifying behaviour for the impossible state: \"| Two co-owners of a shared alias act as it simultaneously | Same collision, one level down. Recorded as evidence for 01.01.02 Q-01 (shared alias may be an org) — this file does not resolve the ontology, only its switcher consequence: **shared aliases get the same presence indicator** | Presence indicator on shared-alias contexts |\". 01.01.03-acting-context-switcher.md:167 — DT-10: \"Same collision recurs one level down on shared aliases, which is further evidence for 01.01.02 Q-01.\" 01.01.03-acting-context-switcher.md:179 — Cross-Cut Notes: \"Shared aliases inherit the shared-inbox collision (DT-10), which is fresh evidence for their Q-01.\" — CONTRADICTED BY — 01.01.02-artist-names-aliases-projects.md:152 — D-04: \"**A shared name is a band org (01.02.01 type `band`), not a co-owned alias. Aliases are single-owner by construction.** Alias creation asks \\\"is anyone else in this?\\\" and routes accordingly | Resolves **Q-01**\"; 01.01.02-artist-names-aliases-projects.md:165 — \"| ~~Q-01~~ | ~~Is a **shared** alias an alias with co-owners, or an organisation?~~ **RESOLVED — D-04**: it is a band org. Aliases are single-owner.\"; 01.01.02-artist-names-aliases-projects.md:135 — \"Since aliases are single-owner (D-04), CX-02's shared-alias race condition and its permission-intersection question **both dissolve** — two people can never act as one alias.\" The same stale construct persists at 01.01-person-identity-roles-cx.md:54-56, where CX-02 notes 3 and 5 record the permission intersection as \"Unresolved\" and note 4 specifies \"a shared alias fans out to all co-owners\".",
+      "failureScenario": "An implementer building the acting-context switcher reads the derivation at 01.01.03:34 and implements three context source types for aliases (own, shared, promoted), then implements the shared-alias presence indicator the Edge Cases table requires and the co-owner notification fan-out 01.01-cx CX-02 note 4 requires. None of those constructs can be populated: under D-04 every alias has exactly one owner, and the shared case is a `band` org handled by an entirely different code path (01.02, 01.03, 01.04). A second implementer, following D-04 first, builds only single-owner alias contexts and no shared-alias presence indicator at all. The divergence is not merely dead code — 01.01.03:34's phrase 'subject to 01.01.02 Q-01' instructs the implementer to treat the alias ownership model as undecided, which is the one thing the domain has decided three times over (01.01.02 D-04, sub-domain index Q-02, domain index Q-08). Both files carry the same Last-updated date of 2026-07-23, so this is not simple staleness; the ratification was propagated into 01.01.02 and never into 01.01.03."
+    },
+    {
+      "findingId": "01-identity-profiles-organizations#005",
+      "unit": "01.02-organizations-entity-model",
+      "severity": "warning",
+      "dimension": 0,
+      "forcedInvention": "What 'owner/admin' resolves to in the mandate model — the uncapped owning mandate (the creator alone) or the `administer` activity (every confirmed permanent band member under the peer seed). 01.02.03 defers the definition to 01.03.03, and 01.03.03 defines no such role.",
+      "claim": "01.02.03 gates adding and removing an org type on an 'owner/admin action under the membership model (01.03)' and explicitly disclaims defining it, but 01.03.03's vocabulary contains no owner/admin role — only seven activities (one of which is `administer`) and an 'owning mandate'. Under the ratified band seed the two readings differ by the entire band.",
+      "evidence": "01.02.03-organization-type-transitions.md:94 — D-05: \"Adding or removing a type is an owner/admin action under the membership model (01.03), gated on org role not persona | DT-04 — capability changes carry legal and search-visibility consequences a non-admin member must not trigger unilaterally\". 01.02.03-organization-type-transitions.md:31 — \"Who may trigger a transition is a **membership-role** question ... changing an entity's capability set is an owner/admin action within the org's membership model (01.03), not something any linked member can do.\" 01.02.03-organization-type-transitions.md:82 — the disclaimer: \"the owner/admin gate on who may add/remove a type is a delegated-authority scope defined there; **this feature consumes that permission, it does not define it**.\" — but the cited file defines no such scope — 01.03.03-mandate-scope-delegated-authority.md:25 — \"Scope dimensions: **activity** — a closed set of **seven**: book / sign / spend / list / release / settle / administer\"; 01.03.03-mandate-scope-delegated-authority.md:40 — every confirmed permanent band member holds all seven; 01.03-membership-representation-mandate-cx.md:35 — \"any permanent member may alter any other's mandate\".",
+      "failureScenario": "A four-piece band on the default wants to self-release. Implementer A maps 'owner/admin' onto the `administer` activity, so any confirmed permanent member may add the `label` type — and equally may add `shop`, which 01.02.03's own Edge Cases (line 50) and 01.02.02's Cross-Cut Notes state re-triggers 01.08's trader assessment and its statutory publication duty. Implementer B maps 'owner/admin' onto the uncapped owning mandate, so only the band's creator may do it — which reintroduces exactly the creator-privilege asymmetry 01.03.03 DT-03 refused to invent and 01.02.02 D-07 was amended to remove. 01.02.03 DT-04's stated rationale ('Otherwise a session player linked to a studio could unilaterally make it a shop') is satisfied by both readings for a studio, where nothing is seeded, and by neither cleanly for a band, where everyone is a peer. The unit's own Q-04-adjacent question (01.02.01 Q-04) narrows a different problem — whether an explicit grant can be scoped per type — and does not name this gate."
+    },
+    {
+      "findingId": "01-identity-profiles-organizations#006",
+      "unit": "01-identity-profiles-organizations",
+      "severity": "warning",
+      "dimension": 4,
+      "claim": "01.08 states its entire normative basis as EU/UK consumer law and specifies a mandatory pre-listing classification gate derived from it, while the ratified launch profile is US-only and meta/constraints.md records that the US has no federal equivalent of the right the file cites. The two sibling features carrying the same jurisdictional exposure were explicitly remediated against this ratification; 01.08 was not, and carries no marker.",
+      "evidence": "01.08-trader-status-classification.md:10 — Overview, the file's stated legal basis: \"Under EU/UK consumer law the distinction decides whether a buyer gets a 14-day right of withdrawal, a statutory warranty and a redress route, or none of them; and marketplace operators have duties to collect trader details, display them, and tell buyers plainly when consumer protections do **not** apply.\" 01.08-trader-status-classification.md:85 — D-04: \"Classification is a precondition of listing; fails closed | Publishing without the disclosure is a breach, not a degraded experience\". — CONTRADICTED BY — meta/constraints.md:248-249: \"Confirmed 2026-07-18, `/ideate-validate`. **Primary market: UNITED STATES to start** (owner revised from an initial \\\"global from day one\\\" to US-first, resolving the flagged tension).\"; meta/constraints.md:267: \"| Consumer protection / returns | Physical + digital goods | **v1.5** | US has no federal 14-day withdrawal right (unlike EU) — returns are policy-driven per seller.\" — while the two siblings were remediated — 01.07-professional-credential-verification.md:100 — D-06: \"**Statutory credential *types* are named by the active jurisdiction profile (16), never hardcoded here. Where a profile declares no such instrument, the slot resolves to explicit `unknown` — never to another jurisdiction's answer** | DQ-14.1 ... the UK vocabulary ... retires into an unauthored profile rather than remaining the implicit default\"; 01.02.01-organization-types-attributes.md:163 — Q-03: \"**RESOLVED for `constrained` authority → D-14** (DQ-14.1/global D-72): the launch market is the US ... only the US profile is authored\". 01.08 was last updated 2026-07-17, before the 2026-07-18 compliance confirmation and the 2026-07-22 D-72 jurisdiction ratification.",
+      "failureScenario": "An implementer building the v1 US listing flow must decide whether the trader/private classification gate exists at launch. Reading 01.08 D-04 alone they build a blocking pre-publish declaration flow rendering 'this seller is a private individual; consumer protections do not apply' — copy whose premise (a withdrawal right the buyer is losing) constraints.md says does not exist federally in the US. Reading the domain's own ratified pattern — an unauthored profile resolves statutory fields to explicit `unknown` (01.07 D-06, 01.02.01 D-14) — they resolve the classification to `undetermined` at launch and ship no gate, which under 01.08 D-04's fail-closed rule would mean nobody can list anything. The file's Q-02 asks only whether the classification *varies* by jurisdiction and is deferred to /create-prd-security; it does not ask which profile is authored at launch, and it does not mark D-04's gate as contingent on the answer. This is a stale constraint premise rather than a missing decision: the reconciliation was performed for 01.07 and 01.02.01 and never propagated here."
+    },
+    {
+      "findingId": "01-identity-profiles-organizations#007",
+      "unit": "01.03-membership-representation-mandate",
+      "severity": "warning",
+      "dimension": 0,
+      "forcedInvention": "Whether a membership edge whose current capacity period carries both `permanent` and a non-seeded capacity is seeded or not. 01.03.01's own worked example creates exactly that state; 01.03.03's seed rule is written as though a period carries one capacity.",
+      "claim": "01.03.01 models a member holding two capacities in one period ('permanent + staff'), while 01.03.03's ratified seed keys on 'whose current capacity period is `permanent`' in the singular and gives `staff` zero authority. Nothing states how a compound capacity resolves.",
+      "evidence": "01.03.01-membership-records-lifecycle.md:63 — Happy Path step 9: \"Two years on, the drummer's role changes: they take over front-of-house on the band's own shows. Their capacity period `permanent (2026–2028)` closes and **`permanent + staff (2028–)`** opens. Tenure is unbroken; the capacity history is a list.\" — against — 01.03.03-mandate-scope-delegated-authority.md:40 — \"| **Peer seed** (D-07) | Every **`confirmed`** membership edge **whose current capacity period is `permanent`** carries the **full seven-activity set** |\"; 01.03.03-mandate-scope-delegated-authority.md:42 — D-09: \"| **Capacity keying** (D-09) | The seed attaches to `permanent` only. `touring`, `staff` and `honorary` carry **presence with zero authority** until something is granted explicitly |\"; 01.03.01-membership-records-lifecycle.md:81 — stated at edge level rather than period level: \"`touring`, `staff` and `honorary` **edges** are **outside the peer seed** — they carry presence with zero authority and therefore no acting context for the band until the band grants something explicitly\".",
+      "failureScenario": "The drummer in 01.03.01's own Happy Path takes on front-of-house and their capacity period becomes 'permanent + staff'. Implementer A reads 01.03.03's rule as satisfied by any `permanent` component and keeps the full seven-activity seed. Implementer B reads 01.03.01:81's edge-level phrasing — an edge carrying `staff` is 'outside the peer seed' — and revokes the seed, so a founding member silently loses all band authority and their acting context (01.01.03 line 42) disappears the moment they agree to run sound. The second outcome is a silent loss of authority, which 01.03-cx CX-01 note 4 classifies as a security-grade event requiring notification, and it happens with nobody having made any decision. The Behavior table's phrasing (01.03.01:34, 'permanent / touring / staff / honorary, each with its own date range') supports the compound reading; 01.03.03's rule is written for the singular. Neither 01.03.01 Q-02 (which explicitly narrows to a representation choice with 'no behavioral difference') nor 01.03.03's questions cover it."
+    },
+    {
+      "findingId": "01-identity-profiles-organizations#008",
+      "unit": "01.03-membership-representation-mandate",
+      "severity": "warning",
+      "dimension": 3,
+      "claim": "01.03.01 fixes membership capacity as a closed four-value enum and records the deliberate removal of a fifth value, then uses a sixth value that is not in the enum in its own worked example of capacity versioning.",
+      "evidence": "01.03.01-membership-records-lifecycle.md:162 — D-03, the enum with its explicit closure history: \"| D-03 | Capacity is on the edge (**permanent / touring / staff / honorary**), not on the person | `session` **removed** from the enum per D-05 — a session player is not a member, so there is no edge to put the capacity on. |\". 01.03.01-membership-records-lifecycle.md:34 — the attribute table: \"| **Capacity periods** | permanent / touring / staff / honorary, each with its own date range | Versioned, not overwritten (D-10) |\". — VIOLATED BY — 01.03.01-membership-records-lifecycle.md:82 — the worked example in the Edge Cases table: \"| **A member's capacity changes over time (roadie → sound engineer → member)** | **RESOLVED — one continuous tenure, versioned capacity periods** (D-10). Behaviorally: tenure is unbroken (one row, \\\"2015–present\\\"), capacity is a list (**\\\"crew 2015–2017, staff 2017–2020, permanent 2020–\\\"**), and any date-scoped query resolves against the capacity period, not the tenure. |\"",
+      "failureScenario": "An implementer builds the capacity enum from D-03 as {permanent, touring, staff, honorary} and then cannot represent the file's own canonical example of the capacity-versioning feature — the roadie who becomes a sound engineer who becomes a member — because `crew` has no slot. They must either widen the enum (changing what 01.03.03 D-09's seed keys on, since a fifth non-seeded capacity now exists and must be classified) or silently remap `crew` to `staff`, which changes the displayed capacity history that D-10 exists to preserve verbatim. The enum is load-bearing well beyond this file: 01.03.03 D-09 keys the peer seed to it, 01.01.03 derives acting contexts from it, and 01.03.01 line 111 groups the lineup by it ('Permanent / Touring / Staff'). The removal of `session` (D-05) shows the enum is treated as closed and deliberately curated, so the extra value is an inconsistency rather than an open vocabulary."
+    },
+    {
+      "findingId": "01-identity-profiles-organizations#009",
+      "unit": "01.04-band-ensemble-governance",
+      "severity": "warning",
+      "dimension": 7,
+      "claim": "01.04.02 specifies behaviour for a band that is 'a shared alias rather than an org' and defers it to a question that is closed in the opposite direction, against a stage that has already run. Under 01.01.02 D-04 the state cannot arise, so the row describes an unreachable case as a live gap.",
+      "evidence": "01.04.02-name-trademark-ownership.md:48 — the Edge Cases row: \"| Band is a shared alias rather than an org (01.01.02 Q-01) | Then name ownership has no governance home, because aliases have no governance | `[PENDING — /ideate-discover Step 5 deepening]` — real evidence for 01.01.02 Q-01 |\". — CONTRADICTED BY — 01.01.02-artist-names-aliases-projects.md:152 — D-04: \"**A shared name is a band org (01.02.01 type `band`), not a co-owned alias. Aliases are single-owner by construction.**\"; 01.01.02-artist-names-aliases-projects.md:165 — \"| ~~Q-01~~ | ... **RESOLVED — D-04**: it is a band org. Aliases are single-owner. | — | Closed, `/ideate-discover` Step 5 |\"; and by the reachability rule at 01.01.02-artist-names-aliases-projects.md:94 — \"| E-30 | A shared alias's co-owners fall out | Not this file's. **By D-04 it was never an alias** — it is a band, and this is band dissolution (01.04.04) with its governance already captured at E-28/step 2 |\". 01.04.02 was last updated 2026-07-16, the oldest file in the domain.",
+      "failureScenario": "The tracking is malformed on both halves the rules care about: the deferral target names a stage (`/ideate-discover Step 5 deepening`) that has completed for this sub-domain, and the question it points at is not merely resolved but resolved so as to make the row's premise unreachable. An implementer or a downstream spec writer surveying open governance gaps records 'name ownership has no governance home for shared aliases' as live work, and either builds a governance-less alias name-ownership path that nothing can populate, or spends the reconciliation effort discovering it is moot. The substantive rule that replaces it — governance capture fires at alias creation and at solo-to-shared promotion (01.01.02 E-28, domain CX-12) — is stated nowhere in 01.04.02, which is the file that owns name ownership."
+    },
+    {
+      "findingId": "01-identity-profiles-organizations#010",
+      "unit": "01-identity-profiles-organizations",
+      "severity": "warning",
+      "dimension": 8,
+      "claim": "The domain index Role Matrix records Operator as having no access to 01.04 Band & Ensemble Governance, while two of that sub-domain's four children grant Operator read-only access with a stated operational need. The index's own explanatory note justifies the denial on membership grounds that neither child's grant depends on.",
+      "evidence": "identity-profiles-organizations-index.md:78 — the Role Matrix row: \"| 01.04 Band & Ensemble Governance | ✅ Full | 👁️ Read-only | ❌ None | 👁️ Read-only |\" (columns Musician, Producer, Operator, Fan). identity-profiles-organizations-index.md:88 — the note: \"Access in 01.04 in particular is granted by **membership**, not by persona ... the ❌ against Operator means an Operator has no standing in a band they are not part of.\" — CONTRADICTED BY — 01.04.02-name-trademark-ownership.md:17 — Role Lens: \"| Operator | Read-only | Sees only the public consequence: which entity the name currently resolves to, so they book the right band. A venue that books \\\"Wolf Alice\\\" needs to know which party that name currently is — which matters precisely when a split has produced two claimants. |\"; 01.04.04-dissolution-succession.md:18 — Role Lens: \"| Operator | Read-only | Sees the public consequence only: whether this band can still be booked, and if the name has transferred, which party it now resolves to. A venue holding a booking for a band that just dissolved needs exactly that fact and nothing else. |\"; and the sub-domain's own matrix at 01.04-band-ensemble-governance-index.md:35,37 records Operator as 👁️ Read-only for both 01.04.02 and 01.04.04.",
+      "failureScenario": "Both Operator grants are explicitly for a non-member Operator — the venue that must resolve which party a band name now points at before honouring a booking — so the index note's 'no standing in a band they are not part of' rationale does not reach them. An implementer or downstream spec writer building access control or navigation from the domain-level matrix (the pipeline key file that all downstream workflows read first, per the index header) denies Operators the name-resolution read that 01.04.02 and 01.04.04 both call load-bearing, and a venue books the wrong successor after a split. The index demonstrates it does reconcile this class of row when it notices — line 90 explicitly justifies the Fan read-only entries for 01.08 and 01.04 as 'load-bearing rather than incidental' — so the Operator row is an unreconciled omission rather than a deliberate roll-up convention. Every other domain-matrix row in this index is consistent with the maximum access granted by its children."
+    },
+    {
+      "findingId": "01-identity-profiles-organizations#011",
+      "unit": "01.06-portfolio-media-epk",
+      "severity": "warning",
+      "dimension": 7,
+      "claim": "The 01.06 cross-cut file records the EPK snapshot-versus-live-view question as open and states that snapshotting 'survives as an option' under it, while 01.06.03 resolved that question in the negative and made never-snapshotting a decision.",
+      "evidence": "01.06-portfolio-media-epk-cx.md:95 — Rejected Pair R-02: \"| R-02 | 01.06.02 Credit-Backed Portfolio | 01.06.03 EPK (as a stored snapshot) | Considered snapshotting the portfolio into each EPK for stability. Rejected here as a *default*: staleness is the flaw the whole feature exists to remove (01.06.03 D-01). **It survives only as an option under 01.06.03 Q-01**, where the case is the narrow one of a pitch changing after it lands — not the general one. |\". 01.06-portfolio-media-epk-cx.md:55 — CX-02 note 5: \"A credit disputed between send and open. **Unresolved — 01.06.03 Q-01.**\" (and note 2 at line 52 likewise frames Q-01 as a live hazard). — CONTRADICTED BY — 01.06.03-epk-generation-sharing.md:103 — \"| Q-01 | ✅ RESOLVED (Step 5, D-05/DT-04): stay **live**, never snapshot; a send watches the foregrounded facts and notifies the sender on material change. |\"; 01.06.03-epk-generation-sharing.md:96 — D-05: \"EPK stays a live view; a send watches foregrounded facts and notifies the sender on material change\"; 01.06.03-epk-generation-sharing.md:74 — DT-04: \"❌ REJECTED. Snapshotting freezes the attested credits into a static claim — which is exactly a PDF, and forfeits the live-view advantage that is the whole reason to generate rather than author.\"",
+      "failureScenario": "An implementer scoping the EPK reads R-02 and builds an opt-in snapshot mode for the 'pitch changed after it landed' case, because R-02 states that option survives. 01.06.03 D-05 and DT-04 forbid it outright and replace it with a different mechanism entirely — a sender-side watch on foregrounded facts that fires a notification. The two produce different features, different data (a stored copy versus none), and different recipient experiences (a frozen kit versus current truth). The cross-cut file is where a downstream reader looks for the sub-domain's unresolved interactions, so a resolved question presented as open with a surviving alternative is the tracking failure that most reliably produces built-but-unwanted scope."
+    }
+  ]
+}

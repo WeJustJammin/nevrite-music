@@ -1,0 +1,234 @@
+{
+  "domain": "18-show-production-touring",
+  "unitsAudited": 12,
+  "filesRead": 70,
+  "coverageNote": "Enumerated from disk: 12 directories containing an *-index.md (the domain root plus 11 sub-domain folders 18.03–18.09, 18.11–18.14), 70 .md files total. This exactly matches the expected 12 units / 70 files. Every file was read in full through the 3a→3b→3c cycle; no sampling. Structure Map verification: the domain index claims '11 sub-domains and 9 domain-level features, containing 37 leaf features (46 feature files total)' — disk confirms 11 sub-domain folders, 9 domain-level feature files (18.01, 18.02, 18.10, 18.15–18.20), and 5+4+3+4+3+3+3+3+3+3+3 = 37 leaves, 46 feature files. No Classification Gate violations: minimum sub-domain child count is 3. Every unit has *-index.md + *-cx.md, every index has a populated Role Matrix, every one of the 46 leaf files has a Role Lens and an Edge Cases table.",
+  "scoringNotes": {
+    "applicableDimensions": "Dimensions 1 (Problem Clarity), 3 (Feature Completeness), 7 (Open Question Resolution) and 8 (Structural Compliance) apply to every unit — each index states a specific problem with a specific actor and a falsifiable claim, each unit carries multi-level features with edge cases, each carries an Open Questions table with Owner/Deferred To columns, and each is a fractal folder with index + CX + Role Matrix.",
+    "naDimensions": "2 (Persona Specificity) is N/A everywhere — every index carries the explicit rule 'NEVER redefine a persona here — reference only'; the required persona fields are canonically owned by meta/personas.md, which is outside this domain. 4 (Constraint Explicitness) is N/A — budget/timeline/team/compliance/performance axes are owned by meta/constraints.md, referenced (not restated) throughout. 5 (Success Measurability) is N/A — these are feature-behaviour files, not the metrics document; no success KPIs are in scope here. 6 (Competitive Positioning) is N/A — owned by meta/competitive-landscape.md. Marking these N/A is not flattery: 2, 4 and 6 are actively forbidden from being restated here by the domain's own rules.",
+    "formula": "points / applicable_checkpoints x 100; ✅=0, ⚠️=0.5, ❌=1"
+  },
+  "units": [
+    {
+      "unit": "18-show-production-touring (domain root)",
+      "applicableCheckpoints": 4,
+      "naDimensions": [2, 4, 5, 6],
+      "points": 1.0,
+      "dimensionScores": {
+        "1": "✅ — show-production-touring-index.md:15 names a specific actor and a specific falsifiable pain: 'Advancing is the most universally hated workflow in live music — a 40-question email chain per date, repeated nightly'.",
+        "3": "⚠️ — 18.16 states a blocking rule its own edge case contradicts (#001); 18.18 leaves two behavioural windows as the literal placeholder 'N days' (#002). Feature depth itself is exemplary: 20 children, 46 feature files, every leaf with edge cases.",
+        "7": "✅ — every Open Questions row carries an Owner and a Deferred To, including the re-pointed rows that name the completed stage they moved from.",
+        "8": "⚠️ — structure, CX coverage, Role Lenses and Structure Map are all correct, but the domain Role Matrix contradicts leaf role definitions in at least two places (#003)."
+      }
+    },
+    {
+      "unit": "18.03-show-advancing",
+      "applicableCheckpoints": 4,
+      "naDimensions": [2, 4, 5, 6],
+      "points": 0,
+      "dimensionScores": {
+        "1": "✅ — 18.03-show-advancing-index.md:10-15 states the problem, the actor and the wedge in one falsifiable claim.",
+        "3": "✅ — 5 leaves, two at [DEEP] with 15 and 17 Deep Think hypotheses; 18.03.01 carries 27 edge-case rows, 18.03.02 carries 37.",
+        "7": "✅ — every open question owned. 18.03.01 Q-05 is notable: the unit self-reports the domain-vs-sub-domain Role Matrix disagreement on the Musician and routes it to /create-prd-security with owner Agent.",
+        "8": "✅ — index + cx + populated Role Matrix; all 5 leaves have Role Lens."
+      }
+    },
+    {
+      "unit": "18.04-riders",
+      "applicableCheckpoints": 4,
+      "naDimensions": [2, 4, 5, 6],
+      "points": 0,
+      "dimensionScores": {
+        "1": "✅ — 18.04-riders-index.md:12-13: 'an unstructured rider cannot be diffed against a room, and a rider that can't be diffed is just an attachment'.",
+        "3": "✅ — 4 leaves; 18.04.01 [DEEP] with 13 hypotheses and 30 edge-case rows; the three-flag model (substitution/negotiability/verification) with category floors is fully enumerated.",
+        "7": "✅ — Q-01/Q-02/Q-03 all owned and routed; the three-file 'answer once' collation (18.04 Q-03 ↔ 18.04.01 Q-05 ↔ 18.04.04 Q-03) is explicit.",
+        "8": "✅ — index + cx; the Role Matrix carries an explicit note on the 18.04.03 authority inversion."
+      }
+    },
+    {
+      "unit": "18.05-stage-plot-input-list",
+      "applicableCheckpoints": 4,
+      "naDimensions": [2, 4, 5, 6],
+      "points": 0.5,
+      "dimensionScores": {
+        "1": "✅ — 18.05-stage-plot-input-list-index.md:11-13 names the three-artifact drift problem concretely.",
+        "3": "✅ — 3 leaves with derivation discipline (plot → input list → monitor mix) and edge cases on each.",
+        "7": "⚠️ — the sub-domain CX declares its own 'one genuinely unresolved modelling decision' and points at an Open Questions section that does not exist (#004).",
+        "8": "✅ — index + cx + Role Matrix with an explicit note on the patch-column co-authorship."
+      }
+    },
+    {
+      "unit": "18.06-setlist-show-files",
+      "applicableCheckpoints": 4,
+      "naDimensions": [2, 4, 5, 6],
+      "points": 0,
+      "dimensionScores": {
+        "1": "✅ — 18.06-setlist-show-files-index.md:12-14: the setlist 'looks like the most trivial object in live music … and is actually the spine of the show'.",
+        "3": "✅ — 4 leaves; plan-vs-performed separation (D-01) carried consistently into every consumer.",
+        "7": "✅ — Q-01 resolved with an owning domain (10.06), Q-02/Q-03 owned and routed; 18.06.02 Q-01/Q-02 both resolved with citations.",
+        "8": "✅ — index + cx + Role Matrix with two explicit access notes."
+      }
+    },
+    {
+      "unit": "18.07-show-day-schedule",
+      "applicableCheckpoints": 4,
+      "naDimensions": [2, 4, 5, 6],
+      "points": 0,
+      "dimensionScores": {
+        "1": "✅ — 18.07-show-day-schedule-index.md:11-13 states the problem and its actor precisely.",
+        "3": "✅ — 18.07.01 is [DEEP] with 18 hypotheses, 16 decisions, 39 edge-case rows and a fully enumerated item-type and anchor-type vocabulary.",
+        "7": "✅ — Q-01 and Q-02 are [OWNER]-marked with /create-prd targets and instanced at leaf level; Q-03 resolved by D-05.",
+        "8": "✅ — index + cx + Role Matrix with an explicit joint-ownership note."
+      }
+    },
+    {
+      "unit": "18.08-crew-credentials",
+      "applicableCheckpoints": 4,
+      "naDimensions": [2, 4, 5, 6],
+      "points": 0.5,
+      "dimensionScores": {
+        "1": "✅ — 18.08-crew-credentials-index.md:13-18 names the hire→roster→call→credential chain and its silent downstream effects.",
+        "3": "⚠️ — the roster 'type dimension' the unit calls its most actionable modelling finding is stated only in CX prose and is not carried into 18.08.01's decisions nor into 18.04.02, the consumer whose failure mode it names (#005).",
+        "7": "✅ — Q-01 re-pointed to its canonical owner (meta/personas.md Q-05), Q-02 owned, Q-03 resolved with three-layer citation.",
+        "8": "✅ — index + cx + Role Matrix with the domain's sharpest persona note."
+      }
+    },
+    {
+      "unit": "18.09-backline-gear-manifest",
+      "applicableCheckpoints": 4,
+      "naDimensions": [2, 4, 5, 6],
+      "points": 0.5,
+      "dimensionScores": {
+        "1": "✅ — 18.09-backline-gear-manifest-index.md:14-17 states the declare→source→verify→correct loop and the problem it closes.",
+        "3": "✅ — 3 leaves; D-05 (date-scoped rental ghosts) closes the ownership-model gap the CX raised.",
+        "7": "⚠️ — every numbered open question in this unit is now resolved, yet the CX carries a self-declared 'Genuinely unresolved' timing decision with no owner and no deferral target (#006).",
+        "8": "✅ — index + cx + Role Matrix with a per-person ownership note."
+      }
+    },
+    {
+      "unit": "18.11-tour-container-routing",
+      "applicableCheckpoints": 4,
+      "naDimensions": [2, 4, 5, 6],
+      "points": 0,
+      "dimensionScores": {
+        "1": "✅ — 18.11-tour-container-routing-index.md:11-14 states what the container makes possible that no per-show tool can.",
+        "3": "✅ — 3 leaves; D-05 resolves multi-act containment; the feasibility-not-optimisation scope rejection is fully argued.",
+        "7": "✅ — Q-01 re-pointed to its canonical owner (domain Q-04), Q-02/Q-03 resolved with citations; the CX's contract-term scoping concern is covered by the resolution of 18.11.02 Q-02, which assigns the breach warning to 17.06 and 18 only the consuming side.",
+        "8": "✅ — index + cx + Role Matrix with an explicit Operator-exclusion note."
+      }
+    },
+    {
+      "unit": "18.12-travel-logistics",
+      "applicableCheckpoints": 4,
+      "naDimensions": [2, 4, 5, 6],
+      "points": 0,
+      "dimensionScores": {
+        "1": "✅ — 18.12-travel-logistics-index.md:10-12 names the problem and is honest that the sub-domain has no supply side.",
+        "3": "✅ — 3 leaves; the local-labour exclusion is carried explicitly into D-02, 18.12.01 D-02 and 18.12.02's edge cases.",
+        "7": "✅ — Q-01 [OWNER], Q-02 narrowed against D-32/D-72 with a live target, Q-03 resolved with citation; 18.12.02 Q-01 resolved.",
+        "8": "✅ — index + cx + Role Matrix with an Operator-absence note."
+      }
+    },
+    {
+      "unit": "18.13-tour-finance",
+      "applicableCheckpoints": 4,
+      "naDimensions": [2, 4, 5, 6],
+      "points": 0.5,
+      "dimensionScores": {
+        "1": "✅ — 18.13-tour-finance-index.md:10-13: 'operational cash in a physical world — a TM with an envelope, paying a stagehand at 01:00'.",
+        "3": "✅ — 3 leaves in a reconciliation loop; the CX is candid that the byproduct-P&L claim is false for cash costs.",
+        "7": "⚠️ — the CX declares the late-synced-receipt-into-a-closed-reconciliation question 'Unresolved — and real' with no owner and no deferral target, and no leaf covers it (#007).",
+        "8": "✅ — index + cx + Role Matrix with a contested-access note on 18.13.02."
+      }
+    },
+    {
+      "unit": "18.14-border-visas-carnets",
+      "applicableCheckpoints": 4,
+      "naDimensions": [2, 4, 5, 6],
+      "points": 0,
+      "dimensionScores": {
+        "1": "✅ — 18.14-border-visas-carnets-index.md:10-13 names the barrier and its measurable consequence.",
+        "3": "✅ — 3 leaves; D-01 (no advice) applied consistently; the carnet-cannot-be-versioned finding is explicit.",
+        "7": "✅ — Q-01 collected at domain Q-07, Q-02 resolved against D-72's jurisdiction lock, Q-03 [OWNER]; every leaf question owned or resolved with citation.",
+        "8": "✅ — index + cx + Role Matrix with an explicit Operator-duty note."
+      }
+    }
+  ],
+  "totals": {
+    "points": 3.0,
+    "applicableCheckpoints": 48,
+    "ambiguityPercent": 6.25
+  },
+  "findings": [
+    {
+      "findingId": "18-show-production-touring#001",
+      "unit": "18-show-production-touring (domain root)",
+      "severity": "warning",
+      "dimension": 3,
+      "claim": "18.16 states as unqualified behaviour that the compliance check 'blocks `advanced` state if a hard requirement is unmet', while its own edge case makes the same situation explicitly non-blocking, and the owning feature (18.03.01 D-07) says a hard item blocks only a *clean* freeze. Two implementers reading 18.16 alone build a hard state gate; reading 18.03.01 they build an always-overridable freeze that records the override.",
+      "evidence": ".memory/wiki/specs/ideation/18-show-production-touring/18.16-show-safety-permits-insurance.md:29 — \"The check runs as part of the advance and blocks `advanced` state if a hard requirement is unmet.\" Contradicted at the same file:46 — \"| Show goes ahead without a required document | Non-blocking record of the override with who authorised it | 'Proceeding without noise permit — authorised by [name]' |\" and at :72 — \"compliance is a section of the advance and can block `advanced`\". The authoritative rule is elsewhere and is different: 18.03-show-advancing/18.03.01-advance-checklist.md:194 D-07 — \"A `hard` **venue-side** item counts in the hard-outstanding gate — so it blocks a **clean** freeze, not the freeze … 18.03.05 D-03 makes every freeze overridable with a stated reason, so 'block' means 'requires an override that goes on the record'.\" The domain CX repeats the unqualified form: show-production-touring-cx.md:306 — \"A hard outstanding item **blocks the freeze** (CX-14) — zero-hard-outstanding is the freeze precondition\" and :325 — \"Freeze precondition (zero hard-outstanding — CX-13) met → `advancing→advanced`\". 18.19-rehearsal-management.md:89 resolves its own Q-01 on the opposite premise: \"warn only, never gate … no third party's state can hold it.\"",
+      "forcedInvention": "Whether an unmet statutory requirement is a hard gate on the `advanced` transition, or a recorded override — i.e. whether the day-of auto-freeze (18.01 state table, 18.03.05 edge case 1) can legally fire with hard items outstanding.",
+      "unit_note": "Files 18.16-show-safety-permits-insurance.md and show-production-touring-cx.md, both in the domain-root unit."
+    },
+    {
+      "findingId": "18-show-production-touring#002",
+      "unit": "18-show-production-touring (domain root)",
+      "severity": "warning",
+      "dimension": 3,
+      "claim": "18.18 leaves two consequential behavioural windows as the literal placeholder 'N days' with no value and no tracked question. One of them decides how long an Operator has to exercise a right of reply before a factual correction against their venue proceeds without them — a fairness parameter, not an implementation detail. The file's only [PENDING] marker covers a different window (the report's editable window), so nothing tracks these two.",
+      "evidence": ".memory/wiki/specs/ideation/18-show-production-touring/18.18-post-show-report.md:50 — \"| Report never filed | Event still settles; venue truth loses the signal; a reminder decays after N days |\". Same file:58 — \"| Operator never answers a right-of-reply | The reply prompt ages out after N days; unanswered discrepancies proceed on the corroboration path without the Operator's input, never blocked by their silence | Operator: 'Reply window closes in 3 days' |\". The only tracked window is a different one — same file:102 D-05 — \"Filed reports are editable within a bounded window, then locked; all edits versioned … Exact window `[PENDING — /write-be-spec]`\". Neither open question covers the reply window: Q-01 (:108) is the corroboration *threshold*, canonically owned at 16.05.04 Q-02; Q-02 (:109) is peer visibility of judgement content.",
+      "forcedInvention": "The right-of-reply window length and the report-reminder decay period — the '3 days' in the User Sees column is a countdown string, not a declared total."
+    },
+    {
+      "findingId": "18-show-production-touring#003",
+      "unit": "18-show-production-touring (domain root)",
+      "severity": "warning",
+      "dimension": 8,
+      "claim": "The domain Role Matrix contradicts leaf role definitions in at least two places, in the same way the spec itself elsewhere calls blocking. For 18.04 it grants the Producer '✅ Full' where 18.04.03 says the Producer 'cannot author, edit, or trade' access requirements — the one place the spec says breaking the rule is 'a dignity failure and plausibly an unlawful one'. For 18.06 it grants the Operator '❌ None' where two children give the Operator read access. The identical mismatch on 18.03/Musician *is* tracked (18.03.01 Q-05, owner Agent → /create-prd-security); these two are not, so the tracking is inconsistent rather than absent by design.",
+      "evidence": ".memory/wiki/specs/ideation/18-show-production-touring/show-production-touring-index.md:83 — \"| 18.04 Riders | ⚙️ Config (own needs) | ✅ Full | 👁️ Read-only | ❌ None |\". Contradicted by 18.04-riders/18.04.03-access-rider.md:21 — \"| Producer | Read-only (scoped) | Sees the *requirements* they must advance and provide for … cannot author, edit, or trade them away (18.03.03 D-03).\" and :20 — \"| Musician | **Full (own only)** | **Authors their own access rider — nobody else can.**\" The sub-domain index flags the inversion (18.04-riders-index.md:51-53 — \"it is the only child where the **Musician outranks the Producer**\"); the domain index does not. Second instance: show-production-touring-index.md:85 — \"| 18.06 Setlist & Show Files | ✅ Full | ✅ Full | ❌ None | 👁️ Read-only (published setlist only) |\" contradicted by 18.06-setlist-show-files/18.06.03-show-file-custody.md:21 — \"| Operator | Read-only (durations only) |\" and 18.06.04-performed-setlist-capture.md:23 — \"| Operator | Read-only + occurrence attest |\". The precedent for treating this as worth tracking: 18.03-show-advancing/18.03.01-advance-checklist.md:212 Q-05 — \"**The two indexes disagree on the Musician's access.** … the indexes are literally inconsistent and a spec writer reading only one will build the wrong thing.\"",
+      "forcedInvention": "Whether the Producer may author or trade an access-rider requirement, and whether the Operator has any read path into show files / performed-setlist capture — resolvable only by preferring the leaf over the domain index, which the domain index's 'shorthand' note licenses for *detail* but not for a direct reversal of access level."
+    },
+    {
+      "findingId": "18-show-production-touring#004",
+      "unit": "18.05-stage-plot-input-list",
+      "severity": "warning",
+      "dimension": 7,
+      "claim": "The sub-domain CX declares its own 'one genuinely unresolved modelling decision', gives only a provisional answer, and points the reader at an 'Open Questions' section that does not exist in that file — and no open question in the 18.05 index or in any of its three leaves covers it. The tracking is malformed: no owner, no deferral target, and a dangling pointer. The CX itself states the consequence: it decides whether adding a monitor mix can make an act fail the stage-footprint diff.",
+      "evidence": ".memory/wiki/specs/ideation/18-show-production-touring/18.05-stage-plot-input-list/18.05-stage-plot-input-list-cx.md:73 — \"**Shared state conflict**: Wedges are the shared object. Are they plot items that mixes reference, or mix outputs that render onto the plot? Provisional answer: the mix is authoritative (a wedge exists because a mix needs it), the plot positions it. **Not yet settled — see Open Questions.**\" The file has no Open Questions section — it ends at Rejected Pairs (:100) and Notes (:105-107). Same file:106 — \"CX-03's ownership question (are wedges plot items or mix outputs?) is the one genuinely unresolved modelling decision in this sub-domain. It is small but it determines whether adding a mix can make an act not fit a stage.\" Coverage check: 18.05-stage-plot-input-list-index.md Q-01 is the spatial-editor build call, Q-02 console export, Q-03 plot-vs-rider versioning; 18.05.01 Q-01 is the editor again; 18.05.02 Q-01/Q-02 are console export and RF; 18.05.03 Q-01 is mix-content depth, Q-02 RF. None is this question.",
+      "forcedInvention": "Whether a wedge is a plot item a mix references or a mix output rendered onto the plot — which decides whether adding a fifth mix mutates the plot's footprint and can therefore newly fail the stage-dimension diff (18.05.01 D-02)."
+    },
+    {
+      "findingId": "18-show-production-touring#005",
+      "unit": "18.08-crew-credentials",
+      "severity": "warning",
+      "dimension": 3,
+      "claim": "The roster head-count 'type dimension' (touring party vs local labour) is declared by two CX files to be a mandatory modelling requirement and 'the single most actionable modelling finding in the domain', but it is not carried into 18.08.01's decisions — the feature that owns and publishes party size — nor into 18.04.02, the consumer whose exact failure mode it names. It reached 18.12 and 18.13 (both restate the exclusion explicitly) but not hospitality. An implementer building 18.04.02 from 18.04.02 + 18.08.01 alone derives catering from count(roster) and caters for stagehands, which is the failure the CX exists to prevent. No open question tracks it.",
+      "evidence": ".memory/wiki/specs/ideation/18-show-production-touring/18.08-crew-credentials/18.08-crew-credentials-cx.md:55 — \"A local hire is on the roster but must not be in the party-size roll-up that drives catering (18.04.02 D-01), rooming (18.12.02) and per diems (18.13.01). A naive `count(roster)` would cater for three extra stagehands and book them hotel rooms. The roster's head count needs a *type* dimension — touring party vs local labour — or 18.08.01 D-04's downstream derivations break the moment this feature is used. **This is a real modelling requirement neither feature file states alone.**\" Corroborated at show-production-touring-cx.md:116 — \"**The roster needs a type dimension** … This is the single most actionable modelling finding in the domain\" and :426 — \"CX-04 and CX-06 remain the domain's two findings that no single feature file contains.\" But 18.08.01-crew-roster-call-times.md:96 D-04 reads only \"Party size is a published input, and edits to it must be visible downstream\" — no type dimension — and its edge case (:53) is silent on the exclusion: \"| Local crew hired for a date | Appears on the roster via 18.08.03 with a scoped date and access |\". 18.04-riders/18.04.02-hospitality-rider.md:94 D-01 reads \"Quantities derive from party size, never typed\" with no exclusion anywhere in the file. By contrast the exclusion *is* carried in 18.12-travel-logistics-index.md:58 (\"Note the local-labour exclusion from 18.08-cx CX-02 applies here too — stagehands don't need beds\"), 18.12.01-travel-accommodation.md:84 D-02 (\"Party size derives from the roster, excluding local labour\"), 18.12.02-rooming-lists.md:49, and 18.13-tour-finance-cx.md:75.",
+      "forcedInvention": "Whether hospitality quantities are derived from count(roster) or count(roster where type = touring-party) — and, absent a type field on 18.08.01's roster entity, what the type dimension's values and default are."
+    },
+    {
+      "findingId": "18-show-production-touring#006",
+      "unit": "18.09-backline-gear-manifest",
+      "severity": "warning",
+      "dimension": 7,
+      "claim": "The sub-domain CX declares a timing decision 'Genuinely unresolved' with no owner and no deferral target, names both failure modes, and confirms in its Notes that it has 'no good answer yet'. Every numbered open question in this unit — 18.09 index Q-01/Q-02/Q-03, 18.09.01 Q-01, 18.09.03 Q-01/Q-02 — is now resolved, so nothing anywhere carries it forward. It decides whether a provisional loss propagates into the remaining dates' manifests and therefore whether the diff fires new shortfalls and sourcing requests.",
+      "evidence": ".memory/wiki/specs/ideation/18-show-production-touring/18.09-backline-gear-manifest/18.09-backline-gear-manifest-cx.md:74 — \"**State transition conflict**: If the loss is provisional (might turn up tomorrow), does the manifest change now or on confirmation? Changing too early creates phantom shortfalls; too late means arriving in Leeds without a bass rig and no time to hire one. Genuinely unresolved.\" Restated at :104 — \"CX-03's timing question (provisional loss vs manifest mutation) has no good answer yet and has real consequences — a phantom shortfall or an unhired bass rig.\" The section header above it says \"_(Medium confidence — remainder deferred to Step 5)_\" (:72) — a deferral to `/ideate-discover` Step 5, a stage other files in this domain record as completed (e.g. 18.08.01-crew-roster-call-times.md:104 \"Re-pointed from the completed `/ideate-validate`\"). The nearest leaf statement stops short of the manifest: 18.09.03-load-out-loss-damage.md:45 — \"| Item found later | Losses are provisional until confirmed; closing the log is normal |\" says nothing about whether the manifest mutates in the interim.",
+      "forcedInvention": "Whether a logged-but-unconfirmed loss mutates the remaining dates' resolved manifests immediately (triggering re-diff and rental sourcing) or only on confirmation."
+    },
+    {
+      "findingId": "18-show-production-touring#007",
+      "unit": "18.13-tour-finance",
+      "severity": "warning",
+      "dimension": 7,
+      "claim": "The sub-domain CX declares an unresolved money question — whether a receipt captured offline and synced after a reconciliation has closed reopens that reconciliation — with no owner and no deferral target, and states in the same sentence that the case is guaranteed to occur. None of the three leaves specifies it: both 18.13.01 and 18.13.03 describe reconciliation as a terminal event without saying what a late arrival does to a closed one.",
+      "evidence": ".memory/wiki/specs/ideation/18-show-production-touring/18.13-tour-finance/18.13-tour-finance-cx.md:37 — \"**State transition conflict**: A receipt captured offline and synced days later lands in a float that has since been reconciled. Does it reopen the reconciliation? Unresolved — and real, because offline capture guarantees late arrivals.\" The guarantee is a ratified decision, not speculation: 18.13.03-expense-receipt-capture.md:84 D-01 — \"Capture at the moment of spend, offline, in one photograph\"; :45 — \"| Offline at a petrol station | Must queue and sync |\". Neither leaf covers the landing case: 18.13.01-per-diems-float.md:37 — \"At tour end the float reconciles: opening + income − payouts − receipts = what's in the envelope\"; 18.13.03-expense-receipt-capture.md:36 — \"At the end of the week the float reconciles\". No open question covers it either: 18.13 index Q-01 (18-vs-23 ownership), Q-02 (band P&L visibility), Q-03 (holding the float); 18.13.01 Q-01 (holding the float), Q-02 resolved; 18.13.03 Q-01 (build/buy OCR), Q-02 (flow to 23).",
+      "forcedInvention": "Whether a late-synced receipt reopens a closed float reconciliation, is posted against the current open period, or is recorded as an adjustment to the prior period's variance — three different cash positions from identical inputs."
+    }
+  ],
+  "notableStrengths": [
+    "18.03.02-venue-capability-diff.md is the strongest file in the unit: three outcomes × five qualifiers with a closed vocabulary per qualifier, an inverted constraint pass, explicit netting semantics, and 17 Deep Think hypotheses each with a decision consequence. The require-confirmation path (D-17) is threaded consistently through 18.04.01 D-04/D-13, 18.03.01 D-06 and the freeze without a single contradiction.",
+    "The plan-vs-fact separation (domain D-08) is applied identically and without drift at four independent places: planned/performed setlist (18.06 D-01), planned/actual schedule (18.07-cx CX-02), manifest/load-out check (18.09-cx CX-02) and confirmation immutability (18.03.01 D-11).",
+    "Numeric thresholds are unusually well specified for a vision layer: curfew bands BREACH<0 / TIGHT 0-10 / CLEAR >10 min (18.07.02 D-05), the 4-rung escalation ladder with 1-nudge-per-side-per-48h cap (18.03.01 D-14), the critical-change rule at T-24h (18.03.05 D-05), the dietary aggregation floor at count<2 (18.04.02 D-05).",
+    "Self-reported inconsistency is handled well where it is handled at all — 18.03.01 Q-05 explicitly reports the domain-vs-sub-domain Role Matrix disagreement rather than papering over it, which is the precedent finding #003 measures against."
+  ]
+}

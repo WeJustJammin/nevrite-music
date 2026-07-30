@@ -1,0 +1,138 @@
+{
+  "domain": "24-trust-safety-disputes",
+  "verdicts": [
+    {
+      "findingId": "24-trust-safety-disputes#001",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "Quotes are accurate but the conclusion ('no reachable adjudication path for credible threats') is contradicted by the same file. 24.01.03:63-65 names `threats` as a live safety-of-person queue with a reserved capacity floor — 'A reserved-capacity floor guarantees that safety-of-person queues (harassment, threats) always retain a minimum share of reviewer time' — so threats are routed and adjudicated, not orphaned. 24.01.03:70-71 narrows the hard structural exclusion to CSAM alone: 'the hard structural rule that CSAM (24.08.01) can never be *routed into* a general queue at all'. D-06 (24.01.03:176) and DT-04 (24.01.03:147) both say 'general queue'/'general lane', not 'skill-scoped queue', and 24.01.03:81 explicitly distinguishes the two. The domain CX's three-family bypass set (trust-safety-disputes-cx.md:208-213) therefore *confirms* threats stay in the queue rather than contradicting the routing. Policy and adjudication for threats are owned by 24.06.01 (24.06.01:29-31, claim-driven, restriction + sanction via 24.02.01). The residue is an imprecise parenthetical in one severity-table cell, not an undefined destination."
+    },
+    {
+      "findingId": "24-trust-safety-disputes#002",
+      "upheld": true,
+      "finalSeverity": "blocking",
+      "refutationReason": "not-refuted",
+      "reason": "Verified verbatim. 24.02.01:178 D-07 — 'Rung ≥ 6 or `indefinite` duration requires a second moderator's concurrence; no self-concurrence'; 24.02.01:123 — 'One person cannot self-concur'; 24.02.01:103 — the proposal 'sits in `proposed` state until concurred or withdrawn'; rungs 6/7 are suspension and ban (24.02.01:52-53). Against a locked constraint: meta/constraints.md:183 '**Composition**: **Solo — the owner plus AI agents**' / :184 'no parallel human workstreams', read by this domain as the *moderation* team (24.01.03:74 'The launch moderation team is **one person**'; 24.01.03:189 Q-06 RESOLVED, 'the worst case in Q-02 (a single reviewer who is also a party) is the *expected* case'). And meta/constraints.md:232 puts the blocked act inside v1: baseline moderation is '(2) an **admin takedown** action (remove content, **suspend account**)'. No file in the domain reconciles the two: a grep for 'concur' across all 56 domain files returns no rule, exemption, or open question about concurrence on a one-person team. 24.01.03 Q-02 (:185) is scoped to *conflict-of-interest recusal*, not to the absence of a concurrer in the unconflicted case; 24.01.03 Q-01 (:184) defers the moderator actor's identity/permission model but does not address how many exist. 24.02.02:98 D-03 bars a model only from *appeal* review, so an AI concurrer is neither authorised nor forbidden — which is itself the divergence. Two normative statements ('every rung ≥6 sanction needs a second distinct human moderator' and 'the moderation team is one human') cannot both hold while any suspension lands."
+    },
+    {
+      "findingId": "24-trust-safety-disputes#003",
+      "upheld": true,
+      "finalSeverity": "blocking",
+      "refutationReason": "not-refuted",
+      "reason": "Verified verbatim and self-contained within one file. 24.01.03:51 'two-reviewer concurrence required before sanction'; :56-57 '**High-severity (S1) decisions require a second reviewer to concur before the sanction lands.**'; :86 'an S1 decision is held in `Awaiting concurrence` until a second, independent, unconflicted reviewer concurs'; :134 the `Awaiting concurrence` state. The same file locks the contradicting constraint at :74 ('The launch moderation team is **one person**') and :189 (Q-06 RESOLVED, quoting meta/constraints.md § Team verbatim), and its resolution then asserts 'no routing, exposure, **QA** or SLA control changes with the answer' — i.e. the gate stands. Unlike the blind-sampling controls, this gate *blocks an outcome*: with one reviewer every S1 case (statutory clock, financial harm in progress, active impersonation) stays in `Awaiting concurrence` while its clock runs, and D-03 (:173) forbids auto-deciding to beat the clock. Nothing in the file or the domain names an exception; Q-02 (:185) covers only conflict-of-interest escalation and Q-01 (:184) only the actor archetype. The implementer must invent auto-concurrence, severity downgrade, a rung-threshold waiver, or a permanently undecided critical queue."
+    },
+    {
+      "findingId": "24-trust-safety-disputes#004",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "The domain CX supplies the reconciliation the finding says is absent. trust-safety-disputes-cx.md:369 states the trigger chain as 'match → account action **proposed** → 24.02 applies a generic suspension → subject sees the standard notice' — the word `proposed` is the ladder's own pre-application state (24.02.01:136 'Proposed | Rung ≥ 6 or indefinite duration awaiting a second moderator's concurrence'), so the CSAM path hands a proposal to 24.02 and 24.02's gates apply unchanged. CX-12 also permission-separates the two contexts (cx.md:371-372, 'the moderator handling the ordinary suspension review has no CSAM-case access'), which presupposes a human in the 24.02 half. 24.08.01 D-01's 'no human decision' is scoped by its own rationale — 'A decision point is a place where it does not happen' (24.08.01:131) and 24.08.01:73 'No reviewer sees it in a general queue' — i.e. no human *reviews the material*, not that no human touches the account action. Any residual gate problem is the generic concurrence-vs-solo-team issue already carried by #002, not a CSAM-specific unreconciled pair."
+    },
+    {
+      "findingId": "24-trust-safety-disputes#005",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "Quotes verified (24.07.02:61, 24.07.03:59, :76, :57; cx.md:75-77), but the behaviour the finding says must be invented is ratified in the same feature. 24.07.02 Q-01 is RESOLVED (:106) as 'freeze and route', citing 01.05.03 D-02 'Undecidable contests freeze the party; the platform does not guess' and 01.04.04 D-02 'With no recorded terms, the platform states the position and executes nothing — inventing a default disposition for a contested asset would be the platform taking a side'. The state table then spells out the outcome the finding asks for: 24.07.02:72 'Frozen indefinitely | Legal proceedings elsewhere | The account persists, earns, and does nothing else', and 24.07.02:68 'entity: consequential actions frozen, accruals unaffected'. 24.07.03 D-02 (:102) repeats it — 'Accruals continue throughout the freeze'. So: the freeze holds both claimants out, the entity keeps accruing to itself, nobody acts in the interim, and probate does not outrank the mandate graph because the platform adjudicates neither. Two competent implementers converge on freeze-and-accrue; the `[PENDING]` cells are unwritten user-facing copy over a settled disposition rule."
+    },
+    {
+      "findingId": "24-trust-safety-disputes#006",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "no-real-divergence",
+      "reason": "Quote verified at 24.09-case-evidence-locker.md:144, and the phrasing is loose, but the file leaves no implementable ambiguity. The transition guard immediately below is explicit and unconditional: :148-149 'Retained → Purged only when `now ≥ max(all applicable clocks)` **and** no hold — checked atomically at delete time'. Under that guard the row's own final clause ('fully removed only when all clocks have expired') is the branch that fires, so `Purged` is always full removal. The anonymise-and-retain branch is separately and unambiguously defined at :79-81 as the response to a *GDPR erasure request against a bundle still inside another clock's window* — a different trigger, on a bundle that is still `Retained`, not `Purged`. Both the purge job's trigger condition and the erasure handler's behaviour are therefore fully determined; the mid-clause is redundant restatement, not a second state."
+    },
+    {
+      "findingId": "24-trust-safety-disputes#007",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "Quotes verified (cx.md:286, :295, :297-298; 24.02.05:104 D-02, :85 DT-02), but both owning features agree on the operative facts and the CX's normative line agrees with them. The CX's trigger chain — the part an implementer builds from — is :295 'listing submit → both checks run → refusals merged into one message', which matches 24.05.03:64 verbatim in substance: 'Same listing trips both this engine and the prohibited-items gate (24.02.05) … a single reconciled reason is surfaced (24 CX-09) | One consolidated hold reason, not two'. The merge point is listing, in both features. 24.02.05 D-02's second evaluation at checkout is a destination-dependent re-run of one engine and is stated by the owning feature, which is authoritative over a CX prose summary. 'Both are pre-publication gates' sits in the *permission-intersection* answer (a statement that neither engine grants the other permissions), not in a timing rule. No implementer is forced to invent the merge point."
+    },
+    {
+      "findingId": "24-trust-safety-disputes#008",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "Quotes verified, but the file confronts the team-size question head-on and its answer is implementable. 24.01.03:71-76 states the position explicitly: 'These controls must be **encoded in the queue regardless of team size** … (The launch moderation team is **one person** … and this conclusion deliberately does not depend on it: the controls are mandatory whether the team is one person or fifty.)' Unlike the concurrence gate (#002/#003), neither control gates an outcome: a blind-sampled shadow copy is enqueued for re-review (:87) and the agreement statistic is degenerate rather than blocking, and 'rotation off a high-harm queue' (:188) rotates the reviewer to a *different queue*, which a solo reviewer can do — the queue set is skill-scoped (:81) and multi-lane, and the exposure caps at :68-70 (blur, mute, per-session caps, forced break) are all single-person-satisfiable. No sanction, case or clock is held hostage by these controls, so nothing must be invented to ship them."
+    },
+    {
+      "findingId": "24-trust-safety-disputes#009",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "Both quotes verified (24.01.01:60 'the same target + reason'; 24.01-reporting-moderation-cx.md:37 'Merge strategy: dedup by (target, reason-family), retain each reporter for notification'), but they are not two competing specifications. The CX line is explicitly labelled 'Merge strategy' and exists precisely to fix the granularity the feature line leaves loose; the feature file itself uses 'reason family' as its own working unit (24.01.01:36 'Three reason families', :117 'the self-harm bypass is *defined* here (reason family)', :118 'CSAM reason family'). A reader hitting the shorter phrase at :60 and then the CX's named merge strategy converges on (target, reason-family). No competing normative statement, and the CX is the layer that owns cross-feature merge semantics."
+    },
+    {
+      "findingId": "24-trust-safety-disputes#010",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "no-real-divergence",
+      "reason": "Quotes verified (24.01.05:104 D-02, :36-37, :32-34, :45, :54), but the file draws the boundary it is accused of omitting. The Happy Path sequences the two regimes explicitly: step 2 'Metadata/pattern signals evaluate the thread — sender age, prior history, structure, payment language' → step 3 recipient warning → step 4 report → step 5 'Case enters the queue (24.01.03)'. So automated pattern matching over message text is the default lane and produces only an in-thread recipient warning (never an enforcement action against the sender, :33-34), while 'content-level inspection' is the human/evidentiary examination that a report unlocks — ':36-37 A reported thread is evidence ([24.09]); an unreported thread is not.' Q-01 (:118) then asks counsel for the lawful basis of exactly that pre-report 'pattern evaluation of private messages', which presupposes the scope rather than begging it. Two implementers converge: pattern matchers over bodies → warnings; human/evidence review → only on report."
+    },
+    {
+      "findingId": "24-trust-safety-disputes#011",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "tracked-deferral",
+      "reason": "The marker exists at 24.01.04:57 and Step 5 is indeed complete (ideation-index.md D-23/D-24), but the file's declared depth is the tracking. 24.01.04's header reads '**Status**: [SURFACE]' — and ideation-index.md D-24 records that this is deliberate: 'Coulds (201) and Won'ts (53) correctly remain `[SURFACE]` — out of Step 5 scope', with the depth ledger maintained per-file at ideation-index.md:65-67. A [SURFACE] Could-have feature is by policy not fully specified, and 24.01.04 Q-02 confirms the classification ('before treating this as Could-have'). Separately, the row's substantive column is not blank: 'Same accuracy machinery; plus abuse is itself reportable' — the behaviour (accuracy ledger throttle/suspend per :56, plus the abuse being independently reportable) is stated; only the 'User Sees' copy is unwritten. Nothing product-behavioural is forced."
+    },
+    {
+      "findingId": "24-trust-safety-disputes#012",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "no-real-divergence",
+      "reason": "Quotes verified (24.02.01:104; 24.01.03:51, :86), but they are two gates in two layers, not two conflicting rules over one gate. 24.01.03's S1 concurrence is a *decision*-stage gate inside the queue — 'Reviewer decides against a cited rule …; an S1 decision is held in `Awaiting concurrence` until a second … reviewer concurs' (:86) — and only then does step 8 (:87) 'On decision (or concurrence), the case emits a sanction (24.02.01)'. 24.02.01's rung test is a *sanction*-stage gate that fires after the case already arrives decided ('A decision is reached (24.01.03)', :101). 'Immediately, for rungs ≤ 5' (:104) means the ladder adds no second wait, not that the upstream queue gate is bypassed. They compose sequentially; no precedence rule is needed and no competent implementer would union or override them."
+    },
+    {
+      "findingId": "24-trust-safety-disputes#013",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "no-real-divergence",
+      "reason": "Quotes verified (24.02.01:39-40, :44-54, :103), but the natural reading makes every statement consistent and needs no per-rung table. 'Duration is explicit; `indefinite` is a distinct, higher-severity value, not a default, and cannot be selected on the same rung as a time-boxed sanction' reads on the sanction record: one record carries one duration — either a time-box or `indefinite`, never both. Under that reading the disjunction at :103 ('rung ≥ 6 **or** `duration = indefinite`') is fully meaningful — an indefinite rung-2 feature restriction trips the gate that a time-boxed rung-2 does not — which is exactly the escalation D-07 exists to catch. The rung table's parentheticals are descriptive of the sanction's ordinary shape ('Account suspension (time-boxed)', 'Permanent ban'), not a duration-class declaration. The alternative reading the finding proposes would make the disjunction's second clause dead, so implementers converge on the first."
+    },
+    {
+      "findingId": "24-trust-safety-disputes#014",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "no-real-divergence",
+      "reason": "Quotes verified but they do not collide once 'sanction' and 'transaction refusal' are kept apart, which the files do. D-02's own context names what it forbids: 'A risk engine that **can ban** is a risk engine that bans your best customer at 3am with no statement of reasons' (24.03-fraud-risk-operations-index.md:67) — account-level consequences, which are the ladder's rungs (content, feature, listing, payout, account, entity — 24.02.01:44-54). A card-testing block is a refusal of an authorisation attempt at the payment rail, an outcome of the per-action evaluation ('Risk is scored **per action, not per user**', 24.03.01:28), and no ladder rung acts on an authorisation attempt. The finding's own cited line refutes the 'no notice' half: 24.03.01:69 — '| Block | Rules-certain (card testing, screening hit) | **Blocked with a reason** |'. The false-positive case is also addressed rather than invented: 24.03.04:60 'Legitimate flash sale or artist drop spikes authorisation volume … Nothing; **must not throttle a real sales spike**'."
+    },
+    {
+      "findingId": "24-trust-safety-disputes#015",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "tracked-deferral",
+      "reason": "Both rows verified (24.04.03:57, :61), but neither has broken tracking. Row :57's pointer is live in the intended direction: it says 'see Q-02', and Q-02 at :112 carries the ratified answer inline — 'Resolved: escrow with milestone release … Source: this file's D-03', with D-03 at :102 'Services are out of scope for this programme'. A reader following the pointer lands on the answer, so nothing is invented; the `[PENDING]` is stale display over a resolved decision. Row :61 is tracked from the owning side, which the finding itself quotes: 24.05.03:112 Q-02 is '**[OWNER]** … Is there a **long-tail authenticity remedy** … so what is open is only whether a **monetary** remedy exists past every standard window', owner 'User', deferred to '/create-prd', and it names this exact cross-reference '(cf. [24.04.03], where the same case is `[PENDING]`)'. Owner + target + live stage present."
+    },
+    {
+      "findingId": "24-trust-safety-disputes#016",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "no-real-divergence",
+      "reason": "Quotes verified (24.05.01:66, :64, :95, :77), but only one reading is coherent and implementers converge on it. Decrement rules presuppose a prior increment: :95 'The counter **must decrement** (24.05 D-02); a strike the platform itself got wrong cannot ratchet the user toward termination' and :64 'strike decremented if the reversal so provides' are dead letters unless the strike already exists at removal time. Under increment-at-acceptance/removal, the lifecycle stage label 'Strike N | Counter incremented on a valid notice **not reversed**' reads as the standing-strike state (a strike that has not been reversed), which is exactly what it must mean for the Reversal row to have anything to act on. The increment *unit* is also fixed, not open: D-04 (:98) '(claimant, asset, infringement-event) tuple', with dedup rules at :91 and :94 and a no-strike rule for incomplete notices (D-02, :96)."
+    },
+    {
+      "findingId": "24-trust-safety-disputes#017",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "The marker exists at 24.06.01:58 and the stage is complete, but the substance the finding says must be invented is stated in the same file's Behavior: :38-40 — 'Doxxing has a music-specific inventory that the Privacy cross-cut already names: EXIF in gear photos …, a venue operator's home address, and **rider dietary and medical data** — health-adjacent information the touring domains collect as a matter of routine.' That settles the question asked ('whether rider medical/dietary data is treated as doxxing-protected'): it is named in-scope inventory, adjudicated by the same claim-driven flow as the rest of the feature (:29-31, :43-48). The file's declared depth also tracks the residue — '**Status**: [PARTIAL]', which ideation-index.md D-24 defines as the ratified Should-level target ('All 285 Should features taken from `[SURFACE]` to `[PARTIAL]` — Behavior, Happy Path, primary edge cases, States, Role Lens'). Only the 'User Sees' cell is unwritten."
+    },
+    {
+      "findingId": "24-trust-safety-disputes#018",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "Every cited cell and every cited resolution verified, and that is the refutation: each stale `[PENDING]` carries a pointer to the very question that now holds the ratified answer, in the same file. 24.07.01:67 points at 24.07 Q-03, resolved at 24.07-identity-abuse-ownership-disputes-index.md:67 with the fallback named ('01.05.02 D-07 … the attester-designated contact route is the universal proof tier'), and 24.07.01's own Q-01 (:132) restates it. 24.07.02:55 and :71 point at 24.07 Q-01, resolved at index:65 and at 24.07.02:106 ('**RESOLVED — freeze and route**'). 24.07.03:64 points at 'Q-02', resolved in the same file at :110; :58's Step-5 marker is resolved at :111 (Q-03). A resolution dated after the cell and citing a source decision plainly supersedes a stale marker, and the pointer takes the reader straight to it — nobody is left choosing between two live answers. This is editorial debt, not divergence."
+    },
+    {
+      "findingId": "24-trust-safety-disputes#019",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "Quotes verified (24.02.03:76, :80; cx.md:357-359, :366-368), but the CX ratifies the content of the field rather than leaving it empty. trust-safety-disputes-cx.md:366-368 says the enforcement record 'user-facing reason field is **deliberately generic**' — a generic value is a non-empty value, so 24.02.03:76's empty-field validation is satisfied. The artifact is named and reused across three files as an existing, defined object: '24.02's **generic suspension notice**' (cx.md:357, :369, :373; 24.08.01:21, :78), and 24.08.01 D-06 (:136) builds the whole reinstatement path on it. The automated-means flag is also satisfiable and honest for a hash match (24.02.03:80). What remains — whether a deliberately generic statement meets Art 17's specificity — is a legal-standard question of the kind this tree routes to counsel (24.08.01 Q-04, 'User + counsel', `/create-prd-security`), and the exact wording is downstream copy, not a second SoR class."
+    }
+  ]
+}

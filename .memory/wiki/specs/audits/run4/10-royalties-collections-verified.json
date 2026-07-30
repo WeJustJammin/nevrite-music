@@ -1,0 +1,89 @@
+{
+  "domain": "10-royalties-collections",
+  "verdicts": [
+    {
+      "findingId": "10-royalties-collections#001",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "no-real-divergence",
+      "reason": "Quotes verify (royalties-collections-index.md:112 D-03, :134-135 MoSCoW table, :139 reasoning), and the set mismatch is real prose imprecision. But no implementer diverges: the operative artifact is the enumerated per-feature MoSCoW table four lines above the gloss, and the file itself explains the deviations it cares about — royalties-collections-index.md:141 states '`10.09` is Should not for its own value but because `10.05.03` cannot detect a missing distribution without it (D-04)'. Nobody sequences a launch slice from a one-sentence rationale when an item-level table is adjacent, and the block is explicitly labelled 'Proposal only — the owner decides' (:129). A summary overstating 'exactly' is a wording defect, not a fork in what gets built."
+    },
+    {
+      "findingId": "10-royalties-collections#002",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "Quotes verify verbatim (10.09:95 D-05, :66 Overdue state, :52 edge case). But the derivation is supplied and tracked. 10.09 D-03 (:93) makes the calendar 'data, maintained by hand, forever', and 10.09 DT-03 (:75) explicitly links the tolerance's shape to the sibling anchor: 'It is the same shape as `10.01.04` Q-01's per-society expected-by turnarounds — institutional knowledge held by practitioners, not published as a dataset.' 10.01.04:104 Q-01 is an owned, staged question — 'Per-society expected-by turnarounds are institutional knowledge held by practitioners... Where does the platform get them — and what does it do for a society whose turnaround it does not know yet? | User | /create-prd' — and 10.01.03:86 D-02 already models turnaround as a per-society profile field ('data, not code'). The tolerance is per-society reference data whose sourcing is tracked, not an unowned invented constant."
+    },
+    {
+      "findingId": "10-royalties-collections#003",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "Quotes verify (10.01-index:14, :61 Q-01; 10.01.06:30, :102 D-02). But the sub-domain's own CX file resolves the exception explicitly and at length: 10.01-society-registration-delivery-cx.md:68 — 'The exception that reshapes the sub-domain's roadmap. Every other child here waits on the parent's `Q-03`... `10.01.06` D-02 breaks that' — plus CX-06 at :17, 'this pair bypasses the accreditation gate the rest of the sub-domain waits on'. 10.01.06 DT-02 (:86) rejects the inherited gate assumption by name, and parent D-11 (royalties-collections-index.md:120) ratifies 10.01.06 as 'the least gated'. Four sources in the same sub-domain plus the parent state the exception; the index Overview's universal sentence is a summary whose first clause is in fact scoped to PRO work registration. Sequencing is settled: 10.01.06 sits at Should and royalties-collections-index.md:141 names it 'the first Should promoted'."
+    },
+    {
+      "findingId": "10-royalties-collections#004",
+      "upheld": true,
+      "finalSeverity": "warning",
+      "refutationReason": "not-refuted",
+      "reason": "CONFIRMED and arithmetically verifiable. 10.02.02:47 gives 'tolerance = 0.5 × 10^-q  +  n × 0.5 × 10^-p'; for the 12-line p=q=2 case this is 0.005 + 12×0.005 = £0.065, not the '£0.005' asserted at :50, and 'a penny out is a real failure' is false under the formula. The second example (:51, p=6 q=2 n=400,000 → £0.205) checks out, isolating the defect. The rationale at :53 ('too tight for the second and far too loose for the first') is satisfiable only by the £0.005 reading, while D-10's restatement at :199 inverts the same sentence ('too tight for a 12-line PRS statement and far too loose for a 400,000-line DSR') — so the two prose statements of the motive are also mutually inconsistent, and neither matches the formula. Nothing in the file, the sub-domain index or 10.02-statement-ingestion-normalization-cx.md reconciles them, and D-02 (:191) makes the outcome a hard gate: 'A failed reconciliation stops the pipeline; it does not warn.' Downgraded from blocking: the formula is stated twice, once as the ratified D-10 text, so the code an implementer writes is not genuinely in doubt — the defect is that the stated design intent for the modal society statement is unachievable under the rule that will be implemented."
+    },
+    {
+      "findingId": "10-royalties-collections#005",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "The stale marker in 10.02.05 is real (:326 Q-04, :78, :281 'Neither is currently stated in `10.02.01`'), but the sibling supplies both fields explicitly and links back. 10.02.01:41 — 'Resolving `10.02.05` Q-04 — the registry owes two fields it did not previously state'; :47 Remittee 'Required by `10.02.05` D-15'; :51 Correction window 'Required by `10.02.05` D-17'; ratified as D-06 (:322, 'resolves `10.02.05` Q-04a') and D-16 (:332, 'Resolves `10.02.05` Q-04b'); and the Cross-Cut Note at :292 states '**`Q-04` there is resolved here** (`D-06`, `D-16`)'. Nothing is forced to be invented and no duplicate model is implied — the data model is stated in the owning feature with bidirectional cross-references. This is a stale back-reference, not a divergence."
+    },
+    {
+      "findingId": "10-royalties-collections#006",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "no-real-divergence",
+      "reason": "Quotes verify (10.02.05:58 closed set, :70 `reversed` row, :253 States row; royalties-collections-cx.md:71 and :293 'under cause `reversed`'). The two statements compose rather than conflict: the code is `reversed` (it is a member of the enumerated closed set, and the domain CX names it as the cause twice), while row :70's 'Re-enters under its original cause' sits in the **Resolution route** column and states which route the identity follows — the one belonging to its original cause. Both readings deliver the same behaviour on the point the finding says is decisive: the resolution route offered is the original cause's, stated explicitly in the row itself. The ageing-ladder half of the forcedInvention is incorrect — D-17 (:315) anchors the ladder to the **source's** declared correction window, not to the reason code, so the code choice cannot change the anchor."
+    },
+    {
+      "findingId": "10-royalties-collections#007",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "no-real-divergence",
+      "reason": "Quotes verify (10.03-index:50 D-05, :34-35 Role Matrix; 10.03-cx:98 CX-05). But the same file draws the line the finding says is never drawn, twice within twelve lines. D-05's own context clause scopes it: 'An editable **calculation** is a second source of truth for the split.' The Finding at 10.03-calculation-recoupment-index.md:38 says 'Nobody has **Full** access to anything in this sub-domain... this sub-domain only computes. A UI that lets anyone type a number into a royalty calculation has created a second source of truth' — deliberately distinguishing Full from the legend's '⚙️ Configuration only'. The Finding at :40 then states outright: 'A Producer configures terms and advances because they are on the paying side of a deal.' No competent reader concludes the term-recording flow is forbidden when the index asserts it two lines below the Role Matrix that grants it."
+    },
+    {
+      "findingId": "10-royalties-collections#008",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "no-real-divergence",
+      "reason": "Quotes verify (10.04.04:27, :29, :88 D-02; 10.04-index:38). The absolute at :27 is rhetorically loose, but the behaviour is fully determinate and both readings converge on the protection D-02 exists to provide. Withdrawal 'Releases to the original allocation' (:29) — the disputant chooses only to stop blocking, never where the money goes, so no party can direct escrow toward themselves. The edge case at :52 pins exactly this: 'Disputant is the payer | They hold the money and dispute the claim on it | **They cannot release it either.**' The finding's alternative ('a withdrawal must route to the dispute engine for closure') is not a reading the text supports — that path is already the separate 'Resolution' trigger at :28. No implementer builds withdrawal differently from the explicit sentence at :29."
+    },
+    {
+      "findingId": "10-royalties-collections#009",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "All three markers exist verbatim and the stage label is indeed weaker than the domain's other markers (which carry `/write-be-spec` or `/create-prd-architecture`). But every underlying question is owned and staged elsewhere. Interest on held money: 10.04.04:99 Q-02 — 'Does the platform **hold the funds** or merely mark them unpayable? Holding disputed third-party money is regulated activity **and interest accrues to someone** (parent `Q-02`) | User | /create-prd-security', plus domain Q-04 (royalties-collections-index.md:152) on client-money custody. Wind-down disposition: 10.04.03:106 Q-01 (terminal disposition of unpayable balances, User, /create-prd), :107 Q-02 (custody, User, /create-prd-security) and domain Q-06 (:154, 'What happens to money nobody can claim?'). Adjudication against the platform: routed out by domain D-05 (:114, the dispute case engine is a cross-cut) and royalties-collections-cx.md:218 — 'dispute *adjudication* tooling is the global Dispute Case Engine's operator surface, not this domain's'. Redundant markers over already-owned questions, not unassigned positions."
+    },
+    {
+      "findingId": "10-royalties-collections#010",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "downstream-detail",
+      "reason": "Quotes verify (10.04.03:98 D-03, :72 Ageing state, Q-01/Q-02/Q-03 at :106-108). But the ideation-layer content is present and complete: the state is named, its trigger class given, the escalation shape fixed ('Escalating alarm, sized in money'), the money-denomination ratified, and the six causes are individually specified with distinct remedies at :55-61 and :68-73 (Accruing / Blocked-actionable / Unreachable / Frozen each carry their own handling), so the 'no per-cause differentiation' claim overstates. What is missing is one calibration scalar, which changes no state, no cause, no remedy and no surface — and the consequential end of the ladder, terminal disposition, is tracked as an owned question (Q-01, User, /create-prd, tied to domain Q-06). Unlike 10.02.05 D-17, there is no external published anchor available here for ideation to cite; the window is a parameter for /create-prd or /write-be-spec, not invented product behaviour."
+    },
+    {
+      "findingId": "10-royalties-collections#011",
+      "upheld": true,
+      "finalSeverity": "warning",
+      "refutationReason": "not-refuted",
+      "reason": "CONFIRMED as an unreconciled clash between ratified decisions in one file. D-09 (10.05.01:227) makes money the second sort key; D-12 (:230) has the platform state it does not know the amount; D-03 (:221) forbids promised amounts; and :144 states outright that pools listing entries without sums is 'The normal case'. Nothing in the file, 10.05-recovery-leakage-cx.md or the sub-domain index says what the second key does when its value is absent, and Q-04 (:242) tracks only the sweep calendar feeding the *first* key. Downgraded from blocking: no product behaviour is prevented and no forbidden invention is actually forced — D-03/D-12 constrain what is *displayed*, not internal ordering, the primary key governs, and the file itself deflates the stakes at :101, 'User recognises the recordings — **they are the discriminator no ranking function replaces**'. The defect is that a ratified ranking rule is inoperative in the case the same file calls normal."
+    },
+    {
+      "findingId": "10-royalties-collections#012",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "Quotes verify (10.05.02:74 'search alone is gated on one'; 10.05-recovery-leakage-cx.md:75; royalties-collections-cx.md:115 'Search: two'). The discrepancy is a summary tally, not the substance: both files enumerate the identical, explicit gate list for search — the credits graph via 02.03.01 import gated on source licensing (credits-attribution-index.md Q-10), plus bulk access to unclaimed corpora (10.05 Q-01, :54). A planner reads the enumerated gates, which agree. The MoSCoW consequence the finding says is at stake is already decided and tracked: 10.05.01 sits in Must (royalties-collections-index.md:134, :139 'with `10.05.01` Q-01's warning attached'), and 10.05.01:239 Q-01 states explicitly '**This is now a phasing question, not a MoSCoW one**', owned by User at /plan-phase, with DT-05/D-11 having already narrowed the graph gate away for the performer pools that ship at t=0."
+    }
+  ]
+}

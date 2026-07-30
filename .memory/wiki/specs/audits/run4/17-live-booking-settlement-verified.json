@@ -1,0 +1,96 @@
+{
+  "domain": "17-live-booking-settlement",
+  "verdicts": [
+    {
+      "findingId": "17-live-booking-settlement#001",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "Quotes verify (17.01.04:62 C-04, :51, :146; 17.01.02:251 D-04, :231). But C-04 is silent about which ladder, not contrary to the two-ladder model — no statement in 17.01.04 asserts a single ladder. The rule the finding says must be invented is stated normatively in the unit's own index: 17.01-availability-holds-confirmation-index.md:59 [line 61] — 'Q-03 | ~~Is the hold ladder ever artist-side?~~ **RESOLVED — yes. There are two ladders (room-side, Operator-owned; artist-side, Musician-owned) and both must resolve for a show to exist; a promoter 1st on the artist and 2nd on the room can confirm nothing.** | Agent | ✅ Resolved'. That resolution answers every sub-question the finding lists (both ladders, both must resolve, position-1 semantics per ladder); the block-message wording is FE detail. 17.01.02:231 records the wording reconciliation, it does not create a second normative rule."
+    },
+    {
+      "findingId": "17-live-booking-settlement#002",
+      "upheld": true,
+      "finalSeverity": "blocking",
+      "refutationReason": "not-refuted",
+      "reason": "Both quotes verify verbatim. 17.14-bill-construction-support-slots.md:59 — 'Announce is blocked — supports-locked is a precondition … Announce action disabled with \"N support slot(s) still open\" (17.01.04 Q-01)' and :89 restates it as a cross-cut assertion. 17.01.04-confirmation-announce-gate.md:229 DT-05 — '\"Supports locked\" is an announce precondition … ❌ REJECTED as stated', :273 D-06 — 'The bill precondition is **lineup honesty** … not \"supports locked\"', :176 — 'Announce fires before supports are locked | **Not a failure if the announce said TBA**'. Two normative statements about the same action that cannot both hold, neither carrying a marker. The citation is additionally dangling: 17.01.04:290 Q-01 is '**[OWNER]** May the deposit precondition (P-07) be waivable at all?' — not the supports question, so a 17.14 reader following the pointer gets no signal that the rule was superseded. 17.14 is [PARTIAL], last updated 2026-07-17; 17.01.04 is [DEEP], 2026-07-30, but nothing in 17.14 defers the rule itself. Blocking retained: an implementer building 17.14 ships a disabled announce for the industry-standard 'Headliner + TBA' bill."
+    },
+    {
+      "findingId": "17-live-booking-settlement#003",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "Quotes verify (17.01.04:63 C-05, :55, :184). But the correction is stated explicitly in the same file, naming C-05 by identifier: 17.01.04-confirmation-announce-gate.md:293 — 'Q-04 | ~~Does a hold attach to a room-date or a show-slot?~~ **RESOLVED — a bookable slot, defaulting to one slot per room-date. C-05's same-date hard block and D-12's cross-room void prompt must therefore evaluate per slot, so a legitimate matinee + evening double-header and a two-stage room are no longer hard-blocked.**' Corroborated at 17.01-availability-holds-confirmation-index.md:59 ('Q-01 … **RESOLVED — a hold attaches to a bookable *slot***'). The :184 edge case's fallback is conditional — 'Until Q-01 resolves, the artist decides rather than the system' — and Q-01 has resolved, so the fallback lapses by its own terms. Stale prose, but every reasonable reading converges on per-slot evaluation."
+    },
+    {
+      "findingId": "17-live-booking-settlement#004",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "Quotes verify (cx:54 'a fixed countdown (24–48h)'; 17.01.03:61 and :230 D-16 '24h ≤ W ≤ 14d'). But the CX passage is a relationship narrative, and the same CX paragraph immediately hands the bound to the leaf: 17.01-availability-holds-confirmation-cx.md:59 — '**Operator**: issues and adjudicates challenges; **sets the window length per room policy**.' The owning leaf carries the normative bound in a dedicated row — 17.01.03-challenge-release-expiry.md:61 '**Window bounds** | Room policy sets a default (platform default 48h). Per-challenge override permitted within **24h ≤ W ≤ 14d**' — plus D-16 with reasoning. An implementer writing the validation bound reads the feature that owns the clock, not a cross-cut parenthetical; 48h is the platform default the CX parenthetical illustrates."
+    },
+    {
+      "findingId": "17-live-booking-settlement#005",
+      "upheld": true,
+      "finalSeverity": "warning",
+      "refutationReason": "not-refuted",
+      "reason": "Confirmed on disk. 17.01.02-hold-ladder-priority.md:260 — '| D-14 | **DQ-04.01:** a held date **stays available** …' and :262 — '| D-14 | **Requests lapse; holds expire.** Different objects, different clocks …' are two distinct decisions carrying the same identifier inside one Decisions table, with :261 D-13 between them, so the table numbers D-11, D-12, D-14, D-13, D-14, D-15. The collision is untracked and unmarked. In-file citations at :148 and :230 use 'D-14' for the lapse rule only, so the identifier cannot serve as a join key into any decision ledger. No marker, no note, and nothing elsewhere disambiguates. Warning is the correct severity — no product behaviour is undetermined, only traceability."
+    },
+    {
+      "findingId": "17-live-booking-settlement#006",
+      "upheld": true,
+      "finalSeverity": "warning",
+      "refutationReason": "not-refuted",
+      "reason": "Both halves confirmed. Duplicate identifier: 17.02.03-offer-approval-chain.md:125 '| Q-03 | **Per DQ-04.03 / D-08 — does an extension re-open the hold ladder clock?** … | Agent | `/write-be-spec`' and :126 '| Q-03 | Does a lineup change between approval and show invalidate the approval? … | Agent | `/write-architecture-spec`' — two open questions sharing one id. Missing decision rows: the Decisions table at :110–:117 contains only D-01 through D-06 (verified line by line), yet D-07 is cited at :71 and :123 and D-08 at :70 and :124 as the source of the two ratified DQ-04.02/DQ-04.03 resolutions. Partially overstated — the edge-case pointer at :73 names its target ('Q-03 → /write-architecture-spec'), so that particular reference is disambiguated by its deferral target — but the id collision and the two unrecorded decision rows are real and untracked."
+    },
+    {
+      "findingId": "17-live-booking-settlement#007",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "downstream-detail",
+      "reason": "Quotes verify (17.02.01:68; 17.03.01:172). But the two files agree on ownership and on outcome, and both declare the detector deliberately imprecise. Ownership: 17.03.01-deal-term-grammar-types.md:244 — 'The economic-content detector (D-09) fires **at that feature's send action**' (i.e. 17.02.01's), and 'its Q-02 (\"how is the escape hatch prevented from smuggling economic terms\") is answered by D-09.' Outcome is identical, not block-vs-warn: 17.03.01:216 'Modal: move it into the deal, or acknowledge. No third option' equals 17.02.01:68 'Convert … / Send anyway (records a per-term acknowledgment)'. Precision is explicitly declared out of scope: 17.02.01:235 D-06 — 'The lint over-flags by design (≥95% recall; **precision not optimised**)' and 17.03.01:124 'The detector is deliberately over-sensitive.' A keyword list and proximity window for a stated recall-only heuristic is BE-spec tuning, and both listed sets are illustrative under an over-flag mandate."
+    },
+    {
+      "findingId": "17-live-booking-settlement#008",
+      "upheld": true,
+      "finalSeverity": "warning",
+      "refutationReason": "not-refuted",
+      "reason": "Confirmed and the tracking is malformed. 17.11.01-verified-draw-record.md:58 — '| Festival slot with 8,000 in the field | The artist did not draw 8,000; the festival did | `[PENDING — /ideate-discover Step 5 deepening]` — festival draw is not draw |'. The target stage is completed and the marker was never re-pointed, unlike its siblings (17.03.03:63/:72, 17.06:157, 17.08.01:133, 17.11.01:111 all carry an explicit '*Re-pointed from the completed …*' note and a live target). No owner, and the file's Open Questions at :109–:111 (Q-01 human-vs-entity RESOLVED, Q-02 read permission, Q-03 append-only adoption cost) do not carry it. Behaviour is genuinely undetermined against :97 D-01 ('Only signed settlements emit records') and :98 D-02 ('Slot (headliner / support / opener) is mandatory and never inferred') — a settled festival booking must emit a record carrying a slot value the enum does not contain. A domain-wide grep for 'festival' finds no other file resolving it."
+    },
+    {
+      "findingId": "17-live-booking-settlement#009",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "tracked-deferral",
+      "reason": "Quotes verify, and they are the tracking. 17.03.03-multishow-cross-collateralization.md:63 carries '`[PENDING — /create-prd]`' twice in one row and self-identifies the owner class — 'a commercial policy call, **of the same class as Q-02**' — where :106 Q-02 is '**[OWNER]** … | User | `/create-prd`'. :72 repeats '`[PENDING — /create-prd]`' for the Broken state and both cells end '*Re-pointed from the completed `/ideate-discover` Step 5.*', i.e. the marker was deliberately re-targeted to a live stage. `/create-prd` has not run. The finding's 'no owner and no queue row' is contradicted by the cell naming Q-02's owner class and by the sibling escalation at :105 Q-01, which routes the same settlement-grain call to `/create-prd` alongside `live-booking-settlement-index.md` Q-02 and `17.09-settlement-reconciliation-index.md` Q-01. Well-formed deferral to a live stage."
+    },
+    {
+      "findingId": "17-live-booking-settlement#010",
+      "upheld": true,
+      "finalSeverity": "warning",
+      "refutationReason": "not-refuted",
+      "reason": "Deferral half upheld; contradiction half not sustained. 17.06-radius-clause-exclusivity.md:102 reads '| Clause on a show that is later cancelled | Does the clause die with the show? Usually yes; not always | `[PENDING — Step 5]` |' (the finding's bold emphasis is not in the source, but the wording is exact). The target is the completed `/ideate-discover` Step 5 and, unlike every other deferral in this file (:157–:161 all carry an owner and a live target, and :157 is explicitly 'Re-pointed from the completed `/ideate-discover` Step 5'), this one was never re-pointed and has no owner and no Open Questions row. The behaviour it gates is a hard block — 17.01.04:64 C-06 blocks confirmation on a live clause — so post-cancellation confirm behaviour is undetermined. The claimed contradiction is weaker than stated: :139 says the clause 'dies with the contract', which is not the same proposition as dying when a show is cancelled, so I downgrade the contradiction but uphold the dangling deferral."
+    },
+    {
+      "findingId": "17-live-booking-settlement#011",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "Both quotes verify (17.04:60, 17.04:114). But the stale cell names its own governing question and that question is resolved in the same file with an explicit, unambiguous answer: 17.04-performance-contracts-deal-memos.md:60 defers the policy — 'Exact detect/block/accept policy is `[PENDING — …]` **(Q-02)**' — and :114 reads '| Q-02 | ~~… Detect, block, or accept?~~ **RESOLVED — detect and require acknowledgement; never block, never silently accept.**', citing `17.03.01` D-09 and `live-booking-settlement-cx.md` CX-23 as the ratified policy. The cell's 'either blocked or flagged' is explicitly labelled a 'Level-1 stance' pending Q-02, not a competing rule. A reader following the pointer the cell itself provides converges on detect-and-acknowledge; the residual is stale prose and a live marker on a closed question, not a divergence."
+    },
+    {
+      "findingId": "17-live-booking-settlement#012",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "no-real-divergence",
+      "reason": "The quote verifies but omits that the cell states the operative rule before the marker. 17.08.01-representation-commission-terms.md:81 — 'Each date computes under its own pinned version; `[PENDING — Step 5 Must-depth: interaction with run-level netting]`'. The finding's forcedInvention ('must invent whether commission is evaluated per date against each date's pinned version … or against the run-level aggregate under one version') is answered by the cell's own first clause: per date, under that date's pinned version. The PENDING scopes only a downstream refinement, and the grain it depends on is itself an owner-tracked question elsewhere — 17.03.03-multishow-cross-collateralization.md:105 'Q-01 | **[OWNER]** Provisional-until-run-closes … or per-show-final-with-true-up? … this sets the settlement entity's grain | User | /create-prd', mirrored at 17.08.02:104 Q-03. Two competent implementers both compute per-date on the pinned version."
+    },
+    {
+      "findingId": "17-live-booking-settlement#013",
+      "upheld": true,
+      "finalSeverity": "warning",
+      "refutationReason": "not-refuted",
+      "reason": "Confirmed by direct comparison. live-booking-settlement-index.md:52–:65 records '`[SURFACE]`' in the Status column of all 14 child rows. On-disk front matter: 17.01 [DEEP], 17.02 [BREADTH], 17.03 [BREADTH], 17.04 [PARTIAL], 17.05 [BREADTH], 17.06 [SURFACE], 17.07 [PARTIAL], 17.08 [BREADTH], 17.09 [BREADTH], 17.10 [BREADTH], 17.11 [BREADTH], 17.12 [PARTIAL], 17.13 [SURFACE], 17.14 [PARTIAL] — 12 of 14 wrong (the finding's 'every one of the 14' is overstated; 17.06 and 17.13 happen to match). live-booking-settlement-index.md:6 'Last updated: 2026-07-16' against children updated through 2026-07-30 confirms the table is simply stale, and nothing marks it as such. The secondary claim that index [BREADTH] contradicts cx [DEEP] is not sustained — those statuses describe different artifacts (the domain's own breadth vs the CX synthesis, which self-describes as '14 children; 24 intra-domain cross-cuts synthesised'). Warning, on the children-table staleness only."
+    }
+  ]
+}

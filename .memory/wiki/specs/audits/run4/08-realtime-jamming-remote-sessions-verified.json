@@ -1,0 +1,132 @@
+{
+  "domain": "08-realtime-jamming-remote-sessions",
+  "verifiedAt": "2026-07-30",
+  "governingContext": [
+    "moscow-ledger.md § MUST: 08.05.01, 08.05.02, 08.05.04, 08.07 only.",
+    "moscow-ledger.md § SHOULD: 08.03.01, 08.03.02.",
+    "moscow-ledger.md § COULD: 08.01.01, 08.01.02, 08.02.01, 08.02.03, 08.03.03, 08.03.04, 08.05.03, 08.06, 08.08.",
+    "moscow-ledger.md § WONT: 08.01.03, 08.02.02, 08.04.01, 08.04.02, 08.04.03.",
+    "ideation-index.md:210 D-24 — 'Coulds (201) and Won'ts (53) correctly remain [SURFACE] — out of Step 5 scope.' This is the ratified policy that governs every stale `[PENDING — Step 5]` marker inside a COULD/WON'T file; 08.02.01:101 states the disposition — a COULD is 'deepened at spec time if pursued'."
+  ],
+  "verdicts": [
+    {
+      "findingId": "08-realtime-jamming-remote-sessions#001",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "no-real-divergence",
+      "reason": "Quotes verify verbatim, but the divergence dissolves in situ. 08.07-overdub-mode.md:269's row subject is 'Request has no live monitor and the Producer later wants the higher grade' and its body is entirely about the witness — 'A witness is only available while the pass happens'. The normative statement is D-04/D-10, not the row: 08.07-overdub-mode.md:359 D-10 scopes non-retrofittability precisely — 'attending is what converts delivered-by into observed-playing. It is offered before the pass, never retrofittable after.' No decision anywhere says the grade is sealed at delivery. Three sources converge the other way inside the same file: the grade table (:176 counter-attested reached at acceptance), the States table (:290 'Accepted | Producer accepted a pass | Counter-attested'), and :264 'Record stands at delivered-by, unaccepted'. An implementer who sealed the grade would have to refuse to build a row of the file's own States table. realtime-jamming-remote-sessions-cx.md:149-150 confirms the ladder ('grade only ever rises on evidence') and scopes the upgrade event to the witness. Both readings converge on: witness rung is live-only; acceptance yields counter-attestation."
+    },
+    {
+      "findingId": "08-realtime-jamming-remote-sessions#002",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "tracked-deferral",
+      "reason": "Quote verifies verbatim at 08.01.03-shared-clock-click-countin.md:56, and Step 5 is indeed complete. But 08.01.03 Shared Clock, Click & Count-In is at **WON'T (now)** — moscow-ledger.md:732 § WONT (53). ideation-index.md:210 D-24 ratifies that 'Coulds (201) and Won'ts (53) correctly remain [SURFACE] — out of Step 5 scope', so the row is unresolved by ratified policy, not by oversight, and the feature is not in v1 or v1.5 (D-31, ideation-index.md:217). The file's own header carries the same status. No implementer is forced to invent this behaviour because no implementer builds this feature in the planned releases; if it is ever pursued, 08.02.01:101 states the disposition for de-scoped features — 'deepened at spec time if pursued'. Blocking severity is not sustainable against a WON'T."
+    },
+    {
+      "findingId": "08-realtime-jamming-remote-sessions#003",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "All quotes verify, but the question is answered three times over and only one loose phrase points the other way. 08.06-session-preflight-rig-readiness.md:113 D-05 — 'Pre-flight informs and records; it does not block.' 08.07-overdub-mode.md:365 D-16 — 'Consistent with 08.06 D-05: it informs and records; it does not block.' 08.07-overdub-mode.md:280 — 'Not a gate (08.06 D-05) — but a skipped calibration is stated, never blank.' The CX text the finding cites as the second gate assertion in fact confirms the non-blocking reading one line later: realtime-jamming-remote-sessions-cx.md:201 — 'A failed round-trip calibration must warn *before* tracking — a wrong offset silently mis-aligns every take.' Warn, not block; ':199 Sync gate before tracking' is an ordering statement in a trigger chain that ends 'overdub proceeds'. 08.07:240's 'a pre-flight gate item' is a checklist-item usage, contradicted explicitly by :280 in the same table. No implementer diverges: run it, record it, warn on failure, never block."
+    },
+    {
+      "findingId": "08-realtime-jamming-remote-sessions#004",
+      "upheld": true,
+      "finalSeverity": "warning",
+      "refutationReason": "not-refuted",
+      "reason": "Verified and live. realtime-jamming-remote-sessions-index.md:122 D-05 still reads 'Overdub also runs on the locked stack and carries the provenance intact', while 08.07-overdub-mode.md:353 D-04 states 'Provenance is captured without real-time transport, at a stated grade — NOT identically to a live session ... The breadth pass claimed identical certainty; that was an overclaim (DT-08).' Both are Decision-log entries — two normative statements that cannot both hold. The tree itself names the defect and it was never closed: 08.07-overdub-mode.md:16 — 'the domain index's D-05 carries the uncorrected claim, and this file does not own that index.' The correction demonstrably reached its other two targets (realtime-jamming-remote-sessions-cx.md:23 CX-07; 08.05.04-session-attendance-provenance.md:166, whose edge row now reads 'delivery-certainty, not performance-certainty'), so this is a genuinely stranded remnant, not a pending pass. No open question in the domain index (:130-136) tracks it. 08.07 is a MUST (moscow-ledger.md:83), so this is in-scope for v1. Severity held at warning, not raised: the finding's claim of a surviving residue at 08.05.04:218 is overstated — that line does say 'Works identically under 08.07 Overdub Mode' but immediately qualifies it, 'Note the honest cost: a solo overdub is self-attested end to end (DT-05), so the mode that survives infrastructure cuts produces the weakest records.'"
+    },
+    {
+      "findingId": "08-realtime-jamming-remote-sessions#005",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "Quotes verify, but the file the finding treats as the defect explains itself. realtime-jamming-remote-sessions-cx.md:225 sits under the heading 'Cross-Cuts Escalated to the Global CX File' (:216-219, 'Mechanisms serving many domains. Not nodes in domain 08'), and its row describes the combined 02/08/09 ladder, whose top rung 02 owns. That attribution is explicit at 08.05.04-session-attendance-provenance.md:207 — \"'02.04' Q-01 names 'session-captured+attested' as the top rung of its candidate ladder; this feature is what produces that rung\" — so the name belongs to 02's tier model, not to 08's emitted enum. 08's own values are stated consistently at the leaves: 08.05.04:50 gives the attendance-record grades ('a live-room segment is observed-playing; an overdub is delivered-by by default and becomes observed-playing only for segments a live witness observed'), and 08.07:172-176 gives the overdub pass basis ladder including counter-attested (Producer acceptance). `counter-attested` and `session-captured+attested` are not competing names for one rung — one is 08's acceptance basis, the other 02's live-session tier — and 08.05.04:207 says so."
+    },
+    {
+      "findingId": "08-realtime-jamming-remote-sessions#006",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "tracked-deferral",
+      "reason": "Quote verifies verbatim at realtime-jamming-remote-sessions-cx.md:52 and no question re-points it. But the transition it describes cannot arise in the planned releases: it requires a live real-time room, and the room's constituent features are de-scoped — 08.01.03 Shared Clock at WON'T (moscow-ledger.md:732), all of 08.04 Talkback/Cue Mixes at WON'T (:734-736), 08.01.01/08.01.02 latency measurement and verdict at COULD (:558-559), 08.06 Pre-Flight at COULD (:565). ideation-index.md:210 D-24 keeps every one of those [SURFACE] by ratified policy, and D-31 (:217) puts v1 at the session spine. The CX row is also not content-free — it records the operative constraint ('the local-round-trip figure overdub needs is a *different* measurement than the network verdict, so a mid-session switch is not a free reuse of state'), which is the finding an implementer would need. Nothing in the shipping scope forces the invention."
+    },
+    {
+      "findingId": "08-realtime-jamming-remote-sessions#007",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "downstream-detail",
+      "reason": "The quote verifies at 08.07-overdub-mode.md:267 but the finding omits the same row's User Sees column, which settles the product behaviour: 'Progress, and a size warning against their own remaining upload, **not a refusal**.' So there is no threshold to invent — size never rejects. Refusal is reserved and separately specified for a different cause at :266 ('Player delivers a non-audio or malformed file | Rejected at the local check with a plain reason'). The contrast the finding draws with 08.05.01:259 cuts the other way: the live path can derive an envelope because it observed the session, and this row explicitly declines to guess precisely because overdub cannot ('Bounded by the request's declared scope, not by a guess'), with the bed's own duration/bar map (:67) and the marked target sections (:218) as the scope. A concrete byte ceiling and a warning threshold are storage/upload-layer numbers, the class this tree routes to /create-prd-compile, not an ideation-level product decision."
+    },
+    {
+      "findingId": "08-realtime-jamming-remote-sessions#008",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "no-real-divergence",
+      "reason": "All three quotes verify (realtime-jamming-remote-sessions-index.md:93; 08.03-remote-monitoring-session-attendance-index.md:41-42; 08.03.03-live-listener-feedback-notes.md:21). But the domain-level row is a roll-up over four children and it matches the two that are in scope: 08.03.01 and 08.03.02 both give Musician 'Read-only' (08.03 index :39-40) and are the SHOULD features (moscow-ledger.md:291-292). The two children that grant more, 08.03.03 and 08.03.04, are COULD (moscow-ledger.md:562-563), both files are [SURFACE], and 08.03.04's own Q-01 (:110) is an owner call on whether the feature is real at all. The tree also states its own precedence rule against reading a parent matrix as authoritative — realtime-jamming-remote-sessions-index.md:87, 'Personas from meta/personas.md. Never redefined here — referenced only' — and the leaf Role Lens is the specific instrument (08.03.03:21 scopes the Musician's 'Full' to acting as a listener: 'a bandmate attending a mix they are not playing on'). Most-specific-wins is the only reasonable reading; no implementer builds a leaf surface from a domain roll-up."
+    },
+    {
+      "findingId": "08-realtime-jamming-remote-sessions#009",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "tracked-deferral",
+      "reason": "Both quotes verify (08.01.02-playability-verdict-tempo-ceiling.md:62; 08.01-latency-budget-playability-cx.md:36). 08.01.02 Playability Verdict & Tempo Ceiling is at **COULD** — moscow-ledger.md:559, whose rationale is the feature's own survival argument ('it gates rooms that may not ship'). ideation-index.md:210 D-24 ratifies that Coulds remain [SURFACE] and were out of Step 5's scope, which is exactly why this row was not deepened while the file's [OWNER]-class questions were re-pointed. The hard floor is also already fixed for the in-scope half: the same edge table's row at :58 and D-02 establish that a red verdict never blocks and always records, and the CX row itself commits the Producer notification ('A verdict transition from green to red mid-session must notify the Producer'). What is open is a player-facing affordance in a feature that is out of v1/v1.5 (D-31)."
+    },
+    {
+      "findingId": "08-realtime-jamming-remote-sessions#010",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "tracked-deferral",
+      "reason": "Quote verifies at 08.01.01-latency-measurement-decomposition.md:56. 08.01.01 Latency Measurement, Decomposition & Remediation is at **COULD** — moscow-ledger.md:558 ('Only valuable once real-time rooms exist, and the rooms are the infrastructure-blocked half'). Per ideation-index.md:210 D-24, Coulds remain [SURFACE] and were out of Step 5's scope, so the unresolved row is ratified policy rather than an untracked gap, and the feature sits outside v1 and v1.5 (D-31). The downstream consumers the finding names are themselves de-scoped — 08.01.02 verdict at COULD (:559) and 08.02.02 correction loop at **WON'T** (:733) — so the cherry-picking risk cannot be realised in the planned releases. The file's own variance discipline is also already stated for the measurement it does produce (:53, 'System reports a range and a confidence, not a point value')."
+    },
+    {
+      "findingId": "08-realtime-jamming-remote-sessions#011",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "Both quotes verify, but MoSCoW ran and answered both. moscow-ledger.md:559 places 08.01.02 Playability Verdict & Tempo Ceiling in § COULD (section header at :507) with the question's own wording as its rationale: 'The BPM-ceiling framing is the domain's most differentiating cheap idea (DT-01, nobody in the category does it), but it gates rooms that may not ship. If Overdub is the shipping path, the verdict risks being a sophistica[ted]…'. That is the same disposition the finding's own cited siblings record as 'RESOLVED by MoSCoW' — kept, not cut, at COULD, out of v1/v1.5 per ideation-index.md:217 D-31, to be 'deepened at spec time if pursued' (08.02.01:101). The residual defect is a missing 'RESOLVED by MoSCoW' annotation on two rows, not a decision that no stage will take. The finding concedes its own forcedInvention is 'None directly'."
+    },
+    {
+      "findingId": "08-realtime-jamming-remote-sessions#012",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "tracked-deferral",
+      "reason": "Both quotes verify (08.02-playable-radius-peer-matching-cx.md:36; 08.02.02-route-aware-radius-correction.md:60). But 08.02.02 Route-Aware Radius Correction is at **WON'T (now)** — moscow-ledger.md:733, confirmed in-tree at 08.02-playable-radius-peer-matching-index.md:58 ('MoSCoW placed the map at COULD and the correction loop at WON'T (now)') and 08.02.01:101. ideation-index.md:210 D-24 keeps Won'ts [SURFACE] by ratified policy. With the correction loop not built, no radius shrinks, so the notification decision and the 'materially' threshold cannot arise; the consequence the finding cites (08.02 CX :48, invisibility in others' searches) is likewise unreachable. The parent index's Q-03 (:58) already records the whole cold-start/rooms dependency as resolved by MoSCoW."
+    },
+    {
+      "findingId": "08-realtime-jamming-remote-sessions#013",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "Quote verifies at 08.02.03-latency-aware-match-filter.md:110, but MoSCoW took the call. moscow-ledger.md:561 places 08.02.03 Latency-Aware Match Filter in § COULD with rationale that is verbatim the question: 'if the rooms are cut, an \\'overdub-capable?\\' predicate replaces it — trivially true for everyone and therefore worthless. Dies with [the rooms]'. So the stage the row points at did run, did consider this exact argument, and kept the feature at COULD rather than Won't — the identical disposition the finding's cited siblings annotate as 'RESOLVED by MoSCoW' (08.02 index :58; 08.02.01:101). What is missing is the annotation, not the decision."
+    },
+    {
+      "findingId": "08-realtime-jamming-remote-sessions#014",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "tracked-deferral",
+      "reason": "Quote verifies at 08.03.03-live-listener-feedback-notes.md:58. 08.03.03 is [SURFACE] (file header; 08.03 index :32) and at **COULD** — moscow-ledger.md:562, 'Genuinely useful but not thesis-critical, and Projects (07) already owns asynchronous review. Also a probable duplicate of 08.05.03's flag gesture (Q-06) — should not be built until that merge is decided.' ideation-index.md:210 D-24 keeps Coulds [SURFACE] and out of Step 5, which is precisely why three questions were re-pointed (each citing D-24: 'Coulds were out of its scope') while undeepened edge rows were not. The feature may also not survive as a separate entity at all pending the 08.03.03/08.05.03 merge (domain index Q-06). Grouping/collapsing rules for a notes feed are additionally the presentation class this tree routes to /write-fe-spec (cf. 08.03.04 Q-03)."
+    },
+    {
+      "findingId": "08-realtime-jamming-remote-sessions#015",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "tracked-deferral",
+      "reason": "Both quotes verify (08.03.04-monitoring-trust-playback-context.md:69 and :79). But this feature's existence is itself an unresolved owner call, and it is tracked: Q-01 (:110) — '[OWNER] Is this a real product? ... If the latter, cut it' — routed to /create-prd, with moscow-ledger.md:563 placing it at COULD and labelling it 'SPECULATIVE — flagged as such in the file itself ... DT-03 rejected the optimistic conclusion'. ideation-index.md:210 D-24 keeps Coulds [SURFACE]; the file is [SURFACE] (08.03 index :33). Specifying staleness behaviour inside a feature whose keep-or-cut is pending would be work ahead of the decision. The default direction is also already fixed rather than open: D-04 (:104) 'Undeclared means unknown, never an assumed default' and :67 'Context is unknown, not assumed' — a stale declaration cannot legitimately become an assumed default under either reading."
+    },
+    {
+      "findingId": "08-realtime-jamming-remote-sessions#016",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "The quotes verify and the two artifacts are real, but the tree distinguishes and separately tracks both. 08.05.02 always names its artifact the **timing witness** — 'each endpoint's local, pre-talkback recording of the inbound ensemble mix' (:72), fixed by D-07 (:300) and D-08 (:301, 'discarded at seal') — and 08.05.01 DT-06 names a distinct 'witness copy of what the network carried' whose purpose is anti-substitution integrity, not alignment. The domain CX keeps them apart in the same sentence (realtime-jamming-remote-sessions-cx.md:18, 'the pre-talkback timing witness (08.05.02 R2)'). Which can serve alignment is settled, not open: 08.05.02's ladder is a closed four-rung set (:69-74) and D-06 (:299) makes the method a pre-session commitment verified at pre-flight. 08.05.01 DT-06 explicitly disclaims authority ('which is 08.05.02's decision to make, not this feature's'), and 08.05.02 Q-01 has since narrowed to 'How is the R1 reference encoded?' (:317) — so the 'candidate answer' pointer is stale, not contradictory. Consent is not under-scoped: 08.05.01 Q-05 (:362, retention of the network witness) and 08.05.02 Q-05 (:321, 'a witness is a *second* recording') are two separate open questions, both owner-User, both routed to /create-prd-security."
+    },
+    {
+      "findingId": "08-realtime-jamming-remote-sessions#017",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "tracked-deferral",
+      "reason": "Quotes verify (08.05.03-auto-highlights-moment-flagging.md:105 D-01; :66; :88 DT-01). 08.05.03 Auto-Highlights & In-the-Moment Flagging is [SURFACE] (file header :5) and at **COULD** — moscow-ledger.md:564, 'Worth building only after capture and provenance' — so ideation-index.md:210 D-24 governs it exactly as it governs the file's other undeepened content; both re-pointed questions (:115, :116) cite D-24 by name for why Step 5 could not take them. The mechanism the finding calls central is decided (D-01, retrospective window ending at the gesture) and DT-01 supplies the working idiom ('capture the last 30 seconds'); what is missing is a single number in a de-scoped feature — the same class this tree routes to /create-prd-compile (08.06 Q-03, 08.05.02 Q-06, 08.01.02 Q-01), and a window length is a tunable, not a product thesis."
+    }
+  ]
+}

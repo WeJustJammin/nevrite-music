@@ -1,0 +1,68 @@
+{
+  "domain": "12-release-distribution",
+  "verdicts": [
+    {
+      "findingId": "12-release-distribution#001",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "Quotes verify verbatim, but the contradiction depends on reading 12.01.03's 'pin' as a freeze, which the same section disclaims two lines later. 12.01.03-delivery-readiness-gate.md:187 'At dispatch, every pin is re-checked (E-2)' and :114 'A gate is a check, not a lock' make the pin a recorded version plus change-detector, not immunity — which forecloses forcedInvention option (a). Option (b) vs (c) is resolved by a specific edge-case row overriding the general E-2 rule: :235 'Rule pack updates between green and dispatch | P-1 is a precondition, not a condition — a rule-pack regression un-presents the gate rather than failing it. The release falls back to validation and says why'. 12.01.02-metadata-validation-conformance.md:178 then gives the complete behaviour the finding says is missing: 'Release falls back to Blocked on the affected store only; unaffected stores stay on schedule. Artist is notified immediately ... If unresolved by that store's lead-time cutoff (12.04.01), the store is dropped from the wave and delivered late rather than delaying the release', with a dedicated state at :222 'Invalidated | A rule-pack update broke a previously-clean, gate-green release | Amber, store-scoped'. Both files also declare the same resolution of the same CX question (12.01.02:134 'This resolves the pinning asymmetry flagged as unresolved in the domain CX file (CX-02, synthesis Q5)'; 12.01.03:235 'Resolves CX-02 Q5 from the gate's side'), so the 12.01-release-builder-cx.md:51 `[PENDING — Step 5]` marker is stale, not a live gap. Not a divergence an implementer must invent through."
+    },
+    {
+      "findingId": "12-release-distribution#002",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "tracked-deferral",
+      "reason": "Every quote verifies verbatim, but the residual is the exact content of a well-formed open question the finding itself quotes. 12.03.04-artist-profile-linking-disambiguation.md:144 'Q-04 | For a Tier-B store (addressable, not claimable), what is the acceptable evidence bar before an asserted link is treated as trusted enough to emit — or are Tier-B links always emitted-with-warning? Feeds the T&S (24) impersonation model. | Agent | `/write-be-spec`' — owner and target both present. Q-04 does not re-open D-05; D-05 sets the typing and the T&S routing for links that are 'asserted-but-unverifiable' (:135, note the qualifier — not all Tier-B links), and Q-04 sets the bar that separates an unverifiable assertion from an emittable one. Q-04's own phrasing presupposes emission is available to asserted links, so the blanket reading ('Tier-B never emitted') is not the reading the file supports. The per-store tier matrix is likewise routed at :63 '`[PENDING — /write-be-spec]` — the exhaustive per-store matrix ... is integration detail, not ideation behavior'. No product behaviour must be invented at ideation depth."
+    },
+    {
+      "findingId": "12-release-distribution#003",
+      "upheld": true,
+      "finalSeverity": "warning",
+      "refutationReason": "not-refuted",
+      "reason": "Verified and genuinely unclosed, but overstated as blocking. The quotes hold: 12.02.03-delivery-choreography-acknowledgement.md:302 '| Held | Partner suspended, endpoint down, or our credential lapsed | **no equivalent — gap** |' and :335 'a credential lapse currently has nowhere honest to land'. A full-tree scan for `Held` confirms the board file contains no occurrence: 12.03.02-per-store-delivery-status.md has zero matches for Held/suspend/credential, and its vocabulary (:44-55) and legal-transition table (:105-117) carry nothing for a suspension hold. Two of the three gaps 12.02.03:335 flagged were later closed on 12.03.02's side (Partial acceptance at :70/D-18; Failed at :110); this one was not, so it is not a stale marker. Downgraded to warning because the artist-facing behaviour and the honest-attribution requirement are specified elsewhere — 12.02.02-per-partner-profile-conformance.md:317 'Artist: store unavailable in 12.03.01 with a reason; releases held, not failed', 12.02-ddex-delivery-messaging-cx.md:50 'A suspended profile ... holds deliveries rather than failing them ... those must not look the same to the artist', 12.03.01-store-selection-territory-scoping.md:260 'Artist selects a store that is suspended (12.02.02) | Shown unavailable with a reason, not silently dropped'. What is missing is the board-row token, not the product decision, and `Queued` ('Scheduled, not yet sent', 12.03.02:46) is a factually honest fallback carrying the store-level reason. Vocabulary reconciliation, not invented behaviour."
+    },
+    {
+      "findingId": "12-release-distribution#004",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "Both projections exist and are ratified. 12.03.02-per-store-delivery-status.md:392 'D-18 | Mixed DSP outcomes stay in one (release × store × territory) row with structured rejected-item details; the parent projects `Partial acceptance` until evidence supports a healthy full release | Owner ratification for A-05 / `r-54[1]`, 2026-07-20', with the behaviour spelled out at :62-74 and mirrored in 12.02-ddex-delivery-messaging-cx.md:59 'The parent row projects `Partial acceptance` while evidence is mixed.' Transport failure is likewise resolved, not open: 12.03.02:110 'Transport failure is not a state here — it is 12.02.03's `Failed` and stays `Sent` on the board until it resolves or ages into `Sent · overdue`.' The 12.02.03 'no equivalent — gap' cells are stale relative to a later ratification, and 12.02.03:335 sends the reader to 12.03.02 by name for exactly these items, so an implementer reading 12.02.03 alone does not re-derive anything — the cross-reference is on the same page as the gap marker."
+    },
+    {
+      "findingId": "12-release-distribution#005",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "Quotes verify, but each of the three routed conditions has a named home, and the gate's exhaustiveness claim at 12.01.03-delivery-readiness-gate.md:56-57 is scoped to 'the gate's own: social checks over facts other humans own', not to all pre-delivery blocks. (1) Missing 09 ownership record: 12.01.03:105 states it directly — '12.01.01 D-02 gates add-eligibility on rights position, so \"no rights position at all\" is caught upstream' — so 12.01.05:92's 'routes to the readiness gate' is shorthand for the readiness path, and the substantive rule (blocking, never free text here) is unambiguous. (2) Missing release year / (P)(C) derivation: validation already owns it — 12.01.02-metadata-validation-conformance.md:66 'RC-10 | Cross-field consistency | ... release year vs (P) year' and :68 'RC-12 | Territory & date | Date formats, per-partner embargo and lead-time rules', with :251 confirming '(P)/(C) line syntax is one more validated field (RC-01/RC-03); whether the (P) line is true is 09's question and the gate's block'. (3) Territory data: 12.01.03:322-325 records the coupling explicitly — 'Territory-scoped blocking ... couples to 12.03.01's territory scoping. Two features computing territory eligibility from different sources will disagree; they need one.' Two competent implementers converge: machine-checkable gaps land as 12.01.02 findings (un-presenting the gate via P-1), which is exactly what the gate says happens. Loose cross-reference wording, not a taxonomy hole."
+    },
+    {
+      "findingId": "12-release-distribution#006",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "tracked-deferral",
+      "reason": "Quotes verify, but nothing here is silent — the CX names D-04 by number and qualifies it in place, which is tracking rather than contradiction. 12.04-release-scheduling-windows-cx.md:80 'Whether a store's pre-save survives a date change is the store's behaviour, not our decision, which means D-04 in 12.04.03 (\"pre-saves survive a date change\") may be an intention we cannot actually honour. That needs confirming per store before it is stated to artists. `[PENDING — Step 5]`', carried onto the map row at :14 'per-store behaviour on date change is `[PENDING — Step 5]`'. The substance is per-store integration behaviour, which this sub-domain routes downstream uniformly and consistently — 12.04.03-pre-save-pre-add-links.md:45 '`[PENDING — /ideate-discover Step 5 deepening]` — per-store mechanics, OAuth scopes', 12.04.02-editorial-pitch-windows.md:27 and :61 carry the same marker for the same class of per-store unknown. D-04 states the product intent (fans are not punished for a date move) and the CX bounds what may be promised to artists until per-store behaviour is confirmed; both statements can hold simultaneously. The stage label is stale, but the deferral is explicit, cross-referenced and consistent across the sub-domain."
+    },
+    {
+      "findingId": "12-release-distribution#007",
+      "upheld": true,
+      "finalSeverity": "warning",
+      "refutationReason": "not-refuted",
+      "reason": "Verified and genuinely untracked. 12.05.02-metadata-update-redelivery.md:102 states a blanket rule — 'Involuntary takedown active (12.05.03) | Updates blocked while unresolved' — with the state at :118. 12.05-catalog-lifecycle-after-release-cx.md:13 records the opposite as unsettled — 'Back-edge: an update can *resolve* a claim ... which is exactly what CX-01 blocks | Musician, Producer | Medium | ... whether a resolving update is permitted during suspension is unresolved' — and :70 calls CX-04 'The most interesting unresolved question in the sub-domain', with :80 recording only a leaning ('allow additive evidence ... block mutations of the claimed facts'). Unlike its siblings CX-01 §5 (:34) and CX-03 §2 (:63), CX-04 carries no `[PENDING]` marker at all, and I confirmed no covering question exists: 12.05.03-involuntary-takedown-suspension.md Q-01/Q-02/Q-03 (:136-138) cover posture, statutory position and freeze-vs-takedown; 12.05.02 Q-01/Q-02 (:155-156) cover mix-vs-recording and contributor requests; the sub-domain index Q-01/Q-02/Q-03 (:69-71) cover none of it. An unresolved owner decision with a named artist-facing consequence and zero owner, target or marker. Warning rather than blocking because 12.05.02:102 is explicit enough that an implementer would build the blanket block by default."
+    },
+    {
+      "findingId": "12-release-distribution#008",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "downstream-detail",
+      "reason": "Quotes verify (12.05-catalog-lifecycle-after-release-cx.md:62 and :63), but the recovery behaviour sits behind two live, correctly-targeted deferrals rather than nothing. Which updates decompose at all is routed at 12.05.02-metadata-update-redelivery.md:78 '`[PENDING — /write-be-spec]`. It depends on the DDEX profile and per-store delivery contracts' — so the half-failure of a decomposition cannot be specified before its trigger classification is. The recovery machinery itself is explicitly not-product: 12.02.03-delivery-choreography-acknowledgement.md:380 'The delivery queue, retry policy, backoff, dead-lettering, transfer resumability, and credential [handling]' routed to `/create-prd-architecture`, and this is ratified at domain level — release-distribution-index.md:120 'D-07 | Delivery queue/retry/backoff/credentials routed to `/create-prd` as not-product'. The CX also records the case rather than passing over it (:63 'Recovery is `[PENDING — Step 5]` and matters more than its obscurity suggests') and separately names the permission consequence at :64. A missing state row for a mid-decomposition failure is a downstream state-machine detail on a mechanism that ideation deliberately did not specify."
+    },
+    {
+      "findingId": "12-release-distribution#009",
+      "upheld": true,
+      "finalSeverity": "warning",
+      "refutationReason": "not-refuted",
+      "reason": "Verified, and in fact broader than claimed. release-distribution-index.md:38 shows 12.08 as `[SURFACE]` while 12.08-catalog-migration-exit.md:5 reads '> **Status**: [PARTIAL]'. The governing blockquote at :26-27 ('All `[SURFACE]` — breadth pass; depth is allocated by MoSCoW in Step 5') is likewise stale against its own table, which carries `[BREADTH]` on six rows, `[DEEP]` on 12.07 and `[SURFACE]` on 12.08. The finding's parenthetical that the other seven children match their file headers is wrong — 12.06-content-id-ugc-claiming-index.md's own header reads '> **Status**: [SURFACE]' against index row :36 `[BREADTH]`, so the drift affects two children, not one. Upheld at warning as filed: verified metadata inconsistency in the domain key file with two different maturity labels for the same node, but no product behaviour turns on it and both labels converge on 'not deep'."
+    }
+  ]
+}

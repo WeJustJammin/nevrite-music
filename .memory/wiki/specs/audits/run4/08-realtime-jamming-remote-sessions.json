@@ -1,0 +1,175 @@
+{
+  "domain": "08-realtime-jamming-remote-sessions",
+  "treeRoot": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/08-realtime-jamming-remote-sessions",
+  "unitsAudited": 6,
+  "filesRead": 32,
+  "coverageNote": "Disk enumeration matched the expected 6 units / 32 files exactly. Units: the domain directory itself (realtime-jamming-remote-sessions-index.md, -cx.md, plus the three domain-level flat features 08.06, 08.07, 08.08) and the five sub-domain directories 08.01 through 08.05, each with its own index, CX and leaf feature files. Every file was read in full through the 3a implementer-simulation / 3b rubric / 3c devil's-advocate cycle. No sampling. Rubric dimensions 2 (Persona Specificity), 4 (Constraint Explicitness), 5 (Success Measurability) and 6 (Competitive Positioning) are marked N/A for all six units: personas, constraints, success metrics and competitive landscape are owned by meta/*.md and are referenced rather than redefined here (domain index line 87: 'Personas from meta/personas.md. Never redefined here — referenced only.'). That leaves dimensions 1, 3, 7 and 8 applicable to each unit — 4 checkpoints per unit, 24 total. A large number of candidate findings were dropped in 3c: this tree explicitly re-points stale deferrals ('Re-pointed from the completed /ideate-discover Step 5') roughly twenty times, and most [PENDING] markers are covered by a re-pointed, owned question elsewhere. Only markers with no owner AND no reachable stage, and contradictions with no marker on either side, survived.",
+  "units": [
+    { "unit": "08-realtime-jamming-remote-sessions (domain root)", "applicableCheckpoints": 4, "points": 1.5, "naDimensions": [2, 4, 5, 6], "scores": { "1": "OK", "3": "WARN", "7": "WARN", "8": "WARN" } },
+    { "unit": "08.01-latency-budget-playability", "applicableCheckpoints": 4, "points": 1.0, "naDimensions": [2, 4, 5, 6], "scores": { "1": "OK", "3": "WARN", "7": "WARN", "8": "OK" } },
+    { "unit": "08.02-playable-radius-peer-matching", "applicableCheckpoints": 4, "points": 1.0, "naDimensions": [2, 4, 5, 6], "scores": { "1": "OK", "3": "WARN", "7": "WARN", "8": "OK" } },
+    { "unit": "08.03-remote-monitoring-session-attendance", "applicableCheckpoints": 4, "points": 0.5, "naDimensions": [2, 4, 5, 6], "scores": { "1": "OK", "3": "WARN", "7": "OK", "8": "OK" } },
+    { "unit": "08.04-talkback-cue-mixes", "applicableCheckpoints": 4, "points": 0.0, "naDimensions": [2, 4, 5, 6], "scores": { "1": "OK", "3": "OK", "7": "OK", "8": "OK" } },
+    { "unit": "08.05-session-capture-recall", "applicableCheckpoints": 4, "points": 0.5, "naDimensions": [2, 4, 5, 6], "scores": { "1": "OK", "3": "WARN", "7": "OK", "8": "OK" } }
+  ],
+  "totals": { "points": 4.5, "applicableCheckpoints": 24, "ambiguityPercent": 18.75 },
+  "findings": [
+    {
+      "findingId": "08-realtime-jamming-remote-sessions#001",
+      "unit": "08-realtime-jamming-remote-sessions (domain root)",
+      "severity": "blocking",
+      "dimension": 3,
+      "claim": "08.07 states the provenance grade is immutable after delivery while simultaneously defining a third grade that is only reachable by a post-delivery Producer acceptance. Both statements are unmarked; an implementer must invent whether the grade is a write-once field or an upgrade-only ladder.",
+      "evidence": "08.07-overdub-mode.md:269 — '| Request has no live monitor and the Producer later wants the higher grade | Not retrofittable. A witness is only available while the pass happens ... | The grade is fixed at delivery. Offered *before* the pass, not after. |' CONTRADICTED BY 08.07-overdub-mode.md:176 — '| **Counter-attested** | The Producer accepted the pass into the project. | Acceptance is signed and attributable (08.05.04 D-01).' and 08.07-overdub-mode.md:290 — '| Accepted | Producer accepted a pass | Counter-attested. Handed to 07 as a project asset, to 08.05.04 as a graded record, to 02 as evidence.' and 08.07-overdub-mode.md:264 — 'Record stands at `delivered-by`, unaccepted.' The domain CX takes the opposite side of the same question: realtime-jamming-remote-sessions-cx.md:150 — 'attendance row written at the *delivered* grade. If a live witness attended (CX-09), grade upgrades. No rollback; grade only ever rises on evidence.'",
+      "forcedInvention": "Whether the provenance grade field is sealed at delivery (making `counter-attested` unreachable) or mutable upward on later evidence (making 'fixed at delivery' false). This is the domain's thesis-bearing output, consumed by domain 02's tier model.",
+      "twoImplementerTest": "Implementer A reads line 269 and seals grade at delivery, so acceptance never changes it. Implementer B reads lines 176/290 and CX-07 and implements an upgrade-only ladder that rises at acceptance. Both are faithful to the text and produce different records for the same session."
+    },
+    {
+      "findingId": "08-realtime-jamming-remote-sessions#002",
+      "unit": "08.01-latency-budget-playability",
+      "severity": "blocking",
+      "dimension": 3,
+      "claim": "What the shared click does when latency drifts mid-take is explicitly named as an unresolved product choice, with no owner, no decision, and a deferral target (/ideate-discover Step 5) that the tree elsewhere records as already completed. No open question in 08.01.03, the 08.01 index, or the domain index covers it.",
+      "evidence": "08.01.03-shared-clock-click-countin.md:56 — '| Latency drifts during a take, breaking alignment | `[PENDING — Step 5]` — whether the click re-aligns live (which itself is an audible timing change) or holds and lets it drift. Both are bad; this is a genuine product choice. | `[PENDING]` |'. The stage it defers to is complete: 08.01.03-shared-clock-click-countin.md:99 and :100 both say 'Re-pointed from the completed `/ideate-discover` Step 5', and realtime-jamming-remote-sessions-index.md:132 records 'MoSCoW has since run'. The file's own three questions cover different ground: Q-01 'Symmetric or conductor — which model does the product commit to' (:98), Q-02 conductor drop-out succession (:99), Q-03 whether the click is recorded as an alignment reference (:100).",
+      "forcedInvention": "Whether an in-flight click re-aligns to changing directional delay (producing an audible timing change under the performers' hands, which 08.01.03 D-02 forbids for the timing model) or holds and accumulates drift, and if it re-aligns, what the trigger threshold is.",
+      "twoImplementerTest": "Implementer A re-aligns continuously and shifts musicians' time mid-bar. Implementer B holds the click and lets the ensemble drift apart. The file states both are bad and picks neither."
+    },
+    {
+      "findingId": "08-realtime-jamming-remote-sessions#003",
+      "unit": "08-realtime-jamming-remote-sessions (domain root)",
+      "severity": "warning",
+      "dimension": 3,
+      "claim": "Overdub round-trip calibration is described as a gate in two places and as explicitly not-a-gate in two others, with no marker reconciling them.",
+      "evidence": "08.07-overdub-mode.md:240 — 'Calibration is a pre-flight gate item; residual + uncertainty shown per pass.' and realtime-jamming-remote-sessions-cx.md:199 — 'Mode = overdub → run overdub checklist (disk, sample rate, monitoring path, round-trip calibration) → overdub proceeds. Skip reachability/uplink. Sync gate before tracking.' CONTRADICTED BY 08.07-overdub-mode.md:280 — '| Pre-flight | Bed local | Overdub checklist: disk, sample rate, monitoring path, round-trip calibration. Not a gate (08.06 D-05) — but a skipped calibration is stated, never blank. |' and 08.07-overdub-mode.md:365 D-16 — 'Consistent with 08.06 D-05: it informs and records; it does not block.' and 08.06-session-preflight-rig-readiness.md:113 D-05 — 'Pre-flight informs and records; it does not block.'",
+      "forcedInvention": "Whether a player who skips or fails round-trip calibration can begin recording passes. The consequence is material: an uncalibrated pass silently mis-aligns by 5-25 ms (08.07 D-05).",
+      "twoImplementerTest": "Preponderance favours not-a-gate (three statements to two), so a careful implementer would likely resolve it consistently — hence warning rather than blocking — but the word 'gate' appears twice unqualified."
+    },
+    {
+      "findingId": "08-realtime-jamming-remote-sessions#004",
+      "unit": "08-realtime-jamming-remote-sessions (domain root)",
+      "severity": "warning",
+      "dimension": 3,
+      "claim": "The domain index still asserts that Overdub carries provenance 'intact', a claim its own children formally rescinded. The correction was propagated into 08.05.04 and the domain CX but never into the index, and the index is the file downstream stages read first.",
+      "evidence": "realtime-jamming-remote-sessions-index.md:122 D-05 — 'Overdub also runs on the locked stack and carries the provenance intact.' RESCINDED BY 08.07-overdub-mode.md:353 D-04 — 'Provenance is captured without real-time transport, at a stated grade — NOT identically to a live session ... The breadth pass claimed identical certainty; that was an overclaim (DT-08).' and realtime-jamming-remote-sessions-cx.md:23 CX-07 — \"08.05.04's 'overdub works identically → same record' edge is **wrong** and must be corrected.\" 08.07 names the un-updated file explicitly at :16 — 'the domain index's D-05 carries the uncorrected claim, and this file does not own that index.' A residue of the same uncorrected phrasing also survives in 08.05.04-session-attendance-provenance.md:218 — 'Works identically under **08.07 Overdub Mode**', even though that file's edge-case row (:166) was corrected.",
+      "forcedInvention": "Whether an overdub attendance row is equal in evidentiary weight to a live-room row. An implementer reading only the domain index builds one undifferentiated record; one reading 08.07/08.05.04 builds a graded one.",
+      "twoImplementerTest": "The contradiction is flagged in two sibling files, so it is not strictly silent — but the parent index was never remediated and a downstream reader following the documented entry path (index first) hits the refuted claim with no marker on it."
+    },
+    {
+      "findingId": "08-realtime-jamming-remote-sessions#005",
+      "unit": "08-realtime-jamming-remote-sessions (domain root)",
+      "severity": "warning",
+      "dimension": 3,
+      "claim": "The provenance-grade enum has two different third rungs across the domain, and the domain CX attributes its version to a Deep Think annotation that does not contain it. The grade is a user-visible string and a cross-domain contract with 02.",
+      "evidence": "realtime-jamming-remote-sessions-cx.md:225 — '08.05.04 emits not a boolean but a *grade* (`delivered-by` < `observed-playing` < `session-captured+attested`, DT-08). 02.04.02 consumes the grade as the top rung of its tier ladder.' CONTRADICTED BY the cited DT-08's own table at 08.07-overdub-mode.md:172-176, whose three rungs are '**Delivered-by**', '**Observed-playing**' and '**Counter-attested** | The Producer accepted the pass into the project.' 08.05.04-session-attendance-provenance.md:50 uses only the first two ('A live-room segment is `observed-playing`; an overdub is `delivered-by` by default') and separately at :207 attributes 'session-captured+attested' to domain 02's ladder, not to 08's grade: \"`02.04` Q-01 names 'session-captured+attested' as the top rung of its candidate ladder\". The grade is rendered to users verbatim — 08.07-overdub-mode.md:258: \"Grade shown honestly: 'delivered-by (single party)'.\"",
+      "forcedInvention": "The exact value set of the grade enum that 08 emits and 02 consumes, and whether `counter-attested` and `session-captured+attested` are the same rung, adjacent rungs, or one 08-side value and one 02-side value.",
+      "twoImplementerTest": "Implementer A models a three-value 08 grade ending in `counter-attested`. Implementer B models a three-value grade ending in `session-captured+attested` and has no representation for Producer acceptance. The cross-domain contract with 02.04.02 differs in both."
+    },
+    {
+      "findingId": "08-realtime-jamming-remote-sessions#006",
+      "unit": "08-realtime-jamming-remote-sessions (domain root)",
+      "severity": "warning",
+      "dimension": 7,
+      "claim": "Whether a live session may degrade to Overdub mid-session is deferred to a stage the tree records as completed, with no owner and no re-point. No question in the domain index or in 08.07 covers it.",
+      "evidence": "realtime-jamming-remote-sessions-cx.md:52 — '5. **State transition conflict**: A live session degrading to overdub mid-session is plausible but likely disruptive; the local-round-trip figure overdub needs is a *different* measurement than the network verdict, so a mid-session switch is not a free reuse of state. `[Deferred — Step 5]`.' The CX file is dated 2026-07-18 (:6) and Step 5 is recorded complete at realtime-jamming-remote-sessions-index.md:132 ('MoSCoW has since run and did not decide this (D-24: Step 5 complete)'). The domain index's seven open questions (Q-01 through Q-07, :130-136) cover classification, cross-cuts, infrastructure, keep-or-fold, the instrument-pair table, two probable merges, and recording consent — none covers mid-session mode switching. 08.07's six questions (:371-376) do not either.",
+      "forcedInvention": "Whether the product offers a mid-session live-to-overdub transition at all, and if so whether the in-flight session's takes, attendance segments and grade carry across the boundary."
+    },
+    {
+      "findingId": "08-realtime-jamming-remote-sessions#007",
+      "unit": "08-realtime-jamming-remote-sessions (domain root)",
+      "severity": "warning",
+      "dimension": 3,
+      "claim": "The upload size bound for an overdub pass is delegated to 'the request's declared scope', but nothing in the overdub request model declares a scope, size or duration. The sibling feature that solves the same problem derives its bound from an observed session, which does not exist in overdub.",
+      "evidence": "08.07-overdub-mode.md:267 — '| Player delivers an implausibly large file | Accepted if it is genuinely a long multichannel pass — this is the mode where a 40-minute multitrack is legitimate. **Bounded by the request's declared scope, not by a guess.** | Progress, and a size warning against their own remaining upload, not a refusal. |'. What the request actually declares is enumerated at 08.07-overdub-mode.md:218 — 'Producer creates an overdub request against a project (07): selects the bed, chooses its fidelity ..., writes the brief, sets the deadline, marks the target section(s).' No scope, size, duration or channel-count declaration appears there, in the bed-package table (:64-71), or in D-06/D-09. Contrast the live path, where the bound is explicitly derived: 08.05.01-local-first-multitrack-capture.md:259 — 'The expected size is *known* from the observed session (duration × channels × format). A file materially beyond the envelope is rejected before it consumes storage.'",
+      "forcedInvention": "What 'the request's declared scope' is — whether the target sections imply a maximum duration, whether channel count is bounded, and therefore what size triggers the warning versus a rejection."
+    },
+    {
+      "findingId": "08-realtime-jamming-remote-sessions#008",
+      "unit": "08-realtime-jamming-remote-sessions (domain root)",
+      "severity": "warning",
+      "dimension": 8,
+      "claim": "The domain-level Role Matrix records the Musician as read-only across the whole 08.03 sub-domain, which contradicts the sub-domain's own matrix and the leaf feature's Role Lens, both of which grant the Musician full authoring on live feedback notes. Neither statement carries a marker.",
+      "evidence": "realtime-jamming-remote-sessions-index.md:93 — '| 08.03 Remote Monitoring & Session Attendance | 👁️ Read-only | ✅ Full | ⚙️ Config | ❌ None |'. CONTRADICTED BY 08.03-remote-monitoring-session-attendance-index.md:41 — '| 08.03.03 Live Listener Feedback & Timestamped Notes | ✅ Full | ✅ Full | ❌ None | ❌ None |' and 08.03.03-live-listener-feedback-notes.md:21 — '| Musician | Full | Can leave notes as a listener (a bandmate attending a mix they are not playing on).' The same domain row also understates 08.03.04, where the sub-domain matrix gives the Musician '⚙️ Config' (08.03-remote-monitoring-session-attendance-index.md:42) and 08.03.04-monitoring-trust-playback-context.md:26 says 'Declares their own playback chain when they are the listener'.",
+      "forcedInvention": "Whether a Musician can author live feedback notes and declare a playback context. An implementer reading the domain Role Matrix as authoritative builds neither surface."
+    },
+    {
+      "findingId": "08-realtime-jamming-remote-sessions#009",
+      "unit": "08.01-latency-budget-playability",
+      "severity": "warning",
+      "dimension": 7,
+      "claim": "Whether a mid-session red playability verdict interrupts players is raised twice inside the unit, both times deferred to the completed Step 5, with no owner on either and no re-pointed question covering it.",
+      "evidence": "08.01.02-playability-verdict-tempo-ceiling.md:62 — '| Verdict flips red mid-session | Producer is notified (they are billing). Whether players are interrupted is `[PENDING — Step 5]` — a modal mid-take is its own kind of damage. | `[PENDING — /ideate-discover Step 5 deepening]` |' and 08.01-latency-budget-playability-cx.md:36 — '4. **Notification fan-out**: A verdict transition from green to red mid-session must notify the Producer (they are billing). Whether it notifies players is `[PENDING — Step 5]`.' Neither of 08.01.02's two live questions covers it: Q-01 is the instrument-pair threshold table (:103) and Q-03 is the commercial consequence of a red verdict on a paid booking (:105).",
+      "forcedInvention": "Whether the room surfaces a mid-take verdict change to performers at all, and if so through what non-interrupting affordance — the file itself notes a modal mid-take is damaging but names no alternative."
+    },
+    {
+      "findingId": "08-realtime-jamming-remote-sessions#010",
+      "unit": "08.01-latency-budget-playability",
+      "severity": "warning",
+      "dimension": 7,
+      "claim": "Re-measurement rate limiting and cross-run variance display are deferred to the completed Step 5 with no owner and no re-pointed question, leaving a user-facing behaviour undecided.",
+      "evidence": "08.01.01-latency-measurement-decomposition.md:56 — '| User re-measures obsessively, hunting a better number | `[PENDING — /ideate-discover Step 5 deepening]` — whether to rate-limit, and whether to show variance across runs rather than encourage cherry-picking the best one. | `[PENDING]` |'. The file's three questions cover directional delay (:96), telemetry retention (:97) and peer-ledger sharing consent (:98) — the last of which was explicitly 'Re-pointed from the completed `/ideate-discover` Step 5', showing the convention this row was not given.",
+      "forcedInvention": "Whether re-measure is rate-limited, and whether the ledger presents a single latest value or a distribution across runs. This determines whether a user can cherry-pick a favourable measurement that then feeds the verdict (08.01.02) and the radius correction loop (08.02.02)."
+    },
+    {
+      "findingId": "08-realtime-jamming-remote-sessions#011",
+      "unit": "08.01-latency-budget-playability",
+      "severity": "warning",
+      "dimension": 7,
+      "claim": "Two open questions in this unit are deferred to 'MoSCoW', a stage the tree records as complete. The deferral target is unreachable, so the questions are tracked to nowhere.",
+      "evidence": "08.01-latency-budget-playability-index.md:57 — '| Q-02 | Does the playability verdict have any value if the real-time rooms it gates never ship? ... | User | MoSCoW |' and 08.01.02-playability-verdict-tempo-ceiling.md:104 — '| Q-02 | If Overdub Mode is where most work actually lands, is the verdict worth building at all — or is it a sophisticated way of saying \"use overdub\"? | User | MoSCoW |'. MoSCoW has run: 08.02-playable-radius-peer-matching-index.md:58 records 'RESOLVED by MoSCoW ... Step 5/MoSCoW is complete (`ideation-index.md` D-24)', and realtime-jamming-remote-sessions-index.md:132 says 'MoSCoW has since run and did not decide this (D-24: Step 5 complete)'.",
+      "forcedInvention": "None directly, but the keep-or-cut call on the playability verdict now has no stage that will take it — every sibling question of this class was re-pointed to /create-prd or /create-prd-compile and these two were not."
+    },
+    {
+      "findingId": "08-realtime-jamming-remote-sessions#012",
+      "unit": "08.02-playable-radius-peer-matching",
+      "severity": "warning",
+      "dimension": 7,
+      "claim": "Whether a materially shrunk playable radius notifies the affected user is deferred twice to the completed Step 5, with no owner, and is not covered by any of the unit's re-pointed questions — despite the CX itself calling it a real argument in both directions.",
+      "evidence": "08.02-playable-radius-peer-matching-cx.md:36 — '4. **Notification fan-out**: `[PENDING — /ideate-discover Step 5 deepening]` — whether a materially shrunk radius notifies the user. It is bad news about their own connection and there is a real argument both ways.' and 08.02.02-route-aware-radius-correction.md:60 — '| Correction shrinks the radius materially | Bad news the user did not ask for. Whether to notify is a real product question — see parent CX-01. | `[PENDING — Step 5]` |'. 08.02.02's three questions cover the asymmetric threshold values (:103), network-context change detection (:104) and probe-history retention (:105); none covers the notification. The consequence is named as the sharpest edge in the sub-domain at 08.02-playable-radius-peer-matching-cx.md:48 — 'may become invisible in other people's searches because of a network fact they never see.'",
+      "forcedInvention": "Whether the platform tells a musician their discoverable radius shrank, and what 'materially' means numerically."
+    },
+    {
+      "findingId": "08-realtime-jamming-remote-sessions#013",
+      "unit": "08.02-playable-radius-peer-matching",
+      "severity": "warning",
+      "dimension": 7,
+      "claim": "The match filter's survival question is deferred to 'MoSCoW', a completed stage, so its tracking target is unreachable.",
+      "evidence": "08.02.03-latency-aware-match-filter.md:110 — '| Q-03 | If real-time rooms are cut at MoSCoW, does an \"overdub-capable?\" predicate replace this one — which would be trivially true for everyone and therefore worthless? If so this feature dies with the rooms. | User | MoSCoW |'. The same file's siblings in this unit were re-pointed when MoSCoW completed — 08.02-playable-radius-peer-matching-index.md:58 ('**RESOLVED by MoSCoW** ... Step 5/MoSCoW is complete') and 08.02.01-playable-radius-map-discovery.md:101 ('**RESOLVED by MoSCoW** — not cut, but deferred') — showing the convention this row did not receive."
+    },
+    {
+      "findingId": "08-realtime-jamming-remote-sessions#014",
+      "unit": "08.03-remote-monitoring-session-attendance",
+      "severity": "warning",
+      "dimension": 3,
+      "claim": "The behaviour under high note volume is stated as a requirement ('some collapsing or batching is needed') with no design and no owner, deferred to the completed Step 5, and not covered by any of the feature's three re-pointed questions.",
+      "evidence": "08.03.03-live-listener-feedback-notes.md:58 — '| High note volume from an enthusiastic client | The Producer is running a session, not a ticket queue. Some collapsing or batching is needed. | `[PENDING — Step 5]` |'. The file's questions are Q-01 commenting as a separate grant (:102), Q-02 whether performers see notes about themselves (:103) and Q-03 the highlight-flag merge (:104) — all three explicitly 'Re-pointed from the completed `/ideate-discover` Step 5', while this row was not.",
+      "forcedInvention": "The collapsing/batching rule — by author, by time window, by category, or by count — and what the Producer sees when notes exceed it. The file asserts a behaviour is required without specifying it."
+    },
+    {
+      "findingId": "08-realtime-jamming-remote-sessions#015",
+      "unit": "08.03-remote-monitoring-session-attendance",
+      "severity": "warning",
+      "dimension": 3,
+      "claim": "A declared playback context going stale mid-session is acknowledged as 'realistic and common' but its behaviour is undefined in both the edge-case table and the States table, with no owner and a dead deferral target. The Stale state exists with no trigger and no user-facing content.",
+      "evidence": "08.03.04-monitoring-trust-playback-context.md:69 — '| Listener changes their playback mid-session (unplugs headphones) | The declaration is now stale and nothing knows. Realistic and common. | `[PENDING — Step 5]` |' and :79 — '| Stale | `[PENDING — Step 5]` | `[PENDING]` |'. The file's three questions cover whether the feature is real at all (:110), whether it should read from domains 15/16 (:111) and the wording of the tension warning (:112) — all re-pointed off completed Step 5; none covers staleness. Contrast the sibling treatment of the same class of gap, 08.06-session-preflight-rig-readiness.md:122 Q-03, which routes staleness explicitly to /create-prd-compile.",
+      "forcedInvention": "Whether a declared context expires, is re-prompted, or is silently retained — and given D-04 ('Undeclared means unknown, never an assumed default', :104), whether a stale declaration degrades to undeclared."
+    },
+    {
+      "findingId": "08-realtime-jamming-remote-sessions#016",
+      "unit": "08.05-session-capture-recall",
+      "severity": "warning",
+      "dimension": 3,
+      "claim": "'Witness' names two structurally different artifacts inside one sub-domain — a server-side retained copy of what the network carried, and an endpoint-local pre-talkback recording of the inbound mix — and 08.05.01 offers its server-side version as a candidate answer to 08.05.02's reference question, which 08.05.02's own governing mechanism rules out.",
+      "evidence": "Server-side sense, 08.05.01-local-first-multitrack-capture.md:304 DT-06 — 'The platform already carried a degraded copy of every participant's audio; correlating an uploaded local take against what the network heard proves the take is the take', and :362 Q-05 — 'Does the platform retain a witness copy of what the network carried, and for how long? ... and a candidate answer to 08.05.02 Q-01.' Endpoint-local sense, 08.05.02-take-alignment-drift-correction.md:72 — '| **R2** | **Timing witness correlation** — each endpoint's local, pre-talkback recording of the inbound ensemble mix' and :109 — 'If a pre-talkback tap is not available at an endpoint, that endpoint has **no witness**, not a compromised one.' The two cannot be the same artifact: 08.05.02:64-67 establishes 'Alignment places a track by comparing it to a reference **that the endpoint's own clock recorded**. This is the mechanism: when the endpoint records the reference, the reference's *apparent duration in that file* directly reveals the endpoint's rate error' — a server-held copy has no such property. Retention also conflicts: 08.05.02-take-alignment-drift-correction.md:301 D-08 — 'The timing witness is a measurement artifact ... and is discarded at seal', versus 08.05.01 Q-05 treating retention as open.",
+      "forcedInvention": "Whether the session produces one witness recording or two, where each lives, who consents to each, and which one (if either) can serve alignment. The consent surface differs sharply: 08.05.02 Q-05 (:321) and 08.05.01 Q-03 (:360) both flag witness recording as a live consent problem, and an implementer conflating the two under-scopes it."
+    },
+    {
+      "findingId": "08-realtime-jamming-remote-sessions#017",
+      "unit": "08.05-session-capture-recall",
+      "severity": "warning",
+      "dimension": 3,
+      "claim": "The retrospective highlight window is the feature's central mechanism but its duration is never stated, and unlike every sibling threshold in this domain it is not routed to any stage as an open number.",
+      "evidence": "08.05.03-auto-highlights-moment-flagging.md:105 D-01 — '| D-01 | A flag anchors to a retrospective window ending at the gesture | Humans flag after realising. See DT-01. |' and :66 — '| Flag placed late (they realised after it happened) | The normal case, not an edge case. ... | Flag creates a region ending at the gesture, not starting there. |'. DT-01 (:88) mentions the idiom without adopting a value — 'why \"capture the last 30 seconds\" is the standard idiom for this problem' — and no decision or question fixes one. The file's three questions are flag privacy (:115), audio analysis scope (:116) and the note/flag merge (:117). Contrast how the tree handles every other threshold of this class: 08.06-session-preflight-rig-readiness.md:122 Q-03 (staleness window), 08.05.02-take-alignment-drift-correction.md:322 Q-06 ('the 1 ms / 5 ms / 20 ms confidence-tier boundaries'), 08.01.02-playability-verdict-tempo-ceiling.md:103 Q-01 (instrument-pair thresholds) — all explicitly routed to /create-prd-compile as 'a threshold with a cost on both sides'.",
+      "forcedInvention": "How much audio a single flag gesture captures. The file states DT-01's failure mode is that 'getting this backwards makes it useless in a way that is not obvious until someone tries to use it' — a window too short misses the take it was meant to keep, one too long makes every flag the same region."
+    }
+  ]
+}

@@ -1,0 +1,97 @@
+{
+  "domain": "23-career-finance-business",
+  "treeRoot": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/23-career-finance-business",
+  "verdicts": [
+    {
+      "findingId": "23-career-finance-business#001",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "no-real-divergence",
+      "reason": "Quotes are accurate but the claimed conflict conflates two different rules. 23.08-point-of-need-insurance.md:37's 'The trigger must be a fact, not a guess' governs the *offer trigger* (the row is 'The offer is wrong for them (already covered, ineligible, wrong territory)'), not the D-03 advisory. DT-03 at :62 fixes the advisory's form itself: 'no generic insurer will ever tell them, because the exclusion is in their favour' and 'it costs the platform nothing to say' — a class-level statement about home-contents exclusions, which is exactly the reading the auditor says is unspecified. A per-user policy-declaration intake with an eligibility model would not 'cost the platform nothing'. Both readings therefore do not survive contact with the file. Additionally the node is :5 'Status: [SURFACE]' and its existence is owner-tracked at :85 Q-01 ('It is legitimate only if the gear-registry edge reaches the user … If it cannot be evidenced, cut it', User → /create-prd), so a data-capture flow is not owed here."
+    },
+    {
+      "findingId": "23-career-finance-business#002",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "The quote at 23.01.05-income-to-work-linkage.md:25 exists verbatim, but the domain CX addresses this exact unit by name and fixes the mechanism. career-finance-business-cx.md:90 '1. Shared state conflict: Liabilities and income are separate records, never merged' and :91 '2. Trigger chain: Advance → position opens → nets every covered income event → clears at zero. Recoupment state must be readable by the income-to-work projection (23.01.05) so a fully-recouped work still renders both gross and net-to-me' — i.e. the CX tells 23.01.05 that advances render as the gross/net-to-me gap. 23.01.05 itself implements that in the same paragraph (:25 'every figure is shown as two numbers — gross and net-to-me') and at :44 ('Advance/recoupment against a work (23.06.03) … Gross and net-to-me must both be visible or the number lies'). No locked income_type enum exists anywhere — 23.01.01:23 enumerates the row's fields and never an income-type vocabulary, and 23.01.05:85 Q-01 routes Income Event Emission Contract field shapes to /create-prd-architecture. The parenthetical is illustrative prose overridden by a targeted, repeated invariant; the auditor's second horn ('no way to render advance money against a work') is false because :25/:44 supply that path."
+    },
+    {
+      "findingId": "23-career-finance-business#003",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "no-real-divergence",
+      "reason": "The auto-merge half is answered inside the sentence the finding quotes. 23.01.01-income-event-ledger.md:43 reads '… If confidence is below the auto-merge threshold, both are held and the user is asked to confirm — matching proposes, never silently auto-merges' with the user-facing column 'At most a \"we linked two records of the same payment\" note; if ambiguous, a confirm-merge prompt'. D-04 at :97 forbids *silent* auto-merge; a visible link note is not silent, and the high-confidence path deletes nothing (':43 the other is linked as a corroborating reference, not a second income row'). Two tiers are explicitly specified, so no divergence. On emitter precedence: this is reconciliation-rule mechanics of exactly the class :108 Q-04 routes downstream ('The precise rule is a downstream contract decision but the policy (bias toward asking) is locked here', Agent → /write-be-spec), and D-04 states the tie-break policy ('the platform-authoritative event wins the tie') that the rule must implement."
+    },
+    {
+      "findingId": "23-career-finance-business#004",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "Quotes verify, but the jurisdiction is resolved and the rule-set content is owner-tracked in the same and parent file. 23.02.02-deduction-categorization-jurisdiction-rules.md:83 Q-01 strikes the old scope and records 'RESOLVED — the United States only … so v1 encodes US musician/sole-trader rules alone', and what remains open is explicitly the sourcing/staffing commitment (User → /create-prd). 23.02-expenses-tax-readiness-index.md:48 names the vocabulary source outright: 'v1 encodes US sole-trader (Schedule C) rules and nothing else'. The UK line at :27-28 is an illustrative happy path, not a locked vocabulary; the file's normative content is the rule-set *shape* (:23 vocabulary + apportionment + capital thresholds + rate claims, versioned by tax year). Enumerating IRS Schedule C categories, mileage rates and the home-office test is externally canonical rule content that two implementers would source identically, not invented product behaviour — and Q-01 is precisely the tracked commitment to source it."
+    },
+    {
+      "findingId": "23-career-finance-business#005",
+      "upheld": true,
+      "finalSeverity": "warning",
+      "refutationReason": "not-refuted",
+      "reason": "Verified verbatim at 23.02.04-cross-border-withholding-reclaim.md:44 — 'Reclaim succeeds; refund arrives | A new income event? A negative deduction? It restates a possibly-filed year (#CX-03) | Must be modelled explicitly, not improvised'. The row carries no marker, no owner and no target, while the sibling row at :42 in the same table does carry '[PENDING — /ideate-discover Step 5 deepening]' — so the omission is not the file's tracking convention. Q-01 (:85 booking reach), Q-02 (:86 corridors) and Q-03 (:87 withholding agent) do not cover it, and the parent CX only restates it (23.02-expenses-tax-readiness-cx.md:68 'A reclaim filed and refunded changes the credit position for a year that may already be filed'). The domain's existing machinery narrows it substantially — D-01 (:77 withholding is a deduction, never an expense), DT-01 (:60 'tax already paid on the user's behalf', not income) and 23.01.01 D-01 (append-only reversing rows) all point away from 'new income event' — which is why this is a warning, not blocking. But the refund arrives from a different counterparty, years later, at a different FX rate than the original withholding (:69), so 23.01.01's same-row reversal path does not cleanly cover it, and the file itself declines to choose."
+    },
+    {
+      "findingId": "23-career-finance-business#006",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "no-real-divergence",
+      "reason": "Quotes verify, but D-02 supplies a mechanical test that decides every case the finding raises. 23.03-invoicing-receivables-index.md:39 — 'The boundary is: did the money move through WeJammin? If yes, no invoice exists' — enforced at 23.03.02-invoice-issuance-compliance.md:43 ('Invoice for work already paid through WeJammin | Should be impossible — parent D-02 | Blocked with an explanation'). Nothing in the Operator Role Lens lines asserts an on-platform origin: 23.03.02:18 pairs shortfalls with 'room hire' (much of it off-platform; cx :31 notes 'the recipient of a quote may not be a WeJammin user at all'). Off-platform shortfalls and deposits invoice here; on-platform ones are blocked and stay in 17, where the mechanism already exists (17.05.01-deposit-invoice-collection.md:27 'its collection runs on the platform's payments cross-cut', :21 'Inverts on venue-hire deals … then the Operator is the one chasing (Q-02)'). 23.03.03:71's cross-cut note is the format's mechanism for recording exactly this adjacency, and it does not contradict the test."
+    },
+    {
+      "findingId": "23-career-finance-business#007",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "Quotes verify, but each named 'missing' item is owned or explicitly excluded elsewhere in the domain. 23.03.02-invoice-issuance-compliance.md:23 delegates jurisdiction content by design — 'Fields are pre-filled from the user's tax profile (23.02.02)' — and :69 records the dependency; 23.02.02 is the jurisdiction rule engine whose US-only scope is resolved at 23.02.02:83 and whose sourcing is owner-tracked to /create-prd. W-9/TIN handling is tracked at 23.02-expenses-tax-readiness-index.md:49 Q-02 ('1099-K / DAC7 issuance, W-9 / W-8BEN collection … does it surface here', User → /create-prd-security), and state sales tax is explicitly out of scope at :50 Q-03 ('state marketplace-facilitator sales tax is provider-handled and explicitly not built (meta/constraints.md § Compliance)'). The VAT rows are jurisdiction examples, one of which is already marked '[PENDING …] — depends on 23.02.02's jurisdiction rules' (:41); the file's own locked content (immutability, sequential numbering, credit notes, PO capture, delivery tracking) is jurisdiction-neutral by design."
+    },
+    {
+      "findingId": "23-career-finance-business#008",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "no-real-divergence",
+      "reason": "The qualifier is definitional, not partial. 23.04-deal-contract-vault-cx.md:31 reads in full: 'Confirmation is mandatory, not optional: an unconfirmed extraction must never **silently** drive an alert or a reconciliation finding.' The colon defines what 'mandatory' means, and 'silently' is the operative word — CX-02 at :51 ('the alert must fire anyway, flagged as unconfirmed') and 23.04.03-option-reversion-obligation-alerts.md:45/:86 ('Fire anyway, flagged as unconfirmed') satisfy it exactly, because a flagged alert is not a silent one. The reconciliation side is stricter by its own decision (23.04.04 D-02 'Only confirmed terms reconcile'), which is consistent with the same sentence rather than evidence against it. No downstream reader who reads the whole sentence builds the confirmation gate the finding predicts."
+    },
+    {
+      "findingId": "23-career-finance-business#009",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "downstream-detail",
+      "reason": "Quotes verify at 23.04.03-option-reversion-obligation-alerts.md:27, but the file locks the governing policy and marks the numbers as tunable defaults: ':27 The bands are seeded per term-type at extraction time (23.04.02) and are **user-adjustable**', under D-01 (:85 'Over-alert deliberately; lead time scales with the action required') and :23 ('Lead time is a function of the action required, not a fixed reminder interval … over-alerting is cheap'). Seed values for an adjustable, deliberately over-firing schedule are alert-composition/BE-FE tuning, not product behaviour — the same class the file already routes downstream at :94 Q-01 ('which further route types the payload carries … is alert-composition detail, not a product call → /write-fe-spec'). The one class where a miss is catalogue-costing (reversion) is the one the file quantifies."
+    },
+    {
+      "findingId": "23-career-finance-business#010",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "The finding quotes Q-01's resolution but stops one clause short of its conclusion. 23.05.02-auto-milestone-timeline.md:85 ends: '23 therefore keeps the whole node … and **any public projection is bound by `01.06.02` D-06**' — i.e. the resolution preserves the public projection and constrains its shape, rather than denying its existence. The parent says the same at 23.05-career-progression-benchmarking-index.md:49 Q-03: '23.05.02 stays one entity under one visibility rule (`23.05.02` D-02), and its public projection is bound by `01.06.02` D-06'. The premise Q-01/Q-03 declare false is that 01/20 already render a *career timeline surface this one could merge into* — not that a public projection may not render. D-06 (verified at 01.06.02-credit-backed-portfolio.md:215) bans chronological density on a public surface — activity graph, per-year counts, timeline spine — which is a rendering constraint the projection inherits, and it is stated as the binding rule twice within domain 23. No third surface has to be invented and no Fan cell has to be deleted; the residue is public-rendering shape, already governed by an explicit cited rule."
+    },
+    {
+      "findingId": "23-career-finance-business#011",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "tracked-deferral",
+      "reason": "The k value is owned and tracked outside this file, exactly where the file says computation lives. 23.05.03-peer-cohort-benchmarking.md:23 assigns it — 'Computation belongs to 22 Analytics; the career framing belongs here (parent D-04)' — and 22 carries both the decision and the open value: 22-analytics-market-intelligence/22.05-cross-source-dashboard-reporting/22.05.04-peer-benchmarking-cohort-comparison.md:102 Q-02 'What is the k-anonymity floor, and is it the same as 22.04.01 D-05's? Two different floors for the same mechanism would be an incoherence' (Agent → /create-prd-security), and 22.04-audience-geography-routing-insight/22.04.01-audience-geography-map.md:105 Q-01 'What is the k-anonymity floor for Operator market views' (User → /create-prd-security), with D-05 at :99 locking that a floor is enforced. The domain CX registers it as one shared cross-domain guarantee spanning 05/16/22/23 (analytics-market-intelligence-cx.md:240 'Anonymised Cohort Construction & k-Anonymity Floor … the floor must be one shared guarantee'). 23.05.03 D-03 locks the policy (hard, enforced, show nothing below); the number is a tracked deferral with an owner and a target stage."
+    },
+    {
+      "findingId": "23-career-finance-business#012",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "The two clauses of D-02 are sequenced, and the finding's exact worked example is resolved in the same file. 23.06.02-commission-representation-deductions.md:87 Q-01 is RESOLVED against D-02 and spells out the operative rule: 'Newly-legible income classes are **not commissionable by default**, and an unresolved scope holds the row rather than deducting.' So a 2019 'all music income' agreement against a 2026 gear-marketplace sale takes the narrow reading — the newly-legible class is simply not commissioned — and commission computes on the unambiguous classes. 'Holds the row' is the residual path for a scope that cannot be read narrowly at all, which the file pairs with the same treatment for unspecified netting order (:39 'Order vs recoupment unspecified | Blocks rather than defaults'). Both implementers converge on the same outcome for the stated case."
+    },
+    {
+      "findingId": "23-career-finance-business#013",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "Both enumerations exist as quoted, and 01.04.03-treasury-mandate.md:25 confirms the owner's triple verbatim — but the authority is declared inside the same file and its parent, so nothing is left to invent. 23.07.03-band-treasury-member-distribution.md:102 Q-02 is RESOLVED and states the ownership explicitly: 'The rule is a governance term owned by 01.04.01 … The rule's shapes are **fixed by** 01.04.03 Behavior: \"exactly three shapes: equal (split N ways), by income share (the percentages fixed in 01.04.01), or manual per event\"', repeated at 23.07-budgeting-project-tour-pl-index.md:48 Q-03 (RESOLVED). Two of the three members also map directly — 23.07.03's 'Weighted — fixed percentages per member summing to 100%' is 01.04.01's 'income shares (how band income splits between members)'. The residue is stale Behavior prose against an explicitly cited owning decision, which every reader following the declared ownership resolves the same way; it is a documentation-hygiene defect, not an ambiguity that forces divergent product behaviour."
+    }
+  ]
+}

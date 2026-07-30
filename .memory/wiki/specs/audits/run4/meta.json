@@ -1,0 +1,57 @@
+{
+  "domain": "meta",
+  "unitsAudited": 1,
+  "filesRead": 6,
+  "coverageNote": "Enumeration matches the expectation exactly: 1 unit (.memory/wiki/specs/ideation/meta/), 6 files, 1259 lines total — problem-statement.md (127), personas.md (181), competitive-landscape.md (114), counterparties.md (156), constraints.md (391), cross-cut-emergent-capabilities.md (290). All six read in full; none sampled. Dimension 5 (Success Measurability) is marked N/A for this unit: the vision layer's success metrics are owned by .memory/wiki/specs/vision.md § Success Metrics (line 151+), one level above the ideation tree, and they carry numbers, units and timeframes (e.g. 'Target: >= 60% within 6 months of v1 launch', 'Target: < 7 days median') with explicitly baseline-set items deferred to a named stage. Per the cross-reference rule, absence of a success-metrics artifact inside meta/ is not scored against meta/. Dimensions 1, 2, 4 and 6 are met; the persona 'Measurable:' lines being directional was considered and dropped as a finding for the same cross-reference reason. Cross-unit reads used only to verify references (ideation-index.md, vision.md, decisions.md, feature-ledger.md, and grep over the non-meta ideation tree); no file under .memory/wiki/specs/audits/ outside run4/ was opened.",
+  "units": [
+    {
+      "unit": ".memory/wiki/specs/ideation/meta/",
+      "applicableCheckpoints": 7,
+      "naDimensions": [5],
+      "points": 2.0
+    }
+  ],
+  "scores": {
+    "1_problem_clarity": "PASS",
+    "2_persona_specificity": "PASS",
+    "3_feature_completeness": "FAIL",
+    "4_constraint_explicitness": "PASS",
+    "5_success_measurability": "N/A",
+    "6_competitive_positioning": "PASS",
+    "7_open_question_resolution": "WARN",
+    "8_structural_compliance": "WARN"
+  },
+  "ambiguityPercent": 28.57,
+  "findings": [
+    {
+      "findingId": "meta#001",
+      "unit": ".memory/wiki/specs/ideation/meta/",
+      "severity": "blocking",
+      "dimension": 3,
+      "claim": "cross-cut-emergent-capabilities.md § 2 'New Features by Domain' enumerates 83 features with an 'Owning domain' column, but the file's own Downstream contract assigns a disposition only to § 1 and § 3, leaving § 2 with no stated consumer, no MoSCoW placement, and no owning feature file. Verified: the 83 never landed anywhere downstream.",
+      "evidence": "meta/cross-cut-emergent-capabilities.md:7-10 — \"**Downstream contract**: `/create-prd` (architecture + shared-mechanism registry), `/decompose-architecture` (domain/shard boundaries), and `/audit-ambiguity` inherit this file. The **New Cross-Cut Mechanisms** table is the authoritative \\\"extract-me-as-shared\\\" list — anything here must NOT be rebuilt per-domain. The **Boundary Analysis** section is the D-17 verdict.\" — § 2 is the only one of the three sections given no disposition. meta/cross-cut-emergent-capabilities.md:129-133 — \"## 2. New Features by Domain\" / \"Deduped from 90 candidates.\" meta/cross-cut-emergent-capabilities.md:135 header \"| Feature | Owning domain | Why it's new / uncovered |\" over 83 rows (lines 137-219), e.g. :157 \"| Rights-Orphan Detector | 07 | A readiness check flagging a Song at `master approved` with ZERO asserted recordings in 09 ... The loudest completeness deficit\"; :202 \"| Postponement as a first-class booking state | 17 | The date moves, the deal survives, tickets stay valid — post-2020 the dominant outcome\"; :166 \"| Medley / multi-work composition object | 09 | ... No feature covers medley composition.\"; :219 \"| Formula / contingent receivable | 23 | ... 23.03 models no unknown-amount/formula-shaped receivables\". The closing instruction at :268-272 commissions only the § 1 extractions and the § 3 merge/relocation decisions — § 2 is not carried forward. VERIFICATION: grep -ril over the entire non-meta ideation tree returns 0 files for 'orphan', 'postpone', 'medley', 'test mix|test-mix', and 'save the venue|save-the-venue'; feature-ledger.md returns 0 for 'Rights-Orphan', 'orphan', 'medley', 'Save-the-venue' and 'Trial / test-mix' (its single 'postpone' hit, line 417 `19.06.03` Reschedule & Postponement Handling / Should, is a different, pre-existing feature — the § 2 entry is 'Postponement as a first-class booking state' owned by 17, which the file says is neither cancellation nor force majeure). So none of the 83 is in a domain feature file or in the 734-feature ledger, while ideation-index.md:154 scores Feature Completeness ✅ on \"195 Musts at `[DEEP]` ... 734 features in feature-ledger.md\" and constraints.md:197-244 allocates exactly 195 Musts across v1 (~45) / v1.5 (~26) / phase 2+ (~124) with none of the 83 accounted for.",
+      "forcedInvention": "Whether the 83 § 2 features are in scope, and at what MoSCoW level and in which release, is not stated anywhere. /decompose-architecture and /plan-phase must invent it. Reading the same unit, one implementer folds all 83 into the domain feature files as new scope (changing the 195-Must accounting and the v1/v1.5/phase-2 split); another treats § 2 as an advisory gap log already superseded by the § 1 mechanism extractions and builds none of them. That is a ~11% swing on a 734-feature corpus, decided by nothing in the text.",
+      "short_summary": "83 emergent features in §2 have no stated disposition or MoSCoW"
+    },
+    {
+      "findingId": "meta#002",
+      "unit": ".memory/wiki/specs/ideation/meta/",
+      "severity": "warning",
+      "dimension": 8,
+      "claim": "constraints.md and competitive-landscape.md each self-declare status `[DEEP]` with a completion date, while the Structure Map in ideation-index.md records both as `[PARTIAL]`. Neither side carries a marker reconciling the two, and the same tree marks problem-statement.md `[DEEP]` in both places despite it also carrying open questions — so the divergence is not explained by a consistent convention.",
+      "evidence": "meta/constraints.md:3 — \"> Status: `[DEEP]` — all constraint categories resolved during `/ideate-validate` 2026-07-18.\" versus ideation-index.md:95 — \"| Constraints | [constraints.md](meta/constraints.md) | `[PARTIAL]` |\". meta/competitive-landscape.md:3 — \"> Status: `[DEEP]` — completed `/ideate-validate` 2026-07-18.\" versus ideation-index.md:94 — \"| Competitive Landscape | [competitive-landscape.md](meta/competitive-landscape.md) | `[PARTIAL]` |\". The index table is introduced at ideation-index.md:85 as \"> Downstream workflows: read this table to find the specific file you need.\" Counter-evidence that the index is not applying a stricter 'open questions remain' sense of the marker: ideation-index.md:91 records problem-statement.md as `[DEEP]` although that file carries an explicitly `[PARTIAL]` section (problem-statement.md:71 — \"`[PARTIAL]` — the strongest candidate signals, to be confirmed with the owner\") and two live owner questions; and ideation-index.md:157 self-scores Competitive Positioning ✅ citing the same competitive-landscape.md it marks `[PARTIAL]`.",
+      "failure_scenario": "A downstream stage that gates on the Structure Map status treats constraints.md and competitive-landscape.md as incomplete and either re-opens settled constraint axes or blocks on them; a stage that reads the files directly treats both as resolved inputs and proceeds. The locked technical constraints (constraints.md:11-17) and the release plan (constraints.md:197-244) are the single most load-bearing inputs to /create-prd-stack and /plan-phase, so the two readings produce different pipeline behaviour on the most consequential file in the unit.",
+      "short_summary": "Index says [PARTIAL]; constraints.md and competitive-landscape.md say [DEEP]"
+    },
+    {
+      "findingId": "meta#003",
+      "unit": ".memory/wiki/specs/ideation/meta/",
+      "severity": "warning",
+      "dimension": 7,
+      "claim": "competitive-landscape.md's Moat section asserts the earned-vs-hostile lock-in answer as settled positioning, with no provisional marker, while problem-statement.md holds that exact question open as an owner decision (Q-02) and records the matching Deep Think hypothesis as deferred (DT-04). The compiled vision.md repeats the assertion, so the open question is either stale or the position is unratified — and nothing in the unit says which.",
+      "evidence": "meta/competitive-landscape.md:82-85 — \"**Earned lock-in, not hostile lock-in.** The moat is the accumulating, verified record of a musician's career ... A user who leaves doesn't lose access to *data they could export*; they lose the *provenance* that only exists because the platform was in the workflow when the work happened.\" versus meta/problem-statement.md:112 — \"| Q-02 | [OWNER] Is the lock-in **earned** or **hostile**? If a user leaves, what do they take? (Data portability is a cross-cut — and a values decision.) | User | `/create-prd` |\" and meta/problem-statement.md:105 — \"| DT-04 | \\\"Cannot live without\\\" comes from accumulated switching cost | Sweep whitespace lens | ⏳ DEFERRED — must confirm lock-in is *earned* (value they'd miss) not *hostile* (data they can't extract). See Q-02 |\". The Moat text answers Q-02's second clause verbatim ('what do they take?' -> 'data they could export'). Corroboration that the assertion has propagated as settled: vision.md:53 — \"It is the earned lock-in the whole product is built to create.\" Note also that vision.md's canonical Open Questions table (vision.md:219-228) does not carry problem-statement.md's Q-02 at all, and reuses the identifier Q-02 for an unrelated question (vision.md:221 — \"| Q-02 | The identifier-binding seam — which mechanism/domain owns work↔identifier binding? | Agent |\"). Contrast the file's own handling of a genuinely resolved question, which is struck through and marked: problem-statement.md:113 — \"| Q-03 | ~~...~~ **RESOLVED (D-31):** ... | User | ✅ Resolved |\".",
+      "failure_scenario": "Data portability and export scope is a product decision that follows directly from this answer. An implementer reading competitive-landscape.md (or vision.md) builds to 'users can export their data, the moat is the unexportable provenance' and specs export surfaces into v1; an implementer reading problem-statement.md sees a live [OWNER] values decision deferred to /create-prd and specs nothing, waiting for the owner. Because Q-02 is absent from vision.md's canonical roll-up, the /create-prd stage that is supposed to resolve it may never be handed it, and the unratified assertion silently becomes the decision.",
+      "short_summary": "Moat asserts earned lock-in while Q-02/DT-04 keep it open"
+    }
+  ]
+}
