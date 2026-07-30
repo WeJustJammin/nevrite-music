@@ -1,0 +1,312 @@
+{
+  "domain": "05-services-marketplace",
+  "root": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/05-services-marketplace",
+  "unitsAudited": 8,
+  "filesRead": 48,
+  "expected": { "units": 8, "files": 48 },
+  "naPolicy": {
+    "dimension4": "Constraint Explicitness — N/A for every unit. Budget/timeline/team/compliance/performance axes are owned by meta/constraints.md, which is outside this domain's unit set. Units reference it (e.g. domain Q-06 cites the locked Cloudflare Workers constraint) rather than restating it.",
+    "dimension5": "Success Measurability — N/A for every unit. Success metrics/KPIs are an ideation-index/meta artifact; no unit in this domain carries a metrics section. Behavioural thresholds inside the units (14d stale, 45d abandonment auto-close, 3 business-day auto-accept floor, 500-char free-text cap) are scored under Problem Clarity / Feature Completeness, not here.",
+    "dimension6": "Competitive Positioning — applicable to the domain unit only (its Overview names SoundBetter/AirGigs/Fiverr Pro plus a specific capability gap and a moat). N/A for the seven sub-domain units, which are internal decompositions and were never in scope to position."
+  },
+  "units": [
+    {
+      "unit": "05 (domain root: services-marketplace-index.md, services-marketplace-cx.md)",
+      "applicableCheckpoints": 6,
+      "naDimensions": [4, 5],
+      "points": 1.5,
+      "scores": {
+        "1_problem_clarity": "✅",
+        "2_persona_specificity": "✅",
+        "3_feature_completeness": "❌",
+        "6_competitive_positioning": "✅",
+        "7_open_question_resolution": "⚠️",
+        "8_structural_compliance": "✅"
+      },
+      "notes": "18 cross-cuts, 4 domain principles, 12 open questions all with owner + deferral target, 6 rejected pairs. Children table matches the folder tree exactly (7 sub-domain dirs, 32 leaf files verified on disk). D3 downgraded for the CX-12 capacity/issuance contradiction; D7 downgraded for one bare [PENDING] with no owner and no deferral target."
+    },
+    {
+      "unit": "05.01-service-listings-pricing",
+      "applicableCheckpoints": 5,
+      "naDimensions": [4, 5, 6],
+      "points": 1.0,
+      "scores": {
+        "1_problem_clarity": "✅",
+        "2_persona_specificity": "✅",
+        "3_feature_completeness": "❌",
+        "7_open_question_resolution": "✅",
+        "8_structural_compliance": "✅"
+      },
+      "notes": "9 files, 7 leaves, deepest unit in the domain (05.01.01/02/03 are [DEEP] with 9/14/13 DT annotations). Every open question carries owner + target; every [PENDING] marker carries either a deferral target or a Q-reference. D3 downgraded for one blocking contradiction (craft mutability) plus five warnings."
+    },
+    {
+      "unit": "05.02-quotes-scope-contracting",
+      "applicableCheckpoints": 5,
+      "naDimensions": [4, 5, 6],
+      "points": 1.0,
+      "scores": {
+        "1_problem_clarity": "✅",
+        "2_persona_specificity": "✅",
+        "3_feature_completeness": "❌",
+        "7_open_question_resolution": "✅",
+        "8_structural_compliance": "✅"
+      },
+      "notes": "05.02.01 is the strongest single file in the domain — 20 decisions, a normative Carried Terms table, a closed set of offer-voiding events, and an explicit two-senses-of-acceptance disambiguation (DT-13). D3 downgraded solely for D-15's benchmark-band conflict with 05.01."
+    },
+    {
+      "unit": "05.03-engagement-lifecycle",
+      "applicableCheckpoints": 5,
+      "naDimensions": [4, 5, 6],
+      "points": 1.0,
+      "scores": {
+        "1_problem_clarity": "✅",
+        "2_persona_specificity": "✅",
+        "3_feature_completeness": "❌",
+        "7_open_question_resolution": "✅",
+        "8_structural_compliance": "✅"
+      },
+      "notes": "8 files. The two bare [PENDING] precedence markers in 05.03-engagement-lifecycle-cx.md (CX-03 §5, CX-04 §5) are stale rather than malformed — both are resolved downstream (05.03.05 D-16 'delivery wins'; 05.03.03 D-10 'revision beats auto-accept'), so D7 is not downgraded. D3 downgraded for two blocking contradictions plus three warnings."
+    },
+    {
+      "unit": "05.04-delivery-qc-acceptance",
+      "applicableCheckpoints": 5,
+      "naDimensions": [4, 5, 6],
+      "points": 0.5,
+      "scores": {
+        "1_problem_clarity": "✅",
+        "2_persona_specificity": "✅",
+        "3_feature_completeness": "⚠️",
+        "7_open_question_resolution": "✅",
+        "8_structural_compliance": "✅"
+      },
+      "notes": "Cleanest unit in the domain. 05.04.01 specifies the auto-accept window's floor (3 business days), ceiling (30 calendar days), escalation ladder (delivery / 50% / T-24h / T-1h), retry policy (2s/8s/32s), a 120-second revision grace, and pauses the clock when notification channels hard-bounce. Only defect found is the QC-override wording."
+    },
+    {
+      "unit": "05.05-multi-party-supply",
+      "applicableCheckpoints": 5,
+      "naDimensions": [4, 5, 6],
+      "points": 0.5,
+      "scores": {
+        "1_problem_clarity": "✅",
+        "2_persona_specificity": "✅",
+        "3_feature_completeness": "⚠️",
+        "7_open_question_resolution": "✅",
+        "8_structural_compliance": "✅"
+      },
+      "notes": "All four leaves resolve to one invariant ('the credit follows the hands'), reached independently four times and recorded once at domain level as P-02. Every bare [PENDING] in 05.05.03 maps to a Q in the same file (Mandate Lapsed → Q-02; studio assignee → Q-04). 05.05.04 is proposed `wont` for MoSCoW (index D-03), which fairly bounds its expected depth."
+    },
+    {
+      "unit": "05.06-rights-warranties-transfer",
+      "applicableCheckpoints": 5,
+      "naDimensions": [4, 5, 6],
+      "points": 1.5,
+      "scores": {
+        "1_problem_clarity": "✅",
+        "2_persona_specificity": "✅",
+        "3_feature_completeness": "❌",
+        "7_open_question_resolution": "⚠️",
+        "8_structural_compliance": "✅"
+      },
+      "notes": "Carries the domain thesis. 05.06.01 elects per copyright with required parameters per posture and a closed vocabulary; 05.06.03 specifies which legs are inside the atomic commit and which are outside, and distinguishes Voided from Superseded. D3 downgraded for the unmapped `spec` pricing model; D7 for one bare untracked [PENDING]."
+    },
+    {
+      "unit": "05.07-custodial-physical-services",
+      "applicableCheckpoints": 5,
+      "naDimensions": [4, 5, 6],
+      "points": 1.0,
+      "scores": {
+        "1_problem_clarity": "✅",
+        "2_persona_specificity": "✅",
+        "3_feature_completeness": "⚠️",
+        "7_open_question_resolution": "⚠️",
+        "8_structural_compliance": "✅"
+      },
+      "notes": "All five files [SURFACE]; sub-domain resolved to COULD priority (index Q-03). The deliberate non-relationship with the 05.03 lifecycle is documented at both levels (index D-02, domain CX-08), which is the right call for a shared entity with a different state machine. D3/D7 each downgraded once."
+    }
+  ],
+  "findings": [
+    {
+      "unit": "05.01-service-listings-pricing",
+      "severity": "blocking",
+      "dimension": 3,
+      "claim": "Whether a seller may change the craft of a live listing is specified both ways: 05.01.01 blocks it as immutable, 05.01.02 permits it. Neither statement carries a marker or references the other.",
+      "evidence": "05.01.01-service-listings-packages-rate-cards.md:191 — \"| D-10 | Craft is immutable on a live listing — archive and republish | Craft determines the legal model set, facet set, benchmark cohort and reputation cohort. A mutable craft is reputation laundering via a form field. |\"; 05.01.01:82 — \"| Seller changes the **craft** of a live listing (Mixing → Mastering) | Blocked. ... | \\\"You can't change the craft of a live listing. Archive it and publish a new one — your Mixing reviews stay with Mixing.\\\" |\"; contradicted by 05.01.02-service-category-taxonomy-attributes.md:105 — \"| **Seller edits craft on a listing with accumulated reputation** | Reputation is **per-role** (Reviews cross-cut; `05.01.01` DT-03) — changing craft does not carry mix reviews onto a mastering listing. **The edit is permitted; the reputation does not follow** | \\\"Reviews stay with the work you did. This listing starts fresh in Mastering.\\\" |\" and by 05.01.02:95 — \"| **Listing's craft changes while a quote derived from it is live** | Listing version increments; the issued quote honours its own snapshot until expiry |\"",
+      "forcedInvention": "Which of the two mutually exclusive rules governs the craft field on a published listing, and therefore whether the archive-and-republish path is the only route. Both files supply finished user-facing copy for their own outcome, using the same Mixing→Mastering example.",
+      "note": "05.01.02's own D-12/D-13 cover curation-driven craft *remap*, which is a different actor; line 105 is explicitly the seller editing."
+    },
+    {
+      "unit": "05.01-service-listings-pricing",
+      "severity": "warning",
+      "dimension": 1,
+      "claim": "A below-scale union render is specified as auto-raised to the floor and as blocked, in the same file, for the same trigger — including inside a single table cell.",
+      "evidence": "05.01.03-music-pricing-model-library.md:76 (Happy Path 9) — \"the rendered fee is floored at scale for that session type; a below-scale render is raised to the floor with the reason shown, **or issue is blocked**.\"; :103 — \"| Union scale floor applies (05.02.03) | Rendered fee is floored at scale; a below-scale render is blocked |\"; :104 — \"| Union scale exceeds the seller's own rate | The floor wins. ... | \\\"Your rate is £400; AFM scale for a master session is £480. Priced at £480.\\\" |\"; States table :131 — \"| Floored | Union scale exceeds the rendered fee | Price raised to scale ... |\" and :132 — \"| Blocked | Below a statutory or union floor ... |\"",
+      "forcedInvention": "Whether an under-scale rate is silently uplifted or refused. Reconcilable as render→auto-floor and manual-issue→block (05.02.01:102 and 05.02.03 both say issue is blocked), which is why this is a warning rather than blocking — but line 103 asserts both outcomes for one event."
+    },
+    {
+      "unit": "05.01-service-listings-pricing",
+      "severity": "warning",
+      "dimension": 3,
+      "claim": "The universal publish-gate parameters are stated to apply to every pricing model regardless of shape, which makes a points-only or spec listing unpublishable, contradicting the feature's own thesis that those shapes exist.",
+      "evidence": "05.01.03-music-pricing-model-library.md:49 — \"Every model — **regardless of shape** — declares these before it can be published. A model missing any of them is **not publishable**; the listing cannot go live (D-03, D-04, D-05)\", where the four are Minimum, Currency, Tax treatment and Rounding rule; :42 defines Points as \"**No — zero cash; a rights term**\" and :43 defines Spec as rendering \"from nothing\". D-04 (:186) narrows to \"Every **cash** model declares currency and tax treatment\" but D-03 (:185) does not: \"Every model declares a **minimum**; a model without one is not publishable\".",
+      "forcedInvention": "Whether non-cash models are exempt from Minimum/Currency/Tax/Rounding at publish, or must supply meaningless values. Taken literally, no points-only production listing can ever publish."
+    },
+    {
+      "unit": "05.01-service-listings-pricing",
+      "severity": "warning",
+      "dimension": 3,
+      "claim": "05.01.04's normative Role Lens and Happy Path still specify a buyer-visible benchmark band, which the sellers-only decision supersedes; the correction is recorded only in a resolved-question row, not at the point of use.",
+      "evidence": "05.01.04-rate-benchmarking-price-transparency.md:18 — \"Sees the same band as a buyer when evaluating a quote.\"; :37 (Happy Path 5) — \"Buyer viewing a quote sees the same band, so the number is contextualised rather than negotiated blind\". Against 05.01.01:186 — \"| D-05 | The benchmark band renders in the seller's pricing step only — never in the buyer preview or on the public listing |\". 05.01.04:96 (Q-03) acknowledges it: \"⚠️ **Consequence for this file**: its Musician Role Lens ... and Happy Path step 5 ... are breadth-pass text that the later `[DEEP]` decision supersedes — they should be corrected at `/write-fe-spec`\".",
+      "forcedInvention": "An implementer reading only the Behavior section builds a buyer-facing band. The acknowledgement sits in an appendix row and the superseded text carries no marker."
+    },
+    {
+      "unit": "05.01-service-listings-pricing",
+      "severity": "warning",
+      "dimension": 1,
+      "claim": "Percentage add-on composition is untestable as written: they are declared to apply to the subtotal yet also to apply 'in declared order', which are different arithmetic for two or more percentage add-ons.",
+      "evidence": "05.01.01-service-listings-packages-rate-cards.md:33 — \"A quote is an **ordered evaluation, not a sum** (D-03). Add-ons occur in the real market in three shapes and **they do not commute**\"; :38 — \"4. **Percentage add-ons** — applied to the subtotal in declared order (rush +50% per 05.01.06; Atmos ×1.5).\"; the permitted add-on model set is \"{flat, same-unit-as-tier, percentage-of-subtotal}\" (:43).",
+      "forcedInvention": "For rush +50% plus Atmos ×1.5 on a £1,000 subtotal, whether the fee total is £2,000 (each percentage taken on the frozen subtotal, order irrelevant) or £2,250 (compounded in declared order). Nothing in 05.01.03 or 05.02.01 resolves it, and the difference is the take-rate base."
+    },
+    {
+      "unit": "05.01-service-listings-pricing",
+      "severity": "warning",
+      "dimension": 3,
+      "claim": "At Capacity is specified only as disabling the Order CTA; whether an at-capacity seller may still receive a quote request and issue a quote is unstated in both the capacity feature and the listing state machine, while the domain CX asserts the ceiling gates quote issuance.",
+      "evidence": "05.01.07-seller-capacity-queue-intake-limits.md:64 — \"| At Capacity | Ceiling reached | Listings visible, order disabled, next-available date, waitlist CTA |\" (no mention of Request Quote); D-03 (:94) — \"At-capacity listings stay visible and non-orderable\"; 05.01.01:117 — \"| Published — At Capacity | Ceiling hit for this craft (05.01.07) | Live listing, Order disabled, waitlist CTA, next-available date |\" versus 05.01.01:116 which does spell out the other case (\"'Request Quote' only, Order disabled\"). services-marketplace-cx.md:137 asserts the opposite obligation: \"issuance of a *new* quote is what the ceiling blocks. Failure surfaces at issuance (\\\"you're at capacity\\\")\".",
+      "forcedInvention": "Whether the Request Quote CTA and the seller's issue control are present in the At Capacity state."
+    },
+    {
+      "unit": "05.01-service-listings-pricing",
+      "severity": "warning",
+      "dimension": 3,
+      "claim": "An 'Action needed' listing state is defined in 05.01.02 and made load-bearing by its 30-day pause countdown, but is absent from the listing lifecycle state machine that 05.01.01 owns, and the two files describe its orderability differently.",
+      "evidence": "05.01.02-service-category-taxonomy-attributes.md:118 — \"| **Action needed** (listing) | Craft retired/merged; target does not permit this listing's model or a required facet | Listing live under the old label; named missing item; countdown to the day-30 pause |\", and :93 — \"Affected listings **stay live** under the old label, enter `Action needed`, seller notified at day 0 / 7 / 28; at **day 30** the listing **pauses**\". The owning lifecycle table (05.01.01:109-122) lists Draft, Blocked, Published—Orderable, Published—Not Orderable, Published—At Capacity, Published—Stale, Dormant, Paused, Suspended, Archived — and no Action needed. 05.01.03:116 describes the same situation as \"new orders are gated pending remap\".",
+      "forcedInvention": "Whether the state exists in the listing machine at all, and whether a listing inside the 30-day window can still take orders ('stay live' vs 'new orders are gated')."
+    },
+    {
+      "unit": "05 (domain root)",
+      "severity": "blocking",
+      "dimension": 3,
+      "claim": "The domain CX file resolves the capacity-vs-immutable-offer collision by making the concurrency ceiling block quote issuance; both owning features specify that it does not — it binds ordering only, and issuance merely surfaces an advisory exposure figure.",
+      "evidence": "services-marketplace-cx.md:136-137 (CX-12 synthesis) — \"The count is advisory at the acceptance boundary — it gates *issuance*, never acceptance of an already-issued offer.\" / \"issuance of a *new* quote is what the ceiling blocks. Failure surfaces at issuance (\\\"you're at capacity\\\"), never at the buyer's acceptance.\" Against 05.02.01-custom-quotes-proposals-scope.md:112 — \"The ceiling binds *ordering* (05.01.07 D-03), not acceptance.\"; 05.02.01:68 lists \"Seller reaching their capacity ceiling (DT-04)\" under **Does not end the offer**; 05.02.01:77 makes the seller's over-ceiling position informational only — \"their **outstanding-offer exposure** (\\\"3 live quotes totalling 14 days of work against a ceiling of 4 concurrent\\\")\"; and 05.01.07 D-03 (:94) gates only orderability. CX-12 also contradicts itself at :139 — \"The seller is warned at issuance when near capacity\".",
+      "forcedInvention": "Whether an at-capacity seller is hard-blocked from issuing a quote or merely warned. The two readings produce different products for the seller who is oversubscribed, and 05.02.01's exposure display is only coherent under the second."
+    },
+    {
+      "unit": "05 (domain root)",
+      "severity": "warning",
+      "dimension": 7,
+      "claim": "A money-affecting escrow rule is left with a bare [PENDING] carrying neither an owner nor a deferral target.",
+      "evidence": "services-marketplace-cx.md:104 (CX-06 synthesis Q5) — \"A downstream engagement disputed while the buyer's acceptance fires. The buyer's release must not be hostage to a fixer-player dispute, but the disputed tranche must be — needing a **per-payee freeze**, not a whole-escrow freeze. `[PENDING]`.\" The same requirement is repeated with the same bare marker at 05.05-multi-party-supply-cx.md:73. No open question in the domain index, the 05.05 index or any 05.05 leaf owns it.",
+      "forcedInvention": "Nothing in the tree assigns the per-payee freeze to an owner or a pipeline stage, so it is a requirement with no route to being decided — the Dimension 7 failure mode rather than a content gap."
+    },
+    {
+      "unit": "05.02-quotes-scope-contracting",
+      "severity": "blocking",
+      "dimension": 3,
+      "claim": "05.02.01 D-15 requires the benchmark band to render to both parties on a live quote; 05.01 decided sellers-only and rejected the buyer-facing pairing three times. Neither side flags the other.",
+      "evidence": "05.02.01-custom-quotes-proposals-scope.md:244 — \"| D-15 | The benchmark band (05.01.04) is rendered on a live quote **symmetrically** to both parties, or to neither | An asymmetric benchmark makes the platform an agent for one side of a negotiation it is supposed to referee. |\", enacted at :77 (\"the benchmark band for this craft/cohort (05.01.04, symmetric — D-15)\"). Against 05.01.01:186 D-05 — \"The benchmark band renders in the seller's pricing step only — never in the buyer preview or on the public listing\"; 05.01.04:96 Q-03 — \"✅ **Resolved — `05.01.01` D-05, upheld by sub-domain CX R-04 and domain CX R-06. Sellers only.**\"; 05.01-service-listings-pricing-cx.md:89 R-04 — \"The band renders in the pricing *step*, not on the public listing\"; services-marketplace-cx.md:216 R-06 — \"The benchmark band renders only in the seller's pricing step (05.01.04 D-01)\".",
+      "forcedInvention": "Whether a buyer evaluating a quote sees the cohort band. 05.01.04's resolution treats buyer visibility as superseded breadth text to be deleted; 05.02.01's later [DEEP] decision makes it mandatory or forbids it for both parties."
+    },
+    {
+      "unit": "05.03-engagement-lifecycle",
+      "severity": "blocking",
+      "dimension": 3,
+      "claim": "Whether a credit is emitted at milestone acceptance is decided in both directions across sibling features, and each cites the other as its authority. Under one reading a cancelled staged engagement emits duplicate credits.",
+      "evidence": "05.03.02-milestones-staged-deliverables.md:107 — \"| D-06 | Milestone acceptance is a **two-leg commit**: it releases the tranche **and** emits a credit for the accepted stage. |\" (also :36 Happy Path 4 and :73 States row). Against 05.03.05-cancellation-abandonment-kill-fee.md:274 — \"| D-06 | ... A cancelled engagement **emits** credits for accepted milestones ... | The surface pass said credits are \\\"not withdrawn\\\", which reached for the right outcome through a mechanism that does not exist: **no credit is emitted at a milestone at all** (05.06.03 D-01 fires emission at final acceptance). |\", and :302 — \"**Superseded** — DT-11. **Credits were never emitted at milestones at all.** A cancelled engagement now emits them, privately by default\". 05.06.03-rights-transfer-split-execution.md:59 sides with 05.03.02 while citing the decision that denies it — \"| **Milestone acceptance** (05.03.02) | Tranche release | **Does not execute** ... | **Emits** — a credit is a fact about work that happened (05.03.05 D-06) |\" (repeated :131, and :130 \"Credits already earned on accepted milestones stand\").",
+      "forcedInvention": "When credit records enter domain 02 for staged work — at each milestone acceptance, or only at final acceptance/cancellation. Building both as written double-emits every accepted stage of a cancelled engagement into the platform's core asset."
+    },
+    {
+      "unit": "05.03-engagement-lifecycle",
+      "severity": "blocking",
+      "dimension": 3,
+      "claim": "The engagement state machine's trigger for `Closed` is the recall window expiring, while the same file's happy path and the recall feature both put the engagement in `Closed` with the window still open — and the state is defined as read-only, which makes recalls impossible.",
+      "evidence": "05.03.01-order-lifecycle-requirements-gating.md:157 — \"| Closed | Support/recall window expired (05.03.06) | Read-only; evidence retained. |\" Against 05.03.01:101 (Happy Path 10) — \"Engagement enters `Closed`, with the support/recall window **still open** (05.03.06).\"; 05.03.06-post-delivery-support-recall.md:25 — \"A support window opens **at acceptance** and runs for a declared period\", :87 D-01 — \"A recall is a **post-terminal** state — the engagement stays closed, rights stay transferred, escrow stays released\", :62 — \"| Window Expired | Period elapsed | Engagement fully closed; read-only |\"; and 05.03-engagement-lifecycle-index.md:50 D-02 — \"a recall must reopen a *closed* engagement without unwinding its rights transfer\".",
+      "forcedInvention": "Which state an accepted engagement occupies during the recall window, and whether that state permits the artifact replacement a recall requires. Both readings break something: the states table makes Closed read-only during the window, the recall feature requires work inside it."
+    },
+    {
+      "unit": "05.03-engagement-lifecycle",
+      "severity": "warning",
+      "dimension": 1,
+      "claim": "Two [DEEP] files specify different, incompatible nudge schedules for the same requirements-gate stall, and the second calls its day-7 notice the 'first nudge'.",
+      "evidence": "05.03.01-order-lifecycle-requirements-gating.md:107 — \"Buyer nudged at **T+24h, T+72h, T+7d, T+14d**; then 05.03.05's escalating abandonment notice\" (repeated verbatim in its Consumes list: \"gate nudges (T+24h/72h/7d/14d)\"). Against 05.03.05-cancellation-abandonment-kill-fee.md:121-124 — \"| 7 | **First nudge** — informational | Buyer only |\", \"| 14 | Second nudge | **Both.** |\", \"| 30 | **Abandonment Notice** |\", \"| 45 | **Auto-Close.** |\", and D-04 (:272) \"Buyer: 7/14/30 notices, close at 45\".",
+      "forcedInvention": "Whether the buyer is contacted at 24h and 72h at all. 05.03.01 D-12 delegates the threshold to 05.03.05, but not the notice cadence, and the two cadences cannot both be first."
+    },
+    {
+      "unit": "05.03-engagement-lifecycle",
+      "severity": "warning",
+      "dimension": 3,
+      "claim": "The domain CX assigns the retainer feature a pinned-rate flag that protects a contracted rate from rate-card mutation; 05.03.04 contains no such flag, no pinning rule, and no reference to the listing feature at all.",
+      "evidence": "services-marketplace-cx.md:24 (CX-13) — \"**A contracted retainer rate is PINNED against rate-card bulk mutation.**\" and :151 — \"the retainer (05.03.04) owns a pinned copy. On a bulk mutation, the pinned copy wins — **the retainer exposes a pinned-rate flag** and the card's blast radius must exclude any listing under an active retainer.\" A search of 05.03.04-retainers-recurring-engagements.md for \"pin\" returns zero matches; its Behavior, Decisions (D-01..D-04), edge cases and Cross-Cut Notes never mention rate pinning or 05.01.01. The obligation is only visible from the other side (05.01.01:71 edge case and its rate-card field list \"pinned-by-contract flag\").",
+      "forcedInvention": "An implementer building 05.03.04 from its own file ships no pinned-rate flag, so the rate card has nothing to exclude and a bulk edit reprices a contracted client — the exact harm CX-13 exists to prevent."
+    },
+    {
+      "unit": "05.03-engagement-lifecycle",
+      "severity": "warning",
+      "dimension": 1,
+      "claim": "The notes-window duration is given as a flat 48h (24h on rush) in a decision and as a per-craft value as low as 24h in the seed table, with no rule for how rush interacts with a craft whose seed is already 24h.",
+      "evidence": "05.03.03-revisions-limits-change-orders.md:220 — \"| D-08 | **The notes window** (48h; 24h on rush) bounds note-dripping |\". Against the per-craft seed table at :67-79, which sets the notes window to 24h for Mastering — single, Session performance — remote overdub, Vocal tuning / editing, and Audio restoration, and 48h for mixing/production/composition; plus :81 — \"**Rush inheritance**: if a rush tier is bought (05.01.06), the **revision turnaround inherits the rush tier**\".",
+      "forcedInvention": "The notes window for a rush mastering single: 24h (craft seed), 12h (rush halving), or 24h (D-08's rush figure). D-15 makes the table the seed source, which is why this is a warning rather than blocking."
+    },
+    {
+      "unit": "05.04-delivery-qc-acceptance",
+      "severity": "warning",
+      "dimension": 3,
+      "claim": "The absolute rule that a QC-failing file never reaches the buyer and never starts their clock is stated without exception in two places, and contradicted by the seller-override path specified in the owning QC feature and acknowledged in the same file's happy path.",
+      "evidence": "05.04.01-delivery-acceptance-auto-accept.md:210 — \"| D-01 | A file that fails QC is not a delivery | It never reaches the buyer and never starts their clock. |\"; :152 — \"| **QC Failed** | Delivery fails spec | Seller only ... **The buyer never sees a broken delivery and their clock never starts** (05.04 D-02) |\"; 05.04-delivery-qc-acceptance-index.md:46 D-02 — \"A technically broken file **must never** reach the buyer and start their auto-accept clock.\" Against 05.04.02-deliverable-spec-automated-audio-qc.md:106 — \"| D-04 | A seller may override with a recorded reason, **visible to the buyer** |\", its Overridden state (:76) — \"Buyer sees the override and the reason at delivery\", and 05.04.01:96 (Happy Path 2) — \"it passes (**or the seller overrides with a recorded reason, which the buyer will see**)\".",
+      "forcedInvention": "Whether a spec-failing delivery can be published at all. The override is specified with UI and audit consequences, so the intended answer is discernible — but the rule that forbids it is stated absolutely in the feature that owns the delivery gate and in the sub-domain decision log."
+    },
+    {
+      "unit": "05.05-multi-party-supply",
+      "severity": "warning",
+      "dimension": 3,
+      "claim": "Mid-chain cancellation settlement across a bundle's sellers, and the terminal 'Broken' state for a seller exiting mid-chain, are both left [PENDING] with no owner and no open question covering them.",
+      "evidence": "05.05.04-multi-seller-bundles-curated-packages.md:55 — \"| Cancellation mid-chain | Per-stage settlement across four parties, plus the partial-work problem (05.03.05 DT-03) ×4 | `[PENDING]` |\"; :67 — \"| Broken | A seller exits mid-chain | `[PENDING]` |\". The file's three open questions cover the counterparty (Q-01), cross-seller SLA fault (Q-02) and assembler margin (Q-03) — none covers settlement or the Broken state. 05.03.05's cascade arithmetic stops at Q-06 (\"Who pays the kill fees of orphaned sub-engagements\"), which is the upstream half.",
+      "forcedInvention": "How a four-party bundle settles when it dies mid-chain. Materially mitigated by 05.05-multi-party-supply-index.md:47 D-03, which proposes the whole feature as `wont` for MoSCoW."
+    },
+    {
+      "unit": "05.06-rights-warranties-transfer",
+      "severity": "blocking",
+      "dimension": 3,
+      "claim": "The `spec` pricing model has no legal rights-posture combination, and its conditional vesting cannot be expressed in the closed posture vocabulary — yet a posture election is mandatory before a listing tier can publish.",
+      "evidence": "05.01.03-music-pricing-model-library.md:43 — \"| Spec | nothing | **trigger condition** · the term that vests on trigger | speculative writing/production | No — conditional (DT-10) |\", and DT-10 rejects mapping it onto points: \"spec is **conditional** ... A points deal vests at acceptance\". The legal-combinations table in 05.06.01-engagement-rights-posture.md:70-74 has exactly three rows — \"Cash-only (flat · per-song · per-minute · day rate · per-stem)\", \"Points-only\", \"Fee + points\" — none of which is spec. 05.06.01:208 D-07 — \"**The posture vocabulary is closed.** Four master postures, four composition postures, no free text, no \\\"other\\\", and no rider may qualify what executes\", and D-01 — \"**No default posture** — an explicit election is required to publish a tier\". 05.06.01 Q-07 concedes the adjacent gap (\"**Reversion is a common, legitimate term this vocabulary cannot express**\") but not this one.",
+      "forcedInvention": "Which posture a spec listing elects, and how a right that vests only on a future trigger is represented when all four postures execute at acceptance. Publish is blocked without an election, so a spec listing cannot be created without inventing the mapping."
+    },
+    {
+      "unit": "05.06-rights-warranties-transfer",
+      "severity": "warning",
+      "dimension": 7,
+      "claim": "Whether an elected points participation survives a re-recording of the work is marked [PENDING] with no owner, no deferral target and no covering open question.",
+      "evidence": "05.06.02-producer-points-backend-participation.md:62 — \"| Points on a recording later re-recorded | The 2020s' favourite manoeuvre | `[PENDING]` |\". The file's Q-01..Q-04 cover points-only permissibility, authority to grant, where the aggregate check lives, and expected-value disclosure; none covers re-recording. 05.06.03's Q-01..Q-07 do not either.",
+      "forcedInvention": "Whether a re-recording extinguishes the participation the platform registered into 09/10 — a question with a direct royalty consequence and no route to a decision as tracked."
+    },
+    {
+      "unit": "05.07-custodial-physical-services",
+      "severity": "warning",
+      "dimension": 3,
+      "claim": "A defect warranty on custodial labour is named as a trade norm with a range instead of a platform behaviour, and nothing decides whether the platform implements one or for how long.",
+      "evidence": "05.07.01-repair-tech-luthier-job-flow.md:59 — \"| Warranty on the work | Trade norm: **6–12 months** on labour | Different from a mix recall (05.03.06) — this is a defect warranty on physical work |\". No decision in 05.07.01 (D-01..D-05), 05.07.03 (D-01..D-05) or the sub-domain index (D-01..D-04) mentions a labour warranty, and none of the eleven open questions across the unit covers it. By contrast the analogous window for creative work is explicitly bounded and owner-tracked (05.03.06 D-03/D-04, Q-04).",
+      "forcedInvention": "Whether a returned repair carries any warranty, its duration, and what a warranty claim does to a closed custodial engagement."
+    },
+    {
+      "unit": "05.07-custodial-physical-services",
+      "severity": "warning",
+      "dimension": 7,
+      "claim": "Two behaviours are left with bare [PENDING] markers that carry no owner and no deferral target, and no open question in the unit covers either.",
+      "evidence": "05.07-custodial-physical-services-cx.md:41 (CX-01/02 synthesis Q5) — \"Damage discovered at return while the job is still marked in progress; or a revised estimate issued while the item is already being returned. Both need a defined precedence; `[PENDING]`.\" — no owner, no stage, and unlike the equivalent races elsewhere in the domain (05.03.05 D-16, 05.03.03 D-10, 05.05.01 D-05) no feature resolves it. 05.07.02-third-party-inspection-verification.md:67 — \"| Disputed | Report contested | `[PENDING]` |\" — its Q-01..Q-04 cover refusal visibility, inspector conflict, report attachment and inspector error, none of them a contested report's right of reply (flagged at :54 as \"`[PENDING — /ideate-discover Step 5 deepening]` — right of reply?\").",
+      "forcedInvention": "Precedence between a return-time damage claim and an in-progress job state; and what a contested inspection report does. Both are terminal-ish states in a state table with no defined behaviour and no owner."
+    }
+  ],
+  "notFiled": [
+    "Bare [PENDING] markers in 05.03-engagement-lifecycle-cx.md (CX-03 §5, CX-04 §5) — stale, not gaps: resolved by 05.03.05 D-16 and 05.03.03 D-10 respectively.",
+    "05.03.02:46 [PENDING] on 'rights transfer at which milestone' — resolved in the same file by D-01/D-06.",
+    "05.06.02:61 'engagement cancelled after points elected ... unresolved' — resolved by 05.03.05 D-17.",
+    "05.07.03:64 [PENDING] on permanent alteration — resolved by 05.07.03 D-04 (approved estimate is the specification of permitted change).",
+    "05.01.03:116 pointing at '05.01.02 Q-03' as open — Q-03 is resolved (D-12/D-13); the policy exists.",
+    "Deep-Think-only concept 'contingent interest vests' (05.03.02 DT-01, echoed 05.06.03) — the operative decision D-01 is unambiguous ('does not transfer rights'), so the undefined term does not change what gets built.",
+    "Domain index provenance arithmetic ('24 became nodes' + '8 Deep Think additions' vs 6 † markers and 2 ‡ narrowings) — metadata accounting, no build consequence.",
+    "Status drift between the domain index (all children `[BREADTH]`/`[SURFACE]`) and current per-file statuses ([DEEP]/[PARTIAL]) — historical statement of the Step 3 result.",
+    "'~15-20% services take rate' expressed as a range (05.01.05 DT-02, 05.01.03 DT-08) — a Payments cross-cut figure, not a claim this domain owns.",
+    "05.05.02 'Roster visible to the buyer' state vs Q-02 asking whether the buyer sees the roster — Q-02 explicitly names the States row, so the tension is tracked.",
+    "05.04.02 D-05 QC 'fail open' vs the no-clock-on-an-invalid-file principle — an explicitly decided availability trade-off with a stated rationale; both implementers build the same thing.",
+    "05.01.06 / 05.01.07 questions deferred to 'Step 5 deepening' — a live target for the [PARTIAL] leaves that carry them, not an expired one."
+  ]
+}

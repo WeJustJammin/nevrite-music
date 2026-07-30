@@ -1,0 +1,375 @@
+{
+  "domain": "23-career-finance-business",
+  "auditRoot": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/23-career-finance-business",
+  "unitsAudited": 8,
+  "filesRead": 45,
+  "expected": { "units": 8, "files": 45 },
+  "coverageNote": "Enumeration from disk matched the expected counts exactly: 8 units (the domain directory itself plus 7 sub-domain directories, each containing an *-index.md) and 45 .md files. No directory under the domain lacks an index. Every file was read in full, line-numbered, inside the context-mode sandbox. Two leaf features (23.08, 23.09) are flat .md files in the domain root and were audited as part of the domain-root unit. No sampling.",
+  "rubric": {
+    "dimensions": {
+      "1": "Problem Clarity",
+      "2": "Persona Specificity",
+      "3": "Feature Completeness",
+      "4": "Constraint Explicitness",
+      "5": "Success Measurability",
+      "6": "Competitive Positioning",
+      "7": "Open Question Resolution",
+      "8": "Structural Compliance"
+    },
+    "naPolicy": "Dimension 4 (Constraint Explicitness) and Dimension 6 (Competitive Positioning) are scored N/A for every unit in this domain: both are properties of meta/constraints.md and meta/competitive-landscape.md, which are outside this domain's scope and are audited as their own unit. Dimension 5 is scored N/A only where a unit makes no quantitative normative claim at all."
+  },
+  "units": [
+    {
+      "unit": "23-career-finance-business (domain root: career-finance-business-index.md, career-finance-business-cx.md, 23.08-point-of-need-insurance.md, 23.09-career-sustainability-signals.md)",
+      "applicableCheckpoints": 5,
+      "naDimensions": [4, 5, 6],
+      "points": 1.0,
+      "ambiguityPct": 20.0,
+      "scores": {
+        "1": "✅ — 'Running the business of a music career … a working musician's income arrives from ten unrelated payers on different schedules in different currencies, and no bank, accountant or fintech can see it' (career-finance-business-index.md:11,13). Specific user, specific pain, falsifiable.",
+        "2": "⚠️ — Role Matrix is fully populated for all 9 children with substantive reading notes (career-finance-business-index.md:72-104), and 23.08/23.09 both carry complete four-role Role Lenses. Downgraded because three domain-level Operator cells contradict the corresponding sub-domain matrices (see finding W3).",
+        "3": "✅ — 9 children with types, candidate disposition for all 16 swept candidates, MoSCoW referenced per child, 5 domain-wide invariants, 6 rejected pairs. 23.08 has 8 edge cases + 5 states; 23.09's Behavior/States are deliberately unspecified with a recorded decision (23.09-career-sustainability-signals.md:12,25,70 D-01) and MoSCoW placement Won't.",
+        "4": "N/A — constraints are meta/constraints.md's artefact.",
+        "5": "N/A — the root unit asserts no quantitative product threshold of its own.",
+        "6": "N/A — competitive positioning is meta/competitive-landscape.md's artefact.",
+        "7": "⚠️ — Q-01..Q-08 all carry an owner and a deferral target, and resolved rows are struck through with sources (career-finance-business-index.md:121-128). Downgraded for the owner-less, spent-target `[PENDING — /ideate-discover Step 5 deepening]` markers that recur in five sub-domain CX files (finding W10).",
+        "8": "✅ — every sub-domain directory has both `*-index.md` and `*-cx.md`; every feature file has a Role Lens; no folder has 1 child; the two flat features carry no sub-features. The Children table's uniform `[SURFACE]` cells are disclosed as a Step-3 snapshot by the note directly above them ('All nodes `[SURFACE]` — structure and Role Lens established, depth allocated by MoSCoW in Step 5', career-finance-business-index.md:26-28), so they are not a silent status contradiction."
+      }
+    },
+    {
+      "unit": "23.01-income-aggregation-financial-identity",
+      "applicableCheckpoints": 6,
+      "naDimensions": [4, 6],
+      "points": 1.0,
+      "ambiguityPct": 16.7,
+      "scores": {
+        "1": "✅ — 'The ledger that answers \"what did I actually earn?\" for a human whose money arrives from ten unrelated payers, on different schedules, in different currencies' (23.01-income-aggregation-financial-identity-index.md:10).",
+        "2": "✅ — Role Matrix per child plus per-feature Role Lens with explicit absences and reasons (e.g. 23.01.05:18 'No linkage. Their income attaches to a room and a date, not a work … Explicit absence: do not build a work-attribution surface into the Operator's ledger').",
+        "3": "⚠️ — 23.01.01 is exceptionally complete (16 edge cases including forged-event, tier self-promotion, out-of-order delivery, split payout, dual-role earning; 5 states; 6 Deep Think; 6 decisions). Downgraded for the unresolved CSV-format edge case (finding W7).",
+        "4": "N/A",
+        "5": "⚠️ — two normative thresholds are asserted without values and only one is tracked: the auto-merge confidence threshold is tracked (23.01.01:108 Q-04) but the orphan 'reconciliation window' is not (finding W6).",
+        "6": "N/A",
+        "7": "✅ — every Open Question row carries an owner and a target; re-pointed rows state why (`/ideate-validate` has run and closed) and name the canonical entry to collect with; resolved rows are struck through and cite their source.",
+        "8": "✅ — index + cx present, 5 feature files each with Role Lens, Behavior, Happy Path, Edge Cases, States, Deep Think, Decisions, Open Questions; no classification-gate violation."
+      }
+    },
+    {
+      "unit": "23.02-expenses-tax-readiness",
+      "applicableCheckpoints": 6,
+      "naDimensions": [4, 6],
+      "points": 1.5,
+      "ambiguityPct": 25.0,
+      "scores": {
+        "1": "✅ — 'The other half of the financial picture: what went out, what is deductible, and what the tax authority needs by January … but only for the sole-trader case' (23.02-expenses-tax-readiness-index.md:10).",
+        "2": "✅ — Role Matrix with reasoned Operator/Producer reductions (23.02-expenses-tax-readiness-index.md:34) mirrored consistently in each feature's Role Lens.",
+        "3": "❌ — the locked launch jurisdiction (US-only, D-32) is contradicted by the canonical walkthroughs of two of the four features: 23.02.02's Happy Path builds the whole flow, including the only category vocabulary given anywhere, on a UK declaration (finding B1), and 23.02.04's Happy Path runs a UK-home treaty corridor its own Q-02 says is superseded (finding W4).",
+        "4": "N/A",
+        "5": "✅ — quantified where it matters: '15.825%' German withholding (23.02-expenses-tax-readiness-cx.md:12), 'US 30% default on foreign performers absent a treaty claim' (23.02-expenses-tax-readiness-cx.md:58), 'commonly 5–7 years' retention (23.02.01:88).",
+        "6": "N/A",
+        "7": "⚠️ — Open Question rows are well-formed with owners and targets, and Q-01/Q-03 carry their D-32/D-28 narrowing. Downgraded for the owner-less spent-target PENDING on band-entity withholding entitlement (finding W8).",
+        "8": "✅ — index + cx + 4 features, all sections present, Role Lens in every feature."
+      }
+    },
+    {
+      "unit": "23.03-invoicing-receivables",
+      "applicableCheckpoints": 6,
+      "naDimensions": [4, 6],
+      "points": 0.0,
+      "ambiguityPct": 0.0,
+      "scores": {
+        "1": "✅ — 'Getting paid for the work that did not go through WeJammin's own checkout … Chasing is the part musicians will not do, because the person who owes them money is usually someone they want to work with again' (23.03-invoicing-receivables-index.md:10).",
+        "2": "✅ — all three professional personas at ✅ Full with the differentiation explicitly relocated to direction and volume in each Role Lens (23.03-invoicing-receivables-index.md:32); Fan absence reasoned ('a fan receives a receipt from a purchase … never an invoice', 23.03.02:19).",
+        "3": "✅ — quote/invoice/dunning each carry 8-9 edge cases and 5 states; the compliance mechanics are specific ('Numbering is assigned at issuance only', 'Draft preserved, no number consumed', 23.03.02:38,54); the ladder has concrete steps ('Day 3 … Day 14', 23.03.03:28,30).",
+        "4": "N/A",
+        "5": "✅ — aging buckets quantified ('current / 30 / 60 / 90+', 23.03.03:52); '30/60/90-day aging is derived from issuance date + terms' (23.03-invoicing-receivables-cx.md:11).",
+        "6": "N/A",
+        "7": "✅ — every open question has an owner and a target, and the three [OWNER] rows state why no downstream stage can take them. The one inline PENDING (23.03.01:41, acceptance identity assurance) is carried by the same file's Q-03 with owner and target.",
+        "8": "✅ — index + cx + 3 features, all sections present."
+      },
+      "deviceNote": "The VAT/GST and sequential-numbering content in 23.03.02 was examined against D-32's US-only launch and is NOT reported: the file specifies 'the tax identifiers the jurisdiction requires' (23.03.02:10) and derives them from the tax profile, which is jurisdiction-parameterized exactly as D-32 requires. No statement asserts VAT fields as v1 behaviour."
+    },
+    {
+      "unit": "23.04-deal-contract-vault",
+      "applicableCheckpoints": 6,
+      "naDimensions": [4, 6],
+      "points": 0.5,
+      "ambiguityPct": 8.3,
+      "scores": {
+        "1": "✅ — 'Musicians sign these young, store them nowhere, and discover their terms years later when a term matters — an option that lapsed, a reversion window that opened and closed unnoticed' (23.04-deal-contract-vault-index.md:10).",
+        "2": "✅ — Operator's reduced access reasoned at both levels ('their contracts are commercial-property-shaped, and music-deal term extraction does not describe them', 23.04-deal-contract-vault-index.md:34; 23.04.02:18).",
+        "3": "⚠️ — four features with strong edge-case coverage (23.04.01 has 12 including malformed/encrypted uploads and two-head version chains). Downgraded for the unmarked disagreement over whether an unconfirmed extraction may drive an alert (finding W1).",
+        "4": "N/A",
+        "5": "✅ — lead times are quantified rather than adjectival: 'roughly 6 months, 3 months, 1 month, on-open, and inside the window' (23.04.03:27), 'a reversion window that opens for 90 days' (23.04.03:10,34).",
+        "6": "N/A",
+        "7": "✅ — all rows have owners and targets; 23.04.03 Q-01 is resolved in-file with the residual re-pointed to `/write-fe-spec`; 23.04.04 Q-03 is re-pointed to `/decompose-architecture` with the trigger condition evidenced.",
+        "8": "✅ — index + cx + 4 features; all sections present; Role Lens everywhere."
+      }
+    },
+    {
+      "unit": "23.05-career-progression-benchmarking",
+      "applicableCheckpoints": 6,
+      "naDimensions": [4, 6],
+      "points": 2.0,
+      "ambiguityPct": 33.3,
+      "scores": {
+        "1": "✅ — 'Everything here lives or dies on one rule: nothing is manually maintained' (23.05-career-progression-benchmarking-index.md:10), with the falsifiable claim that a manually-maintained goal dies in a fortnight.",
+        "2": "✅ — the two unusual cells (Operator ❌ on goals, Fan 👁️ on the timeline) are each argued at length (23.05-career-progression-benchmarking-index.md:32) and mirrored in the feature Role Lenses.",
+        "3": "❌ — the milestone timeline's public projection is required by its Behavior, Happy Path, Fan Role Lens and the domain Role Matrix, and simultaneously foreclosed by the constraint its own resolved Q-01 binds it to (finding B2).",
+        "4": "N/A",
+        "5": "⚠️ — the feature's central privacy control is unquantified: 'Hard minimum cohort size, enforced' with no value, and the dimensionality question left open without an owner (finding W5).",
+        "6": "N/A",
+        "7": "⚠️ — Open Question rows are well-formed (owners, targets, struck-through resolutions with cited sources). Downgraded for the owner-less spent-target PENDING on band-level goals (finding W11).",
+        "8": "✅ — index + cx + 3 features; all sections present; Role Lens everywhere."
+      }
+    },
+    {
+      "unit": "23.06-advances-commission-recoupment",
+      "applicableCheckpoints": 6,
+      "naDimensions": [4, 6],
+      "points": 0.5,
+      "ambiguityPct": 8.3,
+      "scores": {
+        "1": "✅ — 'Money that gets taken off the top before the musician sees it, and money they already took that has to be earned back … The order in which they apply is not a detail' (23.06-advances-commission-recoupment-index.md:10).",
+        "2": "✅ — the strongest persona exclusion in the domain is reasoned rather than asserted: 'a venue has no manager taking a commission, no royalties to recoup against, and no catalogue to sell a stake in' (23.06-advances-commission-recoupment-index.md:36).",
+        "3": "✅ — the order-of-operations spine is specified with worked arithmetic on both branches ('£8,000 recoups → position clears → 20% of the remaining £2,000 = £400 → net £1,600 … Had the contract said commission-first, the answer would have been £0', 23.06.03:29-31), and unspecified sequence blocks rather than defaults (23.06.03:37,78). 23.06.05's unspecified Behavior/States are covered by an explicit decision (23.06.05:75 D-04) and a Won't placement.",
+        "4": "N/A",
+        "5": "✅ — costs are required in absolute terms rather than adjectives: 'Cost in money over the expected term, never only an APR or a percentage' (23.06.01:40,80).",
+        "6": "N/A",
+        "7": "⚠️ — rows are well-formed and cross-linked (23.06.01 Q-02 resolved against 23.06.04 D-03; 23.06.05 Q-01 resolved against the MoSCoW ledger). Downgraded for the owner-less spent-target PENDING on overlapping band/member commissions (finding W9).",
+        "8": "✅ — index + cx + 5 features; all sections present; Role Lens everywhere."
+      }
+    },
+    {
+      "unit": "23.07-budgeting-project-tour-pl",
+      "applicableCheckpoints": 6,
+      "naDimensions": [4, 6],
+      "points": 1.5,
+      "ambiguityPct": 25.0,
+      "scores": {
+        "1": "✅ — 'Did that tour make money? … This sub-domain scopes money to a thing (a tour, a record, a project) rather than to a year' (23.07-budgeting-project-tour-pl-index.md:10).",
+        "2": "✅ — Producer's 👁️ on band treasury is precisely reasoned ('adjacent to the money, not party to it', 23.07.03:19); Operator's 📊 on P&L distinguishes a show's P&L from a tour's (23.07-budgeting-project-tour-pl-index.md:32).",
+        "3": "❌ — the distribution rule's shape set is enumerated two incompatible ways inside one file, both normatively (finding B3). Loss allocation, member-claim ranking and provisional-vs-final closing are otherwise specified to an unusually high standard.",
+        "4": "N/A",
+        "5": "✅ — the waterfall is arithmetically worked ('£4,200 distributable … the drummer's £600 van claim settles first … remaining £3,600 divides … equal fifths, £720 each', 23.07.03:39-43) and 01.04.03's 'USD 1,000 platform default' threshold is cited rather than left vague (23.07.02:87).",
+        "6": "N/A",
+        "7": "⚠️ — rows carry owners, and re-pointed targets state their reasoning and the co-owned question they track. Downgraded because 23.07.03's Edge Cases still pose the no-rule case as an open parent question that both the parent and the file itself have since resolved (finding W2).",
+        "8": "✅ — index + cx + 3 features; all sections present; Role Lens everywhere."
+      }
+    }
+  ],
+  "totals": {
+    "points": 8.0,
+    "applicableCheckpoints": 47,
+    "ambiguityPct": 17.0,
+    "blocking": 3,
+    "warning": 11
+  },
+  "findings": [
+    {
+      "id": "B1",
+      "unit": "23.02-expenses-tax-readiness",
+      "severity": "blocking",
+      "dimension": 3,
+      "category": "silent-contradiction",
+      "claim": "23.02.02's Happy Path — the only place in the domain that enumerates a deduction category vocabulary — specifies a UK sole-trader jurisdiction, while the same file's resolved Q-01 and the parent index's resolved Q-01 lock v1 to US rules only, and the file's own D-02 requires an unsupported jurisdiction to be refused rather than served.",
+      "evidence": "23.02.02-deduction-categorization-jurisdiction-rules.md:27-28 — \"1. Musician declares UK sole-trader jurisdiction. | 2. Their capture surface offers a UK-shaped vocabulary: equipment, instruments, rehearsal, travel, subsistence, home-studio use, professional fees.\" Contradicted by 23.02.02:83 — \"~~Which jurisdictions at launch~~ is **RESOLVED — the United States only** … so v1 encodes US musician/sole-trader rules alone\" and by 23.02-expenses-tax-readiness-index.md:48 — \"**RESOLVED — the United States only.** … v1 encodes US sole-trader (Schedule C) rules and nothing else\". Also contradicted by the same file's D-02 (23.02.02:76) — \"Unsupported jurisdictions fail honestly rather than degrading to a generic list\" and its Edge Case (23.02.02:38) — \"Jurisdiction not supported | Must fail honestly … Explicit 'not supported; export raw data instead'\". Under the locked scope, the Happy Path describes a flow v1 must refuse.",
+      "forcedInvention": "The entire v1 category vocabulary. CX-01 (23.02-expenses-tax-readiness-cx.md:10,21) states that the jurisdiction rule set \"**defines** the category vocabulary available at capture; capture cannot offer a neutral category list\" and that \"capture **cannot ship jurisdiction-neutral**\" — so an implementer must invent the US Schedule C vocabulary, its apportionment rules and its capital threshold from scratch, because the only worked example given is out of scope. Two implementers would build different category enums, and one of them may build the UK list the Happy Path actually specifies.",
+      "twoImplementerTest": "FAILS. One implementer follows the Happy Path and ships the seven UK categories; another follows Q-01/D-02 and ships Schedule C categories while refusing UK declarations outright."
+    },
+    {
+      "id": "B2",
+      "unit": "23.05-career-progression-benchmarking",
+      "severity": "blocking",
+      "dimension": 3,
+      "category": "silent-contradiction",
+      "claim": "23.05.02 requires a public, Fan-readable, year-grouped milestone timeline as first-class behaviour, while the resolution of its own Q-01 (and of the parent's Q-03) binds any public projection to 01.06.02 D-06, which forbids rendering a timeline spine or per-year chronological density on any public surface. Both statements are normative and neither carries a marker.",
+      "evidence": "Required: 23.05.02-auto-milestone-timeline.md:23-24 — \"Each milestone has a private form (complete, factual) and a **public projection** (curated, artist-controlled). The two are one entity with a visibility rule\"; :30 — \"The Musician toggles it public; it joins their artist profile story (01/20)\"; :19 (Fan Role Lens) — \"An artist's public timeline is fan-facing content — the story of the act. They see the public projection\"; :52 (Populated state) — \"Chronological, grouped by year, with public/private markers\"; and career-finance-business-index.md:97-99 — Fan \"holds exactly one cell in the entire domain: `👁️ Read-only` on 23.05, and only on the *public projection* of the milestone timeline (23.05.02)\". Forbidden: 23.05.02:85 — \"**RESOLVED — it stays in 23** … and any public projection is bound by `01.06.02` D-06\", where 01.06.02-credit-backed-portfolio.md:215 D-06 reads \"never renders chronological density on a public surface — no activity graph, no per-year counts, **no timeline spine**. A range is a fact; a timeline invites gap-reading\" and 01.06.02:106 generalises it — \"**no chronological density on any public surface**\". Same rule restated as an absolute prohibition at 01.06.02:68 — \"Per-year credit density / activity timeline | ❌ **Never**\".",
+      "forcedInvention": "Whether the public artist timeline exists at all, and if it does, what form of it survives D-06 (a range? a set of undated markers? a curated subset with no chronology?). The domain's single Fan-facing surface, its visibility model, and the D-06 exception boundary all have to be invented.",
+      "twoImplementerTest": "FAILS. One implementer builds the year-grouped public timeline the feature and the domain Role Matrix describe; another refuses to render any public chronology and drops the Fan cell entirely, per the constraint the same file says binds it."
+    },
+    {
+      "id": "B3",
+      "unit": "23.07-budgeting-project-tour-pl",
+      "severity": "blocking",
+      "dimension": 3,
+      "category": "silent-contradiction",
+      "claim": "23.07.03 enumerates the band distribution rule's permitted shapes twice, with different members, both times as a closed set — its Behavior says Equal / Weighted / Per-role, while its own resolved Q-02 and the parent's resolved Q-03 say the shapes are fixed by 01.04.03 as equal / by income share / manual per event.",
+      "evidence": "23.07.03-band-treasury-member-distribution.md:29-32 — \"**Remainder divides by the distribution rule** — one of three shapes agreed by the band … - **Equal** — remainder ÷ N members. - **Weighted** — fixed percentages per member summing to 100%. - **Per-role** — shares keyed to role/contribution (e.g. touring members vs. writers), still summing to 100%.\" Contradicted by 23.07.03:102 — \"The rule's shapes are fixed by [01.04.03] Behavior: 'exactly three shapes: **equal** (split N ways), **by income share** (the percentages fixed in 01.04.01), or **manual per event**'\", and by the parent's resolution at 23.07-budgeting-project-tour-pl-index.md:48 — \"01.04.03 Treasury Mandate's Behavior fixes the resulting rule to 'exactly three shapes: **equal** (split N ways), **by income share** (the percentages fixed in 01.04.01), or **manual per event**'\". 'Per-role' and 'manual per event' are different objects: one is a standing rule keyed to role, the other is an ad-hoc per-distribution entry. Both enumerations are stated as exhaustive ('one of three shapes' / 'exactly three shapes').",
+      "forcedInvention": "The distribution-rule enum itself — the load-bearing input to the waterfall that pays real money to real people. An implementer must decide whether a standing per-role rule exists, whether manual-per-event is permitted, and which of the two documents governs.",
+      "twoImplementerTest": "FAILS. One implementer ships a role-weighted standing rule and no per-event override; another ships a per-event manual path and no role dimension. The two produce different payments from identical facts."
+    },
+    {
+      "id": "W1",
+      "unit": "23.04-deal-contract-vault",
+      "severity": "warning",
+      "dimension": 3,
+      "category": "internal-inconsistency",
+      "claim": "Adjacent sections of the same CX file disagree about whether an unconfirmed extracted term may drive an alert: CX-01 makes confirmation mandatory before an alert, CX-02 requires the alert to fire regardless.",
+      "evidence": "23.04-deal-contract-vault-cx.md:31 (CX-01 §2) — \"Upload → extract → user confirms each term. **Confirmation is mandatory, not optional**: an unconfirmed extraction must never silently drive an alert or a reconciliation finding.\" Versus 23.04-deal-contract-vault-cx.md:51 (CX-02 §5) — \"A date passing while the extraction is still unconfirmed — **the alert must fire anyway, flagged as unconfirmed**. Silence is the one unacceptable outcome.\" The feature that owns alerts settles it in favour of firing (23.04.03-option-reversion-obligation-alerts.md:86 D-02 — \"Unconfirmed dates alert anyway, flagged\"; :45,:61 same), and 23.04.02's Behavior constrains only reconciliation (\"Unconfirmed extractions are visibly provisional and must never silently drive a reconciliation finding\", 23.04.02:23) — so the CX-01 sentence is the outlier and its 'alert' clause is wrong.",
+      "forcedInvention": "Whether the alert scheduler has a confirmation gate. Kept at warning rather than blocking because CX-01's qualifier 'silently' admits a reconciling reading (a flagged alert is not silent) and because the owning feature's D-02 resolves the direction — but a spec writer working from the CX file alone would build the gate.",
+      "twoImplementerTest": "MARGINAL. A reader of the CX file builds a confirmation gate; a reader of 23.04.03 does not. The consequence — a missed reversion — is the catastrophic failure the sub-domain exists to prevent (23.04.03:44)."
+    },
+    {
+      "id": "W2",
+      "unit": "23.07-budgeting-project-tour-pl",
+      "severity": "warning",
+      "dimension": 7,
+      "category": "stale-marker",
+      "claim": "23.07.03's Edge Cases still pose the no-distribution-rule case as an open parent question and assert that nothing can be computed, while the same file's Q-02 and the parent's Q-03 are both resolved and state that an equal-shares legal default already governs the band and is disclosed to them.",
+      "evidence": "23.07.03-band-treasury-member-distribution.md:49 — \"**No distribution rule exists** | The overwhelming majority of bands. **Nothing can be computed** | Parent Q-03: does the platform ask them to agree one … or refuse to guess?\" But 23.07.03:102 — \"✅ **RESOLVED** — it discloses the default that already governs them rather than prompting a negotiation … the legal default being an equal-shares general partnership\", and 23.07-budgeting-project-tour-pl-index.md:48 — \"✅ **RESOLVED — neither: it discloses the default that already governs them, and it never guesses.\" The unresolved residue is substantive rather than cosmetic: disclosure of an equal-shares default is not the same as computing a distribution from it, and the Empty state ('a band with no agreed rule is the normal starting condition, not an error', 23.07.03:64) does not say which behaviour applies.",
+      "forcedInvention": "Whether the waterfall computes a provisional equal-shares distribution when no rule has been captured, or blocks at step 3. Given that this is the majority case for bands, the choice determines whether the feature functions for most of its users.",
+      "twoImplementerTest": "FAILS on the computability question. One implementer blocks distribution until a rule is captured; another computes equal shares from the disclosed legal default."
+    },
+    {
+      "id": "W3",
+      "unit": "23-career-finance-business (domain root)",
+      "severity": "warning",
+      "dimension": 2,
+      "category": "access-control-inconsistency",
+      "claim": "Three Operator cells in the domain Role Matrix are more restrictive than the per-child matrices they summarise, and no aggregation rule is stated — the same role gets two different access levels for the same feature depending on which document is read.",
+      "evidence": "career-finance-business-index.md:75 gives Operator `📊 Reports` for all of 23.02, but 23.02-expenses-tax-readiness-index.md:27 gives Operator `✅ Full` on 23.02.01 Expense & Receipt Capture (and 23.02.01:18 confirms it: \"Operator | Full | Rent, PRS/PPL-class licences, staff, backline repair, bar stock\"). career-finance-business-index.md:77 gives Operator `👁️ Read-only` for all of 23.04, but 23.04-deal-contract-vault-index.md:27 gives Operator `✅ Full` on 23.04.01 Contract Vault (and 23.04.01:18 confirms it). career-finance-business-index.md:80 gives Operator `📊 Reports` for all of 23.07, but 23.07-budgeting-project-tour-pl-index.md:26 gives Operator `✅ Full` on 23.07.01. The aggregation is also inconsistent in direction: the Fan cell for 23.05 takes the most permissive child value (`👁️` from 23.05.02, per career-finance-business-index.md:97-99) while the Operator cells take neither the maximum nor the minimum of their children.",
+      "forcedInvention": "Operator write access to expense capture, the contract vault and budget tracking. Mitigated but not resolved by the precedence hint at career-finance-business-index.md:104 (\"Per-role behavioural detail lives in each feature file's **Role Lens**\"), which governs behavioural detail rather than access levels — and the domain matrix's reading note argues substantively from its own cells (\"`📊 Reports` where their business is company-shaped\", :91-92), so it does not read as a lossy summary.",
+      "twoImplementerTest": "FAILS. A role-gating implementation built from the domain matrix denies an Operator the ability to capture an expense or upload a lease; one built from the sub-domain matrices grants both."
+    },
+    {
+      "id": "W4",
+      "unit": "23.02-expenses-tax-readiness",
+      "severity": "warning",
+      "dimension": 3,
+      "category": "stale-scope",
+      "claim": "23.02.04's Happy Path and the sub-domain CX file both work a UK-home-country treaty position, which the same file's Q-02 states has been superseded by the US-only launch decision.",
+      "evidence": "23.02.04-cross-border-withholding-reclaim.md:29 — \"3. Feature identifies a **UK–Germany** treaty position and a reclaim route with a statutory deadline.\" Contradicted by 23.02.04:86 — \"**D-32** fixes the home side — the US is the only launch market, so the corridors are US→X, **superseding this row's original UK→US / UK→EU framing**.\" The same stale home country appears in the CX file: 23.02-expenses-tax-readiness-cx.md:12 — \"A German festival withholding 15.825% produces a figure the **UK return** must claim relief for, not deduct as a cost\", and :58 — \"UK FEU\" listed among the regimes the affected persona meets.",
+      "forcedInvention": "Which corridor's forms, deadlines and evidence set v1 encodes. Lower severity than B1 because the feature's normative behaviour (record withholding on the income row, identify route + deadline + evidence, refuse to assert an undeterminable position) is corridor-independent and Q-02 explicitly tracks the corridor choice with an owner and a target.",
+      "twoImplementerTest": "MARGINAL. Both implementers build the same mechanism; only the seeded rule data differs, and Q-02 tracks that."
+    },
+    {
+      "id": "W5",
+      "unit": "23.05-career-progression-benchmarking",
+      "severity": "warning",
+      "dimension": 5,
+      "category": "unquantified-threshold",
+      "claim": "The feature's primary privacy control is asserted as a hard rule with no value, and the related dimensionality limit is left open with no owner and a spent deferral target — so the control that decides whether the feature is safe cannot be implemented as specified.",
+      "evidence": "23.05.03-peer-cohort-benchmarking.md:80 D-03 — \"**Hard minimum cohort size, enforced; show nothing below it**\" with no number anywhere in the file; :37 — \"Hard minimum cohort size, enforced. Show nothing rather than something. This is a privacy control, not a UX preference\"; :23 — \"Benchmarks are **aggregates with a minimum cohort size**, below which nothing is shown at all\". The dimensionality half is an untracked PENDING: :43 — \"Rates differ by genre, city, client type, union status | A single benchmark is meaningless across those splits | `[PENDING — /ideate-discover Step 5 deepening]` — **how many dimensions before the cohort is too small to show?**\" — no owner, and the named stage has completed (ideation-index.md records Step 5 complete and the MoSCoW ledger places all three 23.05 features). Neither of the file's three Open Questions covers the threshold value.",
+      "forcedInvention": "The k-anonymity value and the cohort dimension budget. The file itself supplies the failure it prevents — \"Four session drummers in one city is four named people; one of them can work out the others' rates\" (:37) — which makes the missing number a re-identification risk rather than a tuning parameter.",
+      "twoImplementerTest": "FAILS. k=3 and k=25 are both defensible readings of 'hard minimum' and produce materially different products — one of which leaks rates."
+    },
+    {
+      "id": "W6",
+      "unit": "23.01-income-aggregation-financial-identity",
+      "severity": "warning",
+      "dimension": 5,
+      "category": "unquantified-threshold",
+      "claim": "The out-of-order delivery rule depends on a 'reconciliation window' that is never given a value and is not covered by any open question, while the file's sibling threshold (auto-merge confidence) is explicitly tracked.",
+      "evidence": "23.01.01-income-event-ledger.md:46 — \"The reversing or projecting record is parked as pending, keyed to the missing original's idempotency key, and reconciled when the original lands; if the original never arrives **within the reconciliation window**, the orphan is surfaced for review rather than silently applied or dropped.\" Restated as a decision without a value at :99 D-06 — \"Out-of-order records are parked and reconciled, never applied or dropped\". By contrast the file does track its other threshold: :108 Q-04 — \"For the reconciliation confidence threshold (D-04), what is the auto-merge vs ask boundary … | Agent | `/write-be-spec`\" — so the omission is asymmetric rather than a deliberate deferral pattern.",
+      "forcedInvention": "How long an orphaned reversal or FX projection is held before it becomes a review item. The user-visible consequence is specified ('The affected total shows an \"N records pending reconciliation\" marker'), so the window determines when a financial total stops carrying a caveat.",
+      "twoImplementerTest": "FAILS on timing. 24 hours, 30 days and 'never expire' are all consistent with the text and produce visibly different ledgers."
+    },
+    {
+      "id": "W7",
+      "unit": "23.01-income-aggregation-financial-identity",
+      "severity": "warning",
+      "dimension": 3,
+      "category": "untracked-gap",
+      "claim": "The import feature's core ingestion path — how an arbitrary bank CSV is mapped — is left unresolved by an owner-less marker whose deferral stage has already completed, and no open question in the file or its parent covers it.",
+      "evidence": "23.01.02-off-platform-income-import.md:44 — \"CSV format unrecognized (every bank differs) | `[PENDING — /ideate-discover Step 5 deepening]` — **column-mapping UI vs per-bank parsers is unresolved** | Mapping step\". The marker carries no owner, and the named stage has closed (23.01.02's own Q-01/Q-02 rows state \"`/ideate-validate` has run and closed\", and the feature is a Should at `[PARTIAL]`, i.e. Step 5 Level-1 complete). The file's three Open Questions cover bank linking, evidence adjudication and financial-data-processor scope — none covers format handling. The States table presumes a resolution exists: \"Error | Parse failed / unmappable columns | Row-level errors — never reject a whole file for one bad row\" (:56).",
+      "forcedInvention": "The entire import ingestion model — a generic user-driven column mapper versus a maintained set of per-bank parsers. These are different products with different cold-start behaviour, different failure modes and different ongoing maintenance obligations, and the choice interacts with the (tracked) bank-linking question.",
+      "twoImplementerTest": "FAILS. The two options share no UI, no schema and no error taxonomy."
+    },
+    {
+      "id": "W8",
+      "unit": "23.02-expenses-tax-readiness",
+      "severity": "warning",
+      "dimension": 7,
+      "category": "malformed-tracking",
+      "claim": "The band-versus-member withholding entitlement is deferred by a marker with no owner to a stage that has already completed, and no open question in the file, the sub-domain or the domain covers it.",
+      "evidence": "23.02.04-cross-border-withholding-reclaim.md:42 — \"Band entity performed, individuals taxed | Withholding and reclaim entitlement may sit differently for the entity and the members | `[PENDING — /ideate-discover Step 5 deepening]` — genuinely complex and jurisdiction-dependent\". No owner; the stage is closed. The file's Q-01 (booking-time relief), Q-02 (which corridors) and Q-03 (WeJammin as withholding agent) do not touch it, and the domain-level entity questions (career-finance-business-index.md Q-06 jurisdiction grain, Q-07 retention) do not either.",
+      "forcedInvention": "Whose reclaim it is when a band is the payee of record — the entity's or each member's. The rest of the domain is emphatic that band and personal ledgers never mix (23.01.01:41, 23.01.04:45), so leaving the entitlement side unowned is a live gap rather than a downstream detail.",
+      "twoImplementerTest": "FAILS. One implementer attaches the reclaim candidate to the band ledger; another apportions it to members."
+    },
+    {
+      "id": "W9",
+      "unit": "23.06-advances-commission-recoupment",
+      "severity": "warning",
+      "dimension": 7,
+      "category": "malformed-tracking",
+      "claim": "Overlapping band-level and member-level commissions on the same income are deferred by an owner-less marker to a completed stage, with nothing else in the sub-domain covering the ordering.",
+      "evidence": "23.06.02-commission-representation-deductions.md:44 — \"Band has a manager; members have their own | Overlapping commissions on the same income at different levels | `[PENDING — /ideate-discover Step 5 deepening]`\". No owner; stage closed. 23.06.03's Q-02 covers priority \"between competing positions when no contract specifies it\" (23.06.03:87) but that row is about recoupment positions and stake diversions, and the sibling sequencing rule (23.06.03:23 — \"if it is unspecified, the row **blocks rather than nets**\") is written for a single earner's contract set, not for a band-level rule stacking on a member-level one.",
+      "forcedInvention": "Whether a band manager's commission applies before or after a member's own manager's commission, and against which base (band gross, the member's distribution, or both). The sub-domain's own spine decision (D-02: order of operations is material and 'getting it wrong is litigation') makes this exactly the class of gap it says must not be defaulted.",
+      "twoImplementerTest": "FAILS. Band-first and member-first stacking produce different net figures from identical income."
+    },
+    {
+      "id": "W10",
+      "unit": "23-career-finance-business (domain root — pattern spanning five sub-domain CX files)",
+      "severity": "warning",
+      "dimension": 7,
+      "category": "malformed-tracking",
+      "claim": "The notification-fan-out synthesis question is deferred in five sub-domain CX files by an identical marker that carries no owner and names a deferral stage that has already completed, so no stage owns the notification design for those cross-cuts.",
+      "evidence": "Five occurrences, all reading \"Deferred — `[PENDING — /ideate-discover Step 5 deepening]`\" with no owner: 23.01-income-aggregation-financial-identity-cx.md:67 (CX-03 §4, credit revoked while earnings display); 23.02-expenses-tax-readiness-cx.md:33 (CX-01 §4, delegate re-categorisation); 23.04-deal-contract-vault-cx.md:33 (CX-01 §4, extraction confirmation); 23.05-career-progression-benchmarking-cx.md:61 (CX-03 §4, cohort membership change); 23.06-advances-commission-recoupment-cx.md:69 (CX-03 §5, netting-to-runway state transition). The named stage is closed — ideation-index.md:65-67 records Step 5 complete for all Musts/Shoulds and Coulds/Won'ts as correctly out of scope, and :77 records all 24 domain CX files at `[DEEP]`. The other four synthesis questions in each of those cross-cuts are answered, so these are omissions inside otherwise-complete sections rather than a documented scope boundary.",
+      "forcedInvention": "Who gets notified, and whether at all, when a credit is revoked against displayed earnings, when a delegate re-categorises a row, when an extraction is confirmed, when cohort membership shifts under a user, and when a netting change moves a runway. Reported once as a pattern rather than five times because the defect and the fix are identical in each file.",
+      "twoImplementerTest": "PARTIAL. Each individual gap is small; the pattern leaves five cross-cut notification behaviours unowned after the stage that was supposed to own them has closed."
+    },
+    {
+      "id": "W11",
+      "unit": "23.05-career-progression-benchmarking",
+      "severity": "warning",
+      "dimension": 7,
+      "category": "malformed-tracking",
+      "claim": "Band-level goals are deferred by an owner-less marker to a completed stage, leaving the object model for goals — whose goals, over whose activity — unspecified in a sub-domain whose entire design rests on goals being queries over activity.",
+      "evidence": "23.05.01-career-goals-roadmap-templates.md:42 — \"Band-level goals | The band's goals vs the member's are different objects (01) | `[PENDING — /ideate-discover Step 5 deepening]`\". No owner; the stage is closed. The file's three Open Questions cover declared-vs-verified counting (resolved), MoSCoW survival (resolved) and notification tone — none covers the entity dimension. The rest of the domain treats band-versus-person as load-bearing and specifies it explicitly elsewhere (23.01.01:41, 23.07.03 passim), so silence here is inconsistent rather than deliberate.",
+      "forcedInvention": "Whether a Band entity can hold goals, and if so whether a member's goal may derive over band activity — which decides what the goal derivation query joins on.",
+      "twoImplementerTest": "FAILS. One implementer scopes goals to a person only; another adds an entity dimension to every goal derivation."
+    }
+  ],
+  "refutedCandidates": [
+    {
+      "candidate": "Domain index Children table shows every child `[SURFACE]` while children self-report `[BREADTH]` and contain `[DEEP]`/`[PARTIAL]` features.",
+      "whyDropped": "Disclosed rather than silent. The note immediately above the table states the snapshot's basis: \"Classified through the Node Classification Gate during `/ideate-discover` Step 3. All nodes `[SURFACE]` — structure and Role Lens established, **depth allocated by MoSCoW in Step 5**\" (career-finance-business-index.md:26-27). A reader is told these cells record Step-3 classification, not current drill depth."
+    },
+    {
+      "candidate": "23.03.02 specifies VAT/GST fields, reverse-charge handling and mandatory sequential numbering, which do not apply under the US-only launch (D-32).",
+      "whyDropped": "No statement asserts VAT as v1 behaviour. The file specifies \"the tax identifiers **the jurisdiction requires**\" (23.03.02:10) and derives them from the user's tax profile (:23), which is exactly the jurisdiction-parameterized model D-32 mandates. Immutability and numbering are platform choices justified independently (23.03.02:79-80 D-01/D-02, DT-03's retroactive-migration argument)."
+    },
+    {
+      "candidate": "GDPR/Art. 9/HMRC references across the domain are stale against the US-only launch decision.",
+      "whyDropped": "D-32 locks the launch market while keeping the data model jurisdiction-parameterized for additive expansion; naming other regimes as facts or risks is not a claim about v1 scope. Where a file does assert a non-US flow as its canonical v1 path, it is reported (B1, W4)."
+    },
+    {
+      "candidate": "23.09's `Behavior` and `States` are `[PENDING — /ideate-discover Step 5 deepening]` after Step 5 completed.",
+      "whyDropped": "Covered by an explicit decision and a MoSCoW placement: \"**Proposed `wont`.** Recorded rather than dropped so the owner cuts it knowingly\" (23.09:12), D-01 (:70), and the ledger carries 23.09 in its WONT section. Won't features are \"retained for traceability, not built\" (ideation-index.md:173), so unspecified behaviour is the correct state."
+    },
+    {
+      "candidate": "23.06.05's `Behavior` and `States` are unspecified.",
+      "whyDropped": "Explicitly decided, not omitted: D-04 — \"Behavior and States deliberately unspecified at breadth | The regulatory model determines the product model; specifying now would fabricate detail ahead of the decision\" (23.06.05:75), with Q-01 resolved to Won't against the MoSCoW ledger."
+    },
+    {
+      "candidate": "23.02.02's two-tax-residencies edge case is an untracked PENDING.",
+      "whyDropped": "The marker names its own tracking: \"collides with 23.01.03 Q-03; the shared root is that 'jurisdiction' is not a scalar\" (23.02.02:37), and the same file's Q-03 carries it with an owner and a target (:85), as does domain Q-06 (career-finance-business-index.md:126)."
+    },
+    {
+      "candidate": "23.07.02's departing-member share is an untracked PENDING (23.07.02:44).",
+      "whyDropped": "Carried by the sibling that owns distribution: 23.07.03 Q-03 — \"A departing member: their share, their claims, their ongoing entitlement to income from work done while they were in\" | User | `/create-prd-architecture` (23.07.03:103)."
+    },
+    {
+      "candidate": "23.06.04's personal-outgoings PENDING and 23.03.01's acceptance-identity PENDING are untracked.",
+      "whyDropped": "Each is carried by an Open Question in the same file with an owner and a target: 23.06.04 Q-01 (:87) and 23.03.01 Q-03 (:88)."
+    },
+    {
+      "candidate": "23.09 Q-02 (\"Does the owner agree this is `wont`?\") is deferred to MoSCoW, which has already run.",
+      "whyDropped": "Following the reference answers it: the MoSCoW ledger carries 23.09 in its WONT section with the three-reason rationale. Stale strike-through formatting only; no behavioural ambiguity."
+    },
+    {
+      "candidate": "D-02's arithmetic (\"16 candidates → 7 sub-domains + 2 features + 1 cross-cut, via 5 merges\") does not reconcile with the 6 candidates absorbed in the disposition table.",
+      "whyDropped": "'Merges' plausibly counts merge operations rather than absorbed candidates, and nothing downstream depends on the count. Bookkeeping, not ambiguity."
+    },
+    {
+      "candidate": "career-finance-business-cx.md:22 cites \"CX-02's reporting projection\" where the domain's CX-02 is Invoicing↔Income, not an FX projection.",
+      "whyDropped": "Resolvable: the domain CX file elsewhere cites 23.01's local CX-02 in the same shorthand (\"23.01's own CX-02\", :43), and 23.01's CX-02 *is* the FX reporting projection. Ambiguous citation, no behavioural consequence."
+    }
+  ],
+  "notableStrengths": [
+    "23.01.01 is the strongest unit in the domain: forged-event rejection, tier immutability from every user-facing path, propose-don't-auto-merge reconciliation, parked out-of-order records, and an explicit refusal to render a partial financial total are all specified with the failure each prevents.",
+    "The domain-wide invariants (INV-01..05, career-finance-business-cx.md:171-177) are derived from three or more independent occurrences each and are cited by the features that depend on them, which removes a large class of cross-feature ambiguity that would otherwise have to be rediscovered per feature.",
+    "Refusal-to-compute is specified as a first-class behaviour with named blockers rather than as a warning banner (23.02.03:33,49,66; 23.06.03:37; 23.01.04:61), and the blocking chain is traced upstream to its causes.",
+    "Re-pointed open questions state why the previously named stage cannot take them and which canonical row to collect them with, which is materially better tracking hygiene than a bare deferral target."
+  ]
+}

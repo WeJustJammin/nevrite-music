@@ -1,0 +1,65 @@
+{
+  "domain": "meta",
+  "tree_root": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation",
+  "raw_findings": 7,
+  "upheld": 2,
+  "refuted": 5,
+  "verdicts": [
+    {
+      "unit": "meta",
+      "claim": "personas.md:81 (Producer will not use a capture flow requiring them to leave the session for a web form) silently contradicts constraints.md:293 (v1 capture prompt delivered by PWA web push + in-app), with D-70's restatement missing personas.md.",
+      "upheld": false,
+      "severity": "blocking",
+      "reason": "Quotes verify verbatim (personas.md:81; constraints.md:292-293; problem-statement.md:47), but the reconciliation is explicit in the files that own the flow — the auditor even quotes the reconciling table and reads it backwards. 07-music-projects-collaboration/07.09-daw-bridge-capture-at-source/07.09.03-in-session-capture-surface.md:38 rejects only the **browser tab** on the persona ground (\"Zero at the moment that matters ... It is the flow meta/personas.md says will not be used\"), and :41 ratifies the alternative in the same table: \"Phone push (PWA web push) | Good — the producer is packing up, phone in hand | ... **the ratified v1 surface (D-08)**\", with :42 in-app \"Ships **with** push (D-08), never instead of it\". Same file :28 states the Producer \"Sees the prompt where they are — **In v1 that is the phone in their hand, by PWA web push (D-08)**\". 07.06.02-session-close-capture-prompt.md:38-44 records the identical v1 correction (D-17/D-18: \"delivered by PWA web push + in-app\"). 07.06.01-session-record-attendance.md:204 (DT-02) honours the persona rule rather than colliding with it — the resolution is inference: \"sessions are inferred from bookings (16), service orders (05), DAW activity (07.09) ... Manual creation exists as a fallback, never as the path\". problem-statement.md:44-49 grades the whole question openly (rung 1 = v1, rung 2 \"Not v1, and not authorised\"). A push notification card at session close is not \"leaving the session to go fill in a web form\", and no file in the tree reads it as one; both implementers land on PWA push + in-app.",
+      "severityChange": "blocking -> refuted"
+    },
+    {
+      "unit": "meta",
+      "claim": "competitive-landscape.md's Moat asserts earned lock-in and exportable data as settled while problem-statement.md holds the same question open (Q-02 / DT-04) and the cross-cut file lists the export surface as unowned.",
+      "upheld": false,
+      "severity": "warning",
+      "reason": "Quotes verify (competitive-landscape.md:82-85; problem-statement.md:105 DT-04, :112 Q-02; cross-cut-emergent-capabilities.md:167), but this is the documented deferral mechanism, not a silent contradiction: problem-statement.md:105 names the tension itself — \"⏳ DEFERRED — must confirm lock-in is *earned* ... not *hostile* ... See Q-02\" — and :112 carries `[OWNER]`, owner \"User\", target \"`/create-prd`\". The Moat text is positioning prose about the moat's nature (\"data they could export\"), not a scope commitment: it names no export surface, no format, no release. cross-cut-emergent-capabilities.md:167 flagging the export surface as unnamed is consistent with new work routed downstream (file's own downstream contract, :6-9), not with a decided v1 requirement. Nothing in v1 scope (constraints.md:203-209) contains an export feature for a planner to be misled into, and no implementer scopes a v1 surface off a Moat paragraph while the same unit tracks the decision as owner-open.",
+      "severityChange": "warning -> refuted"
+    },
+    {
+      "unit": "meta",
+      "claim": "problem-statement.md Q-01 (why-now) and Q-02 (lock-in) name no canonical entry and have no counterpart in vision.md's declared-authoritative open-question register, so they are invisible to /create-prd.",
+      "upheld": false,
+      "severity": "warning",
+      "reason": "The factual observation verifies (problem-statement.md:111-112 carry no canonical pointer; vision.md:219-228 table holds Q-00..Q-09 with no why-now and no lock-in/portability entry; vision.md:213-215 declares the namespace), but the tracking on both rows is well-formed on its own terms — `[OWNER]` marker, owner \"User\", target stage \"`/create-prd`\" — which is the documented mechanism for a not-yet-due decision, and index:158 dimension 7 scores exactly that property (\"Every open question has owner + target stage\"). vision.md:214-215 itself legitimises file-local numbering (\"per-file `Q-NN` markers ... are file-local and roll up\"), and absence of an explicit canonical pointer is the tree-wide norm rather than a defect specific to these two: competitive-landscape.md:102 (Q-01 which competitor to beat) and :104 (Q-03 partners vs rivals) carry none, and personas.md:169 (Q-03) and :170 (Q-04) carry none. A missing cross-reference in a rollup register is bookkeeping, not an invention the text forces: neither question makes a downstream implementer choose product behaviour, and both are readable in the meta file /create-prd is required to read.",
+      "severityChange": "warning -> refuted"
+    },
+    {
+      "unit": "meta",
+      "claim": "cross-cut-emergent-capabilities.md § 2 introduces 83 named features with no MoSCoW and no phase, absent from feature-ledger.md and moscow-ledger.md, while the index scores MoSCoW complete at 734 features.",
+      "upheld": false,
+      "severity": "warning",
+      "reason": "The facts verify: § 2 holds exactly 83 rows (lines 137-219, counted in code), the 3-column table at :135 has no priority/phase column, and grep confirms 'Rights-Orphan', 'Save-the-venue', 'Doubling model', 'contingent receivable' appear only in this file — 0 hits in specs/feature-ledger.md, specs/ideation/moscow-ledger.md and every other ideation file. But the set is explicitly routed, not silently orphaned: ideation-index.md:213 (D-27) — \"**Emergent capabilities persisted** to meta/cross-cut-emergent-capabilities.md: 52 new cross-cut mechanisms and 76 new features surfaced during synthesis that neither the sweep nor the breadth pass named ... **Routed to `/create-prd` and `/write-be-spec`**\" — names features as well as mechanisms, and the file's own header :6-9 declares the downstream contract (\"`/create-prd` ... `/decompose-architecture` ... inherit this file\"). § 2's heading and lead (:129-131) label the rows as candidates \"Deduped from 90 candidates\", each with an owning domain, i.e. gaps found in existing domains, not scoped features. /plan-phase sequences from specs and the ledger, so an unledgered candidate cannot be silently pulled in; classifying it is the routed stage's job. Tracked deferral with a named target stage.",
+      "severityChange": "warning -> refuted"
+    },
+    {
+      "unit": "meta",
+      "claim": "The index and D-27 state 52 cross-cut mechanisms and 76 features; the file holds 54 and 83, with no reconciliation on either side.",
+      "upheld": true,
+      "severity": "warning",
+      "reason": "CONFIRMED by count in code. § 1 mechanism rows: 1a=7 (:34-40), 1b=3, 1c=8, 1d=9, 1e=7, 1f=4, 1g=8, 1h=8 → 54. § 2 rows :137-219 → 83 (both counts computed by parsing the table rows, header/separator rows excluded). ideation-index.md:78 states \"Emergent cross-cuts / features (Step 6) | 52 / 76\" and ideation-index.md:213 (D-27) states \"**52 new cross-cut mechanisms** and **76 new features**\"; the file's own header :4-5 gives a third pair of numbers for the *source pool* (\"83 candidate emergent cross-cuts, 90 candidate emergent features\"). No marker anywhere reconciles 52/76 with the 54/83 on disk. Consequence is narrower than claimed — the file, not the count, is what the downstream contract at :6-9 hands over, so rows cannot go missing by reading the file — but two unmarked, contradictory inventories of the same artifact in the pipeline key file is a real index-vs-disk defect. Stays warning: no product behaviour must be invented.",
+      "severityChange": "none"
+    },
+    {
+      "unit": "meta",
+      "claim": "competitive-landscape.md and constraints.md self-declare [DEEP] while ideation-index.md's Key Files table declares both [PARTIAL], with nothing saying which is authoritative.",
+      "upheld": true,
+      "severity": "warning",
+      "reason": "CONFIRMED verbatim. competitive-landscape.md:3 — \"> Status: `[DEEP]` — completed `/ideate-validate` 2026-07-18.\"; constraints.md:3-4 — \"> Status: `[DEEP]` — all constraint categories resolved during `/ideate-validate` 2026-07-18. / Budget, Timeline, Team, V1 Scope, Compliance, Performance, and Surfaces all confirmed with owner.\"; ideation-index.md:94-95 mark both `[PARTIAL]` while :91-93 and :96 mark the other four meta files `[DEEP]`, matching their headers. The index also contradicts itself: :155 (dimension 4, Constraint Explicitness) and :157 (dimension 6, Competitive Positioning) both score ✅ citing these two files as complete inputs. No note on either side records the divergence or a precedence rule, and ideation-index.md:3 asserts the index is the pipeline key file every downstream workflow reads — so a status gate gets opposite verdicts depending on which register it reads. Warning, not blocking: every live open item in both files is separately tracked with an owner and a target stage (competitive-landscape.md:102-105; constraints.md:311-313 iOS-push VERIFY, § Desktop Reopen Evidence), so no settled constraint is actually at risk of reopening and no product behaviour is forced.",
+      "severityChange": "none"
+    },
+    {
+      "unit": "meta",
+      "claim": "constraints.md:293 assigns web push for gig alerts to v1 while the same file phases every domain that could own a gig alert to Phase 2+ and states v1/v1.5 are professional-facing.",
+      "upheld": false,
+      "severity": "warning",
+      "reason": "Quotes verify (constraints.md:293, :226-228, :269, v1 domains :203-209), but the tree has already resolved this exact reading and both readings converge. 04-opportunities-casting/04.02-discovery-matching-alerts/04.02.04-alert-subscriptions-delivery.md:255 (Q-03, RESOLVED) cites this very row as evidence that a device-level *channel* is in v1 and then states the scope rule explicitly: \"Domain 04 is itself Phase 2+ (D-31), so both channels exist by the time this pipe ships\" — capability in v1, alert features when their domain ships. 20-fanbase-direct-to-fan/20.03-broadcast-fan-messaging/20.03.02-channel-routing-bulk-delivery.md:42 and :85 (DT-02) likewise treat fan gig alerts as phase-2 work whose channel was the open question, pointing at 20.06.02 Gig Alerts as the owner. The Surfaces row is a capability declaration inherited from D-28 (ideation-index.md:216), not a scope table; scope is governed by the Release Plan (:203-209 v1 = 01/02/05/07/09; :226-228 places 20, 16-19 and 04 at Phase 2+), which no reader can miss in the same file. No planner pulls Fanbase follow relationships and an alert-eligibility model into v1 off a parenthetical while the release plan 60 lines above excludes domain 20.",
+      "severityChange": "warning -> refuted"
+    }
+  ]
+}

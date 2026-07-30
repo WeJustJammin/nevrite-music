@@ -1,0 +1,178 @@
+{
+  "domain": "meta",
+  "root": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation",
+  "unitsAudited": 1,
+  "filesRead": 6,
+  "filesEnumerated": [
+    "meta/problem-statement.md (127 lines)",
+    "meta/personas.md (181 lines)",
+    "meta/counterparties.md (156 lines)",
+    "meta/competitive-landscape.md (114 lines)",
+    "meta/constraints.md (391 lines)",
+    "meta/cross-cut-emergent-capabilities.md (290 lines)"
+  ],
+  "crossReferencesFollowed": [
+    ".memory/wiki/specs/vision.md (canonical open-question register + Success Metrics)",
+    ".memory/wiki/specs/ideation/ideation-index.md (Key Files status table, counts, D-27/D-70/D-71)",
+    ".memory/wiki/specs/ideation/moscow-ledger.md (195 Musts)",
+    ".memory/wiki/specs/feature-ledger.md (734 features)",
+    ".memory/wiki/specs/ideation/07-music-projects-collaboration/** (07.06.02, 07.09.01, 07.09.03, 07.04.01, 07.01.01 — Producer-constraint consumers)"
+  ],
+  "units": [
+    {
+      "unit": "meta",
+      "applicableCheckpoints": 8,
+      "naDimensions": [],
+      "points": 4.0,
+      "ambiguityPercent": 50.0,
+      "dimensionScores": {
+        "1_problem_clarity": {
+          "score": "PASS",
+          "points": 0,
+          "evidence": "problem-statement.md:8-9 — single falsifiable sentence: \"**A music career is assembled from a dozen disconnected tools that share no identity, no history, and no record of who did what — so the work gets done, but the proof of it evaporates.**\" Specific user named at :11 (\"A working musician today runs their career across Reverb (gear), SoundBetter (services), Bandsintown (gigs)...\"); root cause stated at :85 (\"No system is present at the moment of creation, so the record is always a reconstruction\") and honestly bounded for v1 by the two-rung table at :44-51. Two implementers would agree on the problem being solved."
+        },
+        "2_persona_specificity": {
+          "score": "FAIL",
+          "points": 1,
+          "evidence": "All 6 required fields present for all 4 personas (personas.md:47-54, 74-81, 99-106, 127-134) plus Workflow and Anti-Persona Behavior, and the licence-buyer gap is closed at equal field depth by counterparties.md:45-52, 73-80. Field completeness is exemplary. Scored FAIL on the blocking contradiction in the Producer's Unique Constraint field (finding meta-01): personas.md:81 states as an absolute rule \"Any capture flow requiring them to leave the session and go fill in a web form will not be used\", which is unreconciled with the D-70 v1 decision that the sole v1 capture surface IS a web/PWA form (constraints.md:292-293). personas.md carries no D-70 marker anywhere (verified by grep)."
+        },
+        "3_feature_completeness": {
+          "score": "PARTIAL",
+          "points": 0.5,
+          "evidence": "The Must inventory itself is owned elsewhere (moscow-ledger.md: 195 Musts) and the unit's own inventory work is deep — cross-cut-emergent-capabilities.md carries 54 shared mechanisms (§1a-1h) and 83 emergent features (§2) with per-entry rationale and serving-domain lists. PARTIAL because none of the 83 features in §2 carries a MoSCoW category or phase, and none appears in feature-ledger.md, moscow-ledger.md, or any domain file (finding meta-04)."
+        },
+        "4_constraint_explicitness": {
+          "score": "PARTIAL",
+          "points": 0.5,
+          "evidence": "Every axis has a value: Budget \"Lean — minimize monthly spend\" with explicit \"Not a hard ceiling number\" (constraints.md:160-168); Timeline \"3–6 months to a first shippable v1\" (:174); Team \"Solo — the owner plus AI agents\" (:183); Compliance a 10-row phased US table (:259-269); Performance scale \"thousands, not millions\" (:275); Surfaces table (:289-296) plus a prohibition-with-named-exit for Desktop (:292, :321-343). No axis uses \"standard\" or \"TBD\". PARTIAL on (a) latency/availability carrying no in-unit value (\"real numbers set at `/create-prd-compile`\", :278-283 — a tracked downstream deferral, not reported as a finding), and (b) the internal phase inconsistency in finding meta-07 (v1 PWA row assigns web push for gig alerts while the same file phases every gig-alert-owning domain to Phase 2+)."
+        },
+        "5_success_measurability": {
+          "score": "PARTIAL",
+          "points": 0.5,
+          "evidence": "Directional only inside the unit. personas.md:52 \"Measurable: time-to-book a session drops; credits are cited rather than claimed\"; :79 \"Measurable: split agreed before the session file closes, not after money appears\"; :104 \"Measurable: fewer no-shows; advancing takes minutes\"; :132 \"Measurable: alert → attendance conversion\"; counterparties.md:50 \"Measurable: time from brief to executed licence\". No metric in the unit has a number, unit, or timeframe despite the \"Measurable:\" label. Not raised as a finding: the layer's numeric targets do exist one level up at specs/vision.md § Success Metrics (\"Target: >= 60% within 6 months of v1 launch\", \"Target: < 7 days median\", \"Target: >= 50% verified ... by month 6\"), so nothing downstream is forced to invent a metric — the defect is that meta labels directional statements as measurable and never points at that table."
+        },
+        "6_competitive_positioning": {
+          "score": "PARTIAL",
+          "points": 0.5,
+          "evidence": "17 named competitors with per-row angles (competitive-landscape.md:28-46), differentiation stated as a specific capability gap (:48-59, \"they ask people to remember\"), moat stated as a mechanism (:82-89), and an explicit partner-vs-rival split (:91-96). PARTIAL because the moat asserts as settled the exact question problem-statement.md holds open (finding meta-02), and because Q-04 concedes the post-D-70 wording has not been re-tested for differentiation (:105, tracked to vision.md Q-08 — tracked, so not itself a finding)."
+        },
+        "7_open_question_resolution": {
+          "score": "PARTIAL",
+          "points": 0.5,
+          "evidence": "Tracking discipline is strong: every open-question table carries # / Question / Owner / Deferred To (problem-statement.md:109-113, personas.md:165-171, competitive-landscape.md:100-105), stack gaps use `[PENDING — /create-prd]` markers (constraints.md:23-29), and infra items carry owner plus an explicit deadline (\"**Deadline: before CI/CD is wired, since runner groups depend on it.**\", :142). The self-declared untracked item at :342-343 (\"nobody is currently tasked with gathering (a)–(d)\") IS tracked — verified at specs/vision.md Q-07, owner User, target `/create-prd-stack` — so it is not a finding. PARTIAL on finding meta-03: problem-statement.md Q-01 and Q-02 name no canonical entry and have no counterpart in the vision.md register that downstream stages resolve against, unlike every other meta question."
+        },
+        "8_structural_compliance": {
+          "score": "PARTIAL",
+          "points": 0.5,
+          "evidence": "meta/ is not a domain folder, so the *-index.md / *-cx.md / Role Matrix requirements do not apply to it. Disk matches the Structure Map: 6 files present, ideation-index.md:62 states \"6 meta ... Meta went 5 → 6 on 2026-07-22 with meta/counterparties.md (D-71)\", and all 6 are listed in the Key Files table (:91-96). PARTIAL on two unmarked index-vs-file mismatches: the emergent counts (finding meta-05) and the [DEEP]/[PARTIAL] status cells (finding meta-06)."
+        }
+      }
+    }
+  ],
+  "findings": [
+    {
+      "id": "meta-01",
+      "unit": "meta",
+      "severity": "blocking",
+      "dimension": 2,
+      "category": "silent-contradiction",
+      "claim": "personas.md states as an absolute rule that the Producer will not use any capture flow requiring them to leave the session for a web form, while constraints.md locks the sole v1 capture surface to exactly that flow (PWA web push + in-app) and prohibits every alternative — neither statement carries a marker, and D-70's restatement swept the other two meta files but not personas.md.",
+      "evidence": "personas.md:81 — \"| **Unique Constraint** | Their work happens inside a DAW, not a browser. Any capture flow requiring them to leave the session and go fill in a web form will not be used. Also: they are a **trust broker** ... |\" — and personas.md:69-71 makes this persona load-bearing for the wedge: \"> **The capture point.** Without this persona the provenance wedge has no mechanism — they are the one who is in the room when the facts become true.\" ||| constraints.md:292 — \"| Desktop | — | — | **NOT AUTHORISED** (owner decision 2026-07-22, D-70). No WeJammin-installed client software runs on a user's own machine — no watch-folder agent, no DAW plugin, no other locally-installed binary. This is a rule, not an absence ... |\" ||| constraints.md:293 — \"| Mobile (PWA) | ... | **v1**: web is installable as a PWA (home-screen, web push for gig alerts **and — assigned 2026-07-22, D-70 — the 07.06.02 session-close capture prompt**: the Tier 1 contributor card and the Tier 2 Producer card are delivered in v1 by PWA web push plus the in-app surface). |\" ||| problem-statement.md:47 — \"| **2 — at source, inside the DAW** | The DAW bridge (`07.09`) — watch folder, session parse, in-session prompt | **Not v1, and not authorised.** No non-web client surface exists (constraints.md § Project Surfaces). |\" ||| The tree reads the persona rule the strong way: 07.09.03-in-session-capture-surface.md:38 — \"| **Browser tab** | Zero at the moment that matters | Free | It is the flow `meta/personas.md` says will not be used |\"; 07.06.01-session-record-attendance.md:204 — \"The Producer's constraint (`meta/personas.md`) applies with full force: they will not leave the DAW to create a calendar entry\"; 07.04.01:175 — \"this feature is **structurally dependent on `07.09` (DAW Bridge)**\". ||| personas.md contains no occurrence of \"D-70\", \"PWA\", \"push\", \"first sharing\" (verified by grep), while ideation-index.md:255 records that D-70(d) restated the thesis in \"`vision.md`, `meta/problem-statement.md` and `meta/competitive-landscape.md`\" — personas.md is absent from that list. Supporting staleness in the same field group: personas.md:79 \"Measurable: split agreed before the session file closes, not after money appears\", whereas constraints.md:319 states \"The close **signal** is likewise limited in v1 — producer tap, booked end and the 72 h backstop apply; DAW close is unavailable as a trigger\", i.e. in v1 the prompt fires at or after close, never before it.",
+      "failureScenario": "An implementer specifying the v1 session-close capture prompt reads meta/ and gets two incompatible instructions for the same flow. Implementer A follows constraints.md:293 and builds the PWA-push + in-app capture card as the v1 capture surface. Implementer B follows personas.md:81 (as 07.09.03:38 and 07.06.01:204 already do) and concludes a browser form is the one flow the capture persona will not use, so the v1 mechanism must either be redesigned or escalated as unviable before build. The wedge's only v1 capture path is what is in dispute, so the divergence is not cosmetic: it decides whether the v1 provenance mechanism ships at all, and nothing in meta/ says which statement is superseded.",
+      "forcedInvention": "Whether the Producer's 'no web form' constraint is superseded by D-70 (and therefore whether the PWA/in-app capture card is an authorised v1 surface for the capture persona), or still binding (and therefore whether v1's capture mechanism must be redesigned). The implementer must invent the reconciliation, because neither file marks the other."
+    },
+    {
+      "unit": "meta",
+      "id": "meta-02",
+      "severity": "warning",
+      "dimension": 6,
+      "category": "silent-contradiction",
+      "claim": "competitive-landscape.md's Moat section asserts as settled fact that lock-in is earned rather than hostile and that a departing user can export their data, while problem-statement.md carries the same question as an open owner decision and the cross-cut file lists the export surface as an unowned new feature.",
+      "evidence": "competitive-landscape.md:82 — \"**Earned lock-in, not hostile lock-in.**\" and :84-85 — \"A user who leaves doesn't lose access to *data they could export*; they lose the *provenance* that only exists because the platform was in the workflow when the work happened.\" ||| problem-statement.md:112 — \"| Q-02 | [OWNER] Is the lock-in **earned** or **hostile**? If a user leaves, what do they take? (Data portability is a cross-cut — and a values decision.) | User | `/create-prd` |\" ||| problem-statement.md:105 — \"| DT-04 | \\\"Cannot live without\\\" comes from accumulated switching cost | Sweep whitespace lens | ⏳ DEFERRED — must confirm lock-in is *earned* (value they'd miss) not *hostile* (data they can't extract). See Q-02 |\" ||| cross-cut-emergent-capabilities.md:167 — \"| Signed split-sheet export (\\\"the wedge exit\\\") | 09 | A human-readable signed export so the captured sheet is an asset, not a hostage. Machine interchange (CWR/RIN) is 10; the export surface is unnamed. → cross-cut §1g (doc-gen). |\" — i.e. the export capability the moat claim relies on is recorded as new and unowned, not as existing product.",
+      "failureScenario": "A reader deciding whether v1 must ship data export/portability gets opposite answers from two files in the same unit: competitive-landscape.md states export already exists as a property of the moat, problem-statement.md Q-02 says the earned-vs-hostile question (and data portability with it) is an unresolved values decision for /create-prd, and the cross-cut file says the export surface is unnamed. One implementer scopes a v1 export surface as an assumed given; another defers it to a decision that, per finding meta-03, has no canonical downstream entry and so may never be taken.",
+      "forcedInvention": "Whether data portability/export is a decided v1 requirement (as the Moat asserts) or an open owner decision (as Q-02/DT-04 state)."
+    },
+    {
+      "unit": "meta",
+      "id": "meta-03",
+      "severity": "warning",
+      "dimension": 7,
+      "category": "tracking-malformed",
+      "claim": "problem-statement.md's two open questions (Q-01 why-now trigger, Q-02 earned-vs-hostile lock-in) name no canonical entry and have no counterpart in the vision.md register that the tree declares authoritative for downstream resolution — so unlike every other meta open question, they are invisible to the stages they are deferred to.",
+      "evidence": "problem-statement.md:111-112 — \"| Q-01 | [OWNER] Which \\\"Why Now\\\" signal is the real trigger — or is it situational rather than market-driven? | User | `/create-prd` |\" and \"| Q-02 | [OWNER] Is the lock-in **earned** or **hostile**? ... | User | `/create-prd` |\" — neither row names a canonical entry. ||| specs/vision.md:213-215 — \"> **Canonical open-question list for ideation.** Q-numbers here are the authoritative namespace; per-file `Q-NN` markers inside `personas.md` / domain files are file-local and roll up to the entries below. Downstream stages resolve against this table.\" ||| That table's full contents are Q-00 Admin/Moderator, Q-01 fold 08 into 07, Q-02 identifier-binding seam, Q-03 (resolved, ~71 Musts), Q-04 open stack decisions, Q-05 dealer persona, Q-06 org conversion, Q-07 desktop reopen evidence, Q-08 restated-claim differentiation, Q-09 non-persona actors — no why-now entry and no lock-in/portability entry; vision.md's own Q-02 is the unrelated identifier-binding seam. ||| Contrast, same unit, correct pattern: personas.md:167 \"Canonical entry `vision.md` Q-05\"; personas.md:168 \"Canonical entry `vision.md` Q-00\"; personas.md:171 \"Canonical entry `vision.md` Q-09\"; competitive-landscape.md:105 \"Canonical entry: `vision.md` Q-08\"; constraints.md:343 \"Recorded as `vision.md` Q-07\".",
+      "failureScenario": "/create-prd works the canonical vision.md table, as vision.md instructs, and never sees either question. The why-now trigger is never confirmed (leaving problem-statement.md § Why Now permanently `[PARTIAL]`), and the earned-vs-hostile lock-in decision is never taken — so the unmarked assertion in competitive-landscape.md:82 (finding meta-02) silently becomes the de facto answer by default rather than by decision, and data-portability scope is settled by omission.",
+      "forcedInvention": "Whether the why-now and lock-in questions are live obligations for /create-prd or abandoned, and which register a downstream stage should trust when a file-local Q-NN has no canonical counterpart."
+    },
+    {
+      "unit": "meta",
+      "id": "meta-04",
+      "severity": "warning",
+      "dimension": 3,
+      "category": "unclassified-scope",
+      "claim": "cross-cut-emergent-capabilities.md § 2 introduces 83 named product features with no MoSCoW category and no phase, and none of them exists in feature-ledger.md, moscow-ledger.md, or any domain file — while the index scores MoSCoW as complete and mutually exclusive at 734 features.",
+      "evidence": "cross-cut-emergent-capabilities.md:129-133 — \"## 2. New Features by Domain\\n\\nDeduped from 90 candidates. Cross-domain duplicates collapsed ...\" with a 3-column table (\"| Feature | Owning domain | Why it's new / uncovered |\", :135) and no priority or phase column; 83 feature rows at :137-219. Examples: :157 \"| Rights-Orphan Detector | 07 | A readiness check flagging a Song at `master approved` with ZERO asserted recordings in 09 — a finished record that is a rights object nowhere. The loudest completeness deficit, the thesis failing where it should work. |\"; :202 \"| Postponement as a first-class booking state | 17 | The date moves, the deal survives, tickets stay valid — post-2020 the dominant outcome ... |\"; :219 \"| Formula / contingent receivable | 23 | A receivable whose amount is a **formula** not a number ... yet they must be forecastable. |\" ||| Verified absent elsewhere: grep for \"Rights-Orphan\", \"test-mix milestone\", \"Postponement as a first-class\", \"contingent receivable\", \"Save-the-venue\", \"Doubling model\" returns 0 hits in specs/feature-ledger.md, 0 in specs/ideation/moscow-ledger.md, and 0 across all other specs/ideation/**.md files. ||| ideation-index.md:154 — \"| 3 | Feature Completeness | ✅ | 195 Musts at `[DEEP]` with edge cases + Role Lens; 285 Shoulds `[PARTIAL]`; MoSCoW mutually exclusive; 734 features in [feature-ledger.md](../feature-ledger.md) |\" ||| The file asserts its own authority at :7-9 — \"**Downstream contract**: `/create-prd` ... `/decompose-architecture` ... and `/audit-ambiguity` inherit this file. The **New Cross-Cut Mechanisms** table is the authoritative \\\"extract-me-as-shared\\\" list\" — the authority statement covers § 1 mechanisms only, never § 2's features.",
+      "failureScenario": "At /plan-phase the planner sequences from moscow-ledger.md's 195 Musts and feature-ledger.md's 734 features. All 83 § 2 features are in neither, and none carries Must/Should/Could/Won't or a v1 / v1.5 / phase-2 marker, so each is silently dropped or silently pulled in on a coin flip. Concretely: 'Rights-Orphan Detector' guards the v1 wedge's own completeness (a Song at master-approved with zero asserted recordings in domain 09, which is v1 scope per constraints.md:208) — one planner treats it as v1 because its dependencies are v1 domains, another omits it because it has no ledger entry and no Must classification.",
+      "forcedInvention": "A MoSCoW category and a release phase for each of the 83 emergent features, and whether an unledgered emergent feature is in scope at all."
+    },
+    {
+      "unit": "meta",
+      "id": "meta-05",
+      "severity": "warning",
+      "dimension": 8,
+      "category": "count-contradiction",
+      "claim": "The index and D-27 state that this file holds 52 cross-cut mechanisms and 76 features; the file actually holds 54 mechanisms and 83 features, with no reconciliation on either side.",
+      "evidence": "ideation-index.md:78 — \"| Emergent cross-cuts / features (Step 6) | 52 / 76 — [meta/cross-cut-emergent-capabilities.md](meta/cross-cut-emergent-capabilities.md) |\" ||| ideation-index.md:213 (D-27) — \"**Emergent capabilities persisted** to [meta/cross-cut-emergent-capabilities.md](...): **52 new cross-cut mechanisms** and **76 new features** surfaced during synthesis ... Routed to `/create-prd` and `/write-be-spec`.\" ||| Actual content of cross-cut-emergent-capabilities.md, counted from disk: § 1 holds 54 mechanism rows (1a=7, 1b=3, 1c=8, 1d=9, 1e=7, 1f=4, 1g=8, 1h=8), § 2 holds 83 feature rows (lines 137-219 inclusive). ||| The file's own provenance header at :4-5 is consistent with neither index number: \"Source pool: 83 candidate emergent cross-cuts (`emCC`), 90 candidate emergent features (`emF`), 101 boundary problems (`bp`).\"",
+      "failureScenario": "/create-prd is commissioned against D-27's inventory (52 mechanisms, 76 features) and reconciles its extraction list by count rather than by row. Two mechanisms and seven features are then dropped without any signal that anything is missing — and per the file's own §1a warning (\"Build these four once or four domains write four dialects that disagree about one artist's money\", :32-33), a silently dropped shared mechanism is exactly the failure the file exists to prevent.",
+      "forcedInvention": "Which count is authoritative, and — if the index's is — which two mechanisms and which seven features are not part of the commissioned extraction."
+    },
+    {
+      "unit": "meta",
+      "id": "meta-06",
+      "severity": "warning",
+      "dimension": 8,
+      "category": "status-contradiction",
+      "claim": "competitive-landscape.md and constraints.md each self-declare `[DEEP]` in their status header while the ideation-index Key Files table declares both `[PARTIAL]`, with no marker on either side saying which is authoritative.",
+      "evidence": "competitive-landscape.md:3 — \"> Status: `[DEEP]` — completed `/ideate-validate` 2026-07-18.\" ||| constraints.md:3-4 — \"> Status: `[DEEP]` — all constraint categories resolved during `/ideate-validate` 2026-07-18.\\n> Budget, Timeline, Team, V1 Scope, Compliance, Performance, and Surfaces all confirmed with owner.\" ||| ideation-index.md:94-95 — \"| Competitive Landscape | [competitive-landscape.md](meta/competitive-landscape.md) | `[PARTIAL]` |\" and \"| Constraints | [constraints.md](meta/constraints.md) | `[PARTIAL]` |\" — while the same table marks the other four meta files `[DEEP]` (:91-93, :96), matching their own headers. Neither the index rows nor the file headers carry any note explaining the divergence.",
+      "failureScenario": "A stage gate that admits `[DEEP]` inputs and blocks `[PARTIAL]` ones gets opposite verdicts depending on which file it reads. A reader trusting the file headers treats the constraint set and the positioning as closed and proceeds; a reader trusting the index treats both as incomplete and either blocks or re-opens settled constraints (the locked stack, the release split, the US-first compliance model). Whether the two files are finished is a fact the unit reports both ways.",
+      "forcedInvention": "Whether the constraint set and the competitive positioning are complete inputs to /create-prd, and which status register a gate should trust."
+    },
+    {
+      "unit": "meta",
+      "id": "meta-07",
+      "severity": "warning",
+      "dimension": 4,
+      "category": "phase-contradiction",
+      "claim": "constraints.md assigns web push for gig alerts to v1 in the Project Surfaces table, while the same file phases every domain that could own a gig alert to Phase 2+ and states that v1/v1.5 are professional-facing.",
+      "evidence": "constraints.md:293 — \"| Mobile (PWA) | PWA over the Astro web app | N/A | **v1**: web is installable as a PWA (home-screen, web push for gig alerts **and — assigned 2026-07-22, D-70 — the 07.06.02 session-close capture prompt** ...). Serves the phone-shaped workflows without a separate surface. |\" ||| constraints.md:226-228 — \"### Phase 2+ (stay `Must` per D-20, later releases, ~124 Musts)\\n\\nRoyalties/Collection (10), Licensing (11), Release/Distribution (12), Live/Events (16–19), Fanbase (20), Promotion (21), Analytics (22), Career/Finance (23), Community (03), Opportunities (04), Education (06), Real-Time Jamming (08).\" — every candidate owner of a gig alert (Fanbase 20, Live/Events 16-19, Opportunities 04) is Phase 2+. ||| constraints.md:269 — \"| COPPA / age gating | Fan surface, UGC with minors | **phase 2** | US COPPA (under-13) deferred with the Fanbase domain (20). v1/v1.5 are professional-facing. |\" ||| The v1 domain list at :203-209 is 01 Identity, 02 Credits, 05 Services, 07 Projects, 09 Rights — none of which owns gig alerts.",
+      "failureScenario": "A planner reading the Project Surfaces table scopes fan-facing gig-alert push notifications into v1 — pulling in follow relationships, an alert-eligibility model and a consumer-facing notification surface from Fanbase (20), a domain the same file phases to 2+ and whose consumer scale the file explicitly excludes from the v1 performance budget (:275-277). Another planner treats 'web push for gig alerts' as an illustration of PWA capability rather than a v1 commitment and ships push for the capture prompt only. The two builds differ by a whole surface.",
+      "forcedInvention": "Whether v1 ships gig-alert push (and if so which phase-2 domain's alert model comes with it), or whether only the 07.06.02 capture prompt uses v1 web push."
+    }
+  ],
+  "refutedDuringDevilsAdvocate": [
+    {
+      "candidate": "cross-cut-emergent-capabilities.md:239 says '~85 of the 101 is mechanism extraction' while the classification table at :252 assigns only ~65 to the extraction class, and the table sums to ~85 not 101.",
+      "whyDropped": "The sentence reads 'is mechanism extraction per Section 1 — **not domain merger**', and 5 of the ~8 merge candidates at :259-266 resolve to 'Not a merge — extract the cross-cut', so ~65 + ~10 + 2 + ~8 = ~85 is a coherent 'not a merger' total. The residual gap (101 pool vs ~85 classified, no remainder row) is signalled with tildes throughout and forces no invented behaviour."
+    },
+    {
+      "candidate": "constraints.md § Desktop 'Follow-on, unassigned: nobody is currently tasked with gathering (a)–(d)' is an untracked open item (Dimension 7).",
+      "whyDropped": "Verified tracked: specs/vision.md Q-07 carries it with owner User and target stage `/create-prd-stack`, and constraints.md:343 names that canonical entry."
+    },
+    {
+      "candidate": "cross-cut-emergent-capabilities.md:63 commissions 'DAW Session Format Parsing & Parser-Rot Monitoring' as a shared mechanism although D-70 prohibits any locally-installed client.",
+      "whyDropped": "§ 1's authority claim is 'must NOT be rebuilt per-domain' (:9), not 'must be built in v1'. The parser is separately gated by 07.09 D-04/D-37, recorded in constraints.md:334-336. No unmarked contradiction."
+    },
+    {
+      "candidate": "personas.md:161 gives domain 24's primary persona as 'All four + Admin', implying a fifth Role Matrix actor that counterparties.md:25 forbids.",
+      "whyDropped": "Explicitly tracked on the same row ('⚠️ see Q-02'), with personas.md:168 Q-02 naming owner User, target /create-prd and canonical entry vision.md Q-00."
+    },
+    {
+      "candidate": "constraints.md § Jurisdiction Parameterization authors only a US profile while D-46 determines rights status in four jurisdictions (US, France, Germany, UK), contradicting US-first.",
+      "whyDropped": "Different axes: D-72 governs the statutory venue-record vocabulary (domain 16), D-46 governs term/moral-right determination for works. constraints.md:356 cites D-46 as the precedent it follows. Determining foreign term status in a US-only market is not contradictory."
+    },
+    {
+      "candidate": "No numeric success metric anywhere in the unit despite 'Measurable:' labels (Dimension 5) — report as a finding.",
+      "whyDropped": "Scored PARTIAL but not filed: the layer's numeric targets exist at specs/vision.md § Success Metrics with numbers and timeframes ('>= 60% within 6 months of v1 launch', '< 7 days median', '>= 50% verified ... by month 6'), so nothing downstream must invent a metric."
+    }
+  ],
+  "coverageNote": "Expected 1 unit / 6 files; audited exactly 1 unit / 6 files — enumeration matches disk (meta/ holds competitive-landscape.md, constraints.md, counterparties.md, cross-cut-emergent-capabilities.md, personas.md, problem-statement.md; 1,259 lines total). All 8 vision dimensions were scored as applicable: meta/ is the unit that owns problem, personas, constraints and competitive positioning, and cross-cut-emergent-capabilities.md carries a feature/mechanism inventory, so no dimension was N/A. Dimension 8's domain-folder criteria (*-index.md, *-cx.md, Role Matrix) do not apply to meta/ since it is not a domain folder; it was scored on the remaining applicable criterion, Structure-Map-vs-disk agreement, which holds for file inventory but fails on the emergent counts and the status cells. Scoring maps findings to dimensions: a blocking finding makes its dimension FAIL (1.0), a warning makes it PARTIAL (0.5); Dimension 5 is PARTIAL on the rubric's literal 'directional only' criterion without a filed finding. Points 4.0 / 8 applicable = 50.0%. Six further candidate findings were refuted in the devil's-advocate pass and are recorded above with the reason each was dropped."
+}

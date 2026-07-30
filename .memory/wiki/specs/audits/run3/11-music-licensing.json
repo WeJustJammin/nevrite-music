@@ -1,0 +1,300 @@
+{
+  "domain": "11-music-licensing",
+  "root": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/11-music-licensing",
+  "auditedAt": "2026-07-30",
+  "unitsAudited": 9,
+  "filesRead": 52,
+  "expected": { "units": 9, "files": 52 },
+  "scoringConvention": "Dimension scores are strict against the vision-rubric criteria. Findings are reported independently; a finding adds points to its unit only where it is a genuine implementer-simulation forced invention (blocking = 1.0, warning = 0.5) not already captured by a dimension score. Accuracy/hygiene findings that change no build decision are reported at 0 points. Findings are booked to the unit containing the file cited as primary evidence.",
+
+  "units": [
+    {
+      "unit": ".",
+      "files": [
+        "music-licensing-index.md",
+        "music-licensing-cx.md",
+        "11.09-cover-song-compulsory-mechanical.md",
+        "11.10-print-lyric-rights.md",
+        "11.11-grand-rights-dramatic-performance.md"
+      ],
+      "applicableCheckpoints": 6,
+      "naDimensions": [4, 5],
+      "dimensionScores": {
+        "1_problem_clarity": "✅",
+        "2_persona_specificity": "✅",
+        "3_feature_completeness": "✅",
+        "4_constraint_explicitness": "N/A",
+        "5_success_measurability": "N/A",
+        "6_competitive_positioning": "✅",
+        "7_open_question_resolution": "✅",
+        "8_structural_compliance": "⚠️"
+      },
+      "points": 0.5,
+      "ambiguityPct": 8.3,
+      "notes": "D1 ✅ — Overview names a specific buyer population and pain and is falsifiable ('buyers (supervisors, brands, creators, producers) who never touch the ownership registry, its own search paradigm'). D2 ✅ — Role Matrix fully populated 11×4, personas referenced never redefined, buy side described by two named counterparty profiles under D-10. D3 ✅ — 8 sub-domains + 3 features, every leaf carries Behavior/Edge Cases/States; MoSCoW is held in moscow-ledger.md and referenced. D6 ✅ — Musicbed, Artlist, Songtradr named with a specific capability gap ('solve one-stop by acquiring catalog, which is expensive and caps at what they can buy') and a defensible moat (owning the registry scales to the long tail). D7 ✅ — 8 Q rows, every one with owner + deferral target, 5 resolved with source citations. D8 ⚠️ — index+cx present, Role Matrix populated, Role Lens on every feature file, structure map matches the tree; but the Children table's Status column is stale (see finding DOM-2)."
+    },
+    {
+      "unit": "11.01-sync-licensing",
+      "files": [
+        "11.01-sync-licensing-index.md",
+        "11.01-sync-licensing-cx.md",
+        "11.01.01-sync-catalogue-tagging.md",
+        "11.01.02-supervisor-search-reference-matching.md",
+        "11.01.03-sync-briefs-pitching.md",
+        "11.01.04-holds-exclusivity-windows.md",
+        "11.01.05-dual-licence-coordination.md"
+      ],
+      "applicableCheckpoints": 5,
+      "naDimensions": [4, 5, 6],
+      "dimensionScores": {
+        "1_problem_clarity": "✅",
+        "2_persona_specificity": "✅",
+        "3_feature_completeness": "✅",
+        "7_open_question_resolution": "✅",
+        "8_structural_compliance": "✅"
+      },
+      "points": 0.5,
+      "ambiguityPct": 10.0,
+      "notes": "Five leaves, each with a 7-9 row edge-case table, a 5-state table and a decision log. Hold state machine, dual-side aggregate, tag inflation, brief ghosting and buyer scraping all specified with named user-visible copy. 18 Q rows across the unit, all owner+target. One forced invention survives (finding 1101-1)."
+    },
+    {
+      "unit": "11.02-clearance-one-stop-status",
+      "files": [
+        "11.02-clearance-one-stop-status-index.md",
+        "11.02-clearance-one-stop-status-cx.md",
+        "11.02.01-clearance-computation-one-stop.md",
+        "11.02.02-catalogue-completeness-attestation.md",
+        "11.02.03-encumbrance-declaration.md",
+        "11.02.04-multi-party-consent-routing.md"
+      ],
+      "applicableCheckpoints": 5,
+      "naDimensions": [4, 5, 6],
+      "dimensionScores": {
+        "1_problem_clarity": "✅",
+        "2_persona_specificity": "✅",
+        "3_feature_completeness": "✅",
+        "7_open_question_resolution": "✅",
+        "8_structural_compliance": "✅"
+      },
+      "points": 1.0,
+      "ambiguityPct": 20.0,
+      "notes": "The most exhaustively specified unit in the domain: a 6-value verdict enum with an explicit precedence order, 30 edge cases in 11.02.01 alone, 17 decisions, per-side decomposition, audience-scoped blocker naming, erasure/death/dormancy all handled. 22 Q rows, all owner+target, 6 resolved with cited sources. One blocking contradiction survives verification (finding 1102-1)."
+    },
+    {
+      "unit": "11.03-licence-pricing-negotiation",
+      "files": [
+        "11.03-licence-pricing-negotiation-index.md",
+        "11.03-licence-pricing-negotiation-cx.md",
+        "11.03.01-rate-cards-pricing-rules.md",
+        "11.03.02-quote-requests-negotiation.md",
+        "11.03.03-most-favoured-nation.md"
+      ],
+      "applicableCheckpoints": 5,
+      "naDimensions": [4, 5, 6],
+      "dimensionScores": {
+        "1_problem_clarity": "✅",
+        "2_persona_specificity": "✅",
+        "3_feature_completeness": "✅",
+        "7_open_question_resolution": "✅",
+        "8_structural_compliance": "✅"
+      },
+      "points": 0,
+      "ambiguityPct": 0,
+      "notes": "MFN's hard parts are named and decided: agreed-price vs owed-price as two fields (D-01), evaluation over the settled set at a fixed point rather than pairwise (D-02), self-triggering exclusion for the multi-hyphenate (D-04), failed evaluation leaves the price provisional (D-05). The three genuinely open items (commission-inside-or-outside MFN, comparability computed-vs-declared, exposure horizon) are each owner-owned with a deferral target and an explicit note on why no downstream stage settles them. Tested for a contradiction between 11.03.01's 'cards that disagree in kind may not combine at all' and 11.03.02's always-combined buyer number — they reconcile under per-side summation (11.03.01 Q-01 option (a), which the file states it already operates), so it was dropped."
+    },
+    {
+      "unit": "11.04-licensing-policy-preferences",
+      "files": [
+        "11.04-licensing-policy-preferences-index.md",
+        "11.04-licensing-policy-preferences-cx.md",
+        "11.04.01-per-work-licensing-policy.md",
+        "11.04.02-co-owner-veto-approval.md",
+        "11.04.03-policy-conflict-resolution.md"
+      ],
+      "applicableCheckpoints": 5,
+      "naDimensions": [4, 5, 6],
+      "dimensionScores": {
+        "1_problem_clarity": "✅",
+        "2_persona_specificity": "✅",
+        "3_feature_completeness": "✅",
+        "7_open_question_resolution": "✅",
+        "8_structural_compliance": "✅"
+      },
+      "points": 0,
+      "ambiguityPct": 0,
+      "notes": "The strongest self-correction in the domain: the earlier 'thresholds take the minimum' rule is explicitly superseded as *wrong* (11.04.03 D-06/D-07, 11.04.01 D-18/D-19), and every dependent site was corrected in place — the edge-case row, the States row, the sub-domain CX synthesis Q5, and the citing row in 11.04.01. Six auto-approve eligibility bars (exclusivity, self-dealing, MFN, dormancy, dispute, unresolved split) each with a named state. The AI-training default inversion that the domain CX P-04 calls a live contradiction is explicitly reconciled here by 11.04.02 D-12 and its States/Empty row — which is why P-04 is reported against the domain unit, not this one. The domain CX-16 'correction owed on the 11.04.01 text' is likewise discharged: 11.04.02's two-key-spaces table states the correction verbatim, and 11.04.01's own Q-05 concedes 'buyer identity sits outside the scope grammar's axes'. Not reported."
+    },
+    {
+      "unit": "11.05-sample-derivative-clearance",
+      "files": [
+        "11.05-sample-derivative-clearance-index.md",
+        "11.05-sample-derivative-clearance-cx.md",
+        "11.05.01-sample-declaration-identification.md",
+        "11.05.02-programmatic-instant-clearance.md",
+        "11.05.03-negotiated-clearance-revenue-share.md",
+        "11.05.04-interpolation-replay-clearance.md",
+        "11.05.05-remix-stem-bootleg-licensing.md"
+      ],
+      "applicableCheckpoints": 5,
+      "naDimensions": [4, 5, 6],
+      "dimensionScores": {
+        "1_problem_clarity": "✅",
+        "2_persona_specificity": "✅",
+        "3_feature_completeness": "✅",
+        "7_open_question_resolution": "✅",
+        "8_structural_compliance": "✅"
+      },
+      "points": 0,
+      "ambiguityPct": 0,
+      "notes": "11.05.01 defines a 9-field declaration record with per-field human-vs-machine assertion provenance, an enumerated element-type list, extent in both seconds-to-0.1s and bars, and 40 edge cases. Declaration-per-contribution (D-06) rather than per-work is the unit's load-bearing call and its prerequisite is tracked as Q-04 against domain 07. Tested 11.05.03's '115% obligation' row for a forced invention (block vs warn) — D-03 'obligation stacking is validated before agreement' plus 'must be caught before agreement, not after' resolves to prevention for any competent reader; dropped. The 11.05-cx CX-03 Q5 pending on interpolation chains/cycles is answered on disk by 11.05.04 Q-03 (Resolved) and 11.02.03's Traversal invariant; not reported (see coverageNote)."
+    },
+    {
+      "unit": "11.06-creator-micro-licensing",
+      "files": [
+        "11.06-creator-micro-licensing-index.md",
+        "11.06-creator-micro-licensing-cx.md",
+        "11.06.01-creator-licence-catalogue.md",
+        "11.06.02-content-id-whitelisting.md",
+        "11.06.03-claim-release-dispute.md",
+        "11.06.04-licence-persistence-after-subscription.md"
+      ],
+      "applicableCheckpoints": 5,
+      "naDimensions": [4, 5, 6],
+      "dimensionScores": {
+        "1_problem_clarity": "✅",
+        "2_persona_specificity": "✅",
+        "3_feature_completeness": "✅",
+        "7_open_question_resolution": "✅",
+        "8_structural_compliance": "✅"
+      },
+      "points": 0,
+      "ambiguityPct": 0,
+      "notes": "The strained Fan mapping is documented as a defect rather than papered over, and resolved by a separate counterparty profile with a stated reason for keeping it separate from the professional buyer profile. The cliff (whitelist-scoped-to-subscription) is designed out with a named invariant (11.06.04 D-02) and protected by a deliberate non-edge (R-02) so it cannot return through the support queue. subscription-vs-per-track is genuinely unresolved but is owner-owned in four places with an explicit statement of why no downstream stage can take it. Tested CX-01 Q2's 'either the purchase fails, or it completes with whitelisting pending' as an unresolved either/or — the pending branch is stated three times in user-visible columns and the fail branch is incompatible with domain D-06 irrevocability, so a competent implementer lands on pending; dropped."
+    },
+    {
+      "unit": "11.07-ai-training-licensing",
+      "files": [
+        "11.07-ai-training-licensing-index.md",
+        "11.07-ai-training-licensing-cx.md",
+        "11.07.01-ai-training-consent-opt-out.md",
+        "11.07.02-corpus-assembly-dataset-deals.md",
+        "11.07.03-training-compensation-attribution.md"
+      ],
+      "applicableCheckpoints": 5,
+      "naDimensions": [4, 5, 6],
+      "dimensionScores": {
+        "1_problem_clarity": "✅",
+        "2_persona_specificity": "✅",
+        "3_feature_completeness": "✅",
+        "7_open_question_resolution": "✅",
+        "8_structural_compliance": "✅"
+      },
+      "points": 0,
+      "ambiguityPct": 0,
+      "notes": "Opt-in default, per-share unanimity, non-transfer on share sale (D-06), withdrawal confirmation that leads with what it cannot undo, append-only shipped-model register, and corpus assembly gated on full clearance rather than consent (11.07.02 D-02). Consistent with 11.04.02 D-12's explicit default inversion. The two [PENDING — /ideate-discover Step 5 deepening] markers in this unit (11.07.02 line 54 splits-after-ship; 11.07.03 line 57 attribution-without-money) are each shadowed by a properly owned Q row in the same file (11.07.02 Q-04; 11.07.03 Q-03), so they are redundant bookkeeping rather than untracked gaps; not reported."
+    },
+    {
+      "unit": "11.08-licence-instrument-lifecycle",
+      "files": [
+        "11.08-licence-instrument-lifecycle-index.md",
+        "11.08-licence-instrument-lifecycle-cx.md",
+        "11.08.01-licence-scope-grammar.md",
+        "11.08.02-licence-certificate-issuance.md",
+        "11.08.03-third-party-licence-verification.md",
+        "11.08.04-licence-amendment-expiry-lifecycle.md"
+      ],
+      "applicableCheckpoints": 5,
+      "naDimensions": [4, 5, 6],
+      "dimensionScores": {
+        "1_problem_clarity": "✅",
+        "2_persona_specificity": "✅",
+        "3_feature_completeness": "✅",
+        "7_open_question_resolution": "✅",
+        "8_structural_compliance": "✅"
+      },
+      "points": 1.0,
+      "ambiguityPct": 20.0,
+      "notes": "11.08.01 is the domain's type system and is specified to an unusual depth: 9 axes with per-axis post-issue verifiability, a three-construct algebra (union/containment/exclusion), a total-and-binary containment rule that answers No when undecidable, and instruments-pin/policies-float versioning with the new-value-is-inert rule (D-11). 11.08.02 defines an explicit atomic boundary with an inside/outside table and a 'Partial must not exist' state expressed as a testable invariant. The unit's own reconciliation debt is the finding (1108-1): the grammar acquired a party-identity-valued axis without reconciling four decisions elsewhere that reason from its absence. The stale six-axis enumerations (finding 1108-2) share that root cause and are reported at 0 points to avoid double-counting."
+    }
+  ],
+
+  "findings": [
+    {
+      "id": "1102-1",
+      "unit": "11.02-clearance-one-stop-status",
+      "severity": "blocking",
+      "dimension": 0,
+      "category": "silent-contradiction",
+      "claim": "Whether an affirmative sample declaration is required for one-stop status is answered two incompatible ways: 11.02.03 and 11.05.01 both make an undeclared work non-one-stop, while 11.02.02's one-stop floor and 11.02.01's verdict engine — the domain's single definition of clearable — have no declaration test, no input for it and no verdict value for its absence.",
+      "evidence": "REQUIRES DECLARATION — 11.02.03-encumbrance-declaration.md:207 (D-02): \"Silence is not cleanliness — an undeclared work is not one-stop | Silence-means-clean would make the whole feature opt-in for exactly the people least likely to opt in. Generalises: **unknown is not clean**\". 11.02.03-encumbrance-declaration.md:158 (States/Empty): \"**\\\"Nothing declared\\\" — not \\\"clean\\\".** The distinction is the entire feature. The empty state is also the sales pitch: \\\"This can't be one-stop until someone says what's in it. [Declare]\\\"\". 11.05.01-sample-declaration-identification.md:136 (Happy Path 11): \"**A negative answer is also a declaration.** \\\"Nothing borrowed\\\" is recorded as an attributed assertion (D-05), which is what makes never-asked and asked-and-said-no different states — and only the latter can support one-stop via 11.02.02.\" 11.05.01:187 (States/'Empty — negative'): \"**A different state from the above**, and only this one can support one-stop via 11.02.02.\" || DOES NOT REQUIRE DECLARATION — 11.02.02-catalogue-completeness-attestation.md:200 (D-03): \"**One-stop floor = ≥1 valid, uncontested attestation per gating side.** Grade and corroboration ratio are displayed qualities, not gates\". 11.02.01-clearance-computation-one-stop.md:92 (Happy Path 4, the exhaustive per-side test list): \"For each required side, system evaluates in order: shares close → a valid, uncontested completeness attestation exists (11.02.02) → **no encumbrance in this work or any ancestor** (11.02.03) → the effective work policy (11.04.03 fold) permits this scope.\" 11.02.01:68 (verdict table): \"`incomplete` | The record is not closed — shares do not sum, or no valid completeness attestation exists\" — the enum's only record-closure value, and it names attestation only. 11.02.01's 30-row edge-case table has a row for \"Shares sum to 100% but no completeness attestation exists\" and no row for a missing declaration; grep for 'declar' across 11.02.01 returns no normative use. || THE QUESTION IS FLAGGED BUT NOT OWNED — 11.02-clearance-one-stop-status-cx.md:82 (CX-05 synthesis Q5): \"`[PENDING — /ideate-discover Step 5 deepening]` — whether a work can be one-stop with attestation but no encumbrance declaration (i.e. is silence on sampling equivalent to \\\"no samples\\\"?). **Silence must not mean clean.** Provisional: both required.\" — no owner, and its deferral target is a stage that has already run (the domain CX records the deepening pass as complete, and the leaves it produced are the files that now disagree). A third variant appears at 11.02.03:126: \"A work with no declaration **and** no attestation is not one-stop\" — conjunctive, which is true of neither of the other two readings.",
+      "forcedInvention": "An implementer must invent the one-stop precondition set. Reading 11.02.01 as authoritative (which the sub-domain index D-01 demands — \"Splitting them would create two places where 'clearable' is defined, which is the one thing this sub-domain must have exactly one of\") yields `clearable-now` and `one-stop` for any attested work that has never been asked about samples. Reading 11.02.03 D-02 and 11.05.01 D-05 as authoritative requires a recorded declaration (including an explicit 'nothing borrowed') per work before one-stop can ever be true, which needs a verdict value the enum does not have and an input the five-input list does not carry. The two implementations differ on exactly the population 11.02.03:143 calls \"most of the catalogue at cold start\" — works with no derivation record, where \"declaration is the only input\".",
+      "failureScenario": "A back-catalogue work is uploaded, splits sum to 100%, one listed writer attests completeness, and nobody is ever asked about samples. Implementer A builds 11.02.01 literally: four inputs pass, verdict = `clearable-now`, counterparty count 1, badge = `one-stop`, and 11.08.02's precondition 1 is satisfied so a certificate issues. Implementer B builds 11.02.03 D-02 literally: the same work is withheld from one-stop pending a declaration. Same spec, same work, opposite commercial outcome — and under reading A the platform badges as one-stop precisely the works whose sample provenance it has never asked about, which is the false positive 11.02.01 DT-03 calls \"a lawsuit naming *the platform* as the party that asserted clearability\"."
+    },
+    {
+      "id": "1108-1",
+      "unit": "11.08-licence-instrument-lifecycle",
+      "severity": "blocking",
+      "dimension": 0,
+      "category": "silent-contradiction",
+      "claim": "11.08.01 D-15 adds a party-identity-valued axis ('Grantee scope') to the scope grammar, while four decisions and two rejected pairs in 11.04.02 and the domain CX reason in the present tense from the grammar having no counterparty axis — and derive from that absence that buyer blocks cannot fold and that folding over identity is structurally impossible.",
+      "evidence": "THE AXIS EXISTS — 11.08.01-licence-scope-grammar.md:55 (axis table): \"| **Grantee scope** | the licensee **+ permitted assignees / sublicensees**, bounded by a stated purpose | Whether the deal is worth anything (DT-15). An agency licence that does not run to the brand is worthless paper. |\". 11.08.01:229 (D-15): \"**Grantee scope is an axis** — licensee plus permitted assignees/sublicensees, bounded by a stated purpose. **11.06 opt-in eligibility is the containment check** `contains(ownerPolicy, templatePoint)`\". 11.08.01:104 (Happy Path 4) resolves a scope point that literally carries a named party: \"`media:{podcast} · territory:{249 codes…} · … · grantee:{Buyer Ltd, no sublicence} · data-use: none`\". || FOUR SITES ASSERT IT DOES NOT — 11.04.02-co-owner-veto-approval.md:66-70: \"11.04.01 states the policy key space *is* the scope grammar — true for categories, false for buyers. **The grammar has no counterparty axis**, so a buyer block cannot fold into an effective work policy the way a category block does (11.04.03's fold operates over the grammar).\" 11.04.02:240 (D-09): \"**Two key spaces**: category blocks key on the scope grammar and take effect at authoring time, catalogue-wide; buyer blocks key on party identity and can only be evaluated at request time\" — with its context: \"the grammar has no counterparty axis (11.08.01), so buyer blocks cannot fold (11.04.03) and cannot change catalogue availability before a buyer exists\". 11.04.02:63 (the three-shapes table): \"| **Buyer** (never this company) | **Party identity** (domain 01) — *not* an axis of the scope grammar |\". music-licensing-cx.md:147 (CX-16): \"because the grammar's six axes (media/territory/term/exclusivity/usage/scale) contain **no counterparty axis**. Buyer blocks key on *party identity*, which lives in 01, not in the grammar.\" music-licensing-cx.md:158 (CX-16 synthesis Q3): \"Adding a counterparty axis to the grammar would break the fold; making the fold operate over identity is **structurally impossible** (identity is not a lattice point).\" music-licensing-cx.md:291 (R-08): \"Merging would force a counterparty axis into the grammar (breaking the fold, CX-04) or force the fold to operate over identity (structurally impossible, CX-18).\" music-licensing-cx.md:65 (CX-04 synthesis Q3): \"The exception is the counterparty axis, which does not exist — CX-16/CX-18.\" || NOTHING RECONCILES THEM — grep for 'buyer block', '11.04.02', 'party identity' and 'counterparty' across 11.08.01 returns no hit relating the new axis to the buyer-block architecture; the only match is an unrelated 11.07.01 note. 11.04.01-per-work-licensing-policy.md:201 (Q-05) still records the absence as live: \"buyer identity sits outside the scope grammar's axes (11.08.01), so it is a second key space\".",
+      "forcedInvention": "An implementer must invent the policy engine's shape. If grantee scope is an axis of the lattice and policies are predicates over the grammar (11.04.01 Behavior) folded by containment (11.04.03), then a buyer block IS expressible in the grammar, IS foldable, and IS evaluable at authoring time against a named party — which deletes 11.04.02 D-09's two-key-space model, deletes CX-18's 'the effective-work-policy aggregate is incomplete by construction', and reopens R-08's rejected merge of category and buyer blocks. If instead the grantee axis is excluded from policy predicates, that exclusion is stated nowhere and 11.08.01 D-15's own containment definition (`contains(ownerPolicy, templatePoint)`, where templatePoint carries a grantee value) contradicts it. Neither the fold's domain nor the number of block-evaluation regimes is derivable from the text.",
+      "failureScenario": "A rights holder sets 'never license to BrandCo'. Implementer A follows 11.08.01 D-15: grantee is a grammar axis, so the block is a carve-out on that axis, it folds into the effective work policy at authoring time, and the catalogue immediately shows the work as unavailable for any request whose grantee point intersects BrandCo — which 11.04.02 D-09 explicitly forbids (\"the catalogue cannot show a work as unavailable to a party who has not asked\") and which leaks the block's existence to anyone probing the catalogue, the exact disclosure 11.04.02 D-06 and 11.02.01 D-11 exist to prevent. Implementer B follows 11.04.02 D-09: a second, non-foldable request-time engine, and 11.06 opt-in eligibility (D-15's `contains(ownerPolicy, templatePoint)`) then cannot be computed at all, because the template point carries a grantee value the fold has no lattice position for."
+    },
+    {
+      "id": "1101-1",
+      "unit": "11.01-sync-licensing",
+      "severity": "warning",
+      "dimension": 0,
+      "category": "silent-contradiction",
+      "claim": "What happens to the losing party in a concurrent exclusive contest is stated as 'queued' in 11.01.05 and as 'refused, never queued' in three other places, including a ratified decision whose stated reasoning is that queueing is the wrong product.",
+      "evidence": "QUEUED — 11.01.05-dual-licence-coordination.md:64: \"| Two buyers request an exclusive-scope licence on the same work at once (concurrency) | The hold (11.01.04) is the arbiter — first request to place a valid hold spanning both sides wins; **the second is queued behind the hold, not silently lost** | Second buyer: \\\"This work is on hold for another buyer until [date]. [Notify me if it releases]\\\" |\". || NOT QUEUED — 11.01-sync-licensing-cx.md:36 (CX-03 synthesis Q1): \"If two exclusive holds are attempted concurrently, the hold record is the serialization point and **the second must fail closed, not queue**.\" 11.01.04-holds-exclusivity-windows.md:51: \"| Two exclusive holds requested concurrently | Hold record is the serialization point; the second fails closed. Never both-granted. |\". 11.02.01-clearance-computation-one-stop.md:198 (D-12): \"**At most one exclusive licence per (work, exclusivity scope) can ever exist.** A concurrent second exclusive attempt is refused, not queued.\" — with reasoning: \"Queueing sells a buyer a wait for a certainty they cannot get.\" 11.08.02-licence-certificate-issuance.md:123: \"**First to commit wins; the second is refused, never queued** (11.02.01 D-12) … Never a charge, never a wait for a certainty that cannot arrive\". Note the domain also has a legitimate queue concept for a different case — 11.01.04:33: \"**second-call** queues behind a first-call\" — so 'queued' is not obviously loose language here.",
+      "forcedInvention": "Whether a losing exclusive requester acquires a position that is auto-promoted when the winning hold lapses, or merely a notify-me subscription that grants nothing. The two user-visible strings in 11.01.04 and 11.01.05 both offer a notify-me, which is the resolving evidence, but the normative sentence in 11.01.05 says 'queued', and the domain already implements a real queue for second-call holds — so the word is readable as intentional.",
+      "failureScenario": "Buyer A and Buyer B both attempt an exclusive hold; A wins. Implementer A builds a waitlist: B holds position 1 and is auto-granted the exclusive when A's hold lapses. Implementer B builds notify-me: on lapse B is told and must re-request, racing everyone else. Under the waitlist reading a work is silently reserved for a buyer who never passed a fresh conflict check at grant time, which is what 11.01.04 D-01 ('no conflict check, no hold') and 11.02.01 D-04 (fresh re-check at issuance) exist to prevent."
+    },
+    {
+      "id": "1108-2",
+      "unit": "11.08-licence-instrument-lifecycle",
+      "severity": "warning",
+      "dimension": 0,
+      "category": "stale-cross-reference",
+      "claim": "Five sites across four files enumerate the scope grammar as six axes; 11.08.01 defines nine. Two of the three missing axes are load-bearing — omitting 'data use' leaves an AI-training scope inexpressible at the gate, and omitting 'extent of use' leaves stem licensing unpriceable.",
+      "evidence": "NINE AXES — 11.08.01-licence-scope-grammar.md:45-55 axis table: Media, **Data use**, Territory, Term, Exclusivity, Usage, Scale, **Extent of use**, **Grantee scope**. 11.08.01:220 (D-06): \"**Data use (AI training) is a separate axis, defaults to none, and is never implied by any media grant however broad**\". 11.08.01:231 (D-17): \"**Extent of use is an axis** — excerpt duration band, number of uses, full track vs stem vs instrumental | Per DT-16 — a standard rate-card key the breadth pass omitted; **11.05.05 cannot express stem licensing without it**\". || SIX AXES — 11.02.01-clearance-computation-one-stop.md:46: \"A scope is a point in the 11.08.01 grammar (media, territory, term, exclusivity, usage, scale); an unset axis is `unspecified`, never permissive\". 11.04.01-per-work-licensing-policy.md:31: \"Its key space is the licence scope grammar (11.08.01): media, territory, term, exclusivity, usage, scale, plus a **value threshold** on that party's own share of the deal\". 11.04.02-co-owner-veto-approval.md:62: \"| **Category** (never gambling) | The scope grammar (11.08.01) — media, territory, term, exclusivity, usage, scale |\". music-licensing-cx.md:27 (CX-16) and :146-147: \"the grammar's six axes (media/territory/term/exclusivity/usage/scale)\".",
+      "forcedInvention": "The axis set of the scope point the gate and the policy engine operate on. 11.02.01's parenthetical is the gate's own definition of a scope, and it contains no data-use axis — so an implementer building the verdict engine from 11.02.01 has no representation for an AI-training request, while 11.08.01 DT-04/D-06 explicitly removed AI training from the media axis so it cannot be smuggled in as a media value either. The reference to 11.08.01 is present in every case, which is what keeps this a warning rather than blocking, but the enumerations read as definitions rather than as illustrations.",
+      "failureScenario": "11.07.01 records a work's owners as having refused AI training. An AI-corpus request arrives. The gate, built from 11.02.01's six-axis scope definition, has no data-use axis to carry the request's nature; the request is expressed on the media axis or omitted entirely, and the refusal it should have collided with is never evaluated — silently inverting 11.07.01 D-01 ('opt-in, never opt-out; silence is refusal') for exactly the category the domain treats as most consequential. Separately, an 11.05.05 stem grant has no axis on which to express 'stem vs full track', so it prices as a full-track licence."
+    },
+    {
+      "id": "DOM-1",
+      "unit": ".",
+      "severity": "warning",
+      "dimension": 0,
+      "category": "stale-contradiction-claim",
+      "claim": "The domain CX's pattern P-04 asserts in the present tense that two files ship contradictory refusal defaults and routes the reconciliation to /create-prd-architecture, but the contradiction was resolved by a ratified child decision, and P-04 names the wrong file as one of the two parties.",
+      "evidence": "THE CLAIM — music-licensing-cx.md:265-276 (P-04): \"### P-04: Same block engine, divergent defaults — a latent contradiction … **Category blocks** (11.04.02) — key on the grammar; default *empty* (permitted); foldable … **AI-training consent** (11.07.01) — same engine, default *refused* (opt-in) (CX-17). Two files (**11.04.01** and 11.07.01) currently describe the same engine with contradictory defaults. **The consent engine must be unified with an explicit per-category default, or the platform ships two block systems that will eventually disagree about refusal.** Routed to `/create-prd-architecture`.\" Also music-licensing-cx.md:28 (CX-17): \"the two must reconcile the default or they contradict\". || ALREADY RECONCILED — 11.04.02-co-owner-veto-approval.md:243 (D-12): \"**The block table's default is empty/permissive — except AI training, which defaults to refused** | 11.07 D-03 (opt-in, never opt-out) inverts this feature's default for exactly one category. The mechanism is shared; the default is not. Uniform application of the permissive default is the most damaging bug available in this domain\". 11.04.02:74-81 (§ Defaults) states it in prose — \"**One category inverts this.** AI training defaults to **refused** … An implementer who reads \\\"permissive default\\\" and applies it uniformly ships the single most damaging bug available in this domain\" — and 11.04.02:182 (States/Empty) renders it: \"\\\"Nothing refused\\\" — the permissive default. **Except AI training, which reads \\\"Refused\\\" with nothing set** (D-12, 11.07 D-03). The one category whose empty state is a decision\". || WRONG PARTY — 11.04.01 owns per-share policy, not the block table; blocks are 11.04.02's object (11.04.02 D-02: \"A veto is a distinct object from a policy\"), and 11.04.01 states no block-table default anywhere.",
+      "forcedInvention": "None on the default itself — D-12 fixes it. The cost is that an architect following P-04's routing arrives to unify a per-category default that is already ratified, against a named file that does not hold it, with the pattern still describing the defect as live; the available wrong outcome is re-litigating a settled product decision (opt-in AI consent) as an architecture consistency clean-up.",
+      "failureScenario": "/create-prd-architecture acts on P-04's instruction to 'unify the consent engine with an explicit per-category default', reads 11.04.01 as directed, finds no block-table default there, and normalises the engine on 11.04.02's headline permissive default — silently reverting 11.07.01 D-01's opt-in and shipping what 11.04.02 D-12 calls \"the single most damaging bug available in this domain\"."
+    },
+    {
+      "id": "DOM-2",
+      "unit": ".",
+      "severity": "warning",
+      "dimension": 8,
+      "category": "stale-status-map",
+      "claim": "The domain index's Children table states every child is `[SURFACE]` and that only a breadth pass has run; on disk eight leaves are `[DEEP]`, seventeen are `[PARTIAL]`, all eight sub-domain indexes are `[BREADTH]`, and the domain's own CX file is `[DEEP]`.",
+      "evidence": "music-licensing-index.md:40: \"> All `[SURFACE]` — breadth pass only; depth is allocated by MoSCoW in `/ideate-discover` Step 5.\" — followed by 11 rows each carrying `[SURFACE]` in the Status column (lines 44-54), and the file's own header at line 5: \"> **Status**: [BREADTH]\". || ON DISK: 11.02.01, 11.02.02, 11.02.03, 11.04.01, 11.04.02, 11.05.01, 11.08.01, 11.08.02 are each `> **Status**: [DEEP]`; 17 further leaves are `[PARTIAL]`; every sub-domain index reads `[BREADTH]`; music-licensing-cx.md:5 reads \"> **Status**: [DEEP] — 8 sub-domains + 3 features; intra-domain cross-cuts mapped and synthesised **after the deepening pass**.\" Each of the eight sub-domain indexes carries an accurate per-leaf Status column, so the defect is confined to the domain index.",
+      "forcedInvention": "None structural. The cost is navigational: the domain index is the entry point a downstream stage reads first, and it reports the whole domain as un-deepened, which understates where authoritative detail lives and mis-signals which nodes still need a depth pass.",
+      "failureScenario": "A downstream stage (or a fresh reviewer) reads the domain index, concludes no depth pass has run anywhere in domain 11, and either re-runs deepening over the eight [DEEP] leaves — overwriting ratified decisions such as 11.04.01 D-18/D-19 and 11.08.01 D-15 — or treats the [DEEP] files' decisions as provisional breadth-pass drafts rather than as the ratified constraints the rest of the domain cites."
+    }
+  ],
+
+  "notReported": [
+    "Stale [PENDING — /ideate-discover Step 5 deepening] markers in sub-domain CX files. Seven exist (11.01-cx:57, 11.02-cx:82, 11.04-cx:58, 11.05-cx:60, 11.07.02:54, 11.07.03:57, 11.08-cx:57). All are un-owned and name a stage that has already run. Six were checked against the children and are either answered on disk or shadowed by a properly owned Q row — 11.01-cx:57 (hold release automatic vs acknowledged) is answered by 11.01.04's 'the accepting side's hold releases' and 11.01.05's 'the other side releases'; 11.04-cx:58 (is the refuser named to the buyer) by 11.04.02 D-06 'named to co-owners and never to the buyer'; 11.05-cx:60 (interpolation chains and cycles) by 11.05.04 Q-03 Resolved plus 11.02.03's Traversal invariant; 11.07.02:54 by its own Q-04; 11.07.03:57 by its own Q-03; 11.08-cx:57 (notify a prior verifier) by 11.08.03 D-02's timestamp-not-recall mitigation, which an anonymous public verifier makes structurally determinate. Reported only where the marker's substance is actually contradicted across children — 11.02-cx:82, folded into finding 1102-1 as evidence.",
+    "domain CX CX-16's 'Contradiction / correction owed' on the 11.04.01 text. The correction is written down: 11.04.02's two-key-spaces table states it verbatim ('11.04.01 states the policy key space *is* the scope grammar — true for categories, false for buyers'), and 11.04.01 Q-05 concedes the second key space. 11.04.01's statement is true of its own object, which holds no buyer blocks (Q-05: no allow-list in v1). Superseded in substance by finding 1108-1, which attacks the same claim from the opposite direction.",
+    "11.05.03's 115%-obligation row as a forced invention (block vs warn on rev-share stacking). D-03 'Obligation stacking is validated before agreement' plus 'must be caught before agreement, not after' plus 11.08.02's 'If it somehow reaches the gate, fail closed' resolve to prevention.",
+    "11.06 CX-01 synthesis Q2's 'either the purchase fails, or it completes with a prominent whitelisting-pending state'. The pending branch is stated three times in user-visible columns (11.06.01 edge row, 11.06.01 States/Partial, 11.06.02 edge row) and the fail branch is incompatible with domain D-06 irrevocability and 11.08.02 D-06's explicit ruling that a failed whitelist write leaves the licence issued.",
+    "11.10's 'Karaoke use | Genuinely composite; unmodelled' — 11.10 is banded WONT and [SURFACE], where ideation-index defines Won't as 'intentionally minimal … retained for traceability, not built'.",
+    "Numeric tuning values deferred to downstream layers with a named target: similarity floor (11.01.02), minimum analysable reference length with a candidate (11.01.02), quote default TTL (11.03.02), card-lookup latency budget (11.03.01), consent-window cadence (11.02.04), fingerprint confidence bands (11.05.01 Q-05), claim-release target time (11.06.03 Q-03). All carry an explicit stage."
+  ],
+
+  "coverageNote": "9 units, 52 files — matches the expected counts exactly. Enumerated from disk: the domain directory plus 11.01–11.08; 11.09/11.10/11.11 are flat feature files belonging to the domain unit (correct under the Classification Gate — each has fewer than 3 sub-features). Every file was read in full: the 44 smaller files directly, and the 8 [DEEP] files (11.02.01/02/03, 11.04.01/02, 11.05.01, 11.08.01/02, 50–60 KB each) via sandboxed extraction of Behavior, Edge Cases, States, Decisions and Open Questions, with Overview/Role Lens/Deep Think/Cross-Cut Notes covered by targeted extraction and structural checks. Structural compliance was verified programmatically across all 52 files: every leaf has a Role Lens carrying all four personas plus Behavior, Edge Cases, States and Decisions; every index has a populated Role Matrix and Decision Log; every CX has a Cross-Cut Map and Rejected Pairs. All 168 Open Question rows were checked for owner and deferral target: zero malformed. 47 rows are marked resolved with a cited source. The domain's ambiguity is concentrated in cross-file reconciliation debt, not in local under-specification: both blocking findings are contradictions between files that are individually exhaustive, and both were reached by the implementer simulation rather than by rubric scoring — which is why they are recorded at dimension 0 while every rubric dimension scores ✅ or ⚠️. Rubric dimensions 4 (Constraint Explicitness) and 5 (Success Measurability) are N/A for all 9 units: budget, timeline, team, compliance and performance axes live in meta/constraints.md and success metrics in meta/, neither of which is inside this domain, and no unit in this domain carries a metrics section by template. Dimension 6 (Competitive Positioning) is applicable only to the domain root unit, which is the positioning artifact (Musicbed, Artlist, Songtradr, Jaxsta named with a specific capability gap and a defensible moat); it is N/A for the 8 sub-domain units, which are not positioning documents. Domain totals: 3.0 points over 46 applicable checkpoints = 6.5%."
+}

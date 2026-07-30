@@ -1,0 +1,301 @@
+{
+  "domain": "24-trust-safety-disputes",
+  "root": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/24-trust-safety-disputes",
+  "unitsAudited": 9,
+  "filesRead": 54,
+  "expected": { "units": 9, "files": 54 },
+  "rubric": {
+    "applicableDimensionsPerUnit": [1, 3, 5, 7, 8],
+    "naDimensions": [2, 4, 6],
+    "naRationale": "Dimension 2 (Persona Specificity) requires name + role + pain + current workaround + success criteria + switching trigger per persona — those fields are owned by meta/personas.md, which is outside this domain's unit set. Dimension 4 (Constraint Explicitness) enumerates budget/timeline/team/compliance/performance axes, owned by meta/constraints.md. Dimension 6 (Competitive Positioning) requires >=3 named competitors + capability gap + moat, owned by meta/competitive-landscape.md. Scoring these per-unit would either flatter (marking absent-by-design content as pass) or punish units for content they do not own. Role Matrix / Role Lens presence and completeness were still verified structurally under Dimension 8 (present in all 9 index files and all 33 leaf feature files).",
+    "formula": "ambiguity% = points / applicable_checkpoints * 100",
+    "totalApplicableCheckpoints": 45,
+    "totalPoints": 7.0,
+    "ambiguityPercent": 15.56
+  },
+  "units": [
+    {
+      "unit": "24-trust-safety-disputes (domain unit: trust-safety-disputes-index.md, trust-safety-disputes-cx.md, 24.09-case-evidence-locker.md)",
+      "applicableCheckpoints": 5,
+      "naDimensions": [2, 4, 6],
+      "points": 1.0,
+      "ambiguityPercent": 20.0,
+      "scores": {
+        "1_problem_clarity": "PASS — trust-safety-disputes-index.md:15-22 states a single falsifiable domain thesis and the discriminator against cross-cut classification: 'Not a cross-cut despite serving every domain: it has a dedicated operator persona, its own destination surfaces ... and legally mandated machinery'.",
+        "3_feature_completeness": "WARN (0.5) — two internal satisfiability defects: CX-09 gate timing (finding TSD-03) and the 24.09 `Purged` state effect contradicting its own trigger and transition guard (finding TSD-04). Otherwise exceptional: 24.09 carries 17 edge-case rows spanning mutation, empty, permission, network, malicious input, partial data, concurrency, race, scale and multi-hyphenate.",
+        "5_success_measurability": "PASS — 24.09-case-evidence-locker.md:65 '5 attempts over ~1 hour'; :74 'purge-eligible date is the **latest** expiry among every clock'; :148 'Retained → Purged only when `now >= max(all applicable clocks)` **and** no hold — checked atomically at delete time'. The unquantified half (statutory clock values) is explicitly owned: :193 Q-03, Owner 'User + counsel', Deferred To '/create-prd-security'.",
+        "7_open_question_resolution": "PASS — all 7 domain-index questions and all 4 of 24.09's carry an owner and a deferral target or an explicit resolution citation (e.g. index:141 'Q-06 | [OWNER] ... | User | /create-prd'; 24.09:192 'Q-02 | ... | Agent | /create-prd-architecture').",
+        "8_structural_compliance": "WARN (0.5) — index + cx present at every level, Role Matrix populated (9 rows x 4 personas, no empty cells), Role Lens present in all 33 leaf files, Structure Map matches the folder tree exactly (8 sub-domains + 1 domain-level feature = 36 features, arithmetic checks out). Defect: the Children table's Status column is stale for all 9 rows (finding TSD-05)."
+      }
+    },
+    {
+      "unit": "24.01-reporting-moderation (index, cx, 5 features)",
+      "applicableCheckpoints": 5,
+      "naDimensions": [2, 4, 6],
+      "points": 1.0,
+      "ambiguityPercent": 20.0,
+      "scores": {
+        "1_problem_clarity": "PASS — 24.01-reporting-moderation-index.md:10-15 'The intake half of the adjudication machine: the single front door through which any user of any of the 24 domains says \"this is wrong\" ... this sub-domain decides *what gets looked at, by whom, and how fast*'.",
+        "3_feature_completeness": "FAIL (1.0) — finding TSD-01 (blocking): the factual-rights-dispute lane is simultaneously routed out of and into 24.01.03's queue. Compounded by finding TSD-02 (dedup key granularity). Depth is otherwise outstanding — 24.01.01 has 15 edge-case rows and 7 Deep Think entries; 24.01.03 has 17 edge cases, two separate state tables and 8 decisions.",
+        "5_success_measurability": "PASS — quantified throughout and testable: 24.01.01:62 'issues a case ID within 2 s'; :58 'free-text <= 5,000 chars'; :76 '20 distinct reports per rolling 60 min'; :80 'size-capped (<= 25 MB/file, <= 5 files)'; :60-61 'rolling 30-day window'; 24.01.03:188 'claim lease 30 min, blind re-review sample 5%, inter-rater target (Cohen's kappa) >= 0.7, exposure cap forcing a break after 30 high-harm items or 60 min continuous, rotation off a high-harm queue every 2 h'. The one unquantified normative value (SLA minutes per tier) is owned twice: 24.01.01:142 Q-02 and 24.01.03:187 Q-04, both 'User + counsel' / '/create-prd-security'.",
+        "7_open_question_resolution": "PASS — every question in the unit carries an owner and a target (24.01 index:62-64; 24.01.01:141-144; 24.01.03:184-188). Resolved ones cite their resolving source (24.01.02:96 resolves Q-01 against meta/constraints.md D-31; 24.01.04:101 resolves Q-03 against 24.01.03 D-05/DT-07).",
+        "8_structural_compliance": "PASS — index + cx present; Children table Status column matches every child's own Status header ([DEEP]/[SURFACE]/[DEEP]/[SURFACE]/[PARTIAL]); Role Matrix fully populated with a stated rationale for the all-No rows; Role Lens present in all 5 features."
+      }
+    },
+    {
+      "unit": "24.02-enforcement-appeals-policy (index, cx, 6 features)",
+      "applicableCheckpoints": 5,
+      "naDimensions": [2, 4, 6],
+      "points": 1.0,
+      "ambiguityPercent": 20.0,
+      "scores": {
+        "1_problem_clarity": "PASS — 24.02-enforcement-appeals-policy-index.md:10-14 'The consequence half of the adjudication machine ... and, critically for a platform that holds ownership records, **what a sanction is forbidden to touch**.'",
+        "3_feature_completeness": "WARN (0.5) — finding TSD-07 (rung 8 has no state) and finding TSD-06 (false 'only feature that fails closed' absolute). Depth is otherwise the strongest in the domain: 24.02.04 enumerates 22 numbered edge cases E-01..E-22 with explicit HTTP status codes and error codes; 24.02.01 specifies a 9-rung ladder with a scope containment order and a three-branch entity-vs-member resolution algorithm.",
+        "5_success_measurability": "PASS — 24.02.03:50 'a target of **within 24 hours**'; :87 'retried with progressively longer delays for up to 72 hours'; :90 'bursts of at least 10 000 account-level sanctions per hour, with each subject's notice delivered within 60 seconds of commit'; :82 'length-capped at 4 000 characters'; 24.02.04:53-55 half-open `[effective_from, effective_until)` interval resolution with an explicit millisecond-boundary rule.",
+        "7_open_question_resolution": "WARN (0.5) — finding TSD-08: the Art 17 redress-route obligation (no size carve-out, launch Must) points into the Art 20 appeal surface whose existence is scale-gated and deferred, and no question in the unit owns that interaction. All other questions are owned and targeted (index:66-68; 24.02.01:185-188; 24.02.02:104-106; 24.02.03:143-146; 24.02.04:165-167; 24.02.05:111-113; 24.02.06:96-98).",
+        "8_structural_compliance": "PASS — index + cx present; Children Status column matches each child's own header; Role Matrix populated with a stated rationale for the differentiated 24.02.05 row; Role Lens present in all 6 features."
+      }
+    },
+    {
+      "unit": "24.03-fraud-risk-operations (index, cx, 6 features)",
+      "applicableCheckpoints": 5,
+      "naDimensions": [2, 4, 6],
+      "points": 0.5,
+      "ambiguityPercent": 10.0,
+      "scores": {
+        "1_problem_clarity": "PASS — 24.03-fraud-risk-operations-index.md:10-14 'the detection-driven half ... nobody files a report about card testing, it just happens 4,000 times in an hour', plus :22-26 naming the platform-specific trap ('That behaviour is indistinguishable from account-farming under any generic velocity rule').",
+        "3_feature_completeness": "PASS — every feature has 7-10 edge-case rows including the inverse/false-positive case, and both fail-postures are stated per feature (24.03.01:56 fail open with rules aware they are blind; 24.03.05:60 fail closed on payouts). The three `[PENDING]` markers in the unit all carry an explicit target (24.03.03:106, 24.03.04:59 '/write-be-spec: cross-session aggregation window and thresholds', 24.03.06:62 '/create-prd, Q-01').",
+        "5_success_measurability": "WARN (0.5) — the unit deliberately states no numeric thresholds (index:42 'teaches an adversary the threshold'), which is defensible, but the one numeric tolerance that would make the design testable is routed out of the vision layer entirely: 24.03.01:105 'Q-03 | What is an acceptable false-positive rate on a payout hold ... **Re-targeted**: `/ideate-validate` has already run. This is a numeric tolerance with a cost on both sides, and it belongs with the other engineering budgets and thresholds'. The result is a unit with no testable acceptance criterion of any kind. See finding TSD-09.",
+        "7_open_question_resolution": "PASS — all questions owned and targeted; resolutions cite sources (24.03 index Q-01 resolved against 24.03.01 DT-04 and 24.03.02's burst-signup edge case; 24.03.04:107 Q-01 resolved 2026-07-23 with the quoted supporting edge case; 24.03.03:134-135 Q-01/Q-02 resolved against 13.03.01 D-13 and D-04).",
+        "8_structural_compliance": "PASS — index + cx present; Children Status column matches each child's header; Role Matrix populated with the all-No design rationale stated at index:42; Role Lens present in all 6 features."
+      }
+    },
+    {
+      "unit": "24.04-transaction-disputes-protection (index, cx, 4 features)",
+      "applicableCheckpoints": 5,
+      "naDimensions": [2, 4, 6],
+      "points": 1.5,
+      "ambiguityPercent": 30.0,
+      "scores": {
+        "1_problem_clarity": "PASS — 24.04 index Overview plus D-02 draws the sharp line ('Split and credit disputes are NOT this sub-domain's ... a songwriting share cannot be refunded, returned, or repaired').",
+        "3_feature_completeness": "WARN (0.5) — three protection edge cases remain unspecified with markers rather than behaviour (24.04.03:57, :58, :61), one of which (finding TSD-10) points at a question this same file resolves. Note the 4-vs-5 remedy-set count reads as a contradiction on first pass but is fully reconciled at 24.04 index:64 ('one claim flow over **four** transaction types — the fifth (a split) is not this sub-domain's at all (D-02)') and is therefore NOT reported.",
+        "5_success_measurability": "WARN (0.5) — one concrete window only (24.04.02:59 'Default mediation window is 5 days; a single accept/counter resets nothing — the clock runs on the whole mediation, not per-message'). Finding TSD-12: filing windows are normative but unvalued and unowned.",
+        "7_open_question_resolution": "WARN (0.5) — findings TSD-10 (marker defers to an already-resolved question) and TSD-11 (bare marker with no owner and no target). All entries in the Open Questions tables themselves are owned and targeted (index:64-66; 24.04.01:106-108; 24.04.02:112-114; 24.04.03:111-113; 24.04.04:113-115).",
+        "8_structural_compliance": "PASS — index + cx present; Children Status column matches every child's header ([PARTIAL] x4); Role Matrix populated with a stated rationale for the Fan `No access` row on 24.04.04; Role Lens present in all 4 features."
+      }
+    },
+    {
+      "unit": "24.05-copyright-authenticity-enforcement (index, cx, 4 features)",
+      "applicableCheckpoints": 5,
+      "naDimensions": [2, 4, 6],
+      "points": 0.0,
+      "ambiguityPercent": 0.0,
+      "scores": {
+        "1_problem_clarity": "PASS — 24.05.01:10-13 'The statutory notice-and-takedown cycle and the strike counter that safe harbour is conditioned on ... a 512(i) repeat-infringer policy that is *reasonably implemented* and actually executed.'",
+        "3_feature_completeness": "PASS — the deepest single file in the domain: 24.05.01 adds a dedicated `Claim Lifecycle` table (8 stages) on top of Behavior/Happy Path/Edge Cases/States, with named error codes (`INCOMPLETE_NOTICE`, `NOT_UPLOADER`), a categorised 15-row edge-case table, and a defined strike unit (D-04 '`(claimant, asset, infringement-event)` tuple'). Every claim path states its fail posture (24.05.02 D-03 'Fail open — an unavailable matcher generates no claims').",
+        "5_success_measurability": "PASS — 24.05.01:39 'the product target is **removal actioned within 24 hours of a complete notice being accepted**, not \"fast\"' (explicitly rejecting the unmeasurable word); :45-47 'restored **not less than 10 nor more than 14 business days** after the claimant receives the counter-notice (512(g)(2)(C))'.",
+        "7_open_question_resolution": "PASS — the highest-stakes undecided value in the domain is correctly owned rather than invented: 24.05.01:150 'Q-02 | What is the strike threshold and window ... Writing \"three strikes\" and then not terminating on the third is the Cox failure exactly. | User + counsel | /create-prd-security'. Q-01, Q-03, Q-04 likewise owned; 24.05.02 Q-01/Q-03 and 24.05 index Q-02 resolved with citations.",
+        "8_structural_compliance": "PASS — index + cx present; Children Status column matches every child's header; Role Matrix populated with stated rationales for both non-uniform rows; Role Lens present in all 4 features."
+      }
+    },
+    {
+      "unit": "24.06-personal-safety-threat-response (index, cx, 3 features)",
+      "applicableCheckpoints": 5,
+      "naDimensions": [2, 4, 6],
+      "points": 0.0,
+      "ambiguityPercent": 0.0,
+      "scores": {
+        "1_problem_clarity": "PASS — 24.06.01:32-35 states the falsifiable centre: 'A gig listing is a public, timestamped, geolocated commitment that a named human will be at a known address at a known hour ... A stalker needs nothing else. Blocking them does not unpublish the show.'",
+        "3_feature_completeness": "PASS — every `[PENDING]` in the unit cites an owned question (24.06.01:54 '24.06 Q-01', :56 'see Q-02', :72 'depends on Q-01'; 24.06.02:61 '24.06 CX-03 and 24.06.03 Q-01', :76 '24.06 Q-02'; 24.06.03:57 'routed to Safeguarding', :58 'see Q-02', :62 '24.01.03 Q-02', :73 '[PENDING — Step 5 Must-depth / /create-prd-security] — 24.06 Q-01/Q-02, deliberately unanswered at this level'). 24.06.01 carries two separate state tables (protection lifecycle + standard UI render states).",
+        "5_success_measurability": "PASS — no numeric target is required at this layer and the SLA model the unit depends on is owned upstream (24.01.03:187 Q-04). The unit's normative claims are testable as written: 24.06.01 D-01 'Self-serve restriction requires **zero** process — instant, private, no case'; D-03 'Restriction propagation failure is a correctness bug, not a UX issue'; 24.06.03:34 'No sanction, ever. No removal, no strike, no restriction, no statement of reasons, no appeal.'",
+        "7_open_question_resolution": "PASS — index:65-67 and each feature's table carry owner + target; 24.06.01:121 Q-03 and 24.06.02:116 Q-02 are resolved or explicitly re-targeted with a named destination.",
+        "8_structural_compliance": "PASS — index + cx present; Children Status matches; Role Matrix fully populated (all-Full, with the rationale stated at index:46-50); Role Lens present in all 3 features. Note CX-01 and CX-04 cover the same node pair in opposite directions with distinct semantics — deliberate, not a duplicate, and not reported."
+      }
+    },
+    {
+      "unit": "24.07-identity-abuse-ownership-disputes (index, cx, 3 features)",
+      "applicableCheckpoints": 5,
+      "naDimensions": [2, 4, 6],
+      "points": 2.0,
+      "ambiguityPercent": 40.0,
+      "scores": {
+        "1_problem_clarity": "PASS — 24.07-identity-abuse-ownership-disputes-cx.md:21-25 states the discriminating problem precisely: 'the manager may hold a legitimate, un-revoked mandate ... in which case they are the account's authorised operator and the band's complaint is a governance failure, not an impersonation ... **The same facts, and the answer lives in domain 01's graph, not in the report.**'",
+        "3_feature_completeness": "FAIL (1.0) — finding TSD-13: the scenario both files label the sub-domain's worst case has no specified behaviour in either file, and both `Deadlocked` terminal states resolve to a marker rather than a rule.",
+        "5_success_measurability": "PASS — no numeric metric is required here, and the load-bearing rules are testable as written: 24.07.02 D-02 'Consequential actions freeze on dispute; accruals do not'; 24.07.03 D-02 'Accruals continue throughout the freeze'; D-03 'Incapacity succession must be **reversible**'.",
+        "7_open_question_resolution": "FAIL (1.0) — finding TSD-14: three markers with no owner and no deferral target, plus four markers that defer to questions already resolved in the same or the parent file. 24.07.03 has zero unresolved Open Questions and five PENDING behaviours.",
+        "8_structural_compliance": "PASS — index + cx present; Children Status column matches every child's header; Role Matrix populated with an explicit rationale for the Fan row (index:44-50); Role Lens present in all 3 features."
+      }
+    },
+    {
+      "unit": "24.08-illegal-content-legal-process (index, cx, 4 features)",
+      "applicableCheckpoints": 5,
+      "naDimensions": [2, 4, 6],
+      "points": 0.0,
+      "ambiguityPercent": 0.0,
+      "scores": {
+        "1_problem_clarity": "PASS — 24.08 index D-01 'Grouped by **counterparty**, not by harm type' with the discriminator stated; 24.08.03:28 'Verification is the feature, not the form'.",
+        "3_feature_completeness": "PASS — 24.08.01 carries 17 edge-case rows covering match, audio gap, false positive, provider outage, submission failure, deletion race, retention-sweep race, concurrency, re-upload, GDPR erasure, unhashable input, multipart partial, two malicious-input variants, malicious probing, multi-hyphenate and novel material, plus an explicit internal state chain (:99-102 'Scanning -> Clear or Matched -> Preserved -> Reported -> Held'). The two bare `[PENDING]` cells in the unit (24.08.02:65, 24.08.04:62) sit in the 'What User Sees' column of features whose every other row in that column reads 'Nothing' — no behaviour is left undecided by them, so they are not reported.",
+        "5_success_measurability": "PASS — the standard is named rather than paraphrased: 24.08.01:46-48 'NCMEC submission is a durable, retrying obligation with a statutory \"as soon as reasonably possible\" standard ... it **fails loud**, never silent'; :37-39 'The uploaded bytes are stored before they are servable ... content becomes publicly reachable **only after** matching clears.'",
+        "7_open_question_resolution": "PASS — every question owned and targeted (index:69-71; 24.08.01:142-145; 24.08.02:109-111; 24.08.03:112-114; 24.08.04:105-107), including the two the unit itself calls the hardest (24.08.01 Q-03 break-glass reviewer; 24.08.02 Q-01 art-vs-advocacy line).",
+        "8_structural_compliance": "PASS — index + cx present; Children Status column matches every child's header; Role Matrix fully populated (all-No, with the finding stated explicitly at index:47-54); Role Lens present in all 4 features."
+      }
+    }
+  ],
+  "findings": [
+    {
+      "id": "TSD-01",
+      "unit": "24.01-reporting-moderation",
+      "severity": "blocking",
+      "dimension": 3,
+      "claim": "The factual-rights-dispute reason family is specified as bypassing the general moderation queue entirely AND as an S2 tier routed into a skill-scoped queue inside that same queue, with `credit-dispute` named as one of its skill scopes.",
+      "evidence": "24.01.01-report-intake-notice-and-action.md:36-38 — 'Three reason families **bypass the general moderation queue entirely**: CSAM (-> 24.08.01, preservation duty), self-harm (-> 24.06.03, no sanction ever), and factual rights disputes (-> domains 02/09, not a policy question).' Corroborated at 24.01-reporting-moderation-cx.md:26-27 — 'Three reason codes bypass the general queue entirely: CSAM (-> 24.08.01), self-harm (-> 24.06.03), and factual rights disputes (-> domain 02/09).' Contradicted by 24.01.03-moderation-queue-reviewer-ops.md:50, whose S0 bypass row lists only two destinations — '| S0 | Illegal / imminent-harm (CSAM, credible threat, self-harm) | **Bypasses this queue entirely** - hard-routed to 24.08.01 / 24.06.03; never enters a general lane (DT-04) |' — and by :52 — '| S2 | Standard policy violation or factual dispute | Skill-routed by reason family | Standard SLA |'. 24.01.03:81 makes the routing explicit: 'S0 reasons are hard-routed out to 24.08.01 / 24.06.03 and never touch this queue; all others select a skill-scoped queue (e.g. `sample-clearance`, `credit-dispute`, `gear-authenticity`, `harassment`, `general-policy`)', and :39 names 'the music-domain queues (sample clearance, credit disputes, gear authenticity, mix-ownership)'. A third position appears at trust-safety-disputes-cx.md:209-211 — 'factual rights/credit disputes (-> domains 02/09, wrong remedy - the *remedy* leaves, the *adjudication work* does not: those cases return as case classes on the shared `Dispute Case Engine`'.",
+      "failure_scenario": "A user files a 'credit theft' report. Implementer A reads 24.01.01 and 24.01-cx and hard-routes it out of 24.01.03 before enqueue, exactly as the CSAM and self-harm lanes are routed, so no queue item, no severity tier and no moderation SLA are ever created for it. Implementer B reads 24.01.03 and creates an S2 queue item in the `credit-dispute` skill scope with a standard SLA and a moderation reviewer assignment. The two builds differ in which component owns the case, whether a moderation SLA clock exists on it, whether it consumes reviewer capacity on the one-person team, and whether it can produce a moderation decision record at all. Because 24.01.03 line 158 requires the decision record to be structured at the queue step or the SoR cannot be generated, build A also silently loses the ability to issue any reasoned decision on the lane.",
+      "forcedInvention": "Whether a factual-rights/credit dispute enters 24.01.03's router at all; if it does, whether it is S2 or exempt from the severity model; if it does not, which component holds its clock and produces its reasoned decision; and how either answer reconciles with the domain CX's third position that the adjudication work stays on a shared Dispute Case Engine."
+    },
+    {
+      "id": "TSD-02",
+      "unit": "24.01-reporting-moderation",
+      "severity": "warning",
+      "dimension": 3,
+      "claim": "The report deduplication key is specified at two different granularities — reason code in the feature file, reason family in the cross-cut file — with no reconciliation.",
+      "evidence": "24.01.01-report-intake-notice-and-action.md:60-61 — 'User submits; system dedups against existing open cases on the same target + reason within a rolling 30-day window'. 24.01-reporting-moderation-cx.md:36-37 — 'Two reports on the same target must dedup into one case with N reporters, or a brigade becomes N enforcement signals. Merge strategy: dedup by (target, reason-family), retain each reporter for notification.'",
+      "failure_scenario": "Two hundred fans report one post: 120 pick 'harassment' and 80 pick 'threats' — distinct reason codes inside one reason family. Under the feature file's key the intake produces two separate cases, two queue items, two reviewer assignments and potentially two contradictory outcomes on one object, which 24.02.03:78 then refuses ('The platform admits only one sanction per object at a time; the first to complete wins, the second is refused'), leaving one case permanently unresolvable. Under the cross-cut's key it produces one case with 200 reporter references, which is what 24.01.01:72's brigading row promises ('Dedups to one case with 400 reporter references ... all receive the identical outcome').",
+      "forcedInvention": "Whether the dedup key is the reason code or the reason family, and therefore whether a family-internal reason spread produces one case or many."
+    },
+    {
+      "id": "TSD-03",
+      "unit": "24-trust-safety-disputes (domain unit)",
+      "severity": "warning",
+      "dimension": 3,
+      "claim": "CX-09 places the prohibited-items and authenticity gates at a single shared moment and requires their refusals to be merged into one message, but names that moment inconsistently within the same section and contradicts both children's own gate timing, making the merge unimplementable as written.",
+      "evidence": "trust-safety-disputes-cx.md:284-286 — 'One listing gate, two engines firing at the same moment. Prohibited-items (24.02.05, e.g. CITES-restricted materials) and counterfeit/authenticity (24.05.03, e.g. suspected refin or fake brand) both block a listing **at checkout** and must present the seller one coherent reason, not two contradictory refusals.' Contradicted two paragraphs later at :296-297 — 'Trigger chain: listing submit -> both checks run -> refusals merged into one message' and 'both are **pre-publication** gates'. Both readings are contradicted by the children: 24.02.05-prohibited-restricted-items-engine.md:33-35 — 'Restriction is destination-dependent, so the engine runs **twice**: at listing (is this listable at all?) and at checkout/shipping (is this shippable *there*?). A listing gate alone is wrong - the same guitar is a legal domestic sale and an illegal export' (D-03 at :104: 'The engine evaluates twice: listing and checkout'); and 24.05.03-authenticity-counterfeit-brand-protection.md:28-30, which places its own detection 'at listing time' only. 24.05.03:64 nevertheless demands the merged output: 'One consolidated hold reason, not two.'",
+      "failure_scenario": "A 1968 Brazilian-rosewood Martin with a suspected refinish is listed. The authenticity engine fires at listing submit; the prohibited-items destination rule cannot fire until a buyer with a destination exists at checkout (24.02.05:60 'Listing allowed; **export blocked at checkout**'). There is no single moment at which both refusals exist, so 'refusals merged into one message' cannot execute. Implementer A defers the authenticity hold to checkout to satisfy the merge, delaying a signal the seller could have fixed pre-publication. Implementer B merges only the listing-time subset and lets the CITES destination refusal arrive later as the second, unreconciled refusal the requirement exists to prevent.",
+      "forcedInvention": "Which lifecycle moment the merged refusal is emitted at, and what the seller is shown when one of the two engines has not yet been able to evaluate."
+    },
+    {
+      "id": "TSD-04",
+      "unit": "24-trust-safety-disputes (domain unit)",
+      "severity": "warning",
+      "dimension": 3,
+      "claim": "The evidence locker's `Purged` state describes a partial anonymise-and-retain outcome that its own trigger and transition guard make unreachable.",
+      "evidence": "24.09-case-evidence-locker.md:144 — '| Purged | Every applicable clock expired and no hold present | Nothing; PII anonymised-and-retained **where a financial/evidentiary clock still applies**, fully removed only when all clocks have expired |'. The trigger excludes that branch, and the retention rule and transition guard both confirm the exclusion: :74 'A bundle's purge-eligible date is the **latest** expiry among **every** clock that applies to it'; :148 'Retained -> Purged only when `now >= max(all applicable clocks)` **and** no hold'. :70 confirms tax retention is one of the clocks in that max ('CSAM preservation, chargeback windows, tax retention, open disputes, legal holds and GDPR erasure').",
+      "failure_scenario": "Implementer A implements the guard literally: a bundle reaches Purged only when max-of-clocks has elapsed, so the delete is total and the anonymise branch is dead code. Implementer B implements the state row and adds a partial-purge path that anonymises PII while a financial clock is still open — which means bundles enter Purged before max-of-clocks and the D-06 arithmetic is violated. Both cite the same file. The divergence decides whether a GDPR erasure over a bundle with a live tax clock produces a tombstoned-PII bundle or no change at all, which is the exact case :78-80 legislates for as a separate transition.",
+      "forcedInvention": "Whether anonymise-and-retain is an effect of Purged (impossible under its own trigger) or a distinct transition out of Retained on an erasure request, and consequently what state a partially-anonymised bundle occupies."
+    },
+    {
+      "id": "TSD-05",
+      "unit": "24-trust-safety-disputes (domain unit)",
+      "severity": "warning",
+      "dimension": 8,
+      "claim": "The domain index's Children table reports `[SURFACE]` for all nine children, but not one child's own Status header says `[SURFACE]`.",
+      "evidence": "trust-safety-disputes-index.md:70-78 lists Status '`[SURFACE]`' for 24.01 through 24.09, and :65-66 asserts 'Classified 2026-07-16 by `/ideate-discover` Step 3 ... All nodes `[SURFACE]`', with the file's own Last-updated at :6 being 2026-07-23. On disk: all eight sub-domain indexes carry '> **Status**: [BREADTH]' at line 5 (e.g. 24.01-reporting-moderation-index.md:5, 24.08-illegal-content-legal-process-index.md:5) and 24.09-case-evidence-locker.md:5 carries '> **Status**: [DEEP]'. The sub-domain indexes' own Children tables are accurate by contrast — every one matches its features' headers exactly (e.g. 24.01 index:27-31 [DEEP]/[SURFACE]/[DEEP]/[SURFACE]/[PARTIAL] against the five files' line-5 headers).",
+      "failure_scenario": "A downstream stage reading the pipeline key file to decide what still needs deepening reads nine `[SURFACE]` nodes and schedules a breadth pass over material that is already at [DEEP] (24.09, and the [DEEP] features inside 24.01/24.02/24.05/24.08), while missing that eight sub-domain indexes sit at [BREADTH]. The stale column is the only place in the tree where the status roll-up disagrees with the nodes it summarises, so a reader has no signal that it is stale.",
+      "forcedInvention": "Which status roll-up is authoritative for gating the next pipeline stage — the domain index's Children column or each child's own header."
+    },
+    {
+      "id": "TSD-06",
+      "unit": "24.02-enforcement-appeals-policy",
+      "severity": "warning",
+      "dimension": 3,
+      "claim": "24.02.05 asserts twice that it is the only feature in domain 24 that fails closed, while two other features specify fail-closed behaviour and one of them explicitly counts itself as a second.",
+      "evidence": "24.02.05-prohibited-restricted-items-engine.md:67 — '| Engine unavailable | **Fail closed** - **the one place in domain 24** where failing closed is correct, because publishing an illegal listing is worse than delaying a legal one |', restated as D-03 at :105 — 'Fail closed | **The only feature in domain 24** where failing closed is correct - a delayed legal listing beats a published illegal one.' Directly contradicted by 24.08-illegal-content-legal-process/24.08.01-csam-detection-preservation-reporting.md:72 — '| Matching provider unavailable | **Fail closed on the upload path.** Publishing unscanned content is worse than delaying it; **the only other place in domain 24 that fails closed is 24.02.05**, for the same reason |'. A third instance makes both absolutes false: 24.03-fraud-risk-operations/24.03.05-sanctions-aml-screening.md:60 — '| Screening provider unavailable | **Fail closed on payouts.** Delaying money is recoverable; paying a sanctioned party is not |', restated as D-03 at :99 — 'Fail closed on payouts'.",
+      "failure_scenario": "An implementer building the shared availability/degradation policy takes 24.02.05 D-03 at its word and codifies a single fail-closed exception, then applies the domain's stated default (24.03.01:56 'Fail open with rules aware they are blind'; 24.01.02 D-02 'Fail open, never closed') to the remaining detectors. The sanctions-screening gate is then wired fail-open, and an outage of the screening provider lets a payout to a sanctioned party through — the precise outcome 24.03.05 D-03 exists to prevent. The contradiction is also load-bearing in the other direction: an implementer who trusts 24.08.01's 'only other place' count will not look for 24.03.05's posture at all.",
+      "forcedInvention": "The domain-wide default availability posture, and the complete enumeration of which features are exceptions to it."
+    },
+    {
+      "id": "TSD-07",
+      "unit": "24.02-enforcement-appeals-policy",
+      "severity": "warning",
+      "dimension": 3,
+      "claim": "Rung 8 (entity-level action) is a permitted sanction with no corresponding state in the enforcement state machine.",
+      "evidence": "24.02.01-enforcement-ladder-sanctions.md:54 defines it — '| 8 | Entity-level action | An entity's platform privileges | Fully for the entity; must not touch co-owners |' — and :73-76 permits it — 'the entity itself acted; an entity-level action (rung 8) is permitted, but it restricts only the *entity's* platform privileges (its ability to list, book, transact under the entity name)'. The States table at :135-142 enumerates None, Proposed, Warned ('Rung 0 applied'), Restricted ('Rung 1-4 (object/feature/listing/monetization sanction)'), Suspended ('Rung 6 - account-level, time-boxed'), Banned ('Rung 7 - terminal'), Reversed and Expired. No row covers rung 8, and the Restricted row's enumeration explicitly stops at rung 4. D-08 at :179 makes the state machine normative — 'Object enforcement status moves through distinct states per `(subject, object)` pair, not a boolean flag'.",
+      "failure_scenario": "A band's recorded governance vote authorises a violating act, so entity-vs-member resolution branch 2 fires and a rung-8 sanction is applied to the entity. The implementer must choose a state for it. Choosing `Restricted` puts an entity-scope sanction into a state the table defines as rungs 1-4 object/feature scope, so the Restricted-state UI contract ('The specific capability is unavailable, with the reason inline at the point of failure') is applied to an entity that has no single capability point of failure. Choosing `Suspended` mislabels it as account-level and time-boxed. Inventing a ninth state means the transition guards, the expiry behaviour and the appeal/reversal path for entity actions are all unspecified — and 24.02.01:120's expiry-versus-appeal rule and :141's restoration cascade have no defined behaviour for it.",
+      "forcedInvention": "The state a rung-8 entity action occupies, its transition guards, whether it expires on a duration like rungs 1-6 or is terminal like rung 7, and what the reversal cascade restores for an entity."
+    },
+    {
+      "id": "TSD-08",
+      "unit": "24.02-enforcement-appeals-policy",
+      "severity": "warning",
+      "dimension": 7,
+      "claim": "The Statement of Reasons is a launch obligation that must carry a redress route into the internal appeal surface, but that appeal surface is scale-gated and treated as deferrable, and no open question in the unit owns what the mandatory redress field contains when it is deferred.",
+      "evidence": "24.02.03-statements-of-reasons.md:13-14 — 'Art 17 sits in Section 2, which has **no micro/small-enterprise carve-out**. This is a launch obligation' — and :67-68 — 'The SoR carries the **redress route** (Art 17 mandates it), which is the entry point to the Art 20 internal appeal (24.02.02)'. 24.02.02-appeals-internal-complaints.md:27 makes the appeal reachable only that way — 'Any sanction with a Statement of Reasons carries a redress route inside it (Art 17 requires it), so the SoR is the entry point rather than a separate hub' — while :37-39 defers the surface: 'Art 20 sits in DSA Section 3, which Art 19 disapplies for micro and small enterprises. The *legal* driver for this feature is therefore absent at launch. The *architectural* driver is not - see D-01.' D-01 at :96 splits only surface from reversibility ('The appeal *surface* is scale-gated; sanction *reversibility* is not'). The four questions that touch the split — 24.02.02:105 Q-02 ('Confirm the Art 19 carve-out with counsel before treating the appeal surface as Should rather than Must'), :106 Q-03, 24.02.03:143 Q-01, 24.02 index:66 Q-01 — all ask counsel to confirm the carve-outs; none asks what the Art 17 redress field resolves to if the appeal surface is not built.",
+      "failure_scenario": "The unit ships at launch scale: SoRs are mandatory, the appeal surface is deferred as Should. The implementer must populate a statutorily required field with a destination that does not exist. Implementer A ships a dead redress route (a statutory field pointing at a 404), which is the Art 17 defect the feature exists to prevent. Implementer B builds a minimal appeal intake anyway, silently un-deferring a feature the release plan deferred. Implementer C points the field at out-of-court settlement or judicial redress instead — contradicting 24.02.03:67-68's statement that the route is the entry point to the Art 20 appeal, and pre-empting 24.02.02:106 Q-03, which has not yet decided whether Art 21 is in scope at all.",
+      "forcedInvention": "What the mandatory Art 17 redress field contains at launch scale when 24.02.02 is deferred, and whether deferring the appeal surface is compatible with issuing SoRs at all."
+    },
+    {
+      "id": "TSD-09",
+      "unit": "24.03-fraud-risk-operations",
+      "severity": "warning",
+      "dimension": 5,
+      "claim": "The sub-domain's only numeric tolerance is explicitly routed out of the vision layer, leaving a six-feature detection sub-domain with no testable acceptance criterion of any kind.",
+      "evidence": "24.03.01-risk-scoring-rules-engine.md:105 — 'Q-03 | What is an acceptable false-positive rate on a payout hold, when the false positive is a working musician's rent? **Re-targeted**: `/ideate-validate` has already run. This is a numeric tolerance with a cost on both sides, and it belongs with the other engineering budgets and thresholds rath[er than here]'. Every operative statement in the unit is qualitative by construction: :44-45 'Below threshold -> allow ... Above threshold -> propose friction' (no value); :53 'Multi-hyphenate performs 5 unrelated role-actions in an hour | **Must not flag.**'; :54 'Two musicians on the same studio Wi-Fi both list gear | Shared-IP linkage must not fire'; :56 'Engine unavailable | Fail open with rules aware they are blind'. The suppression of threshold values is deliberate and defensible (24.03-fraud-risk-operations-index.md:42 'teaches an adversary the threshold'), but no measurable substitute is stated anywhere in the unit.",
+      "failure_scenario": "Two implementers both satisfy 'Must not flag' for the multi-hyphenate case and 'must not fire' for the shared-studio case, and both satisfy 'Below threshold -> allow'. One tunes for near-zero false positives and misses the burst-signup ring that 24.03.02:57 requires to be caught; the other tunes for recall and holds payouts on the genuine first-time high-value sale that 24.03.01:55 names as 'the platform's best possible transaction'. Nothing in the unit distinguishes a conforming implementation from a non-conforming one, and the one question that would have — the payout-hold false-positive tolerance — has been moved to a downstream budget with no reciprocal acceptance criterion left behind.",
+      "forcedInvention": "Any operating point at all: the balance between the must-not-flag cases and the must-catch cases, in the absence of either a threshold, a tolerance, or a stated precision/recall preference."
+    },
+    {
+      "id": "TSD-10",
+      "unit": "24.04-transaction-disputes-protection",
+      "severity": "warning",
+      "dimension": 7,
+      "claim": "An edge case is marked PENDING against an open question that the same file records as resolved, so one file states both that the behaviour is undecided and that it is decided.",
+      "evidence": "24.04.03-buyer-seller-protection-programs.md:57 — '| Producer delivered a mix; client refuses to release escrow | The work cannot be un-delivered and the client has the files. Standard protection has no answer | `[PENDING]` - see Q-02 |'. Q-02, in the same file at :112, is struck through and resolved: '| Q-02 | ~~What protects a **Producer who delivered work and was not paid**? DT-03 says this programme cannot. It is the Producer persona's core commercial risk and it currently has no home.~~ **Resolved**: escrow with milestone release, with the platform's own session record as the fact base - a different instrument, homed in the Payments, Escrow & Payouts cross-cut, not in this programme.'",
+      "failure_scenario": "An implementer working the protection-programme edge-case table reads `[PENDING]` and leaves the unpaid-delivered-work case unhandled, or raises it as a blocker, when the answer is recorded twelve rows lower in the same file and in D-03 ('Services are out of scope for this programme ... They need escrow with milestone release'). Conversely an auditor or downstream stage counting unresolved items double-counts a decided one. The row also fails its own purpose: it is the only place a reader of the edge-case table learns what happens, and it says nothing.",
+      "forcedInvention": "Nothing — the answer exists; the defect is that the edge case's stated status contradicts it, so an implementer must decide which of the two statements in one file to trust."
+    },
+    {
+      "id": "TSD-11",
+      "unit": "24.04-transaction-disputes-protection",
+      "severity": "warning",
+      "dimension": 7,
+      "claim": "A protection edge case is marked PENDING with no owner and no deferral target anywhere in the file.",
+      "evidence": "24.04.03-buyer-seller-protection-programs.md:61 — '| Counterfeit discovered a year later (a refin sold as original) | The window has closed, and authenticity fraud surfaces late by nature | `[PENDING]` - the vintage market's defining timing problem |'. The file's Open Questions table at :111-113 contains Q-01 (tier boundaries / escrow-with-inspection), Q-02 (resolved, services), and Q-03 (platform-funded versus underwritten) — none covers the closed-window authenticity case, and no `[OWNER]`, `[AGENT]`, `[PENDING - <stage>]` or `[DEFERRED]` target is attached to the marker itself.",
+      "failure_scenario": "The scenario the file calls the vintage market's defining timing problem has no owner and no stage at which it will be decided, so it is invisible to every downstream gate. An implementer building the protection programme must decide whether a late-discovered misrepresentation is covered, partially covered, or denied — and the Denied state at :76 requires 'The specific unmet condition, with an appeal route', which cannot be populated for a condition nobody has defined. Note that the record half of the answer does exist elsewhere (24.05.03:61 attaches a long-tail authenticity flag, and 24.05.03:112 Q-02 owns the monetary half for the User), but this file neither cites it nor routes to it.",
+      "forcedInvention": "Whether protection covers a loss discovered after every window has closed, and if not, what the seller and buyer are told; and which stage decides it."
+    },
+    {
+      "id": "TSD-12",
+      "unit": "24.04-transaction-disputes-protection",
+      "severity": "warning",
+      "dimension": 5,
+      "claim": "Claim filing windows are normative and per-object-type but carry no values, no source of values, and no owner, while an adjacent window in the same sub-domain is given a concrete default.",
+      "evidence": "24.04.01-claims-dispute-filing.md:34-36 — 'Filing windows differ by object type and are constrained by statutory returns rights (the Tax/consumer-protection cross-cut) and by the card networks' own clocks (24.04.04).' The window is load-bearing in three places with no value: :41 'The claim inherits the object's type, its remedy set and its **filing window**'; :65 '| Available | Transaction within its filing window | \"Report a problem\" on the transaction |'; :72 '| Expired | Filing window closed | No claim route |'. By contrast the mediation window is concrete at 24.04.02:59 — 'Default mediation window is 5 days; a single accept/counter resets nothing - the clock runs on the whole mediation, not per-message'. Neither 24.04.01's Open Questions (:106-108) nor the sub-domain index's (:64-66) owns the filing-window values, and 24.09:193 Q-03, which does own statutory clock values, enumerates 'CSAM preservation period, card-network representment window, tax retention years, DSAR response deadline' — not platform claim filing windows.",
+      "failure_scenario": "Four object types, four windows, no values. Implementer A sets a uniform 30-day window matching the intake dedup window at 24.01.01:60-61; implementer B derives per-type windows from statutory returns rights and leaves booking and service claims with no window at all, since neither has a distance-selling return right. The `Available` and `Expired` states then differ per build for the same transaction, and a claim that one build accepts the other refuses — with no test able to say which is correct.",
+      "forcedInvention": "The filing window per transaction type, or at minimum which stage and owner supplies them."
+    },
+    {
+      "id": "TSD-13",
+      "unit": "24.07-identity-abuse-ownership-disputes",
+      "severity": "blocking",
+      "dimension": 3,
+      "claim": "The scenario both files in the sub-domain label its worst case — an estate claim racing an ownership claim — has no specified behaviour, no owner and no deferral target in either file, and both features' terminal `Deadlocked` states resolve to a bare marker instead of a rule.",
+      "evidence": "24.07.02-entity-ownership-account-recovery-disputes.md:61 — '| An estate claim races an ownership dispute | The worst case; both claims may be legitimate (24.07 CX-02) | `[PENDING]` |'. 24.07.03-deceased-incapacitated-succession.md:59 — '| Estate claim races surviving members' ownership claim | Both may be legitimate (24.07 CX-02). The worst case in the sub-domain | `[PENDING]` |'. Both terminal states are equally unspecified: 24.07.02:71 '| Deadlocked | No factual basis in the graph | `[PENDING]` - 24.07 Q-01 |' and 24.07.03:76 '| Deadlocked | Competing claims | `[PENDING]` |'. The cross-cut raises it and stops there: 24.07-identity-abuse-ownership-disputes-cx.md:75-77 — 'an estate claim can race an ordinary ownership dispute - surviving band members and an executor claiming the same account, both legitimately. This is the worst case in the sub-domain and it is not rare.' No question in the sub-domain owns it: 24.07 index:65-67 Q-01/Q-02/Q-03 are all struck through and resolved; 24.07.02:106-107 Q-01/Q-02 are resolved and :108 Q-03 concerns freeze scoping; 24.07.03:109-111 Q-01/Q-02/Q-03 are all struck through and resolved.",
+      "failure_scenario": "A band member dies. The executor files for succession under 24.07.03 while the surviving members file an ownership dispute under 24.07.02 over the same entity account. Both intakes accept, both freeze consequential actions, and both reach a terminal state whose specified behaviour is a marker. Implementer A gives precedence to the succession claim because probate is documentary evidence and 24.07.03:29 requires verification; implementer B gives precedence to the ownership claim because 24.07.02:28 resolves against domain 01's mandate graph, in which the deceased's edge still exists. Implementer C freezes both indefinitely under 24.07.02:72 ('Frozen indefinitely | Legal proceedings elsewhere | The account persists, earns, and does nothing else'), which produces the outcome 24.07.03:41-42 identifies as the harm — 'a band entity requiring unanimity has a member who cannot consent, and every decision stops until succession resolves it' — permanently. All three builds satisfy the text. The account in question holds royalties that 24.07.03 D-02 requires to keep accruing throughout, so the divergence decides where real money accumulates and who may ever direct it.",
+      "forcedInvention": "Which claim class takes precedence when an estate claim and an ownership claim contest the same entity account, whether they merge into one case or run in parallel, what breaks a Deadlocked state in either feature, and whether the platform decides at all or freezes and routes out."
+    },
+    {
+      "id": "TSD-14",
+      "unit": "24.07-identity-abuse-ownership-disputes",
+      "severity": "warning",
+      "dimension": 7,
+      "claim": "The sub-domain's deferral tracking is systematically stale: four markers defer to questions recorded as resolved, three carry no owner and no target, and 24.07.03 has zero unresolved Open Questions while leaving five behaviours marked PENDING.",
+      "evidence": "Markers deferring to resolved questions: (a) 24.07.02:55 '| Band splits; both halves claim the name | This is trademark and partnership law, not a platform decision | `[PENDING]` - 24.07 Q-01; freeze and route to counsel may be the only honest answer |' and (b) 24.07.02:71 '| Deadlocked | No factual basis in the graph | `[PENDING]` - 24.07 Q-01 |', where 24.07-identity-abuse-ownership-disputes-index.md:65 records 'Q-01 | ~~**Should the platform adjudicate who owns a band name at all?**~~ **RESOLVED - no. The platform executes a *recorded* disposition rule against its own state and never adjudicates a claim; where nothing was recorded, or the claim is contested, it freezes and routes out.**' (c) 24.07.03:58 '| Producer dies holding six artists' unreleased stems | The estate inherits the points, not the right to hold other people's masters. These must separate | `[PENDING - /ideate-discover Step 5 deepening]` |', where the same file's :111 records 'Q-03 | ~~A deceased Producer's account holds other artists' unreleased masters ... How do those separate~~ **RESOLVED - they never join, so there is nothing to separate: vault access is keyed to a roster role, not to the account.**' (d) 24.07.03:64 '| Family wants the profile as a memorial while the catalogue trades | Two different things in one account | `[PENDING]` - see Q-02 |', where :110 records 'Q-02 | ~~The **memorial** and the **operating catalogue** are two products in one account (DT-02). Do they split?~~ **RESOLVED - yes, as two separate capabilities over one party, not as two accounts.**' Markers with no owner and no target: 24.07.02:61, 24.07.03:59, 24.07.03:76 (quoted in TSD-13). Plus 24.07.03:57 '| Band requires unanimous consent; one member is dead | **Governance deadlock.** Nothing can be decided until the estate holds the seat | `[PENDING]` - domain 01's model must anticipate this |', which names a domain rather than an owner or a stage.",
+      "failure_scenario": "24.07.03's Open Questions table shows nothing outstanding, so a downstream readiness gate treats the feature as decided; its Edge Cases and States tables simultaneously mark five behaviours PENDING, two of which the same file answers and three of which nothing answers. An implementer reading top-down builds the resolved answers and skips the rows; one reading the tables builds neither and reports the feature as blocked. Because 24.07 index Q-01's resolution ('freezes and routes out') is in fact the answer for two of the stale markers, the stale text also actively hides a decision that has been ratified — the same defect 24.08.04:60 names as the worst outcome for a governance record ('The register says one thing and the product does another ... evidence of knowledge without action').",
+      "forcedInvention": "For the four stale markers, which of the two contradictory statements in the same file is current. For the three bare markers, who decides and at which stage — nothing in the sub-domain says."
+    }
+  ],
+  "notReported": [
+    "`[PENDING - /ideate-discover Step 5 deepening]` at 24.01.02:59, 24.01.04:57, 24.04.01:56, 24.06.01:58, 24.07.02:57 (5 instances, plus 24.07.03:58 which is reported for a different reason). Considered as malformed tracking on the grounds that /ideate-discover has completed, but withdrawn: the nodes carrying these markers are themselves [SURFACE] or [PARTIAL], so 'when this node is deepened' is a nameable, node-scoped deferral target corroborated by the node's own Status header.",
+    "24.05.04:61 bare `[PENDING]` on the label-A&R conflict — withdrawn: the same file's Q-03 at :126 owns exactly that scenario ('What does the platform do when the trace leads to a **label's own staff**') with `[OWNER]`; the defect is a missing citation, not a missing owner.",
+    "24.08.02:65 and 24.08.04:62 bare `[PENDING]` — withdrawn: both sit in the 'What User Sees' column of features whose every other row in that column reads 'Nothing'; no product behaviour is left undecided.",
+    "4-versus-5 remedy sets in 24.04 — withdrawn: reconciled explicitly at 24.04 index:64 ('one claim flow over **four** transaction types - the fifth (a split) is not this sub-domain's at all (D-02)').",
+    "'one sanction record, two counters' (trust-safety-disputes-cx.md:192) versus 'two distinct sanctions' (24.02.01:62, D-02 at :173) — withdrawn: 'one sanction record' reads defensibly as one shared record type carrying two counters rather than one row per act.",
+    "S1 concurrence (24.01.03:51, :86) versus rung->=6 concurrence (24.02.01:103-104) — withdrawn: these are two gates at two stages (concurrence on the decision, concurrence on the sanction), not one rule stated twice.",
+    "'indefinite cannot be selected on the same rung as a time-boxed sanction' (24.02.01:39-40) — withdrawn: parses coherently as barring `indefinite` from rung 6, the only rung labelled time-boxed.",
+    "24.06-cx CX-01 and CX-04 covering the same node pair — withdrawn: opposite directions with genuinely distinct semantics (meetup-as-origin-of-harassment versus restriction-must-reach-arrangement).",
+    "Sub-CX files carrying Cross-Cut Details for only 2-3 of their 4-6 mapped cross-cuts, and lacking a Status header — withdrawn: the map rows carry Relationship and Evidence for every pair, and neither detail sections per pair nor a Status header on a CX file is a rubric requirement.",
+    "Cross-cut name drift ('Messaging & Contextual Inbox', 'Contracts & E-Signature') against the canonical registry in ideation-cx.md ('Messaging & Conversations', 'Contracts, E-Signature & Attestation') — withdrawn as stylistic; both resolve unambiguously. 'Object & Evidence Storage' and 'Media Handling & Audio Playback', both cited by 24.09, were verified present in ideation-cx.md.",
+    "Unquantified normative values that are correctly owned by a tracked question: SLA minutes per severity tier (24.01.01:142 Q-02, 24.01.03:187 Q-04), the 512(i) strike threshold and window (24.05.01:150 Q-02), statutory retention clock values (24.09:193 Q-03), protection tier boundaries (24.04.03:111 Q-01), classifier language scope (24.01.02:98 Q-03). Tracked deferral with an owner and a target is the documented mechanism, not a finding.",
+    "Classifier review-confidence threshold (24.01.02:47, :67) — withdrawn as model calibration belonging to a downstream layer."
+  ],
+  "coverageNote": "Enumeration matches the expected counts exactly: 9 units (the domain directory itself plus its 8 sub-domain directories, each containing an *-index.md) and 54 markdown files, with zero directories lacking an index and zero non-markdown files. All 54 files were read; the 3 domain-level files, both 24.01 index/cx files and 4 of the largest leaf features (24.01.01, 24.01.03, 24.01.04, 24.02.01) were read verbatim in full, and the remaining 45 were read in the sandbox with Deep Think Annotation prose and auto-generated Related Specs blocks compressed to their outcome clauses so the normative sections (Overview, Behavior, Happy Path, Edge Cases, States, Decisions, Open Questions, Role Matrix, Role Lens, Cross-Cut Map) entered analysis intact; every finding below is anchored to a verbatim quote re-read at its exact line. Ambiguity is computed over 5 applicable dimensions per unit (45 checkpoints, 7.0 points, 15.56%) rather than 8: dimensions 2 (Persona Specificity), 4 (Constraint Explicitness) and 6 (Competitive Positioning) are scored N/A across all 9 units because their required fields are owned by meta/personas.md, meta/constraints.md and meta/competitive-landscape.md, which are outside this domain's unit set — scoring them per-unit would either flatter the result or penalise units for content they do not own. This makes the per-unit denominator small, so a single half-mark costs 10% and the headline percentage is not comparable to a run scored over 8 dimensions. Two findings are blocking (TSD-01 routing contradiction in 24.01; TSD-13 unspecified estate-versus-ownership race in 24.07); the remaining 12 are warnings. 24.05, 24.06 and 24.08 scored clean on every applicable dimension. Twelve candidate findings were generated and then withdrawn under the devil's-advocate pass; they are listed in `notReported` with the reason each failed, so a later run does not re-raise them."
+}

@@ -1,0 +1,290 @@
+{
+  "domain": "20-fanbase-direct-to-fan",
+  "root": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/20-fanbase-direct-to-fan",
+  "auditedAt": "2026-07-30",
+  "unitsAudited": 7,
+  "filesRead": 41,
+  "rubric": {
+    "vision": "/home/rob/Projects/WeJammin/.claude/skills/pipeline-rubrics/references/vision-rubric.md",
+    "scoring": "/home/rob/Projects/WeJammin/.claude/skills/pipeline-rubrics/references/scoring.md",
+    "naPolicy": "Dimensions 4 (Constraint Explicitness), 5 (Success Measurability) and 6 (Competitive Positioning) are meta-layer dimensions owned by meta/constraints.md, meta/problem-statement.md and meta/competitive-landscape.md. They are scored N/A for every unit inside this domain except the domain root, where the index's 'Why this is a top-level domain' section is itself an explicit competitive argument naming competitors and a moat mechanism, so dimension 6 is scored."
+  },
+  "units": [
+    {
+      "unit": ".",
+      "files": ["fanbase-direct-to-fan-index.md", "fanbase-direct-to-fan-cx.md", "20.07-fan-demand-show-requests.md"],
+      "applicableCheckpoints": 6,
+      "naDimensions": [4, 5],
+      "scores": {
+        "1": "✅",
+        "2": "✅",
+        "3": "❌",
+        "6": "✅",
+        "7": "✅",
+        "8": "⚠️"
+      },
+      "points": 1.5,
+      "ambiguityPct": 25.0,
+      "notes": "Dimension 3 ❌ for two silent contradictions carried in this unit's own files (k-anonymity on the demand map; vault-lapse locking). Dimension 7 ✅ — Q-01..Q-10 all carry an owner and either a deferral stage or a cited resolution. Dimension 8 ⚠️ for the CX confidence-count mismatch."
+    },
+    {
+      "unit": "20.01-fan-graph-owned-audience",
+      "files": ["20.01-fan-graph-owned-audience-index.md", "20.01-fan-graph-owned-audience-cx.md", "20.01.01-unified-fan-record.md", "20.01.02-consent-legal-basis.md", "20.01.03-fan-preference-centre.md", "20.01.04-fan-list-import-hygiene.md", "20.01.05-fan-list-ownership-transfer.md"],
+      "applicableCheckpoints": 5,
+      "naDimensions": [4, 5, 6],
+      "scores": {"1": "✅", "2": "✅", "3": "⚠️", "7": "⚠️", "8": "✅"},
+      "points": 1.0,
+      "ambiguityPct": 20.0,
+      "notes": "Exceptionally deep on 20.01.01/.02/.03 (concurrency, race, malicious-input, multi-hyphenate rows all present with specified outcomes). ⚠️ on 3 for the artist per-fan consent-visibility conflict; ⚠️ on 7 for five ownerless [PENDING — /ideate-discover Step 5 deepening] markers pointing at a stage that has already run."
+    },
+    {
+      "unit": "20.02-segmentation-superfan-intelligence",
+      "files": ["20.02-segmentation-superfan-intelligence-index.md", "20.02-segmentation-superfan-intelligence-cx.md", "20.02.01-segment-builder.md", "20.02.02-superfan-score.md", "20.02.03-perk-entitlements-presale-eligibility.md"],
+      "applicableCheckpoints": 5,
+      "naDimensions": [4, 5, 6],
+      "scores": {"1": "✅", "2": "✅", "3": "⚠️", "7": "⚠️", "8": "✅"},
+      "points": 1.0,
+      "ambiguityPct": 20.0,
+      "notes": "CX-04 (live segment vs snapshot entitlement) is the model of a well-resolved tension. ⚠️ on 3 for a wrong owning-domain pointer on the Membership dimension and the blocked-vs-first-come over-promise gate; ⚠️ on 7 for bare [PENDING] cells that same-file decisions already answer."
+    },
+    {
+      "unit": "20.03-broadcast-fan-messaging",
+      "files": ["20.03-broadcast-fan-messaging-index.md", "20.03-broadcast-fan-messaging-cx.md", "20.03.01-campaign-composer.md", "20.03.02-channel-routing-bulk-delivery.md", "20.03.03-send-scheduling-throttling.md", "20.03.04-deliverability-sender-reputation.md"],
+      "applicableCheckpoints": 5,
+      "naDimensions": [4, 5, 6],
+      "scores": {"1": "✅", "2": "✅", "3": "❌", "7": "⚠️", "8": "✅"},
+      "points": 1.5,
+      "ambiguityPct": 30.0,
+      "notes": "❌ on 3: the per-fan frequency cap is consumed as a dispatch gate with a concrete user-visible outcome, but its named owner specifies nothing. ⚠️ on 7 for two ownerless Step-5 PENDINGs in the CX, one of which a child has since resolved."
+    },
+    {
+      "unit": "20.04-direct-to-fan-storefront",
+      "files": ["20.04-direct-to-fan-storefront-index.md", "20.04-direct-to-fan-storefront-cx.md", "20.04.01-storefront-product-catalog.md", "20.04.02-merch-variants-print-on-demand.md", "20.04.03-digital-sales-name-your-price-bundles.md", "20.04.04-d2f-revenue-split-payout.md"],
+      "applicableCheckpoints": 5,
+      "naDimensions": [4, 5, 6],
+      "scores": {"1": "✅", "2": "✅", "3": "❌", "7": "⚠️", "8": "✅"},
+      "points": 1.5,
+      "ambiguityPct": 30.0,
+      "notes": "The deepest unit in the domain — typed product kinds, error codes, hold windows, arithmetic-checked happy path (15 − 1 − 1.40 = 12.60; 70/20/10 = 8.82/2.52/1.26 all correct). ❌ on 3 for the authorization-vs-settlement split-version binding conflict on a money path. ⚠️ on 7 for a stale CX PENDING its own child resolved and a deferral pointed at an audit-queue id with no owner or stage."
+    },
+    {
+      "unit": "20.05-memberships-patronage-campaigns",
+      "files": ["20.05-memberships-patronage-campaigns-index.md", "20.05-memberships-patronage-campaigns-cx.md", "20.05.01-membership-tiers-benefits.md", "20.05.02-exclusive-content-vault.md", "20.05.03-tipping-micro-patronage.md", "20.05.04-crowdfunding-preorder-campaigns.md", "20.05.05-backer-funds-fulfilment.md", "20.05.06-virtual-fan-events.md"],
+      "applicableCheckpoints": 5,
+      "naDimensions": [4, 5, 6],
+      "scores": {"1": "✅", "2": "✅", "3": "⚠️", "7": "✅", "8": "✅"},
+      "points": 0.5,
+      "ambiguityPct": 10.0,
+      "notes": "Cleanest tracking in the domain: every inline PENDING names either an [OWNER] call plus a stage, or its own Q row which carries owner + stage. ⚠️ on 3 for the membership physical-benefit publish gate routed to a file that does not specify it."
+    },
+    {
+      "unit": "20.06-fan-experience-discovery",
+      "files": ["20.06-fan-experience-discovery-index.md", "20.06-fan-experience-discovery-cx.md", "20.06.01-artist-tracking-follow.md", "20.06.02-gig-alerts-near-me.md", "20.06.03-fan-library-collection.md", "20.06.04-listening-history-import-bootstrap.md"],
+      "applicableCheckpoints": 5,
+      "naDimensions": [4, 5, 6],
+      "scores": {"1": "✅", "2": "✅", "3": "❌", "7": "⚠️", "8": "✅"},
+      "points": 1.5,
+      "ambiguityPct": 30.0,
+      "notes": "The radius conflict (25 mi vs 80 km) is NOT reported — it is explicitly recorded in 20.06.02 D-06 and Q-04 with [OWNER] and /create-prd, which is the documented mechanism working. ❌ on 3 for the re-download format contradiction with 20.04.03. ⚠️ on 7 for the duplicate Q-04 id."
+    }
+  ],
+  "domainTotals": {
+    "points": 8.5,
+    "applicableCheckpoints": 36,
+    "ambiguityPct": 23.6,
+    "blocking": 5,
+    "warning": 12
+  },
+  "findings": [
+    {
+      "id": "20-B1",
+      "unit": "20.06-fan-experience-discovery",
+      "severity": "blocking",
+      "dimension": 3,
+      "claim": "Download re-download rights are specified two incompatible ways: 20.04.03 makes the entitlement format-agnostic (buy once, download any offered format forever) and explicitly rejects the alternative, while 20.06.03 restricts re-download to the formats actually purchased.",
+      "evidence": "20.04.03-digital-sales-name-your-price-bundles.md:69-70 — \"the entitlement is format-agnostic (one purchase entitles all offered formats — you bought the record, not a file), and re-downloading in a different format later is free and unlimited\"; D-08 (line 161) — \"Download entitlement is format-agnostic and never expires | See DT-05. Buy the record, not a file; re-download any offered format forever\"; DT-05 (line 130) — \"❌ REJECTED — the fan buys the record, not a file. Binding the entitlement to a single format re-download is a streaming-era mistake: it means a fan who bought MP3 in 2026 and wants FLAC in 2029 has to re-buy.\" AGAINST: 20.06.03-fan-library-collection.md:67-68 — \"Download: the fan re-downloads the original purchased formats (e.g. FLAC, WAV, MP3-320, ALAC — whatever the release offered and they bought)\"; :24 Role Lens Fan — \"re-downloads in the format purchased\"; D-01 (line 168) — \"re-downloadable indefinitely, in the purchased formats, with no expiry or count cap\".",
+      "forcedInvention": "Whether the library exposes a format selector for an owned release or only the format(s) bought. The exact scenario 20.04.03 DT-05 calls a mistake (bought MP3 in 2026, wants FLAC in 2029) is the behaviour 20.06.03 specifies, and nothing marks either statement as provisional.",
+      "failureScenario": "Fan buys an album as MP3-320 in 2026. In 2029 they open the library on a new laptop and want the FLAC. Implementer A (reading 20.04.03 D-08) offers all offered formats free. Implementer B (reading 20.06.03 D-01 and its Role Lens) offers MP3-320 only and the fan must re-buy — which 20.04.03 DT-05 states is the failure the design exists to prevent."
+    },
+    {
+      "id": "20-B2",
+      "unit": "20.04-direct-to-fan-storefront",
+      "severity": "blocking",
+      "dimension": 3,
+      "claim": "The payout-plan version that governs a sale is bound at two different payment-lifecycle events in two files dated the same day: at payment settlement in 20.04.03 and at payment authorization in 20.04.04.",
+      "evidence": "20.04.03-digital-sales-name-your-price-bundles.md:108 — \"Split changes between add-to-cart and settlement (a dispute resolves mid-checkout) | The payout plan version is bound at payment settlement, not at add-to-cart, and the entitlement records that version.\" AGAINST: 20.04.04-d2f-revenue-split-payout.md:99 — \"Split applied at payment authorization against the plan version live at that instant\"; :115 — \"Each sale is locked to the split version live at the moment it is authorized — a domain 09 edit mid-checkout does not re-bind an in-flight sale\"; :121 — \"A late confirmation carrying a superseded plan version does not re-bind the sale; the accrual applies the split version that was live when the sale was authorized.\" 20.04.04 also mixes the two internally: :44 has shares accruing \"the moment the sale clears\" while :99 binds at authorization.",
+      "forcedInvention": "Which payment event stamps the plan version. Authorization and settlement/capture are distinct events separated by hours or days, and domain 09 splits are editable in between (both files specify a mid-checkout dispute resolution as a live scenario).",
+      "failureScenario": "A fan authorizes a £15 NYP purchase at 09:00. At 11:00 a domain 09 dispute resolves and the drummer's share moves from 10% to 20%. Capture settles at 14:00. Under 20.04.04 the drummer is paid £1.26 (10%, the authorization-time version); under 20.04.03 the drummer is paid £2.52 (20%, the settlement-time version). Both files claim to specify the payout of the same sale, and the payee statement names a plan version that differs by implementation."
+    },
+    {
+      "id": "20-B3",
+      "unit": ".",
+      "severity": "blocking",
+      "dimension": 3,
+      "claim": "The demand map is specified as both floored and unfloored for k-anonymity: 20.07 makes a k-anonymity floor on the map a locked decision, while the domain CX and 20.02.01 both state that aggregate/counting surfaces are explicitly not floored.",
+      "evidence": "20.07-fan-demand-show-requests.md:110 D-05 — \"k-anonymity floor on the map | '3 fans in Inverness' names people. The floor belongs on the map, not on the fan record\"; :69 edge case — \"k-anonymity floor on the map, not on the fan record. Ties to 20.02.01 DT-03.\" AGAINST: fanbase-direct-to-fan-cx.md:255 CX-10 §3 — \"Individually-targeted reads inherit the k-anonymity floor (domain 24); aggregate geo-density is unfloored map data\"; :55 CX-01 §3 — \"counting/record-view is unfloored, but individually-targeted send/export is floored by the k-anonymity rule escalated to domain 24\"; 20.02.01-segment-builder.md:99 DT-03 — \"My read: the floor belongs on send and on export, not on counting or record viewing.\"",
+      "forcedInvention": "Whether the demand map suppresses sub-k clusters. 20.07 cites 20.02.01 DT-03 as its authority, but DT-03 says the opposite of what 20.07 D-05 concludes: the map is a counting/aggregate surface, which DT-03 and both CX rows place outside the floor. No marker flags the disagreement on either side.",
+      "failureScenario": "Artist opens the demand map for Scotland with 3 fans in Inverness. Implementer A (20.07 D-05) suppresses the Inverness cluster or rolls it into a region, so the artist cannot see demand exists there — the edge case 'Demand exists where the artist cannot economically play' says show it because 'it is still true'. Implementer B (CX-10 §3) renders '3 fans in Inverness', which 20.07 says 'is close to naming them, and it is a real disclosure of a person's location to an artist'. One implementation leaks; the other withholds the signal the feature exists to give."
+    },
+    {
+      "id": "20-B4",
+      "unit": ".",
+      "severity": "blocking",
+      "dimension": 3,
+      "claim": "Membership lapse is specified with opposite interim defaults: the domain CX requires member-gated vault rows to lock immediately and fail closed to locked, while both 20.05.02 and 20.06.03 specify that items the fan had while entitled stay accessible.",
+      "evidence": "fanbase-direct-to-fan-cx.md:340-341 CX-14 — \"Membership-gated vault items lock the instant a membership lapses, and that lock is felt in the fan's library\"; :356 §2 — \"Must be atomic-enough that the library never shows a stale unlocked state after a lapse — fail-closed to locked on ambiguity\"; :359 §5 — \"Resolution: fail closed to locked\". AGAINST: 20.05.02-exclusive-content-vault.md:73 — \"until ratified, the safe default is no retroactive removal (matches D-05); items opened while entitled stay accessible\"; 20.05.01-membership-tiers-benefits.md:78 — \"a lapsed fan keeps what they opened and loses only future items\"; 20.06.03-fan-library-collection.md:114 — \"on lapse, per 20.05.02 DT-02's leaning, items released while the fan was paying stay accessible and future items lock.\"",
+      "forcedInvention": "What the library shows for a vault item the fan opened while paying, the moment their membership lapses. CX-14 scopes the tracked open question narrowly to 'whether previously downloaded copies survive' while itself asserting the row locks; the three feature files assert access persists. Both are written as the shipping interim behaviour pending 20.05.02 Q-01.",
+      "failureScenario": "A fan's card fails, dunning expires, membership lapses. They open their library and click a demo they played last month. Implementer A (CX-14) shows it locked and fails closed — the outcome 20.05.02 says 'feels like theft' and D-05 forbids. Implementer B (20.05.02/20.06.03) plays it. The keep-vs-lose ruling is legitimately deferred, but the two files disagree about what ships until it lands."
+    },
+    {
+      "id": "20-B5",
+      "unit": "20.03-broadcast-fan-messaging",
+      "severity": "blocking",
+      "dimension": 3,
+      "claim": "20.03.03 specifies a per-fan frequency cap as a mandatory dispatch gate with concrete user-visible behaviour and names 20.02 as its owner, but no file in 20.02 — index, CX, or any of its three features — mentions frequency capping at all, so the policy exists nowhere.",
+      "evidence": "20.03.03-send-scheduling-throttling.md:61 — \"Two campaigns scheduled to overlapping segments in the same window | Both would buzz the same fan. A per-fan frequency cap (owned outside this node) governs: the second message is deferred or suppressed for the overlapping fans... | '1,090 fans already got a message today — deferred for them.'\"; :93 Cross-Cut Notes — \"Gated by per-fan frequency capping (owned in 20.02 Segmentation & Superfan Intelligence) — this node checks the cap at dispatch and defers/suppresses over-limit fans (DT-04); it does not set the cap. `-cx.md` frequency-fatigue thread.\"; :107 D-08 — \"Frequency capping is a separate policy this node consumes, not owns.\" A grep for 'frequency cap|frequency capping|frequency budget|fan-fatigue|fatigue' across all 41 files of domain 20 returns hits only in 20.03.03 (4) and in 20.01.03:61 (\"the tier's frequency cap\" — the fan-chosen tier cap, e.g. Highlights ≤1/month, a different object from DT-04's artist-blind per-fan budget). 20.03-broadcast-fan-messaging-cx.md contains no frequency-fatigue thread (CX-01..CX-05 only).",
+      "forcedInvention": "The entire cap policy: the window (the quoted copy implies per-day, while the only cap that does exist — 20.01.03's Highlights tier — is per-calendar-month), the limit, whether over-limit fans are deferred or suppressed, and who sets it. DT-04 states the cap is 'a per-fan, per-artist budget' distinct from the fan's own tier choice, so 20.01.03's tiers cannot supply it.",
+      "failureScenario": "An artist sends a tour announcement at 10:00 and a merch drop at 16:00 to overlapping segments. The dispatcher must consult a cap to decide whether the 1,090 overlapping fans get the second message. There is no specified cap, so the implementer invents one (or ships no cap, silently deleting the gate D-08 declares mandatory and letting a warm sender both send fast and send often — the exact outcome DT-04 says the split exists to prevent)."
+    },
+    {
+      "id": "20-W1",
+      "unit": "20.01-fan-graph-owned-audience",
+      "severity": "warning",
+      "dimension": 3,
+      "claim": "Whether an artist can see an individual fan's unsubscribe/preference history is specified both ways: 20.01.02 grants the Musician a full per-fan grant/revoke evidence chain, while 20.01.03 states the artist sees churn only in aggregate and cannot see who rejected what.",
+      "evidence": "20.01.02-consent-legal-basis.md:23 Role Lens Musician — \"Can open any single fan's evidence chain (every grant/revoke event: timestamp, owning entity, channel, purpose, exact wording shown, source surface, provenance strength, captured IP/user-agent where the platform witnessed it).\" AGAINST: 20.01.03-fan-preference-centre.md:24 Role Lens Musician — \"Has no write path and no per-fan toggle history as an editable object. Cannot re-subscribe, cannot restore, cannot see a per-fan feed of who rejected what — only the roll-up\"; D-04 (line 162) — \"Artists have no write path and see churn only in aggregate | Per-fan unsubscribe feeds train artists to take it personally.\" The two are the same data: 20.01.03:36 — \"Every control is a consent-ledger event, never an in-place settings update\", so every tier change, channel mute and unsubscribe made in the Preference Centre is an event in the chain 20.01.02 lets the artist open.",
+      "forcedInvention": "Whether the fan-record UI shows 'unsubscribed 14 Mar via preference centre' per fan. 20.01.03's carve-outs ('as an editable object', 'a per-fan feed') can be read as barring only a stream and an edit surface, but D-04's 'see churn only in aggregate' is unqualified and covers on-demand lookup too.",
+      "failureScenario": "Artist opens a fan's record after a campaign. Implementer A (20.01.02) renders the full evidence chain including the unsubscribe, its timestamp and the wording shown. Implementer B (20.01.03 D-04) renders no per-fan consent history and only an aggregate churn number. The complaint-defence use case 20.01.02 specifies ('Consent evidence requested during a spam complaint') needs A; the anti-resentment design D-04 specifies needs B."
+    },
+    {
+      "id": "20-W2",
+      "unit": "20.01-fan-graph-owned-audience",
+      "severity": "warning",
+      "dimension": 7,
+      "claim": "20.01.04 leaves the stale-consent import case as an unowned [PENDING] pointed at a stage that has already run, when 20.01.02 — the authoritative owner of consent — has already fixed the default.",
+      "evidence": "20.01.04-fan-list-import-hygiene.md:57 — \"Import of 200k rows from a venue's decade-old box office | Volume is fine; the consent age is not. `[PENDING — /ideate-discover Step 5 deepening]` on whether stale consent (Q-02 on 20.01.02) blocks. | `[PENDING]`\" — no owner, and the deferral target is the breadth/deepening stage that produced the [DEEP] status on 20.01.01/.02/.03 and this file's own [PARTIAL]. AGAINST: 20.01.02-consent-legal-basis.md:84 — \"Consent granted 24+ months ago, fan never engaged | Consent does not auto-expire... The platform surfaces a staleness advisory... and downgrades that fan's deliverability tier, but blocks no send on age alone\"; Q-02 (line 154) — \"Default is fixed (consent never auto-expires; staleness ≥24 months is surfaced and deliverability-downgraded but blocks no send, per the edge-case table).\"",
+      "forcedInvention": "What the venue sees when importing a decade-old 200k-row list — the 'User Sees' cell is literally `[PENDING]`, so the implementer must invent the whole surface, even though the governing rule (import completes, records land in the artist-asserted deliverability-downgraded tier, nothing is blocked on age) is already settled two files away.",
+      "failureScenario": "An implementer building the import breakdown screen for a venue's 200k-row box-office export finds a [PENDING] cell where the outcome copy belongs, and a deferral pointed at a completed stage with no owner to ask. They either invent a block (contradicting 20.01.02's fixed default) or ship no message about consent age at all."
+    },
+    {
+      "id": "20-W3",
+      "unit": "20.01-fan-graph-owned-audience",
+      "severity": "warning",
+      "dimension": 7,
+      "claim": "The 20.01 CX file carries four [PENDING — /ideate-discover Step 5 deepening] markers with no owner, aimed at a stage that has completed; three of the four have since been answered by the children, so the CX presents settled behaviour as open.",
+      "evidence": "20.01-fan-graph-owned-audience-cx.md:41 — \"Import permission does not confer send permission. `[PENDING — /ideate-discover Step 5 deepening]` on whether weak-provenance records are sendable-with-warning or hard-blocked until re-permissioned\" (answered: 20.01.02:88 — records \"land in the artist-asserted (unmarketable-until-re-permissioned) tier\"; 20.01.04 D-03 — \"Unanswered provenance imports data anyway, into an unmarketable tier\"); :42 — \"whether a re-permission campaign to imported records is itself lawful... `[PENDING — /ideate-discover Step 5 deepening]`\" (properly tracked elsewhere as 20.01.04 Q-01, User, /create-prd-security); :64 — \"A merge must not fan out to the fan... `[PENDING — /ideate-discover Step 5 deepening]`\" (answered: 20.01.01:25 — \"a merge is silent to the fan (CX-02)\"); :104 — \"Merge strategy on a contested split is `[PENDING — /ideate-discover Step 5 deepening]`; the plausible options are unanimous-consent, majority-of-members, or fork-with-notice\" (properly tracked as 20.01.05 Q-02, User, /create-prd). None of the four names an owner.",
+      "forcedInvention": "Nothing product-level for three of them, but a reader who consults the CX file for the synthesis answers — which is what it is for — is told four decisions are open when three are closed, and has no owner to route the fourth to.",
+      "failureScenario": "A downstream stage reads the 20.01 CX synthesis to build the import→consent trigger chain and treats weak-provenance sendability as undecided, re-litigating a rule 20.01.02 D-08 and 20.01.04 D-03 have already fixed, or ships a merge notification to the fan that 20.01.01 explicitly forbids."
+    },
+    {
+      "id": "20-W4",
+      "unit": "20.02-segmentation-superfan-intelligence",
+      "severity": "warning",
+      "dimension": 3,
+      "claim": "The segment builder's Membership dimension names 20.04 (Direct-to-Fan Storefront) as its source domain; membership state is owned by 20.05.01, as the sibling file correctly records.",
+      "evidence": "20.02.01-segment-builder.md:44 — \"| **Membership** | tier / joined-since date / active vs lapsed (no activity in N days) | 20.04 |\". AGAINST: 20.02.02-superfan-score.md:34 — \"| Membership tenure / active tier | Recurring commitment. | 20.05.01 |\"; fanbase-direct-to-fan-cx.md:183 CX-07 §1 — \"Membership state is owned by 20.05.01 (billing engine is CX-M24); the score reads it\"; 20.05-memberships-patronage-campaigns-index.md:26 lists 20.05.01 Membership Tiers & Benefits as the tier owner. 20.04's own Role Matrix (20.04-direct-to-fan-storefront-index.md:46-49) contains no membership child.",
+      "forcedInvention": "Where the builder reads tier/joined-since/active-vs-lapsed from. An implementer following the table goes to the storefront, which holds no membership state at all (its only membership-adjacent concept is the `members-item` gate flag, which resolves through 20.02.03).",
+      "failureScenario": "Implementer wires the Membership segment family against 20.04's catalogue and finds no tier or tenure field, then either invents one in the storefront (duplicating 20.05.01's state, which CX-07 forbids since 'the score never writes membership') or stalls."
+    },
+    {
+      "id": "20-W5",
+      "unit": "20.02-segmentation-superfan-intelligence",
+      "severity": "warning",
+      "dimension": 7,
+      "claim": "20.02.02 leaves two edge-case outcomes as bare [PENDING] with no owner and no deferral target, although that same file's decision table already fixes both.",
+      "evidence": "20.02.02-superfan-score.md:72 — \"New artist, no purchase/scan history | Score degrades to open/click — i.e. to Mailchimp... | `[PENDING]` — the honest answer may be to withhold scoring until there is signal, rather than show a confident number built on nothing\" — but D-04 (line 117) states it flatly: \"Withhold the score rather than show a low-confidence one | Cold-start (DT-02). An artist who trusts a fabricated rank makes worse decisions than one who knows they lack data.\" And :73 — \"Wealthy fan vs devoted broke fan | Spend-weighted scoring ranks a rich casual above a devoted teenager who came to nine shows on a bus... | `[PENDING]`\" — but D-01 (line 114) states it: \"Attendance (scans) outweighs spend.\" Neither [PENDING] carries an owner or a stage.",
+      "forcedInvention": "What the artist sees in the cold-start and spend-vs-devotion cases. The behaviour is decided; only the surface copy is missing, and the bare marker gives no owner or stage to obtain it from — while wrongly signalling that the underlying policy is still open.",
+      "failureScenario": "An implementer reading the edge-case table treats cold-start scoring as an unresolved policy and ships a low-confidence numeric score for a new artist — the precise outcome D-04 exists to forbid ('a confident-looking wrong number is worse than an honest gap')."
+    },
+    {
+      "id": "20-W6",
+      "unit": "20.02-segmentation-superfan-intelligence",
+      "severity": "warning",
+      "dimension": 3,
+      "claim": "Over-promising a presale is specified as blocked at grant time, but the specified user-facing remedy offers a path that proceeds with a first-come disclosure — so the grant is both refused and permitted.",
+      "evidence": "20.02.03-perk-entitlements-presale-eligibility.md:96 D-03 — \"Over-promise is blocked at grant time | See DT-02. Disappointing your best fans is the worst outcome this feature can produce, and it is entirely preventable.\" AGAINST the same file's :54 edge case — \"Presale allocation smaller than the eligible set | ... Must be caught at grant time, not at on-sale. | 'You're promising 1,203 fans access to 300 tickets. Narrow the audience, or say plainly that it's first-come.'\" DT-02 (:76) says the check \"must be blunt rather than a warning nobody reads\" without saying whether blunt means refusing.",
+      "forcedInvention": "Whether an over-subscribed presale can be granted at all. 'Blocked' and 'or say plainly that it's first-come' cannot both hold: the second is a way of proceeding.",
+      "failureScenario": "Artist grants a 48-hour presale to 1,203 eligible fans against 300 tickets. Implementer A disables the grant until the audience is narrowed. Implementer B shows a modal with a 'label it first-come' option and arms the presale for 1,203 fans, producing the 903 disappointed superfans DT-02 identifies as the feature's worst outcome."
+    },
+    {
+      "id": "20-W7",
+      "unit": "20.03-broadcast-fan-messaging",
+      "severity": "warning",
+      "dimension": 3,
+      "claim": "20.03.02's Behavior section and DT-02 assert that the platform has one web surface with mobile unresolved, and conclude push is unusable — a premise the same file's own Q-04 records as superseded by a ratified decision that puts PWA web push in v1.",
+      "evidence": "20.03.02-channel-routing-bulk-delivery.md:40-44 — \"Push is only available where the fan has an app — and `meta/constraints.md` declares web as the only surface, with mobile an open question. Web push exists but is weak on iOS. This means push is, today, a channel this domain mostly cannot use\"; DT-02 (:85) — \"`meta/constraints.md` declares one responsive web surface; mobile is an open question.\" AGAINST the same file's Q-04 (:119) — \"RESOLVED — ... `meta/constraints.md` § Project Surfaces now declares Mobile (PWA) in v1 ('web is installable as a PWA (home-screen, web push for gig alerts…)')... Ratified as ideation-index D-28... So push is not lost: it arrives in v1 as PWA web push.\" Neither the Behavior paragraph nor the channel table (:38, Push) is annotated as superseded, unlike the domain index, which does annotate its own stale gate at fanbase-direct-to-fan-index.md:15-18 (\"Gate superseded (2026-07-16)\").",
+      "forcedInvention": "Whether the broadcast dispatcher implements a push leg in v1. The Behavior text says the channel mostly cannot be used; Q-04 says it ships as PWA web push with a documented iOS home-screen caveat.",
+      "failureScenario": "Implementer builds channel routing from the Behavior section and channel table, ships email and SMS only, and treats push as out of scope. 20.05.06 then depends on a go-live push and 20.06.02 D-06 defaults every follow to geo-gated alerts whose v1 channel is exactly that PWA push."
+    },
+    {
+      "id": "20-W8",
+      "unit": "20.04-direct-to-fan-storefront",
+      "severity": "warning",
+      "dimension": 3,
+      "claim": "`members-item` appears as a row in the product-kind table under the rule that a product declares exactly one kind, while the prose immediately below states it is not a kind but a visibility flag — and miscounts the table while doing so.",
+      "evidence": "20.04.01-storefront-product-catalog.md:34 — \"A product declares exactly one **kind**\"; the table at :38-45 lists six kinds, the sixth being \"| `members-item` | Any of the above, gated | As underlying kind | 20.02.03 | As underlying kind |\". AGAINST :52-53 — \"`members-item` is a **gate flag** on any other kind, not a seventh kind — a members-only download is a `digital-download` with `visibility = members` and an entitlement requirement (20.02.03).\" The table has six rows, so members-item would be the sixth, not the seventh — evidence the two were never reconciled.",
+      "forcedInvention": "Whether `members-item` is a value of the `kind` enum or a `visibility` field. The prose gives the answer, but the table (which the publish-time kind validation and the Operator kind restriction at :54 both key on) contradicts it.",
+      "failureScenario": "Implementer adds `members-item` to the kind enum from the table. A members-only download now has kind `members-item`, so the kind-based delegation at :40 (digital detail → 20.04.03) and the Operator restriction ('Operators may only create merch-pod, merch-stocked, and their bundles thereof') no longer resolve — a members-only venue tote is either rejected or silently permitted depending on which rule wins."
+    },
+    {
+      "id": "20-W9",
+      "unit": "20.04-direct-to-fan-storefront",
+      "severity": "warning",
+      "dimension": 3,
+      "claim": "The 10% rolling reserve is described as taken from each disbursement in the parameter table and from each accrual in the happy path, which changes the balance the payee sees.",
+      "evidence": "20.04.04-d2f-revenue-split-payout.md:58 — \"| **Rolling reserve** | **10%** of each disbursement held **90 days**, released if no refund/chargeback/dispute touches the originating sale |\". AGAINST :99 happy path step 5 — \"artist £8.82, producer £2.52, drummer £1.26 — each accrues immediately, each with a 10% reserve held for 90 days\"; and Role Lens :29 — \"Sees per sale where the money went: gross, platform cut, each payee's share, the 10% rolling reserve held\" (per sale, i.e. at accrual).",
+      "forcedInvention": "Whether the reserve is withheld when a share accrues (so the drummer's visible balance is £1.13, not £1.26, and the £20 disbursement threshold is measured against the reduced figure) or when a disbursement is cut (balance shows £1.26 and 10% is held back at payout).",
+      "failureScenario": "Drummer accrues £1.26 on a sale. Implementer A shows £1.13 available plus £0.13 reserved and needs £20 of net accrual to trigger a payout; Implementer B shows £1.26 accrued, triggers at £20 gross and holds £2 back at disbursement. The refund cover order ('reversed against each payee's rolling reserve pro-rata first') behaves differently for a refund landing before any disbursement, because under A a reserve exists and under B it does not."
+    },
+    {
+      "id": "20-W10",
+      "unit": "20.04-direct-to-fan-storefront",
+      "severity": "warning",
+      "dimension": 3,
+      "claim": "The fund-segregation policy for money-now-object-later sales is scoped to pre-order *bundles* everywhere it is stated, leaving a standalone physical-record pre-order — which the catalogue explicitly supports via the `presale` price rule — with no segregation requirement, the exact routing-around the domain CX warns of.",
+      "evidence": "20.04.01-storefront-product-catalog.md:43 — \"| `physical-record` (vinyl/CD) | Held/pressed stock, ships | Finite; **pre-order window allowed** |\"; :66 — \"| `presale` | underlying rule + `release_at`, optional `presale_amount` | ... **charged now, fulfilled at/after `release_at`** |\" — neither mentions fund segregation, and 20.04.02 (which owns physical-record detail per the taxonomy) never mentions it either. The policy is bundle-scoped in every statement: 20.04.03 D-03 (:156) — \"**Pre-order bundles** carry the same fund-segregation policy as crowdfunding\"; 20.05 index D-03 (:60) — \"Pre-order **bundles** in 20.04.03 fall under the same fund policy as crowdfunding\"; 20.05.05:92 — \"Same policy applies to pre-order **bundles** in 20.04.03\". The hazard is named in fanbase-direct-to-fan-cx.md:321 CX-13 — \"If the fund-segregation policy (20.05 D-02) applies to one and not the other, artists will route around it by calling every campaign a pre-order.\"",
+      "forcedInvention": "Whether money taken on a standalone vinyl pre-order (physical-record + presale price rule, no digital component, so not a bundle) is segregated. Every statement of the policy names bundles; no file extends it to the bare presale rule.",
+      "failureScenario": "Artist lists a `physical-record` with a `presale` rule, charged now for a March pressing, no digital component. Implementer follows 20.04.01's presale rule literally, settles the money to the artist's balance immediately, and the £9,000 taken for an unpressed record is spendable — the PledgeMusic failure 20.05 D-02 exists to prevent, reached by taking the one door nobody wrote the policy on."
+    },
+    {
+      "id": "20-W11",
+      "unit": "20.04-direct-to-fan-storefront",
+      "severity": "warning",
+      "dimension": 7,
+      "claim": "The permission conjunct required to publish a digital-download or NYP bundle is left unresolved with no owner and no pipeline stage — the deferral points only at an audit-queue identifier.",
+      "evidence": "20.04.01-storefront-product-catalog.md:185 — \"Touches 01 Identity, Profiles & Organizations — *permission, currently unstated*. Publishing a product for an artist entity is one party acting for another and needs both of `01.03.02` D-05's conjuncts: the `list` activity, plus `merch` in the edge's `domains` for merch kinds. On a membership edge the domain conjunct is universal. Which domain a digital download or an NYP bundle sells into is not settled — it is the open taxonomy question recorded against DQ-R2-01, not a call this feature may make.\" No owner, no `/create-prd*` stage, and no row in this file's Open Questions table (Q-01..Q-04 cover rights records, guest checkout, physical records, and venue merch — none of them this).",
+      "forcedInvention": "The domain value a delegate's representation edge must carry to publish a digital download, and therefore whether a manager with a signed mandate can list a record at all. The file forbids itself from deciding and points at no stage that will.",
+      "failureScenario": "Implementer wires the publish permission check for `digital-download`. The merch conjunct is specified ('merch' in the edge's domains); the digital one is not, and the pointer resolves to an audit-queue id rather than a pipeline stage. They either invent a domain value, or block delegate publishing of every digital product — silently narrowing what a managed artist can sell."
+    },
+    {
+      "id": "20-W12",
+      "unit": "20.05-memberships-patronage-campaigns",
+      "severity": "warning",
+      "dimension": 3,
+      "claim": "Physical-class membership benefits are gated on a fulfilment path 'routed to 20.05.05', but 20.05.05 is entirely campaign-backer scoped and specifies no membership fulfilment surface, no address collection, and no recurring-benefit obligation model.",
+      "evidence": "20.05.01-membership-tiers-benefits.md:50 — \"| **Physical** | Postcard, test pressing, signed print | A fulfilment obligation wearing a subscription — routes to the [20.05.05] fulfilment surface. The platform must not let an artist promise a physical benefit with no address-collection or fulfilment path.\"; :82 — \"A tier carrying a **physical-class** benefit routes fulfilment to 20.05.05 and cannot be published without an address-collection + fulfilment path attached. | Artist: blocked at tier publish until fulfilment is wired.\" AGAINST 20.05.05-backer-funds-fulfilment.md in full: its Overview (:10), Behavior (:32-47), happy path (:51-56), all eight edge-case rows, all five decisions and all four open questions concern segregated *campaign backer* funds, tranches and milestones. It never mentions memberships, tiers, recurring benefits or address collection; its Role Lens Fan (:28) is scoped to \"own backing\".",
+      "forcedInvention": "What satisfies 'a fulfilment path attached' for a recurring physical membership benefit — where the member's address is captured, when (join vs first fulfilment), how a monthly postcard obligation is tracked, and what the artist must complete before the publish gate opens. CX-M14 owns shipping mechanics but not this product requirement, and the named owner carries none of it.",
+      "failureScenario": "Artist adds 'a signed print every quarter' to a £25 tier. The publish gate must refuse until fulfilment is wired, but no file defines what wiring means, so the implementer either lets the tier publish (a physical promise with no address on file — the leak 20.05.01 names) or invents an address-collection and obligation-tracking model that no spec owns."
+    },
+    {
+      "id": "20-W13",
+      "unit": "20.06-fan-experience-discovery",
+      "severity": "warning",
+      "dimension": 7,
+      "claim": "20.06.02 has two different open questions both numbered Q-04 — one an open [OWNER] radius decision, one resolved — and two decisions each claiming to reference or resolve 'Q-04', so the identifier is unusable for tracking.",
+      "evidence": "20.06.02-gig-alerts-near-me.md:127 — \"| Q-04 | **[OWNER]** **Per DQ-04.07 / D-06 — is the alert radius the same setting as `20.01.03`'s?** ... | User | `/create-prd` |\" and :128 — \"| Q-04 | ✅ Resolved Step 5 → D-07. One aggregate, event-keyed alert; a distinct object from a single-gig alert. | Agent | Resolved |\". Both rows are numbered Q-04 in the same table. Compounding it, D-06 (:116) says \"See Q-04\" meaning the radius question while D-07 (:117) says \"Resolves Q-04\" meaning the aggregate-alert question.",
+      "forcedInvention": "Nothing product-level, but a downstream stage or remediation pass keyed on '20.06.02 Q-04' cannot tell whether the item is an open owner decision or a closed one, and 'Resolves Q-04' now asserts closure of a row that is explicitly open.",
+      "failureScenario": "A /create-prd pass collects owner decisions by question id, sees 20.06.02 Q-04 marked '✅ Resolved Step 5 → D-07', and drops the open radius reconciliation — the one item in this unit the file itself says 'no later stage resolves unaided'."
+    },
+    {
+      "id": "20-W14",
+      "unit": ".",
+      "severity": "warning",
+      "dimension": 8,
+      "claim": "The domain CX status header states 13 High and 1 Medium confidence pairs; the cross-cut map contains 12 High and 2 Medium.",
+      "evidence": "fanbase-direct-to-fan-cx.md:5 — \"**Status**: [DEEP] — 7 children; 14 intra-domain pairs confirmed (13 High, 1 Medium), 5 rejected. All High pairs carry full 5-question synthesis.\" AGAINST the Confidence column of the map at :12-25: CX-01 High, CX-02 High, CX-03 High, CX-04 High, CX-05 High, CX-06 High, CX-07 High, CX-08 High, CX-09 High, CX-10 High, CX-11 High, **CX-12 Medium** (:23), CX-13 High, **CX-14 Medium** (:25) — 12 High, 2 Medium. Both Medium entries additionally carry qualified synthesis (\"*(Medium confidence — synthesis provisional)*\" at :301; \"*(Medium confidence — pending 20.05.02 Q-01 resolution)*\" at :354), so the header's 'All High pairs carry full 5-question synthesis' claim is measuring a set it has miscounted.",
+      "forcedInvention": "Nothing directly, but the header is the file's own completeness attestation and it does not match its contents, so a reader cannot use it to know how many edges carry provisional synthesis.",
+      "failureScenario": "A verification pass trusts the header, expects one provisional edge, and treats CX-12's Medium-confidence broadcast↔memberships synthesis as confirmed — including its unqualified claim about which machine owns the artist-side health nudge."
+    }
+  ]
+}

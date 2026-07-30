@@ -1,0 +1,282 @@
+{
+  "domain": "09-rights-ownership",
+  "root": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/09-rights-ownership",
+  "unitsAudited": 7,
+  "filesRead": 40,
+  "expected": { "units": 7, "files": 40 },
+  "coverageNote": "Enumeration matched the expected 7 units / 40 files exactly. Units are the domain directory plus the six sub-domain directories (09.01-09.06), each containing an *-index.md. Every one of the 40 .md files was read in full (large files chunked by line range in the sandbox); no sampling.",
+  "dimensionApplicability": {
+    "applied": [1, 2, 3, 5, 7, 8],
+    "naDimensions": [4, 6],
+    "rationale": "Dimension 4 (Constraint Explicitness: budget/timeline/team-size/compliance/performance axes) is owned by meta/constraints.md, which is outside this domain's units; every unit here references it rather than restating it, so scoring it per unit would double-count another file's content. Dimension 6 (Competitive Positioning) is owned by meta/competitive-landscape.md per the rubric's own example. Dimension 5 was applied as 'are this unit's normative statements quantified/testable where they need to be', which is the only reading under which it can apply to a domain/feature unit at all.",
+    "note": "6 applicable checkpoints per unit x 7 units = 42."
+  },
+  "units": [
+    {
+      "unit": "09-rights-ownership (domain root: rights-ownership-index.md, rights-ownership-cx.md)",
+      "applicableCheckpoints": 6,
+      "naDimensions": [4, 6],
+      "scores": { "1": "PASS", "2": "PASS", "3": "PASS", "5": "PASS", "7": "PASS", "8": "WARN" },
+      "points": 0.5,
+      "ambiguityPct": 8.3,
+      "notes": "Exemplary domain unit. 23 sweep candidates individually dispositioned; 6 sub-domains / 26 features reconcile exactly with disk (6+4+6+3+3+4=26); 11 CX pairs with 5-question synthesis on 10 of them and an explicit Medium-confidence deferral with a named target on CX-11; 6 rejected pairs with reasons; 5 routed-out mechanisms; 9 not-product routings. All 10 open questions carry Owner + Deferred To. Sole deduction is the status map mismatch (finding 21)."
+    },
+    {
+      "unit": "09.01-rights-registry",
+      "applicableCheckpoints": 6,
+      "naDimensions": [4, 6],
+      "scores": { "1": "PASS", "2": "PASS", "3": "FAIL", "5": "PASS", "7": "WARN", "8": "PASS" },
+      "points": 1.5,
+      "ambiguityPct": 25.0,
+      "notes": "The deepest unit in the domain and the one carrying the domain's load-bearing arithmetic. Numeric precision is exemplary (exact rationals, INV-1..INV-7, canonical row order with a fixed UTF-8 bytewise party-id comparator, majority-by-share evaluator with a strict >1/2 predicate, 15-minute delete window, 1-200 char titles, worked 73.15% waterfall). Dimension 3 fails on three unmarked contradictions plus one forced invention, all in the core data model: whether an edit-of recording shares its parent's consented ledger, whether the ledger holds 0% rows, whether an unbalanced draft can be saved, and how a multi-work recording's spans are declared."
+    },
+    {
+      "unit": "09.02-split-capture-agreements",
+      "applicableCheckpoints": 6,
+      "naDimensions": [4, 6],
+      "scores": { "1": "PASS", "2": "PASS", "3": "PASS", "5": "WARN", "7": "WARN", "8": "PASS" },
+      "points": 1.0,
+      "ambiguityPct": 16.7,
+      "notes": "The strongest unit in the domain. 09.02.01 carries a testable design budget (<=8 interactions / <=90s for a 4-contributor sheet, <=2 interactions to consent); 09.02.03 makes contribution scope, consideration, beneficiary and perpetuity all required-never-defaulted with the extinguishment/vesting distinction named; 09.02.04 rate-limits notification (3 notified resends per rolling 7 days) rather than the draft. Deductions: the consent-chase cadence is specified twice with different numbers, and CX-05 defers to a pipeline stage that has already run."
+    },
+    {
+      "unit": "09.03-chain-of-title-lifecycle",
+      "applicableCheckpoints": 6,
+      "naDimensions": [4, 6],
+      "scores": { "1": "PASS", "2": "PASS", "3": "WARN", "5": "PASS", "7": "WARN", "8": "PASS" },
+      "points": 1.0,
+      "ambiguityPct": 16.7,
+      "notes": "Jurisdiction bounding is unusually disciplined: CQ-09 Option B fixes term and moral-right determination to US/FR/DE/GB with everything else an explicit unknown, and both 09.03.05 and 09.03.06 fail closed rather than extrapolating. Reversion splits correctly into arithmetic-executes / interpretation-notifies. Deductions: the v1 four-jurisdiction bound leaves 09.01.01's `public-domain` terminal ledger state with no defined producer, and 4 of the unit's 6 CX pairs are unsynthesised behind a deferral to a completed stage."
+    },
+    {
+      "unit": "09.04-rights-conflicts-disputes",
+      "applicableCheckpoints": 6,
+      "naDimensions": [4, 6],
+      "scores": { "1": "PASS", "2": "PASS", "3": "PASS", "5": "WARN", "7": "WARN", "8": "PASS" },
+      "points": 1.0,
+      "ambiguityPct": 16.7,
+      "notes": "Detection/dispute/freeze separation is clean and consistently defended (detection notifies, never opens a case, never freezes; freeze is share-scoped, never work-scoped; escrow failure halts distribution rather than paying). The unit's CX file is the only one in the domain that retargets its deferred synthesis detail to a live stage (/write-be-spec) instead of a completed one. Deductions: an unquantified 'deadline' in a normative state row, and an [OWNER] question that a sibling feature has already answered as settled behaviour."
+    },
+    {
+      "unit": "09.05-ai-voice-likeness-consent",
+      "applicableCheckpoints": 6,
+      "naDimensions": [4, 6],
+      "scores": { "1": "PASS", "2": "PASS", "3": "WARN", "5": "PASS", "7": "WARN", "8": "PASS" },
+      "points": 1.0,
+      "ambiguityPct": 16.7,
+      "notes": "The anchoring rule (unanimity to grant, most restrictive governs) and the NIL-attaches-to-the-person rule are both stated as structural impossibilities rather than policy checks, which is the right shape. Silence-reads-as-silence is applied three times without drift. Deductions: the EU AI Act release block is unsatisfiable as written against the never-detect rule, and CX-02 Q5 / CX-03 / CX-04 defer to a completed stage."
+    },
+    {
+      "unit": "09.06-rights-evidence-public-record",
+      "applicableCheckpoints": 6,
+      "naDimensions": [4, 6],
+      "scores": { "1": "PASS", "2": "PASS", "3": "WARN", "5": "PASS", "7": "WARN", "8": "PASS" },
+      "points": 1.0,
+      "ambiguityPct": 16.7,
+      "notes": "Honesty corrections are well made (issuance vs reconciliation for ISWC; two-ISRC canonicalisation ranked-and-recommended but owner-confirmed; group registration as the default filing path; never auto-register). Deductions: the lookup's declared first-class differentiator - trust level - has two conflicting three-value vocabularies in the tree with no mapping, and CX-02 Q5 / CX-03 / CX-04 defer to a completed stage."
+    }
+  ],
+  "totals": {
+    "points": 7.0,
+    "applicableCheckpoints": 42,
+    "ambiguityPct": 16.7,
+    "blocking": 5,
+    "warning": 16
+  },
+  "findings": [
+    {
+      "id": "F-01",
+      "unit": "09.01-rights-registry",
+      "severity": "blocking",
+      "dimension": 3,
+      "claim": "A lineage child recording (`edit-of` / `remaster-of` / `alternate-take-of`) is specified as sharing its parent's consented master ledger by reference, but the ledger feature specifies that a ledger's rows are attached to exactly one rights object and that creating any rights object opens a fresh `unallocated` ledger - so the same recording both inherits a consented ledger and opens an empty one.",
+      "evidence": "09.01.01-work-recording-duality.md:91-92 'Inheritance is **by reference, not by copy**: an `edit-of` shares its parent's consented master ledger until someone forks it, at which point it becomes an independent ledger requiring its own consent.' and :356 D-07 'Lineage kinds that add **no new party** (`edit-of`, `remaster-of`, `alternate-take-of`) inherit the parent's consented master ledger **by reference** ... Obliges 09.01.02 - flagged for Step 6.' CONTRA 09.01.02-ownership-ledger-validation.md:35-36 'A ledger is a set of `(party, pool, role, contribution-basis, share, consent-state, entered-by)` rows attached to **exactly one rights object**.' and :139-140 Happy Path 1 'A rights object is created ([09.01.01]); its ledger opens in `unallocated` with zero rows'. Also 09.01-rights-registry-cx.md:39 'Creating a rights object creates an empty ledger in `unallocated` state.' 09.01.02 contains no lineage/inheritance rule, no inherited or shared ledger state in its States table (:203-214), and its Cross-Cut Notes entry for 09.01.01 (:236) covers only invariant selection and duplicate merges.",
+      "forcedInvention": "Whether an `edit-of` recording gets a fresh `unallocated` ledger (which release-blocks it until every parent party re-consents - the outcome 09.01.01 says 'kills capture') or shares the parent's consented ledger (which requires the ledger model to support one ledger over two objects, contradicting the one-object rule). The implementer must also invent the fork semantics and the state name for a shared ledger.",
+      "notes": "09.01.01 D-07 flags the reconciliation as owed 'for Step 6'. Step 6 has demonstrably run - rights-ownership-cx.md:5 states the domain CX is '[DEEP] - 6 sub-domains; all sub-domain pairs synthesised from Step-6 feature-level evidence' - so the obligation is past its stage and undischarged."
+    },
+    {
+      "id": "F-02",
+      "unit": "09.01-rights-registry",
+      "severity": "blocking",
+      "dimension": 3,
+      "claim": "The ledger declares a 0% row for a work-for-hire contributor to be a mandatory, never-pruned invariant, while the work-for-hire feature specifies that such a party is absent from the ledger by agreement and that a bare 0% row cannot carry that meaning, and the amendment feature forbids a 0% row outright.",
+      "evidence": "09.01.02-ownership-ledger-validation.md:53 INV-6 'Zero rows are rows | All | A 0% party (work-for-hire contributor, non-featured performer) **is a valid row and is not pruned**. Absence and zero are different statements.' and :175 'Party listed with 0% | Valid and important (INV-6) - a work-for-hire contributor or non-featured performer is a real 0% party. | Row shown with \"0% - paid by fee, not by share\" ... **Not pruned, not hidden.**' CONTRA 09.02.03-work-for-hire-buyout.md:70 'Records the party's **absence from** - or another party's presence on - the ownership ledger. They are not a 0% row *by accident*; they are absent *by agreement*' and :176 DT-01 'the record must distinguish **\"0% by agreement\"** from **\"0% because nobody said\"** - and **a bare 0% row cannot**. ... Resolution: present in the view, structurally distinct in the record.' CONTRA 09.02.04-split-amendment-reconsent.md:149 'An amendment **cannot produce a 0% row.**' and :277 D-14 'An amendment **cannot produce a 0% row**; zeroing a party is removal-by-agreement or a WFH designation.' INV-6's second cited population is also disclaimed by 09.01.05-performer-neighbouring-rights.md:97 D-01 'Performer record is **disjoint** from the master ownership ledger', and 09.01.02's own cross-cut note :240 hedges to 'a session drummer is a 0% ledger row (**or absent entirely**)'.",
+      "forcedInvention": "Whether the consented ownership ledger physically contains rows for fee-only and non-featured parties. This decides the row-count and consent-set arithmetic ('Waiting on N of M'), whether INV-6 has any valid population, whether the ledger or the designation record is the source for the capture view's fee rows, and what domain 10 reads when deciding a bought-out performer is owed nothing."
+    },
+    {
+      "id": "F-03",
+      "unit": "09.01-rights-registry",
+      "severity": "blocking",
+      "dimension": 3,
+      "claim": "The publishing feature blocks saving a draft whose publisher rows do not reconcile to their anchor writer's share, while the ledger feature that owns validation states as a ratified decision that save is never gated and only Propose is - a rule two other features cite as governing.",
+      "evidence": "09.01.04-publishing-rights.md:162 'Publisher rows anchored to W total != W's writer share | **Save blocked**, with the specific remainder named per writer - not a global \"doesn't total 200\".' and :197 States 'Partial | All positions declared, one writer's publisher pool != their writer share | Per-writer remainder named; **save disabled** with the reason stated as a question, not a code'. CONTRA 09.01.02-ownership-ledger-validation.md:262 D-05 '**Save is never gated; Propose is.** An unbalanced draft persists as `unallocated` | The capture moment is unrepeatable. Blocking save is a data-loss path aimed at the persona whose lazy path must be the correct path (DT-10).' and :167 'Shares total 97% | Draft **saves**. ... **Save is never blocked**; the Propose button carries the reason.' and :229 DT-10 rejecting blocked-save because 'it contradicts the thesis ... a Producer mid-session typing shares who cannot save loses the work'. The same rule is cited as governing by 09.02.04-split-amendment-reconsent.md:80 'Draft | Saved always, never gated ([09.01.02] D-05)' and 09.02.04:273 D-10 'notification is rate-limited ..., saving never is'. 09.01.04:23-24 places its own anchoring rule inside that validator: 'The arithmetic that validates them is [09.01.02]; this feature contributes one invariant to that validator (the anchoring rule, D-05)'.",
+      "forcedInvention": "Whether a mid-session publishing draft with an incomplete publisher anchor persists or is refused. One implementer builds save-always with a disabled Propose; another builds a save gate on the anchoring invariant and loses unrepeatable capture data."
+    },
+    {
+      "id": "F-04",
+      "unit": "09.01-rights-registry",
+      "severity": "warning",
+      "dimension": 3,
+      "claim": "The 100% publisher-pool total is specified as an independent, separately reported invariant by the validator and as never an independent check by the publishing feature, producing two different validation outputs for the same defect.",
+      "evidence": "09.01.02-ownership-ledger-validation.md:49 INV-2 'Pool totals, independently | Publishing ledger | The **writer pool** sums to exactly 100% **and** the **publisher pool** sums to exactly 100%. A ledger of 150 writer + 50 publisher totals 200% and is invalid. **The two pools are checked separately and reported separately.**' and :169 'Publishing ledger: writer pool 150%, publisher pool 50%, total 200% | **Rejected** by INV-2 ... | \"Writer shares total 150% - should be 100%. Publisher shares total 50% - should be 100%.\" Two separate remainders, two separate fixes.' CONTRA 09.01.04-publishing-rights.md:53 'The 100% publisher pool is therefore a **derived consequence** of rule 2, not an independent check.' and :250 D-05 '... the 100% publisher pool is a derived consequence, **never an independent check**', with :162 requiring the error be reported per writer 'not a global \"doesn't total 200\"'.",
+      "forcedInvention": "Whether the validator reports a publisher-pool remainder at all, or only per-writer anchoring remainders. Under 09.01.04's anchoring rule the 150/50 example 09.01.02 uses to justify INV-2 is unreachable, so the two files disagree about which errors exist."
+    },
+    {
+      "id": "F-05",
+      "unit": "09.01-rights-registry",
+      "severity": "warning",
+      "dimension": 3,
+      "claim": "Concurrent edits to ledger shares are specified as field-level last-write-wins by the ledger feature and as never last-write-wins by the sub-domain cross-cut that both sibling features cite as the governing rule for exactly that scenario.",
+      "evidence": "09.01.02-ownership-ledger-validation.md:183 'Two Producers edit the same draft simultaneously | Field-level **last-write-wins** within `unallocated` only - nobody has consented, so there is nothing to protect - with every change attributed in a visible edit trail.' CONTRA 09.01-rights-registry-cx.md:42 CX-01 synthesis Q5 'Two parties editing shares concurrently can produce a ledger that totals correctly but that neither agreed to. **Ledger writes must be proposals requiring consent, never last-write-wins.**' The same CX clause is cited as binding by 09.01.01-work-recording-duality.md:361 D-12 'Concurrent writes to a link are **rejected, never merged or overwritten** ... Consistent with [CX-01] synthesis question 5 - ledger writes are proposals, never last-write-wins' and by 09.01.04-publishing-rights.md:184 'Never last-write-wins ([09.01.02] CX-01 s5).'",
+      "forcedInvention": "Whether two producers editing one unconsented draft race destructively with an attribution trail, or the second write is rejected and re-presented. The CX rule is quoted absolutely by two siblings and contradicted by the feature that owns the ledger."
+    },
+    {
+      "id": "F-06",
+      "unit": "09.01-rights-registry",
+      "severity": "warning",
+      "dimension": 3,
+      "claim": "The sub-domain cross-cut states unconditionally that creating a recording opens both a master and a publishing ledger, while the master and ledger features state that a recording with no linked work has no publishing ledger and that no phantom publishing ledger is created.",
+      "evidence": "09.01-rights-registry-cx.md:123 CX-06 synthesis Q2 'Creating the recording opens **both ledgers** `unallocated`; capture presents them side by side and names their distinct totals.' and 09.01.03-master-rights-ownership.md:203 'Producer creates the recording record ...; its master ledger opens `unallocated`, **its publishing ledger opens alongside - never one alone** ([CX-06]).' CONTRA 09.01.03-master-rights-ownership.md:251 'Master with **no linked work** (field recording, sound effect, unstructured improvisation) | The master pool is valid alone; it does not require a work. | **No phantom publishing ledger is created**, and no \"incomplete\" warning is shown for its absence.' and 09.01.02-ownership-ledger-validation.md:193 'Recording exists with no linked work | Valid - the link is optional at creation ... The recording has a master ledger and **no publishing ledger yet**.' A publishing ledger belongs to the work, not the recording, per 09.01.01-work-recording-duality.md:248 (the link and both layers appear only after a work is created or picked).",
+      "forcedInvention": "Whether a publishing ledger object is attached to a recording at creation or only to a work once linked - which in turn decides whether the 'pair-incomplete / 1 of 2 ledgers consented' indicator fires for every unlinked recording."
+    },
+    {
+      "id": "F-07",
+      "unit": "09.01-rights-registry",
+      "severity": "warning",
+      "dimension": 0,
+      "claim": "Multi-work recordings branch into two materially different behaviours depending on whether the embodied works' spans are disjoint or overlapping, but the Recording->Work link is defined as carrying only a type and a weight, and no span field, span-entry flow, or disjointness test is specified anywhere.",
+      "evidence": "09.01.01-work-recording-duality.md:69 defines the link's payload: '**1. Recording -> Work** - `0..N` links, each carrying a **type** and a **weight**.' The branch then keys off spans: :105-107 'For declared **disjoint** work spans - a medley or continuous live set where one work ends before the next begins - duration proration is an editable proposed weight: each work's share of the recording's running time. For a mashup whose embodied works **overlap in time**, duration supplies no non-arbitrary allocation.' :270 'duration proration is an editable proposal only because **the declared spans do not overlap**' vs :271 '**Mashup** whose embodied works overlap in time | Allowed only after the declarant supplies every positive exact-rational ... weight'. :304 States 'Incomplete disjoint-span weights show the named shortfall; temporal-overlap mashups name every missing/invalid declared weight and offer no automatic allocation.'",
+      "forcedInvention": "Whether each Recording->Work link carries start/end timecodes (required for the specified 'share of the recording's running time' proration), or the declarant merely ticks 'these overlap'; and who decides disjointness. Under the checkbox reading the specified duration-proration behaviour cannot be built at all."
+    },
+    {
+      "id": "F-08",
+      "unit": "09.01-rights-registry",
+      "severity": "warning",
+      "dimension": 7,
+      "claim": "The sub-domain cross-cut defers a substantive open item to `/ideate-discover Step 5`, a pipeline stage that has already completed, so the deferral can never be honoured; a second obligation is flagged 'for Step 6', also past.",
+      "evidence": "09.01-rights-registry-cx.md:63 CX-02 synthesis Q5 'A sample declared *after* release is the expensive case. The work is already earning; the dilution is retroactive. `[PENDING - /ideate-discover Step 5 deepening]`.' 09.01.01-work-recording-duality.md:356 D-07 '... Obliges 09.01.02 - **flagged for Step 6**.' and :329 'Two new obligations land on 09.01.02 from this file and **must be reconciled at Step 6**'. Both stages have run: rights-ownership-cx.md:5 '**Status**: [DEEP] - 6 sub-domains; all sub-domain pairs synthesised from **Step-6** feature-level evidence', and 09.01.03-master-rights-ownership.md:335 Q-08 is marked RESOLVED by '**Step 6** CX synthesis [CX-07]'. The tree itself treats this pattern as a defect - 09.01-rights-registry-cx.md:128 records of CX-05 that 'It makes **no stale workflow-stage deferral claim**.'",
+      "notes": "Reported as malformed tracking only. The CX-02 Q5 subject matter is in fact resolved downstream at 09.01.06-sample-interpolation-provenance.md:63, so the marker is stale rather than a missing-policy gap; the defect is that a reader cannot tell."
+    },
+    {
+      "id": "F-09",
+      "unit": "09.01-rights-registry",
+      "severity": "warning",
+      "dimension": 3,
+      "claim": "The Control Summary lists a recorded moral-rights assertion as the blocker for the 'mutilate / materially alter' action, but its own definition of the 'Blocked by' verdict admits only recorded, consented terms decidable by date, territory-set and right-type arithmetic - which a moral right is not.",
+      "evidence": "09.01.03-master-rights-ownership.md:132 defines the verdict: '**Blocked by _<named term>_** | A recorded, **consented** term is unambiguously breached by this action, **decidable by date arithmetic, territory set membership, and right-type match**. Always names the term, the holder, and the expiry.' :157 then lists 'Mutilate / materially alter | A recorded moral-rights assertion ([09.03.06]) - surfaced, never evaluated for integrity (09.03.06 D-02)'. A moral right is neither a consented term nor date/territory-decidable: 09.03.06-moral-rights-attribution.md:112 D-01 'Moral rights are a **persistence property** of authorship, not a ledger share', :113 D-02 'The platform **routes** integrity objections; it never **evaluates** them', and :116 D-05 bounds determinate status to US/FR/DE/GB with everything else 'explicitly `unknown` / not determined'.",
+      "forcedInvention": "Which of the three verdicts the alteration action renders. Under the stated predicate it can only ever read 'No recorded obstacle' or 'Unknown', yet the action table names moral rights as its blocker - so one implementer renders a block and another renders Unknown for the same recorded assertion."
+    },
+    {
+      "id": "F-10",
+      "unit": "09.02-split-capture-agreements",
+      "severity": "warning",
+      "dimension": 5,
+      "claim": "The consent-chase cadence is specified twice with different numbers - once as the domain's requirement on the shared chase mechanism and once for amendment proposals - with no rule saying which applies where.",
+      "evidence": "09.02.01-moment-of-creation-split-capture.md:112-118 specifies 'T+0 ... T+1d, T+3d, T+7d, T+14d, T+30d ... Months 2-12 | Monthly | Year 2+ | Quarterly, indefinitely', restated as a domain-level requirement at rights-ownership-cx.md:289 'Requirements this domain imposes: schedule T+0/1d/3d/7d/14d/30d -> monthly to 12mo -> quarterly indefinitely; **no expiry**' and again at 09.02.01:235 'this feature's requirements: the schedule above (T+0/1d/3d/7d/14d/30d -> monthly to 12mo -> quarterly forever)'. CONTRA 09.02.04-split-amendment-reconsent.md:172 'Notices at **day 0, day 7, day 21** on every channel on file. At **day 45** with zero interaction the proposal is badged `blocked`.' and :221 States 'Blocked | **45 days** with zero interaction from a required consenter'. Neither file notes that amendment deliberately uses a different cadence from capture.",
+      "forcedInvention": "Whether the shared Consent Chase mechanism implements one schedule or two, and which one governs an amendment proposal - the two differ from day 1 onward and only one of them defines a `blocked` badge threshold."
+    },
+    {
+      "id": "F-11",
+      "unit": "09.02-split-capture-agreements",
+      "severity": "warning",
+      "dimension": 7,
+      "claim": "The sub-domain cross-cut defers CX-05's synthesis to `/ideate-discover Step 5`, a stage that has already completed, so the deferral cannot be honoured.",
+      "evidence": "09.02-split-capture-agreements-cx.md:106 '> CX-05 remains deferred to `/ideate-discover` Step 5, per the CX gate. It is Medium confidence; CX-02 and CX-04 are High confidence and synthesised above.' Step 5 and Step 6 have both run - rights-ownership-cx.md:5 records Step-6 synthesis as the basis of the domain CX, and 09.02.02-producer-points-agreements.md:106-107 marks its own Q-02/Q-03 '(R)esolved Step 5'. The sibling CX for 09.01 explicitly records that a comparable entry 'makes no stale workflow-stage deferral claim' (09.01-rights-registry-cx.md:128), showing the pattern is recognised as a defect.",
+      "notes": "CX-05's subject matter (points and WFH are mutually exclusive per contribution, combinable across contributions) is in fact decided at 09.02.02:97 D-04 and 09.02.03:226 D-15, so this is malformed tracking rather than missing policy."
+    },
+    {
+      "id": "F-12",
+      "unit": "09.03-chain-of-title-lifecycle",
+      "severity": "blocking",
+      "dimension": 3,
+      "claim": "The registry depends on a `public-domain` terminal publishing-ledger state that satisfies the release gate, but the feature that owns the determination produces only per-jurisdiction statuses for four named jurisdictions, declares everything else `unknown`, and states that a determinate status is not an ownership determination - so nothing in the tree can set the state the registry requires.",
+      "evidence": "09.01.01-work-recording-duality.md:289 'A work in the **public domain** | Its publishing ledger is `public-domain`, a terminal state - **not** `unallocated`. **It satisfies the release gate.** Without this, no PD work could ever be released, which is absurd. The determination is [09.03.05]'s, never this feature's. | \"Composition is in the public domain - no publishing owners.\"' and :334 'public-domain` is a terminal publishing-ledger state that **satisfies** the release gate'. CONTRA 09.03.05-copyright-term-public-domain.md:43-50 '**CQ-09 Option B - v1 supports exactly `US`, `FR`, `DE`, and `GB`** ... Any other territory, missing death date or historical fact, unsupported work/category rule, or insufficient source evidence is explicitly **`unknown` / `not determined`** - never omitted, extrapolated from another jurisdiction, or guessed.' and :119 D-06 'A determinate term status is **not clearance, legal advice, ownership, or release authorization**', with :80 'User treats a determinate term status as clearance, licence, ownership decision, or release approval | **Block the inference, not the work.**' The ledger meanwhile has exactly one territory: 09.01.02-ownership-ledger-validation.md:272 D-15 'Invariants are evaluated **per territory**; v1 has exactly one territory (`World`)'.",
+      "forcedInvention": "Who writes `public-domain` onto a ledger, and on what evidence. The implementer must invent a mapping from per-jurisdiction term statuses (possibly PD in FR and `unknown` in US) onto a single World-scoped terminal ledger state, and must decide whether that state may be reached at all given D-06's refusal to let a term status act as an ownership or release determination."
+    },
+    {
+      "id": "F-13",
+      "unit": "09.03-chain-of-title-lifecycle",
+      "severity": "warning",
+      "dimension": 7,
+      "claim": "Four of the sub-domain's six cross-cut pairs have no synthesis and are deferred to `/ideate-discover Step 5`, a stage that has already completed.",
+      "evidence": "09.03-chain-of-title-lifecycle-cx.md:65 '> CX-03 through CX-06 synthesis questions are deferred to `/ideate-discover` Step 5, per the CX gate.' The unsynthesised pairs include CX-03 (termination rights are heritable on a statutory hierarchy that is not the will's) and CX-04 (term measured from the author's death), both of which carry live cross-feature obligations. Step 5/6 have run: rights-ownership-cx.md:5 '[DEEP] ... all sub-domain pairs synthesised from Step-6 feature-level evidence'; the same file's CX-11 uses the correct pattern for a genuinely open item ('Promote to full synthesis at `/write-architecture-spec` once the detection trigger point is fixed', rights-ownership-cx.md:274)."
+    },
+    {
+      "id": "F-14",
+      "unit": "09.04-rights-conflicts-disputes",
+      "severity": "blocking",
+      "dimension": 7,
+      "claim": "Whether a dispute blocks release and licensing is presented as an unresolved [OWNER] values call in this unit, while the master feature and the domain cross-cut already specify it as settled behaviour - `disputed` blocks every exploitation verdict.",
+      "evidence": "09.04-rights-conflicts-disputes-index.md:61 Q-02 '[OWNER] Does a dispute make the work **unusable** (release-blocked, licence-blocked) or only unpaid (escrowed)? Blocking is the stronger lever to force resolution and it punishes the innocent co-owners hardest. A values trade, not a derivable fact', and 09.04.03-rights-freeze-royalty-escrow.md:112 Q-04 '[OWNER] Does a freeze also block **licensing** and **release** of the contested work, or only payment?' CONTRA 09.01.03-master-rights-ownership.md:147-153, which lists `disputed` as a blocker in the Control Summary action table: 'Release / distribute | An exclusive grant covering the target territory ...; **`unallocated` or `disputed` ledger**', 'Grant a non-exclusive master licence | ...; **`disputed` ledger**', 'Grant an **exclusive** master licence | An existing overlapping exclusive; ...', 'Sell / assign | ...'; and :266 States 'Disputed / frozen | Conflict raised via [09.04] | Dispute banner; payouts frozen; **Control Summary blocks every exploitation action** naming the dispute'. Restated as domain fact at rights-ownership-cx.md:21 CX-03 '`disputed` freezes payouts and **blocks every exploitation verdict**' and :91-92 '`disputed` is a registry state that **freezes payouts and blocks every exploitation verdict** in a master's Control Summary.' Neither open question mentions the in-domain answer; 09.04.03 Q-04 cites only domain 12 as a partial constraint.",
+      "forcedInvention": "Whether to implement licence/release blocking on `disputed` now (per 09.01.03 and the domain CX) or to build payment-freeze only and wait for an owner decision. The two paths differ on the single most consequential consequence of a dispute, and each cites the other's silence as licence."
+    },
+    {
+      "id": "F-15",
+      "unit": "09.04-rights-conflicts-disputes",
+      "severity": "warning",
+      "dimension": 3,
+      "claim": "A moral-rights objection is specified as routing into this sub-domain by the moral-rights feature and as bypassing it entirely by this sub-domain's own rejected-pair rationale.",
+      "evidence": "09.04-rights-conflicts-disputes-cx.md:85 R-03 'A moral-rights objection is not an ownership dispute and its remedy is not a ledger correction - no percentage fixes a mutilated work. It routes to [domain 24] **directly**. **Handling it here** would drag an integrity judgement into a machine built for arithmetic.' CONTRA 09.03.06-moral-rights-attribution.md:23 'Asserts a moral-rights objection when a use misattributes or mutilates their work; that objection **routes to [09.04] and [domain 24]**, not to a rights ledger' and :72 'Author objects to a derogatory treatment | **Routes to [09.04] / [domain 24]**. The platform does not evaluate the merits.'",
+      "forcedInvention": "Whether the 09.04 dispute machinery accepts a moral-rights objection as a case type (with the freeze and escrow consequences that attach to a 09.04 dispute) or refuses it and routes straight to domain 24."
+    },
+    {
+      "id": "F-16",
+      "unit": "09.04-rights-conflicts-disputes",
+      "severity": "warning",
+      "dimension": 5,
+      "claim": "A dispute awaiting the other party's position is specified as showing a deadline, but no duration and no consequence-at-expiry is given anywhere, and the domain rule forbids converting silence into an outcome.",
+      "evidence": "09.04.02-split-ownership-dispute-cases.md:71 States 'Partial | Asserted, other party has not responded | \"Awaiting X's position\" **with a deadline**.' No duration, escalation, or expiry behaviour appears in the file; its only stated non-response handling is :57 'Both parties dig in; nobody withdraws | Escrow accumulates ... The share stays frozen until one party withdraws, a court judgment is recorded, or an agreed end-mechanism is chosen.' The governing domain rule forbids the obvious default: rights-ownership-index.md:117 D-06 '**Silence must read as silence**', applied at 09.02.04-split-amendment-reconsent.md:270 D-07 '**Silence is never consent.** ... unreachability is a status, never an answer.'",
+      "forcedInvention": "The deadline's value and what happens when it passes. Given silence cannot become an answer, an implementer must invent either a purely cosmetic countdown or an escalation with a consequence the domain elsewhere forbids."
+    },
+    {
+      "id": "F-17",
+      "unit": "09.05-ai-voice-likeness-consent",
+      "severity": "warning",
+      "dimension": 3,
+      "claim": "A statutory-disclosure territory block is specified to fire while a synthesised element 'sits undeclared', which the platform cannot know, because the same sub-domain forbids AI detection and relies solely on declaration.",
+      "evidence": "09.05.03-ai-generated-content-disclosure.md:67 'Territory requires disclosure by law (EU AI Act) | ... and the release ([domain 12]) **blocks distribution into that territory while a synthesised element sits undeclared**. | Producer/Musician: \"This element must be declared to distribute in [territory].\"' CONTRA the same file's :47-48 'Per [09.05 D-03], the platform **records declarations; it does not detect AI use**' and :106 D-01 'The platform **records** declarations; it never **detects** AI use', and 09.05-ai-voice-likeness-consent-index.md:61 D-03 'The platform records consent and disclosure; it **does not detect** AI use'. The file's own non-declaration row is consistent with never-detect: :64 'Nobody declares | **The platform cannot detect it.** | Empty reads as **undeclared**, never as \"no AI\"'.",
+      "forcedInvention": "The trigger for the territory block. The only knowable path is an existing NIL grant for a synthesised voice with no matching declaration (the coupling 09.05-ai-voice-likeness-consent-cx.md:64 implies: 'If disclosure fails, the release should block - the grant's condition is unmet'), but the text as written asserts a general undeclared-element block that is unsatisfiable, so one implementer builds the NIL-derived gate and another builds nothing."
+    },
+    {
+      "id": "F-18",
+      "unit": "09.05-ai-voice-likeness-consent",
+      "severity": "warning",
+      "dimension": 7,
+      "claim": "The sub-domain cross-cut defers CX-03 and CX-04 synthesis and one live CX-02 question to `/ideate-discover Step 5`, a stage that has already completed.",
+      "evidence": "09.05-ai-voice-likeness-consent-cx.md:69 '> CX-03 and CX-04 synthesis questions are deferred to `/ideate-discover` Step 5, per the CX gate.' and :67 CX-02 synthesis Q5 'A NIL grant withdrawn after release, with the track live and disclosed - does the disclosure become a defence or an admission? `[PENDING - /ideate-discover Step 5 deepening]`.' Step 5/6 have run (rights-ownership-cx.md:5). CX-03 carries a live substantive rule ('Consent to train is **not** consent to be undisclosed ... The two grants are independent and must not be bundled', :12) whose 5-question synthesis was never written."
+    },
+    {
+      "id": "F-19",
+      "unit": "09.06-rights-evidence-public-record",
+      "severity": "blocking",
+      "dimension": 3,
+      "claim": "Trust level is declared the public lookup's first-class visible differentiator, but the tree defines two different three-value vocabularies for it and the domain cross-cut asserts they are the same attribute, leaving the rendered values undefined.",
+      "evidence": "09.06.04-public-rights-lookup.md:111 D-03 '**Trust level is a first-class, visible attribute** | It is the only thing distinguishing this from the incumbents' and :50-51 'Every record shows its **trust level** - **the same attribute as the chain of title** ([09.03.01] D-01).' That source defines one enum: 09.03.01-chain-of-title-ledger.md:100 D-01 'Every event carries a **trust level**: `platform-witnessed` / `evidence-attached` / `asserted`'. A different enum is defined and declared registry-wide elsewhere: 09.01.03-master-rights-ownership.md:195-199 'Class | Meaning | `captured` ... `asserted` ... `imported`' and :319 D-09 'Master ledgers carry a **provenance class**; `asserted` never renders as `captured`', with :335 Q-08 RESOLVED '**registry-wide**'. The domain cross-cut then equates the two while naming only the second set: rights-ownership-cx.md:179-181 CX-07 '**Trust level** is defined by the chain and rendered by the lookup ... Every rendered record carries its **provenance class** (captured / asserted / imported, 09.06.04 DT-03 / 09.01.03 DT-08)'. 09.06.04 itself uses both: :122 Q-04 'the trust-tier consequence is already governed by **CX-07's provenance class** (imported never renders as captured)'. A third rendering vocabulary appears in its happy path, :59 'Sees \"consented split, 4 parties, March 2026\" rather than \"source: label submission\"'.",
+      "forcedInvention": "The enum the lookup renders and its mapping. `evidence-attached` has no counterpart in the provenance-class set and `imported` has none in the chain's trust-level set, so an implementer must invent either a fourth/fifth value, a lossy mapping, or two parallel attributes - on the one field the feature says is its sole differentiator."
+    },
+    {
+      "id": "F-20",
+      "unit": "09.06-rights-evidence-public-record",
+      "severity": "warning",
+      "dimension": 7,
+      "claim": "The sub-domain cross-cut defers CX-03 and CX-04 synthesis and one live CX-02 question to `/ideate-discover Step 5`, a stage that has already completed.",
+      "evidence": "09.06-rights-evidence-public-record-cx.md:73 '> CX-03 and CX-04 synthesis questions are deferred to `/ideate-discover` Step 5, per the CX gate.' and :71 CX-02 synthesis Q5 'A work amended ([09.02.04]) after registration means the filing describes a superseded ledger. Whether that requires a supplementary registration is a real question - `[PENDING - /ideate-discover Step 5 deepening]`.' Step 5/6 have run (rights-ownership-cx.md:5). The CX-02 Q5 subject is in fact resolved downstream at 09.06.03-copyright-office-registration.md:64 ('**Settled upstream at the amendment** ... Whether to file a supplementary registration is the registrant's call'), so the marker is stale rather than a policy gap - but the reader cannot tell which."
+    },
+    {
+      "id": "F-21",
+      "unit": "09-rights-ownership (domain root)",
+      "severity": "warning",
+      "dimension": 8,
+      "claim": "The domain index's Children table and its narrative both declare every node `[SURFACE]`, but on disk every sub-domain index declares `[BREADTH]` and the 26 leaf features declare `[DEEP]`, `[PARTIAL]` or `[SURFACE]` - so the index's status map does not match the actual tree.",
+      "evidence": "rights-ownership-index.md:28 'All nodes `[SURFACE]`; the domain is `[BREADTH]`.' and :32-37, where the Status column reads `[SURFACE]` for all six sub-domains (e.g. '| 09.01 | Rights Registry | sub-domain | [09.01-rights-registry/] | `[SURFACE]` | 16 hypotheses (6 features) |'). On disk: 09.01-rights-registry-index.md:5 '> **Status**: [BREADTH]' (identically for 09.02, 09.03, 09.04, 09.05 and 09.06), while leaves range across '> **Status**: [DEEP]' (09.01.01-.04, 09.02.01, 09.02.03, 09.02.04), '> **Status**: [PARTIAL]' (09.01.06, 09.02.02, 09.03.01, 09.03.02, 09.04.01-.03, 09.05.01, 09.05.03, 09.06.01, 09.06.02, 09.06.04) and '> **Status**: [SURFACE]'. The domain CX is meanwhile '[DEEP]' (rights-ownership-cx.md:5).",
+      "forcedInvention": "Which status a downstream stage should trust when deciding whether a node still owes deepening. Everything else in Dimension 8 passes: all seven directories carry both an index and a CX file, all Role Matrices are populated, every leaf carries a Role Lens, the Children tables and the leaf-feature map reconcile with disk (6+4+6+3+3+4 = 26 features), Deep Think hypothesis counts reconcile (3+3+2+3+2+3 = 16 for 09.01), and there are no Classification Gate violations (no single-child folders, no flat feature files with 3+ sub-features)."
+    }
+  ],
+  "notablePositives": [
+    "Numeric precision where money depends on it: exact-rational shares with a fixed canonical row order and a locale-free UTF-8 bytewise party-id comparator (09.01.02:83-93); a strictly-greater-than-one-half majority-by-share predicate with the full current pool as denominator and explicit fail-closed on a tie (09.01.03:71-83, edge cases :232-236); a base-tiered encumbrance waterfall with a worked 73.15% example (09.01.03:170-189).",
+    "A testable capture budget rather than an adjective: '<=8 interactions and <=90s from prompt to sent' with consent at '<=2 interactions' (09.02.01:22-27), and every later addition measured against it.",
+    "Silence-reads-as-silence is applied consistently across six independent features (09.01.01 named-not-confirmed, 09.01.02 pending consent, 09.01.06 empty provenance, 09.05.01 no-position-recorded, 09.05.03 undeclared, 09.03.05 cannot-determine) without drift.",
+    "Required-never-defaulted terms are individually justified rather than asserted: producer-points base (09.02.02 D-01), WFH contribution scope, consideration, beneficiary and perpetuity (09.02.03 D-07/D-09/D-10/D-15), publishing deal rate (09.01.04 D-16).",
+    "Open questions are unusually well formed: of the ~60 open questions across the 7 units, all carry an Owner and a Deferred To, resolved ones carry the resolving citation inline, and several explicitly record why no downstream stage can take the call (e.g. 09.04.02 Q-01, 09.02.04 Q-01)."
+  ]
+}

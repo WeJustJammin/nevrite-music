@@ -1,9 +1,10 @@
 # Audit Scope — Ambiguity Audit
 
-> **Status**: ACTIVE — fresh invocation (run 3, canonical `/audit-ambiguity` skill)
+> **Status**: ACTIVE — run 3 EXECUTING (canonical `/audit-ambiguity` skill)
 > **Scope**: ideation (vision layer)
-> **Enumerated**: 2026-07-24
-> **Run type**: fresh post-remediation verification run
+> **Enumerated**: 2026-07-30 (re-enumerated at execution; superseded the 2026-07-24 pass)
+> **Run type**: fresh post-remediation verification run — the full run `BLOCKER-004` requires
+> **Tree state**: post-DQ-R2-01 (D-75 / A′ propagated across 37 files, 2026-07-29)
 
 ## Layers To Audit
 
@@ -26,10 +27,25 @@
 | `*-index.md` | 190 |
 | `*-cx.md` | 190 |
 | `meta/*.md` | 6 |
-| Audit units (sub-domain granularity) | 191 |
+| Audit units (sub-domain granularity) | **191** |
+| Unit definition | any directory carrying an `*-index.md` (189), plus `meta/` and the root as one unit each |
 | Files per unit | min 2 / max 11 / mean 5.9 |
-| Below expected threshold? | No — 1,122 matches the recorded tree size (was 1,121; `meta/counterparties.md` added) |
+| Unit-to-file reconciliation | 191 units account for **1,122 / 1,122** files — zero orphans, zero double-counting |
+| Below expected threshold? | No — 1,122 matches the recorded tree size and run 2's unit count exactly |
 | `surfaces/` scanned | N/A — single-surface project, no `surfaces/` directory |
+
+### Run-3 execution shape
+
+Sharded by domain: 26 shards (24 domains + `meta` + root), each shard audits every unit it
+owns through the full 3a→3b→3c cycle, then its findings verify adversarially before the next
+shard's results are merged. Cross-layer consistency checks (Step 4) are **not applicable** —
+scope is ideation only, not BE/FE/all.
+
+**Data-durability requirement (run-2 regression guard).** Run 2 lost detailed findings for
+~134 of 154 scored units because agents wrote them to a session scratchpad that was later
+cleaned, returning only one-line summaries. Run 3 requires every finding to be returned as
+**structured data** (so it lands in the workflow journal) **and** written to
+`.memory/wiki/specs/audits/run3/` — a tracked location, never a scratchpad.
 
 Every discovered file is audited individually through the full 3a→3b→3c cycle.
 No sampling, no representative selection, no skipping.

@@ -1,0 +1,432 @@
+{
+  "domain": "19-ticketing-box-office",
+  "root": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/19-ticketing-box-office",
+  "auditedAt": "2026-07-30",
+  "unitsAudited": 10,
+  "filesRead": 58,
+  "rubric": {
+    "vision": "/home/rob/Projects/WeJammin/.claude/skills/pipeline-rubrics/references/vision-rubric.md",
+    "scoring": "/home/rob/Projects/WeJammin/.claude/skills/pipeline-rubrics/references/scoring.md",
+    "naPolicy": "Dimension 2 (Persona Specificity) and Dimension 6 (Competitive Positioning) are scored N/A for every unit in this domain. Personas are defined once in meta/personas.md and every unit in domain 19 references them without redefining ('Personas from meta/personas.md — referenced, never redefined', ticketing-box-office-index.md:53); the unit-level obligation is the Role Matrix / Role Lens, which is scored under Dimension 8. Competitive positioning (>=3 named competitors, differentiation, moat) belongs to meta/competitive-landscape.md, not to a ticketing sub-domain. Applicable checkpoints per unit = 6 (dimensions 1, 3, 4, 5, 7, 8).",
+    "aggregate": {
+      "points": 9.0,
+      "applicableCheckpoints": 60,
+      "ambiguityPercent": 15.0
+    }
+  },
+  "units": [
+    {
+      "unit": "19-ticketing-box-office (domain root)",
+      "files": [
+        "ticketing-box-office-index.md",
+        "ticketing-box-office-cx.md",
+        "19.10-attendee-data-capture-consent.md",
+        "19.11-rsvp-free-private-event-admission.md",
+        "19.12-ticket-delivery-fan-wallet.md"
+      ],
+      "applicableCheckpoints": 6,
+      "naDimensions": [2, 6],
+      "scores": {
+        "1_problemClarity": "PASS",
+        "3_featureCompleteness": "PASS",
+        "4_constraintExplicitness": "PASS",
+        "5_successMeasurability": "PASS",
+        "7_openQuestionResolution": "PASS",
+        "8_structuralCompliance": "WARN"
+      },
+      "points": 0.5,
+      "notes": "D1 pass: index:13 gives a single falsifiable reason the domain exists ('even if WeJammin never sells a ticket, it must ingest box office data or settlement is fiction and draw intelligence is guesswork'). D3 pass: 12 children enumerated with types and MoSCoW referenced; 19.10/19.11/19.12 each carry multi-level edge-case tables with states. D4 pass: jurisdiction resolved to a single authored profile (index:105), delivery retry is '3 times over ~24h' (19.12:40), no-show band '30-60%' (19.11:35). D5 pass: normative thresholds carry numbers and units. D7 pass: all 12 index questions carry an owner and a deferral target or a resolution citation. D8 warn: see findings."
+    },
+    {
+      "unit": "19.01-ticket-config-scaling-allocations",
+      "files": [
+        "19.01-ticket-config-scaling-allocations-index.md",
+        "19.01-ticket-config-scaling-allocations-cx.md",
+        "19.01.01-ticket-types-price-scaling.md",
+        "19.01.02-capacity-manifest-allocations-holds.md",
+        "19.01.03-fee-structure-all-in-pricing.md",
+        "19.01.04-seating-model-ga-reserved-seat-maps.md",
+        "19.01.05-accessible-seating-companion-tickets.md"
+      ],
+      "applicableCheckpoints": 6,
+      "naDimensions": [2, 6],
+      "scores": {
+        "1_problemClarity": "PASS",
+        "3_featureCompleteness": "WARN",
+        "4_constraintExplicitness": "PASS",
+        "5_successMeasurability": "PASS",
+        "7_openQuestionResolution": "WARN",
+        "8_structuralCompliance": "WARN"
+      },
+      "points": 1.5,
+      "notes": "D4 pass and unusually strong: face value is 'a non-negative integer in the currency's minor units' with a single ISO-4217 code (19.01.01:25), fee splits sum to 'exactly 10 000 bp' (19.01.03:27), rounding is 'round half-up ... at the individual fee line' (19.01.03:27), the held-inventory alert fires at 'remaining <= max(10% of sellable, 20 units)' (19.01.02:87), access free text is 'length-capped at 1,000 characters' (19.01.05:53). D3 warn, D7 warn, D8 warn: see findings."
+    },
+    {
+      "unit": "19.02-on-sale-announce-presale",
+      "files": [
+        "19.02-on-sale-announce-presale-index.md",
+        "19.02-on-sale-announce-presale-cx.md",
+        "19.02.01-announce-on-sale-scheduling.md",
+        "19.02.02-presale-windows-tiered-access.md",
+        "19.02.03-access-code-issuance-redemption.md",
+        "19.02.04-queue-waiting-room-cart-hold.md",
+        "19.02.05-sold-out-waitlist-demand-capture.md"
+      ],
+      "applicableCheckpoints": 6,
+      "naDimensions": [2, 6],
+      "scores": {
+        "1_problemClarity": "PASS",
+        "3_featureCompleteness": "PASS",
+        "4_constraintExplicitness": "PASS",
+        "5_successMeasurability": "PASS",
+        "7_openQuestionResolution": "WARN",
+        "8_structuralCompliance": "PASS"
+      },
+      "points": 0.5,
+      "notes": "D3/D4 pass: the schedule ordering invariant is stated as a testable predicate ('announce <= every presale start <= every presale end <= public on-sale', 19.02.01:36) with named error codes per branch (422 MANIFEST_NOT_LOCKED, 422 SCHEDULE_ORDER_INVALID, 409 PRESALE_WINDOW_ORPHANED, 422 SCHEDULE_DST_NONEXISTENT, 409 SCHEDULE_VERSION_CONFLICT, 409 SCHEDULE_ALREADY_FIRED). DST spring-forward and fall-back are both resolved deterministically (19.02.01:50-51, D-07). Every bare [PENDING] in 19.02.04 and 19.02.05 is covered by an owned Open Question in the same file (19.02.04 Q-02/Q-03; 19.02.05 Q-01/Q-02) and is therefore not reported. D7 warn: see findings."
+    },
+    {
+      "unit": "19.03-guest-list-comps",
+      "files": [
+        "19.03-guest-list-comps-index.md",
+        "19.03-guest-list-comps-cx.md",
+        "19.03.01-guest-list-allocation-submission.md",
+        "19.03.02-comp-issuance-manifest-impact.md",
+        "19.03.03-door-time-guest-list-changes.md"
+      ],
+      "applicableCheckpoints": 6,
+      "naDimensions": [2, 6],
+      "scores": {
+        "1_problemClarity": "PASS",
+        "3_featureCompleteness": "PASS",
+        "4_constraintExplicitness": "PASS",
+        "5_successMeasurability": "PASS",
+        "7_openQuestionResolution": "WARN",
+        "8_structuralCompliance": "PASS"
+      },
+      "points": 0.5,
+      "notes": "D3/D4 pass and strong: the unit model is exact ('an allocation is a count of admission units, not a count of names ... \"Jane +1\" spends 2 units and produces 2 barcodes', 19.03.01:14), spend atomicity, server-authoritative headroom and idempotency keys are all stated (19.03.01:31-35, D-08), escalating deadline prompts are specific ('T-48h informational, T-12h actionable, T-2h final', 19.03.01:47), the guest name is 'length-capped (<= 200 chars)' (19.03.01:65), and every error branch carries a code. Considered and dropped on devil's-advocate review: the facility-fee-on-comp path (19.03.02:39-44) is absent from the fee-owning feature 19.01.03, but 19.03.02 specifies the accounting fully and 19.01.03's free-ticket row addresses a different case (a zero-value price level, not a comp bound to a priced level), so no implementer is forced to invent. D7 warn: see findings."
+    },
+    {
+      "unit": "19.04-door-scanning-access-control",
+      "files": [
+        "19.04-door-scanning-access-control-index.md",
+        "19.04-door-scanning-access-control-cx.md",
+        "19.04.01-ticket-scan-validation.md",
+        "19.04.02-offline-manifest-sync-reconciliation.md",
+        "19.04.03-multi-scanner-coordination-re-entry.md",
+        "19.04.04-door-age-id-verification.md"
+      ],
+      "applicableCheckpoints": 6,
+      "naDimensions": [2, 6],
+      "scores": {
+        "1_problemClarity": "PASS",
+        "3_featureCompleteness": "WARN",
+        "4_constraintExplicitness": "WARN",
+        "5_successMeasurability": "PASS",
+        "7_openQuestionResolution": "WARN",
+        "8_structuralCompliance": "PASS"
+      },
+      "points": 1.5,
+      "notes": "D5 pass: 'amber ... default 60 minutes' overridable per show (19.04.02 D-11), 'clock-skew uncertainty band (default 120s)' (19.04.02 D-07), 'repeat read of the same code within 3 s' debounce (19.04.01 D-09), replica 'wiped no later than 24h after ... close' (19.04.02 D-08), verdict target 'sub-second' with a spinner only past '~500 ms' (19.04.01:68). The superseded 19.04.02 D-06 is explicitly retained-for-history with its accepted losses named, which is correct practice and not a defect. The bare [PENDING] at 19.04.04:51 is covered by that file's Q-03 and is therefore not reported. D3/D4/D7 warn: see findings."
+    },
+    {
+      "unit": "19.05-box-office-counts-drops",
+      "files": [
+        "19.05-box-office-counts-drops-index.md",
+        "19.05-box-office-counts-drops-cx.md",
+        "19.05.01-live-count-manifest-state.md",
+        "19.05.02-drop-reports-counterparty-distribution.md",
+        "19.05.03-sales-pacing-on-sale-health.md",
+        "19.05.04-walk-up-day-of-show-sales.md",
+        "19.05.05-box-office-close-certified-statement.md"
+      ],
+      "applicableCheckpoints": 6,
+      "naDimensions": [2, 6],
+      "scores": {
+        "1_problemClarity": "PASS",
+        "3_featureCompleteness": "WARN",
+        "4_constraintExplicitness": "PASS",
+        "5_successMeasurability": "PASS",
+        "7_openQuestionResolution": "WARN",
+        "8_structuralCompliance": "PASS"
+      },
+      "points": 1.0,
+      "notes": "D1 pass and the strongest in the domain: 19.05.01:12 states the falsifiable failure the feature prevents ('the artist's number, the venue's number and the fire officer's number disagree, and ... nobody can say which is right'). D4/D5 pass: the admissions vocabulary is authored once and exactly (D-09), derived-counter freshness is bounded by 'the freshness of its stalest input' (D-10), refund semantics are exit-scoped (D-11), the close prompt fires 'within 30 minutes of the scheduled show-end time (default)' (19.05.05:60), counter-attestation runs to a 'default 72h or the settlement run, whichever is sooner' (19.05.05 D-07), walk-up is quantified at '20-50% of the gate' (19.05.04:10). D3 warn, D7 warn: see findings."
+    },
+    {
+      "unit": "19.06-refunds-cancellations-rescheduling",
+      "files": [
+        "19.06-refunds-cancellations-rescheduling-index.md",
+        "19.06-refunds-cancellations-rescheduling-cx.md",
+        "19.06.01-individual-refunds-exchanges.md",
+        "19.06.02-event-cancellation-mass-refund.md",
+        "19.06.03-reschedule-postponement-handling.md"
+      ],
+      "applicableCheckpoints": 6,
+      "naDimensions": [2, 6],
+      "scores": {
+        "1_problemClarity": "PASS",
+        "3_featureCompleteness": "PASS",
+        "4_constraintExplicitness": "PASS",
+        "5_successMeasurability": "PASS",
+        "7_openQuestionResolution": "WARN",
+        "8_structuralCompliance": "PASS"
+      },
+      "points": 0.5,
+      "notes": "D3/D4 pass: the refund policy is a fixed field set whose values are the Operator's ('a refund cutoff ... a cooling-off period ... a set of refundable ticket types ... and a feesRefundable flag', 19.06.01:14), the three request shapes are distinguished at the front (D-02), the discretionary deadline is '72 hours from case open (clamped to doors when sooner)' and resolves by origin (D-07), at-most-one-refund-per-ticket is an explicit invariant (D-09), the cancellation cascade retries a dead instrument '3x over 72h' before escalating (19.06.02:48), and every branch carries an error code. The two unset values (opt-out window duration, postponement deadline) are tracked owner questions with targets (19.06.03 Q-01/Q-02) and are therefore not reported as gaps. D7 warn: see findings."
+    },
+    {
+      "unit": "19.07-external-ticketing-integration",
+      "files": [
+        "19.07-external-ticketing-integration-index.md",
+        "19.07-external-ticketing-integration-cx.md",
+        "19.07.01-external-ticketing-connectors.md",
+        "19.07.02-count-ingestion-manifest-mapping.md",
+        "19.07.03-count-discrepancy-reconciliation.md",
+        "19.07.04-manual-count-entry-attestation.md"
+      ],
+      "applicableCheckpoints": 6,
+      "naDimensions": [2, 6],
+      "scores": {
+        "1_problemClarity": "PASS",
+        "3_featureCompleteness": "WARN",
+        "4_constraintExplicitness": "PASS",
+        "5_successMeasurability": "PASS",
+        "7_openQuestionResolution": "WARN",
+        "8_structuralCompliance": "PASS"
+      },
+      "points": 1.0,
+      "notes": "D4/D5 pass: the manual-entry integrity checks are stated as executable predicates with hard/soft dispositions ('paid + comp <= licensed capacity' hard block; 'gross / paid within +/-10% of the weighted face value' soft warning; 'paid >= scanned' soft warning; non-negativity hard block — 19.07.04:37-40), the async acceptance window is 'default 72 hours, or until settlement runs — whichever is sooner' (19.07.04:58), and connector capability tiers are enumerated with their downstream consequence (19.07.01:29-32). Note: 19.07.03 D-05 gates certification on a materiality threshold whose value is admitted nowhere in the tree, but that is tracked with an owner and a target at 19.07.03 Q-03 ('No band is set anywhere in the tree today') and is therefore not reported. D3 warn, D7 warn: see findings."
+    },
+    {
+      "unit": "19.08-vip-packages-meet-and-greet",
+      "files": [
+        "19.08-vip-packages-meet-and-greet-index.md",
+        "19.08-vip-packages-meet-and-greet-cx.md",
+        "19.08.01-package-composition-inventory.md",
+        "19.08.02-meet-and-greet-scheduling.md",
+        "19.08.03-vip-redemption-fulfilment.md"
+      ],
+      "applicableCheckpoints": 6,
+      "naDimensions": [2, 6],
+      "scores": {
+        "1_problemClarity": "PASS",
+        "3_featureCompleteness": "PASS",
+        "4_constraintExplicitness": "PASS",
+        "5_successMeasurability": "PASS",
+        "7_openQuestionResolution": "WARN",
+        "8_structuralCompliance": "PASS"
+      },
+      "points": 0.5,
+      "notes": "D3/D4 pass: components are references with a named inventory model per component type (19.08.01:27-33), availability is 'a computed minimum across components, not a stored integer' (D-02), sized components are per-variant products (D-05), and atomic reservation is normative (D-04). All four bare [PENDING] markers in 19.08.01/19.08.02/19.08.03 are covered by owned Open Questions in the same or the cited sibling file (19.08.02 Q-01/Q-04, 19.08.03 Q-01/Q-03, 19.08.01 Q-03) and are therefore not reported. The unit is tiered COULD in moscow-ledger.md, which the index states openly ('this is the lowest-priority sub-domain in the domain', index:14) rather than concealing. D7 warn: see findings."
+    },
+    {
+      "unit": "19.09-ticketing-fraud-bot-resale-controls",
+      "files": [
+        "19.09-ticketing-fraud-bot-resale-controls-index.md",
+        "19.09-ticketing-fraud-bot-resale-controls-cx.md",
+        "19.09.01-purchase-limits-bot-mitigation.md",
+        "19.09.02-ticket-transfer-delivery-controls.md",
+        "19.09.03-resale-price-caps-face-value-exchange.md"
+      ],
+      "applicableCheckpoints": 6,
+      "naDimensions": [2, 6],
+      "scores": {
+        "1_problemClarity": "PASS",
+        "3_featureCompleteness": "PASS",
+        "4_constraintExplicitness": "PASS",
+        "5_successMeasurability": "PASS",
+        "7_openQuestionResolution": "WARN",
+        "8_structuralCompliance": "WARN"
+      },
+      "points": 1.0,
+      "notes": "D3/D4 pass: the three transfer postures are enumerated with their cost (19.09.02:27-31), the default is fixed (D-02 'Tracked'), transfer is 'reversible until claimed' (D-06), limits 'cap a buyer's accumulated holding for a show, not their basket' bound to account identity not card (D-01/D-02), and the rotating-token constraint is recorded as confirmed-but-defeated rather than asserted (DT-03). D7 warn, D8 warn: see findings."
+    }
+  ],
+  "findings": [
+    {
+      "id": "19-R3-01",
+      "unit": "19-ticketing-box-office (domain root)",
+      "severity": "warning",
+      "dimension": 8,
+      "claim": "The domain index's one-line description of its own cross-cut file is stale on all three counts, and the 19.12 Role Lens grants an access level the domain Role Matrix does not.",
+      "evidence": "ticketing-box-office-index.md:49 — '**Cross-cuts**: [ticketing-box-office-cx.md](./ticketing-box-office-cx.md) — 14 intra-domain pairs, 6 rejected pairs, 8 cross-cut mechanisms routed out, and the domain's 3 characteristic mechanisms.' The CX file actually carries 21 pairs (CX-01 through CX-21, ticketing-box-office-cx.md:12-32), 7 rejected pairs (R-01 through R-07, ticketing-box-office-cx.md:396-402) and 10 routed-out mechanisms (ticketing-box-office-cx.md:379-388). The '8 mechanisms' figure is repeated as fact in the Decision Log and the resolved-question table: index:91 D-06 'Chargebacks, generic fraud detection, consent management, age assurance, tax, notifications and payments all routed OUT as cross-cuts' and index:100 Q-02 '**RESOLVED** — 8 mechanisms routed out (D-06)'. Separately, index:70 Role Matrix gives '19.12 Ticket Delivery & Fan Ticket Wallet | ... | Operator: ⚙️ Config' while 19.12-ticket-delivery-fan-wallet.md:22 gives 'Operator | Config + Reports | **Config**: chooses which delivery channels a show offers ... **Reports**: sees per-ticket delivery status and a delivery-failure list', which the matrix legend (index:55) treats as a distinct level ('📊 Reports').",
+      "forcedInvention": "Whether the Operator's delivery-failure dashboard exists at all for 19.12, since the domain Role Matrix — the authority other layers read for access scoping — omits the Reports grant that the feature's own behaviour depends on ('a bounced ticket is a person who will arrive with nothing', 19.12:22)."
+    },
+    {
+      "id": "19-R3-02",
+      "unit": "19.01-ticket-config-scaling-allocations",
+      "severity": "blocking",
+      "dimension": 3,
+      "claim": "The manifest invariant is unsatisfiable for any room with an accessible block: accessible inventory is carved out of sellable, exempt by construction from `held`, and has no term of its own in the six-term identity.",
+      "evidence": "19.01.02-capacity-manifest-allocations-holds.md:34 states the identity as '```\\nlicensed capacity  =  killed + held + comp + paid + carted + remaining\\n```' and :46 makes it absolute — 'Any operation that would break the identity is rejected at the moment of the attempt, not reconciled afterwards.' D-06 (:214) repeats it as the enforced rule. But :96 (happy path 2) derives 'sellable inventory as `capacity − killed`, with `killed` pre-populated from the room configuration's standing kills (permanent obstructions) and **the accessible block carved out** per 19.01.05', while :72 excludes that block from the only other non-sold bucket — 'Accessible inventory (19.01.05) — auto-releasing accessible positions to general sale on a date is the precise unlawful act ... The block is **exempt by construction, not by a flag someone can clear**.' 19.01.05-accessible-seating-companion-tickets.md:25 confirms both halves: 'It sits inside the manifest and counts against licensed capacity, but is **exempt from the ordinary hold lifecycle in 19.01.02**.' The bucket table at 19.01.02:37-45 defines `remaining` as 'Sellable right now' and 'Derived — never written directly', and 19.05.01-live-count-manifest-state.md:36 gives its formula with no accessible term. Take a 300-capacity room with 4 unsold accessible positions and nothing else moved: the identity requires remaining = 300, but sellable was derived as capacity − killed − accessible = 296.",
+      "forcedInvention": "An implementer must invent the accessible block's place in the state model — a seventh invariant term, or a sub-partition of `remaining` with an audience restriction. The choice is load-bearing, not cosmetic: if unsold accessible positions sit in `remaining`, then 19.01.05's 'Conditional release' state and its 'Sold out (accessible) ... while general inventory remains' state (19.01.05:75-76) have no quantity to operate on, and the held-inventory alert threshold `remaining <= max(10% of sellable, 20 units)` (19.01.02:87) silently counts statutorily-restricted positions as public sellable inventory."
+    },
+    {
+      "unit": "19.01-ticket-config-scaling-allocations",
+      "id": "19-R3-03",
+      "severity": "warning",
+      "dimension": 8,
+      "claim": "19.01.04's Behavior, edge cases and cross-cut notes all assert that seat maps are a domain-16 room asset, while the same file's resolved Q-01 records that assertion as wrong and the ownership as unreconciled.",
+      "evidence": "19.01.04-seating-model-ga-reserved-seat-maps.md:31 — 'Seat maps are a room asset (domain 16) reused across shows; the show selects a *configuration* of the room, and the manifest is instantiated from it.' Repeated at :51 ('Operator sees a CTA to build the map (domain 16)') and :76 ('seat maps and per-configuration licensed capacity are room assets owned there'). Contradicted by the same file's Q-01 at :94 — '**Collision recorded, not resolved**: the same DT-04 declines seat identities and map geometry — *\"The room does **not** carry **seat identities or map geometry** ... Both domains are pointing at each other\"* — so this file's assertion that *\"seat maps are a room asset (domain 16)\"* is wrong, and the reconciliation is tracked as `16.01.02` Q-02.' The parent domain index carries the same collision at index:110 Q-12. 19.01.05-accessible-seating-companion-tickets.md:118 Q-02 records the mirror residual: '16 declines seat identities and map geometry (`16.01.02` D-05), so per-**position** accessible identities are 19's to hold.'",
+      "forcedInvention": "Where seat identities and map geometry live. Two implementers reading Behavior versus Q-01 build opposite things: one sources the seat map from the domain-16 room record, the other holds seat identities in domain 19's per-show manifest. Mitigating: reserved/mixed seating is tiered `could` (19.01.04 Q-02), so the collision is not on the v1 path."
+    },
+    {
+      "unit": "19.01-ticket-config-scaling-allocations",
+      "id": "19-R3-04",
+      "severity": "warning",
+      "dimension": 8,
+      "claim": "Five normative ownership references in this unit name the wrong sub-domain, routing comps to the on-sale sub-domain and walk-up sales to the guest-list sub-domain.",
+      "evidence": "19.01.05-accessible-seating-companion-tickets.md:21 — 'Operator rights grant no self-comp path into accessible inventory (comps route through **19.02**, never through this purchase flow)'; repeated at :61 ('no Operator self-comp path exists here (comps are 19.02)') and :97 ('Touches **19.02 Comps & Guest Lists** — the only path to a zero-cost accessible ticket is a comp issued in 19.02'). Comps are 19.03: 19.03-guest-list-comps-index.md:1 'Guest List & Comps — Index'; 19.02-on-sale-announce-presale-index.md:1 is 'On-Sale, Announce & Presale Access'. Symmetrically, 19.01.03-fee-structure-all-in-pricing.md:67 — 'The door-sale transaction surface itself lives in **19.03/19.05**' — and :104 — 'Touches **19.03 On-sale / Checkout** and **19.05 Box Office (walk-up)**' — where the door-sale surface is 19.05.04 (19.05-box-office-counts-drops-index.md:45 D-02, 'Walk-up placed here, not with the door (19.04)') and on-sale/checkout is 19.02.",
+      "forcedInvention": "Which sub-domain owns the zero-cost accessible ticket path and the walk-up fee-consuming surface. Both are ownership statements a downstream spec writer resolves by following the reference, and the reference lands on a sub-domain that disclaims the concern."
+    },
+    {
+      "unit": "19.01-ticket-config-scaling-allocations",
+      "id": "19-R3-05",
+      "severity": "warning",
+      "dimension": 7,
+      "claim": "The sub-domain CX file leaves five synthesis answers deferred to a pipeline stage that has completed, with no owner named; and one leaf edge case still cites a question this file records as resolved.",
+      "evidence": "19.01-ticket-config-scaling-allocations-cx.md defers with a bare, ownerless marker at :31 ('`[PENDING — /ideate-discover Step 5 deepening]`' on concurrent Operator edits during a live on-sale), :56 (CX-03 Relationship), :64 (CX-03 'Synthesis questions answered: `[PENDING — /ideate-discover Step 5 deepening]`'), :76 (CX-04) and :84 (CX-05). Step 5 has run: every child of this sub-domain is marked `[DEEP]` or `[PARTIAL]` (index:18-22) and sibling files record the stage as complete — 19.01.02 Q-01/Q-02/Q-03 all read 'Deferred To | ✅ `/ideate-discover` Step 5' (19.01.02:230-232). Separately, 19.01.04:54 states 'whether a seat-optimisation pass runs on release is `[PENDING — Q-03, /write-be-spec]`' while that file's Q-03 (:96) reads '~~Does hold release on a reserved show need a seat-optimisation pass to preserve adjacency?~~ **RESOLVED — no optimiser.**'",
+      "forcedInvention": "Nothing product-level for CX-01's concurrency question — 19.01.02:189 supplies the answer ('release is idempotent against observed state and fails closed on conflict') — but the markers themselves have no owner and no live target, so CX-03/CX-04/CX-05's synthesis is stranded rather than deferred."
+    },
+    {
+      "unit": "19.01-ticket-config-scaling-allocations",
+      "id": "19-R3-06",
+      "severity": "warning",
+      "dimension": 0,
+      "claim": "The hold-owner pre-deadline prompts are specified twice against two different reference frames, and the happy-path frame puts both prompts after the default deadline has already auto-released the hold.",
+      "evidence": "19.01.02-capacity-manifest-allocations-holds.md:68 anchors the prompts to the deadline — 'The owner is prompted **7 days and 24 hours before** the deadline, and notified *after* the release, not asked.' Happy path step 7 (:101) anchors them to doors while also claiming deadline-relativity in the same sentence — 'At `doors − 7 days` and `doors − 24h` relative to each hold's deadline, system prompts the hold owner: claim all, claim part, or release.' The default deadline for a non-guest-list hold is 'Doors − 14 days' (:66), so a doors-relative prompt at `doors − 7 days` fires seven days after auto-release has already fired (:102, 'At the deadline, unclaimed inventory auto-releases to public sale'). The States table hedges between the two frames: :155 'Deadline due | A hold's deadline arrives (or `−7d` / `−24h` prompts fire)'.",
+      "forcedInvention": "Whether the two courtesy prompts are computed from the hold's deadline or from doors. DT-13 (:181) makes the prompts load-bearing for the mechanism's fairness ('The prompts at `−7d` and `−24h` are a courtesy that *precedes* the release'), so a doors-relative implementation silently deletes the only warning the hold owner gets."
+    },
+    {
+      "unit": "19.02-on-sale-announce-presale",
+      "id": "19-R3-07",
+      "severity": "warning",
+      "dimension": 7,
+      "claim": "Four open questions in this unit are deferred to MoSCoW, a stage that has completed, and three CX synthesis answers are deferred to Step 5 with no owner named.",
+      "evidence": "19.02-on-sale-announce-presale-index.md:51-52 — 'Q-01 | Does a **tour-wide on-sale** ... need first-class support ...? | User | MoSCoW' and 'Q-02 | Is a queue/waiting room needed at the beachhead scale at all? ... | User | MoSCoW'. 19.02.01-announce-on-sale-scheduling.md:127-128 — 'Q-02 | Tour-wide on-sale — first-class entity or batch template ...? | User | MoSCoW' and 'Q-03 | ... is a **dedicated embargo-leak recovery affordance** ... worth building? | User | MoSCoW'. MoSCoW has run and its verdicts are cited as settled elsewhere in the same unit: 19.02.04:94 reads 'Q-01 | ~~Is a queue needed at the beachhead at all? ...~~ **RESOLVED — not at the beachhead, and the feature is split.** `/ideate-validate` ran and `moscow-ledger.md` places this feature in **COULD**', and the parent domain index states the pattern for its own rows ('MoSCoW ran and did **not** settle it', ticketing-box-office-index.md:103). The CX file additionally strands three synthesis answers with no owner: 19.02-on-sale-announce-presale-cx.md:69 ('hold expiry, window close, and tier advance (19.01.01) can all fire on the same inventory within the same second. `[PENDING — /ideate-discover Step 5 deepening]`'), :73 (CX-04 Relationship) and :79 (CX-05 Relationship).",
+      "forcedInvention": "Nothing behavioural, but four owner decisions and one three-way state race now point at a stage that cannot pick them up; the CX-03 race in particular is the one place in this unit where hold expiry, window close and a tier advance contend for the same unit within one second."
+    },
+    {
+      "unit": "19.03-guest-list-comps",
+      "id": "19-R3-08",
+      "severity": "warning",
+      "dimension": 7,
+      "claim": "A separation-of-duties question over the certified statement is left with a bare marker carrying no owner and no deferral target, and two leaf questions are deferred to the completed MoSCoW stage.",
+      "evidence": "19.03-guest-list-comps-cx.md:61 — '3. **Permission intersection**: The right to add a guest and the right to certify a statement should not sit with the same person unchecked. `[PENDING]`' — no owner, no stage. The nearest authored rule does not reach it: 19.05.05-box-office-close-certified-statement.md:63 scopes certification authority by role ('Only an identity with Operator-Full on this event may certify') and D-08 (:122) handles only the case where certifier and counterparty are the same identity, not the case where the same Operator both authorises a door-time comp and certifies the count it moved — which CX-03 itself names as the race (19.03-guest-list-comps-cx.md:54, 'A comp issued at 20:14 and a statement certified at 20:15 disagree by one person and one seat'). Separately, 19.03.02-comp-issuance-manifest-impact.md:148-149 defers 'Q-02 | Does v1 expose the facility-fee-on-comp toggle at all?' and 'Q-03 | ... Should the room be able to oversell against expected comp no-show ...?' to 'MoSCoW', which has completed (19.03.01:131 records the same stage as spent: 'Re-pointed from the completed `/ideate-validate`'). Two further Step-5 markers with no owner sit at 19.03-guest-list-comps-cx.md:33 and :48.",
+      "forcedInvention": "Whether the platform enforces any separation between the authority to spend inventory at the door and the authority to certify the count that inventory changed. An implementer either builds a check nobody specified or ships the conflict the CX file flags."
+    },
+    {
+      "unit": "19.04-door-scanning-access-control",
+      "id": "19-R3-09",
+      "severity": "blocking",
+      "dimension": 4,
+      "claim": "19.04.04's Behavior, happy path and cross-cut notes source the show's age restriction from the domain-16 room licence and permit the Operator only to raise it, while the same file's resolved Q-04 establishes that domain 16 carries no audience age restriction at all.",
+      "evidence": "19.04.04-door-age-id-verification.md:27 — 'A show carries an age restriction **sourced from the room's licence (domain 16)** and adjustable **upward** by the Operator for a specific show.' Happy path step 1 (:35) repeats it as a flow step — 'Room's licence (domain 16) supplies the default age restriction; Operator confirms or raises it for this show' — as does the cross-cut note at :93, 'Touches **16 Venues, Studios & Spaces** — the restriction originates in the room's licence, which is a room record.' Directly contradicted by Q-04 (:115): '~~Does domain 16 model the room's licensed age restriction structurally, or is it free text?~~ **RESOLVED — neither: 16 carries no audience age restriction at all.** `16.01.06` **D-06** locks the set: *\"**Five statutory slots, locked**: occupancy ceiling · liability cover · electrical/fire-safety record · performing-rights licence status · hirer requirements\"* — an audience age restriction is not among them ... There is therefore **no upstream default to inherit**, and the restriction is Operator-declared per show here.' The parent domain index reaches the same conclusion independently (ticketing-box-office-index.md:110, 'Licensed age restriction — **no**: D-72's US profile locks exactly five statutory slots ... so `19.04.04` Q-04's requirement currently lands on nobody').",
+      "forcedInvention": "Where the age restriction comes from and what bounds it. With no upstream floor, 'adjustable upward by the Operator' has no baseline to be upward of, so an implementer must invent both the default (unrestricted? or blocked until declared?) and whether the Operator may lower a value. The consequence is statutory: D-02 (:103) makes disclosure-before-purchase the thing that renders a door refusal defensible, and the Error state (:67) requires the scanner to fail safe on a missing restriction ('AGE: UNKNOWN — check the licence'), which presumes a licence field that does not exist."
+    },
+    {
+      "unit": "19.04-door-scanning-access-control",
+      "id": "19-R3-10",
+      "severity": "warning",
+      "dimension": 3,
+      "claim": "19.04.03 offers three per-show re-entry policies including re-scan, while its own D-01 states re-entry is via physical token and the ticket is strictly use-once; 19.04.01's verdict states then treat a re-entry scan as an accept, which the token policy refuses.",
+      "evidence": "19.04.03-multi-scanner-coordination-re-entry.md:27-30 presents a per-show choice of three — '**Re-entry policy** is per show: **No re-entry** — one scan per ticket, ever ... **Re-entry via token** ... **Re-entry via re-scan** — the ticket scans on the way in every time. Simple, and it destroys the signal entirely.' The edge-case table treats re-scan as selectable (:47, 'Re-entry via re-scan policy chosen | Repeat scans are now legitimate; fraud signal is gone | **Warned at configuration**'). D-01 (:89) states the opposite as settled: 'Re-entry is via physical token; the ticket remains strictly use-once', and happy path step 6 (:40) makes the refusal unconditional — 'A second presentation of the same barcode at any gate is refused with the first scan's time and gate.' 19.04.01-ticket-scan-validation.md:72 then lists re-entry as an accepted verdict — 'Warning | Accepted but notable (comp no-show pattern, **re-entry**, stale replica) | Amber verdict with the reason' — which can only occur under the re-scan policy D-01 forecloses.",
+      "forcedInvention": "Whether the re-scan policy exists in the product, and therefore what the scanner returns on a second presentation of the same barcode: a refusal with the first scan's specifics (19.04.03 D-01, happy path 6) or an amber accept-with-warning (19.04.01 States). The choice also decides whether the double-scan signal — named the domain's cheapest fraud control (19.04.03 DT-01, ticketing-box-office-cx.md:368) — survives configuration."
+    },
+    {
+      "unit": "19.04-door-scanning-access-control",
+      "id": "19-R3-11",
+      "severity": "warning",
+      "dimension": 7,
+      "claim": "The sub-domain's biggest scope question and its leaf twin are deferred to the completed MoSCoW stage, and a CX synthesis answer is deferred to the completed Step 5 with no owner.",
+      "evidence": "19.04-door-scanning-access-control-index.md:54 — 'Q-03 | Does WeJammin scan tickets sold by an external ticketing platform (19.07)? If the incumbent owns the barcode, the door is theirs, and this entire sub-domain is unreachable for those shows — which materially changes its MoSCoW weight. | User | MoSCoW'. 19.04.01-ticket-scan-validation.md:119 carries the same row ('Q-02 | Does WeJammin scan tickets sold by an external platform (19.07)? ... | User | MoSCoW'). The parent domain index records that MoSCoW has already run against this exact question and failed to settle it, and re-points it: ticketing-box-office-index.md:103 — 'MoSCoW ran and did **not** settle it: `moscow-ledger.md` places 19.04.01 in **Must** and 19.07.03 in **Should** with the rationale *\"Its value is entirely conditional on Q-05\"* — the tiering deferred the choice rather than making it' (Deferred To: `/create-prd`). 19.04-door-scanning-access-control-cx.md:73 additionally strands CX-04's synthesis: '**Relationship**: `[PENDING — /ideate-discover Step 5 deepening]`' on the wristband-as-transferable-age-credential tension, with no owner named.",
+      "forcedInvention": "Nothing behavioural — the door's own behaviour is fully authored either way — but the domain's single largest scope decision now points at a stage that has already declined it, and CX-04's unresolved tension is the one the sibling 19.04.03 Q-03 escalates to the owner ('does an 18+ show need a distinguishable band?')."
+    },
+    {
+      "unit": "19.05-box-office-counts-drops",
+      "id": "19-R3-12",
+      "severity": "blocking",
+      "dimension": 3,
+      "claim": "The canonical count omits the `carted` bucket entirely and defines `remaining` by a formula that contradicts the manifest invariant, so the two normative definitions of the same counter differ by the whole carted quantity during every live on-sale.",
+      "evidence": "19.05.01-live-count-manifest-state.md:36 defines it as '**Remaining** | Sellable right now (= capacity − killed − held − paid − comp) | The storefront (as a boolean to Fans)'. The manifest owner defines it with one further term: 19.01.02-capacity-manifest-allocations-holds.md:34 — 'licensed capacity  =  killed + held + comp + paid + **carted** + remaining' — restated as D-06 (:214, 'enforced at every mutation, never reconciled on a schedule'), with `carted` given its own writer and meaning ('`carted` | Reserved to a buyer mid-checkout (`19.02.04`) | Cart hold create/expire', :43) and its own operational consequence ('Available-to-hold shown separately from `remaining` because `carted` is untouchable', :154; 'A hold draws only from **unreserved** `remaining` — never from `carted`', :122). 19.05.01's counter table (:29-36) has no `carted` row at all, and its happy path goes straight from sale to counter ('each sale atomically increments paid and decrements remaining in one transaction', :43) with no cart step, although 19.02.04 makes the cart hold the one half of that feature that ships with any sale (19.02.04:94, 'the **cart hold half is not optional if anything is sold at all**').",
+      "forcedInvention": "Whether the canonical count carries a `carted` counter, and which formula the storefront's availability boolean reads. 19.05.01 D-04 exposes `remaining` to Fans 'only as a boolean (available / sold out)'; under 19.05.01's formula that boolean reads available while every remaining unit is inside an unexpired cart, which is the oversell 19.01.02's invariant exists to make impossible. D-01 (:116) forbids consumers computing their own count, so an implementer cannot resolve this locally — they must pick one of the two authored identities."
+    },
+    {
+      "unit": "19.05-box-office-counts-drops",
+      "id": "19-R3-13",
+      "severity": "warning",
+      "dimension": 7,
+      "claim": "One leaf question is deferred to the completed MoSCoW stage and two CX synthesis answers are deferred to the completed Step 5 with no owner named.",
+      "evidence": "19.05.04-walk-up-day-of-show-sales.md:139 — 'Q-03 | On an externally-ticketed show, is a WeJammin-held allocation block that the window sells from (D-07) a real product path worth building, or does walk-up simply not exist on external shows in v1? | User | MoSCoW'. MoSCoW has run: the same unit cites its verdicts as settled elsewhere (19.05.03:107-110 records questions 'Resolved Step 5', and 19.05-box-office-counts-drops-index.md:55-56 records Q-01/Q-02 as resolved against downstream sources). 19.05-box-office-counts-drops-cx.md:72 — 'CX-04: Walk-Up ↔ Close ... **Relationship**: `[PENDING — /ideate-discover Step 5 deepening]`' — and :94 — 'CX-06: Drop Reports ↔ Pacing ... **Relationship**: `[PENDING — /ideate-discover Step 5 deepening]`' — both with no owner. The CX-04 gap is notable because the close-versus-window quiesce race it defers is authored in the leaves (19.05.04 D-12 draining state; 19.05.05 Behavior step 1), so the marker is stale rather than open.",
+      "forcedInvention": "Nothing behavioural — the draining/quiesce sequence is authored at 19.05.04 D-12 and 19.05.05 Behavior — but one owner scope call now points at a completed stage and two CX entries advertise synthesis that will not arrive."
+    },
+    {
+      "unit": "19.06-refunds-cancellations-rescheduling",
+      "id": "19-R3-14",
+      "severity": "warning",
+      "dimension": 7,
+      "claim": "The CX entry that governs whether an indefinite postponement converts to a cancellation defers its synthesis with a bare marker whose stated precondition has since been resolved, leaving it stranded with no owner and no live target.",
+      "evidence": "19.06-refunds-cancellations-rescheduling-cx.md:45 — '**Synthesis questions answered**: `[PENDING]` — jurisdiction mapping required first (parent Q-01).' The precondition is resolved: jurisdiction was settled to a single authored profile (ticketing-box-office-index.md:105, '**RESOLVED — the United States only** ... **Exactly one profile is authored at launch: `US`**'), and the parent question the marker points at is not a jurisdiction question but a commercial-policy one whose compliance readout is already closed (19.06-refunds-cancellations-rescheduling-index.md:46, 'The compliance readout is now settled and does **not** answer it ... *\"US has no federal 14-day withdrawal right (unlike EU) — returns are policy-driven per seller\"*'). The same CX entry states a product consequence that no synthesis now covers: :41 — 'The product consequence: an indefinite postponement cannot be a resting state. It must carry a deadline by which it becomes a real date or becomes a cancellation.' CX-02's own confidence line rests on the same retired premise (:11, 'Medium | The 2020 postponement wave produced exactly this regulatory response; **jurisdiction mapping required**').",
+      "forcedInvention": "Nothing product-level — 19.06.03 D-02 and D-06 author the mandatory deadline and forbid an open-ended 'TBC', and the deadline's value is a tracked owner question (19.06.03 Q-02) — but the CX synthesis that would state the shared-state, trigger-chain and race behaviour between postponement and cancellation is deferred behind a condition that no longer exists, with nobody named to complete it."
+    },
+    {
+      "unit": "19.07-external-ticketing-integration",
+      "id": "19-R3-15",
+      "severity": "warning",
+      "dimension": 0,
+      "claim": "The counter-attestation lapse outcome is named as a member of 'Accepted' in 19.07.04 while 19.05.05 authors it as one of three distinct outcomes that must never collapse silence into consent.",
+      "evidence": "19.07.04-manual-count-entry-attestation.md:85 — 'Accepted (lapsed) | Response window expired with no Musician action | Distinct from an active acceptance: \"artist did not respond within the window\" — never shown as an active accept' — with D-08 (:124) binding the label: 'a lapse is recorded as **Accepted (lapsed)** — never as an active acceptance'. 19.05.05-box-office-close-certified-statement.md:121 D-07 authors the model for the same act and excludes that framing: 'The statement records **three distinct outcomes — counter-attested, declined, and lapsed** — never collapsing silence into consent', rendered in its own States table as 'Counter-attestation lapsed | Deadline passed with no response | Recorded on the statement as lapsed — **silence as silence, not consent**' (:83). The parent domain index treats 19.05.05's three-outcome model as the ratified one (ticketing-box-office-index.md:108, quoting D-07 verbatim).",
+      "forcedInvention": "Whether the acceptance state machine has three terminal values or four with lapse nested under accepted. The distinction is consequential precisely because the downstream rule is still open: both files route 'does a lapse gate settlement?' to the owner (19.05.05 Q-01, 19.07.04 Q-01, 19.07.03 Q-01, 'all three share one answer'), and a settlement implementer reading an enum member called `accepted_lapsed` will treat it as accepted before that answer arrives."
+    },
+    {
+      "unit": "19.07-external-ticketing-integration",
+      "id": "19-R3-16",
+      "severity": "warning",
+      "dimension": 7,
+      "claim": "Three open questions in this unit — including the one that decides whether reconciliation has any independent source — are deferred to the completed MoSCoW stage, and two CX synthesis answers are deferred to the completed Step 5 with no owner.",
+      "evidence": "19.07-external-ticketing-integration-index.md:53-54 — 'Q-03 | If a show is externally ticketed, does WeJammin's door (19.04) work at all? ... | User | MoSCoW' and 'Q-04 | Is a **hybrid show** supported ...? | User | MoSCoW'. 19.07.03-count-discrepancy-reconciliation.md:107 — 'Q-02 | DT-01 says the door and reconciliation stand or fall together. If WeJammin cannot scan externally-ticketed shows (parent Q-03), is this sub-domain still worth building at attestation-only strength? A genuine MoSCoW question with a real answer either way. | User | MoSCoW'. MoSCoW has run and is cited as spent throughout the same unit: 19.07-external-ticketing-integration-index.md:51 reads 'Still open **after MoSCoW**, which tiers `19.07.01` on exactly this', and 19.07.02:108 records a question resolved against post-MoSCoW sources. Two CX synthesis answers are additionally stranded with no owner: 19.07-external-ticketing-integration-cx.md:53 ('CX-03: Manual Entry ↔ Discrepancy & Reconciliation — **Relationship**: `[PENDING — /ideate-discover Step 5 deepening]`') and :59 (CX-04).",
+      "forcedInvention": "Nothing behavioural, but Q-03 is the hinge the sub-domain's own DT-01 says everything rests on ('**The door and the reconciliation stand or fall together**', 19.07.03:77), and it now points at a stage that has already declined to settle it — as the parent domain index records for the identical question (ticketing-box-office-index.md:103)."
+    },
+    {
+      "unit": "19.08-vip-packages-meet-and-greet",
+      "id": "19-R3-17",
+      "severity": "warning",
+      "dimension": 7,
+      "claim": "An edge-case row still carries a bare unowned marker for a fairness question that the same file's Q-02 records as resolved by the domain's ratified capacity-reduction ladder.",
+      "evidence": "19.08.02-meet-and-greet-scheduling.md:49 — 'Capacity cut after packages sold | The artist can no longer meet 30 | Some packages must be refunded; the artist's call stands. **Order of refund is a fairness question — `[PENDING]`**' — no owner, no stage. The same file's Q-02 (:102) resolves exactly that ordering: '~~When capacity is cut after sales, whose packages get refunded — last-in-first-out, random, or the artist's choice?~~ **RESOLVED — the domain's ratified capacity-reduction ladder applies.** `19.01.02` **D-12** ... So: volunteers first, then last-bought-first-unwound — explicitly **not** random and **not** the artist's choice.' The edge case's other clause also survives the resolution intact but conflicts with it in emphasis ('the artist's call stands' versus D-12's fixed involuntary rule).",
+      "forcedInvention": "Whether the M&G capacity cut follows the domain-wide D-12 ladder or the artist's discretion. Two implementers reading the edge-case row versus Q-02 build different refund orderings for the same event, and the row is the one a spec writer reads first."
+    },
+    {
+      "unit": "19.09-ticketing-fraud-bot-resale-controls",
+      "id": "19-R3-18",
+      "severity": "warning",
+      "dimension": 7,
+      "claim": "Two money- and statute-bearing edge cases are left with bare markers carrying no owner and no deferral target, and neither is covered by any Open Question in this unit or in the sibling features they name.",
+      "evidence": "19.09.02-ticket-transfer-delivery-controls.md:58 — 'Transfer of an accessible ticket | The accessible position may not suit the recipient | `[PENDING]`'. That file's four Open Questions cover holding decrement (Q-01), rotating delivery (Q-02), notification addressee (Q-03) and chain visibility (Q-04) — none of them this; nor does 19.01.05, whose four questions cover jurisdiction (Q-01, resolved), domain-16 structure (Q-02, resolved), companion entitlement (Q-03) and the on-sale block override (Q-04). The gap is substantive because 19.01.05 forbids the obvious mitigations: D-04 (:109) 'No proof of disability is demanded at purchase', and :57 blocks any release of accessible inventory outside the conditional flow. Second: 19.09.03-resale-price-caps-face-value-exchange.md:53 — 'Buyer pays; the transfer fails | Money moved, ticket did not | **Must be atomic. `[PENDING]`**' — where that file's questions cover face-value definition (Q-01), scope (Q-02, resolved), jurisdiction (Q-03, resolved) and sell-order (Q-04). The neighbouring guarantees do not reach a two-party exchange: 19.06.01 D-09 bounds refunds ('At most one refund can ever attach to a ticket') and D-03 bounds an exchange as 'all-or-nothing', but both describe one fan and the venue, not a buyer paying while a seller is refunded.",
+      "forcedInvention": "For the accessible transfer: whether it is permitted, blocked, or permitted-with-disclosure, and whether the companion entitlement bound to the position (19.01.05:27) travels with it. For the failed exchange: the compensating action when payment commits and the holder update does not — refund the buyer, retry the transfer, or park the seat — on a transaction the spec calls atomic without saying what atomicity fails to."
+    },
+    {
+      "unit": "19.09-ticketing-fraud-bot-resale-controls",
+      "id": "19-R3-19",
+      "severity": "warning",
+      "dimension": 8,
+      "claim": "Three places in this unit present refund-on-a-transferred-ticket as an open tangle and cite a question number that now holds a different question, when the case is decided by 19.06.01 D-10.",
+      "evidence": "19.09.02-ticket-transfer-delivery-controls.md:55 — 'Refund on a transferred ticket | Money goes back to the payer; the ticket belongs to the holder | **19.06.01 Q-03; a genuine tangle**'; repeated at :91 ('refunding a transferred ticket splits payer from holder (19.06.01 Q-03)') and in the sub-domain CX at 19.09-ticketing-fraud-bot-resale-controls-cx.md:54 ('A refund on a transferred ticket — payer and holder are different people (19.06.01 Q-03)'). The case is settled: 19.06.01-individual-refunds-exchanges.md:137 D-10 — 'On a transferred ticket only the current holder may request a refund; the money returns to the original payer's instrument, and the holder must acknowledge this before confirming ... **resolves prior Q-03**' — with the full acknowledgement copy authored at :55. That file's Q-03 is now the unrelated externally-ticketed brokering question (:145, 'Externally-ticketed shows (19.07): **broker** the refund experience ... or **hand the fan to the incumbent**?').",
+      "forcedInvention": "Whether refund-on-transfer is an authored rule or an open design question. A reader following the citation lands on the external-ticketing question and finds nothing about payer-versus-holder, so the decided behaviour — holder requests, payer is paid, holder must acknowledge — reads as unwritten in the feature that owns transfer."
+    }
+  ],
+  "notReported": [
+    "Broken relative paths to sibling domains (19.02.01:101 '../19.05-box-office-day-of/', 19.02.01:102 '../../16-venues-studios/', 19.03.02:126 '../../02-credits-provenance/', 19.07.04:110 '../../01-identity/'). Four in 58 files; each resolves unambiguously to an existing sibling by name and none changes what gets built.",
+    "Every bare [PENDING] marker that is covered by an owned Open Question in the same file: 19.02.04:48 (covered by Q-02), 19.02.05:49 (Q-02), 19.02.05:56 (Q-01), 19.04.04:51 (Q-03), 19.08.01:60 (Q-03), 19.08.02:45 (Q-01), 19.08.02:52 (Q-04), 19.08.03:58 (Q-03), 19.08.03:60 (19.08.01 Q-03), 19.09.03:51 (Q-04).",
+    "19.07.03 D-05 gating certification on a no-show materiality threshold that exists nowhere in the tree — tracked with owner and target at 19.07.03 Q-03, which states the absence explicitly.",
+    "The unset opt-out window duration and postponement deadline in 19.06.03 — tracked owner questions Q-01 and Q-02 with /create-prd targets.",
+    "UK currency and UK statutory vocabulary throughout (£ examples, UK Equality Act, EU CRD) after jurisdiction resolved to a US-only authored profile — acknowledged as a deliberate retirement in the resolution text of every affected question (e.g. 19.01.05 Q-01, 19.09 index Q-02: 'the UK, whose vocabulary the specs were originally drafted in ... retire into unauthored profiles').",
+    "19.03.02's facility-fee-on-comp path being absent from the fee-owning feature 19.01.03 — 19.03.02:39-44 specifies the accounting completely and 19.01.03:63 addresses a different case (a zero-value price level, not a comp bound to a priced level). Dropped on devil's-advocate review.",
+    "19.06.01 internal question-number drift (edge case at :76 cites 'Q-02' for the externally-ticketed question, which the table holds at Q-03) — the surrounding prose names the question unambiguously.",
+    "19.08.01:89 and 19.08.03:87 citing '19.06.02 Q-02' for the shipped-goods question that 19.06.02 holds at Q-03 — both rows also cite Q-03 correctly at 19.08.01:57 and 19.08.03:52.",
+    "A stray '</content>' tag at 19.01.02:239 — a document artifact with no product consequence.",
+    "19.09.03's exchange availability gate stated twice (Behavior:25 'Where transfer is **tracked**' versus States:62 'Not available | Resale off, or transfer locked', which leaves the Open posture eligible) — low consequence on a COULD-tiered feature."
+  ]
+}
