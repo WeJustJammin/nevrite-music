@@ -1,15 +1,15 @@
 # Audit Scope — Ambiguity Audit
 
-> **Status**: ACTIVE — fresh invocation
+> **Status**: ACTIVE — fresh invocation (run 3, canonical `/audit-ambiguity` skill)
 > **Scope**: ideation (vision layer)
-> **Enumerated**: 2026-07-22
+> **Enumerated**: 2026-07-24
 > **Run type**: fresh post-remediation verification run
 
 ## Layers To Audit
 
 | Layer | Rubric | Documents |
 |-------|--------|-----------|
-| Ideation (vision) | `/home/rob/Projects/WeJammin/.claude/skills/pipeline-rubrics/references/vision-rubric.md` | 1121 |
+| Ideation (vision) | `/home/rob/Projects/WeJammin/.claude/skills/pipeline-rubrics/references/vision-rubric.md` | 1122 |
 
 ## Rubric Files
 
@@ -21,14 +21,14 @@
 | Check | Result |
 |-------|--------|
 | Root | `.memory/wiki/specs/ideation/` |
-| Total `.md` files discovered | **1121** |
+| Total `.md` files discovered | **1122** |
 | Domain folders | 24 |
 | `*-index.md` | 190 |
 | `*-cx.md` | 190 |
-| `meta/*.md` | 5 |
+| `meta/*.md` | 6 |
 | Audit units (sub-domain granularity) | 191 |
 | Files per unit | min 2 / max 11 / mean 5.9 |
-| Below expected threshold? | No — 1,121 matches the recorded tree size |
+| Below expected threshold? | No — 1,122 matches the recorded tree size (was 1,121; `meta/counterparties.md` added) |
 | `surfaces/` scanned | N/A — single-surface project, no `surfaces/` directory |
 
 Every discovered file is audited individually through the full 3a→3b→3c cycle.

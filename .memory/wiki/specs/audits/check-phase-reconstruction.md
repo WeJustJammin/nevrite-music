@@ -78,3 +78,13 @@ Workflow({ scriptPath: "…/scratchpad/triage-workflow.js",
 ```
 then a fresh `/audit-ambiguity ideation`. Do not advance to `/create-prd` until that fresh
 audit's blocking count is zero.
+
+
+<!-- spec-graph: auto-generated -->
+## Related Specs
+
+### Constrained by
+- [[decisions.md#d-28|D-28]]
+- [[decisions.md#d-32|D-32]]
+- [[decisions.md#d-72|D-72]]
+- [[decisions.md#d-06|D-06]]

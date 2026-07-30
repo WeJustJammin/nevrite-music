@@ -1,6 +1,7 @@
 # Remediation State
 
-> Updated: 2026-07-21.
+> Updated: 2026-07-29 — scope-boundary addendum under Reconciliation Arithmetic only; the 107-finding
+> ledger and its counts are unchanged since 2026-07-21.
 > Layer: `vision` / ideation.
 > Purpose: auditable recovery record for the interrupted `wejammin-audit-remediate` workflow. This is **not** a clean, ready, or fresh-audit verdict.
 
@@ -173,6 +174,14 @@ by the original manifest finding index in the ledger below.
 - Disposition arithmetic: `107 + 0 + 0 + 0 = 107`.
 - Current blocker arithmetic: `26 + 0 + 0 + 0 = 26`; warning arithmetic:
   `81 + 0 + 0 + 0 = 81`; `26 + 81 = 107`.
+- **Ledger scope boundary (recorded 2026-07-29).** These 107 findings are the immutable **run-1**
+  manifest. Run-2 findings sit outside it and are not counted here — the fresh run-2 audit's 4
+  raw-blocking units carry no `r-NN` identity. `DQ-R2-01`, the `01.03` representation-scope
+  reconciliation, was ratified by the owner on 2026-07-29 as Option A′ and is recorded in
+  `decision-ratification-log.md`, not in this ledger; the other three (`07.08`, `14.06`, `20.01`)
+  still await the verified re-run. So `needs-architecture-decision = 0` means zero **within these
+  107**, not zero outstanding tree-wide. This note changes no count: 26 blocking + 81 warning = 107,
+  all `verified-fixed`, before and after.
 
 ## Known Report-Label and Range Corrections
 

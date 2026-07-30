@@ -1,15 +1,28 @@
 # Run-2 Blocking Decision Queue
 
 > **Date**: 2026-07-24 · **Source**: fresh audit run 2 (`wf_f5ea9990-b0e`), confirmed findings.
-> **Status**: 1 confirmed entry prepared for ratification. The other 3 raw-blocking units (`07.08`,
-> `14.06`, `20.01`) had their detail lost to scratchpad cleanup and need the complete verified
-> re-run to confirm — do not treat their absence here as "clean."
+> **Status**: 1 entry **RATIFIED** — `DQ-R2-01`, Option **A′**, by the owner on 2026-07-29
+> ([decision-ratification-log.md](./decision-ratification-log.md) `DQ-R2-01`; recorded globally as
+> `ideation-index.md` D-75). The other 3 raw-blocking units (`07.08`, `14.06`, `20.01`) had their
+> detail lost to scratchpad cleanup and still need the complete verified re-run to confirm — do not
+> treat their absence here as "clean."
 
 ---
 
 ## DQ-R2-01 — Representation edge: reconcile the 7-verb mandate with the 5-domain commercial scope
 
 **Type**: Architecture (data model) — present options, owner picks.
+
+> **RATIFIED 2026-07-29 — Option A′, two flat axes conjoined at the call site.** A representation
+> edge carries `activities` (a subset of the closed seven-verb enum) **and** `domains` (a subset of
+> `live booking / recording / publishing / sync / merch`). An action is authorised iff the action's
+> verb is in `activities` **and** the action's domain is in `domains`, ANDed at the call site at the
+> moment of the action. A membership edge carries the activity axis only and resolves to **all**
+> domains, so authority arriving by either edge type presents one `{activities, domains}` shape to
+> enforcement (`01.03-cx` CX-03). Full record:
+> [decision-ratification-log.md](./decision-ratification-log.md) `DQ-R2-01`. Reasoning:
+> [dq-r2-01-decision-brief.md](./dq-r2-01-decision-brief.md). **Option A below — this draft's own
+> recommendation — was REJECTED.**
 
 **Headline**: On a representation edge (01.03.02), what is the relationship between the **mandate's
 seven activity verbs** (01.03.03 D-01, ratified DQ-02.3: `book / sign / spend / list / release /
@@ -42,6 +55,36 @@ membership edges carrying verbs only. This is an owner ratification, not a mecha
 locks the representation-edge data model that `/create-prd-architecture` and the Roles & Permissions
 cross-cut both build on.
 
+**REJECTED at ratification, 2026-07-29.** Option A's cross-product does not survive constraints the
+same sub-domain had already ratified, on three counts:
+
+1. **It builds the artefact `01.03.03` DT-02 rejects by name.** 7 verbs × 5 domains is a 35-cell
+   addressable grid — a permission matrix. DT-02 rejects the matrix, and D-02 requires authority in
+   plain language, "not as a permission grid". Two flat lists are at most 7 + 5 = **12** plain-language
+   statements per edge; the cross-product is **35** cells.
+2. **Its cross-type asymmetry breaks `01.03-cx` CX-03.** "Membership edges simply carry no domain
+   scope" gives the two edge types different shapes, so authority arriving by membership and authority
+   arriving by representation stop being indistinguishable to the enforcement cross-cut and CX-03's
+   union is undefined. A′ repairs this by resolving a membership edge to the universal domain set.
+3. **Its "book for live but not publishing" justification has no source outside this proposal.** The
+   verb half is sourced — `01.03.02`:16, "my manager can book but not sign" — but no file in the tree
+   scopes a manager by commercial domain, so the domain half of the example was authored by this draft
+   and then cited as evidence for it.
+
 **Downstream if ratified**: `01.03.02` Behavior/D-02 (rename + cross-product rule), the Roles &
 Permissions cross-cut resolver (add the domain-scope conjunct), `17` (counterparty "can they bind?"
 check reads both axes), `04` (agent-acts-for-roster scoping).
+
+**Corrected 2026-07-29**: the ratified downstream list is the one in
+[dq-r2-01-decision-brief.md](./dq-r2-01-decision-brief.md) — 3 core files plus ~12 propagation files,
+including `01.03-membership-representation-mandate-cx.md`, which this line omits. The rule to
+propagate is the two-axis conjunction evaluated at the call site, never a cross-product rule.
+
+
+<!-- spec-graph: auto-generated -->
+## Related Specs
+
+### Constrained by
+- [[decisions.md#d-75|D-75]]
+- [[decisions.md#d-01|D-01]]
+- [[decisions.md#d-02|D-02]]

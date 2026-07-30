@@ -31,7 +31,7 @@
 | CX-14 | [17.06 Radius Clause](./17.06-radius-clause-exclusivity.md) | [17.01 Availability, Holds & Confirmation](./17.01-availability-holds-confirmation/) | The radius check fires at **three moments** — publish (warn), hold (warn), confirm (hard block); the artist's own conflicts surface to the artist alone | Musician, Operator | High | 17.06 DT-02/DT-10/DT-12; D-13/D-15; permission asymmetry [30] |
 | CX-15 | [17.07 Booking Enquiry Inbox](./17.07-booking-enquiry-inbox-rfq.md) | [17.01 Availability, Holds & Confirmation](./17.01-availability-holds-confirmation/) | Auto-qualification reads published avails; a qualified enquiry converts into a hold — and an **off-platform link recipient's reply lands here as an enquiry** because they cannot self-hold | Musician, Operator | Medium | Invite-only avail scoping complicates the read (17.01.01 Q-02); link-recipient reply [4] |
 | CX-16 | [17.13 Fan Demand Signals](./17.13-fan-demand-signals.md) | [17.11 Draw History](./17.11-draw-history-market-intelligence/) | **Opposite provenance** — a settled fact vs an expressed wish. They must never render alike | Musician, Operator, Fan | High | 17.13 DT-02: requesting costs nothing; attending costs £20 and a Tuesday |
-| CX-17 | [17.01 Availability, Holds & Confirmation](./17.01-availability-holds-confirmation/) | [17.08 Agency Representation & Commission](./17.08-agency-representation-commission/) | Booking authority gates every hold, publish and confirm; **positions belong to the act, not the placing agent** — representation change carries them, representation *end* freezes the windows | Musician (+ agent lens), Operator | High | [5],[13] — D-11/DT-15, D-15 |
+| CX-17 | [17.01 Availability, Holds & Confirmation](./17.01-availability-holds-confirmation/) | [17.08 Agency Representation & Commission](./17.08-agency-representation-commission/) | Booking authority gates every hold, publish and confirm — `book` **and** `live booking`, conjoined at the act (`01.03.02` D-05); **positions belong to the act, not the placing agent** — representation change carries them, representation *end* freezes the windows | Musician (+ agent lens), Operator | High | [5],[13] — D-11/DT-15, D-15 |
 | CX-18 | [17.01 Availability, Holds & Confirmation](./17.01-availability-holds-confirmation/) | [17.12 Counterparty Relationship & Payment Reliability](./17.12-counterparty-relationship-payment-reliability.md) | **The most under-modelled edge in the domain.** The ladder emits reliability facts 17.12 does not yet know exist: hold→confirm conversion, no-response lapse, repudiation, confirm-then-revert | Musician, Operator | High | [8],[21],[37] |
 | CX-19 | [17.01 Availability, Holds & Confirmation](./17.01-availability-holds-confirmation/) | [17.14 Bill Construction & Support Slots](./17.14-bill-construction-support-slots.md) | Billing intent **selects the ladder** — support and headline holds never contend; bill shape is an avail field and a "fill date" is usually a support conversation | Musician, Operator | High | [7],[10] — D-05 |
 | CX-20 | [17.01 Availability, Holds & Confirmation](./17.01-availability-holds-confirmation/) | [17.11 Draw History](./17.11-draw-history-market-intelligence/) | Draw is an **advisory read** into the ladder and the announce gate — never wired into position assignment; it also explains the guarantee floor/ceiling asymmetry | Musician, Operator | High | [6],[16],[44] — D-03/DT-02 |
@@ -426,8 +426,8 @@ costs nothing; attending costs £20 and a Tuesday night.
 
 ### CX-17: Availability, Holds & Confirmation ↔ Agency Representation & Commission
 
-**Relationship**: Agency representation supplies the **publishing and booking authority** for an act's
-windows, scoped by territory (D-11/DT-15). Publishing dates for — or holding in the name of — an act you
+**Relationship**: Agency representation supplies the **authority to publish and to book** an act's
+windows, scoped by territory and by commercial domain (D-11/DT-15; `01.03.02` D-05). Publishing dates for — or holding in the name of — an act you
 do not represent is a real, current industry harm. The load-bearing rule: **a hold and a published window
 belong to the act, not to the agent who placed them.** A representation change *carries positions across*
 (D-15) — a departing agent must not be able to burn a roster's ladder — and representation *ending* must
@@ -444,16 +444,22 @@ belong to the act, not to the agent who placed them.** A representation change *
    relationship is a delegated-authority grant (resolved through domain 01 / the Roles & Delegated
    Authority cross-cut), not an ownership. On a representation change the positions do not move — only the
    operator of them does.
-2. **Trigger chain**: Grant representation → agent may publish/hold/confirm within territory scope. Revoke
+2. **Trigger chain**: Grant representation → agent may publish/hold/confirm within territory scope **and** where
+   the edge carries `live booking` in its `domains` (`01.03.02` D-05). Revoke
    representation → **freeze** windows (no new holds, existing positions preserved for the act). A naive
    "delete the agent's holds" would be the burn hazard D-15 forbids.
-3. **Permission intersection**: Booking authority gates *every* hold request and confirm; territory scope
-   limits *which* windows an agent may touch. Authority to negotiate (17.02.03) is a separate grant from
-   authority to publish availability.
+3. **Permission intersection**: Booking authority gates *every* hold request and confirm, and it is a
+   **conjunction** — `book` in the edge's `activities` **and** `live booking` in its `domains`
+   (`01.03.02` D-05); territory scope limits *which* windows an agent may touch. Authority to negotiate
+   (17.02.03) is a separate grant from the authority to publish availability. A **membership** edge carries
+   the activity axis alone and resolves to every domain, so a `permanent` band member's seeded `book`
+   needs no domain configured (`01.03.03` D-07).
 4. **Notification fan-out**: A representation change notifies the incoming and outgoing agents and the
    Operators with live holds on the act — those holds now have a new operator, same owner.
 5. **State transition conflict**: An agent placing a hold as representation is being revoked — the write
-   must resolve against the authority state at commit time, or a just-fired agent lands a hold the act
+   must resolve against the authority state at commit time, on **both axes**: a scope narrowed from
+   `live booking + recording` to `recording` revokes booking authority without ending the edge, and a
+   check that only tests whether the edge is live would let a just-fired agent land a hold the act
    never authorised.
 
 ### CX-18: Availability, Holds & Confirmation ↔ Counterparty Relationship & Payment Reliability
@@ -705,8 +711,8 @@ a knowing simplification (DT-05), not an oversight.
 - [[decisions.md#d-01|D-01]]
 - [[decisions.md#d-13|D-13]]
 - [[decisions.md#d-15|D-15]]
-- [[decisions.md#d-11|D-11]]
 - [[decisions.md#d-05|D-05]]
+- [[decisions.md#d-11|D-11]]
 - [[decisions.md#d-03|D-03]]
 - [[decisions.md#d-09|D-09]]
 - [[decisions.md#d-04|D-04]]

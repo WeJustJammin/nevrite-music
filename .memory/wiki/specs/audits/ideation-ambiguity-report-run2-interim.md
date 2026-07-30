@@ -34,7 +34,7 @@ check-phase remediation demonstrably cleared the tree. This is a strong result �
 
 | Unit | Characterization |
 |---|---|
-| `01.03-membership-representation-mandate` | **Confirmed real (main-loop review).** `01.03.02` scopes a representation edge with a 5-item domain vocabulary (live/recording/publishing/sync/merch) never reconciled with the **ratified 7-verb mandate set** (book/sign/spend/list/release/settle/administer). An implementer must invent whether scope is by verbs, domains, or both crossed. A genuine reconciliation gap the DQ-04 ratification left open — an **architecture/owner decision**, not a mechanical fix. |
+| `01.03-membership-representation-mandate` | **Confirmed real (main-loop review).** `01.03.02` scopes a representation edge with a 5-item domain vocabulary (live/recording/publishing/sync/merch) never reconciled with the **ratified 7-verb mandate set** (book/sign/spend/list/release/settle/administer). An implementer must invent whether scope is by verbs, domains, or both crossed. A genuine reconciliation gap the **DQ-02** ratification (log ids `DQ-02.3`–`.7`) left open — an **architecture/owner decision**, not a mechanical fix. **Attribution corrected 2026-07-29**: this row read "DQ-04", which is the domain-02 credit-contest entry (`DQ-04.1`/`.2`); the separate `DQ-04.01`–`.07` series is domain-17 live/fan. Neither namespace mentions mandate verbs, representation edges or commercial domains. **RATIFIED 2026-07-29 as `DQ-R2-01`, Option A′** — two flat axes, `activities` and `domains`, conjoined at the call site. |
 | `07.08-delivery-readiness-qc` | Detail lost with scratchpad. Unit carries several open `[OWNER]` questions (remix-stems hosting/policy) already targeting `/create-prd`, plus an inline `[PENDING]` in the CX. Likely an [OWNER]-tracked deferral the auditor scored blocking — the class verification typically refutes. Needs the Jul 28 verify pass to confirm. |
 | `14.06-used-licence-transfer` | Detail lost. Open questions turn on **EU *UsedSoft v Oracle* (C-128/11)** transfer rights and a `[PENDING]` role-scoping marker in the CX — a real jurisdictional/legal ambiguity, plausibly a genuine owner decision. Needs verify + finding text. |
 | `20.01-fan-graph-owned-audience` | Detail lost. Open `[OWNER]` questions on cross-marketplace fan records + GDPR Art.17 erasure, plus a CX permission-intersection `[PENDING]`. Plausibly a tracked deferral or a real data-model gap. Needs verify + finding text. |
@@ -79,3 +79,11 @@ After the **Jul 28 7pm ET** weekly reset, run a **fresh full `/audit-ambiguity i
 units + verification). Expected: raw ≈1–2%, verified ≪1%, a handful of confirmed blocking that
 resolve into a small owner-decision queue (led by the `01.03` 7-verb reconciliation). The 4 raw
 blocking here are the first entries to carry forward and confirm.
+
+
+<!-- spec-graph: auto-generated -->
+## Related Specs
+
+### Constrained by
+- [[decisions.md#d-01|D-01]]
+- [[decisions.md#d-03|D-03]]

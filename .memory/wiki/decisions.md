@@ -2,8 +2,8 @@
 
 ## Summary
 
-- **Total decisions**: 48
-- **Unique decision titles**: 48
+- **Total decisions**: 49
+- **Unique decision titles**: 49
 
 ## DEC-001: The rights stack is the thesis, not an adjacency (2026-07-16)
 
@@ -678,6 +678,50 @@
 - **Downstream**: The 37 axes found already-locked are the load-bearing result — a scalar answer to any of them would have silently reversed a ratified decision. Propagated into source across three passes (144 files, then 144, then 41). Verification: every decision findable in source, zero broken invariants, and the two invented values that appeared were removed. Notable outcomes: v1 positioning restated from "capture at source" to "capture at the first sharing moment" (domain 07 D-06 made this obligatory, not optional); the UK statutory vocabulary retired to an unauthored profile yielding explicit `unknown`; `scanned` renamed to `admissions_total`/`admissions_paid` because one name could not carry two quantities.
 - **Reversibility**: Medium. Each sub-decision is individually recorded with its rejected alternatives, so any one can be revisited; but several are now load-bearing across domains.
 
+## DEC-049: DQ-R2-01 representation scope is two flat axes conjoined at the call site (2026-07-29)
+
+- **Occurrences**: 1
+- **Latest timestamp**: 2026-07-30T00:38:30.695Z
+- **Agents**: claude
+- **Sources**: propagate-decision (DQ-R2-01)
+- **Index**: [[index]]
+
+- **Problem**: `01.03.02`:25 lists a five-item commercial-domain scope and the ratified seven-verb
+  mandate as siblings on one representation edge; `01.03.02`:76 and `01.03-cx` CX-02 both assert
+  "scope **is** the mandate". The identity reading is unsatisfiable — the activity enum is closed at
+  seven (D-01, DQ-02.3, global D-69) and none of the five domains is in it. Three normative
+  statements, no open marker on any of them. The word "activities" was filled with two different
+  vocabularies nine lines apart in one file (`:16` verbs, `:25` domains).
+- **Options considered**: A full cross-product (7x5=35 cells, the draft's recommendation);
+  A-prime two flat axes ANDed at the call site; A-double-prime domain as edge identity (one edge per
+  domain); B domains-for-representation/verbs-for-membership; C collapse to one vocabulary;
+  D domains as presets expanding to verbs; G defer to `/create-prd`.
+- **Decision**: **A-prime**, owner-ratified 2026-07-29. A representation edge carries two
+  independent flat axes — `activities` (subset of the closed seven) and `domains` (subset of live
+  booking / recording / publishing / sync / merch) — ANDed at the moment of the action. At most
+  7+5=12 plain-language statements per edge, never 35 cells, which is what keeps `01.03.03` DT-02
+  (permission matrix REJECTED) and D-02 (plain language, not a grid) intact. A membership edge
+  carries the activity axis only and resolves to ALL domains, which is what keeps `01.03-cx` CX-03:
+  both edge types present one shape, `{activities, domains}`, to the enforcement cross-cut.
+  Territory, term and commission stay edge-level and do not vary per domain (accepted cost).
+  `administer` does not reach naming a publisher over a share the party did not write (`09.01.04`
+  D-06 stands over the mandate).
+- **Why the draft's Option A was rejected**: a 35-cell grid *is* the artefact DT-02 rejects by name;
+  its cross-type asymmetry breaks the CX-03 union the sub-domain merge exists to protect; and its
+  "book for live but not publishing" justification is only half-sourced — the verb half is real at
+  `01.03.02`:16 ("my manager can book but not sign"), the domain half appears nowhere in 1,122 files.
+  The five-domain list occurs on exactly **one line** tree-wide.
+- **Downstream**: `01.03.02` D-02 restated + new D-05; `01.03.03` D-11 + `:25` scope dimensions;
+  `01.03.01` D-19 (membership universal-domain); `01.03-cx` CX-02 + CX-03; parent index D-05;
+  `ideation-cx.md`:27 Roles/Permissions cross-cut; `ideation-index.md` D-75; `09.01.04` D-17
+  carve-out; domain 17 booking authority (+ its `publishing authority` wording collision);
+  domains 04, 05, 07, 20 local authority vocabularies.
+- **Reversibility**: Medium. The rename and the conjunction are cheap to revise; the eliminated
+  options are not — B, C and G were each independently refuted against source.
+- **Left open (tracked)**: are the five domains identical to domain 17's ratified work-type enum, or
+  a fourth vocabulary? `01.03.02`:25 lists sync as publishing's *sibling*; `09.01.04`:102 carves sync
+  *inside* publishing as a right type. Tracked as `01.03.02` Q-03, targeted at `/create-prd`.
+
 ## Full Log
 
 ### DEC-001: The rights stack is the thesis, not an adjacency (2026-07-16)
@@ -1304,3 +1348,46 @@
 - **Decision**: **20 blocking findings → 2 already-resolved → 18 entries → 94 axes → 57 open sub-decisions, all ratified** (43 owner-decided, 14 agent-decided as spec hygiene or technically determined, each flagged). Full record with reasoning, preserved invariants and downstream commitments: `.memory/wiki/specs/audits/decision-ratification-log.md`. Options each was chosen from: `blocking-decision-queue.md`.
 - **Downstream**: The 37 axes found already-locked are the load-bearing result — a scalar answer to any of them would have silently reversed a ratified decision. Propagated into source across three passes (144 files, then 144, then 41). Verification: every decision findable in source, zero broken invariants, and the two invented values that appeared were removed. Notable outcomes: v1 positioning restated from "capture at source" to "capture at the first sharing moment" (domain 07 D-06 made this obligatory, not optional); the UK statutory vocabulary retired to an unauthored profile yielding explicit `unknown`; `scanned` renamed to `admissions_total`/`admissions_paid` because one name could not carry two quantities.
 - **Reversibility**: Medium. Each sub-decision is individually recorded with its rejected alternatives, so any one can be revisited; but several are now load-bearing across domains.
+
+### DEC-049: DQ-R2-01 representation scope is two flat axes conjoined at the call site (2026-07-29)
+
+- **Timestamp**: 2026-07-30T00:38:30.695Z
+- **Agent**: claude
+- **Source**: propagate-decision (DQ-R2-01)
+- **Tags**: decision, dq-r2-01, domain-01, authority, ratified
+
+- **Problem**: `01.03.02`:25 lists a five-item commercial-domain scope and the ratified seven-verb
+  mandate as siblings on one representation edge; `01.03.02`:76 and `01.03-cx` CX-02 both assert
+  "scope **is** the mandate". The identity reading is unsatisfiable — the activity enum is closed at
+  seven (D-01, DQ-02.3, global D-69) and none of the five domains is in it. Three normative
+  statements, no open marker on any of them. The word "activities" was filled with two different
+  vocabularies nine lines apart in one file (`:16` verbs, `:25` domains).
+- **Options considered**: A full cross-product (7x5=35 cells, the draft's recommendation);
+  A-prime two flat axes ANDed at the call site; A-double-prime domain as edge identity (one edge per
+  domain); B domains-for-representation/verbs-for-membership; C collapse to one vocabulary;
+  D domains as presets expanding to verbs; G defer to `/create-prd`.
+- **Decision**: **A-prime**, owner-ratified 2026-07-29. A representation edge carries two
+  independent flat axes — `activities` (subset of the closed seven) and `domains` (subset of live
+  booking / recording / publishing / sync / merch) — ANDed at the moment of the action. At most
+  7+5=12 plain-language statements per edge, never 35 cells, which is what keeps `01.03.03` DT-02
+  (permission matrix REJECTED) and D-02 (plain language, not a grid) intact. A membership edge
+  carries the activity axis only and resolves to ALL domains, which is what keeps `01.03-cx` CX-03:
+  both edge types present one shape, `{activities, domains}`, to the enforcement cross-cut.
+  Territory, term and commission stay edge-level and do not vary per domain (accepted cost).
+  `administer` does not reach naming a publisher over a share the party did not write (`09.01.04`
+  D-06 stands over the mandate).
+- **Why the draft's Option A was rejected**: a 35-cell grid *is* the artefact DT-02 rejects by name;
+  its cross-type asymmetry breaks the CX-03 union the sub-domain merge exists to protect; and its
+  "book for live but not publishing" justification is only half-sourced — the verb half is real at
+  `01.03.02`:16 ("my manager can book but not sign"), the domain half appears nowhere in 1,122 files.
+  The five-domain list occurs on exactly **one line** tree-wide.
+- **Downstream**: `01.03.02` D-02 restated + new D-05; `01.03.03` D-11 + `:25` scope dimensions;
+  `01.03.01` D-19 (membership universal-domain); `01.03-cx` CX-02 + CX-03; parent index D-05;
+  `ideation-cx.md`:27 Roles/Permissions cross-cut; `ideation-index.md` D-75; `09.01.04` D-17
+  carve-out; domain 17 booking authority (+ its `publishing authority` wording collision);
+  domains 04, 05, 07, 20 local authority vocabularies.
+- **Reversibility**: Medium. The rename and the conjunction are cheap to revise; the eliminated
+  options are not — B, C and G were each independently refuted against source.
+- **Left open (tracked)**: are the five domains identical to domain 17's ratified work-type enum, or
+  a fourth vocabulary? `01.03.02`:25 lists sync as publishing's *sibling*; `09.01.04`:102 carves sync
+  *inside* publishing as a right type. Tracked as `01.03.02` Q-03, targeted at `/create-prd`.

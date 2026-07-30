@@ -2,8 +2,8 @@
 
 ## Summary
 
-- **Total patterns**: 9
-- **Unique pattern titles**: 9
+- **Total patterns**: 11
+- **Unique pattern titles**: 11
 
 ## PAT-001: Verify a generated claim against the kit's own reference before propagating it (2026-07-16)
 
@@ -135,6 +135,53 @@
 - **Pattern**: Before declaring "blocked until reset", split the dropped phase into deterministic sub-jobs the main loop can do with code/Read/Edit, and only defer the parts that truly need parallel judgment. Concretely, three moves paid off: (1) the check phase's most important job — "does any 'already answered' row cite a fabricated D-NN?" — is a pure citation-existence check; done in code it found 0 fabrications across 770 struck rows (resolve same-file, then dotted spec-number refs like `05.01.03 DT-01`, then the CQ canonical namespace). (2) The residual "142 expired rows" were 87% measurement artifact: 123 were already-resolved rows whose Deferred-To cell cosmetically retained the completed stage name; only 19 were genuinely open. Always split resolved-cosmetic from genuinely-open before assuming unfinished work. (3) Hand-triage the small genuine remainder (19 rows) directly. Only the semantic re-check of bucket-A resolutions and the fresh full `/audit-ambiguity` truly needed the reset.
 - **Source**: expired-deferral triage, run wf_884d11c7-65a. Related: [[BLOCKER-009]], PAT-006 (raw-record durability), PAT-007 (domain-wide scope).
 
+## PAT-010: a contradiction with no open marker is a real finding class (2026-07-29)
+
+- **Occurrences**: 1
+- **Latest timestamp**: 2026-07-30T00:38:30.702Z
+- **Agents**: claude
+- **Sources**: propagate-decision (DQ-R2-01)
+- **Index**: [[index]]
+
+- **Type**: best-practice
+- **Confidence**: 0.6
+- **Context**: Triaging audit findings in the ideation tree, deciding whether a flagged unit is a
+  genuine gap or a stale artefact.
+- **Pattern**: PAT-008 established that some findings are **stale parent-CX markers** — the [DEEP]
+  child already answers what the parent still flags as pending. DQ-R2-01 is the **inverse**: the
+  parent asserted a confident identity ("scope IS the mandate") with **no marker at all**, while the
+  child omitted the axis entirely. So "does it carry an open marker?" is not a sufficient triage
+  test in either direction. The reliable test is **satisfiability**: take the document's own claim
+  literally and try to instantiate it. Here, "scope is the mandate" plus a closed seven-value enum
+  plus a five-value scope list is unsatisfiable on arithmetic alone — provable without judgement.
+  Findings on units whose only open questions point elsewhere deserve *more* scrutiny, not less:
+  a silent contradiction has nothing tracking it.
+- **Source**: DQ-R2-01. `01.03.02`'s two [OWNER] questions were commission (`:97`) and on-platform
+  signing (`:98`) — neither was the gap. Four adversarial agents attempted five refutations; all
+  five failed.
+
+## PAT-011: verify a decision's affected-files list by grep, not by reading the decision (2026-07-29)
+
+- **Occurrences**: 1
+- **Latest timestamp**: 2026-07-30T00:38:30.702Z
+- **Agents**: claude
+- **Sources**: propagate-decision (DQ-R2-01)
+- **Index**: [[index]]
+
+- **Type**: anti-pattern
+- **Confidence**: 0.7
+- **Context**: Propagating a ratified decision through the spec tree.
+- **Pattern**: DQ-02 ratified the seven-verb enum, and its recorded affected-files list **omitted
+  `01.03.02`** — the one file in 1,122 that names a competing scope vocabulary. The propagation then
+  ran correctly against an incomplete target list, and the contradiction survived two full audit
+  runs. **The failure mode is not a bad propagation; it is a bad target list.** Never derive the
+  affected-files list from the decision's own text or from the prior propagation record — derive it
+  by grepping the tree for every competing term the decision settles, then diff that against the
+  recorded list. A decision that fixes a vocabulary must target every file using **any** vocabulary
+  in that slot, not just files citing the decision.
+- **Source**: DQ-R2-01 root-cause analysis. Related: [[PAT-006]] (writing to derived artefacts
+  instead of raw records) — both are cases of trusting a generated record over ground truth.
+
 ## Full Log
 
 ### PAT-001: Verify a generated claim against the kit's own reference before propagating it (2026-07-16)
@@ -257,3 +304,48 @@
 - **Context**: A large Workflow (triage + 177-unit check phase) died mid-run on `You've hit your session limit · resets 9am (America/New_York)`. The main loop is NOT subject to the same cap and kept operating.
 - **Pattern**: Before declaring "blocked until reset", split the dropped phase into deterministic sub-jobs the main loop can do with code/Read/Edit, and only defer the parts that truly need parallel judgment. Concretely, three moves paid off: (1) the check phase's most important job — "does any 'already answered' row cite a fabricated D-NN?" — is a pure citation-existence check; done in code it found 0 fabrications across 770 struck rows (resolve same-file, then dotted spec-number refs like `05.01.03 DT-01`, then the CQ canonical namespace). (2) The residual "142 expired rows" were 87% measurement artifact: 123 were already-resolved rows whose Deferred-To cell cosmetically retained the completed stage name; only 19 were genuinely open. Always split resolved-cosmetic from genuinely-open before assuming unfinished work. (3) Hand-triage the small genuine remainder (19 rows) directly. Only the semantic re-check of bucket-A resolutions and the fresh full `/audit-ambiguity` truly needed the reset.
 - **Source**: expired-deferral triage, run wf_884d11c7-65a. Related: [[BLOCKER-009]], PAT-006 (raw-record durability), PAT-007 (domain-wide scope).
+
+### PAT-010: a contradiction with no open marker is a real finding class (2026-07-29)
+
+- **Timestamp**: 2026-07-30T00:38:30.702Z
+- **Agent**: claude
+- **Source**: propagate-decision (DQ-R2-01)
+- **Tags**: pattern, audit, triage
+
+- **Type**: best-practice
+- **Confidence**: 0.6
+- **Context**: Triaging audit findings in the ideation tree, deciding whether a flagged unit is a
+  genuine gap or a stale artefact.
+- **Pattern**: PAT-008 established that some findings are **stale parent-CX markers** — the [DEEP]
+  child already answers what the parent still flags as pending. DQ-R2-01 is the **inverse**: the
+  parent asserted a confident identity ("scope IS the mandate") with **no marker at all**, while the
+  child omitted the axis entirely. So "does it carry an open marker?" is not a sufficient triage
+  test in either direction. The reliable test is **satisfiability**: take the document's own claim
+  literally and try to instantiate it. Here, "scope is the mandate" plus a closed seven-value enum
+  plus a five-value scope list is unsatisfiable on arithmetic alone — provable without judgement.
+  Findings on units whose only open questions point elsewhere deserve *more* scrutiny, not less:
+  a silent contradiction has nothing tracking it.
+- **Source**: DQ-R2-01. `01.03.02`'s two [OWNER] questions were commission (`:97`) and on-platform
+  signing (`:98`) — neither was the gap. Four adversarial agents attempted five refutations; all
+  five failed.
+
+### PAT-011: verify a decision's affected-files list by grep, not by reading the decision (2026-07-29)
+
+- **Timestamp**: 2026-07-30T00:38:30.702Z
+- **Agent**: claude
+- **Source**: propagate-decision (DQ-R2-01)
+- **Tags**: pattern, propagation, anti-pattern
+
+- **Type**: anti-pattern
+- **Confidence**: 0.7
+- **Context**: Propagating a ratified decision through the spec tree.
+- **Pattern**: DQ-02 ratified the seven-verb enum, and its recorded affected-files list **omitted
+  `01.03.02`** — the one file in 1,122 that names a competing scope vocabulary. The propagation then
+  ran correctly against an incomplete target list, and the contradiction survived two full audit
+  runs. **The failure mode is not a bad propagation; it is a bad target list.** Never derive the
+  affected-files list from the decision's own text or from the prior propagation record — derive it
+  by grepping the tree for every competing term the decision settles, then diff that against the
+  recorded list. A decision that fixes a vocabulary must target every file using **any** vocabulary
+  in that slot, not just files citing the decision.
+- **Source**: DQ-R2-01 root-cause analysis. Related: [[PAT-006]] (writing to derived artefacts
+  instead of raw records) — both are cases of trusting a generated record over ground truth.

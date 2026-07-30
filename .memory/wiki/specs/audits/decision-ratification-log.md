@@ -5,6 +5,10 @@
 
 **Ratified: 57 / 57 — COMPLETE**
 
+**Run-2 addendum**: 1 further entry ratified from
+[run2-blocking-decision-queue.md](./run2-blocking-decision-queue.md) — `DQ-R2-01` (owner, 2026-07-29).
+Recorded at the end of this log, outside the 57.
+
 | Entry | Domain | Axes |
 |---|---|---|
 | DQ-03 | 02 Credits | 4 — DQ-03.A3, DQ-03.A4, DQ-03.A2, DQ-03.A5 |
@@ -1002,6 +1006,28 @@
 - If provenance rendering is wanted later it is a new spec change on 21.09, designed additively rather than retrofitted.
 - Kept as its own axis deliberately, so the badge-input decision did not silently decide the EPK surface.
 
+## DQ-R2-01 — Representation edge scope: the seven-verb mandate and the five commercial domains
+
+> **Entry**: DQ-R2-01 (run-2 queue) · **Ratified**: 2026-07-29
+
+**Chosen**: A′ — Two flat axes, conjoined at the call site. A representation edge carries **activities** (a subset of the closed seven-verb enum: book / sign / spend / list / release / settle / administer) and **domains** (a subset of live booking / recording / publishing / sync / merch). An action is authorised iff the action's verb is in `activities` AND the action's domain is in `domains`, ANDed at the call site at the moment of the action. A membership edge carries the activity axis only and resolves to ALL domains. `01.03.02`'s "scope (which activities)" is renamed **domains**, and the identity claim "scope is the mandate" (`01.03.02`:76, `01.03-cx` CX-02) is corrected: the mandate is the activity axis; scope is activities AND domains conjoined at resolution.
+
+**Why**: Two axes are forced — `01.03.02`:25 already names both on one edge, `01.03.02`:16 performs verb scoping on a representation edge ("my manager can book but not sign"), and D-69 makes the seven-verb enum global, so neither collapsing to one vocabulary nor confining verbs to membership is available. Of the two-axis forms, only the flat pair survives every ratified constraint at once. The drafted cross-product does not: 7 × 5 is a 35-cell addressable grid, which is the permission matrix `01.03.03` DT-02 rejects by name and D-02 forbids rendering, while two flat lists are at most 7 + 5 = 12 plain-language statements per edge. The cross-product also gave membership and representation edges different shapes, breaking the indistinguishability `01.03-cx` CX-03 exists to hold; A′ keeps one shape by resolving a membership edge to the universal domain set. And the cross-product's own justification — a manager who may book for live but not for publishing — is sourced on the verb half only; no file in the tree scopes a manager by commercial domain, so the domain half was authored by the proposal and then cited for it.
+
+**Preserves**: `01.03.03` D-01 and global D-69 (the seven-verb enum, its closure and its count; the peer-seed model for bands including the USD 1,000 default ceiling); `01.03.03` DT-02 (permission matrix REJECTED) and D-02 (plain language, not a permission grid) — A′ exists to honour them; `01.03-cx` CX-03 (one `{activities, domains}` shape to enforcement, whichever edge carried the authority); `01.03.02` D-01 (roster as the reverse view of consented edges), D-03 (signed terms optional), D-04 (expiry removes acting context); `09.01.04` D-06
+
+**Commits us to**:
+- Every representation call site evaluates a SECOND conjunct — `verb ∈ activities AND domain ∈ domains` — at the moment of the action. Neither axis is a matrix and the conjunction is never a configurable cell grid; authority renders as prose ("may book and settle, for live and recording"), never as a grid.
+- Territory, term and commission stay EDGE-LEVEL and do NOT vary per domain. Territory and term bound the edge and are inherited by the mandate (`01.03.03`:25) — CX-02's "additionally bounded" is corrected. This is the accepted cost of A′ over A″ and is recorded as accepted, not left silent.
+- An explicit MEMBERSHIP UNIVERSAL-DOMAIN RULE must be written where membership is specified (`01.03.01` D-19). Silence there is what left the CX-03 union undefined.
+- `administer` DOES NOT REACH AUTHORSHIP: a seeded or granted `administer` activity, with or without the `publishing` domain, confers no authority to name a publisher over a writer share the represented party did not write. `09.01.04` D-06 stands over the mandate (`09.01.04` D-17).
+- `01.03.02` D-02 RESTATED OVER BOTH AXES. It read "Representation edges are scoped, territory-bounded and term-bounded" (`01.03.02`:89) before this propagation, and it is the decision that must name the two axes. NOT D-03 — that is about optional signed terms and is out of scope.
+- A representation edge must declare AT LEAST ONE DOMAIN at creation; an empty `domains` set is invalid rather than silently universal. This one is agent-derived and the owner may override it: the basis is the least-privilege default in `ideation-cx.md`'s Roles, Permissions & Delegated Authority cross-cut plus `01.03.02`:50 ("the edge is the represented party's consent") — a consent to nothing is not a consent. Membership edges are exempt; their universality is the rule above, not an empty set.
+- Recorded globally as `ideation-index.md` **D-75**; locally as `01.03.02` D-05, `01.03.03` D-11, `01.03.01` D-19, `01.03` index D-05, `09.01.04` D-17.
+- OPEN and NOT closed by this ratification, carried as a tracked `[OWNER]` question: are the five domains identical to domain 17's ratified work-type enum, or a fourth scoping vocabulary? It needs a taxonomy ruling — `01.03.02`:25 lists **sync** as publishing's sibling while `09.01.04`:102 carves sync inside publishing as a right type (performance, mechanical, sync, print).
+
+**Precedent**: `01.03.03` DT-02 — plain-language statements over a handful of coarse activities will get used; a matrix will not. A′ is the two-axis form that survives DT-02 rather than reintroducing it.
+
 
 <!-- spec-graph: auto-generated -->
 ## Related Specs
@@ -1034,3 +1060,5 @@
 - [[decisions.md#d-46|D-46]]
 - [[decisions.md#d-08|D-08]]
 - [[decisions.md#d-22|D-22]]
+- [[decisions.md#d-69|D-69]]
+- [[decisions.md#d-75|D-75]]

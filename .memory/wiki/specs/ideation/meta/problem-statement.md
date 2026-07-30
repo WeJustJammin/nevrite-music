@@ -123,3 +123,5 @@ moment) and how close the direction goes (rung 2, at source).
 - [[decisions.md#d-10|D-10]]
 - [[decisions.md#d-05|D-05]]
 - [[decisions.md#d-08|D-08]]
+- [[decisions.md#d-31|D-31]]
+- [[decisions.md#d-20|D-20]]

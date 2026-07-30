@@ -1,7 +1,7 @@
 {
-  "builtAt": "2026-07-23T19:08:34.907Z",
-  "nodeCount": 1231,
-  "edgeCount": 8695,
+  "builtAt": "2026-07-30T03:44:07.551Z",
+  "nodeCount": 1237,
+  "edgeCount": 8760,
   "nodes": [
     {
       "id": "audit:audits/audit-scope",
@@ -15,6 +15,13 @@
       "type": "audit",
       "label": "Blocking Ambiguity — Owner Decision Queue",
       "path": ".memory/wiki/specs/audits/blocking-decision-queue.md",
+      "shardId": null
+    },
+    {
+      "id": "audit:audits/check-phase-reconstruction",
+      "type": "audit",
+      "label": "Check-Phase Reconstruction — done in the main loop",
+      "path": ".memory/wiki/specs/audits/check-phase-reconstruction.md",
       "shardId": null
     },
     {
@@ -53,6 +60,20 @@
       "shardId": null
     },
     {
+      "id": "audit:audits/dq-r2-01-decision-brief",
+      "type": "audit",
+      "label": "DQ-R2-01 — Owner Decision Brief",
+      "path": ".memory/wiki/specs/audits/dq-r2-01-decision-brief.md",
+      "shardId": null
+    },
+    {
+      "id": "audit:audits/ideation-ambiguity-report-run2-interim",
+      "type": "audit",
+      "label": "Ideation Ambiguity Audit — Run 2 (post-remediation), INTERIM",
+      "path": ".memory/wiki/specs/audits/ideation-ambiguity-report-run2-interim.md",
+      "shardId": null
+    },
+    {
       "id": "audit:audits/ideation-ambiguity-report",
       "type": "audit",
       "label": "Ideation Ambiguity Audit — Report",
@@ -81,10 +102,24 @@
       "shardId": null
     },
     {
+      "id": "audit:audits/propagation-dq-r2-01-2026-07-29",
+      "type": "audit",
+      "label": "Propagation Record — DQ-R2-01 (Option A′)",
+      "path": ".memory/wiki/specs/audits/propagation-dq-r2-01-2026-07-29.md",
+      "shardId": null
+    },
+    {
       "id": "audit:audits/remediation-state",
       "type": "audit",
       "label": "Remediation State",
       "path": ".memory/wiki/specs/audits/remediation-state.md",
+      "shardId": null
+    },
+    {
+      "id": "audit:audits/run2-blocking-decision-queue",
+      "type": "audit",
+      "label": "Run-2 Blocking Decision Queue",
+      "path": ".memory/wiki/specs/audits/run2-blocking-decision-queue.md",
       "shardId": null
     },
     {
@@ -8236,10 +8271,24 @@
       "shardId": null
     },
     {
+      "id": "decision:d-72",
+      "type": "decision",
+      "label": "D-72",
+      "path": ".memory/wiki/decisions.md#d-72",
+      "shardId": null
+    },
+    {
       "id": "decision:d-69",
       "type": "decision",
       "label": "D-69",
       "path": ".memory/wiki/decisions.md#d-69",
+      "shardId": null
+    },
+    {
+      "id": "decision:d-75",
+      "type": "decision",
+      "label": "D-75",
+      "path": ".memory/wiki/decisions.md#d-75",
       "shardId": null
     },
     {
@@ -8254,13 +8303,6 @@
       "type": "decision",
       "label": "D-71",
       "path": ".memory/wiki/decisions.md#d-71",
-      "shardId": null
-    },
-    {
-      "id": "decision:d-72",
-      "type": "decision",
-      "label": "D-72",
-      "path": ".memory/wiki/decisions.md#d-72",
       "shardId": null
     },
     {
@@ -8317,6 +8359,13 @@
       "type": "decision",
       "label": "D-26",
       "path": ".memory/wiki/decisions.md#d-26",
+      "shardId": null
+    },
+    {
+      "id": "decision:d-67",
+      "type": "decision",
+      "label": "D-67",
+      "path": ".memory/wiki/decisions.md#d-67",
       "shardId": null
     },
     {
@@ -8457,13 +8506,6 @@
       "type": "decision",
       "label": "D-44",
       "path": ".memory/wiki/decisions.md#d-44",
-      "shardId": null
-    },
-    {
-      "id": "decision:d-67",
-      "type": "decision",
-      "label": "D-67",
-      "path": ".memory/wiki/decisions.md#d-67",
       "shardId": null
     },
     {
@@ -8833,6 +8875,30 @@
       "source": "decision-ref"
     },
     {
+      "from": "audit:audits/check-phase-reconstruction",
+      "to": "decision:d-28",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "audit:audits/check-phase-reconstruction",
+      "to": "decision:d-32",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "audit:audits/check-phase-reconstruction",
+      "to": "decision:d-72",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "audit:audits/check-phase-reconstruction",
+      "to": "decision:d-06",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
       "from": "audit:audits/decision-queue-drafts/01-credits-rights",
       "to": "decision:d-15",
       "type": "constrained_by",
@@ -9135,6 +9201,102 @@
     {
       "from": "audit:audits/decision-ratification-log",
       "to": "decision:d-22",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "audit:audits/decision-ratification-log",
+      "to": "decision:d-69",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "audit:audits/decision-ratification-log",
+      "to": "decision:d-75",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "audit:audits/dq-r2-01-decision-brief",
+      "to": "decision:d-01",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "audit:audits/dq-r2-01-decision-brief",
+      "to": "decision:d-75",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "audit:audits/dq-r2-01-decision-brief",
+      "to": "decision:d-02",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "audit:audits/dq-r2-01-decision-brief",
+      "to": "decision:d-69",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "audit:audits/dq-r2-01-decision-brief",
+      "to": "decision:d-11",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "audit:audits/dq-r2-01-decision-brief",
+      "to": "decision:d-06",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "audit:audits/dq-r2-01-decision-brief",
+      "to": "decision:d-07",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "audit:audits/dq-r2-01-decision-brief",
+      "to": "decision:d-10",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "audit:audits/dq-r2-01-decision-brief",
+      "to": "decision:d-09",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "audit:audits/dq-r2-01-decision-brief",
+      "to": "decision:d-03",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "audit:audits/dq-r2-01-decision-brief",
+      "to": "decision:d-04",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "audit:audits/dq-r2-01-decision-brief",
+      "to": "decision:d-14",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "audit:audits/ideation-ambiguity-report-run2-interim",
+      "to": "decision:d-01",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "audit:audits/ideation-ambiguity-report-run2-interim",
+      "to": "decision:d-03",
       "type": "constrained_by",
       "source": "decision-ref"
     },
@@ -9601,6 +9763,78 @@
       "source": "decision-ref"
     },
     {
+      "from": "audit:audits/propagation-dq-r2-01-2026-07-29",
+      "to": "decision:d-75",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "audit:audits/propagation-dq-r2-01-2026-07-29",
+      "to": "decision:d-06",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "audit:audits/propagation-dq-r2-01-2026-07-29",
+      "to": "decision:d-02",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "audit:audits/propagation-dq-r2-01-2026-07-29",
+      "to": "decision:d-05",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "audit:audits/propagation-dq-r2-01-2026-07-29",
+      "to": "decision:d-11",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "audit:audits/propagation-dq-r2-01-2026-07-29",
+      "to": "decision:d-19",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "audit:audits/propagation-dq-r2-01-2026-07-29",
+      "to": "decision:d-03",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "audit:audits/propagation-dq-r2-01-2026-07-29",
+      "to": "decision:d-69",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "audit:audits/propagation-dq-r2-01-2026-07-29",
+      "to": "decision:d-17",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "audit:audits/propagation-dq-r2-01-2026-07-29",
+      "to": "decision:d-67",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "audit:audits/propagation-dq-r2-01-2026-07-29",
+      "to": "decision:d-01",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "audit:audits/propagation-dq-r2-01-2026-07-29",
+      "to": "decision:d-04",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
       "from": "audit:audits/remediation-state",
       "to": "decision:d-05",
       "type": "constrained_by",
@@ -9693,6 +9927,24 @@
     {
       "from": "audit:audits/remediation-state",
       "to": "decision:d-15",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "audit:audits/run2-blocking-decision-queue",
+      "to": "decision:d-75",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "audit:audits/run2-blocking-decision-queue",
+      "to": "decision:d-01",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "audit:audits/run2-blocking-decision-queue",
+      "to": "decision:d-02",
       "type": "constrained_by",
       "source": "decision-ref"
     },
@@ -10490,7 +10742,25 @@
     },
     {
       "from": "ideation:ideation/01-identity-profiles-organizations/01.03-membership-representation-mandate/01.03-membership-representation-mandate-cx",
+      "to": "decision:d-05",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/01-identity-profiles-organizations/01.03-membership-representation-mandate/01.03-membership-representation-mandate-cx",
       "to": "decision:d-02",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/01-identity-profiles-organizations/01.03-membership-representation-mandate/01.03-membership-representation-mandate-cx",
+      "to": "decision:d-11",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/01-identity-profiles-organizations/01.03-membership-representation-mandate/01.03-membership-representation-mandate-cx",
+      "to": "decision:d-19",
       "type": "constrained_by",
       "source": "decision-ref"
     },
@@ -10550,6 +10820,12 @@
     },
     {
       "from": "ideation:ideation/01-identity-profiles-organizations/01.03-membership-representation-mandate/01.03-membership-representation-mandate-index",
+      "to": "decision:d-05",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/01-identity-profiles-organizations/01.03-membership-representation-mandate/01.03-membership-representation-mandate-index",
       "to": "decision:d-04",
       "type": "constrained_by",
       "source": "decision-ref"
@@ -10568,7 +10844,13 @@
     },
     {
       "from": "ideation:ideation/01-identity-profiles-organizations/01.03-membership-representation-mandate/01.03-membership-representation-mandate-index",
-      "to": "decision:d-05",
+      "to": "decision:d-11",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/01-identity-profiles-organizations/01.03-membership-representation-mandate/01.03-membership-representation-mandate-index",
+      "to": "decision:d-19",
       "type": "constrained_by",
       "source": "decision-ref"
     },
@@ -10687,8 +10969,20 @@
       "source": "decision-ref"
     },
     {
+      "from": "ideation:ideation/01-identity-profiles-organizations/01.03-membership-representation-mandate/01.03.01-membership-records-lifecycle",
+      "to": "decision:d-19",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
       "from": "ideation:ideation/01-identity-profiles-organizations/01.03-membership-representation-mandate/01.03.02-representation-roster-relationships",
       "to": "decision:d-01",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/01-identity-profiles-organizations/01.03-membership-representation-mandate/01.03.02-representation-roster-relationships",
+      "to": "decision:d-05",
       "type": "constrained_by",
       "source": "decision-ref"
     },
@@ -10718,7 +11012,37 @@
     },
     {
       "from": "ideation:ideation/01-identity-profiles-organizations/01.03-membership-representation-mandate/01.03.02-representation-roster-relationships",
+      "to": "decision:d-11",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/01-identity-profiles-organizations/01.03-membership-representation-mandate/01.03.02-representation-roster-relationships",
+      "to": "decision:d-06",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/01-identity-profiles-organizations/01.03-membership-representation-mandate/01.03.02-representation-roster-relationships",
       "to": "decision:d-02",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/01-identity-profiles-organizations/01.03-membership-representation-mandate/01.03.02-representation-roster-relationships",
+      "to": "decision:d-75",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/01-identity-profiles-organizations/01.03-membership-representation-mandate/01.03.02-representation-roster-relationships",
+      "to": "decision:d-69",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/01-identity-profiles-organizations/01.03-membership-representation-mandate/01.03.02-representation-roster-relationships",
+      "to": "decision:d-19",
       "type": "constrained_by",
       "source": "decision-ref"
     },
@@ -10731,6 +11055,24 @@
     {
       "from": "ideation:ideation/01-identity-profiles-organizations/01.03-membership-representation-mandate/01.03.03-mandate-scope-delegated-authority",
       "to": "decision:d-08",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/01-identity-profiles-organizations/01.03-membership-representation-mandate/01.03.03-mandate-scope-delegated-authority",
+      "to": "decision:d-05",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/01-identity-profiles-organizations/01.03-membership-representation-mandate/01.03.03-mandate-scope-delegated-authority",
+      "to": "decision:d-11",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/01-identity-profiles-organizations/01.03-membership-representation-mandate/01.03.03-mandate-scope-delegated-authority",
+      "to": "decision:d-19",
       "type": "constrained_by",
       "source": "decision-ref"
     },
@@ -10761,12 +11103,6 @@
     {
       "from": "ideation:ideation/01-identity-profiles-organizations/01.03-membership-representation-mandate/01.03.03-mandate-scope-delegated-authority",
       "to": "decision:d-06",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "ideation:ideation/01-identity-profiles-organizations/01.03-membership-representation-mandate/01.03.03-mandate-scope-delegated-authority",
-      "to": "decision:d-05",
       "type": "constrained_by",
       "source": "decision-ref"
     },
@@ -16532,6 +16868,18 @@
     },
     {
       "from": "ideation:ideation/04-opportunities-casting/04.01-opportunity-posting-targeting/04.01.01-opportunity-post-type-taxonomy",
+      "to": "decision:d-01",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/04-opportunities-casting/04.01-opportunity-posting-targeting/04.01.01-opportunity-post-type-taxonomy",
+      "to": "decision:d-05",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/04-opportunities-casting/04.01-opportunity-posting-targeting/04.01.01-opportunity-post-type-taxonomy",
       "to": "decision:d-13",
       "type": "constrained_by",
       "source": "decision-ref"
@@ -16556,12 +16904,6 @@
     },
     {
       "from": "ideation:ideation/04-opportunities-casting/04.01-opportunity-posting-targeting/04.01.01-opportunity-post-type-taxonomy",
-      "to": "decision:d-05",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "ideation:ideation/04-opportunities-casting/04.01-opportunity-posting-targeting/04.01.01-opportunity-post-type-taxonomy",
       "to": "decision:d-12",
       "type": "constrained_by",
       "source": "decision-ref"
@@ -16581,12 +16923,6 @@
     {
       "from": "ideation:ideation/04-opportunities-casting/04.01-opportunity-posting-targeting/04.01.01-opportunity-post-type-taxonomy",
       "to": "decision:d-18",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "ideation:ideation/04-opportunities-casting/04.01-opportunity-posting-targeting/04.01.01-opportunity-post-type-taxonomy",
-      "to": "decision:d-01",
       "type": "constrained_by",
       "source": "decision-ref"
     },
@@ -17582,13 +17918,13 @@
     },
     {
       "from": "ideation:ideation/04-opportunities-casting/04.04-triage-shortlist-decisioning/04.04.02-shortlist-multi-reviewer-scoring",
-      "to": "decision:d-04",
+      "to": "decision:d-05",
       "type": "constrained_by",
       "source": "decision-ref"
     },
     {
       "from": "ideation:ideation/04-opportunities-casting/04.04-triage-shortlist-decisioning/04.04.02-shortlist-multi-reviewer-scoring",
-      "to": "decision:d-05",
+      "to": "decision:d-04",
       "type": "constrained_by",
       "source": "decision-ref"
     },
@@ -17624,6 +17960,12 @@
     },
     {
       "from": "ideation:ideation/04-opportunities-casting/04.04-triage-shortlist-decisioning/04.04.03-offer-acceptance",
+      "to": "decision:d-05",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/04-opportunities-casting/04.04-triage-shortlist-decisioning/04.04.03-offer-acceptance",
       "to": "decision:d-09",
       "type": "constrained_by",
       "source": "decision-ref"
@@ -17631,12 +17973,6 @@
     {
       "from": "ideation:ideation/04-opportunities-casting/04.04-triage-shortlist-decisioning/04.04.03-offer-acceptance",
       "to": "decision:d-02",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "ideation:ideation/04-opportunities-casting/04.04-triage-shortlist-decisioning/04.04.03-offer-acceptance",
-      "to": "decision:d-05",
       "type": "constrained_by",
       "source": "decision-ref"
     },
@@ -19863,6 +20199,12 @@
     {
       "from": "ideation:ideation/05-services-marketplace/05.05-multi-party-supply/05.05.03-subcontracting-agency-brokered-engagements",
       "to": "decision:d-01",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/05-services-marketplace/05.05-multi-party-supply/05.05.03-subcontracting-agency-brokered-engagements",
+      "to": "decision:d-05",
       "type": "constrained_by",
       "source": "decision-ref"
     },
@@ -22424,13 +22766,19 @@
     },
     {
       "from": "ideation:ideation/07-music-projects-collaboration/07.01-song-release-production-board/07.01.01-song-record-work-entity",
-      "to": "decision:d-08",
+      "to": "decision:d-05",
       "type": "constrained_by",
       "source": "decision-ref"
     },
     {
       "from": "ideation:ideation/07-music-projects-collaboration/07.01-song-release-production-board/07.01.01-song-record-work-entity",
-      "to": "decision:d-05",
+      "to": "decision:d-01",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/07-music-projects-collaboration/07.01-song-release-production-board/07.01.01-song-record-work-entity",
+      "to": "decision:d-08",
       "type": "constrained_by",
       "source": "decision-ref"
     },
@@ -22449,12 +22797,6 @@
     {
       "from": "ideation:ideation/07-music-projects-collaboration/07.01-song-release-production-board/07.01.01-song-record-work-entity",
       "to": "decision:d-11",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "ideation:ideation/07-music-projects-collaboration/07.01-song-release-production-board/07.01.01-song-record-work-entity",
-      "to": "decision:d-01",
       "type": "constrained_by",
       "source": "decision-ref"
     },
@@ -23930,6 +24272,12 @@
     },
     {
       "from": "ideation:ideation/07-music-projects-collaboration/07.05-review-feedback-approval/07.05.04-approval-gates-signoff-trail",
+      "to": "decision:d-05",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/07-music-projects-collaboration/07.05-review-feedback-approval/07.05.04-approval-gates-signoff-trail",
       "to": "decision:d-03",
       "type": "constrained_by",
       "source": "decision-ref"
@@ -23937,12 +24285,6 @@
     {
       "from": "ideation:ideation/07-music-projects-collaboration/07.05-review-feedback-approval/07.05.04-approval-gates-signoff-trail",
       "to": "decision:d-02",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "ideation:ideation/07-music-projects-collaboration/07.05-review-feedback-approval/07.05.04-approval-gates-signoff-trail",
-      "to": "decision:d-05",
       "type": "constrained_by",
       "source": "decision-ref"
     },
@@ -25567,6 +25909,18 @@
       "source": "decision-ref"
     },
     {
+      "from": "ideation:ideation/08-realtime-jamming-remote-sessions/08.02-playable-radius-peer-matching/08.02-playable-radius-peer-matching-index",
+      "to": "decision:d-31",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/08-realtime-jamming-remote-sessions/08.02-playable-radius-peer-matching/08.02-playable-radius-peer-matching-index",
+      "to": "decision:d-24",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
       "from": "ideation:ideation/08-realtime-jamming-remote-sessions/08.02-playable-radius-peer-matching/08.02.01-playable-radius-map-discovery",
       "to": "decision:d-15",
       "type": "constrained_by",
@@ -25593,6 +25947,24 @@
     {
       "from": "ideation:ideation/08-realtime-jamming-remote-sessions/08.02-playable-radius-peer-matching/08.02.01-playable-radius-map-discovery",
       "to": "decision:d-04",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/08-realtime-jamming-remote-sessions/08.02-playable-radius-peer-matching/08.02.01-playable-radius-map-discovery",
+      "to": "decision:d-31",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/08-realtime-jamming-remote-sessions/08.02-playable-radius-peer-matching/08.02.01-playable-radius-map-discovery",
+      "to": "decision:d-24",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/08-realtime-jamming-remote-sessions/08.02-playable-radius-peer-matching/08.02.01-playable-radius-map-discovery",
+      "to": "decision:d-26",
       "type": "constrained_by",
       "source": "decision-ref"
     },
@@ -27129,6 +27501,12 @@
     {
       "from": "ideation:ideation/09-rights-ownership/09.01-rights-registry/09.01.04-publishing-rights",
       "to": "decision:d-12",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/09-rights-ownership/09.01-rights-registry/09.01.04-publishing-rights",
+      "to": "decision:d-17",
       "type": "constrained_by",
       "source": "decision-ref"
     },
@@ -43070,6 +43448,12 @@
     },
     {
       "from": "ideation:ideation/16-venues-studios-spaces/16.03-studio-technical-specification/16.03.04-session-archive-recall-policy",
+      "to": "decision:d-04",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/16-venues-studios-spaces/16.03-studio-technical-specification/16.03.04-session-archive-recall-policy",
       "to": "decision:d-18",
       "type": "constrained_by",
       "source": "decision-ref"
@@ -43089,12 +43473,6 @@
     {
       "from": "ideation:ideation/16-venues-studios-spaces/16.03-studio-technical-specification/16.03.04-session-archive-recall-policy",
       "to": "decision:d-03",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "ideation:ideation/16-venues-studios-spaces/16.03-studio-technical-specification/16.03.04-session-archive-recall-policy",
-      "to": "decision:d-04",
       "type": "constrained_by",
       "source": "decision-ref"
     },
@@ -44960,6 +45338,12 @@
     },
     {
       "from": "ideation:ideation/17-live-booking-settlement/17.01-availability-holds-confirmation/17.01.01-availability-calendar-avails",
+      "to": "decision:d-05",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/17-live-booking-settlement/17.01-availability-holds-confirmation/17.01.01-availability-calendar-avails",
       "to": "decision:d-11",
       "type": "constrained_by",
       "source": "decision-ref"
@@ -44997,12 +45381,6 @@
     {
       "from": "ideation:ideation/17-live-booking-settlement/17.01-availability-holds-confirmation/17.01.01-availability-calendar-avails",
       "to": "decision:d-18",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "ideation:ideation/17-live-booking-settlement/17.01-availability-holds-confirmation/17.01.01-availability-calendar-avails",
-      "to": "decision:d-05",
       "type": "constrained_by",
       "source": "decision-ref"
     },
@@ -45626,6 +46004,18 @@
     },
     {
       "from": "ideation:ideation/17-live-booking-settlement/17.02-offers-negotiation/17.02.03-offer-approval-chain",
+      "to": "decision:d-05",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/17-live-booking-settlement/17.02-offers-negotiation/17.02.03-offer-approval-chain",
+      "to": "decision:d-07",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/17-live-booking-settlement/17.02-offers-negotiation/17.02.03-offer-approval-chain",
       "to": "decision:d-02",
       "type": "constrained_by",
       "source": "decision-ref"
@@ -45644,12 +46034,6 @@
     },
     {
       "from": "ideation:ideation/17-live-booking-settlement/17.02-offers-negotiation/17.02.03-offer-approval-chain",
-      "to": "decision:d-07",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "ideation:ideation/17-live-booking-settlement/17.02-offers-negotiation/17.02.03-offer-approval-chain",
       "to": "decision:d-03",
       "type": "constrained_by",
       "source": "decision-ref"
@@ -45657,12 +46041,6 @@
     {
       "from": "ideation:ideation/17-live-booking-settlement/17.02-offers-negotiation/17.02.03-offer-approval-chain",
       "to": "decision:d-01",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "ideation:ideation/17-live-booking-settlement/17.02-offers-negotiation/17.02.03-offer-approval-chain",
-      "to": "decision:d-05",
       "type": "constrained_by",
       "source": "decision-ref"
     },
@@ -45884,6 +46262,12 @@
     },
     {
       "from": "ideation:ideation/17-live-booking-settlement/17.04-performance-contracts-deal-memos",
+      "to": "decision:d-05",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/17-live-booking-settlement/17.04-performance-contracts-deal-memos",
       "to": "decision:d-03",
       "type": "constrained_by",
       "source": "decision-ref"
@@ -45903,12 +46287,6 @@
     {
       "from": "ideation:ideation/17-live-booking-settlement/17.04-performance-contracts-deal-memos",
       "to": "decision:d-09",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "ideation:ideation/17-live-booking-settlement/17.04-performance-contracts-deal-memos",
-      "to": "decision:d-05",
       "type": "constrained_by",
       "source": "decision-ref"
     },
@@ -46160,6 +46538,12 @@
     },
     {
       "from": "ideation:ideation/17-live-booking-settlement/17.08-agency-representation-commission/17.08-agency-representation-commission-cx",
+      "to": "decision:d-05",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/17-live-booking-settlement/17.08-agency-representation-commission/17.08-agency-representation-commission-cx",
       "to": "decision:d-02",
       "type": "constrained_by",
       "source": "decision-ref"
@@ -46184,6 +46568,12 @@
     },
     {
       "from": "ideation:ideation/17-live-booking-settlement/17.08-agency-representation-commission/17.08-agency-representation-commission-index",
+      "to": "decision:d-05",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/17-live-booking-settlement/17.08-agency-representation-commission/17.08-agency-representation-commission-index",
       "to": "decision:d-03",
       "type": "constrained_by",
       "source": "decision-ref"
@@ -46191,18 +46581,24 @@
     {
       "from": "ideation:ideation/17-live-booking-settlement/17.08-agency-representation-commission/17.08.01-representation-commission-terms",
       "to": "decision:d-03",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "ideation:ideation/17-live-booking-settlement/17.08-agency-representation-commission/17.08.01-representation-commission-terms",
-      "to": "decision:d-04",
       "type": "constrained_by",
       "source": "decision-ref"
     },
     {
       "from": "ideation:ideation/17-live-booking-settlement/17.08-agency-representation-commission/17.08.01-representation-commission-terms",
       "to": "decision:d-02",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/17-live-booking-settlement/17.08-agency-representation-commission/17.08.01-representation-commission-terms",
+      "to": "decision:d-05",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/17-live-booking-settlement/17.08-agency-representation-commission/17.08.01-representation-commission-terms",
+      "to": "decision:d-04",
       "type": "constrained_by",
       "source": "decision-ref"
     },
@@ -46233,6 +46629,12 @@
     {
       "from": "ideation:ideation/17-live-booking-settlement/17.08-agency-representation-commission/17.08.02-commission-accrual-deduction",
       "to": "decision:d-01",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/17-live-booking-settlement/17.08-agency-representation-commission/17.08.03-roster-booking-pipeline",
+      "to": "decision:d-05",
       "type": "constrained_by",
       "source": "decision-ref"
     },
@@ -46670,13 +47072,13 @@
     },
     {
       "from": "ideation:ideation/17-live-booking-settlement/17.09-settlement-reconciliation/17.09.05-settlement-signoff-variance",
-      "to": "decision:d-08",
+      "to": "decision:d-07",
       "type": "constrained_by",
       "source": "decision-ref"
     },
     {
       "from": "ideation:ideation/17-live-booking-settlement/17.09-settlement-reconciliation/17.09.05-settlement-signoff-variance",
-      "to": "decision:d-07",
+      "to": "decision:d-08",
       "type": "constrained_by",
       "source": "decision-ref"
     },
@@ -47318,13 +47720,13 @@
     },
     {
       "from": "ideation:ideation/17-live-booking-settlement/live-booking-settlement-cx",
-      "to": "decision:d-11",
+      "to": "decision:d-05",
       "type": "constrained_by",
       "source": "decision-ref"
     },
     {
       "from": "ideation:ideation/17-live-booking-settlement/live-booking-settlement-cx",
-      "to": "decision:d-05",
+      "to": "decision:d-11",
       "type": "constrained_by",
       "source": "decision-ref"
     },
@@ -52712,13 +53114,19 @@
     },
     {
       "from": "ideation:ideation/20-fanbase-direct-to-fan/20.01-fan-graph-owned-audience/20.01.05-fan-list-ownership-transfer",
-      "to": "decision:d-18",
+      "to": "decision:d-01",
       "type": "constrained_by",
       "source": "decision-ref"
     },
     {
       "from": "ideation:ideation/20-fanbase-direct-to-fan/20.01-fan-graph-owned-audience/20.01.05-fan-list-ownership-transfer",
-      "to": "decision:d-01",
+      "to": "decision:d-05",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/20-fanbase-direct-to-fan/20.01-fan-graph-owned-audience/20.01.05-fan-list-ownership-transfer",
+      "to": "decision:d-18",
       "type": "constrained_by",
       "source": "decision-ref"
     },
@@ -53072,6 +53480,12 @@
     },
     {
       "from": "ideation:ideation/20-fanbase-direct-to-fan/20.03-broadcast-fan-messaging/20.03.04-deliverability-sender-reputation",
+      "to": "decision:d-05",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/20-fanbase-direct-to-fan/20.03-broadcast-fan-messaging/20.03.04-deliverability-sender-reputation",
       "to": "decision:d-03",
       "type": "constrained_by",
       "source": "decision-ref"
@@ -53079,12 +53493,6 @@
     {
       "from": "ideation:ideation/20-fanbase-direct-to-fan/20.03-broadcast-fan-messaging/20.03.04-deliverability-sender-reputation",
       "to": "decision:d-04",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "ideation:ideation/20-fanbase-direct-to-fan/20.03-broadcast-fan-messaging/20.03.04-deliverability-sender-reputation",
-      "to": "decision:d-05",
       "type": "constrained_by",
       "source": "decision-ref"
     },
@@ -59786,6 +60194,18 @@
     },
     {
       "from": "ideation:ideation/ideation-cx",
+      "to": "decision:d-75",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/ideation-cx",
+      "to": "decision:d-06",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/ideation-cx",
       "to": "decision:d-15",
       "type": "constrained_by",
       "source": "decision-ref"
@@ -59805,12 +60225,6 @@
     {
       "from": "ideation:ideation/ideation-cx",
       "to": "decision:d-14",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "ideation:ideation/ideation-cx",
-      "to": "decision:d-06",
       "type": "constrained_by",
       "source": "decision-ref"
     },
@@ -60319,6 +60733,12 @@
       "source": "decision-ref"
     },
     {
+      "from": "ideation:ideation/ideation-index",
+      "to": "decision:d-75",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
       "from": "ideation:ideation/meta/competitive-landscape",
       "to": "decision:d-70",
       "type": "constrained_by",
@@ -60595,6 +61015,18 @@
       "source": "decision-ref"
     },
     {
+      "from": "ideation:ideation/meta/problem-statement",
+      "to": "decision:d-31",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/meta/problem-statement",
+      "to": "decision:d-20",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
       "from": "ideation:ideation/moscow-ledger",
       "to": "decision:d-20",
       "type": "constrained_by",
@@ -60795,13 +61227,13 @@
   ],
   "stats": {
     "byNodeType": {
-      "audit": 13,
+      "audit": 18,
       "plan": 6,
       "ideation": 1122,
-      "decision": 90
+      "decision": 91
     },
     "byEdgeType": {
-      "constrained_by": 8695
+      "constrained_by": 8760
     }
   }
 }

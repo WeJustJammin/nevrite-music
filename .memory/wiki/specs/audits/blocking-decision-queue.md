@@ -147,6 +147,13 @@
 
 #### DQ-02.3 — 5. Does the seed carry a default value ceiling?  `[x] RATIFIED`
 
+> **Disambiguation (recorded 2026-07-29) — this queue-local id is NOT the operative `DQ-02.3`.** The
+> operative namespace is [decision-ratification-log.md](./decision-ratification-log.md), whose
+> `DQ-02.3` is the **coarse activity enum** axis ("seven or four") and whose entry for this
+> **value-ceiling** axis is `DQ-02.5` ("Default value ceiling on seeded authority"). The log numbers by axis (3–7, counting the two locked axes above); this queue numbers only
+> the open axes (1–5), so queue `DQ-02.1`–`.5` map to log `DQ-02.3`–`.7`. The spec tree follows the log.
+> Cite the log; neither id is deleted.
+
 **Is seeded authority unbounded, or bounded by a default value ceiling above which the act escalates — and if bounded, to whom does it escalate?**
 
 | Option | Means | Pros | Cons | New machinery? |
@@ -179,7 +186,14 @@
 
 **Recommendation**: 7a — Band only — The whole argument for a peer seed is the invisible general-partnership default that 01.04.01 D-04 commits the platform to disclosing, and 01.04 index D-01 scopes that argument to bands in terms, denying it for studios ('a studio has an owner'). A studio, venue or shop already has an owner in the sense the seed would otherwise invent. The owner should note that this is a ratification, not an inheritance: no source states what a non-band org defaults to when nothing is configured, and the earlier draft of this entry smuggled it in as part of option A's definition rather than surfacing it as a choice. *(precedent: 01.04 index D-01 (band-specific scope, with the reason given as the invisible partnership default) — supporting, not governing. 01.03.03's Producer/Operator Role Lens rows are corroborating evidence of the explicit-grant posture for business orgs.)*
 
-**Affected files**: `.memory/wiki/specs/ideation/01-identity-profiles-organizations/01.03-membership-representation-mandate/01.03.03-mandate-scope-delegated-authority.md`, `.memory/wiki/specs/ideation/01-identity-profiles-organizations/01.03-membership-representation-mandate/01.03-membership-representation-mandate-cx.md`, `.memory/wiki/specs/ideation/01-identity-profiles-organizations/01.03-membership-representation-mandate/01.03.01-membership-records-lifecycle.md`, `.memory/wiki/specs/ideation/01-identity-profiles-organizations/01.03-membership-representation-mandate/01.03-membership-representation-mandate-index.md`, `.memory/wiki/specs/ideation/01-identity-profiles-organizations/identity-profiles-organizations-index.md`, `.memory/wiki/specs/ideation/01-identity-profiles-organizations/identity-profiles-organizations-cx.md`, `.memory/wiki/specs/ideation/01-identity-profiles-organizations/01.02-organizations-entity-model/01.02.02-organization-creation-lifecycle.md`, `.memory/wiki/specs/ideation/01-identity-profiles-organizations/01.04-band-ensemble-governance/01.04-band-ensemble-governance-index.md`, `.memory/wiki/specs/ideation/01-identity-profiles-organizations/01.04-band-ensemble-governance/01.04.01-partnership-terms-decision-rules.md`, `.memory/wiki/specs/ideation/01-identity-profiles-organizations/01.04-band-ensemble-governance/01.04.03-treasury-mandate.md`, `.memory/wiki/specs/ideation/moscow-ledger.md`
+**Affected files**: `.memory/wiki/specs/ideation/01-identity-profiles-organizations/01.03-membership-representation-mandate/01.03.03-mandate-scope-delegated-authority.md`, `.memory/wiki/specs/ideation/01-identity-profiles-organizations/01.03-membership-representation-mandate/01.03.02-representation-roster-relationships.md`, `.memory/wiki/specs/ideation/01-identity-profiles-organizations/01.03-membership-representation-mandate/01.03-membership-representation-mandate-cx.md`, `.memory/wiki/specs/ideation/01-identity-profiles-organizations/01.03-membership-representation-mandate/01.03.01-membership-records-lifecycle.md`, `.memory/wiki/specs/ideation/01-identity-profiles-organizations/01.03-membership-representation-mandate/01.03-membership-representation-mandate-index.md`, `.memory/wiki/specs/ideation/01-identity-profiles-organizations/identity-profiles-organizations-index.md`, `.memory/wiki/specs/ideation/01-identity-profiles-organizations/identity-profiles-organizations-cx.md`, `.memory/wiki/specs/ideation/01-identity-profiles-organizations/01.02-organizations-entity-model/01.02.02-organization-creation-lifecycle.md`, `.memory/wiki/specs/ideation/01-identity-profiles-organizations/01.04-band-ensemble-governance/01.04-band-ensemble-governance-index.md`, `.memory/wiki/specs/ideation/01-identity-profiles-organizations/01.04-band-ensemble-governance/01.04.01-partnership-terms-decision-rules.md`, `.memory/wiki/specs/ideation/01-identity-profiles-organizations/01.04-band-ensemble-governance/01.04.03-treasury-mandate.md`, `.memory/wiki/specs/ideation/moscow-ledger.md`
+
+> **Process defect, recorded 2026-07-29**: `01.03.02-representation-roster-relationships.md` was added
+> to this list after the fact — it is the only file in the tree that names the five-domain
+> representation scope, and its omission is the mechanism by which that scope escaped the DQ-02
+> propagation pass and resurfaced as run-2 raw-blocking finding `DQ-R2-01` (ratified 2026-07-29 as
+> Option A′). This is a scoping defect in the affected-files list, not a typo: every other DQ entry's
+> list should be rechecked for the same under-scoping.
 
 
 ### DQ-03
