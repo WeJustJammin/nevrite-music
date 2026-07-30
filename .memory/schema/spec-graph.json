@@ -1,7 +1,7 @@
 {
-  "builtAt": "2026-07-30T07:38:21.174Z",
+  "builtAt": "2026-07-30T09:16:18.894Z",
   "nodeCount": 1243,
-  "edgeCount": 8808,
+  "edgeCount": 8855,
   "nodes": [
     {
       "id": "audit:audits/audit-scope",
@@ -17114,6 +17114,12 @@
     },
     {
       "from": "ideation:ideation/04-opportunities-casting/04.01-opportunity-posting-targeting/04.01.01-opportunity-post-type-taxonomy",
+      "to": "decision:d-16",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/04-opportunities-casting/04.01-opportunity-posting-targeting/04.01.01-opportunity-post-type-taxonomy",
       "to": "decision:d-15",
       "type": "constrained_by",
       "source": "decision-ref"
@@ -17168,13 +17174,19 @@
     },
     {
       "from": "ideation:ideation/04-opportunities-casting/04.01-opportunity-posting-targeting/04.01.01-opportunity-post-type-taxonomy",
-      "to": "decision:d-11",
+      "to": "decision:d-06",
       "type": "constrained_by",
       "source": "decision-ref"
     },
     {
       "from": "ideation:ideation/04-opportunities-casting/04.01-opportunity-posting-targeting/04.01.01-opportunity-post-type-taxonomy",
-      "to": "decision:d-06",
+      "to": "decision:d-09",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/04-opportunities-casting/04.01-opportunity-posting-targeting/04.01.01-opportunity-post-type-taxonomy",
+      "to": "decision:d-11",
       "type": "constrained_by",
       "source": "decision-ref"
     },
@@ -17187,12 +17199,6 @@
     {
       "from": "ideation:ideation/04-opportunities-casting/04.01-opportunity-posting-targeting/04.01.01-opportunity-post-type-taxonomy",
       "to": "decision:d-12",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "ideation:ideation/04-opportunities-casting/04.01-opportunity-posting-targeting/04.01.01-opportunity-post-type-taxonomy",
-      "to": "decision:d-09",
       "type": "constrained_by",
       "source": "decision-ref"
     },
@@ -18140,6 +18146,12 @@
     },
     {
       "from": "ideation:ideation/04-opportunities-casting/04.04-triage-shortlist-decisioning/04.04.01-review-queue-triage",
+      "to": "decision:d-16",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/04-opportunities-casting/04.04-triage-shortlist-decisioning/04.04.01-review-queue-triage",
       "to": "decision:d-02",
       "type": "constrained_by",
       "source": "decision-ref"
@@ -18301,6 +18313,12 @@
       "source": "decision-ref"
     },
     {
+      "from": "ideation:ideation/04-opportunities-casting/04.04-triage-shortlist-decisioning/04.04.03-offer-acceptance",
+      "to": "decision:d-16",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
       "from": "ideation:ideation/04-opportunities-casting/04.04-triage-shortlist-decisioning/04.04.04-urgent-fill-first-accept-cascade",
       "to": "decision:d-02",
       "type": "constrained_by",
@@ -18459,6 +18477,12 @@
     {
       "from": "ideation:ideation/04-opportunities-casting/04.05-outcome-response-handoff/04.05.01-disposition-close-out-obligation",
       "to": "decision:d-10",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/04-opportunities-casting/04.05-outcome-response-handoff/04.05.01-disposition-close-out-obligation",
+      "to": "decision:d-16",
       "type": "constrained_by",
       "source": "decision-ref"
     },
@@ -18764,6 +18788,30 @@
     },
     {
       "from": "ideation:ideation/04-opportunities-casting/04.07-open-calls-festival-showcase-competition",
+      "to": "decision:d-16",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/04-opportunities-casting/04.07-open-calls-festival-showcase-competition",
+      "to": "decision:d-05",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/04-opportunities-casting/04.07-open-calls-festival-showcase-competition",
+      "to": "decision:d-04",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/04-opportunities-casting/04.07-open-calls-festival-showcase-competition",
+      "to": "decision:d-06",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/04-opportunities-casting/04.07-open-calls-festival-showcase-competition",
       "to": "decision:d-11",
       "type": "constrained_by",
       "source": "decision-ref"
@@ -18782,25 +18830,7 @@
     },
     {
       "from": "ideation:ideation/04-opportunities-casting/04.07-open-calls-festival-showcase-competition",
-      "to": "decision:d-04",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "ideation:ideation/04-opportunities-casting/04.07-open-calls-festival-showcase-competition",
       "to": "decision:d-07",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "ideation:ideation/04-opportunities-casting/04.07-open-calls-festival-showcase-competition",
-      "to": "decision:d-05",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "ideation:ideation/04-opportunities-casting/04.07-open-calls-festival-showcase-competition",
-      "to": "decision:d-06",
       "type": "constrained_by",
       "source": "decision-ref"
     },
@@ -18991,6 +19021,18 @@
       "source": "decision-ref"
     },
     {
+      "from": "ideation:ideation/05-services-marketplace/05.01-service-listings-pricing/05.01-service-listings-pricing-cx",
+      "to": "decision:d-05",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/05-services-marketplace/05.01-service-listings-pricing/05.01-service-listings-pricing-cx",
+      "to": "decision:d-15",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
       "from": "ideation:ideation/05-services-marketplace/05.01-service-listings-pricing/05.01-service-listings-pricing-index",
       "to": "decision:d-01",
       "type": "constrained_by",
@@ -19095,6 +19137,12 @@
     {
       "from": "ideation:ideation/05-services-marketplace/05.01-service-listings-pricing/05.01.01-service-listings-packages-rate-cards",
       "to": "decision:d-10",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/05-services-marketplace/05.01-service-listings-pricing/05.01.01-service-listings-packages-rate-cards",
+      "to": "decision:d-15",
       "type": "constrained_by",
       "source": "decision-ref"
     },
@@ -19226,6 +19274,12 @@
     },
     {
       "from": "ideation:ideation/05-services-marketplace/05.01-service-listings-pricing/05.01.03-music-pricing-model-library",
+      "to": "decision:d-14",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/05-services-marketplace/05.01-service-listings-pricing/05.01.03-music-pricing-model-library",
       "to": "decision:d-03",
       "type": "constrained_by",
       "source": "decision-ref"
@@ -19280,12 +19334,6 @@
     },
     {
       "from": "ideation:ideation/05-services-marketplace/05.01-service-listings-pricing/05.01.03-music-pricing-model-library",
-      "to": "decision:d-14",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "ideation:ideation/05-services-marketplace/05.01-service-listings-pricing/05.01.03-music-pricing-model-library",
       "to": "decision:d-08",
       "type": "constrained_by",
       "source": "decision-ref"
@@ -19299,6 +19347,24 @@
     {
       "from": "ideation:ideation/05-services-marketplace/05.01-service-listings-pricing/05.01.03-music-pricing-model-library",
       "to": "decision:d-11",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/05-services-marketplace/05.01-service-listings-pricing/05.01.03-music-pricing-model-library",
+      "to": "decision:d-19",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/05-services-marketplace/05.01-service-listings-pricing/05.01.04-rate-benchmarking-price-transparency",
+      "to": "decision:d-05",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/05-services-marketplace/05.01-service-listings-pricing/05.01.04-rate-benchmarking-price-transparency",
+      "to": "decision:d-15",
       "type": "constrained_by",
       "source": "decision-ref"
     },
@@ -19328,7 +19394,7 @@
     },
     {
       "from": "ideation:ideation/05-services-marketplace/05.01-service-listings-pricing/05.01.04-rate-benchmarking-price-transparency",
-      "to": "decision:d-05",
+      "to": "decision:d-10",
       "type": "constrained_by",
       "source": "decision-ref"
     },
@@ -19635,6 +19701,18 @@
     {
       "from": "ideation:ideation/05-services-marketplace/05.02-quotes-scope-contracting/05.02.03-union-session-contracting",
       "to": "decision:d-04",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/05-services-marketplace/05.02-quotes-scope-contracting/05.02.03-union-session-contracting",
+      "to": "decision:d-14",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/05-services-marketplace/05.02-quotes-scope-contracting/05.02.03-union-session-contracting",
+      "to": "decision:d-19",
       "type": "constrained_by",
       "source": "decision-ref"
     },
@@ -20672,6 +20750,12 @@
     },
     {
       "from": "ideation:ideation/05-services-marketplace/05.06-rights-warranties-transfer/05.06.01-engagement-rights-posture",
+      "to": "decision:d-14",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/05-services-marketplace/05.06-rights-warranties-transfer/05.06.01-engagement-rights-posture",
       "to": "decision:d-12",
       "type": "constrained_by",
       "source": "decision-ref"
@@ -20679,6 +20763,12 @@
     {
       "from": "ideation:ideation/05-services-marketplace/05.06-rights-warranties-transfer/05.06.01-engagement-rights-posture",
       "to": "decision:d-11",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/05-services-marketplace/05.06-rights-warranties-transfer/05.06.01-engagement-rights-posture",
+      "to": "decision:d-19",
       "type": "constrained_by",
       "source": "decision-ref"
     },
@@ -20697,6 +20787,18 @@
     {
       "from": "ideation:ideation/05-services-marketplace/05.06-rights-warranties-transfer/05.06.01-engagement-rights-posture",
       "to": "decision:d-09",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/05-services-marketplace/05.06-rights-warranties-transfer/05.06.02-producer-points-backend-participation",
+      "to": "decision:d-05",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/05-services-marketplace/05.06-rights-warranties-transfer/05.06.02-producer-points-backend-participation",
+      "to": "decision:d-15",
       "type": "constrained_by",
       "source": "decision-ref"
     },
@@ -20725,8 +20827,14 @@
       "source": "decision-ref"
     },
     {
-      "from": "ideation:ideation/05-services-marketplace/05.06-rights-warranties-transfer/05.06.02-producer-points-backend-participation",
-      "to": "decision:d-05",
+      "from": "ideation:ideation/05-services-marketplace/05.06-rights-warranties-transfer/05.06.03-rights-transfer-split-execution",
+      "to": "decision:d-14",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/05-services-marketplace/05.06-rights-warranties-transfer/05.06.03-rights-transfer-split-execution",
+      "to": "decision:d-19",
       "type": "constrained_by",
       "source": "decision-ref"
     },
@@ -20739,6 +20847,18 @@
     {
       "from": "ideation:ideation/05-services-marketplace/05.06-rights-warranties-transfer/05.06.03-rights-transfer-split-execution",
       "to": "decision:d-06",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/05-services-marketplace/05.06-rights-warranties-transfer/05.06.03-rights-transfer-split-execution",
+      "to": "decision:d-03",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/05-services-marketplace/05.06-rights-warranties-transfer/05.06.03-rights-transfer-split-execution",
+      "to": "decision:d-10",
       "type": "constrained_by",
       "source": "decision-ref"
     },
@@ -20774,12 +20894,6 @@
     },
     {
       "from": "ideation:ideation/05-services-marketplace/05.06-rights-warranties-transfer/05.06.03-rights-transfer-split-execution",
-      "to": "decision:d-03",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "ideation:ideation/05-services-marketplace/05.06-rights-warranties-transfer/05.06.03-rights-transfer-split-execution",
       "to": "decision:d-02",
       "type": "constrained_by",
       "source": "decision-ref"
@@ -20798,12 +20912,6 @@
     },
     {
       "from": "ideation:ideation/05-services-marketplace/05.06-rights-warranties-transfer/05.06.03-rights-transfer-split-execution",
-      "to": "decision:d-10",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "ideation:ideation/05-services-marketplace/05.06-rights-warranties-transfer/05.06.03-rights-transfer-split-execution",
       "to": "decision:d-12",
       "type": "constrained_by",
       "source": "decision-ref"
@@ -20811,12 +20919,6 @@
     {
       "from": "ideation:ideation/05-services-marketplace/05.06-rights-warranties-transfer/05.06.03-rights-transfer-split-execution",
       "to": "decision:d-13",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "ideation:ideation/05-services-marketplace/05.06-rights-warranties-transfer/05.06.03-rights-transfer-split-execution",
-      "to": "decision:d-14",
       "type": "constrained_by",
       "source": "decision-ref"
     },
@@ -21111,6 +21213,12 @@
     {
       "from": "ideation:ideation/05-services-marketplace/services-marketplace-cx",
       "to": "decision:d-12",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/05-services-marketplace/services-marketplace-cx",
+      "to": "decision:d-15",
       "type": "constrained_by",
       "source": "decision-ref"
     },
@@ -27524,6 +27632,12 @@
     },
     {
       "from": "ideation:ideation/09-rights-ownership/09.01-rights-registry/09.01.01-work-recording-duality",
+      "to": "decision:d-13",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/09-rights-ownership/09.01-rights-registry/09.01.01-work-recording-duality",
       "to": "decision:d-18",
       "type": "constrained_by",
       "source": "decision-ref"
@@ -27537,6 +27651,18 @@
     {
       "from": "ideation:ideation/09-rights-ownership/09.01-rights-registry/09.01.01-work-recording-duality",
       "to": "decision:d-04",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/09-rights-ownership/09.01-rights-registry/09.01.01-work-recording-duality",
+      "to": "decision:d-09",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/09-rights-ownership/09.01-rights-registry/09.01.01-work-recording-duality",
+      "to": "decision:d-15",
       "type": "constrained_by",
       "source": "decision-ref"
     },
@@ -27578,12 +27704,6 @@
     },
     {
       "from": "ideation:ideation/09-rights-ownership/09.01-rights-registry/09.01.01-work-recording-duality",
-      "to": "decision:d-09",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "ideation:ideation/09-rights-ownership/09.01-rights-registry/09.01.01-work-recording-duality",
       "to": "decision:d-10",
       "type": "constrained_by",
       "source": "decision-ref"
@@ -27597,6 +27717,12 @@
     {
       "from": "ideation:ideation/09-rights-ownership/09.01-rights-registry/09.01.01-work-recording-duality",
       "to": "decision:d-12",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/09-rights-ownership/09.01-rights-registry/09.01.01-work-recording-duality",
+      "to": "decision:d-16",
       "type": "constrained_by",
       "source": "decision-ref"
     },
@@ -27638,6 +27764,18 @@
     },
     {
       "from": "ideation:ideation/09-rights-ownership/09.01-rights-registry/09.01.02-ownership-ledger-validation",
+      "to": "decision:d-13",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/09-rights-ownership/09.01-rights-registry/09.01.02-ownership-ledger-validation",
+      "to": "decision:d-16",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/09-rights-ownership/09.01-rights-registry/09.01.02-ownership-ledger-validation",
       "to": "decision:d-02",
       "type": "constrained_by",
       "source": "decision-ref"
@@ -27662,6 +27800,12 @@
     },
     {
       "from": "ideation:ideation/09-rights-ownership/09.01-rights-registry/09.01.02-ownership-ledger-validation",
+      "to": "decision:d-15",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/09-rights-ownership/09.01-rights-registry/09.01.02-ownership-ledger-validation",
       "to": "decision:d-10",
       "type": "constrained_by",
       "source": "decision-ref"
@@ -27680,19 +27824,7 @@
     },
     {
       "from": "ideation:ideation/09-rights-ownership/09.01-rights-registry/09.01.02-ownership-ledger-validation",
-      "to": "decision:d-13",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "ideation:ideation/09-rights-ownership/09.01-rights-registry/09.01.02-ownership-ledger-validation",
       "to": "decision:d-14",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "ideation:ideation/09-rights-ownership/09.01-rights-registry/09.01.02-ownership-ledger-validation",
-      "to": "decision:d-15",
       "type": "constrained_by",
       "source": "decision-ref"
     },
@@ -28616,13 +28748,13 @@
     },
     {
       "from": "ideation:ideation/09-rights-ownership/09.03-chain-of-title-lifecycle/09.03.05-copyright-term-public-domain",
-      "to": "decision:d-01",
+      "to": "decision:d-13",
       "type": "constrained_by",
       "source": "decision-ref"
     },
     {
       "from": "ideation:ideation/09-rights-ownership/09.03-chain-of-title-lifecycle/09.03.05-copyright-term-public-domain",
-      "to": "decision:d-02",
+      "to": "decision:d-06",
       "type": "constrained_by",
       "source": "decision-ref"
     },
@@ -28634,7 +28766,31 @@
     },
     {
       "from": "ideation:ideation/09-rights-ownership/09.03-chain-of-title-lifecycle/09.03.05-copyright-term-public-domain",
+      "to": "decision:d-01",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/09-rights-ownership/09.03-chain-of-title-lifecycle/09.03.05-copyright-term-public-domain",
       "to": "decision:d-04",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/09-rights-ownership/09.03-chain-of-title-lifecycle/09.03.05-copyright-term-public-domain",
+      "to": "decision:d-02",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/09-rights-ownership/09.03-chain-of-title-lifecycle/09.03.05-copyright-term-public-domain",
+      "to": "decision:d-09",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/09-rights-ownership/09.03-chain-of-title-lifecycle/09.03.05-copyright-term-public-domain",
+      "to": "decision:d-15",
       "type": "constrained_by",
       "source": "decision-ref"
     },
@@ -28646,7 +28802,13 @@
     },
     {
       "from": "ideation:ideation/09-rights-ownership/09.03-chain-of-title-lifecycle/09.03.05-copyright-term-public-domain",
-      "to": "decision:d-06",
+      "to": "decision:d-16",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/09-rights-ownership/09.03-chain-of-title-lifecycle/09.03.05-copyright-term-public-domain",
+      "to": "decision:d-07",
       "type": "constrained_by",
       "source": "decision-ref"
     },
@@ -28742,7 +28904,13 @@
     },
     {
       "from": "ideation:ideation/09-rights-ownership/09.04-rights-conflicts-disputes/09.04.01-conflicting-claim-detection",
-      "to": "decision:d-02",
+      "to": "decision:d-13",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/09-rights-ownership/09.04-rights-conflicts-disputes/09.04.01-conflicting-claim-detection",
+      "to": "decision:d-04",
       "type": "constrained_by",
       "source": "decision-ref"
     },
@@ -28754,13 +28922,25 @@
     },
     {
       "from": "ideation:ideation/09-rights-ownership/09.04-rights-conflicts-disputes/09.04.01-conflicting-claim-detection",
+      "to": "decision:d-02",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/09-rights-ownership/09.04-rights-conflicts-disputes/09.04.01-conflicting-claim-detection",
+      "to": "decision:d-07",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/09-rights-ownership/09.04-rights-conflicts-disputes/09.04.01-conflicting-claim-detection",
       "to": "decision:d-03",
       "type": "constrained_by",
       "source": "decision-ref"
     },
     {
       "from": "ideation:ideation/09-rights-ownership/09.04-rights-conflicts-disputes/09.04.01-conflicting-claim-detection",
-      "to": "decision:d-04",
+      "to": "decision:d-09",
       "type": "constrained_by",
       "source": "decision-ref"
     },
@@ -39590,6 +39770,12 @@
     },
     {
       "from": "ideation:ideation/14-digital-goods-marketplace/14.03-delivery-versioning-library/14.03.01-download-delivery-resumable-transfer",
+      "to": "decision:d-12",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/14-digital-goods-marketplace/14.03-delivery-versioning-library/14.03.01-download-delivery-resumable-transfer",
       "to": "decision:d-02",
       "type": "constrained_by",
       "source": "decision-ref"
@@ -39621,12 +39807,6 @@
     {
       "from": "ideation:ideation/14-digital-goods-marketplace/14.03-delivery-versioning-library/14.03.01-download-delivery-resumable-transfer",
       "to": "decision:d-01",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "ideation:ideation/14-digital-goods-marketplace/14.03-delivery-versioning-library/14.03.01-download-delivery-resumable-transfer",
-      "to": "decision:d-12",
       "type": "constrained_by",
       "source": "decision-ref"
     },
@@ -39669,6 +39849,18 @@
     {
       "from": "ideation:ideation/14-digital-goods-marketplace/14.03-delivery-versioning-library/14.03.02-versioning-updates-legacy-archive",
       "to": "decision:d-02",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/14-digital-goods-marketplace/14.03-delivery-versioning-library/14.03.02-versioning-updates-legacy-archive",
+      "to": "decision:d-12",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/14-digital-goods-marketplace/14.03-delivery-versioning-library/14.03.02-versioning-updates-legacy-archive",
+      "to": "decision:d-05",
       "type": "constrained_by",
       "source": "decision-ref"
     },
@@ -39830,6 +40022,12 @@
     },
     {
       "from": "ideation:ideation/14-digital-goods-marketplace/14.03-delivery-versioning-library/14.03.05-per-buyer-forensic-watermarking",
+      "to": "decision:d-12",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/14-digital-goods-marketplace/14.03-delivery-versioning-library/14.03.05-per-buyer-forensic-watermarking",
       "to": "decision:d-01",
       "type": "constrained_by",
       "source": "decision-ref"
@@ -39843,6 +40041,12 @@
     {
       "from": "ideation:ideation/14-digital-goods-marketplace/14.03-delivery-versioning-library/14.03.05-per-buyer-forensic-watermarking",
       "to": "decision:d-02",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/14-digital-goods-marketplace/14.03-delivery-versioning-library/14.03.05-per-buyer-forensic-watermarking",
+      "to": "decision:d-09",
       "type": "constrained_by",
       "source": "decision-ref"
     },
@@ -39926,13 +40130,19 @@
     },
     {
       "from": "ideation:ideation/14-digital-goods-marketplace/14.04-sound-content-catalogs/14.04.01-sample-loop-pack-catalog",
-      "to": "decision:d-13",
+      "to": "decision:d-12",
       "type": "constrained_by",
       "source": "decision-ref"
     },
     {
       "from": "ideation:ideation/14-digital-goods-marketplace/14.04-sound-content-catalogs/14.04.01-sample-loop-pack-catalog",
       "to": "decision:d-05",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/14-digital-goods-marketplace/14.04-sound-content-catalogs/14.04.01-sample-loop-pack-catalog",
+      "to": "decision:d-13",
       "type": "constrained_by",
       "source": "decision-ref"
     },
@@ -39969,12 +40179,6 @@
     {
       "from": "ideation:ideation/14-digital-goods-marketplace/14.04-sound-content-catalogs/14.04.01-sample-loop-pack-catalog",
       "to": "decision:d-11",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "ideation:ideation/14-digital-goods-marketplace/14.04-sound-content-catalogs/14.04.01-sample-loop-pack-catalog",
-      "to": "decision:d-12",
       "type": "constrained_by",
       "source": "decision-ref"
     },
@@ -40742,6 +40946,24 @@
     },
     {
       "from": "ideation:ideation/14-digital-goods-marketplace/14.08-vendor-portal-build-qa/14.08.03-audio-content-qc",
+      "to": "decision:d-12",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/14-digital-goods-marketplace/14.08-vendor-portal-build-qa/14.08.03-audio-content-qc",
+      "to": "decision:d-06",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/14-digital-goods-marketplace/14.08-vendor-portal-build-qa/14.08.03-audio-content-qc",
+      "to": "decision:d-05",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/14-digital-goods-marketplace/14.08-vendor-portal-build-qa/14.08.03-audio-content-qc",
       "to": "decision:d-01",
       "type": "constrained_by",
       "source": "decision-ref"
@@ -40755,12 +40977,6 @@
     {
       "from": "ideation:ideation/14-digital-goods-marketplace/14.08-vendor-portal-build-qa/14.08.03-audio-content-qc",
       "to": "decision:d-03",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "ideation:ideation/14-digital-goods-marketplace/14.08-vendor-portal-build-qa/14.08.03-audio-content-qc",
-      "to": "decision:d-05",
       "type": "constrained_by",
       "source": "decision-ref"
     },
@@ -45938,13 +46154,13 @@
     },
     {
       "from": "ideation:ideation/17-live-booking-settlement/17.01-availability-holds-confirmation/17.01.03-challenge-release-expiry",
-      "to": "decision:d-14",
+      "to": "decision:d-15",
       "type": "constrained_by",
       "source": "decision-ref"
     },
     {
       "from": "ideation:ideation/17-live-booking-settlement/17.01-availability-holds-confirmation/17.01.03-challenge-release-expiry",
-      "to": "decision:d-15",
+      "to": "decision:d-14",
       "type": "constrained_by",
       "source": "decision-ref"
     },
@@ -45968,6 +46184,18 @@
     },
     {
       "from": "ideation:ideation/17-live-booking-settlement/17.01-availability-holds-confirmation/17.01.04-confirmation-announce-gate",
+      "to": "decision:d-13",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/17-live-booking-settlement/17.01-availability-holds-confirmation/17.01.04-confirmation-announce-gate",
+      "to": "decision:d-15",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/17-live-booking-settlement/17.01-availability-holds-confirmation/17.01.04-confirmation-announce-gate",
       "to": "decision:d-04",
       "type": "constrained_by",
       "source": "decision-ref"
@@ -45975,12 +46203,6 @@
     {
       "from": "ideation:ideation/17-live-booking-settlement/17.01-availability-holds-confirmation/17.01.04-confirmation-announce-gate",
       "to": "decision:d-02",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "ideation:ideation/17-live-booking-settlement/17.01-availability-holds-confirmation/17.01.04-confirmation-announce-gate",
-      "to": "decision:d-13",
       "type": "constrained_by",
       "source": "decision-ref"
     },
@@ -45999,6 +46221,12 @@
     {
       "from": "ideation:ideation/17-live-booking-settlement/17.01-availability-holds-confirmation/17.01.04-confirmation-announce-gate",
       "to": "decision:d-09",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/17-live-booking-settlement/17.01-availability-holds-confirmation/17.01.04-confirmation-announce-gate",
+      "to": "decision:d-12",
       "type": "constrained_by",
       "source": "decision-ref"
     },
@@ -46040,19 +46268,7 @@
     },
     {
       "from": "ideation:ideation/17-live-booking-settlement/17.01-availability-holds-confirmation/17.01.04-confirmation-announce-gate",
-      "to": "decision:d-12",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "ideation:ideation/17-live-booking-settlement/17.01-availability-holds-confirmation/17.01.04-confirmation-announce-gate",
       "to": "decision:d-14",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "ideation:ideation/17-live-booking-settlement/17.01-availability-holds-confirmation/17.01.04-confirmation-announce-gate",
-      "to": "decision:d-15",
       "type": "constrained_by",
       "source": "decision-ref"
     },
@@ -46754,13 +46970,37 @@
     },
     {
       "from": "ideation:ideation/17-live-booking-settlement/17.06-radius-clause-exclusivity",
-      "to": "decision:d-01",
+      "to": "decision:d-04",
       "type": "constrained_by",
       "source": "decision-ref"
     },
     {
       "from": "ideation:ideation/17-live-booking-settlement/17.06-radius-clause-exclusivity",
-      "to": "decision:d-02",
+      "to": "decision:d-05",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/17-live-booking-settlement/17.06-radius-clause-exclusivity",
+      "to": "decision:d-13",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/17-live-booking-settlement/17.06-radius-clause-exclusivity",
+      "to": "decision:d-06",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/17-live-booking-settlement/17.06-radius-clause-exclusivity",
+      "to": "decision:d-15",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/17-live-booking-settlement/17.06-radius-clause-exclusivity",
+      "to": "decision:d-01",
       "type": "constrained_by",
       "source": "decision-ref"
     },
@@ -46772,13 +47012,19 @@
     },
     {
       "from": "ideation:ideation/17-live-booking-settlement/17.06-radius-clause-exclusivity",
-      "to": "decision:d-09",
+      "to": "decision:d-12",
       "type": "constrained_by",
       "source": "decision-ref"
     },
     {
       "from": "ideation:ideation/17-live-booking-settlement/17.06-radius-clause-exclusivity",
-      "to": "decision:d-04",
+      "to": "decision:d-02",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/17-live-booking-settlement/17.06-radius-clause-exclusivity",
+      "to": "decision:d-09",
       "type": "constrained_by",
       "source": "decision-ref"
     },
@@ -47918,6 +48164,12 @@
     },
     {
       "from": "ideation:ideation/17-live-booking-settlement/17.12-counterparty-relationship-payment-reliability",
+      "to": "decision:d-06",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/17-live-booking-settlement/17.12-counterparty-relationship-payment-reliability",
       "to": "decision:d-04",
       "type": "constrained_by",
       "source": "decision-ref"
@@ -47925,6 +48177,12 @@
     {
       "from": "ideation:ideation/17-live-booking-settlement/17.12-counterparty-relationship-payment-reliability",
       "to": "decision:d-05",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/17-live-booking-settlement/17.12-counterparty-relationship-payment-reliability",
+      "to": "decision:d-12",
       "type": "constrained_by",
       "source": "decision-ref"
     },
@@ -48032,6 +48290,12 @@
     },
     {
       "from": "ideation:ideation/17-live-booking-settlement/live-booking-settlement-cx",
+      "to": "decision:d-04",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/17-live-booking-settlement/live-booking-settlement-cx",
       "to": "decision:d-13",
       "type": "constrained_by",
       "source": "decision-ref"
@@ -48057,12 +48321,6 @@
     {
       "from": "ideation:ideation/17-live-booking-settlement/live-booking-settlement-cx",
       "to": "decision:d-03",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "ideation:ideation/17-live-booking-settlement/live-booking-settlement-cx",
-      "to": "decision:d-04",
       "type": "constrained_by",
       "source": "decision-ref"
     },
@@ -48434,6 +48692,12 @@
     },
     {
       "from": "ideation:ideation/18-show-production-touring/18.03-show-advancing/18.03.01-advance-checklist",
+      "to": "decision:d-17",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/18-show-production-touring/18.03-show-advancing/18.03.01-advance-checklist",
       "to": "decision:d-04",
       "type": "constrained_by",
       "source": "decision-ref"
@@ -48525,6 +48789,12 @@
     {
       "from": "ideation:ideation/18-show-production-touring/18.03-show-advancing/18.03.02-venue-capability-diff",
       "to": "decision:d-01",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/18-show-production-touring/18.03-show-advancing/18.03.02-venue-capability-diff",
+      "to": "decision:d-17",
       "type": "constrained_by",
       "source": "decision-ref"
     },
@@ -48758,7 +49028,25 @@
     },
     {
       "from": "ideation:ideation/18-show-production-touring/18.04-riders/18.04.01-technical-rider",
+      "to": "decision:d-17",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/18-show-production-touring/18.04-riders/18.04.01-technical-rider",
+      "to": "decision:d-06",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/18-show-production-touring/18.04-riders/18.04.01-technical-rider",
       "to": "decision:d-18",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/18-show-production-touring/18.04-riders/18.04.01-technical-rider",
+      "to": "decision:d-07",
       "type": "constrained_by",
       "source": "decision-ref"
     },
@@ -48782,19 +49070,7 @@
     },
     {
       "from": "ideation:ideation/18-show-production-touring/18.04-riders/18.04.01-technical-rider",
-      "to": "decision:d-06",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "ideation:ideation/18-show-production-touring/18.04-riders/18.04.01-technical-rider",
       "to": "decision:d-03",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "ideation:ideation/18-show-production-touring/18.04-riders/18.04.01-technical-rider",
-      "to": "decision:d-07",
       "type": "constrained_by",
       "source": "decision-ref"
     },
@@ -48807,6 +49083,12 @@
     {
       "from": "ideation:ideation/18-show-production-touring/18.04-riders/18.04.01-technical-rider",
       "to": "decision:d-12",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/18-show-production-touring/18.04-riders/18.04.01-technical-rider",
+      "to": "decision:d-13",
       "type": "constrained_by",
       "source": "decision-ref"
     },
@@ -61563,7 +61845,7 @@
       "decision": 93
     },
     "byEdgeType": {
-      "constrained_by": 8808
+      "constrained_by": 8855
     }
   }
 }

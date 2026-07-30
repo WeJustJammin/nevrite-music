@@ -3,7 +3,7 @@
 > **Level**: domain
 > **Scope**: Connections between children of [Live Booking & Settlement](./live-booking-settlement-index.md)
 > **Status**: [DEEP] — 14 children; 24 intra-domain cross-cuts synthesised, 7 rejected pairs held.
-> **Last updated**: 2026-07-23
+> **Last updated**: 2026-07-30
 
 > **Reading note.** This file connects the domain's **14 children** (8 sub-domains + 6 features) to
 > each other. Leaf-to-leaf edges that live *inside* one child — e.g. `17.01.01 ↔ 17.01.02` (both under
@@ -28,7 +28,7 @@
 | CX-11 | [17.03 Deal Structures](./17.03-deal-structures-economics/) | [17.05 Deposits, Balances & Cancellation](./17.05-deposits-balances-cancellation/) | Cross-collateralization makes a single date's cancellation non-self-contained | Musician, Operator | Medium | 17.03.03: a cancelled date inside a run changes 11 other dates' economics |
 | CX-12 | [17.14 Bill Construction](./17.14-bill-construction-support-slots.md) | [17.10 Live Income Payout & Tax](./17.10-live-income-payout-tax/) | Support fees come **off the top** before the headliner's split — a deduction the single-artist model did not have | Musician | High | 17.14 DT-01: most shows have 2-3 acts on separate deals |
 | CX-13 | [17.14 Bill Construction](./17.14-bill-construction-support-slots.md) | [17.11 Draw History](./17.11-draw-history-market-intelligence/) | **The slot qualifier originates here.** 600 as an opener is not a 600 draw | Musician | High | 17.11.01 DT-01: without the slot, the record flatters the artist |
-| CX-14 | [17.06 Radius Clause](./17.06-radius-clause-exclusivity.md) | [17.01 Availability, Holds & Confirmation](./17.01-availability-holds-confirmation/) | The radius check fires at **three moments** — publish (warn), hold (warn), confirm (hard block); the artist's own conflicts surface to the artist alone | Musician, Operator | High | 17.06 DT-02/DT-10/DT-12; D-13/D-15; permission asymmetry [30] |
+| CX-14 | [17.06 Radius Clause](./17.06-radius-clause-exclusivity.md) | [17.01 Availability, Holds & Confirmation](./17.01-availability-holds-confirmation/) | The radius check fires at **three moments** — publish (warn), hold (warn), confirm (**hard block**, one rule everywhere). The block's door is 17.06's timed waiver-request instrument; the only override is a principal-only break-glass while a challenge clock is live. The artist's own conflicts surface to the artist alone | Musician, Operator | High | 17.06 DT-02/D-04; 17.01.04 C-06/D-13; 17.01.03 D-15 (radius half revised, run-3 D6); permission asymmetry [30] |
 | CX-15 | [17.07 Booking Enquiry Inbox](./17.07-booking-enquiry-inbox-rfq.md) | [17.01 Availability, Holds & Confirmation](./17.01-availability-holds-confirmation/) | Auto-qualification reads published avails; a qualified enquiry converts into a hold — and an **off-platform link recipient's reply lands here as an enquiry** because they cannot self-hold | Musician, Operator | Medium | Invite-only avail scoping complicates the read (17.01.01 Q-02); link-recipient reply [4] |
 | CX-16 | [17.13 Fan Demand Signals](./17.13-fan-demand-signals.md) | [17.11 Draw History](./17.11-draw-history-market-intelligence/) | **Opposite provenance** — a settled fact vs an expressed wish. They must never render alike | Musician, Operator, Fan | High | 17.13 DT-02: requesting costs nothing; attending costs £20 and a Tuesday |
 | CX-17 | [17.01 Availability, Holds & Confirmation](./17.01-availability-holds-confirmation/) | [17.08 Agency Representation & Commission](./17.08-agency-representation-commission/) | Booking authority gates every hold, publish and confirm — `book` **and** `live booking`, conjoined at the act (`01.03.02` D-05); **positions belong to the act, not the placing agent** — representation change carries them, representation *end* freezes the windows | Musician (+ agent lens), Operator | High | [5],[13] — D-11/DT-15, D-15 |
@@ -364,6 +364,18 @@ cannot legally be sold, so the check runs at **publish** (warn); a hold inside a
 and the obligation is actually breached the moment a conflicting date is **confirmed**, so confirm is a
 **hard check** (C-06, DT-10) — a breach found later means two live contracts and one must break.
 
+**One rule at confirm, and it is a block.** This entry previously stated both readings — hard block in
+the summary row, warn-and-override in the trigger chain below — because 17.01.04 (C-06, D-13) and
+17.01.03 (D-15) had ratified opposite rules for the same commit. Owner ratification (run-3 D6) settled
+it: **the block stands everywhere, including under a challenge clock.** 17.01.03's never-block argument
+was about **latency** — "consent is obtainable, just not within 48h" — not about permission, so the fix
+is 17.06's **waiver-request instrument** (D-04 there): an in-app, timed, escalating request against the
+constraining Operator, capped by the deadline of the decision it unblocks. The single override is a
+**break-glass** with four conjunctive conditions — a live challenge clock, the **artist principal in
+person** (never a delegate), the constraining Operator notified **at the moment of use**, and a named
+`radius-break-glass` breach event attributed to the confirming party (17.12). Routing (18) keeps
+warn-and-override: 18 owns feasibility, not permission.
+
 **Role scoping**:
 - **Musician**: warned before double-booking themselves into a lawsuit; **their own radius conflicts
   surface to the artist alone** — showing them to an Operator would disclose who else booked them ([30]).
@@ -373,13 +385,18 @@ and the obligation is actually breached the moment a conflicting date is **confi
 **Synthesis questions answered**:
 1. **Shared state conflict**: The clause is owned by 17.06; 17.01 owns the *moment* it is surfaced. The
    clause never mutates the calendar — it annotates and, at confirm, blocks.
-2. **Trigger chain**: Publish → warn · Hold → warn · Confirm → check (radius conflicts warn-and-override
-   with the override recorded; radius clauses are waived routinely, so a hard block would be wrong — [23]).
-   Nobody checks a radius clause at 4am on deadline day, so the check must be pre-computed and surfaced,
-   not left to the user to run.
+2. **Trigger chain**: Publish → warn · Hold → warn · Confirm → **block** absent a waiver on file, with the
+   waiver-request instrument offered inline and a principal-only break-glass reachable only under a live
+   challenge clock ([23] superseded by run-3 D6). Nobody checks a radius clause at 4am on deadline day, so
+   the check must be pre-computed and surfaced, not left to the user to run — and a check nobody runs is
+   exactly why the last irreversible step is the wrong place to put a dismissible warning.
 3. **Permission intersection**: The permission asymmetry above is the load-bearing rule — the artist's
-   pipeline is confidential from the buy side.
-4. **Notification fan-out**: A prospective breach warns the artist's side; an override is logged.
+   pipeline is confidential from the buy side. Break-glass is the one place it yields: the constraining
+   Operator learns of the breach against their own clause immediately, which is the minimum that makes an
+   override honest, and they learn only that fact — not the terms or the counterparty of the new date.
+4. **Notification fan-out**: A prospective breach warns the artist's side. A waiver request notifies the
+   constraining Operator on 17.01.03's escalation ladder. A break-glass notifies them **in the same
+   instant it is used**, and writes a permanent attributed record; there is no quiet override.
 5. **State transition conflict**: A confirm racing against a just-signed conflicting date elsewhere — the
    window between two confirms is where a real double-obligation is born.
 
@@ -715,12 +732,12 @@ a knowing simplification (DT-05), not an oversight.
 ### Constrained by
 - [[decisions.md#d-01|D-01]]
 - [[decisions.md#d-09|D-09]]
+- [[decisions.md#d-04|D-04]]
 - [[decisions.md#d-13|D-13]]
 - [[decisions.md#d-15|D-15]]
 - [[decisions.md#d-05|D-05]]
 - [[decisions.md#d-11|D-11]]
 - [[decisions.md#d-03|D-03]]
-- [[decisions.md#d-04|D-04]]
 - [[decisions.md#d-20|D-20]]
 - [[decisions.md#d-14|D-14]]
 - [[decisions.md#d-02|D-02]]

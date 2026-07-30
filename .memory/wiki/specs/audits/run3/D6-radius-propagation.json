@@ -1,0 +1,133 @@
+{
+  "decision": "run3-owner-decision-6",
+  "finding_id": "17-live-booking-settlement#001",
+  "audit_unit": "17.01-availability-holds-confirmation",
+  "ratified_option": "D",
+  "ratified_on": "2026-07-30",
+  "propagated_on": "2026-07-30",
+  "domain": "17-live-booking-settlement",
+  "rule": {
+    "statement": "A radius-clause breach against an existing confirmed booking is a hard confirmation precondition (17.01.04 C-06), blocked absent a waiver on file. The block's door is a first-class waiver-request instrument against the constraining Operator, on its own clock, escalating on 17.01.03's channel ladder. Break-glass exists only while a challenge clock is live, requires the artist principal in person, notifies the constraining Operator at the moment of use, and writes a named radius-break-glass breach event feeding 17.12.",
+    "rationale": "17.01.03's never-block argument was about latency, not permission — 'consent is obtainable, just not within 48h'. Fixing the latency dissolves the argument and lets the tree keep the rule its two other files already assume. Pricing the break-glass (principal-only, injured party told immediately, recorded against the confirming party) is what stops it being a click-through.",
+    "break_glass_conditions": [
+      "a 17.01.03 challenge clock is live on the hold — never on an ordinary confirm",
+      "the artist principal acts in person, never a delegate",
+      "the constraining Operator is notified at the moment of use, not after",
+      "a named radius-break-glass breach event is recorded against the confirming party into 17.12"
+    ],
+    "unchanged": "Routing (domain 18) keeps warn-and-override — 18 owns feasibility, not permission."
+  },
+  "files_changed": [
+    {
+      "path": ".memory/wiki/specs/ideation/17-live-booking-settlement/17.01-availability-holds-confirmation/17.01.03-challenge-release-expiry.md",
+      "edits": [
+        "D-15 rewritten — radius half only: routing stays warn+override+recorded, radius becomes a hard block absent a waiver on file (17.01.04 C-06) with the single break-glass. Rationale records the latency-not-permission argument and the four break-glass conditions.",
+        "Edge-case row (was :142) rewritten: the radius conflict under challenge is now a hard block whose door is 17.06's waiver-request instrument; a lapsed request grants nothing.",
+        "New edge-case row inserted after it: waiver lapsed or refused with the challenge deadline hours away -> break-glass, all four conditions, principal-only UI with the delegate path disabled.",
+        "Routing edge-case row (was :143) — 'Same treatment' reference repaired to 'Warn + override, never block — unlike radius (D-15)', so it no longer points at a rule that changed.",
+        "DT-12 outcome text (was :189) rewritten to record the split treatment and the owner ratification.",
+        "Cross-cut note for 17.06 (was :201) rewritten from 'trigger dependency / warn-and-override' to 'permission dependency', carrying two requirements onto 17.06 (waiver clock capped by the challenge deadline; break-glass breach must be a distinct state).",
+        "Cross-cut note for 18 rewritten to state the routing rule positively rather than as 'the same' rule as radius.",
+        "Cross-cut note for 17.02.03 gained the third-authority-slot clause: booking authority is not breach authority.",
+        "Last updated -> 2026-07-30."
+      ]
+    },
+    {
+      "path": ".memory/wiki/specs/ideation/17-live-booking-settlement/17.01-availability-holds-confirmation/17.01.04-confirmation-announce-gate.md",
+      "edits": [
+        "'all hard' framing (was :51) qualified: one exception exists in the whole set — C-06's break-glass — and C-01..C-05 have no override of any kind, by any party, ever.",
+        "C-06 'On failure' cell gained the waiver-request instrument offered inline and the break-glass path with its four conjunctive conditions.",
+        "D-13 gained the same clause, plus the note that this reconciles the gate with 17.01.03 D-15, which previously read radius as warn-and-override at the same commit.",
+        "Cross-cut note for 17.06 gained the two requirements this gate places on it (waiver instrument; break-glass breach as a distinct attributable state).",
+        "Cross-cut note for 17.12 upgraded from one new derived fact to two — confirm-then-revert rate and radius break-glass usage — with the D-12 exclusion carve-out stated.",
+        "Last updated -> 2026-07-30."
+      ]
+    },
+    {
+      "path": ".memory/wiki/specs/ideation/17-live-booking-settlement/live-booking-settlement-cx.md",
+      "edits": [
+        "CX-14 summary row (was :31) now states one rule — confirm is a hard block everywhere — plus the waiver instrument as the door and the principal-only break-glass as the only override. Evidence column re-pointed to 17.06 D-04, 17.01.04 C-06/D-13, and 17.01.03 D-15 (radius half revised).",
+        "CX-14 section body gained an explicit 'One rule at confirm, and it is a block' paragraph that names the prior double statement as the contradiction and records how it was settled.",
+        "Trigger chain item 2 (was :376-377) rewritten from warn-and-override to block + inline waiver request + clock-gated break-glass; the [23] pointer is marked superseded by run-3 D6.",
+        "Permission intersection item 3 gained the one place the confidentiality asymmetry yields: the constraining Operator learns of the breach immediately, and learns only that fact.",
+        "Notification fan-out item 4 rewritten: prospective warning, waiver-request escalation, and same-instant break-glass notice with a permanent attributed record.",
+        "Last updated -> 2026-07-30."
+      ]
+    },
+    {
+      "path": ".memory/wiki/specs/ideation/17-live-booking-settlement/17.06-radius-clause-exclusivity.md",
+      "edits": [
+        "Behavior: 'two moments' -> three, with confirm-as-permission inserted as moment 2 and retrospective breach detection kept as moment 3.",
+        "New section 'The waiver-request instrument' — an 8-row parameter table: who may request, who decides, clock (with the hard cap), escalation ladder, grant, refuse, lapse, repeat requests — plus the break-glass paragraph with its four conjunctive conditions.",
+        "Happy path extended from 5 steps to 7, splitting request / decide / outcome.",
+        "Role Lens: Musician gains 'raises waiver requests, principal-only break-glass'; Operator gains 'decides inside a clock on an escalating ladder' and 'told at the moment break-glass is used'.",
+        "Edge cases: 6 new rows — blocked confirm with no waiver, Operator never answers, refused waiver with hours left, agent attempts break-glass, break-glass with no live challenge, breach created by a third party's later confirm.",
+        "Edge case 'Waiver granted verbally' updated to state the new consequence of a hard block; the capture question stays open and points at 17.02.02 DT-03 / Q-02.",
+        "States table: 'Breaching' split into 'Breaching (break-glass)' (attributable, debits 17.12) and 'Breaching (third-party)' (not attributable, excluded); new states 'Blocked', 'Waiver requested', 'Waiver refused'; 'Waived' clarified as per-date, never blanket.",
+        "Cross-cut notes: three new edges (17.01.04 permission, 17.01.03 clock+channel reuse, 17.12 derived fact); 17.01.02 note cites its D-12 explicitly.",
+        "Decisions: new D-04 (waiver-request instrument), D-05 (narrow priced break-glass), D-06 (break-glass vs third-party breach are distinct states, only the first debits).",
+        "Open questions: new Q-04 (default waiver clock outside a live challenge — no number asserted) and Q-05 (standing pre-authorised waivers), both User / /create-prd.",
+        "Last updated -> 2026-07-30."
+      ]
+    },
+    {
+      "path": ".memory/wiki/specs/ideation/17-live-booking-settlement/17.12-counterparty-relationship-payment-reliability.md",
+      "edits": [
+        "Behavior: derived-signal list gained confirm-then-revert rate (17.01.04 DT-11) and radius break-glass usage (D-06).",
+        "Edge cases: two new rows — break-glass debits (counterparty behaviour, outside 17.01.03 D-12's fault-free exclusions), third-party-created breach does not (same treatment as accepted force majeure).",
+        "Decisions: new D-06 recording the derived fact, its attribution to the confirming party, the D-12 boundary, and the D-04 rendering constraint (facts, never a label).",
+        "Cross-cut notes: new edge to 17.06 and 17.01.04 carrying both new derived facts and the full exclusion set.",
+        "Last updated -> 2026-07-30."
+      ]
+    }
+  ],
+  "cx14_contradiction_resolution": {
+    "was": "CX-14's summary row at :31 said 'confirm (hard block)' while its section body at :371-372 (trigger chain) said radius conflicts warn-and-override and 'a hard block would be wrong' — one entry stating both rules, which is what made the finding blocking.",
+    "now": "Both halves state the hard block. The body carries a new paragraph that names the prior double statement, attributes the split to 17.01.04 (C-06/D-13) and 17.01.03 (D-15) having ratified opposite rules for the same commit, and records the ratified settlement. The warn-and-override language survives in exactly one place — the routing (domain 18) sentence — where it is still correct.",
+    "residual_warn_and_override_mentions": [
+      "17.01.03:144 — routing edge case (correct)",
+      "17.01.03:229 — D-15 routing half (correct)",
+      "cx:368 — historical narration of the resolved contradiction (correct)",
+      "cx:377 — routing rule (correct)"
+    ]
+  },
+  "cross_domain_notes": [
+    {
+      "target_domain": "01-identity-profiles-organizations",
+      "action": "record only — no edit made outside domain 17",
+      "note": "'Artist principal, never a delegate' is a THIRD authority slot, alongside offer-binding (17.02.03 D-03) and settlement-signing (17.09.05 D-06). Booking authority is not breach authority: an agent with full authority to place holds, negotiate and confirm may NOT exercise the radius break-glass. Domain 01's entity/authority model must carry three distinct principal-only permissions, not two.",
+      "recorded_in": [
+        "17.01.03 Cross-Cut Notes — 17.02.03 entity approval chain bullet",
+        "17.06 D-05 context and the 'Agent tries to break glass' edge case"
+      ]
+    },
+    {
+      "target_domain": "18-show-production-touring",
+      "action": "no change",
+      "note": "Routing feasibility keeps warn-and-override. 18 owns feasibility, not permission — an infeasible route breaks nobody's contract. The prior 'same treatment as radius' phrasing was repaired so the routing rule no longer inherits a rule that changed."
+    }
+  ],
+  "new_ids_allocated": {
+    "17.06-radius-clause-exclusivity.md": ["D-04", "D-05", "D-06", "Q-04", "Q-05"],
+    "17.12-counterparty-relationship-payment-reliability.md": ["D-06"]
+  },
+  "deferred_sub_questions": [
+    {
+      "id": "17.06 Q-04",
+      "question": "Default waiver-request clock outside a live challenge. D-04 fixes the cap (never outliving the deadline it unblocks); no default duration is asserted because the ratified statement licenses 'a short clock' and no number.",
+      "owner": "User",
+      "deferred_to": "/create-prd"
+    },
+    {
+      "id": "17.06 Q-05",
+      "question": "May an Operator pre-authorise waivers as a standing policy, removing the round trip entirely? Not licensed either way by the ratification.",
+      "owner": "User",
+      "deferred_to": "/create-prd"
+    }
+  ],
+  "verification": {
+    "table_column_counts": "all tables in all 5 changed files re-checked programmatically — header/row cell counts match everywhere",
+    "decision_question_id_uniqueness": "no duplicate D-/Q- ids in 17.06 or 17.12",
+    "contradiction_sweep": "domain-wide grep for radius / warn-and-override / never hard-block across 17.01.02, 17.01 index+cx, domain index, 17.04, 17.07, 17.14 — 17.01.02 D-12 ('warned at hold time, blocked at confirmation') already agreed with the ratified rule and needed no edit; no residual contradiction found"
+  }
+}

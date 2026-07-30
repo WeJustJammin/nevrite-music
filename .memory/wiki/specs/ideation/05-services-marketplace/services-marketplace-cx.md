@@ -213,7 +213,7 @@ Handover terms (stems, session files) are declared **per tier** and are orthogon
 | R-03 | 05.06 Rights, Warranties & Transfer | 05.07 Custodial & Physical | Repairing an instrument creates no copyright; the rights machinery has no custodial counterpart. |
 | R-04 | 05.04.03 Watermarked Previews | 05.01.04 Rate Benchmarking | Watermarking protects a specific draft; benchmarking is aggregate price intelligence. No shared state, no trigger dependency. |
 | R-05 | 05.05 Multi-Party Supply | 05.07 Custodial & Physical | No fixer/agency/subcontracting shape applies to a single-luthier repair; multi-party supply is a music-work concept. Independent lifecycles. |
-| R-06 | 05.01.04 Rate Benchmarking | 05.06 Rights, Warranties & Transfer | The benchmark band renders only in the seller's pricing step (05.01.04 D-01) and never touches posture election. Deliberately kept apart (sub-domain CX R-04). |
+| R-06 | 05.01.04 Rate Benchmarking | 05.06 Rights, Warranties & Transfer | The benchmark band **never touches posture election** — that is the whole of this rejection and it is unqualified. Its render surface is 05.01.04 D-05's: seller's pricing step on listing surfaces (05.01.01 D-05, sub-domain CX R-04), both parties on an issued quote (05.02.01 D-15). **Scoped 2026-07-30** (run-3 owner queue `05-services-marketplace#010`) — the earlier "renders only in the seller's pricing step" clause asserted a global rule this pair never argued for, and mis-cited 05.01.04 D-01, which is the bands-never-individual-rates rule and not a surface rule. |
 
 > **Notes for agents:**
 > - CX entries connect the seven **sub-domains** of this domain to each other. Feature-level detail lives in each sub-domain's own CX file.
@@ -233,3 +233,4 @@ Handover terms (stems, session files) are declared **per tier** and are orthogon
 - [[decisions.md#d-07|D-07]]
 - [[decisions.md#d-09|D-09]]
 - [[decisions.md#d-12|D-12]]
+- [[decisions.md#d-15|D-15]]

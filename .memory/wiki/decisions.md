@@ -2,8 +2,8 @@
 
 ## Summary
 
-- **Total decisions**: 49
-- **Unique decision titles**: 49
+- **Total decisions**: 56
+- **Unique decision titles**: 56
 
 ## DEC-001: The rights stack is the thesis, not an adjacency (2026-07-16)
 
@@ -722,6 +722,185 @@
   a fourth vocabulary? `01.03.02`:25 lists sync as publishing's *sibling*; `09.01.04`:102 carves sync
   *inside* publishing as a right type. Tracked as `01.03.02` Q-03, targeted at `/create-prd`.
 
+## DEC-050: Opportunity post decide-by is derived by default and overridable (2026-07-30)
+
+- **Occurrences**: 1
+- **Latest timestamp**: 2026-07-30T09:05:20.138Z
+- **Agents**: claude
+- **Sources**: audit-ambiguity run 3 — owner decision queue
+- **Index**: [[index]]
+
+- **Problem**: five decisions and two queue states across `04.04`/`04.05` treated a decide-by date as an
+  established field on the opportunity post; `04.01.01`, which owns the post object, never defined it, and
+  its only expiry rule keyed on the *event* date instead.
+- **Options considered**: mandatory field with type-scoped default; derived-by-default and overridable;
+  derived only (no separate concept); leave it out and let dependents degrade.
+- **Decision**: **derived by default, always present, overridable**. Presence types default to the event
+  date, delivery types to the stated deadline, per `04.01.01` D-10's type-scoped date semantics. The
+  composer adds no interaction. Open calls and briefs get a real asked field because their type says so.
+- **Key consequence**: decide-by is a D-09 **terms field** — a poster silently pushing 'you'll hear by
+  14 Aug' to 30 Sep has ghosted twelve people while the UI still shows them a date.
+- **Expiry reconciled**: the post's date closes **submission**; the decide-by closes the **post**. Identical
+  on the ten derived types, divergent only for briefs and open calls, so the old one-date rule became the
+  special case of the new one.
+- **Downstream**: `04.01.01` D-16 + per-type default table; `04.04.01` D-05/D-06 and the dormant/abandoned
+  triggers gain a real bound; `04.05.01` Q-02 becomes computable; `04.07` D-05; `04.02.04` Q-10 left open on
+  whether the deadline escalation reads decide-by or event date.
+- **Reversibility**: Medium.
+
+## DEC-051: Benchmark band is a surface split — sellers-only pre-transactionally, symmetric once issued (2026-07-30)
+
+- **Occurrences**: 1
+- **Latest timestamp**: 2026-07-30T09:05:20.147Z
+- **Agents**: claude
+- **Sources**: audit-ambiguity run 3 — owner decision queue
+- **Index**: [[index]]
+
+- **Problem**: `05.02.01` D-15 required the rate benchmark band to render symmetrically to both parties on
+  a live quote; `05.01.04` Q-03 was closed 'sellers only'. Same band, simultaneously required and forbidden.
+- **The insight that decided it**: every 'sellers only' statement is textually scoped to the **listing**
+  surface ('public listing', 'buyer preview'), yet Q-03 closed a question broader than its own evidence
+  covered. The two rules were argued against different threats.
+- **Decision**: **surface split**. Public listing, browse and buyer preview stay band-free; once a quote is
+  **issued**, both parties see the cohort band. `05.01.01` D-05 gains a listing-surface scope qualifier;
+  `05.02.01` D-15 stands.
+- **Rationale**: D-05's argument is about a public, browse-scale surface where anyone can shop a cohort's
+  position. A live quote is bilateral, post-request, and already discloses the seller's exact figure to that
+  one buyer. Different exposure, different rule.
+- **Downstream**: `05.01.04` D-05 + Q-03 re-resolved and its stale-text note withdrawn; CX R-04 and R-06
+  scoped; below-*k* on an issued quote withholds from **both** parties (D-15's 'or to neither' branch made
+  operative); Q-01's minimum cohort *k* is now buyer-facing and harder — escalated, **no value picked**.
+- **Reversibility**: Medium.
+
+## DEC-052: Spec deals pre-commit a normal posture whose effect is deferred to a trigger (2026-07-30)
+
+- **Occurrences**: 1
+- **Latest timestamp**: 2026-07-30T09:05:20.148Z
+- **Agents**: claude
+- **Sources**: audit-ambiguity run 3 — owner decision queue
+- **Index**: [[index]]
+
+- **Problem**: `spec` is a publishable pricing model whose nature is a term vesting on a future trigger, but
+  `05.06.01`'s legal-combinations table had no spec row, its posture vocabulary is closed (D-07), and no tier
+  can publish without an election (D-01). The whole `05.06` sub-domain never mentioned spec.
+- **Options considered**: open the vocabulary with a conditional posture; pre-commit and defer effect;
+  two-stage instrument; forbid spec as a listing tier.
+- **Decision**: **pre-commit the posture, defer its effect** — the seller elects a normal posture from the
+  closed vocabulary and the signed instrument takes effect on the named trigger. Effective-date is a property
+  of the **instrument**, not a new posture, so D-07 stays closed.
+- **Why not two-stage**: it leaves the seller holding a promise to sign rather than signed paper — the exact
+  exploitation pattern `05.01.03` DT-01 names, aimed at the population the domain most wants to protect.
+- **Q-07 resolved onto the same mechanism**: reversion is a normal posture whose effect **ends** on a trigger,
+  the mirror of spec's **beginning** on one. One mechanism (`05.06.01` D-14) covers both; D-07 byte-identical.
+- **Also fixed while the table was open**: the cash-only row covered five of eight publishable models —
+  hourly, half-day and retainer had no posture set at all; buyout got its own row per DT-13.
+- **Left open**: `05.06.01` **Q-08** — may a Points posture carry deferred effect? `05.06.02` D-02 has
+  participation existing from execution regardless of earnings, the opposite of vesting on a trigger. Points
+  omitted from the Spec row until answered; if it resolves against, the spec *production* deal collapses to
+  co-ownership. `05.01.03` Q-07 (who detects the trigger) promoted to **prerequisite**.
+- **Reversibility**: Low — it settles the shape of a closed vocabulary two other features enumerate.
+
+## DEC-053: public-domain is user-declared and machine-corroborated, never platform-asserted (2026-07-30)
+
+- **Occurrences**: 1
+- **Latest timestamp**: 2026-07-30T09:05:20.148Z
+- **Agents**: claude
+- **Sources**: audit-ambiguity run 3 — owner decision queue
+- **Index**: [[index]]
+
+- **Problem**: `09.01.01` treated `public-domain` as a terminal ledger state satisfying the release gate, but
+  named `09.03.05` as sole determiner — which emits only per-jurisdiction term statuses for US/FR/DE/GB, is
+  read-only to every persona, and rules by D-06 that a term status is **not** ownership or release
+  authorization. No path in the tree could set the state.
+- **The decisive constraint was timing**: `09.03.05` is a COULD that 'launches empty regardless of build
+  effort'; `09.01.01` is a MUST. Any option making it the writer blocks trad-folk and classical release at
+  launch — an outcome `09.01.01`:289 itself calls absurd.
+- **Decision**: **hybrid — self-declared now, corroborated later**. The user's declaration writes the state
+  and satisfies the **composition side** of the release gate. `09.03.05`, when built, attaches per-jurisdiction
+  results as corroboration **or contradiction**, never override; a contradiction surfaces persistently and
+  routes to `09.04.01`, but a release already made is not retracted by the platform.
+- **Pattern reused**: `09.01.04` D-09's ratified `consented` ≠ `registered` two-truths shape.
+  `09.03.05` D-03/D-05/D-06 are **confirmed, not amended**.
+- **Key detail**: `09.01.02`'s deliberately-alarming empty-ledger copy ('Nobody owns this yet') must **not**
+  fire on it — DT-03's thesis is that absence is the alarm; this is the one absence that is an answer.
+- **Territory**: a v1 declaration is worldwide; jurisdictional contradiction is surfaced, not modelled.
+- **Reversibility**: Medium.
+
+## DEC-054: Delivery integrity — metadata written at ingest, two hashes only for watermarked products (2026-07-30)
+
+- **Occurrences**: 1
+- **Latest timestamp**: 2026-07-30T09:05:20.149Z
+- **Agents**: claude
+- **Sources**: audit-ambiguity run 3 — owner decision queue
+- **Index**: [[index]]
+
+- **Problem**: `14.03.01` published one SHA-256 per artifact **before any bytes move** and auto-verified the
+  download against it, while the same delivery step was specified to rewrite bytes per buyer (embedded
+  tempo/key/loop metadata per `14.04.01` D-06, plus a per-buyer forensic watermark). Under the spec as
+  written, every content download failed verification and E-19 quarantined a correctly-delivered build.
+  Both colliding units are in the MUST band, so it was not deferrable.
+- **Decision**: **move the metadata write upstream**. Embedded tempo/key/loop metadata is a property of the
+  *product*, not the buyer — written once at ingest in `14.08.03` audio QC into the stored master. Delivery
+  then has at most **one** writer. Unmarked products are byte-identical to the master, so the single published
+  hash is simply correct. Watermarked products take a two-hash treatment (master + per-grant).
+- **Why this over two-hashes-for-everything**: a per-buyer hash is a number only *we* can vouch for. The
+  master hash is **corroborable** — two buyers of one build compare and agree. D-09's 'verify on a machine
+  that has never met us' survives intact for the entire air-gapped Operator inventory.
+- **E-19 split**: a per-grant mismatch is a transfer or stamping fault; only a **master** mismatch quarantines.
+- **Not decided here**: `14.03.05` Q-02/Q-03 (watermarking opt-in and cost model) remain the owner's separate
+  calls — Q-03 gains weight because it now also decides which products keep the one-hash contract.
+- **Reversibility**: Medium.
+
+## DEC-055: Radius breach hard-blocks confirm; the waiver becomes a real-time instrument (2026-07-30)
+
+- **Occurrences**: 1
+- **Latest timestamp**: 2026-07-30T09:05:20.149Z
+- **Agents**: claude
+- **Sources**: audit-ambiguity run 3 — owner decision queue
+- **Index**: [[index]]
+
+- **Problem**: `17.01.04` C-06/D-13 made a radius-clause breach a hard confirmation precondition; `17.01.03`
+  D-15 made the same check at the same moment 'warn + recorded override, never hard-block'. Confirm-under-
+  challenge routes through 17.01.04's gate, so both fired on one commit. The CX layer contradicted itself
+  **inside one entry** (:31 'hard block' vs :371 'a hard block would be wrong').
+- **The reframing that decided it**: 17.01.03's argument is not about permission, it is about **latency** —
+  'consent is obtainable, just not within 48h'. Fix the latency and the argument dissolves.
+- **Decision**: **C-06 stands.** The waiver becomes a first-class in-app instrument against the constraining
+  Operator, with its own clock and escalation. Break-glass is narrow and priced: only while a challenge clock
+  is live, artist principal never a delegate, the constraining promoter notified **at the moment of use**, and
+  recorded as a named breach event feeding `17.12`.
+- **Why not warn-everywhere**: it contradicts three ratified rows, and a warning dismissible at the last
+  irreversible step is the weakest possible version of 17.06's promise. Why not split-by-pressure: a
+  contractual permission depending on whether a rival challenged is indefensible and invites manufactured
+  challenges.
+- **New authority slot for domain 01**: 'artist principal, never a delegate' joins offer-binding
+  (`17.02.03` D-03) and settlement-signing (`17.09.05` D-06).
+- **Reversibility**: Medium.
+
+## DEC-056: A require-confirmation rider requirement holds at unknown rather than matching (2026-07-30)
+
+- **Occurrences**: 1
+- **Latest timestamp**: 2026-07-30T09:05:20.150Z
+- **Agents**: claude
+- **Sources**: audit-ambiguity run 3 — owner decision queue
+- **Index**: [[index]]
+
+- **Problem**: `18.04.01`'s `verification` flag said a `require-confirmation` item blocks the advance freeze
+  even on an automatic diff match. But the freeze reads the checklist's hard-outstanding count, and
+  `18.03.01` D-04 rules that a `match` generates **no item** — so the blocking effect had no mechanism
+  anywhere. `require-confirmation` and `trust-listing` occur in exactly one file; no consumer implements them.
+  D-05 floors every power item at `require-confirmation`, so this is mandatory on a whole category.
+- **Decision**: such a requirement **never resolves to `match` from listing data** — it holds at `unknown`
+  via one new `basis` value. The existing source-1 rule then fires (unknown → venue-side question) and D-06's
+  existing sentence derives severity. **No new machinery at all.**
+- **Why this over a fifth generation source**: that punches a permanent exception into D-04's headline rule
+  and emits the largest item volume of any option — power's floor guarantees a matched 6-item power section
+  emits 6 rows — which is precisely the alert-fatigue trade-off DT-14 was decided on.
+- **Precedent, not invention**: `16.05.05` D-03 already forces `match` → `unknown` on stale show-stopping
+  rows. 'Listing data is not consent' (DT-11) is the same claim about a different untrustworthiness.
+- **`18.03.01` D-04 and D-06 untouched**; `18.03.05` unchanged.
+- **Reversibility**: High — one enum value and three reworded claims.
+
 ## Full Log
 
 ### DEC-001: The rights stack is the thesis, not an adjacency (2026-07-16)
@@ -1391,3 +1570,175 @@
 - **Left open (tracked)**: are the five domains identical to domain 17's ratified work-type enum, or
   a fourth vocabulary? `01.03.02`:25 lists sync as publishing's *sibling*; `09.01.04`:102 carves sync
   *inside* publishing as a right type. Tracked as `01.03.02` Q-03, targeted at `/create-prd`.
+
+### DEC-050: Opportunity post decide-by is derived by default and overridable (2026-07-30)
+
+- **Timestamp**: 2026-07-30T09:05:20.138Z
+- **Agent**: claude
+- **Source**: audit-ambiguity run 3 — owner decision queue
+- **Tags**: decision, run3, ratified, domain-04
+
+- **Problem**: five decisions and two queue states across `04.04`/`04.05` treated a decide-by date as an
+  established field on the opportunity post; `04.01.01`, which owns the post object, never defined it, and
+  its only expiry rule keyed on the *event* date instead.
+- **Options considered**: mandatory field with type-scoped default; derived-by-default and overridable;
+  derived only (no separate concept); leave it out and let dependents degrade.
+- **Decision**: **derived by default, always present, overridable**. Presence types default to the event
+  date, delivery types to the stated deadline, per `04.01.01` D-10's type-scoped date semantics. The
+  composer adds no interaction. Open calls and briefs get a real asked field because their type says so.
+- **Key consequence**: decide-by is a D-09 **terms field** — a poster silently pushing 'you'll hear by
+  14 Aug' to 30 Sep has ghosted twelve people while the UI still shows them a date.
+- **Expiry reconciled**: the post's date closes **submission**; the decide-by closes the **post**. Identical
+  on the ten derived types, divergent only for briefs and open calls, so the old one-date rule became the
+  special case of the new one.
+- **Downstream**: `04.01.01` D-16 + per-type default table; `04.04.01` D-05/D-06 and the dormant/abandoned
+  triggers gain a real bound; `04.05.01` Q-02 becomes computable; `04.07` D-05; `04.02.04` Q-10 left open on
+  whether the deadline escalation reads decide-by or event date.
+- **Reversibility**: Medium.
+
+### DEC-051: Benchmark band is a surface split — sellers-only pre-transactionally, symmetric once issued (2026-07-30)
+
+- **Timestamp**: 2026-07-30T09:05:20.147Z
+- **Agent**: claude
+- **Source**: audit-ambiguity run 3 — owner decision queue
+- **Tags**: decision, run3, ratified, domain-05
+
+- **Problem**: `05.02.01` D-15 required the rate benchmark band to render symmetrically to both parties on
+  a live quote; `05.01.04` Q-03 was closed 'sellers only'. Same band, simultaneously required and forbidden.
+- **The insight that decided it**: every 'sellers only' statement is textually scoped to the **listing**
+  surface ('public listing', 'buyer preview'), yet Q-03 closed a question broader than its own evidence
+  covered. The two rules were argued against different threats.
+- **Decision**: **surface split**. Public listing, browse and buyer preview stay band-free; once a quote is
+  **issued**, both parties see the cohort band. `05.01.01` D-05 gains a listing-surface scope qualifier;
+  `05.02.01` D-15 stands.
+- **Rationale**: D-05's argument is about a public, browse-scale surface where anyone can shop a cohort's
+  position. A live quote is bilateral, post-request, and already discloses the seller's exact figure to that
+  one buyer. Different exposure, different rule.
+- **Downstream**: `05.01.04` D-05 + Q-03 re-resolved and its stale-text note withdrawn; CX R-04 and R-06
+  scoped; below-*k* on an issued quote withholds from **both** parties (D-15's 'or to neither' branch made
+  operative); Q-01's minimum cohort *k* is now buyer-facing and harder — escalated, **no value picked**.
+- **Reversibility**: Medium.
+
+### DEC-052: Spec deals pre-commit a normal posture whose effect is deferred to a trigger (2026-07-30)
+
+- **Timestamp**: 2026-07-30T09:05:20.148Z
+- **Agent**: claude
+- **Source**: audit-ambiguity run 3 — owner decision queue
+- **Tags**: decision, run3, ratified, domain-05, rights
+
+- **Problem**: `spec` is a publishable pricing model whose nature is a term vesting on a future trigger, but
+  `05.06.01`'s legal-combinations table had no spec row, its posture vocabulary is closed (D-07), and no tier
+  can publish without an election (D-01). The whole `05.06` sub-domain never mentioned spec.
+- **Options considered**: open the vocabulary with a conditional posture; pre-commit and defer effect;
+  two-stage instrument; forbid spec as a listing tier.
+- **Decision**: **pre-commit the posture, defer its effect** — the seller elects a normal posture from the
+  closed vocabulary and the signed instrument takes effect on the named trigger. Effective-date is a property
+  of the **instrument**, not a new posture, so D-07 stays closed.
+- **Why not two-stage**: it leaves the seller holding a promise to sign rather than signed paper — the exact
+  exploitation pattern `05.01.03` DT-01 names, aimed at the population the domain most wants to protect.
+- **Q-07 resolved onto the same mechanism**: reversion is a normal posture whose effect **ends** on a trigger,
+  the mirror of spec's **beginning** on one. One mechanism (`05.06.01` D-14) covers both; D-07 byte-identical.
+- **Also fixed while the table was open**: the cash-only row covered five of eight publishable models —
+  hourly, half-day and retainer had no posture set at all; buyout got its own row per DT-13.
+- **Left open**: `05.06.01` **Q-08** — may a Points posture carry deferred effect? `05.06.02` D-02 has
+  participation existing from execution regardless of earnings, the opposite of vesting on a trigger. Points
+  omitted from the Spec row until answered; if it resolves against, the spec *production* deal collapses to
+  co-ownership. `05.01.03` Q-07 (who detects the trigger) promoted to **prerequisite**.
+- **Reversibility**: Low — it settles the shape of a closed vocabulary two other features enumerate.
+
+### DEC-053: public-domain is user-declared and machine-corroborated, never platform-asserted (2026-07-30)
+
+- **Timestamp**: 2026-07-30T09:05:20.148Z
+- **Agent**: claude
+- **Source**: audit-ambiguity run 3 — owner decision queue
+- **Tags**: decision, run3, ratified, domain-09, rights
+
+- **Problem**: `09.01.01` treated `public-domain` as a terminal ledger state satisfying the release gate, but
+  named `09.03.05` as sole determiner — which emits only per-jurisdiction term statuses for US/FR/DE/GB, is
+  read-only to every persona, and rules by D-06 that a term status is **not** ownership or release
+  authorization. No path in the tree could set the state.
+- **The decisive constraint was timing**: `09.03.05` is a COULD that 'launches empty regardless of build
+  effort'; `09.01.01` is a MUST. Any option making it the writer blocks trad-folk and classical release at
+  launch — an outcome `09.01.01`:289 itself calls absurd.
+- **Decision**: **hybrid — self-declared now, corroborated later**. The user's declaration writes the state
+  and satisfies the **composition side** of the release gate. `09.03.05`, when built, attaches per-jurisdiction
+  results as corroboration **or contradiction**, never override; a contradiction surfaces persistently and
+  routes to `09.04.01`, but a release already made is not retracted by the platform.
+- **Pattern reused**: `09.01.04` D-09's ratified `consented` ≠ `registered` two-truths shape.
+  `09.03.05` D-03/D-05/D-06 are **confirmed, not amended**.
+- **Key detail**: `09.01.02`'s deliberately-alarming empty-ledger copy ('Nobody owns this yet') must **not**
+  fire on it — DT-03's thesis is that absence is the alarm; this is the one absence that is an answer.
+- **Territory**: a v1 declaration is worldwide; jurisdictional contradiction is surfaced, not modelled.
+- **Reversibility**: Medium.
+
+### DEC-054: Delivery integrity — metadata written at ingest, two hashes only for watermarked products (2026-07-30)
+
+- **Timestamp**: 2026-07-30T09:05:20.149Z
+- **Agent**: claude
+- **Source**: audit-ambiguity run 3 — owner decision queue
+- **Tags**: decision, run3, ratified, domain-14
+
+- **Problem**: `14.03.01` published one SHA-256 per artifact **before any bytes move** and auto-verified the
+  download against it, while the same delivery step was specified to rewrite bytes per buyer (embedded
+  tempo/key/loop metadata per `14.04.01` D-06, plus a per-buyer forensic watermark). Under the spec as
+  written, every content download failed verification and E-19 quarantined a correctly-delivered build.
+  Both colliding units are in the MUST band, so it was not deferrable.
+- **Decision**: **move the metadata write upstream**. Embedded tempo/key/loop metadata is a property of the
+  *product*, not the buyer — written once at ingest in `14.08.03` audio QC into the stored master. Delivery
+  then has at most **one** writer. Unmarked products are byte-identical to the master, so the single published
+  hash is simply correct. Watermarked products take a two-hash treatment (master + per-grant).
+- **Why this over two-hashes-for-everything**: a per-buyer hash is a number only *we* can vouch for. The
+  master hash is **corroborable** — two buyers of one build compare and agree. D-09's 'verify on a machine
+  that has never met us' survives intact for the entire air-gapped Operator inventory.
+- **E-19 split**: a per-grant mismatch is a transfer or stamping fault; only a **master** mismatch quarantines.
+- **Not decided here**: `14.03.05` Q-02/Q-03 (watermarking opt-in and cost model) remain the owner's separate
+  calls — Q-03 gains weight because it now also decides which products keep the one-hash contract.
+- **Reversibility**: Medium.
+
+### DEC-055: Radius breach hard-blocks confirm; the waiver becomes a real-time instrument (2026-07-30)
+
+- **Timestamp**: 2026-07-30T09:05:20.149Z
+- **Agent**: claude
+- **Source**: audit-ambiguity run 3 — owner decision queue
+- **Tags**: decision, run3, ratified, domain-17, domain-01
+
+- **Problem**: `17.01.04` C-06/D-13 made a radius-clause breach a hard confirmation precondition; `17.01.03`
+  D-15 made the same check at the same moment 'warn + recorded override, never hard-block'. Confirm-under-
+  challenge routes through 17.01.04's gate, so both fired on one commit. The CX layer contradicted itself
+  **inside one entry** (:31 'hard block' vs :371 'a hard block would be wrong').
+- **The reframing that decided it**: 17.01.03's argument is not about permission, it is about **latency** —
+  'consent is obtainable, just not within 48h'. Fix the latency and the argument dissolves.
+- **Decision**: **C-06 stands.** The waiver becomes a first-class in-app instrument against the constraining
+  Operator, with its own clock and escalation. Break-glass is narrow and priced: only while a challenge clock
+  is live, artist principal never a delegate, the constraining promoter notified **at the moment of use**, and
+  recorded as a named breach event feeding `17.12`.
+- **Why not warn-everywhere**: it contradicts three ratified rows, and a warning dismissible at the last
+  irreversible step is the weakest possible version of 17.06's promise. Why not split-by-pressure: a
+  contractual permission depending on whether a rival challenged is indefensible and invites manufactured
+  challenges.
+- **New authority slot for domain 01**: 'artist principal, never a delegate' joins offer-binding
+  (`17.02.03` D-03) and settlement-signing (`17.09.05` D-06).
+- **Reversibility**: Medium.
+
+### DEC-056: A require-confirmation rider requirement holds at unknown rather than matching (2026-07-30)
+
+- **Timestamp**: 2026-07-30T09:05:20.150Z
+- **Agent**: claude
+- **Source**: audit-ambiguity run 3 — owner decision queue
+- **Tags**: decision, run3, ratified, domain-18
+
+- **Problem**: `18.04.01`'s `verification` flag said a `require-confirmation` item blocks the advance freeze
+  even on an automatic diff match. But the freeze reads the checklist's hard-outstanding count, and
+  `18.03.01` D-04 rules that a `match` generates **no item** — so the blocking effect had no mechanism
+  anywhere. `require-confirmation` and `trust-listing` occur in exactly one file; no consumer implements them.
+  D-05 floors every power item at `require-confirmation`, so this is mandatory on a whole category.
+- **Decision**: such a requirement **never resolves to `match` from listing data** — it holds at `unknown`
+  via one new `basis` value. The existing source-1 rule then fires (unknown → venue-side question) and D-06's
+  existing sentence derives severity. **No new machinery at all.**
+- **Why this over a fifth generation source**: that punches a permanent exception into D-04's headline rule
+  and emits the largest item volume of any option — power's floor guarantees a matched 6-item power section
+  emits 6 rows — which is precisely the alert-fatigue trade-off DT-14 was decided on.
+- **Precedent, not invention**: `16.05.05` D-03 already forces `match` → `unknown` on stale show-stopping
+  rows. 'Listing data is not consent' (DT-11) is the same claim about a different untrustworthiness.
+- **`18.03.01` D-04 and D-06 untouched**; `18.03.05` unchanged.
+- **Reversibility**: High — one enum value and three reworded claims.

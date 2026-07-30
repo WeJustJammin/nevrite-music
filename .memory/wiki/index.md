@@ -1169,6 +1169,13 @@
 
 ## Structured Memory
 
+- decision: DEC-056: A require-confirmation rider requirement holds at unknown rather than matching (2026-07-30) — 2026-07-30T09:05:20.150Z
+- decision: DEC-054: Delivery integrity — metadata written at ingest, two hashes only for watermarked products (2026-07-30) — 2026-07-30T09:05:20.149Z
+- decision: DEC-055: Radius breach hard-blocks confirm; the waiver becomes a real-time instrument (2026-07-30) — 2026-07-30T09:05:20.149Z
+- decision: DEC-052: Spec deals pre-commit a normal posture whose effect is deferred to a trigger (2026-07-30) — 2026-07-30T09:05:20.148Z
+- decision: DEC-053: public-domain is user-declared and machine-corroborated, never platform-asserted (2026-07-30) — 2026-07-30T09:05:20.148Z
+- decision: DEC-051: Benchmark band is a surface split — sellers-only pre-transactionally, symmetric once issued (2026-07-30) — 2026-07-30T09:05:20.147Z
+- decision: DEC-050: Opportunity post decide-by is derived by default and overridable (2026-07-30) — 2026-07-30T09:05:20.138Z
 - pattern: PAT-010: a contradiction with no open marker is a real finding class (2026-07-29) — 2026-07-30T00:38:30.702Z
 - pattern: PAT-011: verify a decision's affected-files list by grep, not by reading the decision (2026-07-29) — 2026-07-30T00:38:30.702Z
 - decision: DEC-049: DQ-R2-01 representation scope is two flat axes conjoined at the call site (2026-07-29) — 2026-07-30T00:38:30.695Z
