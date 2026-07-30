@@ -43,7 +43,7 @@ The demand side of work — posted gigs, dep calls, auditions, band vacancies, c
 > - `sub-domain` — a grouping with 2+ interacting capabilities (folder with index + CX)
 > - `feature` — a leaf node describing a single capability (.md file)
 
-**Totals**: 5 sub-domains · 22 leaf feature files · 59 Deep Think hypotheses logged.
+**Totals**: 5 sub-domains · 23 leaf feature files · 156 Deep Think hypotheses logged.
 
 ## Role Matrix
 

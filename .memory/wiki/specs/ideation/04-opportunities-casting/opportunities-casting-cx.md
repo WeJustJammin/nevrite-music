@@ -16,7 +16,7 @@ member-wanted reviewer-conflict (CX-10).
 
 | # | Source | Target | Relationship | Roles Affected | Confidence | Evidence |
 |---|--------|--------|--------------|----------------|------------|----------|
-| CX-01 | [04.01 Posting & Targeting](./04.01-opportunity-posting-targeting/) | [04.02 Discovery, Matching & Alerts](./04.02-discovery-matching-alerts/) | Publication gate is the fan-out's **sole** trigger; entitlement resolves *before* ranking; edits and bumps must never re-fire the alert; the honest gate turns the board into a de-facto **price signal** | Musician, Producer, Operator, Fan (open rung) | High | 04.01.03 gate-pass-sole-trigger; 04.01.01 D-13 bump-no-refire; 04.02.01 D-15; 04.01.03 D-18/DT-06 |
+| CX-01 | [04.01 Posting & Targeting](./04.01-opportunity-posting-targeting/) | [04.02 Discovery, Matching & Alerts](./04.02-discovery-matching-alerts/) | Publication gate is upstream of **every** alert and fires the first one; entitlement resolves *before* ranking; bumps and compensation edits never re-fire it, and the pipe caps the whole post at **2 alerts per (user, post) lifetime** (04.02.04 D-12); the honest gate turns the board into a de-facto **price signal** | Musician, Producer, Operator, Fan (open rung) | High | 04.01.03 gate-upstream-of-every-alert; 04.01.01 D-13 bump-no-refire; 04.02.04 D-12 cap-2-lifetime; 04.02.01 D-15; 04.01.03 D-18/DT-06 |
 | CX-02 | [04.02 Discovery, Matching & Alerts](./04.02-discovery-matching-alerts/) | [04.03 Submission & Audition](./04.03-submission-audition/) | Discovery produces a candidate who *believes* they are eligible; the entitlement filter blocks unreachable posts here (not there); eligibility must not diverge between match time and submit time; an existing submission suppresses further alerts | Musician, Producer, Operator | High | 04.01 CX-03 synth Q2; 04.03.01↔04.02.01 entitlement filter; 04.02.04↔04.03 alert suppression |
 | CX-03 | [04.03 Submission & Audition](./04.03-submission-audition/) | [04.04 Triage, Shortlist & Decisioning](./04.04-triage-shortlist-decisioning/) | Submission *structure* determines whether triage is tractable — and tractable triage is what makes close-out honourable; free text renders at shortlist and nowhere earlier; a live offer freezes the submission object | Musician, Producer, Operator | High | 04.03.01 D-01; 04.04 D-01/D-03; 04.03.01↔04.04.02 (D-08); 04.03.01↔04.04.03 (DT-07) |
 | CX-04 | [04.04 Triage, Shortlist & Decisioning](./04.04-triage-shortlist-decisioning/) | [04.05 Outcome, Response & Handoff](./04.05-outcome-response-handoff/) | Acceptance produces `won`, which forks the product into another domain; every other outcome closes cleanly here; one acceptance discharges the poster's whole obligation | Musician, Producer, Operator | High | 04.05 CX-02; 04.05.03 D-02 |
@@ -42,10 +42,12 @@ reaches the board or the fan-out until compensation is declared. Targeting then 
 matching (a security property, not an optimisation: ranking an entitled pool after computing a match
 would let an alert reveal an invite-only post exists). Step 6 hardened two rules on the write side:
 compensation **edits must never re-fire** the alert (a £1 upward edit would be a free bump and the
-board would fill with resurfacing spam), and publication `bump` must not re-fire either — one alert
-per post per subscriber, ever. Emergent property (D-18/DT-06): because the gate forces honest
-compensation, aggregate board data publishes the local going rate (40 dep calls at £150 *is* the
-London dep rate) — a price signal nobody meant to build.
+board would fill with resurfacing spam), and publication `bump` must not re-fire either. Neither
+rule is the cap: the cap is **2 alerts per (user, post), lifetime**, and it belongs to the pipe
+(04.02.04 D-12) — the second alert is spent on an eligibility-widening edit or a deadline
+escalation, whichever comes first, and nothing else buys one. Emergent property (D-18/DT-06):
+because the gate forces honest compensation, aggregate board data publishes the local going rate
+(40 dep calls at £150 *is* the London dep rate) — a price signal nobody meant to build.
 
 **Role scoping**:
 - **Musician**: alerts are the domain's highest-value output; this chain feeds them.
@@ -62,8 +64,11 @@ London dep rate) — a price signal nobody meant to build.
 3. **Permission intersection**: Targeting-before-matching is the boundary keeping invite-only posts
    invisible; ordering it wrong is a leak, not a bug. Entitlement can only *widen* by escalation, so
    posts enter the board but never leave it by escalation.
-4. **Notification fan-out**: Publication is the fan-out's sole trigger; bump and edit are excluded by
-   rule (D-13). Targeting-widening is the only legal cause of a second alert (cap 2 lifetime per user/post).
+4. **Notification fan-out**: Publication fires the first alert; `bump` and a compensation edit are
+   excluded by rule (D-13). Exactly two events can fire the second and last one — an
+   eligibility-widening edit (04.01.02) or a deadline escalation (04.02.04 D-06) — at a cap of
+   **2 lifetime per (user, post)** (04.02.04 D-12). Whichever lands first spends it; the other
+   delivers nothing.
 5. **State transition conflict**: A published post's comp/criteria edit races already-alerted
    candidates — resolved downstream at CX-02 (version-binding) rather than here.
 
@@ -362,6 +367,7 @@ and to `/create-prd-architecture` for the 04↔09 seam. Full synthesis lives in 
 
 ### Constrained by
 - [[decisions.md#d-02|D-02]]
+- [[decisions.md#d-12|D-12]]
 - [[decisions.md#d-13|D-13]]
 - [[decisions.md#d-15|D-15]]
 - [[decisions.md#d-18|D-18]]
@@ -372,7 +378,6 @@ and to `/create-prd-architecture` for the 04↔09 seam. Full synthesis lives in 
 - [[decisions.md#d-05|D-05]]
 - [[decisions.md#d-04|D-04]]
 - [[decisions.md#d-11|D-11]]
-- [[decisions.md#d-12|D-12]]
 - [[decisions.md#d-06|D-06]]
 - [[decisions.md#d-10|D-10]]
 - [[decisions.md#d-14|D-14]]

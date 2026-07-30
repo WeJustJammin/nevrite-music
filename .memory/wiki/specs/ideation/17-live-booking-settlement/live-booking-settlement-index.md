@@ -55,7 +55,7 @@ in domain 02 evidenced rather than claimed.
 | 17.04 | Performance Contracts & Deal Memos | feature | [17.04-performance-contracts-deal-memos.md](./17.04-performance-contracts-deal-memos.md) | `[SURFACE]` | 3 hypotheses |
 | 17.05 | Deposits, Balances & Cancellation | sub-domain | [17.05-deposits-balances-cancellation/](./17.05-deposits-balances-cancellation/) | `[SURFACE]` | 9 hypotheses |
 | 17.06 | Radius Clause & Exclusivity Tracking | feature | [17.06-radius-clause-exclusivity.md](./17.06-radius-clause-exclusivity.md) | `[SURFACE]` | 3 hypotheses |
-| 17.07 | Booking Enquiry Inbox & RFQ | feature | [17.07-booking-enquiry-inbox-rfq.md](./17.07-booking-enquiry-inbox-rfq.md) | `[SURFACE]` | 3 hypotheses |
+| 17.07 | Booking Enquiry Inbox & RFQ | feature | [17.07-booking-enquiry-inbox-rfq.md](./17.07-booking-enquiry-inbox-rfq.md) | `[SURFACE]` | 4 hypotheses |
 | 17.08 | Agency Representation & Commission | sub-domain | [17.08-agency-representation-commission/](./17.08-agency-representation-commission/) | `[SURFACE]` | 8 hypotheses |
 | 17.09 | Settlement & Reconciliation | sub-domain | [17.09-settlement-reconciliation/](./17.09-settlement-reconciliation/) | `[SURFACE]` | 20 hypotheses |
 | 17.10 | Live Income Payout & Tax | sub-domain | [17.10-live-income-payout-tax/](./17.10-live-income-payout-tax/) | `[SURFACE]` | 9 hypotheses |

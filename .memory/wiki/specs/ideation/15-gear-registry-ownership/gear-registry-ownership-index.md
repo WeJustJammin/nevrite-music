@@ -37,8 +37,8 @@ A persistent identity for every individual instrument and piece of gear that out
 | 15.05 | Valuation, Appraisal & Insurance | sub-domain | [15.05-valuation-appraisal-insurance/](./15.05-valuation-appraisal-insurance/) | `[BREADTH]` | 9 hypotheses (3 features) |
 | 15.06 | Rig Profile & Compatibility | sub-domain | [15.06-rig-profile-compatibility/](./15.06-rig-profile-compatibility/) | `[BREADTH]` | 9 hypotheses (3 features) |
 | 15.07 | Studio & Backline Asset Register | sub-domain | [15.07-studio-backline-asset-register/](./15.07-studio-backline-asset-register/) | `[BREADTH]` | 9 hypotheses (3 features) |
-| 15.08 | Custody, Loans & Consignment | feature | [15.08-custody-loans-consignment.md](./15.08-custody-loans-consignment.md) | `[SURFACE]` | 3 hypotheses — **Deep Think addition** |
-| 15.09 | Gear Discography | feature | [15.09-gear-discography.md](./15.09-gear-discography.md) | `[SURFACE]` | 3 hypotheses |
+| 15.08 | Custody, Loans & Consignment | feature | [15.08-custody-loans-consignment.md](./15.08-custody-loans-consignment.md) | `[SURFACE]` | 4 hypotheses — **Deep Think addition** |
+| 15.09 | Gear Discography | feature | [15.09-gear-discography.md](./15.09-gear-discography.md) | `[SURFACE]` | 4 hypotheses |
 | 15.10 | Cases, Manifests & Carnet Source Data | feature | [15.10-cases-manifests-carnet-source-data.md](./15.10-cases-manifests-carnet-source-data.md) | `[SURFACE]` | 3 hypotheses |
 
 > **Type column values:**

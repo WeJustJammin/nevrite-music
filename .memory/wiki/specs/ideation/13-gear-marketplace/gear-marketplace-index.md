@@ -52,7 +52,7 @@ Multi-vendor buying and selling of new and used instruments and equipment — ca
 | 09 | Trade-In, Part-Exchange & Consignment | sub-domain | [13.09-tradein-consignment/](./13.09-tradein-consignment/) | `[BREADTH]` | 6 hypotheses |
 | 10 | Gear Rental & Backline Hire | sub-domain | [13.10-gear-rental-backline/](./13.10-gear-rental-backline/) | `[BREADTH]` | 6 hypotheses |
 | 11 | Local Pickup & Meetup Safety | feature | [13.11-local-pickup-meetup-safety.md](./13.11-local-pickup-meetup-safety.md) | `[SURFACE]` | 2 hypotheses |
-| 12 | Gear Seller Storefront & Commerce Policies | feature | [13.12-gear-seller-storefront-policies.md](./13.12-gear-seller-storefront-policies.md) | `[DEEP]` | 2 hypotheses |
+| 12 | Gear Seller Storefront & Commerce Policies | feature | [13.12-gear-seller-storefront-policies.md](./13.12-gear-seller-storefront-policies.md) | `[DEEP]` | 10 hypotheses |
 | 13 | Authorized Dealer Program & MAP Pricing | feature | [13.13-authorized-dealer-map-pricing.md](./13.13-authorized-dealer-map-pricing.md) | `[SURFACE]` | 2 hypotheses |
 
 > **Type column values:**

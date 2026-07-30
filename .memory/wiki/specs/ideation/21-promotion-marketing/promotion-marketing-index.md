@@ -70,7 +70,7 @@ Three things materially changed the picture, and they are recorded as D-02, D-03
 | 04 | Smart Links, Pre-Save & Attribution | sub-domain | [21.04-smart-links-presave-attribution/](./21.04-smart-links-presave-attribution/) | `[SURFACE]` | 10 hypotheses |
 | 05 | Paid Promotion | sub-domain | [21.05-paid-promotion/](./21.05-paid-promotion/) | `[SURFACE]` | 9 hypotheses |
 | 06 | Social Publishing & Cross-Post | feature | [21.06-social-publishing-cross-post.md](./21.06-social-publishing-cross-post.md) | `[SURFACE]` | 2 hypotheses |
-| 07 | Coverage & Clipping Log | feature | [21.07-coverage-clipping-log.md](./21.07-coverage-clipping-log.md) | `[SURFACE]` | 2 hypotheses |
+| 07 | Coverage & Clipping Log | feature | [21.07-coverage-clipping-log.md](./21.07-coverage-clipping-log.md) | `[SURFACE]` | 3 hypotheses |
 | 08 | Event & Tour Marketing | sub-domain | [21.08-event-tour-marketing/](./21.08-event-tour-marketing/) | `[SURFACE]` | 9 hypotheses |
 | 09 | Campaign Press Kit (EPK) & Asset Pack | feature | [21.09-campaign-press-kit-epk.md](./21.09-campaign-press-kit-epk.md) | `[SURFACE]` | 3 hypotheses |
 

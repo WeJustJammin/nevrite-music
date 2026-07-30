@@ -28,20 +28,20 @@ Getting finished music onto stores and streaming services — release building, 
 
 | # | Name | Type | Path | Status | Deep Think |
 |---|------|------|------|--------|------------|
-| 12.01 | Release Builder & Delivery Readiness | sub-domain | [12.01-release-builder/](./12.01-release-builder/12.01-release-builder-index.md) | `[BREADTH]` | 16 hypotheses (5 features) |
-| 12.02 | DDEX Delivery Messaging | sub-domain | [12.02-ddex-delivery-messaging/](./12.02-ddex-delivery-messaging/12.02-ddex-delivery-messaging-index.md) | `[BREADTH]` | 12 hypotheses (4 features) |
-| 12.03 | DSP Store & Territory Management | sub-domain | [12.03-dsp-store-territory-management/](./12.03-dsp-store-territory-management/12.03-dsp-store-territory-management-index.md) | `[BREADTH]` | 12 hypotheses (4 features) |
-| 12.04 | Release Scheduling & Windows | sub-domain | [12.04-release-scheduling-windows/](./12.04-release-scheduling-windows/12.04-release-scheduling-windows-index.md) | `[BREADTH]` | 12 hypotheses (4 features) |
-| 12.05 | Catalog Lifecycle After Release | sub-domain | [12.05-catalog-lifecycle-after-release/](./12.05-catalog-lifecycle-after-release/12.05-catalog-lifecycle-after-release-index.md) | `[BREADTH]` | 9 hypotheses (3 features) |
+| 12.01 | Release Builder & Delivery Readiness | sub-domain | [12.01-release-builder/](./12.01-release-builder/12.01-release-builder-index.md) | `[BREADTH]` | 65 hypotheses (5 features) |
+| 12.02 | DDEX Delivery Messaging | sub-domain | [12.02-ddex-delivery-messaging/](./12.02-ddex-delivery-messaging/12.02-ddex-delivery-messaging-index.md) | `[BREADTH]` | 44 hypotheses (4 features) |
+| 12.03 | DSP Store & Territory Management | sub-domain | [12.03-dsp-store-territory-management/](./12.03-dsp-store-territory-management/12.03-dsp-store-territory-management-index.md) | `[BREADTH]` | 39 hypotheses (4 features) |
+| 12.04 | Release Scheduling & Windows | sub-domain | [12.04-release-scheduling-windows/](./12.04-release-scheduling-windows/12.04-release-scheduling-windows-index.md) | `[BREADTH]` | 26 hypotheses (4 features) |
+| 12.05 | Catalog Lifecycle After Release | sub-domain | [12.05-catalog-lifecycle-after-release/](./12.05-catalog-lifecycle-after-release/12.05-catalog-lifecycle-after-release-index.md) | `[BREADTH]` | 10 hypotheses (3 features) |
 | 12.06 | Content ID & UGC Claiming | sub-domain | [12.06-content-id-ugc-claiming/](./12.06-content-id-ugc-claiming/12.06-content-id-ugc-claiming-index.md) | `[BREADTH]` | 9 hypotheses (3 features) |
-| 12.07 | Identifier Assignment at Delivery | feature | [12.07-identifier-assignment-at-delivery.md](./12.07-identifier-assignment-at-delivery.md) | `[DEEP]` | 3 hypotheses |
+| 12.07 | Identifier Assignment at Delivery | feature | [12.07-identifier-assignment-at-delivery.md](./12.07-identifier-assignment-at-delivery.md) | `[DEEP]` | 13 hypotheses |
 | 12.08 | Catalog Migration & Exit | feature | [12.08-catalog-migration-exit.md](./12.08-catalog-migration-exit.md) | `[SURFACE]` | 3 hypotheses |
 
 > **Type column values:**
 > - `sub-domain` — a grouping with 2+ interacting capabilities (folder with index + CX)
 > - `feature` — a leaf node describing a single capability (.md file)
 
-**Totals**: 6 sub-domains · 25 leaf features (23 in sub-domains + 2 at domain level) · 76 Deep Think hypotheses logged.
+**Totals**: 6 sub-domains · 25 leaf features (23 in sub-domains + 2 at domain level) · 209 Deep Think hypotheses logged.
 
 ### Classification Notes — how the 8 sweep candidates became these 8 children
 

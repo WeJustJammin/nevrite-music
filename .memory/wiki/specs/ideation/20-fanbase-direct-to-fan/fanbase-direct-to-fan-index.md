@@ -35,12 +35,12 @@ The artist's relationship with their audience and its monetization — owned fan
 
 | # | Name | Type | Path | Status | Deep Think |
 |---|------|------|------|--------|------------|
-| 01 | Fan Graph & Owned Audience | sub-domain | [20.01-fan-graph-owned-audience/](./20.01-fan-graph-owned-audience/20.01-fan-graph-owned-audience-index.md) | `[SURFACE]` | 14 hypotheses (5 features) |
-| 02 | Segmentation & Superfan Intelligence | sub-domain | [20.02-segmentation-superfan-intelligence/](./20.02-segmentation-superfan-intelligence/20.02-segmentation-superfan-intelligence-index.md) | `[SURFACE]` | 10 hypotheses (3 features) |
-| 03 | Broadcast & Fan Messaging | sub-domain | [20.03-broadcast-fan-messaging/](./20.03-broadcast-fan-messaging/20.03-broadcast-fan-messaging-index.md) | `[SURFACE]` | 12 hypotheses (4 features) |
-| 04 | Direct-to-Fan Storefront | sub-domain | [20.04-direct-to-fan-storefront/](./20.04-direct-to-fan-storefront/20.04-direct-to-fan-storefront-index.md) | `[SURFACE]` | 13 hypotheses (4 features) |
+| 01 | Fan Graph & Owned Audience | sub-domain | [20.01-fan-graph-owned-audience/](./20.01-fan-graph-owned-audience/20.01-fan-graph-owned-audience-index.md) | `[SURFACE]` | 24 hypotheses (5 features) |
+| 02 | Segmentation & Superfan Intelligence | sub-domain | [20.02-segmentation-superfan-intelligence/](./20.02-segmentation-superfan-intelligence/20.02-segmentation-superfan-intelligence-index.md) | `[SURFACE]` | 11 hypotheses (3 features) |
+| 03 | Broadcast & Fan Messaging | sub-domain | [20.03-broadcast-fan-messaging/](./20.03-broadcast-fan-messaging/20.03-broadcast-fan-messaging-index.md) | `[SURFACE]` | 14 hypotheses (4 features) |
+| 04 | Direct-to-Fan Storefront | sub-domain | [20.04-direct-to-fan-storefront/](./20.04-direct-to-fan-storefront/20.04-direct-to-fan-storefront-index.md) | `[SURFACE]` | 21 hypotheses (4 features) |
 | 05 | Memberships, Patronage & Campaigns | sub-domain | [20.05-memberships-patronage-campaigns/](./20.05-memberships-patronage-campaigns/20.05-memberships-patronage-campaigns-index.md) | `[SURFACE]` | 18 hypotheses (6 features) |
-| 06 | Fan Experience & Discovery | sub-domain | [20.06-fan-experience-discovery/](./20.06-fan-experience-discovery/20.06-fan-experience-discovery-index.md) | `[SURFACE]` | 13 hypotheses (4 features) |
+| 06 | Fan Experience & Discovery | sub-domain | [20.06-fan-experience-discovery/](./20.06-fan-experience-discovery/20.06-fan-experience-discovery-index.md) | `[SURFACE]` | 16 hypotheses (4 features) |
 | 07 | Fan Demand & Show Requests | feature | [20.07-fan-demand-show-requests.md](./20.07-fan-demand-show-requests.md) | `[SURFACE]` | 3 hypotheses |
 
 > **Type column values:**

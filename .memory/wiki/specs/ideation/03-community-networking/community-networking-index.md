@@ -38,7 +38,7 @@ The social layer — connections and follows, the activity feed, collaborator ma
 | 03.06 | Scenes & Communities | sub-domain | [03.06-scenes-communities/](./03.06-scenes-communities/) | [BREADTH] | 14 hypotheses |
 | 03.07 | Forums & Craft Q&A | feature | [03.07-forums-craft-qa.md](./03.07-forums-craft-qa.md) | [SURFACE] | 3 hypotheses |
 | 03.08 | Contests, Challenges & Beat Battles | sub-domain | [03.08-contests-challenges-beat-battles/](./03.08-contests-challenges-beat-battles/) | [BREADTH] | 14 hypotheses |
-| 03.09 | Local Jam & Open Mic Discovery | feature | [03.09-local-jam-open-mic-discovery.md](./03.09-local-jam-open-mic-discovery.md) | [SURFACE] | 3 hypotheses |
+| 03.09 | Local Jam & Open Mic Discovery | feature | [03.09-local-jam-open-mic-discovery.md](./03.09-local-jam-open-mic-discovery.md) | [SURFACE] | 4 hypotheses |
 | 03.10 | Peer & Scene Listening Rooms | feature | [03.10-peer-scene-listening-rooms.md](./03.10-peer-scene-listening-rooms.md) | [SURFACE] | 3 hypotheses |
 | 03.11 | Conference & Industry Event Networking Mode | feature | [03.11-conference-event-networking-mode.md](./03.11-conference-event-networking-mode.md) | [SURFACE] | 3 hypotheses |
 

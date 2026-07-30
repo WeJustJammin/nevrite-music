@@ -84,3 +84,11 @@ Findings requiring product judgement — the craft-immutability contradiction (`
 owner decision queue once verification lands. The alert-cap case is *likely* mechanical
 (`04.02.04` D-12 is canonical at two, the CX misstates it), but that is a verdict for the
 verifier, not an assumption to act on.
+
+
+<!-- spec-graph: auto-generated -->
+## Related Specs
+
+### Constrained by
+- [[decisions.md#d-10|D-10]]
+- [[decisions.md#d-12|D-12]]

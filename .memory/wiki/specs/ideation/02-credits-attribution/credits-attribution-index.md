@@ -33,7 +33,7 @@ The verified graph of who did what on every session, work and recording — capt
 | 02.03 | Claiming & Cold-Start Seeding | sub-domain | [02.03-claiming-cold-start-seeding/](./02.03-claiming-cold-start-seeding/) | `[BREADTH]` | 8 hypotheses (3 children) |
 | 02.04 | Attestation & Credit Confidence | sub-domain | [02.04-attestation-credit-confidence/](./02.04-attestation-credit-confidence/) | `[BREADTH]` | 11 hypotheses (4 children) |
 | 02.05 | Credit Dispute Resolution | feature | [02.05-credit-dispute-resolution.md](./02.05-credit-dispute-resolution.md) | `[SURFACE]` | 3 hypotheses |
-| 02.06 | Credit Role & Instrument Taxonomy | feature | [02.06-credit-role-instrument-taxonomy.md](./02.06-credit-role-instrument-taxonomy.md) | `[DEEP]` | 3 hypotheses |
+| 02.06 | Credit Role & Instrument Taxonomy | feature | [02.06-credit-role-instrument-taxonomy.md](./02.06-credit-role-instrument-taxonomy.md) | `[DEEP]` | 14 hypotheses |
 | 02.07 | Union & Performer Session Reporting | feature | [02.07-union-performer-session-reporting.md](./02.07-union-performer-session-reporting.md) | `[SURFACE]` | 2 hypotheses |
 | 02.08 | Credit Export & DDEX RIN Emission | feature | [02.08-credit-export-ddex-rin.md](./02.08-credit-export-ddex-rin.md) | `[SURFACE]` | 3 hypotheses |
 | 02.09 | Gear ↔ Credit Linkage | feature | [02.09-gear-credit-linkage.md](./02.09-gear-credit-linkage.md) | `[SURFACE]` | 3 hypotheses |

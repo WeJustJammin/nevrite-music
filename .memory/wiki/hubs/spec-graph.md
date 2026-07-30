@@ -1,14 +1,14 @@
 # Spec Graph
 
-- **Nodes**: 1237
-- **Edges**: 8760
+- **Nodes**: 1243
+- **Edges**: 8808
 
 ## Relationship Chains
 
 ## Orphans
 
-- [[specs/audits/audit-scope|Audit Scope — Ambiguity Audit]]
 - [[specs/audits/p01-production-stage-vocabulary-validation|P-01 Production-Stage Vocabulary Validation]]
+- [[specs/audits/run3/CONFIRMED-root-001-truncated-synthesis|CONFIRMED — `root#001`: 11 truncated cross-domain syntheses in `ideation-cx.md`]]
 - [[specs/be|BE Specs Hub]]
 - [[specs/fe|FE Specs Hub]]
 - [[specs/ia|IA Specs Hub]]

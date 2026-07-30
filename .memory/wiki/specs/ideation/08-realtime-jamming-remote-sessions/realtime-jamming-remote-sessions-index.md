@@ -56,11 +56,11 @@ infrastructure-blocked. **The counter-consideration is in D-06 below and it is s
 |---|------|------|------|--------|------------|
 | 08.01 | Latency Budget & Playability | sub-domain | [08.01-latency-budget-playability/](./08.01-latency-budget-playability/08.01-latency-budget-playability-index.md) | `[BREADTH]` | 9 hypotheses (3 features) |
 | 08.02 | Playable Radius & Peer Matching | sub-domain | [08.02-playable-radius-peer-matching/](./08.02-playable-radius-peer-matching/08.02-playable-radius-peer-matching-index.md) | `[BREADTH]` | 9 hypotheses (3 features) |
-| 08.03 | Remote Monitoring & Session Attendance | sub-domain | [08.03-remote-monitoring-session-attendance/](./08.03-remote-monitoring-session-attendance/08.03-remote-monitoring-session-attendance-index.md) | `[BREADTH]` | 12 hypotheses (4 features) |
+| 08.03 | Remote Monitoring & Session Attendance | sub-domain | [08.03-remote-monitoring-session-attendance/](./08.03-remote-monitoring-session-attendance/08.03-remote-monitoring-session-attendance-index.md) | `[BREADTH]` | 14 hypotheses (4 features) |
 | 08.04 | Talkback & Cue Mixes | sub-domain | [08.04-talkback-cue-mixes/](./08.04-talkback-cue-mixes/08.04-talkback-cue-mixes-index.md) | `[BREADTH]` | 9 hypotheses (3 features) |
-| 08.05 | Session Capture & Recall | sub-domain | [08.05-session-capture-recall/](./08.05-session-capture-recall/08.05-session-capture-recall-index.md) | `[BREADTH]` | 12 hypotheses (4 features) |
+| 08.05 | Session Capture & Recall | sub-domain | [08.05-session-capture-recall/](./08.05-session-capture-recall/08.05-session-capture-recall-index.md) | `[BREADTH]` | 43 hypotheses (4 features) |
 | 08.06 | Session Pre-Flight & Rig Readiness Check | feature | [08.06-session-preflight-rig-readiness.md](./08.06-session-preflight-rig-readiness.md) | `[SURFACE]` | 3 hypotheses |
-| 08.07 | Overdub Mode (Latency-Independent Tracking) | feature | [08.07-overdub-mode.md](./08.07-overdub-mode.md) | `[DEEP]` | 3 hypotheses |
+| 08.07 | Overdub Mode (Latency-Independent Tracking) | feature | [08.07-overdub-mode.md](./08.07-overdub-mode.md) | `[DEEP]` | 15 hypotheses |
 | 08.08 | Interruption, Reconnect & Session Continuity | feature | [08.08-interruption-reconnect-continuity.md](./08.08-interruption-reconnect-continuity.md) | `[SURFACE]` | 3 hypotheses |
 
 > **Type column values:**

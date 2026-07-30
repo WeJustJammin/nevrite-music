@@ -1782,3 +1782,10 @@ The vision rubric has 8 dimensions, but not every dimension applies to every doc
 
 **Status**: COMPLETE — audit executed, report issued. Remediation outstanding.
 **Verdict**: GAPS FOUND (20 blocking). `/create-prd` remains blocked.
+
+
+<!-- spec-graph: auto-generated -->
+## Related Specs
+
+### Constrained by
+- [[decisions.md#d-75|D-75]]

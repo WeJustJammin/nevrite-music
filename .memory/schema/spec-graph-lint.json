@@ -1,17 +1,17 @@
 {
-  "builtAt": "2026-07-30T03:44:07.551Z",
+  "builtAt": "2026-07-30T07:38:21.174Z",
   "issues": [
-    {
-      "severity": "warning",
-      "code": "ORPHAN_SPEC",
-      "message": ".memory/wiki/specs/audits/audit-scope.md has no graph relationships",
-      "path": ".memory/wiki/specs/audits/audit-scope.md"
-    },
     {
       "severity": "warning",
       "code": "ORPHAN_SPEC",
       "message": ".memory/wiki/specs/audits/p01-production-stage-vocabulary-validation.md has no graph relationships",
       "path": ".memory/wiki/specs/audits/p01-production-stage-vocabulary-validation.md"
+    },
+    {
+      "severity": "warning",
+      "code": "ORPHAN_SPEC",
+      "message": ".memory/wiki/specs/audits/run3/CONFIRMED-root-001-truncated-synthesis.md has no graph relationships",
+      "path": ".memory/wiki/specs/audits/run3/CONFIRMED-root-001-truncated-synthesis.md"
     },
     {
       "severity": "warning",

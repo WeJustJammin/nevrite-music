@@ -67,15 +67,15 @@ Three findings reshaped the domain and belong at the top of it:
 
 | # | Name | Type | Path | Status | Deep Think |
 |---|------|------|------|--------|------------|
-| 24.01 | Reporting, Moderation & Notice-and-Action | sub-domain | [24.01-reporting-moderation/](./24.01-reporting-moderation/24.01-reporting-moderation-index.md) | `[SURFACE]` | 15 hypotheses (5 features) |
-| 24.02 | Enforcement, Appeals & Policy | sub-domain | [24.02-enforcement-appeals-policy/](./24.02-enforcement-appeals-policy/24.02-enforcement-appeals-policy-index.md) | `[SURFACE]` | 18 hypotheses (6 features) |
-| 24.03 | Fraud & Risk Operations | sub-domain | [24.03-fraud-risk-operations/](./24.03-fraud-risk-operations/24.03-fraud-risk-operations-index.md) | `[SURFACE]` | 18 hypotheses (6 features) |
-| 24.04 | Transaction Disputes & Protection | sub-domain | [24.04-transaction-disputes-protection/](./24.04-transaction-disputes-protection/24.04-transaction-disputes-protection-index.md) | `[SURFACE]` | 12 hypotheses (4 features) |
-| 24.05 | Copyright & Authenticity Enforcement | sub-domain | [24.05-copyright-authenticity-enforcement/](./24.05-copyright-authenticity-enforcement/24.05-copyright-authenticity-enforcement-index.md) | `[SURFACE]` | 12 hypotheses (4 features) |
-| 24.06 | Personal Safety & Threat Response | sub-domain | [24.06-personal-safety-threat-response/](./24.06-personal-safety-threat-response/24.06-personal-safety-threat-response-index.md) | `[SURFACE]` | 9 hypotheses (3 features) |
+| 24.01 | Reporting, Moderation & Notice-and-Action | sub-domain | [24.01-reporting-moderation/](./24.01-reporting-moderation/24.01-reporting-moderation-index.md) | `[SURFACE]` | 25 hypotheses (5 features) |
+| 24.02 | Enforcement, Appeals & Policy | sub-domain | [24.02-enforcement-appeals-policy/](./24.02-enforcement-appeals-policy/24.02-enforcement-appeals-policy-index.md) | `[SURFACE]` | 26 hypotheses (6 features) |
+| 24.03 | Fraud & Risk Operations | sub-domain | [24.03-fraud-risk-operations/](./24.03-fraud-risk-operations/24.03-fraud-risk-operations-index.md) | `[SURFACE]` | 21 hypotheses (6 features) |
+| 24.04 | Transaction Disputes & Protection | sub-domain | [24.04-transaction-disputes-protection/](./24.04-transaction-disputes-protection/24.04-transaction-disputes-protection-index.md) | `[SURFACE]` | 14 hypotheses (4 features) |
+| 24.05 | Copyright & Authenticity Enforcement | sub-domain | [24.05-copyright-authenticity-enforcement/](./24.05-copyright-authenticity-enforcement/24.05-copyright-authenticity-enforcement-index.md) | `[SURFACE]` | 15 hypotheses (4 features) |
+| 24.06 | Personal Safety & Threat Response | sub-domain | [24.06-personal-safety-threat-response/](./24.06-personal-safety-threat-response/24.06-personal-safety-threat-response-index.md) | `[SURFACE]` | 11 hypotheses (3 features) |
 | 24.07 | Identity Abuse & Ownership Disputes | sub-domain | [24.07-identity-abuse-ownership-disputes/](./24.07-identity-abuse-ownership-disputes/24.07-identity-abuse-ownership-disputes-index.md) | `[SURFACE]` | 9 hypotheses (3 features) |
-| 24.08 | Illegal Content & Legal Process | sub-domain | [24.08-illegal-content-legal-process/](./24.08-illegal-content-legal-process/24.08-illegal-content-legal-process-index.md) | `[SURFACE]` | 12 hypotheses (4 features) |
-| 24.09 | Case Evidence Locker & Chain of Custody | feature | [24.09-case-evidence-locker.md](./24.09-case-evidence-locker.md) | `[SURFACE]` | 3 hypotheses |
+| 24.08 | Illegal Content & Legal Process | sub-domain | [24.08-illegal-content-legal-process/](./24.08-illegal-content-legal-process/24.08-illegal-content-legal-process-index.md) | `[SURFACE]` | 14 hypotheses (4 features) |
+| 24.09 | Case Evidence Locker & Chain of Custody | feature | [24.09-case-evidence-locker.md](./24.09-case-evidence-locker.md) | `[SURFACE]` | 6 hypotheses |
 
 > **Type column values:**
 > - `sub-domain` — a grouping with 2+ interacting capabilities (folder with index + CX)

@@ -20,7 +20,7 @@
 | CX-03 | [17.02 Offers & Negotiation](./17.02-offers-negotiation/) | [17.04 Performance Contracts](./17.04-performance-contracts-deal-memos.md) | The accepted version generates the contract — terms flow through as data, never retyped | Musician, Operator | High | A retyped contract is a second source of truth that disagrees with the first at settlement |
 | CX-04 | [17.04 Performance Contracts](./17.04-performance-contracts-deal-memos.md) | [17.05 Deposits, Balances & Cancellation](./17.05-deposits-balances-cancellation/) | Deposit, balance and cancellation terms are contract terms; execution starts the schedule | Musician, Operator | High | The schedule has no terms until a contract executes |
 | CX-05 | [17.05 Deposits, Balances & Cancellation](./17.05-deposits-balances-cancellation/) | [17.01 Availability, Holds & Confirmation](./17.01-availability-holds-confirmation/) | Deposit receipt is an announce precondition; deposit failure reverts the booking — **but does not restore the destroyed holds** | Musician, Operator | High | 17.01 CX-03: confirmation destroys inferior holds irreversibly; revert is compensating, not rollback |
-| CX-06 | [17.09 Settlement & Reconciliation](./17.09-settlement-reconciliation/) | [17.10 Live Income Payout & Tax](./17.10-live-income-payout-tax/) | Final signoff is the disbursement trigger; the settled pool is what the split divides | Musician | High | Nothing moves until both parties sign — a proposal is not a payment |
+| CX-06 | [17.09 Settlement & Reconciliation](./17.09-settlement-reconciliation/) | [17.10 Live Income Payout & Tax](./17.10-live-income-payout-tax/) | Final signoff releases the full payable; a **refusal** releases the undisputed floor and holds the contested delta — two release events, not one | Musician | High | 17.09.05 D-09: "Refusal blocks finality, not payment — the undisputed floor is payable immediately"; 17.09.06 Q-03 resolved: payable without a second signature |
 | CX-07 | [17.09 Settlement & Reconciliation](./17.09-settlement-reconciliation/) | [17.08 Agency Representation & Commission](./17.08-agency-representation-commission/) | Commission accrues from the settlement — an amendment after disbursement is a **clawback from a third party** | Musician | High | 17.08.02 DT-02: settlements get amended; agencies have been paid and have spent it |
 | CX-08 | [17.09 Settlement & Reconciliation](./17.09-settlement-reconciliation/) | [17.11 Draw History & Market Intelligence](./17.11-draw-history-market-intelligence/) | **Settlement is the generator.** A signed settlement is what makes a draw record verified rather than claimed | Musician, Operator | High | Domain index: settlement is "the source dataset for draw intelligence" |
 | CX-09 | [17.09 Settlement & Reconciliation](./17.09-settlement-reconciliation/) | [17.12 Counterparty Relationship & Payment Reliability](./17.12-counterparty-relationship-payment-reliability.md) | Settlement facts derive the reliability record — paid on time, count matched, contested or not | Musician, Operator | High | Domain index: settlement is "the source of payment-reliability reputation" |
@@ -175,8 +175,11 @@ destroyed.** Those parties have re-routed and moved on.
 
 ### CX-06: Settlement & Reconciliation ↔ Live Income Payout & Tax
 
-**Relationship**: Final bilateral signoff is the disbursement trigger; the settled pool is exactly what
-the split divides. Nothing moves until both parties sign — a proposal is not a payment.
+**Relationship**: Final bilateral signoff is the disbursement trigger for the **full** payable; the settled
+pool is exactly what the split divides. An unanswered proposal moves nothing — but a **refusal** is not
+silence, and it releases the **undisputed floor**, the sheet re-evaluated with every disputed line conceded
+to the counterparty, holding only the contested delta ([17.09.05](./17.09-settlement-reconciliation/17.09.05-settlement-signoff-variance.md)
+D-09). Refusal blocks finality, not payment; the floor is payable without a second signature.
 
 **Role scoping**:
 - **Musician**: the split divides the settled pool among the act's members and payees.
@@ -187,7 +190,9 @@ the split divides. Nothing moves until both parties sign — a proposal is not a
 1. **Shared state conflict**: The settled pool is owned by the settlement (17.09); the split (17.10.01) is
    a separate pinned agreement dividing it. Party ≠ payee — a split can be valid with an unresolved payee
    (a dep with no account); disbursement is what blocks, not the split (domain-01 CX; [61]).
-2. **Trigger chain**: Bilateral signoff → disburse via the Payments/Escrow rail. Per-member deductions
+2. **Trigger chain**: Bilateral signoff → disburse the full payable via the Payments/Escrow rail; **refusal →
+   disburse the undisputed floor only**, delta held until the amendment is signed (17.09.05 D-09, D-14). So
+   17.10.02 has two release events, not one, and its idempotency is per release. Per-member deductions
    (per diems, float — 18.13.01) land *after* division, costing one member entirely; pool deductions cost
    everyone proportionally ([63]).
 3. **Permission intersection**: The split's approval rule is consumed from 01.04, the same rule that binds
@@ -709,17 +714,17 @@ a knowing simplification (DT-05), not an oversight.
 
 ### Constrained by
 - [[decisions.md#d-01|D-01]]
+- [[decisions.md#d-09|D-09]]
 - [[decisions.md#d-13|D-13]]
 - [[decisions.md#d-15|D-15]]
 - [[decisions.md#d-05|D-05]]
 - [[decisions.md#d-11|D-11]]
 - [[decisions.md#d-03|D-03]]
-- [[decisions.md#d-09|D-09]]
 - [[decisions.md#d-04|D-04]]
 - [[decisions.md#d-20|D-20]]
+- [[decisions.md#d-14|D-14]]
 - [[decisions.md#d-02|D-02]]
 - [[decisions.md#d-06|D-06]]
 - [[decisions.md#d-07|D-07]]
 - [[decisions.md#d-18|D-18]]
-- [[decisions.md#d-14|D-14]]
 - [[decisions.md#d-08|D-08]]

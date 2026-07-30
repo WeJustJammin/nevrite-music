@@ -60,7 +60,7 @@ Two findings from breadth classification strengthen the domain-status argument b
 | 01 | Place Records & Rooms | sub-domain | [16.01-place-records-rooms/](./16.01-place-records-rooms/) | [SURFACE] | 28 hypotheses (7 features) |
 | 02 | Venue Technical Specification | sub-domain | [16.02-venue-technical-specification/](./16.02-venue-technical-specification/) | [SURFACE] | 27 hypotheses (6 features) |
 | 03 | Studio Technical Specification | sub-domain | [16.03-studio-technical-specification/](./16.03-studio-technical-specification/) | [SURFACE] | 18 hypotheses (4 features) |
-| 04 | Rehearsal & Practice Space Specification | feature | [16.04-rehearsal-practice-space-specification.md](./16.04-rehearsal-practice-space-specification.md) | [SURFACE] | 4 hypotheses |
+| 04 | Rehearsal & Practice Space Specification | feature | [16.04-rehearsal-practice-space-specification.md](./16.04-rehearsal-practice-space-specification.md) | [SURFACE] | 5 hypotheses |
 | 05 | Curation, Provenance & Data Integrity | sub-domain | [16.05-curation-provenance-data-integrity/](./16.05-curation-provenance-data-integrity/) | [SURFACE] | 35 hypotheses (7 features) |
 | 06 | Space Booking & Reservations | sub-domain | [16.06-space-booking-reservations/](./16.06-space-booking-reservations/) | [SURFACE] | 44 hypotheses (9 features) |
 | 07 | Spec Conformance Check (Rider ↔ Room) | feature | [16.07-spec-conformance-check-rider-room.md](./16.07-spec-conformance-check-rider-room.md) | [SURFACE] | 5 hypotheses |

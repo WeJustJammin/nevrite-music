@@ -53,7 +53,7 @@ Two claims above survived; two did not, and both matter more than the ones that 
 | 11.10 | Print & Lyric Rights | feature | [11.10-print-lyric-rights.md](./11.10-print-lyric-rights.md) | `[SURFACE]` | 3 hypotheses |
 | 11.11 | Grand Rights & Dramatic Performance | feature | [11.11-grand-rights-dramatic-performance.md](./11.11-grand-rights-dramatic-performance.md) | `[SURFACE]` | 3 hypotheses |
 
-**Totals**: 8 sub-domains · 34 leaf features · 103 Deep Think hypotheses logged · max depth 3.
+**Totals**: 8 sub-domains · 34 leaf features · 187 Deep Think hypotheses logged · max depth 3.
 
 Intra-domain cross-cuts, domain-wide patterns and rejected pairs: [music-licensing-cx.md](./music-licensing-cx.md).
 

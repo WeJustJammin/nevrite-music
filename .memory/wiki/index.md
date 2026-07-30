@@ -26,6 +26,7 @@
 - [[specs/audits/decision-ratification-log|Blocking Decision Queue — Ratification Log]] — audit — spec-vault
 - [[specs/audits/dq-r2-01-decision-brief|DQ-R2-01 — Owner Decision Brief]] — audit — spec-vault
 - [[specs/audits/ideation-ambiguity-report-run2-interim|Ideation Ambiguity Audit — Run 2 (post-remediation), INTERIM]] — audit — spec-vault
+- [[specs/audits/ideation-ambiguity-report-run3|Ideation Ambiguity Audit — Run 3]] — audit — spec-vault
 - [[specs/audits/ideation-ambiguity-report|Ideation Ambiguity Audit — Report]] — audit — spec-vault
 - [[specs/audits/ideation-remediation-decision-queue|Ideation Remediation — Canonical Decision Queue]] — audit — spec-vault
 - [[specs/audits/owner-decision-queue|Owner Decision Queue — expired-deferral triage, bucket C]] — audit — spec-vault
@@ -33,6 +34,9 @@
 - [[specs/audits/propagation-dq-r2-01-2026-07-29|Propagation Record — DQ-R2-01 (Option A′)]] — audit — spec-vault
 - [[specs/audits/remediation-state|Remediation State]] — audit — spec-vault
 - [[specs/audits/run2-blocking-decision-queue|Run-2 Blocking Decision Queue]] — audit — spec-vault
+- [[specs/audits/run3/CONFIRMED-root-001-truncated-synthesis|CONFIRMED — `root#001`: 11 truncated cross-domain syntheses in `ideation-cx.md`]] — audit — spec-vault
+- [[specs/audits/run3/MECHANICAL-REMEDIATION-QUEUE|Run-3 Mechanical Remediation Queue]] — audit — spec-vault
+- [[specs/audits/run3-owner-decision-queue|Run-3 Owner Decision Queue — Ideation Layer]] — audit — spec-vault
 - [[specs/audits/tracked-phase2-warnings|Tracked Phase-2 Ambiguity Warnings]] — audit — spec-vault
 - [[specs/be|BE Specs Hub]] — spec — spec-vault
 - [[specs/fe|FE Specs Hub]] — spec — spec-vault

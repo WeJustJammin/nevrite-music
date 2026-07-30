@@ -29,7 +29,7 @@ Running the business of a music career — total income across every lumpy sourc
 
 | # | Name | Type | Path | Status | Deep Think |
 |---|------|------|------|--------|------------|
-| 23.01 | Income Aggregation & Financial Identity | sub-domain | [23.01-income-aggregation-financial-identity/](./23.01-income-aggregation-financial-identity/23.01-income-aggregation-financial-identity-index.md) | `[SURFACE]` | 15 hypotheses (5 features) |
+| 23.01 | Income Aggregation & Financial Identity | sub-domain | [23.01-income-aggregation-financial-identity/](./23.01-income-aggregation-financial-identity/23.01-income-aggregation-financial-identity-index.md) | `[SURFACE]` | 18 hypotheses (5 features) |
 | 23.02 | Expenses & Tax Readiness | sub-domain | [23.02-expenses-tax-readiness/](./23.02-expenses-tax-readiness/23.02-expenses-tax-readiness-index.md) | `[SURFACE]` | 12 hypotheses (4 features) |
 | 23.03 | Invoicing & Receivables | sub-domain | [23.03-invoicing-receivables/](./23.03-invoicing-receivables/23.03-invoicing-receivables-index.md) | `[SURFACE]` | 9 hypotheses (3 features) |
 | 23.04 | Deal & Contract Vault | sub-domain | [23.04-deal-contract-vault/](./23.04-deal-contract-vault/23.04-deal-contract-vault-index.md) | `[SURFACE]` | 12 hypotheses (4 features) |

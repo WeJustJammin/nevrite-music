@@ -31,8 +31,8 @@ visas and carnets.
 
 | # | Name | Type | Path | Status | Deep Think |
 |---|------|------|------|--------|------------|
-| 01 | Event Record & Lifecycle States | feature | [18.01-event-record-lifecycle.md](./18.01-event-record-lifecycle.md) | `[SURFACE]` | 4 hypotheses |
-| 02 | Bill & Support Act Management | feature | [18.02-bill-support-acts.md](./18.02-bill-support-acts.md) | `[SURFACE]` | 4 hypotheses |
+| 01 | Event Record & Lifecycle States | feature | [18.01-event-record-lifecycle.md](./18.01-event-record-lifecycle.md) | `[SURFACE]` | 16 hypotheses |
+| 02 | Bill & Support Act Management | feature | [18.02-bill-support-acts.md](./18.02-bill-support-acts.md) | `[SURFACE]` | 5 hypotheses |
 | 03 | Show Advancing | sub-domain | [18.03-show-advancing/](./18.03-show-advancing/) | `[SURFACE]` | 22 across 5 children |
 | 04 | Riders | sub-domain | [18.04-riders/](./18.04-riders/) | `[SURFACE]` | 17 across 4 children |
 | 05 | Stage Plot & Input List | sub-domain | [18.05-stage-plot-input-list/](./18.05-stage-plot-input-list/) | `[SURFACE]` | 12 across 3 children |

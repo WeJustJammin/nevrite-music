@@ -1,7 +1,7 @@
 {
-  "builtAt": "2026-07-30T03:44:07.551Z",
-  "nodeCount": 1237,
-  "edgeCount": 8760,
+  "builtAt": "2026-07-30T07:38:21.174Z",
+  "nodeCount": 1243,
+  "edgeCount": 8808,
   "nodes": [
     {
       "id": "audit:audits/audit-scope",
@@ -74,6 +74,13 @@
       "shardId": null
     },
     {
+      "id": "audit:audits/ideation-ambiguity-report-run3",
+      "type": "audit",
+      "label": "Ideation Ambiguity Audit — Run 3",
+      "path": ".memory/wiki/specs/audits/ideation-ambiguity-report-run3.md",
+      "shardId": null
+    },
+    {
       "id": "audit:audits/ideation-ambiguity-report",
       "type": "audit",
       "label": "Ideation Ambiguity Audit — Report",
@@ -120,6 +127,27 @@
       "type": "audit",
       "label": "Run-2 Blocking Decision Queue",
       "path": ".memory/wiki/specs/audits/run2-blocking-decision-queue.md",
+      "shardId": null
+    },
+    {
+      "id": "audit:audits/run3/CONFIRMED-root-001-truncated-synthesis",
+      "type": "audit",
+      "label": "CONFIRMED — `root#001`: 11 truncated cross-domain syntheses in `ideation-cx.md`",
+      "path": ".memory/wiki/specs/audits/run3/CONFIRMED-root-001-truncated-synthesis.md",
+      "shardId": null
+    },
+    {
+      "id": "audit:audits/run3/MECHANICAL-REMEDIATION-QUEUE",
+      "type": "audit",
+      "label": "Run-3 Mechanical Remediation Queue",
+      "path": ".memory/wiki/specs/audits/run3/MECHANICAL-REMEDIATION-QUEUE.md",
+      "shardId": null
+    },
+    {
+      "id": "audit:audits/run3-owner-decision-queue",
+      "type": "audit",
+      "label": "Run-3 Owner Decision Queue — Ideation Layer",
+      "path": ".memory/wiki/specs/audits/run3-owner-decision-queue.md",
       "shardId": null
     },
     {
@@ -8026,6 +8054,13 @@
       "shardId": null
     },
     {
+      "id": "decision:d-75",
+      "type": "decision",
+      "label": "D-75",
+      "path": ".memory/wiki/decisions.md#d-75",
+      "shardId": null
+    },
+    {
       "id": "decision:d-11",
       "type": "decision",
       "label": "D-11",
@@ -8285,10 +8320,10 @@
       "shardId": null
     },
     {
-      "id": "decision:d-75",
+      "id": "decision:d-27",
       "type": "decision",
-      "label": "D-75",
-      "path": ".memory/wiki/decisions.md#d-75",
+      "label": "D-27",
+      "path": ".memory/wiki/decisions.md#d-27",
       "shardId": null
     },
     {
@@ -8366,6 +8401,20 @@
       "type": "decision",
       "label": "D-67",
       "path": ".memory/wiki/decisions.md#d-67",
+      "shardId": null
+    },
+    {
+      "id": "decision:d-numbered",
+      "type": "decision",
+      "label": "D-numbered",
+      "path": ".memory/wiki/decisions.md#d-numbered",
+      "shardId": null
+    },
+    {
+      "id": "decision:d-row",
+      "type": "decision",
+      "label": "D-row",
+      "path": ".memory/wiki/decisions.md#d-row",
       "shardId": null
     },
     {
@@ -8492,13 +8541,6 @@
       "type": "decision",
       "label": "D-64",
       "path": ".memory/wiki/decisions.md#d-64",
-      "shardId": null
-    },
-    {
-      "id": "decision:d-27",
-      "type": "decision",
-      "label": "D-27",
-      "path": ".memory/wiki/decisions.md#d-27",
       "shardId": null
     },
     {
@@ -8664,6 +8706,12 @@
     }
   ],
   "edges": [
+    {
+      "from": "audit:audits/audit-scope",
+      "to": "decision:d-75",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
     {
       "from": "audit:audits/blocking-decision-queue",
       "to": "decision:d-11",
@@ -9297,6 +9345,120 @@
     {
       "from": "audit:audits/ideation-ambiguity-report-run2-interim",
       "to": "decision:d-03",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "audit:audits/ideation-ambiguity-report-run3",
+      "to": "decision:d-75",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "audit:audits/ideation-ambiguity-report-run3",
+      "to": "decision:d-13",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "audit:audits/ideation-ambiguity-report-run3",
+      "to": "decision:d-12",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "audit:audits/ideation-ambiguity-report-run3",
+      "to": "decision:d-06",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "audit:audits/ideation-ambiguity-report-run3",
+      "to": "decision:d-17",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "audit:audits/ideation-ambiguity-report-run3",
+      "to": "decision:d-10",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "audit:audits/ideation-ambiguity-report-run3",
+      "to": "decision:d-02",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "audit:audits/ideation-ambiguity-report-run3",
+      "to": "decision:d-05",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "audit:audits/ideation-ambiguity-report-run3",
+      "to": "decision:d-09",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "audit:audits/ideation-ambiguity-report-run3",
+      "to": "decision:d-11",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "audit:audits/ideation-ambiguity-report-run3",
+      "to": "decision:d-15",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "audit:audits/ideation-ambiguity-report-run3",
+      "to": "decision:d-01",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "audit:audits/ideation-ambiguity-report-run3",
+      "to": "decision:d-07",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "audit:audits/ideation-ambiguity-report-run3",
+      "to": "decision:d-21",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "audit:audits/ideation-ambiguity-report-run3",
+      "to": "decision:d-08",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "audit:audits/ideation-ambiguity-report-run3",
+      "to": "decision:d-04",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "audit:audits/ideation-ambiguity-report-run3",
+      "to": "decision:d-14",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "audit:audits/ideation-ambiguity-report-run3",
+      "to": "decision:d-27",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "audit:audits/ideation-ambiguity-report-run3",
+      "to": "decision:d-70",
       "type": "constrained_by",
       "source": "decision-ref"
     },
@@ -9945,6 +10107,120 @@
     {
       "from": "audit:audits/run2-blocking-decision-queue",
       "to": "decision:d-02",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "audit:audits/run3/MECHANICAL-REMEDIATION-QUEUE",
+      "to": "decision:d-10",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "audit:audits/run3/MECHANICAL-REMEDIATION-QUEUE",
+      "to": "decision:d-12",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "audit:audits/run3-owner-decision-queue",
+      "to": "decision:d-05",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "audit:audits/run3-owner-decision-queue",
+      "to": "decision:d-06",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "audit:audits/run3-owner-decision-queue",
+      "to": "decision:d-12",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "audit:audits/run3-owner-decision-queue",
+      "to": "decision:d-10",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "audit:audits/run3-owner-decision-queue",
+      "to": "decision:d-09",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "audit:audits/run3-owner-decision-queue",
+      "to": "decision:d-13",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "audit:audits/run3-owner-decision-queue",
+      "to": "decision:d-15",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "audit:audits/run3-owner-decision-queue",
+      "to": "decision:d-01",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "audit:audits/run3-owner-decision-queue",
+      "to": "decision:d-07",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "audit:audits/run3-owner-decision-queue",
+      "to": "decision:d-11",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "audit:audits/run3-owner-decision-queue",
+      "to": "decision:d-08",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "audit:audits/run3-owner-decision-queue",
+      "to": "decision:d-03",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "audit:audits/run3-owner-decision-queue",
+      "to": "decision:d-04",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "audit:audits/run3-owner-decision-queue",
+      "to": "decision:d-nn",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "audit:audits/run3-owner-decision-queue",
+      "to": "decision:d-02",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "audit:audits/run3-owner-decision-queue",
+      "to": "decision:d-numbered",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "audit:audits/run3-owner-decision-queue",
+      "to": "decision:d-row",
       "type": "constrained_by",
       "source": "decision-ref"
     },
@@ -16856,6 +17132,12 @@
     },
     {
       "from": "ideation:ideation/04-opportunities-casting/04.01-opportunity-posting-targeting/04.01.01-opportunity-post-type-taxonomy",
+      "to": "decision:d-17",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/04-opportunities-casting/04.01-opportunity-posting-targeting/04.01.01-opportunity-post-type-taxonomy",
       "to": "decision:d-07",
       "type": "constrained_by",
       "source": "decision-ref"
@@ -18368,6 +18650,12 @@
     },
     {
       "from": "ideation:ideation/04-opportunities-casting/04.05-outcome-response-handoff/04.05.04-applicant-pipeline-history",
+      "to": "decision:d-12",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/04-opportunities-casting/04.05-outcome-response-handoff/04.05.04-applicant-pipeline-history",
       "to": "decision:d-01",
       "type": "constrained_by",
       "source": "decision-ref"
@@ -18375,6 +18663,12 @@
     {
       "from": "ideation:ideation/04-opportunities-casting/04.05-outcome-response-handoff/04.05.04-applicant-pipeline-history",
       "to": "decision:d-03",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/04-opportunities-casting/04.05-outcome-response-handoff/04.05.04-applicant-pipeline-history",
+      "to": "decision:d-11",
       "type": "constrained_by",
       "source": "decision-ref"
     },
@@ -18393,6 +18687,12 @@
     {
       "from": "ideation:ideation/04-opportunities-casting/04.05-outcome-response-handoff/04.05.04-applicant-pipeline-history",
       "to": "decision:d-06",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/04-opportunities-casting/04.05-outcome-response-handoff/04.05.04-applicant-pipeline-history",
+      "to": "decision:d-09",
       "type": "constrained_by",
       "source": "decision-ref"
     },
@@ -18512,6 +18812,12 @@
     },
     {
       "from": "ideation:ideation/04-opportunities-casting/opportunities-casting-cx",
+      "to": "decision:d-12",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/04-opportunities-casting/opportunities-casting-cx",
       "to": "decision:d-13",
       "type": "constrained_by",
       "source": "decision-ref"
@@ -18567,12 +18873,6 @@
     {
       "from": "ideation:ideation/04-opportunities-casting/opportunities-casting-cx",
       "to": "decision:d-11",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "ideation:ideation/04-opportunities-casting/opportunities-casting-cx",
-      "to": "decision:d-12",
       "type": "constrained_by",
       "source": "decision-ref"
     },
@@ -21464,6 +21764,18 @@
     },
     {
       "from": "ideation:ideation/06-education-lessons-mentorship/06.02-teacher-discovery-profiles-trials/06.02.01-teacher-tuition-profile",
+      "to": "decision:d-02",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/06-education-lessons-mentorship/06.02-teacher-discovery-profiles-trials/06.02.01-teacher-tuition-profile",
+      "to": "decision:d-11",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/06-education-lessons-mentorship/06.02-teacher-discovery-profiles-trials/06.02.01-teacher-tuition-profile",
       "to": "decision:d-09",
       "type": "constrained_by",
       "source": "decision-ref"
@@ -21488,12 +21800,6 @@
     },
     {
       "from": "ideation:ideation/06-education-lessons-mentorship/06.02-teacher-discovery-profiles-trials/06.02.01-teacher-tuition-profile",
-      "to": "decision:d-02",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "ideation:ideation/06-education-lessons-mentorship/06.02-teacher-discovery-profiles-trials/06.02.01-teacher-tuition-profile",
       "to": "decision:d-05",
       "type": "constrained_by",
       "source": "decision-ref"
@@ -21513,12 +21819,6 @@
     {
       "from": "ideation:ideation/06-education-lessons-mentorship/06.02-teacher-discovery-profiles-trials/06.02.01-teacher-tuition-profile",
       "to": "decision:d-10",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "ideation:ideation/06-education-lessons-mentorship/06.02-teacher-discovery-profiles-trials/06.02.01-teacher-tuition-profile",
-      "to": "decision:d-11",
       "type": "constrained_by",
       "source": "decision-ref"
     },
@@ -21686,6 +21986,12 @@
     },
     {
       "from": "ideation:ideation/06-education-lessons-mentorship/06.02-teacher-discovery-profiles-trials/06.02.03-teacher-discovery-match-criteria",
+      "to": "decision:d-11",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/06-education-lessons-mentorship/06.02-teacher-discovery-profiles-trials/06.02.03-teacher-discovery-match-criteria",
       "to": "decision:d-04",
       "type": "constrained_by",
       "source": "decision-ref"
@@ -21705,12 +22011,6 @@
     {
       "from": "ideation:ideation/06-education-lessons-mentorship/06.02-teacher-discovery-profiles-trials/06.02.03-teacher-discovery-match-criteria",
       "to": "decision:d-09",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "ideation:ideation/06-education-lessons-mentorship/06.02-teacher-discovery-profiles-trials/06.02.03-teacher-discovery-match-criteria",
-      "to": "decision:d-11",
       "type": "constrained_by",
       "source": "decision-ref"
     },
@@ -23324,6 +23624,24 @@
     },
     {
       "from": "ideation:ideation/07-music-projects-collaboration/07.03-contributors-access-confidentiality/07.03.02-contributor-invitation-scoped-onboarding",
+      "to": "decision:d-10",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/07-music-projects-collaboration/07.03-contributors-access-confidentiality/07.03.02-contributor-invitation-scoped-onboarding",
+      "to": "decision:d-11",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/07-music-projects-collaboration/07.03-contributors-access-confidentiality/07.03.02-contributor-invitation-scoped-onboarding",
+      "to": "decision:d-08",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/07-music-projects-collaboration/07.03-contributors-access-confidentiality/07.03.02-contributor-invitation-scoped-onboarding",
       "to": "decision:d-06",
       "type": "constrained_by",
       "source": "decision-ref"
@@ -23348,25 +23666,7 @@
     },
     {
       "from": "ideation:ideation/07-music-projects-collaboration/07.03-contributors-access-confidentiality/07.03.02-contributor-invitation-scoped-onboarding",
-      "to": "decision:d-08",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "ideation:ideation/07-music-projects-collaboration/07.03-contributors-access-confidentiality/07.03.02-contributor-invitation-scoped-onboarding",
       "to": "decision:d-09",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "ideation:ideation/07-music-projects-collaboration/07.03-contributors-access-confidentiality/07.03.02-contributor-invitation-scoped-onboarding",
-      "to": "decision:d-10",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "ideation:ideation/07-music-projects-collaboration/07.03-contributors-access-confidentiality/07.03.02-contributor-invitation-scoped-onboarding",
-      "to": "decision:d-11",
       "type": "constrained_by",
       "source": "decision-ref"
     },
@@ -47390,6 +47690,24 @@
     },
     {
       "from": "ideation:ideation/17-live-booking-settlement/17.10-live-income-payout-tax/17.10.02-disbursement-execution",
+      "to": "decision:d-09",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/17-live-booking-settlement/17.10-live-income-payout-tax/17.10.02-disbursement-execution",
+      "to": "decision:d-08",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/17-live-booking-settlement/17.10-live-income-payout-tax/17.10.02-disbursement-execution",
+      "to": "decision:d-14",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/17-live-booking-settlement/17.10-live-income-payout-tax/17.10.02-disbursement-execution",
       "to": "decision:d-03",
       "type": "constrained_by",
       "source": "decision-ref"
@@ -47708,6 +48026,12 @@
     },
     {
       "from": "ideation:ideation/17-live-booking-settlement/live-booking-settlement-cx",
+      "to": "decision:d-09",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/17-live-booking-settlement/live-booking-settlement-cx",
       "to": "decision:d-13",
       "type": "constrained_by",
       "source": "decision-ref"
@@ -47738,12 +48062,6 @@
     },
     {
       "from": "ideation:ideation/17-live-booking-settlement/live-booking-settlement-cx",
-      "to": "decision:d-09",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "ideation:ideation/17-live-booking-settlement/live-booking-settlement-cx",
       "to": "decision:d-04",
       "type": "constrained_by",
       "source": "decision-ref"
@@ -47751,6 +48069,12 @@
     {
       "from": "ideation:ideation/17-live-booking-settlement/live-booking-settlement-cx",
       "to": "decision:d-20",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/17-live-booking-settlement/live-booking-settlement-cx",
+      "to": "decision:d-14",
       "type": "constrained_by",
       "source": "decision-ref"
     },
@@ -47775,12 +48099,6 @@
     {
       "from": "ideation:ideation/17-live-booking-settlement/live-booking-settlement-cx",
       "to": "decision:d-18",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "ideation:ideation/17-live-booking-settlement/live-booking-settlement-cx",
-      "to": "decision:d-14",
       "type": "constrained_by",
       "source": "decision-ref"
     },
@@ -54254,6 +54572,12 @@
     },
     {
       "from": "ideation:ideation/20-fanbase-direct-to-fan/20.06-fan-experience-discovery/20.06.03-fan-library-collection",
+      "to": "decision:d-08",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/20-fanbase-direct-to-fan/20.06-fan-experience-discovery/20.06.03-fan-library-collection",
       "to": "decision:d-03",
       "type": "constrained_by",
       "source": "decision-ref"
@@ -54291,12 +54615,6 @@
     {
       "from": "ideation:ideation/20-fanbase-direct-to-fan/20.06-fan-experience-discovery/20.06.03-fan-library-collection",
       "to": "decision:d-07",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "ideation:ideation/20-fanbase-direct-to-fan/20.06-fan-experience-discovery/20.06.03-fan-library-collection",
-      "to": "decision:d-08",
       "type": "constrained_by",
       "source": "decision-ref"
     },
@@ -60284,6 +60602,18 @@
     },
     {
       "from": "ideation:ideation/ideation-cx",
+      "to": "decision:d-18",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/ideation-cx",
+      "to": "decision:d-19",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/ideation-cx",
       "to": "decision:d-17",
       "type": "constrained_by",
       "source": "decision-ref"
@@ -61227,13 +61557,13 @@
   ],
   "stats": {
     "byNodeType": {
-      "audit": 18,
+      "audit": 22,
       "plan": 6,
       "ideation": 1122,
-      "decision": 91
+      "decision": 93
     },
     "byEdgeType": {
-      "constrained_by": 8760
+      "constrained_by": 8808
     }
   }
 }
