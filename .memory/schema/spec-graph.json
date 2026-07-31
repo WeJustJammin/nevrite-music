@@ -1,7 +1,7 @@
 {
-  "builtAt": "2026-07-31T02:36:30.566Z",
+  "builtAt": "2026-07-31T02:42:42.253Z",
   "nodeCount": 1244,
-  "edgeCount": 8930,
+  "edgeCount": 8931,
   "nodes": [
     {
       "id": "audit:audits/audit-scope",
@@ -50715,6 +50715,12 @@
     },
     {
       "from": "ideation:ideation/18-show-production-touring/18.13-tour-finance/18.13-tour-finance-cx",
+      "to": "decision:d-05",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/18-show-production-touring/18.13-tour-finance/18.13-tour-finance-cx",
       "to": "decision:d-02",
       "type": "constrained_by",
       "source": "decision-ref"
@@ -62302,7 +62308,7 @@
       "decision": 93
     },
     "byEdgeType": {
-      "constrained_by": 8930
+      "constrained_by": 8931
     }
   }
 }
