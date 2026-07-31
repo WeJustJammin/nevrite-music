@@ -1,6 +1,6 @@
 {
-  "builtAt": "2026-07-30T19:30:59.349Z",
-  "nodeCount": 1243,
+  "builtAt": "2026-07-31T02:36:30.566Z",
+  "nodeCount": 1244,
   "edgeCount": 8930,
   "nodes": [
     {
@@ -148,6 +148,13 @@
       "type": "audit",
       "label": "Run-3 Owner Decision Queue — Ideation Layer",
       "path": ".memory/wiki/specs/audits/run3-owner-decision-queue.md",
+      "shardId": null
+    },
+    {
+      "id": "audit:audits/run6/VOID-run-did-not-complete",
+      "type": "audit",
+      "label": "Run 6 — VOID. This run did not complete and its verdict is meaningless.",
+      "path": ".memory/wiki/specs/audits/run6/VOID-run-did-not-complete.md",
       "shardId": null
     },
     {
@@ -62289,7 +62296,7 @@
   ],
   "stats": {
     "byNodeType": {
-      "audit": 22,
+      "audit": 23,
       "plan": 6,
       "ideation": 1122,
       "decision": 93

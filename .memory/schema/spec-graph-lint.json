@@ -1,5 +1,5 @@
 {
-  "builtAt": "2026-07-30T19:30:59.349Z",
+  "builtAt": "2026-07-31T02:36:30.566Z",
   "issues": [
     {
       "severity": "warning",
@@ -12,6 +12,12 @@
       "code": "ORPHAN_SPEC",
       "message": ".memory/wiki/specs/audits/run3/CONFIRMED-root-001-truncated-synthesis.md has no graph relationships",
       "path": ".memory/wiki/specs/audits/run3/CONFIRMED-root-001-truncated-synthesis.md"
+    },
+    {
+      "severity": "warning",
+      "code": "ORPHAN_SPEC",
+      "message": ".memory/wiki/specs/audits/run6/VOID-run-did-not-complete.md has no graph relationships",
+      "path": ".memory/wiki/specs/audits/run6/VOID-run-did-not-complete.md"
     },
     {
       "severity": "warning",

@@ -21,4 +21,5 @@
 - [[specs/audits/run3/CONFIRMED-root-001-truncated-synthesis|CONFIRMED — `root#001`: 11 truncated cross-domain syntheses in `ideation-cx.md`]]
 - [[specs/audits/run3/MECHANICAL-REMEDIATION-QUEUE|Run-3 Mechanical Remediation Queue]]
 - [[specs/audits/run3-owner-decision-queue|Run-3 Owner Decision Queue — Ideation Layer]]
+- [[specs/audits/run6/VOID-run-did-not-complete|Run 6 — VOID. This run did not complete and its verdict is meaningless.]]
 - [[specs/audits/tracked-phase2-warnings|Tracked Phase-2 Ambiguity Warnings]]

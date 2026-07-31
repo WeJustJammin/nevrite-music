@@ -1,6 +1,6 @@
 # Spec Graph
 
-- **Nodes**: 1243
+- **Nodes**: 1244
 - **Edges**: 8930
 
 ## Relationship Chains
@@ -9,6 +9,7 @@
 
 - [[specs/audits/p01-production-stage-vocabulary-validation|P-01 Production-Stage Vocabulary Validation]]
 - [[specs/audits/run3/CONFIRMED-root-001-truncated-synthesis|CONFIRMED — `root#001`: 11 truncated cross-domain syntheses in `ideation-cx.md`]]
+- [[specs/audits/run6/VOID-run-did-not-complete|Run 6 — VOID. This run did not complete and its verdict is meaningless.]]
 - [[specs/be|BE Specs Hub]]
 - [[specs/fe|FE Specs Hub]]
 - [[specs/ia|IA Specs Hub]]
