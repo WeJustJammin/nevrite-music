@@ -1,0 +1,238 @@
+{
+  "reportKind": "ambiguity-audit-raw",
+  "run": 7,
+  "domain": "23-career-finance-business",
+  "unitsAudited": 8,
+  "filesRead": 45,
+  "coverageNote": "Read all 45 current Markdown source files across the root domain unit and seven child units. Applied the eight Vision dimensions per unit (64 checkpoints), checked local structural compliance, and consulted the directly cited current ideation index only to verify the Structure Map.",
+  "applicableCheckpoints": 64,
+  "findings": [
+    {
+      "findingId": "R7-23-D7-001",
+      "unit": "23.01-income-aggregation-financial-identity",
+      "severity": "blocking",
+      "dimension": "Vision Dimension 7 — Open Question Resolution",
+      "claim": "The unrecognized-CSV path leaves the ingestion strategy unresolved without an assigned owner or a recorded decision it blocks.",
+      "evidence": [
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/23-career-finance-business/23.01-income-aggregation-financial-identity/23.01.02-off-platform-income-import.md",
+          "line": 44,
+          "excerpt": "`[PENDING — /ideate-discover Step 5 deepening]` — column-mapping UI vs per-bank parsers is unresolved"
+        }
+      ],
+      "forcedInvention": "An implementer must choose among a user-controlled column-mapping flow, supported-bank parsers, or rejection of the file.",
+      "failureScenario": "A musician uploads a bank CSV with changed headers; one implementation maps a numeric column as income while another rejects the file, producing different ledger and tax-pack results from the same source data."
+    },
+    {
+      "findingId": "R7-23-D7-002",
+      "unit": "23.01-income-aggregation-financial-identity",
+      "severity": "blocking",
+      "dimension": "Vision Dimension 7 — Open Question Resolution",
+      "claim": "Band-entity statement issuance has no owned permission decision despite the feature explicitly deferring its access-control matrix.",
+      "evidence": [
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/23-career-finance-business/23.01-income-aggregation-financial-identity/23.01.04-verified-income-statement.md",
+          "line": 49,
+          "excerpt": "`[PENDING — Step 5 Must-depth / /write-be-spec]` for the exact entity-permission matrix on who may issue a Band-entity statement"
+        }
+      ],
+      "forcedInvention": "An implementer must decide whether a band member, band administrator, delegated accountant, or another actor may issue a Band-entity statement.",
+      "failureScenario": "A former band member can generate a statement for the band's income in one implementation, while a current authorised representative is blocked in another, creating a financial-data disclosure or availability failure."
+    },
+    {
+      "findingId": "R7-23-D7-003",
+      "unit": "23-domain-cross-cuts",
+      "severity": "warning",
+      "dimension": "Vision Dimension 7 — Open Question Resolution",
+      "claim": "Four cross-cut documents defer notification fan-out without recording an owner, resolution deadline, or the delivery/consent decision it blocks.",
+      "evidence": [
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/23-career-finance-business/23.01-income-aggregation-financial-identity/23.01-income-aggregation-financial-identity-cx.md",
+          "line": 67,
+          "excerpt": "Notification fan-out: Deferred — `[PENDING — /ideate-discover Step 5 deepening]`."
+        },
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/23-career-finance-business/23.02-expenses-tax-readiness/23.02-expenses-tax-readiness-cx.md",
+          "line": 33,
+          "excerpt": "Notification fan-out: Deferred — `[PENDING — /ideate-discover Step 5 deepening]`."
+        },
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/23-career-finance-business/23.04-deal-contract-vault/23.04-deal-contract-vault-cx.md",
+          "line": 33,
+          "excerpt": "Notification fan-out: Deferred — `[PENDING — /ideate-discover Step 5 deepening]`."
+        },
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/23-career-finance-business/23.05-career-progression-benchmarking/23.05-career-progression-benchmarking-cx.md",
+          "line": 61,
+          "excerpt": "Notification fan-out: Deferred — `[PENDING — /ideate-discover Step 5 deepening]`."
+        }
+      ],
+      "forcedInvention": "Each consuming feature must independently choose recipients, channels, consent checks, and whether a state change sends a notification at all.",
+      "failureScenario": "A financial reconciliation or contract event notifies a delegated actor in one surface but only the account owner in another, either leaking sensitive information or omitting an action the recipient needed to take."
+    },
+    {
+      "findingId": "R7-23-D7-004",
+      "unit": "23.02-expenses-tax-readiness",
+      "severity": "blocking",
+      "dimension": "Vision Dimension 7 — Open Question Resolution",
+      "claim": "The feature leaves the claimant and withholding attribution unresolved when a Band performs but its members are taxed, without an owner or recorded blocking decision.",
+      "evidence": [
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/23-career-finance-business/23.02-expenses-tax-readiness/23.02.04-cross-border-withholding-reclaim.md",
+          "line": 42,
+          "excerpt": "Withholding and reclaim entitlement may sit differently for the entity and the members | `[PENDING — /ideate-discover Step 5 deepening]`"
+        }
+      ],
+      "forcedInvention": "An implementer must assign the withheld amount and reclaim right to the Band entity, one or more members, or both.",
+      "failureScenario": "A foreign promoter withholds tax from a Band payment while individual members are assessed; the platform files or alerts for the wrong claimant, causing a missed reclaim or duplicate credit."
+    },
+    {
+      "findingId": "R7-23-D7-005",
+      "unit": "23.02-expenses-tax-readiness",
+      "severity": "blocking",
+      "dimension": "Vision Dimension 7 — Open Question Resolution",
+      "claim": "A successful withholding reclaim has two incompatible accounting treatments but is not owned or entered as an open decision.",
+      "evidence": [
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/23-career-finance-business/23.02-expenses-tax-readiness/23.02.04-cross-border-withholding-reclaim.md",
+          "line": 44,
+          "excerpt": "A new income event? A negative deduction? It restates a possibly-filed year (`#CX-03`) | Must be modelled explicitly, not improvised"
+        }
+      ],
+      "forcedInvention": "An implementer must decide whether the refund is a new income event, a reversal of the withholding deduction, or a restatement of the filed period.",
+      "failureScenario": "A reclaim arrives after the tax pack was issued; one implementation increases current-year income while another reverses a prior-year deduction, producing conflicting taxable totals and audit trails."
+    },
+    {
+      "findingId": "R7-23-D7-006",
+      "unit": "23.03-invoicing-receivables",
+      "severity": "blocking",
+      "dimension": "Vision Dimension 7 — Open Question Resolution",
+      "claim": "Reverse-charge and cross-border B2B VAT behaviour is deferred without an owner or a decision record for invoice treatment.",
+      "evidence": [
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/23-career-finance-business/23.03-invoicing-receivables/23.03.02-invoice-issuance-compliance.md",
+          "line": 41,
+          "excerpt": "Reverse charge / cross-border B2B VAT | Jurisdiction-specific and genuinely hard | `[PENDING — /ideate-discover Step 5 deepening]`"
+        }
+      ],
+      "forcedInvention": "An implementer must decide whether to issue, block, or label a cross-border B2B invoice and what tax fields or reverse-charge wording it carries.",
+      "failureScenario": "A cross-border business invoice is issued with domestic VAT in one implementation and reverse-charge treatment in another, leaving the recipient unable to process it or the supplier with an incorrect tax record."
+    },
+    {
+      "findingId": "R7-23-D7-007",
+      "unit": "23.04-deal-contract-vault",
+      "severity": "blocking",
+      "dimension": "Vision Dimension 7 — Open Question Resolution",
+      "claim": "Multi-language contract handling is explicitly pending but has no owned scope or fallback decision.",
+      "evidence": [
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/23-career-finance-business/23.04-deal-contract-vault/23.04.02-key-term-extraction-deal-summary.md",
+          "line": 44,
+          "excerpt": "Multi-language contracts | Territory-dependent | `[PENDING — /ideate-discover Step 5 deepening]`"
+        }
+      ],
+      "forcedInvention": "An implementer must decide which languages are accepted, whether translation or extraction is attempted, and what safe fallback is shown.",
+      "failureScenario": "A musician uploads a non-English agreement; one implementation extracts a term using an unsupported translation while another accepts the file without a summary, producing either false legal guidance or an unusable feature."
+    },
+    {
+      "findingId": "R7-23-D7-008",
+      "unit": "23.05-career-progression-benchmarking",
+      "severity": "warning",
+      "dimension": "Vision Dimension 7 — Open Question Resolution",
+      "claim": "Band-level goals are left as a separate-object ambiguity without an owner or a data-model decision record.",
+      "evidence": [
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/23-career-finance-business/23.05-career-progression-benchmarking/23.05.01-career-goals-roadmap-templates.md",
+          "line": 42,
+          "excerpt": "Band-level goals | The band's goals vs the member's are different objects (01) | `[PENDING — /ideate-discover Step 5 deepening]`"
+        }
+      ],
+      "forcedInvention": "An implementer must choose between a distinct Band goal object, a member-owned goal projected from Band activity, or no Band-goal support.",
+      "failureScenario": "A Band sets a tour-income goal; one implementation credits every member's personal progress while another keeps a separate group goal, making progress, access, and notifications inconsistent."
+    },
+    {
+      "findingId": "R7-23-D7-009",
+      "unit": "23.05-career-progression-benchmarking",
+      "severity": "blocking",
+      "dimension": "Vision Dimension 7 — Open Question Resolution",
+      "claim": "The cohort policy requires both dimensional relevance and a hard privacy floor, but the source leaves the combination rule unowned and unresolved.",
+      "evidence": [
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/23-career-finance-business/23.05-career-progression-benchmarking/23.05.03-peer-cohort-benchmarking.md",
+          "line": 37,
+          "excerpt": "Hard minimum cohort size, enforced. Show nothing rather than something. This is a privacy control, not a UX preference"
+        },
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/23-career-finance-business/23.05-career-progression-benchmarking/23.05.03-peer-cohort-benchmarking.md",
+          "line": 43,
+          "excerpt": "how many dimensions before the cohort is too small to show?"
+        }
+      ],
+      "forcedInvention": "An implementer must choose which filters may be combined and when a relevant cohort becomes too small to display.",
+      "failureScenario": "A user filters benchmark rates by city, genre, client type, and union status; one build exposes a near-identifiable cohort while another suppresses it, making privacy and comparison quality depend on implementation choice."
+    },
+    {
+      "findingId": "R7-23-D7-010",
+      "unit": "23.06-advances-commission-recoupment",
+      "severity": "blocking",
+      "dimension": "Vision Dimension 7 — Open Question Resolution",
+      "claim": "Overlapping Band- and member-manager commissions on the same income have no owned precedence or allocation decision.",
+      "evidence": [
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/23-career-finance-business/23.06-advances-commission-recoupment/23.06.02-commission-representation-deductions.md",
+          "line": 44,
+          "excerpt": "Band has a manager; members have their own | Overlapping commissions on the same income at different levels | `[PENDING — /ideate-discover Step 5 deepening]`"
+        },
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/23-career-finance-business/23.06-advances-commission-recoupment/23.06.02-commission-representation-deductions.md",
+          "line": 39,
+          "excerpt": "Order vs recoupment unspecified | Blocks rather than defaults"
+        }
+      ],
+      "forcedInvention": "An implementer must choose whether band and member commissions apply independently to gross income, sequentially, or to mutually exclusive income portions.",
+      "failureScenario": "A payment qualifies for both a Band manager and a member manager; one calculation takes both percentages from gross while another calculates the second after the first deduction, changing the musician's net without a contract rule."
+    },
+    {
+      "findingId": "R7-23-D7-011",
+      "unit": "23-root-domain",
+      "severity": "warning",
+      "dimension": "Vision Dimension 7 — Open Question Resolution",
+      "claim": "The root cross-cut marks career goals and runway as potentially one feature or two, but the referenced resolved question only decides whether the Career half survives MoSCoW, not the product boundary.",
+      "evidence": [
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/23-career-finance-business/career-finance-business-cx.md",
+          "line": 155,
+          "excerpt": "whether these are two features or one is genuinely unresolved"
+        },
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/23-career-finance-business/career-finance-business-index.md",
+          "line": 125,
+          "excerpt": "RESOLVED — yes, it survives. MoSCoW has run and placed all three 23.05 features at `Could`"
+        }
+      ],
+      "forcedInvention": "An implementer must choose whether stability goals and runway share one model and surface or remain separate features with duplicated derivation logic.",
+      "failureScenario": "The same income gap appears as a completed stability goal in one surface but an unresolved runway warning in another because the two teams model the same signal independently."
+    },
+    {
+      "findingId": "R7-23-D7-012",
+      "unit": "23-root-domain",
+      "severity": "blocking",
+      "dimension": "Vision Dimension 7 — Open Question Resolution",
+      "claim": "The realised-FX treatment for project and tour P&L is unresolved; the cited Q-06 is about tax-jurisdiction placement, so it does not own or decide this accounting representation.",
+      "evidence": [
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/23-career-finance-business/career-finance-business-cx.md",
+          "line": 163,
+          "excerpt": "whether realised FX is modelled as its own P&L line or absorbed into each converted row is unresolved and routes to `/create-prd-architecture` with Q-06"
+        },
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/23-career-finance-business/career-finance-business-index.md",
+          "line": 126,
+          "excerpt": "Is \"tax jurisdiction\" an attribute of identity (01) rather than of 23?"
+        }
+      ],
+      "forcedInvention": "An implementer must choose between a distinct realised-FX P&L line and allocation of the FX delta into converted cost rows.",
+      "failureScenario": "A tour budgeted in one currency and paid in another produces an FX delta; one build reports it as a separate cost while another hides it in row conversions, so tour profitability and reconciliation do not agree."
+    }
+  ]
+}

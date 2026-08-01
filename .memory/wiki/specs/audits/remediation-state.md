@@ -1,13 +1,13 @@
 # Remediation State
 
-> Updated: 2026-07-29 — scope-boundary addendum under Reconciliation Arithmetic only; the 107-finding
-> ledger and its counts are unchanged since 2026-07-21.
+> Updated: 2026-08-01 — Run 7 supersedes the historical Run 6 recovery ledger as the only valid
+> ideation gate evidence. Run 6 remains historical triage only.
 > Layer: `vision` / ideation.
 > Purpose: auditable recovery record for the interrupted `wejammin-audit-remediate` workflow. This is **not** a clean, ready, or fresh-audit verdict.
 
 ## Layer Status
 
-- vision: `needs-audit` — **final disposition ledger complete: 107/107 `verified-fixed`, all 43 decision-queue entries ratified.** A fresh full `/audit-ambiguity ideation` run and the graph refresh remain required before `/create-prd`.
+- vision: `needs-remediation` — **Run 7 is structurally valid and blocked by 114 independently upheld blockers.** The historical 107-finding ledger below is not current gate evidence. A fresh full `/audit-ambiguity ideation` run remains required after remediation before `/create-prd`.
 - architecture: `no-content`
 - ia: `no-content`
 - be: `no-content`
@@ -205,7 +205,7 @@ by the original manifest finding index in the ledger below.
    constrained collusion interface replaces the prior invented interface; `r-57[0]` remains deferred
    despite deterministic bulk mechanics because quality-bar policy stays User-owned.
 
-## Required Gate
+## Superseded Run 6 Gate Record
 
 This ledger does not close the vision layer. Before advancing:
 
@@ -215,6 +215,62 @@ This ledger does not close the vision layer. Before advancing:
    explicitly reaches that gate.
 4. Run a fresh full `/audit-ambiguity ideation`; touched-file checks and this recovery ledger cannot
    replace that fresh run.
+
+## Run 7 Current Recovery Plan
+
+- **Evidence**: `.memory/wiki/specs/audits/run7/gate-status.json` records a valid, blocked Run 7
+  gate with 26 raw audits, 26 independent verification reports, 191 units, and 1,122 source files.
+- **Baseline**: 114 blocking, 122 warning, and 152 refuted verdicts. Only independently upheld
+  blocking findings define this remediation scope.
+- **Execution order**:
+  1. Repair root and meta constraint/open-question governance without inventing product truth.
+  2. Resolve the 69 Dimension 7 open-question governance blockers with a real owner, decision
+     deadline, and explicitly blocked decision for every still-open item.
+  3. Resolve cross-cut persona, constraint, and measurable-SLA gaps from already locked source
+     decisions; escalate genuine product or policy choices rather than guessing.
+  4. Complete the remaining feature-behavior gaps domain by domain in dependency order.
+  5. Run a fresh full Run 8 audit after all source changes; no touched-file check can close the
+     vision gate.
+- **Change discipline**: source edits must be traceable to Run 7 verified evidence. Existing source
+  may resolve a finding; if it does not, a user-owned product choice remains open and must be
+  escalated rather than silently invented.
+
+### Progress Since Run 7
+
+- **2026-08-01 — Dimension 7 governance sweep**: Added the explicit owner/deadline/blocked-decision
+  contract to all 60 affected Open Questions tables. Corrected three stale touring cross-cut
+  questions from already-locked source behavior, and added owner/deadline/blocked-decision records
+  for the three genuine prose-only deferred questions. This is remediation evidence only; it does
+  not close the gate until a fresh full audit verifies the changed source tree.
+
+- **2026-08-01 — Domain 14 canonical reconciliation**: Applied source-backed candidate fixes for
+  R7-14-012, R7-14-013, R7-14-018, and R7-14-019. Payment-failed reacquisition now preserves the
+  singleton entitlement; the library preserves immutable acquisition history without duplicate
+  entitlements; the waiver cross-cut now uses its canonical three-limb, per-entitlement,
+  expiry-bounded contract; and vendor trader status is captured and disclosed before buyer binding.
+  These are candidates only until a fresh full Run 8 audit independently verifies them.
+
+- **2026-08-01 — Domain 08 canonical reconciliation**: Applied source-backed candidate fixes for
+  R7-root-FC-01 and R7-root-FC-04. Overdub now carries delivery-certainty rather than observed
+  performance provenance unless a live witness upgrades a segment, and no-reference/no-witness
+  capture now publishes as R3 unaligned with only a placement hint. These are candidates only until
+  a fresh full Run 8 audit independently verifies them.
+
+- **2026-08-01 — Domain 15 canonical source ownership**: Applied a source-backed candidate fix for
+  R7-15.01-D3-001. The designated identity-resolution owner now enumerates the six already-used
+  identity-confidence values, while the renderer explicitly references that canonical set. This is
+  a candidate only until a fresh full Run 8 audit independently verifies it.
+
+- **2026-08-01 — Domain 21 clearance boundary**: Applied a source-backed candidate fix for
+  R7-21-D4-001. The asset-readiness cross-cut now reflects its resolved decision: clearance is
+  enforced at the release/delivery gate rather than adjudicated by asset readiness. This is a
+  candidate only until a fresh full Run 8 audit independently verifies it.
+
+## Required Gate
+
+The vision layer cannot advance until all Run 7 blocking findings are remediated and a fresh full
+ideation audit verifies the current source tree clean. The historical Run 6 ledger cannot satisfy
+this gate.
 
 
 <!-- spec-graph: auto-generated -->

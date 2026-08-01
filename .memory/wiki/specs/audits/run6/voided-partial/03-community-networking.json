@@ -1,0 +1,108 @@
+{
+  "domain": "03-community-networking",
+  "unitsAudited": 8,
+  "filesRead": 45,
+  "coverageNote": "Enumerated from disk: 8 units (the domain directory itself plus 03.01, 03.02, 03.03, 03.04, 03.05, 03.06, 03.08) and 45 files. This matches the expected 8 units / 45 files exactly. 03.07, 03.09, 03.10 and 03.11 are flat domain-level feature files and were audited as part of the domain-root unit. Every file was read in full through the 3a (implementer simulation) -> 3b (rubric scoring) -> 3c (devil's advocate) cycle. Dimensions 1 (Problem Clarity), 4 (Constraint Explicitness) and 6 (Competitive Positioning) are marked N/A for every unit: they are properties of meta/problem-statement.md, meta/constraints.md and meta/competitive-landscape.md respectively, none of which fall inside this domain. Dimensions 2, 3, 5, 7 and 8 are applicable to all 8 units, giving 40 applicable checkpoints. Findings dropped on the devil's-advocate pass (recorded for transparency): (a) the domain Role Matrix rating 03.01 Fan as Read-only while 03.01.01 gives the Fan Full access - the matrix legend explicitly states 'Access icons are shorthand; detailed per-role behavior lives in each feature file's Role Lens', so an implementer follows the Role Lens and nothing changes in the build; (b) 03.04.01 D-11 'Edges never decay and are never deleted' against the edge case 'Dispute resolved against the claimant -> Edge removed permanently' - D-11's entire stated rationale is about decay-by-age, and 'the fact was never true' is not 'evidenced history', so the specific case governs; (c) bare [PENDING] markers in 03.01.03 (Won't), 03.02.03 (Won't) and 03.10 (Won't) - each is substantively covered by a well-formed Open Question in the same file; (d) 03.02.02 Behavior saying suppression 'should stop fan-out' while Q-04 leaves it open - 'should' is stated as a preference, not an assertion, and Q-04 tracks the decision correctly. Overall this is an unusually high-quality domain: 03.02 and 03.05 produced no findings at all, and 03.04.01, 03.06.01 and 03.06.04 are among the most rigorously specified vision-layer documents in the tree.",
+  "units": [
+    { "unit": "03-community-networking", "applicableCheckpoints": 5, "naDimensions": [1, 4, 6], "points": 1.0 },
+    { "unit": "03.01-connections-follows-endorsements", "applicableCheckpoints": 5, "naDimensions": [1, 4, 6], "points": 0.5 },
+    { "unit": "03.02-activity-feed-ranking", "applicableCheckpoints": 5, "naDimensions": [1, 4, 6], "points": 0 },
+    { "unit": "03.03-collaborator-discovery-matchmaking", "applicableCheckpoints": 5, "naDimensions": [1, 4, 6], "points": 1.0 },
+    { "unit": "03.04-warm-intros-collaboration-graph", "applicableCheckpoints": 5, "naDimensions": [1, 4, 6], "points": 1.0 },
+    { "unit": "03.05-private-rolodex-crm", "applicableCheckpoints": 5, "naDimensions": [1, 4, 6], "points": 0 },
+    { "unit": "03.06-scenes-communities", "applicableCheckpoints": 5, "naDimensions": [1, 4, 6], "points": 1.5 },
+    { "unit": "03.08-contests-challenges-beat-battles", "applicableCheckpoints": 5, "naDimensions": [1, 4, 6], "points": 1.0 }
+  ],
+  "findings": [
+    {
+      "findingId": "03-community-networking#001",
+      "unit": "03-community-networking",
+      "severity": "warning",
+      "dimension": 3,
+      "claim": "community-networking-cx.md CX-03 states within one section both that scene membership IS a ranking axis and that it is candidacy and never rank. The former contradicts three other ratified statements in the domain and is exactly the failure mode 03.06.01 Q-07 exists to guard against.",
+      "evidence": "community-networking-cx.md:127-128 - 'Step 6 hardened the coupling into a **one-way dependency** (03.06.01 DT-12): scene membership is a ranking axis, but a scene must never be *defined as* a feed weighting'. Contradicted 10 lines later at community-networking-cx.md:138 - 'the feed reads it as a **fan-out set only** - candidacy, never rank, per 03.06.01 D-08 and section 4. The ranking axis is geography (03.02.02 D-03).' Also contradicted by 03.06-scenes-communities/03.06.01-scene-definition-membership.md:123-124 - 'Membership is **not** a ranking input - per D-08 ranking reads evidence, never membership'; by 03.02-activity-feed-ranking/03.02.02-ranking-relevance-controls.md:84 - '**geography** is a primary ranking axis (DT-03, D-03); **scene membership is not one**... membership appears nowhere in the input list above'; and by 03.06.01 Q-07 (line 265), which names this precise risk: 'the easy implementation of \"in your scene\" (03.02.02 happy path step 3) is a scene-membership boost - which would smuggle a participation metric back onto the ranking axis and break domain D-03 quietly.'"
+    },
+    {
+      "findingId": "03-community-networking#002",
+      "unit": "03-community-networking",
+      "severity": "warning",
+      "dimension": 8,
+      "claim": "The domain index's Children table carries depth statuses that contradict both its own preamble and the child files' own headers, so no reader can tell which node is at which depth.",
+      "evidence": "community-networking-index.md:29 asserts 'All nodes `[SURFACE]`; the domain is `[BREADTH]`.' The table immediately below contradicts it: lines 33-38 and 40 give 03.01-03.06 and 03.08 as `[BREADTH]`. Separately, community-networking-index.md:41 records 03.09 as `[SURFACE]` while the file itself declares 03.09-local-jam-open-mic-discovery.md:5 '> **Status**: [PARTIAL]'. A third dangling reference: community-networking-cx.md:397 states the domain's incoherent boundaries are 'returned in the cross-domain rows below, not resolvable inside this domain' - there are no cross-domain rows below line 397; the file ends with Rejected Pairs and an auto-generated Related Specs block."
+    },
+    {
+      "findingId": "03-community-networking#003",
+      "unit": "03.01-connections-follows-endorsements",
+      "severity": "warning",
+      "dimension": 3,
+      "claim": "The sub-domain CX file still offers auto-follow-on-connection-accept as a live option, which 03.01.01 D-12 forbids outright. The reconciliation was explicitly flagged as owed by the feature file and was never performed.",
+      "evidence": "03.01-connections-follows-endorsements-cx.md:58 - '2. **Trigger chain**: Accepting a connection MAY auto-create a mutual follow - a convenience most networks implement. If it does, unfollowing later must not silently sever the connection. `[PENDING - /ideate-discover Step 5 deepening]`.' Forbidden by 03.01.01-follows.md:180 D-12 - '**No auto-follow on connection accept** | DT-11. Credit-seeded connections (03.01.02 DT-03) would manufacture follows at scale and inflate the one number DT-06 shows is currency.' The feature file explicitly booked the fix that was not made: 03.01.01-follows.md:145 (DT-11) - 'This resolves `#CX-02` note 2 from this side - flagged for Step 6 synthesis, since the CX file is not this feature's to edit', and 03.01.01-follows.md:152 - 'DT-11 resolves that CX's open note 2 (no auto-follow on connection accept) from this side - **Step 6 must reconcile the CX file**'. Step 6 ran (community-networking-cx.md:6 'Last updated: 2026-07-18') and recorded the rejection at community-networking-cx.md:387 R-07, but 03.01-connections-follows-endorsements-cx.md was never updated and carries no Last-updated field at all."
+    },
+    {
+      "findingId": "03-community-networking#004",
+      "unit": "03.03-collaborator-discovery-matchmaking",
+      "severity": "warning",
+      "dimension": 0,
+      "forcedInvention": "The expiry horizon for an open collaboration call. An implementer must invent a number (7 days? 30? 90?) and must invent whether it is fixed, poster-set, or bounded, in order to implement the specified Expired state.",
+      "claim": "03.03.04 D-03 makes calls expire and the States table specifies an Expired state gated on 'the horizon', but no horizon is stated anywhere and no Open Question tracks it - unlike both sibling features, which track their equivalent horizons explicitly.",
+      "evidence": "03.03-collaborator-discovery-matchmaking/03.03.04-open-collaboration-calls.md:99 D-03 - 'Calls expire | An eternally open call is a ghost - the same defect as a stale signal.' The States table at line 71 depends on an unstated value: 'Expired | No selection within the horizon | Closed automatically'. The file's four Open Questions (lines 106-109) cover the domain-04 boundary, push-vs-pull, high-response triage and unused-submission terms - none covers the horizon. Contrast the two sibling features that do track theirs: 03.03.03-open-to-status-availability-signals.md:117 Q-01 - 'What is the expiry horizon (DT-01)? Too short and it nags the personas least willing to be nagged; too long and the ghost problem returns' (User, /write-be-spec); and 03.01-connections-follows-endorsements/03.01.02-professional-connections.md:127 Q-05 - 'What is the expiry horizon on an unanswered inbound connection request?... no period is stated here or anywhere in the tree, and it is not a free parameter' (User, /write-be-spec)."
+    },
+    {
+      "findingId": "03-community-networking#005",
+      "unit": "03.03-collaborator-discovery-matchmaking",
+      "severity": "warning",
+      "dimension": 5,
+      "claim": "03.03.02's Error-state behaviour is specified as 'evidence-free ordering', which names no ordering at all - two implementers would ship different result orders when scoring is unavailable.",
+      "evidence": "03.03-collaborator-discovery-matchmaking/03.03.02-match-scoring-fit-signals.md:68 - 'Error | Scoring unavailable | Degrade to evidence-free ordering, labelled'. The labelling half is testable; the ordering half is not - alphabetical, recency, distance and arbitrary all satisfy 'evidence-free'. The sibling features specify their degradations concretely: 03.02-activity-feed-ranking/03.02.02-ranking-relevance-controls.md:68 - 'Error | Scoring unavailable | Degrade to chronological rather than fail'; and 03.03.01-collaborator-search-browse.md:101 - 'Partial | Graph traversal timed out; tag-only results available | Degraded results **labelled as such**'. The file's Q-01 (line 103) covers only 'the actual weights', and the Behavior section's `[PENDING - Q-01 / /write-be-spec]` marker is scoped to 'the scoring function', not to the no-score fallback."
+    },
+    {
+      "findingId": "03-community-networking#006",
+      "unit": "03.04-warm-intros-collaboration-graph",
+      "severity": "warning",
+      "dimension": 3,
+      "claim": "03.04.02's stale-path edge case prescribes decay as its mitigation and cites a question number that no longer holds decay. 03.04.01 has since rejected decay outright, leaving the edge case with no mitigation at all.",
+      "evidence": "03.04-warm-intros-collaboration-graph/03.04.02-warm-intro-requests-brokering.md:64 - 'Path is stale - one session in 2009 | The broker barely remembers the target; the intro is a cold ask wearing a warm costume | Decay (Q-03 on 03.04.01). Stale paths burn brokers faster than anything else'. 03.04.01-collaboration-graph-path-finding.md:233 D-11 forbids the prescribed mechanism: '**Edges never decay and are never deleted.** Age is disclosed, never weighted | DT-14 - resolves parent Q-03/this file's Q-03', and DT-14 at line 198 records it as '❌ REJECTED **as weighting** / ✅ CONFIRMED **as disclosure**'. The citation is also stale: 03.04.01's Q-03 is now 'Is graph integrity monitoring built at derivation time, or handled reactively by domain 24?' (line 250). The correct disclosure-based handling exists at 03.04.01:143 ('The edge stands (D-11) and the age is stated... The requester will not pick it') but is never propagated into 03.04.02, whose row still promises a mechanism that will not exist."
+    },
+    {
+      "findingId": "03-community-networking#007",
+      "unit": "03.04-warm-intros-collaboration-graph",
+      "severity": "warning",
+      "dimension": 7,
+      "claim": "03.04.04 records fail-open-vs-fail-closed on traversal failure as an undecided binary, but 03.04.01 D-03 has already ratified fail-closed and names 03.04.04 by number as bound by it. The open question misrepresents a settled decision as open, and the States table leaves the behaviour unimplementable.",
+      "evidence": "03.04-warm-intros-collaboration-graph/03.04.04-reachability-inbound-policy.md:129 Q-04 - 'On traversal failure, does the policy fail open or closed? Closed silently drops legitimate contact; open lets the flood through exactly when the system is already degraded.' (Agent, /create-prd-architecture), echoed in the States table at line 89 - 'Error | Traversal failed | **Fail open or closed?**... Unresolved - Q-04'. Already decided at 03.04.01-collaboration-graph-path-finding.md:225 D-03 - 'Traversal failure degrades to **`unknown`**, never to \"no path\"... All consumers fail closed on `unknown`', and named explicitly at 03.04.01:169 - 'Consumers must fail closed on `unknown`: 03.04.02 must not broker on it, **03.04.04 must not decide reachability on it**' and at 03.04.01:210 - 'Reachability must fail closed on `unknown` (D-03), which sharpens its own Q-04'. The domain CX agrees: community-networking-cx.md:349 - 'If the reachability check is unavailable, results fail *closed* (hidden), never shown-and-broken.' Neither Q-04 nor the States row cites D-03, so a reader of 03.04.04 alone treats the behaviour as undecided."
+    },
+    {
+      "findingId": "03-community-networking#008",
+      "unit": "03.06-scenes-communities",
+      "severity": "blocking",
+      "dimension": 3,
+      "claim": "03.06.03's Behavior, Happy Path and States all specify claiming as the route by which a scene acquires a steward, while its own Q-01 records that route as foreclosed and no replacement exists. The feature therefore specifies a state (Unclaimed -> claimable) with no mechanism that may implement it.",
+      "evidence": "03.06-scenes-communities/03.06.03-scene-stewardship-moderation.md:46 - 'Per parent Q-04, who appoints stewards is unresolved; claiming (03.06.04) is one candidate answer, and `#R-02` forecloses the graph-centrality answer.' Happy Path step 2 at line 52 - 'A steward is established - by claiming, appointment, or another route (parent Q-04)'. States at line 72 - 'Unclaimed | Above threshold, no steward | Scene runs on platform defaults; **claimable**'. Contradicted by the same file's Q-01 at line 107 - 'The two candidate answers are both now closed - `#R-02` forecloses graph centrality, and **03.06.04 D-14 scopes claiming to records rather than governance** (`#CX-04`) - so a route has to be chosen, not derived.' The parent index agrees: 03.06-scenes-communities-index.md:76 Q-04 - 'Claiming was the candidate answer (`#CX-04`) and is now foreclosed... so **no route remains** and none of the later stages will choose one.' And the authority confirms it from its own side: 03.06.04-scene-seeding-claiming-cold-start.md:199 - 'claiming a *premises* is not claiming a *scene*... D-14 scopes claiming here to records, not to governance. Note 03.06.03 DT-03's observation lands hard on this feature - **a seeded scene has no volunteers by definition, so seeding cannot supply the steward that CX-04 hoped it would**.' Also 03.06.01-scene-definition-membership.md:171 - 'Claiming confers authority over the **venue record only**.' An implementer building the Unclaimed state must invent a steward-establishment mechanism the domain has explicitly refused to choose."
+    },
+    {
+      "findingId": "03-community-networking#009",
+      "unit": "03.06-scenes-communities",
+      "severity": "warning",
+      "dimension": 7,
+      "claim": "03.06.04's Behavior section contradicts its own Cross-Cut Notes on whether claiming can produce a steward, and the sub-domain CX file still carries the foreclosed route as a live pending hypothesis with no marker that it has been closed.",
+      "evidence": "03.06-scenes-communities/03.06.04-scene-seeding-claiming-cold-start.md:84-85 - 'Per `03.06-scenes-communities-cx.md#CX-04` claiming is also a candidate answer to \"who becomes the steward\" (parent Q-04).' Contradicted inside the same file at line 199 - 'D-14 scopes claiming here to records, not to governance... a seeded scene has no volunteers by definition, so seeding cannot supply the steward that CX-04 hoped it would.' The CX file itself is unreconciled: 03.06-scenes-communities-cx.md:84-87 - 'CX-04: Seeding & Claiming <-> Stewardship & Moderation. **Relationship**: `[PENDING - /ideate-discover Step 5 deepening]` - claiming is one candidate answer to \"who steward-appoints\" (parent Q-04): the first credible local to claim the seeded scene becomes its steward.' The map row at 03.06-scenes-communities-cx.md:13 repeats it - 'Claiming a seeded scene is how it acquires its first steward - the handover from platform-generated to community-owned'. The parent index (line 76) states this route is 'now foreclosed', and the domain CX agrees at community-networking-cx.md:303 - 'claiming a seeded *venue* confers authority over the venue record ONLY, never over the scene - so inheriting an audience does not confer any scene stewardship (D-08).'"
+    },
+    {
+      "findingId": "03-community-networking#010",
+      "unit": "03.08-contests-challenges-beat-battles",
+      "severity": "warning",
+      "dimension": 7,
+      "claim": "Two places in 03.08 assert that the geo-scene boundary is unresolved and cite question numbers that do not hold that question. The boundary was ratified in 03.06.01 D-05, so scene-scoped contest eligibility is described as harder and more open than it now is.",
+      "evidence": "03.08-contests-challenges-beat-battles/03.08.01-contest-creation-briefs.md:58 - 'Scene-scoped brief (\"Bristol only\") | Inherits the unresolved scene-boundary question (03.06.01 Q-03) | Adjudication is harder than it sounds'. And 03.08-contests-challenges-beat-battles-cx.md:59 - 'scene-scoped eligibility (\"Bristol only\") is the case they care about, and **per 03.06.01 Q-01 the scene boundary is itself unresolved**, which makes \"Bristol only\" harder to adjudicate than it sounds'. Both citations are wrong and both claims are stale. 03.06.01's Q-03 is 'What is the visiting-membership window when domain 17 holds no times?' (03.06.01-scene-definition-membership.md:261) and its Q-01 is 'Are fans members of genre scenes?' (line 259). The boundary is settled at 03.06.01-scene-definition-membership.md:244 D-05 - 'Geo boundaries default to the **largest defensible local unit**; finer scenes are added later as **flat overlapping peers**, never nested, never automatically... Resolves parent Q-01', and 03.06-scenes-communities-index.md:73 marks Q-01 'RESOLVED - [03.06.01] D-05 (DT-05)'."
+    },
+    {
+      "findingId": "03-community-networking#011",
+      "unit": "03.08-contests-challenges-beat-battles",
+      "severity": "warning",
+      "dimension": 0,
+      "forcedInvention": "Where in the entry flow payout eligibility is evaluated, what evidence it requires, and what an entrant sees when it fails (hard reject, soft warning, or entry-permitted-but-prize-forfeit). None of this is stated in the feature that owns intake.",
+      "claim": "03.08.04 D-04 makes payout eligibility an entry-time check, but 03.08.02 - the feature that owns intake eligibility - has no mention of it in its Behavior, Happy Path, edge cases, States, Decisions or Open Questions, and 03.08.04's Cross-Cut Notes do not reference 03.08.02 at all.",
+      "evidence": "03.08-contests-challenges-beat-battles/03.08.04-prizes-payouts-submission-rights.md:104 D-04 - 'Payout eligibility is checked at entry, not at victory | DT-04 - announcing a winner you cannot lawfully pay is this feature's worst failure.' Reinforced at line 57 - 'Payout eligibility should be checked at *entry*, not at victory' and line 73 - 'Blocked | Payout cannot complete | The credibility failure - must be prevented at entry, not discovered here'. The owning feature carries nothing: 03.08.02-submissions-eligibility.md:95 D-01 is 'Eligibility is evaluated at intake and frozen at submission' with no payout dimension; its Happy Path (lines 45-48), edge-case table (lines 53-60), States table (lines 65-71) and three Open Questions (lines 103-105) never mention payout, KYC, jurisdiction or tax status. 03.08.04's Cross-Cut Notes (lines 88-95) link to 03.08.01, 03.08.03, 09, 11, 23, 12 and 17 - 03.08.02 is absent, so the requirement has no route to the feature that must implement it."
+    }
+  ]
+}

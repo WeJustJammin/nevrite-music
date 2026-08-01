@@ -1,0 +1,300 @@
+{
+  "reportKind": "ambiguity-audit-verification",
+  "run": 7,
+  "domain": "08-realtime-jamming-remote-sessions",
+  "rawReport": "08-raw.json",
+  "rawFindingCount": 12,
+  "verdicts": [
+    {
+      "findingId": "R7-08.01-D7-01",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "reason": "Refuted: the canonical ideation record defines a question's target pipeline stage as its deadline. The cited timing question has a named owner, a target stage, and states the decision to be made; no implementation-stage forced invention is established.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/ideation-index.md",
+          "line": 158,
+          "excerpt": "| 7 | Open Question Resolution | ✅ | Every open question has owner + target stage (pipeline-stage = deadline). [vision.md](../vision.md) Open Questions |"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/08-realtime-jamming-remote-sessions/08.01-latency-budget-playability/08.01.03-shared-clock-click-countin.md",
+          "line": 98,
+          "excerpt": "| Q-01 | Symmetric or conductor — which model does the product commit to, or does it support both? Supporting both roughly doubles this feature and every downstream monitoring/capture assumption. | User | `/create-prd` |"
+        }
+      ]
+    },
+    {
+      "findingId": "R7-08.02-D7-01",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "reason": "Refuted: target stage is the canonical deadline, and the cited stale-predicate question names its alternatives, owner, and architecture target. The non-table pending correction item belongs to a Won't feature, so it cannot force current implementation invention.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/ideation-index.md",
+          "line": 158,
+          "excerpt": "| 7 | Open Question Resolution | ✅ | Every open question has owner + target stage (pipeline-stage = deadline). [vision.md](../vision.md) Open Questions |"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/08-realtime-jamming-remote-sessions/08.02-playable-radius-peer-matching/08.02.03-latency-aware-match-filter.md",
+          "line": 109,
+          "excerpt": "| Q-02 | What is the consuming domains' obligation on a stale predicate — re-fetch, show as stale, or drop the filter? This is a contract question across four domains and cannot be answered inside 08 alone. | Agent | `/create-prd-architecture` |"
+        },
+        {
+          "file": ".memory/wiki/specs/feature-ledger.md",
+          "line": 708,
+          "excerpt": "| `08.02.02` 08/route-aware-radius-correction | Route-Aware Radius Correction | Real-Time Jamming & Remote Sessions | Won't | [SURFACE] | — | — | — | — | — | — |"
+        }
+      ]
+    },
+    {
+      "findingId": "R7-08.02-FC-01",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "reason": "Refuted: the exact feature-completeness rubric applies the two-level and edge-case requirement to Must Haves. Route-Aware Radius Correction is canonically Won't, so its deliberately incomplete arbitration rule is not a Must-Have forced-invention gap.",
+      "evidence": [
+        {
+          "file": ".codex/skills/pipeline-rubrics/references/vision-rubric.md",
+          "line": 7,
+          "excerpt": "| 3 | Feature Completeness | Every Must Have has ≥2 levels of sub-features. Every sub-feature has at least one edge case. MoSCoW categories are mutually exclusive. |"
+        },
+        {
+          "file": ".memory/wiki/specs/feature-ledger.md",
+          "line": 708,
+          "excerpt": "| `08.02.02` 08/route-aware-radius-correction | Route-Aware Radius Correction | Real-Time Jamming & Remote Sessions | Won't | [SURFACE] | — | — | — | — | — | — |"
+        }
+      ]
+    },
+    {
+      "findingId": "R7-08.03-D7-01",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "reason": "Refuted: the cited access question records the decision, User owner, and the canonical deadline stage. The affected feedback and monitoring work is Should/Could rather than untracked implementation work, so the raw report does not demonstrate forced invention.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/ideation-index.md",
+          "line": 158,
+          "excerpt": "| 7 | Open Question Resolution | ✅ | Every open question has owner + target stage (pipeline-stage = deadline). [vision.md](../vision.md) Open Questions |"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/08-realtime-jamming-remote-sessions/08.03-remote-monitoring-session-attendance/08.03.02-listener-roster-invite-access.md",
+          "line": 117,
+          "excerpt": "| Q-01 | What hardening do invite links get — single-use, device binding, watermarking, identity challenge on join? This is where the leak actually happens. | User | `/create-prd-security` |"
+        },
+        {
+          "file": ".memory/wiki/specs/feature-ledger.md",
+          "line": 542,
+          "excerpt": "| `08.03.03` 08/live-listener-feedback-notes | Live Listener Feedback & Timestamped Notes | Real-Time Jamming & Remote Sessions | Could | [SURFACE] | — | — | — | — | — | — |"
+        }
+      ]
+    },
+    {
+      "findingId": "R7-08.04-D7-01",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "reason": "Refuted: target stage supplies the canonical deadline, while all cited cue-mix children are classified Won't. Their open product and architecture decisions therefore do not force an implementation choice in the current scope.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/ideation-index.md",
+          "line": 158,
+          "excerpt": "| 7 | Open Question Resolution | ✅ | Every open question has owner + target stage (pipeline-stage = deadline). [vision.md](../vision.md) Open Questions |"
+        },
+        {
+          "file": ".memory/wiki/specs/feature-ledger.md",
+          "line": 709,
+          "excerpt": "| `08.04.01` 08/talkback-channel-ducking | Talkback Channel & Ducking | Real-Time Jamming & Remote Sessions | Won't | [SURFACE] | — | — | — | — | — | — |"
+        },
+        {
+          "file": ".memory/wiki/specs/feature-ledger.md",
+          "line": 711,
+          "excerpt": "| `08.04.03` 08/cue-mix-recall-portable-profile | Cue Mix Recall & Portable Monitoring Profile | Real-Time Jamming & Remote Sessions | Won't | [SURFACE] | — | — | — | — | — | — |"
+        }
+      ]
+    },
+    {
+      "findingId": "R7-08.05-D7-01",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "reason": "Refuted: the cited consent question names the unresolved decision and assigns User plus `/create-prd-security`; the canonical index defines that target stage as its deadline. The raw evidence identifies tracked decisions for their owning stage, not an implementation-stage invention.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/ideation-index.md",
+          "line": 158,
+          "excerpt": "| 7 | Open Question Resolution | ✅ | Every open question has owner + target stage (pipeline-stage = deadline). [vision.md](../vision.md) Open Questions |"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/08-realtime-jamming-remote-sessions/08.05-session-capture-recall/08.05-session-capture-recall-index.md",
+          "line": 66,
+          "excerpt": "| Q-03 | Who consents to being recorded, and when? A jam room that silently records everyone is a surveillance product. But asking every time destroys the \"byproduct of the session\" property the thesis depends on. This tension is real and unresolved. | User | `/create-prd-security` |"
+        }
+      ]
+    },
+    {
+      "findingId": "R7-08.05-FC-01",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "reason": "Refuted: the exact rubric's feature-completeness requirement is limited to Must Haves, and Auto-Highlights & In-the-Moment Flagging is canonically Could. The unbounded retrospective-window policy is therefore not a Must-Have forced-invention gap.",
+      "evidence": [
+        {
+          "file": ".codex/skills/pipeline-rubrics/references/vision-rubric.md",
+          "line": 7,
+          "excerpt": "| 3 | Feature Completeness | Every Must Have has ≥2 levels of sub-features. Every sub-feature has at least one edge case. MoSCoW categories are mutually exclusive. |"
+        },
+        {
+          "file": ".memory/wiki/specs/feature-ledger.md",
+          "line": 544,
+          "excerpt": "| `08.05.03` 08/auto-highlights-moment-flagging | Auto-Highlights & In-the-Moment Flagging | Real-Time Jamming & Remote Sessions | Could | [SURFACE] | — | — | — | — | — | — |"
+        }
+      ]
+    },
+    {
+      "findingId": "R7-root-D7-01",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "reason": "Refuted: the canonical record makes target stage the deadline, and the cited infrastructure decision has an owner and `/create-prd-stack` target. The raw report does not demonstrate an unassigned decision that must be invented during implementation.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/ideation-index.md",
+          "line": 158,
+          "excerpt": "| 7 | Open Question Resolution | ✅ | Every open question has owner + target stage (pipeline-stage = deadline). [vision.md](../vision.md) Open Questions |"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/08-realtime-jamming-remote-sessions/realtime-jamming-remote-sessions-index.md",
+          "line": 140,
+          "excerpt": "| Q-03 | **The infrastructure contradiction stands and is the domain's central risk.** Everything except Overdub Mode needs media infrastructure that `meta/constraints.md` does not have (Astro/Cloudflare Workers/Supabase). The domain index conceded this at ratification and the breadth pass confirms it. Does the owner accept dedicated media infra, or does the domain reduce to Overdub + capture + provenance? MoSCoW has since run and did not decide this (D-24: Step 5 complete; the domain retains its Musts), and 08.07 DT-09 sharpens the question — the shippable mode is free on the locked stack and it is the **witness** (08.03) that costs media infrastructure, so the real trade is provenance grade against infrastructure. It is a provider/technology choice presented with options at the stack gate. Re-pointed off the completed MoSCoW pass. | User | `/create-prd-stack` |"
+        }
+      ]
+    },
+    {
+      "findingId": "R7-root-FC-01",
+      "upheld": true,
+      "finalSeverity": "blocking",
+      "reason": "Uphold: the domain index still says Overdub carries provenance intact, while the owning Must feature explicitly corrects that assertion to delivery-certainty rather than performance-certainty and says the index remains uncorrected. No current source reconciles the grade, so implementation must invent which provenance fact reaches Credits.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/feature-ledger.md",
+          "line": 73,
+          "excerpt": "| `08.07` 08/overdub-mode | Overdub Mode (Latency-Independent Tracking) | Real-Time Jamming & Remote Sessions | Must | [DEEP] | 2+ | — | — | — | — | — |"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/08-realtime-jamming-remote-sessions/realtime-jamming-remote-sessions-index.md",
+          "line": 130,
+          "excerpt": "| D-05 | **Overdub Mode (08.07) is a first-class mode, not a fallback** | Most remote session work is latency-indifferent. The candidate list assumed simultaneity throughout — an artifact of the domain's *name*, not an observation about the work. Overdub also runs on the locked stack and carries the provenance intact. | Agent, Deep Think, 2026-07-16 |"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/08-realtime-jamming-remote-sessions/08.07-overdub-mode.md",
+          "line": 13,
+          "excerpt": "> *identical* to a live session's. It is not. It is **delivery-certainty, not performance-certainty** —"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/08-realtime-jamming-remote-sessions/08.05-session-capture-recall/08.05.04-session-attendance-provenance.md",
+          "line": 166,
+          "excerpt": "| Overdub session (no real-time room) | The record has delivery-certainty, not performance-certainty: it records the authenticated identity, bed version, delivery time, and pass arrival as `delivered-by`. It becomes `observed-playing` only for segments a live witness observed (CX-09); the grade is per-segment, so an unwitnessed segment remains `delivered-by`. | Record shows the provenance grade and any witness; it never presents delivery as proof of performance. |"
+        }
+      ]
+    },
+    {
+      "findingId": "R7-root-FC-02",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "reason": "Refuted: Interruption, Reconnect & Session Continuity is Could, not Must, and the capture rule is conditional on a recording resuming inside one take. It does not dictate the still-tracked take-boundary alternative, so the raw claim does not show a Must-Have forced-invention conflict.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/feature-ledger.md",
+          "line": 546,
+          "excerpt": "| `08.08` 08/interruption-reconnect-continuity | Interruption, Reconnect & Session Continuity | Real-Time Jamming & Remote Sessions | Could | [SURFACE] | — | — | — | — | — | — |"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/08-realtime-jamming-remote-sessions/08.05-session-capture-recall/08.05.01-local-first-multitrack-capture.md",
+          "line": 75,
+          "excerpt": "Where an endpoint's recording is interrupted and resumes inside one take, capture emits **segments with"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/08-realtime-jamming-remote-sessions/08.08-interruption-reconnect-continuity.md",
+          "line": 126,
+          "excerpt": "| Q-03 | Is a take split at the interruption or continued as one? This determines whether 08.05.02 sees one fragmented track or two clean ones, and the answer changes that feature's difficulty. | Agent | `/create-prd-architecture` |"
+        }
+      ]
+    },
+    {
+      "findingId": "R7-root-FC-03",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "reason": "Refuted: the current Overdub state model defines expiration as no delivery by the deadline, explicitly accepts and aligns later delivery, and preserves local audio on an upload error. It resolves the asserted discard-versus-recover choice without a forced implementation invention.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/08-realtime-jamming-remote-sessions/08.07-overdub-mode.md",
+          "line": 251,
+          "excerpt": "| **Player delivers after the deadline** | Accepted and aligned. **08 does not enforce commercial deadlines** — it records the timestamps and 05 decides what a late delivery costs. A platform that silently bins a late take has destroyed work to enforce someone else's policy. | Delivered, labelled `late`. |"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/08-realtime-jamming-remote-sessions/08.07-overdub-mode.md",
+          "line": 291,
+          "excerpt": "| Expired | Deadline passed, nothing delivered | Producer: accepted / bed delivered / nothing delivered / expired — a timeline, not a blank. |"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/08-realtime-jamming-remote-sessions/08.07-overdub-mode.md",
+          "line": 301,
+          "excerpt": "| Error | Bed cannot be delivered / upload cannot resume / alignment failed | Named cause + the specific action. **Audio is never lost to an error** (08.05.02 D-03): passes remain local and downloadable, unaligned if necessary. |"
+        }
+      ]
+    },
+    {
+      "findingId": "R7-root-FC-04",
+      "upheld": true,
+      "finalSeverity": "blocking",
+      "reason": "Uphold: the current parent CX directs correlation/timestamp behavior after an absent reference and unarmed witness, while the owning Must alignment spec says raw endpoint tracks cannot correlate and no-reference/no-witness output is unaligned. No current source reconciles these mutually incompatible implementation paths.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/feature-ledger.md",
+          "line": 71,
+          "excerpt": "| `08.05.02` 08/take-alignment-drift-correction | Take Alignment & Clock Drift Correction | Real-Time Jamming & Remote Sessions | Must | [DEEP] | 2+ | — | — | — | — | — |"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/08-realtime-jamming-remote-sessions/realtime-jamming-remote-sessions-cx.md",
+          "line": 82,
+          "excerpt": "2. **Trigger chain**: Clock established → capture records against it (or enables R2 witness) → alignment reads it. If the reference is absent *and* R2 was not pre-armed, alignment degrades to correlation/timestamp and must **state which method it used** — confidence differs materially. Decision is at capture time; it cannot be fixed after."
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/08-realtime-jamming-remote-sessions/08.05-session-capture-recall/08.05.02-take-alignment-drift-correction.md",
+          "line": 223,
+          "excerpt": "| **Session had no reference and no witness** | Not recoverable after the fact — nothing was recorded to align against. This must be caught at pre-flight, where it is a decision; discovering it here means the session is already lost. | At pre-flight: \"Takes from this session cannot be aligned automatically.\" Here: tracks preserved, unaligned, downloadable. |"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/08-realtime-jamming-remote-sessions/08.05-session-capture-recall/08.05.02-take-alignment-drift-correction.md",
+          "line": 261,
+          "excerpt": "| DT-04 | **There is no acoustic bleed between endpoints, so track-to-track correlation is structurally impossible.** | Domain reasoning, and the fact that reframes the whole feature. A physical multitrack is aligned by bleed — the snare is in the vocal mic, so the tracks share content and correlate. Distributed endpoints are in different buildings: each track is acoustically isolated *by construction*. Zero shared content. | ✅ CONFIRMED — and it invalidates the entire standard toolkit. Every alignment technique an engineer knows assumes bleed. None of them transfer. This is why a reference is not a convenience but the *only* mechanism, and why \"just correlate the tracks\" — the obvious first idea, and what the parent CX's \"degrade to correlation\" implies — cannot work on raw tracks. Correlation is only available against a recording of what an endpoint *heard*. |"
+        }
+      ]
+    }
+  ],
+  "coverage": {
+    "sourceMarkdownFilesReviewed": 32,
+    "canonicalSourcesReviewed": [
+      ".memory/wiki/specs/ideation/ideation-index.md",
+      ".memory/wiki/specs/ideation/moscow-ledger.md",
+      ".memory/wiki/specs/feature-ledger.md",
+      ".memory/wiki/specs/ideation/meta/constraints.md",
+      ".memory/wiki/specs/ideation/meta/problem-statement.md",
+      ".memory/wiki/specs/vision.md"
+    ],
+    "rubricsReviewed": [
+      ".codex/skills/pipeline-rubrics/references/vision-rubric.md",
+      ".codex/skills/pipeline-rubrics/references/scoring.md"
+    ],
+    "verifiedFindingIds": [
+      "R7-08.01-D7-01",
+      "R7-08.02-D7-01",
+      "R7-08.02-FC-01",
+      "R7-08.03-D7-01",
+      "R7-08.04-D7-01",
+      "R7-08.05-D7-01",
+      "R7-08.05-FC-01",
+      "R7-root-D7-01",
+      "R7-root-FC-01",
+      "R7-root-FC-02",
+      "R7-root-FC-03",
+      "R7-root-FC-04"
+    ],
+    "allRawFindingsHaveExactlyOneVerdict": true
+  }
+}

@@ -1,0 +1,138 @@
+{
+  "reportKind": "ambiguity-audit-verification",
+  "run": 7,
+  "domain": "22-analytics-market-intelligence",
+  "rawReport": "22-raw.json",
+  "rawFindingCount": 6,
+  "verdicts": [
+    {
+      "findingId": "R7-22-001",
+      "upheld": true,
+      "finalSeverity": "warning",
+      "reason": "The domain has an Open Questions section, but its register records only Owner and Deferred To, not a deadline or the decision blocked; an unresolved CX-03 issue is also marked PENDING outside that register. This fails Dimension 7, but is a warning because a questions section exists.",
+      "evidence": [
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/22-analytics-market-intelligence/analytics-market-intelligence-index.md",
+          "line": 132,
+          "excerpt": "## Open Questions"
+        },
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/22-analytics-market-intelligence/analytics-market-intelligence-index.md",
+          "line": 134,
+          "excerpt": "| # | Question | Owner | Deferred To |"
+        },
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/22-analytics-market-intelligence/22.01-source-connections-ingestion/22.01-source-connections-ingestion-cx.md",
+          "line": 73,
+          "excerpt": "**Shared state conflict**: unresolved — `[PENDING — /ideate-discover Step 5 deepening]`."
+        }
+      ]
+    },
+    {
+      "findingId": "R7-22-002",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "reason": "The cited manual-import item is a child feature and explicitly supplies an edge-case/failure-mode treatment for a live-source conflict. The pending precedence choice is an open decision, not evidence that Dimension 3's hierarchy or edge-case requirement is absent.",
+      "evidence": [
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/22-analytics-market-intelligence/22.01-source-connections-ingestion/22.01-source-connections-ingestion-index.md",
+          "line": 34,
+          "excerpt": "| 04 | Manual & File-Based Metric Import | feature |"
+        },
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/22-analytics-market-intelligence/22.01-source-connections-ingestion/22.01.04-manual-file-based-metric-import.md",
+          "line": 46,
+          "excerpt": "### Edge Cases / Failure Modes"
+        },
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/22-analytics-market-intelligence/22.01-source-connections-ingestion/22.01.04-manual-file-based-metric-import.md",
+          "line": 50,
+          "excerpt": "Conflict flagged; neither value is destroyed"
+        }
+      ]
+    },
+    {
+      "findingId": "R7-22-003",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "reason": "Current catalog-matching behavior explicitly handles contested races and parent revocation. The pending sync-vs-async mechanism therefore does not establish a missing Dimension 3 hierarchy or edge case.",
+      "evidence": [
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/22-analytics-market-intelligence/22.02-external-identity-catalog-matching/22.02.02-recording-release-catalog-matching.md",
+          "line": 79,
+          "excerpt": "The dispute wins (a contested recording blocks binding, D-02 of 22.02.03)"
+        },
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/22-analytics-market-intelligence/22.02-external-identity-catalog-matching/22.02.02-recording-release-catalog-matching.md",
+          "line": 93,
+          "excerpt": "Every dependent catalog match invalidates — loudly, cascading, never silently orphaned"
+        },
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/22-analytics-market-intelligence/22.02-external-identity-catalog-matching/22.02.02-recording-release-catalog-matching.md",
+          "line": 103,
+          "excerpt": "Affected rows frozen; routed to 22.02.03; the rest of the list stays usable"
+        }
+      ]
+    },
+    {
+      "findingId": "R7-22-004",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "reason": "The transient placement transition is explicitly documented as an edge case with defined user-visible behavior. It does not support a Dimension 3 completeness failure.",
+      "evidence": [
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/22-analytics-market-intelligence/22.03-playlist-chart-tracking/22.03.01-playlist-placement-tracking.md",
+          "line": 50,
+          "excerpt": "### Edge Cases / Failure Modes"
+        },
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/22-analytics-market-intelligence/22.03-playlist-chart-tracking/22.03.01-playlist-placement-tracking.md",
+          "line": 54,
+          "excerpt": "The event is invisible — we never sampled it"
+        }
+      ]
+    },
+    {
+      "findingId": "R7-22-005",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "reason": "The vendor-dispute row is an open policy question, but it does not show that risk scoring lacks a second-level feature or an edge case. The current feature declares failure modes and defines a no-score outcome for insufficient observations.",
+      "evidence": [
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/22-analytics-market-intelligence/22.06-streaming-fraud-detection/22.06.02-promo-vendor-risk-scoring.md",
+          "line": 47,
+          "excerpt": "### Edge Cases / Failure Modes"
+        },
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/22-analytics-market-intelligence/22.06-streaming-fraud-detection/22.06.02-promo-vendor-risk-scoring.md",
+          "line": 51,
+          "excerpt": "No score computed"
+        },
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/22-analytics-market-intelligence/22.06-streaming-fraud-detection/22.06.02-promo-vendor-risk-scoring.md",
+          "line": 54,
+          "excerpt": "Vendor disputes their score"
+        }
+      ]
+    },
+    {
+      "findingId": "R7-22-006",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "reason": "The cited pending note does not leave the compliance constraint without a value: the current decision explicitly sets minors to default-off. It therefore does not support a Dimension 4 finding that the axis is vague or TBD.",
+      "evidence": [
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/22-analytics-market-intelligence/22.07-ar-scouting-watchlists/22.07.04-scouted-artist-visibility-consent.md",
+          "line": 84,
+          "excerpt": "Default-off for minors is the only defensible position"
+        },
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/22-analytics-market-intelligence/22.07-ar-scouting-watchlists/22.07.04-scouted-artist-visibility-consent.md",
+          "line": 120,
+          "excerpt": "Minors are **default-off**, pending legal review"
+        }
+      ]
+    }
+  ],
+  "coverage": "Independently checked all 6 raw finding IDs against the 44 current Markdown files in the assigned domain and the specified rubrics; only R7-22-001 is upheld, downgraded to warning."
+}

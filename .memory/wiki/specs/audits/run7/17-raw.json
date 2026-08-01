@@ -1,0 +1,695 @@
+{
+  "reportKind": "ambiguity-audit-raw",
+  "run": 7,
+  "domain": "17-live-booking-settlement",
+  "unitsAudited": 9,
+  "filesRead": 55,
+  "coverageNote": "Audited every current Markdown source file in the scoped domain: 9 audit units and 55 files.",
+  "applicableCheckpoints": 72,
+  "findings": [
+    {
+      "findingId": "R7-17-001",
+      "unit": "root",
+      "severity": "high",
+      "dimension": 7,
+      "claim": "An owner is assigned, but no deadline is recorded for deciding whether an accepted offer is legally binding or only an executed contract binds; contract formation cannot be implemented without inventing the binding event.",
+      "evidence": [
+        {
+          "file": "17.04-performance-contracts-deal-memos.md",
+          "line": 113,
+          "excerpt": "Is an accepted offer legally binding, or does binding effect begin only when the contract is executed?"
+        }
+      ],
+      "forcedInvention": "Choose whether acceptance creates an enforceable agreement before contract execution.",
+      "failureScenario": "A party treats an accepted offer as cancellable while another treats it as binding, producing an unresolvable cancellation and remedy dispute."
+    },
+    {
+      "findingId": "R7-17-002",
+      "unit": "root",
+      "severity": "critical",
+      "dimension": 7,
+      "claim": "An owner is assigned, but no deadline is recorded for deciding how postponement is represented; booking, hold, contract, schedule, and ticket-manifest behavior cannot be built without inventing whether postponement is a state change or a successor booking.",
+      "evidence": [
+        {
+          "file": "live-booking-settlement-index.md",
+          "line": 135,
+          "excerpt": "Postponement is not yet modelled: whether it is a state transition or a new booking affects the hold, contract, schedule, and ticket manifest."
+        }
+      ],
+      "forcedInvention": "Choose state-transition versus replacement-booking semantics and which records carry forward.",
+      "failureScenario": "A postponed show retains its hold or payment schedule in one subsystem but creates a second live obligation in another."
+    },
+    {
+      "findingId": "R7-17-003",
+      "unit": "17.01-availability-holds-confirmation",
+      "severity": "critical",
+      "dimension": 7,
+      "claim": "An owner is assigned, but no deadline is recorded for resolving the canonical hold-protocol owner; two units claim the hold ladder, so expiry, conversion, and conflict behavior cannot be implemented without inventing an authority boundary.",
+      "evidence": [
+        {
+          "file": "17.01-availability-holds-confirmation/17.01.01-availability-calendar-avails.md",
+          "line": 254,
+          "excerpt": "17.01 and 17.02 both claim ownership of the hold protocol. Both cannot own it."
+        },
+        {
+          "file": "17.01-availability-holds-confirmation/17.01.01-availability-calendar-avails.md",
+          "line": 301,
+          "excerpt": "Which unit owns the canonical hold protocol?"
+        }
+      ],
+      "forcedInvention": "Choose the authoritative hold state machine and its owning aggregate.",
+      "failureScenario": "Offer acceptance and calendar availability apply incompatible expiry or release transitions to the same date."
+    },
+    {
+      "findingId": "R7-17-004",
+      "unit": "17.01-availability-holds-confirmation",
+      "severity": "high",
+      "dimension": 3,
+      "claim": "The announcement gate conflicts on whether deposit receipt is waivable: confirmation treats it as waivable while deposit collection makes it an enforceability condition, so publication logic has no single contract.",
+      "evidence": [
+        {
+          "file": "17.01-availability-holds-confirmation/17.01.04-confirmation-announce-gate.md",
+          "line": 96,
+          "excerpt": "P-07 Deposit received is a Tier 2 prerequisite and may be waived."
+        },
+        {
+          "file": "17.01-availability-holds-confirmation/17.01.04-confirmation-announce-gate.md",
+          "line": 290,
+          "excerpt": "Does the waiver model conflict with the requirement that deposit receipt gates announcement?"
+        },
+        {
+          "file": "17.05-deposits-balances-cancellation/17.05.01-deposit-invoice-collection.md",
+          "line": 31,
+          "excerpt": "The deposit gate before announcement determines whether the booking is commercially enforceable."
+        }
+      ],
+      "forcedInvention": "Choose whether an authorized waiver permits announcement before the deposit is received.",
+      "failureScenario": "A show is publicly announced under a waiver, then downstream enforcement rejects it as unconfirmed."
+    },
+    {
+      "findingId": "R7-17-005",
+      "unit": "17.01-availability-holds-confirmation",
+      "severity": "high",
+      "dimension": 7,
+      "claim": "An owner is assigned, but no deadline is recorded for deciding whether publishing availability consumes the book or list permission; permission enforcement cannot be implemented without inventing the required claim.",
+      "evidence": [
+        {
+          "file": "17.01-availability-holds-confirmation/17.01.01-availability-calendar-avails.md",
+          "line": 304,
+          "excerpt": "Does publishing avails require book or list?"
+        }
+      ],
+      "forcedInvention": "Choose the authorization claim required to publish availability.",
+      "failureScenario": "A user with only one of the two claims can either publish improperly or is blocked from a valid workflow."
+    },
+    {
+      "findingId": "R7-17-006",
+      "unit": "root",
+      "severity": "high",
+      "dimension": 7,
+      "claim": "An owner is assigned, but no deadline is recorded for the radius-clause predicate: the bound subject and distance metric remain undecided, so conflict checks need invented legal scope.",
+      "evidence": [
+        {
+          "file": "17.06-radius-clause-exclusivity.md",
+          "line": 158,
+          "excerpt": "Does the radius bind the contracting entity, individual humans, or both?"
+        },
+        {
+          "file": "17.06-radius-clause-exclusivity.md",
+          "line": 159,
+          "excerpt": "Is radius distance driving distance or straight-line distance?"
+        }
+      ],
+      "forcedInvention": "Choose who is restricted and how geographic distance is measured.",
+      "failureScenario": "A booking is permitted under an entity-only or straight-line implementation but breaches the counterparty's intended restriction."
+    },
+    {
+      "findingId": "R7-17-007",
+      "unit": "root",
+      "severity": "high",
+      "dimension": 7,
+      "claim": "An owner is assigned, but no deadline is recorded for the visibility and permission model that permits an enquiry to enter an invite-only room; inbox routing cannot be implemented without inventing access authority.",
+      "evidence": [
+        {
+          "file": "17.07-booking-enquiry-inbox-rfq.md",
+          "line": 139,
+          "excerpt": "Can an enquiry create or enter an invite-only room, and what visibility and permission model applies?"
+        }
+      ],
+      "forcedInvention": "Choose whether enquiry senders can create or access private booking rooms and at which role level.",
+      "failureScenario": "A requester gains access to a private negotiation room or a valid enquiry cannot be routed."
+    },
+    {
+      "findingId": "R7-17-008",
+      "unit": "17.02-offers-negotiation",
+      "severity": "critical",
+      "dimension": 3,
+      "claim": "Parallel offers sharing a bill or budget are explicitly out of scope even though two live threads for one date are routine, so acceptance cannot atomically protect shared capacity.",
+      "evidence": [
+        {
+          "file": "17.02-offers-negotiation/17.02.02-counteroffer-thread-versions.md",
+          "line": 197,
+          "excerpt": "Same-bill and same-budget state is out of scope."
+        },
+        {
+          "file": "17.02-offers-negotiation/17.02.02-counteroffer-thread-versions.md",
+          "line": 198,
+          "excerpt": "Two live threads for the same date are real and routine, but remain unmodelled."
+        },
+        {
+          "file": "live-booking-settlement-cx.md",
+          "line": 660,
+          "excerpt": "Shared state is not modelled: a sibling acceptance can exhaust budget that another thread assumes remains available."
+        }
+      ],
+      "forcedInvention": "Choose locking, reservation, and rollback semantics for shared bill, date, and budget capacity.",
+      "failureScenario": "Two negotiators accept compatible-looking offers concurrently and overcommit the same talent budget or bill slot."
+    },
+    {
+      "findingId": "R7-17-009",
+      "unit": "17.02-offers-negotiation",
+      "severity": "high",
+      "dimension": 7,
+      "claim": "An owner is assigned, but no deadline is recorded for whether approval survives a lineup membership change; offer approval validity cannot be computed without inventing consent continuity.",
+      "evidence": [
+        {
+          "file": "17.02-offers-negotiation/17.02.03-offer-approval-chain.md",
+          "line": 125,
+          "excerpt": "If lineup membership changes between approval and show, does entity consent survive?"
+        }
+      ],
+      "forcedInvention": "Choose whether the entity, former approver, or revised lineup must reapprove.",
+      "failureScenario": "An offer binds a changed act without consent, or a legitimate approval is unexpectedly invalidated."
+    },
+    {
+      "findingId": "R7-17-010",
+      "unit": "17.02-offers-negotiation",
+      "severity": "high",
+      "dimension": 7,
+      "claim": "An owner is assigned, but no deadline is recorded for how an offer extension affects the hold ladder, expiry, and challenge clock; the extension endpoint cannot preserve reservation semantics without inventing a rule.",
+      "evidence": [
+        {
+          "file": "17.02-offers-negotiation/17.02.03-offer-approval-chain.md",
+          "line": 126,
+          "excerpt": "An extension may re-open the hold ladder, expiry, and challenge clock; this needs an answer."
+        }
+      ],
+      "forcedInvention": "Choose whether an extension renews, preserves, or releases a hold and its challenge state.",
+      "failureScenario": "An extended offer appears reserved to one party while the calendar releases it to another."
+    },
+    {
+      "findingId": "R7-17-011",
+      "unit": "17.03-deal-structures-economics",
+      "severity": "critical",
+      "dimension": 7,
+      "claim": "An owner is assigned, but no deadline is recorded for the settlement grain of a cross-collateralized run; per-show finality is described as impossible, so settlement state cannot be designed without inventing the aggregate entity.",
+      "evidence": [
+        {
+          "file": "17.03-deal-structures-economics/17.03.03-multishow-cross-collateralization.md",
+          "line": 37,
+          "excerpt": "A cross-collateralized run means a profitable show can cover another show's loss."
+        },
+        {
+          "file": "17.03-deal-structures-economics/17.03.03-multishow-cross-collateralization.md",
+          "line": 42,
+          "excerpt": "Per-show finality is impossible while the run remains open."
+        },
+        {
+          "file": "17.03-deal-structures-economics/17.03.03-multishow-cross-collateralization.md",
+          "line": 105,
+          "excerpt": "Choose the settlement grain for a cross-collateralized run."
+        }
+      ],
+      "forcedInvention": "Choose show-level, run-level, or hybrid settlement aggregation and finalization timing.",
+      "failureScenario": "A show disburses as final, then a later loss requires retroactive clawback with no supported ledger model."
+    },
+    {
+      "findingId": "R7-17-012",
+      "unit": "17.03-deal-structures-economics",
+      "severity": "high",
+      "dimension": 7,
+      "claim": "An owner is assigned, but no deadline is recorded for handling advances while a cross-collateralized run remains open; cash application needs invented recoupment and finality rules.",
+      "evidence": [
+        {
+          "file": "17.03-deal-structures-economics/17.03.03-multishow-cross-collateralization.md",
+          "line": 62,
+          "excerpt": "Advances during an open run are not modelled."
+        },
+        {
+          "file": "17.03-deal-structures-economics/17.03.03-multishow-cross-collateralization.md",
+          "line": 106,
+          "excerpt": "How should advances be handled while a run remains open?"
+        }
+      ],
+      "forcedInvention": "Choose whether an advance is paid, escrowed, netted, or recouped across the remaining run.",
+      "failureScenario": "A participant receives an advance that is later double-counted or cannot be reconciled against run losses."
+    },
+    {
+      "findingId": "R7-17-013",
+      "unit": "17.03-deal-structures-economics",
+      "severity": "high",
+      "dimension": 7,
+      "claim": "An owner is assigned, but no deadline is recorded for the entity and Operator authority that own a run across independent operators; aggregate visibility and mutation rights need invented boundaries.",
+      "evidence": [
+        {
+          "file": "17.03-deal-structures-economics/17.03.03-multishow-cross-collateralization.md",
+          "line": 59,
+          "excerpt": "A run across independent operators leaves ownership and aggregate visibility unclear."
+        },
+        {
+          "file": "17.03-deal-structures-economics/17.03.03-multishow-cross-collateralization.md",
+          "line": 107,
+          "excerpt": "Which entity owns a run, and which Operator can view the aggregate?"
+        }
+      ],
+      "forcedInvention": "Choose the run owner, participating operator visibility, and mutation authority.",
+      "failureScenario": "An operator sees or alters another operator's financial aggregate without authority, or cannot settle a shared run."
+    },
+    {
+      "findingId": "R7-17-014",
+      "unit": "17.05-deposits-balances-cancellation",
+      "severity": "critical",
+      "dimension": 7,
+      "claim": "An owner is assigned, but no deadline is recorded for platform custody: both the deposit and a disputed settlement delta may be escrowed or merely recorded, so money movement obligations cannot be implemented without inventing custody.",
+      "evidence": [
+        {
+          "file": "17.05-deposits-balances-cancellation/17.05-deposits-balances-cancellation-index.md",
+          "line": 62,
+          "excerpt": "Is the deposit held in escrow by the platform or paid directly between parties?"
+        },
+        {
+          "file": "17.09-settlement-reconciliation/17.09.05-settlement-signoff-variance.md",
+          "line": 333,
+          "excerpt": "Is the contested delta held in escrow, or merely recorded as an obligation?"
+        }
+      ],
+      "forcedInvention": "Choose whether the platform takes custody of deposits and disputed settlement amounts.",
+      "failureScenario": "The product represents funds as held when no regulated custody exists, or releases funds it was expected to control."
+    },
+    {
+      "findingId": "R7-17-015",
+      "unit": "17.05-deposits-balances-cancellation",
+      "severity": "high",
+      "dimension": 7,
+      "claim": "An owner is assigned, but no deadline is recorded for late-deposit handling; invoice expiry cannot determine whether to auto-void, grant grace, or route a decision without inventing authority.",
+      "evidence": [
+        {
+          "file": "17.05-deposits-balances-cancellation/17.05.01-deposit-invoice-collection.md",
+          "line": 53,
+          "excerpt": "Late deposit handling and automatic voiding remain open."
+        },
+        {
+          "file": "17.05-deposits-balances-cancellation/17.05.01-deposit-invoice-collection.md",
+          "line": 107,
+          "excerpt": "Should late payment auto-void, have a grace period, or require a named decision-maker?"
+        }
+      ],
+      "forcedInvention": "Choose expiry behavior, grace duration, and who may override it.",
+      "failureScenario": "A booking is voided while payment is being accepted, or remains held indefinitely after the payment deadline."
+    },
+    {
+      "findingId": "R7-17-016",
+      "unit": "17.05-deposits-balances-cancellation",
+      "severity": "high",
+      "dimension": 7,
+      "claim": "An owner is assigned, but no deadline is recorded for payment-ledger precedence when cancellation, in-flight payment, and contract amendment overlap; reconciliation cannot be deterministic without inventing event ordering.",
+      "evidence": [
+        {
+          "file": "17.05-deposits-balances-cancellation/17.05.01-deposit-invoice-collection.md",
+          "line": 59,
+          "excerpt": "Cancellation while payment is in flight leaves the required settle-or-reverse ordering open."
+        },
+        {
+          "file": "17.05-deposits-balances-cancellation/17.05.02-balance-schedule-reminders.md",
+          "line": 113,
+          "excerpt": "What is the precedence when a same-day cancellation and installment payment occur?"
+        },
+        {
+          "file": "17.05-deposits-balances-cancellation/17.05.02-balance-schedule-reminders.md",
+          "line": 114,
+          "excerpt": "How are already-paid schedule rows reconciled after a contract amendment?"
+        }
+      ],
+      "forcedInvention": "Choose event precedence, settlement-versus-reversal behavior, and amendment reconciliation.",
+      "failureScenario": "The same payment is both retained and refunded, leaving contradictory balances and cancellation status."
+    },
+    {
+      "findingId": "R7-17-017",
+      "unit": "root",
+      "severity": "high",
+      "dimension": 7,
+      "claim": "An owner is assigned, but no deadline is recorded for the cancellation cascade and forfeit direction when a headliner cancels a bill with support acts; downstream contract and payment obligations need invented allocation rules.",
+      "evidence": [
+        {
+          "file": "17.14-bill-construction-support-slots.md",
+          "line": 118,
+          "excerpt": "What is the cancellation cascade and forfeit direction when the headliner cancels a bill with support acts?"
+        }
+      ],
+      "forcedInvention": "Choose which linked engagements cancel, who owes whom, and how forfeits propagate.",
+      "failureScenario": "A support act remains contractually committed after a headliner cancellation or is charged the wrong party's forfeit."
+    },
+    {
+      "findingId": "R7-17-018",
+      "unit": "root",
+      "severity": "high",
+      "dimension": 7,
+      "claim": "An owner is assigned, but no deadline is recorded for whether buy-ons are permitted and what values gate them; bill editing cannot be authorized without inventing product policy.",
+      "evidence": [
+        {
+          "file": "17.14-bill-construction-support-slots.md",
+          "line": 117,
+          "excerpt": "Are buy-ons permitted, prohibited, or allowed only under explicit values gates?"
+        }
+      ],
+      "forcedInvention": "Choose the buy-on policy and any eligibility or value thresholds.",
+      "failureScenario": "A promoter sells a slot under an unapproved pay-to-play policy, creating financial and reputation risk."
+    },
+    {
+      "findingId": "R7-17-019",
+      "unit": "root",
+      "severity": "high",
+      "dimension": 7,
+      "claim": "An owner is assigned, but no deadline is recorded for who controls a TBA slot or what refund semantics apply after it is filled; support-slot mutation and payment treatment need invented authority.",
+      "evidence": [
+        {
+          "file": "17.14-bill-construction-support-slots.md",
+          "line": 119,
+          "excerpt": "Who controls a TBA slot, and what refund semantics apply after it is filled?"
+        }
+      ],
+      "forcedInvention": "Choose the controlling actor, fill authorization, and post-fill refund policy.",
+      "failureScenario": "A party fills a slot without authority or a displaced participant receives an inconsistent refund."
+    },
+    {
+      "findingId": "R7-17-020",
+      "unit": "17.08-agency-representation-commission",
+      "severity": "critical",
+      "dimension": 7,
+      "claim": "An owner is assigned, but no deadline is recorded for whether commission is withheld at source or invoiced by the agency; payout flow and KYC or AML obligations cannot be implemented without inventing the money path.",
+      "evidence": [
+        {
+          "file": "17.08-agency-representation-commission/17.08-agency-representation-commission-index.md",
+          "line": 63,
+          "excerpt": "Is commission deducted at source or collected by a separate agency invoice?"
+        },
+        {
+          "file": "17.08-agency-representation-commission/17.08.02-commission-accrual-deduction.md",
+          "line": 33,
+          "excerpt": "At-source deduction versus separate agency invoicing is unresolved and changes KYC or AML exposure."
+        }
+      ],
+      "forcedInvention": "Choose whether commission passes through platform settlement or an external agency invoice.",
+      "failureScenario": "The platform deducts and remits commission without the intended regulated role, or fails to pay an agency that expects at-source collection."
+    },
+    {
+      "findingId": "R7-17-021",
+      "unit": "17.08-agency-representation-commission",
+      "severity": "critical",
+      "dimension": 7,
+      "claim": "An owner is assigned, but no deadline is recorded for post-disbursement commission recovery; the platform may have an obligation it cannot execute, so receivable and payout reversal behavior need invention.",
+      "evidence": [
+        {
+          "file": "17.08-agency-representation-commission/17.08.02-commission-accrual-deduction.md",
+          "line": 52,
+          "excerpt": "Post-disbursement clawback can create a platform obligation that the platform cannot execute."
+        },
+        {
+          "file": "17.08-agency-representation-commission/17.08.02-commission-accrual-deduction.md",
+          "line": 102,
+          "excerpt": "Recovery may hold payout, accept risk, or net against future payments."
+        },
+        {
+          "file": "17.10-live-income-payout-tax/17.10.02-disbursement-execution.md",
+          "line": 126,
+          "excerpt": "Post-disbursement clawback may involve many recipients."
+        }
+      ],
+      "forcedInvention": "Choose hold, receivable, future-netting, or loss treatment after payout.",
+      "failureScenario": "Commission is marked recoverable but no authorized mechanism exists to recover it from dispersed payees."
+    },
+    {
+      "findingId": "R7-17-022",
+      "unit": "17.09-settlement-reconciliation",
+      "severity": "critical",
+      "dimension": 7,
+      "claim": "An owner is assigned, but no deadline is recorded for who bears a chargeback after settlement has been signed and disbursed; the settlement ledger needs invented liability allocation.",
+      "evidence": [
+        {
+          "file": "17.09-settlement-reconciliation/17.09.02-box-office-count-reconciliation.md",
+          "line": 168,
+          "excerpt": "A chargeback can arrive after settlement has been signed and disbursed; who bears it is unresolved."
+        },
+        {
+          "file": "17.09-settlement-reconciliation/17.09.02-box-office-count-reconciliation.md",
+          "line": 280,
+          "excerpt": "Who bears chargeback burden after settlement?"
+        }
+      ],
+      "forcedInvention": "Choose the liable party and whether settled amounts are reopened, clawed back, or absorbed.",
+      "failureScenario": "A late chargeback produces a negative balance with no accountable party or recovery path."
+    },
+    {
+      "findingId": "R7-17-023",
+      "unit": "17.09-settlement-reconciliation",
+      "severity": "high",
+      "dimension": 7,
+      "claim": "An owner is assigned, but no deadline is recorded for the settlement amendment-window duration; sign-off finality and edit permissions need an invented cutoff.",
+      "evidence": [
+        {
+          "file": "17.09-settlement-reconciliation/17.09-settlement-reconciliation-index.md",
+          "line": 79,
+          "excerpt": "What is the settlement amendment window?"
+        },
+        {
+          "file": "17.09-settlement-reconciliation/17.09.06-ledger-append-only-adjustments.md",
+          "line": 282,
+          "excerpt": "The amendment-window duration remains open."
+        }
+      ],
+      "forcedInvention": "Choose the duration and start event for post-settlement amendments.",
+      "failureScenario": "One implementation accepts a correction after sign-off while another treats the same settlement as immutable."
+    },
+    {
+      "findingId": "R7-17-024",
+      "unit": "17.09-settlement-reconciliation",
+      "severity": "high",
+      "dimension": 7,
+      "claim": "An owner is assigned, but no deadline is recorded for expense eligibility when a cost is off-schedule or lacks a receipt; settlement deductions need invented evidence and authorization rules.",
+      "evidence": [
+        {
+          "file": "17.09-settlement-reconciliation/17.09.03-show-expense-receipt-capture.md",
+          "line": 52,
+          "excerpt": "An off-schedule line cannot deduct until the applicable rule is decided."
+        },
+        {
+          "file": "17.09-settlement-reconciliation/17.09.03-show-expense-receipt-capture.md",
+          "line": 106,
+          "excerpt": "Must the expense schedule be structured, or may it be vague?"
+        },
+        {
+          "file": "17.09-settlement-reconciliation/17.09.03-show-expense-receipt-capture.md",
+          "line": 108,
+          "excerpt": "May an unreceipted cash expense be deducted with a flag, or not at all?"
+        }
+      ],
+      "forcedInvention": "Choose proof requirements and whether non-scheduled or unreceipted expenses can reduce settlement.",
+      "failureScenario": "A party deducts unsupported expenses in one flow while another flow blocks the same charge."
+    },
+    {
+      "findingId": "R7-17-025",
+      "unit": "17.09-settlement-reconciliation",
+      "severity": "high",
+      "dimension": 7,
+      "claim": "An owner is assigned, but no deadline is recorded for negative settlement treatment; the system cannot determine whether to collect a debt or only display it without inventing collection policy.",
+      "evidence": [
+        {
+          "file": "17.09-settlement-reconciliation/17.09.01-settlement-sheet-computation.md",
+          "line": 261,
+          "excerpt": "For a negative settlement, does the platform collect the amount or merely render the shortfall?"
+        }
+      ],
+      "forcedInvention": "Choose collection, receivable, offset, or display-only treatment for a negative balance.",
+      "failureScenario": "A negative settlement is represented as payable by one component and non-actionable by another."
+    },
+    {
+      "findingId": "R7-17-026",
+      "unit": "17.09-settlement-reconciliation",
+      "severity": "high",
+      "dimension": 7,
+      "claim": "An owner is assigned, but no deadline is recorded for self-dealing detection and evidence weight; variance adjudication needs invented fraud or conflict thresholds.",
+      "evidence": [
+        {
+          "file": "17.09-settlement-reconciliation/17.09.01-settlement-sheet-computation.md",
+          "line": 263,
+          "excerpt": "What self-deal detection threshold applies, given the privacy implications?"
+        },
+        {
+          "file": "17.09-settlement-reconciliation/17.09.05-settlement-signoff-variance.md",
+          "line": 335,
+          "excerpt": "How much weight should a self-dealt draw record carry?"
+        }
+      ],
+      "forcedInvention": "Choose the detection threshold, evidence treatment, and privacy-safe review behavior.",
+      "failureScenario": "A valid settlement is blocked by an arbitrary self-dealing signal, or a conflicted record is accepted without review."
+    },
+    {
+      "findingId": "R7-17-027",
+      "unit": "17.10-live-income-payout-tax",
+      "severity": "critical",
+      "dimension": 7,
+      "claim": "An owner is assigned, but no deadline is recorded for whether payouts go to individuals, a band entity, or both; payee validation, disbursement, and tax handling need invented identity rules.",
+      "evidence": [
+        {
+          "file": "17.10-live-income-payout-tax/17.10-live-income-payout-tax-index.md",
+          "line": 65,
+          "excerpt": "Should payout be to individuals, a band entity, or both?"
+        },
+        {
+          "file": "17.10-live-income-payout-tax/17.10.02-disbursement-execution.md",
+          "line": 125,
+          "excerpt": "The individuals-versus-entity payout model remains unresolved."
+        }
+      ],
+      "forcedInvention": "Choose eligible payee types and how entity and member claims interact.",
+      "failureScenario": "A band fund cannot be paid to an entity that the payout service does not recognize, or members are paid contrary to contractual entitlement."
+    },
+    {
+      "findingId": "R7-17-028",
+      "unit": "17.10-live-income-payout-tax",
+      "severity": "critical",
+      "dimension": 7,
+      "claim": "An owner is assigned, but no deadline is recorded for the international withholding posture: the product may gate, warn, or only flag a liability, so tax-sensitive disbursement cannot be implemented without inventing compliance behavior.",
+      "evidence": [
+        {
+          "file": "17.10-live-income-payout-tax/17.10.03-withholding-tax-vat.md",
+          "line": 111,
+          "excerpt": "Should the platform provide only a liability line or calculate an exact rate?"
+        },
+        {
+          "file": "17.10-live-income-payout-tax/17.10.03-withholding-tax-vat.md",
+          "line": 113,
+          "excerpt": "Should withholding be built as a gate for international payouts or only a warning?"
+        }
+      ],
+      "forcedInvention": "Choose whether the platform calculates, withholds, blocks, or merely warns on tax obligations.",
+      "failureScenario": "An international payout proceeds without the intended tax control, or is blocked when only disclosure was intended."
+    },
+    {
+      "findingId": "R7-17-029",
+      "unit": "17.10-live-income-payout-tax",
+      "severity": "high",
+      "dimension": 7,
+      "claim": "An owner is assigned, but no deadline is recorded for the agreement authority for directly hired sidemen or deps; split eligibility cannot be verified without inventing a contract owner or reference.",
+      "evidence": [
+        {
+          "file": "17.10-live-income-payout-tax/17.10.01-live-income-split-definition.md",
+          "line": 150,
+          "excerpt": "A non-member rate reference cannot be edited."
+        },
+        {
+          "file": "17.10-live-income-payout-tax/17.10.01-live-income-split-definition.md",
+          "line": 151,
+          "excerpt": "No agreed rate blocks the participant."
+        },
+        {
+          "file": "17.10-live-income-payout-tax/17.10.01-live-income-split-definition.md",
+          "line": 253,
+          "excerpt": "For a player or dep hired directly by an operator, no domain owns the agreement or supplies a reference target."
+        }
+      ],
+      "forcedInvention": "Choose the agreement owner and admissible evidence for a directly hired non-member's rate.",
+      "failureScenario": "A directly hired player is excluded from a valid split or receives a payout based on an unverified rate."
+    },
+    {
+      "findingId": "R7-17-030",
+      "unit": "17.11-draw-history-market-intelligence",
+      "severity": "critical",
+      "dimension": 7,
+      "claim": "An owner is assigned, but no deadline is recorded for consent and reciprocity governing external settlement data; market comparables cannot be generated without inventing data-use authority.",
+      "evidence": [
+        {
+          "file": "17.11-draw-history-market-intelligence/17.11-draw-history-market-intelligence-index.md",
+          "line": 64,
+          "excerpt": "What consent governs settlement data used for draw history and market intelligence?"
+        },
+        {
+          "file": "17.11-draw-history-market-intelligence/17.11.02-market-comparables-benchmarks.md",
+          "line": 101,
+          "excerpt": "Market comparables cannot be built until the consent choice is made."
+        },
+        {
+          "file": "17.11-draw-history-market-intelligence/17.11.02-market-comparables-benchmarks.md",
+          "line": 102,
+          "excerpt": "Would reciprocity make consent coercive?"
+        }
+      ],
+      "forcedInvention": "Choose opt-in, opt-out, aggregation, and reciprocity policy for settlement-derived intelligence.",
+      "failureScenario": "The platform exposes or trains on settlement information without valid consent, or denies valid users access under an arbitrary reciprocity rule."
+    },
+    {
+      "findingId": "R7-17-031",
+      "unit": "17.11-draw-history-market-intelligence",
+      "severity": "high",
+      "dimension": 7,
+      "claim": "An owner is assigned, but no deadline is recorded for whether an Operator can access an artist's draw record; record visibility cannot be enforced without inventing the permission policy.",
+      "evidence": [
+        {
+          "file": "17.11-draw-history-market-intelligence/17.11.01-verified-draw-record.md",
+          "line": 110,
+          "excerpt": "May an Operator access an artist's draw record?"
+        }
+      ],
+      "forcedInvention": "Choose whether access is denied, consented, aggregated, or role-based.",
+      "failureScenario": "An operator receives private performance data without permission or cannot access the verification data needed for a valid offer."
+    },
+    {
+      "findingId": "R7-17-032",
+      "unit": "17.11-draw-history-market-intelligence",
+      "severity": "high",
+      "dimension": 7,
+      "claim": "An owner is assigned, but no deadline is recorded for the competition-law posture of offer guidance; guarantee recommendations need invented limits on pricing influence.",
+      "evidence": [
+        {
+          "file": "17.11-draw-history-market-intelligence/17.11.03-offer-guidance-guarantee-sizing.md",
+          "line": 101,
+          "excerpt": "What is the price-setting competition posture for offer guidance?"
+        }
+      ],
+      "forcedInvention": "Choose whether guidance is allowed, how it is bounded, and what information it may use.",
+      "failureScenario": "The system presents market guidance that creates unlawful or unsafe coordinated pricing behavior."
+    },
+    {
+      "findingId": "R7-17-033",
+      "unit": "root",
+      "severity": "high",
+      "dimension": 7,
+      "claim": "An owner is assigned, but no deadline is recorded for whether counterparty payment-reliability information is private or visible within a room; reputation disclosure cannot be implemented without inventing the audience.",
+      "evidence": [
+        {
+          "file": "17.12-counterparty-relationship-payment-reliability.md",
+          "line": 115,
+          "excerpt": "Is payment-reliability reputation private to the reporter or visible within the room?"
+        }
+      ],
+      "forcedInvention": "Choose the visibility audience and disclosure controls for reliability signals.",
+      "failureScenario": "A sensitive reputation signal leaks to an unauthorized party or a counterparty cannot see a signal the workflow relies on."
+    },
+    {
+      "findingId": "R7-17-034",
+      "unit": "root",
+      "severity": "high",
+      "dimension": 7,
+      "claim": "An owner is assigned, but no deadline is recorded for handling brigading of fan-demand signals; market-intelligence integrity controls need invented detection and response behavior.",
+      "evidence": [
+        {
+          "file": "17.13-fan-demand-signals.md",
+          "line": 103,
+          "excerpt": "How is brigading handled?"
+        }
+      ],
+      "forcedInvention": "Choose detection thresholds, suppression behavior, review authority, and appeal handling for manipulated demand data.",
+      "failureScenario": "Manipulated signals inflate demand guidance and cause promoters to make materially distorted booking offers."
+    }
+  ]
+}

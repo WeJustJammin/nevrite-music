@@ -1,0 +1,315 @@
+{
+  "domain": "13-gear-marketplace",
+  "treeRoot": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/13-gear-marketplace",
+  "unitsAudited": 11,
+  "filesRead": 65,
+  "coverageNote": "Enumerated from disk: 11 units (the domain directory itself plus 10 sub-domain directories, each containing an *-index.md) and 65 .md files totalling 1,304,173 bytes — matching the expected 11 units / 65 files exactly. Every file was read. For the six largest files (13.08.01 74k, 13.03.01 60k, 13.01.02 57k, 13.02.02 57k, 13.12 55k, 13.03.02 54k) the Deep Think Annotations sections were read at reduced line depth while Overview, Behavior, Edge Cases, States, Decisions, Open Questions and Cross-Cut Notes were read in full; no finding below rests on a Deep Think row. A programmatic scan confirmed no line in the tree is truncated mid-sentence, so no finding rests on a rendering artefact. Rubric dimensions 1 (Problem Clarity), 4 (Constraint Explicitness) and 5 (Success Measurability) are marked N/A for every unit: the problem statement, constraint axes and success metrics live in meta/problem-statement.md, meta/constraints.md and vision.md, outside this domain's units, and scoring their absence here would penalise content never in scope. Dimension 6 (Competitive Positioning) is applicable only to the domain-root unit, whose gear-marketplace-index.md Overview names Reverb (~$1B GMV), Sweetwater, eBay and Thomann, states the differentiation as a specific capability gap (provenance requires credit graph + registry + listing simultaneously) and names a defensible moat — it scores as met. Dimensions 2, 3, 7 and 8 are applicable to all 11 units. Forced inventions surfaced by implementer simulation are added as punch-list items to both the numerator and the denominator, per the scoring note that they 'count toward the ambiguity score'. Overall raw ambiguity for this domain: 14.0 points / 51 applicable checkpoints = 27.5%. The tree is of very high quality on product behaviour; the dominant defect class is not missing decisions but stale process metadata — sub-domain CX files that still assert an unresolved conflict, or defer to an ideation stage that has already run, after the owning child feature resolved it.",
+  "units": [
+    {
+      "unit": "13-gear-marketplace (domain root: gear-marketplace-index.md, gear-marketplace-cx.md, 13.11, 13.12, 13.13)",
+      "applicableCheckpoints": 5,
+      "naDimensions": [1, 4, 5],
+      "points": 0.5,
+      "dimensionScores": {"2": "PASS", "3": "PASS", "6": "PASS", "7": "PASS", "8": "WARN"},
+      "note": "Open Questions are exemplary: every live row carries [OWNER]/Agent plus a live downstream stage, and eight rows explicitly document being re-pointed from an expired target. Structural compliance is the only weak dimension."
+    },
+    {
+      "unit": "13.01-canonical-gear-catalog",
+      "applicableCheckpoints": 5,
+      "naDimensions": [1, 4, 5, 6],
+      "points": 2.5,
+      "dimensionScores": {"2": "PASS", "3": "WARN", "7": "WARN", "8": "WARN"},
+      "note": "One blocking contradiction (rejection-class count) counted as a separate punch-list item, adding 1 to both numerator and denominator."
+    },
+    {
+      "unit": "13.02-condition-originality-disclosure",
+      "applicableCheckpoints": 4,
+      "naDimensions": [1, 4, 5, 6],
+      "points": 0.5,
+      "dimensionScores": {"2": "PASS", "3": "PASS", "7": "WARN", "8": "PASS"}
+    },
+    {
+      "unit": "13.03-listings-inventory",
+      "applicableCheckpoints": 4,
+      "naDimensions": [1, 4, 5, 6],
+      "points": 1.0,
+      "dimensionScores": {"2": "PASS", "3": "WARN", "7": "WARN", "8": "PASS"}
+    },
+    {
+      "unit": "13.04-price-discovery-market-data",
+      "applicableCheckpoints": 5,
+      "naDimensions": [1, 4, 5, 6],
+      "points": 1.5,
+      "dimensionScores": {"2": "PASS", "3": "PASS", "7": "WARN", "8": "PASS"}
+    },
+    {
+      "unit": "13.05-offers-auctions-negotiation",
+      "applicableCheckpoints": 4,
+      "naDimensions": [1, 4, 5, 6],
+      "points": 1.0,
+      "dimensionScores": {"2": "PASS", "3": "PASS", "7": "WARN", "8": "WARN"}
+    },
+    {
+      "unit": "13.06-cart-checkout-orders",
+      "applicableCheckpoints": 5,
+      "naDimensions": [1, 4, 5, 6],
+      "points": 1.5,
+      "dimensionScores": {"2": "PASS", "3": "PASS", "7": "WARN", "8": "PASS"}
+    },
+    {
+      "unit": "13.07-gear-logistics-cross-border",
+      "applicableCheckpoints": 4,
+      "naDimensions": [1, 4, 5, 6],
+      "points": 1.0,
+      "dimensionScores": {"2": "PASS", "3": "PASS", "7": "WARN", "8": "WARN"}
+    },
+    {
+      "unit": "13.08-returns-rma-warranty",
+      "applicableCheckpoints": 5,
+      "naDimensions": [1, 4, 5, 6],
+      "points": 2.0,
+      "dimensionScores": {"2": "PASS", "3": "PASS", "7": "WARN", "8": "WARN"}
+    },
+    {
+      "unit": "13.09-tradein-consignment",
+      "applicableCheckpoints": 6,
+      "naDimensions": [1, 4, 5, 6],
+      "points": 2.5,
+      "dimensionScores": {"2": "PASS", "3": "PASS", "7": "WARN", "8": "PASS"},
+      "note": "Two forced inventions counted as punch-list items."
+    },
+    {
+      "unit": "13.10-gear-rental-backline",
+      "applicableCheckpoints": 4,
+      "naDimensions": [1, 4, 5, 6],
+      "points": 0,
+      "dimensionScores": {"2": "PASS", "3": "PASS", "7": "PASS", "8": "PASS"},
+      "note": "Clean. Every open question carries an owner and a live downstream stage, including the two rows explicitly re-pointed from the completed /ideate-discover Step 5. The one live design conflict (pooled assignment vs per-unit condition history) is named as a conflict in the CX file and tracked at 13.10.03 Q-01 with owner Agent and target /create-prd-architecture."
+    }
+  ],
+  "findings": [
+    {
+      "findingId": "13-gear-marketplace#001",
+      "unit": "13-gear-marketplace",
+      "severity": "warning",
+      "dimension": 8,
+      "claim": "The identifier CX-M11 is bound to two different cross-cut mechanisms inside a single file, and the two bindings are used by different features of this domain.",
+      "evidence": "gear-marketplace-cx.md:382 — \"| **Step 6:** Message-to-disclosure promotion | **CX-M11** Messaging & Conversations | DT-12: the highest-volume condition disclosure on any gear marketplace happens in unstructured messages (\\\"any cracks?\\\" → \\\"no, none\\\"). One-tap promotion into structured, timestamped, pack-pinned disclosure\"  ///  gear-marketplace-cx.md:390 — \"| **CX-M11** Real-Time Rooms, Presence & Audio Transport | Does not serve gear-marketplace. 13.05.02 (live auction bid state) may need it — low confidence, only if auctions survive MoSCoW. |\"  ///  13.02.02-mandatory-flaw-disclosure.md Cross-Cut Notes — \"**CX-M11 Messaging** — DT-12: condition claims made in messages are promotable to structured disclosure.\"  ///  13.05.02-auctions-bidding.md:71 — \"Consumes **CX-M11 Real-Time Rooms, Presence & Audio Transport** — plausibly, for live bid state. Flagged: CX-M11 does **not** currently list gear-marketplace among the domains it serves.\"",
+      "failure_scenario": "13.05.02 Q-03 asks an agent to 'extend CX-M11's served-domains list to include gear-marketplace'. Under the Messaging binding that edit is a no-op — the global registry row for Messaging & Conversations already serves domain 13 ('03,04,05,06,07,13,16,17,20,24'). Under the Real-Time Rooms binding it is a real change (that row serves '03,06,07,08,17,18'). An implementer or downstream agent acting on the ticket edits the wrong registry row, and message-to-disclosure promotion is built on the realtime audio-transport mechanism instead of the messaging mechanism.",
+      "forcedInvention": "Which of the two named mechanisms the identifier CX-M11 denotes at each of its four use sites in this domain."
+    },
+    {
+      "findingId": "13-gear-marketplace#002",
+      "unit": "13-gear-marketplace",
+      "severity": "warning",
+      "dimension": 8,
+      "claim": "Three children's depth statuses in the domain index's Children table contradict the status declared in the children's own front matter.",
+      "evidence": "gear-marketplace-index.md:54 — \"| 11 | Local Pickup & Meetup Safety | feature | [13.11-local-pickup-meetup-safety.md](./13.11-local-pickup-meetup-safety.md) | `[SURFACE]` | 2 hypotheses |\" versus 13.11-local-pickup-meetup-safety.md:5 — \"> **Status**: [PARTIAL]\"  ///  gear-marketplace-index.md:52 — \"| 09 | Trade-In, Part-Exchange & Consignment | sub-domain | [13.09-tradein-consignment/](./13.09-tradein-consignment/) | `[BREADTH]` |\" versus 13.09-tradein-consignment-index.md:5 — \"> **Status**: [SURFACE]\"  ///  gear-marketplace-index.md:53 — \"| 10 | Gear Rental & Backline Hire | sub-domain | [13.10-gear-rental-backline/](./13.10-gear-rental-backline/) | `[BREADTH]` |\" versus 13.10-gear-rental-backline-index.md:5 — \"> **Status**: [SURFACE]\"",
+      "failure_scenario": "A downstream stage that selects work by depth status (for example /decompose-architecture deciding which nodes still need deepening, or a coverage check reading the index rather than the leaf) reads [SURFACE] for 13.11 from the index and [PARTIAL] from the file, and for 13.09/13.10 reads [BREADTH] from the index against [SURFACE] in the sub-domain indexes. The two sources disagree about whether these nodes have been deepened, so the same coverage query returns different answers depending on which file it reads."
+    },
+    {
+      "findingId": "13-gear-marketplace#003",
+      "unit": "13.01-canonical-gear-catalog",
+      "severity": "blocking",
+      "dimension": 3,
+      "claim": "The model lifecycle state machine transitions on 'one of the five rejection classes below', but no enumeration of five rejection classes exists anywhere in the file, and the sibling feature that owns rejection behaviour defines exactly three.",
+      "evidence": "13.01.02-catalog-contribution-moderation.md:72 — \"| `provisional` → `rejected` | One of the five rejection classes below. The bound listing survives; it does not. |\"  ///  13.01.04-listing-model-matching.md:197 — \"| D-07 | Moderation rejection has three subtypes with three behaviours | Resolves CX-01 synthesis Q2. Duplicate → silent re-point. Nonsense → unbind + notify. Abuse → unbind + escalate to 24. One word (\\\"rejected\\\") was hiding three outcomes. |\"  ///  13.01.04-listing-model-matching.md:121 — \"| **Bound provisional is rejected by moderation** | Three rejection subtypes, three behaviours — CX-01 synthesis Q2 resolved (D-07): **duplicate** → re-point to survivor, silent. **Nonsense/invalid** → unbind to unmatched, notify, invite re-contribution. **Abuse** → unbind and escalate the *listing* to domain 24 |\"  ///  A grep for 'rejection class' across the whole domain returns only 13.01.02:72; no list of five is authored in 13.01.02 or anywhere else in 13-gear-marketplace.",
+      "failure_scenario": "An implementer building the catalog moderation state machine must enumerate the rejection classes to write the transition. 13.01.02 promises five 'below' and delivers none; 13.01.04 D-07 delivers three and states in terms that three is the complete decomposition. Implementer A builds three rejection outcomes per D-07. Implementer B, reading 13.01.02 as the owning file for the lifecycle, invents two additional classes (plausibly 'counterfeit' and 'free-text abuse', which appear as unlabelled Edge Case rows) and gives them behaviours nothing specifies — including whether the bound listing survives them, which 13.01.02:72 asserts as a property of every rejection class. The two implementations disagree on both the enum and the listing-survival guarantee.",
+      "forcedInvention": "The identity, count and per-class listing behaviour of the missing rejection classes."
+    },
+    {
+      "findingId": "13-gear-marketplace#004",
+      "unit": "13.01-canonical-gear-catalog",
+      "severity": "warning",
+      "dimension": 3,
+      "claim": "A rejected model is said to be deleted, while the same file's lifecycle diagram gives `rejected` a persistent terminal state and the file's own thesis makes every attribute's assertion chain a provenance record that must survive.",
+      "evidence": "13.01.02-catalog-contribution-moderation.md:154 — \"| **Contribution rejected as fabricated / not a real product** | Model is deleted. **The listing is not.** It falls back to unmatched-published (13.01.04 D-01)\"  ///  13.01.02-catalog-contribution-moderation.md:64 (lifecycle diagram) — \"└──────────────► rejected   └── unmerge ─┘\"  ///  13.01.02-catalog-contribution-moderation.md:25 — \"every attribute value on a model record carries its assertion chain (DT-08)\"  ///  13.01.02-catalog-contribution-moderation.md:168 — \"the **assertion survives** — \\\"the 1962 year range was asserted on 2026-03-04, citing [source], and confirmed by two moderators\\\" is a fact about the catalog, not personal data\"",
+      "failure_scenario": "An implementer must decide whether rejection hard-deletes the model row or tombstones it in state `rejected`. Choosing deletion (per the Edge Case) destroys the assertion chain that DT-08/D-10 make the feature's D-18 contribution, and leaves the lifecycle's `rejected` state unreachable. Choosing a tombstone (per the lifecycle diagram) contradicts the Edge Case's explicit 'Model is deleted'. The two choices differ in whether a repeat fabricated contribution can be detected as a repeat, and in whether the abuse audit trail exists at all."
+    },
+    {
+      "findingId": "13-gear-marketplace#005",
+      "unit": "13.01-canonical-gear-catalog",
+      "severity": "warning",
+      "dimension": 8,
+      "claim": "The sub-domain CX file declares CX-05 a live conflict between two confirmed decisions requiring an owner ruling, while two child features each state that the conflict is resolved and name the resolving decision.",
+      "evidence": "13.01-canonical-gear-catalog-cx.md:94 — \"**Synthesis questions deferred** — Medium confidence. Step 5 must resolve whether safety-relevant attributes (voltage, market) require moderation before a model leaves `provisional`, which would partially contradict 13.01.02 D-01 (provisional-publish, never blocking). **This is a real conflict between two confirmed decisions and needs the owner.**\"  ///  13.01.01-model-records-taxonomy-attributes.md:172 — \"| D-07 | An **unmoderated `safety`/`compliance` value may raise a warning but may never suppress one** | Resolves the CX-05 conflict the CX file flagged as needing the owner. The conflict only exists if \\\"moderate the attribute\\\" means \\\"block the listing\\\" — it does not. Nothing is blocked, 13.01.02 D-01 (provisional-publish, never blocking) stands, 13.01.05 D-01 (warnings inform, never block) stands\"  ///  13.01.02-catalog-contribution-moderation.md:228 — \"**CX-05's flagged conflict is resolved here** (D-03) without contradicting D-01\"  ///  13.01.05-fitment-compatibility-voltage.md:96 — \"13.01.01 explicitly feeds this file via CX-04 and resolves the CX-05 raise-but-never-suppress conflict.\"",
+      "failure_scenario": "The CX file is the artifact a downstream stage reads to find unresolved cross-cuts within the sub-domain. It reports an owner decision as still required on a question three child files record as settled, and it points at '/ideate-discover Step 5', a stage the domain CX file's own header shows has been superseded (gear-marketplace-cx.md:5 records Step 6 as complete). A remediation or /create-prd pass escalates a settled safety-attribute policy back to the user, or worse, implements the blocking behaviour the CX file contemplates and breaks 13.01.02 D-01's never-blocking listing flow."
+    },
+    {
+      "findingId": "13-gear-marketplace#006",
+      "unit": "13.01-canonical-gear-catalog",
+      "severity": "warning",
+      "dimension": 7,
+      "claim": "Three synthesis questions in the sub-domain CX file are marked `[PENDING — Step 5]` with no owner named and a deferral target that has already run, and all three were in fact resolved by child features that the CX file was never updated against.",
+      "evidence": "13.01-canonical-gear-catalog-cx.md:33 — \"If moderation rejects, the listing must not vanish — fallback is unmatched-published. `[PENDING — Step 5]`: exact rejection behaviour.\" (resolved at 13.01.04 D-07)  ///  13.01-canonical-gear-catalog-cx.md:69 — \"A merge landing while a listing is mid-checkout re-points the comp set under a live transaction. Low frequency, high confusion. `[PENDING — Step 5]`.\" (resolved at 13.01.01 D-08 and gear-marketplace-cx.md CX-17)  ///  13.01-canonical-gear-catalog-cx.md:84 — \"An attribute schema change (adding `voltage` to a category) retroactively makes warnings derivable for existing listings. Backfill behaviour `[PENDING — Step 5]`.\" (resolved at 13.01.01 D-10: \"Schema additions in `safety`/`compliance` class enter **draft** ... and activate at **≥80% coverage across models with ≥1 listing in the trailing 90 days**\")  ///  Contrast the tree's own convention at 13.01.01 Q-02: \"**Re-targeted**: MoSCoW has run and did not settle it\"",
+      "failure_scenario": "Dimension 7 requires every open question to carry an owner and a deadline. These three carry neither an owner nor a stage that can still run, so nothing in the pipeline will ever pick them up. Because they are also stale, a downstream reader either re-opens three settled decisions or, seeing no owner, silently drops them."
+    },
+    {
+      "findingId": "13-gear-marketplace#007",
+      "unit": "13.01-canonical-gear-catalog",
+      "severity": "warning",
+      "dimension": 7,
+      "claim": "An open question is deferred to MoSCoW, a stage that has already produced moscow-ledger.md, with no live stage behind it.",
+      "evidence": "13.01.03-serial-decoding-dating.md:81 — \"| Q-02 | How many manufacturers must be covered before decode is worth shipping? A decoder that knows Fender and nothing else may be worse than none. | User | MoSCoW |\"  ///  Evidence that MoSCoW has run: gear-marketplace-index.md:128 — \"**MoSCoW ran and declined to answer it**: [`moscow-ledger.md`](../moscow-ledger.md) places 13.07.02 and 13.07.03 in SHOULD\"; 13.01.02-catalog-contribution-moderation.md:263 — \"**Re-targeted**: the MoSCoW half has expired — [moscow-ledger.md](../../moscow-ledger.md) has run\"  ///  Contrast the sibling row 13.01-canonical-gear-catalog-index.md:47, which carries a live fallback: \"| User | MoSCoW / `/create-prd` |\"",
+      "failure_scenario": "The row's deadline has passed and the ledger did not answer it, so no stage in the remaining pipeline owns the decision. The coverage threshold for shipping serial decoding is a scope decision that gates whether 13.01.03 ships at all, and it will reach implementation unanswered."
+    },
+    {
+      "findingId": "13-gear-marketplace#008",
+      "unit": "13.02-condition-originality-disclosure",
+      "severity": "warning",
+      "dimension": 7,
+      "claim": "The sub-domain CX file, last updated the same day as its children, still carries two `[PENDING — Step 5]` synthesis questions with no owner plus a third 'Step 5 must decide' deferral, and two of the three are already answered by decisions in the children.",
+      "evidence": "13.02-condition-originality-disclosure-cx.md:35 — \"A seller editing flaws on a live listing can invalidate the published grade. `[PENDING — Step 5]`: does the listing auto-downgrade, or is publish held until the seller re-confirms?\" — answered by 13.02.01 D-09 (\"**Grade and flaws must stay mutually consistent on a live listing** ... without auto-downgrading (which asserts a fact on the seller's behalf) and without stalling\") and D-03 (\"a cross-check **contradiction** does block the *edit*\")  ///  13.02-condition-originality-disclosure-cx.md:50 — \"Seller edits a disclosure between purchase and dispatch — the buyer bought against the old disclosure. `[PENDING — Step 5]`\" — answered by 13.02.02 D-11 (\"A material change to disclosure after purchase pauses dispatch and requires buyer re-confirmation within 72h, else auto-cancel with full refund and no seller penalty | Resolves CX-02's synthesis question 5\")  ///  13.02-condition-originality-disclosure-cx.md:61 — \"**Synthesis questions deferred** — Medium confidence. Step 5 must decide whether originality declarations carry a photo requirement mirroring 13.02.02 D-03, and whether \\\"originals included\\\" specifically requires evidence (it is a price-raising claim, which is precisely when claims need proof).\"  ///  File header 13.02-condition-originality-disclosure-cx.md:5 — \"> **Last updated**: 2026-07-23\"",
+      "failure_scenario": "The first two rows will send a remediation pass to re-decide behaviour 13.02.01 D-09 and 13.02.02 D-11 already lock, risking a second, divergent answer. The third — whether an 'originals included' claim requires photographic evidence — is genuinely unanswered (13.02.03's Edge Cases only prompt a photo 'where material'), carries no owner, and targets a stage that has run, so no stage will take it."
+    },
+    {
+      "findingId": "13-gear-marketplace#009",
+      "unit": "13.03-listings-inventory",
+      "severity": "warning",
+      "dimension": 3,
+      "claim": "Within one file, a Decision row and the Happy Path assert that the bulk-listing quality mechanics are interim and do not mandate no relaxation, while an Open Question row in the same file records the governing decision as ratified and the same mechanics as final.",
+      "evidence": "13.03.04-bulk-listing-channel-sync.md:107 — \"| D-05 | **Interim bulk mechanics are source-locked; the quality-bar decision is not.** | ... They are interim behavior only and do **not** mandate no relaxation. The parent quality-bar choice remains **domain Q-13, User-owned**. |\"  ///  13.03.04-bulk-listing-channel-sync.md:52 (Happy Path step 6) — \"The interim slices above are source-locked mechanics, not a final quality-bar decision: parent **domain Q-13 is User-owned** and may ratify, revise, or replace the cross-slice bulk policy.\"  ///  13.03.04-bulk-listing-channel-sync.md:113 — \"| Q-01 | ~~**What final quality bar applies to bulk listings...**~~ **RESOLVED — the bar does not bend; the evidence moment moves; absence is disclosed, never gated.** Parent domain Q-13 was ratified by **DQ-MG-01 (2026-07-21)** ... The interim mechanics above are therefore final, not provisional. |\"  ///  Corroborated at gear-marketplace-index.md:136 — \"| Q-13 | ~~How do bulk listings satisfy per-unit model binding, grading, disclosure and unit media?~~ **Resolved by DQ-MG-01 (2026-07-21)** ... | Owner | ✅ `/ideate-validate`, 2026-07-21 |\"",
+      "failure_scenario": "The Decisions table is the highest-authority artifact in a feature file and is not struck through or annotated. An implementer reading D-05 treats the bulk quality bar as open and builds a relaxation path (for example, allowing templated flaw answers on import pending the owner's ruling), directly violating the ratified 13.02.02 D-08 prohibition on templating. An implementer reading Q-01 builds the fixed bar. Both are defensible from the same file."
+    },
+    {
+      "findingId": "13-gear-marketplace#010",
+      "unit": "13.03-listings-inventory",
+      "severity": "warning",
+      "dimension": 7,
+      "claim": "Two synthesis deferrals in the sub-domain CX file name Step 5 as the resolving stage with no owner, and neither is mirrored by an Open Question row in any child feature.",
+      "evidence": "13.03-listings-inventory-cx.md:114 — \"**Synthesis questions deferred** — Medium confidence. One question is worth naming now: a listing with rich provenance and a stolen-registry hit is the highest-stakes case in the domain — a valuable, historically significant, allegedly stolen instrument. Which panel wins the page? Step 5.\"  ///  13.03-listings-inventory-cx.md:126 — \"**Synthesis questions deferred** — Medium confidence. The loop is asserted from the two files' own text, not yet validated against real registration behaviour. Step 5 should test whether the pre-fill benefit alone justifies registration before the credit graph has any density\"  ///  13.03.06's Open Questions (Q-01..Q-04) and 13.03.07's (Q-01..Q-03) contain no row for either question.",
+      "failure_scenario": "The provenance-panel-versus-stolen-hold rendering conflict is a concrete UI/behaviour decision on the domain's highest-stakes listing state. No owner is named and the stage has run, so a /write-fe-spec implementer must invent whether a held listing suppresses, dims or fully renders its verified provenance panel — a choice with opposite safety implications (suppression hides evidence useful to a recovery; full render advertises a valuable allegedly-stolen instrument)."
+    },
+    {
+      "findingId": "13-gear-marketplace#011",
+      "unit": "13.04-price-discovery-market-data",
+      "severity": "warning",
+      "dimension": 7,
+      "claim": "Whether an auto-repricing fleet run pins its confidence snapshot for the duration of the run is left `[PENDING — Step 5]` with no owner, and no Open Question row in any child of this sub-domain carries it.",
+      "evidence": "13.04-price-discovery-market-data-cx.md:68 — \"5. **State transition conflict**: A bucket crossing the threshold mid-run means an auto-reprice fleet job could act on some listings and skip others for the same model within one execution. `[PENDING — Step 5]` — likely needs the confidence snapshot pinned per run.\"  ///  13.04.02's Open Questions are Q-01 (does the platform accept that suggestions shape the market), Q-02 (auto-repricing on counted stock), Q-03 (is auto-repricing a paid tier) — none covers snapshot pinning.  ///  13.04.03's Open Questions are Q-01 (threshold values), Q-02 (comp decay rate), Q-03 (is the guide worth building) — none covers it.  ///  A second untracked row at 13.04-price-discovery-market-data-cx.md:34 — \"a model page that quoted a price yesterday may refuse today. Correct behaviour, confusing UX. `[PENDING — Step 5]`.\"",
+      "failure_scenario": "An Operator runs a fleet reprice across 400 listings. A model merge or a new comp lands mid-run and flips a bucket across 13.04.03's confidence gate. Implementer A evaluates confidence per listing, so listings 1–180 are repriced and 181–400 are skipped for the same model in one job, with no explanation the seller can act on — which 13.04-cx CX-03 synthesis 2 requires ('for **auto-repricing it must be reported**'). Implementer B pins the confidence evaluation at run start, so all 400 behave identically but some are repriced against a bucket that has since become ungated. Nothing in the sub-domain chooses.",
+      "forcedInvention": "Whether confidence is evaluated per listing or pinned per fleet-run, and what the seller is shown for the divergent subset."
+    },
+    {
+      "findingId": "13-gear-marketplace#012",
+      "unit": "13.04-price-discovery-market-data",
+      "severity": "warning",
+      "dimension": 7,
+      "claim": "Three open questions across this sub-domain are deferred to MoSCoW, a stage that has already produced moscow-ledger.md, with no live stage behind them.",
+      "evidence": "13.04-price-discovery-market-data-index.md:45 — \"| Q-02 | Is the price guide public and indexed (CX-M23)? ... and giving it away free is a strategic call. | User | MoSCoW |\"  ///  13.04.01-price-guide-comps.md:91 — \"| Q-03 | Is the guide public and free (best acquisition surface) or gated (CX-M24 subscription)? | User | MoSCoW |\"  ///  13.04.03-valuation-confidence-thin-market.md:90 — \"| Q-03 | Given DT-02, is the price guide worth building at all if it is permanently mute on the rare gear people most want valued? A real scope question, not rhetoric. | User | MoSCoW |\"  ///  Evidence MoSCoW has run: gear-marketplace-index.md:131 — \"MoSCoW placed 13.13 Authorized Dealer Program & MAP Pricing in the **WONT** bucket of [`moscow-ledger.md`](../moscow-ledger.md)\"",
+      "failure_scenario": "Three scope-shaping decisions — whether the price guide is public and indexed, whether it is monetised, and whether it is built at all given permanent thin-market muteness — have expired deadlines and no successor stage. Sibling rows elsewhere in this domain were re-pointed when MoSCoW expired (13.05.02 Q-01: 'Re-pointed from the expired MoSCoW target'); these three were not, so nothing will collect them before implementation."
+    },
+    {
+      "findingId": "13-gear-marketplace#013",
+      "unit": "13.05-offers-auctions-negotiation",
+      "severity": "warning",
+      "dimension": 7,
+      "claim": "The sub-domain index defers a question to MoSCoW while its own mirror in the child feature records that same MoSCoW target as expired and re-points to /create-prd.",
+      "evidence": "13.05-offers-auctions-negotiation-index.md:47 — \"| Q-02 | Do auctions belong in this product at all? They are a distinct market culture (eBay) from the offer-driven one (Reverb), and running both may split the audience's expectations. | User | MoSCoW |\"  ///  13.05.02-auctions-bidding.md:86 — \"| Q-01 | **[OWNER]** Do auctions belong in this product at all? ... **MoSCoW ran and declined to settle it**: [`moscow-ledger.md`](../../moscow-ledger.md) places 13.05.02 in **COULD**, restating the tension rather than resolving it ... COULD defers commitment; it does not answer \\\"at all\\\". Re-pointed from the expired MoSCoW target; sub-domain mirror [13.05 Q-02](./13.05-offers-auctions-negotiation-index.md). | User | `/create-prd` |\"",
+      "failure_scenario": "The child row explicitly names the index row as its mirror and records the target as expired, but the index row was not updated. A downstream stage reading the sub-domain index (which is the normal entry point for a sub-domain) sees the question routed to a stage that has run and produced no answer, and drops it; the same question read from the leaf routes correctly. Whether auctions ship at all is a scope decision that changes 13.05.02, 13.03.02 D-10, 13.03.03 D-07's 48h auction hold and CX-07's bid-time eligibility gate."
+    },
+    {
+      "findingId": "13-gear-marketplace#014",
+      "unit": "13.05-offers-auctions-negotiation",
+      "severity": "warning",
+      "dimension": 8,
+      "claim": "The sub-domain CX file marks an offer's survival of its parent ISO's expiry as `[PENDING — Step 5]` with no owner, though 13.05.01 D-10 resolves it and cites this very synthesis question as resolved.",
+      "evidence": "13.05-offers-auctions-negotiation-cx.md:31 — \"If the ISO expires with a live offer outstanding, the offer must survive its parent context — an offer's lifetime is its own (13.05.01), not the ISO's. `[PENDING — Step 5]`.\"  ///  13.05.01-offers-counter-offers.md:150 — \"| D-10 | **An offer's lifetime is its own.** It does not inherit the expiry of its listing, its ISO, or any other originating context; a listing with a live offer extends to the offer's expiry | Resolves sub-domain CX-01 synthesis Q2 and the 13.03.02 Q-03 interaction. |\"",
+      "failure_scenario": "The CX file is the sub-domain's cross-cut register. It reports as pending a rule that D-10 states in terms and explicitly claims to resolve. A remediation pass reading the CX file re-opens a locked decision, or an implementer reading only the CX file leaves offer lifetime undefined against an expiring ISO and implements ISO-expiry cascading offer cancellation — the opposite of D-10."
+    },
+    {
+      "findingId": "13-gear-marketplace#015",
+      "unit": "13.06-cart-checkout-orders",
+      "severity": "warning",
+      "dimension": 7,
+      "claim": "Whether a layaway line may be composed into a cart is left unresolved with no owner and a stage that has run, and the CX text states what the answer 'should' be without deciding it; no Open Question row in any child of this sub-domain carries it.",
+      "evidence": "13.06-cart-checkout-orders-cx.md:98 — \"**Synthesis questions deferred** — Medium confidence. Step 5 should confirm the expected resolution: layaway is initiated **from a listing, not from a cart**, and a cart containing a layaway-intended item either rejects it or splits it out. The open risk is a mixed cart where one line is layaway and three are normal — one payment, four fulfilment models, months apart. That should be prohibited rather than engineered.\"  ///  13.06.03-layaway-staged-payment.md Open Questions are Q-01 (loss on a destroyed held unit), Q-02 (regulated consumer credit), Q-03 (can escrow hold funds for months) — none covers cart composition.  ///  13.06.01-cart-multivendor-checkout.md Open Questions Q-01..Q-06 cover mixed gear/digital carts (Q-02) and local-pickup lines (Q-04) but not layaway lines.  ///  Contrast the parallel case, which was decided: 13.06.01 D-07 — \"**A freight line needing a human quote leaves the cart** — claimed with a 72h hold, quoted out of session, checked out separately\"",
+      "failure_scenario": "A buyer adds a layaway-eligible guitar and three pedals to one cart. 13.06.01 D-06 makes the shipment the unit of quoting and D-05 makes checkout a single authorisation of the confirmed set; a layaway line has no single authorisation and a months-long hold. Implementer A silently strips the layaway line at checkout, violating D-12 ('Checkout removes only what it bought'). Implementer B blocks the whole cart. Implementer C engineers the mixed case the CX text says should be prohibited. Nothing in the domain chooses, and the CX file's own preference carries no decision number.",
+      "forcedInvention": "Whether a layaway-intended line may enter a cart at all, and if it enters, whether checkout rejects the cart, splits the line out, or authorises a mixed fulfilment model."
+    },
+    {
+      "findingId": "13-gear-marketplace#016",
+      "unit": "13.07-gear-logistics-cross-border",
+      "severity": "warning",
+      "dimension": 7,
+      "claim": "Two rows asking the same launch-scope question are deferred to the expired MoSCoW stage, while two other mirrors of the identical question were re-pointed to /create-prd — so the same decision has two different, mutually inconsistent routes inside this domain.",
+      "evidence": "13.07-gear-logistics-cross-border-index.md:46 — \"| Q-01 | Is international physical sale in scope at launch? If not, 13.07.02 and 13.07.03 are deferrable; if yes, CITES becomes a `must` because most guitars have rosewood on them. This single answer reshapes the sub-domain's MoSCoW entirely. | User | MoSCoW |\"  ///  13.07.03-cites-export-compliance.md:91 — \"| Q-03 | Is international physical sale in scope at launch? If yes, this is a `must` — most vintage guitars have restricted materials. Shared with the sub-domain index. | User | MoSCoW |\"  ///  versus the re-pointed mirrors: 13.07.02-international-customs-landed-cost.md:91 — \"| Q-01 | [OWNER] Is international physical sale in scope at launch? ... MoSCoW ran and declined to answer it ... re-pointed from the expired MoSCoW target. Matches domain index Q-05, also `[OWNER]` → `/create-prd`. | User | `/create-prd` |\"  ///  gear-marketplace-index.md:128 — \"| Q-05 | **[OWNER]** **Is international physical sale in scope at launch?** ... Re-pointed from the expired MoSCoW target; `/plan-phase` will not take it either | User | `/create-prd` |\"",
+      "failure_scenario": "Two of the four rows for one decision route to a stage that has run and declined to answer, and two route to /create-prd. A downstream stage enumerating open questions per unit collects the two expired rows as unowned and either drops them or re-asks a question already queued for /create-prd, producing a duplicate owner prompt or a silent gap depending on which file it reads first."
+    },
+    {
+      "findingId": "13-gear-marketplace#017",
+      "unit": "13.07-gear-logistics-cross-border",
+      "severity": "warning",
+      "dimension": 8,
+      "claim": "The sub-domain CX file flags the claim-versus-auto-settle interaction as unspecified and defers it to a stage that has run, while the domain CX file states the same rule as settled and cites a decision that does not contain it.",
+      "evidence": "13.07-gear-logistics-cross-border-cx.md:52 — \"Escrow must hold while a claim runs (13.07.04 Cross-Cut Notes), which collides with the order's auto-settle timer (13.06.02 D-02). A claim opened on the last day of the inspection window must suspend settlement — and therefore suspend ownership transfer (13.06.05). **Flagged for Step 5**: the interaction between claim-opening and auto-settle is unspecified and would silently transfer ownership of a destroyed object.\"  ///  gear-marketplace-cx.md:106 — \"5. **State transition conflict**: **A claim opened on the last inspection day must suspend auto-settle** (13.06.02 D-02) and therefore ownership transfer (13.06.05), or the chain records a transfer of a destroyed object.\"  ///  The cited decision, 13.06.02-order-management-lifecycle.md:181, reads in full — \"| D-02 | Every stall has a bounded timeout with an automatic resolution | Money plus a unique object in indefinite limbo is the worst state available. |\" — and says nothing about claims suspending settlement. The nearest live rule is 13.06.02 D-15, which is scoped to *disputes*: \"| D-15 | **Dispute wins on tie** with auto-settle; a dispute landing after release becomes a post-settlement claim |\"",
+      "failure_scenario": "An implementer wiring the order state machine must decide whether opening a 13.07.04 damage claim halts the auto-settle timer. The domain CX asserts it must and cites D-02, which does not say so; the sub-domain CX says it is unspecified; D-15 covers disputes only, and 13.08 R-01 plus 13.08 D-01 establish that a damage claim is a different object from a dispute or a return. Implementer A treats a claim as a dispute and halts settlement. Implementer B does not, and a claim filed on the last inspection day settles anyway — writing an ownership transfer (13.06.05 D-05) for an object destroyed in transit, which is the exact failure gear-marketplace-cx.md CX-04 exists to prevent."
+    },
+    {
+      "findingId": "13-gear-marketplace#018",
+      "unit": "13.07-gear-logistics-cross-border",
+      "severity": "warning",
+      "dimension": 7,
+      "claim": "Two further synthesis deferrals in this sub-domain's CX file name Step 5 as the resolving stage with no owner, and neither is mirrored in any child's Open Questions.",
+      "evidence": "13.07-gear-logistics-cross-border-cx.md:64 — \"**Synthesis questions deferred** — Medium confidence. Step 5 should establish whether freight needs a *distinct* insurance regime rather than a higher declared value: freight carriers' liability terms, claim processes and inspection requirements differ structurally from parcel, and 13.07.04 currently treats declared value as the only dial. Also open: whether the domain should actively steer irreplaceable freight items toward local pickup (13.11), which 13.07.04 DT-02 hints at and nothing currently implements.\"  ///  13.07-gear-logistics-cross-border-cx.md:73 — \"**Synthesis questions deferred** — Low confidence. Step 5 should test whether the intersection is real enough to design for, starting with the ivory-keyed piano case.\"  ///  13.07.04's Open Questions are Q-01 (insurance value threshold and payer), Q-02 (resolved), Q-03 (underwrite vs broker vs carrier declared-value) — none covers a distinct freight insurance regime or freight-to-pickup steering.",
+      "failure_scenario": "13.07.04 D-01 makes insurance structural above a value threshold and D-02 derives declared value from the sale price; whether freight carries its own regime rather than a larger number is left to an implementer, who will default to the single declared-value dial the file provides and silently under-protect the highest-risk shipments in the domain. No owner and an expired stage mean nothing will correct it."
+    },
+    {
+      "findingId": "13-gear-marketplace#019",
+      "unit": "13.08-returns-rma-warranty",
+      "severity": "warning",
+      "dimension": 8,
+      "claim": "The sub-domain CX file states that nothing in the sub-domain owns the remedy fork and instructs Step 5 to assign it an owner, while 13.08.01's decisions define the fork, its chooser and its failure behaviour.",
+      "evidence": "13.08-returns-rma-warranty-cx.md:51 — \"5. **State transition conflict**: The unresolved one. **Nothing in the sub-domain owns the remedy fork** — 13.08.01 mentions partial refund, 13.08.02 mentions repair, 13.07.04 Q-02 asks the same question from the insurance side, and no file specifies who chooses, when, or what happens if the chosen path fails. Medium confidence because the interaction is certain but the design is absent. **Step 5 must give the fork an owner.**\"  ///  13.08.01-returns-refunds.md:242 — \"| D-08 | **The seller offers; the buyer chooses. Replacement is not on the menu.** | Per DT-06. The remedy preference splits by persona (CX-02) — a Producer wants the repair, a Fan wants their money back — so it cannot be a platform default. Alternatives render beside the return right at equal weight. |\"  ///  13.08.01-returns-refunds.md:241 — \"| D-07 | **Accepting an alternative remedy pauses the return right; it never extinguishes it** | Per DT-06. A repair can run for weeks and fail. If choosing repair burns the window, choosing repair is a trap — CX-02's exact objection. The clock resumes with the time that was left\"  ///  13.08.01-returns-refunds.md:237 — \"| D-03 | Partial refund with retention is a first-class remedy | ... **Bounded by D-08**: it is an *offer*, and the buyer may still insist on the return. |\"",
+      "failure_scenario": "The CX file's claim is not merely stale, it is false as written: D-08 names the chooser, D-07 names what happens if the chosen path fails, and both cite CX-02 by name. A remediation or /create-prd pass reading the CX register escalates an owned, locked design as an unowned gap, and risks a second answer that contradicts D-07's pause-never-extinguish rule — which is precisely the trap D-07 was written to close."
+    },
+    {
+      "findingId": "13-gear-marketplace#020",
+      "unit": "13.08-returns-rma-warranty",
+      "severity": "warning",
+      "dimension": 7,
+      "claim": "Two live behaviour questions in the sub-domain CX file carry no owner and defer to a stage that has run, and neither is mirrored in any child's Open Questions; one of them determines whether a repair voids the cover that authorised it.",
+      "evidence": "13.08-returns-rma-warranty-cx.md:34 — \"5. **State transition conflict**: A warranty expiring while a unit is in repair custody. Low frequency; the regime should pin at RMA issue, not re-evaluate mid-repair. `[PENDING — Step 5]`.\"  ///  13.08-returns-rma-warranty-cx.md:63 — \"**Synthesis questions deferred** — Medium confidence. ... Step 5 should establish: does an authorised warranty repair record differently from an owner-commissioned modification, given they are the same physical act? The registry (domain 15) needs to distinguish \\\"manufacturer replaced this under warranty\\\" from \\\"owner had this swapped\\\" — the first preserves both warranty and originality standing, the second may destroy both. **That distinction is intent, not evidence**, which makes it hard to capture honestly and easy to game.\"  ///  13.08.02's Open Questions are Q-01 (repair-custody liability), Q-02 (off-platform repair records), Q-03 (is repair routing worth building) — none covers either.  ///  13.08.03's are Q-01 (transfer-policy data source), Q-02 (own protection plan), Q-03 (grey-market surfacing) — none covers either.  ///  The unresolved consequence is visible downstream at 13.08.03 Edge Cases — \"| Manufacturer refuses because the unit was modified | A mod voids most warranties; 13.02.03 records mods | Contradiction surfaced: the registry knows about the mod the claim depends on not existing |\"",
+      "failure_scenario": "13.08.02 D-03 requires a repair to record what was replaced, and 13.02.03 D-03 pre-fills originality disclosure from registry history. With no warranty-versus-owner-modification distinction on the record, an implementer writes every replaced part as a modification. A manufacturer-authorised warranty repair then surfaces on the unit as an originality-destroying mod (13.02.03) and as grounds for the manufacturer to refuse the next claim (13.08.03) — the platform's own record voiding the cover it is tracking. Implementer B adds an intent flag and must invent who sets it and how it is verified, which the CX file itself notes is 'easy to game'.",
+      "forcedInvention": "Whether the registry service record distinguishes an authorised warranty repair from an owner-commissioned modification, who asserts that distinction, and whether the warranty regime pins at RMA issue or re-evaluates mid-repair."
+    },
+    {
+      "findingId": "13-gear-marketplace#021",
+      "unit": "13.08-returns-rma-warranty",
+      "severity": "warning",
+      "dimension": 7,
+      "claim": "An open question is deferred to MoSCoW, a stage that has already run and produced moscow-ledger.md, with no live stage behind it.",
+      "evidence": "13.08.02-rma-repair-routing.md:89 — \"| Q-03 | Is repair routing worth building, or is \\\"own gear, book a tech in domain 05\\\" sufficient? The registry write is the only unique part — but per DT-01 it may be the whole point. | User | MoSCoW |\"  ///  Evidence the ledger has run and is cited as authoritative elsewhere in this very sub-domain's sibling: 13.06.04-pos-service-addons.md:87 — \"**RESOLVED — kept, at Should.** MoSCoW ran and placed 13.06.04 in **SHOULD (285)** ... ([moscow-ledger.md](../../moscow-ledger.md), SHOULD section)\"",
+      "failure_scenario": "A scope decision about whether an entire feature ships has an expired deadline and no successor owner. Because 13.08.02's registry write is what supplies 13.02.01 D-15's repair-quality corroboration and 13.02.02 D-14's severity split, dropping the feature silently degrades two ratified decisions in another sub-domain, and no stage is scheduled to notice."
+    },
+    {
+      "findingId": "13-gear-marketplace#022",
+      "unit": "13.09-tradein-consignment",
+      "severity": "warning",
+      "dimension": 7,
+      "claim": "Trading in gear that carries an outstanding layaway or lien is marked with a bare `[PENDING]` that names no owner, no deferral target and no resolving mechanism, and no Open Question row in this sub-domain carries it.",
+      "evidence": "13.09.01-tradein-part-exchange.md:41 — \"| Owner trades in gear with an outstanding layaway or lien | They don't fully own it | `[PENDING]` — the chain (13.06.05) would know |\"  ///  13.09.01's Open Questions are Q-01 (is the guide's number shown beside the trade offer), Q-02 (who pays return shipping on a rejected re-offer), Q-03 (who is the dealer) — none covers encumbrance.  ///  13.09-tradein-consignment-index.md Open Questions are Q-01 (who is the dealer) and Q-02 (does the platform act as consignee) — neither covers it.  ///  The referenced mechanism does not close it: 13.06.05-ownership-transfer-on-settlement.md:129 — \"| D-01 | Settlement writes the ownership event; 15 owns the record, 13 owns the event |\" records transfers but states no encumbrance semantics, and 13.06.03's layaway decisions (D-01..D-03) define the inventory hold without any trade-in interaction.",
+      "failure_scenario": "An owner with a guitar half-paid under a layaway agreement (13.06.03: the unit is held, ownership sits nowhere, forfeit terms are live) offers it in part-exchange. 13.09.01 D-01 requires the trade-in to write two ownership transfers. Implementer A blocks the trade-in on any encumbrance, which requires an encumbrance flag nothing defines. Implementer B allows it and writes a transfer for a unit the owner does not fully own, corrupting the very chain 13.06.05 exists to make evidential. Implementer C warns and proceeds. The text asserts only that the chain 'would know', which is a capability claim, not a behaviour.",
+      "forcedInvention": "Whether an encumbered unit may be traded in at all, what the platform does when it detects an encumbrance, and what ownership event (if any) is written."
+    },
+    {
+      "findingId": "13-gear-marketplace#023",
+      "unit": "13.09-tradein-consignment",
+      "severity": "warning",
+      "dimension": 7,
+      "claim": "The behaviour when intake findings contradict a previous owner's disclosure recorded on the ownership chain is left `[PENDING — /ideate-discover Step 5 deepening]` with no owner, and no Open Question row in the file or its siblings carries it.",
+      "evidence": "13.09.03-inspection-intake-grading.md:47 — \"| Findings contradict a previous owner's disclosure on the chain | The instrument's recorded history is wrong somewhere | Genuinely valuable signal; `[PENDING — /ideate-discover Step 5 deepening]` |\"  ///  13.09.03's Open Questions are Q-01 (does the offer go up on a favourable divergence), Q-02 (is a grader's distribution surfaced), Q-03 (who performs intake grading) — none covers a chain contradiction.  ///  The adjacent, narrower case is owned: 13.02.03-modification-originality-disclosure.md:90 — \"| Q-01 | When registry history contradicts a seller's disclosure, what happens — flag to buyer, flag to seller only, or block? ... | User | `/create-prd-security` |\" — but that row governs a *seller's own* disclosure, not a *previous owner's* record found wrong at intake.  ///  Evidence the target stage has run: gear-marketplace-cx.md:5 — \"> **Status**: [DEEP] — 13 children classified; 21 intra-domain pairs mapped and synthesised (Step 6).\"",
+      "failure_scenario": "A bench inspection at trade-in intake finds a headstock splice that the unit's chain records a previous owner as having declared absent. The platform now holds first-party evidence that a historical record on its own append-only provenance chain is wrong. 13.06.05 D-03 forbids deletion and 13.02.04 D-03 forbids mutating sealed evidence, so an implementer must invent whether the finding appends as a contradiction annotation, whether the previous owner is notified or flagged to domain 24, and whether the chain renders the contradiction to a future buyer — decisions with reputational consequences for a party who is not on the transaction. No owner and an expired stage mean nothing collects it."
+    },
+    {
+      "findingId": "13-gear-marketplace#024",
+      "unit": "13.09-tradein-consignment",
+      "severity": "warning",
+      "dimension": 7,
+      "claim": "Whether an owner may switch between the trade-in and consignment paths after the intake grade lands is stated as unspecified with a bare preference and no owner, no deferral target and no Open Question row anywhere in the sub-domain.",
+      "evidence": "13.09-tradein-consignment-cx.md:64 — \"2. **Trigger chain**: Decision → intake → grade → path executes. **The grade lands *after* the choice**, which means a lowered grade changes the economics of a decision already made. Whether the owner may switch paths post-grade is unspecified and probably should be permitted.\"  ///  No Q row exists for it: 13.09-tradein-consignment-index.md Q-01/Q-02, 13.09.01 Q-01..Q-03, 13.09.02 Q-01..Q-03 and 13.09.03 Q-01..Q-03 contain no switching question.  ///  The paths diverge structurally, so the choice is not cosmetic: gear-marketplace-cx.md:189 — \"A trade-in writes **two** transfers (13.09.01 DT-01 ...). A consignment writes **one**, consignor → buyer, the consignee never appearing as an owner because they never were one (13.09.02 D-02).\"",
+      "failure_scenario": "An owner chooses trade-in, ships the guitar, and the intake grade comes back two grades lower, collapsing the cash offer. Under CX-03 the alternative — consignment at a higher expected net — was presented at the same decision point and is now more attractive. Implementer A permits the switch and must invent whether the consignment terms are re-agreed, whether the intake grade carries over as the custody-transfer evidence (13.09.02 Happy Path step 2), and which of the two divergent ownership-chain outcomes is written. Implementer B forbids it, so the owner's only exit is to reject the re-offer and pay to have their gear returned under the unresolved 13.09.01 Q-02. The CX file's 'probably should be permitted' is a preference with no decision number behind it.",
+      "forcedInvention": "Whether a post-grade path switch is permitted, and if so whether the intake grade, the custody evidence and the consignment terms carry over or are re-established."
+    }
+  ]
+}

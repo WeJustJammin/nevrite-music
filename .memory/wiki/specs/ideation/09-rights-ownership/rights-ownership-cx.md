@@ -18,7 +18,7 @@
 |---|--------|--------|--------------|----------------|------------|----------|
 | CX-01 | [09.02 Split Capture](./09.02-split-capture-agreements/) | [09.01 Rights Registry](./09.01-rights-registry/) | Capture is the **only write path** that produces a consented ledger. Registry owns invariants + state; capture owns prompting, consent and lock. The `unallocated` alarm is exposed in 09.01.02, acted on in 09.02.01. | Musician, Producer | High | Registry D-04 scopes the validator out of deal semantics; capture is the sole author of `consented`. |
 | CX-02 | [09.03 Chain of Title & Lifecycle](./09.03-chain-of-title-lifecycle/) | [09.01 Rights Registry](./09.01-rights-registry/) | Two views of one truth: the chain says **how** a row came to be; the registry says **what** it is now. Registry state is derivable from chain events; divergence is a defect, not an opinion. | Musician, Producer | High | Reversion/termination move title with no actor; both must propagate to registry atomically. |
-| CX-03 | [09.04 Conflicts & Disputes](./09.04-rights-conflicts-disputes/) | [09.01 Rights Registry](./09.01-rights-registry/) | A conflict is **about** a ledger; a resolution **corrects** one. `disputed` freezes payouts and blocks every exploitation verdict. The ledger does not defend itself; the platform does not rule (D-04). | Musician, Producer | High | 09.04 D-01: the remedy is a corrected ledger, never a refund; freeze is share-scoped. |
+| CX-03 | [09.04 Conflicts & Disputes](./09.04-rights-conflicts-disputes/) | [09.01 Rights Registry](./09.01-rights-registry/) | A conflict is **about** a ledger; a resolution **corrects** one. `disputed` freezes payouts. Its release/licensing verdict is **Unknown — dispute policy unresolved** pending 09.04 Q-02 / 09.04.03 Q-04; consumers needing a positive verdict fail closed. The ledger does not defend itself; the platform does not rule (D-04). | Musician, Producer | High | 09.04 D-01: the remedy is a corrected ledger, never a refund; freeze is share-scoped. |
 | CX-04 | [09.05 AI, Voice & Likeness](./09.05-ai-voice-likeness-consent/) | [09.01 Rights Registry](./09.01-rights-registry/) | Training consent is **anchored** to the ownership ledger — a grant means something only from parties who demonstrably hold the right. **NIL is not anchored at all** (ownership ≠ control). | Musician | High | 09.05 D-01/09.05.02 D-03: a buyout extinguishes the copyright, never the voice. |
 | CX-05 | [09.06 Evidence & Public Record](./09.06-rights-evidence-public-record/) | [09.01 Rights Registry](./09.01-rights-registry/) | The lookup reads a **publication-safe projection**, deliberately never the ledger — privacy is opt-in by construction. Writer identity may be public; percentages, deal types and rates never cross. | Musician, Producer, Operator, Fan | High | 09.06.04 D-01/R-02; domain Q-06 (what is public). |
 | CX-06 | [09.04 Conflicts & Disputes](./09.04-rights-conflicts-disputes/) | [09.02 Split Capture](./09.02-split-capture-agreements/) | Resolution is applied as a **consented amendment** ([09.02.04](./09.02-split-capture-agreements/09.02.04-split-amendment-reconsent.md)), never a unilateral write. No admin path into the ledger exists — including for dispute resolution. | Musician, Producer | High | 09.02.04 D-02: an override is the domain's highest-value attack surface. |
@@ -88,9 +88,12 @@ is wrong in one direction.
 ### CX-03: Conflicts & Disputes ↔ Rights Registry
 
 **Relationship**: A conflict is *about* a ledger and a resolution *corrects* one; disputes never produce
-their own truth. `disputed` is a registry state that **freezes payouts and blocks every exploitation
-verdict** in a master's Control Summary. Because freeze is **share-scoped, not work-scoped**, the ledger
-must support a **partially-frozen** state where uncontested rows keep paying while contested rows escrow
+their own truth. `disputed` is a registry state that **freezes payouts**. Whether it also blocks
+live/continued release or licensing is the owner decision 09.04 Q-02 / 09.04.03 Q-04, so those Control
+Summary verdicts remain **Unknown — dispute policy unresolved**; a consumer that needs permission fails
+closed rather than treating uncertainty as a clean result. Pre-delivery release eligibility is separately
+blocked by domain 12. Because freeze is **share-scoped, not work-scoped**, the ledger must support a
+**partially-frozen** state where uncontested rows keep paying while contested rows escrow
 (09.01.02 ↔ 09.04.03). Conflict causes of action include: a stranger claiming an unclaimed stub, an
 ISRC collision across differently-consented ledgers, a cover-link dispute, and an off-platform society
 registration that disagrees with the ledger — the last originating **outside** the platform entirely.

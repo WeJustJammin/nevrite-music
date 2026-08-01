@@ -79,7 +79,7 @@
 
 **Synthesis questions answered**:
 1. **Shared state conflict**: The clock owns the reference; capture embeds/records it; alignment reads it. One producer, two consumers, no write-back.
-2. **Trigger chain**: Clock established → capture records against it (or enables R2 witness) → alignment reads it. If the reference is absent *and* R2 was not pre-armed, alignment degrades to correlation/timestamp and must **state which method it used** — confidence differs materially. Decision is at capture time; it cannot be fixed after.
+2. **Trigger chain**: Clock established → capture records against it (or enables R2 witness) → alignment reads it. If the reference is absent *and* R2 was not pre-armed, there is no correlation input: R3 timestamps plus measured directional delay may provide only a placement hint. The tracks publish **unaligned**, never as a correlation or alignment result, and the UI states that basis. Decision is at capture time; it cannot be fixed after.
 3. **Permission intersection**: None.
 4. **Notification fan-out**: A low-confidence alignment notifies the Producer (08.05.02 D-04/D-18). A **common-mode** failure (every track low-confidence) points at the *reference*, not the tracks, and must say so.
 5. **State transition conflict**: A timing-model change mid-session (08.01.03 D-02 forbids mid-take) would invalidate the reference across the boundary — another reason that decision is locked to take boundaries.

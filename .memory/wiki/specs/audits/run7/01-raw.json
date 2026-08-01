@@ -1,0 +1,491 @@
+{
+  "reportKind": "ambiguity-audit-raw",
+  "run": 7,
+  "domain": "01-identity-profiles-organizations",
+  "unitsAudited": 7,
+  "filesRead": 38,
+  "coverageNote": "All 38 current Markdown source files in the scoped directory were read and individually run through 3a implementer simulation, 3b Vision Rubric scoring, and 3c devil's-advocate probing across seven audit units.",
+  "applicableCheckpoints": 304,
+  "findings": [
+    {
+      "findingId": "R7-01-001",
+      "unit": "all-7-units",
+      "severity": "high",
+      "dimension": 7,
+      "claim": "Active question ledgers record `Owner` and `Deferred To`, but omit a deadline; entries such as the safety-posture question also do not state the implementation decision they block.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/01-identity-profiles-organizations/01.01-person-identity-roles/01.01-person-identity-roles-index.md",
+          "line": 55,
+          "excerpt": "| # | Question | Owner | Deferred To |"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/01-identity-profiles-organizations/01.02-organizations-entity-model/01.02-organizations-entity-model-index.md",
+          "line": 53,
+          "excerpt": "| # | Question | Owner | Deferred To |"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/01-identity-profiles-organizations/01.03-membership-representation-mandate/01.03-membership-representation-mandate-index.md",
+          "line": 55,
+          "excerpt": "| # | Question | Owner | Deferred To |"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/01-identity-profiles-organizations/01.04-band-ensemble-governance/01.04-band-ensemble-governance-index.md",
+          "line": 59,
+          "excerpt": "| # | Question | Owner | Deferred To |"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/01-identity-profiles-organizations/01.05-profile-claiming-verification/01.05-profile-claiming-verification-index.md",
+          "line": 55,
+          "excerpt": "| # | Question | Owner | Deferred To |"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/01-identity-profiles-organizations/01.06-portfolio-media-epk/01.06-portfolio-media-epk-index.md",
+          "line": 55,
+          "excerpt": "| # | Question | Owner | Deferred To |"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/01-identity-profiles-organizations/identity-profiles-organizations-index.md",
+          "line": 114,
+          "excerpt": "| # | Question | Owner | Deferred To |"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/01-identity-profiles-organizations/01.01-person-identity-roles/01.01.04-legal-identity-vs-public-identity.md",
+          "line": 92,
+          "excerpt": "What is the platform's safety posture for a user who must not be locatable?"
+        }
+      ],
+      "forcedInvention": "Decide which unresolved product, authority, legal, or safety question blocks work and when implementation must stop, rather than following a recorded deadline and blocked decision.",
+      "failureScenario": "A downstream team treats a workflow destination as permission to choose a policy, creating a de facto decision before its accountable owner resolves it."
+    },
+    {
+      "findingId": "R7-01-002",
+      "unit": "01.02-organizations-entity-model",
+      "severity": "critical",
+      "dimension": 3,
+      "claim": "The party-of-record model is unresolved for a person trading without an organization and for a legally separate band and label company represented as one on-platform party.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/01-identity-profiles-organizations/01.02-organizations-entity-model/01.02-organizations-entity-model-index.md",
+          "line": 56,
+          "excerpt": "Can a person-with-no-org sell, book and get paid — is an org ever required?"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/01-identity-profiles-organizations/01.02-organizations-entity-model/01.02.03-organization-type-transitions.md",
+          "line": 101,
+          "excerpt": "When an on-platform party is legally two entities, does the platform model one party with two types, or two parties?"
+        }
+      ],
+      "forcedInvention": "Choose the seller-of-record, payee, registered-detail, reputation, and credit attachment model for each transaction.",
+      "failureScenario": "Payments or contracts bind the wrong party, while credits and reputation either fork or leak across legally separate entities."
+    },
+    {
+      "findingId": "R7-01-003",
+      "unit": "01.01-person-identity-roles",
+      "severity": "critical",
+      "dimension": 3,
+      "claim": "Delegated authority has no rule for communication, even though messaging is the acting-context switcher's dominant use.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/01-identity-profiles-organizations/01.01-person-identity-roles/01.01.03-acting-context-switcher.md",
+          "line": 218,
+          "excerpt": "The mandate vocabulary has no communication verb, yet communication is the switcher's dominant daily use."
+        }
+      ],
+      "forcedInvention": "Authorize speaking as a party by attaching communication to an arbitrary commercial activity or by adding an undocumented activity.",
+      "failureScenario": "A manager can send binding-looking messages without authority, or a legitimately mandated representative cannot communicate for the party."
+    },
+    {
+      "findingId": "R7-01-004",
+      "unit": "01.03-membership-representation-mandate",
+      "severity": "critical",
+      "dimension": 3,
+      "claim": "Representation authority lacks a complete contract: overlap detection, typed territory/term/commission fields, and the behavior of an unset value ceiling remain undefined.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/01-identity-profiles-organizations/01.03-membership-representation-mandate/01.03.02-representation-roster-relationships.md",
+          "line": 101,
+          "excerpt": "What is the representation overlap key, and does a clash block or warn?"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/01-identity-profiles-organizations/01.03-membership-representation-mandate/01.03.02-representation-roster-relationships.md",
+          "line": 102,
+          "excerpt": "A representation edge has no typed attribute table; territory, term, notice, commission, and lifecycle are not typed."
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/01-identity-profiles-organizations/01.03-membership-representation-mandate/01.03.03-mandate-scope-delegated-authority.md",
+          "line": 131,
+          "excerpt": "Nothing states the representation default; null can mean zero authority or uncapped spend."
+        }
+      ],
+      "forcedInvention": "Define the representation schema, duplicate-detection key, conflict action, and null-ceiling semantics without an approved authority rule.",
+      "failureScenario": "An overlapping or unbounded representative can transact for a party, or valid representation is rejected because data shapes differ by implementation."
+    },
+    {
+      "findingId": "R7-01-005",
+      "unit": "01.04-band-ensemble-governance",
+      "severity": "critical",
+      "dimension": 3,
+      "claim": "Governance thresholds and treasury mandates can both govern the same spend while no precedence or mandate-regeneration rule exists.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/01-identity-profiles-organizations/01.04-band-ensemble-governance/01.04-band-ensemble-governance-cx.md",
+          "line": 35,
+          "excerpt": "Two records claim authority over the same question, with no precedence rule."
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/01-identity-profiles-organizations/01.04-band-ensemble-governance/01.04.03-treasury-mandate.md",
+          "line": 102,
+          "excerpt": "When governance thresholds and treasury mandates contradict, which wins?"
+        }
+      ],
+      "forcedInvention": "Choose the source of authorization and whether recording governance terms invalidates, transforms, or leaves existing mandates unchanged.",
+      "failureScenario": "A member spends band money under a valid-looking mandate that the band's recorded decision rule would reject."
+    },
+    {
+      "findingId": "R7-01-006",
+      "unit": "01.04-band-ensemble-governance",
+      "severity": "high",
+      "dimension": 3,
+      "claim": "The governance lifecycle has no settled posture for legal templates, mandatory capture, post-agreement admission, third-party standing, or re-forming a dissolved band.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/01-identity-profiles-organizations/01.04-band-ensemble-governance/01.04-band-ensemble-governance-index.md",
+          "line": 61,
+          "excerpt": "Does the platform offer partnership templates or only a record of what was agreed?"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/01-identity-profiles-organizations/01.04-band-ensemble-governance/01.04-band-ensemble-governance-index.md",
+          "line": 62,
+          "excerpt": "Is governance ever required, or always optional?"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/01-identity-profiles-organizations/01.04-band-ensemble-governance/01.04.01-partnership-terms-decision-rules.md",
+          "line": 97,
+          "excerpt": "Are members who joined after terms were agreed bound by them?"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/01-identity-profiles-organizations/01.04-band-ensemble-governance/01.04.04-dissolution-succession.md",
+          "line": 96,
+          "excerpt": "Can a dissolved band be reactivated, or does re-forming create a new party?"
+        }
+      ],
+      "forcedInvention": "Pick whether the platform creates legal instruments, who must accept governance, and whether re-formation preserves or starts a party history.",
+      "failureScenario": "Users rely on terms that never bound a member, or a successor project inherits a history and audience without an authorized basis."
+    },
+    {
+      "findingId": "R7-01-007",
+      "unit": "01.01-person-identity-roles",
+      "severity": "critical",
+      "dimension": 4,
+      "claim": "The privacy and legal-identity contract does not settle stalking-safety behavior or whether a pseudonymous split sheet is enforceable.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/01-identity-profiles-organizations/01.01-person-identity-roles/01.01.04-legal-identity-vs-public-identity.md",
+          "line": 92,
+          "excerpt": "What is the platform's safety posture for a user who must not be locatable?"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/01-identity-profiles-organizations/01.01-person-identity-roles/01.01.04-legal-identity-vs-public-identity.md",
+          "line": 93,
+          "excerpt": "Can a split sheet be signed pseudonymously and still be enforceable?"
+        }
+      ],
+      "forcedInvention": "Choose disclosure, location suppression, and signature requirements without a legal or safety posture.",
+      "failureScenario": "A safety-mode user is locatable through a connected surface, or a signed split lacks the identity required to be enforceable."
+    },
+    {
+      "findingId": "R7-01-008",
+      "unit": "01.01-person-identity-roles+01.03-membership-representation-mandate",
+      "severity": "critical",
+      "dimension": 4,
+      "claim": "Erasure and retention for shared provenance records remain legally unresolved for aliases and membership edges.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/01-identity-profiles-organizations/01.01-person-identity-roles/01.01.02-artist-names-aliases-projects.md",
+          "line": 168,
+          "excerpt": "Does GDPR erasure permit an alias and its credits to persist after the owner erases their account?"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/01-identity-profiles-organizations/01.03-membership-representation-mandate/01.03.01-membership-records-lifecycle.md",
+          "line": 186,
+          "excerpt": "A membership record is jointly-authored personal data. Whose erasure right governs it?"
+        }
+      ],
+      "forcedInvention": "Choose between retaining, suppressing, anonymizing, or deleting shared career evidence without a lawful retention rule.",
+      "failureScenario": "The service either unlawfully retains personal data or deletes credits and membership history that other parties rely on."
+    },
+    {
+      "findingId": "R7-01-009",
+      "unit": "01.05-profile-claiming-verification",
+      "severity": "critical",
+      "dimension": 3,
+      "claim": "Contested ownership lacks a complete resolution contract: merge-versus-contest ordering, adjudicator authority, and escrowed settlement outcomes are unresolved.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/01-identity-profiles-organizations/01.05-profile-claiming-verification/01.05-profile-claiming-verification-cx.md",
+          "line": 74,
+          "excerpt": "Two shadows merging while one is contested. Unmodelled."
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/01-identity-profiles-organizations/01.05-profile-claiming-verification/01.05.03-contested-claims-ownership-transfer.md",
+          "line": 126,
+          "excerpt": "Who adjudicates — the platform, or domain 24?"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/01-identity-profiles-organizations/01.05-profile-claiming-verification/01.05.03-contested-claims-ownership-transfer.md",
+          "line": 129,
+          "excerpt": "Who receives payout when resolution lands mid-window?"
+        }
+      ],
+      "forcedInvention": "Choose state-transition ordering, the decision authority, and payout recipient for a frozen party.",
+      "failureScenario": "A claimant or merge target obtains control incorrectly, or booked-party funds are released to the losing side of a contest."
+    },
+    {
+      "findingId": "R7-01-010",
+      "unit": "01.05-profile-claiming-verification",
+      "severity": "critical",
+      "dimension": 3,
+      "claim": "Claim assurance is incomplete: collusion resistance, qualifying Tier A providers, and the capture-versus-proof requirement for contact routes remain open.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/01-identity-profiles-organizations/01.05-profile-claiming-verification/01.05.02-claim-initiation-proof-methods.md",
+          "line": 244,
+          "excerpt": "A 5-account ring crediting each other across fabricated sessions passes Tier C cleanly."
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/01-identity-profiles-organizations/01.05-profile-claiming-verification/01.05.02-claim-initiation-proof-methods.md",
+          "line": 245,
+          "excerpt": "Which OAuth providers qualify as Tier A?"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/01-identity-profiles-organizations/01.05-profile-claiming-verification/01.05.02-claim-initiation-proof-methods.md",
+          "line": 246,
+          "excerpt": "Should the contact route be required at capture, now that it is the person claim's primary proof?"
+        }
+      ],
+      "forcedInvention": "Pick proof sources, fraud thresholds, and whether capture may proceed without the strongest available recovery route.",
+      "failureScenario": "A collusion ring reaches actionable trust, or a genuine claimant cannot recover a profile because the capture flow omitted the only usable proof."
+    },
+    {
+      "findingId": "R7-01-011",
+      "unit": "cross-unit-compliance",
+      "severity": "critical",
+      "dimension": 4,
+      "claim": "Launch compliance truth is missing for age-gated acts, lapsed load-bearing credentials, statutory credential instruments, and US trader disclosures.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/01-identity-profiles-organizations/01.01-person-identity-roles/01.01.01-person-record-role-facets.md",
+          "line": 211,
+          "excerpt": "What are the statutory age thresholds that gate selling, teaching, and signing a split?"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/01-identity-profiles-organizations/01.07-professional-credential-verification.md",
+          "line": 106,
+          "excerpt": "When venue insurance lapses with shows booked, notify, block new bookings, or do nothing?"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/01-identity-profiles-organizations/01.07-professional-credential-verification.md",
+          "line": 109,
+          "excerpt": "What are the US instrument names behind the launch profile's five statutory slots?"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/01-identity-profiles-organizations/01.08-trader-status-classification.md",
+          "line": 97,
+          "excerpt": "Which regime is operative at launch — and what does the disclosure therefore say?"
+        }
+      ],
+      "forcedInvention": "Set legal thresholds, disclosure copy, credential requirements, and booking behavior without an authoritative jurisdictional rule.",
+      "failureScenario": "The platform permits a prohibited act, presents a legally insufficient disclosure, or fails to act on a safety-critical credential lapse."
+    },
+    {
+      "findingId": "R7-01-012",
+      "unit": "01.08-trader-status-classification",
+      "severity": "high",
+      "dimension": 3,
+      "claim": "Trader reclassification does not define its disposition or what happens to existing live listings that may require retroactive public disclosure.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/01-identity-profiles-organizations/01.08-trader-status-classification.md",
+          "line": 96,
+          "excerpt": "Detection is settled, but the disposition is prompt, reclassify, or block."
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/01-identity-profiles-organizations/identity-profiles-organizations-cx.md",
+          "line": 187,
+          "excerpt": "Do existing listings retroactively publish their address? Unmodelled and consequential."
+        }
+      ],
+      "forcedInvention": "Choose whether to alter, hide, re-gate, or publish information on live listings after a classification signal.",
+      "failureScenario": "A private seller continues trading without required disclosures, or an address is exposed retroactively without a defined legal basis or user notice."
+    },
+    {
+      "findingId": "R7-01-013",
+      "unit": "01.04-band-ensemble-governance",
+      "severity": "critical",
+      "dimension": 4,
+      "claim": "Band treasury design does not decide whether the platform holds funds or only routes them, nor whether it has withholding or reporting duties.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/01-identity-profiles-organizations/01.04-band-ensemble-governance/01.04.03-treasury-mandate.md",
+          "line": 103,
+          "excerpt": "Does the platform hold band money or only route it? Holding is a regulated activity."
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/01-identity-profiles-organizations/01.04-band-ensemble-governance/01.04.03-treasury-mandate.md",
+          "line": 104,
+          "excerpt": "Does the platform carry any tax-withholding or reporting obligation on band distributions?"
+        }
+      ],
+      "forcedInvention": "Select custody, ledger, payout, and tax-reporting behavior before the regulated business model is chosen.",
+      "failureScenario": "The service moves or holds money under the wrong regulatory posture and issues incomplete or incorrect member distributions."
+    },
+    {
+      "findingId": "R7-01-014",
+      "unit": "01.09-party-identifier-resolution",
+      "severity": "critical",
+      "dimension": 3,
+      "claim": "Identifier verification has no per-namespace rule for what can be verified and what may happen when verification is unavailable, despite silent royalty-routing risk.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/01-identity-profiles-organizations/01.09-party-identifier-resolution.md",
+          "line": 100,
+          "excerpt": "A well-formed identifier belonging to someone else passes validation and misroutes royalties silently."
+        }
+      ],
+      "forcedInvention": "Choose whether an identifier can route royalties, remain unverified, or enter a dispute when a registry cannot verify it.",
+      "failureScenario": "Royalties route to an impersonator or remain unpayable because different namespace implementations choose incompatible safety behavior."
+    },
+    {
+      "findingId": "R7-01-015",
+      "unit": "01.10-estates-legacy-accounts",
+      "severity": "critical",
+      "dimension": 4,
+      "claim": "Estate handling lacks verified death-report evidence, a succession policy for an un-nominated earning catalogue, and a removal policy for a memorialized party cited by others.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/01-identity-profiles-organizations/01.10-estates-legacy-accounts.md",
+          "line": 99,
+          "excerpt": "With no nomination, who can administer a catalogue that keeps earning?"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/01-identity-profiles-organizations/01.10-estates-legacy-accounts.md",
+          "line": 100,
+          "excerpt": "What evidence verifies a death report?"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/01-identity-profiles-organizations/01.10-estates-legacy-accounts.md",
+          "line": 101,
+          "excerpt": "Can an estate have a profile removed when other people's credits cite it?"
+        }
+      ],
+      "forcedInvention": "Choose evidence strength, succession claimant, funds administration, and record suppression behavior without an estate policy.",
+      "failureScenario": "A malicious report freezes a living user's account, or a real estate cannot administer income while the service mishandles third-party credit evidence."
+    },
+    {
+      "findingId": "R7-01-016",
+      "unit": "01.06-portfolio-media-epk",
+      "severity": "critical",
+      "dimension": 4,
+      "claim": "The public portfolio of an unclaimed party has no settled lawful basis for publishing and search-indexing personal data about a non-user.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/01-identity-profiles-organizations/01.06-portfolio-media-epk/01.06.02-credit-backed-portfolio.md",
+          "line": 230,
+          "excerpt": "Does the unclaimed party's portfolio have a lawful basis?"
+        }
+      ],
+      "forcedInvention": "Choose whether to publish, index, suppress, or obtain consent for a non-user's portfolio without a lawful-basis decision.",
+      "failureScenario": "The growth loop publicly profiles a non-consenting person without a valid legal basis, creating a privacy and removal-rights breach."
+    },
+    {
+      "findingId": "R7-01-017",
+      "unit": "01.06-portfolio-media-epk",
+      "severity": "high",
+      "dimension": 3,
+      "claim": "Media Reel has neither a component owner for upload, storage, formats, ordering, and takedown nor a rights-clearance rule for publishing credited audio.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/01-identity-profiles-organizations/01.06-portfolio-media-epk/01.06.01-profile-page-composition.md",
+          "line": 228,
+          "excerpt": "Reel upload, storage, formats, ordering and takedown mechanics have no owning component."
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/01-identity-profiles-organizations/01.06-portfolio-media-epk/01.06.01-profile-page-composition.md",
+          "line": 229,
+          "excerpt": "A credited party may not own the master; composition must not assume the right exists."
+        }
+      ],
+      "forcedInvention": "Design a media lifecycle and decide when a credit is sufficient permission to publish audio.",
+      "failureScenario": "The product stores and publishes unlicensed master recordings without a takedown owner or an enforceable clearance path."
+    },
+    {
+      "findingId": "R7-01-018",
+      "unit": "01.06-portfolio-media-epk",
+      "severity": "critical",
+      "dimension": 3,
+      "claim": "EPK sharing lacks rules for link expiry or revocation, use of a member's personal credits, and disclosure of privately linked aliases to recipients.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/01-identity-profiles-organizations/01.06-portfolio-media-epk/01.06.03-epk-generation-sharing.md",
+          "line": 107,
+          "excerpt": "Do share links expire or get revoked, given an EPK may carry rates and contact routes?"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/01-identity-profiles-organizations/01.06-portfolio-media-epk/01.06.03-epk-generation-sharing.md",
+          "line": 108,
+          "excerpt": "May a band's EPK foreground credits that belong to its members personally — and who consents?"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/01-identity-profiles-organizations/01.06-portfolio-media-epk/01.06.03-epk-generation-sharing.md",
+          "line": 109,
+          "excerpt": "Does a human-scoped EPK disclose the sender's privately-linked aliases to the named recipient?"
+        }
+      ],
+      "forcedInvention": "Choose access lifetime, recipient controls, consent defaults, and private-alias disclosure behavior for each generated kit.",
+      "failureScenario": "Forwarded links expose contact details or aliases beyond the intended audience, or a band markets itself using a former member's credit without permission."
+    },
+    {
+      "findingId": "R7-01-019",
+      "unit": "01.06-portfolio-media-epk",
+      "severity": "high",
+      "dimension": 3,
+      "claim": "No single component owns the shared descriptor vocabulary or attribution of first-person content authored by a mandate holder.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/01-identity-profiles-organizations/01.06-portfolio-media-epk/01.06.01-profile-page-composition.md",
+          "line": 232,
+          "excerpt": "Who owns the descriptor vocabulary? The vocabulary is shared and still unowned."
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/01-identity-profiles-organizations/01.06-portfolio-media-epk/01.06.01-profile-page-composition.md",
+          "line": 233,
+          "excerpt": "Where is a mandate holder's authorship of first-person content recorded?"
+        }
+      ],
+      "forcedInvention": "Create an ad hoc canonical vocabulary and a content-author attribution field in whichever component is implemented first.",
+      "failureScenario": "Matching filters drift across surfaces and a manager can publish first-person content without a durable, reviewable authorship record."
+    },
+    {
+      "findingId": "R7-01-020",
+      "unit": "01.06-portfolio-media-epk",
+      "severity": "high",
+      "dimension": 3,
+      "claim": "Fan profile discovery is unresolved: the page composition is derived, but indexing, linking, and findability are not.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/01-identity-profiles-organizations/01.06-portfolio-media-epk/01.06-portfolio-media-epk-index.md",
+          "line": 57,
+          "excerpt": "What remains is whether a Fan's page is indexed, linked and findable."
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/01-identity-profiles-organizations/identity-profiles-organizations-index.md",
+          "line": 125,
+          "excerpt": "Does a Fan have a public profile at all? A visibility choice about a persona."
+        }
+      ],
+      "forcedInvention": "Choose public-page creation, robots/indexing, link visibility, and discovery eligibility for a Fan without a product decision.",
+      "failureScenario": "Fans are discoverable despite expecting a private account, or remain undiscoverable when social identity is an intended product surface."
+    }
+  ]
+}

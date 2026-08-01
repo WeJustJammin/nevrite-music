@@ -366,17 +366,19 @@ default everywhere in this domain — here, non-disclosure is mandatory.
 
 **Synthesis questions answered**:
 1. **Shared state conflict**: the CSAM case (24.08) and the enforcement record (24.02) are linked, but the
-   enforcement record's user-facing reason field is deliberately generic — 24.02 must not leak a CSAM-specific
-   reason into an SoR.
+enforcement record's user-facing reason field is deliberately generic — 24.02 must not leak a CSAM-specific
+reason into an SoR. The 24.09 preservation bundle is `restricted-preservation`: it has no party view
+or redacted derivative, while the enforcement record supplies only the generic appeal-safe projection.
 2. **Trigger chain**: match → account action proposed → 24.02 applies a generic suspension → subject sees the
    standard notice. A false positive → standard suspension-review → reinstatement, CSAM basis never surfaced.
-3. **Permission intersection**: the moderator handling the ordinary suspension review has no CSAM-case access;
-   the two adjudication contexts are permission-separated.
+3. **Permission intersection**: the moderator handling the ordinary suspension review has no CSAM-case access,
+and the subject has no preservation-bundle access. The two contexts are permission-separated: the
+break-glass path returns only a sealed non-content validation outcome to the generic review.
 4. **Notification fan-out**: subject gets the generic suspension notice only; the true basis stays inside the
    preservation path.
 5. **State transition conflict**: an appeal against the *generic* suspension runs through the normal path and
-   must not force disclosure of the underlying CSAM case — the appeal can succeed (reinstate) or fail without
-   ever exposing the real reason.
+must not force disclosure of the underlying CSAM case. The subject receives the generic appeal-safe projection;
+the appeal can succeed (reinstate) or fail without a bundle, a redacted derivative, or the real reason.
 
 ---
 

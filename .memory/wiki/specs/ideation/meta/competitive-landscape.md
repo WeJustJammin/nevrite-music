@@ -97,6 +97,8 @@ to them downstream. Strong candidates: **DistroKid/TuneCore** (distribution), **
 
 ## Open Questions
 
+> **Open-question governance.** Every unresolved row in this table is an explicit delivery hold. The **Owner** cell is accountable; the **hard decision deadline** is the gate immediately before the pipeline stage named in **Deferred To** begins; and the **Question** text is the exact policy, behavior, or contract decision blocked. **Deferred To** names the destination only and never replaces the deadline. No downstream stage may begin until its owner resolves the row or records a formally approved supersession.
+
 | # | Question | Owner | Deferred To |
 |---|----------|-------|-------------|
 | Q-01 | Which competitor is the one to BEAT first? For v1 (session spine + marketplaces), the direct rivals are **SoundBetter** (services) and **Reverb** (gear); the wedge competitor is **Sound Credit/Jaxsta**. | User | `/create-prd` |

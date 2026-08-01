@@ -362,7 +362,7 @@
 
 ### CX-19: Licensing ↔ Refunds & Revocation (Chargeback)
 
-**Relationship**: A **chargeback** is a new trigger, distinct from `refund` — 14.09.03 currently enumerates refund / transfer / hardware-return only. A chargeback has no vendor consent, no policy check, and arrives up to 120 days (cards) or 13 months (SEPA unauthorised) later — after payout. Separately, the terms registry exposes a `downstream_propagation` signal (placement + release-clearance counts) that refund eligibility reads: a *propagated* entitlement is not auto-refundable, closing the buy→release→refund→free-clearance fraud vector. Revocation **appends** an event; it never deletes.
+**Relationship**: A **chargeback** is an enumerated revocation trigger, distinct from refund. It has no vendor consent or policy check, arrives up to 120 days (cards) or 13 months (SEPA unauthorised) later — after payout — and routes the holder to the payment dispute. Separately, the terms registry exposes a `downstream_propagation` signal (placement + release-clearance counts) that refund eligibility reads: a *propagated* entitlement is not auto-refundable, closing the buy→release→refund→free-clearance fraud vector. Revocation **appends** an event; it never deletes.
 
 **Role scoping**:
 - **Musician**: an honest buyer whose card issuer reverses a legitimate purchase — the entitlement must reflect the reversal without destroying evidence.
@@ -372,7 +372,7 @@
 
 **Synthesis questions answered**:
 1. **Shared state**: The entitlement's lifecycle state (14.02) and the refund/revocation ledger (14.09). Revocation appends; the entitlement is never hard-deleted (it is evidence).
-2. **Trigger chain**: Chargeback received (async, months later) → entitlement → `revoked/reversed` → clawback cascades to the contributor pool (CX-21), which may already have settled. Compensating reversal, not rollback.
+2. **Trigger chain**: Chargeback received (async, months later) → entitlement enters `revoked` with trigger `chargeback` → clawback cascades to the contributor pool (CX-21), which may already have settled. Compensating reversal, not rollback; the holder is routed to the payment dispute.
 3. **Permission intersection**: A propagated entitlement (used in a release) is not auto-refundable — the propagation signal gates the discretionary path; the statutory floor still applies via 14.09.02.
 4. **Notification fan-out**: Buyer, vendor, and any contributors whose settled share is reversed. Every refusal carries an appeal route (14.09.02 D-04 → domain 24).
 5. **State-transition race**: Chargeback arriving after the entitlement was transferred (14.06) or used in a release (12) — revocation lands on the current holder / flags the release; the append-only ledger preserves the full history.

@@ -1,0 +1,310 @@
+{
+  "reportKind": "ambiguity-audit-verification",
+  "run": 7,
+  "domain": "10-royalties-collections",
+  "rawReport": "10-raw.json",
+  "rawFindingCount": 12,
+  "verdicts": [
+    {
+      "findingId": "RUN7-10-001",
+      "upheld": true,
+      "finalSeverity": "blocking",
+      "reason": "All six current Open Questions tables expose only Owner and Deferred To. None records the rubric-required deadline, and Deferred To is a workflow destination rather than a deadline; the universal Dimension 7 requirement therefore remains unmet.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/10-royalties-collections/10.01-society-registration-delivery/10.01-society-registration-delivery-index.md",
+          "line": 59,
+          "excerpt": "| # | Question | Owner | Deferred To |"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/10-royalties-collections/10.02-statement-ingestion-normalization/10.02-statement-ingestion-normalization-index.md",
+          "line": 56,
+          "excerpt": "| # | Question | Owner | Deferred To |"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/10-royalties-collections/10.03-calculation-recoupment/10.03-calculation-recoupment-index.md",
+          "line": 54,
+          "excerpt": "| # | Question | Owner | Deferred To |"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/10-royalties-collections/10.04-disbursement-payee-statements/10.04-disbursement-payee-statements-index.md",
+          "line": 54,
+          "excerpt": "| # | Question | Owner | Deferred To |"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/10-royalties-collections/10.05-recovery-leakage/10.05-recovery-leakage-index.md",
+          "line": 52,
+          "excerpt": "| # | Question | Owner | Deferred To |"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/10-royalties-collections/royalties-collections-index.md",
+          "line": 151,
+          "excerpt": "| # | Question | Owner | Deferred To |"
+        }
+      ]
+    },
+    {
+      "findingId": "RUN7-10-002",
+      "upheld": true,
+      "finalSeverity": "warning",
+      "reason": "The current feature still leaves both identifier acquisition and the incomplete-party registration policy open. The rows name an owner and a later stage but supply neither a decision nor a deadline, so implementing registration still requires choosing a path.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/10-royalties-collections/10.01-society-registration-delivery/10.01.02-work-registration-payload-validation.md",
+          "line": 99,
+          "excerpt": "What is the actual plan for getting a co-writer's IPI"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/10-royalties-collections/10.01-society-registration-delivery/10.01.02-work-registration-payload-validation.md",
+          "line": 100,
+          "excerpt": "Does WeJammin register a work with an incomplete party set ... or hold until complete"
+        }
+      ]
+    },
+    {
+      "findingId": "RUN7-10-003",
+      "upheld": true,
+      "finalSeverity": "blocking",
+      "reason": "D-20 narrows the behavior by prohibiting third-party notification and cross-uploader aggregation, but the current source expressly leaves storage/display of third-party earnings and calculation for other people open. No deadline-backed decision record resolves those remaining authority choices.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/10-royalties-collections/10.02-statement-ingestion-normalization/10.02.01-statement-source-ingestion.md",
+          "line": 336,
+          "excerpt": "Q-03 decides storage and display; this decides everything else."
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/10-royalties-collections/10.02-statement-ingestion-normalization/10.02.01-statement-source-ingestion.md",
+          "line": 347,
+          "excerpt": "D-20 settles everything except storage and display of third-party earnings"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/10-royalties-collections/10.02-statement-ingestion-normalization/10.02.01-statement-source-ingestion.md",
+          "line": 348,
+          "excerpt": "What may the platform compute for other people from a file only the uploader has seen?"
+        }
+      ]
+    },
+    {
+      "findingId": "RUN7-10-004",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "reason": "The current Source Registry decisions explicitly define both disputed fields and state that they resolve Exception Queue Q-04a and Q-04b. The old sibling-note wording cannot force an implementer to invent a registry schema.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/10-royalties-collections/10.02-statement-ingestion-normalization/10.02.01-statement-source-ingestion.md",
+          "line": 322,
+          "excerpt": "The registry holds the remittee ... resolves 10.02.05 Q-04a"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/10-royalties-collections/10.02-statement-ingestion-normalization/10.02.01-statement-source-ingestion.md",
+          "line": 332,
+          "excerpt": "The registry holds the source's correction window ... Resolves 10.02.05 Q-04b"
+        }
+      ]
+    },
+    {
+      "findingId": "RUN7-10-005",
+      "upheld": true,
+      "finalSeverity": "blocking",
+      "reason": "The calculation engine now states the dependency in its required bitemporal form, but it remains an open owner decision with no deadline. The parent decision also says Domain 10 requires Domain 09 as-of support, so historical calculation behavior is not yet implementable without invention.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/10-royalties-collections/10.03-calculation-recoupment/10.03.01-royalty-calculation-engine.md",
+          "line": 263,
+          "excerpt": "Is domain 09's ledger bitemporal? ... no calculation is reproducible"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/10-royalties-collections/royalties-collections-index.md",
+          "line": 115,
+          "excerpt": "Requires 09 to support as-of reads; see Q-05."
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/10-royalties-collections/royalties-collections-index.md",
+          "line": 157,
+          "excerpt": "Does domain 09's ledger support as-of reads? D-02 requires it."
+        }
+      ]
+    },
+    {
+      "findingId": "RUN7-10-006",
+      "upheld": true,
+      "finalSeverity": "blocking",
+      "reason": "D-01 sketches a division between agreement, document, and executable rule, but the feature explicitly says that division needs ratification and keeps the canonical deal owner open. Neither the local nor parent question records a deadline-backed resolution for identity, write authority, synchronization, or calculation source.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/10-royalties-collections/10.03-calculation-recoupment/10.03.02-deal-terms-rate-application.md",
+          "line": 235,
+          "excerpt": "The executable rule lives here; the document lives in 23; the agreement lives in 09"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/10-royalties-collections/10.03-calculation-recoupment/10.03.02-deal-terms-rate-application.md",
+          "line": 258,
+          "excerpt": "Three domains touch one deal ... A line drawn by an agent mid-drill is not a ratified architecture."
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/10-royalties-collections/royalties-collections-index.md",
+          "line": 160,
+          "excerpt": "Who owns the deal? Terms appear in 09, 23, and 10.03.02."
+        }
+      ]
+    },
+    {
+      "findingId": "RUN7-10-007",
+      "upheld": true,
+      "finalSeverity": "blocking",
+      "reason": "The current Must-level Deal Terms feature explicitly records the held contradictory-term state and lists three mutually exclusive launch exits without selecting one. Its referenced dispute feature remains Could, so the existing source still forces an implementation choice for release.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/10-royalties-collections/10.03-calculation-recoupment/10.03.02-deal-terms-rate-application.md",
+          "line": 262,
+          "excerpt": "the calculation is held ... routed to a dispute engine that does not exist at launch"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/10-royalties-collections/royalties-collections-index.md",
+          "line": 138,
+          "excerpt": "Must ... 10.03.02 Deal Terms"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/10-royalties-collections/royalties-collections-index.md",
+          "line": 140,
+          "excerpt": "Could ... 10.08 Statement Disputes"
+        }
+      ]
+    },
+    {
+      "findingId": "RUN7-10-008",
+      "upheld": true,
+      "finalSeverity": "warning",
+      "reason": "The current source narrows ordinary marketplace payouts to a provider-held model but expressly leaves royalty disbursement and client-money custody unresolved. The payout sub-domain repeats those open choices, so money movement cannot be implemented from the current record alone.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/10-royalties-collections/10.04-disbursement-payee-statements/10.04-disbursement-payee-statements-index.md",
+          "line": 56,
+          "excerpt": "Does WeJammin hold and move money at all? ... Narrowed, not answered"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/10-royalties-collections/10.04-disbursement-payee-statements/10.04-disbursement-payee-statements-index.md",
+          "line": 57,
+          "excerpt": "Holding client money ... is regulated activity"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/10-royalties-collections/royalties-collections-index.md",
+          "line": 159,
+          "excerpt": "what is open is royalty disbursement and client-money custody"
+        }
+      ]
+    },
+    {
+      "findingId": "RUN7-10-009",
+      "upheld": true,
+      "finalSeverity": "warning",
+      "reason": "The sources require ageing and an escrow expiry policy, but neither selects a terminal state for permanently unpayable balances or never-resolved disputes. Both questions remain owner-assigned without a deadline, leaving disposition behavior to be invented.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/10-royalties-collections/10.04-disbursement-payee-statements/10.04.03-thresholds-holds-unpayable-balances.md",
+          "line": 106,
+          "excerpt": "What happens to a permanently unpayable balance?"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/10-royalties-collections/10.04-disbursement-payee-statements/10.04.04-disputed-royalty-escrow.md",
+          "line": 91,
+          "excerpt": "An expiry policy is mandatory"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/10-royalties-collections/10.04-disbursement-payee-statements/10.04.04-disputed-royalty-escrow.md",
+          "line": 98,
+          "excerpt": "What is the expiry policy?"
+        }
+      ]
+    },
+    {
+      "findingId": "RUN7-10-010",
+      "upheld": true,
+      "finalSeverity": "blocking",
+      "reason": "The Must search flow still leaves bulk corpus access open, and the claim flow only specifies handoff when filing is impossible. The choice between filing with mandate/standing and handoff when filing is possible remains explicitly open, so the authority model is not resolved.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/10-royalties-collections/10.05-recovery-leakage/10.05.01-black-box-unclaimed-search.md",
+          "line": 240,
+          "excerpt": "Can the corpora be bulk-ingested? ... bulk ingestion may breach terms."
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/10-royalties-collections/10.05-recovery-leakage/10.05.02-claim-submission-evidence-pack.md",
+          "line": 94,
+          "excerpt": "Where the platform cannot file, it hands off the evidence pack"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/10-royalties-collections/10.05-recovery-leakage/10.05.02-claim-submission-evidence-pack.md",
+          "line": 101,
+          "excerpt": "Does WeJammin file on the user's behalf ... or prepare and hand off?"
+        }
+      ]
+    },
+    {
+      "findingId": "RUN7-10-011",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "reason": "The feature's current decision and resolved question explicitly prohibit an amount in money-in-flight and route estimation to Forecasting as a range only. CX-10's illustrative wording does not require an implementer to create a deterministic amount field or notification value.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/10-royalties-collections/10.09-distribution-calendar-money-in-flight.md",
+          "line": 92,
+          "excerpt": "Dates without amounts. The platform states when, not how much"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/10-royalties-collections/10.09-distribution-calendar-money-in-flight.md",
+          "line": 102,
+          "excerpt": "Resolved - never in this feature; only in 10.10, and only as a range."
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/10-royalties-collections/10.10-royalty-forecasting.md",
+          "line": 87,
+          "excerpt": "A range, never a point figure"
+        }
+      ]
+    },
+    {
+      "findingId": "RUN7-10-012",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "reason": "The leaf feature and its directly cited canonical source both resolve the behavior: the platform never contacts a non-user; only a Producer may relay the information socially. The older cross-cut prompt therefore does not force a choice about platform-side financial outreach.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/10-royalties-collections/10.04-disbursement-payee-statements/10.04.03-thresholds-holds-unpayable-balances.md",
+          "line": 108,
+          "excerpt": "Resolved - the platform never sends it; there is no platform-side channel to a non-user"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/02-credits-attribution/credits-attribution-index.md",
+          "line": 134,
+          "excerpt": "Resolved - the Producer's social act at roll call; the platform prompts it and never performs it."
+        }
+      ]
+    }
+  ],
+  "coverage": {
+    "rawFindingIds": [
+      "RUN7-10-001",
+      "RUN7-10-002",
+      "RUN7-10-003",
+      "RUN7-10-004",
+      "RUN7-10-005",
+      "RUN7-10-006",
+      "RUN7-10-007",
+      "RUN7-10-008",
+      "RUN7-10-009",
+      "RUN7-10-010",
+      "RUN7-10-011",
+      "RUN7-10-012"
+    ],
+    "verdictCount": 12,
+    "upheldCount": 9,
+    "refutedCount": 3,
+    "allRawFindingsAccountedFor": true,
+    "rubricsRead": [
+      ".codex/skills/pipeline-rubrics/references/vision-rubric.md",
+      ".codex/skills/pipeline-rubrics/references/scoring.md"
+    ],
+    "sourceScope": "Current files under .memory/wiki/specs/ideation/10-royalties-collections/ and directly cited canonical sources only."
+  }
+}

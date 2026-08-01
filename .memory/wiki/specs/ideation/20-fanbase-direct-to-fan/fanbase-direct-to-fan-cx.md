@@ -22,7 +22,7 @@
 | CX-11 | [20.07 Fan Demand](./20.07-fan-demand-show-requests.md) | [20.06 Fan Experience](./20.06-fan-experience-discovery/20.06-fan-experience-discovery-index.md) | **The loop that closes the domain.** Demand informs the booking; the booking fires the alert; the alert produces attendance; attendance sharpens the next demand map. Inverse views of one graph. | Musician, Fan | High | [20.07](./20.07-fan-demand-show-requests.md) happy path steps 4–6. |
 | CX-12 | [20.03 Broadcast](./20.03-broadcast-fan-messaging/20.03-broadcast-fan-messaging-index.md) | [20.05 Memberships](./20.05-memberships-patronage-campaigns/20.05-memberships-patronage-campaigns-index.md) | Campaigns are how a crowdfunding drive reaches backers and how vault drops reach members — but the **artist-side health nudge** ("your members haven't had anything in 6 weeks") is the platform speaking to the artist (CX-M07), not broadcast. | Musician | Medium | [20.05.01](./20.05-memberships-patronage-campaigns/20.05.01-membership-tiers-benefits.md) DT-02; the direction of the message decides the owner. |
 | CX-13 | [20.05 Memberships](./20.05-memberships-patronage-campaigns/20.05-memberships-patronage-campaigns-index.md) | [20.04 Storefront](./20.04-direct-to-fan-storefront/20.04-direct-to-fan-storefront-index.md) | **Pre-order bundles are crowdfunding campaigns wearing a Buy button** — same money-now-object-later hazard, therefore the same fund-segregation policy. A boundary the sweep did not see. | Musician, Fan | High | [20.04.03](./20.04-direct-to-fan-storefront/20.04.03-digital-sales-name-your-price-bundles.md) DT-02; [20.05](./20.05-memberships-patronage-campaigns/20.05-memberships-patronage-campaigns-index.md) D-03. |
-| CX-14 | [20.05 Memberships](./20.05-memberships-patronage-campaigns/20.05-memberships-patronage-campaigns-index.md) | [20.06 Fan Experience](./20.06-fan-experience-discovery/20.06-fan-experience-discovery-index.md) | **The vault-lapse race.** Membership-gated vault items ([20.05.02](./20.05-memberships-patronage-campaigns/20.05.02-exclusive-content-vault.md)) lock the instant a membership lapses, and that transition is **felt in the fan's library** ([20.06.03](./20.06-fan-experience-discovery/20.06.03-fan-library-collection.md)). The keep-vs-lose policy is owned by 20.05 but its lifecycle event must reach the library atomically. | Fan, Musician | Medium | [20.06.03](./20.06-fan-experience-discovery/20.06.03-fan-library-collection.md) — membership-gated items lock on lapse; keep-vs-lose call shared with [20.05.02](./20.05-memberships-patronage-campaigns/20.05.02-exclusive-content-vault.md) Q-01. |
+| CX-14 | [20.05 Memberships](./20.05-memberships-patronage-campaigns/20.05-memberships-patronage-campaigns-index.md) | [20.06 Fan Experience](./20.06-fan-experience-discovery/20.06-fan-experience-discovery-index.md) | **The vault-lapse race.** A lapse re-evaluates membership-gated vault access and the result is **felt in the fan's library** ([20.06.03](./20.06-fan-experience-discovery/20.06.03-fan-library-collection.md)). The tracked interim posture preserves items released while the fan was paying and locks future member-only items; 20.05 Q-01 owns the final keep-vs-lose policy. The lifecycle event must reach the library atomically. | Fan, Musician | Medium | [20.05.02](./20.05-memberships-patronage-campaigns/20.05.02-exclusive-content-vault.md) Q-01 + DT-02 — no-retroactive-removal interim; [20.06.03](./20.06-fan-experience-discovery/20.06.03-fan-library-collection.md) Q-04 mirrors the same owner decision. |
 
 > **Confidence levels:** High (confirmed with evidence), Medium (strong signal, needs validation), Low (hypothesis)
 >
@@ -162,7 +162,7 @@ what.
 **Synthesis questions answered**:
 1. **Shared state conflict**: The entitlement rule lives in 20.02.03; the product's gated-flag lives in [20.04.01](./20.04-direct-to-fan-storefront/20.04.01-storefront-product-catalog.md). The catalogue reads the entitlement at add-to-cart; it never caches "who is eligible".
 2. **Trigger chain**: Add-to-cart on a gated item → resolve entitlement against the buyer's segment/score at that moment → allow or block. Synchronous; blocking is the safe default if resolution fails.
-3. **Permission intersection**: This *is* a permission edge — the segment/entitlement is the permission that unlocks the purchase. A revoked membership (CX-07/CX-14) removes the entitlement and re-locks the item.
+3. **Permission intersection**: This *is* a permission edge — the segment/entitlement is the permission that unlocks the purchase. A lapsed membership removes active-tier eligibility for future member-gated items; previously released vault access follows CX-14's tracked Q-01 interim posture rather than being retroactively re-locked.
 4. **Notification fan-out**: A presale opening can drive a broadcast to the eligible segment — but that runs through CX-03/CX-02 (segment → consent gate), never a privileged storefront path.
 5. **State transition conflict**: Eligibility is resolved at cart time, not listing time; a fan who lapses between browsing and checkout is correctly blocked at checkout. The gate is evaluated as late as possible.
 
@@ -182,7 +182,7 @@ score. Each turn compounds.
 **Synthesis questions answered**:
 1. **Shared state conflict**: Membership state is owned by [20.05.01](./20.05-memberships-patronage-campaigns/20.05.01-membership-tiers-benefits.md) (billing engine is CX-M24); the score reads it. The score never writes membership.
 2. **Trigger chain**: Join/renew/lapse → membership state change → score recompute → segment/perk eligibility shifts. A lapse must *lower* the signal, not merely stop raising it — otherwise a lapsed member outranks a current one.
-3. **Permission intersection**: Active tier is an entitlement input to CX-06; a lapse propagates through CX-14 to re-lock member-gated goods and vault items.
+3. **Permission intersection**: Active tier is an entitlement input to CX-06; a lapse removes future member-gated eligibility and propagates CX-14's Q-01-governed retained-access rule to the vault and library.
 4. **Notification fan-out**: A presale to "members + top 5%" fans out through CX-03/CX-02, never directly.
 5. **State transition conflict**: The ratchet must not let perk redemption inflate the score past what tenure/attendance justify — redemption is *a* signal, weighted, not a multiplier. Same D-08 discipline as CX-05.
 
@@ -233,7 +233,7 @@ via claimable entitlements + a signed email link.
 2. **Trigger chain**: Purchase → entitlement created → library row appears → (if guest) claimable via signed link → account resolution merges the fan record (CX-04 intersection rule).
 3. **Permission intersection**: A guest's claimable entitlement is bearer-protected by the signed link; claiming binds it to an authenticated fan record. No marketing consent is created by the claim.
 4. **Notification fan-out**: "Your download is ready" / "claim your purchase" are transactional (CX-M07), not broadcast.
-5. **State transition conflict**: A member-gated library item can be re-locked by a lapse — that race is CX-14. A purchased (owned) item never re-locks; ownership and access are different states and the library must not confuse them.
+5. **State transition conflict**: A lapse re-evaluates a member-gated library entitlement — that race is CX-14. Under its tracked interim rule, items released while the fan was paying remain accessible and future member-only items lock; a purchased (owned) item never locks. Ownership and access are different states and the library must not confuse them.
 
 ---
 
@@ -337,26 +337,25 @@ to one and not the other, artists will route around it by calling every campaign
 
 ### CX-14: Memberships ↔ Fan Experience — the vault-lapse race
 
-**Relationship**: Membership-gated vault items ([20.05.02](./20.05-memberships-patronage-campaigns/20.05.02-exclusive-content-vault.md))
-**lock the instant a membership lapses**, and that lock is *felt in the fan's library*
-([20.06.03](./20.06-fan-experience-discovery/20.06.03-fan-library-collection.md)). The keep-vs-lose policy is
-owned by 20.05 (its open Q-01: does a lapsed member keep what they downloaded?), but the *lifecycle event*
-that flips a vault row from unlocked to locked must reach the library atomically, or a fan sees content they
-can no longer legitimately open. This is the one genuine interaction at the 20.05↔20.06 join that R-02
-conceded was real; it is promoted here from a rejected pair because it is a state-transition race, not a
-passive render.
+**Relationship**: A membership lapse re-evaluates vault access ([20.05.02](./20.05-memberships-patronage-campaigns/20.05.02-exclusive-content-vault.md))
+and the library renders the result ([20.06.03](./20.06-fan-experience-discovery/20.06.03-fan-library-collection.md)).
+20.05 Q-01 owns the final keep-vs-lose product decision. Until it is ratified, the tracked interim posture is
+no retroactive removal: items released while the fan was paying remain accessible and only future member-only
+items lock. The entitlement result must reach the library atomically; otherwise a fan sees a state that the
+vault no longer permits. This is the one genuine interaction at the 20.05↔20.06 join that R-02 conceded was
+real; it is promoted here from a rejected pair because it is a state-transition race, not a passive render.
 
 **Role scoping**:
-- **Fan / member**: on lapse, member-only vault rows lock in the library; owned purchases never lock (CX-09).
-- **Musician**: sets the keep-vs-lose policy (20.05.02 Q-01) that this edge enforces.
+- **Fan / member**: on lapse, retained vault items remain accessible under the Q-01 interim rule; future member-only rows are locked. Owned purchases never lock (CX-09).
+- **Musician**: may configure content and tiers, but does not decide the platform-wide keep-vs-lose policy; 20.05.02 Q-01 is owner-routed to `/create-prd`.
 - **Operator / Producer**: not affected.
 
 **Synthesis questions answered** *(Medium confidence — pending 20.05.02 Q-01 resolution)*:
-1. **Shared state conflict**: The entitlement/tier state is owned by 20.05 (billing is CX-M24); the library is a reader that must reflect the lock. The library never decides the policy; it renders the current entitlement.
-2. **Trigger chain**: Lapse (billing event, CX-M24) → membership state change (20.05.01) → vault entitlement re-evaluated (20.05.02) → library row locks (20.06.03). Must be atomic-enough that the library never shows a stale *unlocked* state after a lapse — fail-closed to locked on ambiguity.
-3. **Permission intersection**: The vault entitlement is the permission; lapse revokes it. Distinguish member-*gated* vault content (re-locks) from *purchased* content (never re-locks) — conflating them either strands owned goods or leaks member goods.
-4. **Notification fan-out**: A lapse may notify the fan ("your membership ended; N items are now locked") via CX-M07 — transactional, not broadcast.
-5. **State transition conflict**: The core race — a lapse landing while the fan is mid-view. Resolution: fail closed to locked; the keep-vs-lose policy (whether *previously downloaded* copies survive) is the unresolved 20.05.02 Q-01 that must be answered before this edge is fully specifiable.
+1. **Shared state conflict**: The entitlement/tier state is owned by 20.05 (billing is CX-M24); the library is a reader that must reflect its current entitlement plus Q-01's retained-access posture. The library never decides the policy.
+2. **Trigger chain**: Lapse (billing event, CX-M24) → membership state change (20.05.01) → vault entitlement re-evaluated (20.05.02) → library renders retained access or a locked future item (20.06.03). It must be atomic enough that the library never shows an entitlement state the vault rejects; fail closed only when the retained-access predicate cannot be established.
+3. **Permission intersection**: The vault entitlement is the permission. A lapse ends active-tier access, while Q-01's interim rule retains items released while the fan was active; purchased content never locks. Conflating the three either strands paid-for content or leaks future member goods.
+4. **Notification fan-out**: A lapse may notify the fan ("your membership ended; review your library access") via CX-M07 — transactional, not broadcast.
+5. **State transition conflict**: The core race is a lapse landing while the fan is mid-view. The current, explicit interim resolution preserves eligible retained items and locks future member-only content. Q-01 owns the final platform policy, so a future ratification changes the predicate rather than leaving this edge unspecified.
 
 ---
 

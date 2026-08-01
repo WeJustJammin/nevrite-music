@@ -161,6 +161,8 @@ domain's and currently has no home (Q-05).
 
 ## Open Questions
 
+> **Open-question governance.** Every unresolved row in this table is an explicit delivery hold. The **Owner** cell is accountable; the **hard decision deadline** is the gate immediately before the pipeline stage named in **Deferred To** begins; and the **Question** text is the exact policy, behavior, or contract decision blocked. **Deferred To** names the destination only and never replaces the deadline. No downstream stage may begin until its owner resolves the row or records a formally approved supersession.
+
 | # | Question | Owner | Deferred To |
 |---|----------|-------|-------------|
 | Q-01 | ~~**The licence buyer has no persona.**~~ **RESOLVED → D-10** (DQ-10.A1/A2/A3): the buyer is not a persona and does not become one. Two non-persona **counterparty profiles** in `meta/counterparties.md` — professional licence buyer, and creator micro-licence buyer — describe the buy side and add no Role Matrix column. `/write-fe-spec` for 11.01/11.03 is unblocked. **This row asserted that its own question, personas.md Q-01 and 11.06 Q-01 were "all three one question"; the ratification declines that bundling** and answers only the buyer. **Still open elsewhere, and not closed by this**: personas.md Q-01 (professional dealer, 13/14/15 — a seller), personas.md Q-02 with 24.01.03 Q-01 (Admin — the sharpest of the nine, independently blocking its own surface), 21.02 Q-01 with 21 D-03 (curator / journalist / radio / DSP gatekeeper), 13.09 D-03 with 13.13 (dealer counterparty), plus the stagehand, insurer, accountant, manager and fee-paying-parent questions. | User | Resolved 2026-07-22 (D-10 = global **D-71**) |

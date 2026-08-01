@@ -1,0 +1,747 @@
+{
+  "reportKind": "ambiguity-audit-raw",
+  "run": 7,
+  "domain": "11-music-licensing",
+  "unitsAudited": 9,
+  "filesRead": 52,
+  "coverageNote": "Audited all 52 current Markdown source files in the nine logical units under .memory/wiki/specs/ideation/11-music-licensing/. Every file underwent 3a implementer simulation, 3b Vision Rubric scoring, and 3c devil's-advocate probing. Structural checks found all required index/CX files, populated Role Matrices, Role Lenses, and Edge Cases sections; no audit, remediation, decision-queue, or gate path was read.",
+  "applicableCheckpoints": 416,
+  "findings": [
+    {
+      "findingId": "R7-11-001",
+      "unit": "cross-unit",
+      "severity": "critical",
+      "dimension": 7,
+      "claim": "All 129 active Open Questions are routed to a future workflow stage but none has a resolution deadline. A routing target is not a deadline, so the required owner + deadline + blocked-decision record is incomplete.",
+      "evidence": [
+        {
+          "file": "music-licensing-index.md",
+          "line": 167,
+          "excerpt": "Is the one-stop flag a warranty, an indemnity, or best-effort?"
+        },
+        {
+          "file": "11.01-sync-licensing/11.01-sync-licensing-index.md",
+          "line": 65,
+          "excerpt": "Does the platform take a sync commission ... inside the licence price or outside it?"
+        },
+        {
+          "file": "11.02-clearance-one-stop-status/11.02-clearance-one-stop-status-index.md",
+          "line": 73,
+          "excerpt": "What is the platform's liability posture when a one-stop flag is wrong?"
+        },
+        {
+          "file": "11.03-licence-pricing-negotiation/11.03-licence-pricing-negotiation-index.md",
+          "line": 67,
+          "excerpt": "Deferral expired ... this is a revenue-model choice."
+        },
+        {
+          "file": "11.04-licensing-policy-preferences/11.04.01-per-work-licensing-policy.md",
+          "line": 209,
+          "excerpt": "Does auto-approve constitute valid consent for a licence the owner never saw?"
+        },
+        {
+          "file": "11.05-sample-derivative-clearance/11.05-sample-derivative-clearance-index.md",
+          "line": 73,
+          "excerpt": "Can a sample be cleared for a work that is not yet released?"
+        },
+        {
+          "file": "11.06-creator-micro-licensing/11.06-creator-micro-licensing-index.md",
+          "line": 95,
+          "excerpt": "Is this subscription or per-track? It decides 11.06.04's entire existence."
+        },
+        {
+          "file": "11.07-ai-training-licensing/11.07-ai-training-licensing-index.md",
+          "line": 68,
+          "excerpt": "Does WeJammin train on user audio?"
+        },
+        {
+          "file": "11.08-licence-instrument-lifecycle/11.08-licence-instrument-lifecycle-index.md",
+          "line": 77,
+          "excerpt": "Is the licence instrument a real legal contract or a record of an agreement?"
+        }
+      ],
+      "forcedInvention": "Implementers must choose unresolved commercial, legal, safety, and operational policy without a committed decision date.",
+      "failureScenario": "Downstream specifications advance with expired deferrals and independently choose incompatible policy."
+    },
+    {
+      "findingId": "R7-11-002",
+      "unit": "11.02-clearance-one-stop-status",
+      "severity": "critical",
+      "dimension": 7,
+      "claim": "The legal transaction posture is unresolved: the platform may be a principal or a directory, may be a party or facilitator, and has no ratified liability remedy for a wrongly issued licence.",
+      "evidence": [
+        {
+          "file": "music-licensing-index.md",
+          "line": 167,
+          "excerpt": "Is the one-stop flag a warranty, an indemnity, or best-effort?"
+        },
+        {
+          "file": "11.02-clearance-one-stop-status/11.02.01-clearance-computation-one-stop.md",
+          "line": 218,
+          "excerpt": "Is the platform the single counterparty ... or a directory that publishes verdicts?"
+        },
+        {
+          "file": "11.08-licence-instrument-lifecycle/11.08.02-licence-certificate-issuance.md",
+          "line": 235,
+          "excerpt": "Is the platform a party to the licence, or a facilitator between the parties?"
+        },
+        {
+          "file": "11.08-licence-instrument-lifecycle/11.08.04-licence-amendment-expiry-lifecycle.md",
+          "line": 130,
+          "excerpt": "What is the remedy for a licence that should never have issued?"
+        }
+      ],
+      "forcedInvention": "Choose the contract parties, who issues and collects, the liability bearer, and the remedy after an erroneous clearance.",
+      "failureScenario": "A certificate, payment flow, and one-stop badge promise mutually inconsistent rights and liability."
+    },
+    {
+      "findingId": "R7-11-003",
+      "unit": "11.02-clearance-one-stop-status",
+      "severity": "critical",
+      "dimension": 7,
+      "claim": "Erasure, evidence retention, and identity disclosure have no authoritative legal rule across clearance, attestations, declarations, and issued instruments.",
+      "evidence": [
+        {
+          "file": "11.02-clearance-one-stop-status/11.02.01-clearance-computation-one-stop.md",
+          "line": 123,
+          "excerpt": "Whether erasure law permits retaining a pre-erasure standing policy is a legal question."
+        },
+        {
+          "file": "11.02-clearance-one-stop-status/11.02.02-catalogue-completeness-attestation.md",
+          "line": 219,
+          "excerpt": "Erasure by the attester is not settled because the record's value is the name on it."
+        },
+        {
+          "file": "11.05-sample-derivative-clearance/11.05.01-sample-declaration-identification.md",
+          "line": 256,
+          "excerpt": "What survives a source-side erasure request?"
+        },
+        {
+          "file": "11.08-licence-instrument-lifecycle/11.08.02-licence-certificate-issuance.md",
+          "line": 239,
+          "excerpt": "Can an erased party's name be removed from an issued instrument a buyer relies on as evidence?"
+        }
+      ],
+      "forcedInvention": "Choose retention, pseudonymization, and disclosure rules for legally significant evidence after erasure.",
+      "failureScenario": "The system either retains personal data unlawfully or deletes proof and breaks reliance on issued licences."
+    },
+    {
+      "findingId": "R7-11-004",
+      "unit": "11.02-clearance-one-stop-status",
+      "severity": "critical",
+      "dimension": 7,
+      "claim": "The authority and remedy model for false or contested clearance evidence is incomplete, including false attestations, band-entity authority, encumbrance contests, and platform exposure.",
+      "evidence": [
+        {
+          "file": "11.02-clearance-one-stop-status/11.02.02-catalogue-completeness-attestation.md",
+          "line": 216,
+          "excerpt": "What is the consequence of a proven knowingly-false attestation?"
+        },
+        {
+          "file": "11.02-clearance-one-stop-status/11.02.02-catalogue-completeness-attestation.md",
+          "line": 220,
+          "excerpt": "Can one member of a band entity bind the entity's attestation?"
+        },
+        {
+          "file": "11.02-clearance-one-stop-status/11.02.03-encumbrance-declaration.md",
+          "line": 226,
+          "excerpt": "Can a co-owner contest an encumbrance ... and what is the state while contested?"
+        },
+        {
+          "file": "11.02-clearance-one-stop-status/11.02.03-encumbrance-declaration.md",
+          "line": 230,
+          "excerpt": "What is the platform's own exposure from holding declarations?"
+        }
+      ],
+      "forcedInvention": "Choose who can bind an entity, when a contest changes availability, and which sanctions or liabilities follow false records.",
+      "failureScenario": "A malicious or mistaken declaration either freezes catalogue indefinitely or clears and licenses unsafe work."
+    },
+    {
+      "findingId": "R7-11-005",
+      "unit": "11.02-clearance-one-stop-status",
+      "severity": "high",
+      "dimension": 7,
+      "claim": "Consent and joint-hold resolution lack a finished state protocol for holdouts, consideration disclosure, exact expiry, and release after partial acceptance.",
+      "evidence": [
+        {
+          "file": "11.02-clearance-one-stop-status/11.02.04-multi-party-consent-routing.md",
+          "line": 111,
+          "excerpt": "Is there an escalation path when one party blocks a deal everyone else wants?"
+        },
+        {
+          "file": "11.02-clearance-one-stop-status/11.02.04-multi-party-consent-routing.md",
+          "line": 112,
+          "excerpt": "Does the platform show declining parties what they turned down, the fee?"
+        },
+        {
+          "file": "11.02-clearance-one-stop-status/11.02.04-multi-party-consent-routing.md",
+          "line": 60,
+          "excerpt": "Exact window and reminder cadence to write-be-spec."
+        },
+        {
+          "file": "11.01-sync-licensing/11.01-sync-licensing-cx.md",
+          "line": 57,
+          "excerpt": "Whether release is automatic or requires the first party's acknowledgement."
+        }
+      ],
+      "forcedInvention": "Choose the final consent/hold state, escalation authority, reminders, and fee visibility.",
+      "failureScenario": "A buyer sees a deal as live while one side has lapsed, or a holdout is coerced or bypassed."
+    },
+    {
+      "findingId": "R7-11-006",
+      "unit": "11.01-sync-licensing",
+      "severity": "high",
+      "dimension": 7,
+      "claim": "Sync catalogue governance leaves taxonomy, co-owner contest authority, tag-inflation handling, reference-audio retention, and privacy thresholds undecided.",
+      "evidence": [
+        {
+          "file": "11.01-sync-licensing/11.01.01-sync-catalogue-tagging.md",
+          "line": 90,
+          "excerpt": "Is the tag vocabulary controlled or open?"
+        },
+        {
+          "file": "11.01-sync-licensing/11.01.01-sync-catalogue-tagging.md",
+          "line": 91,
+          "excerpt": "Does a co-owner get a formal contest action, or only the ability to re-edit?"
+        },
+        {
+          "file": "11.01-sync-licensing/11.01.01-sync-catalogue-tagging.md",
+          "line": 92,
+          "excerpt": "What is the penalty for sustained tag inflation?"
+        },
+        {
+          "file": "11.01-sync-licensing/11.01.02-supervisor-search-reference-matching.md",
+          "line": 107,
+          "excerpt": "Are uploaded reference tracks retained or discarded after query?"
+        },
+        {
+          "file": "11.01-sync-licensing/11.01.02-supervisor-search-reference-matching.md",
+          "line": 108,
+          "excerpt": "What minimum cohort size and delay window prevent buyer-intent leakage?"
+        }
+      ],
+      "forcedInvention": "Choose metadata authority, enforcement boundaries, copyrighted-audio retention, and disclosure-control parameters.",
+      "failureScenario": "Search becomes manipulable, co-owner conflicts have no lawful remedy, or retained/query data leaks buyer intent."
+    },
+    {
+      "findingId": "R7-11-007",
+      "unit": "11.01-sync-licensing",
+      "severity": "high",
+      "dimension": 7,
+      "claim": "The sync marketplace has no settled participation and anti-abuse policy for brief visibility, buyer accountability, fishing expeditions, or off-platform rights brokering.",
+      "evidence": [
+        {
+          "file": "11.01-sync-licensing/11.01.03-sync-briefs-pitching.md",
+          "line": 103,
+          "excerpt": "Are briefs public, invite-only, or tiered by owner standing?"
+        },
+        {
+          "file": "11.01-sync-licensing/11.01.03-sync-briefs-pitching.md",
+          "line": 104,
+          "excerpt": "Should buyer responsiveness be a published property?"
+        },
+        {
+          "file": "11.01-sync-licensing/11.01.03-sync-briefs-pitching.md",
+          "line": 105,
+          "excerpt": "How is a fishing-expedition brief deterred?"
+        },
+        {
+          "file": "11.01-sync-licensing/11.01.05-dual-licence-coordination.md",
+          "line": 110,
+          "excerpt": "Does WeJammin broker outward or mark the work non-one-stop and stop?"
+        }
+      ],
+      "forcedInvention": "Choose marketplace eligibility, disclosure, abuse deterrence, and the platform's broker-versus-directory boundary.",
+      "failureScenario": "The same request is visible, blocked, or brokered differently by different surfaces."
+    },
+    {
+      "findingId": "R7-11-008",
+      "unit": "11.01-sync-licensing",
+      "severity": "high",
+      "dimension": 7,
+      "claim": "Hold policy is incomplete for payment, buyer-identity disclosure, and the maximum/extendable exclusivity window.",
+      "evidence": [
+        {
+          "file": "11.01-sync-licensing/11.01.04-holds-exclusivity-windows.md",
+          "line": 99,
+          "excerpt": "Are holds free?"
+        },
+        {
+          "file": "11.01-sync-licensing/11.01.04-holds-exclusivity-windows.md",
+          "line": 100,
+          "excerpt": "This file currently contradicts itself ... is the holding buyer's identity visible?"
+        },
+        {
+          "file": "11.01-sync-licensing/11.01.04-holds-exclusivity-windows.md",
+          "line": 101,
+          "excerpt": "What is the maximum hold window, and can it be extended indefinitely?"
+        }
+      ],
+      "forcedInvention": "Choose whether holds are paid, what identity is disclosed, and the anti-warehousing limit.",
+      "failureScenario": "Conflicting UI and API behavior leaks campaign intent or lets a buyer monopolize work indefinitely."
+    },
+    {
+      "findingId": "R7-11-009",
+      "unit": "11.03-licence-pricing-negotiation",
+      "severity": "critical",
+      "dimension": 7,
+      "claim": "The rate-card data model and buyer-facing aggregation are not settled for co-owners, comparables, or catalogue-level defaults.",
+      "evidence": [
+        {
+          "file": "11.03-licence-pricing-negotiation/11.03.01-rate-cards-pricing-rules.md",
+          "line": 102,
+          "excerpt": "How do co-owners with different cards combine into one buyer-facing price?"
+        },
+        {
+          "file": "11.03-licence-pricing-negotiation/11.03.01-rate-cards-pricing-rules.md",
+          "line": 103,
+          "excerpt": "Does the platform suggest prices from comparables?"
+        },
+        {
+          "file": "11.03-licence-pricing-negotiation/11.03.01-rate-cards-pricing-rules.md",
+          "line": 104,
+          "excerpt": "Is a card per-work, per-catalogue, or per-owner-default with overrides?"
+        },
+        {
+          "file": "11.03-licence-pricing-negotiation/11.03-licence-pricing-negotiation-index.md",
+          "line": 68,
+          "excerpt": "Is pricing guidance offered to owners?"
+        }
+      ],
+      "forcedInvention": "Choose how prices aggregate, where cards persist, and whether the marketplace sets or merely displays prices.",
+      "failureScenario": "Quotes can total differently in search, negotiation, and certificate issuance."
+    },
+    {
+      "findingId": "R7-11-010",
+      "unit": "11.03-licence-pricing-negotiation",
+      "severity": "critical",
+      "dimension": 7,
+      "claim": "Commission, executed-price disclosure, MFN comparability, and MFN exposure horizon are unresolved contract terms.",
+      "evidence": [
+        {
+          "file": "11.03-licence-pricing-negotiation/11.03-licence-pricing-negotiation-index.md",
+          "line": 67,
+          "excerpt": "Does the platform take a commission on licence fees, and is it inside or outside the MFN-visible number?"
+        },
+        {
+          "file": "11.03-licence-pricing-negotiation/11.03-licence-pricing-negotiation-index.md",
+          "line": 69,
+          "excerpt": "Are executed licence prices visible to anyone beyond the parties?"
+        },
+        {
+          "file": "11.03-licence-pricing-negotiation/11.03.03-most-favoured-nation.md",
+          "line": 104,
+          "excerpt": "Is comparable computed or declared?"
+        },
+        {
+          "file": "11.03-licence-pricing-negotiation/11.03.03-most-favoured-nation.md",
+          "line": 106,
+          "excerpt": "How long does MFN exposure stay open?"
+        }
+      ],
+      "forcedInvention": "Choose financial terms, disclosure audiences, a comparability authority, and when final price becomes final.",
+      "failureScenario": "An issued licence silently reprices or exposes confidential deal terms without a valid contractual basis."
+    },
+    {
+      "findingId": "R7-11-011",
+      "unit": "11.03-licence-pricing-negotiation",
+      "severity": "high",
+      "dimension": 4,
+      "claim": "Rate-card lookup and stale-negotiation handling have no concrete performance or timing constraints despite being buyer-path behavior.",
+      "evidence": [
+        {
+          "file": "11.03-licence-pricing-negotiation/11.03.01-rate-cards-pricing-rules.md",
+          "line": 65,
+          "excerpt": "Concrete latency budget is pending to write-be-spec."
+        },
+        {
+          "file": "11.03-licence-pricing-negotiation/11.03.02-quote-requests-negotiation.md",
+          "line": 66,
+          "excerpt": "Default TTL expires it the same way a deadline would; exact TTL is pending."
+        }
+      ],
+      "forcedInvention": "Choose a latency budget and default quote expiration period.",
+      "failureScenario": "One implementation blocks a purchase path while another expires a live negotiation at an incompatible time."
+    },
+    {
+      "findingId": "R7-11-012",
+      "unit": "11.04-licensing-policy-preferences",
+      "severity": "critical",
+      "dimension": 7,
+      "claim": "Auto-approval lacks a ratified legal-consent and authority model for absent owners, delegated policy authors, reserved approval rights, and cooling-off.",
+      "evidence": [
+        {
+          "file": "11.04-licensing-policy-preferences/11.04-licensing-policy-preferences-index.md",
+          "line": 69,
+          "excerpt": "Does an auto-approve policy constitute valid consent for a licence the owner never saw?"
+        },
+        {
+          "file": "11.04-licensing-policy-preferences/11.04.01-per-work-licensing-policy.md",
+          "line": 210,
+          "excerpt": "Can a shareholder delegate their share's policy to a publisher, manager, or band entity?"
+        },
+        {
+          "file": "11.04-licensing-policy-preferences/11.04.01-per-work-licensing-policy.md",
+          "line": 211,
+          "excerpt": "Is there a review-before-it-lands window?"
+        },
+        {
+          "file": "11.04-licensing-policy-preferences/11.04.02-co-owner-veto-approval.md",
+          "line": 264,
+          "excerpt": "Does the platform model reserved approval rights against an administered share?"
+        }
+      ],
+      "forcedInvention": "Choose whether standing policies are legally valid consent, who can author them, and whether a granted licence can be reconsidered.",
+      "failureScenario": "A platform grants a licence without valid authority or promises buyer certainty while allowing unmodeled revocation."
+    },
+    {
+      "findingId": "R7-11-013",
+      "unit": "11.04-licensing-policy-preferences",
+      "severity": "high",
+      "dimension": 7,
+      "claim": "Refusal enforcement and disclosure are unresolved across moral-rights validity, sensitive-data inference, buyer warranty, and refuser identity.",
+      "evidence": [
+        {
+          "file": "11.04-licensing-policy-preferences/11.04-licensing-policy-preferences-index.md",
+          "line": 68,
+          "excerpt": "Is a moral-rights refusal legally enforceable through the platform in every territory?"
+        },
+        {
+          "file": "11.04-licensing-policy-preferences/11.04.02-co-owner-veto-approval.md",
+          "line": 265,
+          "excerpt": "Are category blocks special-category personal data, and does correlation require active suppression?"
+        },
+        {
+          "file": "11.04-licensing-policy-preferences/11.04.02-co-owner-veto-approval.md",
+          "line": 268,
+          "excerpt": "Is the end-client declaration warranted by the buyer?"
+        },
+        {
+          "file": "11.04-licensing-policy-preferences/11.04-licensing-policy-preferences-cx.md",
+          "line": 58,
+          "excerpt": "Pending whether the vetoing party's identity is disclosed to the buyer."
+        }
+      ],
+      "forcedInvention": "Choose enforceability, privacy controls, buyer representation terms, and the disclosure audience for a refusal.",
+      "failureScenario": "A buyer can infer protected political views or evade a categorical block with an unactionable end-client declaration."
+    },
+    {
+      "findingId": "R7-11-014",
+      "unit": "11.05-sample-derivative-clearance",
+      "severity": "critical",
+      "dimension": 7,
+      "claim": "Sample clearance has no settled legal classification policy for de-minimis use or unknown off-platform source terms.",
+      "evidence": [
+        {
+          "file": "11.05-sample-derivative-clearance/11.05-sample-derivative-clearance-index.md",
+          "line": 71,
+          "excerpt": "Is there a de-minimis threshold below which the platform treats a sample as not requiring clearance?"
+        },
+        {
+          "file": "11.05-sample-derivative-clearance/11.05.01-sample-declaration-identification.md",
+          "line": 257,
+          "excerpt": "Is a beat lease's term limit an encumbrance this feature declares?"
+        },
+        {
+          "file": "11.02-clearance-one-stop-status/11.02.03-encumbrance-declaration.md",
+          "line": 231,
+          "excerpt": "For a pack bought elsewhere the terms are unknown."
+        }
+      ],
+      "forcedInvention": "Choose when material is declared/blocked and how unknown third-party terms affect clearance.",
+      "failureScenario": "Equivalent samples are treated as clearable or encumbered solely by which client or code path handled them."
+    },
+    {
+      "findingId": "R7-11-015",
+      "unit": "11.05-sample-derivative-clearance",
+      "severity": "high",
+      "dimension": 7,
+      "claim": "The feature's source-provenance and fingerprint-calibration prerequisites are unresolved, so declaration quality cannot be implemented reliably.",
+      "evidence": [
+        {
+          "file": "11.05-sample-derivative-clearance/11.05.01-sample-declaration-identification.md",
+          "line": 254,
+          "excerpt": "Does domain 07's contribution graph model per-contributor stem provenance?"
+        },
+        {
+          "file": "11.05-sample-derivative-clearance/11.05.01-sample-declaration-identification.md",
+          "line": 255,
+          "excerpt": "What fingerprint confidence bands drive which behaviour?"
+        },
+        {
+          "file": "11.05-sample-derivative-clearance/11.05.04-interpolation-replay-clearance.md",
+          "line": 104,
+          "excerpt": "The derivation-walk invariant is relied on for interpolation-chain termination."
+        }
+      ],
+      "forcedInvention": "Choose the evidence graph and statistical confidence thresholds that determine suggestions, conflicts, and suppression.",
+      "failureScenario": "False positives train users to ignore warnings while false negatives let unlicensed material reach clearance."
+    },
+    {
+      "findingId": "R7-11-016",
+      "unit": "11.05-sample-derivative-clearance",
+      "severity": "high",
+      "dimension": 7,
+      "claim": "Sample-clearance requests lack approved confidentiality, unreleased-work disclosure, refund, and revenue-share auto-approval terms.",
+      "evidence": [
+        {
+          "file": "11.05-sample-derivative-clearance/11.05-sample-derivative-clearance-index.md",
+          "line": 73,
+          "excerpt": "Can a sample be cleared for a work that is not yet released, without disclosing the unreleased work?"
+        },
+        {
+          "file": "11.05-sample-derivative-clearance/11.05.02-programmatic-instant-clearance.md",
+          "line": 108,
+          "excerpt": "Is an instant clearance refundable if the track is abandoned?"
+        },
+        {
+          "file": "11.05-sample-derivative-clearance/11.05.02-programmatic-instant-clearance.md",
+          "line": 109,
+          "excerpt": "Revenue-share auto-approve denominator has no currency deal value at issuance."
+        },
+        {
+          "file": "11.05-sample-derivative-clearance/11.05.05-remix-stem-bootleg-licensing.md",
+          "line": 101,
+          "excerpt": "Does a stem grant carry a confidentiality obligation?"
+        }
+      ],
+      "forcedInvention": "Choose request payload disclosure, confidentiality terms, refund behavior, and when a non-cash grant can auto-clear.",
+      "failureScenario": "A clearance request leaks unreleased work or grants usage under unpriced, unreviewed revenue-share terms."
+    },
+    {
+      "findingId": "R7-11-017",
+      "unit": "11.06-creator-micro-licensing",
+      "severity": "critical",
+      "dimension": 7,
+      "claim": "Creator micro-licensing has no ratified commercial model for subscription versus per-track sale, grant versus access, wind-down, or chargeback reversal.",
+      "evidence": [
+        {
+          "file": "11.06-creator-micro-licensing/11.06-creator-micro-licensing-index.md",
+          "line": 95,
+          "excerpt": "Is this subscription or per-track?"
+        },
+        {
+          "file": "11.06-creator-micro-licensing/11.06.04-licence-persistence-after-subscription.md",
+          "line": 106,
+          "excerpt": "Grant or access?"
+        },
+        {
+          "file": "11.06-creator-micro-licensing/11.06.04-licence-persistence-after-subscription.md",
+          "line": 108,
+          "excerpt": "What happens to permanent licences if WeJammin stops existing or loses Content ID access?"
+        },
+        {
+          "file": "11.06-creator-micro-licensing/11.06.04-licence-persistence-after-subscription.md",
+          "line": 109,
+          "excerpt": "Does a chargeback reverse a permanent grant?"
+        }
+      ],
+      "forcedInvention": "Choose the sold product, post-cancellation rights, wind-down promise, and payment-dispute effect.",
+      "failureScenario": "Customers buy a permanent grant that a later billing or platform event unexpectedly revokes."
+    },
+    {
+      "findingId": "R7-11-018",
+      "unit": "11.06-creator-micro-licensing",
+      "severity": "critical",
+      "dimension": 7,
+      "claim": "Content ID claim-release functionality depends on uncommitted commercial access, platform scope, prevention requirements, and indemnity policy.",
+      "evidence": [
+        {
+          "file": "11.06-creator-micro-licensing/11.06-creator-micro-licensing-index.md",
+          "line": 96,
+          "excerpt": "Content ID whitelisting requires a relationship with YouTube or Meta that WeJammin does not have."
+        },
+        {
+          "file": "11.06-creator-micro-licensing/11.06.02-content-id-whitelisting.md",
+          "line": 106,
+          "excerpt": "Which platforms are in scope — YouTube only, or Meta, TikTok, Twitch, Spotify?"
+        },
+        {
+          "file": "11.06-creator-micro-licensing/11.06.03-claim-release-dispute.md",
+          "line": 106,
+          "excerpt": "Does opt-in ask whether the work is registered for claiming elsewhere?"
+        },
+        {
+          "file": "11.06-creator-micro-licensing/11.06.03-claim-release-dispute.md",
+          "line": 107,
+          "excerpt": "Does the platform indemnify a creator whose claim cannot be released?"
+        }
+      ],
+      "forcedInvention": "Choose external counterparties, supported channels, claim-prevention data, and liability after failed release.",
+      "failureScenario": "The product promises claim release on platforms it cannot reach and leaves creators without a remedy."
+    },
+    {
+      "findingId": "R7-11-019",
+      "unit": "11.06-creator-micro-licensing",
+      "severity": "high",
+      "dimension": 5,
+      "claim": "Claim-release quality has no measurable target: the document calls release time the product's real quality metric but gives no number, unit, or timeframe.",
+      "evidence": [
+        {
+          "file": "11.06-creator-micro-licensing/11.06.03-claim-release-dispute.md",
+          "line": 108,
+          "excerpt": "What is the target release time? It is the product's real quality metric."
+        },
+        {
+          "file": "11.06-creator-micro-licensing/11.06.03-claim-release-dispute.md",
+          "line": 67,
+          "excerpt": "Release execution against YouTube or PROs has a target time pending."
+        }
+      ],
+      "forcedInvention": "Choose the service-level target for automated matching and third-party release.",
+      "failureScenario": "A claim can take seconds or weeks with no contract, alerting, or escalation threshold."
+    },
+    {
+      "findingId": "R7-11-020",
+      "unit": "11.07-ai-training-licensing",
+      "severity": "critical",
+      "dimension": 7,
+      "claim": "The platform's own use of user audio remains unanswered while it offers a consent registry, and the circumstances for informed confirmation remain undefined.",
+      "evidence": [
+        {
+          "file": "11.07-ai-training-licensing/11.07-ai-training-licensing-index.md",
+          "line": 68,
+          "excerpt": "Does WeJammin train on user audio?"
+        },
+        {
+          "file": "11.07-ai-training-licensing/11.07.01-ai-training-consent-opt-out.md",
+          "line": 108,
+          "excerpt": "Should a yes be re-confirmed at first deal, when the number is real?"
+        }
+      ],
+      "forcedInvention": "Choose the platform's self-training prohibition or permission and whether consent must be reconfirmed when value is known.",
+      "failureScenario": "The platform markets opt-in consent while internally relying on an unannounced or differently scoped permission."
+    },
+    {
+      "findingId": "R7-11-021",
+      "unit": "11.08-licence-instrument-lifecycle",
+      "severity": "critical",
+      "dimension": 7,
+      "claim": "The licence instrument has no settled legal form or scope model: contract versus record, standard versus native grammar, future media, and obligations remain open.",
+      "evidence": [
+        {
+          "file": "11.08-licence-instrument-lifecycle/11.08-licence-instrument-lifecycle-index.md",
+          "line": 77,
+          "excerpt": "Is the licence instrument a real legal contract or a record of an agreement?"
+        },
+        {
+          "file": "11.08-licence-instrument-lifecycle/11.08-licence-instrument-lifecycle-index.md",
+          "line": 78,
+          "excerpt": "Does the scope grammar follow an industry standard or a platform-native model?"
+        },
+        {
+          "file": "11.08-licence-instrument-lifecycle/11.08.01-licence-scope-grammar.md",
+          "line": 266,
+          "excerpt": "Enumerated media or hereafter devised?"
+        },
+        {
+          "file": "11.08-licence-instrument-lifecycle/11.08.01-licence-scope-grammar.md",
+          "line": 269,
+          "excerpt": "Does the instrument carry obligations at all, or only obligation-free licences?"
+        }
+      ],
+      "forcedInvention": "Choose the legal document type, scope vocabulary, unknown-media behavior, and payload for covenants or approvals.",
+      "failureScenario": "Different services serialize incompatible scope or issue a document that cannot express the promised deal."
+    },
+    {
+      "findingId": "R7-11-022",
+      "unit": "11.08-licence-instrument-lifecycle",
+      "severity": "critical",
+      "dimension": 7,
+      "claim": "Certificate issuance lacks resolved legal and lifecycle semantics for consumer withdrawal, trigger-based terms, erased identities, zero-price grants, and buyer identity disclosure.",
+      "evidence": [
+        {
+          "file": "11.08-licence-instrument-lifecycle/11.08.02-licence-certificate-issuance.md",
+          "line": 237,
+          "excerpt": "Does the consumer withdrawal right defeat irrevocability?"
+        },
+        {
+          "file": "11.08-licence-instrument-lifecycle/11.08.02-licence-certificate-issuance.md",
+          "line": 238,
+          "excerpt": "Who declares that a trigger-based term has started?"
+        },
+        {
+          "file": "11.08-licence-instrument-lifecycle/11.08.02-licence-certificate-issuance.md",
+          "line": 240,
+          "excerpt": "Does the platform take a fee on a zero-value licence?"
+        },
+        {
+          "file": "11.08-licence-instrument-lifecycle/11.08.02-licence-certificate-issuance.md",
+          "line": 242,
+          "excerpt": "On a policy-approved licence, does the owner learn the buyer's identity?"
+        }
+      ],
+      "forcedInvention": "Choose enforceability at checkout, term commencement authority, zero-price economics, and disclosure after issuance.",
+      "failureScenario": "A supposedly irrevocable certificate has unmodeled cancellation, no reliable end date, or inconsistent party disclosure."
+    },
+    {
+      "findingId": "R7-11-023",
+      "unit": "11.08-licence-instrument-lifecycle",
+      "severity": "high",
+      "dimension": 7,
+      "claim": "Third-party verification has no approved access, disclosure, or watcher-record policy.",
+      "evidence": [
+        {
+          "file": "11.08-licence-instrument-lifecycle/11.08-licence-instrument-lifecycle-index.md",
+          "line": 79,
+          "excerpt": "Is verification public or authenticated?"
+        },
+        {
+          "file": "11.08-licence-instrument-lifecycle/11.08.03-third-party-licence-verification.md",
+          "line": 103,
+          "excerpt": "What is disclosed — validity only, scope, or terms?"
+        },
+        {
+          "file": "11.08-licence-instrument-lifecycle/11.08.03-third-party-licence-verification.md",
+          "line": 105,
+          "excerpt": "Does the platform keep a record of who verified what and when?"
+        }
+      ],
+      "forcedInvention": "Choose verification authentication, public fields, and whether an anonymous check becomes a monitored relationship.",
+      "failureScenario": "A public verifier leaks commercial relationships or an authenticated verifier cannot serve legitimate third parties."
+    },
+    {
+      "findingId": "R7-11-024",
+      "unit": "11.08-licence-instrument-lifecycle",
+      "severity": "high",
+      "dimension": 7,
+      "claim": "The post-issuance lifecycle has no settled model for narrowing scope, expiry-warning dates, or promotion of immutable history to a platform invariant.",
+      "evidence": [
+        {
+          "file": "11.08-licence-instrument-lifecycle/11.08.04-licence-amendment-expiry-lifecycle.md",
+          "line": 131,
+          "excerpt": "Is the old record always survives a platform-level invariant rather than a domain-11 rule?"
+        },
+        {
+          "file": "11.08-licence-instrument-lifecycle/11.08.04-licence-amendment-expiry-lifecycle.md",
+          "line": 132,
+          "excerpt": "Can a licence be amended to narrow scope?"
+        },
+        {
+          "file": "11.08-licence-instrument-lifecycle/11.08.04-licence-amendment-expiry-lifecycle.md",
+          "line": 133,
+          "excerpt": "Which one of many ends do the expiry warnings count back from?"
+        }
+      ],
+      "forcedInvention": "Choose amendment semantics, notification schedule, and record-versioning invariant.",
+      "failureScenario": "A refund-like narrowing mutates an irrevocable record or renewal notices disagree across territories."
+    },
+    {
+      "findingId": "R7-11-025",
+      "unit": "11-music-licensing-root",
+      "severity": "high",
+      "dimension": 7,
+      "claim": "The cover-song flow has no authority for classifying a use as a cover versus a derivative arrangement, which changes whether consent is required.",
+      "evidence": [
+        {
+          "file": "11.09-cover-song-compulsory-mechanical.md",
+          "line": 103,
+          "excerpt": "Where is the line between a cover and a derivative arrangement? It decides whether consent is needed."
+        }
+      ],
+      "forcedInvention": "Choose a legal classification rule or an uncertainty/escalation contract.",
+      "failureScenario": "The platform issues a compulsory-mechanical path for a derivative work that required permission."
+    }
+  ]
+}
+

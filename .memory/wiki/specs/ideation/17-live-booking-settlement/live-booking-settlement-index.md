@@ -128,6 +128,8 @@ in domain 02 evidenced rather than claimed.
 
 ## Open Questions
 
+> **Open-question governance.** Every unresolved row in this table is an explicit delivery hold. The **Owner** cell is accountable; the **hard decision deadline** is the gate immediately before the pipeline stage named in **Deferred To** begins; and the **Question** text is the exact policy, behavior, or contract decision blocked. **Deferred To** names the destination only and never replaces the deadline. No downstream stage may begin until its owner resolves the row or records a formally approved supersession.
+
 | # | Question | Owner | Deferred To |
 |---|----------|-------|-------------|
 | Q-01 | **[OWNER]** **Which persona is a booking agent?** Mapped to Musician (artist's side, paid from the artist's money, invisible to the Operator) but they make no music and the fit is visibly poor — 17.08's entire Operator column being `None` is the symptom. This is the strongest evidence in the map for or against the four-persona model (D-19), and it mirrors the open dealer-persona question (`meta/personas.md` Q-01). *Re-pointed from the completed `/ideate-validate`, matching the precedent `meta/personas.md` Q-01 already set for the sibling persona questions.* | User | `/create-prd` |

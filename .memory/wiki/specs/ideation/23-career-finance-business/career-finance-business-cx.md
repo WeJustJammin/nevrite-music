@@ -160,7 +160,7 @@
 
 ### CX-11: Income Aggregation ↔ Budgeting & Project/Tour P&L (realised FX)
 
-**Relationship**: Distinct from CX-01's projection concern. FX in 23.01.03 is normally a *derived reporting projection* over an immutable native amount. But a tour **budgeted in GBP and spent in EUR** realises an actual FX gain or loss between commitment and settlement — and that delta is a genuine cost line the tour P&L (23.07) must book, not a display choice. The same multi-country reality (shared with 18 Touring) manufactures FX, withholding and per-diems as real tour costs. Medium confidence: whether realised FX is modelled as its own P&L line or absorbed into each converted row is unresolved and routes to `/create-prd-architecture` with Q-06.
+**Relationship**: Distinct from CX-01's projection concern. FX in 23.01.03 is normally a *derived reporting projection* over an immutable native amount. But a tour **budgeted in GBP and spent in EUR** realises an actual FX gain or loss between commitment and settlement — and that delta is a genuine cost line the tour P&L (23.07) must book, not a display choice. The same multi-country reality (shared with 18 Touring) manufactures FX, withholding and per-diems as real tour costs. **Open-question governance, CX-11-Q-01:** Owner: User (architecture choice). Hard decision deadline: the gate immediately before /create-prd-architecture begins. Blocks: the project/tour P&L schema's realised-FX representation — a dedicated cost line or conversion embedded in each native-currency row. Q-06 concerns tax-jurisdiction placement and does not own this decision; no downstream P&L model may assume either representation until the owner resolves or formally supersedes CX-11-Q-01.
 
 ---
 

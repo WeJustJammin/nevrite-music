@@ -1,0 +1,42 @@
+{
+  "reportKind": "ambiguity-audit-raw",
+  "run": 7,
+  "domain": "root",
+  "unitsAudited": 1,
+  "filesRead": 4,
+  "coverageNote": "Audited exactly one root unit across the four explicitly scoped current Markdown files; numbered domain directories and prior audit artifacts were not read.",
+  "applicableCheckpoints": 8,
+  "findings": [
+    {
+      "findingId": "R7-ROOT-D7-001",
+      "unit": "root ideation artifacts",
+      "severity": "warning",
+      "dimension": "Vision Dimension 7 — Open Question Resolution",
+      "claim": "Open-question governance does not meet Dimension 7: target pipeline stages are treated as deadlines, at least one owner is a placeholder, and the candidate-question record does not capture an individual blocked decision.",
+      "evidence": [
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/ideation-index.md",
+          "line": 158,
+          "excerpt": "Every open question has owner + target stage (pipeline-stage = deadline)."
+        },
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/ideation-cx.md",
+          "line": 47,
+          "excerpt": "| Candidate | Provisional owner | Serves | Deciding question | Target stage |"
+        },
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/ideation-cx.md",
+          "line": 380,
+          "excerpt": "**OPEN QUESTION Q-03** — ratify whether the session is a first-class 07 entity or a jointly-owned 02/07 entity; **owner: Producer + architecture lead; target stage: /create-prd**"
+        },
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/moscow-ledger.md",
+          "line": 790,
+          "excerpt": "| **[OWNER]** | `/plan-phase` — the first consumer that reads tier and rationale together |"
+        }
+      ],
+      "forcedInvention": "A `/create-prd` author must invent an accountable resolver and calendar cutoff before deciding whether Timestamped Annotation is one cross-cut contract or independent 05/06/07 models, because the source supplies only a provisional owner and target stage.",
+      "failureScenario": "Architecture starts before the promotion decision is assigned and due. Domains 05, 06, and 07 create incompatible timestamped-note records, after which a later owner decision requires cross-domain migration and reconciliation."
+    }
+  ]
+}

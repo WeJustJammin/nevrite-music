@@ -1,0 +1,38 @@
+{
+  "reportKind": "ambiguity-audit-verification",
+  "run": 7,
+  "domain": "root",
+  "rawReport": "root-raw.json",
+  "rawFindingCount": 1,
+  "verdicts": [
+    {
+      "findingId": "R7-ROOT-D7-001",
+      "upheld": true,
+      "finalSeverity": "warning",
+      "reason": "Upheld. The root artifacts explicitly substitute target pipeline stages for required deadlines, one listed question retains an [OWNER] placeholder, and the candidate registry records a provisional owner, deciding question, and target stage but not the decision the question blocks. This fails Dimension 7's owner, deadline, and blocked-decision requirements.",
+      "evidence": [
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/ideation-index.md",
+          "line": 158,
+          "excerpt": "Every open question has owner + target stage (pipeline-stage = deadline)."
+        },
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/ideation-cx.md",
+          "line": 47,
+          "excerpt": "| Candidate | Provisional owner | Serves | Deciding question | Target stage |"
+        },
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/ideation-cx.md",
+          "line": 380,
+          "excerpt": "OPEN QUESTION Q-03 — ratify whether the session is a first-class 07 entity or a jointly-owned 02/07 entity; owner: Producer + architecture lead; target stage: /create-prd"
+        },
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/moscow-ledger.md",
+          "line": 790,
+          "excerpt": "| Q-01 | **[OWNER]** ... | **[OWNER]** | `/plan-phase` — the first consumer that reads tier and rationale together |"
+        }
+      ]
+    }
+  ],
+  "coverage": "Exact raw-finding coverage: 1/1 (R7-ROOT-D7-001)."
+}

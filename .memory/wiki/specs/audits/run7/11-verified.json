@@ -1,0 +1,628 @@
+{
+  "reportKind": "ambiguity-audit-verification",
+  "run": 7,
+  "domain": "11-music-licensing",
+  "rawReport": "11-raw.json",
+  "rawFindingCount": 25,
+  "verdicts": [
+    {
+      "findingId": "R7-11-001",
+      "upheld": true,
+      "finalSeverity": "blocking",
+      "reason": "The cited current questions identify owners and pipeline targets, but not dated decision deadlines. One target is explicitly expired, so routing is not a valid owner/deadline/blocked-decision record under Dimension 7.",
+      "evidence": [
+        {
+          "file": "music-licensing-index.md",
+          "line": 167,
+          "excerpt": "Q-02 asks whether the one-stop flag is warranty, indemnity, or best-effort; its owner is User and target is /create-prd-security."
+        },
+        {
+          "file": "11.03-licence-pricing-negotiation/11.03-licence-pricing-negotiation-index.md",
+          "line": 67,
+          "excerpt": "Q-01 states 'Deferral expired' and says no later pipeline stage resolves the revenue-model choice."
+        }
+      ]
+    },
+    {
+      "findingId": "R7-11-002",
+      "upheld": true,
+      "finalSeverity": "blocking",
+      "reason": "The current source still leaves the platform's principal-versus-directory role, party-versus-facilitator role, and remedy for a wrongly issued licence as explicit legal decisions. Those choices determine who issues, collects, and bears liability.",
+      "evidence": [
+        {
+          "file": "11.02-clearance-one-stop-status/11.02.01-clearance-computation-one-stop.md",
+          "line": 218,
+          "excerpt": "Q-06 asks whether the platform is the licensing principal/agent or a directory, and says it is upstream of Q-01."
+        },
+        {
+          "file": "11.08-licence-instrument-lifecycle/11.08.02-licence-certificate-issuance.md",
+          "line": 235,
+          "excerpt": "Q-02 asks whether the platform is a party to the licence or a facilitator, determining who is sued."
+        },
+        {
+          "file": "11.08-licence-instrument-lifecycle/11.08.04-licence-amendment-expiry-lifecycle.md",
+          "line": 130,
+          "excerpt": "Q-01 asks for the remedy when a licence should never have issued."
+        }
+      ]
+    },
+    {
+      "findingId": "R7-11-003",
+      "upheld": true,
+      "finalSeverity": "blocking",
+      "reason": "Pseudonymizing a share is specified, but the legal authority for retaining policy, attestation, declaration, and issued-instrument evidence after erasure is not. The unresolved questions force incompatible retention and disclosure choices.",
+      "evidence": [
+        {
+          "file": "11.02-clearance-one-stop-status/11.02.01-clearance-computation-one-stop.md",
+          "line": 123,
+          "excerpt": "The share persists pseudonymously, but whether erasure law permits retaining its standing policy is a legal question."
+        },
+        {
+          "file": "11.02-clearance-one-stop-status/11.02.02-catalogue-completeness-attestation.md",
+          "line": 219,
+          "excerpt": "Q-05 says erasing an attester name destroys evidence while retention needs a legitimate-interest basis."
+        },
+        {
+          "file": "11.08-licence-instrument-lifecycle/11.08.02-licence-certificate-issuance.md",
+          "line": 239,
+          "excerpt": "Q-06 asks whether an erased party's name can be removed from an issued evidentiary instrument."
+        }
+      ]
+    },
+    {
+      "findingId": "R7-11-004",
+      "upheld": true,
+      "finalSeverity": "blocking",
+      "reason": "The falsity standard is set, but consequences, entity authority, contest handling, and platform exposure remain unresolved. Implementing clearance evidence requires choosing sanctions and authority without a ratified rule.",
+      "evidence": [
+        {
+          "file": "11.02-clearance-one-stop-status/11.02.02-catalogue-completeness-attestation.md",
+          "line": 216,
+          "excerpt": "Q-02 says D-06 fixes the standard for knowingly false attestations, but 'the consequence is unset'."
+        },
+        {
+          "file": "11.02-clearance-one-stop-status/11.02.02-catalogue-completeness-attestation.md",
+          "line": 220,
+          "excerpt": "Q-06 says whether a band member can bind the entity remains an unresolved permission-model question."
+        },
+        {
+          "file": "11.02-clearance-one-stop-status/11.02.03-encumbrance-declaration.md",
+          "line": 226,
+          "excerpt": "Q-01 leaves the contest state and adjudication clock as the owner's choice."
+        },
+        {
+          "file": "11.02-clearance-one-stop-status/11.02.03-encumbrance-declaration.md",
+          "line": 230,
+          "excerpt": "Q-05 says the platform's exposure from holding declarations is a multi-jurisdiction lawyer's call."
+        }
+      ]
+    },
+    {
+      "findingId": "R7-11-005",
+      "upheld": true,
+      "finalSeverity": "warning",
+      "reason": "A provisional 14-day default exists, but its exact window and cadence are still pending. Escalation for a holdout, fee disclosure, and release after partial acceptance remain undecided, so the protocol is not finished.",
+      "evidence": [
+        {
+          "file": "11.02-clearance-one-stop-status/11.02.04-multi-party-consent-routing.md",
+          "line": 111,
+          "excerpt": "Q-01 leaves the owner to choose between a buyout/negotiation surface and no escalation."
+        },
+        {
+          "file": "11.02-clearance-one-stop-status/11.02.04-multi-party-consent-routing.md",
+          "line": 112,
+          "excerpt": "Q-02 asks whether declining parties see the fee they turned down."
+        },
+        {
+          "file": "11.02-clearance-one-stop-status/11.02.04-multi-party-consent-routing.md",
+          "line": 60,
+          "excerpt": "The 14-day default and reminder cadence are marked pending to /write-be-spec."
+        },
+        {
+          "file": "11.01-sync-licensing/11.01-sync-licensing-cx.md",
+          "line": 57,
+          "excerpt": "Whether the first party's hold release is automatic or acknowledged is marked pending."
+        }
+      ]
+    },
+    {
+      "findingId": "R7-11-006",
+      "upheld": true,
+      "finalSeverity": "warning",
+      "reason": "The source narrows several options but does not ratify taxonomy, a co-owner contest action, tag-inflation response, reference-audio retention, or the privacy parameters for aggregate search standing.",
+      "evidence": [
+        {
+          "file": "11.01-sync-licensing/11.01.01-sync-catalogue-tagging.md",
+          "line": 90,
+          "excerpt": "Q-01 asks whether the sync tag vocabulary is controlled or open."
+        },
+        {
+          "file": "11.01-sync-licensing/11.01.01-sync-catalogue-tagging.md",
+          "line": 91,
+          "excerpt": "The tagging baseline is recorded, but the formal co-owner contest action remains open."
+        },
+        {
+          "file": "11.01-sync-licensing/11.01.02-supervisor-search-reference-matching.md",
+          "line": 107,
+          "excerpt": "Q-02 asks whether uploaded copyrighted reference tracks are retained or discarded after query."
+        },
+        {
+          "file": "11.01-sync-licensing/11.01.02-supervisor-search-reference-matching.md",
+          "line": 108,
+          "excerpt": "The aggregate-only shape is settled, but the minimum cohort size and delay window remain open."
+        }
+      ]
+    },
+    {
+      "findingId": "R7-11-007",
+      "upheld": true,
+      "finalSeverity": "warning",
+      "reason": "The marketplace's access, disclosure, anti-abuse, and external-brokering boundaries are current owner questions. Existing behavior constrains options but is expressly not ratified.",
+      "evidence": [
+        {
+          "file": "11.01-sync-licensing/11.01.03-sync-briefs-pitching.md",
+          "line": 103,
+          "excerpt": "Q-01 leaves the owner to choose open-to-rights-holders, invite-only, or tiered brief access."
+        },
+        {
+          "file": "11.01-sync-licensing/11.01.03-sync-briefs-pitching.md",
+          "line": 105,
+          "excerpt": "Q-03 leaves deterrence of fishing-expedition briefs as buyer verification, posting cost, or accepted noise."
+        },
+        {
+          "file": "11.01-sync-licensing/11.01.05-dual-licence-coordination.md",
+          "line": 110,
+          "excerpt": "The source says current specs behave as stop-and-invite for off-platform rights, but 'nothing ratifies it'."
+        }
+      ]
+    },
+    {
+      "findingId": "R7-11-008",
+      "upheld": true,
+      "finalSeverity": "warning",
+      "reason": "Payment, holder-identity disclosure, and the maximum/extendable hold window remain active owner calls. The source also records a load-bearing contradiction over identity disclosure.",
+      "evidence": [
+        {
+          "file": "11.01-sync-licensing/11.01.04-holds-exclusivity-windows.md",
+          "line": 99,
+          "excerpt": "Q-01 asks whether holds are free or paid."
+        },
+        {
+          "file": "11.01-sync-licensing/11.01.04-holds-exclusivity-windows.md",
+          "line": 100,
+          "excerpt": "Q-02 says the file currently contradicts itself about revealing the holding buyer's identity."
+        },
+        {
+          "file": "11.01-sync-licensing/11.01.04-holds-exclusivity-windows.md",
+          "line": 101,
+          "excerpt": "Q-03 asks for a maximum hold window and whether it can be extended indefinitely."
+        }
+      ]
+    },
+    {
+      "findingId": "R7-11-009",
+      "upheld": true,
+      "finalSeverity": "blocking",
+      "reason": "Buyer-facing co-owner aggregation is marked 'Unresolved and load-bearing'; comparable-based guidance and rate-card persistence scope are also still open. The price model cannot be implemented consistently without choosing among these options.",
+      "evidence": [
+        {
+          "file": "11.03-licence-pricing-negotiation/11.03.01-rate-cards-pricing-rules.md",
+          "line": 102,
+          "excerpt": "Q-01 calls co-owner price combination 'Unresolved and load-bearing' because every sync quote depends on it."
+        },
+        {
+          "file": "11.03-licence-pricing-negotiation/11.03.01-rate-cards-pricing-rules.md",
+          "line": 103,
+          "excerpt": "Q-02 asks whether the platform suggests prices from comparables."
+        },
+        {
+          "file": "11.03-licence-pricing-negotiation/11.03.01-rate-cards-pricing-rules.md",
+          "line": 104,
+          "excerpt": "Q-03 remains undecided between catalogue-scoped cards and owner defaults with overrides."
+        }
+      ]
+    },
+    {
+      "findingId": "R7-11-010",
+      "upheld": true,
+      "finalSeverity": "blocking",
+      "reason": "Commission treatment, third-party executed-price visibility, MFN comparability, and the exposure horizon are explicitly unresolved and some are marked as expired deferrals. These are contract terms that determine final-price behavior.",
+      "evidence": [
+        {
+          "file": "11.03-licence-pricing-negotiation/11.03-licence-pricing-negotiation-index.md",
+          "line": 67,
+          "excerpt": "Q-01 asks whether commission is inside or outside the MFN-visible number and says its deferral expired."
+        },
+        {
+          "file": "11.03-licence-pricing-negotiation/11.03-licence-pricing-negotiation-index.md",
+          "line": 69,
+          "excerpt": "Q-03 leaves visibility of executed licence prices beyond the parties open."
+        },
+        {
+          "file": "11.03-licence-pricing-negotiation/11.03.03-most-favoured-nation.md",
+          "line": 104,
+          "excerpt": "Q-01 leaves whether comparability is computed or declared as the owner's call."
+        },
+        {
+          "file": "11.03-licence-pricing-negotiation/11.03.03-most-favoured-nation.md",
+          "line": 106,
+          "excerpt": "Q-03 asks how long MFN exposure stays open and says the behavior is unfixed."
+        }
+      ]
+    },
+    {
+      "findingId": "R7-11-011",
+      "upheld": true,
+      "finalSeverity": "warning",
+      "reason": "Both cited buyer-path constraints expressly defer their concrete values. The qualitative statements provide neither a performance number nor a timing value required by Dimensions 4 and 5.",
+      "evidence": [
+        {
+          "file": "11.03-licence-pricing-negotiation/11.03.01-rate-cards-pricing-rules.md",
+          "line": 65,
+          "excerpt": "Card lookup has a concrete latency budget marked pending to /write-be-spec."
+        },
+        {
+          "file": "11.03-licence-pricing-negotiation/11.03.02-quote-requests-negotiation.md",
+          "line": 66,
+          "excerpt": "The default quote TTL is marked pending to /write-be-spec."
+        }
+      ]
+    },
+    {
+      "findingId": "R7-11-012",
+      "upheld": true,
+      "finalSeverity": "blocking",
+      "reason": "Auto-approval's legal consent, delegated-policy authority, cooling-off, and reserved-rights model remain active owner or legal-escalation questions. No cited decision ratifies a consent model an implementer can apply.",
+      "evidence": [
+        {
+          "file": "11.04-licensing-policy-preferences/11.04-licensing-policy-preferences-index.md",
+          "line": 69,
+          "excerpt": "Q-02 leaves whether a live opted-in policy is valid consent for an unseen licence to legal escalation."
+        },
+        {
+          "file": "11.04-licensing-policy-preferences/11.04.01-per-work-licensing-policy.md",
+          "line": 210,
+          "excerpt": "Q-03 says no source grants or denies delegated policy authorship."
+        },
+        {
+          "file": "11.04-licensing-policy-preferences/11.04.01-per-work-licensing-policy.md",
+          "line": 211,
+          "excerpt": "Q-04 leaves a review-before-it-lands cooling-off window as an owner choice."
+        },
+        {
+          "file": "11.04-licensing-policy-preferences/11.04.02-co-owner-veto-approval.md",
+          "line": 264,
+          "excerpt": "Q-02 leaves whether to model reserved approval rights against an administered share as an owner call."
+        }
+      ]
+    },
+    {
+      "findingId": "R7-11-013",
+      "upheld": true,
+      "finalSeverity": "warning",
+      "reason": "The enforceability, privacy, warranty, and refuser-disclosure decisions remain open or pending. Existing identity protections do not supply a disclosure rule for buyers.",
+      "evidence": [
+        {
+          "file": "11.04-licensing-policy-preferences/11.04-licensing-policy-preferences-index.md",
+          "line": 68,
+          "excerpt": "Q-01 asks whether a moral-rights refusal is legally enforceable or only a platform courtesy."
+        },
+        {
+          "file": "11.04-licensing-policy-preferences/11.04.02-co-owner-veto-approval.md",
+          "line": 265,
+          "excerpt": "Q-03 asks whether category blocks are special-category personal data requiring active suppression."
+        },
+        {
+          "file": "11.04-licensing-policy-preferences/11.04.02-co-owner-veto-approval.md",
+          "line": 268,
+          "excerpt": "Q-06 asks whether the buyer's end-client declaration is warranted."
+        },
+        {
+          "file": "11.04-licensing-policy-preferences/11.04-licensing-policy-preferences-cx.md",
+          "line": 58,
+          "excerpt": "Disclosure of the vetoing party's identity to the buyer is marked pending."
+        }
+      ]
+    },
+    {
+      "findingId": "R7-11-014",
+      "upheld": true,
+      "finalSeverity": "blocking",
+      "reason": "The source does not set a legally reliable de-minimis classification, and off-platform source terms have only two live, incompatible choices. The clearance result therefore cannot be determined consistently.",
+      "evidence": [
+        {
+          "file": "11.05-sample-derivative-clearance/11.05-sample-derivative-clearance-index.md",
+          "line": 71,
+          "excerpt": "Q-01 says there is no reliable legal de-minimis threshold across jurisdictions."
+        },
+        {
+          "file": "11.05-sample-derivative-clearance/11.05.01-sample-declaration-identification.md",
+          "line": 257,
+          "excerpt": "Q-07 routes off-platform beat-lease restrictions to the still-open off-platform pack-provenance decision."
+        },
+        {
+          "file": "11.02-clearance-one-stop-status/11.02.03-encumbrance-declaration.md",
+          "line": 231,
+          "excerpt": "Q-06 leaves only producer attestation or fail-closed unknown-scope encumbrance as live choices."
+        }
+      ]
+    },
+    {
+      "findingId": "R7-11-015",
+      "upheld": true,
+      "finalSeverity": "warning",
+      "reason": "The cited interpolation-chain question is resolved, but the source-provenance prerequisite and fingerprint confidence bands remain explicitly unresolved. The resolved traversal invariant does not provide the missing provenance graph or calibration thresholds.",
+      "evidence": [
+        {
+          "file": "11.05-sample-derivative-clearance/11.05.01-sample-declaration-identification.md",
+          "line": 254,
+          "excerpt": "Q-04 calls per-contributor stem provenance in domain 07 a prerequisite rather than a preference."
+        },
+        {
+          "file": "11.05-sample-derivative-clearance/11.05.01-sample-declaration-identification.md",
+          "line": 255,
+          "excerpt": "Q-05 says confidence-band calibration needs a corpus and measured false-positive rate that do not exist."
+        },
+        {
+          "file": "11.05-sample-derivative-clearance/11.05.04-interpolation-replay-clearance.md",
+          "line": 104,
+          "excerpt": "Q-03 is resolved by the derivation-walk invariant; it does not resolve Q-04 or Q-05."
+        }
+      ]
+    },
+    {
+      "findingId": "R7-11-016",
+      "upheld": true,
+      "finalSeverity": "warning",
+      "reason": "Revenue-share auto-approval has a stated fail-closed interim, but unreleased-work disclosure, refund treatment, and confidentiality obligations remain active decisions. The narrowed scope is still insufficient for a complete clearance-request contract.",
+      "evidence": [
+        {
+          "file": "11.05-sample-derivative-clearance/11.05-sample-derivative-clearance-index.md",
+          "line": 73,
+          "excerpt": "Q-03 leaves whether a clearance request can avoid disclosing an unreleased work as an owner call."
+        },
+        {
+          "file": "11.05-sample-derivative-clearance/11.05.02-programmatic-instant-clearance.md",
+          "line": 108,
+          "excerpt": "Q-03 asks whether an abandoned-track instant clearance is refundable."
+        },
+        {
+          "file": "11.05-sample-derivative-clearance/11.05.02-programmatic-instant-clearance.md",
+          "line": 109,
+          "excerpt": "Q-04 specifies a fail-closed interim: only fee terms can auto-clear until the denominator is answered."
+        },
+        {
+          "file": "11.05-sample-derivative-clearance/11.05.05-remix-stem-bootleg-licensing.md",
+          "line": 101,
+          "excerpt": "Q-02 leaves whether a stem grant carries confidentiality terms unresolved."
+        }
+      ]
+    },
+    {
+      "findingId": "R7-11-017",
+      "upheld": true,
+      "finalSeverity": "blocking",
+      "reason": "The product model, grant-versus-access rule, wind-down promise, and chargeback effect remain open. These terms define the right sold and whether it persists.",
+      "evidence": [
+        {
+          "file": "11.06-creator-micro-licensing/11.06-creator-micro-licensing-index.md",
+          "line": 95,
+          "excerpt": "Q-02 says subscription versus per-track decides the feature's entire existence and no downstream stage resolves it."
+        },
+        {
+          "file": "11.06-creator-micro-licensing/11.06.04-licence-persistence-after-subscription.md",
+          "line": 106,
+          "excerpt": "Q-01 gives grant as a recommendation but leaves it as the owner's knowing call."
+        },
+        {
+          "file": "11.06-creator-micro-licensing/11.06.04-licence-persistence-after-subscription.md",
+          "line": 108,
+          "excerpt": "Q-03 asks what happens to permanent licences if the platform ends or loses Content ID access."
+        },
+        {
+          "file": "11.06-creator-micro-licensing/11.06.04-licence-persistence-after-subscription.md",
+          "line": 109,
+          "excerpt": "Q-04 asks whether a chargeback reverses a permanent grant."
+        }
+      ]
+    },
+    {
+      "findingId": "R7-11-018",
+      "upheld": true,
+      "finalSeverity": "blocking",
+      "reason": "Commercial access to the external rights systems is called existential, while supported platforms, prevention requirements, and indemnity remain open. The claim-release promise cannot be made consistently without these choices.",
+      "evidence": [
+        {
+          "file": "11.06-creator-micro-licensing/11.06-creator-micro-licensing-index.md",
+          "line": 96,
+          "excerpt": "Q-03 says Content ID whitelisting depends on external cooperation the platform may not get."
+        },
+        {
+          "file": "11.06-creator-micro-licensing/11.06.02-content-id-whitelisting.md",
+          "line": 106,
+          "excerpt": "Q-02 asks which platforms are in scope and states each needs a separate commercial relationship."
+        },
+        {
+          "file": "11.06-creator-micro-licensing/11.06.03-claim-release-dispute.md",
+          "line": 106,
+          "excerpt": "Q-01 leaves the opt-in prevention requirement as an owner trade-off."
+        },
+        {
+          "file": "11.06-creator-micro-licensing/11.06.03-claim-release-dispute.md",
+          "line": 107,
+          "excerpt": "Q-02 asks whether failed release leads to indemnification, refund, compensation, or nothing."
+        }
+      ]
+    },
+    {
+      "findingId": "R7-11-019",
+      "upheld": true,
+      "finalSeverity": "warning",
+      "reason": "The feature names release time as its quality metric but records no numeric target, unit, or timeframe. 'Seconds' describes only an unquantified expectation for the in-platform step and does not set the third-party release target.",
+      "evidence": [
+        {
+          "file": "11.06-creator-micro-licensing/11.06.03-claim-release-dispute.md",
+          "line": 108,
+          "excerpt": "Q-03 asks for the target release time and calls it the product's real quality metric."
+        },
+        {
+          "file": "11.06-creator-micro-licensing/11.06.03-claim-release-dispute.md",
+          "line": 67,
+          "excerpt": "Release execution against YouTube or PROs has a target time marked pending to Q-03 and /create-prd-compile."
+        }
+      ]
+    },
+    {
+      "findingId": "R7-11-020",
+      "upheld": true,
+      "finalSeverity": "blocking",
+      "reason": "The platform's own training use is explicitly unanswered and required to be stated publicly. The additional reconfirmation rule at first deal is also open, leaving the consent posture without a ratified boundary.",
+      "evidence": [
+        {
+          "file": "11.07-ai-training-licensing/11.07-ai-training-licensing-index.md",
+          "line": 68,
+          "excerpt": "Q-01 asks whether WeJammin trains on user audio and says it must be answered explicitly and publicly."
+        },
+        {
+          "file": "11.07-ai-training-licensing/11.07.01-ai-training-consent-opt-out.md",
+          "line": 108,
+          "excerpt": "Q-02 asks whether consent must be reconfirmed at first deal once the price is real."
+        }
+      ]
+    },
+    {
+      "findingId": "R7-11-021",
+      "upheld": true,
+      "finalSeverity": "blocking",
+      "reason": "Legal form, scope grammar, future-media treatment, and obligation payload are all active upstream decisions. The source says the contract-versus-record choice precedes every spec in the sub-domain.",
+      "evidence": [
+        {
+          "file": "11.08-licence-instrument-lifecycle/11.08-licence-instrument-lifecycle-index.md",
+          "line": 77,
+          "excerpt": "Q-01 asks whether the instrument is a legal contract or a record of agreement and says it precedes every spec."
+        },
+        {
+          "file": "11.08-licence-instrument-lifecycle/11.08-licence-instrument-lifecycle-index.md",
+          "line": 78,
+          "excerpt": "Q-02 leaves industry-standard versus platform-native scope grammar unresolved."
+        },
+        {
+          "file": "11.08-licence-instrument-lifecycle/11.08.01-licence-scope-grammar.md",
+          "line": 266,
+          "excerpt": "Q-01 leaves enumerated media versus hereafter-devised language as an owner's values decision."
+        },
+        {
+          "file": "11.08-licence-instrument-lifecycle/11.08.01-licence-scope-grammar.md",
+          "line": 269,
+          "excerpt": "Q-04 asks whether the instrument carries obligations or only obligation-free licences."
+        }
+      ]
+    },
+    {
+      "findingId": "R7-11-022",
+      "upheld": true,
+      "finalSeverity": "blocking",
+      "reason": "Withdrawal, trigger-based term commencement, zero-value economics, and policy-approved buyer identity disclosure are unresolved legal or owner decisions. They affect certificate enforceability and lifecycle semantics directly.",
+      "evidence": [
+        {
+          "file": "11.08-licence-instrument-lifecycle/11.08.02-licence-certificate-issuance.md",
+          "line": 237,
+          "excerpt": "Q-04 asks whether consumer withdrawal defeats irrevocability and whether checkout waiver suffices."
+        },
+        {
+          "file": "11.08-licence-instrument-lifecycle/11.08.02-licence-certificate-issuance.md",
+          "line": 238,
+          "excerpt": "Q-05 asks who declares that a trigger-based term has started."
+        },
+        {
+          "file": "11.08-licence-instrument-lifecycle/11.08.02-licence-certificate-issuance.md",
+          "line": 240,
+          "excerpt": "Q-07 asks whether the platform charges a fee on a zero-value licence."
+        },
+        {
+          "file": "11.08-licence-instrument-lifecycle/11.08.02-licence-certificate-issuance.md",
+          "line": 242,
+          "excerpt": "Q-09 asks whether an owner learns the buyer's identity on a policy-approved licence."
+        }
+      ]
+    },
+    {
+      "findingId": "R7-11-023",
+      "upheld": true,
+      "finalSeverity": "warning",
+      "reason": "Verification access, disclosed fields, and post-verification watcher records remain open. The current source explains the surveillance trade-off but supplies no approved policy.",
+      "evidence": [
+        {
+          "file": "11.08-licence-instrument-lifecycle/11.08-licence-instrument-lifecycle-index.md",
+          "line": 79,
+          "excerpt": "Q-03 leaves public versus authenticated verification unresolved."
+        },
+        {
+          "file": "11.08-licence-instrument-lifecycle/11.08.03-third-party-licence-verification.md",
+          "line": 103,
+          "excerpt": "Q-02 asks whether verification exposes validity only, scope, or terms."
+        },
+        {
+          "file": "11.08-licence-instrument-lifecycle/11.08.03-third-party-licence-verification.md",
+          "line": 105,
+          "excerpt": "Q-04 leaves no register versus an opt-in watch as a real trade and says no later stage derives it."
+        }
+      ]
+    },
+    {
+      "findingId": "R7-11-024",
+      "upheld": true,
+      "finalSeverity": "warning",
+      "reason": "The source identifies four historical-record instances but does not promote them to a platform invariant. Scope narrowing and expiry-warning timing are also explicit owner decisions, so lifecycle behavior remains incomplete.",
+      "evidence": [
+        {
+          "file": "11.08-licence-instrument-lifecycle/11.08.04-licence-amendment-expiry-lifecycle.md",
+          "line": 131,
+          "excerpt": "Q-02 says four instances support the invariant, but promoting it remains a system-structure call."
+        },
+        {
+          "file": "11.08-licence-instrument-lifecycle/11.08.04-licence-amendment-expiry-lifecycle.md",
+          "line": 132,
+          "excerpt": "Q-03 asks whether a licence can be amended to narrow scope."
+        },
+        {
+          "file": "11.08-licence-instrument-lifecycle/11.08.04-licence-amendment-expiry-lifecycle.md",
+          "line": 133,
+          "excerpt": "Q-04 leaves which term end drives expiry warnings as an owner's choice."
+        }
+      ]
+    },
+    {
+      "findingId": "R7-11-025",
+      "upheld": true,
+      "finalSeverity": "warning",
+      "reason": "The cover-versus-derivative boundary is explicitly unresolved and determines whether consent is required. No cited source supplies a classification rule or an approved uncertainty-escalation contract.",
+      "evidence": [
+        {
+          "file": "11.09-cover-song-compulsory-mechanical.md",
+          "line": 103,
+          "excerpt": "Q-02 asks where the line lies between a cover and derivative arrangement and whether the platform asserts a position or surfaces uncertainty."
+        }
+      ]
+    }
+  ],
+  "coverage": {
+    "sourceRoot": ".memory/wiki/specs/ideation/11-music-licensing/",
+    "rubricsRead": [
+      {
+        "file": ".agents/skills/pipeline-rubrics/references/vision-rubric.md",
+        "line": 11,
+        "excerpt": "Every open question has: owner + deadline + what decision it blocks."
+      },
+      {
+        "file": ".agents/skills/pipeline-rubrics/references/scoring.md",
+        "line": 3,
+        "excerpt": "Scoring assigns 0, 0.5, or 1 point by rubric result."
+      }
+    ],
+    "rawFindingIdsVerifiedExactlyOnce": true,
+    "verdictCount": 25,
+    "upheldCount": 25,
+    "refutedCount": 0
+  }
+}

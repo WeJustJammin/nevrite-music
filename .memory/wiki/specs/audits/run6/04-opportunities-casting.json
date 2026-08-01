@@ -2,180 +2,89 @@
   "domain": "04-opportunities-casting",
   "unitsAudited": 6,
   "filesRead": 35,
-  "coverageNote": "Enumerated from disk: 6 units (the domain directory itself plus 04.01-04.05), 35 .md files — exactly matching the expected 6 units / 35 files. Every file read in full through the 3a/3b/3c cycle; no sampling. Scoring method: applicable rubric dimensions form the checkpoint denominator. Dimensions 1 (Problem Clarity), 2 (Persona Specificity), 3, 5, 7 and 8 apply to every unit — each index carries its own Overview/'why this is a sub-domain' problem statement and a populated Role Matrix that references meta/personas.md without redefining it. Dimension 4 (Constraint Explicitness) is N/A everywhere: budget/timeline/team/compliance/performance axes are owned by meta/constraints.md, not by domain files. Dimension 6 (Competitive Positioning) applies only to the domain unit, whose index names Sonicbids, ReverbNation, JoinMyBand, Bandmix, Craigslist and Facebook dep groups with a specific capability gap and a defensible moat; it is N/A for sub-domains. 04.05 scored clean — it is the most internally reconciled sub-domain in the tree. A large number of raw candidates were dropped in the 3c pass because a cross-reference already carried the detail (e.g. the 04.07 23:59/timezone [PENDING] marker is answered by 04.03.01's 'deadlines are absolute instants' edge case; the 04.06 band-splits marker is covered by the tracked org-dissolution questions at 04.04.01 Q-05, 04.05.01 Q-05 and 04.04.03; the domain CX-02 'invited-but-ineligible is the unresolved intersection' marker is resolved at 04.01.04 D-05; the 04.02/04.04 CX [PENDING] markers are all answered in their [DEEP] children) or because a well-formed tracked deferral covers the gap (notably 04.05.03 Q-07, which self-declares the missing target/replaced-party references on 04.01.01 with an owner and a stage).",
+  "coverageNote": "Fresh source-only audit. Enumerated `/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/04-opportunities-casting/` from disk: 35 Markdown files across 6 units — the domain directory (4 files, including domain-level features 04.06 and 04.07), 04.01 (6), 04.02 (6), 04.03 (7), 04.04 (6), and 04.05 (6). All 35 files were read from the ideation tree; no prior audit report was opened. A relative-link resolver checked 448 Markdown links: 7 targets are absent and no heading anchor is missing. A source-wide stale-marker scan classified all `[PENDING]` / `unresolved` references: properly owned questions and explicit downstream deferrals were not reported; the findings below are the remaining stale or untraceable contracts.",
   "units": [
     {
-      "unit": "04-opportunities-casting (domain: opportunities-casting-index.md, opportunities-casting-cx.md, 04.06, 04.07)",
-      "applicableCheckpoints": 7,
-      "naDimensions": [4],
+      "unit": "04-opportunities-casting",
+      "applicableCheckpoints": 5,
+      "naDimensions": [1, 2, 4],
+      "points": 1
+    },
+    {
+      "unit": "04.01-opportunity-posting-targeting",
+      "applicableCheckpoints": 5,
+      "naDimensions": [1, 2, 4],
       "points": 0.5
     },
     {
-      "unit": "04.01-opportunity-posting-targeting",
-      "applicableCheckpoints": 6,
-      "naDimensions": [4, 6],
-      "points": 1.0
-    },
-    {
       "unit": "04.02-discovery-matching-alerts",
-      "applicableCheckpoints": 6,
-      "naDimensions": [4, 6],
-      "points": 1.0
+      "applicableCheckpoints": 5,
+      "naDimensions": [1, 2, 4],
+      "points": 0
     },
     {
       "unit": "04.03-submission-audition",
-      "applicableCheckpoints": 6,
-      "naDimensions": [4, 6],
-      "points": 1.0
+      "applicableCheckpoints": 5,
+      "naDimensions": [1, 2, 4],
+      "points": 0
     },
     {
       "unit": "04.04-triage-shortlist-decisioning",
-      "applicableCheckpoints": 6,
-      "naDimensions": [4, 6],
-      "points": 1.0
+      "applicableCheckpoints": 5,
+      "naDimensions": [1, 2, 4],
+      "points": 0
     },
     {
       "unit": "04.05-outcome-response-handoff",
-      "applicableCheckpoints": 6,
-      "naDimensions": [4, 6],
-      "points": 0
+      "applicableCheckpoints": 5,
+      "naDimensions": [1, 2, 4],
+      "points": 0.5
     }
   ],
+  "scoring": {
+    "totalApplicableCheckpoints": 30,
+    "totalPoints": 2,
+    "ambiguityPercent": 6.67,
+    "naRationale": "This is an ideation-layer audit rather than an IA implementation spec. Dimensions 1, 2, and 4 are N/A at the unit-summary level because feature enumeration, persona access, and user-flow detail are authored in the leaf feature documents and cross-cut files, not in each unit's aggregate contract. Dimensions 3, 5, 6, 7, and 8 were assessed for the documented decisions, cross-unit contracts, edge handling, depth, and implementer determinacy."
+  },
   "findings": [
     {
       "findingId": "04-opportunities-casting#001",
-      "unit": "04.01-opportunity-posting-targeting",
-      "severity": "blocking",
-      "dimension": 3,
-      "claim": "04.01.01 D-11 makes any deliverable request force the paid gate regardless of type, while 04.01.03's spec-work sub-declaration and D-16 explicitly permit unpaid work products up to a declared hours ceiling. Both are ratified decisions in the same sub-domain and they cannot both hold.",
-      "evidence": "04.01.01-opportunity-post-type-taxonomy.md:327 (D-11) — \"**Unpaid legitimacy requires a presence outcome.** Any slot requesting a deliverable clears the paid gate regardless of type\"; reinforced at :190 — \"Member wanted can't ask for a deliverable. If you need a mix, that's a session call — and it needs a fee.\" AGAINST 04.01.03-compensation-spec-work-guardrails.md:41 — \"Unpaid work products (test mix, spec topline, sample arrangement) must be declared, scoped in hours, capped at one round, and carry evaluation-only retention\"; :74 — \"Declared effort | In hours. Rendered on the badge. Unpaid permitted only up to the platform ceiling (**proposed default: 2 hours** …)\"; :222 (D-16) — \"**Unpaid work product: exactly one round, evaluation-only, no use rights, destroyed or returned on non-selection.** More rounds ⇒ `Paid trial`\". 04.01.03 Q-05 is a live [OWNER] question asking for the numeric value of a ceiling that 04.01.01 D-11 says can never be reached.",
-      "forcedInvention": "An implementer must invent whether the compensation gate refuses every unpaid slot that asks for any artefact (D-11's rule) or permits a bounded unpaid work product under the spec-work sub-declaration. The two produce opposite outcomes on the taxonomy's own `Audition / casting call` type, which is marked unpaid-legitimate at 04.01.01:99 and whose distinguishing feature is 'Adds an audition task (04.03.03)' — a recorded take is a deliverable. 04.03.03's edge table depends on the permissive reading (':57' — \"Task is unpaid and substantial (a full mix) | Spec-work gate refuses at post time\" implies unpaid-and-bounded passes)."
+      "unit": "04.05-outcome-response-handoff",
+      "severity": "warning",
+      "dimension": 4,
+      "claim": "Applicant Pipeline still exposes a `Shortlisted` state conditional on `04.04.02 Q-02 — unresolved`, although that question is resolved: applicants are not auto-told that they were shortlisted. The downstream pipeline therefore presents an obsolete branch as a live state and gives the implementer no authoritative answer for whether an applicant can ever see `Shortlisted` rather than the sanctioned generic ‘still in consideration’ signal.",
+      "evidence": "04.05-outcome-response-handoff/04.05.04-applicant-pipeline-history.md:32 says `Shortlisted | If posters tell (04.04.02 Q-02 — unresolved)`. CONTRADICTED BY 04.04-triage-shortlist-decisioning/04.04.02-shortlist-multi-reviewer-scoring.md:121, where Q-02 is explicitly resolved: ‘Applicants are told a date, never a shortlist state’; the same resolution allows only an optional generic ‘still in consideration’ signal. The source pipeline file contains no later decision or cross-cut note reconciling its state table to that resolution.",
+      "forcedInvention": "An implementer must choose whether `Shortlisted` remains a recipient-visible pipeline state, is removed entirely, or is rendered as the generic consideration signal. Those choices expose different information about rank and create different notification behavior.",
+      "failureScenario": "A reviewer adds a candidate to a shortlist. One implementation updates the applicant’s private pipeline to `Shortlisted`; another follows Q-02 and leaves it `Submitted` while showing only the decide-by date; a third shows ‘still in consideration’. The first leaks the rank that Q-02 rejects, while the second and third produce materially different applicant experiences with no source of truth choosing between them."
     },
     {
       "findingId": "04-opportunities-casting#002",
-      "unit": "04.04-triage-shortlist-decisioning",
-      "severity": "blocking",
-      "dimension": 3,
-      "claim": "04.04.01 asserts the queue can never contain a candidate who fails a required criterion, while D-07 — the sub-domain's stated main volume lever, and the resolution of its 400-scale question — is worked entirely through an example that bulk-rejects 312 candidates for failing a required criterion.",
-      "evidence": "04.04.01-review-queue-triage.md:82 (Happy Path step 2) — \"Every arriving candidate is **already eligible by construction** — a candidate failing a required criterion was blocked at submit time with the reason named (04.01.04). The queue therefore never contains a mechanically-disqualified card, and 'filter the pile' is not a lever available here.\" AGAINST :113 — \"a criterion-scoped bulk bar ('312 don't have a released record')\" and :114 — \"Confirm names the count and the criterion: 'Reject 312 candidates who don't meet released record?' Applicant receives: '**Not selected — this post required a released record.**'\" and D-07 at :214 — \"A bulk reject scopes to a criterion that was **live at submit time**\". If the criterion was required and live at submit, step 2 means zero such candidates exist; if it was 'preferred', 04.01.04 D-02 (\"'Preferred' criteria **rank rather than exclude**\") is violated and the applicant-facing copy saying the post 'required' it is false.",
-      "forcedInvention": "An implementer must invent which criteria bulk action may scope to. Option A (required criteria only) makes D-07 a lever that always matches zero candidates, leaving 04.04.01 Q-02's 400-submission case unresolved after it was declared resolved. Option B (preferred criteria) contradicts 04.01.04 D-02 and makes the machine-generated reason a lie. The choice determines whether the domain's close-out obligation is dischargeable at A&R scale at all — 04.05.01:143 and 04.05.02 Q-02 both rest on D-07 working."
+      "unit": "04.01-opportunity-posting-targeting",
+      "severity": "warning",
+      "dimension": 5,
+      "claim": "Seven cross-domain Markdown links point at removed or renamed directories. They sever the contracts that are supposed to constrain opportunity typing, compensation, notifications, submission identity, venues, booking, and fan/promotion behavior.",
+      "evidence": "Fresh link resolution found these absent targets: 04.01.01-opportunity-post-type-taxonomy.md:308 → `../../16-venues-studios/`; :309 → `../../20-fanbase-community/`; 04.01.03-compensation-spec-work-guardrails.md:197 → `../../02-credits-verified-work/`; 04.02.04-alert-subscriptions-delivery.md:219 → `../../01-identity-profile/`; :220 → `../../17-live-booking/` and `../../16-venues-studios/`; 04.03.01-structured-submission.md:181 → `../../01-identity-profile/`. Current ideation directories use names such as `01-identity-profiles-organizations`, `02-credits-attribution`, `16-venues-studios-spaces`, `17-live-booking-settlement`, and `20-fanbase-direct-to-fan`.",
+      "failureScenario": "A downstream writer follows 04.02.04’s stated dependency for entity alert delegates or venue/booking supply triggers and lands on no source file. They must rediscover the correct domain and may miss the intended constraint, creating a one-way or duplicate contract rather than inheriting the existing decision."
     },
     {
       "findingId": "04-opportunities-casting#003",
-      "unit": "04.01-opportunity-posting-targeting",
+      "unit": "04-opportunities-casting",
       "severity": "warning",
-      "dimension": 3,
-      "claim": "04.01.01 D-16 names brief/RFP inside the group of delivery types that derive the decide-by from the stated deadline, and two sentences later names brief/RFP as one of the two types that get a real asked field which is never defaulted to the deadline.",
-      "evidence": "04.01.01-opportunity-post-type-taxonomy.md:332 (D-16) — \"**delivery types** (session call, brief — every type whose date is an absolute deadline) derive it from the **stated deadline**; … **Two types get a real asked field** — brief/RFP and festival/showcase/competition open call (04.07 D-05) — because there the decision date is genuinely a separate fact from the work date.\" The 'every type whose date is an absolute deadline' clause also captures the festival open call, whose taxonomy row at :102 reads \"Absolute deadline | **Asked** — a real field, blank and required, **never defaulted to the deadline** (04.07 D-05)\". The brief row at :100 reads identically.",
-      "forcedInvention": "An implementer must decide whether a brief/RFP composer pre-fills the decide-by from the deadline or renders it blank-and-required. The file itself states at :117-118 that defaulting it is the harm: \"a decide-by silently carrying the deadline's value would tell 2,000 acts they will hear by 1 March, which is precisely the ghosting 04.07 D-04 exists to prevent, generated by the platform rather than stated by the Operator.\""
+      "dimension": 5,
+      "claim": "The current CX documents retain completed-stage `[PENDING — /ideate-discover Step 5 deepening]` markers after their resolving decisions were written elsewhere. Because the markers do not cite those decisions or active question rows, a reader cannot distinguish genuine open work from stale prose.",
+      "evidence": "04.01-opportunity-posting-targeting-cx.md:43-45 says an admin override for a vetted institutional poster is unresolved, while 04.01.03-compensation-spec-work-guardrails.md:216 records D-10 ‘No admin override’ and explicitly says it resolves CX-01 synthesis Q3. 04.02-discovery-matching-alerts-cx.md:102-104 leaves replay after a calendar cancellation pending, while 04.02.04-alert-subscriptions-delivery.md:137-140 specifies replay eligibility, travel-time gating, a Timely cap, and batching. The same CX file leaves CX-05 permission pending at :143, while 04.02.04-alert-subscriptions-delivery.md:212 and D-14 specify recipient-only material facts. Other stale markers remain at 04.04-triage-shortlist-decisioning-cx.md:67, 04.05-outcome-response-handoff-cx.md:117, 04.06-band-member-wanted.md:56, and 04.07-open-calls-festival-showcase-competition.md:65 without a direct resolving reference.",
+      "failureScenario": "A later pass treats a closed question as open and designs a second override or replay policy, or wrongly assumes that an already-specified privacy rule has no answer. Conversely, a genuine remaining gap can be silently mistaken for an already-resolved one because it uses the same stale marker format."
     },
     {
       "findingId": "04-opportunities-casting#004",
-      "unit": "04-opportunities-casting (domain)",
+      "unit": "04-opportunities-casting",
       "severity": "warning",
-      "dimension": 3,
-      "claim": "The domain Role Matrix, the domain CX-07 and 04.05.02 all state that a Fan reads a poster's response-reputation signal when the board is public; 04.02.01 — the file that owns board rendering — states a Fan never sees poster response reputation or tombstones.",
-      "evidence": "opportunities-casting-index.md:60 — \"04.05 Outcome, Response & Handoff | … | 👁️ Read-only — response signals, only if the board is public\"; opportunities-casting-cx.md:228 (CX-07 role scoping) — \"**Fan**: read-only — response signals are visible only if the board is public (Q-11).\"; 04.05.02-response-reputation-signals.md:23 — \"Fan | Read-only | Only if the board is public (04.02.01 Q-01), and only as an incidental part of a listing.\" AGAINST 04.02.01-opportunity-board-search.md:31 — \"Fan | Read-only | … **Never sees**: contact detail, compensation (04.01.03 Role Lens), requirement checklists (04.01.04 Role Lens), match reasons, **poster response reputation, tombstones**, or any targeted / trusted-network / filtered-pool / invite-only post.\"",
-      "forcedInvention": "An implementer building the public/logged-out board projection must invent whether the response-reputation signal and the filled/closed tombstones render to an unauthenticated viewer. 04.05.02:23 itself flags the stake — \"if the board is indexed, the number is visible, and that is a decision worth making deliberately rather than discovering\" — but the four documents give two different answers and none is marked as an open question."
-    },
-    {
-      "findingId": "04-opportunities-casting#005",
-      "unit": "04-opportunities-casting (domain)",
-      "severity": "warning",
-      "dimension": 3,
-      "claim": "The domain CX asserts that the aggregate price signal is the only board data a Fan reads, which is unsatisfiable given three ratified decisions that no compensation renders publicly and that the board never aggregates a market rate.",
-      "evidence": "opportunities-casting-cx.md:56 (CX-01 role scoping) — \"**Fan**: only the open rung is ever visible; **the price signal is the only board data a Fan reads.**\" AGAINST 04.01.03-compensation-spec-work-guardrails.md:220 (D-14) — \"**The public/logged-out board projection is the Fan projection** — compensation never renders publicly … A scrapeable index of every working musician's rate harms the seller and gifts the buyer; price transparency as a *deliberate* product is 05.01.04's question, not an SEO side effect\"; 04.01.03:31 — \"**Also never sees the compensation badge**: the Fan-facing board projection omits it entirely\"; 04.02.01-opportunity-board-search.md:286 (D-18) — \"The board renders **declared compensation verbatim** and **never derives, aggregates or badges a market rate**.\"",
-      "forcedInvention": "Take the CX claim literally and it cannot be instantiated: a Fan who sees no per-listing compensation and is shown no aggregate cannot read a going rate off the board. An implementer must invent either a Fan-visible aggregate rate surface (contradicting D-14 and D-18) or accept that the Fan reads no board data at all, which the CX row denies."
-    },
-    {
-      "findingId": "04-opportunities-casting#006",
-      "unit": "04.02-discovery-matching-alerts",
-      "severity": "warning",
-      "dimension": 5,
-      "claim": "04.02.04's tier table delegates the quiet-hours window to D-08, D-08 explicitly rejects the industry-standard clock window without supplying a replacement, and no numeric default window appears anywhere in the file — while every other threshold in the same file is specified to the number.",
-      "evidence": "04.02.04-alert-subscriptions-delivery.md:52 — \"Quiet hours | **Overridden** (**D-08 defines the window**)\"; :240 (D-08) — \"**Quiet hours are calendar-derived, not clock-derived.** Default window is musician-shaped, not 22:00–07:00 … A clock default is inverted for this population\"; Q-07 at :261 — \"Busy/free alone reduces D-08 to a slightly better clock default.\" No clock values are given. By contrast the same file fixes: Critical thresholds \"≥ 60% of these songs in the last 24 months\" (:52), \"hard floor of ~3 minutes\" fuse (04.04.04 D-05), \"Daily 10:00 local (default) or weekly Mon 10:00 local\" (:55), \"≤ 5/hour\" (:87), \"1 batched push per 60 min\" (:88), \"**20** live intents\" (:91), \"event-end + 15 min\" (:159).",
-      "forcedInvention": "An implementer must invent the fallback quiet-hours clock window for every recipient with no calendar data — which by Q-07's own admission is the normal case if the availability cross-cut exposes busy/free only. Two implementers will pick different windows and Timely/Standard alerts will be deferred to different boundaries for the same user."
-    },
-    {
-      "findingId": "04-opportunities-casting#007",
-      "unit": "04.02-discovery-matching-alerts",
-      "severity": "warning",
-      "dimension": 3,
-      "claim": "The alert cap is stated as two per (user, post) lifetime with a closed set of exactly two events that may fire the second, but the replay mechanism fires an alert on a third trigger (a calendar cancellation) and the spec never says whether a suppressed alert consumes the cap.",
-      "evidence": "04.02.04-alert-subscriptions-delivery.md:244 (D-12) — \"**Two alerts per (user, post), lifetime.** The second is spent on an eligibility-widening edit or a deadline escalation — whichever comes first\"; opportunities-casting-cx.md:68-71 (CX-01 §4) — \"Exactly two events can fire the second and last one — an eligibility-widening edit (04.01.02) or a deadline escalation (04.02.04 D-06) — at a cap of **2 lifetime per (user, post)** … Whichever lands first spends it; the other delivers nothing.\" AGAINST 04.02.04:138 — \"A gig cancels; a suppressed post is still open and its date is still reachable | **Replay.** Conditions, all required: suppression record ≤ 30 days old **AND** post still open **AND** `post.starts_at ≥ now + computed travel time` … Tier capped at **Timely**\" and the `Replay-pending` state at :182, and :140 — \"A whole tour cancels — 40 suppressed alerts become replay-eligible at once\".",
-      "forcedInvention": "An implementer must invent (a) whether a suppressed-but-never-delivered alert consumes one of the two lifetime slots, and (b) whether a replay is a permitted third trigger despite CX-01's 'nothing else buys one'. Counting attempts versus deliveries changes how many alerts a booked-then-freed musician receives on any post, and the tour-cancellation case turns the difference into dozens of alerts."
-    },
-    {
-      "findingId": "04-opportunities-casting#008",
-      "unit": "04.02-discovery-matching-alerts",
-      "severity": "warning",
-      "dimension": 3,
-      "claim": "04.02.01's cold-start state renders a 14-day window of filled/closed listings as proof of life, including a worked example of a dep call filled two days ago, while the same file's type table retains dep-call tombstones for only 24 hours.",
-      "evidence": "04.02.01-opportunity-board-search.md:51 (D-05 table) — \"Dep / sub call | Time-to-gig ascending | Filled, or gig start time passes | **24 h**\" (tombstone retained). AGAINST :171 — \"shows **the tombstone window (last 14 days of fills/closes for that intent)** as proof the market is alive … | 'Nothing open for bass in London this weekend. **3 dep calls were filled here in the last fortnight** — the last one 2 days ago.'\" and the state row at :213 — \"Empty — cold start | … Honest count + **14-day tombstone window** as proof of life\". D-07 at :275 scopes retention to \"the window above\", i.e. the per-type table.",
-      "forcedInvention": "An implementer must invent how long a filled dep call remains retained and renderable — 24 hours per the type table, or 14 days so the cold-start proof-of-life state can exist at all. The cold-start state is D-16's entire answer to the domain's biggest named risk, and it is unbuildable as written on the domain's highest-velocity type."
-    },
-    {
-      "findingId": "04-opportunities-casting#009",
-      "unit": "04.01-opportunity-posting-targeting",
-      "severity": "warning",
-      "dimension": 3,
-      "claim": "04.01.03's edge table shows five downward compensation edits landing inside one 10-minute settle window (v1 to v6), while the adjacent row and the Locked state refuse the fourth downward edit and lock the post.",
-      "evidence": "04.01.03-compensation-spec-work-guardrails.md:129 — \"Poster makes **5 downward edits** in 10 minutes | One notice, not five. Edits **batch on a 10-minute settle window** … | Applicant: one notice, showing **v1 → v6** net\". AGAINST :130 — \"Poster makes a **4th downward re-gate** on one live post | **Locked** to further downward edits and flagged to 24.03\" and the state at :159 — \"Locked | **4th downward edit attempted** | Downward edits refused\", plus D-05 at :211 — \"Batched on a 10-minute settle window; **locked after 3 downward re-gates**\".",
-      "forcedInvention": "An implementer must invent whether the lock counter increments per edit or per settled batch. Under per-edit counting the worked v1→v6 example is impossible; under per-batch counting a poster can walk a fee down indefinitely in 10-minute batches, which is precisely the ratchet D-05's no-de-minimis rule and 04.04.03 D-06's against-the-post delta rule exist to stop."
-    },
-    {
-      "findingId": "04-opportunities-casting#010",
-      "unit": "04.03-submission-audition",
-      "severity": "warning",
-      "dimension": 5,
-      "claim": "04.03.01 D-08 specifies a type-scoped free-text question ceiling but assigns values to only seven of the taxonomy's twelve types and names one category, 'A&R', that does not exist in the closed taxonomy.",
-      "evidence": "04.03.01-structured-submission.md:198 (D-08) — \"Type-scoped ceiling — **0 for dep-call/urgent types, 1 for session call / crew / member-wanted, 3 for brief / A&R / audition / open call, hard platform ceiling 3.**\" The taxonomy at 04.01.01-opportunity-post-type-taxonomy.md:96-107 is twelve rows: dep/sub call, session call, function/private hire, audition/casting call, brief/RFP, crew/technical labour, festival open call, songwriting camp invitation, support slot, member wanted, open-mic/showcase slot, General call. There is no `A&R` type, and 04.01.01 D-04 at :320 makes the taxonomy \"**closed and platform-curated** … not extensible by posters\". Function/private hire, songwriting camp invitation, support slot, open-mic/showcase slot and `General call` receive no ceiling.",
-      "forcedInvention": "An implementer must invent the free-text question ceiling for five of twelve post types — 0, 1 or 3 are all defensible and produce materially different composer forms — and must decide what 'A&R' maps to, given that the type it appears to mean was folded into the taxonomy rather than kept as a type."
-    },
-    {
-      "findingId": "04-opportunities-casting#011",
-      "unit": "04.03-submission-audition",
-      "severity": "warning",
-      "dimension": 3,
-      "claim": "04.03.04 asserts strip-at-capture as settled behaviour in its Happy Path, asserts store-un-stripped-and-hide-at-render in its edge table, and keeps the choice open at Q-02 — three mutually exclusive positions in one file.",
-      "evidence": "04.03.04-blind-review-mode.md:42 (Happy Path 3) — \"Submissions capture with identity stripped — **at capture, not at render** (CX-01 synthesis Q2).\" AGAINST :52 — \"Un-blinding at shortlist | Evidence must have survived the blind stage *somewhere*, **so it was stored un-stripped and hidden at render** — which is the design CX-01 says will leak | `[PENDING]` — see Q-02\". AGAINST Q-02 at :100 — \"**Strip at capture or at render (DT-03)?** Capture is safe and forecloses un-blinding at shortlist — which is the flow posters actually want. Render is what everyone builds and it leaks.\" The source the Happy Path cites is itself a recommendation, not a decision: 04.03-submission-audition-cx.md:44 — \"**At capture is safer and lossier**\".",
-      "forcedInvention": "An implementer must invent whether the blind submission is captured already stripped (foreclosing the shortlist un-blind that 04.04 CX-05 and 04.04.02 Happy Path step 3 both assume happens) or stored intact and filtered at render. The two produce different data models and different leak surfaces, and the file's own Happy Path picks the option that makes the rest of the file's flow impossible."
-    },
-    {
-      "findingId": "04-opportunities-casting#012",
-      "unit": "04.01-opportunity-posting-targeting",
-      "severity": "warning",
-      "dimension": 3,
-      "claim": "The 25-slot limit is called a soft ceiling twice and enforced as an unconditional refusal once, in a file that elsewhere distinguishes warn-not-block enforcement explicitly.",
-      "evidence": "04.01.01-opportunity-post-type-taxonomy.md:47 — \"**Soft ceiling: 25 slots per post** — past that it is a hiring round\"; D-08 at :324 — \"**Soft ceiling 25 slots**\". AGAINST :196 — \"Post needs 30 slots (a festival's whole crew) | **Refused above 25**; routed to the open call shape (04.07) … | 'That's a hiring round, not an opportunity — open calls handle 30 slots properly.'\" The same file marks the genuinely soft case explicitly at D-13 (:329) — \"heuristic … → **warn, never block**\".",
-      "forcedInvention": "An implementer must invent whether a 26-slot post publishes with a warning or is blocked at compose. The routing consequence is real: under the refusal reading, a 30-slot crew call must be re-authored as an open call, which changes its decide-by from derived to asked (D-16), its board decay curve (04.02.01 D-05) and its triage model from rolling to batched (04.04.01)."
-    },
-    {
-      "findingId": "04-opportunities-casting#013",
-      "unit": "04.02-discovery-matching-alerts",
-      "severity": "warning",
-      "dimension": 3,
-      "claim": "04.02.01's board table sorts and expires Audition/casting call posts on a 'deadline' and treats them as deadline-bearing for freshness purposes, but the taxonomy gives auditions no deadline field — their date is a venue-local event date and their decide-by is derived from it.",
-      "evidence": "04.02.01-opportunity-board-search.md:54 — \"Audition / casting call | **Deadline ascending** | **Deadline passes** | 7 days\"; :80-82 — freshness marking applies \"48 h for dep/session/function/crew/support/open-mic, 30 days for member-wanted, **never for deadline-bearing types (the deadline *is* the freshness signal)**\" — auditions appear in neither list, so they receive no freshness marker and no assumed-stale tombstone. AGAINST 04.01.01-opportunity-post-type-taxonomy.md:99 — \"Audition / casting call | 04 | **Venue-local wall-clock** | Derived — **the event date** | **Yes** (presence outcome) | Performance\", and D-16 at :332 lists \"audition/casting call\" among the presence types that \"derive it from the **event date**\".",
-      "forcedInvention": "An implementer must invent which field an audition sorts and expires on, and whether auditions get freshness marking. Every other presence type gets a 24 h tombstone and a 48 h freshness interval; auditions are given 7 days and none, on the strength of a 'deadline' the post object does not carry."
-    },
-    {
-      "findingId": "04-opportunities-casting#014",
-      "unit": "04.04-triage-shortlist-decisioning",
-      "severity": "warning",
-      "dimension": 3,
-      "claim": "04.04.03 DT-04 — the rationale for the file's central decision — describes 04.01.03 D-05 as carrying 'reconfirm-or-auto-withdraw', which is the exact mechanism that D-05 and 04.01.01 D-09 both explicitly reject.",
-      "evidence": "04.04.03-offer-acceptance.md:208 (DT-04) — \"04.01.03 built an elaborate and well-reasoned apparatus — a publication gate (D-01), six mandatory facets (D-08), £0-is-not-a-fee (D-09), unrepresentable applicant fees (D-02), **versioned downward edits with reconfirm-or-auto-withdraw (D-05)**\". AGAINST 04.01.03-compensation-spec-work-guardrails.md:211 (D-05) — \"**Rejected auto-withdrawing on silence**: a musician who applied at £200 and never saw the notice should not lose their place over an unseen notice — the terms-set rule (04.01.01 D-09) makes silence keep them in\"; and 04.01.01-opportunity-post-type-taxonomy.md:325 (D-09) — \"there is **no auto-withdraw on silence, no silent grandfathering, and no suspend-until-reconfirm**.\"",
-      "forcedInvention": "The DT-04 rationale states the opposite of the decision it imports, in the file that declares it imports 04.01.03 D-05's semantics 'verbatim'. An implementer reading 04.04.03 for the offer-stage terms-change behaviour is told a submitter who ignores a notice is auto-withdrawn or must reconfirm; every other file in the domain says silence keeps them in the pool."
-    },
-    {
-      "findingId": "04-opportunities-casting#015",
-      "unit": "04.02-discovery-matching-alerts",
-      "severity": "warning",
-      "dimension": 7,
-      "claim": "04.02.04 carries a live 'Correction for Step 6' asserting that the parent CX file states the wrong dedup key and directing that it be swapped — but the CX file already carries the correct key, so acting on the instruction would reintroduce the defect it was written to fix.",
-      "evidence": "04.02.04-alert-subscriptions-delivery.md:227 — \"⚠️ **Correction for Step 6**: the parent CX file's CX-01 synthesis Q5 states \\\"Dedup is on (intent, post), not on (user, post)\\\" while its own justification … argues for (user, post). … **The CX file needs the key swapped.**\" AGAINST 04.02-discovery-matching-alerts-cx.md:46-48 — \"Dedup is on **(user, post)**, not on (intent, post) (04.02.04 D-03) — the same post legitimately matching two of a multi-hyphenate's intents must not double-alert, so the dedup key is scoped to the person and the post, never to the individual intent that surfaced it.\"",
-      "forcedInvention": "The note is an outstanding, un-owned instruction with no deferral target that describes a state of the corpus that no longer exists. Anyone executing it swaps a correct (user, post) key to (intent, post), which D-03 and CX-01's own reasoning both forbid and which double-alerts every multi-hyphenate whose several intents match one post."
+      "dimension": 6,
+      "claim": "Member-wanted specifies a band splitting mid-search only as ‘Post orphaned’ with a closed-stage pending marker. The related entity-lifecycle and close-out documents identify the debt but do not settle what happens to the open post, its applications, or its eligibility to block dissolution.",
+      "evidence": "04.06-band-member-wanted.md:56 records ‘Band splits up mid-search | Post orphaned; the entity that posted no longer coheres | [PENDING — /ideate-discover Step 5 deepening]’. 01.04.04-dissolution-succession.md:45 and :88 say live obligations block dissolution, but name bookings, money, and releases rather than an open opportunity. 04.05.01-disposition-close-out-obligation.md:165 says a posting org dissolving mid-queue leaves a real, ownerless debt, and :259 correctly routes debt inheritance to `/create-prd-architecture`; it does not decide whether the post is blocked, auto-closed with dispositions, re-assigned, or remains live.",
+      "forcedInvention": "The implementation must invent the transition for an open member-wanted post when its acting band dissolves and whether any applicants receive a disposition, even though the platform’s close-out obligation is meant to prevent exactly that silence.",
+      "failureScenario": "A four-member band dissolves while six applicants are in review. One implementation blocks dissolution until the post closes; another permits dissolution and leaves the post publicly live under an inactive entity; another auto-closes it and sends `withdrawn by poster`. Only the last prevents ghosting, but it may conflict with the successor/debt model. Nothing in the current contract selects the behavior."
     }
   ]
 }

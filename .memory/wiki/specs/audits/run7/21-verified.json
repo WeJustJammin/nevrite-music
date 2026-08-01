@@ -1,0 +1,176 @@
+{
+  "reportKind": "ambiguity-audit-verification",
+  "run": 7,
+  "domain": "21-promotion-marketing",
+  "rawReport": "21-raw.json",
+  "rawFindingCount": 7,
+  "verdicts": [
+    {
+      "findingId": "R7-21-D2-001",
+      "upheld": true,
+      "finalSeverity": "blocking",
+      "reason": "The current domain source still records the gatekeeper as a structural persona gap, leaves the representation decision open, and states that no gatekeeper counterparty profile exists.",
+      "evidence": [
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/21-promotion-marketing/promotion-marketing-index.md",
+          "line": 147,
+          "excerpt": "**The pitch target is not one of the four personas** — recorded as a structural gap, not a detail"
+        },
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/21-promotion-marketing/promotion-marketing-index.md",
+          "line": 159,
+          "excerpt": "nothing here is decided, and no counterparty profile for the gatekeeper exists"
+        },
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/meta/personas.md",
+          "line": 171,
+          "excerpt": "Which remaining non-persona actors get a counterparty profile, a persona, or neither?"
+        }
+      ]
+    },
+    {
+      "findingId": "R7-21-D4-001",
+      "upheld": true,
+      "finalSeverity": "blocking",
+      "reason": "The same current document retains an unresolved rights-clearance boundary while its question row declares a different resolved boundary, leaving the gate behavior ambiguous.",
+      "evidence": [
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/21-promotion-marketing/21.01-release-campaign-planner/21.01.02-asset-readiness-gate.md",
+          "line": 84,
+          "excerpt": "an uncleared sample makes a \"final\" master not actually deliverable. Boundary unresolved (see Q-01)."
+        },
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/21-promotion-marketing/21.01-release-campaign-planner/21.01.02-asset-readiness-gate.md",
+          "line": 98,
+          "excerpt": "**RESOLVED** — **clearance blocks release/delivery, not asset readiness, and this gate never adjudicates it.**"
+        }
+      ]
+    },
+    {
+      "findingId": "R7-21-D4-002",
+      "upheld": true,
+      "finalSeverity": "blocking",
+      "reason": "The feature identifies special-category and defamatory-note handling as a compliance exposure, but leaves it pending and merely routes it to security without a required handling policy.",
+      "evidence": [
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/21-promotion-marketing/21.03-pitch-targets-crm/21.03.02-private-contact-crm.md",
+          "line": 56,
+          "excerpt": "`[PENDING — /ideate-discover Step 5 deepening]` — probably a `/create-prd-security` concern; flagged rather than designed"
+        },
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/21-promotion-marketing/21.03-pitch-targets-crm/21.03.02-private-contact-crm.md",
+          "line": 84,
+          "excerpt": "**Not-product**: private free-text about identifiable third parties (defamation, special-category data, retention) → `/create-prd-security`."
+        },
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/21-promotion-marketing/21.03-pitch-targets-crm/21.03.02-private-contact-crm.md",
+          "line": 99,
+          "excerpt": "Does a GDPR erasure request against the directory reach an artist's private address book?"
+        }
+      ]
+    },
+    {
+      "findingId": "R7-21-D7-001",
+      "upheld": true,
+      "finalSeverity": "blocking",
+      "reason": "The current registers provide only an owner and deferred pipeline stage. They provide neither a deadline nor the decision the question blocks, and a deferred stage is not a deadline.",
+      "evidence": [
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/21-promotion-marketing/promotion-marketing-index.md",
+          "line": 157,
+          "excerpt": "| # | Question | Owner | Deferred To |"
+        },
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/21-promotion-marketing/promotion-marketing-index.md",
+          "line": 160,
+          "excerpt": "**Do pitch emails send as the artist or as WeJammin?**"
+        },
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/21-promotion-marketing/21.01-release-campaign-planner/21.01-release-campaign-planner-index.md",
+          "line": 53,
+          "excerpt": "| # | Question | Owner | Deferred To |"
+        }
+      ]
+    },
+    {
+      "findingId": "R7-21-D5-001",
+      "upheld": true,
+      "finalSeverity": "warning",
+      "reason": "The current sources identify an unobservable conversion, a directional recovered state, and cost per ticket sold without a numeric success target or timeframe.",
+      "evidence": [
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/21-promotion-marketing/21.04-smart-links-presave-attribution/21.04.03-campaign-attribution.md",
+          "line": 80,
+          "excerpt": "the metric that would matter (pre-save → release-day stream conversion) is unobservable to us"
+        },
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/21-promotion-marketing/21.08-event-tour-marketing/21.08.02-geo-date-promotion-soft-seat.md",
+          "line": 75,
+          "excerpt": "| Recovered | Trajectory improved | Attribution says whether the spend did it (21.08.03) |"
+        },
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/21-promotion-marketing/21.08-event-tour-marketing/21.08.03-ticket-sale-attribution.md",
+          "line": 85,
+          "excerpt": "The number that matters is **cost per ticket sold**"
+        }
+      ]
+    },
+    {
+      "findingId": "R7-21-D7-002",
+      "upheld": true,
+      "finalSeverity": "warning",
+      "reason": "Five current cross-cut rows retain implementation-shaping questions or validation needs outside the controlled registers, without an owner, deadline, or blocked decision.",
+      "evidence": [
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/21-promotion-marketing/21.01-release-campaign-planner/21.01-release-campaign-planner-cx.md",
+          "line": 13,
+          "excerpt": "Needs validation against real campaign data before we design the gate as an early-warning system."
+        },
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/21-promotion-marketing/21.02-pitching-outreach/21.02-pitching-outreach-cx.md",
+          "line": 13,
+          "excerpt": "Whether this needs a system-level guard or is merely a copy warning is unresolved."
+        },
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/21-promotion-marketing/21.02-pitching-outreach/21.02-pitching-outreach-cx.md",
+          "line": 14,
+          "excerpt": "whether the system should model that contention or leave it to the human is open."
+        },
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/21-promotion-marketing/21.05-paid-promotion/21.05-paid-promotion-cx.md",
+          "line": 12,
+          "excerpt": "Whether the platform should model the trade-off or simply show both spends is unresolved"
+        },
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/21-promotion-marketing/21.08-event-tour-marketing/21.08-event-tour-marketing-cx.md",
+          "line": 13,
+          "excerpt": "Whether this is a re-announce or a new announce is unresolved and matters for fan fatigue."
+        }
+      ]
+    },
+    {
+      "findingId": "R7-21-D8-001",
+      "upheld": true,
+      "finalSeverity": "warning",
+      "reason": "The root summary states eight children, while the current child table independently enumerates child 09, leaving the domain structure count unreconciled.",
+      "evidence": [
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/21-promotion-marketing/promotion-marketing-index.md",
+          "line": 62,
+          "excerpt": "8 children from 12 candidates: 6 sub-domains, 2 features, plus 1 Deep Think addition (21.09)."
+        },
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/21-promotion-marketing/promotion-marketing-index.md",
+          "line": 75,
+          "excerpt": "| 01 | Release Campaign Planner | sub-domain |"
+        },
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/21-promotion-marketing/promotion-marketing-index.md",
+          "line": 83,
+          "excerpt": "| 09 | Campaign Press Kit (EPK) & Asset Pack | feature |"
+        }
+      ]
+    }
+  ],
+  "coverage": "Verified all 7 raw finding IDs against current domain sources and directly cited canonical sources; no additional findings added."
+}

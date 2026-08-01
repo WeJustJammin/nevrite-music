@@ -1,10 +1,10 @@
 # Audit Scope — Ambiguity Audit
 
-> **Status**: ACTIVE — run 3 EXECUTING (canonical `/audit-ambiguity` skill)
+> **Status**: ACTIVE — run 7 EXECUTING (canonical `/audit-ambiguity` skill)
 > **Scope**: ideation (vision layer)
-> **Enumerated**: 2026-07-30 (re-enumerated at execution; superseded the 2026-07-24 pass)
-> **Run type**: fresh post-remediation verification run — the full run `BLOCKER-004` requires
-> **Tree state**: post-DQ-R2-01 (D-75 / A′ propagated across 37 files, 2026-07-29)
+> **Enumerated**: 2026-08-01 (fresh disk enumeration; 1,122 documents / 191 units)
+> **Run type**: fresh independent post-remediation audit — void Run 6 findings and verdict are not audit input
+> **Tree state**: current workspace after the remediation evidence recorded in `run6/remediation-log.md`; Run 7 auditors must not read that log
 
 ## Layers To Audit
 
@@ -34,18 +34,20 @@
 | Below expected threshold? | No — 1,122 matches the recorded tree size and run 2's unit count exactly |
 | `surfaces/` scanned | N/A — single-surface project, no `surfaces/` directory |
 
-### Run-3 execution shape
+### Run-7 execution shape
 
-Sharded by domain: 26 shards (24 domains + `meta` + root), each shard audits every unit it
-owns through the full 3a→3b→3c cycle, then its findings verify adversarially before the next
-shard's results are merged. Cross-layer consistency checks (Step 4) are **not applicable** —
-scope is ideation only, not BE/FE/all.
+Sharded by domain: 26 audit shards (24 domains + `meta` + root), each shard audits every unit it
+owns through the full 3a→3b→3c cycle. A separate independent verifier must issue one final
+verdict for every raw finding before results merge. No gate verdict may be emitted unless all
+26 audit shards and all 26 verification shards return, every finding has exactly one verdict,
+and coverage remains 191 units / 1,122 files. Cross-layer consistency checks (Step 4) are
+**not applicable** — scope is ideation only, not BE/FE/all.
 
 **Data-durability requirement (run-2 regression guard).** Run 2 lost detailed findings for
 ~134 of 154 scored units because agents wrote them to a session scratchpad that was later
 cleaned, returning only one-line summaries. Run 3 requires every finding to be returned as
 **structured data** (so it lands in the workflow journal) **and** written to
-`.memory/wiki/specs/audits/run3/` — a tracked location, never a scratchpad.
+`.memory/wiki/specs/audits/run7/` — a tracked location, never a scratchpad.
 
 Every discovered file is audited individually through the full 3a→3b→3c cycle.
 No sampling, no representative selection, no skipping.
@@ -53,10 +55,10 @@ No sampling, no representative selection, no skipping.
 ## Freshness / Session-Independence Gate
 
 This is a **remediated rerun**. To satisfy session independence, every document is
-audited by an agent with **no access to the prior audit's findings** — auditors are
-instructed not to read `.memory/wiki/specs/audits/`. Findings are then adversarially
-verified by a second independent pass against source. Nothing is inherited from the
-previous run's manifest, ledger, or decision queue.
+audited by an agent with **no access to prior audit findings** — auditors are instructed not
+to read `.memory/wiki/specs/audits/`. Findings are then adversarially verified by a
+second independent pass against current source. Verifiers may read only their assigned Run 7
+raw report and source, never a prior-run manifest, ledger, or decision queue.
 
 ## Applicable Rubric Dimensions
 

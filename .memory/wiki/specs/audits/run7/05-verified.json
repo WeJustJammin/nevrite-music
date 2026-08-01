@@ -1,0 +1,581 @@
+{
+  "reportKind": "ambiguity-audit-verification",
+  "run": 7,
+  "domain": "05-services-marketplace",
+  "rawReport": "05-raw.json",
+  "rawFindingCount": 28,
+  "verdicts": [
+    {
+      "findingId": "R7-05-001",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "reason": "Current decisions define instrument-based protection for both non-escrow shapes. The remaining product acceptance is owned by User and deferred to create-prd, not left to implementation.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/05-services-marketplace/05.06-rights-warranties-transfer/05.06.02-producer-points-backend-participation.md",
+          "line": 114,
+          "excerpt": "Points-only deals carry an explicit no-escrow warning, and the instrument is named as the protection"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/05-services-marketplace/05.03-engagement-lifecycle/05.03.04-retainers-recurring-engagements.md",
+          "line": 93,
+          "excerpt": "Rights transfer attaches to the retainer instrument, not to a per-engagement escrow release"
+        }
+      ]
+    },
+    {
+      "findingId": "R7-05-002",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "reason": "The canonical authority model is defined, and the domain distinguishes signers from credited humans. The remaining entity-action mapping is explicitly assigned to create-prd-architecture.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/01-identity-profiles-organizations/01.03-membership-representation-mandate/01.03.02-representation-roster-relationships.md",
+          "line": 92,
+          "excerpt": "A representation edge carries two independent flat scope axes — activities and domains — and an action is authorised iff both apply"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/05-services-marketplace/05.06-rights-warranties-transfer/05.06.03-rights-transfer-split-execution.md",
+          "line": 246,
+          "excerpt": "The party that signs and the humans that are credited are different sets, and neither implies the other"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/05-services-marketplace/05.02-quotes-scope-contracting/05.02.01-custom-quotes-proposals-scope.md",
+          "line": 261,
+          "excerpt": "Which human may bind an entity to a quote? ... Agent | create-prd-architecture — coordinate with 01"
+        }
+      ]
+    },
+    {
+      "findingId": "R7-05-003",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "reason": "Curation mechanics specify candidacy and review timing. Staffing and vocabulary licensing are separately owned User decisions deferred to create-prd, so no operating policy is untracked.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/05-services-marketplace/05.01-service-listings-pricing/05.01.02-service-category-taxonomy-attributes.md",
+          "line": 168,
+          "excerpt": "Candidacy: ≥5 distinct sellers in 90 days; any single proposal reviewed within 10 working days"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/05-services-marketplace/05.01-service-listings-pricing/05.01.02-service-category-taxonomy-attributes.md",
+          "line": 186,
+          "excerpt": "Who staffs the curation queue, and at what cadence? ... User | create-prd"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/05-services-marketplace/05.01-service-listings-pricing/05.01.02-service-category-taxonomy-attributes.md",
+          "line": 191,
+          "excerpt": "What seeds the craft vocabulary, and under what licence? ... User | create-prd"
+        }
+      ]
+    },
+    {
+      "findingId": "R7-05-004",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "reason": "AI involvement is already constrained to a disclosure axis. The residual allowed-listing and buyer-filter choice is one owned User decision shared with 05.06.05 and deferred to create-prd.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/05-services-marketplace/05.01-service-listings-pricing/05.01.02-service-category-taxonomy-attributes.md",
+          "line": 179,
+          "excerpt": "AI mastering is not a craft. AI involvement is a disclosure axis"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/05-services-marketplace/05.01-service-listings-pricing/05.01.02-service-category-taxonomy-attributes.md",
+          "line": 185,
+          "excerpt": "May a seller list AI-involved work at all, and is the disclosure buyer-visible and filterable? ... User | create-prd"
+        }
+      ]
+    },
+    {
+      "findingId": "R7-05-005",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "reason": "The source specifies one time-authority model as the required architecture outcome and assigns the collision decision to create-prd-architecture. This is an explicit blocked-decision record.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/05-services-marketplace/05.01-service-listings-pricing/05.01-service-listings-pricing-cx.md",
+          "line": 38,
+          "excerpt": "Resolution requires one authority over the human's committed time, with both models as views onto it ... escalated to create-prd-architecture"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/05-services-marketplace/05.01-service-listings-pricing/05.01.07-seller-capacity-queue-intake-limits.md",
+          "line": 100,
+          "excerpt": "How do queue-based and calendar-based scarcity reconcile ... Agent | create-prd-architecture"
+        }
+      ]
+    },
+    {
+      "findingId": "R7-05-006",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "reason": "Due dates are fixed instants in the buyer timezone. The residual standard-remedy and working-day inputs are individually owned User decisions with explicit downstream stages, not implementation defaults.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/05-services-marketplace/05.01-service-listings-pricing/05.01.06-turnaround-rush-service-levels.md",
+          "line": 96,
+          "excerpt": "A due date is always rendered as an absolute date+time in the buyer's timezone, never as a duration"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/05-services-marketplace/05.01-service-listings-pricing/05.01.06-turnaround-rush-service-levels.md",
+          "line": 104,
+          "excerpt": "What is the remedy for a breached standard turnaround? ... User | MoSCoW"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/05-services-marketplace/05.01-service-listings-pricing/05.01.06-turnaround-rush-service-levels.md",
+          "line": 105,
+          "excerpt": "Are working days the seller's jurisdiction's or the buyer's? ... User | Step 5 deepening"
+        }
+      ]
+    },
+    {
+      "findingId": "R7-05-007",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "reason": "The source limits output to bands and accepted engagements. Cohort and consent choices have named owners and a create-prd-security decision target, so implementation has no unowned privacy, consent, or statistic to invent.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/05-services-marketplace/05.01-service-listings-pricing/05.01.04-rate-benchmarking-price-transparency.md",
+          "line": 89,
+          "excerpt": "Bands only — never individual rates, never individual transactions"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/05-services-marketplace/05.01-service-listings-pricing/05.01.04-rate-benchmarking-price-transparency.md",
+          "line": 99,
+          "excerpt": "What is the minimum cohort size (k) before a band is shown ... Agent | create-prd-security"
+        }
+      ]
+    },
+    {
+      "findingId": "R7-05-008",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "reason": "Currency and tax treatment are required per cash model and seller currency is the contract currency. Provider escrow support and facilitator tax are explicitly owned upstream; the canonical constraints place provider handling in v1.5.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/05-services-marketplace/05.01-service-listings-pricing/05.01.03-music-pricing-model-library.md",
+          "line": 186,
+          "excerpt": "Every cash model declares currency and tax treatment; every rendered figure states its tax treatment explicitly"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/05-services-marketplace/05.01-service-listings-pricing/05.01.03-music-pricing-model-library.md",
+          "line": 201,
+          "excerpt": "The rule is decided ... seller's currency is the contract currency ... What remains open is a provider constraint"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/meta/constraints.md",
+          "line": 265,
+          "excerpt": "Marketplace facilitator sales tax ... v1.5 | Use the payments/tax provider's marketplace-facilitator handling"
+        }
+      ]
+    },
+    {
+      "findingId": "R7-05-009",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "reason": "The observer is expressly promoted to a blocking prerequisite, paired with the union new-use obligation, and assigned to the architecture stage. It is a valid blocked-decision record rather than a forced implementation invention.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/05-services-marketplace/05.01-service-listings-pricing/05.01.03-music-pricing-model-library.md",
+          "line": 206,
+          "excerpt": "PREREQUISITE — blocking ... Who detects the trigger and notifies the spec engagement ... Agent | create-prd-architecture"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/05-services-marketplace/05.02-quotes-scope-contracting/05.02.03-union-session-contracting.md",
+          "line": 97,
+          "excerpt": "New-use obligations outlive the engagement ... paired with 05.01.03 Q-07 ... Solve them together"
+        }
+      ]
+    },
+    {
+      "findingId": "R7-05-010",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "reason": "Sealed engagements retain the credit while suppressing display, use a defined anonymity spectrum, and price anonymity on the quote. The remaining counter-attestation seam is named and routed to domain 02.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/05-services-marketplace/05.02-quotes-scope-contracting/05.02.02-nda-confidentiality-ghost-production.md",
+          "line": 111,
+          "excerpt": "Sealed engagements record the credit and suppress its display; they do not discard it"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/05-services-marketplace/05.02-quotes-scope-contracting/05.02.02-nda-confidentiality-ghost-production.md",
+          "line": 114,
+          "excerpt": "Anonymity level is a priced term on the quote"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/05-services-marketplace/05.02-quotes-scope-contracting/05.02.02-nda-confidentiality-ghost-production.md",
+          "line": 123,
+          "excerpt": "How does counter-attestation (02) work on a sealed credit ... Agent | Domain 02 drilling"
+        }
+      ]
+    },
+    {
+      "findingId": "R7-05-011",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "reason": "Scale-data and post-engagement-obligation decisions have named owners and architecture targets. Their unresolved state is documented as a deferred cross-domain decision, not an unowned implementation requirement.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/05-services-marketplace/05.02-quotes-scope-contracting/05.02.03-union-session-contracting.md",
+          "line": 96,
+          "excerpt": "Where do scale tables come from and how are they kept current? ... User | create-prd-architecture"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/05-services-marketplace/05.02-quotes-scope-contracting/05.02.03-union-session-contracting.md",
+          "line": 97,
+          "excerpt": "Who holds them ... Agent | create-prd-architecture — coordinate with 09/10/11 and 12"
+        }
+      ]
+    },
+    {
+      "findingId": "R7-05-012",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "reason": "Canonical policy requires a verified guardian co-signatory and disclosure, and blocks an unaccompanied known minor from completing a designation. The remaining statutory eligibility question is counsel-owned at create-prd-security.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/05-services-marketplace/05.02-quotes-scope-contracting/05.02.01-custom-quotes-proposals-scope.md",
+          "line": 243,
+          "excerpt": "A party under 18 ... transacts only with a verified guardian as a co-signatory party to the instrument"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/09-rights-ownership/09.02-split-capture-agreements/09.02.03-work-for-hire-buyout.md",
+          "line": 223,
+          "excerpt": "A known minor's unaccompanied consent does not complete a designation; a guardian/representative consent is required"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/05-services-marketplace/05.02-quotes-scope-contracting/05.02.01-custom-quotes-proposals-scope.md",
+          "line": 262,
+          "excerpt": "Does the platform accept under-18 users as contracting parties at all? ... User | create-prd-security"
+        }
+      ]
+    },
+    {
+      "findingId": "R7-05-013",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "reason": "Cancellation settlement is deterministic: milestone acceptance releases a tranche without transferring rights, then the quote declares one of three cancellation rights dispositions with a safe no-transfer fallback.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/05-services-marketplace/05.03-engagement-lifecycle/05.03.02-milestones-staged-deliverables.md",
+          "line": 102,
+          "excerpt": "Milestone acceptance releases the tranche; it does not transfer rights"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/05-services-marketplace/05.03-engagement-lifecycle/05.03.05-cancellation-abandonment-kill-fee.md",
+          "line": 277,
+          "excerpt": "The rights disposition on cancellation is a declared quote term ... Undeclared and unagreed → nothing transfers"
+        }
+      ]
+    },
+    {
+      "findingId": "R7-05-014",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "reason": "The lifecycle now has an explicit race winner: delivery wins over cancellation.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/05-services-marketplace/05.03-engagement-lifecycle/05.03.05-cancellation-abandonment-kill-fee.md",
+          "line": 284,
+          "excerpt": "Delivery wins a race with cancellation"
+        }
+      ]
+    },
+    {
+      "findingId": "R7-05-015",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "reason": "The in-flight failed-charge outcome is explicitly owned by the architecture stage, so implementation is not assigned a recovery-path default.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/05-services-marketplace/05.03-engagement-lifecycle/05.03.04-retainers-recurring-engagements.md",
+          "line": 100,
+          "excerpt": "Does an in-flight engagement survive a failed retainer charge? ... Agent | create-prd-architecture"
+        }
+      ]
+    },
+    {
+      "findingId": "R7-05-016",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "reason": "Recall is explicitly post-terminal, preserving transferred rights and released escrow. Its residual recall-versus-defect boundary is a named Step 5 decision.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/05-services-marketplace/05.03-engagement-lifecycle/05.03.06-post-delivery-support-recall.md",
+          "line": 87,
+          "excerpt": "A recall is a post-terminal state — the engagement stays closed, rights stay transferred, escrow stays released"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/05-services-marketplace/05.03-engagement-lifecycle/05.03.06-post-delivery-support-recall.md",
+          "line": 98,
+          "excerpt": "Where is the line between a recall and a defect ... Agent | Step 5 deepening"
+        }
+      ]
+    },
+    {
+      "findingId": "R7-05-017",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "reason": "The source defines atomic delivery acceptance and permanently records affirmative versus expiry consent. The enforceability question is explicitly counsel-owned at create-prd-security.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/05-services-marketplace/05.04-delivery-qc-acceptance/05.04.01-delivery-acceptance-auto-accept.md",
+          "line": 211,
+          "excerpt": "Acceptance fires escrow release + rights transfer + credit emission atomically"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/05-services-marketplace/05.06-rights-warranties-transfer/05.06.03-rights-transfer-split-execution.md",
+          "line": 237,
+          "excerpt": "The consent basis is recorded permanently ... affirmative or by-expiry"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/05-services-marketplace/05.04-delivery-qc-acceptance/05.04.01-delivery-acceptance-auto-accept.md",
+          "line": 228,
+          "excerpt": "Is a rights assignment executed by auto-accept (silence) enforceable? ... User | create-prd-security"
+        }
+      ]
+    },
+    {
+      "findingId": "R7-05-018",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "reason": "DSP execution is deliberately routed to Media Handling and a hard create-prd-stack decision rather than assumed to run in Workers.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/05-services-marketplace/05.04-delivery-qc-acceptance/05.04.02-deliverable-spec-automated-audio-qc.md",
+          "line": 108,
+          "excerpt": "The rules are product-owned; the DSP engine belongs to Media Handling and is routed to create-prd"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/05-services-marketplace/05.04-delivery-qc-acceptance/05.04.02-deliverable-spec-automated-audio-qc.md",
+          "line": 114,
+          "excerpt": "Where does QC actually execute ... User | create-prd-stack — hard constraint"
+        }
+      ]
+    },
+    {
+      "findingId": "R7-05-019",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "reason": "Retention and third-party-material handling are separately owned stack and security decisions, while the only-copy question is assigned to architecture.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/05-services-marketplace/05.04-delivery-qc-acceptance/05.04.04-source-file-session-handover.md",
+          "line": 119,
+          "excerpt": "Does the platform store the session at all ... User | create-prd-stack"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/05-services-marketplace/05.04-delivery-qc-acceptance/05.04.04-source-file-session-handover.md",
+          "line": 120,
+          "excerpt": "If a session contains third-party material ... User | create-prd-security"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/05-services-marketplace/05.04-delivery-qc-acceptance/05.04-delivery-qc-acceptance-index.md",
+          "line": 56,
+          "excerpt": "Does the platform ever hold the only copy of a delivered work? ... Agent | create-prd-architecture"
+        }
+      ]
+    },
+    {
+      "findingId": "R7-05-020",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "reason": "The source fixes the required partial-freeze intent and assigns the ledger and dispute seam to create-prd-architecture.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/05-services-marketplace/05.05-multi-party-supply/05.05-multi-party-supply-index.md",
+          "line": 56,
+          "excerpt": "The intent is already settled ... freeze the disputed tranche, release the rest; what does not exist is the ledger mechanism ... Agent | create-prd-architecture"
+        }
+      ]
+    },
+    {
+      "findingId": "R7-05-021",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "reason": "Off-platform participation is an explicitly owned User decision coordinated with identity and credits. Canonical identity rules prevent an unclaimed shadow from silently becoming a payment or signature authority.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/05-services-marketplace/05.05-multi-party-supply/05.05.01-deps-substitutes-emergency-cover.md",
+          "line": 119,
+          "excerpt": "The best dep usually has no account. Can an off-platform dep be brought in ... User | create-prd — coordinate with 01 and 02"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/01-identity-profiles-organizations/01.05-profile-claiming-verification/01.05.01-shadow-party-creation-invitation.md",
+          "line": 206,
+          "excerpt": "A shadow party is a subject, not an agent — it can be credited, never act"
+        }
+      ]
+    },
+    {
+      "findingId": "R7-05-022",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "reason": "Agency-mandate revocation is an Agent-owned architecture decision, while the bundled-seller half is explicitly marked not now in its own source. The compound claim does not identify a current unowned forced-invention gap.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/05-services-marketplace/05.05-multi-party-supply/05.05.03-subcontracting-agency-brokered-engagements.md",
+          "line": 103,
+          "excerpt": "What happens to a live engagement when the agency's mandate is revoked ... Agent | create-prd-architecture"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/05-services-marketplace/05.05-multi-party-supply/05.05.04-multi-seller-bundles-curated-packages.md",
+          "line": 74,
+          "excerpt": "Hence wont: not wrong, not now."
+        }
+      ]
+    },
+    {
+      "findingId": "R7-05-023",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "reason": "Domain 09 is the canonical append-only chain, and Services restricts the only live ownership read to 09. The remaining writer protocol is an explicit architecture seam, not an implementer choice.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/09-rights-ownership/09.03-chain-of-title-lifecycle/09.03.01-chain-of-title-ledger.md",
+          "line": 31,
+          "excerpt": "The chain is an append-only sequence of rights events over an object"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/05-services-marketplace/05.06-rights-warranties-transfer/05.06.03-rights-transfer-split-execution.md",
+          "line": 233,
+          "excerpt": "The only live read is 09's aggregate allocation"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/05-services-marketplace/05.06-rights-warranties-transfer/05.06.03-rights-transfer-split-execution.md",
+          "line": 256,
+          "excerpt": "Does this feature write directly into 09's chain of title ... Agent | create-prd-architecture — coordinate with 09"
+        }
+      ]
+    },
+    {
+      "findingId": "R7-05-024",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "reason": "Canonical rights policy forbids automatic reversion after an unpaid or refunded fee. The residual financial-loss allocation is explicitly owned by security, payments, and disputes.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/09-rights-ownership/09.02-split-capture-agreements/09.02.03-work-for-hire-buyout.md",
+          "line": 224,
+          "excerpt": "An unpaid or refunded fee is surfaced, never auto-reverting the designation"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/05-services-marketplace/05.06-rights-warranties-transfer/05.06.03-rights-transfer-split-execution.md",
+          "line": 258,
+          "excerpt": "A chargeback reverses the money leg months after execution ... User | create-prd-security — coordinate with the Payments cross-cut and 24"
+        }
+      ]
+    },
+    {
+      "findingId": "R7-05-025",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "reason": "Current posture rules record governing facts, warn of residual rights, and avoid claiming unimpeachable assignment. The canonical performer-registration flow is self-registration from the credit graph; residual policy choices remain counsel-owned.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/05-services-marketplace/05.06-rights-warranties-transfer/05.06.01-engagement-rights-posture.md",
+          "line": 223,
+          "excerpt": "The posture record stores the determining facts — governing law, seller's jurisdiction asserted at signature"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/05-services-marketplace/05.06-rights-warranties-transfer/05.06.01-engagement-rights-posture.md",
+          "line": 227,
+          "excerpt": "Both parties see a residual-rights notice naming that some rights may not be assignable where the seller signed"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/10-royalties-collections/10.01-society-registration-delivery/10.01.06-neighbouring-rights-performer-registration.md",
+          "line": 30,
+          "excerpt": "The performer registers themselves. SoundExchange and PPL take direct performer memberships"
+        }
+      ]
+    },
+    {
+      "findingId": "R7-05-026",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "reason": "Both custody/job-flow races are consolidated into one Agent-owned Step 5 decision. The documented race is therefore not an unowned implementation choice.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/05-services-marketplace/05.07-custodial-physical-services/05.07-custodial-physical-services-index.md",
+          "line": 55,
+          "excerpt": "What is the precedence when a custody event and a job-flow event race? ... Agent | ideate-discover Step 5 deepening"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/05-services-marketplace/05.07-custodial-physical-services/05.07.03-custody-chain-liability-damage-claims.md",
+          "line": 119,
+          "excerpt": "Damage discovered at the return hand-off ... Needs a stated precedence ... Agent | Step 5 deepening"
+        }
+      ]
+    },
+    {
+      "findingId": "R7-05-027",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "reason": "The platform-versus-insurer boundary is explicit, and insurance eligibility and orphan-item disposition are separately owned product and security decisions.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/05-services-marketplace/05.07-custodial-physical-services/05.07.03-custody-chain-liability-damage-claims.md",
+          "line": 107,
+          "excerpt": "The platform provides a record, not insurance"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/05-services-marketplace/05.07-custodial-physical-services/05.07-custodial-physical-services-index.md",
+          "line": 52,
+          "excerpt": "Does the platform require sellers to carry insurance for custodial work? ... User | create-prd"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/05-services-marketplace/05.07-custodial-physical-services/05.07.03-custody-chain-liability-damage-claims.md",
+          "line": 118,
+          "excerpt": "What happens to an orphaned item ... User | create-prd-security"
+        }
+      ]
+    },
+    {
+      "findingId": "R7-05-028",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "reason": "Conflict checking and the non-insurer boundary are already defined. The remaining role-separation and error-loss choices are explicitly owned User decisions.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/05-services-marketplace/05.07-custodial-physical-services/05.07.02-third-party-inspection-verification.md",
+          "line": 97,
+          "excerpt": "Conflict of interest is checked against the platform's collaboration and credit graphs, not just self-declared"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/05-services-marketplace/05.07-custodial-physical-services/05.07.02-third-party-inspection-verification.md",
+          "line": 106,
+          "excerpt": "Should an inspector be barred from quoting the repair they just recommended? ... User | create-prd"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/05-services-marketplace/05.07-custodial-physical-services/05.07.02-third-party-inspection-verification.md",
+          "line": 108,
+          "excerpt": "Who bears an inspector's error ... User | create-prd-security"
+        }
+      ]
+    }
+  ],
+  "coverage": {
+    "verdictCount": 28,
+    "allRawFindingsCovered": true,
+    "outcomeCounts": {
+      "upheld": 0,
+      "refuted": 28,
+      "blocking": 0,
+      "warning": 0
+    },
+    "rubricsApplied": [
+      ".agents/skills/pipeline-rubrics/references/vision-rubric.md",
+      ".agents/skills/pipeline-rubrics/references/scoring.md"
+    ],
+    "sourceScope": "Current 05-services-marketplace source plus directly referenced canonical source only",
+    "directCanonicalSourcesChecked": [
+      ".memory/wiki/specs/ideation/01-identity-profiles-organizations/01.03-membership-representation-mandate/01.03.02-representation-roster-relationships.md",
+      ".memory/wiki/specs/ideation/01-identity-profiles-organizations/01.05-profile-claiming-verification/01.05.01-shadow-party-creation-invitation.md",
+      ".memory/wiki/specs/ideation/09-rights-ownership/09.02-split-capture-agreements/09.02.03-work-for-hire-buyout.md",
+      ".memory/wiki/specs/ideation/09-rights-ownership/09.03-chain-of-title-lifecycle/09.03.01-chain-of-title-ledger.md",
+      ".memory/wiki/specs/ideation/10-royalties-collections/10.01-society-registration-delivery/10.01.06-neighbouring-rights-performer-registration.md",
+      ".memory/wiki/specs/ideation/meta/constraints.md"
+    ]
+  }
+}

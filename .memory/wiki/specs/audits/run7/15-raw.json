@@ -1,0 +1,332 @@
+{
+  "reportKind": "ambiguity-audit-raw",
+  "run": 7,
+  "domain": "15-gear-registry-ownership",
+  "unitsAudited": 6,
+  "filesRead": 36,
+  "coverageNote": "Read all 36 current Markdown sources under .memory/wiki/specs/ideation/15-gear-registry-ownership/ across six audit units. Every source underwent 3a implementer simulation, 3b Vision Rubric scoring, and 3c devil's-advocate probing. Applied 48 checkpoints (six units × eight Vision Rubric dimensions). Freshness preserved: no audit artifacts were read.",
+  "applicableCheckpoints": 48,
+  "findings": [
+    {
+      "findingId": "R7-15.01-D3-001",
+      "unit": "15.01-instrument-identity-provenance",
+      "severity": "high",
+      "dimension": 3,
+      "claim": "The declared canonical source for identity-confidence values does not state the enum, while the renderer contains an unresolved proposed vocabulary.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/15-gear-registry-ownership/15.01-instrument-identity-provenance/15.01.05-non-serialized-contested-identity.md",
+          "line": 93,
+          "excerpt": "this file authors the canonical identity-confidence value set; 15.01.01 renders it and never defines its own"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/15-gear-registry-ownership/15.01-instrument-identity-provenance/15.01.01-gear-record-serial-identity.md",
+          "line": 87,
+          "excerpt": "Identity confidence the record must render"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/15-gear-registry-ownership/15.01-instrument-identity-provenance/15.01.01-gear-record-serial-identity.md",
+          "line": 96,
+          "excerpt": "15.01.05 owns resolution logic and the authoritative value set; this feature owns the render."
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/15-gear-registry-ownership/15.01-instrument-identity-provenance/15.01.01-gear-record-serial-identity.md",
+          "line": 98,
+          "excerpt": "The vocabulary above is proposed from the render side and is flagged for Step 6 synthesis against 15.01.05's."
+        }
+      ],
+      "forcedInvention": "Choose a canonical enum and source of truth for persisted identity-confidence values.",
+      "failureScenario": "Resolver, record, chain, and screening implementations accept or display divergent values, allowing weak photo-bound identities to be rendered as stronger states."
+    },
+    {
+      "findingId": "R7-15.01-D7-002",
+      "unit": "15.01-instrument-identity-provenance",
+      "severity": "high",
+      "dimension": 7,
+      "claim": "The unit has 18 unresolved questions routed to future stages, but none supplies a decision deadline.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/15-gear-registry-ownership/15.01-instrument-identity-provenance/15.01-instrument-identity-provenance-index.md",
+          "line": 59,
+          "excerpt": "| # | Question | Owner | Deferred To |"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/15-gear-registry-ownership/15.01-instrument-identity-provenance/15.01-instrument-identity-provenance-index.md",
+          "line": 63,
+          "excerpt": "Authenticity is not provenance... whether the platform makes any authenticity assertion at all needs an owner call."
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/15-gear-registry-ownership/15.01-instrument-identity-provenance/15.01.03-ownership-transfer-handshake.md",
+          "line": 100,
+          "excerpt": "What is the confirmation timeout? Too short and honest slow buyers get a permanent gap; too long and the chain is indefinitely ambiguous."
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/15-gear-registry-ownership/15.01-instrument-identity-provenance/15.01.06-identity-continuity-modification.md",
+          "line": 96,
+          "excerpt": "When the serial-bearing part is swapped, which record keeps the serial — the body, the assembly, both, neither?"
+        }
+      ],
+      "forcedInvention": "Proceed without a scheduled resolution for authenticity, transfer timing, evidence, privacy, and identity-fork decisions.",
+      "failureScenario": "Separate teams freeze incompatible product and safety policies while implementing the record, transfer, and public-chain paths."
+    },
+    {
+      "findingId": "R7-15.02-D3-003",
+      "unit": "15.02-stolen-gear-registry-recovery",
+      "severity": "critical",
+      "dimension": 3,
+      "claim": "Partial-identity screening is specified both as impossible without the full composite key and as a maker/model-only check, leaving the safety behavior undefined.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/15-gear-registry-ownership/15.02-stolen-gear-registry-recovery/15.02.01-theft-report-serial-flagging.md",
+          "line": 50,
+          "excerpt": "Flag exists but cannot support point-of-sale screening (needs full composite key per parent D-02)"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/15-gear-registry-ownership/15.02-stolen-gear-registry-recovery/15.02.02-point-of-sale-serial-screening.md",
+          "line": 28,
+          "excerpt": "Screening resolves the listing's gear identity via the composite key (15.01.05) and matches it against flags."
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/15-gear-registry-ownership/15.02-stolen-gear-registry-recovery/15.02.02-point-of-sale-serial-screening.md",
+          "line": 67,
+          "excerpt": "\"Limited check — we matched on maker and model only\""
+        }
+      ],
+      "forcedInvention": "Choose whether partial identities may match, whether any result is advisory or blocking, and how the result avoids a false accusation or false assurance.",
+      "failureScenario": "A seller is wrongly held on a broad partial match, or a partially identified stolen item receives a reassuring result despite no safe match being possible."
+    },
+    {
+      "findingId": "R7-15.02-D7-004",
+      "unit": "15.02-stolen-gear-registry-recovery",
+      "severity": "high",
+      "dimension": 7,
+      "claim": "The unit has nine unresolved safety, liability, and lifecycle questions routed to future stages, but none supplies a decision deadline.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/15-gear-registry-ownership/15.02-stolen-gear-registry-recovery/15.02-stolen-gear-registry-recovery-index.md",
+          "line": 57,
+          "excerpt": "| # | Question | Owner | Deferred To |"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/15-gear-registry-ownership/15.02-stolen-gear-registry-recovery/15.02-stolen-gear-registry-recovery-index.md",
+          "line": 59,
+          "excerpt": "Cold start: screening is worthless until the flag registry has coverage... What breaks the loop?"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/15-gear-registry-ownership/15.02-stolen-gear-registry-recovery/15.02.02-point-of-sale-serial-screening.md",
+          "line": 100,
+          "excerpt": "What is WeJammin's liability for a false negative ... and a false positive?"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/15-gear-registry-ownership/15.02-stolen-gear-registry-recovery/15.02.04-false-flag-dispute-lifecycle.md",
+          "line": 146,
+          "excerpt": "Exact reconfirmation cadence... too frequent re-traumatises a victim, too rare and the registry rots."
+        }
+      ],
+      "forcedInvention": "Proceed without scheduled decisions for registry federation, report visibility, legal posture, and flag-reconfirmation policy.",
+      "failureScenario": "Screening, disputes, and recovery teams implement incompatible user-safety and liability behavior."
+    },
+    {
+      "findingId": "R7-ROOT-D2-005",
+      "unit": "15-gear-registry-ownership-root",
+      "severity": "high",
+      "dimension": 2,
+      "claim": "Consignment, appraisal, and dealer-stock workflows require a professional dealer, but the actor has no persona definition.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/15-gear-registry-ownership/gear-registry-ownership-index.md",
+          "line": 136,
+          "excerpt": "consignment (15.08 DT-03), appraisal (15.05.02) and a dealer's stock register (15.07 Q-02) all have an actor with no persona."
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/15-gear-registry-ownership/15.08-custody-loans-consignment.md",
+          "line": 117,
+          "excerpt": "Consignment implies a dealer, and personas.md Q-01 leaves the dealer persona unresolved."
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/15-gear-registry-ownership/15.07-studio-backline-asset-register/15.07-studio-backline-asset-register-index.md",
+          "line": 63,
+          "excerpt": "Is a dealer's stock register the same thing as a studio's asset register? Consignment stock is org-held, not org-owned."
+        }
+      ],
+      "forcedInvention": "Choose whether a dealer is a Musician, Operator, or a fifth persona, including their authority over stock, custody, and consignment sales.",
+      "failureScenario": "Consignment and dealer inventory receive arbitrary permissions and ownership semantics, enabling either blocked legitimate sales or unauthorized listing rights."
+    },
+    {
+      "findingId": "R7-ROOT-D7-006",
+      "unit": "15-gear-registry-ownership-root",
+      "severity": "high",
+      "dimension": 7,
+      "claim": "The root unit has 19 unresolved questions routed to future stages, but none supplies a decision deadline.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/15-gear-registry-ownership/gear-registry-ownership-index.md",
+          "line": 132,
+          "excerpt": "| # | Question | Owner | Deferred To |"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/15-gear-registry-ownership/gear-registry-ownership-index.md",
+          "line": 138,
+          "excerpt": "The composed-exposure hazard needs an owner. Public collection + public tour dates + public city = a targeting package for endemic gear theft."
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/15-gear-registry-ownership/15.04-gear-collection-visibility.md",
+          "line": 104,
+          "excerpt": "Who owns the composed-exposure evaluation? It spans domains 15, 01, 17, 18 and 20."
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/15-gear-registry-ownership/15.10-cases-manifests-carnet-source-data.md",
+          "line": 101,
+          "excerpt": "Should country of origin be captured at registration ... without it this feature is theatre."
+        }
+      ],
+      "forcedInvention": "Proceed without scheduled resolutions for exposure control, ownership actors, customs source data, and cold-start scope.",
+      "failureScenario": "Platform safety, document generation, and domain boundaries diverge before the relevant product decisions are made."
+    },
+    {
+      "findingId": "R7-ROOT-D7-007",
+      "unit": "15-gear-registry-ownership-root",
+      "severity": "critical",
+      "dimension": 7,
+      "claim": "The authority of a stale or disputed custodian to file a theft report is explicitly still open, but the exception is not tracked as a live open question with owner, deadline, and blocked decision.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/15-gear-registry-ownership/15.08-custody-loans-consignment.md",
+          "line": 57,
+          "excerpt": "The owner asserts custody ... the holder may confirm or dispute but cannot unilaterally claim custody of gear that isn't theirs."
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/15-gear-registry-ownership/15.08-custody-loans-consignment.md",
+          "line": 60,
+          "excerpt": "Standing under stale and disputed custody remains open."
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/15-gear-registry-ownership/15.08-custody-loans-consignment.md",
+          "line": 114,
+          "excerpt": "Who has standing to report gear stolen when custody and ownership differ ... RESOLVED ... Standing under stale and disputed custody remains open."
+        }
+      ],
+      "forcedInvention": "Choose whether a stale or disputed holder may create a sale-blocking theft flag, and what evidence or notification boundary applies.",
+      "failureScenario": "An actual holder is denied a crisis report, or a disputed possessor can weaponize a theft flag against a sale."
+    },
+    {
+      "findingId": "R7-15.05-D7-008",
+      "unit": "15.05-valuation-appraisal-insurance",
+      "severity": "high",
+      "dimension": 7,
+      "claim": "The unit has 12 unresolved valuation, insurer, and appraisal questions routed to future stages, but none supplies a decision deadline.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/15-gear-registry-ownership/15.05-valuation-appraisal-insurance/15.05-valuation-appraisal-insurance-index.md",
+          "line": 57,
+          "excerpt": "| # | Question | Owner | Deferred To |"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/15-gear-registry-ownership/15.05-valuation-appraisal-insurance/15.05-valuation-appraisal-insurance-index.md",
+          "line": 59,
+          "excerpt": "Conflict of interest: WeJammin operates the marketplace whose comps feed the valuation, and earns fees on the resulting sales."
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/15-gear-registry-ownership/15.05-valuation-appraisal-insurance/15.05.02-appraisal-record.md",
+          "line": 95,
+          "excerpt": "If an appraiser is later discredited, every appraisal they made is affected simultaneously. Is there a retraction mechanism, and who triggers it?"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/15-gear-registry-ownership/15.05-valuation-appraisal-insurance/15.05.03-insurance-schedule-claim-pack.md",
+          "line": 101,
+          "excerpt": "What remains is only how an off-platform insurer is represented as that claimant/owner."
+        }
+      ],
+      "forcedInvention": "Proceed without scheduled decisions for valuation governance, appraisal invalidation, insurer representation, and insurance-fraud posture.",
+      "failureScenario": "Value and claim-pack implementations encode inconsistent authority and disclosure rules around high-stakes financial evidence."
+    },
+    {
+      "findingId": "R7-15.06-D7-009",
+      "unit": "15.06-rig-profile-compatibility",
+      "severity": "high",
+      "dimension": 7,
+      "claim": "The unit has 12 unresolved product, data, lifecycle, and disclosure questions routed to future stages, but none supplies a decision deadline.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/15-gear-registry-ownership/15.06-rig-profile-compatibility/15.06-rig-profile-compatibility-index.md",
+          "line": 56,
+          "excerpt": "| # | Question | Owner | Deferred To |"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/15-gear-registry-ownership/15.06-rig-profile-compatibility/15.06-rig-profile-compatibility-index.md",
+          "line": 58,
+          "excerpt": "Is a compatibility check against unreliable data worth shipping, or does it manufacture false confidence?"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/15-gear-registry-ownership/15.06-rig-profile-compatibility/15.06.01-rig-definition-signal-chain.md",
+          "line": 100,
+          "excerpt": "What happens to a rig when its gear is sold — remove the member, convert it to a placeholder, or leave the reference?"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/15-gear-registry-ownership/15.06-rig-profile-compatibility/15.06.03-rig-spec-sheet-source-data.md",
+          "line": 100,
+          "excerpt": "May an exported sheet disclose rig members the band holds but does not own?"
+        }
+      ],
+      "forcedInvention": "Proceed without scheduled decisions for oracle scope, rig ownership and lifecycle, source data, and third-party asset disclosure.",
+      "failureScenario": "Compatibility checks and exports encode incompatible data, consent, and lifecycle behavior before those decisions are resolved."
+    },
+    {
+      "findingId": "R7-15.06-D7-010",
+      "unit": "15.06-rig-profile-compatibility",
+      "severity": "high",
+      "dimension": 7,
+      "claim": "A target-data change after a compatibility check is marked PENDING, but no tracked decision assigns a deadline or defines result invalidation and re-notification semantics.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/15-gear-registry-ownership/15.06-rig-profile-compatibility/15.06.02-compatibility-oracle.md",
+          "line": 57,
+          "excerpt": "Target's specs change after the check ... Re-check on change should notify. [PENDING — /ideate-discover Step 5 deepening]"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/15-gear-registry-ownership/15.06-rig-profile-compatibility/15.06-rig-profile-compatibility-cx.md",
+          "line": 35,
+          "excerpt": "A target's spec changing after a check should re-notify."
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/15-gear-registry-ownership/gear-registry-ownership-cx.md",
+          "line": 441,
+          "excerpt": "A register change should re-run open checks and re-notify."
+        }
+      ],
+      "forcedInvention": "Choose which target changes invalidate a result, whether affected checks re-run, and which band, venue, or booking participants must receive the update.",
+      "failureScenario": "A band relies on a stale compatibility result after venue data changes, causing a cancelled show or equipment damage."
+    },
+    {
+      "findingId": "R7-15.07-D7-011",
+      "unit": "15.07-studio-backline-asset-register",
+      "severity": "high",
+      "dimension": 7,
+      "claim": "The unit has 14 unresolved publication, condition, inventory, and notification questions routed to future stages, but none supplies a decision deadline.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/15-gear-registry-ownership/15.07-studio-backline-asset-register/15.07-studio-backline-asset-register-index.md",
+          "line": 60,
+          "excerpt": "| # | Question | Owner | Deferred To |"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/15-gear-registry-ownership/15.07-studio-backline-asset-register/15.07-studio-backline-asset-register-index.md",
+          "line": 65,
+          "excerpt": "Supply with no org entity cannot publish at all ... Does the entity model admit a single-person org, does this sub-domain admit a person-owned register, or is that supply out of scope?"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/15-gear-registry-ownership/15.07-studio-backline-asset-register/15.07.02-asset-condition-availability-state.md",
+          "line": 116,
+          "excerpt": "On a quantity line the booked item has no referent, so that notification contract has to be respecified for counts."
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/15-gear-registry-ownership/15.07-studio-backline-asset-register/15.07.03-backline-list-publication.md",
+          "line": 120,
+          "excerpt": "Should gear held on loan be publishable? It advertises someone else's property and can vanish without notice."
+        }
+      ],
+      "forcedInvention": "Proceed without scheduled decisions for sole-trader eligibility, condition disclosure, quantity-line booking notifications, and publication of held assets.",
+      "failureScenario": "Asset publication and booking flows make inconsistent promises, hide material faults, or expose another owner's property without a settled authority rule."
+    }
+  ]
+}

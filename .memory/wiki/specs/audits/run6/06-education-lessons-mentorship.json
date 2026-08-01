@@ -1,0 +1,224 @@
+{
+  "domain": "06-education-lessons-mentorship",
+  "unitsAudited": 5,
+  "filesRead": 33,
+  "coverageNote": "Enumeration from disk matched the expected 5 units / 33 files exactly. Units: the domain directory itself (education-lessons-mentorship-index.md + -cx.md + the 7 loose leaf features 06.05-06.11, 9 files), 06.01-lesson-booking-packages-delivery (6 files), 06.02-teacher-discovery-profiles-trials (6), 06.03-curriculum-assignments-practice (7), 06.04-course-marketplace-authoring (5). Every file was read in full; no sampling. Dimension 4 (Constraint Explicitness) and 6 (Competitive Positioning) are marked N/A on every unit: constraints live in meta/constraints.md and competitive analysis in meta/competitive-landscape.md, neither of which is in scope for a domain sub-tree. Dimension 5 (Success Measurability) is scored only on the domain unit, where the domain index carries an explicit success-measure open question (Q-08); it is N/A on the four sub-domain units, which state no metrics and are not the layer where metrics belong. A large number of stale [PENDING - /ideate-discover Step 5] markers were inspected and DROPPED as non-findings because a live, owned open question in the same or a referenced file carries the decision (e.g. 06.03.01's three markers, 06.03.05's skill-model marker, 06.06's pairing marker, 06.04.01's stalled-course markers). Only markers with no covering row are reported.",
+  "units": [
+    {
+      "unit": "06-education-lessons-mentorship",
+      "applicableCheckpoints": 6,
+      "points": 1.5,
+      "naDimensions": [4, 6]
+    },
+    {
+      "unit": "06.01-lesson-booking-packages-delivery",
+      "applicableCheckpoints": 5,
+      "points": 1.0,
+      "naDimensions": [4, 5, 6]
+    },
+    {
+      "unit": "06.02-teacher-discovery-profiles-trials",
+      "applicableCheckpoints": 5,
+      "points": 1.0,
+      "naDimensions": [4, 5, 6]
+    },
+    {
+      "unit": "06.03-curriculum-assignments-practice",
+      "applicableCheckpoints": 5,
+      "points": 1.0,
+      "naDimensions": [4, 5, 6]
+    },
+    {
+      "unit": "06.04-course-marketplace-authoring",
+      "applicableCheckpoints": 5,
+      "points": 1.0,
+      "naDimensions": [4, 5, 6]
+    }
+  ],
+  "findings": [
+    {
+      "findingId": "06-education-lessons-mentorship#001",
+      "unit": "06.01-lesson-booking-packages-delivery",
+      "severity": "blocking",
+      "dimension": 3,
+      "claim": "Two files settle a both-parties-no-show in directly opposite ways, and the file that defers points at a row the other file marks RESOLVED. 06.01.02 holds the credit in limbo pending '06.01.03's rule (their Q-03)'; 06.01.03's Q-03 is struck through as RESOLVED and its edge table returns the credit.",
+      "evidence": "06.01-lesson-booking-packages-delivery/06.01.02-lesson-packages-credits-rate-cards.md:223 — '| 35 | Both parties no-show | The ledger will not burn without a resolved earning event. The credit sits in **limbo**, un-consumed and un-returned, pending 06.01.03's rule (their Q-03). ... | Both: \"Nobody joined — this lesson is unresolved and your credit is on hold\" |'  VERSUS  06.01-lesson-booking-packages-delivery/06.01.03-cancellation-makeup-no-show-policy.md:144 — '| Nobody joins a remote lesson | Grace elapses; **both-no-show** rule fires (D-03) — credit returns, no signal either side | Both: \"Neither of you joined. Did this lesson move? Your credit is safe.\" |'  AND 06.01.03:268 — '| Q-03 | ~~Both-parties-no-show: who eats it?~~ **RESOLVED** → DT-09 / D-11. Nobody eats it: the credit returns...'  The same stale pointer is repeated at 06.01.04-lesson-delivery-session-record.md:246 — '| **Both parties no-show (remote)** | ... the ledger effect is 06.01.03's open Q-03 and is deliberately not decided here |'",
+      "failure_scenario": "Teacher and student both fail to join a remote Tuesday 17:00 lesson. An implementer building from 06.01.02 puts the credit in a `limbo` state, shows the student 'this lesson is unresolved and your credit is on hold', and waits for a rule that will never arrive because the question is closed. An implementer building from 06.01.03 returns the credit at grace expiry and shows 'your credit is safe'. The two builds differ in balance, in state machine, and in the user-visible message, on an event 06.01.03 DT-09 says is common enough to be a data-quality signal.",
+      "forcedInvention": "Whether a both-no-show credit enters a limbo state or returns immediately, and what the student is told."
+    },
+    {
+      "findingId": "06-education-lessons-mentorship#002",
+      "unit": "06.01-lesson-booking-packages-delivery",
+      "severity": "blocking",
+      "dimension": 3,
+      "claim": "The refill-reversal behaviour (default ON) requires a burned credit to return and a teacher's already-accrued earning to unwind, but 06.01.02's credit lifecycle — presented as the exhaustive ledger state machine — has no transition out of `burned`, and no file allocates the reversed earning.",
+      "evidence": "06.01-lesson-booking-packages-delivery/06.01.02-lesson-packages-credits-rate-cards.md:66-80 — '**Credit lifecycle** — the ledger's state machine. Every transition is an Audit Log event ...  reserved ──policy burn (06.01.03)─────> burned     [EARNING EVENT]' with no arrow leaving `burned`.  VERSUS 06.01.03-cancellation-makeup-no-show-policy.md:41 — '| Refill reversal | On or off; **on by default** | If the vacated slot is refilled *and delivered*, the burn reverses (DT-08). |' and :154 — '| Student's slot is refilled and delivered after a late-cancel burn | Burn **auto-reverses** (DT-08). ... | Student: \"Your slot was refilled — the credit you used has been returned.\"'  AND 06.01.03 D-12 (:254) — 'A burned credit **transfers its value to the teacher** as if the lesson were delivered'. 06.01.02's own cross-cut note to 06.01.03 (:270) lists only the burn/lapse distinction as 'New constraint from DT-04' and never mentions reversal.",
+      "failure_scenario": "Student late-cancels Tuesday; the burn fires, the teacher's payout accrues (06.01.03 D-12, 06.01.02 D-06). The teacher then refills that hour with a released one-off and delivers it, so refill reversal fires and the student's credit is returned. The teacher has now been paid twice for one hour and the ledger has no `burned → granted` edge to record it. One implementer claws back the accrued earning (unfairly, since the teacher taught the replacement), one lets the platform eat it, one refuses the reversal because the state machine forbids it. Nothing in the tree says which; 06.01.02 Q-04 covers chargeback loss allocation only.",
+      "forcedInvention": "The `burned → granted` ledger transition, and who absorbs the teacher's already-accrued earning when a refill reversal fires."
+    },
+    {
+      "findingId": "06-education-lessons-mentorship#003",
+      "unit": "06.02-teacher-discovery-profiles-trials",
+      "severity": "blocking",
+      "dimension": 3,
+      "claim": "The delivery-mode enum has two incompatible definitions in the tree: four values including `academy` in the discovery/profile files, three values in the rate-card and cancellation-policy files that must price and govern it — while 06.01.04 D-15 makes an academy room one of only two legally acceptable configurations for a minor's in-person 1:1.",
+      "evidence": "06.02-teacher-discovery-profiles-trials/06.02.03-teacher-discovery-match-criteria.md:63 — '| 4 | Mode | Yes | `remote` · `teacher's room` · `student's home` · `academy` — multi-select | Drives whether S5 contributes at all |' and 06.02.01-teacher-tuition-profile.md:29 — 'modes (remote / their room / student's home / academy)'.  VERSUS 06.01-lesson-booking-packages-delivery/06.01.02-lesson-packages-credits-rate-cards.md:28 — 'one line per (instrument × duration × mode × level), where duration ∈ {30, 45, 60, 90 min}, mode ∈ {remote, teacher's room, student's home}' and 06.01.03-cancellation-makeup-no-show-policy.md:42 — '| Mode | Remote, teacher's room, or student's home | Policy is dimensioned per mode exactly as the rate card is (DT-11).'  AND 06.01.04-lesson-delivery-session-record.md:372 D-15 — 'A minor's in-person 1:1 requires a declared present adult **or** an academy room'.",
+      "failure_scenario": "A teacher on an academy roster ticks `academy` as a teaching mode on their profile; a parent filters teacher search on mode = `academy` (a hard filter per 06.02.03) and gets results. The teacher then opens the rate card to price it and no `academy` line can exist, because the mode enum has three values — so the lesson is unbookable (06.01.02 edge 18: 'the rate card is a hard precondition for the calendar'), and no cancellation policy can be dimensioned for it either. Worse, the one configuration 06.01.04 D-15 requires for a minor's in-person 1:1 that has no declared chaperone is the configuration the booking model cannot express. Two implementers split on whether `academy` is a distinct mode, an alias of `teacher's room`, or a room attribute — and each choice changes pricing, policy dimensioning and the safeguarding gate.",
+      "forcedInvention": "Whether `academy` is a fourth delivery mode (and therefore a rate-card and cancellation-policy dimension value) or a property of the `teacher's room` mode."
+    },
+    {
+      "findingId": "06-education-lessons-mentorship#004",
+      "unit": "06.01-lesson-booking-packages-delivery",
+      "severity": "warning",
+      "dimension": 3,
+      "claim": "The series state named 'At Risk' has two different, incompatible entry conditions in the two files that own it — balance 0 in 06.01.01, available ≤ 2 or exhaustion-within-21-days in 06.01.02 — with no statement that they are two layers.",
+      "evidence": "06.01-lesson-booking-packages-delivery/06.01.01-lesson-slot-booking-recurring-series.md:162 — '| **At Risk** | Balance 0, next occurrence unreserved | Student: amber series + \"Top up by 30 Jul to keep Tuesday 17:00\" with the exact release date. Teacher: \"Amy's balance is empty — held until 30 Jul\" |'  VERSUS 06.01.02-lesson-packages-credits-rate-cards.md:141 — 'When available credits reach **≤ 2**, or when reserved occurrences would exhaust the balance within **21 days** at the series' cadence — whichever fires first — the ledger raises an **at-risk** signal on the series and prompts a top-up.' and its States table :239 — '| At risk | Available ≤ 2, or reserved occurrences exhaust the balance within 21 days | \"Your Tuesday slot is funded to 26 Aug — top up to keep it\"'",
+      "failure_scenario": "A student holds 2 available credits on a weekly ongoing series. 06.01.02 says the series is At Risk and shows an amber top-up prompt; 06.01.01 says At Risk begins only at balance 0 and that entering it starts the 2-occurrence / 14-day grace clock that ends in Lapsed and a released standing slot. An implementer who unifies the two states starts the slot-release countdown while the student still has two paid lessons in hand. An implementer who keeps them separate must invent a second state name and a second copy set that neither file supplies."
+    },
+    {
+      "findingId": "06-education-lessons-mentorship#005",
+      "unit": "06.01-lesson-booking-packages-delivery",
+      "severity": "warning",
+      "dimension": 3,
+      "claim": "The no-show grace formula is worked through on a lesson duration the rate-card enum cannot express, and under that enum both the min() and its stated floor are unreachable.",
+      "evidence": "06.01-lesson-booking-packages-delivery/06.01.03-cancellation-makeup-no-show-policy.md:83 — '2. **At `scheduled_start + grace`** — the no-show evaluation. `grace = min(15 min, 50% × duration)`, floor 5 min. A 20-minute beginner's lesson gets 10 minutes, not 15.'  VERSUS 06.01.02-lesson-packages-credits-rate-cards.md:28 — 'duration ∈ {30, 45, 60, 90 min}'. (06.02.04-trial-lessons-conversion.md:22 also assumes a sub-30 duration: 'all staff offer a free 20-minute taster'.)",
+      "failure_scenario": "For every duration the rate card permits, 50% × duration ≥ 15, so grace is always exactly 15 minutes and both the min() and the 5-minute floor are dead code. An implementer either hard-codes 15 and silently drops the ability to sell the short beginner lessons the spec's own worked example and 06.02.04's academy taster policy assume exist, or extends the duration enum with values (20 min? 15 min?) nobody ratified — which then propagate into rate-card lines, credit fungibility (06.01.02 D-07) and slot buffers."
+    },
+    {
+      "findingId": "06-education-lessons-mentorship#006",
+      "unit": "06.01-lesson-booking-packages-delivery",
+      "severity": "warning",
+      "dimension": 3,
+      "claim": "The package expiry floor as written rejects the term-fee billing shape that DT-07/D-09 identify as essential to the domain's cold-start supply, and the waiver that would rescue it is scoped to 'subscription-shaped packs', glossed in the body text as monthly grants only.",
+      "evidence": "06.01-lesson-booking-packages-delivery/06.01.02-lesson-packages-credits-rate-cards.md:54 — 'Package expiry window ≥ `max(90 days, credits × 14 days)` and ≤ 24 months.'  AND :126 — 'The expiry floor above (`≥ 90 days`) is waived for subscription-shaped packs — a monthly grant is by construction a 1-month pack'.  VERSUS :253 DT-07 — 'a **term is a pack whose expiry is pinned to the Operator's term bound** ... the expiry floor must not block a 12-week term' and :120 — 'A **term fee** ... is a pack with `credits = weeks in term` and `expiry = the term bound the Operator publishes`'.",
+      "failure_scenario": "A UK academy publishes its autumn term as a pack: 12 credits, expiry pinned to the 18 December term bound, roughly 84 days out. Publish-time validation computes the floor as max(90, 12×14) = 168 days and blocks it with 'the shortest expiry for this pack is 168 days' — exactly the failure DT-07 says will mean 'academies ... will simply not be adopted'. One implementer reads D-09's 'waived for subscription-shaped packs' as covering both term and monthly and lets it through; another reads the body gloss ('a monthly grant is by construction a 1-month pack') as monthly-only and blocks it."
+    },
+    {
+      "findingId": "06-education-lessons-mentorship#007",
+      "unit": "06.01-lesson-booking-packages-delivery",
+      "severity": "warning",
+      "dimension": 7,
+      "claim": "The two open questions that carry the cancellation-policy preset numbers — the values every policy evaluation runs on — defer solely to 'MoSCoW', a pass this tree elsewhere records as completed and repeatedly re-points away from. They have no live deferral target.",
+      "evidence": "06.01-lesson-booking-packages-delivery/06.01.03-cancellation-makeup-no-show-policy.md:266 — '| Q-01 | **Which preset is the default, and what are the preset numbers?** ... | User | MoSCoW |' and :267 — '| Q-02 | Does teacher-side cancellation behaviour surface **publicly** ...? | User | MoSCoW |'.  That target is documented as complete at education-lessons-mentorship-index.md:122 — 'Deferral target re-pointed from the completed MoSCoW pass (`/ideate-discover`; ledger ratified 2026-07-16 by D-20)' and again at 06.02-teacher-discovery-profiles-trials/06.02-teacher-discovery-profiles-trials-index.md:74. Sibling rows in the same sub-domain carry a live fallback ('MoSCoW / `/create-prd`', 06.01 index Q-02, 06.01.02 Q-02); these two do not.",
+      "failure_scenario": "An implementer needs Standard's make-up allowance to evaluate 'make-up if cap remains, else burn'. Q-01 says the numbers are the owner's call at MoSCoW; MoSCoW has run and the ledger bands features without setting preset numbers. The agent's recommendation ('24h notice, 1 make-up per 10 credits, no-show burns, refill-reversal on') is explicitly not ratified, and the 'per 10 credits' ratio is undefined for the 4-credit monthly packs D-09 creates. Nothing downstream is scheduled to answer it."
+    },
+    {
+      "findingId": "06-education-lessons-mentorship#008",
+      "unit": "06.02-teacher-discovery-profiles-trials",
+      "severity": "warning",
+      "dimension": 3,
+      "claim": "Free trials are the domain's primary acquisition mechanic and are modelled as a rate-card line, but the rate card's publish-time validation forbids a zero price.",
+      "evidence": "06.02-teacher-discovery-profiles-trials/06.02.04-trial-lessons-conversion.md:20 — '**As Teacher**: chooses whether to offer trials and at what price (free / reduced / full)' and :22 — 'sets a house trial policy (all staff offer a free 20-minute taster)'.  VERSUS 06.01-lesson-booking-packages-delivery/06.01.02-lesson-packages-credits-rate-cards.md:273 — 'a **trial is not a credit**: it is a rate-card line of its own (often free or reduced) drawing against no pack' and :51 — 'Publish-time validation (all fail closed, all with the offending value echoed back): - List price > 0, and within the Operator's floor/ceiling'.",
+      "failure_scenario": "A teacher sets a free 30-minute trial. If the trial really is 'a rate-card line of its own', publish validation rejects it with 'List price > 0' and the free trial — the mechanic 06.02.04 D-02, 06.02 CX-04 and domain CX-01 all build the funnel on — cannot be published. An implementer must invent either a price-0 exemption on the trial line, a separate trial object outside the rate card, or a floor-price trial. The rate card's stated dimensions (instrument × duration × mode × level) also carry no trial axis, so where the line lives is undefined."
+    },
+    {
+      "findingId": "06-education-lessons-mentorship#009",
+      "unit": "06.02-teacher-discovery-profiles-trials",
+      "severity": "warning",
+      "dimension": 3,
+      "claim": "The level hard filter is specified as '±1 band' against a band scale the file's own Deep Think argues cannot exist, and that scale is enumerated nowhere — while the sibling age bands are enumerated precisely.",
+      "evidence": "06.02-teacher-discovery-profiles-trials/06.02.03-teacher-discovery-match-criteria.md:76 — '| Level | Intake, with **±1 band tolerance** (D-06) | Teacher's accepted level range must intersect `[stated−1, stated+1]` |', and D-06 at :303 — 'Level is captured as a **profile of proxy facts** and hard-filtered against the teacher's declared range with a **±1 band tolerance**'.  VERSUS DT-04 at :241 — '\"Intermediate\" is not commensurable across instruments or traditions ... never as a point value on a shared scale that does not exist.'  Contrast the age bands, fully enumerated at :61 — '`under-11` · `11–17` · `18–24` · `25–64` · `65+`'. S3's facet key at :93 is 'Per `(instrument, level band, age band)`'.",
+      "failure_scenario": "An implementer must instantiate the level bands to compute `[stated−1, stated+1]`, to define the teacher's 'accepted level range', and to key S3's per-facet conversion counter. One builds a 5-band beginner→advanced scale — reintroducing exactly the scalar DT-04 rejects and that 06.09 DT-02 says would 'misinform matching, misinform parents, and be resented by teachers'. Another keeps the proxy-fact profile with no bands, at which point '±1 band' is uncomputable and S3's facet key has no second component. The two produce different result pools for the same query."
+    },
+    {
+      "findingId": "06-education-lessons-mentorship#010",
+      "unit": "06.02-teacher-discovery-profiles-trials",
+      "severity": "warning",
+      "dimension": 3,
+      "claim": "The published ranking score is stated as a 0–100 total, but S5 contributes 0 on every remote search and the file specifies redistribution only for the missing-window case, leaving remote scores' normalisation undecided on a number the spec commits to publishing.",
+      "evidence": "06.02-teacher-discovery-profiles-trials/06.02.03-teacher-discovery-match-criteria.md:87 — 'Signals are scored 0–1 and multiplied by the weight; the total is 0–100 and is **published**'.  :95 — '| S5 | **Recurrence-weighted proximity** ... | **10** | 0–25 | In-person only — contributes **0** for a remote search.'  The only redistribution rule given is for a different signal, at :208 — '| Student refuses to state a window (\"any time works\") | S1 (30) has nothing to score against and redistributes proportionally across S2–S8.'  D-10 at :307 publishes the weights to teachers: 'The **weights are published**; each teacher's **inputs are private to them**.'",
+      "failure_scenario": "A remote-only guitar search runs. One implementer redistributes S5's 10 points proportionally across S2–S8 by analogy with the stated S1 rule; another leaves them unallocated so every remote result tops out at 90. The two produce different orderings whenever two candidates differ mainly on reviews or page completeness, and the teacher-facing 'where each input is costing them' view (Role Lens, :28) reports different deficits for the same teacher depending on which build they are looking at — on a number D-10 commits to publishing precisely so it can be interrogated."
+    },
+    {
+      "findingId": "06-education-lessons-mentorship#011",
+      "unit": "06.02-teacher-discovery-profiles-trials",
+      "severity": "warning",
+      "dimension": 7,
+      "claim": "One open question in this unit defers solely to the completed MoSCoW pass, and the sub-domain CX's one Medium-confidence seam is held open against a question that has been resolved, with a role scoping marked [PENDING] against a completed stage and no owner.",
+      "evidence": "06.02-teacher-discovery-profiles-trials/06.02.04-trial-lessons-conversion.md:118 — '| Q-03 | Does the platform take a fee on a trial? ... | User | MoSCoW |' (sibling Q-01 on the same table carries a live fallback, 'MoSCoW / `/write-be-spec`'; Q-03 does not).  06.02-teacher-discovery-profiles-trials-cx.md:117-123 — 'CX-05 ... Its strength depends on 06.02.04 Q-02: an explicit outcome is far better data ... **Role scoping**: `[PENDING — /ideate-discover Step 5]`.'  But 06.02.04:117 records '| Q-02 | ~~Explicit vs inferred outcome~~ — **RESOLVED** by DT-04 / D-06: inferred from conversion, no explicit rating. | Agent | Closed |', and the Step 5 target is documented as complete at education-lessons-mentorship-index.md:123-125.",
+      "failure_scenario": "A downstream spec writer opening 06.02 CX to establish the trial→ranking feedback loop's role scoping finds a [PENDING] with no owner pointing at a run that has finished, and a stated dependency on a question closed two sections away in the file it links to. The CX's own warning ('Watch this one: if the loop resolves to \"inferred from conversion only\", the sub-domain's justification thins') has been triggered and never actioned; the trial-fee question has no stage left that will answer it."
+    },
+    {
+      "findingId": "06-education-lessons-mentorship#012",
+      "unit": "06.03-curriculum-assignments-practice",
+      "severity": "warning",
+      "dimension": 3,
+      "claim": "06.01.04 states an absolute, role-level prohibition on Operator content access; 06.03.02 grants the Operator a standing, undeclared read of minors' submitted audio and video. Neither file cites the other on this point, and neither supplies the declaration/consent mechanism that 06.01.04's own reasoning requires.",
+      "evidence": "06.01-lesson-booking-packages-delivery/06.01.04-lesson-delivery-session-record.md:370 D-13 — 'An Operator observing a lesson is a **consented, declared, per-occurrence participant** — never a role permission ... The Operator role grants occupancy and attendance, never content, at any tier. A standing silent content read over a child's lesson would make the platform the threat.'  VERSUS 06.03-curriculum-assignments-practice/06.03.02-assignments-submissions-timestamped-feedback.md:29 — '| Operator | Read-only | As an academy: reads assignments, submissions and feedback for **teachers on their roster** ... to quality-assure their staff. Survives the teacher leaving'. A submission is a minor's recording of themselves: :44 — 'A submission is audio or video — **declared by the assignment**' and D-13 at :201 defaults technique instruments to video. 06.03.02's own D-10 (:198) forbids the teacher forwarding the same artifact: 'A child's recording leaving the relationship it was made in is a safeguarding failure regardless of intent.'",
+      "failure_scenario": "A 10-year-old submits a video of their fretting hand to their academy teacher. Under 06.03.02 the academy head can open and watch it at any time, silently and retrospectively, and can still do so after the teacher leaves — the precise shape 06.01.04 D-13 rejects as 'a standing silent content read over a child's lesson'. One implementer builds the QA read as a plain Operator role permission per 06.03.02; another refuses it per D-13's 'never content, at any tier' and forces the declared per-occurrence pattern. Neither file says whether the student or guardian is told the academy can read the exchange — 06.03.02 edge 26 covers only the guardian's own visibility."
+    },
+    {
+      "findingId": "06-education-lessons-mentorship#013",
+      "unit": "06.03-curriculum-assignments-practice",
+      "severity": "warning",
+      "dimension": 3,
+      "claim": "The submission path is specified twice in mutually exclusive terms: the CX and the Role Lens state that no file picker or upload flow exists, while the same feature's decisions and edge table specify behaviour for an out-of-room upload rejected 'at selection, before transfer'.",
+      "evidence": "06.03-curriculum-assignments-practice/06.03-curriculum-assignments-practice-cx.md:99 — 'the submission is recorded from it. **No export step, no file picker, no upload flow.**' and 06.03.02-assignments-submissions-timestamped-feedback.md:27 — '**As Student**: ... records takes locally, picks one, submits with no export or file picker'.  VERSUS 06.03.02:99 — '| 5 | Out-of-room upload longer than 20:00 | **Rejected at selection, before transfer.** The file is still on the student's device, so nothing is lost' and D-15 at :203 — 'out-of-room uploads over 20:00 are rejected **at selection, before transfer**, with an actionable message'.",
+      "failure_scenario": "A student records on their phone's voice-memo app because the practice room's mic permission failed (06.03.04 edge case: 'No microphone permission | Tuner and record die'). Under the CX and Role Lens there is no way to get that file in — the submission is lost. Under D-15 and edge 5 there is a selection surface with a 20-minute cap. An implementer building the in-room-only path silently drops the fallback for the students 06.03.02 edge 9 identifies as the poorest ('Student has no way to record'); an implementer building both must invent the picker UI, its entry point and its interaction with the 10-minute in-room cap, none of which is specified."
+    },
+    {
+      "findingId": "06-education-lessons-mentorship#014",
+      "unit": "06.03-curriculum-assignments-practice",
+      "severity": "warning",
+      "dimension": 7,
+      "claim": "Two seams in the sub-domain CX carry role scoping marked [PENDING] with no owner and either no target at all or a target the tree documents as a completed run.",
+      "evidence": "06.03-curriculum-assignments-practice/06.03-curriculum-assignments-practice-cx.md:151 — '### CX-06: Curriculum ↔ Progress Reports ... **Role scoping**: `[PENDING — /ideate-discover Step 5]`.' and :164 — '### CX-07: Assignments ↔ Progress Reports ... **Role scoping**: `[PENDING]`.'  The Step 5 run is recorded as completed at education-lessons-mentorship-index.md:123 ('Deferral target re-pointed from the completed `/ideate-discover` Step 5 run') and :125. Every Open Questions row in this unit is by contrast well-formed with a live target, which makes these two the only unowned items in it.",
+      "failure_scenario": "A spec writer resolving who may read the coverage half of a progress report, or the submission-history input to it, finds a bare [PENDING] with no owner and no stage scheduled to fill it. Because 06.03's privacy model is asymmetric by design (D-11 gives the guardian the full feedback exchange and none of the diary; sub-domain D-03 walls the report's reader off from the log), the missing role scoping is exactly the place the asymmetry would be got wrong, and there is no owner to ask."
+    },
+    {
+      "findingId": "06-education-lessons-mentorship#015",
+      "unit": "06.04-course-marketplace-authoring",
+      "severity": "warning",
+      "dimension": 3,
+      "claim": "The shape of the authoring tool — the feature's central product decision — is parked behind a marker with no owner pointing at a completed stage, is covered by none of the file's four open questions, and is mis-attributed upstream to a question about a different subject.",
+      "evidence": "06.04-course-marketplace-authoring/06.04.01-course-authoring-publishing.md:47 — '`[PENDING — /ideate-discover Step 5]`: the authoring tool's actual shape. Whether it is a video-first LMS builder, a lightweight \"record from the practice room\" flow, or an import from existing YouTube content, is a real product decision'.  The file's Q-01 (:120) is about the stalled 4-of-20 course ('whether an incomplete course may be sold at all'), Q-02 academy staff rights, Q-03 versioning (resolved), Q-04 the repertoire library — none covers tool shape.  Upstream, education-lessons-mentorship-cx.md:284 attributes it to the wrong row: 'Unresolved only because it depends on 06.04's authoring shape (06.04.01 Q-01 — if the authoring tool is \"record from the room\", this is near-free).'",
+      "failure_scenario": "CX-11 (a recorded masterclass becoming a course) and 06.05 Q-03 both turn on whether the authoring tool can capture from a room. Following the citation to 06.04.01 Q-01 lands on the stalled-course commercial question, which says nothing about capture. The tool-shape decision itself sits behind a [PENDING] whose stage has finished, with no owner. An implementer defaults to the video-first LMS builder implied by the Behavior section, which silently forecloses the 'near-free' masterclass bridge that two other files are costing their own scope against."
+    },
+    {
+      "findingId": "06-education-lessons-mentorship#016",
+      "unit": "06.04-course-marketplace-authoring",
+      "severity": "warning",
+      "dimension": 7,
+      "claim": "Five open questions across this unit — including its two most consequential, by their own text — defer solely to 'MoSCoW', a pass this tree documents as completed and re-points away from everywhere else. None carries a live fallback target.",
+      "evidence": "06.04-course-marketplace-authoring-index.md:76 — '| Q-01 | Is the course marketplace **open** ... or **curated** ...? | User | MoSCoW |'; :78 — '| Q-03 | Are **course completion certificates** issued (06.08) ...? | User | MoSCoW |'.  06.04.02-course-catalog-pricing-enrollment.md:136 — '| Q-01 | Which pricing models ship? ... **The most consequential call in the sub-domain** ... | User | MoSCoW |'; :139 — '| Q-04 | Per DT-02: should courses be the domain's **first slice** ...? | User | MoSCoW |'.  06.04.03-course-consumption-completion.md:117 — '| Q-02 | Offline download ... | User | MoSCoW |'.  The pass is recorded as complete at education-lessons-mentorship-index.md:122 and the canonical first-slice row was re-pointed to `/plan-phase` there, leaving 06.04.02 Q-04 pointing at a dead stage while its own canonical row points at a live one.",
+      "failure_scenario": "The open-vs-curated call governs the publish gate's completeness bar (06.04.01 D-06 explicitly defers to it: 'Any stricter bar is governed by Q-01'), the moderation surface with minors as buyers, and CX-05's whole unresolved seam. It is owned by the User and scheduled at a stage that has already run and closed without answering it, so no downstream stage will surface it. An implementer building the publish gate has to guess whether a minimum lesson count applies, and the guess determines whether half-finished courses reach a catalogue with children in the buyer pool."
+    },
+    {
+      "findingId": "06-education-lessons-mentorship#017",
+      "unit": "06-education-lessons-mentorship",
+      "severity": "warning",
+      "dimension": 3,
+      "claim": "Three behaviours in 06.06 Mentorship are marked [PENDING — Step 5] with no owner, a completed target stage, and no covering row in the file's Open Questions table — leaving an undefined product state and an undefined abuse control.",
+      "evidence": "06.06-mentorship-programmes.md:59 — '| Mentor is overwhelmed by applications | ... | `[PENDING — Step 5]` — application caps, or closing when full |'; :60 — '| Mentee wants a job, not mentorship | Common and corrosive ... | `[PENDING — Step 5]` — expectation-setting is a design problem here |'; :76 — '| Lapsed | Cadence missed repeatedly | `[PENDING — Step 5]` — surface it gently or let it die quietly? |'.  The file's Q-01..Q-04 (:112-115) cover pairing model, the Services-05 boundary, sub-domain promotion, and the adult power-imbalance risk class — none of these three. The Step 5 run is recorded as completed at education-lessons-mentorship-index.md:123.",
+      "failure_scenario": "A well-known producer offers 2 mentorship places (D-03: capacity 1–3) and receives 200 applications. Whether the platform caps applications, closes the listing when full, or lets all 200 through is undecided and unowned — and the file itself calls the uncapped outcome 'a bad experience for 200 people'. Separately, the `Lapsed` state exists in the States table with no defined rendering: one implementer surfaces a nudge (which DT-02 argues drives mentors off the platform), another lets it die silently (which leaves the mentee with no signal). No stage is scheduled to rule on either.",
+      "forcedInvention": "Whether mentor application caps exist; and what the Lapsed state renders."
+    },
+    {
+      "findingId": "06-education-lessons-mentorship#018",
+      "unit": "06-education-lessons-mentorship",
+      "severity": "warning",
+      "dimension": 3,
+      "claim": "06.08's Happy Path specifies automatic certificate issuance on completion; the same file's Cross-Cut Notes, 06.04's CX and the domain CX all record automatic issuance as rejected. The one survivor D-02 contemplates therefore has no defined issuance trigger.",
+      "evidence": "06.08-certificates-badges-verification.md:50 — '2. Certificate issues **automatically** in the author's or academy's name'.  VERSUS the same file :86 — 'Touches **06.04.03 Course Consumption** — the completion trigger. Note 06.04 CX R-04 already rejected auto-issuance.'; 06.04-course-marketplace-authoring-cx.md:152 R-04 — 'Considered auto-issuing a certificate on completion — the LMS default. **Rejected** at breadth on demand grounds'; education-lessons-mentorship-cx.md:257 — 'Trigger chain: Completion → issuance is **rejected as automatic** (`06.04-...-cx.md#R-04`).'",
+      "failure_scenario": "06.08 D-02 keeps one survivor — 'the academy-issued certificate for children' — alive as the only case with real demand. An implementer building it has a Happy Path saying issuance is automatic and three other artifacts saying automatic issuance was rejected, with no manual trigger specified anywhere (no Operator action, no term-end hook, no approval step of the kind 06.03.05 D-02 mandates for reports). The whole feature is banded `wont` in the ledger, which limits the blast radius, but the contradiction is unmarked on the Happy Path side."
+    },
+    {
+      "findingId": "06-education-lessons-mentorship#019",
+      "unit": "06-education-lessons-mentorship",
+      "severity": "warning",
+      "dimension": 5,
+      "claim": "The domain's success-measure question is closed on the finding that exactly one measure exists — an exam-board grade — and the feature that supplies it is separately decided to be absent in the ratified primary market. The consequence, that the domain has no working success measure where it will actually launch, is stated nowhere and tracked by no open row.",
+      "evidence": "education-lessons-mentorship-index.md:127 — '| Q-08 | ~~Does the domain have any success metric it can measure?~~ **RESOLVED — exactly one, and the platform does not own it: an exam-board grade.** ... | User | Closed |'.  VERSUS 06.09-exam-board-alignment.md:107 D-03 — 'The feature is **absent**, not empty, for teachers who don't use grades | Most of the world, and nearly all of the US.' and its Q-01 resolution at :115 — 'the market priority has since been decided by the owner: the US ... **D-32** ... So: no board is required for the primary market'.  Q-08's own residual pointer sends the reader to 'the measure exists only where the graded tradition does (06.09 D-03, 06.09 Q-01 at MoSCoW)' — but 06.09 Q-01 is now Closed, so the pointer terminates without carrying the gap forward.",
+      "failure_scenario": "A PRD author reads Q-08 as closed and takes the exam grade as the domain's progress measure, then discovers at 06.09 D-03 that the feature renders nothing at all for nearly every US teacher — and D-32 makes the US the launch market. The domain's other three progress candidates were each rejected as unmeasurable (06.03.05 DT-02, 06.04.03 DT-02, 06.08 DT-02), so in the primary market the domain has zero measurable success criteria, no metric with a number, a unit or a timeframe anywhere in its index, and no open row assigned to anyone to notice."
+    },
+    {
+      "findingId": "06-education-lessons-mentorship#020",
+      "unit": "06-education-lessons-mentorship",
+      "severity": "warning",
+      "dimension": 7,
+      "claim": "Four cross-cut seams in the domain CX carry role scoping marked [PENDING] with no owner — two against a stage the same tree records as completed, two with no target at all.",
+      "evidence": "education-lessons-mentorship-cx.md:231 — '### CX-08: Learning Paths ↔ Course Marketplace ... **Role scoping**: `[PENDING — /ideate-discover Step 5]`, pending 06.07 Q-01'; :274 — '### CX-10: Mentorship ↔ Teacher Discovery ... **Role scoping**: `[PENDING — /ideate-discover Step 5]`, pending 06.06 Q-01'; :287 — '### CX-11 ... **Role scoping**: `[PENDING]`.'; :302 — '### CX-12 ... **Role scoping**: `[PENDING]`.'  The same index that owns this CX documents Step 5 as finished — education-lessons-mentorship-index.md:123, 'Deferral target re-pointed from the completed `/ideate-discover` Step 5 run' — and re-points its own rows accordingly; these four were not re-pointed.",
+      "failure_scenario": "CX-11 (a recorded masterclass is a course) and CX-12 (exam boards as a discovery filter) each describe an object crossing a feature boundary with real access consequences — who may sell a recorded masterclass, who may filter on a board — and both hold their role scoping at a bare [PENDING] with nobody assigned and no stage named. Unlike the file's other deferrals, there is nothing to follow: a downstream spec writer either invents the role scoping or ships the seam unscoped."
+    }
+  ]
+}

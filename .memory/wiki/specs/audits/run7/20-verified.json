@@ -1,0 +1,359 @@
+{
+  "reportKind": "ambiguity-audit-verification",
+  "run": 7,
+  "domain": "20-fanbase-direct-to-fan",
+  "rawReport": "20-raw.json",
+  "rawFindingCount": 18,
+  "verdicts": [
+    {
+      "findingId": "R7-20.01-001",
+      "upheld": true,
+      "finalSeverity": "warning",
+      "reason": "Upheld: live open-question rows name an owner and a deferred stage, but the table records neither a deadline nor a blocked decision; a target pipeline stage is not a deadline under Dimension 7.",
+      "evidence": [
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/20-fanbase-direct-to-fan/20.01-fan-graph-owned-audience/20.01-fan-graph-owned-audience-index.md",
+          "line": 65,
+          "excerpt": "| # | Question | Owner | Deferred To |"
+        },
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/20-fanbase-direct-to-fan/20.01-fan-graph-owned-audience/20.01-fan-graph-owned-audience-index.md",
+          "line": 69,
+          "excerpt": "Q-03 ... | User | `/create-prd-security` |"
+        }
+      ]
+    },
+    {
+      "findingId": "R7-20.01-002",
+      "upheld": true,
+      "finalSeverity": "blocking",
+      "reason": "Upheld: weak-provenance sending and re-permission legality remain PENDING, while the importer also leaves its stale-consent outcome PENDING. The consent feature supplies a different age-only default, so the current sources are incomplete and internally inconsistent for a core import edge case.",
+      "evidence": [
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/20-fanbase-direct-to-fan/20.01-fan-graph-owned-audience/20.01-fan-graph-owned-audience-cx.md",
+          "line": 41,
+          "excerpt": "[PENDING] on whether weak-provenance records are sendable-with-warning or hard-blocked until re-permissioned."
+        },
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/20-fanbase-direct-to-fan/20.01-fan-graph-owned-audience/20.01.04-fan-list-import-hygiene.md",
+          "line": 57,
+          "excerpt": "[PENDING] on whether stale consent ... blocks."
+        },
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/20-fanbase-direct-to-fan/20.01-fan-graph-owned-audience/20.01.02-consent-legal-basis.md",
+          "line": 84,
+          "excerpt": "blocks no send on age alone."
+        }
+      ]
+    },
+    {
+      "findingId": "R7-20.02-001",
+      "upheld": true,
+      "finalSeverity": "warning",
+      "reason": "Upheld: the open-question table supplies owner and deferred stage only; it does not record a deadline or the decision blocked by the cross-entity-segment question.",
+      "evidence": [
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/20-fanbase-direct-to-fan/20.02-segmentation-superfan-intelligence/20.02-segmentation-superfan-intelligence-index.md",
+          "line": 58,
+          "excerpt": "| # | Question | Owner | Deferred To |"
+        },
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/20-fanbase-direct-to-fan/20.02-segmentation-superfan-intelligence/20.02-segmentation-superfan-intelligence-index.md",
+          "line": 62,
+          "excerpt": "Q-03 ... Resolve before either ships. | Agent | `/create-prd-architecture` |"
+        }
+      ]
+    },
+    {
+      "findingId": "R7-20.02-002",
+      "upheld": true,
+      "finalSeverity": "blocking",
+      "reason": "Upheld: the privacy constraint for individually targeted sends has no chosen floor or value. The source explicitly leaves the send rule PENDING and escalates it because the author is not confident enough to decide it.",
+      "evidence": [
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/20-fanbase-direct-to-fan/20.02-segmentation-superfan-intelligence/20.02.01-segment-builder.md",
+          "line": 77,
+          "excerpt": "[PENDING] on whether a k-anonymity floor applies to sends."
+        },
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/20-fanbase-direct-to-fan/20.02-segmentation-superfan-intelligence/20.02.01-segment-builder.md",
+          "line": 99,
+          "excerpt": "the floor belongs on send and on export ... I am not confident enough to call it."
+        }
+      ]
+    },
+    {
+      "findingId": "R7-20.02-003",
+      "upheld": true,
+      "finalSeverity": "warning",
+      "reason": "Upheld: redemption is specified to feed the score, creating a self-reinforcing ratchet, but no policy is selected from the listed alternatives. That leaves the perk/score interaction incomplete.",
+      "evidence": [
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/20-fanbase-direct-to-fan/20.02-segmentation-superfan-intelligence/20.02-segmentation-superfan-intelligence-cx.md",
+          "line": 67,
+          "excerpt": "Feeding it back into the score means fans who got a perk score higher, so they get the next perk."
+        },
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/20-fanbase-direct-to-fan/20.02-segmentation-superfan-intelligence/20.02-segmentation-superfan-intelligence-cx.md",
+          "line": 81,
+          "excerpt": "[PENDING — owner ruling] ... Options: exclude ... weight it low; or hold back a slice."
+        }
+      ]
+    },
+    {
+      "findingId": "R7-20.03-001",
+      "upheld": true,
+      "finalSeverity": "warning",
+      "reason": "Upheld: the sending-domain question has an owner and a deferred stage, but no deadline or recorded blocked decision, which does not meet Dimension 7.",
+      "evidence": [
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/20-fanbase-direct-to-fan/20.03-broadcast-fan-messaging/20.03-broadcast-fan-messaging-index.md",
+          "line": 61,
+          "excerpt": "| # | Question | Owner | Deferred To |"
+        },
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/20-fanbase-direct-to-fan/20.03-broadcast-fan-messaging/20.03-broadcast-fan-messaging-index.md",
+          "line": 63,
+          "excerpt": "Q-01 ... shared domain ... or per-artist authenticated domains? | User | `/create-prd-architecture` |"
+        }
+      ]
+    },
+    {
+      "findingId": "R7-20.03-002",
+      "upheld": true,
+      "finalSeverity": "blocking",
+      "reason": "Upheld: sender-health thresholds, ramp curves, and reputation model remain PENDING; the blocklist response has no runbook and the complaint breaker has no numeric trigger. The required success measures are not specified with numbers, units, and timeframes.",
+      "evidence": [
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/20-fanbase-direct-to-fan/20.03-broadcast-fan-messaging/20.03.04-deliverability-sender-reputation.md",
+          "line": 44,
+          "excerpt": "[PENDING] — thresholds, ramp curves, reputation model."
+        },
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/20-fanbase-direct-to-fan/20.03-broadcast-fan-messaging/20.03.04-deliverability-sender-reputation.md",
+          "line": 60,
+          "excerpt": "[PENDING] — needs an incident runbook, not a UI."
+        },
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/20-fanbase-direct-to-fan/20.03-broadcast-fan-messaging/20.03.03-send-scheduling-throttling.md",
+          "line": 57,
+          "excerpt": "Complaint spike mid-send | Rate drops or halts immediately."
+        }
+      ]
+    },
+    {
+      "findingId": "R7-20.04-001",
+      "upheld": true,
+      "finalSeverity": "warning",
+      "reason": "Upheld: the open-question table records owner and deferred stage only; its high-impact D2F revenue questions have no deadline or recorded blocked decision.",
+      "evidence": [
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/20-fanbase-direct-to-fan/20.04-direct-to-fan-storefront/20.04-direct-to-fan-storefront-index.md",
+          "line": 70,
+          "excerpt": "| # | Question | Owner | Deferred To |"
+        },
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/20-fanbase-direct-to-fan/20.04-direct-to-fan-storefront/20.04-direct-to-fan-storefront-index.md",
+          "line": 72,
+          "excerpt": "Q-01 ... Deferral expired ... | User | `/create-prd` |"
+        }
+      ]
+    },
+    {
+      "findingId": "R7-20.04-002",
+      "upheld": true,
+      "finalSeverity": "blocking",
+      "reason": "Upheld: central payment compliance constraints remain open: money-transmitter status, tax obligations, and the versioned terms record/resolution model. The source has a worked payout path, but its open-question section still leaves these requirements undecided or unmodeled.",
+      "evidence": [
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/20-fanbase-direct-to-fan/20.04-direct-to-fan-storefront/20.04.04-d2f-revenue-split-payout.md",
+          "line": 188,
+          "excerpt": "Does holding collaborator funds ... make WeJammin a regulated money transmitter / e-money institution?"
+        },
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/20-fanbase-direct-to-fan/20.04-direct-to-fan-storefront/20.04.04-d2f-revenue-split-payout.md",
+          "line": 190,
+          "excerpt": "Tax & fiscal compliance ... Confirm collection points, withholding, and reporting obligations."
+        },
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/20-fanbase-direct-to-fan/20.04-direct-to-fan-storefront/20.04.04-d2f-revenue-split-payout.md",
+          "line": 191,
+          "excerpt": "The versioned platform basis-terms record is new specification work ... not modelled anywhere."
+        }
+      ]
+    },
+    {
+      "findingId": "R7-20.05-001",
+      "upheld": true,
+      "finalSeverity": "warning",
+      "reason": "Upheld: the fulfilment-milestone question has a named owner and deferred stage but no deadline or identified blocked decision, so the open-question record fails Dimension 7.",
+      "evidence": [
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/20-fanbase-direct-to-fan/20.05-memberships-patronage-campaigns/20.05-memberships-patronage-campaigns-index.md",
+          "line": 65,
+          "excerpt": "| # | Question | Owner | Deferred To |"
+        },
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/20-fanbase-direct-to-fan/20.05-memberships-patronage-campaigns/20.05-memberships-patronage-campaigns-index.md",
+          "line": 68,
+          "excerpt": "Q-02 | What are the fulfilment milestones ... and who verifies them? | User | `/create-prd-security` |"
+        }
+      ]
+    },
+    {
+      "findingId": "R7-20.05-002",
+      "upheld": true,
+      "finalSeverity": "blocking",
+      "reason": "Upheld: milestone verification, advance tranches, insolvency protection, and partial-fulfilment refunds remain unresolved. These are core backer-funds behaviors rather than optional detail, leaving the feature incomplete.",
+      "evidence": [
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/20-fanbase-direct-to-fan/20.05-memberships-patronage-campaigns/20.05.05-backer-funds-fulfilment.md",
+          "line": 41,
+          "excerpt": "Which surfaces the unsolved problem ... who verifies a milestone?"
+        },
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/20-fanbase-direct-to-fan/20.05-memberships-patronage-campaigns/20.05.05-backer-funds-fulfilment.md",
+          "line": 62,
+          "excerpt": "[PENDING — Q-01, `/create-prd`] — an owner call ... I do not have a good answer."
+        },
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/20-fanbase-direct-to-fan/20.05-memberships-patronage-campaigns/20.05.05-backer-funds-fulfilment.md",
+          "line": 67,
+          "excerpt": "Who gets refunded — first-come, pro-rata? | [PENDING — `/create-prd`]"
+        }
+      ]
+    },
+    {
+      "findingId": "R7-20.06-001",
+      "upheld": true,
+      "finalSeverity": "warning",
+      "reason": "Upheld: current fan-discovery questions retain an owner and stage but omit a deadline and a recorded blocked decision, which is insufficient for Dimension 7.",
+      "evidence": [
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/20-fanbase-direct-to-fan/20.06-fan-experience-discovery/20.06-fan-experience-discovery-index.md",
+          "line": 67,
+          "excerpt": "| # | Question | Owner | Deferred To |"
+        },
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/20-fanbase-direct-to-fan/20.06-fan-experience-discovery/20.06-fan-experience-discovery-index.md",
+          "line": 71,
+          "excerpt": "Q-03 ... recommendation ... | User | `/create-prd` |"
+        }
+      ]
+    },
+    {
+      "findingId": "R7-20.06-002",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "reason": "Refuted: the live source resolves the mobile-surface decision to web plus PWA for v1 with PWA web push, and the cited canonical decision locks native as phase 2. The cited phone-shaped concern is not an unresolved constraint conflict.",
+      "evidence": [
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/20-fanbase-direct-to-fan/20.06-fan-experience-discovery/20.06.02-gig-alerts-near-me.md",
+          "line": 124,
+          "excerpt": "Resolved — D-28 ... v1 is web + PWA, and PWA web push is the alert channel; a native app is phase 2."
+        },
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/ideation-index.md",
+          "line": 214,
+          "excerpt": "Mobile = native app is phase 2 (v1 = web + PWA)."
+        }
+      ]
+    },
+    {
+      "findingId": "R7-20.06-003",
+      "upheld": true,
+      "finalSeverity": "blocking",
+      "reason": "Upheld: the no-account follow path is required to work, but its durable identity, later-account linking, duplicate handling, and email-capture consent remain undecided. This leaves a core follow flow incomplete.",
+      "evidence": [
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/20-fanbase-direct-to-fan/20.06-fan-experience-discovery/20.06.01-artist-tracking-follow.md",
+          "line": 63,
+          "excerpt": "Needs an anonymous-to-identified path (email-only, then upgrade)."
+        },
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/20-fanbase-direct-to-fan/20.06-fan-experience-discovery/20.06.01-artist-tracking-follow.md",
+          "line": 118,
+          "excerpt": "what is undecided is the identity model ... how it links on later signup ... and what consent that email capture does and does not carry."
+        }
+      ]
+    },
+    {
+      "findingId": "R7-20.06-004",
+      "upheld": true,
+      "finalSeverity": "warning",
+      "reason": "Upheld: the source now explicitly records, rather than resolves, the 25-mi/40-km versus 80-km/50-mi conflict. The owner-tagged question has no decision, so the radius constraint remains ambiguous.",
+      "evidence": [
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/20-fanbase-direct-to-fan/20.06-fan-experience-discovery/20.06.02-gig-alerts-near-me.md",
+          "line": 116,
+          "excerpt": "Radius conflict recorded ... 20.01.03 D-05 uses 80 km / 50 mi ... needs an explicit owner ruling."
+        },
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/20-fanbase-direct-to-fan/20.06-fan-experience-discovery/20.06.02-gig-alerts-near-me.md",
+          "line": 128,
+          "excerpt": "20.06.02 uses 25 mi / 40 km; 20.01.03 D-05 uses 80 km / 50 mi ... a real product question."
+        }
+      ]
+    },
+    {
+      "findingId": "R7-20.07-001",
+      "upheld": true,
+      "finalSeverity": "warning",
+      "reason": "Upheld: unresolved demand-request questions have owners and target stages only; no deadline or recorded blocked decision is supplied as Dimension 7 requires.",
+      "evidence": [
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/20-fanbase-direct-to-fan/20.07-fan-demand-show-requests.md",
+          "line": 114,
+          "excerpt": "| # | Question | Owner | Deferred To |"
+        },
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/20-fanbase-direct-to-fan/20.07-fan-demand-show-requests.md",
+          "line": 116,
+          "excerpt": "Q-01 ... Are requests public ... or artist-only ...? | User | `/create-prd` |"
+        }
+      ]
+    },
+    {
+      "findingId": "R7-20.07-002",
+      "upheld": true,
+      "finalSeverity": "warning",
+      "reason": "Upheld: the Role Lens promises that fans see others asking, while the current open question says public versus artist-only visibility is unreconciled. The cited booking source instead describes aggregation surfaced to artist and promoters, leaving the fan-visible behavior incomplete.",
+      "evidence": [
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/20-fanbase-direct-to-fan/20.07-fan-demand-show-requests.md",
+          "line": 28,
+          "excerpt": "Fan | Full (requests) | Asks for a show in their city. Sees others asking."
+        },
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/20-fanbase-direct-to-fan/20.07-fan-demand-show-requests.md",
+          "line": 116,
+          "excerpt": "Unreconciled today ... public ... or artist-only ... names no fan-visible count."
+        },
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/17-live-booking-settlement/17.13-fan-demand-signals.md",
+          "line": 26,
+          "excerpt": "aggregated by market and surfaced to the artist and, at their discretion, to promoters."
+        }
+      ]
+    },
+    {
+      "findingId": "R7-20.07-003",
+      "upheld": true,
+      "finalSeverity": "blocking",
+      "reason": "Upheld: the demand map requires a k-anonymity floor, but the specification still supplies neither a threshold nor whether it also covers explicit requests. The privacy constraint is therefore not explicit.",
+      "evidence": [
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/20-fanbase-direct-to-fan/20.07-fan-demand-show-requests.md",
+          "line": 110,
+          "excerpt": "D-05 | k-anonymity floor on the map"
+        },
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/20-fanbase-direct-to-fan/20.07-fan-demand-show-requests.md",
+          "line": 120,
+          "excerpt": "What is k, and does the floor cover explicit requests as well as passive density?"
+        }
+      ]
+    }
+  ],
+  "coverage": "All 18 finding IDs from 20-raw.json are present exactly once; no additional findings were added."
+}

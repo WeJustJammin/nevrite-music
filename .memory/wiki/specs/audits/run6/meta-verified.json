@@ -1,0 +1,40 @@
+{
+  "domain": "meta",
+  "verdicts": [
+    {
+      "findingId": "meta#001",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "Quotes verified verbatim (constraints.md:199 'capture credit + split at source'; constraints.md:242 'a signed document at creation'). But the correction is not absent — it is six lines below line 199 inside the same table: constraints.md:205 reads 'capture at the **first sharing moment** (D-70, 2026-07-22; capture-at-source is the *direction*, not the v1 claim — see § Project Surfaces, Desktop row)'. constraints.md:292 states the Desktop prohibition ('NOT AUTHORISED ... no watch-folder agent, no DAW plugin'), and problem-statement.md:36-51 carries a dedicated '### Where capture actually happens in v1 (D-70, 2026-07-22)' section with the two-rung table and the sentence 'nothing v1 ships may say that it is'. Line 199 is a one-line slogan opening a section whose substantive content is the very table that corrects it; line 242's 'a signed document at creation' is a capture-vs-collection contrast ('capture now, collect later', :244), not a capture-point claim. The auditor's specific failure scenario — a writer shipping v1 positioning copy that overclaims — is itself a tracked deferral: competitive-landscape.md:105 Q-04 states 'D-70 restated the v1 position from \"capture at source / present at the moment of creation\" to \"capture at the first sharing moment\" ... this page must be re-read against the new wording before v1 positioning copy is finalised' with Owner=User and Target=/create-prd. No competent reader of § Release Plan reaches line 205 and still scopes a DAW trigger."
+    },
+    {
+      "findingId": "meta#002",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "no-real-divergence",
+      "reason": "Quotes verified verbatim at cross-cut-emergent-capabilities.md:239 ('~85 of the 101'), :252 ('~65'), :250-253 and :5. But the core claim 'No reading reconciles them' is false. (a) Every count is explicitly tilde-approximate, so ~10+2+~65+~8 against ~101 is within stated slop. (b) The classes are not a partition and are not enumerations — the 'Representative entries' column names ~6-12 IDs per class, and B3 appears in BOTH row 252 and row 253, proving the rows are illustrative samples rather than a disjoint tally. (c) The reconciling reading is recorded in the ratified decision: ideation-index.md:212 D-26 restates the figure as '~85 of 101 flagged boundary problems are legitimate seam-work between near-mirror domains ... and ~10 flags are explicit clean-seam counter-examples FOR the split' — i.e. ~85 is the not-a-merge-signal total that line 239's contrast clause ('not domain merger') is asserting, with ~65 the finer extraction sub-count. (d) The failure scenario does not survive contact with the file: the mechanism-extraction workstream is sized from the § 1 table, which lines 8-9 designate 'the authoritative \"extract-me-as-shared\" list', not from boundary-problem headcounts that have no per-item backlog at either number. The actionable verdict — keep 24 domains, one genuine merge candidate 08 -> 07 escalated to /create-prd (:259, D-26) — is unambiguous and identical under both readings."
+    },
+    {
+      "findingId": "meta#003",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "tracked-deferral",
+      "reason": "Quote verified verbatim at cross-cut-emergent-capabilities.md:124, and the tree-wide search is confirmed: over 1,122 ideation .md files, 'push-at-purchase' and 'Purchased-Input Clearance' each appear in this file only. The heading list is also as claimed (20, 129, 223, 276 — no '## Open Questions'). The refutation is that the target stage is carried at file level rather than row level: cross-cut-emergent-capabilities.md:7-9 states 'Downstream contract: `/create-prd` (architecture + shared-mechanism registry), `/decompose-architecture` (domain/shard boundaries), and `/audit-ambiguity` inherit this file. The **New Cross-Cut Mechanisms** table is the authoritative \"extract-me-as-shared\" list'. § 1 is by construction a register of unbuilt candidate mechanisms handed to /create-prd, so an 'Open Q:' written into a § 1 row is a question delivered to a named deciding stage, not an untracked one. The row itself is visible in the artifact that stage is contractually required to consume. Separately, push-at-purchase vs pull-as-of-at-release is a clearance-propagation architecture choice squarely inside /create-prd's remit, and the mechanism serves 07/09/12/14 — 14 is v1.5 and 12 is phase-2 per constraints.md:211-228 — so no v1 implementer reaches the fork at all. That the sibling Practice-Room Tools row additionally got a row-level entry in ideation-cx.md:50 shows tracking granularity varies, not that this question is unregistered."
+    },
+    {
+      "findingId": "meta#004",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "All four quotes verified verbatim: constraints.md:3 '[DEEP]', competitive-landscape.md:3 '[DEEP]', ideation-index.md:94 and :95 '[PARTIAL]', with :91-93 and :96 '[DEEP]' as claimed. But the index rows are not unexplained drift — each file documents exactly why it is not closed, with owner and target. competitive-landscape.md:98 has an '## Open Questions' section whose :105 Q-04 reads 'Is the restated v1 claim still competitively differentiating? ... this page must be re-read against the new wording before v1 positioning copy is finalised', Owner=User, Target=/create-prd — the precise re-read the auditor speculates PARTIAL 'was plausibly flagging'. constraints.md:19-29 carries '### Stack Decisions Still Open' with five `[PENDING — /create-prd]` rows, and :133-142 '### Open Infrastructure Actions' with two open items (DNS, User->Org conversion). The headers are also correctly scoped, not overclaims: constraints.md:4 enumerates what '[DEEP]' covers — 'Budget, Timeline, Team, V1 Scope, Compliance, Performance, and Surfaces' — none of which are the open stack/infra items. The failure scenario is directly blocked by the file: constraints.md:8-9 'These were declared by the owner up front and are **inputs** to `/create-prd`, not open decisions for it' and :21 'The locked table above is settled. These remain open and belong to `/create-prd-stack`.' An agent cannot read constraints.md and re-open budget/timeline/team."
+    },
+    {
+      "findingId": "meta#005",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "no-real-divergence",
+      "reason": "The arithmetic is confirmed independently: counting markdown data rows (rows following a separator, headers excluded) gives § 1 = 54 mechanism rows and § 2 = 83 feature rows, against ideation-index.md:78 '52 / 76' and :213 D-27 '**52 new cross-cut mechanisms** and **76 new features**'. So the drift is real as arithmetic. It is not a divergence an implementer can act on wrongly, because the file states which artifact wins: cross-cut-emergent-capabilities.md:8-9 'The **New Cross-Cut Mechanisms** table is the authoritative \"extract-me-as-shared\" list — anything here must NOT be rebuilt per-domain.' A registry is commissioned by walking that table, not by trusting a headcount in a metrics row or a dated decision-log entry. D-27 is a decision record stamped '/ideate-discover Step 6, 2026-07-18' — a historical statement of what that run surfaced, and the tree has demonstrably kept editing this file since (the D-70/D-71 sweep is dated 2026-07-22), so a decision-log figure trailing a live table is expected, not contradictory. The index also already reports three different mechanism counts for three different artifacts (:74 '25 — in ideation-cx.md', :78 '52', file § 1 = 54), confirming these are separate registers rather than one number stated twice. § 2 is internally consistent with itself at :131 'Deduped from 90 candidates' -> 83 rows."
+    }
+  ]
+}

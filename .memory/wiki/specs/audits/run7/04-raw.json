@@ -1,0 +1,169 @@
+{
+  "reportKind": "ambiguity-audit-raw",
+  "run": 7,
+  "domain": "04-opportunities-casting",
+  "unitsAudited": 6,
+  "filesRead": 35,
+  "coverageNote": "Audited all 35 current Markdown sources under .memory/wiki/specs/ideation/04-opportunities-casting/ as six units: 04.01, 04.02, 04.03, 04.04, 04.05, and 04.06-04.07 with the domain root. Each file received implementer simulation, rubric scoring, and devil's-advocate probing. No path under .memory/wiki/specs/audits/ was read.",
+  "applicableCheckpoints": 48,
+  "findings": [
+    {
+      "findingId": "R7-04-001",
+      "unit": "04.06-04.07-and-domain-root",
+      "severity": "high",
+      "dimension": 2,
+      "claim": "Function/private-hire buyers and crew are required by the domain but have no persona or authority model, so their access and posting powers cannot be implemented without inventing product truth.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/04-opportunities-casting/opportunities-casting-index.md",
+          "line": 87,
+          "excerpt": "The function/private-hire buyer ... is not a Musician, Producer, Operator or Fan. Out of scope, civilian/Fan-tier account, or a 5th persona?"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/04-opportunities-casting/opportunities-casting-index.md",
+          "line": 88,
+          "excerpt": "Crew are not covered by the 4 personas. A lighting tech is not a Musician."
+        }
+      ],
+      "forcedInvention": "Choose whether each actor is out of scope, uses an existing account tier, or becomes a new persona, then assign its posting and review authority.",
+      "failureScenario": "A function-gig or crew flow either denies a core actor or grants that actor permissions intended for a different role."
+    },
+    {
+      "findingId": "R7-04-002",
+      "unit": "04.01-opportunity-posting-targeting",
+      "severity": "high",
+      "dimension": 7,
+      "claim": "The open-question register records an owner and deferred stage, but not the required deadline or decision blocked; this leaves the legal criteria policy unscheduled.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/04-opportunities-casting/04.01-opportunity-posting-targeting/04.01-opportunity-posting-targeting-index.md",
+          "line": 52,
+          "excerpt": "| # | Question | Owner | Deferred To |"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/04-opportunities-casting/04.01-opportunity-posting-targeting/04.01.01-opportunity-post-type-taxonomy.md",
+          "line": 342,
+          "excerpt": "Which protected characteristics are lawful occupational requirements ... and does WeJammin take a position stricter than the law? ... the content is a legal and product-values decision."
+        }
+      ],
+      "forcedInvention": "Choose when the legal policy must be settled and whether a jurisdiction-specific eligibility criterion can be configured or published before then.",
+      "failureScenario": "Eligibility validation may permit unlawful protected-characteristic filters or block lawful occupational requirements without an approved policy."
+    },
+    {
+      "findingId": "R7-04-003",
+      "unit": "04.02-discovery-matching-alerts",
+      "severity": "high",
+      "dimension": 7,
+      "claim": "The open-question register omits the required deadline and decision blocked for the public-versus-login-walled board decision.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/04-opportunities-casting/04.02-discovery-matching-alerts/04.02-discovery-matching-alerts-index.md",
+          "line": 52,
+          "excerpt": "| # | Question | Owner | Deferred To |"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/04-opportunities-casting/04.02-discovery-matching-alerts/04.02-discovery-matching-alerts-index.md",
+          "line": 54,
+          "excerpt": "Is the board public (SEO-indexable) or login-walled? ... It also exposes the board to scraping and makes the Fan read-only lens load-bearing."
+        }
+      ],
+      "forcedInvention": "Choose the board's exposure model and whether SEO, public projections, and scraping controls are required before the board and alert surfaces are built.",
+      "failureScenario": "One implementation exposes the opportunity pool and alert feed publicly while another assumes authenticated access, producing incompatible privacy and cold-start behavior."
+    },
+    {
+      "findingId": "R7-04-004",
+      "unit": "04.03-submission-audition",
+      "severity": "high",
+      "dimension": 7,
+      "claim": "The evidence-versus-blind-review decision has an owner but no required deadline or decision-blocked record, leaving the privacy and evidence policy unresolved.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/04-opportunities-casting/04.03-submission-audition/04.03-submission-audition-index.md",
+          "line": 55,
+          "excerpt": "| # | Question | Owner | Deferred To |"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/04-opportunities-casting/04.03-submission-audition/04.03-submission-audition-index.md",
+          "line": 57,
+          "excerpt": "The evidence/blind contradiction (D-03) is unresolved. Options: blind mode disables evidence entirely, evidence is reduced to unattributable aggregates, or blind mode is scoped to types where evidence does not matter."
+        }
+      ],
+      "forcedInvention": "Choose which evidence data can exist and render during blind review, or which opportunity types may enable blind review.",
+      "failureScenario": "Blind review leaks identifying evidence, or a reviewer loses required evidence under a policy the product never selected."
+    },
+    {
+      "findingId": "R7-04-005",
+      "unit": "04.04-triage-shortlist-decisioning",
+      "severity": "high",
+      "dimension": 7,
+      "claim": "The contract status of an accepted offer has no required deadline or decision-blocked record, despite determining obligations for both the candidate and poster.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/04-opportunities-casting/04.04-triage-shortlist-decisioning/04.04-triage-shortlist-decisioning-index.md",
+          "line": 52,
+          "excerpt": "| # | Question | Owner | Deferred To |"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/04-opportunities-casting/04.04-triage-shortlist-decisioning/04.04.03-offer-acceptance.md",
+          "line": 264,
+          "excerpt": "Is acceptance a contract — and does the obligation run both ways? Binding means penalties, disputes and terms nobody has drafted."
+        }
+      ],
+      "forcedInvention": "Choose whether acceptance is binding and the cancellation, withdrawal, and dispute consequences for both parties.",
+      "failureScenario": "The system represents an offer as binding without a defined legal effect, or binds one party while leaving the other unaccountable."
+    },
+    {
+      "findingId": "R7-04-006",
+      "unit": "04.05-outcome-response-handoff",
+      "severity": "high",
+      "dimension": 7,
+      "claim": "The close-out enforcement question has no required deadline or decision-blocked record, so the next-post behavior remains ungoverned.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/04-opportunities-casting/04.05-outcome-response-handoff/04.05-outcome-response-handoff-index.md",
+          "line": 51,
+          "excerpt": "| # | Question | Owner | Deferred To |"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/04-opportunities-casting/04.05-outcome-response-handoff/04.05-outcome-response-handoff-index.md",
+          "line": 53,
+          "excerpt": "Is the close-out obligation enforced or encouraged? ... What survives is one values call — block or warn."
+        }
+      ],
+      "forcedInvention": "Choose whether an actor with unpaid dispositions is blocked from the next post or shown only a warning.",
+      "failureScenario": "Ghosting posters can continue without consequence, or legitimate supply is blocked by an unapproved enforcement policy."
+    },
+    {
+      "findingId": "R7-04-007",
+      "unit": "04.06-04.07-and-domain-root",
+      "severity": "high",
+      "dimension": 7,
+      "claim": "A band dissolving while a member-wanted post is live is marked pending outside the question register, with no owner, deadline, or decision blocked.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/04-opportunities-casting/04.06-band-member-wanted.md",
+          "line": 56,
+          "excerpt": "Band splits up mid-search | Post orphaned; the entity that posted no longer coheres | [PENDING — /ideate-discover Step 5 deepening]"
+        }
+      ],
+      "forcedInvention": "Choose whether the post auto-closes, transfers authority, or continues, and how outstanding applicant obligations are discharged.",
+      "failureScenario": "A dissolved entity's post remains actionable or leaves applicants without a final disposition from an authorized actor."
+    },
+    {
+      "findingId": "R7-04-008",
+      "unit": "04.06-04.07-and-domain-root",
+      "severity": "high",
+      "dimension": 7,
+      "claim": "Open-call submission deadlines have no authoritative timezone or tracked resolution owner, deadline, and blocked decision.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/04-opportunities-casting/04.07-open-calls-festival-showcase-competition.md",
+          "line": 65,
+          "excerpt": "Deadline passes, act submitted at 23:59 | Window is hard; timezones make it soft in practice | [PENDING — /ideate-discover Step 5 deepening]"
+        }
+      ],
+      "forcedInvention": "Choose the deadline timezone, instant boundary, and deterministic acceptance rule for submissions at the cutoff.",
+      "failureScenario": "Equivalent submissions at 23:59 receive inconsistent acceptance outcomes, creating fairness and dispute risk for a competition or festival call."
+    }
+  ]
+}

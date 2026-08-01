@@ -3,7 +3,7 @@
 > **Scope**: Cross-domain interactions for this single-surface project — the super-CX holding the mechanism registry and the domain↔domain interaction index.
 > **Format**: Registry + index. Per-pair 5-question synthesis detail lives in each source domain's own `*-cx.md` file (Detail column); the highest-value pairs are expanded inline in §3.
 > **Status**: [DEEP]
-> **Last updated**: 2026-07-30
+> **Last updated**: 2026-08-01
 
 ---
 
@@ -42,12 +42,18 @@
 
 ### 1b. Candidate Mechanisms (unratified)
 
-> Shared-mechanism candidates surfaced by cross-pair synthesis but NOT yet promoted into the §1 registry. Each carries a deciding question and a target stage. Downstream (`/create-prd`) MUST rule on promotion before any owning domain builds a private copy — the failure mode is each domain rebuilding a subtly incompatible version.
+> Shared-mechanism candidates surfaced by cross-pair synthesis or carried forward from the ratified domain-map cross-cut inventory, but NOT yet promoted into the §1 registry. Each carries a deciding question and a target stage. Downstream (`/create-prd`) MUST rule on promotion before any owning domain builds a private copy — the failure mode is each domain rebuilding a subtly incompatible version.
 
 | Candidate | Provisional owner | Serves | Deciding question | Target stage |
 |---|---|---|---|---|
 | **Timestamped Annotation** | Education (06) owns the pedagogical instance | 05, 06, 07 | Promote to a cross-cut primitive? A producer's timestamped revision note on a mix (07), a teacher's timestamped feedback on a student take (06.03.02), and service delivery notes (05) are the SAME object (SoundCloud-comments / Frame.io-shaped). Source: pair #143. | /create-prd |
 | **Practice-Room Tools** (tuner, click/metronome, drone, slow-downer) | Education (06) owns the daily practice-room surface | 06, 07, 08 | Promote the tools (not the surface) to a cross-cut? The same tools are plausibly wanted in jam rooms (08) and sessions (07). Open Q-05, returned for global synthesis. Source: pair #144. | /create-prd |
+| **Onboarding & Role-Aware Activation** | 01 owns role/identity source; otherwise pure-cross-cut | 01, 02, 05, 13, 14, 16, 17, 20 | Promote one activation contract? Define the role-context, first-value milestones, resume/skip behavior, and the point at which a domain may treat a person or organization as activated; do not let individual domains independently equate verification with activation. Source: domain-map cross-cut inventory. | /create-prd |
+| **Accessibility** | pure-cross-cut | 01, 06, 07, 13, 16, 19, 20 | Route accessible component, content, and critical-flow behavior as a product-wide baseline rather than per-domain work? Set the compliance target, assistive-technology/content obligations, and exception governance before the design system or a critical flow is built. Source: domain-map cross-cut inventory. | /create-prd |
+| **Promoted Placement & Advertising** | pure-cross-cut | 03, 04, 05, 13, 14, 20, 21 | Does the product include paid discovery, sponsorship, or advertising at all? If yes, promote one governed mechanism and define eligibility, clear advertising disclosure, ranking separation, attribution, and abuse controls before a marketplace domain sells placement privately. Source: domain-map cross-cut inventory. | /create-prd |
+| **Referrals, Invites & Affiliates** | pure-cross-cut | 01, 03, 05, 13, 14, 20 | Does the product include invitation, referral, or affiliate incentives? If yes, define attribution, eligibility, incentive terms, and abuse controls once; if not, retain only non-incentivized invitations explicitly. Source: domain-map cross-cut inventory. | /create-prd |
+| **Follow, Save & Watchlist** | 20 owns the follower graph; otherwise pure-cross-cut | 03, 04, 11, 13, 14, 16, 20 | Promote one intentional-interest, collection, and alert primitive? Define which entities can be followed or saved, whether collections are private or shareable, and the alert/privacy semantics before individual domains build incompatible saved-item tables. Source: domain-map cross-cut inventory. | /create-prd |
+| **Offline & Low-Connectivity Field Resilience** | pure-cross-cut | 02, 15, 17, 18, 19 | Which v1 field workflows require locally durable capture, synchronization, and degraded operation? Define conflict, stale-permission, and fail-closed behavior before ticketing, touring, credits, booking, or the registry individually invent offline queues. Source: domain-map cross-cut inventory. | /create-prd |
 
 ---
 

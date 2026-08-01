@@ -1,0 +1,305 @@
+{
+  "reportKind": "ambiguity-audit-verification",
+  "run": 7,
+  "domain": "02-credits-attribution",
+  "rawReport": "02-raw.json",
+  "rawFindingCount": 12,
+  "verdicts": [
+    {
+      "findingId": "R7-02-01-001",
+      "upheld": true,
+      "finalSeverity": "blocking",
+      "reason": "The Must embargo flow still requires a contested-lift SLA, but its value and the capacity needed to meet it remain unspecified. The directly linked Trust & Safety source confirms this case class is unbudgeted, so an implementer would have to invent the resolution bound.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/02-credits-attribution/credits-attribution-index.md",
+          "line": 117,
+          "excerpt": "Must includes `02.01.05` Visibility & Embargo."
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/02-credits-attribution/02.01-credit-graph-discography/02.01.05-credit-visibility-embargo.md",
+          "line": 297,
+          "excerpt": "The requirement is specified; the number is not, and it is bounded by `02.05`'s own ladder timings and by domain 24's adjudication capacity, neither of which currently budgets for this load."
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/24-trust-safety-disputes/trust-safety-disputes-cx.md",
+          "line": 431,
+          "excerpt": "Unbudgeted. No current 24 spec allocates per-objection reviewer capacity for this class... The SLA value is deferred, not the requirement."
+        }
+      ]
+    },
+    {
+      "findingId": "R7-02-01-002",
+      "upheld": true,
+      "finalSeverity": "blocking",
+      "reason": "The Must embargo flow explicitly leaves the leak-or-bootleg case without an authorised-release predicate or a defined human test. The open question has an owner and deferred stage but no deadline, leaving the lift decision dependent on invented policy.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/02-credits-attribution/credits-attribution-index.md",
+          "line": 117,
+          "excerpt": "Must includes `02.01.05` Visibility & Embargo."
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/02-credits-attribution/02.01-credit-graph-discography/02.01.05-credit-visibility-embargo.md",
+          "line": 86,
+          "excerpt": "No enumerated ground fits it, because no source in the corpus defines an authorised-vs-unauthorised predicate and D-03's \"demonstrably public\" does not license one."
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/02-credits-attribution/02.01-credit-graph-discography/02.01.05-credit-visibility-embargo.md",
+          "line": 298,
+          "excerpt": "Today such an objection can only be filed under ground (iii) \"other\", which routes to a human with no defined test to apply."
+        }
+      ]
+    },
+    {
+      "findingId": "R7-02-02-001",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "reason": "The directly referenced shadow-party policy now specifies tiered pre-claim visibility, limits invitation disclosure, provides a no-account suppression route, and preserves the credit record. These rules supply the visibility, objection, and refusal behavior the raw claim says must be invented.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/01-identity-profiles-organizations/01.05-profile-claiming-verification/01.05.01-shadow-party-creation-invitation.md",
+          "line": 208,
+          "excerpt": "Invitation dispatch and shadow visibility are tiered on the creator's standing in the credit graph."
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/01-identity-profiles-organizations/01.05-profile-claiming-verification/01.05.01-shadow-party-creation-invitation.md",
+          "line": 216,
+          "excerpt": "The invitation discloses attester + credit count + instrument. Never work titles."
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/01-identity-profiles-organizations/01.05-profile-claiming-verification/01.05.01-shadow-party-creation-invitation.md",
+          "line": 217,
+          "excerpt": "A subject may suppress a shadow of themselves without creating an account, via 24. Suppression removes the public page; the credit stays in the record."
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/01-identity-profiles-organizations/01.05-profile-claiming-verification/01.05.01-shadow-party-creation-invitation.md",
+          "line": 219,
+          "excerpt": "The shadow renders only what domain 02 says is public. Zero public credits = no public page."
+        }
+      ]
+    },
+    {
+      "findingId": "R7-02-03-001",
+      "upheld": true,
+      "finalSeverity": "warning",
+      "reason": "Licensing remains a hard stop for the import capability. Current source still names no permitted source/use matrix; its open question has only an owner and deferred stage, not a deadline or resolved legal basis.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/02-credits-attribution/02.03-claiming-cold-start-seeding/02.03.01-external-catalog-import.md",
+          "line": 42,
+          "excerpt": "Source licence forbids ingestion/redistribution: Hard stop. Sub-domain Q-01 is a legal gate."
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/02-credits-attribution/02.03-claiming-cold-start-seeding/02.03.01-external-catalog-import.md",
+          "line": 91,
+          "excerpt": "Source licensing — which of MusicBrainz/Discogs/DDEX/PRO permit ingestion and redistribution in a commercial product? Potentially a hard block on the sub-domain."
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/02-credits-attribution/02.03-claiming-cold-start-seeding/02.03.01-external-catalog-import.md",
+          "line": 89,
+          "excerpt": "Open-question columns are #, Question, Owner, and Deferred To."
+        }
+      ]
+    },
+    {
+      "findingId": "R7-02-03-002",
+      "upheld": true,
+      "finalSeverity": "warning",
+      "reason": "The source defines only directional ordering and holding behavior. It explicitly leaves the ranking signals and surfaced-versus-held cut pending, so implementing this review queue requires product logic not fixed by the current source.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/02-credits-attribution/02.03-claiming-cold-start-seeding/02.03.01-external-catalog-import.md",
+          "line": 46,
+          "excerpt": "Candidates are ranked (identifier-resolved and role-mappable first; bare-name matches last) and only the top band is surfaced for review... Exact ranking signals and the surfaced-vs-held cut are `[PENDING — /write-be-spec]`."
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/02-credits-attribution/02.03-claiming-cold-start-seeding/02.03.01-external-catalog-import.md",
+          "line": 85,
+          "excerpt": "Import is ranked and throttled to human review capacity."
+        }
+      ]
+    },
+    {
+      "findingId": "R7-02-03-003",
+      "upheld": true,
+      "finalSeverity": "warning",
+      "reason": "Current claim adjudication still makes pendency unbounded when no usable corroborator exists and gives the alleged true owner no unilateral visibility control while the first claimant retains the credit. The domain cross-cut confirms both exposures remain open.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/02-credits-attribution/02.03-claiming-cold-start-seeding/02.03.03-claim-adjudication.md",
+          "line": 63,
+          "excerpt": "Nothing bounds how long that takes — there is no corroboration SLA anywhere in the corpus, so the pendency window under D-05 is unbounded in the worst case."
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/02-credits-attribution/02.03-claiming-cold-start-seeding/02.03.03-claim-adjudication.md",
+          "line": 67,
+          "excerpt": "They cannot set the credit Unlisted or Confidential... Their only lever is the contest itself."
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/02-credits-attribution/02.03-claiming-cold-start-seeding/02.03-claiming-cold-start-seeding-cx.md",
+          "line": 53,
+          "excerpt": "The true owner has no unilateral control over the line, and with no corroboration SLA anywhere, pendency here is unbounded in the worst case."
+        }
+      ]
+    },
+    {
+      "findingId": "R7-02-04-001",
+      "upheld": true,
+      "finalSeverity": "warning",
+      "reason": "The scoring model's thresholds, weights, score-side demotion cut, and density floor remain deliberately unspecified pending real data. The consolidated deferral names an owner and stage but no deadline, so activating the detector would require invented calibration values.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/02-credits-attribution/02.04-attestation-credit-confidence/02.04.04-attestation-ring-collusion-detection.md",
+          "line": 43,
+          "excerpt": "Three quantities are genuinely undecidable at ideation because publishing them arms the adversary and because they require real graph-timing data to calibrate honestly."
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/02-credits-attribution/02.04-attestation-credit-confidence/02.04.04-attestation-ring-collusion-detection.md",
+          "line": 47,
+          "excerpt": "The demotion-cut value and the density-floor value below which the whole detector is off."
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/02-credits-attribution/02.04-attestation-credit-confidence/02.04.04-attestation-ring-collusion-detection.md",
+          "line": 140,
+          "excerpt": "Calibration of the scoring model ... per-signal thresholds ... weights ... score-side demotion-cut value, and the density-floor value."
+        }
+      ]
+    },
+    {
+      "findingId": "R7-02-05-001",
+      "upheld": true,
+      "finalSeverity": "warning",
+      "reason": "The dispute ladder still has no decided import carve-out. Current source frames imported credits as the no-record/no-witness case, while Q-01 leaves whether adjudication is offered at all as an owner-held decision without a deadline.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/02-credits-attribution/02.05-credit-dispute-resolution.md",
+          "line": 50,
+          "excerpt": "Dispute on an imported credit: No capture evidence, no witnesses on-platform."
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/02-credits-attribution/02.05-credit-dispute-resolution.md",
+          "line": 106,
+          "excerpt": "Does the platform offer adjudication at all for imported credits... D-03's ladder currently carries no import carve-out... the scope ruling is still owner-held."
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/02-credits-attribution/02.05-credit-dispute-resolution.md",
+          "line": 104,
+          "excerpt": "Open-question columns are #, Question, Owner, and Deferred To."
+        }
+      ]
+    },
+    {
+      "findingId": "R7-02-05-002",
+      "upheld": true,
+      "finalSeverity": "blocking",
+      "reason": "The taxonomy is a Must, but its canonical seed and redistribution licence remain an unresolved legal gate. No permitted source, attribution obligation, or fallback is selected, so a lawful role picker cannot be implemented without invention.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/02-credits-attribution/credits-attribution-index.md",
+          "line": 117,
+          "excerpt": "Must includes `02.06` Taxonomy."
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/02-credits-attribution/02.06-credit-role-instrument-taxonomy.md",
+          "line": 236,
+          "excerpt": "What seeds the canonical core, and under what licence? DDEX AVS, MusicBrainz, Discogs and PRO role lists have materially different terms, and some may prohibit exactly the redistribution a picker performs."
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/02-credits-attribution/02.06-credit-role-instrument-taxonomy.md",
+          "line": 230,
+          "excerpt": "Open-question columns are #, Question, Owner, and Deferred To."
+        }
+      ]
+    },
+    {
+      "findingId": "R7-02-05-003",
+      "upheld": true,
+      "finalSeverity": "warning",
+      "reason": "Current source resolves stale detection and the internal re-emit action, but it still expressly defers the external recipient supersession and acceptance contract. That unresolved contract leaves downstream acknowledgement and correction behavior dependent on invention.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/02-credits-attribution/02.08-credit-export-ddex-rin.md",
+          "line": 42,
+          "excerpt": "Amendment and retraction each fire a post-mutation event... every match flips to `Stale` and the exporting user is notified in-app with a re-emit action targeting the same recipient."
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/02-credits-attribution/02.08-credit-export-ddex-rin.md",
+          "line": 43,
+          "excerpt": "Downstream update contract (NOT owned here — `Q-01`) — whether and how the external recipient is told its copy is stale, and whether it accepts a re-send... is the one genuinely unsolved piece."
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/02-credits-attribution/02.08-credit-export-ddex-rin.md",
+          "line": 115,
+          "excerpt": "What remains open: when a re-emit is sent, how (if at all) is the external consumer told its prior copy is superseded, and does the standard/recipient support supersession?"
+        }
+      ]
+    },
+    {
+      "findingId": "R7-02-05-004",
+      "upheld": true,
+      "finalSeverity": "warning",
+      "reason": "Direct marketplace source adds a safe consent gate and hides non-consented links, but it still leaves the consent holders and sale-time owner-end transfer/re-consent unresolved. The remaining transaction rule cannot be implemented without choosing a consent model.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/13-gear-marketplace/13.03-listings-inventory/13.03.06-provenance-session-history-display.md",
+          "line": 82,
+          "excerpt": "Consent is required at both the session and owner ends."
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/13-gear-marketplace/13.03-listings-inventory/13.03.06-provenance-session-history-display.md",
+          "line": 89,
+          "excerpt": "Who consents to gear attribution — the Producer who captured the session, the artist, or the gear's owner at the time?"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/13-gear-marketplace/13.03-listings-inventory/13.03.06-provenance-session-history-display.md",
+          "line": 90,
+          "excerpt": "Does provenance travel with the unit to a new owner automatically, or does each owner re-consent?"
+        }
+      ]
+    },
+    {
+      "findingId": "R7-02-05-005",
+      "upheld": true,
+      "finalSeverity": "warning",
+      "reason": "Structured disclosure and degraded export behavior are specified, but whether missing disclosure is ever enforced as an export or release block remains user-held without a deadline. Implementing enforcement would therefore require an unsourced platform policy.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/02-credits-attribution/02.10-ai-contribution-disclosure.md",
+          "line": 74,
+          "excerpt": "Where the format has no disclosure field, the export is marked degraded and states exactly which disclosure facts were recorded but not carried, before the user commits."
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/02-credits-attribution/02.10-ai-contribution-disclosure.md",
+          "line": 120,
+          "excerpt": "Structured capture; the platform defines no threshold."
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/02-credits-attribution/02.10-ai-contribution-disclosure.md",
+          "line": 130,
+          "excerpt": "Is disclosure ever required by the platform (blocking export or release), or always voluntary?"
+        }
+      ]
+    }
+  ],
+  "coverage": {
+    "verifiedFindingCount": 12,
+    "upheldCount": 11,
+    "refutedCount": 1,
+    "allRawFindingIdsRepresentedExactlyOnce": true,
+    "sourceScope": ".memory/wiki/specs/ideation/02-credits-attribution/",
+    "directCanonicalSourcesChecked": [
+      ".memory/wiki/specs/ideation/01-identity-profiles-organizations/01.05-profile-claiming-verification/01.05.01-shadow-party-creation-invitation.md",
+      ".memory/wiki/specs/ideation/01-identity-profiles-organizations/01.05-profile-claiming-verification/01.05.03-contested-claims-ownership-transfer.md",
+      ".memory/wiki/specs/ideation/12-release-distribution/12.02-ddex-delivery-messaging/12.02.03-delivery-choreography-acknowledgement.md",
+      ".memory/wiki/specs/ideation/12-release-distribution/12.05-catalog-lifecycle-after-release/12.05.02-metadata-update-redelivery.md",
+      ".memory/wiki/specs/ideation/13-gear-marketplace/13.03-listings-inventory/13.03.06-provenance-session-history-display.md",
+      ".memory/wiki/specs/ideation/15-gear-registry-ownership/15.09-gear-discography.md",
+      ".memory/wiki/specs/ideation/24-trust-safety-disputes/trust-safety-disputes-cx.md"
+    ],
+    "rubricsApplied": [
+      ".codex/skills/pipeline-rubrics/references/vision-rubric.md",
+      ".codex/skills/pipeline-rubrics/references/scoring.md"
+    ]
+  }
+}
