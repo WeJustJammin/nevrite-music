@@ -345,7 +345,7 @@ Responsive web/PWA is the sole launch surface. Offline work may save private off
 
 ## Cross-Shard Dependencies
 
-- **Depends on:** [[specs/ia/00-infrastructure|Shard 00]], [[specs/ia/01-identity-authority|Shard 01]], [[specs/ia/06-trust-safety|Shard 06]], [[specs/ia/11-community-graph|Shard 11]], [[specs/ia/29-venues-spaces|Shard 29]]
+- **Depends on:** [[specs/ia/00-infrastructure|Shard 00]], [[specs/ia/01-identity-authority|Shard 01]], [[specs/ia/06-trust-safety|Shard 06]], [[specs/ia/11-community-graph|Shard 11]], [[specs/ia/13-opportunities-casting|Shard 13]], [[specs/ia/29-venues-spaces|Shard 29]]
 - **Depended on by:** [[specs/ia/31-live-settlement-intelligence|Shard 31]], [[specs/ia/32-show-production-planning|Shard 32]], [[specs/ia/35-ticket-products-sales|Shard 35]]
 
 
@@ -355,6 +355,7 @@ Responsive web/PWA is the sole launch surface. Offline work may save private off
 - **Shard 01:** consume [Shard 01 Contracts](01-identity-authority.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 01 Event Schemas](01-identity-authority.md#event-schemas). Canonical ownership stays with the producer; typed failure/unknown states cross the same boundary.
 - **Shard 06:** consume [Shard 06 Contracts](06-trust-safety.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 06 Event Schemas](06-trust-safety.md#event-schemas). Canonical ownership stays with the producer; typed failure/unknown states cross the same boundary.
 - **Shard 11:** consume [Shard 11 Contracts](11-community-graph.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 11 Event Schemas](11-community-graph.md#event-schemas). Canonical ownership stays with the producer; typed failure/unknown states cross the same boundary.
+- **Shard 13:** this shard is the caller, per DEC-098 — Shard 13 declares no dependency on this shard and exposes a protected inbound callback instead. On its OPP-16 handoff, Shard 13 publishes `opportunity.handoff.changed.v1` from [Shard 13 Event Schemas](13-opportunities-casting.md#event-schemas) with the publication-fixed handoff mode/target and the acceptance fact manifest; this shard consumes that event into this shard `§ Contracts`, then creates or joins its own booking record under its own authority and invariants — a new `OfferThread` and `AcceptedDeal` through `SendOfferVersion`, `ApproveOfferVersion` and `AcceptOfferVersion`, or an existing `Bill` slot through interaction 30.27 — and calls Shard 13's protected inbound command `RecordHandoffOutcome` in [Shard 13 Contracts](13-opportunities-casting.md#contracts), carrying the handoff reference, the `HandoffMode`, this shard's booking record as the downstream identifier, the terminal handoff state, an `expectedVersion` and Shard 13's original idempotency key, so Shard 13 converges `handoff` state and its back-reference. Replay of the same key returns the same result; a stale revision returns `VERSION_CONFLICT`; key reuse with a changed payload returns `IDEMPOTENCY_MISMATCH`. This shard never mutates Shard 13 acceptance or disposition and never fabricates a booking to satisfy a handoff: if this shard's own authority, approval or acceptance gates refuse, no booking record is created, no outcome is reported, and the handoff stays in Shard 13's idempotent retry and escalation under `HANDOFF_FAILED` rather than rolling back the acceptance. Canonical ownership stays with the producer; typed failure/unknown states cross the same boundary.
 - **Shard 29:** consume [Shard 29 Contracts](29-venues-spaces.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 29 Event Schemas](29-venues-spaces.md#event-schemas). Canonical ownership stays with the producer; typed failure/unknown states cross the same boundary.
 - **Shard 31:** consume [Shard 31 Contracts](31-live-settlement-intelligence.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 31 Event Schemas](31-live-settlement-intelligence.md#event-schemas). Canonical ownership stays with the producer; typed failure/unknown states cross the same boundary.
 - **Shard 32:** consume [Shard 32 Contracts](32-show-production-planning.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 32 Event Schemas](32-show-production-planning.md#event-schemas). Canonical ownership stays with the producer; typed failure/unknown states cross the same boundary.
@@ -367,6 +368,7 @@ Responsive web/PWA is the sole launch surface. Offline work may save private off
 | 2026-08-02 | Initial skeleton and source-feature seeding | `/decompose-architecture-structure` | All |
 | 2026-08-03 | Authored and deepened complete IA contract | `/write-architecture-spec` | All |
 | 2026-08-05 | A-19 announce gate rebuilt onto ratified preconditions P-01..P-07, `EMBARGO_ACTIVE` removed, Unknown fails closed, Q-01/Q-02/Q-05 recorded as open; A-18 phantom `Aggregate` registry entry deleted; A-34 stale Shard 31/32/35 filenames and wiki links corrected | `/resolve-ambiguity` | Architecture Decisions, Acceptance Criteria, Interactions, Contracts, Typed Field and Cardinality Registry, Cross-Shard Dependencies |
+| 2026-08-05 | F2 — cross-shard contract reciprocity: declared the Shard 13 caller edge, consuming `opportunity.handoff.changed.v1` and calling Shard 13's protected `RecordHandoffOutcome`, and added Shard 13 to Depends on | `/resolve-ambiguity` | Cross-Shard Dependencies, Cross-Shard Section Contract Map |
 
 
 <!-- spec-graph: auto-generated -->
@@ -378,6 +380,7 @@ Responsive web/PWA is the sole launch surface. Offline work may save private off
 - [[specs/ia/11-community-graph|Shard 11 — Social graph and collaborator network]]
 - [[specs/ia/06-trust-safety|Shard 06 — Trust, safety, disputes and evidence]]
 - [[specs/ia/00-infrastructure|Shard 00 — Cross-cutting platform foundation]]
+- [[specs/ia/13-opportunities-casting|Shard 13 — Opportunities and casting lifecycle]]
 - [[specs/ia/31-live-settlement-intelligence|Shard 31 — Agency, settlement and live-market intelligence]]
 - [[specs/ia/32-show-production-planning|Shard 32 — Event production planning and advancing]]
 - [[specs/ia/35-ticket-products-sales|Shard 35 — Ticket products, sales, access packages and delivery]]

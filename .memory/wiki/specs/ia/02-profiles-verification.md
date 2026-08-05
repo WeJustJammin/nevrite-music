@@ -318,3 +318,5 @@ All payloads use Shard 00 envelopes and identifiers only.
 - [[specs/ia/06-trust-safety|Shard 06 — Trust, safety, disputes and evidence]]
 - [[specs/ia/15-education-delivery|Shard 15 — Lessons, practice and mentorship delivery]]
 - [[specs/ia/16-education-credentials-institutions|Shard 16 — Courses, credentials, institutions and special practice]]
+- [[specs/ia/17-realtime-sessions|Shard 17 — Real-time jamming and remote sessions]]
+- [[specs/ia/20-licensing-core|Shard 20 — Licensing core and instrument lifecycle]]

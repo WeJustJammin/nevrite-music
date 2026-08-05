@@ -256,7 +256,7 @@ Events exclude prices except purpose-authorized finance paths, policy thresholds
 ## Dependency References
 
 - **Depends on:** [[specs/ia/00-infrastructure|Shard 00]] for payments/storage/jobs/settings/audit; [[specs/ia/01-identity-authority|Shard 01]] for parties/mandates; [[specs/ia/02-profiles-verification|Shard 02]] for verified evidence; [[specs/ia/06-trust-safety|Shard 06]] for disputes/breach evidence; [[specs/ia/09-projects-collaboration|Shard 09]] for works/assets/pitches; [[specs/ia/10-rights-ownership|Shard 10]] for rights/splits/consent graph.
-- **Depended on by:** downstream templates, usage controls, whitelist/claims and reporting consume issued instrument IDs and scope only.
+- **Depended on by:** [[specs/ia/21-specialized-licensing|Shard 21]] for scope/clearance/policy/instruments — its templates, whitelist/claims and AI-training routes consume issued instrument IDs and scope only; [[specs/ia/22-release-distribution|Shard 22]] for the licensed inclusions it records against a release; other downstream usage controls and reporting consume issued instrument IDs and scope only.
 - **Deep dive:** [[specs/ia/deep-dives/20-licensing-core|Licensing core deep dive]].
 
 ## Edge-Case Coverage Matrix
@@ -293,6 +293,8 @@ Events exclude prices except purpose-authorized finance paths, policy thresholds
 - **Shard 07:** consume [Shard 07 Contracts](07-credits-core.md#contracts) into this shard `§ Contracts` — `AssertCredit` and `CreditState` establish the `Credited contributor` standing this shard's `§ Access Control` grants and `LIC-06` requires — and [Shard 07 Event Schemas](07-credits-core.md#event-schemas), specifically `credit.provenance.derived.v1`, whose consumer list already names Shards 18–20. Consent graph, share graph and credit graph stay distinct: this shard never writes a credit and publishes nothing back to Shard 07. Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
 - **Shard 09:** consume [Shard 09 Contracts](09-projects-collaboration.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 09 Event Schemas](09-projects-collaboration.md#event-schemas). Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
 - **Shard 10:** consume [Shard 10 Contracts](10-rights-ownership.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 10 Event Schemas](10-rights-ownership.md#event-schemas). Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
+- **Shard 21:** publish this shard `§ Contracts` — the `LicenceScope` grammar, `ComputeClearance`, `EvaluatePolicyFold` and `IssueLicence`, which [Shard 21 Dependency References](21-specialized-licensing.md#dependency-references) names as its scope/clearance/policy/instrument source — to [Shard 21 Contracts](21-specialized-licensing.md#contracts), and consume [Shard 21 Event Schemas](21-specialized-licensing.md#event-schemas), specifically `licensing.sample-declaration.changed.v1` and `licensing.sample-clearance.changed.v1`, whose consumer columns already name this shard's clearance evaluation and issuance gate, into this shard `§ Event Schemas`. This shard owns the scope grammar, clearance verdict, policy fold and issued instrument; Shard 21 layers specialized clearances on them and never issues an instrument of its own, so the edge is 21 → 20. Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
+- **Shard 22:** publish this shard `§ Contracts` — the `LicenceScope` grammar, `ComputeClearance` verdicts and `IssueLicence`, which [Shard 22 Dependency References](22-release-distribution.md#dependency-references) names as its source for licensed inclusions — to [Shard 22 Contracts](22-release-distribution.md#contracts), and consume [Shard 22 Event Schemas](22-release-distribution.md#event-schemas) into this shard `§ Event Schemas`. This shard owns clearance and instrument truth; Shard 22 records which release inclusions are licensed and never issues, widens or terminates an instrument, so the edge is 22 → 20. Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
 
 ## Changelog
 
@@ -301,6 +303,7 @@ Events exclude prices except purpose-authorized finance paths, policy thresholds
 | 2026-08-03 | Reconciled 29 sources; locked clearance, policy, pricing, scope, issuance and B3 boundaries | `/write-architecture-spec` |
 | 2026-08-05 | F1 — added per-flow Preconditions and Failure / recovery; regenerated acceptance criteria | `/resolve-ambiguity` |
 | 2026-08-05 | F2 — cross-shard contract reciprocity: added the missing Shard 07 (credit-graph standing for `Credited contributor` / LIC-06) and Shard 04 (DEC-098 inbound delivery commands called from LIC-15/18/19) entries to the Cross-Shard Section Contract Map | `/resolve-ambiguity` |
+| 2026-08-05 | F2 — cross-shard contract reciprocity: added the downward reciprocals for Shard 21 and Shard 22 to the Cross-Shard Section Contract Map and named both in Dependency References `Depended on by`; no upward dependency added | `/resolve-ambiguity` |
 
 
 <!-- spec-graph: auto-generated -->
@@ -313,4 +316,6 @@ Events exclude prices except purpose-authorized finance paths, policy thresholds
 - [[specs/ia/06-trust-safety|Shard 06 — Trust, safety, disputes and evidence]]
 - [[specs/ia/09-projects-collaboration|Shard 09 — Music projects and collaboration]]
 - [[specs/ia/10-rights-ownership|Shard 10 — Rights and ownership]]
+- [[specs/ia/21-specialized-licensing|Shard 21 — Specialized clearances and licensing]]
+- [[specs/ia/22-release-distribution|Shard 22 — Release and distribution lifecycle]]
 - [[specs/ia/deep-dives/20-licensing-core|Deep Dive 20 — Licensing core and instrument lifecycle]]

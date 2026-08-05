@@ -319,3 +319,4 @@ All events use Shard 00 identifier-only envelopes.
 - [[specs/data-placement-strategy|Data Placement Strategy]]
 - [[specs/ia/04-cms-delivery-media|Shard 04 — CMS navigation, media and delivery]]
 - [[specs/ia/05-platform-configuration-admin|Shard 05 — Platform configuration, admin and quality]]
+- [[specs/ia/16-education-credentials-institutions|Shard 16 — Courses, credentials, institutions and special practice]]

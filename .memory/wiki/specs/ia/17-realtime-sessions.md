@@ -277,7 +277,7 @@ Events exclude IP/location, raw latency samples, device names, media bytes/URLs,
 ## Dependency References
 
 - **Depends on:** [[specs/ia/00-infrastructure|Shard 00]] for runtime admission, storage, jobs, settings and audit; [[specs/ia/01-identity-authority|Shard 01]] for human/acting-party authority; [[specs/ia/02-profiles-verification|Shard 02]] for evidence vocabulary/credit conclusions; [[specs/ia/06-trust-safety|Shard 06]] for restrictions/recording safety; [[specs/ia/09-projects-collaboration|Shard 09]] for project/take/note lifecycle.
-- **Depended on by:** service, rights, credit and dispute shards consume immutable facts only; they do not control audio/runtime state.
+- **Depended on by:** [[specs/ia/33-show-day-operations|Shard 33]] for synchronized performance media referenced on show day, consumed as immutable packaged facts without any playback-engine or transport authority; service, rights, credit and dispute shards consume immutable facts only; they do not control audio/runtime state.
 - **Deep dive:** [[specs/ia/deep-dives/17-realtime-sessions|Real-time sessions deep dive]].
 
 ## Edge-Case Coverage Matrix
@@ -310,6 +310,7 @@ Events exclude IP/location, raw latency samples, device names, media bytes/URLs,
 - **Shard 02:** consume [Shard 02 Contracts](02-profiles-verification.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 02 Event Schemas](02-profiles-verification.md#event-schemas). Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
 - **Shard 06:** consume [Shard 06 Contracts](06-trust-safety.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 06 Event Schemas](06-trust-safety.md#event-schemas). Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
 - **Shard 09:** consume [Shard 09 Contracts](09-projects-collaboration.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 09 Event Schemas](09-projects-collaboration.md#event-schemas). Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
+- **Shard 33:** consume [Shard 33 Contracts](33-show-day-operations.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 33 Event Schemas](33-show-day-operations.md#event-schemas). Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
 
 ## Changelog
 
@@ -317,6 +318,7 @@ Events exclude IP/location, raw latency samples, device names, media bytes/URLs,
 |---|---|---|---|
 | 2026-08-03 | Reconciled 30 sources; locked Phase-2 runtime boundary, live/overdub/capture/monitoring/provenance contracts | `/write-architecture-spec` | All |
 | 2026-08-05 | F1 — added per-flow Preconditions and Failure / recovery; regenerated acceptance criteria | `/resolve-ambiguity` | Interactions, Acceptance Criteria |
+| 2026-08-05 | F2 — cross-shard contract reciprocity: mirrored Shard 33's inbound declaration (33 depends on 17) | `/resolve-ambiguity` | Dependency References, Cross-Shard Section Contract Map |
 
 
 <!-- spec-graph: auto-generated -->
@@ -328,4 +330,5 @@ Events exclude IP/location, raw latency samples, device names, media bytes/URLs,
 - [[specs/ia/02-profiles-verification|Shard 02 — Profiles, claiming and qualifications]]
 - [[specs/ia/06-trust-safety|Shard 06 — Trust, safety, disputes and evidence]]
 - [[specs/ia/09-projects-collaboration|Shard 09 — Music projects and collaboration]]
+- [[specs/ia/33-show-day-operations|Shard 33 — Show-day execution and recovery]]
 - [[specs/ia/deep-dives/17-realtime-sessions|Deep Dive 17 — Real-time jamming and remote sessions]]

@@ -1,7 +1,7 @@
 {
-  "builtAt": "2026-08-05T08:18:08.532Z",
+  "builtAt": "2026-08-05T08:53:58.633Z",
   "nodeCount": 1480,
-  "edgeCount": 9868,
+  "edgeCount": 9892,
   "nodes": [
     {
       "id": "plan:2026-08-02-architecture-design",
@@ -12658,6 +12658,18 @@
       "source": "wikilink"
     },
     {
+      "from": "ia-spec:ia/01-identity-authority",
+      "to": "ia-spec:ia/22-release-distribution",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "ia-spec:ia/01-identity-authority",
+      "to": "ia-spec:ia/39-analytics-ingestion-reporting",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
       "from": "ia-spec:ia/02-profiles-verification",
       "to": "ia-spec:ia/00-infrastructure",
       "type": "references",
@@ -12706,6 +12718,18 @@
       "source": "wikilink"
     },
     {
+      "from": "ia-spec:ia/02-profiles-verification",
+      "to": "ia-spec:ia/17-realtime-sessions",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "ia-spec:ia/02-profiles-verification",
+      "to": "ia-spec:ia/20-licensing-core",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
       "from": "ia-spec:ia/03-cms-content-modeling",
       "to": "ia-spec:ia/00-infrastructure",
       "type": "references",
@@ -12744,6 +12768,12 @@
     {
       "from": "ia-spec:ia/03-cms-content-modeling",
       "to": "ia-spec:ia/05-platform-configuration-admin",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "ia-spec:ia/03-cms-content-modeling",
+      "to": "ia-spec:ia/16-education-credentials-institutions",
       "type": "references",
       "source": "wikilink"
     },
@@ -12870,6 +12900,42 @@
     {
       "from": "ia-spec:ia/06-trust-safety",
       "to": "ia-spec:ia/16-education-credentials-institutions",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "ia-spec:ia/06-trust-safety",
+      "to": "ia-spec:ia/17-realtime-sessions",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "ia-spec:ia/06-trust-safety",
+      "to": "ia-spec:ia/18-royalty-accounting",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "ia-spec:ia/06-trust-safety",
+      "to": "ia-spec:ia/20-licensing-core",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "ia-spec:ia/06-trust-safety",
+      "to": "ia-spec:ia/21-specialized-licensing",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "ia-spec:ia/06-trust-safety",
+      "to": "ia-spec:ia/22-release-distribution",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "ia-spec:ia/06-trust-safety",
+      "to": "ia-spec:ia/23-gear-provenance-registry",
       "type": "references",
       "source": "wikilink"
     },
@@ -13043,6 +13109,12 @@
     },
     {
       "from": "ia-spec:ia/09-projects-collaboration",
+      "to": "ia-spec:ia/13-opportunities-casting",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "ia-spec:ia/09-projects-collaboration",
       "to": "ia-spec:ia/14-services-marketplace",
       "type": "references",
       "source": "wikilink"
@@ -13056,6 +13128,18 @@
     {
       "from": "ia-spec:ia/09-projects-collaboration",
       "to": "ia-spec:ia/19-royalty-reporting-forecasting",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "ia-spec:ia/09-projects-collaboration",
+      "to": "ia-spec:ia/20-licensing-core",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "ia-spec:ia/09-projects-collaboration",
+      "to": "ia-spec:ia/21-specialized-licensing",
       "type": "references",
       "source": "wikilink"
     },
@@ -13217,7 +13301,19 @@
     },
     {
       "from": "ia-spec:ia/14-services-marketplace",
+      "to": "ia-spec:ia/23-gear-provenance-registry",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "ia-spec:ia/14-services-marketplace",
       "to": "ia-spec:ia/26-gear-commerce-fulfilment",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "ia-spec:ia/14-services-marketplace",
+      "to": "ia-spec:ia/38-promotion-marketing",
       "type": "references",
       "source": "wikilink"
     },
@@ -13301,6 +13397,12 @@
     },
     {
       "from": "ia-spec:ia/17-realtime-sessions",
+      "to": "ia-spec:ia/33-show-day-operations",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "ia-spec:ia/17-realtime-sessions",
       "to": "ia-spec:ia/deep-dives/17-realtime-sessions",
       "type": "references",
       "source": "wikilink"
@@ -13320,12 +13422,6 @@
     {
       "from": "ia-spec:ia/18-royalty-accounting",
       "to": "ia-spec:ia/01-identity-authority",
-      "type": "references",
-      "source": "wikilink"
-    },
-    {
-      "from": "ia-spec:ia/18-royalty-accounting",
-      "to": "ia-spec:ia/02-profiles-verification",
       "type": "references",
       "source": "wikilink"
     },
@@ -13356,6 +13452,12 @@
     {
       "from": "ia-spec:ia/18-royalty-accounting",
       "to": "ia-spec:ia/deep-dives/18-royalty-accounting",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "ia-spec:ia/18-royalty-accounting",
+      "to": "ia-spec:ia/02-profiles-verification",
       "type": "references",
       "source": "wikilink"
     },
@@ -13427,6 +13529,18 @@
     },
     {
       "from": "ia-spec:ia/20-licensing-core",
+      "to": "ia-spec:ia/21-specialized-licensing",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "ia-spec:ia/20-licensing-core",
+      "to": "ia-spec:ia/22-release-distribution",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "ia-spec:ia/20-licensing-core",
       "to": "ia-spec:ia/deep-dives/20-licensing-core",
       "type": "references",
       "source": "wikilink"
@@ -13434,12 +13548,6 @@
     {
       "from": "ia-spec:ia/21-specialized-licensing",
       "to": "ia-spec:ia/00-infrastructure",
-      "type": "references",
-      "source": "wikilink"
-    },
-    {
-      "from": "ia-spec:ia/21-specialized-licensing",
-      "to": "ia-spec:ia/01-identity-authority",
       "type": "references",
       "source": "wikilink"
     },
@@ -13487,13 +13595,13 @@
     },
     {
       "from": "ia-spec:ia/22-release-distribution",
-      "to": "ia-spec:ia/02-profiles-verification",
+      "to": "ia-spec:ia/06-trust-safety",
       "type": "references",
       "source": "wikilink"
     },
     {
       "from": "ia-spec:ia/22-release-distribution",
-      "to": "ia-spec:ia/06-trust-safety",
+      "to": "ia-spec:ia/07-credits-core",
       "type": "references",
       "source": "wikilink"
     },
@@ -13541,13 +13649,19 @@
     },
     {
       "from": "ia-spec:ia/23-gear-provenance-registry",
-      "to": "ia-spec:ia/02-profiles-verification",
+      "to": "ia-spec:ia/06-trust-safety",
       "type": "references",
       "source": "wikilink"
     },
     {
       "from": "ia-spec:ia/23-gear-provenance-registry",
-      "to": "ia-spec:ia/06-trust-safety",
+      "to": "ia-spec:ia/07-credits-core",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "ia-spec:ia/23-gear-provenance-registry",
+      "to": "ia-spec:ia/08-credit-reporting-disclosure",
       "type": "references",
       "source": "wikilink"
     },
@@ -13559,7 +13673,31 @@
     },
     {
       "from": "ia-spec:ia/23-gear-provenance-registry",
+      "to": "ia-spec:ia/24-gear-holdings-operations",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "ia-spec:ia/23-gear-provenance-registry",
+      "to": "ia-spec:ia/25-gear-market-catalog",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "ia-spec:ia/23-gear-provenance-registry",
+      "to": "ia-spec:ia/26-gear-commerce-fulfilment",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "ia-spec:ia/23-gear-provenance-registry",
       "to": "ia-spec:ia/deep-dives/23-gear-provenance-registry",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "ia-spec:ia/23-gear-provenance-registry",
+      "to": "ia-spec:ia/02-profiles-verification",
       "type": "references",
       "source": "wikilink"
     },
@@ -13734,6 +13872,12 @@
     {
       "from": "ia-spec:ia/30-booking-contracts",
       "to": "ia-spec:ia/00-infrastructure",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "ia-spec:ia/30-booking-contracts",
+      "to": "ia-spec:ia/13-opportunities-casting",
       "type": "references",
       "source": "wikilink"
     },
@@ -69585,7 +69729,7 @@
     },
     "byEdgeType": {
       "constrained_by": 9327,
-      "references": 538,
+      "references": 562,
       "split_from": 3
     }
   }

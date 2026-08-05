@@ -330,3 +330,5 @@ All events use Shard 00's `PlatformEvent`; payloads contain identifiers only.
 - [[specs/data-placement-strategy|Data Placement Strategy]]
 - [[specs/ia/decomposition-plan|WeJammin — IA Decomposition Plan]]
 - [[specs/ia/02-profiles-verification|Shard 02 — Profiles, claiming and qualifications]]
+- [[specs/ia/22-release-distribution|Shard 22 — Release and distribution lifecycle]]
+- [[specs/ia/39-analytics-ingestion-reporting|Shard 39 — Analytics ingestion, matching and reporting]]

@@ -424,8 +424,11 @@ These items are named by the spec and deliberately not authored. Each is blocked
 
 ### References
 - [[specs/ia/10-rights-ownership|Shard 10 — Rights and ownership]]
+- [[specs/ia/13-opportunities-casting|Shard 13 — Opportunities and casting lifecycle]]
 - [[specs/ia/14-services-marketplace|Shard 14 — Services marketplace lifecycle]]
 - [[specs/ia/17-realtime-sessions|Shard 17 — Real-time jamming and remote sessions]]
 - [[specs/ia/19-royalty-reporting-forecasting|Shard 19 — Performance reporting, money-in-flight and forecasting]]
+- [[specs/ia/20-licensing-core|Shard 20 — Licensing core and instrument lifecycle]]
+- [[specs/ia/21-specialized-licensing|Shard 21 — Specialized clearances and licensing]]
 - [[specs/ia/22-release-distribution|Shard 22 — Release and distribution lifecycle]]
 - [[specs/ia/32-show-production-planning|Shard 32 — Event production planning and advancing]]
