@@ -23,13 +23,13 @@ This deep dive owns exact-rational ledger invariants, frozen whole-ledger consen
 
 | Model | Fields and constraints |
 |---|---|
-| `rights_object` | `id, kind(work|recording), title, asserted_by/context, source_project/version?, lifecycle, created_at, version`; explicit assertion only. |
+| `rights_object` | `id, kind(work\|recording), title, asserted_by/context, source_project/version?, lifecycle, created_at, version`; explicit assertion only. |
 | `recording_work_link_version` | `set_id, version, recording_id, links[{work_id,type,weight_num,weight_den}], author, evidence_hash`; each positive, canonical sum 1. |
 | `rights_ledger_version` | `id, object_id, right_type, territory_profile, state, payout_basis_term_version, proposer, source_hash, supersedes_id?, created_at, version`. |
 | `rights_ledger_row` | `id, ledger_id, party_id, row_kind, numerator, denominator, entered_by, writer_anchor_row_id?, provenance, canonical_order`; reduced exact rational. |
 | `ledger_consent` | `ledger_id/version, row_id, party_id, state, method, recipient_binding?, acted_at, evidence_hash`; unique exact row/party/version. |
 | `master_encumbrance` | `id, object_id, kind, base_key, tier, numerator/denominator, payee, term, recoupment, evidence, state`. |
-| `joint_owner_rule` | `master_ledger_id, rule(unanimous|majority_by_share), consented_version`; default unanimous. |
+| `joint_owner_rule` | `master_ledger_id, rule(unanimous\|majority_by_share), consented_version`; default unanimous. |
 
 ### Agreements, Title and Conflicts
 

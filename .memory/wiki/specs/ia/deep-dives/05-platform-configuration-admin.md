@@ -51,7 +51,7 @@ This deep dive owns definition/value resolution, controlled activation/runtime d
 | `export_artifact` | `id, export_type, scope_manifest, field_manifest, object_id, checksum, encryption_ref?, expires_at, max/download_count, state, actor/context, version`. |
 | `restore_verification` | `id, source_artifact/backup, target_environment, schema/count/hash/reference/RLS/render/a11y results, state, reviewer, completed_at, version`. |
 | `quality_check_run` | `id, checker_key/version, target_type/id/version, state, findings jsonb, blocking_count, evidence_ref?, run_at`; findings schema bounded. |
-| `data_lifecycle_request` | `id, request_type archive|delete|anonymize|hold|release_hold|erasure, requester/subject, scope, verification, store_manifest, conflict/decision refs, state, version`. |
+| `data_lifecycle_request` | `id, request_type archive\|delete\|anonymize\|hold\|release_hold\|erasure, requester/subject, scope, verification, store_manifest, conflict/decision refs, state, version`. |
 | `lifecycle_store_result` | `request_id, store/processor, item_count, action, state, evidence_ref, attempted/completed_at, error_code?`; unique request/store/action. |
 
 ## State Machines
@@ -59,14 +59,14 @@ This deep dive owns definition/value resolution, controlled activation/runtime d
 | Aggregate | Allowed transitions |
 |---|---|
 | Definition | `draft → active → deprecated → retired`; key never reused; retired definitions remain readable for history. |
-| Value/change | `draft → review → approved → scheduled|active → superseded|rolled_back`; changed hash/authority invalidates review. |
-| Flag | `draft → active → paused|expired|retired`; absent/expired evaluates fallback. |
-| Experiment | `draft → approved → running → paused|stopped|completed`; assignment immutable per user/cohort/version. |
+| Value/change | `draft → review → approved → scheduled\|active → superseded\|rolled_back`; changed hash/authority invalidates review. |
+| Flag | `draft → active → paused\|expired\|retired`; absent/expired evaluates fallback. |
+| Experiment | `draft → approved → running → paused\|stopped\|completed`; assignment immutable per user/cohort/version. |
 | Kill activation | `requested → active → resolving → ended`; emergency failure still records/reconciles canonical evidence. |
-| Capability grant | `pending → active → expired|revoked`; revocation immediate, no restoration without new grant. |
-| Bulk/import | `draft → dry_run → approved → running → completed|partial|failed|cancelled`; resumes exact target/cursor only. |
-| Export | `requested → generating → ready → expired|revoked|failed`; expiry/revoke removes delivery before bytes. |
-| Lifecycle request | `requested → verifying → planned → approved|blocked → executing → completed|partial|failed`; hold conflict may remain blocked. |
+| Capability grant | `pending → active → expired\|revoked`; revocation immediate, no restoration without new grant. |
+| Bulk/import | `draft → dry_run → approved → running → completed\|partial\|failed\|cancelled`; resumes exact target/cursor only. |
+| Export | `requested → generating → ready → expired\|revoked\|failed`; expiry/revoke removes delivery before bytes. |
+| Lifecycle request | `requested → verifying → planned → approved\|blocked → executing → completed\|partial\|failed`; hold conflict may remain blocked. |
 
 ## Effective-Value Resolution
 

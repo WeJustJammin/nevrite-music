@@ -51,7 +51,7 @@ These values are versioned protected policy/configuration records with the liste
 
 | Policy | Default and exact behavior |
 |---|---|
-| Facet removal obligations | `seller`: live listing, unfulfilled order, open return, checkout in flight; `teacher`: future lesson or running cohort; `producer`: open owned project or outstanding contributor invite; `engineer|tech`: accepted-undelivered service; `performer`: future confirmed booking; `writer`: issued-unsigned split. |
+| Facet removal obligations | `seller`: live listing, unfulfilled order, open return, checkout in flight; `teacher`: future lesson or running cohort; `producer`: open owned project or outstanding contributor invite; `engineer\|tech`: accepted-undelivered service; `performer`: future confirmed booking; `writer`: issued-unsigned split. |
 | Alias quotas | Maximum 5 alias creations/person/rolling 30 days and 2 handle changes/alias/rolling 12 months. Limit adds friction/review, never transfers ownership or reissues a handle. |
 | Organization creation | Duplicate detection p95 <500ms and hard 2-second bound; after bound creation commits and detection continues. Default friction review at >3 orgs/24 hours or >10 lifetime/person; never a permanent denial by count alone. |
 | Quietness | Prompt after 12 months without qualifying activity; suppress from supply discovery after 18 months without response; type-specific protected overrides permitted; no public dormancy claim. |
@@ -69,9 +69,9 @@ These values are versioned protected policy/configuration records with the liste
 | `party` | `id uuid PK`; `kind party_kind not null`; `lifecycle party_lifecycle not null`; `version bigint > 0`; immutable kind/created metadata. |
 | `person_party` | `party_id PK/FK`; `auth_user_id uuid unique null`; `account_state`; shadow people may have null Auth UUID; one live person per UUID. |
 | `role_facet_assertion` | `person_id, facet_code, state, source, asserted_at, removed_at`; partial unique active person/facet; removal requires expected person version. |
-| `alias_party` | `party_id PK/FK`; `display_name 1..120`; `current_handle_id`; `public_link_state private|public`; alias never stores legal identity. |
+| `alias_party` | `party_id PK/FK`; `display_name 1..120`; `current_handle_id`; `public_link_state private\|public`; alias never stores legal identity. |
 | `alias_ownership_period` | `id, alias_id, owner_person_id, starts_at, ends_at, transfer_id`; exclusion constraint prevents overlap; exactly one open period. |
-| `handle_reservation` | `id, normalized_handle unique, display_handle, party_id, state active|redirect|retired, successor_handle_id?`; normalized 3..40 code points; no reuse. |
+| `handle_reservation` | `id, normalized_handle unique, display_handle, party_id, state active\|redirect\|retired, successor_handle_id?`; normalized 3..40 code points; no reuse. |
 | `legal_identity` | `id, person_id, effective_from/to, encrypted/protected field references, verification_ref?, version`; periods cannot overlap. |
 | `legal_disclosure_event` | append-only `id, legal_identity_id, version, recipient_party_id, purpose_code, field_codes[], actor_id, acting_party_id, occurred_at`. |
 
@@ -79,40 +79,40 @@ These values are versioned protected policy/configuration records with the liste
 
 | Model | Fields and constraints |
 |---|---|
-| `organization_party` | `party_id PK/FK, ownership_state unclaimed|owned|ownerless, inferred_quiet_at?, closing_at?, version`; lifecycle remains on `party`. |
+| `organization_party` | `party_id PK/FK, ownership_state unclaimed\|owned\|ownerless, inferred_quiet_at?, closing_at?, version`; lifecycle remains on `party`. |
 | `organization_type_assignment` | `organization_id, type_code, starts_at, ends_at?, version`; partial unique active org/type; type code references protected registry. |
-| `membership_tenure` | `id, org_id, person_id, state invited|asserted|confirmed|ended|disputed|rejected, provenance, starts_on, ends_on?, accepted_at?, revoked_at?, version`. |
-| `membership_capacity_period` | `id, tenure_id, capacity permanent|touring|staff|honorary, starts_on, ends_on?`; non-overlap; contained by tenure. |
+| `membership_tenure` | `id, org_id, person_id, state invited\|asserted\|confirmed\|ended\|disputed\|rejected, provenance, starts_on, ends_on?, accepted_at?, revoked_at?, version`. |
+| `membership_capacity_period` | `id, tenure_id, capacity permanent\|touring\|staff\|honorary, starts_on, ends_on?`; non-overlap; contained by tenure. |
 | `representation_edge` | `id, principal_party_id, representative_party_id, activities[], domains[], territories[], starts_at, ends_at, communicate, ceiling_minor?, currency?, agreement_ref?, state, version`; territories are non-empty ISO-3166-1 alpha-2 codes or the sole sentinel `WORLDWIDE`; `ends_at > starts_at`. |
-| `mandate_grant` | `id, relationship_type/id, activities[], domains_mode all|explicit, domains[], ceiling_minor?, currency?, starts_at, ends_at, source default|explicit|governance, grantor_party_id, state, version`. |
+| `mandate_grant` | `id, relationship_type/id, activities[], domains_mode all\|explicit, domains[], ceiling_minor?, currency?, starts_at, ends_at, source default\|explicit\|governance, grantor_party_id, state, version`. |
 | `authority_projection` | derived/current `human_id, acting_party_id, source_relationship_id, activities, domains, communicate, ceiling, term, projection_version`; never client-written authority. |
 
 ### Governance, Identifiers, and Legacy
 
 | Model | Fields and constraints |
 |---|---|
-| `governance_terms_version` | `id, org_id, version_no, terms_json, document_hash, state draft|proposed|active|superseded|withdrawn, proposed_at, effective_at?`; immutable after proposed. |
-| `governance_confirmation` | `terms_id, member_person_id, decision confirm|reject, identity/acting context, occurred_at`; unique member/version; rejection prevents activation. |
+| `governance_terms_version` | `id, org_id, version_no, terms_json, document_hash, state draft\|proposed\|active\|superseded\|withdrawn, proposed_at, effective_at?`; immutable after proposed. |
+| `governance_confirmation` | `terms_id, member_person_id, decision confirm\|reject, identity/acting context, occurred_at`; unique member/version; rejection prevents activation. |
 | `name_ownership_record` | `id, org_id, terms_version, owners[], disposition, trademark_reference?, effective_at, superseded_at?`; record/surface only. |
 | `party_identifier_claim` | `id, party_id, namespace, normalized_value, capacity, provenance, verification_state, evidence_ref?, verified_at?, revoked_at?, version`; no global uniqueness until verified. |
-| `identifier_collision` | `id, namespace, normalized_value, claim_ids[], state open|resolved|withdrawn, resolution_basis?, resolved_at?`; open collision blocks routing for all claims. |
-| `legacy_nomination` | `id, nominator_person_id, successor_person_id, state active|revoked|superseded, created_at, revoked_at?, version`; one active nomination/person. |
-| `memorialisation_case` | `id, subject_person_id, reporter_person_id?, evidence_refs[], state reported|reviewing|verified|rejected|contested, reviewer_id?, reason_code?, decided_at?`. |
+| `identifier_collision` | `id, namespace, normalized_value, claim_ids[], state open\|resolved\|withdrawn, resolution_basis?, resolved_at?`; open collision blocks routing for all claims. |
+| `legacy_nomination` | `id, nominator_person_id, successor_person_id, state active\|revoked\|superseded, created_at, revoked_at?, version`; one active nomination/person. |
+| `memorialisation_case` | `id, subject_person_id, reporter_person_id?, evidence_refs[], state reported\|reviewing\|verified\|rejected\|contested, reviewer_id?, reason_code?, decided_at?`. |
 | `estate_representation` | ordinary representation edge referencing verified case/legal evidence; activities/domains/term explicit; cannot grant identity/signature as deceased. |
 
 ## State Machines
 
 | Aggregate | Allowed transitions and guards |
 |---|---|
-| Person account | `shadow → claimed → active → suspended|memorialised|erasure_processing`; memorialised cannot return active without protected false-report reversal. |
+| Person account | `shadow → claimed → active → suspended\|memorialised\|erasure_processing`; memorialised cannot return active without protected false-report reversal. |
 | Facet | `absent → active → removed → active`; remove blocked only by current closed obligation codes. |
-| Alias | `active → transfer_pending → active|transferred`; `active|transferred → retired`; empty unrelied alias may delete; retired never reactivates under a new party. |
-| Organization | ownership and lifecycle are orthogonal; lifecycle `active ↔ dormant`, `active|dormant → closing → closed`, band `active|dormant → dissolving → dissolved`; only closed may reopen. |
-| Membership | `invited → confirmed|rejected|expired`; `asserted → confirmed|rejected|disputed`; `confirmed → ended|disputed`; immediate authority revocation is independent of contested historic end date. |
-| Representation | `draft → pending → active|rejected|expired`; `active → revoked|expired`; no authority outside active term. |
-| Governance terms | `draft → proposed → active|rejected|withdrawn`; active → superseded; proposed content/member set is immutable. |
-| Identifier claim | `self_asserted → verifying → verified|mismatch|collision|self_asserted`; any non-revoked → revoked; collision clears only by evidence/withdrawal. |
-| Memorialisation | `reported → reviewing → verified|rejected|contested`; verified triggers account/authority termination and optional estate edge. |
+| Alias | `active → transfer_pending → active\|transferred`; `active\|transferred → retired`; empty unrelied alias may delete; retired never reactivates under a new party. |
+| Organization | ownership and lifecycle are orthogonal; lifecycle `active ↔ dormant`, `active\|dormant → closing → closed`, band `active\|dormant → dissolving → dissolved`; only closed may reopen. |
+| Membership | `invited → confirmed\|rejected\|expired`; `asserted → confirmed\|rejected\|disputed`; `confirmed → ended\|disputed`; immediate authority revocation is independent of contested historic end date. |
+| Representation | `draft → pending → active\|rejected\|expired`; `active → revoked\|expired`; no authority outside active term. |
+| Governance terms | `draft → proposed → active\|rejected\|withdrawn`; active → superseded; proposed content/member set is immutable. |
+| Identifier claim | `self_asserted → verifying → verified\|mismatch\|collision\|self_asserted`; any non-revoked → revoked; collision clears only by evidence/withdrawal. |
+| Memorialisation | `reported → reviewing → verified\|rejected\|contested`; verified triggers account/authority termination and optional estate edge. |
 
 ## Authority Resolution
 

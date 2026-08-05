@@ -47,38 +47,38 @@ This deep dive owns claiming/projection/qualification mechanics. It does not red
 | Model | Fields and constraints |
 |---|---|
 | `shadow_party_context` | `id, party_id, creator_person_id, acting_party_id, source_domain, source_entity_id, role_code?, instrument_code?, contact_route_id?, created_at, version`; unique source-domain/entity/party binding. |
-| `shadow_suppression` | `id, party_id?, route_fingerprint?, scope outreach|publication|both, state active|revoked, case_id, created_at`; protected lookup; never public name registry. |
-| `invitation_dispatch` | `id, shadow_id, route_id, attempt_no 1..6, trigger initial|schedule|new_attester, scheduled_at, sent_at?, state, provider_ref?`; unique shadow/route/attempt. |
-| `claim_case` | `id, target_party_id, claimant_person_id, claim_kind self|representation|transfer, state, control_level none|provisional|full, window_ends_at?, version`; one active self claim/person/target. |
-| `claim_proof_attempt` | `id, claim_id, tier A|B|C, method, challenge_hash?, evidence_ref?, attester_person_ids[], independence_result, state, expires_at?, created_at`. |
-| `ownership_contest` | `id, party_id, incumbent_claim_id, challenger_claim_id, state open|frozen|resolved|withdrawn, response_due_at, resolution_basis?, winner_claim_id?, reversal_ends_at?, version`. |
+| `shadow_suppression` | `id, party_id?, route_fingerprint?, scope outreach\|publication\|both, state active\|revoked, case_id, created_at`; protected lookup; never public name registry. |
+| `invitation_dispatch` | `id, shadow_id, route_id, attempt_no 1..6, trigger initial\|schedule\|new_attester, scheduled_at, sent_at?, state, provider_ref?`; unique shadow/route/attempt. |
+| `claim_case` | `id, target_party_id, claimant_person_id, claim_kind self\|representation\|transfer, state, control_level none\|provisional\|full, window_ends_at?, version`; one active self claim/person/target. |
+| `claim_proof_attempt` | `id, claim_id, tier A\|B\|C, method, challenge_hash?, evidence_ref?, attester_person_ids[], independence_result, state, expires_at?, created_at`. |
+| `ownership_contest` | `id, party_id, incumbent_claim_id, challenger_claim_id, state open\|frozen\|resolved\|withdrawn, response_due_at, resolution_basis?, winner_claim_id?, reversal_ends_at?, version`. |
 
 ### Profile, EPK, Credential, and Trader
 
 | Model | Fields and constraints |
 |---|---|
-| `profile_section_revision` | `id, party_id, section_code, content jsonb, author_person_id, acting_party_id, revision_no, state draft|active|archived, created_at`; active partial unique party/section. |
+| `profile_section_revision` | `id, party_id, section_code, content jsonb, author_person_id, acting_party_id, revision_no, state draft\|active\|archived, created_at`; active partial unique party/section. |
 | `profile_fact_projection` | derived `party_id, source_type/id/version, provenance_state, evidence_class, evidence_count, visibility, occurred_on?, role_codes[], sort_key`; rebuilt, never directly edited. |
-| `profile_emphasis` | `party_id, surface public|epk, default_filter?, ordered_refs[], version`; last-write-wins preference, not authority. |
-| `reel_item` | `id, party_id, credit_id, media_kind object|approved_embed, media_ref, role_code, rights_basis ownership|licence|provider_publication, rights_ref, state, order, version`. |
+| `profile_emphasis` | `party_id, surface public\|epk, default_filter?, ordered_refs[], version`; last-write-wins preference, not authority. |
+| `reel_item` | `id, party_id, credit_id, media_kind object\|approved_embed, media_ref, role_code, rights_basis ownership\|licence\|provider_publication, rights_ref, state, order, version`. |
 | `epk_share` | `id, party_id, creator_person_id, acting_party_id, token_hash, recipient_label, purpose_code, selected_fact_refs[], consent_refs[], expires_at, revoked_at?, version`; token ≥128 bits. |
-| `credential_record` | `id, subject_party_id, jurisdiction, profile_type_code, issuer_party/text, external_ref?, issued_on?, expires_on?, method, evidence_ref?, state submitted|reviewing|verified|expired|rejected|revoked|unknown, version`. |
-| `trader_assessment` | `id, party_id, jurisdiction, answers jsonb, rule_pack_version, classification private|trader|undetermined|review_required, effective_from, effective_to?, state, version`. |
-| `trader_mismatch_signal` | `id, party_id, signal_type, bounded_metrics jsonb, state open|dismissed|confirmed, generated_at, reviewed_at?, reviewer_id?`; no raw buyer/content data. |
+| `credential_record` | `id, subject_party_id, jurisdiction, profile_type_code, issuer_party/text, external_ref?, issued_on?, expires_on?, method, evidence_ref?, state submitted\|reviewing\|verified\|expired\|rejected\|revoked\|unknown, version`. |
+| `trader_assessment` | `id, party_id, jurisdiction, answers jsonb, rule_pack_version, classification private\|trader\|undetermined\|review_required, effective_from, effective_to?, state, version`. |
+| `trader_mismatch_signal` | `id, party_id, signal_type, bounded_metrics jsonb, state open\|dismissed\|confirmed, generated_at, reviewed_at?, reviewer_id?`; no raw buyer/content data. |
 
 ## State Machines
 
 | Aggregate | Allowed transitions |
 |---|---|
-| Shadow | `created → invited|suppressed|claimed|merged`; unclaimed remains non-public; claimed resolves through ownership without replacing party. |
-| Invitation | `queued → sent|failed_retryable|stopped`; “not you”, suppression, claim, or lifetime cap stops future attempts. |
-| Claim | `started → proving → provisional|full|stalled|withheld|contested`; stalled may resume; provisional → full|contested|revoked; no silent denial. |
-| Contest | `open → resolved|frozen|withdrawn`; frozen → resolved only through policy/human evidence; transfer remains blocked. |
+| Shadow | `created → invited\|suppressed\|claimed\|merged`; unclaimed remains non-public; claimed resolves through ownership without replacing party. |
+| Invitation | `queued → sent\|failed_retryable\|stopped`; “not you”, suppression, claim, or lifetime cap stops future attempts. |
+| Claim | `started → proving → provisional\|full\|stalled\|withheld\|contested`; stalled may resume; provisional → full\|contested\|revoked; no silent denial. |
+| Contest | `open → resolved\|frozen\|withdrawn`; frozen → resolved only through policy/human evidence; transfer remains blocked. |
 | Profile section | `draft → active → archived`; activating one revision archives prior active revision atomically. |
-| Reel item | `draft → verifying_rights → active|rejected|takedown`; only active projects publicly. |
-| EPK | `active → expired|revoked`; source changes do not change token/state, only live rendering and sender notification. |
-| Credential | `submitted → reviewing → verified|rejected|unknown`; verified → expired|revoked|reviewing; expired remains visible as expired. |
-| Trader assessment | `undetermined → private|trader|review_required`; private/trader → review_required on signal/rule change; review → private|trader|undetermined. |
+| Reel item | `draft → verifying_rights → active\|rejected\|takedown`; only active projects publicly. |
+| EPK | `active → expired\|revoked`; source changes do not change token/state, only live rendering and sender notification. |
+| Credential | `submitted → reviewing → verified\|rejected\|unknown`; verified → expired\|revoked\|reviewing; expired remains visible as expired. |
+| Trader assessment | `undetermined → private\|trader\|review_required`; private/trader → review_required on signal/rule change; review → private\|trader\|undetermined. |
 
 ## Proof Evaluation
 

@@ -41,25 +41,25 @@ This deep dive makes Shard 03's dynamic-but-bounded CMS deterministic. Shard 04 
 
 | Model | Fields and constraints |
 |---|---|
-| `content_type` | `id uuid PK, key varchar(64) unique, built_in bool, owner_capability, lifecycle active|retired, created_at`; key lowercase `^[a-z][a-z0-9_]{1,63}$`, immutable. |
+| `content_type` | `id uuid PK, key varchar(64) unique, built_in bool, owner_capability, lifecycle active\|retired, created_at`; key lowercase `^[a-z][a-z0-9_]{1,63}$`, immutable. |
 | `content_type_version` | `id, content_type_id, version_no integer>0, label, workflow_key/version, source_locale, default_template_id?, state, definition_hash, supersedes_id?, created_by/at, activated_at?`; unique type/version. |
-| `field_definition_version` | `id, type_version_id, field_id uuid, key, kind, constraints jsonb, required, default_mode none|literal|inherited, default_value?, localization_mode, editor_config, lifecycle`; unique type-version/key and field ID. |
-| `relation_definition` | `field_definition_id, target_kind content|domain, target_type, cardinality one|many, min/max, projection_key, on_unavailable omit|block|placeholder, ordered`; target/projection allowlisted. |
+| `field_definition_version` | `id, type_version_id, field_id uuid, key, kind, constraints jsonb, required, default_mode none\|literal\|inherited, default_value?, localization_mode, editor_config, lifecycle`; unique type-version/key and field ID. |
+| `relation_definition` | `field_definition_id, target_kind content\|domain, target_type, cardinality one\|many, min/max, projection_key, on_unavailable omit\|block\|placeholder, ordered`; target/projection allowlisted. |
 | `schema_artifact` | `type_version_id, compiler_version, zod_contract_ref, editor_manifest jsonb, renderer_manifest jsonb, artifact_hash, compiled_at`; immutable/reproducible. |
-| `schema_migration_plan` | `id, type_id, from_version_id, to_version_id, compatibility additive|conditional|breaking, transform_key/version?, dry_run_report, state, cursor?, migrated_count, failed_count, version`. |
+| `schema_migration_plan` | `id, type_id, from_version_id, to_version_id, compatibility additive\|conditional\|breaking, transform_key/version?, dry_run_report, state, cursor?, migrated_count, failed_count, version`. |
 
 ### Entries, Reviews, and Publication
 
 | Model | Fields and constraints |
 |---|---|
-| `content_entry` | `id uuid PK, type_id, owner_party_id?, lifecycle active|archived|deletion_pending|held, current_draft_revision_id?, version, created_by/at`. |
+| `content_entry` | `id uuid PK, type_id, owner_party_id?, lifecycle active\|archived\|deletion_pending\|held, current_draft_revision_id?, version, created_by/at`. |
 | `entry_revision` | `id, entry_id, revision_no, schema_version_id, template_version_id?, taxonomy_version_ids[], parent_revision_ids[], locale_payloads jsonb, content_hash, author_person_id, acting_party_id, state, created_at`; immutable after save. |
 | `entry_relation` | `revision_id, field_id, target_kind, target_id, expected_target_version?, position`; unique revision/field/target; never stores target fields/authority. |
 | `edit_presence` | `entry_id, person_id, acting_party_id, lease_until, last_seen_at, current_field_id?`; advisory, no write authority. |
-| `editorial_review` | `id, revision_id, frozen_hash, dependency_manifest jsonb, risk_class ordinary|protected, state, submitted_by/at, due_at?, version`. |
-| `editorial_decision` | `review_id, reviewer_person_id, acting_party_id, capability, decision approve|reject, reason_code, comment?, decided_at, reviewed_hash`; unique reviewer/review. |
-| `publication_schedule` | `id, entry_id, revision_id, action publish|unpublish|expire|archive, local_datetime, timezone, resolved_at_utc, tzdb_version, state, job_id?, version`. |
-| `publication_version` | `id, entry_id, revision_id, schema/template/taxonomy/settings version set, locale/audience, publication_hash, state active|superseded|revoked, activated_at`; one active per entry/locale/audience. |
+| `editorial_review` | `id, revision_id, frozen_hash, dependency_manifest jsonb, risk_class ordinary\|protected, state, submitted_by/at, due_at?, version`. |
+| `editorial_decision` | `review_id, reviewer_person_id, acting_party_id, capability, decision approve\|reject, reason_code, comment?, decided_at, reviewed_hash`; unique reviewer/review. |
+| `publication_schedule` | `id, entry_id, revision_id, action publish\|unpublish\|expire\|archive, local_datetime, timezone, resolved_at_utc, tzdb_version, state, job_id?, version`. |
+| `publication_version` | `id, entry_id, revision_id, schema/template/taxonomy/settings version set, locale/audience, publication_hash, state active\|superseded\|revoked, activated_at`; one active per entry/locale/audience. |
 
 ### Composition, Taxonomy, and Locale
 
@@ -68,25 +68,25 @@ This deep dive makes Shard 03's dynamic-but-bounded CMS deterministic. Shard 04 
 | `block_definition_version` | `block_key, version, props_schema_ref/hash, renderer_ref, allowed_children, data_sources, accessibility_contract, compatible_from/to, lifecycle`; code-release-owned. |
 | `template_version` | `id, key, version, compatible_type_keys[], slots jsonb, reserved_regions[], binding_manifest, state, hash`; no arbitrary markup/code. |
 | `pattern_version` | `id, key, version, block_tree jsonb, state, hash, owner_capability`; acyclic validated tree. |
-| `composition_instance` | `revision_id, path, slot_key, block_key/version, pattern_id/version?, link_mode linked|detached, props jsonb, bindings jsonb`; unique revision/path. |
-| `taxonomy_version` | `id, key, version, owner_capability, shape flat|hierarchical, allowed_type/field keys, state, hash`; key immutable. |
-| `taxonomy_term` | `id, taxonomy_id, key, parent_id?, lifecycle active|deprecated|merged, successor_id?, created_at`; acyclic parent; stable ID. |
+| `composition_instance` | `revision_id, path, slot_key, block_key/version, pattern_id/version?, link_mode linked\|detached, props jsonb, bindings jsonb`; unique revision/path. |
+| `taxonomy_version` | `id, key, version, owner_capability, shape flat\|hierarchical, allowed_type/field keys, state, hash`; key immutable. |
+| `taxonomy_term` | `id, taxonomy_id, key, parent_id?, lifecycle active\|deprecated\|merged, successor_id?, created_at`; acyclic parent; stable ID. |
 | `term_label` | `term_id, locale, label, description?, aliases[]`; normalized uniqueness within taxonomy/locale where configured. |
-| `locale_variant_state` | `entry_id, revision_id, locale, source_locale/revision, state untranslated|draft|review|approved|stale, approved_by/at?`. |
-| `related_content_rule` | `source_entry_id, target_entry_id?, rule_key/version?, mode pin|exclude|derived, reason_code, order?, state, version`; cycles allowed only where relation definition permits. |
+| `locale_variant_state` | `entry_id, revision_id, locale, source_locale/revision, state untranslated\|draft\|review\|approved\|stale, approved_by/at?`. |
+| `related_content_rule` | `source_entry_id, target_entry_id?, rule_key/version?, mode pin\|exclude\|derived, reason_code, order?, state, version`; cycles allowed only where relation definition permits. |
 
 ## State Machines
 
 | Aggregate | Allowed transitions |
 |---|---|
-| Type/schema/template/taxonomy/pattern version | `draft → review → approved → scheduled|active → superseded|retired`; blocked may return to draft; active content immutable. |
-| Entry revision | `draft → submitted → approved|rejected → scheduled|published`; any changed draft creates a new revision and invalidates prior review. |
-| Review | `open → approved|rejected|invalidated`; protected review requires required distinct capabilities/humans. |
-| Schedule | `pending → executing → completed|failed_retryable|blocked|cancelled`; exact action idempotent. |
-| Migration | `draft → dry_running → ready|blocked → running → verifying → completed|failed_retryable|failed_terminal`; resume from cursor. |
+| Type/schema/template/taxonomy/pattern version | `draft → review → approved → scheduled\|active → superseded\|retired`; blocked may return to draft; active content immutable. |
+| Entry revision | `draft → submitted → approved\|rejected → scheduled\|published`; any changed draft creates a new revision and invalidates prior review. |
+| Review | `open → approved\|rejected\|invalidated`; protected review requires required distinct capabilities/humans. |
+| Schedule | `pending → executing → completed\|failed_retryable\|blocked\|cancelled`; exact action idempotent. |
+| Migration | `draft → dry_running → ready\|blocked → running → verifying → completed\|failed_retryable\|failed_terminal`; resume from cursor. |
 | Term | `active → deprecated → merged`; merged cannot reactivate and redirects permanently. |
 | Locale | `untranslated → draft → review → approved`; source change makes approved `stale`; explicit revalidation returns approved. |
-| Publication | `active → superseded|revoked`; unpublish creates a new state/version and does not delete prior publication evidence. |
+| Publication | `active → superseded\|revoked`; unpublish creates a new state/version and does not delete prior publication evidence. |
 
 ## Schema Compilation and Compatibility
 

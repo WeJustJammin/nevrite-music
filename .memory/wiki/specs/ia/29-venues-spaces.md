@@ -148,7 +148,7 @@ Shard 29 owns place and room identity, room technical truth, provenance, availab
 | `WaitlistEntry` | Demand, eligibility, rank basis, expiry, notification budget and offer state |
 | `RecurringSeries` | Bounded rule, review date, generated instance identities and explicit skips/moves |
 | `FieldContest` | Field/revisions, parties, evidence, visibility, moderation reference and resolution |
-| `ConformanceRun` | Rider/spec/event snapshots plus immutable per-field `match|unknown|conflict` outcomes |
+| `ConformanceRun` | Rider/spec/event snapshots plus immutable per-field `match\|unknown\|conflict` outcomes |
 
 ### State Machines
 

@@ -32,7 +32,7 @@ Shard 24 owns personal collection views, public item visibility, rig definitions
 | Condition honesty | Known condition cannot be hidden from a published item. Unknown, stale and conflicting reports remain explicit and never become “verified working.” |
 | Custody | Custody is orthogonal to ownership. Self-asserted custody grants no listing, publication, transfer or insurance authority until owner confirmation. |
 | Cases and rigs | Both are first-class many-to-many groupings: rigs are functional; cases are physical and intentionally more volatile. |
-| Carnet boundary | This shard produces immutable manifest snapshots, readiness gaps and source data; [[specs/ia/32-show-production-planning|Shard 32]] owns the carnet and advancing process. |
+| Carnet boundary | This shard produces immutable manifest snapshots, readiness gaps and source data; [[specs/ia/32-show-production-planning\|Shard 32]] owns the carnet and advancing process. |
 
 ## Features
 

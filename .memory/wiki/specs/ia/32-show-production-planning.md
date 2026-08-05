@@ -28,7 +28,7 @@ Shard 32 owns event production identity, bill projections, riders, stage/input/m
 | Bill privacy | Private per act by default with explicit field/section sharing. Off-platform acts are name-only scheduling/technical placeholders. |
 | Rider | Structured requirement layer with per-item substitution, negotiability, verification, strictness, supply expectation and provenance. PDF is export only. |
 | Sensitive riders | Access rider is person-owned with per-recipient consent. Dietary data defaults to aggregate/class disclosure; severe individual instructions require explicit recipient grant and counsel-approved privacy/retention policy. |
-| Diff | Typed three-way `match|shortfall|unknown` with qualifiers; caveated/stale hard requirements become actionable unknown/shortfall. It informs checklist and never vetoes. |
+| Diff | Typed three-way `match\|shortfall\|unknown` with qualifiers; caveated/stale hard requirements become actionable unknown/shortfall. It informs checklist and never vetoes. |
 | Shared capability | Promoter/production authority explicitly allocates pooled resources across bill; no headliner-first or first-to-advance implicit rule. |
 | Checklist | Generated from shortfalls, unknowns, near matches, requirements and constraints; manually extensible. Completion requires counter-confirmation. |
 | External advance | Expiring scoped link can read and answer assigned items without account; email reply parsing is disabled. |
