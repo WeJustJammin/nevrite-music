@@ -268,7 +268,7 @@ All events use Shard 00 identifier-only envelopes.
 ## Cross-Shard Dependencies
 
 - **Depends on:** Shard 00 platform contracts and Shard 01 staff identity/acting-context/capability.
-- **Depended on by:** Shard 04 CMS delivery/media and Shard 05 platform configuration/admin.
+- **Depended on by:** Shard 04 CMS delivery/media, Shard 05 platform configuration/admin, and Shard 16 courses/credentials/institutions, whose certificate-template and academy-setting refusals rely on this shard's reserved-concept content type registry.
 
 ## Deep Dives Needed
 
@@ -280,6 +280,7 @@ All events use Shard 00 identifier-only envelopes.
 - **Shard 01 — Identity authority and party governance:** consume [Shard 01 — Identity authority and party governance Contracts](01-identity-authority.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 01 — Identity authority and party governance Event Schemas](01-identity-authority.md#event-schemas). Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
 - **Shard 04 — CMS navigation, media and delivery:** consume [Shard 04 — CMS navigation, media and delivery Contracts](04-cms-delivery-media.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 04 — CMS navigation, media and delivery Event Schemas](04-cms-delivery-media.md#event-schemas). Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
 - **Shard 05 — Platform configuration, admin and quality:** consume [Shard 05 — Platform configuration, admin and quality Contracts](05-platform-configuration-admin.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 05 — Platform configuration, admin and quality Event Schemas](05-platform-configuration-admin.md#event-schemas). Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
+- **Shard 16 — Education credentials and institutions:** consume [Shard 16 — Education credentials and institutions Contracts](16-education-credentials-institutions.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 16 — Education credentials and institutions Event Schemas](16-education-credentials-institutions.md#event-schemas). This shard `§ Contracts` — Content Type and Field Registry `Reserved concepts` row is the binding for Shard 16's certificate-template and academy-setting edge cases: credentials, entitlements and credits are canonical domain entities, so no CMS type, template or block can be registered for them and no CMS entry manufactures authority over Shard 16 `EvidenceState`, `EntitlementState` or `InstitutionGate`; Shard 16 course, revision and lesson records are domain entities authored in Shard 16, never CMS entries. Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
 
 ## Changelog
 
@@ -290,6 +291,7 @@ All events use Shard 00 identifier-only envelopes.
 | 2026-08-02 | Resolved storage, migration, concurrency, preview, taxonomy, locale and publication variance | /write-architecture-spec-deepen | Contracts, Models, Access, Events, Edge Cases |
 | 2026-08-05 | A-04 — restored AC-CMS-15 from the intact CMS-15 interaction row and escaped the locale-state pipes that corrupted it | /resolve-ambiguity | Acceptance Criteria, Interactions |
 | 2026-08-05 | F1 — added per-flow Preconditions and Failure / recovery; regenerated acceptance criteria | /resolve-ambiguity | Interactions, Acceptance Criteria |
+| 2026-08-05 | F2 — cross-shard contract reciprocity: mirrored the inbound Shard 16 edge (certificate-template and academy-setting refusals bound to the Content Type and Field Registry `Reserved concepts` row) and recorded Shard 16 as a downstream consumer | /resolve-ambiguity | Cross-Shard Dependencies, Cross-Shard Section Contract Map, Dependency References, Changelog |
 
 ## Dependency References
 
@@ -303,6 +305,7 @@ All events use Shard 00 identifier-only envelopes.
 
 - [[specs/ia/04-cms-delivery-media|Shard 04 — CMS navigation, media and delivery]]
 - [[specs/ia/05-platform-configuration-admin|Shard 05 — Platform configuration, admin and quality]]
+- [[specs/ia/16-education-credentials-institutions|Shard 16 — Courses, credentials, institutions and special practice]]
 
 
 <!-- spec-graph: auto-generated -->

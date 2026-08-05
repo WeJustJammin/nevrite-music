@@ -230,7 +230,7 @@ Events exclude sample/source descriptions, media, provider tokens, channel ident
 
 ## Dependency References
 
-- **Depends on:** [[specs/ia/00-infrastructure|Shard 00]] for provider adapters/storage/jobs/audit; [[specs/ia/01-identity-authority|Shard 01]] for parties/mandates; [[specs/ia/06-trust-safety|Shard 06]] for claim/dispute evidence; [[specs/ia/09-projects-collaboration|Shard 09]] for contributions/assets; [[specs/ia/10-rights-ownership|Shard 10]] for rights/shares; [[specs/ia/20-licensing-core|Shard 20]] for scope/clearance/policy/instruments.
+- **Depends on:** [[specs/ia/00-infrastructure|Shard 00]] for provider adapters/storage/jobs/audit; [[specs/ia/06-trust-safety|Shard 06]] for claim/dispute evidence; [[specs/ia/09-projects-collaboration|Shard 09]] for contributions/assets; [[specs/ia/10-rights-ownership|Shard 10]] for rights/shares; [[specs/ia/20-licensing-core|Shard 20]] for scope/clearance/policy/instruments.
 - **Depended on by:** distribution, accounting and claims consumers use issued instrument/manifest/allocation references only.
 - **Deep dive:** [[specs/ia/deep-dives/21-specialized-licensing|Specialized licensing deep dive]].
 
@@ -257,7 +257,6 @@ Events exclude sample/source descriptions, media, provider tokens, channel ident
 ### Cross-Shard Section Contract Map
 
 - **Shard 00:** consume [Shard 00 Contracts](00-infrastructure.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 00 Event Schemas](00-infrastructure.md#event-schemas). Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
-- **Shard 01:** consume [Shard 01 Contracts](01-identity-authority.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 01 Event Schemas](01-identity-authority.md#event-schemas). Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
 - **Shard 06:** consume [Shard 06 Contracts](06-trust-safety.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 06 Event Schemas](06-trust-safety.md#event-schemas). Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
 - **Shard 09:** consume [Shard 09 Contracts](09-projects-collaboration.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 09 Event Schemas](09-projects-collaboration.md#event-schemas). Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
 - **Shard 10:** consume [Shard 10 Contracts](10-rights-ownership.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 10 Event Schemas](10-rights-ownership.md#event-schemas). Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
@@ -269,6 +268,7 @@ Events exclude sample/source descriptions, media, provider tokens, channel ident
 |---|---|---|
 | 2026-08-03 | Reconciled 21 sources; locked specialized clearance, provider, AI, statutory and WONT boundaries | `/write-architecture-spec` |
 | 2026-08-05 | F1 — added per-flow Preconditions and Failure / recovery; regenerated acceptance criteria | `/resolve-ambiguity` |
+| 2026-08-05 | F2 — cross-shard contract reciprocity: removed unsupported Shard 01 edge from the contract map, Dependency References and Related Specs | `/resolve-ambiguity` |
 
 
 <!-- spec-graph: auto-generated -->
@@ -276,7 +276,6 @@ Events exclude sample/source descriptions, media, provider tokens, channel ident
 
 ### References
 - [[specs/ia/00-infrastructure|Shard 00 — Cross-cutting platform foundation]]
-- [[specs/ia/01-identity-authority|Shard 01 — Identity authority and party governance]]
 - [[specs/ia/06-trust-safety|Shard 06 — Trust, safety, disputes and evidence]]
 - [[specs/ia/09-projects-collaboration|Shard 09 — Music projects and collaboration]]
 - [[specs/ia/10-rights-ownership|Shard 10 — Rights and ownership]]

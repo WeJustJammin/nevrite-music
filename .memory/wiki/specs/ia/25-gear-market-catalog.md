@@ -281,6 +281,7 @@ Events use the platform envelope, contain no evidence bytes or private serials, 
 
 ### Cross-Shard Section Contract Map
 
+- **Shard 06:** consume [Shard 06 Contracts](06-trust-safety.md#contracts) into this shard `§ Contracts` — `RiskSignal`, `AuthenticityClaim`, `TriangulationReview` and the `Decision`/`SanctionRung`/`ScopeType` ladder that restricts a listing or suspends a seller surface; publish this shard `§ Event Schemas` to [Shard 06 Event Schemas](06-trust-safety.md#event-schemas) — listing, disclosure and screening facts are the listing-time detection `AuthenticityClaim` reconciles, and `safety.restriction.changed.v1` and `safety.authenticity.decided.v1` already name marketplace and seller notice as consumers. Shard 06 owns case and evidence truth; this shard owns catalog and listing truth. Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
 - **Shard 23:** consume [Shard 23 Contracts](23-gear-provenance-registry.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 23 Event Schemas](23-gear-provenance-registry.md#event-schemas). Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
 - **Shard 24:** consume [Shard 24 Contracts](24-gear-holdings-operations.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 24 Event Schemas](24-gear-holdings-operations.md#event-schemas). Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
 - **Shard 26:** consume [Shard 26 Contracts](26-gear-commerce-fulfilment.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 26 Event Schemas](26-gear-commerce-fulfilment.md#event-schemas). Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
@@ -289,6 +290,7 @@ Events use the platform envelope, contain no evidence bytes or private serials, 
 
 - 2026-08-02: Initial complete interaction architecture authored from 29 source documents and 21 child capabilities.
 - 2026-08-02: Locked legal hybrid catalog seeding, unmatched publication, versioned disclosure, atomic inventory, screening outage behavior and confidence-gated market data.
+- 2026-08-05: F2 — cross-shard contract reciprocity; mirrored the Shard 06 trust and safety edge into the Cross-Shard Section Contract Map (`/resolve-ambiguity`).
 
 
 <!-- spec-graph: auto-generated -->

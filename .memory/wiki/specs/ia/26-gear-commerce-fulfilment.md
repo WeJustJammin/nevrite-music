@@ -283,15 +283,18 @@ Events carry no raw addresses, payment secrets, evidence bytes or protected regi
 
 ### Cross-Shard Section Contract Map
 
+- **Shard 06:** consume [Shard 06 Contracts](06-trust-safety.md#contracts) into this shard `§ Contracts` — `OpenDispute` and `RecordSettlement` for the dispute rail, `MeetupSafetyRecord` for pickup-arrangement gating, and `CardTestingDefense`/`TriangulationReview` for rail blocks and payout holds; publish this shard `§ Event Schemas` to [Shard 06 Event Schemas](06-trust-safety.md#event-schemas) — `gear_pickup.arrangement_changed.v1` already names safety as a consumer, and order, shipment and damage-claim state is the transaction truth a case attaches to. Shard 06 owns case and evidence truth; this shard owns order and settlement truth. Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
 - **Shard 25:** consume [Shard 25 Contracts](25-gear-market-catalog.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 25 Event Schemas](25-gear-market-catalog.md#event-schemas). Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
 - **Shard 23:** consume [Shard 23 Contracts](23-gear-provenance-registry.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 23 Event Schemas](23-gear-provenance-registry.md#event-schemas). Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
 - **Shard 24:** consume [Shard 24 Contracts](24-gear-holdings-operations.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 24 Event Schemas](24-gear-holdings-operations.md#event-schemas). Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
 - **Shard 14:** consume [Shard 14 Contracts](14-services-marketplace.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 14 Event Schemas](14-services-marketplace.md#event-schemas). Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
+- **Shard 41:** publish this shard `§ Contracts` — specifically `SettleOrderLine` and the refund/remedy outcome of `OpenReturnOrDamageCase` — to [Shard 41 Contracts](41-career-finance.md#contracts), and this shard `§ Event Schemas` (`gear_order.settled.v1`, `gear_order.return_changed.v1`) to [Shard 41 Event Schemas](41-career-finance.md#event-schemas). This shard owns sale sequencing, buyer election and the exactly-once money close on an order line; Shard 41 records the settled net as an `IncomeEventV1` and a refund as an `IncomeReversalV1`, and never alters order state, remedy, settlement or payout. Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
 
 ## Changelog
 
 - 2026-08-02: Initial complete interaction architecture authored from 34 source documents and 22 child capabilities.
 - 2026-08-02: Locked domestic consumer-first commerce, partitioned checkout, brokered freight, bounded remedies, settlement-triggered transfer and deferred custody-heavy models.
+- 2026-08-05: `/resolve-ambiguity` — F2 — cross-shard contract reciprocity: added reciprocal Cross-Shard Section Contract Map bullets for Shard 06 (trust and safety dispute, meetup-safety and fraud rails) and Shard 41 (career finance ledger, publish-direction only).
 
 
 <!-- spec-graph: auto-generated -->

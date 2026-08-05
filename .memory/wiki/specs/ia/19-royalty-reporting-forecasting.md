@@ -190,6 +190,7 @@ Events exclude amounts, society/member IDs, setlists, productions, model feature
 - **Shard 18:** consume [Shard 18 Contracts](18-royalty-accounting.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 18 Event Schemas](18-royalty-accounting.md#event-schemas). Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
 - **Shard 10:** consume [Shard 10 Contracts](10-rights-ownership.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 10 Event Schemas](10-rights-ownership.md#event-schemas). Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
 - **Shard 09:** consume [Shard 09 Contracts](09-projects-collaboration.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 09 Event Schemas](09-projects-collaboration.md#event-schemas). Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
+- **Shard 07:** consume [Shard 07 Contracts](07-credits-core.md#contracts) into this shard `§ Contracts` — `ProvenanceRung` and `DeriveProvenance` supply the contribution basis behind a matched work and a cover's writer attribution — and [Shard 07 Event Schemas](07-credits-core.md#event-schemas), specifically `credit.provenance.derived.v1`, whose consumer list already names Shards 18–20. This shard publishes nothing back: its calendar and forecast models are derived and read-only, and Shard 07 never reads a return, expectation or forecast. Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
 - **Shard 00:** consume [Shard 00 Contracts](00-infrastructure.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 00 Event Schemas](00-infrastructure.md#event-schemas). Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
 
 ## Changelog
@@ -198,6 +199,7 @@ Events exclude amounts, society/member IDs, setlists, productions, model feature
 |---|---|---|
 | 2026-08-03 | Locked performance reporting, cue expectations, curated calendars and conservative calibrated forecasts | `/write-architecture-spec` |
 | 2026-08-05 | F1 — added per-flow Preconditions and Failure / recovery; regenerated acceptance criteria | `/resolve-ambiguity` |
+| 2026-08-05 | F2 — cross-shard contract reciprocity: added the reciprocal consume-only Shard 07 bullet to the Cross-Shard Section Contract Map | `/resolve-ambiguity` |
 
 
 <!-- spec-graph: auto-generated -->

@@ -249,13 +249,16 @@ Events include `eventId`, `schemaVersion`, `aggregateId`, `aggregateVersion`, `a
 ### Cross-Shard Section Contract Map
 
 - **Shard 23:** consume [Shard 23 Contracts](23-gear-provenance-registry.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 23 Event Schemas](23-gear-provenance-registry.md#event-schemas). Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
+- **Shard 25:** consume [Shard 25 Contracts](25-gear-market-catalog.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 25 Event Schemas](25-gear-market-catalog.md#event-schemas). Shard 25 is the marketplace listing authority named in this shard's Cross-Domain Contracts: its `PublishListing` consumes an active confirmed custody record plus an explicit selling grant from `ProposeCustody`/`RespondCustody`, and reads grant changes from `gear.custody_changed.v1`; possession alone never authorises a listing, each grant stays separately scoped and revocable here, and Shard 25 may not infer sale rights from custody. Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
 - **Shard 32:** consume [Shard 32 Contracts](32-show-production-planning.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 32 Event Schemas](32-show-production-planning.md#event-schemas). Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
 - **Shard 29:** consume [Shard 29 Contracts](29-venues-spaces.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 29 Event Schemas](29-venues-spaces.md#event-schemas). Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
+- **Shard 34:** publish this shard `§ Contracts` — specifically `CreateManifestSnapshot` plus the `ManifestSnapshot`, `Case` / `CaseMembership` and `GearLogisticsFacts` models in `§ Data Models` — to [Shard 34 Contracts](34-touring-operations.md#contracts), and this shard `§ Event Schemas` (`gear.manifest_snapshot_created.v1`, `gear.case_membership_changed.v1`, `gear.readiness_gap_changed.v1`) to [Shard 34 Event Schemas](34-touring-operations.md#event-schemas). This shard owns custody, case membership and manifest snapshots; Shard 34 pins a manifest version into `ReconcileCarnet` and returns `tour.carnet.reconciled` as crossing evidence, and never mutates custody, holdings or readiness gaps. Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
 
 ## Changelog
 
 - 2026-08-02: Initial complete interaction architecture authored from 13 source documents and 9 child capabilities.
 - 2026-08-02: Locked private-by-default publication, actor-owned rigs, advisory compatibility, dual register modes, honest condition, confirmed custody grants and gap-led manifests.
+- 2026-08-05: F2 — cross-shard contract reciprocity: added the reciprocal Shard 25 (custody/selling-grant → listing authority) and Shard 34 (manifest snapshot/readiness → carnet reconciliation) bullets to the Cross-Shard Section Contract Map (`/resolve-ambiguity`).
 
 
 <!-- spec-graph: auto-generated -->

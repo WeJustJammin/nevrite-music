@@ -276,7 +276,7 @@ All events use Shard 00's `PlatformEvent`; payloads contain identifiers only.
 ## Cross-Shard Dependencies
 
 - **Depends on:** Shard 00 for platform contracts.
-- **Depended on by:** Shards 02–18, 20, 23–25, 27, 29–30, 37, and 39 according to the approved decomposition.
+- **Depended on by:** Shards 02–18, 20, 23–25, 27, 29–30, 37, and 39 according to the approved decomposition, plus Shard 22 — Release and distribution lifecycle, whose authored `store_artist_link` and `release_label_copy` models key on the canonical party and organization entities owned here.
 - Downstream shards reference canonical party IDs and current authority; they never duplicate identity or infer authority from profile/provider text.
 
 ## Deep Dives Needed
@@ -288,6 +288,8 @@ All events use Shard 00's `PlatformEvent`; payloads contain identifiers only.
 - **Shard 00 — Cross-cutting platform foundation:** consume [Shard 00 — Cross-cutting platform foundation Contracts](00-infrastructure.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 00 — Cross-cutting platform foundation Event Schemas](00-infrastructure.md#event-schemas). Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
 - **WeJammin — IA Decomposition Plan:** consume [WeJammin — IA Decomposition Plan Contracts](decomposition-plan.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [WeJammin — IA Decomposition Plan Event Schemas](decomposition-plan.md#event-schemas). Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
 - **Shard 02 — Profiles, claiming and qualifications:** consume [Shard 02 — Profiles, claiming and qualifications Contracts](02-profiles-verification.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 02 — Profiles, claiming and qualifications Event Schemas](02-profiles-verification.md#event-schemas). Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
+- **Shard 22 — Release and distribution lifecycle:** consume [Shard 22 — Release and distribution lifecycle Contracts](22-release-distribution.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 22 — Release and distribution lifecycle Event Schemas](22-release-distribution.md#event-schemas) — this shard's `Party and Identity` and `Organization and Relationship` contracts supply the canonical artist party that [Shard 22 — Release and distribution lifecycle Interactions](22-release-distribution.md#interactions) DST-12 resolves a destination store artist ID against before that destination's first delivery, the key of Shard 22's `store_artist_link` model, and the org entity its `release_label_copy` label-name field accepts in place of an asserted external label string. Canonical party and organization truth stays here; Shard 22 never mints, merges or promotes a party from a store profile. Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
+- **Shard 39 — Analytics ingestion, matching and reporting:** publish this shard `§ Contracts` — specifically the canonical party contract and the `Acting context` rule under `§ Party and Identity` — to [Shard 39 — Analytics ingestion, matching and reporting Contracts](39-analytics-ingestion-reporting.md#contracts), and this shard `§ Event Schemas` (`identity.alias.changed.v1`, `identity.acting-context.revoked.v1`, `identity.identifier.changed.v1`) to [Shard 39 — Analytics ingestion, matching and reporting Event Schemas](39-analytics-ingestion-reporting.md#event-schemas). This shard owns canonical party identity and current authority; Shard 39's `ExternalProfileBindingV1` binds a provider external ID to that canonical subject, derives its dashboard contexts from the acting-context ordering defined here, and never creates identity or infers authority from provider text. Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
 
 ## Changelog
 
@@ -298,6 +300,7 @@ All events use Shard 00's `PlatformEvent`; payloads contain identifiers only.
 | 2026-08-02 | Resolved model, authority, governance, identifier, estate, and abuse-path variance | /write-architecture-spec-deepen | Contracts, Models, Access, Events, Edge Cases |
 | 2026-08-05 | A-01: repaired corrupted AC-IDA-15 to the shard's AC template and escaped the IDA-15 completion enum pipes | /resolve-ambiguity | Acceptance Criteria, Interactions |
 | 2026-08-05 | F1 — added per-flow Preconditions and Failure / recovery; regenerated acceptance criteria | /resolve-ambiguity | Acceptance Criteria, Interactions |
+| 2026-08-05 | F2 — cross-shard contract reciprocity: mirrored the Shard 22 and Shard 39 section contracts, and recorded Shard 22 as a dependent | /resolve-ambiguity | Cross-Shard Dependencies, Cross-Shard Section Contract Map, Dependency References |
 
 ## Dependency References
 
@@ -312,6 +315,8 @@ All events use Shard 00's `PlatformEvent`; payloads contain identifiers only.
 ### Constrains
 
 - [[specs/ia/02-profiles-verification|Shard 02 — Profiles, claiming and qualifications]]
+- [[specs/ia/22-release-distribution|Shard 22 — Release and distribution lifecycle]]
+- [[specs/ia/39-analytics-ingestion-reporting|Shard 39 — Analytics ingestion, matching and reporting]]
 - All declared dependent IA shards through canonical party and authority contracts.
 
 

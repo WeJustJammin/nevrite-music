@@ -281,6 +281,7 @@ Events contain IDs/versions only, never buyer identity maps, object bytes, licen
 
 ### Cross-Shard Section Contract Map
 
+- **Shard 06:** consume [Shard 06 Contracts](06-trust-safety.md#contracts) into this shard `§ Contracts` — `RepeatInfringerLedger`, `AppealDecision`, `LeakForensics` and the `EvidenceClass` grades `WithdrawArtifact` requires, plus `safety.dmca.changed.v1`, whose consumer list already names asset availability; publish this shard `§ Event Schemas` to [Shard 06 Event Schemas](06-trust-safety.md#event-schemas) — `digital_enforcement.requested.v1` is the adjudication request `RequestSerialBlacklist` sends, and per-recipient transfer grants are the watermark trace `LeakForensics` reads. Shard 06 owns adjudication, appeal and evidence truth; this shard owns product, artifact and entitlement truth. Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
 - **Shard 28:** consume [Shard 28 Contracts](28-digital-licensing-commerce.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 28 Event Schemas](28-digital-licensing-commerce.md#event-schemas). Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
 - **Shard 10:** consume [Shard 10 Contracts](10-rights-ownership.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 10 Event Schemas](10-rights-ownership.md#event-schemas). Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
 - **Shard 07:** consume [Shard 07 Contracts](07-credits-core.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 07 Event Schemas](07-credits-core.md#event-schemas). Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
@@ -289,6 +290,7 @@ Events contain IDs/versions only, never buyer identity maps, object bytes, licen
 
 - 2026-08-03: Initial complete interaction architecture authored from 34 source documents and 24 child capabilities.
 - 2026-08-03: Locked content-first launch, entitlement-first ownership, per-request delivery authorization, immutable version archives and vendor continuity.
+- 2026-08-05: `/resolve-ambiguity` — F2 — cross-shard contract reciprocity: mirrored the Shard 06 trust-and-safety edge (adjudication, appeal, repeat-infringer and leak-forensics contracts consumed; enforcement-request and transfer-grant events published) into the Cross-Shard Section Contract Map.
 
 
 <!-- spec-graph: auto-generated -->

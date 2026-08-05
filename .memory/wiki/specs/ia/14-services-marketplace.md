@@ -301,7 +301,7 @@ Responsive web/PWA only. Large files use resumable protected uploads/streams. Ph
 ## Cross-Shard Dependencies
 
 - **Depends on:** [Shard 00](00-infrastructure.md) for contracts/storage/queues/payment adapters; [Shard 01](01-identity-authority.md) for parties/authority/guardian/agency; [Shard 06](06-trust-safety.md) for disputes/spec-work/integrity; [Shard 09](09-projects-collaboration.md) for project assets/requirements; [Shard 10](10-rights-ownership.md) for rights instruments/allocation.
-- **Depended on by:** Shard 26 consumes repair/inspection/custody services; Shard 41 consumes accepted engagement economics. Neither may bypass quote/acceptance truth.
+- **Depended on by:** Shard 23 appends gear service/modification history from completed engagements and custody handoffs; Shard 26 consumes repair/inspection/custody services; Shard 38 consumes creator engagement and payment facts and publishes the payola classification verdict this shard applies; Shard 41 consumes accepted engagement economics. None may bypass quote/acceptance truth.
 
 ## Deep Dives Needed
 
@@ -309,7 +309,9 @@ Responsive web/PWA only. Large files use resumable protected uploads/streams. Ph
 
 ### Cross-Shard Section Contract Map
 
+- **Shard 23 — Gear provenance registry:** consume [Shard 23 — Gear provenance registry Contracts](23-gear-provenance-registry.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 23 — Gear provenance registry Event Schemas](23-gear-provenance-registry.md#event-schemas) — Shard 23's GPR-11 appends a service or modification event only from a completed engagement here (`PublishDelivery`, `AcceptDelivery`, `ExecuteAcceptance`) plus the `RecordCustodyHandoff` condition facts this shard already routes to Shard 23 through `service.custody.changed.v1`; Shard 23 owns gear identity and the append-only service history and never rewrites engagement, quote or acceptance truth, while a provider acting outside its mandate scope is refused there rather than widened here. Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
 - **Shard 26 — Gear commerce and fulfilment:** consume [Shard 26 — Gear commerce and fulfilment Contracts](26-gear-commerce-fulfilment.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 26 — Gear commerce and fulfilment Event Schemas](26-gear-commerce-fulfilment.md#event-schemas). Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
+- **Shard 38 — Promotion and marketing:** consume [Shard 38 — Promotion and marketing Contracts](38-promotion-marketing.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 38 — Promotion and marketing Event Schemas](38-promotion-marketing.md#event-schemas). Creator seeding splits at this boundary: this shard owns the engagement, `AcceptQuote`, `ExecuteAcceptance`, payment and `ComputeExitSettlement`, while Shard 38 owns the disclosure-locked brief, campaign rights and post-publication verification — a failed verification records against the engagement case here and Shard 38 never claws money itself. Shard 38's immutable `promotion.offer.classified.v1` verdict is the payola guardrail this shard applies to a creator engagement, and an unknown verdict fails closed. Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
 - **Shard 41 — Career finance and business operations:** consume [Shard 41 — Career finance and business operations Contracts](41-career-finance.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 41 — Career finance and business operations Event Schemas](41-career-finance.md#event-schemas). Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
 
 ## Changelog
@@ -321,12 +323,15 @@ Responsive web/PWA only. Large files use resumable protected uploads/streams. Ph
 | 2026-08-05 | A-13 — stated the closed four-member `MasterPosture` and `CompositionPosture` vocabularies, added `ElectRightsPosture` per-member required parameters, `PostureDeterminingFacts` and `ExecuteRightsPosture`'s Shard 10 mapping; scoped elections per tier | /resolve-ambiguity | Contracts, Data Models, Edge Cases |
 | 2026-08-05 | F1 — added per-flow Preconditions and Failure / recovery; regenerated acceptance criteria | /resolve-ambiguity | Acceptance Criteria, Interactions |
 | 2026-08-05 | F3 — repointed stale cross-shard slugs to canonical filenames; shard numbers verified against `decomposition-plan.md` § Domain Boundary Table | `/resolve-ambiguity` | Cross-Shard Dependencies, Cross-Shard Section Contract Map |
+| 2026-08-05 | F2 — cross-shard contract reciprocity: added reciprocal map bullets for the inbound Shard 23 (gear service history) and Shard 38 (creator seeding / payola guardrail) edges and recorded both as downstream consumers | `/resolve-ambiguity` | Cross-Shard Dependencies, Cross-Shard Section Contract Map, Changelog, Dependency References |
 
 ## Dependency References
 
 ### Constrains
 
+- [[specs/ia/23-gear-provenance-registry|Shard 23 — Gear provenance registry]]
 - [[specs/ia/26-gear-commerce-fulfilment|Shard 26 — Gear commerce and fulfilment]]
+- [[specs/ia/38-promotion-marketing|Shard 38 — Promotion and marketing]]
 - [[specs/ia/41-career-finance|Shard 41 — Career finance and business operations]]
 
 

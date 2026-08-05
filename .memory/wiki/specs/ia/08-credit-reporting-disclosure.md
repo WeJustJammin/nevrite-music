@@ -114,6 +114,7 @@ Shard 08 converts authorized Shard 07 contribution records into purpose-specific
 | `ProjectGearDiscography` | Public only when item owner opted in and source credit is public; confidentiality changes purge projection. Link follows item, not prior owner. |
 | `RecordAIDisclosure` | Actor may disclose own contribution only. Zero or more structured entries; absence means “not disclosed,” never “human.” |
 | `EvaluateDisclosurePolicy` | Applies named external policy/version without rewriting disclosure or credit; destination may block while core credit remains valid. |
+| `RecordGearItemIdentity` / `RecordGearOwnershipTransfer` | Protected inbound commands, and the only way registered gear identity and ownership enter this shard (DEC-098). Shard 23 calls them, each carrying the registered item and version, the current holder, an effective time, an expected version and an idempotency key. This shard materialises the identity `LinkGearCredit` resolves against and the ownership change `ProjectGearDiscography` re-derives from; it never writes canonical identity or an ownership change itself and refuses any such attempt with `FORBIDDEN`. Where item identity has not been recorded no link is created and the credit is left entirely unaffected. |
 
 ## Data Models
 
@@ -250,8 +251,9 @@ Responsive web/PWA only. Human-readable reports and receipts are server-renderab
 ## Cross-Shard Dependencies
 
 - **Depends on:** [Shard 00](00-infrastructure.md) for request/error/storage/queue/audit contracts; [Shard 01](01-identity-authority.md) for parties, authority and identifiers; [Shard 07](07-credits-core.md) for credit/session/provenance/taxonomy/visibility truth.
-- **Adjacent consumers:** Shard 22 may own release-recipient delivery metadata, and Shard 23 owns registered gear identity/ownership. Shard 08 owns only output snapshots, disclosure and linkage.
-- **Depended on by:** None in the current decomposition; future adapters consume versioned artifacts/events, never internal tables.
+- **Adjacent consumers:** Shard 22 may own release-recipient delivery metadata, and Shard 23 owns registered gear identity/ownership. Neither is a declared dependency of this shard: it consumes no Shard 22 or Shard 23 contract and cites no section of either. Shard 08 owns only output snapshots, disclosure and linkage.
+- **Depended on by:** Shard 23 gear provenance registry, which calls this shard's protected inbound commands `RecordGearItemIdentity` and `RecordGearOwnershipTransfer`; no other shard in the current decomposition. Future adapters consume versioned artifacts/events, never internal tables.
+- **Dependency direction:** every declared edge is downward — 08 → 00, 08 → 01, 08 → 07 and 23 → 08 — satisfying DEC-097. This shard declares no dependency on Shard 23 and never reads its store; DEC-098 fixes the inbound-command inversion as the mechanism.
 
 ## Deep Dives Needed
 
@@ -262,8 +264,7 @@ Responsive web/PWA only. Human-readable reports and receipts are server-renderab
 - **Shard 00 — Cross-cutting platform foundation:** consume [Shard 00 — Cross-cutting platform foundation Contracts](00-infrastructure.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 00 — Cross-cutting platform foundation Event Schemas](00-infrastructure.md#event-schemas). Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
 - **Shard 01 — Identity authority and party governance:** consume [Shard 01 — Identity authority and party governance Contracts](01-identity-authority.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 01 — Identity authority and party governance Event Schemas](01-identity-authority.md#event-schemas). Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
 - **Shard 07 — Credit graph, capture and confidence:** consume [Shard 07 — Credit graph, capture and confidence Contracts](07-credits-core.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 07 — Credit graph, capture and confidence Event Schemas](07-credits-core.md#event-schemas). Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
-- **Shard 22 — Release and distribution:** consume [Shard 22 — Release and distribution Contracts](22-release-distribution.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 22 — Release and distribution Event Schemas](22-release-distribution.md#event-schemas). Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
-- **Shard 23 — Gear provenance registry:** consume [Shard 23 — Gear provenance registry Contracts](23-gear-provenance-registry.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 23 — Gear provenance registry Event Schemas](23-gear-provenance-registry.md#event-schemas). Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
+- **Shard 23 — Gear provenance registry:** inbound only, per DEC-098 — this shard declares no dependency on Shard 23, consumes no Shard 23 contract and cites no Shard 23 section. Shard 23 calls this shard's protected inbound commands `RecordGearItemIdentity` and `RecordGearOwnershipTransfer` in [§ Contracts](#contracts), each carrying the registered item and version, the current holder, an effective time, an expected version and an idempotency key; those commands materialise the identity CXR-08 resolves links against and the ownership change CXR-10 re-derives projections from. This shard publishes `credit.gear-link.changed.v1` from its [§ Event Schemas](#event-schemas) to Shard 23's projection and purge worker. Canonical gear identity and ownership stay with Shard 23 — this shard never writes an ownership change and refuses any attempt with `FORBIDDEN` — and where item identity has not been recorded no link is created and the credit is left entirely unaffected.
 
 ## Changelog
 
@@ -273,14 +274,13 @@ Responsive web/PWA only. Human-readable reports and receipts are server-renderab
 | 2026-08-03 | Locked reporting, portability, RIN, gear and AI-disclosure contracts under standing autonomy | /write-architecture-spec | All |
 | 2026-08-05 | A-08: replaced the AI Disclosure Entry V1 table with the ratified 02.10 v1 shape, deleted eight generation-artifact registry bullets, and pinned entries as JSON keys in the registry preamble | /resolve-ambiguity | Data Models |
 | 2026-08-05 | F1 — added per-flow Preconditions and Failure / recovery; regenerated acceptance criteria | /resolve-ambiguity | Interactions, Acceptance Criteria |
+| 2026-08-05 | F2 — cross-shard contract reciprocity: inverted the Shard 23 edge to protected inbound commands `RecordGearItemIdentity` / `RecordGearOwnershipTransfer` per DEC-098, and removed the unsupported Shard 22 contract edge | /resolve-ambiguity | Contracts, Cross-Shard Dependencies, Cross-Shard Section Contract Map, Dependency References, Changelog |
 
 ## Dependency References
 
 - [[specs/ia/00-infrastructure|Shard 00 — Cross-cutting platform foundation]]
 - [[specs/ia/01-identity-authority|Shard 01 — Identity authority and party governance]]
 - [[specs/ia/07-credits-core|Shard 07 — Credit graph, capture and confidence]]
-- [[specs/ia/22-release-distribution|Shard 22 — Release and distribution]]
-- [[specs/ia/23-gear-provenance-registry|Shard 23 — Gear provenance registry]]
 
 
 <!-- spec-graph: auto-generated -->
