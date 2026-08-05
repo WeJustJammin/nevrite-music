@@ -263,5 +263,5 @@ Events include `eventId`, `schemaVersion`, `aggregateId`, `aggregateVersion`, `a
 
 ### References
 - [[specs/ia/23-gear-provenance-registry|Shard 23 — Gear identity, provenance and recovery]]
-- [[specs/ia/32-show-production-planning|Shard 32 — Event production planning and advancing]]
 - [[specs/ia/29-venues-spaces|Shard 29 — Venues, studios and spaces]]
+- [[specs/ia/32-show-production-planning|Shard 32 — Event production planning and advancing]]

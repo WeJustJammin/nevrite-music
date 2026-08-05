@@ -310,7 +310,7 @@ Responsive web/PWA only. Large files use resumable protected uploads/streams. Ph
 ### Cross-Shard Section Contract Map
 
 - **Shard 26 — Gear commerce and fulfilment:** consume [Shard 26 — Gear commerce and fulfilment Contracts](26-gear-commerce-fulfilment.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 26 — Gear commerce and fulfilment Event Schemas](26-gear-commerce-fulfilment.md#event-schemas). Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
-- **Shard 41 — Finance and tax operations:** consume [Shard 41 — Finance and tax operations Contracts](41-finance-tax-operations.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 41 — Finance and tax operations Event Schemas](41-finance-tax-operations.md#event-schemas). Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
+- **Shard 41 — Career finance and business operations:** consume [Shard 41 — Career finance and business operations Contracts](41-career-finance.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 41 — Career finance and business operations Event Schemas](41-career-finance.md#event-schemas). Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
 
 ## Changelog
 
@@ -320,13 +320,14 @@ Responsive web/PWA only. Large files use resumable protected uploads/streams. Ph
 | 2026-08-03 | Reconciled 46 sources; locked listing, quote, engagement, delivery, supply, rights and custody contracts | /write-architecture-spec | All |
 | 2026-08-05 | A-13 — stated the closed four-member `MasterPosture` and `CompositionPosture` vocabularies, added `ElectRightsPosture` per-member required parameters, `PostureDeterminingFacts` and `ExecuteRightsPosture`'s Shard 10 mapping; scoped elections per tier | /resolve-ambiguity | Contracts, Data Models, Edge Cases |
 | 2026-08-05 | F1 — added per-flow Preconditions and Failure / recovery; regenerated acceptance criteria | /resolve-ambiguity | Acceptance Criteria, Interactions |
+| 2026-08-05 | F3 — repointed stale cross-shard slugs to canonical filenames; shard numbers verified against `decomposition-plan.md` § Domain Boundary Table | `/resolve-ambiguity` | Cross-Shard Dependencies, Cross-Shard Section Contract Map |
 
 ## Dependency References
 
 ### Constrains
 
 - [[specs/ia/26-gear-commerce-fulfilment|Shard 26 — Gear commerce and fulfilment]]
-- [[specs/ia/41-finance-tax-operations|Shard 41 — Finance and tax operations]]
+- [[specs/ia/41-career-finance|Shard 41 — Career finance and business operations]]
 
 
 <!-- spec-graph: auto-generated -->
@@ -334,3 +335,4 @@ Responsive web/PWA only. Large files use resumable protected uploads/streams. Ph
 
 ### References
 - [[specs/ia/26-gear-commerce-fulfilment|Shard 26 — Gear transactions, fulfilment and possession models]]
+- [[specs/ia/41-career-finance|Shard 41 — Career finance and business operations]]

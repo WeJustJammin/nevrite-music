@@ -1,7 +1,7 @@
 {
-  "builtAt": "2026-08-05T07:28:28.888Z",
+  "builtAt": "2026-08-05T08:18:08.532Z",
   "nodeCount": 1480,
-  "edgeCount": 9857,
+  "edgeCount": 9868,
   "nodes": [
     {
       "id": "plan:2026-08-02-architecture-design",
@@ -13091,6 +13091,12 @@
     },
     {
       "from": "ia-spec:ia/10-rights-ownership",
+      "to": "ia-spec:ia/21-specialized-licensing",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "ia-spec:ia/10-rights-ownership",
       "to": "ia-spec:ia/22-release-distribution",
       "type": "references",
       "source": "wikilink"
@@ -13128,6 +13134,12 @@
     {
       "from": "ia-spec:ia/11-community-graph",
       "to": "ia-spec:ia/37-fanbase-direct-to-fan",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "ia-spec:ia/11-community-graph",
+      "to": "ia-spec:ia/38-promotion-marketing",
       "type": "references",
       "source": "wikilink"
     },
@@ -13206,6 +13218,12 @@
     {
       "from": "ia-spec:ia/14-services-marketplace",
       "to": "ia-spec:ia/26-gear-commerce-fulfilment",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "ia-spec:ia/14-services-marketplace",
+      "to": "ia-spec:ia/41-career-finance",
       "type": "references",
       "source": "wikilink"
     },
@@ -13553,13 +13571,13 @@
     },
     {
       "from": "ia-spec:ia/24-gear-holdings-operations",
-      "to": "ia-spec:ia/32-show-production-planning",
+      "to": "ia-spec:ia/29-venues-spaces",
       "type": "references",
       "source": "wikilink"
     },
     {
       "from": "ia-spec:ia/24-gear-holdings-operations",
-      "to": "ia-spec:ia/29-venues-spaces",
+      "to": "ia-spec:ia/32-show-production-planning",
       "type": "references",
       "source": "wikilink"
     },
@@ -13678,6 +13696,18 @@
       "source": "wikilink"
     },
     {
+      "from": "ia-spec:ia/29-venues-spaces",
+      "to": "ia-spec:ia/32-show-production-planning",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "ia-spec:ia/29-venues-spaces",
+      "to": "ia-spec:ia/35-ticket-products-sales",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
       "from": "ia-spec:ia/30-booking-contracts",
       "to": "ia-spec:ia/29-venues-spaces",
       "type": "references",
@@ -13750,6 +13780,18 @@
       "source": "wikilink"
     },
     {
+      "from": "ia-spec:ia/31-live-settlement-intelligence",
+      "to": "ia-spec:ia/34-touring-operations",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "ia-spec:ia/31-live-settlement-intelligence",
+      "to": "ia-spec:ia/41-career-finance",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
       "from": "ia-spec:ia/32-show-production-planning",
       "to": "ia-spec:ia/30-booking-contracts",
       "type": "references",
@@ -13780,6 +13822,18 @@
       "source": "wikilink"
     },
     {
+      "from": "ia-spec:ia/32-show-production-planning",
+      "to": "ia-spec:ia/33-show-day-operations",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "ia-spec:ia/32-show-production-planning",
+      "to": "ia-spec:ia/34-touring-operations",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
       "from": "ia-spec:ia/33-show-day-operations",
       "to": "ia-spec:ia/32-show-production-planning",
       "type": "references",
@@ -13800,6 +13854,18 @@
     {
       "from": "ia-spec:ia/33-show-day-operations",
       "to": "ia-spec:ia/17-realtime-sessions",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "ia-spec:ia/33-show-day-operations",
+      "to": "ia-spec:ia/34-touring-operations",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "ia-spec:ia/33-show-day-operations",
+      "to": "ia-spec:ia/36-box-office-risk",
       "type": "references",
       "source": "wikilink"
     },
@@ -69519,7 +69585,7 @@
     },
     "byEdgeType": {
       "constrained_by": 9327,
-      "references": 527,
+      "references": 538,
       "split_from": 3
     }
   }

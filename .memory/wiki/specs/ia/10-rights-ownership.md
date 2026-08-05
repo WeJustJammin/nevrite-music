@@ -319,7 +319,7 @@ Responsive web/PWA only. Signed consent links may support non-account parties wi
 - **Shard 14 — Services marketplace:** consume [Shard 14 — Services marketplace Contracts](14-services-marketplace.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 14 — Services marketplace Event Schemas](14-services-marketplace.md#event-schemas). Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
 - **Shard 18 — Royalty accounting:** consume [Shard 18 — Royalty accounting Contracts](18-royalty-accounting.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 18 — Royalty accounting Event Schemas](18-royalty-accounting.md#event-schemas). Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
 - **Shard 20 — Licensing core:** consume [Shard 20 — Licensing core Contracts](20-licensing-core.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 20 — Licensing core Event Schemas](20-licensing-core.md#event-schemas). Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
-- **Shard 21 — Licensing operations:** consume [Shard 21 — Licensing operations Contracts](21-licensing-operations.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 21 — Licensing operations Event Schemas](21-licensing-operations.md#event-schemas). Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
+- **Shard 21 — Specialized clearances and licensing:** consume [Shard 21 — Specialized clearances and licensing Contracts](21-specialized-licensing.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 21 — Specialized clearances and licensing Event Schemas](21-specialized-licensing.md#event-schemas). Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
 - **Shard 22 — Release and distribution:** consume [Shard 22 — Release and distribution Contracts](22-release-distribution.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 22 — Release and distribution Event Schemas](22-release-distribution.md#event-schemas). Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
 - **Shard 27 — Digital catalog and delivery:** consume [Shard 27 — Digital catalog and delivery Contracts](27-digital-catalog-delivery.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 27 — Digital catalog and delivery Event Schemas](27-digital-catalog-delivery.md#event-schemas). Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
 - **Shard 28 — Digital licensing and commerce:** consume [Shard 28 — Digital licensing and commerce Contracts](28-digital-licensing-commerce.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 28 — Digital licensing and commerce Event Schemas](28-digital-licensing-commerce.md#event-schemas). Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
@@ -332,6 +332,7 @@ Responsive web/PWA only. Signed consent links may support non-account parties wi
 | 2026-08-03 | Reconciled 38 sources; locked registry, ledger, consent, title, conflict, AI/NIL and evidence contracts | /write-architecture-spec | All |
 | 2026-08-05 | A-12 — repaired RGT-10 table corruption (unescaped pipes in the Completion cell) and regenerated AC-RGT-10 from the Interactions row; verdict enum sourced from deep-dives/10 § Chain, Control and Reversion Algorithm step 5 | /resolve-ambiguity | Acceptance Criteria, Interactions |
 | 2026-08-05 | F1 — added per-flow Preconditions and Failure / recovery; regenerated acceptance criteria | /resolve-ambiguity | Interactions, Acceptance Criteria |
+| 2026-08-05 | F3 — repointed stale cross-shard slugs to canonical filenames; shard numbers verified against `decomposition-plan.md` § Domain Boundary Table | `/resolve-ambiguity` | Cross-Shard Dependencies, Cross-Shard Section Contract Map |
 
 ## Dependency References
 
@@ -340,7 +341,7 @@ Responsive web/PWA only. Signed consent links may support non-account parties wi
 - [[specs/ia/14-services-marketplace|Shard 14 — Services marketplace]]
 - [[specs/ia/18-royalty-accounting|Shard 18 — Royalty accounting]]
 - [[specs/ia/20-licensing-core|Shard 20 — Licensing core]]
-- [[specs/ia/21-licensing-operations|Shard 21 — Licensing operations]]
+- [[specs/ia/21-specialized-licensing|Shard 21 — Specialized clearances and licensing]]
 - [[specs/ia/22-release-distribution|Shard 22 — Release and distribution]]
 - [[specs/ia/27-digital-catalog-delivery|Shard 27 — Digital catalog and delivery]]
 - [[specs/ia/28-digital-licensing-commerce|Shard 28 — Digital licensing and commerce]]
@@ -353,6 +354,7 @@ Responsive web/PWA only. Signed consent links may support non-account parties wi
 - [[specs/ia/14-services-marketplace|Shard 14 — Services marketplace lifecycle]]
 - [[specs/ia/18-royalty-accounting|Shard 18 — Royalty registration, ingestion, calculation and payout]]
 - [[specs/ia/20-licensing-core|Shard 20 — Licensing core and instrument lifecycle]]
+- [[specs/ia/21-specialized-licensing|Shard 21 — Specialized clearances and licensing]]
 - [[specs/ia/22-release-distribution|Shard 22 — Release and distribution lifecycle]]
 - [[specs/ia/27-digital-catalog-delivery|Shard 27 — Digital catalog, entitlement, delivery and vendor QA]]
 - [[specs/ia/28-digital-licensing-commerce|Shard 28 — Digital licensing, commerce, revocation and revenue]]

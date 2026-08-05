@@ -281,7 +281,7 @@ Responsive web/PWA only. Browser-local follow state may exist before durable acc
 - **Shard 13 — Opportunities and casting:** consume [Shard 13 — Opportunities and casting Contracts](13-opportunities-casting.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 13 — Opportunities and casting Event Schemas](13-opportunities-casting.md#event-schemas). Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
 - **Shard 30 — Booking and contracts:** consume [Shard 30 — Booking and contracts Contracts](30-booking-contracts.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 30 — Booking and contracts Event Schemas](30-booking-contracts.md#event-schemas). Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
 - **Shard 37 — Fanbase and direct-to-fan:** consume [Shard 37 — Fanbase and direct-to-fan Contracts](37-fanbase-direct-to-fan.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 37 — Fanbase and direct-to-fan Event Schemas](37-fanbase-direct-to-fan.md#event-schemas). Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
-- **Shard 38 — Campaigns and communications:** consume [Shard 38 — Campaigns and communications Contracts](38-campaigns-communications.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 38 — Campaigns and communications Event Schemas](38-campaigns-communications.md#event-schemas). Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
+- **Shard 38 — Promotion and marketing:** consume [Shard 38 — Promotion and marketing Contracts](38-promotion-marketing.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 38 — Promotion and marketing Event Schemas](38-promotion-marketing.md#event-schemas). Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
 
 ## Changelog
 
@@ -290,6 +290,7 @@ Responsive web/PWA only. Browser-local follow state may exist before durable acc
 | 2026-08-02 | Initial skeleton and source-feature seeding | /decompose-architecture-structure | All |
 | 2026-08-03 | Reconciled 27 sources; locked graph, ranking, discovery, intro, reachability and CRM contracts | /write-architecture-spec | All |
 | 2026-08-05 | F1 — added per-flow Preconditions and Failure / recovery; regenerated acceptance criteria | /resolve-ambiguity | Interactions, Acceptance Criteria |
+| 2026-08-05 | F3 — repointed stale cross-shard slugs to canonical filenames; shard numbers verified against `decomposition-plan.md` § Domain Boundary Table | `/resolve-ambiguity` | Cross-Shard Dependencies, Cross-Shard Section Contract Map |
 
 ## Dependency References
 
@@ -299,7 +300,7 @@ Responsive web/PWA only. Browser-local follow state may exist before durable acc
 - [[specs/ia/13-opportunities-casting|Shard 13 — Opportunities and casting]]
 - [[specs/ia/30-booking-contracts|Shard 30 — Booking and contracts]]
 - [[specs/ia/37-fanbase-direct-to-fan|Shard 37 — Fanbase and direct-to-fan]]
-- [[specs/ia/38-campaigns-communications|Shard 38 — Campaigns and communications]]
+- [[specs/ia/38-promotion-marketing|Shard 38 — Promotion and marketing]]
 
 
 <!-- spec-graph: auto-generated -->
@@ -310,3 +311,4 @@ Responsive web/PWA only. Browser-local follow state may exist before durable acc
 - [[specs/ia/13-opportunities-casting|Shard 13 — Opportunities and casting lifecycle]]
 - [[specs/ia/30-booking-contracts|Shard 30 — Booking, negotiation and contracts]]
 - [[specs/ia/37-fanbase-direct-to-fan|Shard 37 — Fanbase and direct-to-fan]]
+- [[specs/ia/38-promotion-marketing|Shard 38 — Promotion and marketing]]

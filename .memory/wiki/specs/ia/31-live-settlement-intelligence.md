@@ -318,7 +318,7 @@ Responsive web/PWA is the sole launch surface. Offline capture is allowed for ex
 ## Cross-Shard Dependencies
 
 - **Depends on:** [[specs/ia/00-infrastructure|Shard 00]], [[specs/ia/06-trust-safety|Shard 06]], [[specs/ia/18-royalty-accounting|Shard 18]], [[specs/ia/30-booking-contracts|Shard 30]]
-- **Depended on by:** [[specs/ia/34-event-ticketing|Shard 34]], [[specs/ia/41-career-business|Shard 41]]
+- **Depended on by:** [[specs/ia/34-touring-operations|Shard 34]], [[specs/ia/41-career-finance|Shard 41]]
 
 
 ### Cross-Shard Section Contract Map
@@ -327,8 +327,8 @@ Responsive web/PWA is the sole launch surface. Offline capture is allowed for ex
 - **Shard 06:** consume [Shard 06 Contracts](06-trust-safety.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 06 Event Schemas](06-trust-safety.md#event-schemas). Canonical ownership stays with the producer; typed failure/unknown states cross the same boundary.
 - **Shard 18:** consume [Shard 18 Contracts](18-royalty-accounting.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 18 Event Schemas](18-royalty-accounting.md#event-schemas). Canonical ownership stays with the producer; typed failure/unknown states cross the same boundary.
 - **Shard 30:** consume [Shard 30 Contracts](30-booking-contracts.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 30 Event Schemas](30-booking-contracts.md#event-schemas). Canonical ownership stays with the producer; typed failure/unknown states cross the same boundary.
-- **Shard 34:** consume [Shard 34 Contracts](34-event-ticketing.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 34 Event Schemas](34-event-ticketing.md#event-schemas). Canonical ownership stays with the producer; typed failure/unknown states cross the same boundary.
-- **Shard 41:** consume [Shard 41 Contracts](41-career-business.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 41 Event Schemas](41-career-business.md#event-schemas). Canonical ownership stays with the producer; typed failure/unknown states cross the same boundary.
+- **Shard 34:** consume [Shard 34 Contracts](34-touring-operations.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 34 Event Schemas](34-touring-operations.md#event-schemas). Canonical ownership stays with the producer; typed failure/unknown states cross the same boundary.
+- **Shard 41:** consume [Shard 41 Contracts](41-career-finance.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 41 Event Schemas](41-career-finance.md#event-schemas). Canonical ownership stays with the producer; typed failure/unknown states cross the same boundary.
 
 ## Changelog
 
@@ -336,6 +336,7 @@ Responsive web/PWA is the sole launch surface. Offline capture is allowed for ex
 |---|---|---|---|
 | 2026-08-02 | Initial skeleton and source-feature seeding | `/decompose-architecture-structure` | All |
 | 2026-08-03 | Authored and deepened complete IA contract | `/write-architecture-spec` | All |
+| 2026-08-05 | F3 — repointed stale cross-shard slugs to canonical filenames; shard numbers verified against `decomposition-plan.md` § Domain Boundary Table | `/resolve-ambiguity` | Cross-Shard Dependencies, Cross-Shard Section Contract Map |
 
 
 <!-- spec-graph: auto-generated -->
@@ -346,3 +347,5 @@ Responsive web/PWA is the sole launch surface. Offline capture is allowed for ex
 - [[specs/ia/00-infrastructure|Shard 00 — Cross-cutting platform foundation]]
 - [[specs/ia/18-royalty-accounting|Shard 18 — Royalty registration, ingestion, calculation and payout]]
 - [[specs/ia/06-trust-safety|Shard 06 — Trust, safety, disputes and evidence]]
+- [[specs/ia/34-touring-operations|Shard 34 — Tour routing, logistics, finance and reporting]]
+- [[specs/ia/41-career-finance|Shard 41 — Career finance and business operations]]

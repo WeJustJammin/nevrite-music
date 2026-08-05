@@ -256,7 +256,7 @@ Responsive web/PWA is the sole launch surface. Offline read of current day sheet
 ## Cross-Shard Dependencies
 
 - **Depends on:** [[specs/ia/00-infrastructure|Shard 00]], [[specs/ia/06-trust-safety|Shard 06]], [[specs/ia/17-realtime-sessions|Shard 17]], [[specs/ia/32-show-production-planning|Shard 32]]
-- **Depended on by:** [[specs/ia/34-event-ticketing|Shard 34]], [[specs/ia/36-live-reporting|Shard 36]]
+- **Depended on by:** [[specs/ia/34-touring-operations|Shard 34]], [[specs/ia/36-box-office-risk|Shard 36]]
 
 
 ### Cross-Shard Section Contract Map
@@ -265,8 +265,8 @@ Responsive web/PWA is the sole launch surface. Offline read of current day sheet
 - **Shard 06:** consume [Shard 06 Contracts](06-trust-safety.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 06 Event Schemas](06-trust-safety.md#event-schemas). Canonical ownership stays with the producer; typed failure/unknown states cross the same boundary.
 - **Shard 17:** consume [Shard 17 Contracts](17-realtime-sessions.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 17 Event Schemas](17-realtime-sessions.md#event-schemas). Canonical ownership stays with the producer; typed failure/unknown states cross the same boundary.
 - **Shard 32:** consume [Shard 32 Contracts](32-show-production-planning.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 32 Event Schemas](32-show-production-planning.md#event-schemas). Canonical ownership stays with the producer; typed failure/unknown states cross the same boundary.
-- **Shard 34:** consume [Shard 34 Contracts](34-event-ticketing.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 34 Event Schemas](34-event-ticketing.md#event-schemas). Canonical ownership stays with the producer; typed failure/unknown states cross the same boundary.
-- **Shard 36:** consume [Shard 36 Contracts](36-live-reporting.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 36 Event Schemas](36-live-reporting.md#event-schemas). Canonical ownership stays with the producer; typed failure/unknown states cross the same boundary.
+- **Shard 34:** consume [Shard 34 Contracts](34-touring-operations.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 34 Event Schemas](34-touring-operations.md#event-schemas). Canonical ownership stays with the producer; typed failure/unknown states cross the same boundary.
+- **Shard 36:** consume [Shard 36 Contracts](36-box-office-risk.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 36 Event Schemas](36-box-office-risk.md#event-schemas). Canonical ownership stays with the producer; typed failure/unknown states cross the same boundary.
 
 ## Changelog
 
@@ -275,6 +275,7 @@ Responsive web/PWA is the sole launch surface. Offline read of current day sheet
 | 2026-08-02 | Initial skeleton and source-feature seeding | `/decompose-architecture-structure` | All |
 | 2026-08-03 | Authored and deepened complete IA contract | `/write-architecture-spec` | All |
 | 2026-08-05 | A-20 corrupted AC-33.07 re-authored, interaction 33.07 pipes escaped, `CurfewMarginStatus` enum and `EvaluateCurfewMargin` command added; A-18 phantom `Aggregate` registry entry deleted | `/resolve-ambiguity` | Acceptance Criteria, Interactions, Contracts, Data Models, Typed Field and Cardinality Registry |
+| 2026-08-05 | F3 — repointed stale cross-shard slugs to canonical filenames; shard numbers verified against `decomposition-plan.md` § Domain Boundary Table | `/resolve-ambiguity` | Cross-Shard Dependencies, Cross-Shard Section Contract Map |
 
 
 <!-- spec-graph: auto-generated -->
@@ -285,3 +286,5 @@ Responsive web/PWA is the sole launch surface. Offline read of current day sheet
 - [[specs/ia/00-infrastructure|Shard 00 — Cross-cutting platform foundation]]
 - [[specs/ia/06-trust-safety|Shard 06 — Trust, safety, disputes and evidence]]
 - [[specs/ia/17-realtime-sessions|Shard 17 — Real-time jamming and remote sessions]]
+- [[specs/ia/34-touring-operations|Shard 34 — Tour routing, logistics, finance and reporting]]
+- [[specs/ia/36-box-office-risk|Shard 36 — Door access, box office, reconciliation and ticketing risk]]

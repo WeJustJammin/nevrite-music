@@ -243,7 +243,7 @@ Responsive web/PWA is the sole launch surface. Offline rider/plot/checklist draf
 ## Cross-Shard Dependencies
 
 - **Depends on:** [[specs/ia/00-infrastructure|Shard 00]], [[specs/ia/09-projects-collaboration|Shard 09]], [[specs/ia/24-gear-holdings-operations|Shard 24]], [[specs/ia/29-venues-spaces|Shard 29]], [[specs/ia/30-booking-contracts|Shard 30]]
-- **Depended on by:** [[specs/ia/33-show-day-tour-operations|Shard 33]], [[specs/ia/34-event-ticketing|Shard 34]]
+- **Depended on by:** [[specs/ia/33-show-day-operations|Shard 33]], [[specs/ia/34-touring-operations|Shard 34]]
 
 
 ### Cross-Shard Section Contract Map
@@ -253,8 +253,8 @@ Responsive web/PWA is the sole launch surface. Offline rider/plot/checklist draf
 - **Shard 24:** consume [Shard 24 Contracts](24-gear-holdings-operations.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 24 Event Schemas](24-gear-holdings-operations.md#event-schemas). Canonical ownership stays with the producer; typed failure/unknown states cross the same boundary.
 - **Shard 29:** consume [Shard 29 Contracts](29-venues-spaces.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 29 Event Schemas](29-venues-spaces.md#event-schemas). Canonical ownership stays with the producer; typed failure/unknown states cross the same boundary.
 - **Shard 30:** consume [Shard 30 Contracts](30-booking-contracts.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 30 Event Schemas](30-booking-contracts.md#event-schemas). Canonical ownership stays with the producer; typed failure/unknown states cross the same boundary.
-- **Shard 33:** consume [Shard 33 Contracts](33-show-day-tour-operations.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 33 Event Schemas](33-show-day-tour-operations.md#event-schemas). Canonical ownership stays with the producer; typed failure/unknown states cross the same boundary.
-- **Shard 34:** consume [Shard 34 Contracts](34-event-ticketing.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 34 Event Schemas](34-event-ticketing.md#event-schemas). Canonical ownership stays with the producer; typed failure/unknown states cross the same boundary.
+- **Shard 33:** consume [Shard 33 Contracts](33-show-day-operations.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 33 Event Schemas](33-show-day-operations.md#event-schemas). Canonical ownership stays with the producer; typed failure/unknown states cross the same boundary.
+- **Shard 34:** consume [Shard 34 Contracts](34-touring-operations.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 34 Event Schemas](34-touring-operations.md#event-schemas). Canonical ownership stays with the producer; typed failure/unknown states cross the same boundary.
 
 ## Changelog
 
@@ -262,6 +262,7 @@ Responsive web/PWA is the sole launch surface. Offline rider/plot/checklist draf
 |---|---|---|---|
 | 2026-08-02 | Initial skeleton and source-feature seeding | `/decompose-architecture-structure` | All |
 | 2026-08-03 | Authored and deepened complete IA contract | `/write-architecture-spec` | All |
+| 2026-08-05 | F3 — repointed stale cross-shard slugs to canonical filenames; shard numbers verified against `decomposition-plan.md` § Domain Boundary Table | `/resolve-ambiguity` | Cross-Shard Dependencies, Cross-Shard Section Contract Map |
 
 
 <!-- spec-graph: auto-generated -->
@@ -273,3 +274,5 @@ Responsive web/PWA is the sole launch surface. Offline rider/plot/checklist draf
 - [[specs/ia/24-gear-holdings-operations|Shard 24 — Gear collections, rigs, custody and manifests]]
 - [[specs/ia/09-projects-collaboration|Shard 09 — Music projects and collaboration]]
 - [[specs/ia/00-infrastructure|Shard 00 — Cross-cutting platform foundation]]
+- [[specs/ia/33-show-day-operations|Shard 33 — Show-day execution and recovery]]
+- [[specs/ia/34-touring-operations|Shard 34 — Tour routing, logistics, finance and reporting]]

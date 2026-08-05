@@ -308,7 +308,7 @@ Responsive web/PWA is the sole launch surface. Offline drafts may capture spec e
 ## Cross-Shard Dependencies
 
 - **Depends on:** [[specs/ia/00-infrastructure|Shard 00]], [[specs/ia/01-identity-authority|Shard 01]], [[specs/ia/06-trust-safety|Shard 06]], [[specs/ia/24-gear-holdings-operations|Shard 24]]
-- **Depended on by:** [[specs/ia/30-booking-contracts|Shard 30]], [[specs/ia/32-event-operations|Shard 32]], [[specs/ia/35-discovery-recommendations|Shard 35]]
+- **Depended on by:** [[specs/ia/30-booking-contracts|Shard 30]], [[specs/ia/32-show-production-planning|Shard 32]], [[specs/ia/35-ticket-products-sales|Shard 35]]
 
 
 ### Cross-Shard Section Contract Map
@@ -318,8 +318,8 @@ Responsive web/PWA is the sole launch surface. Offline drafts may capture spec e
 - **Shard 06:** consume [Shard 06 Contracts](06-trust-safety.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 06 Event Schemas](06-trust-safety.md#event-schemas). Canonical ownership stays with the producer; typed failure/unknown states cross the same boundary.
 - **Shard 24:** consume [Shard 24 Contracts](24-gear-holdings-operations.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 24 Event Schemas](24-gear-holdings-operations.md#event-schemas). Canonical ownership stays with the producer; typed failure/unknown states cross the same boundary.
 - **Shard 30:** consume [Shard 30 Contracts](30-booking-contracts.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 30 Event Schemas](30-booking-contracts.md#event-schemas). Canonical ownership stays with the producer; typed failure/unknown states cross the same boundary.
-- **Shard 32:** consume [Shard 32 Contracts](32-event-operations.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 32 Event Schemas](32-event-operations.md#event-schemas). Canonical ownership stays with the producer; typed failure/unknown states cross the same boundary.
-- **Shard 35:** consume [Shard 35 Contracts](35-discovery-recommendations.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 35 Event Schemas](35-discovery-recommendations.md#event-schemas). Canonical ownership stays with the producer; typed failure/unknown states cross the same boundary.
+- **Shard 32:** consume [Shard 32 Contracts](32-show-production-planning.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 32 Event Schemas](32-show-production-planning.md#event-schemas). Canonical ownership stays with the producer; typed failure/unknown states cross the same boundary.
+- **Shard 35:** consume [Shard 35 Contracts](35-ticket-products-sales.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 35 Event Schemas](35-ticket-products-sales.md#event-schemas). Canonical ownership stays with the producer; typed failure/unknown states cross the same boundary.
 
 ## Changelog
 
@@ -328,6 +328,7 @@ Responsive web/PWA is the sole launch surface. Offline drafts may capture spec e
 | 2026-08-02 | Initial skeleton and source-feature seeding | `/decompose-architecture-structure` | All |
 | 2026-08-03 | Authored and deepened complete IA contract | `/write-architecture-spec` | All |
 | 2026-08-05 | A-18 phantom `Aggregate` registry entry deleted — it was the Canonical Aggregates table header row consumed as data | `/resolve-ambiguity` | Typed Field and Cardinality Registry |
+| 2026-08-05 | F3 — repointed stale cross-shard slugs to canonical filenames; shard numbers verified against `decomposition-plan.md` § Domain Boundary Table | `/resolve-ambiguity` | Cross-Shard Dependencies, Cross-Shard Section Contract Map |
 
 
 <!-- spec-graph: auto-generated -->
@@ -339,3 +340,5 @@ Responsive web/PWA is the sole launch surface. Offline drafts may capture spec e
 - [[specs/ia/24-gear-holdings-operations|Shard 24 — Gear collections, rigs, custody and manifests]]
 - [[specs/ia/30-booking-contracts|Shard 30 — Booking, negotiation and contracts]]
 - [[specs/ia/00-infrastructure|Shard 00 — Cross-cutting platform foundation]]
+- [[specs/ia/32-show-production-planning|Shard 32 — Event production planning and advancing]]
+- [[specs/ia/35-ticket-products-sales|Shard 35 — Ticket products, sales, access packages and delivery]]
