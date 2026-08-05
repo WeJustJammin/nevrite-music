@@ -2,8 +2,8 @@
 
 ## Summary
 
-- **Total decisions**: 97
-- **Unique decision titles**: 97
+- **Total decisions**: 99
+- **Unique decision titles**: 99
 
 ## DEC-001: The rights stack is the thesis, not an adjacency (2026-07-16)
 
@@ -1431,6 +1431,35 @@
 
 Owner approved the recommended architecture decomposition: 43 total IA shards comprising 00-infrastructure plus 42 feature-domain shards. Mandatory splits M01-M13, recommended splits R01-R02, and keep-together decisions for domains 04, 05, 07, 08, 09, 12, 16, 20, 21, and 24 are locked. Dependencies must point only to lower-numbered shards. The canonical boundary table is .memory/wiki/specs/ia/decomposition-plan.md. Downstream IA, BE, FE, phase, setup, and implementation work must preserve these boundaries unless /remediate-shard-split or /propagate-decision is run.
 
+## DEC-098: Shard 04 delivery eligibility learns dispute/rights/licence state by inbound command, not upward read (2026-08-05)
+
+- **Occurrences**: 1
+- **Latest timestamp**: 2026-08-05T06:54:22.708Z
+- **Agents**: claude
+- **Sources**: /resolve-ambiguity all ia — gap A-25
+- **Index**: [[index]]
+
+- **Problem**: Shard 04 (CMS delivery and media) gates delivery eligibility on dispute, takedown, rights and licence state owned by Shards 06, 10 and 20. Those dependencies were undeclared, cited no section, and were absent from the Section Contract Map. Declaring them directly would point 04 at higher-numbered shards, which DEC-097 forbids, and 04 -> 06 closes a real cycle through Shard 05.
+- **Options considered**: (A) inbound-command inversion — Shard 04 exposes protected delivery commands that 06/10/20 call; (B) upward event consumption via the Shard 00 envelope, amending DEC-097; (C) broker everything through Shard 05; (D) renumber the shards.
+- **Decision**: Option A. Shard 04 exposes protected delivery commands (apply/release delivery hold, revoke delivery eligibility) that write `TakedownCaseLink` and set `AssetRight.state`. Shards 06, 10 and 20 call them. Every new edge points downward (06 -> 04, 10 -> 04, 20 -> 04), so DEC-097 and the acyclicity guarantee both survive unamended — 06 -> 04 already held transitively via 05, and 10 and 20 are not in 04's closure {00, 01, 03}. Shard 04 never adjudicates; it executes. Rejected B because Shard 00's events are identifier-only envelopes, so the consumer must still read producer state, reintroducing the upward edge the amendment was meant to remove. Rejected C because Shard 05's declared dependencies are 00, 01, 03, 04 — it cannot read Shard 10 or 20 either, and it would park adjudicated legal state in the admin shard. Rejected D because DEC-097 locks the 43-shard boundary table and renumbering rewrites every reference across 83 IA documents for no product benefit.
+- **Downstream**: Shards 06, 10 and 20 each gain a Shard 04 integration section and a reciprocal Cross-Shard Section Contract Map entry. Shard 04 gains the protected command contracts and drops its undeclared upward dependencies. Sets the precedent for every future cross-shard need that would otherwise point upward: invert to an inbound command rather than amend DEC-097.
+- **Reversibility**: Medium. The command surface is additive, but three shards take integration sections that would need unwinding.
+
+## DEC-099: Vault access binds to a per-role vault_role_class, shipped as non-enforceable profile_version 0 with a review floor (2026-08-05)
+
+- **Occurrences**: 1
+- **Latest timestamp**: 2026-08-05T06:54:22.747Z
+- **Agents**: claude
+- **Sources**: /resolve-ambiguity all ia — gap A-10
+- **Index**: [[index]]
+
+- **Problem**: Shard 09's PRJ-07 resolves vault access as roster roles intersected with asset sensitivity against an 'approved role-profile version', but nothing in the IA layer, its deep dive, or the architecture states what the profile binds to or what a roster role the profile does not name receives. DEC-016 makes the six ideation profiles non-enforceable candidates until practitioner validation approves a version, and assigned the profile-versioning and enforcement-rollout design to `/create-prd-security` — an assignment never discharged (the architecture design has zero hits for `sensitivity`, `role profile`, `role-derived` or `profile version`). PRJ-07 must still ship.
+- **Options considered**: (A) per-`role_version` `vault_role_class` attribute, ideation rows shipped as draft `profile_version: 0`, unclassified roles floor to `review`; (B) bind to `role_version.family_id`; (C) owner and Producer only for v1; (D) defer the matrix to the BE layer.
+- **Decision**: Option A. Add a `vault_role_class` attribute per `role_version` in Shard 07's taxonomy, valued from `SensitivityClass` (`roster | review | stems | takes | restricted`). Ship the six ideation candidate rows as `profile_version: 0`, explicitly marked non-enforceable draft. Any `role_version` with no `vault_role_class` — including every `pending_role_alias` — defaults to the lowest class (`review`) with an explained denial. Rejected B because role families are grouped for discography presentation, not confidentiality: mix engineer and mastering engineer share a family yet require opposite grants, which is the counter-intuitive case DT-01 says the feature exists for. Rejected C because it deletes the feature's value and reproduces the DT-02 failure the design exists to prevent. Rejected D because the BE layer was deleted in commit 5c4e712, so there is no downstream spec to defer into, and deferring reproduces this exact defect one layer down.
+- **Precedent**: follows DEC-047 (P-01 stage vocabulary) — candidate values are evidence, not contract; the gate is in force, so no draft label becomes a downstream contract. Same disposition as the DAW-parsing and vault-profile calls.
+- **Downstream**: Shard 07 takes a reciprocal taxonomy-model edit and changelog entry for `vault_role_class`; shard 09 keys `ResolveVaultAccess` on it. Classifying newly admitted DDEX roles becomes ongoing taxonomy-admin work, harmless by default because unclassified floors to `review`. DEC-016's boundaries hold: no per-asset ACLs, no project-wide grants, no owner-configured-only model. `/create-prd-security` still owes the profile-versioning and enforcement-rollout design.
+- **Reversibility**: High while `profile_version` is 0 — nothing is enforceable until an approved version lands.
+
 ## Full Log
 
 ### DEC-001: The rights stack is the thesis, not an adjacency (2026-07-16)
@@ -2761,3 +2790,30 @@ Owner approved the recommended architecture decomposition: 43 total IA shards co
 - **Tags**: decision, architecture, decomposition, ia, approved
 
 Owner approved the recommended architecture decomposition: 43 total IA shards comprising 00-infrastructure plus 42 feature-domain shards. Mandatory splits M01-M13, recommended splits R01-R02, and keep-together decisions for domains 04, 05, 07, 08, 09, 12, 16, 20, 21, and 24 are locked. Dependencies must point only to lower-numbered shards. The canonical boundary table is .memory/wiki/specs/ia/decomposition-plan.md. Downstream IA, BE, FE, phase, setup, and implementation work must preserve these boundaries unless /remediate-shard-split or /propagate-decision is run.
+
+### DEC-098: Shard 04 delivery eligibility learns dispute/rights/licence state by inbound command, not upward read (2026-08-05)
+
+- **Timestamp**: 2026-08-05T06:54:22.708Z
+- **Agent**: claude
+- **Source**: /resolve-ambiguity all ia — gap A-25
+- **Tags**: decision, ia, architecture, dependencies
+
+- **Problem**: Shard 04 (CMS delivery and media) gates delivery eligibility on dispute, takedown, rights and licence state owned by Shards 06, 10 and 20. Those dependencies were undeclared, cited no section, and were absent from the Section Contract Map. Declaring them directly would point 04 at higher-numbered shards, which DEC-097 forbids, and 04 -> 06 closes a real cycle through Shard 05.
+- **Options considered**: (A) inbound-command inversion — Shard 04 exposes protected delivery commands that 06/10/20 call; (B) upward event consumption via the Shard 00 envelope, amending DEC-097; (C) broker everything through Shard 05; (D) renumber the shards.
+- **Decision**: Option A. Shard 04 exposes protected delivery commands (apply/release delivery hold, revoke delivery eligibility) that write `TakedownCaseLink` and set `AssetRight.state`. Shards 06, 10 and 20 call them. Every new edge points downward (06 -> 04, 10 -> 04, 20 -> 04), so DEC-097 and the acyclicity guarantee both survive unamended — 06 -> 04 already held transitively via 05, and 10 and 20 are not in 04's closure {00, 01, 03}. Shard 04 never adjudicates; it executes. Rejected B because Shard 00's events are identifier-only envelopes, so the consumer must still read producer state, reintroducing the upward edge the amendment was meant to remove. Rejected C because Shard 05's declared dependencies are 00, 01, 03, 04 — it cannot read Shard 10 or 20 either, and it would park adjudicated legal state in the admin shard. Rejected D because DEC-097 locks the 43-shard boundary table and renumbering rewrites every reference across 83 IA documents for no product benefit.
+- **Downstream**: Shards 06, 10 and 20 each gain a Shard 04 integration section and a reciprocal Cross-Shard Section Contract Map entry. Shard 04 gains the protected command contracts and drops its undeclared upward dependencies. Sets the precedent for every future cross-shard need that would otherwise point upward: invert to an inbound command rather than amend DEC-097.
+- **Reversibility**: Medium. The command surface is additive, but three shards take integration sections that would need unwinding.
+
+### DEC-099: Vault access binds to a per-role vault_role_class, shipped as non-enforceable profile_version 0 with a review floor (2026-08-05)
+
+- **Timestamp**: 2026-08-05T06:54:22.747Z
+- **Agent**: claude
+- **Source**: /resolve-ambiguity all ia — gap A-10
+- **Tags**: decision, ia, access-control, vault
+
+- **Problem**: Shard 09's PRJ-07 resolves vault access as roster roles intersected with asset sensitivity against an 'approved role-profile version', but nothing in the IA layer, its deep dive, or the architecture states what the profile binds to or what a roster role the profile does not name receives. DEC-016 makes the six ideation profiles non-enforceable candidates until practitioner validation approves a version, and assigned the profile-versioning and enforcement-rollout design to `/create-prd-security` — an assignment never discharged (the architecture design has zero hits for `sensitivity`, `role profile`, `role-derived` or `profile version`). PRJ-07 must still ship.
+- **Options considered**: (A) per-`role_version` `vault_role_class` attribute, ideation rows shipped as draft `profile_version: 0`, unclassified roles floor to `review`; (B) bind to `role_version.family_id`; (C) owner and Producer only for v1; (D) defer the matrix to the BE layer.
+- **Decision**: Option A. Add a `vault_role_class` attribute per `role_version` in Shard 07's taxonomy, valued from `SensitivityClass` (`roster | review | stems | takes | restricted`). Ship the six ideation candidate rows as `profile_version: 0`, explicitly marked non-enforceable draft. Any `role_version` with no `vault_role_class` — including every `pending_role_alias` — defaults to the lowest class (`review`) with an explained denial. Rejected B because role families are grouped for discography presentation, not confidentiality: mix engineer and mastering engineer share a family yet require opposite grants, which is the counter-intuitive case DT-01 says the feature exists for. Rejected C because it deletes the feature's value and reproduces the DT-02 failure the design exists to prevent. Rejected D because the BE layer was deleted in commit 5c4e712, so there is no downstream spec to defer into, and deferring reproduces this exact defect one layer down.
+- **Precedent**: follows DEC-047 (P-01 stage vocabulary) — candidate values are evidence, not contract; the gate is in force, so no draft label becomes a downstream contract. Same disposition as the DAW-parsing and vault-profile calls.
+- **Downstream**: Shard 07 takes a reciprocal taxonomy-model edit and changelog entry for `vault_role_class`; shard 09 keys `ResolveVaultAccess` on it. Classifying newly admitted DDEX roles becomes ongoing taxonomy-admin work, harmless by default because unclassified floors to `review`. DEC-016's boundaries hold: no per-asset ACLs, no project-wide grants, no owner-configured-only model. `/create-prd-security` still owes the profile-versioning and enforcement-rollout design.
+- **Reversibility**: High while `profile_version` is 0 — nothing is enforceable until an approved version lands.

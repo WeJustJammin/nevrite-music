@@ -1,5 +1,5 @@
 {
-  "builtAt": "2026-08-05T06:09:09.980Z",
+  "builtAt": "2026-08-05T06:54:32.848Z",
   "issues": [
     {
       "severity": "warning",
@@ -102,6 +102,12 @@
       "code": "ORPHAN_SPEC",
       "message": ".memory/wiki/specs/audits/2026-08-02-create-prd-quality-gate.md has no graph relationships",
       "path": ".memory/wiki/specs/audits/2026-08-02-create-prd-quality-gate.md"
+    },
+    {
+      "severity": "warning",
+      "code": "ORPHAN_SPEC",
+      "message": ".memory/wiki/specs/audits/2026-08-03-be-ambiguity-report.md has no graph relationships",
+      "path": ".memory/wiki/specs/audits/2026-08-03-be-ambiguity-report.md"
     },
     {
       "severity": "warning",
@@ -216,6 +222,18 @@
       "code": "ORPHAN_SPEC",
       "message": ".memory/wiki/specs/audits/run8-preflight-governance-verification.md has no graph relationships",
       "path": ".memory/wiki/specs/audits/run8-preflight-governance-verification.md"
+    },
+    {
+      "severity": "warning",
+      "code": "ORPHAN_SPEC",
+      "message": ".memory/wiki/specs/be.md has no graph relationships",
+      "path": ".memory/wiki/specs/be.md"
+    },
+    {
+      "severity": "warning",
+      "code": "ORPHAN_SPEC",
+      "message": ".memory/wiki/specs/fe.md has no graph relationships",
+      "path": ".memory/wiki/specs/fe.md"
     },
     {
       "severity": "warning",

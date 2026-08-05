@@ -204,4 +204,3 @@ Fresh rerun 1 began after all remediation was persisted, all 156 backend contrac
 
 ### References
 - [[specs/audits/2026-08-03-be-ambiguity-rerun-1-report|BE Ambiguity Audit — Fresh Rerun 1]]
-- [[specs/be/index|BE Layer — Backend Specifications]]

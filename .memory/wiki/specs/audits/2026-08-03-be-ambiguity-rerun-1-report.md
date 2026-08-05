@@ -51,10 +51,3 @@ For each contract, two implementers are constrained to the same IA allocation, s
 Backend ambiguity gate passes. The constrained next command is `/write-fe-spec`; frontend specifications must consume these backend contracts without weakening counsel gates, privacy boundaries, error states or deterministic lifecycle behavior.
 
 **Audited layer:** [[specs/be/index|BE Specification Index]]
-
-
-<!-- spec-graph: auto-generated -->
-## Related Specs
-
-### References
-- [[specs/be/index|BE Layer — Backend Specifications]]

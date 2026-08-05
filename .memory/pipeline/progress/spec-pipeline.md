@@ -2,7 +2,9 @@
 
 **Project**: WeJammin
 **Last updated**: 2026-08-05
-**Overall**: IA 43/43 authored (**audit FAIL — 19.48% ambiguity, 2026-08-05**); BE 156/156; FE 15/43
+**Overall**: IA 43/43 authored (**audit FAIL — 19.48% ambiguity, 2026-08-05**); BE 0 — deleted; FE 0 — deleted
+
+> `.memory/wiki/specs/be/` and `.memory/wiki/specs/fe/` were emptied by commit `5c4e712` "Deleted premature fe/be specs" on 2026-08-05. The per-shard BE/FE columns below are historical and no longer reflect disk. IA must pass its audit before either layer is re-authored.
 
 ## Legend
 

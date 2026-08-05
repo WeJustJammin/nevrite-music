@@ -1,58 +1,9 @@
 # Spec Graph
 
-- **Nodes**: 1653
-- **Edges**: 10953
+- **Nodes**: 1481
+- **Edges**: 9862
 
 ## Relationship Chains
-
-### [[specs/ia/00-infrastructure|Shard 00 — Cross-cutting platform foundation]]
-- derives_from: [[specs/fe/00-infrastructure|Cross-cutting Web Foundation - Frontend Specification]]
-
-### [[specs/ia/08-credit-reporting-disclosure|Shard 08 — Credit reporting, exchange and disclosure]]
-- derives_from: [[specs/fe/08-credit-reporting-disclosure|Credit Reporting, Exchange and Disclosure - Frontend Specification]]
-
-### [[specs/ia/12-community-spaces-events|Shard 12 — Communities, participatory spaces and events]]
-- derives_from: [[specs/fe/12-community-spaces-events|Communities, Participatory Spaces and Events - Frontend Specification]]
-
-### [[specs/ia/deep-dives/01-identity-authority|Deep Dive 01 — Identity authority and party governance]]
-- derives_from: [[specs/fe/01-identity-authority|Identity Authority and Party Governance - Frontend Specification]]
-
-### [[specs/ia/deep-dives/02-profiles-verification|Deep Dive 02 — Profiles, claiming and qualifications]]
-- derives_from: [[specs/fe/02-profiles-verification|Profiles, Claiming and Qualifications - Frontend Specification]]
-
-### [[specs/ia/deep-dives/03-cms-content-modeling|Deep Dive 03 — CMS content modeling and authoring]]
-- derives_from: [[specs/fe/03-cms-content-modeling|CMS Content Modeling and Authoring - Frontend Specification]]
-
-### [[specs/ia/deep-dives/04-cms-delivery-media|Deep Dive 04 — CMS navigation, media and delivery]]
-- derives_from: [[specs/fe/04-cms-delivery-media|CMS Navigation, Media and Delivery - Frontend Specification]]
-
-### [[specs/ia/deep-dives/05-platform-configuration-admin|Deep Dive 05 — Platform configuration, admin and quality]]
-- derives_from: [[specs/fe/05-platform-configuration-admin|Platform Configuration, Admin and Quality - Frontend Specification]]
-
-### [[specs/ia/deep-dives/06-trust-safety|Deep Dive 06 — Trust, safety, disputes and evidence]]
-- derives_from: [[specs/fe/06-trust-safety|Trust, Safety, Disputes and Evidence - Frontend Specification]]
-
-### [[specs/ia/deep-dives/07-credits-core|Deep Dive 07 — Credit graph, capture and confidence]]
-- derives_from: [[specs/fe/07-credits-core|Credit Graph, Capture and Confidence - Frontend Specification]]
-
-### [[specs/ia/deep-dives/09-projects-collaboration|Deep Dive 09 — Music projects and collaboration]]
-- derives_from: [[specs/fe/09-projects-collaboration|Music Projects and Collaboration - Frontend Specification]]
-
-### [[specs/ia/deep-dives/10-rights-ownership|Deep Dive 10 — Rights and ownership]]
-- derives_from: [[specs/fe/10-rights-ownership|Rights and Ownership - Frontend Specification]]
-
-### [[specs/ia/deep-dives/11-community-graph|Deep Dive 11 — Social graph and collaborator network]]
-- derives_from: [[specs/fe/11-community-graph|Social Graph and Collaborator Network - Frontend Specification]]
-
-### [[specs/ia/deep-dives/13-opportunities-casting|Deep Dive 13 — Opportunities and casting lifecycle]]
-- derives_from: [[specs/fe/13-opportunities-casting|Opportunities and Casting Lifecycle - Frontend Specification]]
-
-### [[specs/ia/deep-dives/14-services-marketplace|Deep Dive 14 — Services marketplace lifecycle]]
-- derives_from: [[specs/fe/14-services-marketplace|Services Marketplace Lifecycle - Frontend Specification]]
-
-### [[specs/ia/index|IA Layer — Information Architecture]]
-- derives_from: [[specs/be/index|BE Layer — Backend Specifications]]
-- derives_from: [[specs/fe/index|FE Layer — Frontend Specifications]]
 
 ## Orphans
 
@@ -73,6 +24,7 @@
 - [[specs/architecture/prd-working/ideation-relevance-index|Ideation Relevance Index]]
 - [[specs/architecture/prd-working/persistence-map-interview|Persistence Map Interview]]
 - [[specs/audits/2026-08-02-create-prd-quality-gate|Create PRD Quality Gate — 2026-08-02]]
+- [[specs/audits/2026-08-03-be-ambiguity-report|BE Ambiguity Audit — Initial Fresh Run]]
 - [[specs/audits/audit-scope|Ambiguity Audit Scope — IA]]
 - [[specs/audits/owner-autonomy-delegation-2026-08-02|Owner Autonomy Delegation — 2026-08-02]]
 - [[specs/audits/p01-production-stage-vocabulary-validation|P-01 Production-Stage Vocabulary Validation]]
@@ -92,6 +44,8 @@
 - [[specs/audits/run7-owner-decision-agenda|Run 7 — Owner Decision Agenda]]
 - [[specs/audits/run8-preflight-candidate-verification|Run 8 Preflight — Candidate Source Fix Review]]
 - [[specs/audits/run8-preflight-governance-verification|Run 8 Preflight — Dimension 7 Governance Verification]]
+- [[specs/be|BE Specs Hub]]
+- [[specs/fe|FE Specs Hub]]
 - [[specs/ideation/09-rights-ownership/09.03-chain-of-title-lifecycle/09.03-chain-of-title-lifecycle-cx|Chain of Title & Rights Lifecycle — Cross-Cuts]]
 - [[specs/ideation/09-rights-ownership/09.05-ai-voice-likeness-consent/09.05-ai-voice-likeness-consent-cx|AI, Voice & Likeness Consent — Cross-Cuts]]
 - [[specs/ideation/11-music-licensing/11.01-sync-licensing/11.01-sync-licensing-cx|Sync Licensing — Cross-Cuts]]

@@ -511,7 +511,9 @@ Each was challenged by an independent reviewer instructed to default to REFUTED 
 
 Several defects in this report are mechanically detectable in seconds and were present on that date: the broken links in F3 sit in Changelog-dated text older than 2026-08-03, and the F1 schema split is visible from the table headers alone. A scoring pass that returns 0/344 while 54 dangling references sit in the layer did not read the layer.
 
-**Recommendation:** treat the 2026-08-03 IA PASS as void rather than superseded, and do not carry its evidence forward. The BE layer was authored against these IA shards after that PASS; the F3 dangling references and the F1 missing preconditions may have propagated into BE contracts. A `be`-scoped audit should follow IA remediation.
+**Recommendation:** treat the 2026-08-03 IA PASS as void rather than superseded, and do not carry its evidence forward.
+
+**Update, same day:** commit `5c4e712` "Deleted premature fe/be specs" emptied `.memory/wiki/specs/be/` and `.memory/wiki/specs/fe/`. The BE layer that was authored against these IA shards on the strength of the voided PASS no longer exists on disk (retrievable at `git show 7986b4d:.memory/wiki/specs/be/`). So no `be`-scoped audit is owed — but the deletion is consistent with this report's finding: BE was built on an IA layer that had not actually been verified.
 
 ## Remediation classification
 

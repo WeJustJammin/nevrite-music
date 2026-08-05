@@ -55,10 +55,3 @@ Two implementers receive the same domain invariants, authority boundaries, endpo
 Mechanical remediation is authorized under standing autonomy. This report remains historical and cannot be converted into a pass after edits; `/audit-ambiguity be` must run freshly after remediation.
 
 **Audited layer:** [[specs/be/index|BE Specification Index]]
-
-
-<!-- spec-graph: auto-generated -->
-## Related Specs
-
-### References
-- [[specs/be/index|BE Layer — Backend Specifications]]

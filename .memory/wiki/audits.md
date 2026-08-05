@@ -15,6 +15,7 @@
 - [[specs/audits/2026-08-03-ia-ambiguity-report|IA Ambiguity Audit — Initial Fresh Run]]
 - [[specs/audits/2026-08-03-ia-ambiguity-rerun-1|IA Ambiguity Audit — Fresh Rerun 1]]
 - [[specs/audits/2026-08-05-ia-ambiguity-report|IA Ambiguity Audit — Fresh Run (2026-08-05)]]
+- [[specs/audits/2026-08-05-ia-remediation-worklist|IA Remediation Worklist — 2026-08-05]]
 - [[specs/audits/architecture/2026-08-02-architecture-design-ambiguity-rerun-1|Architecture Ambiguity Audit — Architecture Design Fresh Rerun 1]]
 - [[specs/audits/architecture/2026-08-02-architecture-design-ambiguity-rerun-2|Architecture Ambiguity Audit — Architecture Design Fresh Rerun 2]]
 - [[specs/audits/architecture/2026-08-02-architecture-design-ambiguity-rerun-3|Architecture Ambiguity Audit — Architecture Design Fresh Rerun 3]]
