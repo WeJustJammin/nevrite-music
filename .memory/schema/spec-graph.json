@@ -1,7 +1,7 @@
 {
-  "builtAt": "2026-08-03T11:39:56.517Z",
-  "nodeCount": 1651,
-  "edgeCount": 10944,
+  "builtAt": "2026-08-05T06:09:09.980Z",
+  "nodeCount": 1653,
+  "edgeCount": 10953,
   "nodes": [
     {
       "id": "plan:2026-08-02-architecture-design",
@@ -242,6 +242,13 @@
       "shardId": "2026"
     },
     {
+      "id": "audit:audits/2026-08-05-ia-ambiguity-report",
+      "type": "audit",
+      "label": "IA Ambiguity Audit — Fresh Run (2026-08-05)",
+      "path": ".memory/wiki/specs/audits/2026-08-05-ia-ambiguity-report.md",
+      "shardId": "2026"
+    },
+    {
       "id": "audit:audits/architecture/2026-08-02-architecture-design-ambiguity-rerun-1",
       "type": "audit",
       "label": "Architecture Ambiguity Audit — Architecture Design Fresh Rerun 1",
@@ -340,9 +347,16 @@
       "shardId": "2026"
     },
     {
-      "id": "audit:audits/audit-scope",
+      "id": "audit:audits/audit-scope-be-2026-08-03",
       "type": "audit",
       "label": "Ambiguity Audit Scope — BE",
+      "path": ".memory/wiki/specs/audits/audit-scope-be-2026-08-03.md",
+      "shardId": null
+    },
+    {
+      "id": "audit:audits/audit-scope",
+      "type": "audit",
+      "label": "Ambiguity Audit Scope — IA",
       "path": ".memory/wiki/specs/audits/audit-scope.md",
       "shardId": null
     },
@@ -10882,24 +10896,10 @@
       "shardId": null
     },
     {
-      "id": "decision:d-11",
-      "type": "decision",
-      "label": "D-11",
-      "path": ".memory/wiki/decisions.md#d-11",
-      "shardId": null
-    },
-    {
       "id": "decision:d-01",
       "type": "decision",
       "label": "D-01",
       "path": ".memory/wiki/decisions.md#d-01",
-      "shardId": null
-    },
-    {
-      "id": "decision:d-05",
-      "type": "decision",
-      "label": "D-05",
-      "path": ".memory/wiki/decisions.md#d-05",
       "shardId": null
     },
     {
@@ -10910,10 +10910,31 @@
       "shardId": null
     },
     {
+      "id": "decision:d-02",
+      "type": "decision",
+      "label": "D-02",
+      "path": ".memory/wiki/decisions.md#d-02",
+      "shardId": null
+    },
+    {
       "id": "decision:d-03",
       "type": "decision",
       "label": "D-03",
       "path": ".memory/wiki/decisions.md#d-03",
+      "shardId": null
+    },
+    {
+      "id": "decision:d-11",
+      "type": "decision",
+      "label": "D-11",
+      "path": ".memory/wiki/decisions.md#d-11",
+      "shardId": null
+    },
+    {
+      "id": "decision:d-05",
+      "type": "decision",
+      "label": "D-05",
+      "path": ".memory/wiki/decisions.md#d-05",
       "shardId": null
     },
     {
@@ -10935,13 +10956,6 @@
       "type": "decision",
       "label": "D-entry",
       "path": ".memory/wiki/decisions.md#d-entry",
-      "shardId": null
-    },
-    {
-      "id": "decision:d-02",
-      "type": "decision",
-      "label": "D-02",
-      "path": ".memory/wiki/decisions.md#d-02",
       "shardId": null
     },
     {
@@ -11743,6 +11757,54 @@
       "source": "wikilink"
     },
     {
+      "from": "audit:audits/2026-08-05-ia-ambiguity-report",
+      "to": "decision:d-01",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "audit:audits/2026-08-05-ia-ambiguity-report",
+      "to": "decision:d-06",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "audit:audits/2026-08-05-ia-ambiguity-report",
+      "to": "decision:d-02",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "audit:audits/2026-08-05-ia-ambiguity-report",
+      "to": "decision:d-03",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "audit:audits/2026-08-05-ia-ambiguity-report",
+      "to": "decision:d-04",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "audit:audits/2026-08-05-ia-ambiguity-report",
+      "to": "decision:d-11",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "audit:audits/2026-08-05-ia-ambiguity-report",
+      "to": "ia-spec:ia/36-box-office-risk",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "audit:audits/2026-08-05-ia-ambiguity-report",
+      "to": "ia-spec:ia/35-ticket-products-sales",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
       "from": "audit:audits/architecture/2026-08-02-architecture-design-ambiguity-rerun-1",
       "to": "plan:2026-08-02-architecture-design",
       "type": "references",
@@ -11827,13 +11889,13 @@
       "source": "wikilink"
     },
     {
-      "from": "audit:audits/audit-scope",
+      "from": "audit:audits/audit-scope-be-2026-08-03",
       "to": "audit:audits/2026-08-03-be-ambiguity-rerun-1-report",
       "type": "references",
       "source": "wikilink"
     },
     {
-      "from": "audit:audits/audit-scope",
+      "from": "audit:audits/audit-scope-be-2026-08-03",
       "to": "be-spec:be/index",
       "type": "references",
       "source": "wikilink"
@@ -20457,6 +20519,12 @@
     {
       "from": "plan:fe",
       "to": "fe-spec:fe/13-opportunities-casting",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:fe",
+      "to": "fe-spec:fe/14-services-marketplace",
       "type": "references",
       "source": "wikilink"
     },
@@ -77231,7 +77299,7 @@
     "byNodeType": {
       "plan": 12,
       "architecture": 17,
-      "audit": 75,
+      "audit": 77,
       "be-spec": 157,
       "fe-spec": 16,
       "ia-spec": 85,
@@ -77239,8 +77307,8 @@
       "decision": 103
     },
     "byEdgeType": {
-      "constrained_by": 9317,
-      "references": 1606,
+      "constrained_by": 9323,
+      "references": 1609,
       "derives_from": 17,
       "implemented_by": 1,
       "split_from": 3

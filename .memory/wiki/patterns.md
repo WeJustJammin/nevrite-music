@@ -2,8 +2,8 @@
 
 ## Summary
 
-- **Total patterns**: 12
-- **Unique pattern titles**: 12
+- **Total patterns**: 14
+- **Unique pattern titles**: 14
 
 ## PAT-001: Verify a generated claim against the kit's own reference before propagating it (2026-07-16)
 
@@ -196,6 +196,34 @@
 - **Pattern**: Apply shard-load thresholds to direct approved subareas, then independently map every leaf feature through its top-level source prefix and verify total, Must, orphan and duplicate counts. Boundary counts alone can pass while leaf coverage is incomplete; ledger counts alone can hide overloaded boundaries. Also emit explicit wiki relationships because ordinary Markdown links do not satisfy the spec-graph edge linter.
 - **Source**: WeJammin /decompose-architecture — 43 shards, 776/776 features, 230/230 Must, 35 deep dives, zero cycles and zero changed-artifact graph warnings.
 
+## PAT-013: A uniform per-document evidence string is proof the audit did not run (2026-08-05)
+
+- **Occurrences**: 1
+- **Latest timestamp**: 2026-08-05T06:09:09.157Z
+- **Agents**: claude
+- **Sources**: /audit-ambiguity ia
+- **Index**: [[index]]
+
+- **Type**: anti-pattern
+- **Confidence**: 0.6
+- **Context**: Reading any prior ambiguity-audit report before trusting its verdict.
+- **Pattern**: `2026-08-03-ia-ambiguity-rerun-1.md` recorded 0/344 (0.00%) and cleared IA for `/write-be-spec`. Its per-document table repeats one identical evidence string — "8/8 rubric dimensions; implementer and adversarial checks pass" — for all 43 shards. A fresh run over the same 83 documents scored 19.48%, including 54 dangling cross-shard references detectable by a link check in seconds and present on that date. Treat an identical per-document evidence string across every row as a red flag that one verdict was copied N times, and treat that report's PASS as void rather than superseded. Corollary: run the cheap deterministic checks (link resolution, section presence, table-schema uniformity, reference reciprocity) before or alongside any semantic audit — they are exhaustive, they cannot be faked, and they calibrate whether the semantic pass is credible.
+- **Source**: fresh IA audit 2026-08-05 contradicting the 2026-08-03 PASS.
+
+## PAT-014: Calibrate a deterministic screen against real doc conventions before trusting its flags (2026-08-05)
+
+- **Occurrences**: 1
+- **Latest timestamp**: 2026-08-05T06:09:09.158Z
+- **Agents**: claude
+- **Sources**: /audit-ambiguity ia
+- **Index**: [[index]]
+
+- **Type**: best-practice
+- **Confidence**: 0.6
+- **Context**: Running any regex or structural sweep across a spec layer.
+- **Pattern**: The first screen of the IA layer flagged all 43 shards, and nearly every flag was false: it searched for a `User Interactions` heading (the real one is `Interactions`), matched `Then` case-sensitively when the ACs use lowercase `then`, and treated `skeleton`/`placeholder` as lazy markers when they are Changelog rows and a real rig-member domain concept. A separate regex missed 54 genuinely broken links because it only matched paths prefixed `./` or `../`, skipping same-directory links. Before reporting screen output as findings, open two or three sample documents, confirm the actual conventions, and re-run. A screen that flags 100% of inputs is measuring itself, not the corpus — and one that flags 0% may simply be looking in the wrong place.
+- **Source**: IA audit 2026-08-05, both failure directions hit in the same session.
+
 ## Full Log
 
 ### PAT-001: Verify a generated claim against the kit's own reference before propagating it (2026-07-16)
@@ -376,3 +404,29 @@
 - **Context**: Decomposing a deep fractal ideation tree into dependency-ordered IA shards.
 - **Pattern**: Apply shard-load thresholds to direct approved subareas, then independently map every leaf feature through its top-level source prefix and verify total, Must, orphan and duplicate counts. Boundary counts alone can pass while leaf coverage is incomplete; ledger counts alone can hide overloaded boundaries. Also emit explicit wiki relationships because ordinary Markdown links do not satisfy the spec-graph edge linter.
 - **Source**: WeJammin /decompose-architecture — 43 shards, 776/776 features, 230/230 Must, 35 deep dives, zero cycles and zero changed-artifact graph warnings.
+
+### PAT-013: A uniform per-document evidence string is proof the audit did not run (2026-08-05)
+
+- **Timestamp**: 2026-08-05T06:09:09.157Z
+- **Agent**: claude
+- **Source**: /audit-ambiguity ia
+- **Tags**: pattern, anti-pattern, audit, verification
+
+- **Type**: anti-pattern
+- **Confidence**: 0.6
+- **Context**: Reading any prior ambiguity-audit report before trusting its verdict.
+- **Pattern**: `2026-08-03-ia-ambiguity-rerun-1.md` recorded 0/344 (0.00%) and cleared IA for `/write-be-spec`. Its per-document table repeats one identical evidence string — "8/8 rubric dimensions; implementer and adversarial checks pass" — for all 43 shards. A fresh run over the same 83 documents scored 19.48%, including 54 dangling cross-shard references detectable by a link check in seconds and present on that date. Treat an identical per-document evidence string across every row as a red flag that one verdict was copied N times, and treat that report's PASS as void rather than superseded. Corollary: run the cheap deterministic checks (link resolution, section presence, table-schema uniformity, reference reciprocity) before or alongside any semantic audit — they are exhaustive, they cannot be faked, and they calibrate whether the semantic pass is credible.
+- **Source**: fresh IA audit 2026-08-05 contradicting the 2026-08-03 PASS.
+
+### PAT-014: Calibrate a deterministic screen against real doc conventions before trusting its flags (2026-08-05)
+
+- **Timestamp**: 2026-08-05T06:09:09.158Z
+- **Agent**: claude
+- **Source**: /audit-ambiguity ia
+- **Tags**: pattern, best-practice, tooling, audit
+
+- **Type**: best-practice
+- **Confidence**: 0.6
+- **Context**: Running any regex or structural sweep across a spec layer.
+- **Pattern**: The first screen of the IA layer flagged all 43 shards, and nearly every flag was false: it searched for a `User Interactions` heading (the real one is `Interactions`), matched `Then` case-sensitively when the ACs use lowercase `then`, and treated `skeleton`/`placeholder` as lazy markers when they are Changelog rows and a real rig-member domain concept. A separate regex missed 54 genuinely broken links because it only matched paths prefixed `./` or `../`, skipping same-directory links. Before reporting screen output as findings, open two or three sample documents, confirm the actual conventions, and re-run. A screen that flags 100% of inputs is measuring itself, not the corpus — and one that flags 0% may simply be looking in the wrong place.
+- **Source**: IA audit 2026-08-05, both failure directions hit in the same session.

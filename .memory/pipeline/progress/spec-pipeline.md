@@ -1,8 +1,8 @@
 # Spec Pipeline Progress
 
 **Project**: WeJammin
-**Last updated**: 2026-08-03
-**Overall**: IA 43/43; BE 156/156; FE 15/43
+**Last updated**: 2026-08-05
+**Overall**: IA 43/43 authored (**audit FAIL — 19.48% ambiguity, 2026-08-05**); BE 156/156; FE 15/43
 
 ## Legend
 
@@ -82,4 +82,7 @@ Shards with all three specifications complete:
 
 ## Next Target
 
-- Run `/write-fe-spec` for Shard 15 — Lessons, practice and mentorship delivery.
+- **BLOCKED.** `/write-fe-spec` for Shard 15 is held pending IA remediation.
+- The fresh IA ambiguity audit on 2026-08-05 scored 67/344 = 19.48% (FAIL); only 2 of 43 shards are clean. See `.memory/wiki/specs/audits/2026-08-05-ia-ambiguity-report.md` and BLOCKER-010.
+- The 2026-08-03 IA PASS (0/344) that cleared this layer is recommended void, not superseded. BE was authored against these shards after it, so a `be`-scoped audit should follow IA remediation.
+- Next: remediate IA (mechanical + structural classes are determined; 14 items need owner decisions), then rerun `/audit-ambiguity ia` as a fresh invocation.

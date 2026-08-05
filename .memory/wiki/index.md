@@ -50,6 +50,7 @@
 - [[specs/audits/2026-08-03-be-ambiguity-rerun-1-report|BE Ambiguity Audit — Fresh Rerun 1]] — audit — spec-vault
 - [[specs/audits/2026-08-03-ia-ambiguity-report|IA Ambiguity Audit — Initial Fresh Run]] — audit — spec-vault
 - [[specs/audits/2026-08-03-ia-ambiguity-rerun-1|IA Ambiguity Audit — Fresh Rerun 1]] — audit — spec-vault
+- [[specs/audits/2026-08-05-ia-ambiguity-report|IA Ambiguity Audit — Fresh Run (2026-08-05)]] — audit — spec-vault
 - [[specs/audits/architecture/2026-08-02-architecture-design-ambiguity-rerun-1|Architecture Ambiguity Audit — Architecture Design Fresh Rerun 1]] — audit — spec-vault
 - [[specs/audits/architecture/2026-08-02-architecture-design-ambiguity-rerun-2|Architecture Ambiguity Audit — Architecture Design Fresh Rerun 2]] — audit — spec-vault
 - [[specs/audits/architecture/2026-08-02-architecture-design-ambiguity-rerun-3|Architecture Ambiguity Audit — Architecture Design Fresh Rerun 3]] — audit — spec-vault
@@ -64,7 +65,8 @@
 - [[specs/audits/architecture/2026-08-02-engineering-standards-ambiguity-rerun-5|Architecture Ambiguity Audit — Engineering Standards Fresh Rerun 5]] — audit — spec-vault
 - [[specs/audits/architecture/2026-08-02-engineering-standards-ambiguity-rerun-6|Architecture Ambiguity Audit — Engineering Standards Fresh Rerun 6]] — audit — spec-vault
 - [[specs/audits/architecture/2026-08-02-engineering-standards-ambiguity|Architecture Ambiguity Audit — Engineering Standards]] — audit — spec-vault
-- [[specs/audits/audit-scope|Ambiguity Audit Scope — BE]] — audit — spec-vault
+- [[specs/audits/audit-scope-be-2026-08-03|Ambiguity Audit Scope — BE]] — audit — spec-vault
+- [[specs/audits/audit-scope|Ambiguity Audit Scope — IA]] — audit — spec-vault
 - [[specs/audits/blocking-decision-queue|Blocking Ambiguity — Owner Decision Queue]] — audit — spec-vault
 - [[specs/audits/check-phase-reconstruction|Check-Phase Reconstruction — done in the main loop]] — audit — spec-vault
 - [[specs/audits/decision-queue-drafts/01-credits-rights|Credits & Rights Decision Queue]] — audit — spec-vault
@@ -1567,6 +1569,9 @@
 
 ## Structured Memory
 
+- pattern: PAT-014: Calibrate a deterministic screen against real doc conventions before trusting its flags (2026-08-05) — 2026-08-05T06:09:09.158Z
+- pattern: PAT-013: A uniform per-document evidence string is proof the audit did not run (2026-08-05) — 2026-08-05T06:09:09.157Z
+- blocker: BLOCKER-010: IA layer fails fresh ambiguity audit at 19.48% (2026-08-05) — 2026-08-05T06:09:09.154Z
 - pattern: PAT-012: Validate decomposition at both boundary and ledger granularity (2026-08-02) — 2026-08-03T01:33:14.100Z
 - decision: DEC-097: Decompose approved architecture into 43 dependency-ordered IA shards (2026-08-02) — 2026-08-03T01:24:45.515Z
 - decision: DEC-096: Provider effects are local-intent-first cross-store operations (2026-08-02) — 2026-08-03T01:20:00.000Z

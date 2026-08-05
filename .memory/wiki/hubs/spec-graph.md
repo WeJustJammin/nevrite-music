@@ -1,7 +1,7 @@
 # Spec Graph
 
-- **Nodes**: 1651
-- **Edges**: 10944
+- **Nodes**: 1653
+- **Edges**: 10953
 
 ## Relationship Chains
 
@@ -73,6 +73,7 @@
 - [[specs/architecture/prd-working/ideation-relevance-index|Ideation Relevance Index]]
 - [[specs/architecture/prd-working/persistence-map-interview|Persistence Map Interview]]
 - [[specs/audits/2026-08-02-create-prd-quality-gate|Create PRD Quality Gate — 2026-08-02]]
+- [[specs/audits/audit-scope|Ambiguity Audit Scope — IA]]
 - [[specs/audits/owner-autonomy-delegation-2026-08-02|Owner Autonomy Delegation — 2026-08-02]]
 - [[specs/audits/p01-production-stage-vocabulary-validation|P-01 Production-Stage Vocabulary Validation]]
 - [[specs/audits/propagation-availability-slo-2026-08-02|Decision Propagation Record — Availability SLO]]

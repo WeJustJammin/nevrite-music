@@ -2,8 +2,8 @@
 
 ## Summary
 
-- **Total blockers**: 5
-- **Unique blocker titles**: 5
+- **Total blockers**: 6
+- **Unique blocker titles**: 6
 
 ## BLOCKER-001: `gh` authenticated as personal account, not business account (2026-07-16)
 
@@ -71,6 +71,22 @@
 - **Impact**: The 177-unit citation-check phase died entirely on `You've hit your session limit · resets 9am (America/New_York)`, along with 12 of 189 triage units. Consequences on disk: (a) 566 "already answered" resolutions citing a `D-`/`DEC-`/`DT-` decision are UNVERIFIED — no agent confirmed the citations are real; (b) 142 expired open-question rows remain across 19 domains (the 12 failed units + scattered rows successfully-run units did not fully clear); (c) `.memory/wiki/specs/audits/owner-decision-queue.md` (923 rows) is therefore PROVISIONAL.
 - **Resolution**: After the 9am ET reset, resume `Workflow({scriptPath: "/tmp/claude-1000/-home-rob-Projects-WeJammin/5b54e4f2-15e5-4aff-a313-3eae561a316c/scratchpad/triage-workflow.js", resumeFromRunId: "wf_884d11c7-65a"})` — the 177 completed triage units replay from cache; the 12 failed units + all 177 check units run live. Then re-measure expired to 0 and regenerate the owner queue.
 
+## BLOCKER-010: IA layer fails fresh ambiguity audit at 19.48% (2026-08-05)
+
+- **Occurrences**: 1
+- **Latest timestamp**: 2026-08-05T06:09:09.154Z
+- **Agents**: claude
+- **Sources**: /audit-ambiguity ia
+- **Index**: [[index]]
+
+- **Status**: active
+- **Impact**: Blocks `/write-fe-spec` for shards 15-42 and any further IA-dependent work. The BE layer was authored against these IA shards after the voided 2026-08-03 PASS, so a `be`-scoped audit should follow IA remediation.
+- **Score**: 67/344 = 19.48% ambiguity across 83 documents. 2 of 43 shards fully clean.
+- **Systemic defects**: F1 — shards 00-23 use a legacy Interactions schema with no Preconditions or Failure/recovery column, leaving 393 of 773 acceptance criteria with an identical boilerplate Given and refusal clause. F2 — 52 of 218 declared cross-shard contract edges are never acknowledged by the target shard. F3 — 54 dangling cross-shard references across 10 shards, naming 18 shard slugs that do not exist in this decomposition.
+- **Agent findings**: 138 raw, 104 refuted on adversarial review, 34 upheld (25 blocking).
+- **Report**: `.memory/wiki/specs/audits/2026-08-05-ia-ambiguity-report.md`
+- **Resolution**: unresolved. Remediation deferred to a single pass; 14 items need owner decisions first.
+
 ## Full Log
 
 ### BLOCKER-001: `gh` authenticated as personal account, not business account (2026-07-16)
@@ -133,3 +149,18 @@
 - **Status**: active
 - **Impact**: The 177-unit citation-check phase died entirely on `You've hit your session limit · resets 9am (America/New_York)`, along with 12 of 189 triage units. Consequences on disk: (a) 566 "already answered" resolutions citing a `D-`/`DEC-`/`DT-` decision are UNVERIFIED — no agent confirmed the citations are real; (b) 142 expired open-question rows remain across 19 domains (the 12 failed units + scattered rows successfully-run units did not fully clear); (c) `.memory/wiki/specs/audits/owner-decision-queue.md` (923 rows) is therefore PROVISIONAL.
 - **Resolution**: After the 9am ET reset, resume `Workflow({scriptPath: "/tmp/claude-1000/-home-rob-Projects-WeJammin/5b54e4f2-15e5-4aff-a313-3eae561a316c/scratchpad/triage-workflow.js", resumeFromRunId: "wf_884d11c7-65a"})` — the 177 completed triage units replay from cache; the 12 failed units + all 177 check units run live. Then re-measure expired to 0 and regenerate the owner queue.
+
+### BLOCKER-010: IA layer fails fresh ambiguity audit at 19.48% (2026-08-05)
+
+- **Timestamp**: 2026-08-05T06:09:09.154Z
+- **Agent**: claude
+- **Source**: /audit-ambiguity ia
+- **Tags**: blocker, ia, audit, ambiguity
+
+- **Status**: active
+- **Impact**: Blocks `/write-fe-spec` for shards 15-42 and any further IA-dependent work. The BE layer was authored against these IA shards after the voided 2026-08-03 PASS, so a `be`-scoped audit should follow IA remediation.
+- **Score**: 67/344 = 19.48% ambiguity across 83 documents. 2 of 43 shards fully clean.
+- **Systemic defects**: F1 — shards 00-23 use a legacy Interactions schema with no Preconditions or Failure/recovery column, leaving 393 of 773 acceptance criteria with an identical boilerplate Given and refusal clause. F2 — 52 of 218 declared cross-shard contract edges are never acknowledged by the target shard. F3 — 54 dangling cross-shard references across 10 shards, naming 18 shard slugs that do not exist in this decomposition.
+- **Agent findings**: 138 raw, 104 refuted on adversarial review, 34 upheld (25 blocking).
+- **Report**: `.memory/wiki/specs/audits/2026-08-05-ia-ambiguity-report.md`
+- **Resolution**: unresolved. Remediation deferred to a single pass; 14 items need owner decisions first.

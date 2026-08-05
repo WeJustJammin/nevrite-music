@@ -1,5 +1,5 @@
 {
-  "builtAt": "2026-08-03T11:39:56.517Z",
+  "builtAt": "2026-08-05T06:09:09.980Z",
   "issues": [
     {
       "severity": "warning",
@@ -102,6 +102,12 @@
       "code": "ORPHAN_SPEC",
       "message": ".memory/wiki/specs/audits/2026-08-02-create-prd-quality-gate.md has no graph relationships",
       "path": ".memory/wiki/specs/audits/2026-08-02-create-prd-quality-gate.md"
+    },
+    {
+      "severity": "warning",
+      "code": "ORPHAN_SPEC",
+      "message": ".memory/wiki/specs/audits/audit-scope.md has no graph relationships",
+      "path": ".memory/wiki/specs/audits/audit-scope.md"
     },
     {
       "severity": "warning",
