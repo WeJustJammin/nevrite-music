@@ -271,6 +271,11 @@ Delivery Layer, the Graded-Attestation primitive, and the Outbound Deliverabilit
 domain-merge decision forward — **07/08 (Overdub)** — and four shared-owner/relocation decisions (17/18 tour
 container, 17/19 count binding, 13/15 unit owner, 14.05 & 13.10 relocation) as explicit ratification items.
 
+**Open-decision governance — 07/08 (Overdub).** The **Owner** is User; the hard decision deadline is
+immediately before `/create-prd` begins; and the decision blocks whether domain 08 remains a separate
+vision domain or folds into domain 07. The four shared-owner and relocation items above are architecture
+ratification work for the named downstream stages; they do not reopen the 24-domain decision.
+
 
 <!-- spec-graph: auto-generated -->
 ## Related Specs

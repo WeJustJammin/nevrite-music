@@ -28,7 +28,7 @@ Before taking any action on a task:
 ## 4. Validate (MANDATORY)
 After **every** code change, run:
 ```bash
-See `.agents/instructions/commands.md` for the validation command.
+See `.pi/instructions/commands.md` for the validation command.
 ```
 
 Do NOT mark a task complete until all validations pass.

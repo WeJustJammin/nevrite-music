@@ -75,7 +75,7 @@ Neither half stands alone:
 | **Remote collaboration is normal** | Post-2020, sessions are routinely distributed. The "room" is already digital — so a platform *can* be present in it. Ten years ago the room was physical and uninstrumentable. |
 | **The credits crisis is now an industry priority** | DDEX RIN, Sound Credit, Jaxsta, Muso.AI and the MLC all exist because the metadata gap became unignorable at streaming scale. The problem is acknowledged; nobody has solved capture-at-source. |
 | **Streaming economics made splits matter to everyone** | Fractional royalties on millions of streams mean split accuracy now affects working musicians, not just stars. The stakes moved down-market. |
-| **Edge compute makes a fat multi-domain platform viable solo** | Cloudflare Workers + Supabase make an ambitious 24-domain platform buildable without a platform team — the constraint that historically forced point solutions. |
+| **Edge compute makes a fat multi-domain platform viable solo** | Cloudflare Workers + Supabase make an ambitious 25-domain platform buildable without a platform team — the constraint that historically forced point solutions. |
 
 > **Open question for the owner (Q-01)**: which of these is the *real* "why now"? Or is the
 > trigger something specific to your situation rather than the market's?
@@ -105,6 +105,8 @@ moment) and how close the direction goes (rung 2, at source).
 | DT-04 | "Cannot live without" comes from accumulated switching cost | Sweep whitespace lens | ⏳ DEFERRED — must confirm lock-in is *earned* (value they'd miss) not *hostile* (data they can't extract). See Q-02 |
 
 ## Open Questions
+
+**Open-question governance.** Every unresolved row in this table is an explicit delivery hold. The **Owner** cell is accountable; the **hard decision deadline** is the gate immediately before the pipeline stage named in **Deferred To** begins; and the **Question** text is the exact policy, behavior, or contract decision blocked. **Deferred To** names the destination only and never replaces the deadline. No downstream stage may begin until its owner resolves the row or records a formally approved supersession.
 
 | # | Question | Owner | Deferred To |
 |---|----------|-------|-------------|

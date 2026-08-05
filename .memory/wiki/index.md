@@ -16,7 +16,55 @@
 
 ## Knowledge
 
-- [[specs/audits/audit-scope|Audit Scope — Ambiguity Audit]] — audit — spec-vault
+- [[specs/2026-08-02-architecture-design|WeJammin — Architecture Design]] — spec — spec-vault
+- [[specs/ENGINEERING-STANDARDS|WeJammin — Engineering Standards]] — spec — spec-vault
+- [[specs/architecture/prd-working/auth-provider-package|P2 — Auth Provider Package (Provider Confirmed)]] — architecture — spec-vault
+- [[specs/architecture/prd-working/bootstrap-api-layer-report|API Layer Bootstrap Report]] — architecture — spec-vault
+- [[specs/architecture/prd-working/bootstrap-backend-runtime-report|Backend Runtime Bootstrap Report]] — architecture — spec-vault
+- [[specs/architecture/prd-working/bootstrap-cdn-assets-report|CDN / Assets Bootstrap Report]] — architecture — spec-vault
+- [[specs/architecture/prd-working/bootstrap-ci-cd-report|CI/CD Bootstrap Report]] — architecture — spec-vault
+- [[specs/architecture/prd-working/bootstrap-development-tooling-report|Development Tooling Bootstrap Report]] — architecture — spec-vault
+- [[specs/architecture/prd-working/bootstrap-frontend-framework-report|Frontend Framework Bootstrap Report]] — architecture — spec-vault
+- [[specs/architecture/prd-working/bootstrap-monitoring-report|Monitoring Bootstrap Report]] — architecture — spec-vault
+- [[specs/architecture/prd-working/bootstrap-p1-report|Bootstrap Report — P1 Persistence Map]] — architecture — spec-vault
+- [[specs/architecture/prd-working/bootstrap-p2-auth-report|Bootstrap Report — P2 Auth Provider]] — architecture — spec-vault
+- [[specs/architecture/prd-working/bootstrap-p2-social-report|Bootstrap Report — P2 Additive Social Identity Policy]] — architecture — spec-vault
+- [[specs/architecture/prd-working/bootstrap-primary-language-report|Bootstrap Report — Primary Language]] — architecture — spec-vault
+- [[specs/architecture/prd-working/bootstrap-security-report|Security Bootstrap Verification]] — architecture — spec-vault
+- [[specs/architecture/prd-working/design-system-synthesis|Design System Synthesis]] — architecture — spec-vault
+- [[specs/architecture/prd-working/ideation-relevance-index|Ideation Relevance Index]] — architecture — spec-vault
+- [[specs/architecture/prd-working/persistence-map-interview|Persistence Map Interview]] — architecture — spec-vault
+- [[specs/architecture/prd-working/stack-synthesis|Stack Synthesis]] — architecture — spec-vault
+- [[specs/architecture-draft|Architecture Design Draft]] — spec — spec-vault
+- [[specs/audits/2026-08-02-architecture-ambiguity-report|Architecture Ambiguity Audit — 2026-08-02]] — audit — spec-vault
+- [[specs/audits/2026-08-02-architecture-ambiguity-rerun-1|Architecture Ambiguity Audit — Fresh Rerun 1]] — audit — spec-vault
+- [[specs/audits/2026-08-02-architecture-ambiguity-rerun-2|Architecture Ambiguity Audit — Fresh Rerun 2]] — audit — spec-vault
+- [[specs/audits/2026-08-02-architecture-ambiguity-rerun-3|Architecture Ambiguity Audit — Fresh Rerun 3]] — audit — spec-vault
+- [[specs/audits/2026-08-02-architecture-ambiguity-rerun-4|Architecture Ambiguity Audit — Fresh Rerun 4]] — audit — spec-vault
+- [[specs/audits/2026-08-02-architecture-ambiguity-rerun-5|Architecture Ambiguity Audit — Fresh Rerun 5]] — audit — spec-vault
+- [[specs/audits/2026-08-02-architecture-ambiguity-rerun-6|Architecture Ambiguity Audit — Fresh Rerun 6]] — audit — spec-vault
+- [[specs/audits/2026-08-02-cms-evolution-initial|CMS Evolution Ambiguity Audit — Initial Run]] — audit — spec-vault
+- [[specs/audits/2026-08-02-cms-evolution-rerun|CMS Evolution Ambiguity Audit — Fresh Rerun]] — audit — spec-vault
+- [[specs/audits/2026-08-02-create-prd-quality-gate|Create PRD Quality Gate — 2026-08-02]] — audit — spec-vault
+- [[specs/audits/2026-08-03-be-ambiguity-report|BE Ambiguity Audit — Initial Fresh Run]] — audit — spec-vault
+- [[specs/audits/2026-08-03-be-ambiguity-rerun-1-report|BE Ambiguity Audit — Fresh Rerun 1]] — audit — spec-vault
+- [[specs/audits/2026-08-03-ia-ambiguity-report|IA Ambiguity Audit — Initial Fresh Run]] — audit — spec-vault
+- [[specs/audits/2026-08-03-ia-ambiguity-rerun-1|IA Ambiguity Audit — Fresh Rerun 1]] — audit — spec-vault
+- [[specs/audits/architecture/2026-08-02-architecture-design-ambiguity-rerun-1|Architecture Ambiguity Audit — Architecture Design Fresh Rerun 1]] — audit — spec-vault
+- [[specs/audits/architecture/2026-08-02-architecture-design-ambiguity-rerun-2|Architecture Ambiguity Audit — Architecture Design Fresh Rerun 2]] — audit — spec-vault
+- [[specs/audits/architecture/2026-08-02-architecture-design-ambiguity-rerun-3|Architecture Ambiguity Audit — Architecture Design Fresh Rerun 3]] — audit — spec-vault
+- [[specs/audits/architecture/2026-08-02-architecture-design-ambiguity-rerun-4|Architecture Ambiguity Audit — Architecture Design Fresh Rerun 4]] — audit — spec-vault
+- [[specs/audits/architecture/2026-08-02-architecture-design-ambiguity-rerun-5|Architecture Ambiguity Audit — Architecture Design Fresh Rerun 5]] — audit — spec-vault
+- [[specs/audits/architecture/2026-08-02-architecture-design-ambiguity-rerun-6|Architecture Ambiguity Audit — Architecture Design Fresh Rerun 6]] — audit — spec-vault
+- [[specs/audits/architecture/2026-08-02-architecture-design-ambiguity|Architecture Ambiguity Audit — Architecture Design]] — audit — spec-vault
+- [[specs/audits/architecture/2026-08-02-engineering-standards-ambiguity-rerun-1|Architecture Ambiguity Audit — Engineering Standards Fresh Rerun 1]] — audit — spec-vault
+- [[specs/audits/architecture/2026-08-02-engineering-standards-ambiguity-rerun-2|Architecture Ambiguity Audit — Engineering Standards Fresh Rerun 2]] — audit — spec-vault
+- [[specs/audits/architecture/2026-08-02-engineering-standards-ambiguity-rerun-3|Architecture Ambiguity Audit — Engineering Standards Fresh Rerun 3]] — audit — spec-vault
+- [[specs/audits/architecture/2026-08-02-engineering-standards-ambiguity-rerun-4|Architecture Ambiguity Audit — Engineering Standards Fresh Rerun 4]] — audit — spec-vault
+- [[specs/audits/architecture/2026-08-02-engineering-standards-ambiguity-rerun-5|Architecture Ambiguity Audit — Engineering Standards Fresh Rerun 5]] — audit — spec-vault
+- [[specs/audits/architecture/2026-08-02-engineering-standards-ambiguity-rerun-6|Architecture Ambiguity Audit — Engineering Standards Fresh Rerun 6]] — audit — spec-vault
+- [[specs/audits/architecture/2026-08-02-engineering-standards-ambiguity|Architecture Ambiguity Audit — Engineering Standards]] — audit — spec-vault
+- [[specs/audits/audit-scope|Ambiguity Audit Scope — BE]] — audit — spec-vault
 - [[specs/audits/blocking-decision-queue|Blocking Ambiguity — Owner Decision Queue]] — audit — spec-vault
 - [[specs/audits/check-phase-reconstruction|Check-Phase Reconstruction — done in the main loop]] — audit — spec-vault
 - [[specs/audits/decision-queue-drafts/01-credits-rights|Credits & Rights Decision Queue]] — audit — spec-vault
@@ -29,19 +77,304 @@
 - [[specs/audits/ideation-ambiguity-report-run3|Ideation Ambiguity Audit — Run 3]] — audit — spec-vault
 - [[specs/audits/ideation-ambiguity-report|Ideation Ambiguity Audit — Report]] — audit — spec-vault
 - [[specs/audits/ideation-remediation-decision-queue|Ideation Remediation — Canonical Decision Queue]] — audit — spec-vault
+- [[specs/audits/owner-autonomy-delegation-2026-08-02|Owner Autonomy Delegation — 2026-08-02]] — audit — spec-vault
 - [[specs/audits/owner-decision-queue|Owner Decision Queue — expired-deferral triage, bucket C]] — audit — spec-vault
 - [[specs/audits/p01-production-stage-vocabulary-validation|P-01 Production-Stage Vocabulary Validation]] — audit — spec-vault
+- [[specs/audits/propagation-availability-slo-2026-08-02|Decision Propagation Record — Availability SLO]] — audit — spec-vault
+- [[specs/audits/propagation-batch1-2026-08-02|Batch 1 Propagation Record — 2026-08-02]] — audit — spec-vault
+- [[specs/audits/propagation-batch2-2026-08-02|Batch 2 Propagation Record — 2026-08-02]] — audit — spec-vault
+- [[specs/audits/propagation-batch3-2026-08-02|Batch 3 Propagation Record — 2026-08-02]] — audit — spec-vault
+- [[specs/audits/propagation-batch4-2026-08-02|Batch 4 Propagation Record — 2026-08-02]] — audit — spec-vault
+- [[specs/audits/propagation-batch5-2026-08-02|Batch 5 Propagation Record — 2026-08-02]] — audit — spec-vault
+- [[specs/audits/propagation-batch6-2026-08-02|Propagation Batch 6 — Scene Feed Boundary]] — audit — spec-vault
+- [[specs/audits/propagation-batch7-2026-08-02|Propagation Batch 7 — Entitlement Payment-Failure Recovery]] — audit — spec-vault
+- [[specs/audits/propagation-batch8-2026-08-02|Propagation Batch 8 — Transaction Dispute Limits]] — audit — spec-vault
+- [[specs/audits/propagation-batch9-2026-08-02|Propagation Batch 9 — Ledger Authority and Structural Links]] — audit — spec-vault
 - [[specs/audits/propagation-dq-r2-01-2026-07-29|Propagation Record — DQ-R2-01 (Option A′)]] — audit — spec-vault
+- [[specs/audits/propagation-scan-availability-slo-2026-08-02|Decision Propagation Scan — Availability SLO]] — audit — spec-vault
+- [[specs/audits/propagation-scan-batch1-2026-08-02|Batch 1 Propagation Scan — 2026-08-02]] — audit — spec-vault
 - [[specs/audits/remediation-state|Remediation State]] — audit — spec-vault
 - [[specs/audits/run2-blocking-decision-queue|Run-2 Blocking Decision Queue]] — audit — spec-vault
 - [[specs/audits/run3/CONFIRMED-root-001-truncated-synthesis|CONFIRMED — `root#001`: 11 truncated cross-domain syntheses in `ideation-cx.md`]] — audit — spec-vault
 - [[specs/audits/run3/MECHANICAL-REMEDIATION-QUEUE|Run-3 Mechanical Remediation Queue]] — audit — spec-vault
 - [[specs/audits/run3-owner-decision-queue|Run-3 Owner Decision Queue — Ideation Layer]] — audit — spec-vault
 - [[specs/audits/run6/VOID-run-did-not-complete|Run 6 — VOID. This run did not complete and its verdict is meaningless.]] — audit — spec-vault
+- [[specs/audits/run6/remediation-log|Run 6 Remediation Log]] — audit — spec-vault
+- [[specs/audits/run7/VOID-pilot-inherited-context|Void Run 7 Pilot Shards]] — audit — spec-vault
+- [[specs/audits/run7/evidence-path-reconciliation|Run 7 Evidence Path Reconciliation]] — audit — spec-vault
+- [[specs/audits/run7/ideation-ambiguity-report|Run 7 Ideation Ambiguity Audit]] — audit — spec-vault
+- [[specs/audits/run7/manifest|Run 7 Audit Manifest]] — audit — spec-vault
+- [[specs/audits/run7/verified-blocker-remediation-matrix|Run 7 Verified Blocker Remediation Matrix]] — audit — spec-vault
+- [[specs/audits/run7-owner-decision-agenda|Run 7 — Owner Decision Agenda]] — audit — spec-vault
+- [[specs/audits/run7-owner-decision-packet|Run 7 — Owner Decision Packet]] — audit — spec-vault
+- [[specs/audits/run8-fresh-ideation-audit-2026-08-02|Run 8 — Fresh Ideation Ambiguity Audit]] — audit — spec-vault
+- [[specs/audits/run8-preflight-candidate-verification|Run 8 Preflight — Candidate Source Fix Review]] — audit — spec-vault
+- [[specs/audits/run8-preflight-governance-verification|Run 8 Preflight — Dimension 7 Governance Verification]] — audit — spec-vault
 - [[specs/audits/tracked-phase2-warnings|Tracked Phase-2 Ambiguity Warnings]] — audit — spec-vault
+- [[specs/be/00-infrastructure|Cross-cutting platform foundation — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/01a-auth-account-linking|Authentication, additive login methods and account merge — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/01b-party-identity-aliases|Person, facets, aliases, acting context and legal disclosure — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/01c-relationships-authority-governance|Organizations, relationships, mandates and governance — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/01d-identifiers-legacy|External identifiers, legacy succession and memorialisation — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/02a-shadow-claim-ownership|Shadow parties, claims, contests and ownership transfer — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/02b-profile-portfolio-epk|Public profiles, portfolio, reel and EPK delivery — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/02c-credentials-trader|Credentials and trader-status assessment — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/03a-content-schema-registry|CMS content types, schema registry and migrations — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/03b-editorial-workflow-publication|CMS entries, revisions, review, scheduling and publication — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/03c-composition-taxonomy-localization|CMS blocks, templates, preview, taxonomy, localization and related content — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/04a-navigation-routes-discovery|CMS navigation, routes and discovery metadata — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/04b-governed-media-renditions|Governed media, rights, renditions and takedown — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/04c-public-delivery-cache|CMS public delivery, projection convergence and cache coherence — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/05a-settings-flags-runtime|Governed settings, flags, experiments and kill switches — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/05b-admin-workspace-operations|Admin workspace, capability grants, bulk operations and diagnostics — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/05c-portability-quality-lifecycle|Portability, quality gates and data lifecycle — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/06a-case-intake-evidence|Trust and safety case intake, routing and evidence — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/06b-policy-enforcement-appeals|Safety policy, moderation decisions, enforcement and appeals — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/06c-disputes-dmca-legal-risk|Fraud review, transaction disputes, DMCA, identity abuse and legal process — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/07a-credit-assertions-visibility|Credit assertions, visibility and graph — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/07b-session-capture-offline|Session roll, contribution capture and offline merge — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/07c-claims-attestations-confidence-taxonomy|Credit claims, attestations, confidence and taxonomy — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/08a-portability-ddex-emission|Credit portability and DDEX RIN emission — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/08b-union-session-reporting|Union and performer session reporting — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/08c-gear-credit-linkage|Gear-to-credit linkage and item discography — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/08d-ai-contribution-disclosure|AI contribution disclosure and destination policy — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/09a-project-containers-creative-docs|Project containers, release boards and creative documents — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/09b-roster-invitations-vault-access|Project roster, invitations and vault access — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/09c-audio-version-review-approval|Audio versioning, review and approval — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/09d-sessions-delivery-readiness|Project sessions, delivery, QC and readiness — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/09e-daw-bridge-evidence-gate|DAW bridge and capture-at-source evidence gate — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/10a-rights-objects-ledgers|Rights objects, ownership ledgers and consent — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/10b-splits-points-buyouts-amendments|Split capture, producer points, buyouts and amendments — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/10c-title-control-conflicts-freezes|Chain of title, control, conflicts and freeze instructions — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/10d-ai-training-nil-consent|AI-training, voice and likeness consent — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/10e-identifiers-registration-evidence|Rights identifiers, registration and evidence export — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/11a-follows-connections-endorsements|Follows, professional connections and endorsements — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/11b-activity-feed-native-posts|Activity feed, controls and native posts — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/11c-collaborator-discovery-calls|Collaborator discovery, availability and calls — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/11d-collaboration-paths-warm-intros|Collaboration paths, reachability and warm introductions — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/11e-private-rolodex-crm|Private rolodex, notes and reminders — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/12a-scenes-stewardship-seeding|Scenes, stewardship and derived place/event seeding — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/12b-craft-forums-qa|Craft forums and professional Q&A — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/12c-contests-submissions-judging|Contests, submissions, judging and prize instructions — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/12d-informal-listening-conference-events|Informal event discovery, listening rooms and conference networking — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/13a-opportunity-publication-discovery-alerts|Opportunity publication, targeting, discovery and alerts — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/13b-submissions-auditions-pitches|Opportunity submissions, auditions and unsolicited pitches — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/13c-triage-offers-dispositions|Candidate triage, shortlists, offers and dispositions — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/13d-handoff-history-specialized-calls|Opportunity handoff, history, band membership and open calls — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/14a-service-listings-quotes-engagements|Service listings, quotes and engagement creation — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/14b-requirements-sla-milestones-revisions|Service requirements, SLA, milestones, revisions and change orders — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/14c-delivery-acceptance-exit-rights|Final delivery, acceptance, exit settlement, recall and rights execution — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/14d-substitution-multiparty-supply|Supplier substitution, fixers and multi-party service supply — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/14e-repair-inspection-custody|Repair, inspection, custody and damage evidence — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/15a-teacher-facets-discovery-trials|Teacher tuition facets, discovery and trials — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/15b-lesson-booking-credits-delivery|Lesson booking, credits, policy and delivery — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/15c-curriculum-feedback-practice|Curriculum, assignments, feedback, practice and progress — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/15d-group-mentorship-learning-paths|Group classes, mentorship and learning paths — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/16a-course-authoring-publication-catalog|Course authoring, publication and catalog — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/16b-course-commerce-consumption-refunds|Course commerce, entitlements, consumption, refunds and diagnostics — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/16c-exam-evidence-credential-exclusion|External exam evidence and platform credential exclusion — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/16d-institution-gate-clinical-exclusion|Institution evolution gate and clinical-purpose exclusion — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/17a-runtime-admission-latency-discovery|Runtime admission, preflight, latency and partner discovery — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/17b-live-room-monitoring-controls|Live room, cue, talkback and monitoring controls — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/17c-continuity-capture-alignment-attendance|Session continuity, local capture, alignment and attendance — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/17d-overdub-requests-delivery|Latency-independent overdub requests and delivery — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/18a-society-affiliation-registration|Society affiliation, registration projection and delivery — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/18b-statement-ingestion-matching-normalization|Royalty statement ingestion, matching and normalization — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/18c-royalty-calculation-restatement-statements|Royalty calculation, recoupment, restatement and payee statements — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/18d-royalty-payout-b3-gate|Royalty payout and escrow B3 gate — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/18e-royalty-recovery-statement-disputes|Royalty recovery findings and statement disputes — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/19a-live-returns-cue-sheet-expectations|Live-performance returns and cue-sheet expectations — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/19b-distribution-calendar-money-in-flight|Distribution calendars and money-in-flight expectations — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/19c-royalty-forecast-calibration|Conservative royalty forecasts and calibration — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/20a-sync-catalogue-briefs-holds|Sync catalogue, briefs, pitches and bilateral holds — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/20b-clearance-evidence-consent|Licensing clearance, evidence, encumbrance and consent — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/20c-owner-policy-quotes-mfn|Share-owner policy, quotes, negotiation and MFN — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/20d-licence-issuance-verification-lifecycle|Licence issuance, verification and immutable lifecycle — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/21a-sample-interpolation-remix-clearance|Sample, interpolation and remix clearance — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/21b-creator-microlicensing-content-id|Creator micro-licensing, whitelisting and Content ID recovery — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/21c-ai-training-corpus-compensation|AI-training consent, corpus manifests and compensation records — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/21d-cover-print-grand-right-routing|Cover, print, lyric and grand-right routing — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/22a-release-build-readiness-footprint|Release composition, readiness, footprint, dates and identifiers — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/22b-partner-message-delivery-status|Partner messages, delivery choreography and store status — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/22c-release-promotion-updates-takedowns|Release promotion timeline, updates and takedowns — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/22d-ugc-claims-catalogue-migration|UGC fingerprint/claims and catalogue migration — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/23a-gear-identity-claims-transfers|Gear identity, ownership claims, transfers and provenance — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/23b-theft-screening-recovery|Gear theft flags, transfer screening and recovery — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/23c-service-component-history|Gear service, repair and component history — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/23d-valuation-insurance-discography|Gear valuation, appraisal, insurance packs and discography — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/24a-gear-collections-publication|Gear collections and public item projection — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/24b-rigs-compatibility-exports|Gear rigs, advisory compatibility and source exports — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/24c-organization-register-backline|Organization asset registers, condition and public backline — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/24d-custody-cases-manifests|Gear custody, operational cases, manifests and theft handoff — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/25a-gear-catalog-authority-matching|Gear catalog authority, matching and advisory facts — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/25b-gear-listing-disclosure-lifecycle|Gear listing disclosure, evidence and lifecycle — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/25c-gear-inventory-bulk-channels|Gear inventory claims, bundles, bulk listing and channels — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/25d-gear-market-guides-storefront-policies|Gear market guides, seller pricing and storefront policies — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/26a-gear-offers-cart-checkout|Gear offers, cart eligibility and checkout commitment — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/26b-gear-logistics-order-lifecycle|Gear freight, shipment and order lifecycle — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/26c-gear-remedies-settlement-transfers|Gear damage, returns, settlement and ownership transfer — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/26d-gear-pickup-service-warranty|Gear pickup, pre-dispatch service and warranty routing — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/26e-gear-future-commerce-gates|Gear international and future commerce capability gates — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/27a-digital-product-catalog-compatibility|Digital product catalog, compatibility and dependencies — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/27b-digital-submission-qa-publication|Digital artifact submission, QA, review and publication — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/27c-digital-entitlements-library-delivery|Digital entitlements, holder library and secure delivery — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/27d-digital-updates-assets-trials|Digital updates, owned assets, auditions and trials — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/27e-digital-enforcement-retirement-portability|Digital enforcement, withdrawal, retirement and portability — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/28a-digital-purchases-beat-licensing|Digital purchases, beat licensing and usage tracking — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/28b-digital-refunds-revocation-clearance|Digital delivery waiver, refunds, revocation and past clearance — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/28c-digital-transfers-promotions-upgrades|Digital licence transfers, promotions and upgrades — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/28d-digital-contributor-revenue|Digital contributor consent, accrual and period close — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/29a-place-room-authority-status|Place and room identity, authority and status — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/29b-room-specs-accessibility-conformance|Room specifications, gear, accessibility and conformance — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/29c-room-calendars-holds-enquiries|Room calendars, external busy mirrors, holds and enquiries — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/29d-room-reservations-series-handoff|Room reservations, waitlists, recurring series and performance handoff — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/30a-booking-avails-commercial-positions|Booking avails, routing windows and commercial positions — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/30b-booking-offers-approval-acceptance|Booking offers, counters, approvals and confirmation — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/30c-booking-documents-payments-announcement|Booking announcement, documents, amendments and payment assertions — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/30d-booking-cancellation-postponement-exclusivity|Booking cancellation, postponement and exclusivity — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/30e-booking-rfq-bill-construction|Booking RFQ triage and performance bill construction — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/31a-agency-terms-pipeline-commission|Agency representation terms, pipeline and commission — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/31b-settlement-inputs-reconciliation-disputes|Live settlement inputs, reconciliation and disputes — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/31c-settlement-finality-restatement-export|Live settlement signatures, finality, restatement and export — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/31d-live-splits-disbursement-tax|Live splits, disbursement obligations and tax evidence — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/31e-live-draw-guidance-reliability-demand|Verified live draw, guidance, reliability and fan demand — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/32a-production-events-bill-rehearsal|Production events, bill projection and rehearsal linkage — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/32b-rider-sensitive-disclosure-redlines|Production riders, sensitive disclosure and redlines — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/32c-stage-plan-capability-allocation|Stage plans, input lists, monitors and venue capability allocation — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/32d-advance-checklist-freeze|Production advance checklist, sheets and freeze control — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/33a-show-setlists-files-performance|Show setlists, file packages and performed-set evidence — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/33b-run-of-show-crew-credentials|Run of show, crew calls and credentials — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/33c-gear-manifest-loadout-daysheet|Show-date gear manifests, load-out and day sheets — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/33d-safety-weather-postshow-corrections|Show safety evidence, weather decisions and post-show corrections — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/34a-tour-container-routing-book|Tour containers, dates, routing and tour books — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/34b-tour-travel-rooming-ground-perdiem|Tour travel, rooming, ground transport and per diem — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/34c-tour-budgets-actuals-expenses|Tour budgets, actuals and expenses — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/34d-tour-border-merch-carbon|Tour border readiness, carnets, withholding, merch and carbon — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/35a-ticket-inventory-onsale-presale|Ticket inventory, manifests, on-sale and presale — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/35b-ticket-carts-orders-waitlists|Ticket carts, orders and returned-inventory waitlists — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/35c-ticket-guest-allocations-door|Ticket guest allocations, comps and door additions — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/35d-ticket-vip-rsvp-conversion|Ticket VIP packages, RSVP and free-to-paid conversion — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/35e-ticket-delivery-transfer-claim|Ticket delivery, pass projection and transfer claim — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/36a-door-replicas-scans-age|Door replicas, scans, reversals and age checks — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/36b-boxoffice-counts-drops-walkup-close|Box-office counts, immutable drops, walk-up sales and close — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/36c-ticket-refunds-event-changes|Ticket refunds, event cancellation and rescheduling — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/36d-external-counts-attestation-reconciliation|External ticketing connections, count attestations and reconciliation — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/36e-ticket-limits-transfer-exchange-consent|Ticket purchase limits, transfers, face-value exchange and consent — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/37-fanbase-direct-to-fan|Fanbase and direct-to-fan — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/38-promotion-marketing|Promotion and marketing — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/39-analytics-ingestion-reporting|Analytics ingestion, matching and reporting — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/40-market-intelligence-signals|Market intelligence, fraud and scouting signals — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/41a-income-tax-receivables|Income, tax readiness and receivables — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/41b-deals-recoupment-pl|Deals, recoupment, runway and closing — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/42-career-planning-risk|Career planning, insurance and sustainability boundaries — Backend Specification]] — be-spec — spec-vault
+- [[specs/be/index|BE Layer — Backend Specifications]] — be-spec — spec-vault
 - [[specs/be|BE Specs Hub]] — spec — spec-vault
+- [[specs/data-placement-strategy|Data Placement Strategy]] — spec — spec-vault
+- [[specs/design-system|Design System]] — spec — spec-vault
+- [[specs/evolutions/2026-08-02-content-management-platform|Evolution — Content Management & Settings-First Platform]] — spec — spec-vault
+- [[specs/fe/00-infrastructure|Cross-cutting Web Foundation - Frontend Specification]] — fe-spec — spec-vault
+- [[specs/fe/01-identity-authority|Identity Authority and Party Governance - Frontend Specification]] — fe-spec — spec-vault
+- [[specs/fe/02-profiles-verification|Profiles, Claiming and Qualifications - Frontend Specification]] — fe-spec — spec-vault
+- [[specs/fe/03-cms-content-modeling|CMS Content Modeling and Authoring - Frontend Specification]] — fe-spec — spec-vault
+- [[specs/fe/04-cms-delivery-media|CMS Navigation, Media and Delivery - Frontend Specification]] — fe-spec — spec-vault
+- [[specs/fe/05-platform-configuration-admin|Platform Configuration, Admin and Quality - Frontend Specification]] — fe-spec — spec-vault
+- [[specs/fe/06-trust-safety|Trust, Safety, Disputes and Evidence - Frontend Specification]] — fe-spec — spec-vault
+- [[specs/fe/07-credits-core|Credit Graph, Capture and Confidence - Frontend Specification]] — fe-spec — spec-vault
+- [[specs/fe/08-credit-reporting-disclosure|Credit Reporting, Exchange and Disclosure - Frontend Specification]] — fe-spec — spec-vault
+- [[specs/fe/09-projects-collaboration|Music Projects and Collaboration - Frontend Specification]] — fe-spec — spec-vault
+- [[specs/fe/10-rights-ownership|Rights and Ownership - Frontend Specification]] — fe-spec — spec-vault
+- [[specs/fe/11-community-graph|Social Graph and Collaborator Network - Frontend Specification]] — fe-spec — spec-vault
+- [[specs/fe/12-community-spaces-events|Communities, Participatory Spaces and Events - Frontend Specification]] — fe-spec — spec-vault
+- [[specs/fe/13-opportunities-casting|Opportunities and Casting Lifecycle - Frontend Specification]] — fe-spec — spec-vault
+- [[specs/fe/14-services-marketplace|Services Marketplace Lifecycle - Frontend Specification]] — fe-spec — spec-vault
+- [[specs/fe/index|FE Layer — Frontend Specifications]] — fe-spec — spec-vault
 - [[specs/fe|FE Specs Hub]] — spec — spec-vault
 - [[specs/feature-ledger|Feature Tracking Ledger — WeJammin]] — spec — spec-vault
+- [[specs/ia/00-infrastructure|Shard 00 — Cross-cutting platform foundation]] — ia-spec — spec-vault
+- [[specs/ia/01-identity-authority|Shard 01 — Identity authority and party governance]] — ia-spec — spec-vault
+- [[specs/ia/02-profiles-verification|Shard 02 — Profiles, claiming and qualifications]] — ia-spec — spec-vault
+- [[specs/ia/03-cms-content-modeling|Shard 03 — CMS content modeling and authoring]] — ia-spec — spec-vault
+- [[specs/ia/04-cms-delivery-media|Shard 04 — CMS navigation, media and delivery]] — ia-spec — spec-vault
+- [[specs/ia/05-platform-configuration-admin|Shard 05 — Platform configuration, admin and quality]] — ia-spec — spec-vault
+- [[specs/ia/06-trust-safety|Shard 06 — Trust, safety, disputes and evidence]] — ia-spec — spec-vault
+- [[specs/ia/07-credits-core|Shard 07 — Credit graph, capture and confidence]] — ia-spec — spec-vault
+- [[specs/ia/08-credit-reporting-disclosure|Shard 08 — Credit reporting, exchange and disclosure]] — ia-spec — spec-vault
+- [[specs/ia/09-projects-collaboration|Shard 09 — Music projects and collaboration]] — ia-spec — spec-vault
+- [[specs/ia/10-rights-ownership|Shard 10 — Rights and ownership]] — ia-spec — spec-vault
+- [[specs/ia/11-community-graph|Shard 11 — Social graph and collaborator network]] — ia-spec — spec-vault
+- [[specs/ia/12-community-spaces-events|Shard 12 — Communities, participatory spaces and events]] — ia-spec — spec-vault
+- [[specs/ia/13-opportunities-casting|Shard 13 — Opportunities and casting lifecycle]] — ia-spec — spec-vault
+- [[specs/ia/14-services-marketplace|Shard 14 — Services marketplace lifecycle]] — ia-spec — spec-vault
+- [[specs/ia/15-education-delivery|Shard 15 — Lessons, practice and mentorship delivery]] — ia-spec — spec-vault
+- [[specs/ia/16-education-credentials-institutions|Shard 16 — Courses, credentials, institutions and special practice]] — ia-spec — spec-vault
+- [[specs/ia/17-realtime-sessions|Shard 17 — Real-time jamming and remote sessions]] — ia-spec — spec-vault
+- [[specs/ia/18-royalty-accounting|Shard 18 — Royalty registration, ingestion, calculation and payout]] — ia-spec — spec-vault
+- [[specs/ia/19-royalty-reporting-forecasting|Shard 19 — Performance reporting, money-in-flight and forecasting]] — ia-spec — spec-vault
+- [[specs/ia/20-licensing-core|Shard 20 — Licensing core and instrument lifecycle]] — ia-spec — spec-vault
+- [[specs/ia/21-specialized-licensing|Shard 21 — Specialized clearances and licensing]] — ia-spec — spec-vault
+- [[specs/ia/22-release-distribution|Shard 22 — Release and distribution lifecycle]] — ia-spec — spec-vault
+- [[specs/ia/23-gear-provenance-registry|Shard 23 — Gear identity, provenance and recovery]] — ia-spec — spec-vault
+- [[specs/ia/24-gear-holdings-operations|Shard 24 — Gear collections, rigs, custody and manifests]] — ia-spec — spec-vault
+- [[specs/ia/25-gear-market-catalog|Shard 25 — Gear catalog, listings and market data]] — ia-spec — spec-vault
+- [[specs/ia/26-gear-commerce-fulfilment|Shard 26 — Gear transactions, fulfilment and possession models]] — ia-spec — spec-vault
+- [[specs/ia/27-digital-catalog-delivery|Shard 27 — Digital catalog, entitlement, delivery and vendor QA]] — ia-spec — spec-vault
+- [[specs/ia/28-digital-licensing-commerce|Shard 28 — Digital licensing, commerce, revocation and revenue]] — ia-spec — spec-vault
+- [[specs/ia/29-venues-spaces|Shard 29 — Venues, studios and spaces]] — ia-spec — spec-vault
+- [[specs/ia/30-booking-contracts|Shard 30 — Booking, negotiation and contracts]] — ia-spec — spec-vault
+- [[specs/ia/31-live-settlement-intelligence|Shard 31 — Agency, settlement and live-market intelligence]] — ia-spec — spec-vault
+- [[specs/ia/32-show-production-planning|Shard 32 — Event production planning and advancing]] — ia-spec — spec-vault
+- [[specs/ia/33-show-day-operations|Shard 33 — Show-day execution and recovery]] — ia-spec — spec-vault
+- [[specs/ia/34-touring-operations|Shard 34 — Tour routing, logistics, finance and reporting]] — ia-spec — spec-vault
+- [[specs/ia/35-ticket-products-sales|Shard 35 — Ticket products, sales, access packages and delivery]] — ia-spec — spec-vault
+- [[specs/ia/36-box-office-risk|Shard 36 — Door access, box office, reconciliation and ticketing risk]] — ia-spec — spec-vault
+- [[specs/ia/37-fanbase-direct-to-fan|Shard 37 — Fanbase and direct-to-fan]] — ia-spec — spec-vault
+- [[specs/ia/38-promotion-marketing|Shard 38 — Promotion and marketing]] — ia-spec — spec-vault
+- [[specs/ia/39-analytics-ingestion-reporting|Shard 39 — Analytics ingestion, matching and reporting]] — ia-spec — spec-vault
+- [[specs/ia/40-market-intelligence-signals|Shard 40 — Market intelligence, fraud and scouting signals]] — ia-spec — spec-vault
+- [[specs/ia/41-career-finance|Shard 41 — Career finance and business operations]] — ia-spec — spec-vault
+- [[specs/ia/42-career-planning-risk|Shard 42 — Career planning, insurance and sustainability]] — ia-spec — spec-vault
+- [[specs/ia/decomposition-plan|WeJammin — IA Decomposition Plan]] — ia-spec — spec-vault
+- [[specs/ia/decomposition-validation|IA Decomposition Validation]] — ia-spec — spec-vault
+- [[specs/ia/deep-dives/01-identity-authority|Deep Dive 01 — Identity authority and party governance]] — ia-spec — spec-vault
+- [[specs/ia/deep-dives/02-profiles-verification|Deep Dive 02 — Profiles, claiming and qualifications]] — ia-spec — spec-vault
+- [[specs/ia/deep-dives/03-cms-content-modeling|Deep Dive 03 — CMS content modeling and authoring]] — ia-spec — spec-vault
+- [[specs/ia/deep-dives/04-cms-delivery-media|Deep Dive 04 — CMS navigation, media and delivery]] — ia-spec — spec-vault
+- [[specs/ia/deep-dives/05-platform-configuration-admin|Deep Dive 05 — Platform configuration, admin and quality]] — ia-spec — spec-vault
+- [[specs/ia/deep-dives/06-trust-safety|Deep Dive 06 — Trust, safety, disputes and evidence]] — ia-spec — spec-vault
+- [[specs/ia/deep-dives/07-credits-core|Deep Dive 07 — Credit graph, capture and confidence]] — ia-spec — spec-vault
+- [[specs/ia/deep-dives/09-projects-collaboration|Deep Dive 09 — Music projects and collaboration]] — ia-spec — spec-vault
+- [[specs/ia/deep-dives/10-rights-ownership|Deep Dive 10 — Rights and ownership]] — ia-spec — spec-vault
+- [[specs/ia/deep-dives/11-community-graph|Deep Dive 11 — Social graph and collaborator network]] — ia-spec — spec-vault
+- [[specs/ia/deep-dives/13-opportunities-casting|Deep Dive 13 — Opportunities and casting lifecycle]] — ia-spec — spec-vault
+- [[specs/ia/deep-dives/14-services-marketplace|Deep Dive 14 — Services marketplace lifecycle]] — ia-spec — spec-vault
+- [[specs/ia/deep-dives/15-education-delivery|Deep Dive 15 — Lessons, practice and mentorship delivery]] — ia-spec — spec-vault
+- [[specs/ia/deep-dives/16-education-credentials-institutions|Deep Dive 16 — Courses, credentials, institutions and special practice]] — ia-spec — spec-vault
+- [[specs/ia/deep-dives/17-realtime-sessions|Deep Dive 17 — Real-time jamming and remote sessions]] — ia-spec — spec-vault
+- [[specs/ia/deep-dives/18-royalty-accounting|Deep Dive 18 — Royalty accounting]] — ia-spec — spec-vault
+- [[specs/ia/deep-dives/19-royalty-reporting-forecasting|Deep Dive 19 — Royalty reporting and forecasting]] — ia-spec — spec-vault
+- [[specs/ia/deep-dives/20-licensing-core|Deep Dive 20 — Licensing core and instrument lifecycle]] — ia-spec — spec-vault
+- [[specs/ia/deep-dives/21-specialized-licensing|Deep Dive 21 — Specialized clearances and licensing]] — ia-spec — spec-vault
+- [[specs/ia/deep-dives/22-release-distribution|Deep Dive 22 — Release and distribution lifecycle]] — ia-spec — spec-vault
+- [[specs/ia/deep-dives/23-gear-provenance-registry|Deep Dive 23 — Gear identity, provenance and recovery]] — ia-spec — spec-vault
+- [[specs/ia/deep-dives/24-gear-holdings-operations|Deep Dive 24 — Gear collections, rigs, custody and manifests]] — ia-spec — spec-vault
+- [[specs/ia/deep-dives/25-gear-market-catalog|Deep Dive 25 — Gear catalog, listings and market data]] — ia-spec — spec-vault
+- [[specs/ia/deep-dives/26-gear-commerce-fulfilment|Deep Dive 26 — Gear transactions, fulfilment and possession models]] — ia-spec — spec-vault
+- [[specs/ia/deep-dives/27-digital-catalog-delivery|Deep Dive 27 — Digital catalog, entitlement, delivery and vendor QA]] — ia-spec — spec-vault
+- [[specs/ia/deep-dives/28-digital-licensing-commerce|Deep Dive 28 — Digital licensing, commerce, revocation and revenue]] — ia-spec — spec-vault
+- [[specs/ia/deep-dives/29-venues-spaces|Deep Dive 29 — Venues, studios and spaces]] — ia-spec — spec-vault
+- [[specs/ia/deep-dives/30-booking-contracts|Deep Dive 30 — Booking, negotiation and contracts]] — ia-spec — spec-vault
+- [[specs/ia/deep-dives/31-live-settlement-intelligence|Deep Dive 31 — Agency, settlement and live-market intelligence]] — ia-spec — spec-vault
+- [[specs/ia/deep-dives/32-show-production-planning|Deep Dive 32 — Event production planning and advancing]] — ia-spec — spec-vault
+- [[specs/ia/deep-dives/33-show-day-operations|Deep Dive 33 — Show-day execution and recovery]] — ia-spec — spec-vault
+- [[specs/ia/deep-dives/34-touring-operations|Deep Dive 34 — Tour routing, logistics, finance and reporting]] — ia-spec — spec-vault
+- [[specs/ia/deep-dives/35-ticket-products-sales|Deep Dive 35 — Ticket products, sales, access packages and delivery]] — ia-spec — spec-vault
+- [[specs/ia/deep-dives/36-box-office-risk|Deep Dive 36 — Door access, box office, reconciliation and ticketing risk]] — ia-spec — spec-vault
+- [[specs/ia/deep-dives/37-fanbase-direct-to-fan|Deep Dive 37 — Fanbase and direct-to-fan]] — ia-spec — spec-vault
+- [[specs/ia/deep-dives/38-promotion-marketing|Deep Dive 38 — Promotion and marketing]] — ia-spec — spec-vault
+- [[specs/ia/deep-dives/39-analytics-ingestion-reporting|Deep Dive 39 — Analytics ingestion, matching and reporting]] — ia-spec — spec-vault
+- [[specs/ia/deep-dives/40-market-intelligence-signals|Deep Dive 40 — Market intelligence, fraud and scouting signals]] — ia-spec — spec-vault
+- [[specs/ia/deep-dives/41-career-finance|Deep Dive 41 — Career finance and business operations]] — ia-spec — spec-vault
+- [[specs/ia/index|IA Layer — Information Architecture]] — ia-spec — spec-vault
 - [[specs/ia|IA Specs Hub]] — spec — spec-vault
 - [[specs/ideation/01-identity-profiles-organizations/01.01-person-identity-roles/01.01-person-identity-roles-cx|Person Identity & Roles — Cross-Cuts]] — ideation — spec-vault
 - [[specs/ideation/01-identity-profiles-organizations/01.01-person-identity-roles/01.01-person-identity-roles-index|Person Identity & Roles — Index]] — ideation — spec-vault
@@ -661,7 +994,7 @@
 - [[specs/ideation/14-digital-goods-marketplace/14.10-contributor-revenue-royalty-pool/14.10-contributor-revenue-royalty-pool-index|Contributor Revenue & Per-Download Royalty Pool — Index]] — ideation — spec-vault
 - [[specs/ideation/14-digital-goods-marketplace/14.10-contributor-revenue-royalty-pool/14.10.01-pool-funding-rate-model|Feature: Pool Funding & Rate Model]] — ideation — spec-vault
 - [[specs/ideation/14-digital-goods-marketplace/14.10-contributor-revenue-royalty-pool/14.10.02-download-attribution-accrual|Feature: Download Attribution & Accrual]] — ideation — spec-vault
-- [[specs/ideation/14-digital-goods-marketplace/14.10-contributor-revenue-royalty-pool/14.10.03-multi-contributor-pack-splits|Feature: Multi-Contributor Pack Splits]] — ideation — spec-vault
+- [[specs/ideation/14-digital-goods-marketplace/14.10-contributor-revenue-royalty-pool/14.10.03-multi-contributor-pack-splits|Feature: Multi-Contributor Pack Splits & Use Consent]] — ideation — spec-vault
 - [[specs/ideation/14-digital-goods-marketplace/digital-goods-marketplace-cx|Digital Goods & Plugin Marketplace — Cross-Cuts]] — ideation — spec-vault
 - [[specs/ideation/14-digital-goods-marketplace/digital-goods-marketplace-index|Digital Goods & Plugin Marketplace — Index]] — ideation — spec-vault
 - [[specs/ideation/15-gear-registry-ownership/15.01-instrument-identity-provenance/15.01-instrument-identity-provenance-cx|Instrument Identity & Provenance — Cross-Cuts]] — ideation — spec-vault
@@ -1155,6 +1488,70 @@
 - [[specs/ideation/24-trust-safety-disputes/24.09-case-evidence-locker|Feature: Case Evidence Locker & Chain of Custody]] — ideation — spec-vault
 - [[specs/ideation/24-trust-safety-disputes/trust-safety-disputes-cx|Trust, Safety & Disputes — Cross-Cuts]] — ideation — spec-vault
 - [[specs/ideation/24-trust-safety-disputes/trust-safety-disputes-index|Trust, Safety & Disputes — Index]] — ideation — spec-vault
+- [[specs/ideation/25-content-management-platform-configuration/25.01-content-types-schema-registry/25.01-content-types-schema-registry-cx|Content Types & Schema Registry — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/25-content-management-platform-configuration/25.01-content-types-schema-registry/25.01-content-types-schema-registry-index|Content Types & Schema Registry — Index]] — ideation — spec-vault
+- [[specs/ideation/25-content-management-platform-configuration/25.01-content-types-schema-registry/25.01.01-content-type-definitions|Feature: Content Type Definitions]] — ideation — spec-vault
+- [[specs/ideation/25-content-management-platform-configuration/25.01-content-types-schema-registry/25.01.02-field-schemas-validation-defaults|Feature: Field Schemas, Validation & Defaults]] — ideation — spec-vault
+- [[specs/ideation/25-content-management-platform-configuration/25.01-content-types-schema-registry/25.01.03-relations-domain-record-bindings|Feature: Relations & Domain Record Bindings]] — ideation — spec-vault
+- [[specs/ideation/25-content-management-platform-configuration/25.01-content-types-schema-registry/25.01.04-schema-versioning-migration|Feature: Schema Versioning & Migration]] — ideation — spec-vault
+- [[specs/ideation/25-content-management-platform-configuration/25.02-content-entries-editorial-lifecycle/25.02-content-entries-editorial-lifecycle-cx|Content Entries & Editorial Lifecycle — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/25-content-management-platform-configuration/25.02-content-entries-editorial-lifecycle/25.02-content-entries-editorial-lifecycle-index|Content Entries & Editorial Lifecycle — Index]] — ideation — spec-vault
+- [[specs/ideation/25-content-management-platform-configuration/25.02-content-entries-editorial-lifecycle/25.02.01-entry-authoring-autosave-locking|Feature: Entry Authoring, Autosave & Locking]] — ideation — spec-vault
+- [[specs/ideation/25-content-management-platform-configuration/25.02-content-entries-editorial-lifecycle/25.02.02-revision-history-compare-restore|Feature: Revision History, Compare & Restore]] — ideation — spec-vault
+- [[specs/ideation/25-content-management-platform-configuration/25.02-content-entries-editorial-lifecycle/25.02.03-review-approval-ownership|Feature: Review, Approval & Editorial Ownership]] — ideation — spec-vault
+- [[specs/ideation/25-content-management-platform-configuration/25.02-content-entries-editorial-lifecycle/25.02.04-scheduling-expiry-archive|Feature: Scheduling, Expiry & Archive]] — ideation — spec-vault
+- [[specs/ideation/25-content-management-platform-configuration/25.03-templates-blocks-page-composition/25.03-templates-blocks-page-composition-cx|Templates, Blocks & Page Composition — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/25-content-management-platform-configuration/25.03-templates-blocks-page-composition/25.03-templates-blocks-page-composition-index|Templates, Blocks & Page Composition — Index]] — ideation — spec-vault
+- [[specs/ideation/25-content-management-platform-configuration/25.03-templates-blocks-page-composition/25.03.01-approved-block-registry|Feature: Approved Block Registry]] — ideation — spec-vault
+- [[specs/ideation/25-content-management-platform-configuration/25.03-templates-blocks-page-composition/25.03.02-template-definitions-slots-bindings|Feature: Template Definitions, Slots & Bindings]] — ideation — spec-vault
+- [[specs/ideation/25-content-management-platform-configuration/25.03-templates-blocks-page-composition/25.03.03-page-composition-reusable-patterns|Feature: Page Composition & Reusable Patterns]] — ideation — spec-vault
+- [[specs/ideation/25-content-management-platform-configuration/25.03-templates-blocks-page-composition/25.03.04-preview-diff-safe-publish|Feature: Preview, Diff & Safe Publish]] — ideation — spec-vault
+- [[specs/ideation/25-content-management-platform-configuration/25.04-navigation-routes-discovery-metadata/25.04-navigation-routes-discovery-metadata-cx|Navigation, Routes & Discovery Metadata — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/25-content-management-platform-configuration/25.04-navigation-routes-discovery-metadata/25.04-navigation-routes-discovery-metadata-index|Navigation, Routes & Discovery Metadata — Index]] — ideation — spec-vault
+- [[specs/ideation/25-content-management-platform-configuration/25.04-navigation-routes-discovery-metadata/25.04.01-menu-trees-locations|Feature: Menu Trees & Locations]] — ideation — spec-vault
+- [[specs/ideation/25-content-management-platform-configuration/25.04-navigation-routes-discovery-metadata/25.04.02-conditional-navigation-visibility|Feature: Conditional Navigation Visibility]] — ideation — spec-vault
+- [[specs/ideation/25-content-management-platform-configuration/25.04-navigation-routes-discovery-metadata/25.04.03-slugs-permalinks-redirects|Feature: Slugs, Permalinks & Redirects]] — ideation — spec-vault
+- [[specs/ideation/25-content-management-platform-configuration/25.04-navigation-routes-discovery-metadata/25.04.04-seo-sitemap-breadcrumb-social|Feature: SEO, Sitemap, Breadcrumb & Social Metadata]] — ideation — spec-vault
+- [[specs/ideation/25-content-management-platform-configuration/25.05-taxonomies-localization-relationships/25.05-taxonomies-localization-relationships-cx|Taxonomies, Localization & Content Relationships — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/25-content-management-platform-configuration/25.05-taxonomies-localization-relationships/25.05-taxonomies-localization-relationships-index|Taxonomies, Localization & Content Relationships — Index]] — ideation — spec-vault
+- [[specs/ideation/25-content-management-platform-configuration/25.05-taxonomies-localization-relationships/25.05.01-taxonomy-vocabulary-definitions|Feature: Taxonomy & Vocabulary Definitions]] — ideation — spec-vault
+- [[specs/ideation/25-content-management-platform-configuration/25.05-taxonomies-localization-relationships/25.05.02-term-governance-assignment|Feature: Term Governance & Assignment]] — ideation — spec-vault
+- [[specs/ideation/25-content-management-platform-configuration/25.05-taxonomies-localization-relationships/25.05.03-localization-variants-fallback|Feature: Localization Variants & Fallback]] — ideation — spec-vault
+- [[specs/ideation/25-content-management-platform-configuration/25.05-taxonomies-localization-relationships/25.05.04-related-content-curation|Feature: Related Content Curation]] — ideation — spec-vault
+- [[specs/ideation/25-content-management-platform-configuration/25.06-media-library-asset-governance/25.06-media-library-asset-governance-cx|Media Library & Asset Governance — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/25-content-management-platform-configuration/25.06-media-library-asset-governance/25.06-media-library-asset-governance-index|Media Library & Asset Governance — Index]] — ideation — spec-vault
+- [[specs/ideation/25-content-management-platform-configuration/25.06-media-library-asset-governance/25.06.01-asset-ingest-dedup-metadata|Feature: Asset Ingest, Deduplication & Metadata]] — ideation — spec-vault
+- [[specs/ideation/25-content-management-platform-configuration/25.06-media-library-asset-governance/25.06.02-renditions-transform-alt-focal|Feature: Renditions, Transforms, Alt Text & Focal Points]] — ideation — spec-vault
+- [[specs/ideation/25-content-management-platform-configuration/25.06-media-library-asset-governance/25.06.03-rights-provenance-usage-consent|Feature: Rights, Provenance, Usage & Consent]] — ideation — spec-vault
+- [[specs/ideation/25-content-management-platform-configuration/25.06-media-library-asset-governance/25.06.04-reference-lifecycle-takedown|Feature: Reference Lifecycle, Replacement & Takedown]] — ideation — spec-vault
+- [[specs/ideation/25-content-management-platform-configuration/25.07-settings-flags-configuration-governance/25.07-settings-flags-configuration-governance-cx|Settings, Flags & Configuration Governance — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/25-content-management-platform-configuration/25.07-settings-flags-configuration-governance/25.07-settings-flags-configuration-governance-index|Settings, Flags & Configuration Governance — Index]] — ideation — spec-vault
+- [[specs/ideation/25-content-management-platform-configuration/25.07-settings-flags-configuration-governance/25.07.01-settings-definition-registry|Feature: Settings Definition Registry]] — ideation — spec-vault
+- [[specs/ideation/25-content-management-platform-configuration/25.07-settings-flags-configuration-governance/25.07.02-scope-inheritance-effective-values|Feature: Scope, Inheritance & Effective Values]] — ideation — spec-vault
+- [[specs/ideation/25-content-management-platform-configuration/25.07-settings-flags-configuration-governance/25.07.03-change-approval-version-rollback|Feature: Change Approval, Versioning & Rollback]] — ideation — spec-vault
+- [[specs/ideation/25-content-management-platform-configuration/25.07-settings-flags-configuration-governance/25.07.04-feature-flags-experiments-kill-switches|Feature: Feature Flags, Experiments & Kill Switches]] — ideation — spec-vault
+- [[specs/ideation/25-content-management-platform-configuration/25.07-settings-flags-configuration-governance/25.07.05-secrets-runtime-config-boundary|Feature: Secrets & Runtime Configuration Boundary]] — ideation — spec-vault
+- [[specs/ideation/25-content-management-platform-configuration/25.08-admin-workspace-operations/25.08-admin-workspace-operations-cx|Admin Workspace & Operations — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/25-content-management-platform-configuration/25.08-admin-workspace-operations/25.08-admin-workspace-operations-index|Admin Workspace & Operations — Index]] — ideation — spec-vault
+- [[specs/ideation/25-content-management-platform-configuration/25.08-admin-workspace-operations/25.08.01-admin-home-task-inbox|Feature: Admin Home & Task Inbox]] — ideation — spec-vault
+- [[specs/ideation/25-content-management-platform-configuration/25.08-admin-workspace-operations/25.08.02-global-search-filtering-bulk-actions|Feature: Global Search, Filtering & Bulk Actions]] — ideation — spec-vault
+- [[specs/ideation/25-content-management-platform-configuration/25.08-admin-workspace-operations/25.08.03-admin-capabilities-delegation-step-up|Feature: Admin Capabilities, Delegation & Step-Up]] — ideation — spec-vault
+- [[specs/ideation/25-content-management-platform-configuration/25.08-admin-workspace-operations/25.08.04-activity-audit-notifications|Feature: Activity Audit & Security Notifications]] — ideation — spec-vault
+- [[specs/ideation/25-content-management-platform-configuration/25.08-admin-workspace-operations/25.08.05-site-health-config-diagnostics|Feature: Site Health & Configuration Diagnostics]] — ideation — spec-vault
+- [[specs/ideation/25-content-management-platform-configuration/25.09-content-delivery-preview-cache/25.09-content-delivery-preview-cache-cx|Content Delivery, Preview & Cache Coherence — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/25-content-management-platform-configuration/25.09-content-delivery-preview-cache/25.09-content-delivery-preview-cache-index|Content Delivery, Preview & Cache Coherence — Index]] — ideation — spec-vault
+- [[specs/ideation/25-content-management-platform-configuration/25.09-content-delivery-preview-cache/25.09.01-content-query-apis-read-models|Feature: Content Query APIs & Read Models]] — ideation — spec-vault
+- [[specs/ideation/25-content-management-platform-configuration/25.09-content-delivery-preview-cache/25.09.02-authenticated-preview-sessions|Feature: Authenticated Preview Sessions]] — ideation — spec-vault
+- [[specs/ideation/25-content-management-platform-configuration/25.09-content-delivery-preview-cache/25.09.03-atomic-publish-cache-invalidation|Feature: Atomic Publish & Cache Invalidation]] — ideation — spec-vault
+- [[specs/ideation/25-content-management-platform-configuration/25.09-content-delivery-preview-cache/25.09.04-degraded-delivery-recovery|Feature: Degraded Delivery & Recovery]] — ideation — spec-vault
+- [[specs/ideation/25-content-management-platform-configuration/25.10-portability-governance-quality/25.10-portability-governance-quality-cx|Portability, Governance & Quality — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/25-content-management-platform-configuration/25.10-portability-governance-quality/25.10-portability-governance-quality-index|Portability, Governance & Quality — Index]] — ideation — spec-vault
+- [[specs/ideation/25-content-management-platform-configuration/25.10-portability-governance-quality/25.10.01-import-mapping-validation-dry-run|Feature: Import Mapping, Validation & Dry Run]] — ideation — spec-vault
+- [[specs/ideation/25-content-management-platform-configuration/25.10-portability-governance-quality/25.10.02-export-backup-restore-portability|Feature: Export, Backup, Restore & Portability]] — ideation — spec-vault
+- [[specs/ideation/25-content-management-platform-configuration/25.10-portability-governance-quality/25.10.03-accessibility-content-quality-gates|Feature: Accessibility & Content Quality Gates]] — ideation — spec-vault
+- [[specs/ideation/25-content-management-platform-configuration/25.10-portability-governance-quality/25.10.04-retention-legal-hold-erasure|Feature: Retention, Legal Hold & Erasure]] — ideation — spec-vault
+- [[specs/ideation/25-content-management-platform-configuration/content-management-platform-configuration-cx|Content Management & Platform Configuration — Cross-Cuts]] — ideation — spec-vault
+- [[specs/ideation/25-content-management-platform-configuration/content-management-platform-configuration-index|Content Management & Platform Configuration — Index]] — ideation — spec-vault
 - [[specs/ideation/domain-map-proposal|WeJammin — Proposed Domain Map]] — ideation — spec-vault
 - [[specs/ideation/ideation-cx|Global Cross-Cuts — WeJammin]] — ideation — spec-vault
 - [[specs/ideation/ideation-index|Ideation Index — WeJammin]] — ideation — spec-vault
@@ -1170,6 +1567,48 @@
 
 ## Structured Memory
 
+- pattern: PAT-012: Validate decomposition at both boundary and ledger granularity (2026-08-02) — 2026-08-03T01:33:14.100Z
+- decision: DEC-097: Decompose approved architecture into 43 dependency-ordered IA shards (2026-08-02) — 2026-08-03T01:24:45.515Z
+- decision: DEC-096: Provider effects are local-intent-first cross-store operations (2026-08-02) — 2026-08-03T01:20:00.000Z
+- decision: DEC-095: Design verification is local, first-party, and warm-light-only at launch (2026-08-02) — 2026-08-03T01:10:00.000Z
+- decision: DEC-094: Workers Paid is the selected shared staging and production tier (2026-08-02) — 2026-08-03T01:00:00.000Z
+- decision: DEC-093: Every technology axis and component arrow has one normative contract (2026-08-02) — 2026-08-03T00:50:00.000Z
+- decision: DEC-092: Runtime contracts close the final architecture implementation seams (2026-08-02) — 2026-08-03T00:40:00.000Z
+- decision: DEC-091: Performance gates use one numeric load and data profile (2026-08-02) — 2026-08-02T18:00:34.000Z
+- decision: DEC-090: Final architecture embeds query and PII registries (2026-08-02) — 2026-08-02T18:00:33.000Z
+- decision: DEC-089: Seven-day PITR gates protected production data (2026-08-02) — 2026-08-02T18:00:32.000Z
+- decision: DEC-088: Final architecture owns every implementer-critical contract (2026-08-02) — 2026-08-02T18:00:31.000Z
+- decision: DEC-087: Launch spend is capped and media is the primary cost risk (2026-08-02) — 2026-08-02T18:00:30.000Z
+- decision: DEC-086: Consumer v1 ships through six dependency and infrastructure gates (2026-08-02) — 2026-08-02T18:00:29.000Z
+- decision: DEC-085: Quality is contract-first and vertical from the first slice (2026-08-02) — 2026-08-02T18:00:28.000Z
+- decision: DEC-084: Structured correlation plus numeric SLO alerts define launch observability (2026-08-02) — 2026-08-02T18:00:27.000Z
+- decision: DEC-083: Launch integrations are allowlisted, degradable, and spend-gated (2026-08-02) — 2026-08-02T18:00:26.000Z
+- decision: DEC-082: Zod 4 is the single runtime contract library and WCAG 2.2 AA is a release gate (2026-08-02) — 2026-08-02T18:00:25.000Z
+- decision: DEC-081: Authentication is additive, but authorization is always first-party and contextual (2026-08-02) — 2026-08-02T18:00:24.000Z
+- decision: DEC-080: PostgreSQL owns truth and every secondary store is reconstructible or coordinated (2026-08-02) — 2026-08-02T18:00:23.000Z
+- decision: DEC-079: Every API failure uses one four-field envelope (2026-08-02) — 2026-08-02T18:00:22.000Z
+- decision: DEC-078: The launch system is an edge-deployed modular monolith (2026-08-02) — 2026-08-02T18:00:21.000Z
+- decision: DEC-077: Supabase Data API and PostgreSQL RPC replace a general ORM (2026-08-02) — 2026-08-02T18:00:20.000Z
+- decision: DEC-076: Global states remain explicit and non-interchangeable (2026-08-02) — 2026-08-02T18:00:19.000Z
+- decision: DEC-075: Data density is hybrid by archetype (2026-08-02) — 2026-08-02T18:00:18.000Z
+- decision: DEC-074: Motion is subtle responsive feedback (2026-08-02) — 2026-08-02T18:00:17.000Z
+- decision: DEC-073: The global component inventory is a mandatory seed (2026-08-02) — 2026-08-02T18:00:16.000Z
+- decision: DEC-072: Twelve page archetypes cover the platform without one universal dashboard (2026-08-02) — 2026-08-02T18:00:15.000Z
+- decision: DEC-071: The layout uses a 4/8/12 hybrid grid (2026-08-02) — 2026-08-02T18:00:14.000Z
+- decision: DEC-070: Navigation adapts by route family and viewport (2026-08-02) — 2026-08-02T18:00:13.000Z
+- decision: DEC-069: pnpm, Vitest, Playwright, ESLint, Prettier, and strict TypeScript form the toolchain (2026-08-02) — 2026-08-02T18:00:12.000Z
+- decision: DEC-068: The Working Record defines a product-first governed design system (2026-08-02) — 2026-08-02T18:00:11.000Z
+- decision: DEC-067: Cloudflare serves deploy assets; Supabase serves governed media (2026-08-02) — 2026-08-02T18:00:10.000Z
+- decision: DEC-066: Versioned REST and OpenAPI define the platform API (2026-08-02) — 2026-08-02T18:00:09.000Z
+- decision: DEC-065: Cloudflare Workers and Hono form one modular backend (2026-08-02) — 2026-08-02T18:00:08.000Z
+- decision: DEC-064: Astro hybrid rendering uses React only for hydrated islands (2026-08-02) — 2026-08-02T18:00:07.000Z
+- decision: DEC-063: Sentry plus structured native telemetry is the v1 monitoring stack (2026-08-02) — 2026-08-02T18:00:06.000Z
+- decision: DEC-062: GitHub Actions runs CI/CD on the verified self-hosted fleet (2026-08-02) — 2026-08-02T18:00:05.000Z
+- decision: DEC-061: CMS and settings-first operation are mission-critical (2026-08-02) — 2026-08-02T18:00:04.000Z
+- decision: DEC-060: TypeScript is the sole v1 primary language (2026-08-02) — 2026-08-02T18:00:03.000Z
+- decision: DEC-059: Social identities are additive credentials on one canonical user (2026-08-02) — 2026-08-02T18:00:02.000Z
+- decision: DEC-058: Supabase Auth serves consumer identity; enterprise capabilities wait (2026-08-02) — 2026-08-02T18:00:01.000Z
+- decision: DEC-057: P1 keeps Supabase PostgreSQL canonical and bounds adjunct services (2026-08-02) — 2026-08-02T18:00:00.000Z
 - decision: DEC-056: A require-confirmation rider requirement holds at unknown rather than matching (2026-07-30) — 2026-07-30T09:05:20.150Z
 - decision: DEC-054: Delivery integrity — metadata written at ingest, two hashes only for watermarked products (2026-07-30) — 2026-07-30T09:05:20.149Z
 - decision: DEC-055: Radius breach hard-blocks confirm; the waiver becomes a real-time instrument (2026-07-30) — 2026-07-30T09:05:20.149Z

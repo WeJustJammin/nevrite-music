@@ -16,7 +16,7 @@ This is a proposal for owner review. It preserves recovered facts, ratified prio
 - Locked stack: Astro islands, Cloudflare Pages, Cloudflare Workers, and Supabase.
 - Firebase is abandoned; legacy Firebase and Next.js material is discarded.
 
-## 24-domain overview
+## 25-domain overview
 
 | # | Domain | Priority | Novelty | Purpose |
 |---:|---|---|---|---|
@@ -44,6 +44,7 @@ This is a proposal for owner review. It preserves recovered facts, ratified prio
 | 22 | Analytics & Market Intelligence | important | in-source | Trustworthy aggregation and explanation of professional, commerce, fan, release, and live data. |
 | 23 | Career, Finance & Business Management | important | in-source | Financial operations, business planning, tax readiness, and team financial visibility. |
 | 24 | Trust, Safety & Disputes | core | industry-standard | Prevention, investigation, enforcement, remediation, and appeals for platform harm. |
+| 25 | Content Management & Platform Configuration | core | user-directive | First-party structured content, templates/blocks, navigation, media, publishing, typed settings, and bounded admin operations. |
 
 ## Detailed domain boundaries
 
@@ -335,6 +336,18 @@ This is a proposal for owner review. It preserves recovered facts, ratified prio
 
 **Personas.** Trust and safety operator; moderator; fraud analyst; disputes specialist; buyer; seller; rights holder; reported user.
 
+### 25. Content Management & Platform Configuration
+
+**Purpose / summary.** A first-party WordPress-like operating system for structured content types and entries, controlled templates/blocks, menus/navigation, taxonomies/localization, media, revisions/publishing, preview/delivery, typed settings, admin operations, and portability/quality.
+
+**Why it earns a top-level boundary.** It is a daily operator destination with ten interacting capability groups and explicit user-facing/editorial behavior. The former architecture-only “configuration” concern did not own authoring, workflow, navigation, revision, preview, or governance.
+
+**Capabilities.** Schema registry; content lifecycle; approved block/template composition; routes and SEO; taxonomy/localization; media rights and accessibility; settings/flags governance; bounded admin workspace; content APIs, preview and cache convergence; import/export, quality, retention and erasure.
+
+**Sub-domains.** Content Types & Schema Registry; Content Entries & Editorial Lifecycle; Templates, Blocks & Page Composition; Navigation, Routes & Discovery Metadata; Taxonomies, Localization & Relationships; Media Library & Asset Governance; Settings, Flags & Configuration Governance; Admin Workspace & Operations; Content Delivery, Preview & Cache Coherence; Portability, Governance & Quality.
+
+**Personas.** The four primary personas consume or manage scoped self/represented-party content through owning domains. Internal platform staff are bounded account roles, not a fifth persona.
+
 ## Cross-cutting systems
 
 | System | Purpose | Affected domains |
@@ -366,6 +379,7 @@ This is a proposal for owner review. It preserves recovered facts, ratified prio
 | Promoted Placement & Advertising | Governed paid discovery, sponsorship, and advertising disclosure. | 13 Gear; 14 Digital Goods; 05 Services; 04 Opportunities; 20 Fanbase; 21 Promotion; 03 Community. |
 | Referrals, Invites & Affiliates | Invitation, attribution, incentive, and abuse-controlled referral system. | 01 Identity; 03 Community; 13 Gear; 14 Digital Goods; 05 Services; 20 Fanbase. |
 | Admin, Back-Office & Support | Operators’ admin, casework, configuration, and support tooling. | 01 Identity; 13 Gear; 14 Digital Goods; 05 Services; 09 Rights; 17 Live Booking; 19 Ticketing; 24 Trust/Safety. |
+| Content Management, Settings & Publishing | Structured editorial content, controlled composition, navigation, typed configuration, preview, revision, and publishing control. | 25 owns; all domains consume according to explicit bindings and settings definitions. |
 | Follow, Save & Watchlist | Shared intentional-interest, collection, and alert primitives. | 03 Community; 04 Opportunities; 13 Gear; 14 Digital Goods; 11 Licensing; 20 Fanbase; 16 Venues/Studios/Spaces. |
 | Bulk Import, Sync & Migration Tooling | High-volume import, mapping, validation, sync, and migration tooling. | 02 Credits; 09 Rights; 13 Gear; 16 Venues/Studios/Spaces; 10 Royalties; 12 Distribution; 22 Analytics. |
 | Analytics Instrumentation & Per-Domain Reporting | Product telemetry, domain reporting, and decision-grade measurement. | 01 Identity; 03 Community; 04 Opportunities; 05 Services; 13 Gear; 14 Digital Goods; 17 Live Booking; 19 Ticketing; 20 Fanbase; 22 Analytics. |
@@ -378,7 +392,7 @@ This is a proposal for owner review. It preserves recovered facts, ratified prio
 |---|---|---|
 | Enterprise Security Architecture, Threat Detection, WAF & Scraper Defense | Security architecture and operations, not a destination product domain. | `/create-prd-security` |
 | Authentication, Session & Account Recovery Architecture | Credential, session, and recovery mechanics; profile ownership disputes remain product work. | `/create-prd-security` |
-| Global CDN & 99.9% Uptime | Availability/performance NFR covered by locked Cloudflare deployment. | `/create-prd-compile` |
+| Global CDN & availability | **99.9% monthly availability, excluding scheduled outages**; Cloudflare is a baseline, not a substitute for the service requirement. | `/create-prd-compile` (operational definition) |
 | Legacy Stack (Next.js, Firebase App Hosting, Google Drive, Vite migration) | Superseded predecessor implementation material; Firebase and Next.js are discarded. | `meta/constraints.md` |
 | Low-Latency Audio Transport Layer | Dedicated media architecture beneath jam and monitoring experience. | `/create-prd-architecture` |
 | Audio Transcode, Analysis & Waveform Rendering Pipeline | Heavy DSP/transcode architecture beneath media experiences. | `/create-prd-architecture` |
@@ -391,7 +405,7 @@ This is a proposal for owner review. It preserves recovered facts, ratified prio
 | Data Residency & Cross-Border Transfer Architecture | Privacy and cross-border compliance constraint. | `/create-prd-security` |
 | Observability, SRE & Incident Response | Operational infrastructure and service-management concern. | `/create-prd-compile` |
 | CI/CD, Environments & Release Engineering | Delivery-pipeline and runtime environment concern. | `/setup-workspace-cicd` |
-| Feature Flags, Experiments & Configuration | Implementation mechanism for controlled rollout and experimentation. | `/create-prd-architecture` |
+| Feature Flags, Experiments & Configuration Runtime | Runtime evaluation, rollout, cache, and deployment machinery beneath domain 25's product behavior. | `/create-prd-architecture` |
 | Design System & Component Library | Shared UI implementation infrastructure. | `/create-prd-design-system` |
 | Realtime Multi-Party Sync & Collaborative Edit Conflict Resolution | Collaborative document-sync architecture, distinct from audio transport. | `/create-prd-architecture` |
 | AI Fuzzy Matching & Ranking Engine | Implementation strategy beneath search, matching, and tagging product behavior. | `/create-prd-architecture` |
@@ -409,7 +423,7 @@ Capture provenance at the instant music is made: a project/session workflow prod
 
 Ratified value-chain sequence: identity and credits (01–02); discovery and work demand (03–04); services and education (05–06); creation (07–08); ownership and income (09–12); physical, digital, and gear-provenance commerce (13–15); places and live-event management (16–19); fan growth and intelligence (20–22); business operation (23); safety and adjudication (24).
 
-The ratified ideation index records all 24 domains at `[BREADTH]`, 734 feature leaves, 195 Musts deepened, 285 Shoulds partially deepened, one responsive web/PWA surface, and the owner-locked Astro islands + Cloudflare Pages/Workers + Supabase stack. Firebase is wholly abandoned. The absent `domains-1.md` draft must not be used to cut scope; the authoritative workflow JSON and ratified index supersede drafts.
+The evolved ideation index records 25 domains, 776 feature leaves, 230 Musts deepened, 292 Shoulds partially deepened or deeper, one responsive web/PWA surface, and the owner-locked Astro islands + Cloudflare Pages/Workers + Supabase stack. Firebase is wholly abandoned. The absent `domains-1.md` draft must not be used to cut scope; the authoritative index plus D-85 supersede recovery-era counts.
 
 ## Owner decisions recovered from the map
 
@@ -437,13 +451,14 @@ The ratified ideation index records all 24 domains at `[BREADTH]`, 734 feature l
 - **Recorded recommendation:** Retain the top-level destination and extract shared transport.
 - **Recorded basis:** D-15 ratifies Domain 08 narrowed to latency-aware matching and monitoring; shared rooms and transport are cross-cut. Dedicated media infrastructure remains an architecture constraint.
 
-**Status: [RATIFIED — owner reaffirmed the 24-domain classification on 2026-07-19; existing fractal domain tree is authoritative]**
+**Status: [EVOLVED — original 24-domain classification reaffirmed 2026-07-19; owner added domain 25 on 2026-08-02 via D-85]**
 
 
 <!-- spec-graph: auto-generated -->
 ## Related Specs
 
 ### Constrained by
+- [[decisions.md#d-85|D-85]]
 - [[decisions.md#d-10|D-10]]
 - [[decisions.md#d-16|D-16]]
 - [[decisions.md#d-11|D-11]]

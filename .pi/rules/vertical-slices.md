@@ -57,7 +57,7 @@ A feature slice is complete when:
 - [ ] Surface scope declared in the phase plan (explicit list of target surfaces)
 - [ ] **For each declared surface:**
   - [ ] Data layer: schema defined, permissions set, seed data exists
-  - [ ] API layer: endpoints exist, validated with {{CONTRACT_LIBRARY}}, tested
+  - [ ] API layer: endpoints exist, validated with Zod, tested
   - [ ] User-facing: component renders, handles loading/error/empty states
   - [ ] Admin: can create/read/update/delete the resource (if the feature has admin management)
 - [ ] Tests pass at all levels (contract, unit, integration, E2E)

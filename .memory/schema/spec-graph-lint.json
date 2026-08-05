@@ -1,11 +1,155 @@
 {
-  "builtAt": "2026-07-31T02:42:42.253Z",
+  "builtAt": "2026-08-03T11:39:56.517Z",
   "issues": [
+    {
+      "severity": "warning",
+      "code": "ORPHAN_SPEC",
+      "message": ".memory/wiki/specs/architecture/prd-working/auth-provider-package.md has no graph relationships",
+      "path": ".memory/wiki/specs/architecture/prd-working/auth-provider-package.md"
+    },
+    {
+      "severity": "warning",
+      "code": "ORPHAN_SPEC",
+      "message": ".memory/wiki/specs/architecture/prd-working/bootstrap-api-layer-report.md has no graph relationships",
+      "path": ".memory/wiki/specs/architecture/prd-working/bootstrap-api-layer-report.md"
+    },
+    {
+      "severity": "warning",
+      "code": "ORPHAN_SPEC",
+      "message": ".memory/wiki/specs/architecture/prd-working/bootstrap-backend-runtime-report.md has no graph relationships",
+      "path": ".memory/wiki/specs/architecture/prd-working/bootstrap-backend-runtime-report.md"
+    },
+    {
+      "severity": "warning",
+      "code": "ORPHAN_SPEC",
+      "message": ".memory/wiki/specs/architecture/prd-working/bootstrap-cdn-assets-report.md has no graph relationships",
+      "path": ".memory/wiki/specs/architecture/prd-working/bootstrap-cdn-assets-report.md"
+    },
+    {
+      "severity": "warning",
+      "code": "ORPHAN_SPEC",
+      "message": ".memory/wiki/specs/architecture/prd-working/bootstrap-ci-cd-report.md has no graph relationships",
+      "path": ".memory/wiki/specs/architecture/prd-working/bootstrap-ci-cd-report.md"
+    },
+    {
+      "severity": "warning",
+      "code": "ORPHAN_SPEC",
+      "message": ".memory/wiki/specs/architecture/prd-working/bootstrap-development-tooling-report.md has no graph relationships",
+      "path": ".memory/wiki/specs/architecture/prd-working/bootstrap-development-tooling-report.md"
+    },
+    {
+      "severity": "warning",
+      "code": "ORPHAN_SPEC",
+      "message": ".memory/wiki/specs/architecture/prd-working/bootstrap-frontend-framework-report.md has no graph relationships",
+      "path": ".memory/wiki/specs/architecture/prd-working/bootstrap-frontend-framework-report.md"
+    },
+    {
+      "severity": "warning",
+      "code": "ORPHAN_SPEC",
+      "message": ".memory/wiki/specs/architecture/prd-working/bootstrap-monitoring-report.md has no graph relationships",
+      "path": ".memory/wiki/specs/architecture/prd-working/bootstrap-monitoring-report.md"
+    },
+    {
+      "severity": "warning",
+      "code": "ORPHAN_SPEC",
+      "message": ".memory/wiki/specs/architecture/prd-working/bootstrap-p1-report.md has no graph relationships",
+      "path": ".memory/wiki/specs/architecture/prd-working/bootstrap-p1-report.md"
+    },
+    {
+      "severity": "warning",
+      "code": "ORPHAN_SPEC",
+      "message": ".memory/wiki/specs/architecture/prd-working/bootstrap-p2-auth-report.md has no graph relationships",
+      "path": ".memory/wiki/specs/architecture/prd-working/bootstrap-p2-auth-report.md"
+    },
+    {
+      "severity": "warning",
+      "code": "ORPHAN_SPEC",
+      "message": ".memory/wiki/specs/architecture/prd-working/bootstrap-p2-social-report.md has no graph relationships",
+      "path": ".memory/wiki/specs/architecture/prd-working/bootstrap-p2-social-report.md"
+    },
+    {
+      "severity": "warning",
+      "code": "ORPHAN_SPEC",
+      "message": ".memory/wiki/specs/architecture/prd-working/bootstrap-primary-language-report.md has no graph relationships",
+      "path": ".memory/wiki/specs/architecture/prd-working/bootstrap-primary-language-report.md"
+    },
+    {
+      "severity": "warning",
+      "code": "ORPHAN_SPEC",
+      "message": ".memory/wiki/specs/architecture/prd-working/bootstrap-security-report.md has no graph relationships",
+      "path": ".memory/wiki/specs/architecture/prd-working/bootstrap-security-report.md"
+    },
+    {
+      "severity": "warning",
+      "code": "ORPHAN_SPEC",
+      "message": ".memory/wiki/specs/architecture/prd-working/design-system-synthesis.md has no graph relationships",
+      "path": ".memory/wiki/specs/architecture/prd-working/design-system-synthesis.md"
+    },
+    {
+      "severity": "warning",
+      "code": "ORPHAN_SPEC",
+      "message": ".memory/wiki/specs/architecture/prd-working/ideation-relevance-index.md has no graph relationships",
+      "path": ".memory/wiki/specs/architecture/prd-working/ideation-relevance-index.md"
+    },
+    {
+      "severity": "warning",
+      "code": "ORPHAN_SPEC",
+      "message": ".memory/wiki/specs/architecture/prd-working/persistence-map-interview.md has no graph relationships",
+      "path": ".memory/wiki/specs/architecture/prd-working/persistence-map-interview.md"
+    },
+    {
+      "severity": "warning",
+      "code": "ORPHAN_SPEC",
+      "message": ".memory/wiki/specs/audits/2026-08-02-create-prd-quality-gate.md has no graph relationships",
+      "path": ".memory/wiki/specs/audits/2026-08-02-create-prd-quality-gate.md"
+    },
+    {
+      "severity": "warning",
+      "code": "ORPHAN_SPEC",
+      "message": ".memory/wiki/specs/audits/owner-autonomy-delegation-2026-08-02.md has no graph relationships",
+      "path": ".memory/wiki/specs/audits/owner-autonomy-delegation-2026-08-02.md"
+    },
     {
       "severity": "warning",
       "code": "ORPHAN_SPEC",
       "message": ".memory/wiki/specs/audits/p01-production-stage-vocabulary-validation.md has no graph relationships",
       "path": ".memory/wiki/specs/audits/p01-production-stage-vocabulary-validation.md"
+    },
+    {
+      "severity": "warning",
+      "code": "ORPHAN_SPEC",
+      "message": ".memory/wiki/specs/audits/propagation-availability-slo-2026-08-02.md has no graph relationships",
+      "path": ".memory/wiki/specs/audits/propagation-availability-slo-2026-08-02.md"
+    },
+    {
+      "severity": "warning",
+      "code": "ORPHAN_SPEC",
+      "message": ".memory/wiki/specs/audits/propagation-batch2-2026-08-02.md has no graph relationships",
+      "path": ".memory/wiki/specs/audits/propagation-batch2-2026-08-02.md"
+    },
+    {
+      "severity": "warning",
+      "code": "ORPHAN_SPEC",
+      "message": ".memory/wiki/specs/audits/propagation-batch3-2026-08-02.md has no graph relationships",
+      "path": ".memory/wiki/specs/audits/propagation-batch3-2026-08-02.md"
+    },
+    {
+      "severity": "warning",
+      "code": "ORPHAN_SPEC",
+      "message": ".memory/wiki/specs/audits/propagation-batch4-2026-08-02.md has no graph relationships",
+      "path": ".memory/wiki/specs/audits/propagation-batch4-2026-08-02.md"
+    },
+    {
+      "severity": "warning",
+      "code": "ORPHAN_SPEC",
+      "message": ".memory/wiki/specs/audits/propagation-batch5-2026-08-02.md has no graph relationships",
+      "path": ".memory/wiki/specs/audits/propagation-batch5-2026-08-02.md"
+    },
+    {
+      "severity": "warning",
+      "code": "ORPHAN_SPEC",
+      "message": ".memory/wiki/specs/audits/propagation-scan-availability-slo-2026-08-02.md has no graph relationships",
+      "path": ".memory/wiki/specs/audits/propagation-scan-availability-slo-2026-08-02.md"
     },
     {
       "severity": "warning",
@@ -22,20 +166,50 @@
     {
       "severity": "warning",
       "code": "ORPHAN_SPEC",
-      "message": ".memory/wiki/specs/be.md has no graph relationships",
-      "path": ".memory/wiki/specs/be.md"
+      "message": ".memory/wiki/specs/audits/run7/VOID-pilot-inherited-context.md has no graph relationships",
+      "path": ".memory/wiki/specs/audits/run7/VOID-pilot-inherited-context.md"
     },
     {
       "severity": "warning",
       "code": "ORPHAN_SPEC",
-      "message": ".memory/wiki/specs/fe.md has no graph relationships",
-      "path": ".memory/wiki/specs/fe.md"
+      "message": ".memory/wiki/specs/audits/run7/evidence-path-reconciliation.md has no graph relationships",
+      "path": ".memory/wiki/specs/audits/run7/evidence-path-reconciliation.md"
     },
     {
       "severity": "warning",
       "code": "ORPHAN_SPEC",
-      "message": ".memory/wiki/specs/ia.md has no graph relationships",
-      "path": ".memory/wiki/specs/ia.md"
+      "message": ".memory/wiki/specs/audits/run7/ideation-ambiguity-report.md has no graph relationships",
+      "path": ".memory/wiki/specs/audits/run7/ideation-ambiguity-report.md"
+    },
+    {
+      "severity": "warning",
+      "code": "ORPHAN_SPEC",
+      "message": ".memory/wiki/specs/audits/run7/manifest.md has no graph relationships",
+      "path": ".memory/wiki/specs/audits/run7/manifest.md"
+    },
+    {
+      "severity": "warning",
+      "code": "ORPHAN_SPEC",
+      "message": ".memory/wiki/specs/audits/run7/verified-blocker-remediation-matrix.md has no graph relationships",
+      "path": ".memory/wiki/specs/audits/run7/verified-blocker-remediation-matrix.md"
+    },
+    {
+      "severity": "warning",
+      "code": "ORPHAN_SPEC",
+      "message": ".memory/wiki/specs/audits/run7-owner-decision-agenda.md has no graph relationships",
+      "path": ".memory/wiki/specs/audits/run7-owner-decision-agenda.md"
+    },
+    {
+      "severity": "warning",
+      "code": "ORPHAN_SPEC",
+      "message": ".memory/wiki/specs/audits/run8-preflight-candidate-verification.md has no graph relationships",
+      "path": ".memory/wiki/specs/audits/run8-preflight-candidate-verification.md"
+    },
+    {
+      "severity": "warning",
+      "code": "ORPHAN_SPEC",
+      "message": ".memory/wiki/specs/audits/run8-preflight-governance-verification.md has no graph relationships",
+      "path": ".memory/wiki/specs/audits/run8-preflight-governance-verification.md"
     },
     {
       "severity": "warning",
@@ -72,12 +246,6 @@
       "code": "ORPHAN_SPEC",
       "message": ".memory/wiki/specs/ideation/11-music-licensing/11.06-creator-micro-licensing/11.06-creator-micro-licensing-cx.md has no graph relationships",
       "path": ".memory/wiki/specs/ideation/11-music-licensing/11.06-creator-micro-licensing/11.06-creator-micro-licensing-cx.md"
-    },
-    {
-      "severity": "warning",
-      "code": "ORPHAN_SPEC",
-      "message": ".memory/wiki/specs/ideation/14-digital-goods-marketplace/14.03-delivery-versioning-library/14.03-delivery-versioning-library-cx.md has no graph relationships",
-      "path": ".memory/wiki/specs/ideation/14-digital-goods-marketplace/14.03-delivery-versioning-library/14.03-delivery-versioning-library-cx.md"
     },
     {
       "severity": "warning",
@@ -130,12 +298,6 @@
     {
       "severity": "warning",
       "code": "ORPHAN_SPEC",
-      "message": ".memory/wiki/specs/ideation/19-ticketing-box-office/19.03-guest-list-comps/19.03-guest-list-comps-cx.md has no graph relationships",
-      "path": ".memory/wiki/specs/ideation/19-ticketing-box-office/19.03-guest-list-comps/19.03-guest-list-comps-cx.md"
-    },
-    {
-      "severity": "warning",
-      "code": "ORPHAN_SPEC",
       "message": ".memory/wiki/specs/ideation/21-promotion-marketing/21.01-release-campaign-planner/21.01-release-campaign-planner-cx.md has no graph relationships",
       "path": ".memory/wiki/specs/ideation/21-promotion-marketing/21.01-release-campaign-planner/21.01-release-campaign-planner-cx.md"
     },
@@ -162,6 +324,72 @@
       "code": "ORPHAN_SPEC",
       "message": ".memory/wiki/specs/ideation/24-trust-safety-disputes/24.05-copyright-authenticity-enforcement/24.05-copyright-authenticity-enforcement-cx.md has no graph relationships",
       "path": ".memory/wiki/specs/ideation/24-trust-safety-disputes/24.05-copyright-authenticity-enforcement/24.05-copyright-authenticity-enforcement-cx.md"
+    },
+    {
+      "severity": "warning",
+      "code": "ORPHAN_SPEC",
+      "message": ".memory/wiki/specs/ideation/25-content-management-platform-configuration/25.01-content-types-schema-registry/25.01-content-types-schema-registry-cx.md has no graph relationships",
+      "path": ".memory/wiki/specs/ideation/25-content-management-platform-configuration/25.01-content-types-schema-registry/25.01-content-types-schema-registry-cx.md"
+    },
+    {
+      "severity": "warning",
+      "code": "ORPHAN_SPEC",
+      "message": ".memory/wiki/specs/ideation/25-content-management-platform-configuration/25.02-content-entries-editorial-lifecycle/25.02-content-entries-editorial-lifecycle-cx.md has no graph relationships",
+      "path": ".memory/wiki/specs/ideation/25-content-management-platform-configuration/25.02-content-entries-editorial-lifecycle/25.02-content-entries-editorial-lifecycle-cx.md"
+    },
+    {
+      "severity": "warning",
+      "code": "ORPHAN_SPEC",
+      "message": ".memory/wiki/specs/ideation/25-content-management-platform-configuration/25.03-templates-blocks-page-composition/25.03-templates-blocks-page-composition-cx.md has no graph relationships",
+      "path": ".memory/wiki/specs/ideation/25-content-management-platform-configuration/25.03-templates-blocks-page-composition/25.03-templates-blocks-page-composition-cx.md"
+    },
+    {
+      "severity": "warning",
+      "code": "ORPHAN_SPEC",
+      "message": ".memory/wiki/specs/ideation/25-content-management-platform-configuration/25.04-navigation-routes-discovery-metadata/25.04-navigation-routes-discovery-metadata-cx.md has no graph relationships",
+      "path": ".memory/wiki/specs/ideation/25-content-management-platform-configuration/25.04-navigation-routes-discovery-metadata/25.04-navigation-routes-discovery-metadata-cx.md"
+    },
+    {
+      "severity": "warning",
+      "code": "ORPHAN_SPEC",
+      "message": ".memory/wiki/specs/ideation/25-content-management-platform-configuration/25.05-taxonomies-localization-relationships/25.05-taxonomies-localization-relationships-cx.md has no graph relationships",
+      "path": ".memory/wiki/specs/ideation/25-content-management-platform-configuration/25.05-taxonomies-localization-relationships/25.05-taxonomies-localization-relationships-cx.md"
+    },
+    {
+      "severity": "warning",
+      "code": "ORPHAN_SPEC",
+      "message": ".memory/wiki/specs/ideation/25-content-management-platform-configuration/25.06-media-library-asset-governance/25.06-media-library-asset-governance-cx.md has no graph relationships",
+      "path": ".memory/wiki/specs/ideation/25-content-management-platform-configuration/25.06-media-library-asset-governance/25.06-media-library-asset-governance-cx.md"
+    },
+    {
+      "severity": "warning",
+      "code": "ORPHAN_SPEC",
+      "message": ".memory/wiki/specs/ideation/25-content-management-platform-configuration/25.07-settings-flags-configuration-governance/25.07-settings-flags-configuration-governance-cx.md has no graph relationships",
+      "path": ".memory/wiki/specs/ideation/25-content-management-platform-configuration/25.07-settings-flags-configuration-governance/25.07-settings-flags-configuration-governance-cx.md"
+    },
+    {
+      "severity": "warning",
+      "code": "ORPHAN_SPEC",
+      "message": ".memory/wiki/specs/ideation/25-content-management-platform-configuration/25.08-admin-workspace-operations/25.08-admin-workspace-operations-cx.md has no graph relationships",
+      "path": ".memory/wiki/specs/ideation/25-content-management-platform-configuration/25.08-admin-workspace-operations/25.08-admin-workspace-operations-cx.md"
+    },
+    {
+      "severity": "warning",
+      "code": "ORPHAN_SPEC",
+      "message": ".memory/wiki/specs/ideation/25-content-management-platform-configuration/25.09-content-delivery-preview-cache/25.09-content-delivery-preview-cache-cx.md has no graph relationships",
+      "path": ".memory/wiki/specs/ideation/25-content-management-platform-configuration/25.09-content-delivery-preview-cache/25.09-content-delivery-preview-cache-cx.md"
+    },
+    {
+      "severity": "warning",
+      "code": "ORPHAN_SPEC",
+      "message": ".memory/wiki/specs/ideation/25-content-management-platform-configuration/25.10-portability-governance-quality/25.10-portability-governance-quality-cx.md has no graph relationships",
+      "path": ".memory/wiki/specs/ideation/25-content-management-platform-configuration/25.10-portability-governance-quality/25.10-portability-governance-quality-cx.md"
+    },
+    {
+      "severity": "warning",
+      "code": "ORPHAN_SPEC",
+      "message": ".memory/wiki/specs/ideation/25-content-management-platform-configuration/content-management-platform-configuration-cx.md has no graph relationships",
+      "path": ".memory/wiki/specs/ideation/25-content-management-platform-configuration/content-management-platform-configuration-cx.md"
     },
     {
       "severity": "warning",

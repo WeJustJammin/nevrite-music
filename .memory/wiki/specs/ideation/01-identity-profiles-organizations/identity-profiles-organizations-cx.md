@@ -12,7 +12,7 @@
 | CX-01 | [01.03 Membership, Representation & Mandate](./01.03-membership-representation-mandate/) | [01.01 Person Identity & Roles](./01.01-person-identity-roles/) | The acting-context list is a derived view over the membership/representation graph. Aliases + mandated orgs + represented parties = the switcher's contents | Musician, Producer, Operator | High | 01.01.03 D-01 (derivation) + 01.03 index D-01 |
 | CX-02 | [01.05 Profile Claiming](./01.05-profile-claiming-verification/) | [01.06 Portfolio, Media Reel & EPK](./01.06-portfolio-media-epk/) | Merging duplicate parties must **redirect** credits, never rewrite them — the portfolio's value rests on the credit record being immutable | Musician, Producer | High | 01.06.02 D-03 + 01.05.01 Edge Cases (duplicate shadows) |
 | CX-03 | [01.02 Organizations & Entity Model](./01.02-organizations-entity-model/) | [01.05 Profile Claiming](./01.05-profile-claiming-verification/) | Creation and claiming are the two doors to the same entity. Creation is a weak assertion; claiming is a proof. Duplicate detection at creation routes into the claim flow | Musician, Producer, Operator | High | 01.02.02 D-01/D-02 + 01.05 index D-03 |
-| CX-04 | [01.06 Portfolio, Media Reel & EPK](./01.06-portfolio-media-epk/) | [01.05 Profile Claiming](./01.05-profile-claiming-verification/) | The unclaimed party's portfolio — built entirely from other people's attestations — is the claim incentive, and its attesters are the claim's proof. The domain's growth loop | Musician, Producer, Operator | High | 01.05.01 DT-03 + 01.05.02 DT-03 + 01.06 index D-03 |
+| CX-04 | [01.06 Portfolio, Media Reel & EPK](./01.06-portfolio-media-epk/) | [01.05 Profile Claiming](./01.05-profile-claiming-verification/) | The unclaimed party's non-public credits-only projection supports bounded claim notice and proof; it is not public or search-indexed before a claim or explicit consent and the D-13 release controls. The domain's privacy-bounded growth loop | Musician, Producer, Operator | High | 01.06 index D-03 + 01.06.02 D-08/D-13 |
 | CX-05 | [01.09 Party Identifier Resolution](./01.09-party-identifier-resolution.md) | [01.01 Person Identity & Roles](./01.01-person-identity-roles/) | Identifiers attach to any party — including aliases, because ISNI is assigned per public identity, not per human | Musician, Producer | High | 01.09 D-02 + 01.01.02 D-01 |
 | CX-06 | [01.04 Band & Ensemble Governance](./01.04-band-ensemble-governance/) | [01.03 Membership, Representation & Mandate](./01.03-membership-representation-mandate/) | Governance should be the source of mandates; today they are independently editable and can contradict. The domain's sharpest unresolved conflict | Musician | High | 01.04.01 DT-03 + 01.04.03 Q-01 + 01.04 CX-01 |
 | CX-07 | [01.04 Band & Ensemble Governance](./01.04-band-ensemble-governance/) | [01.02 Organizations & Entity Model](./01.02-organizations-entity-model/) | `dissolved` is a band-specific terminal state governed by 01.04, executed against 01.02's lifecycle model. Ending one capability on a multi-type entity is a type removal, not a terminal state | Musician, Operator, Fan | High | 01.02.02 Behavior + 01.04.04 Behavior + 01.02.03 D-01/D-03 + 01.02.02→01.02.03 D-17/DT-15 |
@@ -99,19 +99,19 @@
 
 ### CX-04: Portfolio ↔ Profile Claiming (the growth loop)
 
-**Relationship**: The domain's flywheel, and the clearest expression of D-18's claim that consolidation and provenance are causally linked rather than bundled. The Producer captures credits at the session (consolidation puts us in the room). Those credits create shadow parties with portfolios (provenance). The portfolio — built by other people, unfakeable by its subject — is what makes claiming worth doing. And the attesters who built it are the proof that the claimant is real (01.05.02 DT-03).
+**Relationship**: The domain's privacy-bounded flywheel, and the clearest expression of D-18's claim that consolidation and provenance are causally linked rather than bundled. The Producer captures credits at the session (consolidation puts us in the room). Those credits create shadow parties with non-public credits-only projections (provenance). The projection supports bounded notice, remedy, and proof; it never becomes a public acquisition surface until the subject claims or explicitly consents and 01.06.02 D-13's release controls are approved.
 
 So the wedge feature *is* the acquisition mechanism, and the provenance graph *is* the identity-verification substrate. Neither was designed to be the other.
 
 **Role scoping**:
 - **Producer**: creates the loop's inputs at the session; rarely its subject.
-- **Musician**: the claimant, arriving to a career already on the page.
-- **Operator**: the same loop with business-shaped proof — their venue's show history is the bait.
+- **Musician**: the claimant, arriving through a bounded notice or claim route to a non-public projection.
+- **Operator**: the same loop with business-shaped proof — their venue's show history supports a private claim path, not a public listing.
 - **Fan**: outside the loop entirely, and must stay outside: fan attestation would make reputation purchasable at scale.
 
 **Synthesis questions answered**:
 1. **Shared state conflict**: The party record is the same object before and after claiming; claiming attaches an owner rather than creating anything, so the accumulated history survives the conversion by construction.
-2. **Trigger chain**: Capture → shadow party + portfolio → invitation (best-effort) → claim → proof via the same attesters → owned party. Every link is designed to survive its own failure: no contact route still leaves the credit standing (01.05.01 D-04).
+2. **Trigger chain**: Capture → shadow party + non-public projection → bounded invitation/notice (best-effort) → claim → proof via the same attesters → owned party. Every link is designed to survive its own failure: no contact route still leaves the credit standing (01.05.01 D-04).
 3. **Permission intersection**: A shadow party is a subject, never an agent (01.05.01 D-05). Claiming is the only thing that grants agency — the domain's cleanest authority boundary.
 4. **Notification fan-out**: The subject is invited; and on a successful claim the attesters **are** notified (01.05.02 D-11) — they are the fraud alarm, the only people who know "Big Mike" is Michael Adeyemi, and the notice closes their capture loop and re-engages them. **(Resolves the former Step-5 pending.)**
 5. **State transition conflict**: Credits accreting while a claim is in flight is safe — orthogonal writes to the same party.
@@ -409,13 +409,14 @@ So the wedge feature *is* the acquisition mechanism, and the provenance graph *i
 - [[decisions.md#d-01|D-01]]
 - [[decisions.md#d-03|D-03]]
 - [[decisions.md#d-02|D-02]]
+- [[decisions.md#d-13|D-13]]
+- [[decisions.md#d-08|D-08]]
 - [[decisions.md#d-17|D-17]]
 - [[decisions.md#d-05|D-05]]
 - [[decisions.md#d-04|D-04]]
 - [[decisions.md#d-07|D-07]]
 - [[decisions.md#d-16|D-16]]
 - [[decisions.md#d-14|D-14]]
-- [[decisions.md#d-08|D-08]]
 - [[decisions.md#d-09|D-09]]
 - [[decisions.md#d-10|D-10]]
 - [[decisions.md#d-18|D-18]]

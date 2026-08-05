@@ -1,0 +1,268 @@
+# Shard 40 — Market intelligence, fraud and scouting signals
+
+**Status:** Complete
+**Surface:** Responsive web/PWA
+**Source:** [Architecture design](../2026-08-02-architecture-design.md) · [Decomposition plan](decomposition-plan.md)
+
+## Overview
+
+Shard 40 owns playlist/chart event tracking, curator evidence, privacy-safe audience geography and routing insight, show-impact analysis, descriptive streaming-anomaly evidence, promotion-vendor coincidence reports, consent-scoped watchlists, momentum observations and scouting discovery. It consumes integrity-labeled series from [[specs/ia/39-analytics-ingestion-reporting|Shard 39]], case/evidence controls from [[specs/ia/06-trust-safety|Shard 06]] and platform policy/queue primitives from [[specs/ia/00-infrastructure|Shard 00]].
+
+### Scope Reconciliation
+
+| Item | Result |
+|---|---|
+| In-scope source documents | 22 |
+| Child capabilities | 12 across 22.03, 22.04, 22.06 and 22.07 |
+| Intelligence boundary | Descriptive observations, ranges, sample sizes and named blind spots; never prediction, accusation or causal certainty |
+| Privacy boundary | B2 keeps sparse geography, operator aggregates, shared vendor scores and cohort-like intelligence disabled until approved floor |
+| Routing boundary | Evidence-ranked shortlist only; never optimized route, booking/legal recommendation or paid venue rank |
+| Fraud boundary | Early hedged anomaly evidence for the artist; platform never reports users to DSP/distributor or renders an all-clear badge |
+| Scouting boundary | Purpose-specific opt-in enforced inside query/fire paths; results capped and non-enumerable; minors default off |
+
+### Architecture Decisions
+
+| Area | Locked decision |
+|---|---|
+| Playlist tracking | Placement is append-only event stream; current placement derives from events. Follower/reach facts snapshot at event time. Contribution remains explicitly estimated and excluded from proof. |
+| Placement quality | Quality/fraud context ranks above celebratory reach and is evaluated before alerts. Unknown quality suppresses praise, not the placement fact. |
+| Charts | Events date to chart period, not ingestion. Conflicting chart sources render side by side with source methodology; platform never reconciles them. |
+| Curator intelligence | Publicly acting curators only; institutional playlists name no private individual. Outputs are ranges with sample size, freshness and fraud context, never one score. Shared low-n data is B2-disabled. |
+| Geography | Owned audience and rented DSP reach are separate layers; source city counts are never averaged. Fraud-filtered series and engagement depth are first-class. |
+| Operator geography | Cross-artist/operator aggregates and sparse market maps remain disabled until B2 approves floor, lawful basis and anti-differencing enforcement. |
+| Routing insight | Shortlist explains supporting evidence, missing constraints and confidence. Prior booking result outranks inferred audience; venue payment cannot affect ranking. |
+| Show impact | Only first-party booked shows. Output is range/confidence/confounders; null result is first-class and analysis declines when confounding overwhelms signal. |
+| Anomaly evidence | Describe unusual patterns and limits, never label fraud/intent. Earlier hedged warning beats delayed certainty. Evidence dossier is exportable for human review. |
+| Reporting boundary | WeJammin never auto-reports artist/user to DSP/distributor. `Clear` produces silence because source limitations cannot prove absence. |
+| Vendor risk | Structured coincidence history, range/sample size and retractions only. Vendor signal never feeds anomaly detector or creates self-confirming loop; no public accusation. |
+| Watchlists | Private scouting watch is separate from public follow. Entries reference live consent-scoped projection, never durable subject snapshot. Revocation leaves non-informative tombstone. |
+| Momentum | Descriptive threshold crossing with absolute floor and source integrity; no forecast, ranking guarantee or generated prediction. Consent rechecks at fire time. |
+| Discovery | Credit-native, purpose-scoped search enforced in database query. Results are capped; no pagination path enumerates people. No-result response is cause-invariant. |
+| Scouted visibility | Consent is per purpose (`discoverable_for_work`, `watchable_for_evaluation`, etc.). Revocation cascades index/watch/signal access. Minors remain default-off pending counsel. |
+| Configuration | Quality bands, source windows, sample floors, geography granularity, anomaly thresholds, confidence rules, signal floors, caps and retention are typed versioned settings, never hardcoded. |
+
+## Features
+
+- **22.03 Playlist & Chart Tracking** — [ideation source](../ideation/22-analytics-market-intelligence/22.03-playlist-chart-tracking/22.03-playlist-chart-tracking-index.md); represented in the normative interactions, contracts, data model, access rules and edge cases below.
+- **22.04 Audience Geography & Tour Routing Insight** — [ideation source](../ideation/22-analytics-market-intelligence/22.04-audience-geography-routing-insight/22.04-audience-geography-routing-insight-index.md); represented in the normative interactions, contracts, data model, access rules and edge cases below.
+- **22.06 Streaming Fraud & Fake Engagement Detection** — [ideation source](../ideation/22-analytics-market-intelligence/22.06-streaming-fraud-detection/22.06-streaming-fraud-detection-index.md); represented in the normative interactions, contracts, data model, access rules and edge cases below.
+- **22.07 A&R Scouting Signals & Watchlists** — [ideation source](../ideation/22-analytics-market-intelligence/22.07-ar-scouting-watchlists/22.07-ar-scouting-watchlists-index.md); represented in the normative interactions, contracts, data model, access rules and edge cases below.
+
+## Acceptance Criteria
+
+- **AC-40.01 — Record playlist transition:** Given Integrity-qualified provider observation, when the actor invokes this flow, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) Record playlist transition, and (6) return Added/moved/removed event appends with event-time reach snapshot; if the flow cannot complete, Duplicate/source restatement reconciles additively.
+- **AC-40.02 — Render placement alert:** Given Current placement event and quality assessment, when the actor invokes this flow, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) Render placement alert, and (6) return Neutral/positive/risk-first alert uses current policy; if the flow cannot complete, Unknown/risky quality suppresses celebration and states uncertainty.
+- **AC-40.03 — Record chart event:** Given Named chart source and chart period, when the actor invokes this flow, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) Record chart event, and (6) return Source-specific position appends at period date; if the flow cannot complete, Conflicting source remains side-by-side, not merged.
+- **AC-40.04 — Inspect curator evidence:** Given Public curator/institution and sufficient sample, when the actor invokes this flow, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) Inspect curator evidence, and (6) return Range, n, freshness and fraud context render; if the flow cannot complete, Below floor/B2 gate suppresses shared result.
+- **AC-40.05 — View audience geography:** Given Authorized artist context and source integrity, when the actor invokes this flow, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) View audience geography, and (6) return Separate owned/rented layers plus engagement depth render; if the flow cannot complete, Sources never average; sparse cells coarsen/suppress by policy.
+- **AC-40.06 — Request routing shortlist:** Given Authorized act/tour context and available history, when the actor invokes this flow, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) Request routing shortlist, and (6) return Candidates with reasons, unknowns and confidence return; if the flow cannot complete, Insufficient facts returns no ranking, never invented route.
+- **AC-40.07 — Evaluate show impact:** Given First-party booked show and usable before/after windows, when the actor invokes this flow, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) Evaluate show impact, and (6) return Range, confidence, null result and confounders publish privately; if the flow cannot complete, Confounded/sparse case declines measurement.
+- **AC-40.08 — Detect anomaly:** Given Integrity-qualified series crosses descriptive rule, when the actor invokes this flow, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) Detect anomaly, and (6) return Hedged observation and evidence case append early; if the flow cannot complete, Missing/claimed data lowers confidence or withholds, never accuses.
+- **AC-40.09 — Export anomaly dossier:** Given Artist authority and evidence case, when the actor invokes this flow, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) Export anomaly dossier, and (6) return Human-readable source/provenance/timeline dossier exports; if the flow cannot complete, No automatic provider report or fraud verdict.
+- **AC-40.10 — Evaluate vendor history:** Given Linked promotion campaigns and anomaly outcomes, when the actor invokes this flow, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) Evaluate vendor history, and (6) return Coincidence range, n and retractions show privately; if the flow cannot complete, Below floor/no linkage yields insufficient evidence.
+- **AC-40.11 — Add private watch:** Given Scout purpose mandate and subject consent at read time, when the actor invokes this flow, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) Add private watch, and (6) return Reference watch entry saves without subject snapshot; if the flow cannot complete, No consent returns invariant no-result; follow remains separate.
+- **AC-40.12 — Fire momentum signal:** Given Watch active, purpose consent current and absolute/relative floors met, when the actor invokes this flow, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) Fire momentum signal, and (6) return Descriptive signal records and notifies within budget; if the flow cannot complete, Revoked consent is indistinguishable from quiet.
+- **AC-40.13 — Search scouting discovery:** Given Purpose, mandate, query and current consent scope, when the actor invokes this flow, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) Search scouting discovery, and (6) return Capped credit-native results return; if the flow cannot complete, Empty/denied/suppressed cases render identically.
+- **AC-40.14 — Revoke scouting visibility:** Given Subject changes one purpose, when the actor invokes this flow, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) Revoke scouting visibility, and (6) return Index, watches and pending signals lose access atomically; if the flow cannot complete, Tombstone tells scout access ended without reason/data.
+
+## Interactions
+
+| ID | Interaction | Preconditions | Success | Failure / recovery |
+|---|---|---|---|---|
+| 40.01 | Record playlist transition | Integrity-qualified provider observation | Added/moved/removed event appends with event-time reach snapshot | Duplicate/source restatement reconciles additively |
+| 40.02 | Render placement alert | Current placement event and quality assessment | Neutral/positive/risk-first alert uses current policy | Unknown/risky quality suppresses celebration and states uncertainty |
+| 40.03 | Record chart event | Named chart source and chart period | Source-specific position appends at period date | Conflicting source remains side-by-side, not merged |
+| 40.04 | Inspect curator evidence | Public curator/institution and sufficient sample | Range, n, freshness and fraud context render | Below floor/B2 gate suppresses shared result |
+| 40.05 | View audience geography | Authorized artist context and source integrity | Separate owned/rented layers plus engagement depth render | Sources never average; sparse cells coarsen/suppress by policy |
+| 40.06 | Request routing shortlist | Authorized act/tour context and available history | Candidates with reasons, unknowns and confidence return | Insufficient facts returns no ranking, never invented route |
+| 40.07 | Evaluate show impact | First-party booked show and usable before/after windows | Range, confidence, null result and confounders publish privately | Confounded/sparse case declines measurement |
+| 40.08 | Detect anomaly | Integrity-qualified series crosses descriptive rule | Hedged observation and evidence case append early | Missing/claimed data lowers confidence or withholds, never accuses |
+| 40.09 | Export anomaly dossier | Artist authority and evidence case | Human-readable source/provenance/timeline dossier exports | No automatic provider report or fraud verdict |
+| 40.10 | Evaluate vendor history | Linked promotion campaigns and anomaly outcomes | Coincidence range, n and retractions show privately | Below floor/no linkage yields insufficient evidence |
+| 40.11 | Add private watch | Scout purpose mandate and subject consent at read time | Reference watch entry saves without subject snapshot | No consent returns invariant no-result; follow remains separate |
+| 40.12 | Fire momentum signal | Watch active, purpose consent current and absolute/relative floors met | Descriptive signal records and notifies within budget | Revoked consent is indistinguishable from quiet |
+| 40.13 | Search scouting discovery | Purpose, mandate, query and current consent scope | Capped credit-native results return | Empty/denied/suppressed cases render identically |
+| 40.14 | Revoke scouting visibility | Subject changes one purpose | Index, watches and pending signals lose access atomically | Tombstone tells scout access ended without reason/data |
+
+## Contracts
+
+| Contract | Producer → consumer | Required fields | Errors / invariants |
+|---|---|---|---|
+| `PlaylistPlacementEventV1` | Provider series → placement tracker | recording, playlist, transition, charted-at, reach snapshot, source/integrity | Append-only; contribution estimate separate |
+| `PlacementQualityV1` | Intelligence policy → alerts | placement, evidence bands, fraud context, range, sample, policy version | Unknown never defaults positive |
+| `ChartObservationV1` | Chart adapter → tracker | source/chart, subject, period, position, methodology ref | No cross-source reconciliation |
+| `CuratorEvidenceV1` | Public artifacts + Shard 39 → private report | public curator/institution, ranges, n, freshness, source | No private-person dossier; B2 floor enforced |
+| `AudienceGeoLayerV1` | Shard 39/fan aggregate → geography | subject, source layer, coarse cell, metric, depth, integrity, privacy policy | Sources remain separate; sparse suppressed |
+| `RoutingCandidateV1` | Geography/booking facts → routing view | market, evidence factors, booking history, missing inputs, confidence | Advisory only; no paid factor |
+| `ShowImpactEstimateV1` | First-party show + series → artist | show, windows, range, confidence, confounders, result/null/declined | No headline causal percentage |
+| `AnomalyObservationV1` | Detector → artist evidence | series, rule/policy, unusual facts, confidence/limits, observed-at | Descriptive only; no fraud verdict |
+| `VendorCoincidenceV1` | Campaign/anomaly links → vendor view | vendor, eligible campaigns, coincident outcomes, n, range, retractions | Never detector input; below floor unavailable |
+| `ScoutingConsentDecisionV1` | Subject policy → search/watch/signal | subject, purpose, allowed, policy version, evaluated-at | Query/fire-time; unknown denied |
+| `WatchReferenceV1` | Scout → watch service | scout entity, subject opaque ID, purpose, created-at | No metric snapshot; separate from follow |
+| `MomentumObservationV1` | Series → scout signal | subject, metric, baseline/current, absolute/relative floors, integrity | Observation, not prediction; consent rechecked |
+
+All commands carry acting-party mandate, purpose, expected revision/idempotency key and audit correlation. Public/search responses are rate-limited and cause-invariant. Intelligence consumers cannot strengthen Shard 39 provenance or Shard 38 truth labels.
+
+## Data Models
+
+| Entity | Key relationships and constraints |
+|---|---|
+| `playlist_placement_event` | Immutable recording/playlist transition, event-period reach and source evidence |
+| `placement_quality_projection` | Disposable policy-versioned range/sample/fraud context; not canonical verdict |
+| `chart_observation` | Source/chart/period/subject/position; conflicting sources coexist |
+| `curator_public_reference` | Public professional role/institution only, source/provenance and removal state |
+| `audience_geo_observation` | Subject/source/coarse cell/metric/depth/integrity; no averaged city total |
+| `routing_candidate_projection` | Market factors, booking history, unseen constraints and confidence; disposable |
+| `show_impact_analysis` | First-party show, windows, method version, range/null/declined and confounders |
+| `anomaly_case` / `anomaly_observation` | Artist-owned evidence timeline, rules, source integrity and descriptive state |
+| `vendor_campaign_link` / `vendor_coincidence_projection` | Structured campaign relation, observed coincidence and additive retraction |
+| `scouting_visibility_instruction` | Subject/purpose append-only allow/withdraw events |
+| `scout_watch` / `watch_tombstone` | Scout entity, opaque live subject ref and purpose; no subject metrics snapshot |
+| `momentum_observation` | Threshold facts, integrity and descriptive signal state |
+| `discovery_query_audit` | Purpose, query class, result band/cap and abuse decision; no reusable result list |
+
+Raw fan geography, exact audience identities and subject consent evidence remain restricted. Market projections use coarse cells and approved floors. Anomaly evidence follows case retention; vendor/public intelligence retains only lawful source facts and retractions. Watch revocation removes subject projection and leaves minimal tombstone.
+
+### Typed Field and Cardinality Registry
+
+Field typing is deterministic: `*_id: uuid`, `*_at: timestamptz`, `*_date: date`, `*_minor: bigint`, `*_count: integer`, `currency: char(3)`, `is_*|has_*: boolean`, `state|status|type|kind|class: closed enum`, `version: bigint`, ratios `numeric(9,6)`, checksums `text`, and URLs `text`. Every named contract field uses this registry unless its contract declares a stricter type.
+
+- **`playlist_placement_event`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Immutable recording/playlist transition, event-period reach and source evidence.
+- **`placement_quality_projection`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Disposable policy-versioned range/sample/fraud context; not canonical verdict.
+- **`chart_observation`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Source/chart/period/subject/position; conflicting sources coexist.
+- **`curator_public_reference`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Public professional role/institution only, source/provenance and removal state.
+- **`audience_geo_observation`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Subject/source/coarse cell/metric/depth/integrity; no averaged city total.
+- **`routing_candidate_projection`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Market factors, booking history, unseen constraints and confidence; disposable.
+- **`show_impact_analysis`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: First-party show, windows, method version, range/null/declined and confounders.
+- **`anomaly_case`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Artist-owned evidence timeline, rules, source integrity and descriptive state.
+- **`anomaly_observation`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Artist-owned evidence timeline, rules, source integrity and descriptive state.
+- **`vendor_campaign_link`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Structured campaign relation, observed coincidence and additive retraction.
+- **`vendor_coincidence_projection`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Structured campaign relation, observed coincidence and additive retraction.
+- **`scouting_visibility_instruction`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Subject/purpose append-only allow/withdraw events.
+- **`scout_watch`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Scout entity, opaque live subject ref and purpose; no subject metrics snapshot.
+- **`watch_tombstone`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Scout entity, opaque live subject ref and purpose; no subject metrics snapshot.
+- **`momentum_observation`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Threshold facts, integrity and descriptive signal state.
+- **`discovery_query_audit`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Purpose, query class, result band/cap and abuse decision; no reusable result list.
+
+## Access Control
+
+| Actor | Allowed | Explicitly denied |
+|---|---|---|
+| Artist/entity actor | View own placements, geography, routing, show impact, anomaly/vendor evidence | See another artist's private series or sparse market facts |
+| Operator/venue | View authorized event/market aggregate only after B2 gate/floor | Identify contributing artists/fans or pay for rank |
+| Scout organization actor | Search/watch only subjects/purposes currently consented under mandate | Enumerate platform, cache revoked subject metrics or treat watch as follow |
+| Scouted subject | Grant/withdraw each scouting purpose and view effective visibility | Learn scout watch identities unless separate policy permits |
+| Trust & Safety | Consume scoped anomaly/vendor evidence in a case | Convert signal to platform fraud verdict or auto-report externally |
+| Support/steward | Resolve named source/removal/watch case with expiring grant | Browse watchlists or lower privacy/sample floor |
+| Administrator | Activate versioned B2/policy gates under dual control | Override subject consent, publish accusation or alter historical observation |
+| Service principal | Execute one detector/query/projection contract | Join fan identities, cross-user private data or post-filter consent |
+
+Scouting consent is enforced inside RLS/security-definer query and signal functions, not UI post-filtering. B2 and minors gates have no role override. Exports and anomaly dossier require step-up; dossiers remain artist-controlled unless separately shared.
+
+### Access Escalation
+
+- **Artist/entity actor:** a denial returns a typed reason and preserves canonical state; authority or evidence disputes route to the scoped case/Trust & Safety path, support handles mechanical recovery through an expiring purpose grant, and counsel/capability/privacy hard gates have no role override.
+- **Operator/venue:** a denial returns a typed reason and preserves canonical state; authority or evidence disputes route to the scoped case/Trust & Safety path, support handles mechanical recovery through an expiring purpose grant, and counsel/capability/privacy hard gates have no role override.
+- **Scout organization actor:** a denial returns a typed reason and preserves canonical state; authority or evidence disputes route to the scoped case/Trust & Safety path, support handles mechanical recovery through an expiring purpose grant, and counsel/capability/privacy hard gates have no role override.
+- **Scouted subject:** a denial returns a typed reason and preserves canonical state; authority or evidence disputes route to the scoped case/Trust & Safety path, support handles mechanical recovery through an expiring purpose grant, and counsel/capability/privacy hard gates have no role override.
+- **Trust & Safety:** a denial returns a typed reason and preserves canonical state; authority or evidence disputes route to the scoped case/Trust & Safety path, support handles mechanical recovery through an expiring purpose grant, and counsel/capability/privacy hard gates have no role override.
+- **Support/steward:** a denial returns a typed reason and preserves canonical state; authority or evidence disputes route to the scoped case/Trust & Safety path, support handles mechanical recovery through an expiring purpose grant, and counsel/capability/privacy hard gates have no role override.
+- **Administrator:** a denial returns a typed reason and preserves canonical state; authority or evidence disputes route to the scoped case/Trust & Safety path, support handles mechanical recovery through an expiring purpose grant, and counsel/capability/privacy hard gates have no role override.
+- **Service principal:** a denial returns a typed reason and preserves canonical state; authority or evidence disputes route to the scoped case/Trust & Safety path, support handles mechanical recovery through an expiring purpose grant, and counsel/capability/privacy hard gates have no role override.
+
+## Accessibility
+
+- Placement/chart timelines expose transitions, source, period, reach-at-event and quality in semantic tables; charts are supplementary.
+- Risk/uncertainty appears before positive reach in DOM and visual order, with text rather than color/icon alone.
+- Geography has equivalent coarse-region list with owned/rented layers and engagement depth; map pointer use is optional.
+- Routing shortlist states reasons, confidence and unseen constraints in text; it is never presented as turn-by-turn route.
+- Show-impact view distinguishes positive, null and declined analysis neutrally and names confounders.
+- Anomaly language is plain, hedged and non-accusatory; dossier provides accessible HTML/PDF/table outputs.
+- Search/watch controls name purpose and current consent without exposing hidden-result causes; empty states are identical.
+- Momentum signals state observed values/window/floors and avoid predictive language or celebratory motion.
+- Normal web/PWA reads target p95 ≤2 seconds; expensive projections show complete cached version plus freshness, never partial fabricated output.
+
+## Event Schemas
+
+| Event | Required payload | Consumers |
+|---|---|---|
+| `intelligence.playlist.transitioned.v1` | placement, recording, playlist, transition, period, reach snapshot, source | alerts, dashboard |
+| `intelligence.chart.observed.v1` | chart/source, subject, period, position, methodology | timeline |
+| `intelligence.geo.changed.v1` | subject/source layer, coarse cells, integrity/privacy policy version | routing, private map |
+| `intelligence.show_impact.derived.v1` | analysis, show, result/range/confidence/confounders, method | artist report |
+| `intelligence.anomaly.observed.v1` | case, subject, metric facts, confidence/limits, rule version | artist evidence, trust case on explicit share |
+| `intelligence.vendor_coincidence.changed.v1` | vendor, n, range, retraction delta, policy | private vendor view |
+| `intelligence.scouting_visibility.changed.v1` | subject, purpose, action, policy version | index, watch, signal invalidation |
+| `intelligence.momentum.observed.v1` | subject opaque ID, metric facts, floors, integrity, observed-at | consent-aware signal dispatcher |
+
+Events are versioned, append-only and at-least-once. Consumers deduplicate by event/domain key. Shared events exclude exact fan/location data, private watch membership, subject consent reason, unreleased private metrics and accusatory labels.
+
+## Edge Cases
+
+- Playlist follower count later changes: historical event keeps event-time count; current profile may show separate live value.
+- Placement is later identified risky: quality projection updates and alert/report context changes without deleting placement fact.
+- Chart sources disagree: both observations remain; no average/best-number synthesis.
+- Institutional playlist editor changes: institution remains target; no historical/private-person dossier is inferred.
+- Owned and DSP city names differ: map keeps source layers and canonical coarse region mapping, never averages values.
+- B2 floor opens then cohort shrinks: affected geo/operator/vendor result suppresses immediately and query-family cache invalidates.
+- Booking result contradicts audience reach: shortlist ranks booking fact higher and shows disagreement.
+- Tour constraint unavailable: candidate explicitly names missing constraint; never becomes optimized itinerary.
+- Release overlaps show-impact window: analysis names confounder or declines measurement.
+- Anomaly detector uses claimed/imported data: confidence policy excludes or labels it; no evidence laundering.
+- Artist asks platform to report suspected fraud: dossier exports for artist-controlled human escalation; platform does not submit.
+- Retraction removes vendor coincidence: projection decrements and records retraction; score cannot ratchet upward by history alone.
+- Subject revokes watchable purpose while signal queued: fire-time check suppresses indistinguishably from no signal.
+- Scout repeats queries to enumerate: fixed cap, query budget and no cursor beyond cap block traversal.
+- Consent service unavailable: discovery/watch/signal fail closed without revealing whether subject exists.
+- Minor reaches age threshold: no automatic visibility; fresh purpose-specific affirmative instruction required after eligibility.
+
+## Edge-Case Coverage Matrix
+
+| Flow | Concurrent access | Invalid input / authority | Deletion, revocation or cascade |
+|---|---|---|---|
+| 40.01 Record playlist transition | Same idempotency key returns the same result; competing expected revisions serialize one winner and return typed conflict to the loser without duplicate effect. | Schema, authority and policy validation fail before mutation/provider effect and return a typed refusal without existence leakage. | Owner/source deletion or revocation preserves required immutable evidence/tombstone, removes derived access/projection, and queues idempotent dependent invalidation so no orphan remains. |
+| 40.02 Render placement alert | Same idempotency key returns the same result; competing expected revisions serialize one winner and return typed conflict to the loser without duplicate effect. | Schema, authority and policy validation fail before mutation/provider effect and return a typed refusal without existence leakage. | Owner/source deletion or revocation preserves required immutable evidence/tombstone, removes derived access/projection, and queues idempotent dependent invalidation so no orphan remains. |
+| 40.03 Record chart event | Same idempotency key returns the same result; competing expected revisions serialize one winner and return typed conflict to the loser without duplicate effect. | Schema, authority and policy validation fail before mutation/provider effect and return a typed refusal without existence leakage. | Owner/source deletion or revocation preserves required immutable evidence/tombstone, removes derived access/projection, and queues idempotent dependent invalidation so no orphan remains. |
+| 40.04 Inspect curator evidence | Same idempotency key returns the same result; competing expected revisions serialize one winner and return typed conflict to the loser without duplicate effect. | Schema, authority and policy validation fail before mutation/provider effect and return a typed refusal without existence leakage. | Owner/source deletion or revocation preserves required immutable evidence/tombstone, removes derived access/projection, and queues idempotent dependent invalidation so no orphan remains. |
+| 40.05 View audience geography | Same idempotency key returns the same result; competing expected revisions serialize one winner and return typed conflict to the loser without duplicate effect. | Schema, authority and policy validation fail before mutation/provider effect and return a typed refusal without existence leakage. | Owner/source deletion or revocation preserves required immutable evidence/tombstone, removes derived access/projection, and queues idempotent dependent invalidation so no orphan remains. |
+| 40.06 Request routing shortlist | Same idempotency key returns the same result; competing expected revisions serialize one winner and return typed conflict to the loser without duplicate effect. | Schema, authority and policy validation fail before mutation/provider effect and return a typed refusal without existence leakage. | Owner/source deletion or revocation preserves required immutable evidence/tombstone, removes derived access/projection, and queues idempotent dependent invalidation so no orphan remains. |
+| 40.07 Evaluate show impact | Same idempotency key returns the same result; competing expected revisions serialize one winner and return typed conflict to the loser without duplicate effect. | Schema, authority and policy validation fail before mutation/provider effect and return a typed refusal without existence leakage. | Owner/source deletion or revocation preserves required immutable evidence/tombstone, removes derived access/projection, and queues idempotent dependent invalidation so no orphan remains. |
+| 40.08 Detect anomaly | Same idempotency key returns the same result; competing expected revisions serialize one winner and return typed conflict to the loser without duplicate effect. | Schema, authority and policy validation fail before mutation/provider effect and return a typed refusal without existence leakage. | Owner/source deletion or revocation preserves required immutable evidence/tombstone, removes derived access/projection, and queues idempotent dependent invalidation so no orphan remains. |
+| 40.09 Export anomaly dossier | Same idempotency key returns the same result; competing expected revisions serialize one winner and return typed conflict to the loser without duplicate effect. | Schema, authority and policy validation fail before mutation/provider effect and return a typed refusal without existence leakage. | Owner/source deletion or revocation preserves required immutable evidence/tombstone, removes derived access/projection, and queues idempotent dependent invalidation so no orphan remains. |
+| 40.10 Evaluate vendor history | Same idempotency key returns the same result; competing expected revisions serialize one winner and return typed conflict to the loser without duplicate effect. | Schema, authority and policy validation fail before mutation/provider effect and return a typed refusal without existence leakage. | Owner/source deletion or revocation preserves required immutable evidence/tombstone, removes derived access/projection, and queues idempotent dependent invalidation so no orphan remains. |
+| 40.11 Add private watch | Same idempotency key returns the same result; competing expected revisions serialize one winner and return typed conflict to the loser without duplicate effect. | Schema, authority and policy validation fail before mutation/provider effect and return a typed refusal without existence leakage. | Owner/source deletion or revocation preserves required immutable evidence/tombstone, removes derived access/projection, and queues idempotent dependent invalidation so no orphan remains. |
+| 40.12 Fire momentum signal | Same idempotency key returns the same result; competing expected revisions serialize one winner and return typed conflict to the loser without duplicate effect. | Schema, authority and policy validation fail before mutation/provider effect and return a typed refusal without existence leakage. | Owner/source deletion or revocation preserves required immutable evidence/tombstone, removes derived access/projection, and queues idempotent dependent invalidation so no orphan remains. |
+| 40.13 Search scouting discovery | Same idempotency key returns the same result; competing expected revisions serialize one winner and return typed conflict to the loser without duplicate effect. | Schema, authority and policy validation fail before mutation/provider effect and return a typed refusal without existence leakage. | Owner/source deletion or revocation preserves required immutable evidence/tombstone, removes derived access/projection, and queues idempotent dependent invalidation so no orphan remains. |
+| 40.14 Revoke scouting visibility | Same idempotency key returns the same result; competing expected revisions serialize one winner and return typed conflict to the loser without duplicate effect. | Schema, authority and policy validation fail before mutation/provider effect and return a typed refusal without existence leakage. | Owner/source deletion or revocation preserves required immutable evidence/tombstone, removes derived access/projection, and queues idempotent dependent invalidation so no orphan remains. |
+
+## Cross-Shard Dependencies
+
+- **Depends on:** [[specs/ia/00-infrastructure|Shard 00]], [[specs/ia/06-trust-safety|Shard 06]], [[specs/ia/39-analytics-ingestion-reporting|Shard 39]]
+- **Depended on by:** [[specs/ia/42-career-planning-risk|Shard 42 — Career planning, insurance and sustainability]]
+- **Deep dive:** [[specs/ia/deep-dives/40-market-intelligence-signals|Deep Dive 40 — Market intelligence, fraud and scouting signals]]
+
+
+### Cross-Shard Section Contract Map
+
+- **Shard 00:** consume [Shard 00 Contracts](00-infrastructure.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 00 Event Schemas](00-infrastructure.md#event-schemas). Canonical ownership stays with the producer; typed failure/unknown states cross the same boundary.
+- **Shard 06:** consume [Shard 06 Contracts](06-trust-safety.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 06 Event Schemas](06-trust-safety.md#event-schemas). Canonical ownership stays with the producer; typed failure/unknown states cross the same boundary.
+- **Shard 39:** consume [Shard 39 Contracts](39-analytics-ingestion-reporting.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 39 Event Schemas](39-analytics-ingestion-reporting.md#event-schemas). Canonical ownership stays with the producer; typed failure/unknown states cross the same boundary.
+- **Shard 42 — Career planning, insurance and sustainability:** consume [Shard 42 — Career planning, insurance and sustainability Contracts](42-career-planning-risk.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 42 — Career planning, insurance and sustainability Event Schemas](42-career-planning-risk.md#event-schemas). Canonical ownership stays with the producer; typed failure/unknown states cross the same boundary.
+
+## Changelog
+
+| Date | Change | Workflow | Sections Affected |
+|---|---|---|---|
+| 2026-08-02 | Initial skeleton and source-feature seeding | `/decompose-architecture-structure` | All |
+| 2026-08-03 | Locked descriptive market intelligence, hedged anomaly evidence and consent-scoped scouting | `/write-architecture-spec` | All |
+
+
+<!-- spec-graph: auto-generated -->
+## Related Specs
+
+### References
+- [[specs/ia/39-analytics-ingestion-reporting|Shard 39 — Analytics ingestion, matching and reporting]]
+- [[specs/ia/06-trust-safety|Shard 06 — Trust, safety, disputes and evidence]]
+- [[specs/ia/00-infrastructure|Shard 00 — Cross-cutting platform foundation]]
+- [[specs/ia/42-career-planning-risk|Shard 42 — Career planning, insurance and sustainability]]
+- [[specs/ia/deep-dives/40-market-intelligence-signals|Deep Dive 40 — Market intelligence, fraud and scouting signals]]

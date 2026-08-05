@@ -1,17 +1,11 @@
 # Code Patterns & Conventions
 
-<!-- 
-  THIS FILE IS A TEMPLATE. 
-  The /bootstrap-agents workflow will fill in your project-specific patterns.
-  Sections marked with {{PLACEHOLDER}} will be replaced.
--->
-
 ## TypeScript → skills: `clean-code`, `typescript-advanced-patterns`
 - **Strict mode** everywhere — `strict: true` in tsconfig
 - **Explicit types** — No `any`, no implicit returns
-- **{{CONTRACT_LIBRARY}} validation** — All API inputs validated with {{CONTRACT_LIBRARY}} schemas
+- **Zod validation** — All API inputs validated with Zod schemas
 - **Self-documenting** — Clear naming over comments
-- **{{CONTRACT_LIBRARY}} inference** — Derive types from {{CONTRACT_LIBRARY}} schemas (e.g., `z.infer<typeof schema>` for Zod, type inference for Pydantic)
+- **Zod inference** — Derive types from Zod schemas (for example, `z.infer<typeof schema>`)
 
 ## File Organization → skill: `clean-code`
 - **File size limits** — Per-type limits (enforced by extensibility rule): 200 lines for components (.tsx), 300 for utilities (.ts), 150 for schemas (.schema.ts), 400 for tests (.test.ts), 100 for config files
@@ -20,14 +14,21 @@
 - **Direct imports** — Import from specific files, avoid barrel files
 
 ## Components
-<!-- {{FRAMEWORK_PATTERNS}} — Filled by /bootstrap-agents based on chosen frontend framework -->
-> ⚠️ **Framework component patterns not yet configured.** Run /bootstrap-agents with FRAMEWORK_PATTERNS to fill this section. Until then, follow the framework's official documentation for component conventions and apply the naming and file organisation rules above.
+- **Astro first** — Render static/server HTML in `.astro` components; hydrate only interactions that require client state.
+- **React islands** — One explicit interaction boundary per island; serializable validated props; an island error cannot erase canonical server-rendered context.
+- **Route families** — Public, product, admin, auth/recovery and system routes use their locked shells/archetypes rather than one universal dashboard.
+- **Global primitives** — Consume `packages/ui`; feature modules may extend but not redefine navigation, forms, provenance, errors, audit, upload or offline/conflict behavior.
+- **State ownership** — URL/server projections own durable view state; island-local state stays local. Add a shared client store only after a documented cross-island requirement.
+- **Accessibility** — Semantic HTML, keyboard behavior, visible focus, non-color state, reduced motion and WCAG 2.2 AA are component acceptance criteria.
 
-## API & Data → skill: `rest-api-design`
-- **Input validation** — {{CONTRACT_LIBRARY}} schemas on every endpoint
-- **Error format** — Consistent: `{ success: boolean, data?: T, error?: { code, message } }`
+## API & Data → skills: `api-design-principles`, `supabase-data-access`
+- **Input validation** — Zod schemas on every endpoint
+- **Error format** — Exactly `{ code, message, requestId, details }`; HTTP status remains on the response line
 - **No magic strings** — Constants and enums for repeated values
-- **Rate limiting** — On all public-facing endpoints
+- **Authorization** — Resolve authenticated user plus current acting party/capability, then recheck with RLS/RPC
+- **Transactions** — Multi-row invariants, versions, idempotency, audit and outbox commit in one PostgreSQL RPC
+- **Rate limiting** — Apply the numeric route-class limits from the architecture and emit standard rate-limit headers
+- **Pagination** — Opaque deterministic cursors; page size at most 50
 
 ## Security → skill: `security-scanning-security-hardening`
 - **No secrets in client code** — Server-side only, environment variables
@@ -44,18 +45,8 @@
 
 ## What NOT to Do
 - No `console.log` in committed code — Use a structured logging utility
-- No `// TODO` — Lazy placeholders are banned. If the information you need genuinely doesn't exist yet, use a `// BOUNDARY:` stub (see rule: `boundary-not-placeholder`)
+- No deferred-work comment markers — Lazy placeholders are banned. If required information genuinely does not exist yet, use a `// BOUNDARY:` stub (see rule: `boundary-not-placeholder`)
 - No `any` type — Ever
 - No inline styles — Use CSS classes or scoped styles
 - No hardcoded URLs — Use environment config
 - No barrel files (`index.ts`) — Import directly from source files
-
-<!-- 
-  Add project-specific sections below as your stack evolves:
-  ## State & Data
-  ## Caching
-  ## Observability
-  ## Payments
-  ## Email
-  ## Images
--->

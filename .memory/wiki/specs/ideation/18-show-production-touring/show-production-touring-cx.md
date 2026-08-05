@@ -176,7 +176,8 @@ in money moving, which is why it's the clearest argument that 18 and 13/16 belon
 - **Fan**: no visibility.
 
 **Synthesis questions answered**:
-1. **Shared state conflict**: Owned items reference registry 15; rented items belong to a supplier and exist for one date. They cannot share an ownership model (18.09 Q-02, unresolved).
+1. **Shared state conflict**: Owned items reference registry 15; rented items are supplier-owned,
+date-scoped manifest ghosts. They deliberately do not share an ownership model (18.09.01 D-05).
 2. **Trigger chain**: Shortfall → rental → manifest → plot → load-out check. If the rental never arrives, the manifest promised something that doesn't exist.
 3. **Permission intersection**: A venue-supplied rental is the Operator's item on the act's manifest — item-level visibility inside one document.
 4. **Notification fan-out**: The aggregate insight (rented on 9 of 11 dates → carry it) exists only because the tour is one object (CX-10).

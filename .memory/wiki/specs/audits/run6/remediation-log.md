@@ -74,3 +74,23 @@
   its resolution before the fresh audit.
 - Run a fresh full `/audit-ambiguity ideation` after remediation; this log does
   not alter the original Run 6 findings or close the gate.
+
+
+<!-- spec-graph: auto-generated -->
+## Related Specs
+
+### Constrained by
+- [[decisions.md#d-06|D-06]]
+- [[decisions.md#d-05|D-05]]
+- [[decisions.md#d-07|D-07]]
+- [[decisions.md#d-02|D-02]]
+- [[decisions.md#d-15|D-15]]
+- [[decisions.md#d-18|D-18]]
+- [[decisions.md#d-10|D-10]]
+- [[decisions.md#d-16|D-16]]
+- [[decisions.md#d-12|D-12]]
+- [[decisions.md#d-04|D-04]]
+- [[decisions.md#d-13|D-13]]
+- [[decisions.md#d-03|D-03]]
+- [[decisions.md#d-09|D-09]]
+- [[decisions.md#d-08|D-08]]

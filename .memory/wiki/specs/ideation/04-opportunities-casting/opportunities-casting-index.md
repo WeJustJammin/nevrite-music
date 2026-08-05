@@ -61,10 +61,9 @@ The demand side of work — posted gigs, dep calls, auditions, band vacancies, c
 | 04.06 Band & Member Wanted | ✅ Full — the only real user | ✅ Full — project bands; member-who-also-engineers | ❌ None — an Operator in a band is being a Musician | 👁️ Read-only — the likeliest Fan→Musician conversion path |
 | 04.07 Open Calls | ✅ Full — the applicant, usually via a Band entity | 👁️ Read-only — appears as a credit on submitting acts | ✅ Full — the curator (festival, showcase, competition) | 👁️ Read-only — **explicitly excluded from voting** (04.07 D-03) |
 
-> **Persona gaps found during drilling** — see Q-01 and Q-02. Two populations in this domain are not
-> covered by the 4 personas: the **function/private-hire buyer** (who posts the gigs this domain
-> calls its clearest displacement target) and **crew** (a lighting tech is not a Musician). Same
-> shape as the dealer-persona gap already open in `meta/personas.md` Q-01.
+> **Non-persona roles resolved by D-76.** The function/private-hire buyer is a bounded buyer
+> account/counterparty role, and crew is a bounded crew account/counterparty role. Neither becomes
+> a fifth persona or a new Role Matrix column.
 
 ## Decision Log
 
@@ -84,8 +83,8 @@ The demand side of work — posted gigs, dep calls, auditions, band vacancies, c
 |---|----------|-------|-------------|
 | Q-01 | Which candidate children are sub-domains vs features? | Agent | ✅ **RESOLVED** — 5 sub-domains, 2 domain-level features, 22 leaf features. See Children table and D-02. |
 | Q-02 | Are any candidate children actually cross-cuts? | Agent | ✅ **RESOLVED** — 6 cross-cuts routed out (availability, notification delivery, reputation, verified-credit-as-evidence, pitchable asset packet, split-capture trigger). Candidate 12 (Song Catalog & Pitch One-Sheet) was entirely a cross-cut. |
-| Q-03 | **[OWNER]** **The function/private-hire buyer** (wedding, corporate) posts the gigs this domain calls its clearest displacement target, but is not a Musician, Producer, Operator or Fan. Out of scope, civilian/Fan-tier account, or a 5th persona? **Explicitly NOT closed by D-71** ([meta/counterparties.md](../meta/counterparties.md)): that ratification is deliberately narrow and describes only the **commercial licence buyer**, as two non-persona counterparty profiles adding no Role Matrix column — a private-hire buyer buys a **live performance, not a licence** and appears in neither. Deferral re-pointed from `/ideate-validate` (ran 2026-07-18 and closed without answering) to `/create-prd`, matching the re-pointing already applied to `04.01.01` Q-01 and `personas.md` Q-01. Rolled up with the other undescribed non-persona actors under [`vision.md` Q-09](../../vision.md). | User | `/create-prd` |
-| Q-04 | **[OWNER]** **Crew are not covered by the 4 personas.** A lighting tech is not a Musician. Same shape as `meta/personas.md` Q-01 (dealer persona). Carried on the D-71 non-closure list as "Local stagehand / crew hire", owned in domain 18 ([meta/counterparties.md](../meta/counterparties.md) § *What D-71 Does NOT Close*), and rolled up canonically via `personas.md` Q-05 into [`vision.md` Q-09](../../vision.md) — both of which are already deferred to `/create-prd`. Re-pointed from the completed `/ideate-validate` to match. | User | `/create-prd` |
+| Q-03 | ~~Is the function/private-hire buyer out of scope, civilian/Fan-tier, or a fifth persona?~~ **RESOLVED — D-76.** A wedding or corporate buyer is a bounded buyer account/counterparty role for the live-opportunity request, booking, payment, and authorised communication workflow. It is not a Fan-tier substitute and adds no fifth persona or Role Matrix column. | User | ✅ Owner ratification A3, 2026-08-02 |
+| Q-04 | ~~Are crew a persona gap?~~ **RESOLVED — D-76.** Crew is a bounded account/counterparty role for its named crew, hire, roster, credential, availability, and communication workflows. A lighting technician need not impersonate a Musician persona to use those routes. | User | ✅ Owner ratification A3, 2026-08-02 |
 | Q-05 | **[OWNER]** **Is "no applicant-side fees, ever" a permanent commitment (D-03)?** It is encoded structurally (unrepresentable, not prohibited), which makes reversal expensive. It forecloses the revenue line Sonicbids used, from the users least able to refuse. Canonical at `04.01.03` Q-01, which records it as "a product-values decision, not an agent call"; 04.01.03 D-10 (no admin override) removed the escape hatch and 04.07 DT-01 is where it costs real money. No later pipeline stage can take this call. Re-pointed from the completed `/ideate-validate`. | User | `/create-prd` |
 | Q-06 | **[OWNER]** **Cold-start seeding is this domain's biggest risk.** A board's entire value is other people's supply, and an empty board teaches users the product is dead. Where does the first supply come from — import, partnership, manual seeding, or a narrow geographic/scene beachhead? `04.02.01` D-16 specifies the board's *behaviour* under a sparse pool and holds under any answer; `04.02.01` Q-02 records that the supply question "is a go-to-market decision and cannot be answered by a spec". Re-pointed from the completed `/ideate-validate`. | User | `/create-prd` |
 | Q-07 | **[OWNER]** **Does matching rank by fit or by quality?** Ranking humans by fitness for paid work is the domain's sharpest fairness hazard, and it bites hardest in the triage queue where the ranking becomes a decision. `04.02.02` Q-03 calls it "a product-values decision"; `04.04.01` Q-03 sharpens it at Step 5 — DT-09 showed every other volume lever is mechanical, so ranking is **the only remaining lever at scale** and declining it is a real cost rather than a free abstention. Re-pointed from the completed `/ideate-validate`. | User | `/create-prd` |
@@ -101,6 +100,7 @@ The demand side of work — posted gigs, dep calls, auditions, band vacancies, c
 
 ### Constrained by
 - [[decisions.md#d-03|D-03]]
+- [[decisions.md#d-76|D-76]]
 - [[decisions.md#d-01|D-01]]
 - [[decisions.md#d-16|D-16]]
 - [[decisions.md#d-02|D-02]]
@@ -109,6 +109,6 @@ The demand side of work — posted gigs, dep calls, auditions, band vacancies, c
 - [[decisions.md#d-18|D-18]]
 - [[decisions.md#d-06|D-06]]
 - [[decisions.md#d-07|D-07]]
-- [[decisions.md#d-71|D-71]]
 - [[decisions.md#d-10|D-10]]
 - [[decisions.md#d-14|D-14]]
+- [[decisions.md#d-71|D-71]]

@@ -107,30 +107,25 @@ The two profiles must be kept consistent wherever the buy side is genuinely comm
 **verdict rendering** and **the licence instrument** are shared machinery serving both. A change to
 one profile's description of those three must be checked against the other.
 
-## What D-71 Does NOT Close
+## D-76 — Classification Beyond the Licence Buyer
 
-> Written into the decision deliberately (A3-a). D-71 is a **narrow** ratification of the commercial
-> licence buyer. It is not the general answer to "does the 4-persona model cover non-musician users?",
-> and a downstream reader must not treat it as one. The nine actors below are not buyers, are not
-> alike, and several already have contrary domain rulings — a buyer artifact is not their answer.
-> Each is owned in another domain's index, so a domain-11 ratification can make them answerable but
-> cannot close them.
+> D-71 remains the narrow commercial-licence-buyer ratification. D-76 (owner ratification A3,
+> 2026-08-02) supplies the missing actor taxonomy without altering D-19's four primary personas or
+> adding Role Matrix columns.
 
-| Still open | Where it lives | Owner |
+| Actor | D-76 classification | Workflow boundary |
 |---|---|---|
-| Professional dealer / plugin developer (13/14/15) — a **seller**, not a buyer | `personas.md` Q-01 · `vision.md` Q-05 | User |
-| **Admin / Moderator** — the sharpest of the nine; blocks the actor's identity, permission model and console endpoints | `personas.md` Q-02 · `24.01.03` Q-01 · `vision.md` Q-00 | User |
-| Curator / journalist / radio / DSP gatekeeper | `21.02` Q-01 with `21` D-03 | User |
-| Dealer counterparty (trade-in / consignment) | `13.09` D-03 with `13.13` | User |
-| Local stagehand / crew hire | domain 18 | User |
-| Insurer (off-platform) | domain 18 / 23 | User |
-| Accountant | `23.02.03` DT-03 | User |
-| Manager (delegated authority, not a buyer) | domain 01 / 23 | User |
-| Fee-paying parent | `06` D-07 with `06` Q-01 | User |
+| Professional dealer / plugin developer; dealer counterparty | Bounded seller account/counterparty role | Marketplace, stock, consignment, appraisal, or trade-in workflow only. |
+| Function/private-hire buyer | Bounded buyer account/counterparty role | Live-opportunity request, booking, payment, and authorised communication only. |
+| Local stagehand / crew hire | Bounded crew account/counterparty role | Named crew, roster, credential, hire, or availability workflow only. |
+| Fee-paying parent / guardian | Bounded guardian account/counterparty role | Child-directed booking, billing, and consent only. |
+| Manager / agent | Bounded representation account/counterparty role | Acts only via a recorded mandate; commercial authority and `communicate` are independently granted. |
+| Admin / Moderator | Internal staff role | Separate staff identity, console, and permission model; no user persona or ordinary acting context. |
+| Curator / journalist / radio / DSP gatekeeper | Off-platform v1 target | Directory/contact reference data and outbound pitch destination only; no account or inbox in v1. |
+| Insurer / accountant | Off-platform counterparty handoff | Existing claim, policy-document, and tax-pack handoffs only; no v1 account workflow. |
 
-**Honest note on scope**: `11` Q-01's own text bundles itself with `personas.md` Q-01 and `11.06`
-Q-01 as "all three are one question". D-71 answers two of the three and **explicitly declines** the
-dealer half. Rolled up canonically as [`vision.md` Q-09](../../vision.md).
+**Scope note:** a bounded role is not a latent persona. It receives only the named workflow and no
+general Role Matrix column. Any expansion of that workflow is an explicit future feature decision.
 
 ## What D-71 Closes
 
@@ -153,4 +148,5 @@ dealer half. Rolled up canonically as [`vision.md` Q-09](../../vision.md).
 - [[decisions.md#d-11|D-11]]
 - [[decisions.md#d-03|D-03]]
 - [[decisions.md#d-04|D-04]]
+- [[decisions.md#d-76|D-76]]
 - [[decisions.md#d-07|D-07]]

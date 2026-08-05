@@ -1,0 +1,300 @@
+# Shard 27 — Digital catalog, entitlement, delivery and vendor QA
+
+**Status:** Complete
+**Surface:** Web/PWA, governed digital artifacts and holder-scoped libraries
+**Source:** [Architecture design](../2026-08-02-architecture-design.md) · [Decomposition plan](decomposition-plan.md)
+
+## Overview
+
+Shard 27 owns structured digital-product listings, compatibility/dependency facts, entitlement issuance, governed delivery/version archives, purchased libraries, sound-content indexing and vendor submission/QA/continuity. It supplies product, terms, entitlement and artifact versions to [[specs/ia/28-digital-licensing-commerce|Shard 28]] without owning checkout, refunds, revenue or revocation policy.
+
+### Scope Reconciliation
+
+| Item | Result |
+|---|---|
+| In-scope source documents | 34 |
+| Child capabilities | 24 |
+| Consumer-launch inventory | Sample packs, preset packs, beats and supported project templates from platform people/orgs |
+| Launch exclusion | Third-party executable plugins, platform activation server, DRM bridges and buyer-identifying watermarking |
+| Core ownership | Immutable entitlement fact, frozen terms/version range and holder-scoped library |
+| Delivery continuity | Authorized resumable grants, immutable versions, vendor-exit retention and smallest-scope takedown |
+| Vendor safety | Typed attestations, artifact inspection, audio QC, high-risk review and payout-ready publication |
+
+### Digital Delivery Decisions
+
+| Area | Locked decision |
+|---|---|
+| Product model | One listing entity with immutable type: `plugin`, `sample_pack`, `preset_pack`, `template`, or `beat`; required sections vary by type. |
+| Launch posture | Creator content is open after identity/vendor/payout gates. Executable plugins remain disabled until sandboxed QA, liability, staged rollout and vendor admission are proven. |
+| Vendor identity | Vendor is an acting person/org role, not a new enterprise persona; public identity/credits are platform-composed and legal identity remains private. |
+| QA authority | Deterministic artifact contradictions block; subjective/extracted disagreement warns and preserves vendor assertion. QA states what it checked, never “safe” or “rights verified.” |
+| Compatibility | Facts are per product version and axis-combination. Self-declared rig checks are advisory and separate from machine authorization. |
+| Entitlement | Record is primary; key is optional. Issuance is atomic with confirmed paid order or explicit grant and separates purchaser from person/org holder. |
+| Terms | Structured immutable product-level clauses freeze onto entitlement. Unknown composite is prohibitive; release use is advisory/override-audited, not platform adjudication. |
+| Activation | No WeJammin activation dependency at launch. Future seats/bridges require provider admission and bounded fail-open grace by default. |
+| Delivery | Every request reauthorizes live entitlement. Stable buyer/artifact transfer grants support ranges, queue capacity and expose size/hash/expiry. |
+| Versions | Every entitled version stays fetchable except smallest-scope malicious or rights withdrawal; updates are offered, never forced. |
+| Library | Library is a projection of entitlements, scoped to one holder; store and owned results never interleave; rows/history never delete. |
+| Content economics | Pack is billing unit and file/asset is search/use unit at launch; no per-file purchase. |
+| Watermarking | No buyer-identifying audio watermark at launch. Future admitted use is disclosed, platform-held and fail-open on stamping failure. |
+| Vendor exit | Perpetual entitlements and required artifacts survive retirement. Removal for cause preserves entitlement evidence while disabling unsafe/unlawful delivery. |
+
+## Features
+
+- **14.01 Digital Product Catalog & Compatibility** — [ideation source](../ideation/14-digital-goods-marketplace/14.01-catalog-compatibility/14.01-catalog-compatibility-index.md); represented in the normative interactions, contracts, data model, access rules and edge cases below.
+- **14.02 Licensing, Activation & Entitlement** — [ideation source](../ideation/14-digital-goods-marketplace/14.02-licensing-activation-entitlement/14.02-licensing-activation-entitlement-index.md); represented in the normative interactions, contracts, data model, access rules and edge cases below.
+- **14.03 Delivery, Versioning & Library** — [ideation source](../ideation/14-digital-goods-marketplace/14.03-delivery-versioning-library/14.03-delivery-versioning-library-index.md); represented in the normative interactions, contracts, data model, access rules and edge cases below.
+- **14.04 Sound Content Catalogs (Samples, Presets, Templates)** — [ideation source](../ideation/14-digital-goods-marketplace/14.04-sound-content-catalogs/14.04-sound-content-catalogs-index.md); represented in the normative interactions, contracts, data model, access rules and edge cases below.
+- **14.08 Vendor Portal, Build Submission & QA** — [ideation source](../ideation/14-digital-goods-marketplace/14.08-vendor-portal-build-qa/14.08-vendor-portal-build-qa-index.md); represented in the normative interactions, contracts, data model, access rules and edge cases below.
+
+## Acceptance Criteria
+
+- **AC-27.01 — Create product draft:** Given Actor accepted vendor terms; type selected, when the actor invokes this flow, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) Create product draft, and (6) return Type-conditional structured draft, vendor identity and policy versions initialize; if the flow cannot complete, Type cannot change after first publish; unsupported executable type stays non-publishable.
+- **AC-27.02 — Declare compatibility:** Given Version/build exists; vendor authorized, when the actor invokes this flow, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) Declare compatibility, and (6) return Per-combination OS/format/host/DAW support and known issues append; if the flow cannot complete, Curated-host unknown remains excluded from facet/checker; no false support.
+- **AC-27.03 — Declare dependencies:** Given Product/version exists, when the actor invokes this flow, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) Declare dependencies, and (6) return Edition/version/optional status graph stores external or marketplace dependencies; if the flow cannot complete, Unsatisfied/unknown remain distinct; unavailable required dependency blocks “completable” claim.
+- **AC-27.04 — Check self-declared rig:** Given Buyer selects named rig, when the actor invokes this flow, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) Check self-declared rig, and (6) return Separate machine-capability and dependency verdicts with unknown coverage; if the flow cannot complete, Advisory only; no compatibility badge that implies enforcement.
+- **AC-27.05 — Submit vendor artifact:** Given Vendor gate and current schema pass, when the actor invokes this flow, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) Submit vendor artifact, and (6) return Immutable submission, specific attestations, source declarations and artifact digest commit atomically; if the flow cannot complete, Signing/schema conflict blocks submit and preserves draft.
+- **AC-27.06 — Run deterministic artifact QA:** Given Supported content artifact uploaded, when the actor invokes this flow, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) Run deterministic artifact QA, and (6) return Manifest facts, malware/archive checks and exact contradictions produce actionable checks; if the flow cannot complete, Scanner failure blocks executable future path; content remains pending/retry.
+- **AC-27.07 — Run audio/content QC:** Given Audio product submitted, when the actor invokes this flow, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) Run audio/content QC, and (6) return Technical findings, metadata extraction and content-match signals attach; if the flow cannot complete, Only listing-lie conditions block; QC never asserts provenance.
+- **AC-27.08 — Review high-risk submission:** Given Third-party recording, exact match or policy risk present, when the actor invokes this flow, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) Review high-risk submission, and (6) return Independent reviewer accepts, rejects or requests evidence with reason/version; if the flow cannot complete, No silent automation disposal; appeal/re-review remains available.
+- **AC-27.09 — Publish product/version:** Given Payout ready; required demos/terms/QA/attestation pass, when the actor invokes this flow, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) Publish product/version, and (6) return Listing/version activates with immutable artifact, schema, terms and vendor identity snapshot; if the flow cannot complete, External purchase links, contradictory grants or missing contents demo block.
+- **AC-27.10 — Issue entitlement:** Given Confirmed synchronous payment or authorized grant, when the actor invokes this flow, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) Issue entitlement, and (6) return One product/holder record appends acquisition epoch with purchaser, holder, terms and version range; if the flow cannot complete, Pending payment grants no download/seat; retries serialize on same record.
+- **AC-27.11 — View holder library:** Given Authenticated actor selects controlled person/org, when the actor invokes this flow, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) View holder library, and (6) return Searchable current/as-of entitlement projection, holder shown per row; if the flow cannot complete, Stale cache may render with age; empty requires authoritative zero.
+- **AC-27.12 — Request download:** Given Current entitlement/version permits delivery, when the actor invokes this flow, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) Request download, and (6) return Buyer/artifact-bound grant returns size, unpacked size, hashes, expiry and range support; if the flow cannot complete, Revoked/withdrawn scope fails with exact reason and lawful alternatives.
+- **AC-27.13 — Resume/verify transfer:** Given Grant valid and concurrency slot available, when the actor invokes this flow, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) Resume/verify transfer, and (6) return Range request reauthorizes and telemetry/hash verify completion; if the flow cannot complete, Capacity queues; expiry creates refresh path; static public links never exist.
+- **AC-27.14 — Publish ordinary update:** Given Version passes same submission/QA gates, when the actor invokes this flow, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) Publish ordinary update, and (6) return New version/release notes append; entitled holders notified and old version remains; if the flow cannot complete, Metadata correction is new version/hash, never in-place mutation.
+- **AC-27.15 — Select release channel:** Given Future executable gate enabled and QA passed, when the actor invokes this flow, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) Select release channel, and (6) return Buyer selects stable/beta; vendor stages or withdraws build with immutable reason; if the flow cannot complete, Malicious rollback kills transfer; defective/superseded in-flight transfer may finish.
+- **AC-27.16 — Search owned assets:** Given Holder library loaded, when the actor invokes this flow, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) Search owned assets, and (6) return File/asset objects use per-type musical facets, buyer tags and separate owned/store bands; if the flow cannot complete, Nullable metadata remains honest; no store merchandising inside owned results.
+- **AC-27.17 — Audition content:** Given Public product/file eligible, when the actor invokes this flow, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) Audition content, and (6) return Complete-duration protected rendition streams with source/confidence labels; if the flow cannot complete, No original download URL; abuse is review/rate signal, not automatic guilt.
+- **AC-27.18 — Update buyer tags/collections:** Given Holder may organize asset, when the actor invokes this flow, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) Update buyer tags/collections, and (6) return Buyer-owned metadata survives product revisions/refund tombstones; if the flow cannot complete, Re-purchase relights tombstoned organization without merging entitlements.
+- **AC-27.19 — Start trial/free grant:** Given Vendor policy and origin admitted, when the actor invokes this flow, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) Start trial/free grant, and (6) return Same entitlement model with origin/expiry and no separate trial object; if the flow cannot complete, Abuse checks best-effort/appealable; binary feature limits remain vendor-owned.
+- **AC-27.20 — Request blacklist/enforcement:** Given Vendor submits reason/evidence against entitlement/key, when the actor invokes this flow, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) Request blacklist/enforcement, and (6) return Platform adjudicates, notifies and offers appeal before state effect; if the flow cannot complete, Vendor cannot execute directly; blacklisting remains distinct from refund revocation.
+- **AC-27.21 — Retire vendor/product:** Given Vendor obligations/artifacts satisfy continuity contract, when the actor invokes this flow, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) Retire vendor/product, and (6) return New sales stop; owner library shows passive retired state and access continues; if the flow cannot complete, Committed orders become owned or refunded, never paid-without-access.
+- **AC-27.22 — Remove for malicious artifact:** Given Evidence meets emergency policy, when the actor invokes this flow, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) Remove for malicious artifact, and (6) return New/in-flight unsafe delivery stops, partial marked unsafe, holders notified; if the flow cannot complete, Entitlement/acquisition evidence remains; appeal and remediation version tracked.
+- **AC-27.23 — Remove for rights cause:** Given Identified asset/container scope and legal record exist, when the actor invokes this flow, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) Remove for rights cause, and (6) return Smallest valid scope stops onward/archive delivery, holders receive reason; if the flow cannot complete, Unaffected pack assets/versions remain; no whole-catalog over-removal.
+- **AC-27.24 — Export/erase account context:** Given Data-subject request and controlled holder selected, when the actor invokes this flow, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) Export/erase account context, and (6) return Mandatory portable entitlement/library export precedes eligible erasure/anonymization; if the flow cannot complete, Perpetual contractual records survive under lawful pseudonymous retention.
+
+## Interactions
+
+| ID | Interaction | Preconditions | Success | Failure / recovery |
+|---|---|---|---|---|
+| 27.01 | Create product draft | Actor accepted vendor terms; type selected | Type-conditional structured draft, vendor identity and policy versions initialize | Type cannot change after first publish; unsupported executable type stays non-publishable |
+| 27.02 | Declare compatibility | Version/build exists; vendor authorized | Per-combination OS/format/host/DAW support and known issues append | Curated-host unknown remains excluded from facet/checker; no false support |
+| 27.03 | Declare dependencies | Product/version exists | Edition/version/optional status graph stores external or marketplace dependencies | Unsatisfied/unknown remain distinct; unavailable required dependency blocks “completable” claim |
+| 27.04 | Check self-declared rig | Buyer selects named rig | Separate machine-capability and dependency verdicts with unknown coverage | Advisory only; no compatibility badge that implies enforcement |
+| 27.05 | Submit vendor artifact | Vendor gate and current schema pass | Immutable submission, specific attestations, source declarations and artifact digest commit atomically | Signing/schema conflict blocks submit and preserves draft |
+| 27.06 | Run deterministic artifact QA | Supported content artifact uploaded | Manifest facts, malware/archive checks and exact contradictions produce actionable checks | Scanner failure blocks executable future path; content remains pending/retry |
+| 27.07 | Run audio/content QC | Audio product submitted | Technical findings, metadata extraction and content-match signals attach | Only listing-lie conditions block; QC never asserts provenance |
+| 27.08 | Review high-risk submission | Third-party recording, exact match or policy risk present | Independent reviewer accepts, rejects or requests evidence with reason/version | No silent automation disposal; appeal/re-review remains available |
+| 27.09 | Publish product/version | Payout ready; required demos/terms/QA/attestation pass | Listing/version activates with immutable artifact, schema, terms and vendor identity snapshot | External purchase links, contradictory grants or missing contents demo block |
+| 27.10 | Issue entitlement | Confirmed synchronous payment or authorized grant | One product/holder record appends acquisition epoch with purchaser, holder, terms and version range | Pending payment grants no download/seat; retries serialize on same record |
+| 27.11 | View holder library | Authenticated actor selects controlled person/org | Searchable current/as-of entitlement projection, holder shown per row | Stale cache may render with age; empty requires authoritative zero |
+| 27.12 | Request download | Current entitlement/version permits delivery | Buyer/artifact-bound grant returns size, unpacked size, hashes, expiry and range support | Revoked/withdrawn scope fails with exact reason and lawful alternatives |
+| 27.13 | Resume/verify transfer | Grant valid and concurrency slot available | Range request reauthorizes and telemetry/hash verify completion | Capacity queues; expiry creates refresh path; static public links never exist |
+| 27.14 | Publish ordinary update | Version passes same submission/QA gates | New version/release notes append; entitled holders notified and old version remains | Metadata correction is new version/hash, never in-place mutation |
+| 27.15 | Select release channel | Future executable gate enabled and QA passed | Buyer selects stable/beta; vendor stages or withdraws build with immutable reason | Malicious rollback kills transfer; defective/superseded in-flight transfer may finish |
+| 27.16 | Search owned assets | Holder library loaded | File/asset objects use per-type musical facets, buyer tags and separate owned/store bands | Nullable metadata remains honest; no store merchandising inside owned results |
+| 27.17 | Audition content | Public product/file eligible | Complete-duration protected rendition streams with source/confidence labels | No original download URL; abuse is review/rate signal, not automatic guilt |
+| 27.18 | Update buyer tags/collections | Holder may organize asset | Buyer-owned metadata survives product revisions/refund tombstones | Re-purchase relights tombstoned organization without merging entitlements |
+| 27.19 | Start trial/free grant | Vendor policy and origin admitted | Same entitlement model with origin/expiry and no separate trial object | Abuse checks best-effort/appealable; binary feature limits remain vendor-owned |
+| 27.20 | Request blacklist/enforcement | Vendor submits reason/evidence against entitlement/key | Platform adjudicates, notifies and offers appeal before state effect | Vendor cannot execute directly; blacklisting remains distinct from refund revocation |
+| 27.21 | Retire vendor/product | Vendor obligations/artifacts satisfy continuity contract | New sales stop; owner library shows passive retired state and access continues | Committed orders become owned or refunded, never paid-without-access |
+| 27.22 | Remove for malicious artifact | Evidence meets emergency policy | New/in-flight unsafe delivery stops, partial marked unsafe, holders notified | Entitlement/acquisition evidence remains; appeal and remediation version tracked |
+| 27.23 | Remove for rights cause | Identified asset/container scope and legal record exist | Smallest valid scope stops onward/archive delivery, holders receive reason | Unaffected pack assets/versions remain; no whole-catalog over-removal |
+| 27.24 | Export/erase account context | Data-subject request and controlled holder selected | Mandatory portable entitlement/library export precedes eligible erasure/anonymization | Perpetual contractual records survive under lawful pseudonymous retention |
+
+## Contracts
+
+### Command Contracts
+
+| Command | Required input | Invariants |
+|---|---|---|
+| `SaveDigitalProductDraft` | vendor party, immutable product type, schema version, draft key | Current schema validates at resume/publish; no external purchase links |
+| `SubmitProductVersion` | listing/version, artifacts, manifests, terms, attestations, demos, idempotency key | Artifact/attestation/publish atomic; prior version never overwritten |
+| `ResolveSubmissionReview` | submission/version, action, findings/evidence, reviewer authority | Reasoned, appealable, conflict/recusal checked |
+| `IssueEntitlement` | product, purchaser, holder, origin, terms/version range, order/grant proof | One record per product/holder; acquisition epochs append; pending grants nothing |
+| `CreateTransferGrant` | entitlement, artifact version, holder/account, requested purpose | Reauthorize every request; bounded expiry/concurrency; no static URL |
+| `PublishProductUpdate` | prior/new version, release notes, compatibility/dependency matrix, QA result | Update optional for holder; old entitled version preserved |
+| `WithdrawArtifact` | artifact/container, reason class, legal/safety evidence, expected version | Minimal scope; withdrawal not deletion; reason controls transfer behavior |
+| `RequestSerialBlacklist` | entitlement/key, vendor, reason/evidence | Platform adjudication and appeal required; vendor has no direct mutation |
+| `RetireVendor` | vendor, products, continuity manifest, effective time | New carts stop; required perpetual artifacts cannot delete |
+
+### Cross-Domain Contracts
+
+- Shard 28 owns prices/checkout/refunds/revocation/revenue and consumes exact product/terms/entitlement versions.
+- [[specs/ia/10-rights-ownership|Shard 10]] and release flows consume structured terms composition and pending obligations; they never infer from vendor prose.
+- [[specs/ia/07-credits-core|Shard 07]] supplies platform-composed vendor credits and receives `credit_required` obligations.
+- Governed storage metadata, retention, legal holds and signed delivery remain canonical in PostgreSQL; bytes remain immutable in Supabase Storage.
+- All state changes write audit/outbox records and operate under person/org acting-party authority.
+
+## Data Models
+
+| Model | Required fields | Rules |
+|---|---|---|
+| `DigitalProduct` / `ProductVersion` | vendor, type, schema, listing revision, demos, status/version | Type immutable after publish; buyer order pins revision |
+| `CompatibilityMatrix` | product version, axis combination, support level, caveat/source | Levels include supported, known-issue, unsupported, untested; combination not booleans |
+| `DependencyEdge` | product version, dependency/edition/version constraint, required/optional, source | Evaluation is satisfied/unsatisfied/unknown per rig |
+| `VendorSubmission` | vendor party, artifact digests, attestations, source/AI declarations, schema, state/version | Immutable after binding; correction appends and may notify holders |
+| `QaCheck` / `ReviewDecision` | submission, check type/scope, result, evidence, reviewer/automation, version | Verdict says checked scope; no “safe/rights verified” boolean |
+| `LicenceTermsVersion` | product, structured clauses, custom flags, status/version | Product-level, immutable, tombstoned not deleted; unknown composite prohibitive |
+| `Entitlement` / `AcquisitionEpoch` | product, purchaser, holder, origin, state, frozen terms, version range, order/grant | One per product/holder; issuance fact indelible; state/history independent |
+| `SeatAuthorization` | entitlement, rig/machine, seat, fingerprint version, state/grace | Future gated; separate from pre-purchase rig profile |
+| `ArtifactVersion` | product version, master object, sizes, SHA-256, media/type, release channel, withdrawal | Immutable master; only approved watermark may create per-grant derivative/hash |
+| `TransferGrant` | entitlement, artifact, account/holder, expiry, concurrency, served hash, state | Stable scoped URL; every range reauthorized |
+| `LibraryProjection` | holder, entitlement rows, product/vendor/management axes, as-of | Derived only; rows never delete or merge |
+| `DigitalAsset` | artifact/file identity, product, type metadata/confidence, terms reference | Pack billing, file search, asset use remain separate grains |
+| `VendorContinuityManifest` | product/artifact obligations, storage class, dependencies, exit states | Required before publish where perpetual rights are offered |
+
+### Typed Field and Cardinality Registry
+
+Field typing is deterministic: `*_id: uuid`, `*_at: timestamptz`, `*_date: date`, `*_minor: bigint`, `*_count: integer`, `currency: char(3)`, `is_*|has_*: boolean`, `state|status|type|kind|class: closed enum`, `version: bigint`, ratios `numeric(9,6)`, checksums `text`, and URLs `text`. Every named contract field uses this registry unless its contract declares a stricter type.
+
+- **`DigitalProduct`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: vendor, type, schema, listing revision, demos, status/version | Type immutable after publish; buyer order pins revision.
+- **`ProductVersion`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: vendor, type, schema, listing revision, demos, status/version | Type immutable after publish; buyer order pins revision.
+- **`CompatibilityMatrix`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: product version, axis combination, support level, caveat/source | Levels include supported, known-issue, unsupported, untested; combination not booleans.
+- **`DependencyEdge`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: product version, dependency/edition/version constraint, required/optional, source | Evaluation is satisfied/unsatisfied/unknown per rig.
+- **`VendorSubmission`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: vendor party, artifact digests, attestations, source/AI declarations, schema, state/version | Immutable after binding; correction appends and may notify holders.
+- **`QaCheck`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: submission, check type/scope, result, evidence, reviewer/automation, version | Verdict says checked scope; no “safe/rights verified” boolean.
+- **`ReviewDecision`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: submission, check type/scope, result, evidence, reviewer/automation, version | Verdict says checked scope; no “safe/rights verified” boolean.
+- **`LicenceTermsVersion`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: product, structured clauses, custom flags, status/version | Product-level, immutable, tombstoned not deleted; unknown composite prohibitive.
+- **`Entitlement`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: product, purchaser, holder, origin, state, frozen terms, version range, order/grant | One per product/holder; issuance fact indelible; state/history independent.
+- **`AcquisitionEpoch`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: product, purchaser, holder, origin, state, frozen terms, version range, order/grant | One per product/holder; issuance fact indelible; state/history independent.
+- **`SeatAuthorization`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: entitlement, rig/machine, seat, fingerprint version, state/grace | Future gated; separate from pre-purchase rig profile.
+- **`ArtifactVersion`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: product version, master object, sizes, SHA-256, media/type, release channel, withdrawal | Immutable master; only approved watermark may create per-grant derivative/hash.
+- **`TransferGrant`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: entitlement, artifact, account/holder, expiry, concurrency, served hash, state | Stable scoped URL; every range reauthorized.
+- **`LibraryProjection`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: holder, entitlement rows, product/vendor/management axes, as-of | Derived only; rows never delete or merge.
+- **`DigitalAsset`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: artifact/file identity, product, type metadata/confidence, terms reference | Pack billing, file search, asset use remain separate grains.
+- **`VendorContinuityManifest`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: product/artifact obligations, storage class, dependencies, exit states | Required before publish where perpetual rights are offered.
+
+## Access Control
+
+| Capability | Public | Holder | Vendor | Reviewer/support | System |
+|---|---:|---:|---:|---:|---:|
+| Read public product/demo | yes | yes | buyer/vendor lenses | yes | projection |
+| Read/download owned artifact | no | controlled holder only | no buyer access | case-bound | entitlement check |
+| Author product/version | no | no | vendor party role | no | validation only |
+| Sign org attestation | no | no | org binding authority only | no | verification |
+| View buyer identity | no | own account | never through library/report | case-bound | pseudonymous joins |
+| Resolve high-risk review | no | appeal input only | evidence/appeal | scoped reviewer | no autonomous disposal |
+| Request enforcement | no | appeal | request only | adjudicate | execute approved state |
+| Withdraw malicious artifact | no | notify/remediate | cannot suppress alone | emergency dual-control policy | execute/audit |
+
+- Library context never blends person/org holdings and always renders current holder.
+- Delivery authorization checks account-to-holder control, entitlement state, artifact scope and withdrawal on every request.
+- Vendors receive aggregate commerce/report outcomes from Shard 28, never buyer identity or watermark mapping.
+- Original submission artifacts, legal identity, review evidence and takedown records are protected purpose-bound data.
+
+### Access Escalation
+
+- **Read public product/demo:** a denial returns a typed reason and preserves canonical state; authority or evidence disputes route to the scoped case/Trust & Safety path, support handles mechanical recovery through an expiring purpose grant, and counsel/capability/privacy hard gates have no role override.
+- **Read/download owned artifact:** a denial returns a typed reason and preserves canonical state; authority or evidence disputes route to the scoped case/Trust & Safety path, support handles mechanical recovery through an expiring purpose grant, and counsel/capability/privacy hard gates have no role override.
+- **Author product/version:** a denial returns a typed reason and preserves canonical state; authority or evidence disputes route to the scoped case/Trust & Safety path, support handles mechanical recovery through an expiring purpose grant, and counsel/capability/privacy hard gates have no role override.
+- **Sign org attestation:** a denial returns a typed reason and preserves canonical state; authority or evidence disputes route to the scoped case/Trust & Safety path, support handles mechanical recovery through an expiring purpose grant, and counsel/capability/privacy hard gates have no role override.
+- **View buyer identity:** a denial returns a typed reason and preserves canonical state; authority or evidence disputes route to the scoped case/Trust & Safety path, support handles mechanical recovery through an expiring purpose grant, and counsel/capability/privacy hard gates have no role override.
+- **Resolve high-risk review:** a denial returns a typed reason and preserves canonical state; authority or evidence disputes route to the scoped case/Trust & Safety path, support handles mechanical recovery through an expiring purpose grant, and counsel/capability/privacy hard gates have no role override.
+- **Request enforcement:** a denial returns a typed reason and preserves canonical state; authority or evidence disputes route to the scoped case/Trust & Safety path, support handles mechanical recovery through an expiring purpose grant, and counsel/capability/privacy hard gates have no role override.
+- **Withdraw malicious artifact:** a denial returns a typed reason and preserves canonical state; authority or evidence disputes route to the scoped case/Trust & Safety path, support handles mechanical recovery through an expiring purpose grant, and counsel/capability/privacy hard gates have no role override.
+
+## Accessibility
+
+- Type-conditional forms announce required sections and preserve draft progress when schema changes.
+- Compatibility/dependency verdicts separate unsupported, unknown and known-issue in text; no color-only badge.
+- Audio auditions/downloads provide keyboard controls, captions/descriptions, duration, size and format before action.
+- Transfer progress states bytes served, estimated finish, expiry and queue position; percentage is supplemental.
+- Library tables expose holder, entitlement, vendor and management state as separate labeled fields.
+- Terms diffs are clause-by-clause, readable without side-by-side color and focus the first changed obligation.
+- QA/review errors link to exact artifact/check and remain exportable for vendor remediation.
+
+## Event Schemas
+
+| Event | Required payload | Consumers |
+|---|---|---|
+| `digital_product.version_submitted.v1` | product/version, artifact/attestation/schema IDs, vendor, state | QA/review |
+| `digital_product.qa_completed.v1` | submission, check scope/results, blocker counts, version | review, publish gate |
+| `digital_product.published.v1` | product/version, terms/artifacts/vendor snapshot, occurredAt | catalog, Shard 28 |
+| `digital_entitlement.issued.v1` | entitlement/epoch, product, purchaser/holder, origin, terms/range | library, delivery, Shard 28 |
+| `digital_entitlement.state_changed.v1` | entitlement, prior/new state, trigger, version | library, transfer enforcement |
+| `digital_transfer.grant_created.v1` | grant, entitlement/artifact, expiry/concurrency, version | delivery audit |
+| `digital_transfer.completed.v1` | grant/artifact, bytes/ranges/hash, completedAt | evidence, support metrics |
+| `digital_product.update_published.v1` | product, prior/new version, notes, compatibility changes | holder notifications, library |
+| `digital_artifact.withdrawn.v1` | artifact/container, reason, scope, evidence/version | transfer kill, library, notices |
+| `digital_asset.metadata_changed.v1` | asset, prior/new version, values/confidence, master hash | search, delivery |
+| `digital_vendor.retired.v1` | vendor, product continuity states, effectiveAt/version | catalog, library, Shard 28 |
+| `digital_enforcement.requested.v1` | entitlement/key, vendor, reason/evidence, case/version | adjudication, appeal |
+
+Events contain IDs/versions only, never buyer identity maps, object bytes, licence keys or signed URLs.
+
+## Edge Cases
+
+| Case | Required outcome |
+|---|---|
+| Vendor tries executable at launch | Draft may be preserved, publish remains disabled with admission prerequisites |
+| Artifact contradicts declared file count/format | Deterministic contradiction blocks until corrected; vendor remains author of subjective metadata |
+| Self-declared rig is wrong | Advisory verdict shows declaration time/unknowns; no refund-proof compatibility guarantee |
+| Terms change while item held in cart | Price policy may remain; terms consent breaks and current clause diff requires acceptance |
+| Same product bought for person and org | Two independent entitlements/library rows; never merge |
+| Payment pending | Visible pending entitlement grants no downloads or seats |
+| Vendor retires | New sales stop; perpetual owners retain eligible versions/artifacts |
+| Malware discovered after sale | Kill unsafe transfers, mark partial unsafe, preserve entitlement/evidence and notify |
+| Rights issue affects one sample | Withdraw smallest valid asset/container scope; unaffected pack contents remain |
+| Metadata correction changes embedded master | New artifact version/hash; prior entitled version preserved unless legal withdrawal applies |
+| Transfer capacity reached | Queue and preserve expiry visibility; never deny ownership |
+| Watermark stamping fails in future | Serve unmarked, log and never block lawful download |
+| Refund/revocation tombstones asset | Buyer tags/history persist read-only; Shard 28 determines state/re-purchase |
+| Account erasure requested | Export first; contractual entitlement fact retained pseudonymously under lawful basis |
+
+## Dependency References
+
+- Supplies catalog, terms, entitlement, artifact and vendor-continuity facts to Shard 28.
+- Consumes identity/credits from Shards 01/07 and supplies rights obligations to Shard 10/release flows.
+- Uses governed storage, media processing, search, moderation, notifications, audit/outbox and settings versioning.
+- Executable, activation, DRM, watermark and staged-rollout paths remain behind explicit admission gates.
+
+## Edge-Case Coverage Matrix
+
+| Flow | Concurrent access | Invalid input / authority | Deletion, revocation or cascade |
+|---|---|---|---|
+| 27.01 Create product draft | Same idempotency key returns the same result; competing expected revisions serialize one winner and return typed conflict to the loser without duplicate effect. | Schema, authority and policy validation fail before mutation/provider effect and return a typed refusal without existence leakage. | Owner/source deletion or revocation preserves required immutable evidence/tombstone, removes derived access/projection, and queues idempotent dependent invalidation so no orphan remains. |
+| 27.02 Declare compatibility | Same idempotency key returns the same result; competing expected revisions serialize one winner and return typed conflict to the loser without duplicate effect. | Schema, authority and policy validation fail before mutation/provider effect and return a typed refusal without existence leakage. | Owner/source deletion or revocation preserves required immutable evidence/tombstone, removes derived access/projection, and queues idempotent dependent invalidation so no orphan remains. |
+| 27.03 Declare dependencies | Same idempotency key returns the same result; competing expected revisions serialize one winner and return typed conflict to the loser without duplicate effect. | Schema, authority and policy validation fail before mutation/provider effect and return a typed refusal without existence leakage. | Owner/source deletion or revocation preserves required immutable evidence/tombstone, removes derived access/projection, and queues idempotent dependent invalidation so no orphan remains. |
+| 27.04 Check self-declared rig | Same idempotency key returns the same result; competing expected revisions serialize one winner and return typed conflict to the loser without duplicate effect. | Schema, authority and policy validation fail before mutation/provider effect and return a typed refusal without existence leakage. | Owner/source deletion or revocation preserves required immutable evidence/tombstone, removes derived access/projection, and queues idempotent dependent invalidation so no orphan remains. |
+| 27.05 Submit vendor artifact | Same idempotency key returns the same result; competing expected revisions serialize one winner and return typed conflict to the loser without duplicate effect. | Schema, authority and policy validation fail before mutation/provider effect and return a typed refusal without existence leakage. | Owner/source deletion or revocation preserves required immutable evidence/tombstone, removes derived access/projection, and queues idempotent dependent invalidation so no orphan remains. |
+| 27.06 Run deterministic artifact QA | Same idempotency key returns the same result; competing expected revisions serialize one winner and return typed conflict to the loser without duplicate effect. | Schema, authority and policy validation fail before mutation/provider effect and return a typed refusal without existence leakage. | Owner/source deletion or revocation preserves required immutable evidence/tombstone, removes derived access/projection, and queues idempotent dependent invalidation so no orphan remains. |
+| 27.07 Run audio/content QC | Same idempotency key returns the same result; competing expected revisions serialize one winner and return typed conflict to the loser without duplicate effect. | Schema, authority and policy validation fail before mutation/provider effect and return a typed refusal without existence leakage. | Owner/source deletion or revocation preserves required immutable evidence/tombstone, removes derived access/projection, and queues idempotent dependent invalidation so no orphan remains. |
+| 27.08 Review high-risk submission | Same idempotency key returns the same result; competing expected revisions serialize one winner and return typed conflict to the loser without duplicate effect. | Schema, authority and policy validation fail before mutation/provider effect and return a typed refusal without existence leakage. | Owner/source deletion or revocation preserves required immutable evidence/tombstone, removes derived access/projection, and queues idempotent dependent invalidation so no orphan remains. |
+| 27.09 Publish product/version | Same idempotency key returns the same result; competing expected revisions serialize one winner and return typed conflict to the loser without duplicate effect. | Schema, authority and policy validation fail before mutation/provider effect and return a typed refusal without existence leakage. | Owner/source deletion or revocation preserves required immutable evidence/tombstone, removes derived access/projection, and queues idempotent dependent invalidation so no orphan remains. |
+| 27.10 Issue entitlement | Same idempotency key returns the same result; competing expected revisions serialize one winner and return typed conflict to the loser without duplicate effect. | Schema, authority and policy validation fail before mutation/provider effect and return a typed refusal without existence leakage. | Owner/source deletion or revocation preserves required immutable evidence/tombstone, removes derived access/projection, and queues idempotent dependent invalidation so no orphan remains. |
+| 27.11 View holder library | Same idempotency key returns the same result; competing expected revisions serialize one winner and return typed conflict to the loser without duplicate effect. | Schema, authority and policy validation fail before mutation/provider effect and return a typed refusal without existence leakage. | Owner/source deletion or revocation preserves required immutable evidence/tombstone, removes derived access/projection, and queues idempotent dependent invalidation so no orphan remains. |
+| 27.12 Request download | Same idempotency key returns the same result; competing expected revisions serialize one winner and return typed conflict to the loser without duplicate effect. | Schema, authority and policy validation fail before mutation/provider effect and return a typed refusal without existence leakage. | Owner/source deletion or revocation preserves required immutable evidence/tombstone, removes derived access/projection, and queues idempotent dependent invalidation so no orphan remains. |
+| 27.13 Resume/verify transfer | Same idempotency key returns the same result; competing expected revisions serialize one winner and return typed conflict to the loser without duplicate effect. | Schema, authority and policy validation fail before mutation/provider effect and return a typed refusal without existence leakage. | Owner/source deletion or revocation preserves required immutable evidence/tombstone, removes derived access/projection, and queues idempotent dependent invalidation so no orphan remains. |
+| 27.14 Publish ordinary update | Same idempotency key returns the same result; competing expected revisions serialize one winner and return typed conflict to the loser without duplicate effect. | Schema, authority and policy validation fail before mutation/provider effect and return a typed refusal without existence leakage. | Owner/source deletion or revocation preserves required immutable evidence/tombstone, removes derived access/projection, and queues idempotent dependent invalidation so no orphan remains. |
+| 27.15 Select release channel | Same idempotency key returns the same result; competing expected revisions serialize one winner and return typed conflict to the loser without duplicate effect. | Schema, authority and policy validation fail before mutation/provider effect and return a typed refusal without existence leakage. | Owner/source deletion or revocation preserves required immutable evidence/tombstone, removes derived access/projection, and queues idempotent dependent invalidation so no orphan remains. |
+| 27.16 Search owned assets | Same idempotency key returns the same result; competing expected revisions serialize one winner and return typed conflict to the loser without duplicate effect. | Schema, authority and policy validation fail before mutation/provider effect and return a typed refusal without existence leakage. | Owner/source deletion or revocation preserves required immutable evidence/tombstone, removes derived access/projection, and queues idempotent dependent invalidation so no orphan remains. |
+| 27.17 Audition content | Same idempotency key returns the same result; competing expected revisions serialize one winner and return typed conflict to the loser without duplicate effect. | Schema, authority and policy validation fail before mutation/provider effect and return a typed refusal without existence leakage. | Owner/source deletion or revocation preserves required immutable evidence/tombstone, removes derived access/projection, and queues idempotent dependent invalidation so no orphan remains. |
+| 27.18 Update buyer tags/collections | Same idempotency key returns the same result; competing expected revisions serialize one winner and return typed conflict to the loser without duplicate effect. | Schema, authority and policy validation fail before mutation/provider effect and return a typed refusal without existence leakage. | Owner/source deletion or revocation preserves required immutable evidence/tombstone, removes derived access/projection, and queues idempotent dependent invalidation so no orphan remains. |
+| 27.19 Start trial/free grant | Same idempotency key returns the same result; competing expected revisions serialize one winner and return typed conflict to the loser without duplicate effect. | Schema, authority and policy validation fail before mutation/provider effect and return a typed refusal without existence leakage. | Owner/source deletion or revocation preserves required immutable evidence/tombstone, removes derived access/projection, and queues idempotent dependent invalidation so no orphan remains. |
+| 27.20 Request blacklist/enforcement | Same idempotency key returns the same result; competing expected revisions serialize one winner and return typed conflict to the loser without duplicate effect. | Schema, authority and policy validation fail before mutation/provider effect and return a typed refusal without existence leakage. | Owner/source deletion or revocation preserves required immutable evidence/tombstone, removes derived access/projection, and queues idempotent dependent invalidation so no orphan remains. |
+| 27.21 Retire vendor/product | Same idempotency key returns the same result; competing expected revisions serialize one winner and return typed conflict to the loser without duplicate effect. | Schema, authority and policy validation fail before mutation/provider effect and return a typed refusal without existence leakage. | Owner/source deletion or revocation preserves required immutable evidence/tombstone, removes derived access/projection, and queues idempotent dependent invalidation so no orphan remains. |
+| 27.22 Remove for malicious artifact | Same idempotency key returns the same result; competing expected revisions serialize one winner and return typed conflict to the loser without duplicate effect. | Schema, authority and policy validation fail before mutation/provider effect and return a typed refusal without existence leakage. | Owner/source deletion or revocation preserves required immutable evidence/tombstone, removes derived access/projection, and queues idempotent dependent invalidation so no orphan remains. |
+| 27.23 Remove for rights cause | Same idempotency key returns the same result; competing expected revisions serialize one winner and return typed conflict to the loser without duplicate effect. | Schema, authority and policy validation fail before mutation/provider effect and return a typed refusal without existence leakage. | Owner/source deletion or revocation preserves required immutable evidence/tombstone, removes derived access/projection, and queues idempotent dependent invalidation so no orphan remains. |
+| 27.24 Export/erase account context | Same idempotency key returns the same result; competing expected revisions serialize one winner and return typed conflict to the loser without duplicate effect. | Schema, authority and policy validation fail before mutation/provider effect and return a typed refusal without existence leakage. | Owner/source deletion or revocation preserves required immutable evidence/tombstone, removes derived access/projection, and queues idempotent dependent invalidation so no orphan remains. |
+
+### Cross-Shard Section Contract Map
+
+- **Shard 28:** consume [Shard 28 Contracts](28-digital-licensing-commerce.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 28 Event Schemas](28-digital-licensing-commerce.md#event-schemas). Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
+- **Shard 10:** consume [Shard 10 Contracts](10-rights-ownership.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 10 Event Schemas](10-rights-ownership.md#event-schemas). Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
+- **Shard 07:** consume [Shard 07 Contracts](07-credits-core.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 07 Event Schemas](07-credits-core.md#event-schemas). Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
+
+## Changelog
+
+- 2026-08-03: Initial complete interaction architecture authored from 34 source documents and 24 child capabilities.
+- 2026-08-03: Locked content-first launch, entitlement-first ownership, per-request delivery authorization, immutable version archives and vendor continuity.
+
+
+<!-- spec-graph: auto-generated -->
+## Related Specs
+
+### References
+- [[specs/ia/28-digital-licensing-commerce|Shard 28 — Digital licensing, commerce, revocation and revenue]]
+- [[specs/ia/10-rights-ownership|Shard 10 — Rights and ownership]]
+- [[specs/ia/07-credits-core|Shard 07 — Credit graph, capture and confidence]]

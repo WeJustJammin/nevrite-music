@@ -1,0 +1,342 @@
+# Shard 07 — Credit graph, capture and confidence
+
+> **Architecture Source**: [2026-08-02-architecture-design.md](../2026-08-02-architecture-design.md)
+> **Decomposition Source**: [decomposition-plan.md](decomposition-plan.md)
+> **Deep Dive**: [deep-dives/07-credits-core.md](deep-dives/07-credits-core.md)
+> **Document Type**: Feature domain
+> **Status**: Complete — design approved under standing owner autonomy; deepening converged
+
+## Overview
+
+Shard 07 owns contribution truth: immutable credit records, session-time capture, claims, attestations, provenance derivation, corrections, disputes and role/instrument vocabulary. A credit says who contributed what to which recording/composition and with what evidence. It never implies ownership, split percentage, royalty, legal status, popularity or platform trust.
+
+### Scope Reconciliation
+
+| Check | Result |
+|---|---|
+| Source boundaries loaded | 6 |
+| In-scope source documents loaded | 27 |
+| Child capabilities reconciled | 20 |
+| Added or removed feature boundaries | 0 |
+| Adjacent 02.07–02.10 | Remain downstream/adjacent consumers; not absorbed |
+| Consumer launch | Credit ledger, session roll/log/close capture, claims, attestations, confidence, disputes and taxonomy |
+| Split handling | Parent IA plus one approved high-complexity deep dive |
+
+## Features
+
+- **02.01 Credit Graph & Discography** — one party/role/work credit, public role-grouped discography, bounded traversal, non-automatic merges, confidentiality/embargo and superseding corrections.
+- **02.02 Session Capture** — temporal roll call, per-part contribution log, non-blocking close prompt and consent-respecting attendance evidence.
+- **02.03 Claiming & Cold-Start Seeding** — source-marked imports, precise claim suggestions and witness-led claim adjudication.
+- **02.04 Attestation & Credit Confidence** — bounded asks, independent evidence, derived rung/internal score, immutable retractions and score-only collusion demotion.
+- **02.05 Credit Dispute Resolution** — shared case-engine disputes, participant-only contest state, direct/witness/adjudicated ladder and joint outcomes.
+- **02.06 Credit Role & Instrument Taxonomy** — DDEX-anchored role core, separate functional instruments, bounded aliases, pending terms and immutable assertion-time resolution.
+
+## Acceptance Criteria
+
+- **AC-CRD-01 — Assert credit:** Given a valid request with current identity, authority, source state and required inputs, when the actor invokes this flow, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) Authorized participant names one party, one canonical/literal role, recording/composition scope, contribution date, asserter and visibility, and (6) return Immutable credit version created; no rights/split inference; if the flow cannot complete, invalid input, stale authority, revision conflict or dependency failure returns a typed refusal and no contradictory canonical mutation.
+- **AC-CRD-02 — View work ledger:** Given a valid request with current identity, authority, source state and required inputs, when the actor invokes this flow, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) Viewer receives all authorized records including qualified/not-final and participant-visible contest states; billing order is separate owner assertion, and (6) return Viewer-relative projection and count agree; if the flow cannot complete, invalid input, stale authority, revision conflict or dependency failure returns a typed refusal and no contradictory canonical mutation.
+- **AC-CRD-03 — View public discography:** Given a valid request with current identity, authority, source state and required inputs, when the actor invokes this flow, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) Public records group by role family with provenance sentence/rung and bounded pagination; embargo/confidential records leave no observable trace, and (6) return Cacheable viewer-safe projection rendered; if the flow cannot complete, invalid input, stale authority, revision conflict or dependency failure returns a typed refusal and no contradictory canonical mutation.
+- **AC-CRD-04 — Traverse graph:** Given a valid request with current identity, authority, source state and required inputs, when the actor invokes this flow, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) Professional query follows allowed work-party paths with tier weighting, density floor and visible path explanation; Fan is limited to work↔party walks, and (6) return Bounded result/cursor or explicit sparse-data degradation; if the flow cannot complete, invalid input, stale authority, revision conflict or dependency failure returns a typed refusal and no contradictory canonical mutation.
+- **AC-CRD-05 — Merge duplicate party shell:** Given a valid request with current identity, authority, source state and required inputs, when the actor invokes this flow, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) Knowledgeable party reviews proposal; people never auto-merge; rejection records permanent negative assertion, and (6) return Re-point plan commits without changing credit confidentiality; if the flow cannot complete, invalid input, stale authority, revision conflict or dependency failure returns a typed refusal and no contradictory canonical mutation.
+- **AC-CRD-06 — Set/lift embargo:** Given a valid request with current identity, authority, source state and required inputs, when the actor invokes this flow, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) Session capture inherits strictest allowed default; verified public-release evidence may trigger objection window; lift is one-way except retracted-release window, and (6) return Visibility version and participant notices commit; if the flow cannot complete, invalid input, stale authority, revision conflict or dependency failure returns a typed refusal and no contradictory canonical mutation.
+- **AC-CRD-07 — Propose correction:** Given a valid request with current identity, authority, source state and required inputs, when the actor invokes this flow, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) Authorized actor proposes superseding party/role/work/qualifier change; required parties agree or proposal escalates after bounded reminders, and (6) return Successor or linked dispute; original remains immutable; if the flow cannot complete, invalid input, stale authority, revision conflict or dependency failure returns a typed refusal and no contradictory canonical mutation.
+- **AC-CRD-08 — Run session roll:** Given a valid request with current identity, authority, source state and required inputs, when the actor invokes this flow, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) Owner/delegate confirms pre-seeded people/shells/entities, capacities and observed/inferred intervals; presence never creates credit, and (6) return Versioned temporal roll persists offline conflicts; if the flow cannot complete, invalid input, stale authority, revision conflict or dependency failure returns a typed refusal and no contradictory canonical mutation.
+- **AC-CRD-09 — Log contribution:** Given a valid request with current identity, authority, source state and required inputs, when the actor invokes this flow, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) Self attributes self; Producer/delegate may attribute any roll party; one role per row, multi-valued instruments, visibility intent and asserter recorded, and (6) return Append-only contribution claim committed; if the flow cannot complete, invalid input, stale authority, revision conflict or dependency failure returns a typed refusal and no contradictory canonical mutation.
+- **AC-CRD-10 — Close session:** Given a valid request with current identity, authority, source state and required inputs, when the actor invokes this flow, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) Wrap fires contributor delta cards and Producer reconciliation independently; never blocks close; silence is not refusal, and (6) return Stable prompt issue IDs and passive follow-up state recorded; if the flow cannot complete, invalid input, stale authority, revision conflict or dependency failure returns a typed refusal and no contradictory canonical mutation.
+- **AC-CRD-11 — Capture attendance evidence:** Given a valid request with current identity, authority, source state and required inputs, when the actor invokes this flow, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) Optional byproduct signals attach to session; declining is consequence-free; human evidence outranks device conflict, and (6) return Evidence reference recorded without gating credit; if the flow cannot complete, invalid input, stale authority, revision conflict or dependency failure returns a typed refusal and no contradictory canonical mutation.
+- **AC-CRD-12 — Import external credit:** Given a valid request with current identity, authority, source state and required inputs, when the actor invokes this flow, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) Source row remains source-marked, exact-resolves identities/taxonomy where possible, queues candidate review and never publishes automatically, and (6) return Candidate, source hash and review state recorded; if the flow cannot complete, invalid input, stale authority, revision conflict or dependency failure returns a typed refusal and no contradictory canonical mutation.
+- **AC-CRD-13 — Claim unclaimed credit:** Given a valid request with current identity, authority, source state and required inputs, when the actor invokes this flow, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) Verified person claims a shell-linked record; verification proves identity, not contribution; first claimant remains during contest, and (6) return Claim state/party link or witness request created; if the flow cannot complete, invalid input, stale authority, revision conflict or dependency failure returns a typed refusal and no contradictory canonical mutation.
+- **AC-CRD-14 — Request attestation:** Given a valid request with current identity, authority, source state and required inputs, when the actor invokes this flow, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) Eligible credited party/session owner/close prompt asks a present independent human using canonical claim and bounded optional note, and (6) return One pending ask per credit/attester with cadence budget; if the flow cannot complete, invalid input, stale authority, revision conflict or dependency failure returns a typed refusal and no contradictory canonical mutation.
+- **AC-CRD-15 — Answer/retract attestation:** Given a valid request with current identity, authority, source state and required inputs, when the actor invokes this flow, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) Attester confirms/refuses/does-not-know; refusal remains unattributed; retraction requires reason and preserves original, and (6) return Immutable evidence edge and derived-state refresh queued; if the flow cannot complete, invalid input, stale authority, revision conflict or dependency failure returns a typed refusal and no contradictory canonical mutation.
+- **AC-CRD-16 — Derive provenance:** Given a valid request with current identity, authority, source state and required inputs, when the actor invokes this flow, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) Current eligible evidence computes categorical rung plus internal score; score cannot cross rung; failure renders unavailable, not lowest, and (6) return Versioned derivation and explanation stored; if the flow cannot complete, invalid input, stale authority, revision conflict or dependency failure returns a typed refusal and no contradictory canonical mutation.
+- **AC-CRD-17 — Contest credit:** Given a valid request with current identity, authority, source state and required inputs, when the actor invokes this flow, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) Participant marks dispute; public line remains at existing tier without marker; participant view shows contest and evidence ladder, and (6) return Shard 06 case link and contest state committed; if the flow cannot complete, invalid input, stale authority, revision conflict or dependency failure returns a typed refusal and no contradictory canonical mutation.
+- **AC-CRD-18 — Resolve pending taxonomy alias:** Given a valid request with current identity, authority, source state and required inputs, when the actor invokes this flow, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) Admin promotes/maps/rejects bounded literal; first mapping completes resolution without changing claim identity or invalidating attestations, and (6) return Canonical link/version added; retained literal preserved; if the flow cannot complete, invalid input, stale authority, revision conflict or dependency failure returns a typed refusal and no contradictory canonical mutation.
+
+## Interactions
+
+| ID | Interaction | Required behavior | Completion |
+|---|---|---|---|
+| CRD-01 | Assert credit | Authorized participant names one party, one canonical/literal role, recording/composition scope, contribution date, asserter and visibility. | Immutable credit version created; no rights/split inference. |
+| CRD-02 | View work ledger | Viewer receives all authorized records including qualified/not-final and participant-visible contest states; billing order is separate owner assertion. | Viewer-relative projection and count agree. |
+| CRD-03 | View public discography | Public records group by role family with provenance sentence/rung and bounded pagination; embargo/confidential records leave no observable trace. | Cacheable viewer-safe projection rendered. |
+| CRD-04 | Traverse graph | Professional query follows allowed work-party paths with tier weighting, density floor and visible path explanation; Fan is limited to work↔party walks. | Bounded result/cursor or explicit sparse-data degradation. |
+| CRD-05 | Merge duplicate party shell | Knowledgeable party reviews proposal; people never auto-merge; rejection records permanent negative assertion. | Re-point plan commits without changing credit confidentiality. |
+| CRD-06 | Set/lift embargo | Session capture inherits strictest allowed default; verified public-release evidence may trigger objection window; lift is one-way except retracted-release window. | Visibility version and participant notices commit. |
+| CRD-07 | Propose correction | Authorized actor proposes superseding party/role/work/qualifier change; required parties agree or proposal escalates after bounded reminders. | Successor or linked dispute; original remains immutable. |
+| CRD-08 | Run session roll | Owner/delegate confirms pre-seeded people/shells/entities, capacities and observed/inferred intervals; presence never creates credit. | Versioned temporal roll persists offline conflicts. |
+| CRD-09 | Log contribution | Self attributes self; Producer/delegate may attribute any roll party; one role per row, multi-valued instruments, visibility intent and asserter recorded. | Append-only contribution claim committed. |
+| CRD-10 | Close session | Wrap fires contributor delta cards and Producer reconciliation independently; never blocks close; silence is not refusal. | Stable prompt issue IDs and passive follow-up state recorded. |
+| CRD-11 | Capture attendance evidence | Optional byproduct signals attach to session; declining is consequence-free; human evidence outranks device conflict. | Evidence reference recorded without gating credit. |
+| CRD-12 | Import external credit | Source row remains source-marked, exact-resolves identities/taxonomy where possible, queues candidate review and never publishes automatically. | Candidate, source hash and review state recorded. |
+| CRD-13 | Claim unclaimed credit | Verified person claims a shell-linked record; verification proves identity, not contribution; first claimant remains during contest. | Claim state/party link or witness request created. |
+| CRD-14 | Request attestation | Eligible credited party/session owner/close prompt asks a present independent human using canonical claim and bounded optional note. | One pending ask per credit/attester with cadence budget. |
+| CRD-15 | Answer/retract attestation | Attester confirms/refuses/does-not-know; refusal remains unattributed; retraction requires reason and preserves original. | Immutable evidence edge and derived-state refresh queued. |
+| CRD-16 | Derive provenance | Current eligible evidence computes categorical rung plus internal score; score cannot cross rung; failure renders unavailable, not lowest. | Versioned derivation and explanation stored. |
+| CRD-17 | Contest credit | Participant marks dispute; public line remains at existing tier without marker; participant view shows contest and evidence ladder. | Shard 06 case link and contest state committed. |
+| CRD-18 | Resolve pending taxonomy alias | Admin promotes/maps/rejects bounded literal; first mapping completes resolution without changing claim identity or invalidating attestations. | Canonical link/version added; retained literal preserved. |
+
+### Global Interaction Rules
+
+- Commands carry `actor_person_id`, `acting_party_id?`, `acting_context_version`, `idempotency_key`, `expected_version?` and `request_id`.
+- Credit, work, session, party, role and instrument use canonical IDs; all edits are new versions/supersession.
+- Confidentiality is enforced in query/RLS and every derived count/search/cache/export, never as a final render filter.
+- Claiming, self-assertion, imported agreement, attendance and popularity never independently raise provenance rung.
+- Contest marks but does not suppress; confidentiality still wins over citation, correction redirects and public discoverability.
+
+## Contracts
+
+### Core Types and Errors
+
+| Contract | Definition |
+|---|---|
+| `CreditScope` | `recording | composition | both`; required |
+| `CreditState` | `asserted | acknowledged | contested | superseded | withdrawn` |
+| `Confidentiality` | `public | embargoed | confidential`; record-wide |
+| `PageCuration` | `listed | unlisted`; party-page only |
+| `ProvenanceRung` | `imported | asserted | witnessed | attested | captured_verified`; exact labels/version owned here |
+| `AttestationAnswer` | `confirm | refuse | dont_know` |
+| `StandardError` | `VALIDATION_FAILED, FORBIDDEN, ACTING_CONTEXT_STALE, VERSION_CONFLICT, IDEMPOTENCY_MISMATCH, EMBARGOED_NOT_FOUND, CLAIM_CONFLICT, ATTESTATION_INELIGIBLE, RATE_LIMITED, TAXONOMY_UNAVAILABLE, DISPUTE_REQUIRED` |
+
+### Credit and Visibility
+
+| Contract | Invariant |
+|---|---|
+| `AssertCredit` | Unique active record per party/role/work/scope; one role, many instruments; contribution/assertion dates and asserter distinct. |
+| `QualifyCredit` | `not_in_final_master` and similar qualifiers preserve contribution; they never delete or widen visibility. |
+| `ProjectDiscography` | Public eligibility = confidentiality + release/lift + page curation. Counts/pagination computed after authorization. |
+| `LiftEmbargo` | Requires release event, verified public evidence after objection window, or authorized manual lift. Reachability is evidence, not authorization. |
+| `ProposeCorrection` | In-place edit prohibited; party change routes claim transfer/dispute, not ordinary amendment. Material party/role/work change invalidates attestations. |
+| `MergePartyShell` | Person merge always human-confirmed; re-points party IDs only and preserves record visibility/history. |
+
+### Session Capture
+
+| Contract | Invariant |
+|---|---|
+| `UpsertRollEntry` | One party/shell per session with many intervals/capacities; endpoints observed/inferred; author always recorded. |
+| `MergeOfflineRoll` | Add wins remove, capacities union, intervals widen and mark conflicted; conflict offered at close. |
+| `AppendContribution` | Self may name self; Producer/delegate may name roll party; log immutable after commit. |
+| `IssueClosePrompt` | Contributor delta and Producer reconciliation issue independently within five seconds; duplicate issue is no-op; close never waits. |
+| `RecordPromptAnswer` | Answer binds claim hash shown. Changed claim re-asks; silence has no refusal semantics. |
+
+### Claims, Attestations and Confidence
+
+| Contract | Invariant |
+|---|---|
+| `ImportCreditCandidate` | Source/hash permanent, candidate capped below captured tiers, exact resolution only, no auto-write to public page. |
+| `ClaimCredit` | Identity proof links claimant; it does not confirm credit. Rejection is permanent negative assertion. |
+| `RequestAttestation` | Attester present, independent of credited party/asserter, no block/open dispute, context floor present; one request + ≤2 nudges. |
+| `RecordAttestation` | Authenticated immutable answer; refusal identity private; concurrent asks collapse; confirmation can be attributable. |
+| `DeriveProvenance` | Rung from current eligible evidence; score is internal 0–1 and cannot promote rung; ring demotion affects score only. |
+| `OpenCreditDispute` | Uses Shard 06 case engine; public projection unchanged except outcomes that create successor/party re-point. |
+
+### Taxonomy
+
+| Contract | Invariant |
+|---|---|
+| `ResolveRole` | Exact/alias resolves visibly; fuzzy offers ≤5 and never auto-selects; no-hit commits bounded pending literal. Import never fuzzy-resolves. |
+| `RoleVersion` | Canonical base + optional modifier, admitted party types, family, locale labels and DDEX fidelity exact/broader/none. |
+| `InstrumentVersion` | Separate functional hierarchy; make/model forbidden. Credit may reference multiple instruments. |
+| `TaxonomyChange` | Deprecation never rewrites credits. First pending-alias mapping completes resolution without attestation invalidation. |
+
+## Data Models
+
+| Model | Key relationships and constraints |
+|---|---|
+| `work_credit` | Party, role version, retained literal, work/recording IDs, scope, qualifier, dates, asserter/context, confidentiality, state, version. |
+| `credit_instrument` | Credit + instrument version; unique pair. |
+| `credit_order_assertion` | Work/release owner, ordered credit IDs, version; display only. |
+| `discography_curation` | Party + credit listed/unlisted and pin rank; cannot change ledger visibility. |
+| `credit_visibility_version` | Credit/session, confidentiality, source/inheritance, evidence, effective interval, exposure-window audit. |
+| `credit_amendment` | Original/successor, proposal hash, required approvals, reminder/escalation state. |
+| `party_merge_assertion` | Candidate IDs, proposer, evidence, decision/negative assertion, re-point manifest. |
+| `session` / `session_roll_entry` / `roll_interval` | Project/owner/wrap/autoclose plus party/shell/capacities and observed/inferred/conflicted intervals. |
+| `contribution_claim` | Session/part, party/shell, role/instruments, asserter, claim hash, visibility intent, committed version. |
+| `close_prompt_issue` / `prompt_answer` | Session delta/hash/recipient/channel/cadence and immutable answer bound to claim hash. |
+| `attendance_evidence` | Session/party, source kind, time range, consent, reliability and evidence pointer. |
+| `external_credit_candidate` | Source/license/hash/raw identifiers, exact matches, review state and negative assertion. |
+| `credit_claim` | Credit/shell/claimant, identity evidence ref, state, witness and adjudication link. |
+| `attestation_request` / `attestation` | Credit claim hash, attester, requester, cadence/state; immutable answer/retraction chain. |
+| `provenance_derivation` | Credit/evidence-set hash, rung, internal score, explanation/version, unavailable reason. |
+| `credit_contest` | Credit, opener, reason, participant visibility, Shard 06 case ID, outcome. |
+| `role_version` / `role_alias` / `pending_role_alias` | Canonical structure, party types, family, DDEX fidelity, locale alias and requester-scoped pending literal. |
+| `instrument_version` | Functional hierarchy, locale labels, version/deprecation. |
+| `credit_audit_event` | Immutable actor/context/action/target/before-after/evidence/request hashes. |
+
+### Typed Field and Cardinality Registry
+
+Field typing is deterministic: `*_id: uuid`, `*_at: timestamptz`, `*_date: date`, `*_minor: bigint`, `*_count: integer`, `currency: char(3)`, `is_*|has_*: boolean`, `state|status|type|kind|class: closed enum`, `version: bigint`, ratios `numeric(9,6)`, checksums `text`, and URLs `text`. Every named contract field uses this registry unless its contract declares a stricter type.
+
+- **`work_credit`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Party, role version, retained literal, work/recording IDs, scope, qualifier, dates, asserter/context, confidentiality, state, version..
+- **`credit_instrument`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Credit + instrument version; unique pair..
+- **`credit_order_assertion`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Work/release owner, ordered credit IDs, version; display only..
+- **`discography_curation`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Party + credit listed/unlisted and pin rank; cannot change ledger visibility..
+- **`credit_visibility_version`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Credit/session, confidentiality, source/inheritance, evidence, effective interval, exposure-window audit..
+- **`credit_amendment`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Original/successor, proposal hash, required approvals, reminder/escalation state..
+- **`party_merge_assertion`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Candidate IDs, proposer, evidence, decision/negative assertion, re-point manifest..
+- **`session`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Project/owner/wrap/autoclose plus party/shell/capacities and observed/inferred/conflicted intervals..
+- **`session_roll_entry`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Project/owner/wrap/autoclose plus party/shell/capacities and observed/inferred/conflicted intervals..
+- **`roll_interval`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Project/owner/wrap/autoclose plus party/shell/capacities and observed/inferred/conflicted intervals..
+- **`contribution_claim`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Session/part, party/shell, role/instruments, asserter, claim hash, visibility intent, committed version..
+- **`close_prompt_issue`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Session delta/hash/recipient/channel/cadence and immutable answer bound to claim hash..
+- **`prompt_answer`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Session delta/hash/recipient/channel/cadence and immutable answer bound to claim hash..
+- **`attendance_evidence`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Session/party, source kind, time range, consent, reliability and evidence pointer..
+- **`external_credit_candidate`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Source/license/hash/raw identifiers, exact matches, review state and negative assertion..
+- **`credit_claim`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Credit/shell/claimant, identity evidence ref, state, witness and adjudication link..
+- **`attestation_request`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Credit claim hash, attester, requester, cadence/state; immutable answer/retraction chain..
+- **`attestation`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Credit claim hash, attester, requester, cadence/state; immutable answer/retraction chain..
+- **`provenance_derivation`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Credit/evidence-set hash, rung, internal score, explanation/version, unavailable reason..
+- **`credit_contest`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Credit, opener, reason, participant visibility, Shard 06 case ID, outcome..
+- **`role_version`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Canonical structure, party types, family, DDEX fidelity, locale alias and requester-scoped pending literal..
+- **`role_alias`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Canonical structure, party types, family, DDEX fidelity, locale alias and requester-scoped pending literal..
+- **`pending_role_alias`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Canonical structure, party types, family, DDEX fidelity, locale alias and requester-scoped pending literal..
+- **`instrument_version`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Functional hierarchy, locale labels, version/deprecation..
+- **`credit_audit_event`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Immutable actor/context/action/target/before-after/evidence/request hashes..
+
+## Access Control
+
+| Actor | Permitted | Explicitly denied |
+|---|---|---|
+| Public/Fan | Public discography and bounded work-party traversal | Hidden counts/status, participant graph, confidence score, session roll |
+| Credited party | Own credits including embargoed, export, claim/correction/attestation request, contest | Change another party's credit or lift Producer confidentiality alone |
+| Session participant | Own/overlapping roll view, relevant ledger, attest witnessed facts, request lift | Non-overlapping attendance, confidential unrelated sessions |
+| Producer/session owner | Manage roll, attribute roll parties, ordering, close reconciliation, visibility within ratchet | Delete contributions, assert rights/splits, suppress contest |
+| Operator/room | Room facts and witnessed mode, scoped session support | Attest creative contribution merely as facility/operator |
+| Work/release owner | Billing order and approved publication evidence | Rewrite contributor identity/evidence |
+| Taxonomy admin | Promote/deprecate/map vocabulary through reviewed capability | Edit credit claims, derive rights or retroactively rewrite assertions |
+| Dispute reviewer | Privileged case-scoped record/evidence projection | Publish embargoed facts or mutate original evidence |
+| System worker | Idempotent derivation/projection/notification/import commands | Auto-merge people, auto-select fuzzy role, auto-publish import |
+
+### Access Escalation
+
+- **Public/Fan:** a denial returns a typed reason and preserves canonical state; authority or evidence disputes route to the scoped case/Trust & Safety path, support handles mechanical recovery through an expiring purpose grant, and counsel/capability/privacy hard gates have no role override.
+- **Credited party:** a denial returns a typed reason and preserves canonical state; authority or evidence disputes route to the scoped case/Trust & Safety path, support handles mechanical recovery through an expiring purpose grant, and counsel/capability/privacy hard gates have no role override.
+- **Session participant:** a denial returns a typed reason and preserves canonical state; authority or evidence disputes route to the scoped case/Trust & Safety path, support handles mechanical recovery through an expiring purpose grant, and counsel/capability/privacy hard gates have no role override.
+- **Producer/session owner:** a denial returns a typed reason and preserves canonical state; authority or evidence disputes route to the scoped case/Trust & Safety path, support handles mechanical recovery through an expiring purpose grant, and counsel/capability/privacy hard gates have no role override.
+- **Operator/room:** a denial returns a typed reason and preserves canonical state; authority or evidence disputes route to the scoped case/Trust & Safety path, support handles mechanical recovery through an expiring purpose grant, and counsel/capability/privacy hard gates have no role override.
+- **Work/release owner:** a denial returns a typed reason and preserves canonical state; authority or evidence disputes route to the scoped case/Trust & Safety path, support handles mechanical recovery through an expiring purpose grant, and counsel/capability/privacy hard gates have no role override.
+- **Taxonomy admin:** a denial returns a typed reason and preserves canonical state; authority or evidence disputes route to the scoped case/Trust & Safety path, support handles mechanical recovery through an expiring purpose grant, and counsel/capability/privacy hard gates have no role override.
+- **Dispute reviewer:** a denial returns a typed reason and preserves canonical state; authority or evidence disputes route to the scoped case/Trust & Safety path, support handles mechanical recovery through an expiring purpose grant, and counsel/capability/privacy hard gates have no role override.
+- **System worker:** a denial returns a typed reason and preserves canonical state; authority or evidence disputes route to the scoped case/Trust & Safety path, support handles mechanical recovery through an expiring purpose grant, and counsel/capability/privacy hard gates have no role override.
+
+## Accessibility
+
+- Roll, contribution grid, close cards, discography, evidence timeline and taxonomy picker are keyboard complete with semantic table/list alternatives.
+- Provenance, contest, qualifier and visibility states use text plus icon/structure; color never carries meaning alone.
+- One-tap confirmation has an equivalent labeled control, visible claim summary and undo/retraction route; silence is never visually marked negative.
+- Embargo/non-disclosure screens do not announce hidden counts or existence to assistive technology.
+- Offline/conflict status is announced politely; preserved edits and exact changed rows are focus-targeted after reconciliation.
+- Graph traversal has a linear path list and explanation; no force-directed canvas is required to understand results.
+
+## Event Schemas
+
+| Event | Payload minimum | Consumers |
+|---|---|---|
+| `credit.record.changed.v1` | Credit/version/state/party/role/work/scope/confidentiality/hash | Discography, search, downstream provenance consumers |
+| `credit.visibility.changed.v1` | Credit/old/new/reason/effective/version | Public cache purge, export, search |
+| `credit.session.closed.v1` | Session/wrap/roll/contribution hashes | Prompt issuer, project and split-capture coordinators |
+| `credit.prompt.answered.v1` | Issue/claim hash/answer kind/actor/time | Credit/attestation derivation |
+| `credit.claim.changed.v1` | Claim/credit/shell/claimant/state/version | Inbox, profile and dispute projector |
+| `credit.attestation.changed.v1` | Attestation/credit/answer/state/evidence hash | Provenance derivation |
+| `credit.provenance.derived.v1` | Credit/evidence hash/rung/availability/version | Discography, search, Shards 08/10/18–20/22/39 |
+| `credit.contest.changed.v1` | Credit/case/state/outcome/version | Participant projection, provenance refresh |
+| `credit.taxonomy.changed.v1` | Kind/canonical/version/change/pending mapping | Pickers, resolver, export adapters |
+
+Events omit private session names, narratives, embargo existence, refusal identity, internal score, ring flags and unrestricted PII.
+
+## Edge Cases
+
+| Case | Required result |
+|---|---|
+| Concurrent same credit assertions | Unique active key converges; evidence/asserters attach without duplicate public row. |
+| Offline roll add/remove conflict | Add wins, intervals union/conflicted, close offers resolution without blocking. |
+| Party removed with contributions | Explicit reassign/remove proposal; immutable committed contribution not silently deleted. |
+| Session auto-closes incorrectly | Reopen within 24h, preserve event history and reissue only changed prompt delta. |
+| Claim changes after ask | Prior answer stays historical but no longer supports new claim; re-ask required. |
+| Attestation refusal/retraction | No public negative marker; rung/score re-derive from remaining evidence. |
+| Derivation worker fails | Provenance renders unavailable distinctly; never defaults to lowest or stale higher tier without label. |
+| Embargoed record requested publicly | 404-equivalent and invariant counts/cache/search; no 403/existence leak. |
+| Public-release evidence contested | Pause lift at status quo and use Shard 06 case; repeated evidence remains allowed. |
+| Person merge uncertain | Never automatic; rejection persists as negative assertion. |
+| Taxonomy unavailable/new term | Commit bounded literal and pending alias; credit flow never blocks. |
+| Contest remains unresolved | Credit stays attached/visible per existing policy, zero weight in derived discovery, participant marker only. |
+
+## Surface Applicability
+
+Responsive web/PWA. Server-rendered discography/provenance remains understandable before hydration; room mode supports offline shared-device capture without mislabeling witnessed taps as attestations.
+
+## Edge-Case Coverage Matrix
+
+| Flow | Concurrent access | Invalid input / authority | Deletion, revocation or cascade |
+|---|---|---|---|
+| CRD-01 Assert credit | Same idempotency key returns the same result; competing expected revisions serialize one winner and return typed conflict to the loser without duplicate effect. | Schema, authority and policy validation fail before mutation/provider effect and return a typed refusal without existence leakage. | Owner/source deletion or revocation preserves required immutable evidence/tombstone, removes derived access/projection, and queues idempotent dependent invalidation so no orphan remains. |
+| CRD-02 View work ledger | Same idempotency key returns the same result; competing expected revisions serialize one winner and return typed conflict to the loser without duplicate effect. | Schema, authority and policy validation fail before mutation/provider effect and return a typed refusal without existence leakage. | Owner/source deletion or revocation preserves required immutable evidence/tombstone, removes derived access/projection, and queues idempotent dependent invalidation so no orphan remains. |
+| CRD-03 View public discography | Same idempotency key returns the same result; competing expected revisions serialize one winner and return typed conflict to the loser without duplicate effect. | Schema, authority and policy validation fail before mutation/provider effect and return a typed refusal without existence leakage. | Owner/source deletion or revocation preserves required immutable evidence/tombstone, removes derived access/projection, and queues idempotent dependent invalidation so no orphan remains. |
+| CRD-04 Traverse graph | Same idempotency key returns the same result; competing expected revisions serialize one winner and return typed conflict to the loser without duplicate effect. | Schema, authority and policy validation fail before mutation/provider effect and return a typed refusal without existence leakage. | Owner/source deletion or revocation preserves required immutable evidence/tombstone, removes derived access/projection, and queues idempotent dependent invalidation so no orphan remains. |
+| CRD-05 Merge duplicate party shell | Same idempotency key returns the same result; competing expected revisions serialize one winner and return typed conflict to the loser without duplicate effect. | Schema, authority and policy validation fail before mutation/provider effect and return a typed refusal without existence leakage. | Owner/source deletion or revocation preserves required immutable evidence/tombstone, removes derived access/projection, and queues idempotent dependent invalidation so no orphan remains. |
+| CRD-06 Set/lift embargo | Same idempotency key returns the same result; competing expected revisions serialize one winner and return typed conflict to the loser without duplicate effect. | Schema, authority and policy validation fail before mutation/provider effect and return a typed refusal without existence leakage. | Owner/source deletion or revocation preserves required immutable evidence/tombstone, removes derived access/projection, and queues idempotent dependent invalidation so no orphan remains. |
+| CRD-07 Propose correction | Same idempotency key returns the same result; competing expected revisions serialize one winner and return typed conflict to the loser without duplicate effect. | Schema, authority and policy validation fail before mutation/provider effect and return a typed refusal without existence leakage. | Owner/source deletion or revocation preserves required immutable evidence/tombstone, removes derived access/projection, and queues idempotent dependent invalidation so no orphan remains. |
+| CRD-08 Run session roll | Same idempotency key returns the same result; competing expected revisions serialize one winner and return typed conflict to the loser without duplicate effect. | Schema, authority and policy validation fail before mutation/provider effect and return a typed refusal without existence leakage. | Owner/source deletion or revocation preserves required immutable evidence/tombstone, removes derived access/projection, and queues idempotent dependent invalidation so no orphan remains. |
+| CRD-09 Log contribution | Same idempotency key returns the same result; competing expected revisions serialize one winner and return typed conflict to the loser without duplicate effect. | Schema, authority and policy validation fail before mutation/provider effect and return a typed refusal without existence leakage. | Owner/source deletion or revocation preserves required immutable evidence/tombstone, removes derived access/projection, and queues idempotent dependent invalidation so no orphan remains. |
+| CRD-10 Close session | Same idempotency key returns the same result; competing expected revisions serialize one winner and return typed conflict to the loser without duplicate effect. | Schema, authority and policy validation fail before mutation/provider effect and return a typed refusal without existence leakage. | Owner/source deletion or revocation preserves required immutable evidence/tombstone, removes derived access/projection, and queues idempotent dependent invalidation so no orphan remains. |
+| CRD-11 Capture attendance evidence | Same idempotency key returns the same result; competing expected revisions serialize one winner and return typed conflict to the loser without duplicate effect. | Schema, authority and policy validation fail before mutation/provider effect and return a typed refusal without existence leakage. | Owner/source deletion or revocation preserves required immutable evidence/tombstone, removes derived access/projection, and queues idempotent dependent invalidation so no orphan remains. |
+| CRD-12 Import external credit | Same idempotency key returns the same result; competing expected revisions serialize one winner and return typed conflict to the loser without duplicate effect. | Schema, authority and policy validation fail before mutation/provider effect and return a typed refusal without existence leakage. | Owner/source deletion or revocation preserves required immutable evidence/tombstone, removes derived access/projection, and queues idempotent dependent invalidation so no orphan remains. |
+| CRD-13 Claim unclaimed credit | Same idempotency key returns the same result; competing expected revisions serialize one winner and return typed conflict to the loser without duplicate effect. | Schema, authority and policy validation fail before mutation/provider effect and return a typed refusal without existence leakage. | Owner/source deletion or revocation preserves required immutable evidence/tombstone, removes derived access/projection, and queues idempotent dependent invalidation so no orphan remains. |
+| CRD-14 Request attestation | Same idempotency key returns the same result; competing expected revisions serialize one winner and return typed conflict to the loser without duplicate effect. | Schema, authority and policy validation fail before mutation/provider effect and return a typed refusal without existence leakage. | Owner/source deletion or revocation preserves required immutable evidence/tombstone, removes derived access/projection, and queues idempotent dependent invalidation so no orphan remains. |
+| CRD-15 Answer/retract attestation | Same idempotency key returns the same result; competing expected revisions serialize one winner and return typed conflict to the loser without duplicate effect. | Schema, authority and policy validation fail before mutation/provider effect and return a typed refusal without existence leakage. | Owner/source deletion or revocation preserves required immutable evidence/tombstone, removes derived access/projection, and queues idempotent dependent invalidation so no orphan remains. |
+| CRD-16 Derive provenance | Same idempotency key returns the same result; competing expected revisions serialize one winner and return typed conflict to the loser without duplicate effect. | Schema, authority and policy validation fail before mutation/provider effect and return a typed refusal without existence leakage. | Owner/source deletion or revocation preserves required immutable evidence/tombstone, removes derived access/projection, and queues idempotent dependent invalidation so no orphan remains. |
+| CRD-17 Contest credit | Same idempotency key returns the same result; competing expected revisions serialize one winner and return typed conflict to the loser without duplicate effect. | Schema, authority and policy validation fail before mutation/provider effect and return a typed refusal without existence leakage. | Owner/source deletion or revocation preserves required immutable evidence/tombstone, removes derived access/projection, and queues idempotent dependent invalidation so no orphan remains. |
+| CRD-18 Resolve pending taxonomy alias | Same idempotency key returns the same result; competing expected revisions serialize one winner and return typed conflict to the loser without duplicate effect. | Schema, authority and policy validation fail before mutation/provider effect and return a typed refusal without existence leakage. | Owner/source deletion or revocation preserves required immutable evidence/tombstone, removes derived access/projection, and queues idempotent dependent invalidation so no orphan remains. |
+
+## Cross-Shard Dependencies
+
+- **Depends on:** [Shard 00](00-infrastructure.md) for contracts/events/offline/idempotency/projections; [Shard 01](01-identity-authority.md) for parties, aliases, acting context, memberships, mandates and non-automatic identity merges.
+- **Depended on by:** Shards 08–10, 18–20, 22, 23 and 39 consume credit/provenance/taxonomy projections. Shard 09 owns projects/sessions; Shard 10 owns rights/splits; neither may reinterpret a credit as ownership.
+
+## Deep Dives Needed
+
+- [Credit graph, capture and confidence deep dive](deep-dives/07-credits-core.md)
+
+### Cross-Shard Section Contract Map
+
+- **Shard 08 — Credit reporting and disclosure:** consume [Shard 08 — Credit reporting and disclosure Contracts](08-credit-reporting-disclosure.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 08 — Credit reporting and disclosure Event Schemas](08-credit-reporting-disclosure.md#event-schemas). Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
+- **Shard 09 — Projects and collaboration:** consume [Shard 09 — Projects and collaboration Contracts](09-projects-collaboration.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 09 — Projects and collaboration Event Schemas](09-projects-collaboration.md#event-schemas). Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
+- **Shard 10 — Rights and ownership:** consume [Shard 10 — Rights and ownership Contracts](10-rights-ownership.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 10 — Rights and ownership Event Schemas](10-rights-ownership.md#event-schemas). Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
+- **Shard 18 — Royalty accounting:** consume [Shard 18 — Royalty accounting Contracts](18-royalty-accounting.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 18 — Royalty accounting Event Schemas](18-royalty-accounting.md#event-schemas). Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
+- **Shard 20 — Licensing core:** consume [Shard 20 — Licensing core Contracts](20-licensing-core.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 20 — Licensing core Event Schemas](20-licensing-core.md#event-schemas). Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
+- **Shard 22 — Release and distribution:** consume [Shard 22 — Release and distribution Contracts](22-release-distribution.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 22 — Release and distribution Event Schemas](22-release-distribution.md#event-schemas). Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
+- **Shard 23 — Gear provenance registry:** consume [Shard 23 — Gear provenance registry Contracts](23-gear-provenance-registry.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 23 — Gear provenance registry Event Schemas](23-gear-provenance-registry.md#event-schemas). Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
+- **Shard 39 — Analytics ingestion and reporting:** consume [Shard 39 — Analytics ingestion and reporting Contracts](39-analytics-ingestion-reporting.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 39 — Analytics ingestion and reporting Event Schemas](39-analytics-ingestion-reporting.md#event-schemas). Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
+
+## Changelog
+
+| Date | Change | Workflow | Sections Affected |
+|---|---|---|---|
+| 2026-08-02 | Initial skeleton and source-feature seeding | /decompose-architecture-structure | All |
+| 2026-08-03 | Reconciled 27 in-scope sources and locked credit, capture, confidence, dispute and taxonomy contracts | /write-architecture-spec | All |
+
+## Dependency References
+
+### Constrains
+
+- [[specs/ia/08-credit-reporting-disclosure|Shard 08 — Credit reporting and disclosure]]
+- [[specs/ia/09-projects-collaboration|Shard 09 — Projects and collaboration]]
+- [[specs/ia/10-rights-ownership|Shard 10 — Rights and ownership]]
+- [[specs/ia/18-royalty-accounting|Shard 18 — Royalty accounting]]
+- [[specs/ia/20-licensing-core|Shard 20 — Licensing core]]
+- [[specs/ia/22-release-distribution|Shard 22 — Release and distribution]]
+- [[specs/ia/23-gear-provenance-registry|Shard 23 — Gear provenance registry]]
+- [[specs/ia/39-analytics-ingestion-reporting|Shard 39 — Analytics ingestion and reporting]]
+
+
+<!-- spec-graph: auto-generated -->
+## Related Specs
+
+### References
+- [[specs/ia/08-credit-reporting-disclosure|Shard 08 — Credit reporting, exchange and disclosure]]
+- [[specs/ia/09-projects-collaboration|Shard 09 — Music projects and collaboration]]
+- [[specs/ia/10-rights-ownership|Shard 10 — Rights and ownership]]
+- [[specs/ia/18-royalty-accounting|Shard 18 — Royalty registration, ingestion, calculation and payout]]
+- [[specs/ia/20-licensing-core|Shard 20 — Licensing core and instrument lifecycle]]
+- [[specs/ia/22-release-distribution|Shard 22 — Release and distribution lifecycle]]
+- [[specs/ia/23-gear-provenance-registry|Shard 23 — Gear identity, provenance and recovery]]
+- [[specs/ia/39-analytics-ingestion-reporting|Shard 39 — Analytics ingestion, matching and reporting]]

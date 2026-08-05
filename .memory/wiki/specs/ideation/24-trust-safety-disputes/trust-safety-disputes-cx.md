@@ -440,11 +440,10 @@ re-check something the first automated pass did not have. A ground-(iii) objecti
 re-check to check, so it is logged, shown and routed straight to a human here: **never auto-handled, never
 auto-resolved**.
 
-**A known gap arrives with the load.** A recording that is publicly reachable but **unauthorised** (a leak or
-bootleg) has no ground on the closed list — no source in the corpus defines an authorised-vs-unauthorised
-predicate, and inventing one would make domain 12 the authority for what counts as an authorised release.
-Such an objection can only be filed under ground (iii), which lands on a domain-24 human **with no defined
-test to apply**. Recorded as an accepted gap, not an oversight: `02.01.05` Q-07 — Owner: User, `/create-prd`.
+**Publicly reachable but unauthorised.** Public access is discovery evidence, never authorisation. A leak
+or bootleg is a ground-(iv) human review under `02.01.05` D-24: the reviewer records the cited object,
+claimant authority, and publisher release/licence/authority evidence. Public availability alone does not
+defeat the claim; unresolved cases retain the temporary embargo path rather than an invented approval.
 
 **Reading the embargoed record.** The adjudicator is not a session participant and must still read the
 credit under `02.01.05` D-18's logged, non-publishing, case-scoped grant — the same shape as CX-02's
@@ -468,3 +467,4 @@ case-scoped, read-only locker access: a privileged read that never publishes.
 - [[decisions.md#d-20|D-20]]
 - [[decisions.md#d-21|D-21]]
 - [[decisions.md#d-22|D-22]]
+- [[decisions.md#d-24|D-24]]

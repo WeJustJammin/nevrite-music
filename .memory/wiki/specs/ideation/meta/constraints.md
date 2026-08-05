@@ -165,7 +165,9 @@ time. If builds start thrashing, reduce to 2 runners rather than adding memory p
   where a usage-based equivalent exists. Any capability that would add a fixed monthly floor
   (e.g. a hosted search cluster, a media-transcode pipeline) must be justified against a
   cheaper edge/managed alternative.
-- **Not a hard ceiling number** — "keep it cheap" is the rule, no fixed $/month cap set.
+- **Hard pre-revenue infrastructure cap**: **$0/month** — confirmed by User on 2026-08-02.
+  No paid fixed service or chargeable usage may be enabled before revenue. Free tiers, grants, and
+  credits are permitted only when billing cannot begin automatically without renewed approval.
 
 ## Timeline
 
@@ -173,7 +175,7 @@ time. If builds start thrashing, reduce to 2 runners rather than adding memory p
 
 - **Target**: **Wedge-first, fast — 3–6 months to a first shippable v1.**
 - **Strategy**: ship the provenance wedge + consolidation core; defer the rest to later phases.
-- **Implication**: `/plan-phase` must sequence aggressively. The 195 Musts (D-20) are NOT all v1 —
+- **Implication**: `/plan-phase` must sequence aggressively. The 230 Musts (D-20 + D-85) are NOT all v1 —
   see **V1 Scope** below. Phasing is now a hard planning input, not a deferred question.
 
 ## Team
@@ -184,17 +186,17 @@ time. If builds start thrashing, reduce to 2 runners rather than adding memory p
 - **Implication**: no parallel human workstreams. Everything is sequential build by one person
   with AI leverage. This makes ruthless phasing essential and strongly favors managed services
   (Supabase/Cloudflare do the operational heavy lifting) over anything requiring ops attention.
-  A 24-domain platform is a multi-year road solo; v1 must be a tight, buildable slice.
+  A 25-domain platform is a multi-year road solo; v1 must be a tight, dependency-ordered slice.
 
 ## Release Plan (planning constraint — derived, owner-confirmed)
 
-> Confirmed 2026-07-18, **revised same day** to split the release. This is the single most
+> Confirmed 2026-07-18, revised 2026-08-02 by D-85 to add the CMS/settings foundation. This is the single most
 > important input to `/plan-phase`. Derived from Team=solo + Timeline=3–6mo wedge-first + owner's
 > explicit two-release decision (D-31).
 
 **The v1 marketplace risk was accepted then mitigated by splitting the release into two.**
 
-### v1 — the session spine (first release, ~45 Musts, 5 domains)
+### v1 — session spine + CMS/settings foundation (first release, ~80 Musts, 6 domains)
 
 The irreducible wedge: hire → do the work → capture credit + split at source → on one identity.
 This is what's genuinely buildable solo in 3–6mo AND delivers the unrepeatable provenance wedge.
@@ -206,7 +208,8 @@ This is what's genuinely buildable solo in 3–6mo AND delivers the unrepeatable
 | 05 | Services Marketplace | hiring = the funnel into the room | 10 |
 | 07 | Music Projects & Collaboration | where the work happens | 9 |
 | 09 | Rights & Ownership | **split CAPTURE only** (not collection) | 7 |
-| | **v1 total** | | **~45 Musts** |
+| 25 | Content Management & Platform Configuration | first-party CMS, admin, publishing, navigation, media governance, and settings control plane | 35 |
+| | **v1 total** | | **~80 Musts** |
 
 ### v1.5 — the marketplaces (soon after v1, ~26 Musts, 3 domains)
 
@@ -275,12 +278,17 @@ international expansion is additive (field-level data-residency awareness) but n
 - **Scale expectation (v1)**: professional users, not consumer scale — thousands, not millions.
   Fan/consumer scale (D-13) arrives in phase 2 with domain 20, and *that* is when the budget
   must account for orders-of-magnitude more traffic.
-- **Latency**: real numbers set at `/create-prd-compile`. Note the one hard physical constraint
-  already surfaced: Real-Time Jamming (08, phase 2) has a ~25–30ms desync ceiling — but that's
-  out of v1 scope.
-- **Availability**: the predecessor's "99.9% uptime" claim is aspiration, not a locked budget.
-  The Cloudflare edge already provides strong baseline availability. Real target at
-  `/create-prd-compile`.
+- **Latency**: **normal-web p95 must be <2 seconds** for first-party interactive web requests at
+  expected v1 load — confirmed by User on 2026-08-02. This is a web-response target, not the
+  phase-2 real-time-jamming constraint: upload transfer, asynchronous/background work, and waiting
+  for a third party to complete are measured and surfaced separately rather than being represented
+  as a fast first-party response. Real-Time Jamming (08, phase 2) has its own ~25–30ms desync
+  ceiling and remains out of v1 scope.
+- **Availability**: **99.9% monthly availability, excluding scheduled outages** — confirmed by User on
+  2026-08-02. There is no permitted unplanned-downtime budget. The predecessor's "99.9% uptime"
+  claim is superseded; the Cloudflare edge provides a baseline, not a substitute for this requirement.
+  `/create-prd-compile` must define a scheduled outage's notice, finite start/end window, and
+  emergency-maintenance treatment; it cannot be used to relabel an incident as maintenance.
 - **Lean implication**: performance work should ride the edge platform's built-in capabilities
   (Cloudflare caching, Workers) before adding paid performance infrastructure.
 
@@ -342,6 +350,11 @@ Auto-Update & Security Model" not-product row has no v1 brief.
 **Follow-on, unassigned**: nobody is currently tasked with gathering (a)–(d). They are owner-decision
 inputs, not tracked work. Recorded as `vision.md` Q-07.
 
+**Open-decision governance.** The **Owner** is User; the hard decision deadline is immediately before
+`/create-prd-stack` begins; and the decision blocks whether the v1 local-agent surface may reopen.
+The required evidence is (a)–(d) above; until the owner records a superseding decision, no v1 agent
+distribution, signing, notarisation, or auto-update work may begin.
+
 ### Jurisdiction Parameterization — launch profile
 
 > Owner decision 2026-07-22 (D-72, from queue entry DQ-14). Applies D-32's second half
@@ -377,6 +390,7 @@ inputs, not tracked work. Recorded as `vision.md` Q-07.
 
 ### Constrained by
 - [[decisions.md#d-20|D-20]]
+- [[decisions.md#d-85|D-85]]
 - [[decisions.md#d-31|D-31]]
 - [[decisions.md#d-70|D-70]]
 - [[decisions.md#d-10|D-10]]

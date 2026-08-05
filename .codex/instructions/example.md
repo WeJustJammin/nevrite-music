@@ -3,7 +3,7 @@ ideation/
 │   ├── web/
 │   │   ├── webdomain-01/ (top domain)
 │   │   │  ├── 01.01-consumer-web/ (sub domain)
-│   │   │  │   └── 01.01.01-consumer-web-{{feat01}}.md 
+│   │   │  │   └── 01.01.01-consumer-web-{{feat01}}.md
 │   │   │  │   └── 01.01.02-consumer-web-{{feat02}}.md
 │   │   │  │   └── cunsumer-web-crosscut.md (sub domain CX)
 │   │   │  │   └── consumer-web-index.md (sub domain index)

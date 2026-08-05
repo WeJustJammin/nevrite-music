@@ -1,24 +1,29 @@
 # Development Commands
 
-<!-- 
-  THIS FILE IS A TEMPLATE.
-  The /bootstrap-agents workflow fills per-surface command sections below.
-  For single-surface projects, one flat section is written.
-  For multi-surface projects, one section per surface.
--->
+## Web Surface
 
-<!-- Bootstrap writes command sections here. Each surface from the map gets its own section. -->
-<!-- Single-surface projects get a flat layout (no surface header). -->
-
-{{COMMAND_SECTIONS}}
+| Action | Command |
+|---|---|
+| Install exact lockfile | `pnpm install --frozen-lockfile` |
+| Development server | `pnpm dev` |
+| Unit/integration tests | `pnpm test` |
+| Test watch mode | `pnpm test:watch` |
+| Coverage gate | `pnpm test:coverage` |
+| End-to-end tests | `pnpm test:e2e` |
+| Lint | `pnpm lint` |
+| Lint with fixes | `pnpm lint:fix` |
+| Format files | `pnpm format` |
+| Check formatting | `pnpm format:check` |
+| Type-check | `pnpm type-check` |
+| Production build | `pnpm build` |
+| Full validation | `pnpm validate` |
 
 ## Validation (run after every code change)
 
 The validation command runs all checks for the primary surface. For multi-surface projects, run each surface's validation command.
 
-// turbo
 ```bash
-{{VALIDATION_COMMAND}}
+pnpm validate
 ```
 
 All checks must pass before marking any task complete.

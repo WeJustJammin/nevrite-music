@@ -124,6 +124,7 @@
 - [ ] **R7-15.02-D3-003** — Dimension 3: Partial-identity screening is specified both as impossible without the full composite key and as a maker/model-only check, leaving the safety behavior undefined.
   - Evidence: .memory/wiki/specs/ideation/15-gear-registry-ownership/15.02-stolen-gear-registry-recovery/15.02.01-theft-report-serial-flagging.md:50
   - Verification: Current source still makes a serial-unknown flag unusable for screening because a full composite key is required, but also defines a partial screen with no era or serial as a maker/model-only match. It does not specify whether that partial result can hit, hold, or only advise, forcing safety behavior to be invented.
+  - Remediation status: Candidate source fix applied on 2026-08-01. Partial identities are now explicitly not-screenable and never produce a hit, hold, block, or notification; fresh Run 8 verification required.
 - [ ] **R7-ROOT-D2-005** — Dimension 2: Consignment, appraisal, and dealer-stock workflows require a professional dealer, but the actor has no persona definition.
   - Evidence: .memory/wiki/specs/ideation/15-gear-registry-ownership/gear-registry-ownership-index.md:136
   - Verification: The root source and its canonical persona sources all still leave the professional dealer undecided. No authoritative source selects a persona or permissions model, so consignment, appraisal, and dealer stock workflows would require inventing actor authority.

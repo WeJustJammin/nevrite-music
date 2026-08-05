@@ -3,7 +3,9 @@
 > **Pipeline key file.** All downstream workflows read this index to locate ideation documents.
 > This file is the entry point for `/create-prd`, `/decompose-architecture`, `/audit-ambiguity ideation`, and all other workflows that consume ideation output.
 
-> Source: [idea.md](../../../../idea.md) — SoundBytez platform README (predecessor product)
+> Source: SoundBytez platform README (predecessor product). The original intake file is not retained in this repository; this ideation corpus is the canonical surviving source.
+>
+> **Ideation gate**: **LOCKED** — Run 8 fresh independent source-only ambiguity audit passed on 2026-08-02. Downstream work begins at `/create-prd`; counsel-gated capabilities remain explicit non-shipping scope until qualified approval.
 
 ## Project Overview
 
@@ -56,24 +58,24 @@
 | Metric | Value |
 |--------|-------|
 | Total surfaces | 1 (web) |
-| Total domains | **24** — all `[BREADTH]` |
-| Total sub-domains | **165** |
-| Total leaf features | **734** |
-| Total ideation files | **1,121** (734 features · 190 indexes · 190 CX · 6 meta · 1 super-index (`ideation-index.md`) · not counted: `../vision.md`, `../feature-ledger.md`, `../moscow-ledger.md` live one level up). Meta went 5 → 6 on 2026-07-22 with [meta/counterparties.md](meta/counterparties.md) (D-71). |
+| Total domains | **25** — 24 `[BREADTH]` + domain 25 `[DEEP]` |
+| Total sub-domains | **175** |
+| Total leaf features | **776** |
+| Total ideation files | **1,185** (776 features · 201 indexes · 201 CX · 6 meta · 1 super-index (`ideation-index.md`); excludes the recovery-only `domain-map-proposal.md`). |
 | Max depth reached | 3 |
-| Domains at [BREADTH] | 24 / 24 (mixed: Musts [DEEP], Shoulds/Coulds [SURFACE]) |
-| Must features at [DEEP] | **195 / 195** — Step 5 complete |
-| Should features at [PARTIAL] | **285 / 285** — Step 5 Level-1 complete |
+| Domains at [BREADTH] | 24 / 25; domain 25 is [DEEP] |
+| Must features at [DEEP] | **230 / 230** — original 195 plus 35 CMS/settings features |
+| Should features at [PARTIAL]+ | **292 / 292** — 285 original plus 7 CMS features at [DEEP] |
 | Could/Won't features at [SURFACE] | 254 — _correctly out of Step 5 scope_ |
 | Nodes at [EXHAUSTED] | 0 |
-| Role Lens coverage | **734 / 734** feature files (2,936 rows = 4 personas × 734, verified) |
+| Role Lens coverage | **776 / 776** feature files (3,104 rows = 4 personas × 776) |
 | Invented personas | **0** — only Musician / Producer / Operator / Fan |
 | Placeholder leaks | **0** |
 | Deep Think nodes added beyond the sweep's candidates | **166** |
 | Duplicate candidates merged during classification | **118** |
-| Cross-cut mechanisms (consolidated registry) | **25** — in `ideation-cx.md` |
+| Cross-cut mechanisms (consolidated registry) | **26** — in `ideation-cx.md` |
 | Not-product concerns routed to `/create-prd` | 142 |
-| Cross-domain interaction pairs synthesized | **206** (184 full synthesis, 22 tracked) — Step 6 complete |
+| Cross-domain interaction pairs synthesized | **230** (208 full synthesis, 22 tracked) — includes all 24 domain-25 seams |
 | Domain CX files at [DEEP] | **24 / 24** |
 | Emergent cross-cuts / features (Step 6) | 52 / 76 — [meta/cross-cut-emergent-capabilities.md](meta/cross-cut-emergent-capabilities.md) |
 | Candidates demoted from domain status (extract) | 21 |
@@ -108,7 +110,8 @@
 
 #### Top-Level Domains
 
-> **24 domains, ratified 2026-07-16 (D-16).** All at `[BREADTH]` as of 2026-07-16 —
+> **25 domains.** Domains 01–24 were ratified 2026-07-16 (D-16); domain 25 was owner-directed 2026-08-02 (D-85).
+> Domains 01–24 remain `[BREADTH]`; domain 25 is `[DEEP]` —
 > children classified through the Node Classification Gate and written to disk.
 > **Counts below are read from disk, not from agent self-reports.**
 > Depth (Step 5 deepening) is allocated by MoSCoW — see `## MoSCoW Summary`.
@@ -139,6 +142,7 @@
 | 22 | Analytics & Market Intelligence | [22-analytics-market-intelligence/](./22-analytics-market-intelligence/) | `[BREADTH]` | 8 sub-domains + 26 features | 3 | in-source / important |
 | 23 | Career, Finance & Business Management | [23-career-finance-business/](./23-career-finance-business/) | `[BREADTH]` | 7 sub-domains + 29 features | 3 | in-source / important |
 | 24 | Trust, Safety & Disputes | [24-trust-safety-disputes/](./24-trust-safety-disputes/) | `[BREADTH]` | 8 sub-domains + 36 features | 3 | industry-standard / core |
+| 25 | Content Management & Platform Configuration | [25-content-management-platform-configuration/](./25-content-management-platform-configuration/) | `[DEEP]` | 10 sub-domains + 42 features | 3 | user-directive / core |
 
 > **Ratified recovery provenance, per-domain rationale, cross-cuts, not-product routing, and demotions**:
 > [domain-map-proposal.md](domain-map-proposal.md)
@@ -151,7 +155,7 @@
 |---|-----------|-------|----------|
 | 1 | Problem Clarity | ✅ | Single falsifiable sentence naming the multi-hyphenate musician + the "proof evaporates" pain. [problem-statement.md](meta/problem-statement.md) |
 | 2 | Persona Specificity | ✅ | 4 personas, all 6 fields each, no generic "users". [personas.md](meta/personas.md). **Amended 2026-07-22 (D-71)**: this run scored ✅ without recording an answer to the licence-buyer gap it should have caught. That gap is now closed by two non-persona counterparty profiles at the same field depth ([counterparties.md](meta/counterparties.md)); the persona count is unchanged at 4. Nine other non-persona actors remain explicitly open — `vision.md` Q-09. |
-| 3 | Feature Completeness | ✅ | 195 Musts at `[DEEP]` with edge cases + Role Lens; 285 Shoulds `[PARTIAL]`; MoSCoW mutually exclusive; 734 features in [feature-ledger.md](../feature-ledger.md) |
+| 3 | Feature Completeness | ✅ | 230 Musts at `[DEEP]` with edge cases + Role Lens; 292 Shoulds `[PARTIAL]` or deeper; MoSCoW mutually exclusive; 776 features in [feature-ledger.md](../feature-ledger.md) |
 | 4 | Constraint Explicitness | ✅ | Budget/timeline/team/compliance/performance/surfaces all have specific values (D-28/**31/32** — supersedes D-29/30). Open stack items explicitly deferred to `/create-prd`. [constraints.md](meta/constraints.md) |
 | 5 | Success Measurability | ✅ | Each metric has a method + target; wedge metrics numeric (split-capture ≥60% @ 6mo, capture <7d); baseline-set + hard SLOs deferred to `/create-prd-compile`. [vision.md](../vision.md) |
 | 6 | Competitive Positioning | ✅ | 17 named competitors, capture-vs-reconstruct differentiation, earned-provenance moat, partner-vs-rival split. [competitive-landscape.md](meta/competitive-landscape.md) |
@@ -258,11 +262,21 @@ Numbered decisions with source references.
 | D-73 | **DQ-15 rehearsal backline reads through the gear register, quantity-tracked, with provision posture typed on the room spec.** (a) `16.04` confirms `15.07` D-01 for rehearsal rooms: backline renders from `15.07.03` filtered by `15.07.02` condition and `16.04` stops typing its own item list — the same read-through both sibling room types already confirmed (16.02.02 D-06, 16.03.02 D-04/D-05), avoiding the two-stores-two-update-paths rot `15.07.03` DT-01 exists to prevent. Recorded as a per-feature confirmation; it does **not** close domain-15 Q-07 or 15.07 Q-01. (b) **Quantity-tracked** mode for commodity rehearsal stock, identity-tracking retained per item where the Operator wants it — commissioning a genuine model addition inside domain 15, degrading `15.07.02` D-01 (condition-on-a-count: "4 amps, 1 faulty" cannot say which) and `16.03.02` D-08 (a reservation's gear dependency has no referent on a count, and must be respecified for quantity lines). (c) `16.04` owns a typed per-category **provision enum** (`included` / `hire-extra` / `bring-your-own-only` / `none`, with `unstated` a distinct non-value); 15 owns the items and `16.06.07` owns the price — requiring one explicit boundary sentence, because inference fails in both directions (an empty register renders `unstated`, not `none`). **Unresolved precondition, blocking a real population**: `15.07` publishes ORG registers, so per `16.03.02` DT-12 a sole-trader rehearsal Operator with no org entity cannot publish at all. | Owner decision + source-contract recheck, 2026-07-22 | 16, 15 |
 | D-74 | **DQ-20 the coverage verification badge is earned by the ARTEFACT, never by pitch provenance.** Artefact class plus retrievability determines strength: a fixed, live, retrievable article renders `verified` whether or not a WeJammin pitch produced it. `21.07` owns the verification taxonomy — its `Verified` trigger contains no pitch condition, D-03 declares parentless coverage fully valid ("often the best coverage there is"), and D-04 commits verification to a **link** act ("we verify the link, not the reading"), performable on any URL. This **overrules** the later, deeper `promotion-marketing-cx.md` on ownership rather than recency, editing ratified `[DEEP]` CX prose in two places (CX-05 Relationship, CX-08 synthesis Q3). It also **weakens** what the badge proves about WeJammin specifically: index D-02 rested the domain's existence on "it sent the pitch, it holds the link", and that defensibility claim must be re-founded on the link-verification act. Separately, **provenance stays a log state**: `Attributed` / `Organic` remains a record state visible to the Musician, driving the CRM flip and the directory denominator, while the EPK renders **one** strength badge per item and nothing about sourcing — `21.09` is untouched while `[PARTIAL]`, and a compound label would be new spec no source has written. Accepted: a journalist reading the EPK cannot distinguish a platform-observed capture from an artist-self-logged one. | Owner decision + source-contract recheck, 2026-07-22 | 21 |
 | D-75 | **DQ-R2-01 a representation edge carries TWO independent flat axes, conjoined at the call site.** The closed seven-verb **activities** enum — book / sign / spend / list / release / settle / administer — is untouched and unrepealed (`01.03.03` D-01, restated globally as D-69); it gains a second, independent axis, **domains**, a subset of the commercial-domain set (live booking / recording / publishing / sync / merch). An action is authorised **iff** its verb is in the edge's `activities` **and** its domain is in the edge's `domains` — the two axes ANDed at the call site, at the moment of the action. Neither axis is a matrix and the conjunction is no cell grid: two flat lists are at most **7 + 5 = 12** plain-language statements per edge, never 35 addressable cells, which is what keeps `01.03.03` DT-02 (permission matrix REJECTED) and its D-02 (plain language, not a permission grid) intact — authority renders as prose, "may book and settle, for live and recording". A **membership** edge carries the activity axis only and resolves to **all five** domains, which is what preserves `01.03-cx` CX-03: enforcement sees one shape, `{activities, domains}`, whichever route the authority arrived by, and D-69's peer seed is neither widened nor narrowed. Terminology is fixed platform-wide — **activities** is reserved for the seven verbs, so `01.03.02`'s "scope (which activities — live booking, recording, publishing, sync, merch)" is renamed **domains**, and the identity claim "scope **is** the mandate" (`01.03.02`:76, `01.03-cx` CX-02) is corrected: the **mandate is the activity axis**; **scope is activities AND domains** conjoined at resolution. Derived rule (agent decision, owner may override): a representation edge must declare **at least one** domain at creation — an empty `domains` set is invalid rather than silently universal, on the least-privilege default in [ideation-cx.md](ideation-cx.md)'s Roles, Permissions & Delegated Authority cross-cut plus `01.03.02`:50 ("the edge **is** the represented party's consent" — and a consent to nothing is not a consent); membership edges are exempt because their universality is the rule above, not an empty set. Accepted cost recorded: **territory, term and commission stay edge-level and do not vary per domain** — they bound the edge and are inherited by the mandate (`01.03.03`:25, correcting CX-02's "additionally bounding"), so a mandate that is worldwide for `publishing` but narrower for `live booking` cannot be expressed on one edge; that is the price of two flat axes, and it is recorded as accepted, not left silent. Carve-out: `administer` does not reach authorship — with or without the `publishing` domain it confers no authority to name a publisher over a writer share the represented party did not write, and `09.01.04` D-06 stands over the mandate. Tracked, unresolved — **[OWNER]**: are the five domains identical to domain 17's ratified work-type enum, or a fourth vocabulary? `01.03.02`:25 lists **sync** as publishing's *sibling* while `09.01.04`:102 carves sync *inside* publishing as a right type (performance, mechanical, sync, print); this needs a taxonomy ruling and is not answered here. | Owner decision, 2026-07-29 | 01 |
+| D-76 | **Batch 1 owner ratification — party, communication, actor, and unclaimed-portfolio boundaries.** (A1) An organisation is optional; person and each legally separate band/studio/agency/label are distinct parties of record, and acting for another party requires a recorded mandate. (A2) `communicate` is a separate, explicit mandate grant: no commercial activity or commercial domain silently authorises speaking as a party. (A3) D-19's four primary personas remain fixed; dealer/plugin developer, private-hire buyer, crew, guardian, and manager are bounded account/counterparty roles; Admin/Moderator is internal staff; gatekeepers, insurers, and accountants are off-platform v1 counterparts. (A4) An unclaimed non-user portfolio may accrue as a provisional record but is neither public nor search-indexed until lawful basis, notice, and removal controls are approved; claimed or explicitly consented public paths remain eligible. | Owner ratification A1–A4, 2026-08-02 | Global, 01, 04, 05, 06, 15, 21, 24 |
+| D-77 | **Batch 2 owner ratification — payout, follow, and counsel-gated release boundaries.** (B1) After 30 calendar days from a recorded split request, pay confirmed shares and hold only the unresolved portion in a non-forfeitable record with a claim path; silence never reallocates or forfeits it. (B2) Segment sends, audience export, demand maps, and sparse-cluster disclosure do not ship before qualified privacy/security approval of the numeric floor and enforcement scope; counts and a fan's own record remain available. (B3) V1 D2F sales are a compliance-cleared single-payee path only; multi-party payout and held collaborator funds are excluded pending qualified approval. (B4) A browser-local follow has no alert delivery; verified email plus explicit alert consent makes it durable, and later account creation links the same consented follow. (B5) Private free-text notes about identifiable third parties are excluded from v1; structured outcomes only pending qualified review. (B6) Automatic CSAM action, crisis emergency-contact/escalation, self-service law-enforcement portal, and 24/7 response are excluded pending qualified approval. | Owner ratification B1/B4 + counsel gates B2/B3/B5/B6, 2026-08-02 | Global, 14, 20, 21, 24 |
+| D-78 | **Batch 3 owner-autonomy ratification — claims, education, and royalty safeguards.** (C1) Tier-C counter-attestation creates only a provisional claim, never public trust, ownership change, or contest resolution before independent proof. (C2) Contested lifts use a 7-calendar-day evidence exchange and a 30-calendar-day final-decision target; unsupported objections lift, while timely substantiated cases stay embargoed with weekly status and priority review. (C3) Guardians see feedback and billing/entitlement facts, never an identifiable child practice diary. (C4) Course refunds are available for 14 days before 20% material consumption, subject to defect, misrepresentation, and mandatory-law overrides. (C5) Contradictory royalty terms use minimal bilateral reconciliation with affected-counterparty consent; unresolved terms remain held. | Owner autonomy delegation, 2026-08-02 | Global, 01, 02, 06, 10 |
+| D-79 | **Batch 4 owner-autonomy ratification — release distribution safeguards.** (D1) Distribution updates the artist and emits `release.date_changed` but never directly messages fans; promotion needs artist authorization and applicable consent. (D2) Suspension permits only timestamped, claimant-visible additive evidence; challenged facts, delivery state, and prior evidence remain immutable. (D3) Destructive redelivery requires a persisted per-store plan and visible idempotent recovery. (D4) An unresolved UGC ownership conflict blocks new registration across platforms while retaining existing platform-specific state. (D5) Whitelist source changes create a protected, artist-reviewed reconciliation with no automatic removal. | Owner autonomy delegation, 2026-08-02 | Global, 12, 20, 21 |
+| D-80 | **Batch 5 owner-autonomy ratification — marketplace, messaging, and adjudication safeguards.** (E1) A timely damage claim atomically suspends settlement and title transfer. (E2) Rights takedown stops delivery only for the identified asset at the smallest valid container scope while preserving records. (E3) An unavailable required template dependency stops future completable sales and gives existing buyers a compatible-update-or-refund remedy. (E4) An approved base refund permits keeping an upgrade only through explicit, paid re-pricing; otherwise both refund and revoke. (E5) Weak-provenance and stale-consent imports are quarantined until fresh lawful consent. (E6) V1 bulk broadcasting is disabled pending managed sender operations. (E7) V1 paid campaign funding is excluded pending qualified funds-protection approval. (E8) Public reachability is discovery evidence, never authorization; authority evidence receives human review and unresolved cases remain embargoed. | Owner autonomy delegation, 2026-08-02 | Global, 02, 13, 14, 20, 24 |
+| D-81 | **Batch 6 owner-autonomy ratification — scene-feed candidacy boundary.** Scene membership may select a member's own candidate event set only. It never appears as a rank input, boost, or tie-breaker; scoring uses graph proximity, geographic relevance, event class, recency, and reader controls. An “in your scene” explanation labels geographic candidacy rather than a participation score. | Owner autonomy delegation, 2026-08-02 | Global, 03 |
+| D-82 | **Batch 7 owner-autonomy ratification — entitlement payment-failure recovery.** One `(product, holder)` entitlement record persists across every lifecycle state. Retries and new purchases serialise on that record; only a fresh confirmed capture may append a new acquisition epoch and terms snapshot before it becomes `active`. Failed/cancelled attempts grant nothing and cannot mint a duplicate. | Owner autonomy delegation, 2026-08-02 | Global, 14 |
+| D-83 | **Batch 8 owner-autonomy ratification — transaction-dispute limits and entity authority.** V1 addresses a perishable no-show only through the transaction's recorded cancellation/no-show amount or deposit/escrow allocation, never speculative lost revenue, reputation, opportunity, or platform-protection compensation. An entity needs `communicate` authority for evidence/non-binding messages and independently recorded `settle` authority to bind a settlement; without it, normal non-response rules apply. Evidence-backed adjudication is not marketed as an outcome guarantee. | Owner autonomy delegation, 2026-08-02 | Global, 01, 17, 24 |
+| D-84 | **Batch 9 owner-autonomy ratification — MoSCoW rationale authority.** The linked leaf specification, not a ledger digest, is the sole canonical rationale for a MoSCoW placement. Historical excerpts remain navigation-only and may be truncated; no audit, gate, or implementation choice may rely on them. | Owner autonomy delegation, 2026-08-02 | Global |
+| D-85 | **Content management and settings-first operation are mission-critical.** Add a first-party Content Management & Platform Configuration domain with editable structured content types, controlled templates/blocks, entries, navigation, taxonomies, media, revision/publishing workflow, preview, import/export, and a capability-scoped admin workspace. Product-operable variables are typed/scoped/versioned settings, never scattered literals. Plugins, themes, arbitrary executable templates, and genericization of rights/credits/money/authority/dispute/entitlement records are excluded. | Owner directive, 2026-08-02 | Global, 01–24, 25 |
 | D-32 | **Primary market = UNITED STATES to start** (owner revision from D-30's global). One coherent federal framework + state-privacy patchwork instead of every jurisdiction at once — resolves the global-vs-solo tension. US model: CCPA/CPRA, ESIGN/UETA e-sign, DMCA §512, state marketplace-facilitator sales tax (provider-handled), 1099-K, COPPA deferred. `/create-prd-security` keeps the data model jurisdiction-parameterized so later international expansion is additive, not a rewrite. | User, 2026-07-18 | Global, 24 |
 
 ## MoSCoW Summary
 
-> **Full ledger with all 734 features, paths and rationale**: [moscow-ledger.md](./moscow-ledger.md)
+> **Full ledger with all 776 features, paths and rationale**: [moscow-ledger.md](./moscow-ledger.md)
 > Every row links to a verified file on disk (734/734 resolved, 0 broken).
 > **Caveat on "rationale"**: the ledger's Rationale column is a *digest*, and 608 of its 734 digests
 > were hard-cut at 220 characters by the generator that wrote them. They are marked with a trailing
@@ -271,11 +285,11 @@ Numbered decisions with source references.
 
 | Priority | Count | Share |
 |---|---|---|
-| **MUST** | **195** | 26.6% |
-| **SHOULD** | 285 | 38.8% |
-| **COULD** | 201 | 27.4% |
-| **WON'T (now)** | 53 | 7.2% |
-| **TOTAL** | **734** | 100% |
+| **MUST** | **230** | 29.6% |
+| **SHOULD** | 292 | 37.6% |
+| **COULD** | 201 | 25.9% |
+| **WON'T (now)** | 53 | 6.8% |
+| **TOTAL** | **776** | 100% |
 
 ### Must Have — by domain
 
@@ -290,6 +304,7 @@ Numbered decisions with source references.
 | 05 Services Marketplace | 10 | | 21 Promotion & Marketing | 2 |
 | 14 Digital Goods & Plugins | 10 | | 15 Gear Registry | 1 |
 | 02 Credits & Attribution | 9 | | 23 Career, Finance & Business | 1 |
+| 25 Content Management & Configuration | 35 | | | |
 | 04 Opportunities & Casting | 9 | | | |
 | 07 Music Projects & Collab | 9 | | | |
 | 06 Education & Mentorship | 8 | | | |
@@ -297,11 +312,12 @@ Numbered decisions with source references.
 | 11 Music Licensing | 8 | | | |
 | 24 Trust, Safety & Disputes | 8 | | | |
 
-> **✅ Sequencing RESOLVED by D-31 (2026-07-18).** All 195 Musts are retained (D-20), but the
+> **✅ Sequencing UPDATED by D-31 + D-85.** All original 195 Musts are retained (D-20) and 35
+> mission-critical CMS/settings Musts are added (D-85), for 230 total. The
 > release is now **split into v1 / v1.5 / phase-2+** — this supersedes the earlier "defer the
 > beachhead to `/plan-phase`" position recorded under D-20.
 >
-> - **v1 — session spine** (01, 02, 05, 07, **09-capture**), ~45 Musts. The provenance wedge:
+> - **v1 — session spine + CMS/settings foundation** (01, 02, 05, 07, **09-capture**, 25), ~80 Musts. The provenance wedge:
 >   hire → session → split captured at the **first sharing moment**, on one identity. *(Restated
 >   per D-70: with no locally-installed client authorised and `07.09` unphased, v1's capture points
 >   are the review link `07.05.02` and the session-close prompt `07.06.02`. Capture-at-source is the
@@ -313,7 +329,7 @@ Numbered decisions with source references.
 > **09.01 rights-registry + 09.02 split-capture-agreements + 09.03 chain-of-title-lifecycle**
 > (the record + the signed split + provenance of title). Royalty **collection** and the rest of
 > domain 09/10/11/12 are phase 2 (capture now, collect later — D-10). This defines the "~45 Musts"
-> arithmetic: 01(10) + 02(9) + 05(10) + 07(9) + 09-capture(7) = 45.
+> arithmetic: 01(10) + 02(9) + 05(10) + 07(9) + 09-capture(7) + 25(35) = 80.
 >
 > **What `/plan-phase` does now**: it orders **within each release** by dependency. The beachhead
 > is chosen (v1 = the spine); `/plan-phase` sequences the ~45 v1 Musts, then the ~26 v1.5 Musts.
@@ -321,8 +337,8 @@ Numbered decisions with source references.
 >
 > See [meta/constraints.md § Release Plan](meta/constraints.md) for the full per-domain breakdown.
 
-### Should Have — 285
-See [moscow-ledger.md](./moscow-ledger.md#should-285).
+### Should Have — 292
+See [moscow-ledger.md](./moscow-ledger.md#should-292).
 
 ### Could Have — 201
 See [moscow-ledger.md](./moscow-ledger.md#could-201).
@@ -338,6 +354,7 @@ See [moscow-ledger.md](./moscow-ledger.md#wont-53).
 - [[decisions.md#d-18|D-18]]
 - [[decisions.md#d-71|D-71]]
 - [[decisions.md#d-16|D-16]]
+- [[decisions.md#d-85|D-85]]
 - [[decisions.md#d-35|D-35]]
 - [[decisions.md#d-28|D-28]]
 - [[decisions.md#d-29|D-29]]
@@ -410,3 +427,12 @@ See [moscow-ledger.md](./moscow-ledger.md#wont-53).
 - [[decisions.md#d-73|D-73]]
 - [[decisions.md#d-74|D-74]]
 - [[decisions.md#d-75|D-75]]
+- [[decisions.md#d-76|D-76]]
+- [[decisions.md#d-77|D-77]]
+- [[decisions.md#d-78|D-78]]
+- [[decisions.md#d-79|D-79]]
+- [[decisions.md#d-80|D-80]]
+- [[decisions.md#d-81|D-81]]
+- [[decisions.md#d-82|D-82]]
+- [[decisions.md#d-83|D-83]]
+- [[decisions.md#d-84|D-84]]

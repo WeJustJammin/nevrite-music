@@ -13,7 +13,7 @@ and risk operations, transaction disputes and protection programs, copyright enf
 identity abuse, and the duties the platform owes to a state rather than to a user.
 
 **Why this is a top-level domain**: Not a cross-cut despite serving every domain: it has a dedicated
-operator persona, its own destination surfaces (report flow, resolution centre, appeal, moderation queues)
+internal staff operating role, its own destination surfaces (report flow, resolution centre, appeal, moderation queues)
 and legally mandated machinery — DSA notice-and-action with statements of reasons and internal complaint
 handling, UK OSA illegal-harms duties, and DMCA safe harbour conditional on a reasonably implemented
 repeat-infringer policy (the exact failure that produced nine- and ten-figure verdicts in BMG v. Cox and
@@ -135,7 +135,7 @@ Three findings reshaped the domain and belong at the top of it:
 |---|----------|-------|-------------|
 | Q-01 | ✅ **RESOLVED** — 29 candidates classified: 8 sub-domains, 36 features, 3 cross-cuts, 4 not-product halves. | Agent | `/ideate-discover` (done) |
 | Q-02 | ✅ **RESOLVED** — three candidates were cross-cuts (D-06); recorded in [trust-safety-disputes-cx.md](./trust-safety-disputes-cx.md) and returned for the global CX file. | Agent | `/ideate-discover` (done) |
-| Q-03 | **Admin/Moderator is not a persona** (`personas.md` Q-02) and this domain has *five* non-persona actors. Three of nine children have an all-`❌` Role Matrix row. **This domain cannot be specified until Q-02 is resolved.** | User | `/create-prd` |
+| Q-03 | ~~Admin/Moderator is not a persona and this domain cannot be specified until the actor resolves.~~ **RESOLVED — D-76.** Admin/Moderator is internal staff with a separate console and permission boundary, not a fifth persona or ordinary acting context. Domain specifications consume that staff boundary; the detailed console and security controls remain their normal architecture work. | User | ✅ Owner ratification A3, 2026-08-02 |
 | Q-04 | ~~**MoSCoW here is a function of the beachhead** (`problem-statement.md` Q-03). Gear-marketplace fraud, chargebacks and CITES are irrelevant if gear does not launch; CSAM reporting and DMCA are not, because they bind from user one regardless. The domain cannot be prioritised before the beachhead is chosen.~~ **RESOLVED — the beachhead is chosen.** [ideation-index](../ideation-index.md) **D-31**: "**v1 = session spine** (01, 02, 05, 07, 09-capture) ~45 Musts… **v1.5 = the 3 marketplaces** (13, 14, 15) ~26 Musts… Phase 2+ = the remaining ~124 Musts." This domain appears in neither release list, so its **8 Musts sit in phase 2+**, and its gear-facing work (fraud, chargebacks, CITES) is no longer hypothetical because gear ships at v1.5. All 195 Musts are retained (D-20). D-31 makes no carve-out for the bind-from-user-one items (CSAM reporting, DMCA) — moving any of them earlier is a release-scope change under D-20/D-31, not an open beachhead question. | User | ✅ Resolved — ideation-index D-31 (+ D-20) |
 | Q-05 | **Every DSA scale-gate reading in this domain is an agent's reading.** Art 16 (Section 2, no carve-out) vs Art 19 disapplying Section 3 for micro/small; Art 17 SoR vs Art 15(2) transparency. This reasoning moves four features between Must and Could and **must be confirmed by counsel**, not by an agent. | User + counsel | `/create-prd-security` |
 | Q-06 | [OWNER] **`meta/constraints.md` describes no platform team — so the owner is the first moderator.** That makes reviewer wellbeing a business-continuity control ([24.01.03](./24.01-reporting-moderation/24.01.03-moderation-queue-reviewer-ops.md) DT-01), makes conflict-of-interest recusal structurally impossible (24.01.03 Q-02), and puts CSAM and crisis review on one unrotatable person. **This is a founder-welfare question, not only a staffing one.** It now also carries a **new, unbudgeted inbound load**: every contested evidence-based lift objection that survives inline platform re-verification becomes per-objection human adjudication under a *mandatory* resolution SLA (`02.01.05` D-21 → `02.05` D-07; SLA value deferred to `02.01.05` Q-06). See **Inbound Adjudication Load** in [trust-safety-disputes-cx.md](./trust-safety-disputes-cx.md). Team = solo is locked ([ideation-index](../ideation-index.md) D-28), so this is not a resourcing forecast but a live owner choice about what the founder will personally review and what the product must therefore not ship. | User | `/create-prd` |
@@ -157,6 +157,7 @@ Three findings reshaped the domain and belong at the top of it:
 - [[decisions.md#d-05|D-05]]
 - [[decisions.md#d-06|D-06]]
 - [[decisions.md#d-07|D-07]]
+- [[decisions.md#d-76|D-76]]
 - [[decisions.md#d-31|D-31]]
 - [[decisions.md#d-20|D-20]]
 - [[decisions.md#d-21|D-21]]

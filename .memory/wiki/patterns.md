@@ -2,8 +2,8 @@
 
 ## Summary
 
-- **Total patterns**: 11
-- **Unique pattern titles**: 11
+- **Total patterns**: 12
+- **Unique pattern titles**: 12
 
 ## PAT-001: Verify a generated claim against the kit's own reference before propagating it (2026-07-16)
 
@@ -182,6 +182,20 @@
 - **Source**: DQ-R2-01 root-cause analysis. Related: [[PAT-006]] (writing to derived artefacts
   instead of raw records) — both are cases of trusting a generated record over ground truth.
 
+## PAT-012: Validate decomposition at both boundary and ledger granularity (2026-08-02)
+
+- **Occurrences**: 1
+- **Latest timestamp**: 2026-08-03T01:33:14.100Z
+- **Agents**: codex
+- **Sources**: decompose-architecture
+- **Index**: [[index]]
+
+- **Type**: best-practice
+- **Confidence**: 0.6 (applied 1 time)
+- **Context**: Decomposing a deep fractal ideation tree into dependency-ordered IA shards.
+- **Pattern**: Apply shard-load thresholds to direct approved subareas, then independently map every leaf feature through its top-level source prefix and verify total, Must, orphan and duplicate counts. Boundary counts alone can pass while leaf coverage is incomplete; ledger counts alone can hide overloaded boundaries. Also emit explicit wiki relationships because ordinary Markdown links do not satisfy the spec-graph edge linter.
+- **Source**: WeJammin /decompose-architecture — 43 shards, 776/776 features, 230/230 Must, 35 deep dives, zero cycles and zero changed-artifact graph warnings.
+
 ## Full Log
 
 ### PAT-001: Verify a generated claim against the kit's own reference before propagating it (2026-07-16)
@@ -349,3 +363,16 @@
   in that slot, not just files citing the decision.
 - **Source**: DQ-R2-01 root-cause analysis. Related: [[PAT-006]] (writing to derived artefacts
   instead of raw records) — both are cases of trusting a generated record over ground truth.
+
+### PAT-012: Validate decomposition at both boundary and ledger granularity (2026-08-02)
+
+- **Timestamp**: 2026-08-03T01:33:14.100Z
+- **Agent**: codex
+- **Source**: decompose-architecture
+- **Tags**: pattern, decomposition, coverage, spec-graph
+
+- **Type**: best-practice
+- **Confidence**: 0.6 (applied 1 time)
+- **Context**: Decomposing a deep fractal ideation tree into dependency-ordered IA shards.
+- **Pattern**: Apply shard-load thresholds to direct approved subareas, then independently map every leaf feature through its top-level source prefix and verify total, Must, orphan and duplicate counts. Boundary counts alone can pass while leaf coverage is incomplete; ledger counts alone can hide overloaded boundaries. Also emit explicit wiki relationships because ordinary Markdown links do not satisfy the spec-graph edge linter.
+- **Source**: WeJammin /decompose-architecture — 43 shards, 776/776 features, 230/230 Must, 35 deep dives, zero cycles and zero changed-artifact graph warnings.

@@ -1,0 +1,322 @@
+# Shard 18 — Royalty registration, ingestion, calculation and payout
+
+**Status:** Complete
+**Surface:** Web/PWA and asynchronous import/export jobs
+**Source:** [Architecture design](../2026-08-02-architecture-design.md) · [Decomposition plan](decomposition-plan.md)
+
+## Overview
+
+Shard 18 owns society affiliation facts, registration payload projection/delivery status, immutable statement ingestion, deterministic parsing, catalogue matching, exact bitemporal calculation, recoupment position, restatements, payee statements, recovery findings and statement disputes. It does not interpret contracts, promise society acceptance, infer ownership, hide residuals or move multi-party royalty money before counsel/provider gate B3.
+
+### Scope Reconciliation
+
+| Reconciliation item | Result |
+|---|---|
+| In-scope source documents loaded | 34 |
+| Child capabilities reconciled | 24 |
+| Accounting chain | Registration, ingestion, parsing, matching, normalization, calculation, recoupment, restatement, statements |
+| Recovery chain | Unclaimed search, evidence packs, leakage findings and statement disputes |
+| Phase | Phase-2 royalties train after rights/catalogue prerequisites |
+| Disabled financial capability | Multi-party payout routing, pooled funds and escrow representations pending B3 |
+
+### Accounting Decisions
+
+| Area | Locked decision |
+|---|---|
+| Registration | Payload projects immutable Shard 10/09 rights data; user corrects source records, never edits delivery payload. |
+| Source files | Original bytes and custody remain immutable even when unparseable; duplicate and restatement are distinct. |
+| Parsing | Source/version/date adapter is deterministic data. No runtime LLM parsing and no user column mapping. |
+| Reconciliation | Every row classified and source-currency lines reconcile to the declared total/tolerance; no-total is explicitly `unoracled`. |
+| Matching | Probabilistic matches never move money. Human-confirmed, catalogue/source-scoped mappings are reversible and replay deterministically. |
+| Calculation | Exact decimal, bitemporal, right/territory/source scoped, versioned and fully derived; unknown terms produce no fabricated amount. |
+| Residuals | Unmatched, underallocated, unpayable and converted residuals travel with every affected total. Nothing is dropped or redistributed. |
+| Payout | Statements/calculated balances may exist, but provider payout execution and disputed-money escrow remain disabled until B3 evolves the architecture. |
+| Disputes | Restatements version facts; disputes attach beside them and absorb concurrent versions rather than racing. |
+
+## Features
+
+- **10.01 Society Registration & Delivery** — [ideation source](../ideation/10-royalties-collections/10.01-society-registration-delivery/10.01-society-registration-delivery-index.md); represented in the normative interactions, contracts, data model, access rules and edge cases below.
+- **10.02 Statement Ingestion & Normalization** — [ideation source](../ideation/10-royalties-collections/10.02-statement-ingestion-normalization/10.02-statement-ingestion-normalization-index.md); represented in the normative interactions, contracts, data model, access rules and edge cases below.
+- **10.03 Royalty Calculation & Recoupment** — [ideation source](../ideation/10-royalties-collections/10.03-calculation-recoupment/10.03-calculation-recoupment-index.md); represented in the normative interactions, contracts, data model, access rules and edge cases below.
+- **10.04 Disbursement & Payee Statements** — [ideation source](../ideation/10-royalties-collections/10.04-disbursement-payee-statements/10.04-disbursement-payee-statements-index.md); represented in the normative interactions, contracts, data model, access rules and edge cases below.
+- **10.05 Recovery & Leakage** — [ideation source](../ideation/10-royalties-collections/10.05-recovery-leakage/10.05-recovery-leakage-index.md); represented in the normative interactions, contracts, data model, access rules and edge cases below.
+- **10.08 Statement Disputes & Audit Rights** — [ideation source](../ideation/10-royalties-collections/10.08-statement-disputes-audit-rights.md); represented in the normative interactions, contracts, data model, access rules and edge cases below.
+
+## Acceptance Criteria
+
+- **AC-ROY-01 — Rights administrator records society affiliation:** Given a valid request with current identity, authority, source state and required inputs, when the actor invokes this flow, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) Save body/territory/role/identifier/status/dates with provenance; conflicts block payload only, and (6) return Asserted/acknowledged affiliation or named conflict; if the flow cannot complete, invalid input, stale authority, revision conflict or dependency failure returns a typed refusal and no contradictory canonical mutation.
+- **AC-ROY-02 — User validates work registration:** Given a valid request with current identity, authority, source state and required inputs, when the actor invokes this flow, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) Project rights/title/party identifiers as-of target; run structural/arithmetic checks and assign blockers to actors, and (6) return Registration-ready belief or actionable blockers; if the flow cannot complete, invalid input, stale authority, revision conflict or dependency failure returns a typed refusal and no contradictory canonical mutation.
+- **AC-ROY-03 — Administrator delivers registration:** Given a valid request with current identity, authority, source state and required inputs, when the actor invokes this flow, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) Select versioned society profile/channel/cadence; sequence-aware file/API/manual task with expected-by, and (6) return Submitted state with immutable payload/receipt; if the flow cannot complete, invalid input, stale authority, revision conflict or dependency failure returns a typed refusal and no contradictory canonical mutation.
+- **AC-ROY-04 — User receives acknowledgement/rejection:** Given a valid request with current identity, authority, source state and required inputs, when the actor invokes this flow, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) Parse response; update work×society×territory belief, reason/action/owner and age, and (6) return Known outcome, conflict route or overdue alarm; if the flow cannot complete, invalid input, stale authority, revision conflict or dependency failure returns a typed refusal and no contradictory canonical mutation.
+- **AC-ROY-05 — Authorized party registers statement source:** Given a valid request with current identity, authority, source state and required inputs, when the actor invokes this flow, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) Bind counterparty/payee/reporting relationship, remittee, cadence/correction window and custody channels, and (6) return Versioned source registry entry; if the flow cannot complete, invalid input, stale authority, revision conflict or dependency failure returns a typed refusal and no contradictory canonical mutation.
+- **AC-ROY-06 — User uploads/forwards/fetches statement:** Given a valid request with current identity, authority, source state and required inputs, when the actor invokes this flow, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) Verify complete transfer/checksum/custody; certain-byte dedupe; retain private original, and (6) return Ingest, duplicate, notification-only or loud failure; if the flow cannot complete, invalid input, stale authority, revision conflict or dependency failure returns a typed refusal and no contradictory canonical mutation.
+- **AC-ROY-07 — System parses statement:** Given a valid request with current identity, authority, source state and required inputs, when the actor invokes this flow, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) Select declared source + fingerprint adapter version by statement date; deterministic whole-file parse and classification, and (6) return Reconciled, unoracled or blocked parse; if the flow cannot complete, invalid input, stale authority, revision conflict or dependency failure returns a typed refusal and no contradictory canonical mutation.
+- **AC-ROY-08 — User resolves catalogue identities:** Given a valid request with current identity, authority, source state and required inputs, when the actor invokes this flow, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) Apply identifier cascade; show multi-signal candidates; confirm/reject reversible source identity mapping, and (6) return Deterministic attribution or value-ranked exception; if the flow cannot complete, invalid input, stale authority, revision conflict or dependency failure returns a typed refusal and no contradictory canonical mutation.
+- **AC-ROY-09 — User works exception queue:** Given a valid request with current identity, authority, source state and required inputs, when the actor invokes this flow, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) Rank source identities by open value/age/reason; resolve not-mine, mapping, missing period/rights or escalation, and (6) return Open decreases; closed history never disappears; if the flow cannot complete, invalid input, stale authority, revision conflict or dependency failure returns a typed refusal and no contradictory canonical mutation.
+- **AC-ROY-10 — System normalizes periods/currency:** Given a valid request with current identity, authority, source state and required inputs, when the actor invokes this flow, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) Preserve source amount; pin period basis, source FX facts and optional reporting-rate provenance, and (6) return Source-native fact plus labelled derived view/residual; if the flow cannot complete, invalid input, stale authority, revision conflict or dependency failure returns a typed refusal and no contradictory canonical mutation.
+- **AC-ROY-11 — Administrator records executable deal terms:** Given a valid request with current identity, authority, source state and required inputs, when the actor invokes this flow, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) Store authored closed-taxonomy terms/order/scope/effective/recorded time; flag unrepresentable/contradictory, and (6) return Versioned term set or calculation hold; if the flow cannot complete, invalid input, stale authority, revision conflict or dependency failure returns a typed refusal and no contradictory canonical mutation.
+- **AC-ROY-12 — System calculates royalties:** Given a valid request with current identity, authority, source state and required inputs, when the actor invokes this flow, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) Resolve bitemporal right/split/allocation/deal inputs; exact arithmetic; itemized deductions and residual, and (6) return Immutable derivation and scoped party results; if the flow cannot complete, invalid input, stale authority, revision conflict or dependency failure returns a typed refusal and no contradictory canonical mutation.
+- **AC-ROY-13 — User views recoupment:** Given a valid request with current identity, authority, source state and required inputs, when the actor invokes this flow, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) Derive advance/recoupable applications/cross-collateralization separately from earnings, and (6) return Payability position or explicit unknown; if the flow cannot complete, invalid input, stale authority, revision conflict or dependency failure returns a typed refusal and no contradictory canonical mutation.
+- **AC-ROY-14 — New fact triggers restatement:** Given a valid request with current identity, authority, source state and required inputs, when the actor invokes this flow, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) Recompute transitive dependent calculations/statements; retain prior version and causation, and (6) return New version/delta; no overwrite; if the flow cannot complete, invalid input, stale authority, revision conflict or dependency failure returns a typed refusal and no contradictory canonical mutation.
+- **AC-ROY-15 — Administrator issues payee statement:** Given a valid request with current identity, authority, source state and required inputs, when the actor invokes this flow, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) Freeze display FX, coverage and earned/deducted/applied/payable lines with drill-through/breaks, and (6) return Immutable zero-or-nonzero statement version; if the flow cannot complete, invalid input, stale authority, revision conflict or dependency failure returns a typed refusal and no contradictory canonical mutation.
+- **AC-ROY-16 — Finance operator requests payout:** Given a valid request with current identity, authority, source state and required inputs, when the actor invokes this flow, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) Gate on B3/provider/KYC/tax/holds/reconciliation; launch/ungated system refuses execution, and (6) return Disabled or future idempotent provider run; if the flow cannot complete, invalid input, stale authority, revision conflict or dependency failure returns a typed refusal and no contradictory canonical mutation.
+- **AC-ROY-17 — User reviews recovery candidate:** Given a valid request with current identity, authority, source state and required inputs, when the actor invokes this flow, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) Search approved corpora with evidence/mandate; never promise amount; assemble filing or handoff pack, and (6) return Dismissed, submitted or expected-by monitored claim; if the flow cannot complete, invalid input, stale authority, revision conflict or dependency failure returns a typed refusal and no contradictory canonical mutation.
+- **AC-ROY-18 — Party opens statement dispute:** Given a valid request with current identity, authority, source state and required inputs, when the actor invokes this flow, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) Freeze amount scope, attach evidence/reason/deadline, incorporate restatements and route Shard 06 process, and (6) return Open/resolved dispute; no hidden payment; if the flow cannot complete, invalid input, stale authority, revision conflict or dependency failure returns a typed refusal and no contradictory canonical mutation.
+
+## Interactions
+
+| ID | Actor and intent | System flow | Terminal outcome |
+|---|---|---|---|
+| ROY-01 | Rights administrator records society affiliation | Save body/territory/role/identifier/status/dates with provenance; conflicts block payload only. | Asserted/acknowledged affiliation or named conflict. |
+| ROY-02 | User validates work registration | Project rights/title/party identifiers as-of target; run structural/arithmetic checks and assign blockers to actors. | Registration-ready belief or actionable blockers. |
+| ROY-03 | Administrator delivers registration | Select versioned society profile/channel/cadence; sequence-aware file/API/manual task with expected-by. | Submitted state with immutable payload/receipt. |
+| ROY-04 | User receives acknowledgement/rejection | Parse response; update work×society×territory belief, reason/action/owner and age. | Known outcome, conflict route or overdue alarm. |
+| ROY-05 | Authorized party registers statement source | Bind counterparty/payee/reporting relationship, remittee, cadence/correction window and custody channels. | Versioned source registry entry. |
+| ROY-06 | User uploads/forwards/fetches statement | Verify complete transfer/checksum/custody; certain-byte dedupe; retain private original. | Ingest, duplicate, notification-only or loud failure. |
+| ROY-07 | System parses statement | Select declared source + fingerprint adapter version by statement date; deterministic whole-file parse and classification. | Reconciled, unoracled or blocked parse. |
+| ROY-08 | User resolves catalogue identities | Apply identifier cascade; show multi-signal candidates; confirm/reject reversible source identity mapping. | Deterministic attribution or value-ranked exception. |
+| ROY-09 | User works exception queue | Rank source identities by open value/age/reason; resolve not-mine, mapping, missing period/rights or escalation. | Open decreases; closed history never disappears. |
+| ROY-10 | System normalizes periods/currency | Preserve source amount; pin period basis, source FX facts and optional reporting-rate provenance. | Source-native fact plus labelled derived view/residual. |
+| ROY-11 | Administrator records executable deal terms | Store authored closed-taxonomy terms/order/scope/effective/recorded time; flag unrepresentable/contradictory. | Versioned term set or calculation hold. |
+| ROY-12 | System calculates royalties | Resolve bitemporal right/split/allocation/deal inputs; exact arithmetic; itemized deductions and residual. | Immutable derivation and scoped party results. |
+| ROY-13 | User views recoupment | Derive advance/recoupable applications/cross-collateralization separately from earnings. | Payability position or explicit unknown. |
+| ROY-14 | New fact triggers restatement | Recompute transitive dependent calculations/statements; retain prior version and causation. | New version/delta; no overwrite. |
+| ROY-15 | Administrator issues payee statement | Freeze display FX, coverage and earned/deducted/applied/payable lines with drill-through/breaks. | Immutable zero-or-nonzero statement version. |
+| ROY-16 | Finance operator requests payout | Gate on B3/provider/KYC/tax/holds/reconciliation; launch/ungated system refuses execution. | Disabled or future idempotent provider run. |
+| ROY-17 | User reviews recovery candidate | Search approved corpora with evidence/mandate; never promise amount; assemble filing or handoff pack. | Dismissed, submitted or expected-by monitored claim. |
+| ROY-18 | Party opens statement dispute | Freeze amount scope, attach evidence/reason/deadline, incorporate restatements and route Shard 06 process. | Open/resolved dispute; no hidden payment. |
+
+### Global Interaction Rules
+
+- Source fact, platform derivation, registration belief, calculated entitlement, payability, provider transfer and actual receipt are separate states.
+- Every number names source currency, coverage, right type, territory, usage period, calculation version and residual where applicable.
+- Work/catalogue matching never asserts ownership; Shard 10/09 owns rights and split truth.
+- Calculated/held balances are not described as platform custody or escrow while B3 is disabled.
+- Financial commands require MFA where policy demands, expected version, idempotency, immutable audit and exact reconciliation.
+
+## Contracts
+
+### Core Types and Errors
+
+| Type | Contract |
+|---|---|
+| `ExactAmount` | Decimal string with declared precision ≥9 dp for calculation; never binary floating point. |
+| `MoneyFact` | Original amount/currency/precision/source plus optional derived reporting amount/rate/method/date. |
+| `RegistrationBelief` | Work/society/territory/state/effective observation/age/expected-by; not society truth. |
+| `ParseState` | `received`, `parsing`, `reconciled`, `unoracled`, `blocked`, `superseded`. |
+| `MappingState` | `proposed`, `confirmed`, `rejected`, `reversed`, `review_required`; scoped to source identity and catalogue. |
+| `CalculationState` | `ready`, `incomplete`, `held_terms`, `held_rights`, `calculated`, `restated`. |
+| `PayoutGate` | `disabled_b3`, `provider_unready`, `eligible`, `held`, `submitted`, `paid`, `failed`; only future evolved system reaches execution states. |
+| Errors | `NOT_AUTHORIZED`, `SOURCE_CONFLICT`, `PAYLOAD_NOT_READY`, `DELIVERY_SEQUENCE_CONFLICT`, `TRANSFER_INCOMPLETE`, `DUPLICATE_STATEMENT`, `ADAPTER_MISMATCH`, `PARSE_UNRECONCILED`, `MAPPING_CONFIRMATION_REQUIRED`, `PERIOD_UNKNOWN`, `FX_UNAVAILABLE`, `TERMS_UNKNOWN`, `TERMS_CONTRADICTORY`, `RIGHTS_INCOMPLETE`, `ALLOCATION_INVALID`, `CALCULATION_HELD`, `PAYOUT_DISABLED_B3`, `DISPUTE_SCOPE_CONFLICT`. |
+
+### Registration, Ingestion and Matching
+
+| Contract | Rule |
+|---|---|
+| `ProjectRegistrationPayload` | Read-only projection from valid as-of rights/party/identifier records; structural/local semantic distinction. |
+| `DeliverRegistration` | Society profile version/dialect/channel/sequence/expected-by; manual channel is an explicit task. |
+| `IngestStatement` | Complete bytes, checksum, source/payee relationship, custody, received time and immutable original. |
+| `ParseStatement` | Same bytes+adapter version produces identical normalized lines; whole document parsed, no ambient locale/FX/time. |
+| `ReconcileParse` | Structural classification plus declared-total source-currency arithmetic using file-derived tolerance. |
+| `ConfirmIdentityMapping` | Human decision on source identity, catalogue scoped, reversible, provenance retained and future replay deterministic. |
+| `ResolveException` | Closed reason taxonomy, named route and amount; no materiality threshold drops an item. |
+
+### Calculation, Statement and Financial Gate
+
+| Contract | Rule |
+|---|---|
+| `NormalizeLine` | Four dates remain distinct; source FX/deductions are facts; platform rate pins at use or leaves source-native residual. |
+| `ResolveCalculationParameters` | Bitemporal rights/splits/allocation/terms by work/master, income type, right, territory, source and usage period. |
+| `CalculateRoyalty` | Exact deterministic derivation; no assumptions for known-unrecorded terms; overallocated hard-block, underallocated residual. |
+| `RoundPayableAggregate` | Round once at future payable boundary by largest remainder with stable tie key; never line-by-line. |
+| `DeriveRecoupmentPosition` | Earnings separate from advance applications/reserves/cross-collateralization; unknown advance means unknown. |
+| `RestateCalculation` | New version with cause and transitive dependency manifest; prior results/statements remain. |
+| `IssuePayeeStatement` | Immutable version, frozen display rates, coverage/residual and earned/deducted/applied/payable/paid separation. |
+| `ExecuteRoyaltyPayout` | Deny with `PAYOUT_DISABLED_B3` until evolved provider/legal model; no platform-held escrow representation. |
+
+## Data Models
+
+| Model | Relationships and invariants |
+|---|---|
+| `society_affiliation` | Party/body/territory/role/identifier/status/effective dates/provenance. |
+| `registration_submission` / `registration_observation` | Work/society/territory payload version, channel/sequence/receipt/expected-by and belief history. |
+| `statement_source` | Counterparty/payee/reporting relationship, remittee, cadence/correction window, custody channels and lifecycle. |
+| `statement_ingest` / `statement_object` | Source, custody, checksum/size, received state and private immutable original. |
+| `adapter_version` | Source/fingerprint/effective dates/schema/classification/reconciliation rules; reviewed deterministic data. |
+| `statement_parse` / `normalized_line` | Adapter/input hash, parse state, source facts, right/period/payee/identity and aggregation level. |
+| `source_identity_mapping` | Source/catalogue identity, target, state, evidence/actor/version and attributed-value history. |
+| `royalty_exception` | Source identity/reason/route/open amount/age/deadline/state; closed history immutable. |
+| `fx_rate_pin` | Currency pair/rate/date/provider/method/version; source-asserted rate remains separate. |
+| `deal_term_version` | Deal/work/master/income/territory/period scope, taxonomy/value/order/author/bitemporal state. |
+| `calculation_parameter_set` | Fully resolved bitemporal inputs and engine version keyed by identity/period/right/territory/source. |
+| `royalty_calculation` / `calculation_part` | Line/parameter set/exact derivation, party amounts, deductions, residual and state. |
+| `recoupment_application` | Advance/obligation/application/cross-collateral scope; position derived, not stored. |
+| `restatement` | Cause, old/new versions, dependency manifest and exact deltas. |
+| `payee_statement` | Payee/period/version/display-rate pins/coverage/totals/residuals/issue state. |
+| `calculated_balance` | Party/currency/right/period components and hold reason; explicitly not provider custody before B3. |
+| `payout_run` / `payout_transfer` | Future B3-only provider references, idempotency, reconciliation and terminal state. |
+| `recovery_candidate` / `claim_pack` | Corpus/pool/right/evidence/mandate/deadline/state; amount unknown unless source proves it. |
+| `royalty_dispute` | Scoped amount/calculation/statement versions, parties, reason/evidence and Shard 06 case. |
+
+PostgreSQL owns canonical metadata, calculations, mappings, audit, idempotency and outbox. Supabase Storage holds originals/evidence privately. Queue jobs parse/recalculate/project using identifiers and versions, never statement bytes or financial detail. Search is private and purpose-scoped.
+
+### Typed Field and Cardinality Registry
+
+Field typing is deterministic: `*_id: uuid`, `*_at: timestamptz`, `*_date: date`, `*_minor: bigint`, `*_count: integer`, `currency: char(3)`, `is_*|has_*: boolean`, `state|status|type|kind|class: closed enum`, `version: bigint`, ratios `numeric(9,6)`, checksums `text`, and URLs `text`. Every named contract field uses this registry unless its contract declares a stricter type.
+
+- **`society_affiliation`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Party/body/territory/role/identifier/status/effective dates/provenance..
+- **`registration_submission`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Work/society/territory payload version, channel/sequence/receipt/expected-by and belief history..
+- **`registration_observation`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Work/society/territory payload version, channel/sequence/receipt/expected-by and belief history..
+- **`statement_source`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Counterparty/payee/reporting relationship, remittee, cadence/correction window, custody channels and lifecycle..
+- **`statement_ingest`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Source, custody, checksum/size, received state and private immutable original..
+- **`statement_object`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Source, custody, checksum/size, received state and private immutable original..
+- **`adapter_version`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Source/fingerprint/effective dates/schema/classification/reconciliation rules; reviewed deterministic data..
+- **`statement_parse`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Adapter/input hash, parse state, source facts, right/period/payee/identity and aggregation level..
+- **`normalized_line`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Adapter/input hash, parse state, source facts, right/period/payee/identity and aggregation level..
+- **`source_identity_mapping`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Source/catalogue identity, target, state, evidence/actor/version and attributed-value history..
+- **`royalty_exception`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Source identity/reason/route/open amount/age/deadline/state; closed history immutable..
+- **`fx_rate_pin`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Currency pair/rate/date/provider/method/version; source-asserted rate remains separate..
+- **`deal_term_version`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Deal/work/master/income/territory/period scope, taxonomy/value/order/author/bitemporal state..
+- **`calculation_parameter_set`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Fully resolved bitemporal inputs and engine version keyed by identity/period/right/territory/source..
+- **`royalty_calculation`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Line/parameter set/exact derivation, party amounts, deductions, residual and state..
+- **`calculation_part`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Line/parameter set/exact derivation, party amounts, deductions, residual and state..
+- **`recoupment_application`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Advance/obligation/application/cross-collateral scope; position derived, not stored..
+- **`restatement`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Cause, old/new versions, dependency manifest and exact deltas..
+- **`payee_statement`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Payee/period/version/display-rate pins/coverage/totals/residuals/issue state..
+- **`calculated_balance`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Party/currency/right/period components and hold reason; explicitly not provider custody before B3..
+- **`payout_run`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Future B3-only provider references, idempotency, reconciliation and terminal state..
+- **`payout_transfer`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Future B3-only provider references, idempotency, reconciliation and terminal state..
+- **`recovery_candidate`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Corpus/pool/right/evidence/mandate/deadline/state; amount unknown unless source proves it..
+- **`claim_pack`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Corpus/pool/right/evidence/mandate/deadline/state; amount unknown unless source proves it..
+- **`royalty_dispute`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Scoped amount/calculation/statement versions, parties, reason/evidence and Shard 06 case..
+
+## Access Control
+
+| Role | Allowed | Denied |
+|---|---|---|
+| Payee/rightsholder | Own authorized sources, lines, mappings, calculations, statements, candidates and disputes | Other payees in multi-party files, adapter internals, arbitrary payout routing |
+| Rights administrator | Mandate-scoped registration/terms/import/calculation operations | Authority from uploader status, contract interpretation, unrelated catalogues |
+| Counterparty/payer | Explicit relationship-scoped submissions/statements/dispute responses | Payee private catalogue or cross-counterparty analytics |
+| Collaborator asked for identity help | Identity/evidence prompt only | Amount, statement, mapping authority |
+| Finance operator | Reconciliation, holds and future B3-cleared provider operations with MFA/reason | Balance edits, raw bank data, multi-party payout before gate |
+| Adapter maintainer | Redacted samples, deterministic adapter candidates/tests and activation workflow | Production statement browsing, runtime LLM parsing |
+| Dispute reviewer | Assigned scoped statement/calculation/evidence projection | General finance browsing or direct calculation rewrite |
+| Service principal | One ingest/parse/calculate/project/reconcile job scope | Interactive authority, wildcard financial/store access |
+
+Original multi-party documents remain visible only to the authorized holder who supplied them; normalized third-party rows cannot be aggregated across uploaders or exposed to named third parties. Legal retention, erasure and holds preserve minimum required evidence without turning finance operators into universal viewers.
+
+### Access Escalation
+
+- **Payee/rightsholder:** a denial returns a typed reason and preserves canonical state; authority or evidence disputes route to the scoped case/Trust & Safety path, support handles mechanical recovery through an expiring purpose grant, and counsel/capability/privacy hard gates have no role override.
+- **Rights administrator:** a denial returns a typed reason and preserves canonical state; authority or evidence disputes route to the scoped case/Trust & Safety path, support handles mechanical recovery through an expiring purpose grant, and counsel/capability/privacy hard gates have no role override.
+- **Counterparty/payer:** a denial returns a typed reason and preserves canonical state; authority or evidence disputes route to the scoped case/Trust & Safety path, support handles mechanical recovery through an expiring purpose grant, and counsel/capability/privacy hard gates have no role override.
+- **Collaborator asked for identity help:** a denial returns a typed reason and preserves canonical state; authority or evidence disputes route to the scoped case/Trust & Safety path, support handles mechanical recovery through an expiring purpose grant, and counsel/capability/privacy hard gates have no role override.
+- **Finance operator:** a denial returns a typed reason and preserves canonical state; authority or evidence disputes route to the scoped case/Trust & Safety path, support handles mechanical recovery through an expiring purpose grant, and counsel/capability/privacy hard gates have no role override.
+- **Adapter maintainer:** a denial returns a typed reason and preserves canonical state; authority or evidence disputes route to the scoped case/Trust & Safety path, support handles mechanical recovery through an expiring purpose grant, and counsel/capability/privacy hard gates have no role override.
+- **Dispute reviewer:** a denial returns a typed reason and preserves canonical state; authority or evidence disputes route to the scoped case/Trust & Safety path, support handles mechanical recovery through an expiring purpose grant, and counsel/capability/privacy hard gates have no role override.
+- **Service principal:** a denial returns a typed reason and preserves canonical state; authority or evidence disputes route to the scoped case/Trust & Safety path, support handles mechanical recovery through an expiring purpose grant, and counsel/capability/privacy hard gates have no role override.
+
+## Accessibility
+
+- Import, parse, reconciliation, matching, exception, calculation, statement and dispute states are keyboard operable with persistent text and focus management.
+- Monetary tables expose currency, sign, precision, source/derived label, coverage and residual in headers/cell labels; color never carries debit/credit or failure alone.
+- Exact derivations have linearized plain-language summaries and expandable arithmetic; screen readers receive stable row/column associations.
+- Upload/job progress survives navigation and provides resumable status, specific failures and no time-only action without warning.
+- Charts are supplementary to accessible tables; source amounts and original currencies remain available.
+- Restatement/delta views identify prior/current versions and cause without animation-only meaning.
+
+## Event Schemas
+
+| Event | Safe payload | Consumers |
+|---|---|---|
+| `royalty.affiliation.changed.v1` | Affiliation/body/territory/state/version | Registration readiness |
+| `royalty.registration.changed.v1` | Submission/work/society/territory/state/version | Status/tasks |
+| `royalty.statement-ingest.changed.v1` | Ingest/source/state/custody/version | Parse/operations |
+| `royalty.statement-parse.changed.v1` | Parse/adapter/state/check summary/version | Matching/exceptions |
+| `royalty.identity-mapping.changed.v1` | Mapping/source identity/state/version | Replay/restatement |
+| `royalty.exception.changed.v1` | Exception/reason/state/open-value class/version | Queue/coverage |
+| `royalty.calculation.changed.v1` | Calculation/period/right/state/version | Statements/recoupment |
+| `royalty.restatement.created.v1` | Restatement/cause class/dependency count/version | Recalculation/statements/disputes |
+| `royalty.payee-statement.issued.v1` | Statement/payee pseudonym/period/version | Delivery/disputes |
+| `royalty.payout.changed.v1` | Future gate/run/transfer/state/version | Finance/reconciliation |
+| `royalty.recovery-candidate.changed.v1` | Candidate/pool/right/state/version | User tasks |
+| `royalty.dispute.changed.v1` | Case/scope/state/version | Holds/statements/review |
+
+Events exclude statement bytes/lines, amounts, bank/tax data, party names, evidence, contract terms and unrestricted identifiers.
+
+## Edge Cases
+
+| Scenario | Required behavior |
+|---|---|
+| Conflicting society affiliations | Block affected payload and name actors; do not choose precedence. |
+| Society silent past expected-by | Create overdue observation/alarm; never indefinite pending or assumed acceptance. |
+| Same bytes uploaded twice | Certain duplicate, no second parse/calculation; restatement requires parsed semantic distinction. |
+| Adapter fingerprint mismatch | Block and name mismatch; never guess parser. |
+| No declared statement total | `unoracled` travels downstream; never silently reconciled. |
+| Parse total differs within precision | Use file-derived tolerance only; outside blocks all downstream calculation. |
+| Fuzzy title-only candidate | Exception with value; not confirmable candidate and never auto-match. |
+| Mapping reversed after payouts/statements | New restatement cascade; historical cause and affected versions preserved. |
+| Usage period spans split change | Allocate only at source-supplied granularity; overlap without valid weights blocks. |
+| FX unavailable within seven days | Source-native result plus named converted residual; never invent rate. |
+| Known deal but terms absent | No calculated amount, not zero/standard/raw split. |
+| Calculation parts exceed whole | Hard block; below whole creates visible residual, never redistribution. |
+| Circular entity/deal resolution | Refuse and name cycle. |
+| Restatement races dispute | Dispute absorbs new version and exact delta; no parallel stale resolution. |
+| Payout requested before B3 | Deny; calculated statement remains and never claims custody/escrow. |
+| Payee unpayable/erased | Balance remains attributable under legal policy, never float, revenue, forfeiture or redistribution. |
+| Original contains third-party rows | Parse whole file privately; do not notify/expose/aggregate third parties. |
+
+## Dependency References
+
+- **Depends on:** [[specs/ia/00-infrastructure|Shard 00]] for imports/storage/jobs/settings/audit; [[specs/ia/01-identity-authority|Shard 01]] for parties/mandates; [[specs/ia/02-profiles-verification|Shard 02]] for identifiers/evidence; [[specs/ia/10-rights-ownership|Shard 10]] for works/rights/splits/allocations; [[specs/ia/06-trust-safety|Shard 06]] for disputes/evidence.
+- **Depended on by:** Shard 19 consumes immutable calculations/coverage for reporting and forecasting, never edits accounting truth.
+- **Deep dive:** [[specs/ia/deep-dives/18-royalty-accounting|Royalty accounting deep dive]].
+
+## Edge-Case Coverage Matrix
+
+| Flow | Concurrent access | Invalid input / authority | Deletion, revocation or cascade |
+|---|---|---|---|
+| ROY-01 Rights administrator records society affiliation | Same idempotency key returns the same result; competing expected revisions serialize one winner and return typed conflict to the loser without duplicate effect. | Schema, authority and policy validation fail before mutation/provider effect and return a typed refusal without existence leakage. | Owner/source deletion or revocation preserves required immutable evidence/tombstone, removes derived access/projection, and queues idempotent dependent invalidation so no orphan remains. |
+| ROY-02 User validates work registration | Same idempotency key returns the same result; competing expected revisions serialize one winner and return typed conflict to the loser without duplicate effect. | Schema, authority and policy validation fail before mutation/provider effect and return a typed refusal without existence leakage. | Owner/source deletion or revocation preserves required immutable evidence/tombstone, removes derived access/projection, and queues idempotent dependent invalidation so no orphan remains. |
+| ROY-03 Administrator delivers registration | Same idempotency key returns the same result; competing expected revisions serialize one winner and return typed conflict to the loser without duplicate effect. | Schema, authority and policy validation fail before mutation/provider effect and return a typed refusal without existence leakage. | Owner/source deletion or revocation preserves required immutable evidence/tombstone, removes derived access/projection, and queues idempotent dependent invalidation so no orphan remains. |
+| ROY-04 User receives acknowledgement/rejection | Same idempotency key returns the same result; competing expected revisions serialize one winner and return typed conflict to the loser without duplicate effect. | Schema, authority and policy validation fail before mutation/provider effect and return a typed refusal without existence leakage. | Owner/source deletion or revocation preserves required immutable evidence/tombstone, removes derived access/projection, and queues idempotent dependent invalidation so no orphan remains. |
+| ROY-05 Authorized party registers statement source | Same idempotency key returns the same result; competing expected revisions serialize one winner and return typed conflict to the loser without duplicate effect. | Schema, authority and policy validation fail before mutation/provider effect and return a typed refusal without existence leakage. | Owner/source deletion or revocation preserves required immutable evidence/tombstone, removes derived access/projection, and queues idempotent dependent invalidation so no orphan remains. |
+| ROY-06 User uploads/forwards/fetches statement | Same idempotency key returns the same result; competing expected revisions serialize one winner and return typed conflict to the loser without duplicate effect. | Schema, authority and policy validation fail before mutation/provider effect and return a typed refusal without existence leakage. | Owner/source deletion or revocation preserves required immutable evidence/tombstone, removes derived access/projection, and queues idempotent dependent invalidation so no orphan remains. |
+| ROY-07 System parses statement | Same idempotency key returns the same result; competing expected revisions serialize one winner and return typed conflict to the loser without duplicate effect. | Schema, authority and policy validation fail before mutation/provider effect and return a typed refusal without existence leakage. | Owner/source deletion or revocation preserves required immutable evidence/tombstone, removes derived access/projection, and queues idempotent dependent invalidation so no orphan remains. |
+| ROY-08 User resolves catalogue identities | Same idempotency key returns the same result; competing expected revisions serialize one winner and return typed conflict to the loser without duplicate effect. | Schema, authority and policy validation fail before mutation/provider effect and return a typed refusal without existence leakage. | Owner/source deletion or revocation preserves required immutable evidence/tombstone, removes derived access/projection, and queues idempotent dependent invalidation so no orphan remains. |
+| ROY-09 User works exception queue | Same idempotency key returns the same result; competing expected revisions serialize one winner and return typed conflict to the loser without duplicate effect. | Schema, authority and policy validation fail before mutation/provider effect and return a typed refusal without existence leakage. | Owner/source deletion or revocation preserves required immutable evidence/tombstone, removes derived access/projection, and queues idempotent dependent invalidation so no orphan remains. |
+| ROY-10 System normalizes periods/currency | Same idempotency key returns the same result; competing expected revisions serialize one winner and return typed conflict to the loser without duplicate effect. | Schema, authority and policy validation fail before mutation/provider effect and return a typed refusal without existence leakage. | Owner/source deletion or revocation preserves required immutable evidence/tombstone, removes derived access/projection, and queues idempotent dependent invalidation so no orphan remains. |
+| ROY-11 Administrator records executable deal terms | Same idempotency key returns the same result; competing expected revisions serialize one winner and return typed conflict to the loser without duplicate effect. | Schema, authority and policy validation fail before mutation/provider effect and return a typed refusal without existence leakage. | Owner/source deletion or revocation preserves required immutable evidence/tombstone, removes derived access/projection, and queues idempotent dependent invalidation so no orphan remains. |
+| ROY-12 System calculates royalties | Same idempotency key returns the same result; competing expected revisions serialize one winner and return typed conflict to the loser without duplicate effect. | Schema, authority and policy validation fail before mutation/provider effect and return a typed refusal without existence leakage. | Owner/source deletion or revocation preserves required immutable evidence/tombstone, removes derived access/projection, and queues idempotent dependent invalidation so no orphan remains. |
+| ROY-13 User views recoupment | Same idempotency key returns the same result; competing expected revisions serialize one winner and return typed conflict to the loser without duplicate effect. | Schema, authority and policy validation fail before mutation/provider effect and return a typed refusal without existence leakage. | Owner/source deletion or revocation preserves required immutable evidence/tombstone, removes derived access/projection, and queues idempotent dependent invalidation so no orphan remains. |
+| ROY-14 New fact triggers restatement | Same idempotency key returns the same result; competing expected revisions serialize one winner and return typed conflict to the loser without duplicate effect. | Schema, authority and policy validation fail before mutation/provider effect and return a typed refusal without existence leakage. | Owner/source deletion or revocation preserves required immutable evidence/tombstone, removes derived access/projection, and queues idempotent dependent invalidation so no orphan remains. |
+| ROY-15 Administrator issues payee statement | Same idempotency key returns the same result; competing expected revisions serialize one winner and return typed conflict to the loser without duplicate effect. | Schema, authority and policy validation fail before mutation/provider effect and return a typed refusal without existence leakage. | Owner/source deletion or revocation preserves required immutable evidence/tombstone, removes derived access/projection, and queues idempotent dependent invalidation so no orphan remains. |
+| ROY-16 Finance operator requests payout | Same idempotency key returns the same result; competing expected revisions serialize one winner and return typed conflict to the loser without duplicate effect. | Schema, authority and policy validation fail before mutation/provider effect and return a typed refusal without existence leakage. | Owner/source deletion or revocation preserves required immutable evidence/tombstone, removes derived access/projection, and queues idempotent dependent invalidation so no orphan remains. |
+| ROY-17 User reviews recovery candidate | Same idempotency key returns the same result; competing expected revisions serialize one winner and return typed conflict to the loser without duplicate effect. | Schema, authority and policy validation fail before mutation/provider effect and return a typed refusal without existence leakage. | Owner/source deletion or revocation preserves required immutable evidence/tombstone, removes derived access/projection, and queues idempotent dependent invalidation so no orphan remains. |
+| ROY-18 Party opens statement dispute | Same idempotency key returns the same result; competing expected revisions serialize one winner and return typed conflict to the loser without duplicate effect. | Schema, authority and policy validation fail before mutation/provider effect and return a typed refusal without existence leakage. | Owner/source deletion or revocation preserves required immutable evidence/tombstone, removes derived access/projection, and queues idempotent dependent invalidation so no orphan remains. |
+
+### Cross-Shard Section Contract Map
+
+- **Shard 00:** consume [Shard 00 Contracts](00-infrastructure.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 00 Event Schemas](00-infrastructure.md#event-schemas). Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
+- **Shard 01:** consume [Shard 01 Contracts](01-identity-authority.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 01 Event Schemas](01-identity-authority.md#event-schemas). Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
+- **Shard 02:** consume [Shard 02 Contracts](02-profiles-verification.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 02 Event Schemas](02-profiles-verification.md#event-schemas). Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
+- **Shard 10:** consume [Shard 10 Contracts](10-rights-ownership.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 10 Event Schemas](10-rights-ownership.md#event-schemas). Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
+- **Shard 06:** consume [Shard 06 Contracts](06-trust-safety.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 06 Event Schemas](06-trust-safety.md#event-schemas). Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
+
+## Changelog
+
+| Date | Change | Source | Sections |
+|---|---|---|---|
+| 2026-08-03 | Reconciled 34 sources; locked deterministic accounting, visible residuals and B3-disabled payout execution | `/write-architecture-spec` | All |
+
+
+<!-- spec-graph: auto-generated -->
+## Related Specs
+
+### References
+- [[specs/ia/00-infrastructure|Shard 00 — Cross-cutting platform foundation]]
+- [[specs/ia/01-identity-authority|Shard 01 — Identity authority and party governance]]
+- [[specs/ia/02-profiles-verification|Shard 02 — Profiles, claiming and qualifications]]
+- [[specs/ia/10-rights-ownership|Shard 10 — Rights and ownership]]
+- [[specs/ia/06-trust-safety|Shard 06 — Trust, safety, disputes and evidence]]
+- [[specs/ia/deep-dives/18-royalty-accounting|Deep Dive 18 — Royalty accounting]]

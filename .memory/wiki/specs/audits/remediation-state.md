@@ -1,17 +1,33 @@
 # Remediation State
 
-> Updated: 2026-08-01 — Run 7 supersedes the historical Run 6 recovery ledger as the only valid
-> ideation gate evidence. Run 6 remains historical triage only.
-> Layer: `vision` / ideation.
-> Purpose: auditable recovery record for the interrupted `wejammin-audit-remediate` workflow. This is **not** a clean, ready, or fresh-audit verdict.
+> Updated: 2026-08-03 — backend remediation is closed by fresh ambiguity rerun 1.
+> Historical ideation remediation evidence below remains preserved.
+> Layer: `be`.
+> Purpose: auditable recovery record. The current BE verdict is the fresh rerun report, not the historical failed baseline.
 
 ## Layer Status
 
-- vision: `needs-remediation` — **Run 7 is structurally valid and blocked by 114 independently upheld blockers.** The historical 107-finding ledger below is not current gate evidence. A fresh full `/audit-ambiguity ideation` run remains required after remediation before `/create-prd`.
-- architecture: `no-content`
-- ia: `no-content`
-- be: `no-content`
+- vision: `pass` — **Run 8 fresh independent source-only ambiguity audit passed on 2026-08-02.** The ideation gate is locked; `/create-prd` may begin. Counsel-gated capabilities remain non-shipping scope until qualified approval.
+- architecture: `pass` — fresh ambiguity rerun 6 passed on 2026-08-02.
+- ia: `pass` — fresh ambiguity rerun 1 passed on 2026-08-03.
+- be: `pass` — fresh rerun 1 scored 0/1590 points (0.00% ambiguity); `/write-fe-spec` is unblocked.
 - fe: `no-content`
+
+## Backend Remediation Run — 2026-08-03
+
+| Finding | Status | Evidence / next action |
+|---|---|---|
+| BE-R0-01 upstream section/field traceability | verified-fixed | Fresh rerun confirms every contract binds endpoint/worker allocation and field origins to IA Contracts/Data Model plus Shard 00 transport fields. |
+| BE-R0-02 typed request/success/error schemas | verified-fixed | Fresh rerun confirms normative strict Zod/JSON/PostgreSQL token expansion and fail-closed unresolved-token behavior. |
+| BE-R0-03 error message/retry guidance | verified-fixed | Fresh rerun confirms exact global envelope and deterministic status-class retry/no-retry rules. |
+| BE-R0-04 persistence columns/FKs/indexes | verified-fixed | Fresh rerun confirms deterministic types/nullability/FKs/delete/uniqueness/indexes/RLS/audit-outbox expansion. |
+| BE-R0-05 endpoint middleware | verified-fixed | Fresh rerun confirms exact route-class rates, fixed validation order and browser/internal CORS policy. |
+| BE-R0-06 state machines | verified-fixed (156/156) | Fresh rerun confirms explicit state/transition/trigger/blocked-operation registries for every backend contract. |
+| BE-R0-07 concurrency/pagination | verified-fixed | Fresh rerun confirms method-specific concurrency and exact collection cursor/default/max/order/filter rules. |
+| BE-R0-08 external seams | verified-fixed | Fresh rerun confirms adapter DTO, 5-second deadline, bounded retry/backoff, reconciliation and circuit behavior. |
+| BE-R0-09 security/error envelope | verified-fixed | Fresh rerun confirms direct envelope citation, strict input handling and allowlisted output filtering. |
+
+Standing owner autonomy approves recommended mechanical remediation. Any counsel-gated capability remains closed; remediation may specify gate behavior but cannot activate it.
 
 ## Immutable Recovery Facts
 
@@ -23,7 +39,7 @@
 | Original first-pass range statement | `r-00`–`r-32`, 48 findings, reported applied-unverified |
 | Original first-pass remainder statement | `r-33`–`r-80`, 59 findings, reported pending |
 | Original stop cause | Weekly model limit; never a completion verdict |
-| Fresh audit status | Not run; still blocks `/create-prd` |
+| Historical pre-Run-8 audit status | Not run; still blocked `/create-prd` at that time |
 
 The range statements are preserved as historical workflow facts only. They are **not** final
 statuses: later independent artifacts repaired and/or verified findings in the old pending range,
@@ -237,11 +253,14 @@ This ledger does not close the vision layer. Before advancing:
 
 ### Progress Since Run 7
 
-- **2026-08-01 — Dimension 7 governance sweep**: Added the explicit owner/deadline/blocked-decision
-  contract to all 60 affected Open Questions tables. Corrected three stale touring cross-cut
-  questions from already-locked source behavior, and added owner/deadline/blocked-decision records
-  for the three genuine prose-only deferred questions. This is remediation evidence only; it does
-  not close the gate until a fresh full audit verifies the changed source tree.
+- **2026-08-01 — Dimension 7 governance preflight (updated)**: Parsed the machine-readable Run 7
+  verdicts and found 60 Dimension 7 verdicts: 32 upheld blocking, 22 upheld warning, and 6 refuted.
+  Static verification now confirms the explicit owner/deadline/blocked-decision contract in all 55
+  unique evidence-bearing Open Questions table sources, with local governance or already-locked
+  behavior recorded for the repaired prose gaps. See
+  [run8-preflight-governance-verification.md](./run8-preflight-governance-verification.md). This is
+  remediation evidence only; it does not close the gate until a fresh full audit verifies the changed
+  source tree.
 
 - **2026-08-01 — Domain 14 canonical reconciliation**: Applied source-backed candidate fixes for
   R7-14-012, R7-14-013, R7-14-018, and R7-14-019. Payment-failed reacquisition now preserves the
@@ -261,10 +280,28 @@ This ledger does not close the vision layer. Before advancing:
   identity-confidence values, while the renderer explicitly references that canonical set. This is
   a candidate only until a fresh full Run 8 audit independently verifies it.
 
+- **2026-08-01 — Domain 15 partial-screening boundary**: Applied a source-backed candidate fix for
+  R7-15.02-D3-003. A partial identity is now explicitly not-screenable and cannot hit, hold, block,
+  or notify; only the full composite key reaches the flag matcher. This is a candidate only until a
+  fresh full Run 8 audit independently verifies it.
+
 - **2026-08-01 — Domain 21 clearance boundary**: Applied a source-backed candidate fix for
   R7-21-D4-001. The asset-readiness cross-cut now reflects its resolved decision: clearance is
   enforced at the release/delivery gate rather than adjudicated by asset readiness. This is a
   candidate only until a fresh full Run 8 audit independently verifies it.
+
+- **2026-08-01 — Run 7 owner-decision packet**: Compiled the 36 remaining independently upheld
+  owner or policy decisions into
+  [run7-owner-decision-packet.md](./run7-owner-decision-packet.md). It excludes the nine
+  source-only candidate fixes and groups the unresolved decisions by platform targets, actors and
+  authority, safety/compliance, and transaction/lifecycle behavior. The packet is intake only;
+  each decision still requires ratification, source application, and fresh Run 8 verification.
+
+- **2026-08-01 — Run 8 candidate preflight**: Reviewed the nine source-only candidate fixes against
+  their current canonical source relationships in
+  [run8-preflight-candidate-verification.md](./run8-preflight-candidate-verification.md).
+  All nine pass this targeted consistency review. This is explicitly non-gating; the independent
+  full Run 8 audit remains required after the owner decisions are ratified.
 
 ## Required Gate
 

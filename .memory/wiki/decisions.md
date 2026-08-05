@@ -2,8 +2,8 @@
 
 ## Summary
 
-- **Total decisions**: 56
-- **Unique decision titles**: 56
+- **Total decisions**: 97
+- **Unique decision titles**: 97
 
 ## DEC-001: The rights stack is the thesis, not an adjacency (2026-07-16)
 
@@ -901,6 +901,536 @@
 - **`18.03.01` D-04 and D-06 untouched**; `18.03.05` unchanged.
 - **Reversibility**: High — one enum value and three reworded claims.
 
+## DEC-057: P1 keeps Supabase PostgreSQL canonical and bounds adjunct services (2026-08-02)
+
+- **Occurrences**: 1
+- **Latest timestamp**: 2026-08-02T18:00:00.000Z
+- **Agents**: codex
+- **Sources**: create-prd decision recovery
+- **Index**: [[index]]
+
+- **Decision**: Supabase Pro PostgreSQL is canonical for relational business state; Storage owns governed bytes, Realtime carries hints, PostgreSQL search is v1, and Queue transport is paired with a transactional outbox. No adjunct may become an ungoverned second source of truth.
+- **Reasoning**: The approved feature-to-query map favors relational invariants, rights, authority, money, CMS versioning, and audit consistency while retaining bounded managed capabilities.
+- **Downstream**: Decomposition and schema work preserve canonical UUIDs, transactional authority, replay, and rebuild rules.
+- **Reversibility**: Medium.
+
+## DEC-058: Supabase Auth serves consumer identity; enterprise capabilities wait (2026-08-02)
+
+- **Occurrences**: 1
+- **Latest timestamp**: 2026-08-02T18:00:01.000Z
+- **Agents**: codex
+- **Sources**: create-prd decision recovery
+- **Index**: [[index]]
+
+- **Decision**: Supabase Auth owns consumer credentials and sessions. Enterprise SSO, SCIM, enterprise tenancy, and enterprise administration are deferred until consumer launch is ready.
+- **Reasoning**: Consumer launch needs secure social identity without premature enterprise scope or cost.
+- **Downstream**: Auth specs implement consumer OAuth and recovery only; enterprise features require later evolution.
+- **Reversibility**: Medium.
+
+## DEC-059: Social identities are additive credentials on one canonical user (2026-08-02)
+
+- **Occurrences**: 1
+- **Latest timestamp**: 2026-08-02T18:00:02.000Z
+- **Agents**: codex
+- **Sources**: create-prd decision recovery
+- **Index**: [[index]]
+
+- **Decision**: Google, Apple, Meta, lower-priority TikTok, SoundCloud, and BandLab when applicable are additive login credentials on one canonical user. Users may link or unlink providers after proof; no email-only auto-merge occurs and at least one recovery path must remain.
+- **Reasoning**: Provider accounts are credentials, not separate people; safe linking prevents account takeover and duplicate identities.
+- **Downstream**: Identity specs define link, unlink, conflict, recovery, audit, and provider-admission flows.
+- **Reversibility**: Medium.
+
+## DEC-060: TypeScript is the sole v1 primary language (2026-08-02)
+
+- **Occurrences**: 1
+- **Latest timestamp**: 2026-08-02T18:00:03.000Z
+- **Agents**: codex
+- **Sources**: create-prd decision recovery
+- **Index**: [[index]]
+
+- **Decision**: TypeScript is the sole application language across Astro, React islands, Hono Workers, contracts, jobs, and tests; SQL remains migration and database-function implementation.
+- **Reasoning**: One language maximizes shared contracts and minimizes runtime/tooling fragmentation.
+- **Downstream**: A second primary language requires measured evidence and architecture evolution.
+- **Reversibility**: Medium.
+
+## DEC-061: CMS and settings-first operation are mission-critical (2026-08-02)
+
+- **Occurrences**: 1
+- **Latest timestamp**: 2026-08-02T18:00:04.000Z
+- **Agents**: codex
+- **Sources**: create-prd decision recovery
+- **Index**: [[index]]
+
+- **Decision**: WeJammin includes a governed WordPress-like CMS/control plane for typed content types, fields, entries, templates/blocks, menus, navigation, taxonomies, media, settings, flags, revisions, approvals, preview, and publication. Plugins, themes, arbitrary code/CSS, and security/legal/transactional invariants as settings are prohibited.
+- **Reasoning**: Routine variable content and configuration must be operator-editable without deployment while preserving domain authority and safety.
+- **Downstream**: CMS is an early dependency and every variable must be classified as content, setting, rule pack, runtime config, secret, or invariant.
+- **Reversibility**: Low.
+
+## DEC-062: GitHub Actions runs CI/CD on the verified self-hosted fleet (2026-08-02)
+
+- **Occurrences**: 1
+- **Latest timestamp**: 2026-08-02T18:00:05.000Z
+- **Agents**: codex
+- **Sources**: create-prd decision recovery
+- **Index**: [[index]]
+
+- **Decision**: GitHub Actions is the canonical CI/CD control plane using verified self-hosted runners, protected environments, immutable artifacts, and same-artifact promotion.
+- **Reasoning**: It matches the repository and avoids hosted-runner baseline spend while retaining protected automation.
+- **Downstream**: Setup verifies runner isolation, concurrency, secrets, caching, and protected deployment.
+- **Reversibility**: Medium.
+
+## DEC-063: Sentry plus structured native telemetry is the v1 monitoring stack (2026-08-02)
+
+- **Occurrences**: 1
+- **Latest timestamp**: 2026-08-02T18:00:06.000Z
+- **Agents**: codex
+- **Sources**: create-prd decision recovery
+- **Index**: [[index]]
+
+- **Decision**: Use Sentry Developer for release-aware errors and sampled traces, Cloudflare/Supabase native logs and metrics for platform evidence, and PostgreSQL audit for durable business evidence.
+- **Reasoning**: This provides actionable diagnostics at launch cost without treating telemetry as legal or business audit.
+- **Downstream**: Setup configures scrubbing, quotas, sampling, source maps, alerts, and independent blind-spot detection.
+- **Reversibility**: High.
+
+## DEC-064: Astro hybrid rendering uses React only for hydrated islands (2026-08-02)
+
+- **Occurrences**: 1
+- **Latest timestamp**: 2026-08-02T18:00:07.000Z
+- **Agents**: codex
+- **Sources**: create-prd decision recovery
+- **Index**: [[index]]
+
+- **Decision**: Astro hybrid rendering owns documents and route shells; React is limited to explicit interactive islands with validated serializable props and local state.
+- **Reasoning**: Most surfaces benefit from server/static HTML while complex workbenches need bounded hydration.
+- **Downstream**: Frontend specs justify every island and preserve canonical server-rendered context on island failure.
+- **Reversibility**: Medium.
+
+## DEC-065: Cloudflare Workers and Hono form one modular backend (2026-08-02)
+
+- **Occurrences**: 1
+- **Latest timestamp**: 2026-08-02T18:00:08.000Z
+- **Agents**: codex
+- **Sources**: create-prd decision recovery
+- **Index**: [[index]]
+
+- **Decision**: Hono on Cloudflare Workers is one edge-deployed modular backend; domain modules own contracts and boundaries inside the deployable. No launch microservices or always-on servers exist.
+- **Reasoning**: The model minimizes operations and latency while preserving later extraction seams.
+- **Downstream**: Separate services require measured isolation, runtime, scale, legal, or organizational evidence.
+- **Reversibility**: Medium.
+
+## DEC-066: Versioned REST and OpenAPI define the platform API (2026-08-02)
+
+- **Occurrences**: 1
+- **Latest timestamp**: 2026-08-02T18:00:09.000Z
+- **Agents**: codex
+- **Sources**: create-prd decision recovery
+- **Index**: [[index]]
+
+- **Decision**: The public application boundary is versioned REST/HTTP JSON under /api/v1, with OpenAPI generated from shared Zod contracts.
+- **Reasoning**: REST provides explicit resources, commands, caching, provider/native compatibility, and bounded query cost.
+- **Downstream**: Breaking changes require versioning or compatibility migration; GraphQL/tRPC are not launch boundaries.
+- **Reversibility**: Medium.
+
+## DEC-067: Cloudflare serves deploy assets; Supabase serves governed media (2026-08-02)
+
+- **Occurrences**: 1
+- **Latest timestamp**: 2026-08-02T18:00:10.000Z
+- **Agents**: codex
+- **Sources**: create-prd decision recovery
+- **Index**: [[index]]
+
+- **Decision**: Cloudflare serves immutable build assets and cached public output; Supabase Storage serves governed media/documents behind PostgreSQL-owned metadata and policy.
+- **Reasoning**: Deploy assets and rights-bearing user objects have different authority, retention, and access requirements.
+- **Downstream**: Object access always authorizes in PostgreSQL and uses bounded signed delivery.
+- **Reversibility**: Medium.
+
+## DEC-068: The Working Record defines a product-first governed design system (2026-08-02)
+
+- **Occurrences**: 1
+- **Latest timestamp**: 2026-08-02T18:00:11.000Z
+- **Agents**: codex
+- **Sources**: create-prd decision recovery
+- **Index**: [[index]]
+
+- **Decision**: The design north star is The Working Record: credible, human, exact, provenance-forward, warm-light, and product-first, with Jam Magenta as the constrained accent and root DESIGN.md as normative.
+- **Reasoning**: The system must support dense professional work without generic dashboards, decorative cliches, or unverifiable claims.
+- **Downstream**: Frontend specs consume tokens, archetypes, states, and provenance semantics rather than inventing local design rules.
+- **Reversibility**: Medium.
+
+## DEC-069: pnpm, Vitest, Playwright, ESLint, Prettier, and strict TypeScript form the toolchain (2026-08-02)
+
+- **Occurrences**: 1
+- **Latest timestamp**: 2026-08-02T18:00:12.000Z
+- **Agents**: codex
+- **Sources**: create-prd decision recovery
+- **Index**: [[index]]
+
+- **Decision**: Use pnpm workspaces/Corepack, strict TypeScript, ESLint, Prettier, Vitest, and Playwright as the canonical development and validation toolchain.
+- **Reasoning**: The tools align with Astro/Vite/Workers and provide reproducible contract, unit, integration, browser, and E2E gates.
+- **Downstream**: Setup pins versions and implements canonical scripts without introducing parallel runners or package managers.
+- **Reversibility**: Medium.
+
+## DEC-070: Navigation adapts by route family and viewport (2026-08-02)
+
+- **Occurrences**: 1
+- **Latest timestamp**: 2026-08-02T18:00:13.000Z
+- **Agents**: codex
+- **Sources**: create-prd decision recovery
+- **Index**: [[index]]
+
+- **Decision**: Public, product, admin, auth/recovery, and system route families use purpose-specific navigation; mobile and desktop adapt without becoming separate information architectures.
+- **Reasoning**: One universal dashboard or menu cannot serve the platform breadth accessibly.
+- **Downstream**: Frontend decomposition preserves named shells and menu locations.
+- **Reversibility**: Medium.
+
+## DEC-071: The layout uses a 4/8/12 hybrid grid (2026-08-02)
+
+- **Occurrences**: 1
+- **Latest timestamp**: 2026-08-02T18:00:14.000Z
+- **Agents**: codex
+- **Sources**: create-prd decision recovery
+- **Index**: [[index]]
+
+- **Decision**: Responsive layout uses four columns on compact, eight on medium, and twelve on wide viewports with locked spacing tokens.
+- **Reasoning**: A shared grid gives consistent density while supporting mobile through professional workbench layouts.
+- **Downstream**: Components align to the shared grid and do not create independent spacing systems.
+- **Reversibility**: High.
+
+## DEC-072: Twelve page archetypes cover the platform without one universal dashboard (2026-08-02)
+
+- **Occurrences**: 1
+- **Latest timestamp**: 2026-08-02T18:00:15.000Z
+- **Agents**: codex
+- **Sources**: create-prd decision recovery
+- **Index**: [[index]]
+
+- **Decision**: Twelve named page archetypes cover public records, discovery, workbenches, forms, review, admin, settings, operations, and system states.
+- **Reasoning**: The product needs reusable structural patterns without flattening every workflow into cards or a dashboard.
+- **Downstream**: Frontend specs classify pages into an archetype before component design.
+- **Reversibility**: Medium.
+
+## DEC-073: The global component inventory is a mandatory seed (2026-08-02)
+
+- **Occurrences**: 1
+- **Latest timestamp**: 2026-08-02T18:00:16.000Z
+- **Agents**: codex
+- **Sources**: create-prd decision recovery
+- **Index**: [[index]]
+
+- **Decision**: A shared packages/ui inventory owns navigation, forms, provenance, status, errors, tables, uploads, audit, and offline/conflict primitives.
+- **Reasoning**: Cross-domain consistency and accessibility require shared high-risk primitives.
+- **Downstream**: Feature modules may extend but not redefine the global inventory.
+- **Reversibility**: Medium.
+
+## DEC-074: Motion is subtle responsive feedback (2026-08-02)
+
+- **Occurrences**: 1
+- **Latest timestamp**: 2026-08-02T18:00:17.000Z
+- **Agents**: codex
+- **Sources**: create-prd decision recovery
+- **Index**: [[index]]
+
+- **Decision**: Motion is bounded responsive feedback, normally 150–220ms with reduced-motion support; bounce, elastic motion, layout animation, and choreographed product loads are prohibited.
+- **Reasoning**: Motion must communicate state without delaying work or harming accessibility.
+- **Downstream**: All frontend acceptance criteria include reduced-motion behavior.
+- **Reversibility**: High.
+
+## DEC-075: Data density is hybrid by archetype (2026-08-02)
+
+- **Occurrences**: 1
+- **Latest timestamp**: 2026-08-02T18:00:18.000Z
+- **Agents**: codex
+- **Sources**: create-prd decision recovery
+- **Index**: [[index]]
+
+- **Decision**: Public surfaces are calmer; professional workbenches are compact and information-dense; density follows page archetype rather than one global mode.
+- **Reasoning**: Users need both approachable public pages and efficient operational tools.
+- **Downstream**: Components use approved compact/comfortable variants only where archetypes permit.
+- **Reversibility**: High.
+
+## DEC-076: Global states remain explicit and non-interchangeable (2026-08-02)
+
+- **Occurrences**: 1
+- **Latest timestamp**: 2026-08-02T18:00:19.000Z
+- **Agents**: codex
+- **Sources**: create-prd decision recovery
+- **Index**: [[index]]
+
+- **Decision**: Loading, empty, absent, forbidden, blocked, stale, offline, degraded, conflict, failed, and success states are distinct contracts and cannot be collapsed into generic empty/error UI.
+- **Reasoning**: Conflating states causes unsafe retries, authority leaks, and false confidence.
+- **Downstream**: Every affected route/component specifies and tests applicable states.
+- **Reversibility**: Low.
+
+## DEC-077: Supabase Data API and PostgreSQL RPC replace a general ORM (2026-08-02)
+
+- **Occurrences**: 1
+- **Latest timestamp**: 2026-08-02T18:00:20.000Z
+- **Agents**: codex
+- **Sources**: create-prd decision recovery
+- **Index**: [[index]]
+
+- **Decision**: Use generated Supabase Data API queries for bounded ordinary access and migration-owned PostgreSQL RPC for protected multi-row transactions; no general ORM is selected.
+- **Reasoning**: This preserves RLS and transactional invariants without adding an abstraction that obscures SQL and policy.
+- **Downstream**: Repositories expose typed ports; raw rows never become transport contracts.
+- **Reversibility**: Medium.
+
+## DEC-078: The launch system is an edge-deployed modular monolith (2026-08-02)
+
+- **Occurrences**: 1
+- **Latest timestamp**: 2026-08-02T18:00:21.000Z
+- **Agents**: codex
+- **Sources**: create-prd decision recovery
+- **Index**: [[index]]
+
+- **Decision**: Launch as one Astro/Hono edge deployment with explicit domain modules, PostgreSQL schemas/contracts, Queue consumers, and provider adapters.
+- **Reasoning**: A modular monolith fits launch staffing and budget while preserving clear boundaries.
+- **Downstream**: Extraction requires evidence and a migration/replay plan.
+- **Reversibility**: Medium.
+
+## DEC-079: Every API failure uses one four-field envelope (2026-08-02)
+
+- **Occurrences**: 1
+- **Latest timestamp**: 2026-08-02T18:00:22.000Z
+- **Agents**: codex
+- **Sources**: create-prd decision recovery
+- **Index**: [[index]]
+
+- **Decision**: Every JSON API failure has exactly code, message, requestId, and details; HTTP status stays on the response line and unsafe internals never reach clients.
+- **Reasoning**: One envelope enables consistent safe error handling across browser, API, jobs, and support.
+- **Downstream**: Contracts define per-code details and clients branch on code/context, never message text.
+- **Reversibility**: Low.
+
+## DEC-080: PostgreSQL owns truth and every secondary store is reconstructible or coordinated (2026-08-02)
+
+- **Occurrences**: 1
+- **Latest timestamp**: 2026-08-02T18:00:23.000Z
+- **Agents**: codex
+- **Sources**: create-prd decision recovery
+- **Index**: [[index]]
+
+- **Decision**: PostgreSQL owns canonical authority; Storage bytes are governed by database metadata, Queue is disposable transport backed by outbox, Realtime is a hint, and search/public projections are transactional or rebuildable.
+- **Reasoning**: Cross-store ambiguity is unacceptable for rights, money, publication, and evidence.
+- **Downstream**: Every secondary representation defines identity, version, replay, deletion, and recovery.
+- **Reversibility**: Low.
+
+## DEC-081: Authentication is additive, but authorization is always first-party and contextual (2026-08-02)
+
+- **Occurrences**: 1
+- **Latest timestamp**: 2026-08-02T18:00:24.000Z
+- **Agents**: codex
+- **Sources**: create-prd decision recovery
+- **Index**: [[index]]
+
+- **Decision**: External providers authenticate credentials only. Authorization resolves canonical user, acting party, current mandate/relationship/capability, and RLS policy server-side for every action.
+- **Reasoning**: Social identity must never imply organizational or resource authority.
+- **Downstream**: Every protected endpoint and job revalidates current acting context.
+- **Reversibility**: Low.
+
+## DEC-082: Zod 4 is the single runtime contract library and WCAG 2.2 AA is a release gate (2026-08-02)
+
+- **Occurrences**: 1
+- **Latest timestamp**: 2026-08-02T18:00:25.000Z
+- **Agents**: codex
+- **Sources**: create-prd decision recovery
+- **Index**: [[index]]
+
+- **Decision**: Zod 4 defines runtime contracts and OpenAPI derivation; WCAG 2.2 AA gates public, authenticated, admin, and PWA release.
+- **Reasoning**: Shared runtime validation and accessibility are production invariants, not later polish.
+- **Downstream**: Contracts precede implementation and accessibility failures block release.
+- **Reversibility**: Low.
+
+## DEC-083: Launch integrations are allowlisted, degradable, and spend-gated (2026-08-02)
+
+- **Occurrences**: 1
+- **Latest timestamp**: 2026-08-02T18:00:26.000Z
+- **Agents**: codex
+- **Sources**: create-prd decision recovery
+- **Index**: [[index]]
+
+- **Decision**: Launch integrations are Cloudflare, Supabase Pro at setup, GitHub/self-hosted Actions, Sentry, Resend, approved identity providers, and counsel-cleared Stripe-hosted Checkout Sessions plus hosted Connect. Unregistered destinations and deferred advertising, AI, enterprise, specialist search, and multi-party payout integrations fail closed.
+- **Reasoning**: Each admitted provider has typed boundaries, local canonical state, failure fallback, deletion behavior, and a bounded cost gate.
+- **Downstream**: Setup must verify provider terms, data placement, secrets, webhooks, outage behavior, quotas, and deletion before activation.
+- **Reversibility**: High.
+
+## DEC-084: Structured correlation plus numeric SLO alerts define launch observability (2026-08-02)
+
+- **Occurrences**: 1
+- **Latest timestamp**: 2026-08-02T18:00:27.000Z
+- **Agents**: codex
+- **Sources**: create-prd decision recovery
+- **Index**: [[index]]
+
+- **Decision**: Propagate request, correlation, causation, job, attempt, and safe entity-version identifiers across API, RPC, outbox, Queue, and adapters; combine scrubbed logs, Sentry, numeric SLOs, dashboards, alerts, and runbooks.
+- **Reasoning**: A solo owner needs actionable numeric signals without false 24/7 promises or PII leakage.
+- **Downstream**: Setup creates and drills dashboards, alerts, scrubbing, sampling, and runbooks.
+- **Reversibility**: High.
+
+## DEC-085: Quality is contract-first and vertical from the first slice (2026-08-02)
+
+- **Occurrences**: 1
+- **Latest timestamp**: 2026-08-02T18:00:28.000Z
+- **Agents**: codex
+- **Sources**: create-prd decision recovery
+- **Index**: [[index]]
+
+- **Decision**: Every capability advances through approved specs, Zod contract, failing test, minimal implementation, refactor, full validation, and all affected user/admin/data/security/telemetry/documentation surfaces.
+- **Reasoning**: Horizontal partial delivery creates false completeness across highly coupled authority, CMS, rights, and money workflows.
+- **Downstream**: All plans and slices follow Red-Green-Refactor and the completion checklist.
+- **Reversibility**: Low.
+
+## DEC-086: Consumer v1 ships through six dependency and infrastructure gates (2026-08-02)
+
+- **Occurrences**: 1
+- **Latest timestamp**: 2026-08-02T18:00:29.000Z
+- **Agents**: codex
+- **Sources**: create-prd decision recovery
+- **Index**: [[index]]
+
+- **Decision**: Sequence assurance, operational foundation, identity/admin/CMS, projects/media/safety, credits/splits, services/single-payee commerce, and release hardening before later domains; enterprise remains deferred.
+- **Reasoning**: Identity, acting context, CMS, and operations are prerequisites; commerce depends on earlier provenance and counsel gates.
+- **Downstream**: Planning may optimize within gates but cannot violate dependency or exit criteria.
+- **Reversibility**: Medium.
+
+## DEC-087: Launch spend is capped and media is the primary cost risk (2026-08-02)
+
+- **Occurrences**: 1
+- **Latest timestamp**: 2026-08-02T18:00:30.000Z
+- **Agents**: codex
+- **Sources**: create-prd decision recovery
+- **Index**: [[index]]
+
+- **Decision**: Spend is $0 before setup, setup/staging is capped at $50/month, and consumer production at $300/month. Supabase Pro starts at setup; seven-day production PITR reserves about $100 inside the production ceiling; 80/90% alerts and freezes apply.
+- **Reasoning**: Media storage/renditions/egress grow faster than request volume and require attribution, quotas, and admission controls.
+- **Downstream**: Setup records dated calculators and production features prove cost at 1k and 10k MAU.
+- **Reversibility**: High.
+
+## DEC-088: Final architecture owns every implementer-critical contract (2026-08-02)
+
+- **Occurrences**: 1
+- **Latest timestamp**: 2026-08-02T18:00:31.000Z
+- **Agents**: codex
+- **Sources**: audit-ambiguity architecture
+- **Index**: [[index]]
+
+- **Decision**: Lock token-driven vanilla CSS with cascade layers, Astro scoped styles, and React CSS Modules; manual injection and explicit composition roots; exact error/cursor contracts; communication/fallback matrices; Stripe-hosted Checkout and hosted Connect without embedded card UI; and a linked runbook contract.
+- **Reasoning**: Each omission allowed incompatible or less-safe implementations without changing product intent.
+- **Downstream**: Later specs preserve these contracts; alternatives require evolution or propagated architecture change.
+- **Reversibility**: Medium.
+
+## DEC-089: Seven-day PITR gates protected production data (2026-08-02)
+
+- **Occurrences**: 1
+- **Latest timestamp**: 2026-08-02T18:00:32.000Z
+- **Agents**: codex
+- **Sources**: audit-ambiguity architecture
+- **Index**: [[index]]
+
+- **Decision**: Enable and restore-test Supabase seven-day PITR before production money, rights, or publication records. Worst-case RPO is ≤2 minutes; protected writes remain disabled if PITR is unavailable or unverified; the roughly $100/month cost stays inside the $300 ceiling.
+- **Reasoning**: Database-resident audit/outbox shares the recovery domain and cannot truthfully guarantee zero loss under daily restore.
+- **Downstream**: Setup provisions production PITR and infrastructure verification proves RPO/RTO before enabling protected writes.
+- **Reversibility**: Low.
+
+## DEC-090: Final architecture embeds query and PII registries (2026-08-02)
+
+- **Occurrences**: 1
+- **Latest timestamp**: 2026-08-02T18:00:33.000Z
+- **Agents**: codex
+- **Sources**: audit-ambiguity architecture
+- **Index**: [[index]]
+
+- **Decision**: Embed the normative 25-domain plus cross-cut feature-to-query map and canonical semantic PII field-registry seed in final architecture. Extensions require reviewed purpose, lawful basis/consent, access, retention, deletion, telemetry, search, and export treatment.
+- **Reasoning**: Final-layer implementers cannot depend on working notes or prose-only PII classes.
+- **Downstream**: Decomposition and schema specs map every entity/query and protected field to these registries.
+- **Reversibility**: Medium.
+
+## DEC-091: Performance gates use one numeric load and data profile (2026-08-02)
+
+- **Occurrences**: 1
+- **Latest timestamp**: 2026-08-02T18:00:34.000Z
+- **Agents**: codex
+- **Sources**: audit-ambiguity architecture
+- **Index**: [[index]]
+
+- **Decision**: Use the committed 20-iteration pull-request smoke; staging 5 RPS for 15 minutes then 25 RPS for 2 minutes; fixed route/cache mix, sample floors, deterministic dataset floors, and ten-client pgbench profile.
+- **Reasoning**: Latency gates are meaningless if teams choose different traffic, data volume, cache state, or sample count.
+- **Downstream**: Setup commits scenarios and seed manifests; validation reports environment, checksum, plans, samples, percentiles, and errors.
+- **Reversibility**: High.
+
+## DEC-092: Runtime contracts close the final architecture implementation seams (2026-08-02)
+
+- **Occurrences**: 1
+- **Latest timestamp**: 2026-08-03T00:40:00.000Z
+- **Agents**: codex
+- **Sources**: audit-ambiguity architecture fresh rerun 1
+- **Index**: [[index]]
+
+- **Decision**: Lock the CSS rationale and rejected alternatives; add explicit Hono/Queue-to-domain protocols and domain failure fallback; select repository-owned @wejammin/observability as the typed newline-delimited JSON runtime logger; fix client deadlines at 8 seconds for reads, 15 seconds for commands, 2 seconds for job acceptance, 30 seconds no-byte upload idle, and 15 minutes signed-upload expiry; and require every route/consumer to register exactly one SLO/async tier with CI coverage.
+- **Reasoning**: Fresh implementer simulation proved that guidance without an import contract, approximate deadlines, implicit in-process arrows, unregistered SLO tiers, and unexplained CSS rejection still allowed incompatible conforming implementations.
+- **Downstream**: Decomposition and later specs must use the named logger port, service-call direction, exact deadlines, route/consumer registry, and selected CSS governance. Alternatives require architecture evolution and equivalent contract tests.
+- **Reversibility**: Medium; implementations can evolve behind stable ports and registries, but wire deadlines and monitoring assignments require propagated contract changes.
+
+## DEC-093: Every technology axis and component arrow has one normative contract (2026-08-02)
+
+- **Occurrences**: 1
+- **Latest timestamp**: 2026-08-03T00:50:00.000Z
+- **Agents**: codex
+- **Sources**: audit-ambiguity architecture fresh rerun 2
+- **Index**: [[index]]
+
+- **Decision**: Add an exhaustive launch technology matrix naming each axis, selection, project-specific rationale, and rejected alternatives; replace the communication matrix with one row for every component-diagram arrow and preserve transport → domain port → infrastructure adapter direction.
+- **Reasoning**: Fresh rerun 2 found that scattered rationale did not satisfy every selected axis and grouped protocol rows contradicted the diagram by allowing Hono to bypass domain persistence ports.
+- **Downstream**: Decomposition and all architecture/backend specs must preserve the technology matrix and one-to-one path contracts. Any technology substitution or diagram/path change requires an originating architecture decision and synchronized matrix update.
+- **Reversibility**: Medium; rows can evolve through explicit propagation, but silent local substitution is prohibited.
+
+## DEC-094: Workers Paid is the selected shared staging and production tier (2026-08-02)
+
+- **Occurrences**: 1
+- **Latest timestamp**: 2026-08-03T01:00:00.000Z
+- **Agents**: codex
+- **Sources**: audit-ambiguity architecture fresh rerun 3
+- **Index**: [[index]]
+
+- **Decision**: Cloudflare Workers Paid is required beginning with shared staging at /setup-workspace and remains the production tier. Pre-setup repository/local work and disposable Free-tier evaluation remain $0 and cannot carry shared staging, production data, or production traffic. Procurement and dated price verification are deferred; tier selection is not.
+- **Reasoning**: Fresh rerun 3 found an explicit deferred-tier statement that contradicted the integration and cost models already reserving the Workers Paid floor and left setup teams free to choose incompatible postures.
+- **Downstream**: Setup provisions Workers Paid within the $50 staging ceiling, verifies current pricing/limits, and configures 80/90% alerts before shared staging. Production promotion retains the selected tier unless an architecture change is propagated.
+- **Reversibility**: High through a future hosting architecture decision, provided availability, queues, abuse controls, cost, and migration evidence remain satisfied.
+
+## DEC-095: Design verification is local, first-party, and warm-light-only at launch (2026-08-02)
+
+- **Occurrences**: 1
+- **Latest timestamp**: 2026-08-03T01:10:00.000Z
+- **Agents**: codex
+- **Sources**: audit-ambiguity architecture fresh rerun 4
+- **Index**: [[index]]
+
+- **Decision**: Use a local/CI-only static Astro apps/docs catalog importing packages/ui; run tagged Playwright screenshots and @axe-core/playwright inside pnpm test:e2e; self-host approved immutable WOFF2 fonts through Cloudflare deploy assets without launch subsetting; launch only the warm-light theme and require /evolve-feature for dark theme.
+- **Reasoning**: Fresh rerun 4 found that Storybook or equivalent, font delivery/subsetting, visual regression, and dark-theme admission were still selectable at setup, allowing different services, privacy/CSP posture, cost, accessibility scope, and visual coverage.
+- **Downstream**: Setup pins the selected package/font versions, builds apps/docs without production deployment, creates reviewed baselines, and proves CI. Frontend specs enumerate catalog states and may not add font origins or themes outside this decision.
+- **Reversibility**: Medium; tooling can evolve behind the same local/CI evidence contract, while font origin and theme changes require propagated security/accessibility/design updates.
+
+## DEC-096: Provider effects are local-intent-first cross-store operations (2026-08-02)
+
+- **Occurrences**: 1
+- **Latest timestamp**: 2026-08-03T01:20:00.000Z
+- **Agents**: codex
+- **Sources**: audit-ambiguity architecture fresh rerun 5
+- **Index**: [[index]]
+
+- **Decision**: Every payment, email, registry, identity-adjacent, or other provider-backed operation uses a PostgreSQL operation/transaction UUID as canonical identity; commits local pending intent, idempotency, audit, and outbox before the provider effect; reads local state normally; reconciles unknown outcomes through signed webhook or bounded poll; and revokes locally before provider cancel/delete/suppress with retained evidence or exception.
+- **Reasoning**: Fresh rerun 5 found that integration fallbacks did not supply the full canonical ID, creation order, failure recovery, deletion cascade, and read join required for every multi-store entity.
+- **Downstream**: Every provider adapter and backend spec instantiates this lifecycle and may narrow retention/deletion only through its approved legal/provider contract. Blind retry and provider-authoritative rendering are prohibited.
+- **Reversibility**: Low for operation ordering and canonical ownership; individual providers remain replaceable behind adapters.
+
+## DEC-097: Decompose approved architecture into 43 dependency-ordered IA shards (2026-08-02)
+
+- **Occurrences**: 1
+- **Latest timestamp**: 2026-08-03T01:24:45.515Z
+- **Agents**: codex
+- **Sources**: decompose-architecture
+- **Index**: [[index]]
+
+Owner approved the recommended architecture decomposition: 43 total IA shards comprising 00-infrastructure plus 42 feature-domain shards. Mandatory splits M01-M13, recommended splits R01-R02, and keep-together decisions for domains 04, 05, 07, 08, 09, 12, 16, 20, 21, and 24 are locked. Dependencies must point only to lower-numbered shards. The canonical boundary table is .memory/wiki/specs/ia/decomposition-plan.md. Downstream IA, BE, FE, phase, setup, and implementation work must preserve these boundaries unless /remediate-shard-split or /propagate-decision is run.
+
 ## Full Log
 
 ### DEC-001: The rights stack is the thesis, not an adjacency (2026-07-16)
@@ -1742,3 +2272,492 @@
   rows. 'Listing data is not consent' (DT-11) is the same claim about a different untrustworthiness.
 - **`18.03.01` D-04 and D-06 untouched**; `18.03.05` unchanged.
 - **Reversibility**: High — one enum value and three reworded claims.
+
+### DEC-057: P1 keeps Supabase PostgreSQL canonical and bounds adjunct services (2026-08-02)
+
+- **Timestamp**: 2026-08-02T18:00:00.000Z
+- **Agent**: codex
+- **Source**: create-prd decision recovery
+- **Tags**: decision, create-prd
+
+- **Decision**: Supabase Pro PostgreSQL is canonical for relational business state; Storage owns governed bytes, Realtime carries hints, PostgreSQL search is v1, and Queue transport is paired with a transactional outbox. No adjunct may become an ungoverned second source of truth.
+- **Reasoning**: The approved feature-to-query map favors relational invariants, rights, authority, money, CMS versioning, and audit consistency while retaining bounded managed capabilities.
+- **Downstream**: Decomposition and schema work preserve canonical UUIDs, transactional authority, replay, and rebuild rules.
+- **Reversibility**: Medium.
+
+### DEC-058: Supabase Auth serves consumer identity; enterprise capabilities wait (2026-08-02)
+
+- **Timestamp**: 2026-08-02T18:00:01.000Z
+- **Agent**: codex
+- **Source**: create-prd decision recovery
+- **Tags**: decision, create-prd
+
+- **Decision**: Supabase Auth owns consumer credentials and sessions. Enterprise SSO, SCIM, enterprise tenancy, and enterprise administration are deferred until consumer launch is ready.
+- **Reasoning**: Consumer launch needs secure social identity without premature enterprise scope or cost.
+- **Downstream**: Auth specs implement consumer OAuth and recovery only; enterprise features require later evolution.
+- **Reversibility**: Medium.
+
+### DEC-059: Social identities are additive credentials on one canonical user (2026-08-02)
+
+- **Timestamp**: 2026-08-02T18:00:02.000Z
+- **Agent**: codex
+- **Source**: create-prd decision recovery
+- **Tags**: decision, create-prd
+
+- **Decision**: Google, Apple, Meta, lower-priority TikTok, SoundCloud, and BandLab when applicable are additive login credentials on one canonical user. Users may link or unlink providers after proof; no email-only auto-merge occurs and at least one recovery path must remain.
+- **Reasoning**: Provider accounts are credentials, not separate people; safe linking prevents account takeover and duplicate identities.
+- **Downstream**: Identity specs define link, unlink, conflict, recovery, audit, and provider-admission flows.
+- **Reversibility**: Medium.
+
+### DEC-060: TypeScript is the sole v1 primary language (2026-08-02)
+
+- **Timestamp**: 2026-08-02T18:00:03.000Z
+- **Agent**: codex
+- **Source**: create-prd decision recovery
+- **Tags**: decision, create-prd
+
+- **Decision**: TypeScript is the sole application language across Astro, React islands, Hono Workers, contracts, jobs, and tests; SQL remains migration and database-function implementation.
+- **Reasoning**: One language maximizes shared contracts and minimizes runtime/tooling fragmentation.
+- **Downstream**: A second primary language requires measured evidence and architecture evolution.
+- **Reversibility**: Medium.
+
+### DEC-061: CMS and settings-first operation are mission-critical (2026-08-02)
+
+- **Timestamp**: 2026-08-02T18:00:04.000Z
+- **Agent**: codex
+- **Source**: create-prd decision recovery
+- **Tags**: decision, create-prd
+
+- **Decision**: WeJammin includes a governed WordPress-like CMS/control plane for typed content types, fields, entries, templates/blocks, menus, navigation, taxonomies, media, settings, flags, revisions, approvals, preview, and publication. Plugins, themes, arbitrary code/CSS, and security/legal/transactional invariants as settings are prohibited.
+- **Reasoning**: Routine variable content and configuration must be operator-editable without deployment while preserving domain authority and safety.
+- **Downstream**: CMS is an early dependency and every variable must be classified as content, setting, rule pack, runtime config, secret, or invariant.
+- **Reversibility**: Low.
+
+### DEC-062: GitHub Actions runs CI/CD on the verified self-hosted fleet (2026-08-02)
+
+- **Timestamp**: 2026-08-02T18:00:05.000Z
+- **Agent**: codex
+- **Source**: create-prd decision recovery
+- **Tags**: decision, create-prd
+
+- **Decision**: GitHub Actions is the canonical CI/CD control plane using verified self-hosted runners, protected environments, immutable artifacts, and same-artifact promotion.
+- **Reasoning**: It matches the repository and avoids hosted-runner baseline spend while retaining protected automation.
+- **Downstream**: Setup verifies runner isolation, concurrency, secrets, caching, and protected deployment.
+- **Reversibility**: Medium.
+
+### DEC-063: Sentry plus structured native telemetry is the v1 monitoring stack (2026-08-02)
+
+- **Timestamp**: 2026-08-02T18:00:06.000Z
+- **Agent**: codex
+- **Source**: create-prd decision recovery
+- **Tags**: decision, create-prd
+
+- **Decision**: Use Sentry Developer for release-aware errors and sampled traces, Cloudflare/Supabase native logs and metrics for platform evidence, and PostgreSQL audit for durable business evidence.
+- **Reasoning**: This provides actionable diagnostics at launch cost without treating telemetry as legal or business audit.
+- **Downstream**: Setup configures scrubbing, quotas, sampling, source maps, alerts, and independent blind-spot detection.
+- **Reversibility**: High.
+
+### DEC-064: Astro hybrid rendering uses React only for hydrated islands (2026-08-02)
+
+- **Timestamp**: 2026-08-02T18:00:07.000Z
+- **Agent**: codex
+- **Source**: create-prd decision recovery
+- **Tags**: decision, create-prd
+
+- **Decision**: Astro hybrid rendering owns documents and route shells; React is limited to explicit interactive islands with validated serializable props and local state.
+- **Reasoning**: Most surfaces benefit from server/static HTML while complex workbenches need bounded hydration.
+- **Downstream**: Frontend specs justify every island and preserve canonical server-rendered context on island failure.
+- **Reversibility**: Medium.
+
+### DEC-065: Cloudflare Workers and Hono form one modular backend (2026-08-02)
+
+- **Timestamp**: 2026-08-02T18:00:08.000Z
+- **Agent**: codex
+- **Source**: create-prd decision recovery
+- **Tags**: decision, create-prd
+
+- **Decision**: Hono on Cloudflare Workers is one edge-deployed modular backend; domain modules own contracts and boundaries inside the deployable. No launch microservices or always-on servers exist.
+- **Reasoning**: The model minimizes operations and latency while preserving later extraction seams.
+- **Downstream**: Separate services require measured isolation, runtime, scale, legal, or organizational evidence.
+- **Reversibility**: Medium.
+
+### DEC-066: Versioned REST and OpenAPI define the platform API (2026-08-02)
+
+- **Timestamp**: 2026-08-02T18:00:09.000Z
+- **Agent**: codex
+- **Source**: create-prd decision recovery
+- **Tags**: decision, create-prd
+
+- **Decision**: The public application boundary is versioned REST/HTTP JSON under /api/v1, with OpenAPI generated from shared Zod contracts.
+- **Reasoning**: REST provides explicit resources, commands, caching, provider/native compatibility, and bounded query cost.
+- **Downstream**: Breaking changes require versioning or compatibility migration; GraphQL/tRPC are not launch boundaries.
+- **Reversibility**: Medium.
+
+### DEC-067: Cloudflare serves deploy assets; Supabase serves governed media (2026-08-02)
+
+- **Timestamp**: 2026-08-02T18:00:10.000Z
+- **Agent**: codex
+- **Source**: create-prd decision recovery
+- **Tags**: decision, create-prd
+
+- **Decision**: Cloudflare serves immutable build assets and cached public output; Supabase Storage serves governed media/documents behind PostgreSQL-owned metadata and policy.
+- **Reasoning**: Deploy assets and rights-bearing user objects have different authority, retention, and access requirements.
+- **Downstream**: Object access always authorizes in PostgreSQL and uses bounded signed delivery.
+- **Reversibility**: Medium.
+
+### DEC-068: The Working Record defines a product-first governed design system (2026-08-02)
+
+- **Timestamp**: 2026-08-02T18:00:11.000Z
+- **Agent**: codex
+- **Source**: create-prd decision recovery
+- **Tags**: decision, create-prd
+
+- **Decision**: The design north star is The Working Record: credible, human, exact, provenance-forward, warm-light, and product-first, with Jam Magenta as the constrained accent and root DESIGN.md as normative.
+- **Reasoning**: The system must support dense professional work without generic dashboards, decorative cliches, or unverifiable claims.
+- **Downstream**: Frontend specs consume tokens, archetypes, states, and provenance semantics rather than inventing local design rules.
+- **Reversibility**: Medium.
+
+### DEC-069: pnpm, Vitest, Playwright, ESLint, Prettier, and strict TypeScript form the toolchain (2026-08-02)
+
+- **Timestamp**: 2026-08-02T18:00:12.000Z
+- **Agent**: codex
+- **Source**: create-prd decision recovery
+- **Tags**: decision, create-prd
+
+- **Decision**: Use pnpm workspaces/Corepack, strict TypeScript, ESLint, Prettier, Vitest, and Playwright as the canonical development and validation toolchain.
+- **Reasoning**: The tools align with Astro/Vite/Workers and provide reproducible contract, unit, integration, browser, and E2E gates.
+- **Downstream**: Setup pins versions and implements canonical scripts without introducing parallel runners or package managers.
+- **Reversibility**: Medium.
+
+### DEC-070: Navigation adapts by route family and viewport (2026-08-02)
+
+- **Timestamp**: 2026-08-02T18:00:13.000Z
+- **Agent**: codex
+- **Source**: create-prd decision recovery
+- **Tags**: decision, create-prd
+
+- **Decision**: Public, product, admin, auth/recovery, and system route families use purpose-specific navigation; mobile and desktop adapt without becoming separate information architectures.
+- **Reasoning**: One universal dashboard or menu cannot serve the platform breadth accessibly.
+- **Downstream**: Frontend decomposition preserves named shells and menu locations.
+- **Reversibility**: Medium.
+
+### DEC-071: The layout uses a 4/8/12 hybrid grid (2026-08-02)
+
+- **Timestamp**: 2026-08-02T18:00:14.000Z
+- **Agent**: codex
+- **Source**: create-prd decision recovery
+- **Tags**: decision, create-prd
+
+- **Decision**: Responsive layout uses four columns on compact, eight on medium, and twelve on wide viewports with locked spacing tokens.
+- **Reasoning**: A shared grid gives consistent density while supporting mobile through professional workbench layouts.
+- **Downstream**: Components align to the shared grid and do not create independent spacing systems.
+- **Reversibility**: High.
+
+### DEC-072: Twelve page archetypes cover the platform without one universal dashboard (2026-08-02)
+
+- **Timestamp**: 2026-08-02T18:00:15.000Z
+- **Agent**: codex
+- **Source**: create-prd decision recovery
+- **Tags**: decision, create-prd
+
+- **Decision**: Twelve named page archetypes cover public records, discovery, workbenches, forms, review, admin, settings, operations, and system states.
+- **Reasoning**: The product needs reusable structural patterns without flattening every workflow into cards or a dashboard.
+- **Downstream**: Frontend specs classify pages into an archetype before component design.
+- **Reversibility**: Medium.
+
+### DEC-073: The global component inventory is a mandatory seed (2026-08-02)
+
+- **Timestamp**: 2026-08-02T18:00:16.000Z
+- **Agent**: codex
+- **Source**: create-prd decision recovery
+- **Tags**: decision, create-prd
+
+- **Decision**: A shared packages/ui inventory owns navigation, forms, provenance, status, errors, tables, uploads, audit, and offline/conflict primitives.
+- **Reasoning**: Cross-domain consistency and accessibility require shared high-risk primitives.
+- **Downstream**: Feature modules may extend but not redefine the global inventory.
+- **Reversibility**: Medium.
+
+### DEC-074: Motion is subtle responsive feedback (2026-08-02)
+
+- **Timestamp**: 2026-08-02T18:00:17.000Z
+- **Agent**: codex
+- **Source**: create-prd decision recovery
+- **Tags**: decision, create-prd
+
+- **Decision**: Motion is bounded responsive feedback, normally 150–220ms with reduced-motion support; bounce, elastic motion, layout animation, and choreographed product loads are prohibited.
+- **Reasoning**: Motion must communicate state without delaying work or harming accessibility.
+- **Downstream**: All frontend acceptance criteria include reduced-motion behavior.
+- **Reversibility**: High.
+
+### DEC-075: Data density is hybrid by archetype (2026-08-02)
+
+- **Timestamp**: 2026-08-02T18:00:18.000Z
+- **Agent**: codex
+- **Source**: create-prd decision recovery
+- **Tags**: decision, create-prd
+
+- **Decision**: Public surfaces are calmer; professional workbenches are compact and information-dense; density follows page archetype rather than one global mode.
+- **Reasoning**: Users need both approachable public pages and efficient operational tools.
+- **Downstream**: Components use approved compact/comfortable variants only where archetypes permit.
+- **Reversibility**: High.
+
+### DEC-076: Global states remain explicit and non-interchangeable (2026-08-02)
+
+- **Timestamp**: 2026-08-02T18:00:19.000Z
+- **Agent**: codex
+- **Source**: create-prd decision recovery
+- **Tags**: decision, create-prd
+
+- **Decision**: Loading, empty, absent, forbidden, blocked, stale, offline, degraded, conflict, failed, and success states are distinct contracts and cannot be collapsed into generic empty/error UI.
+- **Reasoning**: Conflating states causes unsafe retries, authority leaks, and false confidence.
+- **Downstream**: Every affected route/component specifies and tests applicable states.
+- **Reversibility**: Low.
+
+### DEC-077: Supabase Data API and PostgreSQL RPC replace a general ORM (2026-08-02)
+
+- **Timestamp**: 2026-08-02T18:00:20.000Z
+- **Agent**: codex
+- **Source**: create-prd decision recovery
+- **Tags**: decision, create-prd
+
+- **Decision**: Use generated Supabase Data API queries for bounded ordinary access and migration-owned PostgreSQL RPC for protected multi-row transactions; no general ORM is selected.
+- **Reasoning**: This preserves RLS and transactional invariants without adding an abstraction that obscures SQL and policy.
+- **Downstream**: Repositories expose typed ports; raw rows never become transport contracts.
+- **Reversibility**: Medium.
+
+### DEC-078: The launch system is an edge-deployed modular monolith (2026-08-02)
+
+- **Timestamp**: 2026-08-02T18:00:21.000Z
+- **Agent**: codex
+- **Source**: create-prd decision recovery
+- **Tags**: decision, create-prd
+
+- **Decision**: Launch as one Astro/Hono edge deployment with explicit domain modules, PostgreSQL schemas/contracts, Queue consumers, and provider adapters.
+- **Reasoning**: A modular monolith fits launch staffing and budget while preserving clear boundaries.
+- **Downstream**: Extraction requires evidence and a migration/replay plan.
+- **Reversibility**: Medium.
+
+### DEC-079: Every API failure uses one four-field envelope (2026-08-02)
+
+- **Timestamp**: 2026-08-02T18:00:22.000Z
+- **Agent**: codex
+- **Source**: create-prd decision recovery
+- **Tags**: decision, create-prd
+
+- **Decision**: Every JSON API failure has exactly code, message, requestId, and details; HTTP status stays on the response line and unsafe internals never reach clients.
+- **Reasoning**: One envelope enables consistent safe error handling across browser, API, jobs, and support.
+- **Downstream**: Contracts define per-code details and clients branch on code/context, never message text.
+- **Reversibility**: Low.
+
+### DEC-080: PostgreSQL owns truth and every secondary store is reconstructible or coordinated (2026-08-02)
+
+- **Timestamp**: 2026-08-02T18:00:23.000Z
+- **Agent**: codex
+- **Source**: create-prd decision recovery
+- **Tags**: decision, create-prd
+
+- **Decision**: PostgreSQL owns canonical authority; Storage bytes are governed by database metadata, Queue is disposable transport backed by outbox, Realtime is a hint, and search/public projections are transactional or rebuildable.
+- **Reasoning**: Cross-store ambiguity is unacceptable for rights, money, publication, and evidence.
+- **Downstream**: Every secondary representation defines identity, version, replay, deletion, and recovery.
+- **Reversibility**: Low.
+
+### DEC-081: Authentication is additive, but authorization is always first-party and contextual (2026-08-02)
+
+- **Timestamp**: 2026-08-02T18:00:24.000Z
+- **Agent**: codex
+- **Source**: create-prd decision recovery
+- **Tags**: decision, create-prd
+
+- **Decision**: External providers authenticate credentials only. Authorization resolves canonical user, acting party, current mandate/relationship/capability, and RLS policy server-side for every action.
+- **Reasoning**: Social identity must never imply organizational or resource authority.
+- **Downstream**: Every protected endpoint and job revalidates current acting context.
+- **Reversibility**: Low.
+
+### DEC-082: Zod 4 is the single runtime contract library and WCAG 2.2 AA is a release gate (2026-08-02)
+
+- **Timestamp**: 2026-08-02T18:00:25.000Z
+- **Agent**: codex
+- **Source**: create-prd decision recovery
+- **Tags**: decision, create-prd
+
+- **Decision**: Zod 4 defines runtime contracts and OpenAPI derivation; WCAG 2.2 AA gates public, authenticated, admin, and PWA release.
+- **Reasoning**: Shared runtime validation and accessibility are production invariants, not later polish.
+- **Downstream**: Contracts precede implementation and accessibility failures block release.
+- **Reversibility**: Low.
+
+### DEC-083: Launch integrations are allowlisted, degradable, and spend-gated (2026-08-02)
+
+- **Timestamp**: 2026-08-02T18:00:26.000Z
+- **Agent**: codex
+- **Source**: create-prd decision recovery
+- **Tags**: decision, create-prd
+
+- **Decision**: Launch integrations are Cloudflare, Supabase Pro at setup, GitHub/self-hosted Actions, Sentry, Resend, approved identity providers, and counsel-cleared Stripe-hosted Checkout Sessions plus hosted Connect. Unregistered destinations and deferred advertising, AI, enterprise, specialist search, and multi-party payout integrations fail closed.
+- **Reasoning**: Each admitted provider has typed boundaries, local canonical state, failure fallback, deletion behavior, and a bounded cost gate.
+- **Downstream**: Setup must verify provider terms, data placement, secrets, webhooks, outage behavior, quotas, and deletion before activation.
+- **Reversibility**: High.
+
+### DEC-084: Structured correlation plus numeric SLO alerts define launch observability (2026-08-02)
+
+- **Timestamp**: 2026-08-02T18:00:27.000Z
+- **Agent**: codex
+- **Source**: create-prd decision recovery
+- **Tags**: decision, create-prd
+
+- **Decision**: Propagate request, correlation, causation, job, attempt, and safe entity-version identifiers across API, RPC, outbox, Queue, and adapters; combine scrubbed logs, Sentry, numeric SLOs, dashboards, alerts, and runbooks.
+- **Reasoning**: A solo owner needs actionable numeric signals without false 24/7 promises or PII leakage.
+- **Downstream**: Setup creates and drills dashboards, alerts, scrubbing, sampling, and runbooks.
+- **Reversibility**: High.
+
+### DEC-085: Quality is contract-first and vertical from the first slice (2026-08-02)
+
+- **Timestamp**: 2026-08-02T18:00:28.000Z
+- **Agent**: codex
+- **Source**: create-prd decision recovery
+- **Tags**: decision, create-prd
+
+- **Decision**: Every capability advances through approved specs, Zod contract, failing test, minimal implementation, refactor, full validation, and all affected user/admin/data/security/telemetry/documentation surfaces.
+- **Reasoning**: Horizontal partial delivery creates false completeness across highly coupled authority, CMS, rights, and money workflows.
+- **Downstream**: All plans and slices follow Red-Green-Refactor and the completion checklist.
+- **Reversibility**: Low.
+
+### DEC-086: Consumer v1 ships through six dependency and infrastructure gates (2026-08-02)
+
+- **Timestamp**: 2026-08-02T18:00:29.000Z
+- **Agent**: codex
+- **Source**: create-prd decision recovery
+- **Tags**: decision, create-prd
+
+- **Decision**: Sequence assurance, operational foundation, identity/admin/CMS, projects/media/safety, credits/splits, services/single-payee commerce, and release hardening before later domains; enterprise remains deferred.
+- **Reasoning**: Identity, acting context, CMS, and operations are prerequisites; commerce depends on earlier provenance and counsel gates.
+- **Downstream**: Planning may optimize within gates but cannot violate dependency or exit criteria.
+- **Reversibility**: Medium.
+
+### DEC-087: Launch spend is capped and media is the primary cost risk (2026-08-02)
+
+- **Timestamp**: 2026-08-02T18:00:30.000Z
+- **Agent**: codex
+- **Source**: create-prd decision recovery
+- **Tags**: decision, create-prd
+
+- **Decision**: Spend is $0 before setup, setup/staging is capped at $50/month, and consumer production at $300/month. Supabase Pro starts at setup; seven-day production PITR reserves about $100 inside the production ceiling; 80/90% alerts and freezes apply.
+- **Reasoning**: Media storage/renditions/egress grow faster than request volume and require attribution, quotas, and admission controls.
+- **Downstream**: Setup records dated calculators and production features prove cost at 1k and 10k MAU.
+- **Reversibility**: High.
+
+### DEC-088: Final architecture owns every implementer-critical contract (2026-08-02)
+
+- **Timestamp**: 2026-08-02T18:00:31.000Z
+- **Agent**: codex
+- **Source**: audit-ambiguity architecture
+- **Tags**: decision, architecture-audit
+
+- **Decision**: Lock token-driven vanilla CSS with cascade layers, Astro scoped styles, and React CSS Modules; manual injection and explicit composition roots; exact error/cursor contracts; communication/fallback matrices; Stripe-hosted Checkout and hosted Connect without embedded card UI; and a linked runbook contract.
+- **Reasoning**: Each omission allowed incompatible or less-safe implementations without changing product intent.
+- **Downstream**: Later specs preserve these contracts; alternatives require evolution or propagated architecture change.
+- **Reversibility**: Medium.
+
+### DEC-089: Seven-day PITR gates protected production data (2026-08-02)
+
+- **Timestamp**: 2026-08-02T18:00:32.000Z
+- **Agent**: codex
+- **Source**: audit-ambiguity architecture
+- **Tags**: decision, architecture-audit
+
+- **Decision**: Enable and restore-test Supabase seven-day PITR before production money, rights, or publication records. Worst-case RPO is ≤2 minutes; protected writes remain disabled if PITR is unavailable or unverified; the roughly $100/month cost stays inside the $300 ceiling.
+- **Reasoning**: Database-resident audit/outbox shares the recovery domain and cannot truthfully guarantee zero loss under daily restore.
+- **Downstream**: Setup provisions production PITR and infrastructure verification proves RPO/RTO before enabling protected writes.
+- **Reversibility**: Low.
+
+### DEC-090: Final architecture embeds query and PII registries (2026-08-02)
+
+- **Timestamp**: 2026-08-02T18:00:33.000Z
+- **Agent**: codex
+- **Source**: audit-ambiguity architecture
+- **Tags**: decision, architecture-audit
+
+- **Decision**: Embed the normative 25-domain plus cross-cut feature-to-query map and canonical semantic PII field-registry seed in final architecture. Extensions require reviewed purpose, lawful basis/consent, access, retention, deletion, telemetry, search, and export treatment.
+- **Reasoning**: Final-layer implementers cannot depend on working notes or prose-only PII classes.
+- **Downstream**: Decomposition and schema specs map every entity/query and protected field to these registries.
+- **Reversibility**: Medium.
+
+### DEC-091: Performance gates use one numeric load and data profile (2026-08-02)
+
+- **Timestamp**: 2026-08-02T18:00:34.000Z
+- **Agent**: codex
+- **Source**: audit-ambiguity architecture
+- **Tags**: decision, architecture-audit
+
+- **Decision**: Use the committed 20-iteration pull-request smoke; staging 5 RPS for 15 minutes then 25 RPS for 2 minutes; fixed route/cache mix, sample floors, deterministic dataset floors, and ten-client pgbench profile.
+- **Reasoning**: Latency gates are meaningless if teams choose different traffic, data volume, cache state, or sample count.
+- **Downstream**: Setup commits scenarios and seed manifests; validation reports environment, checksum, plans, samples, percentiles, and errors.
+- **Reversibility**: High.
+
+### DEC-092: Runtime contracts close the final architecture implementation seams (2026-08-02)
+
+- **Timestamp**: 2026-08-03T00:40:00.000Z
+- **Agent**: codex
+- **Source**: audit-ambiguity architecture fresh rerun 1
+- **Tags**: decision, architecture-audit, fresh-rerun
+
+- **Decision**: Lock the CSS rationale and rejected alternatives; add explicit Hono/Queue-to-domain protocols and domain failure fallback; select repository-owned @wejammin/observability as the typed newline-delimited JSON runtime logger; fix client deadlines at 8 seconds for reads, 15 seconds for commands, 2 seconds for job acceptance, 30 seconds no-byte upload idle, and 15 minutes signed-upload expiry; and require every route/consumer to register exactly one SLO/async tier with CI coverage.
+- **Reasoning**: Fresh implementer simulation proved that guidance without an import contract, approximate deadlines, implicit in-process arrows, unregistered SLO tiers, and unexplained CSS rejection still allowed incompatible conforming implementations.
+- **Downstream**: Decomposition and later specs must use the named logger port, service-call direction, exact deadlines, route/consumer registry, and selected CSS governance. Alternatives require architecture evolution and equivalent contract tests.
+- **Reversibility**: Medium; implementations can evolve behind stable ports and registries, but wire deadlines and monitoring assignments require propagated contract changes.
+
+### DEC-093: Every technology axis and component arrow has one normative contract (2026-08-02)
+
+- **Timestamp**: 2026-08-03T00:50:00.000Z
+- **Agent**: codex
+- **Source**: audit-ambiguity architecture fresh rerun 2
+- **Tags**: decision, architecture-audit, fresh-rerun
+
+- **Decision**: Add an exhaustive launch technology matrix naming each axis, selection, project-specific rationale, and rejected alternatives; replace the communication matrix with one row for every component-diagram arrow and preserve transport → domain port → infrastructure adapter direction.
+- **Reasoning**: Fresh rerun 2 found that scattered rationale did not satisfy every selected axis and grouped protocol rows contradicted the diagram by allowing Hono to bypass domain persistence ports.
+- **Downstream**: Decomposition and all architecture/backend specs must preserve the technology matrix and one-to-one path contracts. Any technology substitution or diagram/path change requires an originating architecture decision and synchronized matrix update.
+- **Reversibility**: Medium; rows can evolve through explicit propagation, but silent local substitution is prohibited.
+
+### DEC-094: Workers Paid is the selected shared staging and production tier (2026-08-02)
+
+- **Timestamp**: 2026-08-03T01:00:00.000Z
+- **Agent**: codex
+- **Source**: audit-ambiguity architecture fresh rerun 3
+- **Tags**: decision, architecture-audit, fresh-rerun, cloudflare, cost
+
+- **Decision**: Cloudflare Workers Paid is required beginning with shared staging at /setup-workspace and remains the production tier. Pre-setup repository/local work and disposable Free-tier evaluation remain $0 and cannot carry shared staging, production data, or production traffic. Procurement and dated price verification are deferred; tier selection is not.
+- **Reasoning**: Fresh rerun 3 found an explicit deferred-tier statement that contradicted the integration and cost models already reserving the Workers Paid floor and left setup teams free to choose incompatible postures.
+- **Downstream**: Setup provisions Workers Paid within the $50 staging ceiling, verifies current pricing/limits, and configures 80/90% alerts before shared staging. Production promotion retains the selected tier unless an architecture change is propagated.
+- **Reversibility**: High through a future hosting architecture decision, provided availability, queues, abuse controls, cost, and migration evidence remain satisfied.
+
+### DEC-095: Design verification is local, first-party, and warm-light-only at launch (2026-08-02)
+
+- **Timestamp**: 2026-08-03T01:10:00.000Z
+- **Agent**: codex
+- **Source**: audit-ambiguity architecture fresh rerun 4
+- **Tags**: decision, architecture-audit, fresh-rerun, design-system
+
+- **Decision**: Use a local/CI-only static Astro apps/docs catalog importing packages/ui; run tagged Playwright screenshots and @axe-core/playwright inside pnpm test:e2e; self-host approved immutable WOFF2 fonts through Cloudflare deploy assets without launch subsetting; launch only the warm-light theme and require /evolve-feature for dark theme.
+- **Reasoning**: Fresh rerun 4 found that Storybook or equivalent, font delivery/subsetting, visual regression, and dark-theme admission were still selectable at setup, allowing different services, privacy/CSP posture, cost, accessibility scope, and visual coverage.
+- **Downstream**: Setup pins the selected package/font versions, builds apps/docs without production deployment, creates reviewed baselines, and proves CI. Frontend specs enumerate catalog states and may not add font origins or themes outside this decision.
+- **Reversibility**: Medium; tooling can evolve behind the same local/CI evidence contract, while font origin and theme changes require propagated security/accessibility/design updates.
+
+### DEC-096: Provider effects are local-intent-first cross-store operations (2026-08-02)
+
+- **Timestamp**: 2026-08-03T01:20:00.000Z
+- **Agent**: codex
+- **Source**: audit-ambiguity architecture fresh rerun 5
+- **Tags**: decision, architecture-audit, fresh-rerun, persistence, integrations
+
+- **Decision**: Every payment, email, registry, identity-adjacent, or other provider-backed operation uses a PostgreSQL operation/transaction UUID as canonical identity; commits local pending intent, idempotency, audit, and outbox before the provider effect; reads local state normally; reconciles unknown outcomes through signed webhook or bounded poll; and revokes locally before provider cancel/delete/suppress with retained evidence or exception.
+- **Reasoning**: Fresh rerun 5 found that integration fallbacks did not supply the full canonical ID, creation order, failure recovery, deletion cascade, and read join required for every multi-store entity.
+- **Downstream**: Every provider adapter and backend spec instantiates this lifecycle and may narrow retention/deletion only through its approved legal/provider contract. Blind retry and provider-authoritative rendering are prohibited.
+- **Reversibility**: Low for operation ordering and canonical ownership; individual providers remain replaceable behind adapters.
+
+### DEC-097: Decompose approved architecture into 43 dependency-ordered IA shards (2026-08-02)
+
+- **Timestamp**: 2026-08-03T01:24:45.515Z
+- **Agent**: codex
+- **Source**: decompose-architecture
+- **Tags**: decision, architecture, decomposition, ia, approved
+
+Owner approved the recommended architecture decomposition: 43 total IA shards comprising 00-infrastructure plus 42 feature-domain shards. Mandatory splits M01-M13, recommended splits R01-R02, and keep-together decisions for domains 04, 05, 07, 08, 09, 12, 16, 20, 21, and 24 are locked. Dependencies must point only to lower-numbered shards. The canonical boundary table is .memory/wiki/specs/ia/decomposition-plan.md. Downstream IA, BE, FE, phase, setup, and implementation work must preserve these boundaries unless /remediate-shard-split or /propagate-decision is run.

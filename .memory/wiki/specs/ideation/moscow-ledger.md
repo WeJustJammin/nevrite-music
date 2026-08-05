@@ -1,7 +1,7 @@
 # WeJammin — MoSCoW Ledger
 
 > Generated from the `/ideate-discover` breadth pass, 2026-07-16. Paths verified against disk.
-> **Owner decision (D-20)**: all 195 Must-haves retained; sequencing deferred to `/plan-phase`.
+> **Owner decisions (D-20 + D-85)**: all original 195 Must-haves retained; 35 CMS Must-haves added as a v1 foundation; sequencing deferred to `/plan-phase`.
 
 > **Read this before you trust a Rationale cell.** The generator that wrote this ledger cut every
 > Rationale at 220 characters, mid-word, with no marker — 608 of the 734 rows are fragments, 515 of
@@ -19,16 +19,16 @@
 
 | Priority | Count | Share |
 |---|---|---|
-| **MUST** | 195 | 26.6% |
-| **SHOULD** | 285 | 38.8% |
-| **COULD** | 201 | 27.4% |
-| **WONT** | 53 | 7.2% |
-| **TOTAL** | 734 | 100% |
+| **MUST** | 230 | 29.6% |
+| **SHOULD** | 292 | 37.6% |
+| **COULD** | 201 | 25.9% |
+| **WONT** | 53 | 6.8% |
+| **TOTAL** | 776 | 100% |
 
 ---
 
 
-## MUST (195)
+## MUST (230)
 
 | # | Feature | Path | Rationale |
 |---|---------|------|-----------|
@@ -228,7 +228,43 @@
 | 24.08.01 | CSAM Detection, Preservation & Mandatory Reporting | [24.08.01](./24-trust-safety-disputes/24.08-illegal-content-legal-process/24.08.01-csam-detection-preservation-reporting.md) | The clearest Must in the domain, and DT-02 explains why the reasoning DIFFERS from everything else here: nearly every other duty in domain 24 has a size carve-out (Art 19, Art 15(2)), so it is natural to absorb 'small pl… |
 | 24.09 | Case Evidence Locker & Chain of Custody | [24.09](./24-trust-safety-disputes/24.09-case-evidence-locker.md) | D-18 applied to the domain's own machinery, and unretrofittable. DT-02: three sub-domains derived the capture-at-source principle INDEPENDENTLY from three directions (24.03.03 returns, 24.04.01 claims, 24.04.04 chargebac… |
 
-## SHOULD (285)
+| 25.01.01 | Content Type Definitions | [25.01.01](./25-content-management-platform-configuration/25.01-content-types-schema-registry/25.01.01-content-type-definitions.md) | Define built-in and admin-created editorial types with stable keys, labels, capabilities, workflow, and ownership. |
+| 25.01.02 | Field Schemas, Validation & Defaults | [25.01.02](./25-content-management-platform-configuration/25.01-content-types-schema-registry/25.01.02-field-schemas-validation-defaults.md) | Define typed fields, constraints, conditional requirements, safe defaults, and editor/display metadata. |
+| 25.01.03 | Relations & Domain Record Bindings | [25.01.03](./25-content-management-platform-configuration/25.01-content-types-schema-registry/25.01.03-relations-domain-record-bindings.md) | Create typed content relations and read-only references to canonical domain records. |
+| 25.01.04 | Schema Versioning & Migration | [25.01.04](./25-content-management-platform-configuration/25.01-content-types-schema-registry/25.01.04-schema-versioning-migration.md) | Evolve schemas through immutable versions, compatibility checks, dry runs, resumable migrations, and rollback/forward-fix plans. |
+| 25.02.01 | Entry Authoring, Autosave & Locking | [25.02.01](./25-content-management-platform-configuration/25.02-content-entries-editorial-lifecycle/25.02.01-entry-authoring-autosave-locking.md) | Provide schema-driven drafts, autosave, validation, and field-level conflict handling. |
+| 25.02.02 | Revision History, Compare & Restore | [25.02.02](./25-content-management-platform-configuration/25.02-content-entries-editorial-lifecycle/25.02.02-revision-history-compare-restore.md) | Preserve immutable snapshots and field-level diffs; restore creates a new draft revision. |
+| 25.02.03 | Review, Approval & Editorial Ownership | [25.02.03](./25-content-management-platform-configuration/25.02-content-entries-editorial-lifecycle/25.02.03-review-approval-ownership.md) | Assign owners/reviewers, collect comments, enforce sensitive-content separation of duties, and record rejection reasons. |
+| 25.02.04 | Scheduling, Expiry & Archive | [25.02.04](./25-content-management-platform-configuration/25.02-content-entries-editorial-lifecycle/25.02.04-scheduling-expiry-archive.md) | Schedule publish/unpublish in a declared timezone, support embargo/expiry, and archive without deleting history. |
+| 25.03.01 | Approved Block Registry | [25.03.01](./25-content-management-platform-configuration/25.03-templates-blocks-page-composition/25.03.01-approved-block-registry.md) | Register code-owned blocks with typed props, child rules, data-source permissions, accessibility, and compatibility. |
+| 25.03.02 | Template Definitions, Slots & Bindings | [25.03.02](./25-content-management-platform-configuration/25.03-templates-blocks-page-composition/25.03.02-template-definitions-slots-bindings.md) | Define templates with named slots, permitted blocks, required bindings, and reserved regions. |
+| 25.03.03 | Page Composition & Reusable Patterns | [25.03.03](./25-content-management-platform-configuration/25.03-templates-blocks-page-composition/25.03.03-page-composition-reusable-patterns.md) | Compose pages from approved blocks and versioned shared patterns with explicit detach/update behavior. |
+| 25.03.04 | Preview, Diff & Safe Publish | [25.03.04](./25-content-management-platform-configuration/25.03-templates-blocks-page-composition/25.03.04-preview-diff-safe-publish.md) | Render exact draft/schema/template/settings combinations in isolated previews with diffs and preflight. |
+| 25.04.01 | Menu Trees & Locations | [25.04.01](./25-content-management-platform-configuration/25.04-navigation-routes-discovery-metadata/25.04.01-menu-trees-locations.md) | Create hierarchical menus and bind versions to named responsive locations. |
+| 25.04.02 | Conditional Navigation Visibility | [25.04.02](./25-content-management-platform-configuration/25.04-navigation-routes-discovery-metadata/25.04.02-conditional-navigation-visibility.md) | Use a bounded visibility vocabulary for auth state, capability, locale, entitlement, and feature availability. |
+| 25.04.03 | Slugs, Permalinks & Redirects | [25.04.03](./25-content-management-platform-configuration/25.04-navigation-routes-discovery-metadata/25.04.03-slugs-permalinks-redirects.md) | Manage stable routes, collisions, reserved namespaces, canonical URLs, and redirect history. |
+| 25.04.04 | SEO, Sitemap, Breadcrumb & Social Metadata | [25.04.04](./25-content-management-platform-configuration/25.04-navigation-routes-discovery-metadata/25.04.04-seo-sitemap-breadcrumb-social.md) | Manage titles, descriptions, canonical/noindex, social cards, breadcrumbs, sitemaps, and structured data. |
+| 25.05.01 | Taxonomy & Vocabulary Definitions | [25.05.01](./25-content-management-platform-configuration/25.05-taxonomies-localization-relationships/25.05.01-taxonomy-vocabulary-definitions.md) | Define hierarchical/flat vocabularies with stable keys, labels, allowed types, and governance owners. |
+| 25.05.02 | Term Governance & Assignment | [25.05.02](./25-content-management-platform-configuration/25.05-taxonomies-localization-relationships/25.05.02-term-governance-assignment.md) | Create, propose, merge, alias, deprecate, and assign terms with impact previews. |
+| 25.06.01 | Asset Ingest, Deduplication & Metadata | [25.06.01](./25-content-management-platform-configuration/25.06-media-library-asset-governance/25.06.01-asset-ingest-dedup-metadata.md) | Ingest images/audio/video/documents privately, scan, checksum, extract metadata, and surface duplicates. |
+| 25.06.02 | Renditions, Transforms, Alt Text & Focal Points | [25.06.02](./25-content-management-platform-configuration/25.06-media-library-asset-governance/25.06.02-renditions-transform-alt-focal.md) | Generate reproducible renditions while preserving originals; manage crop/focal, captions, transcripts, and alt text. |
+| 25.06.03 | Rights, Provenance, Usage & Consent | [25.06.03](./25-content-management-platform-configuration/25.06-media-library-asset-governance/25.06.03-rights-provenance-usage-consent.md) | Record source, creator/rightsholder claim, licence basis, consent, territory/time/use restrictions, and active uses. |
+| 25.06.04 | Reference Lifecycle, Replacement & Takedown | [25.06.04](./25-content-management-platform-configuration/25.06-media-library-asset-governance/25.06.04-reference-lifecycle-takedown.md) | Track every reference so replacement, archive, erasure, legal hold, and takedown affect the smallest valid scope. |
+| 25.07.01 | Settings Definition Registry | [25.07.01](./25-content-management-platform-configuration/25.07-settings-flags-configuration-governance/25.07.01-settings-definition-registry.md) | Register each setting key, type, owner, meaning, sensitivity, default source, valid scopes, validation, and risk. |
+| 25.07.02 | Scope, Inheritance & Effective Values | [25.07.02](./25-content-management-platform-configuration/25.07-settings-flags-configuration-governance/25.07.02-scope-inheritance-effective-values.md) | Resolve deterministic values across only the scopes each setting explicitly permits. |
+| 25.07.03 | Change Approval, Versioning & Rollback | [25.07.03](./25-content-management-platform-configuration/25.07-settings-flags-configuration-governance/25.07.03-change-approval-version-rollback.md) | Apply risk-based approval, scheduling, impact preview, canary observation, audit, and rollback. |
+| 25.07.05 | Secrets & Runtime Configuration Boundary | [25.07.05](./25-content-management-platform-configuration/25.07-settings-flags-configuration-governance/25.07.05-secrets-runtime-config-boundary.md) | Route product settings, deploy config, secrets, legal rule packs, and code invariants to distinct control planes. |
+| 25.08.01 | Admin Home & Task Inbox | [25.08.01](./25-content-management-platform-configuration/25.08-admin-workspace-operations/25.08.01-admin-home-task-inbox.md) | Show assigned drafts, approvals, schedules, failed jobs, expiring rights, configuration warnings, and incident-safe links. |
+| 25.08.03 | Admin Capabilities, Delegation & Step-Up | [25.08.03](./25-content-management-platform-configuration/25.08-admin-workspace-operations/25.08.03-admin-capabilities-delegation-step-up.md) | Define least privilege, scoped grants, temporary elevation, separation, emergency access, and immediate revocation. |
+| 25.08.04 | Activity Audit & Security Notifications | [25.08.04](./25-content-management-platform-configuration/25.08-admin-workspace-operations/25.08.04-activity-audit-notifications.md) | Present attributable history and notify affected owners of sensitive changes without copying protected payloads. |
+| 25.09.01 | Content Query APIs & Read Models | [25.09.01](./25-content-management-platform-configuration/25.09-content-delivery-preview-cache/25.09.01-content-query-apis-read-models.md) | Expose versioned render-ready published projections without draft/control-plane leakage. |
+| 25.09.02 | Authenticated Preview Sessions | [25.09.02](./25-content-management-platform-configuration/25.09-content-delivery-preview-cache/25.09.02-authenticated-preview-sessions.md) | Issue short-lived, audience-bound previews for exact draft/template/settings/route combinations. |
+| 25.09.03 | Atomic Publish & Cache Invalidation | [25.09.03](./25-content-management-platform-configuration/25.09-content-delivery-preview-cache/25.09.03-atomic-publish-cache-invalidation.md) | Commit publication and outbox together; converge route manifests, caches, search, sitemap, and subscribers idempotently. |
+| 25.09.04 | Degraded Delivery & Recovery | [25.09.04](./25-content-management-platform-configuration/25.09-content-delivery-preview-cache/25.09.04-degraded-delivery-recovery.md) | Serve validated last-known-good published snapshots during control-plane failure and distinguish unavailable from absent. |
+| 25.10.03 | Accessibility & Content Quality Gates | [25.10.03](./25-content-management-platform-configuration/25.10-portability-governance-quality/25.10.03-accessibility-content-quality-gates.md) | Gate required alt text, headings, link purpose, language, broken refs, and policy metadata; warn on readability. |
+| 25.10.04 | Retention, Legal Hold & Erasure | [25.10.04](./25-content-management-platform-configuration/25.10-portability-governance-quality/25.10.04-retention-legal-hold-erasure.md) | Distinguish unpublish, archive, delete, anonymize, legal hold, and evidence retention across revisions/assets/caches. |
+
+## SHOULD (292)
 
 | # | Feature | Path | Rationale |
 |---|---------|------|-----------|
@@ -518,6 +554,14 @@
 | 24.08.02 | Terrorist & Violent Extremist Content Removal | [24.08.02](./24-trust-safety-disputes/24.08-illegal-content-legal-process/24.08.02-tvec-removal.md) | The POLICY is a Must (it lives in 24.02.04); the tooling is a Should. DT-01 reverses the usual scoping: a music platform's TVEC exposure is HIGHER than a generic marketplace's — NSBM and white-power rock are established…  |
 | 24.08.03 | Law Enforcement & Legal Process Portal | [24.08.03](./24-trust-safety-disputes/24.08-illegal-content-legal-process/24.08.03-law-enforcement-legal-process-portal.md) | DT-01: WeJammin is POLICE-FACING BY CONSTRUCTION — domain 15's stolen-gear registry exists so police can query serials, making law-enforcement contact a success metric rather than an exception. Deferring the portal means… |
 
+| 25.05.03 | Localization Variants & Fallback | [25.05.03](./25-content-management-platform-configuration/25.05-taxonomies-localization-relationships/25.05.03-localization-variants-fallback.md) | Maintain locale-specific variants, field translation state, and explicit fallback rules. |
+| 25.05.04 | Related Content Curation | [25.05.04](./25-content-management-platform-configuration/25.05-taxonomies-localization-relationships/25.05.04-related-content-curation.md) | Combine manual relationships with explainable derived candidates and editorial exclusions. |
+| 25.07.04 | Feature Flags, Experiments & Kill Switches | [25.07.04](./25-content-management-platform-configuration/25.07-settings-flags-configuration-governance/25.07.04-feature-flags-experiments-kill-switches.md) | Separate release flags, experiments, and emergency switches with owner, expiry, cohort, fallback, and metrics. |
+| 25.08.02 | Global Search, Filtering & Bulk Actions | [25.08.02](./25-content-management-platform-configuration/25.08-admin-workspace-operations/25.08.02-global-search-filtering-bulk-actions.md) | Search content/assets/navigation/settings/audit-safe references and run dry-run bounded bulk commands. |
+| 25.08.05 | Site Health & Configuration Diagnostics | [25.08.05](./25-content-management-platform-configuration/25.08-admin-workspace-operations/25.08.05-site-health-config-diagnostics.md) | Check schema drift, stale flags, broken routes, unresolved media, scheduler/cache lag, and dependencies. |
+| 25.10.01 | Import Mapping, Validation & Dry Run | [25.10.01](./25-content-management-platform-configuration/25.10-portability-governance-quality/25.10.01-import-mapping-validation-dry-run.md) | Import content/media with explicit mapping, provenance, duplicate strategy, quarantine, and dry runs. |
+| 25.10.02 | Export, Backup, Restore & Portability | [25.10.02](./25-content-management-platform-configuration/25.10-portability-governance-quality/25.10.02-export-backup-restore-portability.md) | Export content/schemas/navigation/settings/media manifests and verify isolated restore. |
+
 ## COULD (201)
 
 | # | Feature | Path | Rationale |
@@ -785,9 +829,17 @@
 
 ## Open Questions
 
+**Open-question governance.** Every unresolved row in this table is an explicit delivery hold. The **Owner** cell is accountable; the **hard decision deadline** is the gate immediately before the pipeline stage named in **Deferred To** begins; and the **Question** text is the exact policy, behavior, or contract decision blocked. **Deferred To** names the destination only and never replaces the deadline. No downstream stage may begin until its owner resolves the row or records a formally approved supersession.
+
+**D-84 — Ledger rationale excerpts are retired as a decision source.** The linked leaf specification is
+the sole canonical rationale for each MoSCoW placement. Historical one-line excerpts may remain for
+navigation, including truncated excerpts, but no pipeline gate, implementation choice, or audit may
+rely on them. Re-authoring 608 lost tails would fabricate owner-owned placement reasoning; removing
+their authority is the accurate and reversible choice.
+
 | # | Question | Owner | Deferred To |
 |---|----------|-------|-------------|
-| Q-01 | **[OWNER]** The 608 truncated Rationale digests are marked but not restored. Restore them — re-derive each from its leaf file's DT/D tables — or retire the column and let the leaf link carry the reason alone? Restoring is not a sweep: the lost tails exist in no commit that ever touched this file, so re-deriving means re-authoring the stated reason for an owner-owned MoSCoW placement, and MoSCoW placement is the owner's call (`.claude/rules/decision-classification.md`). Retiring is cheap and honest but costs the one-screen scan of 734 reasons that is this ledger's whole point. The 126 intact rows and all 734 tiers are unaffected either way. | **[OWNER]** | `/plan-phase` — the first consumer that reads tier and rationale together |
+| Q-01 | ~~**[OWNER]** The 608 truncated Rationale digests are marked but not restored. Restore them — re-derive each from its leaf file's DT/D tables — or retire the column and let the leaf link carry the reason alone?~~ **RESOLVED — retire excerpts as a decision source.** The leaf specification is canonical for every placement; historic excerpts remain navigation-only, including truncated text, and may not be used by a gate or implementation. Re-authoring the lost tails would invent owner-owned MoSCoW reasoning. | Agent | ✅ Resolved — D-84, 2026-08-02 |
 
 
 <!-- spec-graph: auto-generated -->
@@ -795,6 +847,7 @@
 
 ### Constrained by
 - [[decisions.md#d-20|D-20]]
+- [[decisions.md#d-85|D-85]]
 - [[decisions.md#d-71|D-71]]
 - [[decisions.md#d-05|D-05]]
 - [[decisions.md#d-08|D-08]]
@@ -813,3 +866,4 @@
 - [[decisions.md#d-15|D-15]]
 - [[decisions.md#d-13c|D-13c]]
 - [[decisions.md#d-12|D-12]]
+- [[decisions.md#d-84|D-84]]

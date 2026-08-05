@@ -277,6 +277,11 @@ inheritance — shared-state and version discipline follow CX-02; trigger/rollba
 CX-03/CX-06. Promote to full synthesis at `/write-architecture-spec` once the detection trigger point is
 fixed.
 
+**Outstanding decision governance.** The double-assignment detection trigger is an architecture decision:
+the **Owner** is Agent; the hard decision deadline is immediately before
+`/write-architecture-spec` begins; and it blocks the authoritative event that opens the conflict,
+freezes the contested share, and emits downstream notification.
+
 ---
 
 ## Cross-Cut Mechanisms (routed OUT of this domain)
