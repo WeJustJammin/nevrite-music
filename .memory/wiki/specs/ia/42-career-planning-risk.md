@@ -26,7 +26,7 @@ Shard 42 owns queryable career goals, derived milestones, privacy-gated peer dis
 |---|---|
 | Goals | A goal is target predicate + derivation query + cadence + visibility. Unsupported manual trackers are not offered as platform goals. |
 | Templates | Templates are composable goal bundles, not persona/archetype assignment. Stability-oriented goals are default suggestions, never mandatory. |
-| Progress | Derived from canonical source facts and source integrity. Users may annotate context but cannot manually mark derived metric complete. |
+| Progress | Derived from canonical source facts and source integrity. Users may annotate context but cannot manually mark derived metric complete. A goal derived over ledger facts derives over both Shard 41 trust tiers and reports them segregated: a `verified` value and a `declared` value, each with its own state, never one blended figure and never a sum or average across the tiers (Domain 23 INV-03; `23.05.01` Q-01). Trust tier is a separate axis from source integrity/freshness — a fresh, complete series still carries two tier values. A goal whose derivation touches no ledger fact reports a single value with its tier recorded as not applicable. |
 | Milestones | Append-only derived facts with source revision and visibility. One entity/fact milestone prevents duplicate public/private timelines. |
 | Privacy | Income/financial milestones are hard-private by default and cannot be made public through generic visibility control. Public `first` wording is scoped to `first recorded on WeJammin`. |
 | Cohorts | Per-role stage/shape cohorts return distributions, sample and subject position; never a single market rate, prescription or named peer. Verified income only. |
@@ -46,7 +46,7 @@ Shard 42 owns queryable career goals, derived milestones, privacy-gated peer dis
 ## Acceptance Criteria
 
 - **AC-42.01 — Add goal template:** Given Authorized person/entity and supported derivations, when the actor invokes this flow, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) Add goal template, and (6) return Composable goals instantiate with targets, cadence and visibility; if the flow cannot complete, Missing source/query disables goal with explanation.
-- **AC-42.02 — View goal progress:** Given Current source projection and integrity, when the actor invokes this flow, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) View goal progress, and (6) return Progress/unknown state derives with source/freshness; if the flow cannot complete, Stale/incomplete source never renders achieved.
+- **AC-42.02 — View goal progress:** Given Current source projection and integrity, when the actor invokes this flow, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) View goal progress, and (6) return Progress/unknown state derives with source/freshness, segregated by trust tier with verified and declared reported separately and never blended; if the flow cannot complete, Stale/incomplete source never renders achieved.
 - **AC-42.03 — Derive milestone:** Given Qualifying canonical fact and rule version, when the actor invokes this flow, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) Derive milestone, and (6) return One immutable milestone appends with safe visibility/wording; if the flow cannot complete, Duplicate derivation idempotent; revoked fact invalidates visibly.
 - **AC-42.04 — Share milestone:** Given Milestone class permits sharing and actor authorized, when the actor invokes this flow, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) Share milestone, and (6) return Public/entity-scoped projection uses bounded wording; if the flow cannot complete, Financial/hard-private class refuses public visibility.
 - **AC-42.05 — View peer distribution:** Given B2 gate open, role/context and cohort meet floor, when the actor invokes this flow, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) View peer distribution, and (6) return Pull-only distribution, n, position and caveats render; if the flow cannot complete, Below floor/denied/no data suppresses without widening.
@@ -60,7 +60,7 @@ Shard 42 owns queryable career goals, derived milestones, privacy-gated peer dis
 | ID | Interaction | Preconditions | Success | Failure / recovery |
 |---|---|---|---|---|
 | 42.01 | Add goal template | Authorized person/entity and supported derivations | Composable goals instantiate with targets, cadence and visibility | Missing source/query disables goal with explanation |
-| 42.02 | View goal progress | Current source projection and integrity | Progress/unknown state derives with source/freshness | Stale/incomplete source never renders achieved |
+| 42.02 | View goal progress | Current source projection and integrity | Progress/unknown state derives with source/freshness, segregated by trust tier with verified and declared reported separately and never blended | Stale/incomplete source never renders achieved |
 | 42.03 | Derive milestone | Qualifying canonical fact and rule version | One immutable milestone appends with safe visibility/wording | Duplicate derivation idempotent; revoked fact invalidates visibly |
 | 42.04 | Share milestone | Milestone class permits sharing and actor authorized | Public/entity-scoped projection uses bounded wording | Financial/hard-private class refuses public visibility |
 | 42.05 | View peer distribution | B2 gate open, role/context and cohort meet floor | Pull-only distribution, n, position and caveats render | Below floor/denied/no data suppresses without widening |
@@ -74,7 +74,7 @@ Shard 42 owns queryable career goals, derived milestones, privacy-gated peer dis
 | Contract | Producer → consumer | Required fields | Errors / invariants |
 |---|---|---|---|
 | `GoalDefinitionV1` | Template/user → goal service | owner, target predicate, derivation query/version, cadence, visibility class | Queryable targets only; no archetype lock |
-| `GoalProgressV1` | Source projections → goal view | goal, value/state, source revision, integrity/freshness, derived-at | Unknown/stale cannot become achieved |
+| `GoalProgressV1` | Source projections → goal view | goal, per-tier progress entries each carrying trust tier (`verified`, `declared` or `not_applicable`), value and state, source revision, integrity/freshness, derived-at | Unknown/stale cannot become achieved; verified and declared entries are reported separately and are never summed, averaged or blended into one figure (INV-03); a ledger-derived goal always returns both tier entries, and a tier with no qualifying rows returns zero rather than being omitted |
 | `DerivedMilestoneV1` | Rule engine → timeline/share | owner/entity, fact key, class, source revision, wording scope, visibility | Unique fact/rule; financial hard-private |
 | `PeerDistributionV1` | B2 cohort engine → subject | role, stage/shape criteria, distribution, n, subject position, policy version | No named peer/market-rate/prescription; no export |
 | `InsuranceNeedObservationV1` | Booking/gear/finance fact → referral surface | owner, underlying action, requirement, declared policy attributes, confidence/source | Possible gap only unless provider-confirmed |
@@ -87,7 +87,7 @@ All mutations carry acting-party mandate, expected revision/idempotency key and 
 | Entity | Key relationships and constraints |
 |---|---|
 | `goal_template` / `goal_definition` | Versioned composable target/derivation/cadence/visibility; no archetype discriminator |
-| `goal_progress_projection` | Disposable source-versioned value/state/integrity/freshness |
+| `goal_progress_projection` | Disposable source-versioned value/state/integrity/freshness, keyed one row per goal and trust tier; no column stores a cross-tier total |
 | `derived_milestone` | Unique owner/entity/fact/rule, immutable source/wording/visibility class and active/invalidated state |
 | `cohort_definition` / `peer_distribution` | Role/stage/shape criteria and anonymous aggregate; physically gate-restricted under B2 |
 | `insurance_need_observation` | Underlying action, structured requirement/declared policy facts, source/confidence and suppression key |
@@ -102,7 +102,7 @@ Field typing is deterministic: `*_id: uuid`, `*_at: timestamptz`, `*_date: date`
 
 - **`goal_template`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Versioned composable target/derivation/cadence/visibility; no archetype discriminator.
 - **`goal_definition`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Versioned composable target/derivation/cadence/visibility; no archetype discriminator.
-- **`goal_progress_projection`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Disposable source-versioned value/state/integrity/freshness.
+- **`goal_progress_projection`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Disposable source-versioned value/state/integrity/freshness, keyed one row per goal and trust tier; no column stores a cross-tier total.
 - **`derived_milestone`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Unique owner/entity/fact/rule, immutable source/wording/visibility class and active/invalidated state.
 - **`cohort_definition`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Role/stage/shape criteria and anonymous aggregate; physically gate-restricted under B2.
 - **`peer_distribution`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Role/stage/shape criteria and anonymous aggregate; physically gate-restricted under B2.
@@ -149,7 +149,7 @@ Goal/milestone rows use owner/entity RLS. Cohort query enforces privacy before c
 | Event | Required payload | Consumers |
 |---|---|---|
 | `career.goal.created.v1` | goal, owner/entity, target/derivation version, cadence, visibility | progress scheduler/audit |
-| `career.goal.progress_changed.v1` | goal, state/value, source revision, integrity, derived-at | timeline/notification |
+| `career.goal.progress_changed.v1` | goal, per-tier state/value entries with trust tier, source revision, integrity, derived-at | timeline/notification |
 | `career.milestone.derived.v1` | milestone, fact/rule, source revision, class/visibility/wording | private timeline/share projection |
 | `career.milestone.invalidated.v1` | milestone, source fact revision, reason | timeline/public cache invalidation |
 | `career.insurance_need.observed.v1` | need, owner, action, requirement/source/confidence, suppression class | referral prompt |
@@ -160,6 +160,9 @@ Events are versioned, append-only and at-least-once. Consumers deduplicate by ev
 ## Edge Cases
 
 - Source metric disappears or permission revokes: goal becomes unknown/unavailable, never silently completed or reset.
+- An income-shaped goal is satisfied partly by imported activity: the declared tier counts toward the goal and is reported beside the verified tier, never merged into it; no surface renders a single blended progress bar, and a target met only by the two tiers combined is reported as met in neither tier alone.
+- A goal's derivation covers one trust tier only: the absent tier returns zero for that goal rather than being omitted, so the segregation stays visible instead of collapsing back to one figure.
+- Imported rows are never self-promoted to `verified`; a goal cannot change a row's tier, and a tier reclassification at the Shard 41 source re-derives both tier values against the new source revision.
 - One fact satisfies two templates: one milestone fact renders once with applicable labels, not duplicate timeline claims.
 - Historical data predates WeJammin: wording says `first recorded on WeJammin`, never false career-first claim.
 - Income milestone rule fires: hard-private visibility enforced even if generic entity timeline is public.
@@ -205,6 +208,7 @@ Events are versioned, append-only and at-least-once. Consumers deduplicate by ev
 |---|---|---|---|
 | 2026-08-02 | Initial skeleton and source-feature seeding | `/decompose-architecture-structure` | All |
 | 2026-08-03 | Locked queryable goals, private milestones, gated cohorts, referral-only insurance and no-wellbeing boundary | `/write-architecture-spec` | All |
+| 2026-08-05 | A-23 — bound goal progress to Domain 23 INV-03: `GoalProgressV1` and `goal_progress_projection` now carry one entry per trust tier, verified and declared are reported segregated and never summed, and AC-42.02, interaction 42.02, `career.goal.progress_changed.v1` and three edge cases were updated to match | `/resolve-ambiguity` | Architecture Decisions, Acceptance Criteria, Interactions, Contracts, Data Models, Typed Field Registry, Event Schemas, Edge Cases |
 
 
 <!-- spec-graph: auto-generated -->

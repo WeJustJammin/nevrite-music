@@ -40,7 +40,7 @@ Shard 06 owns the protected case system for reports, moderation, sanctions, appe
 | Phase | Enabled boundary |
 |---|---|
 | Consumer launch | `report.create` for user-visible objects/profiles; authorized admin removal/suspension; identified DMCA intake; repeat-infringer ledger; moderation audit |
-| Phase 2+ | Full queue operations, policy library, ordinary appeal UI, fraud review, transaction disputes, safety/identity cases, evidence views and transparency |
+| Phase 2+ | Full queue operations, policy library, ordinary appeal UI, fraud review, transaction disputes, safety/identity cases, evidence views and transparency, trusted-flagger lane, message-safety signals, card-testing/triangulation defence, review-integrity adjudication, authenticity/counterfeit review, leak forensics, meetup safety records and TVEC policy-path removal |
 | Counsel-gated | Automatic CSAM action, emergency disclosure/escalation, 24/7 legal response, high-risk automation, sparse safety analytics and unapproved money/AML outcomes |
 
 ## Acceptance Criteria
@@ -63,6 +63,14 @@ Shard 06 owns the protected case system for reports, moderation, sanctions, appe
 - **AC-TSE-16 — Capture evidence:** Given a valid request with current identity, authority, source state and required inputs, when the actor invokes this flow, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) Source event atomically writes capture intent; worker snapshots fields and hashes media; terminal failure is explicit, and (6) return Sealed entry or `capture_failed` marker exists; if the flow cannot complete, invalid input, stale authority, revision conflict or dependency failure returns a typed refusal and no contradictory canonical mutation.
 - **AC-TSE-17 — Place/release legal hold:** Given a valid request with current identity, authority, source state and required inputs, when the actor invokes this flow, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) Counsel-authorized actor states basis, scope and release condition; hold supersedes destructive clocks, and (6) return Hold/release version and manifest commit; if the flow cannot complete, invalid input, stale authority, revision conflict or dependency failure returns a typed refusal and no contradictory canonical mutation.
 - **AC-TSE-18 — Assess domain-launch risk:** Given a valid request with current identity, authority, source state and required inputs, when the actor invokes this flow, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) Before launch, owner records harms, controls, gaps, evidence and disposition; calendar-only review is insufficient, and (6) return Assessment gates launch configuration; if the flow cannot complete, invalid input, stale authority, revision conflict or dependency failure returns a typed refusal and no contradictory canonical mutation.
+- **AC-TSE-19 — Submit trusted-flagger notice:** Given a valid request with current identity, authority, source state and required inputs, when the actor invokes this flow, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) Granted per-entity status shortens the report SLA and admits idempotent bulk API submission per item; the lane covers public content only, never private messages, and never bypasses SoR or appeal. Each per-item outcome writes back to the flagger accuracy ledger, and (6) return Per-item cases created at the granted SLA; accuracy-ledger entries committed; duplicate batch replay creates no additional case; if the flow cannot complete, invalid input, stale authority, revision conflict or dependency failure returns a typed refusal and no contradictory canonical mutation.
+- **AC-TSE-20 — Evaluate message-safety signal:** Given a valid request with current identity, authority, source state and required inputs, when the actor invokes this flow, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) Metadata/pattern signals only by default (new account + payment instruction + off-platform contact + urgency); content inspection escalates only on a participant report. Warning is inline, dismissible and never blocks the send, and (6) return Recipient warning surfaced or thread delivered clean; evaluation never delays delivery; if the flow cannot complete, invalid input, stale authority, revision conflict or dependency failure returns a typed refusal and no contradictory canonical mutation.
+- **AC-TSE-21 — Defend card testing and triangulation:** Given a valid request with current identity, authority, source state and required inputs, when the actor invokes this flow, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) Card-testing velocity per device/session/card-BIN-spread throttles then blocks at the rail before any score is consulted; digital fulfilment never precedes settlement confirmation. Triangulation indicators produce a payout hold plus review, never an auto-block, and below-market price is never a signal on its own, and (6) return Rail block recorded, or hold plus review case opened with the indicator set; if the flow cannot complete, invalid input, stale authority, revision conflict or dependency failure returns a typed refusal and no contradictory canonical mutation.
+- **AC-TSE-22 — Adjudicate review integrity:** Given a valid request with current identity, authority, source state and required inputs, when the actor invokes this flow, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) Detection runs on the fraud linkage graph, never on review data. Removal is an enforcement action requiring a cited rule, a Statement of Reasons to the review author and an appeal. Reputation and integrity are per-role; a ring in one role never contaminates another, and (6) return Review-removal decision recorded with cited rule, SoR and appeal route; per-role scope preserved; if the flow cannot complete, invalid input, stale authority, revision conflict or dependency failure returns a typed refusal and no contradictory canonical mutation.
+- **AC-TSE-23 — Review authenticity or counterfeit claim:** Given a valid request with current identity, authority, source state and required inputs, when the actor invokes this flow, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) Three claim paths converge (buyer post-purchase dispute, brand notice, platform listing-time detection) and must never yield contradictory seller reasons. Trademark exhaustion is checked before any brand claim is actioned. Misrepresented provenance is adjudicated against the Shard 23 registry chain, not against detection; innocent misrepresentation is a dispute, not an offence, and (6) return Single reconciled outcome per listing with the claim path and exhaustion check recorded; if the flow cannot complete, invalid input, stale authority, revision conflict or dependency failure returns a typed refusal and no contradictory canonical mutation.
+- **AC-TSE-24 — Respond to pre-release leak:** Given a valid request with current identity, authority, source state and required inputs, when the actor invokes this flow, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) Every delivery of an unreleased asset is watermarked per recipient at transfer and logged as a consequential action. A leak report matches the copy against the platform's own reference, extracts the watermark, traces the access log and produces a finding. The asset's release state changes the meaning of an identical match, and (6) return Forensic finding with watermark identity and access trace, or explicit no-attribution result; if the flow cannot complete, invalid input, stale authority, revision conflict or dependency failure returns a typed refusal and no contradictory canonical mutation.
+- **AC-TSE-25 — Attach meetup safety layer:** Given a valid request with current identity, authority, source state and required inputs, when the actor invokes this flow, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) Offered at the moment the meeting is arranged, never buried in settings: suggested public exchange location, optional check-in/check-out timer, share-my-meetup with a trusted contact. A restricted party cannot arrange a meeting, not merely cannot message. Inform and offer; never block or moralise, and (6) return Immutable arrangement safety record persisted; clean check-out preserves rather than deletes it; if the flow cannot complete, invalid input, stale authority, revision conflict or dependency failure returns a typed refusal and no contradictory canonical mutation.
+- **AC-TSE-26 — Apply TVEC removal:** Given a valid request with current identity, authority, source state and required inputs, when the actor invokes this flow, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) Two separate mechanisms: narrow automatic hash matching against designated-organisation sets, and broad written-policy judgment applied by a human with its reasoning in the risk register. No extremism scoring of users under any signal. Removal runs the ordinary enforcement ladder with a Statement of Reasons and an appeal, and (6) return Removal recorded against the mechanism actually used, with SoR and appeal route; if the flow cannot complete, invalid input, stale authority, revision conflict or dependency failure returns a typed refusal and no contradictory canonical mutation.
 
 ## Interactions
 
@@ -86,6 +94,14 @@ Shard 06 owns the protected case system for reports, moderation, sanctions, appe
 | TSE-16 | Capture evidence | Source event atomically writes capture intent; worker snapshots fields and hashes media; terminal failure is explicit. | Sealed entry or `capture_failed` marker exists. |
 | TSE-17 | Place/release legal hold | Counsel-authorized actor states basis, scope and release condition; hold supersedes destructive clocks. | Hold/release version and manifest commit. |
 | TSE-18 | Assess domain-launch risk | Before launch, owner records harms, controls, gaps, evidence and disposition; calendar-only review is insufficient. | Assessment gates launch configuration. |
+| TSE-19 | Submit trusted-flagger notice | Granted per-entity status shortens the report SLA and admits idempotent bulk API submission per item; the lane covers public content only, never private messages, and never bypasses SoR or appeal. Each per-item outcome writes back to the flagger accuracy ledger. | Per-item cases created at the granted SLA; accuracy-ledger entries committed; duplicate batch replay creates no additional case. |
+| TSE-20 | Evaluate message-safety signal | Metadata/pattern signals only by default (new account + payment instruction + off-platform contact + urgency); content inspection escalates only on a participant report. Warning is inline, dismissible and never blocks the send. | Recipient warning surfaced or thread delivered clean; evaluation never delays delivery. |
+| TSE-21 | Defend card testing and triangulation | Card-testing velocity per device/session/card-BIN-spread throttles then blocks at the rail before any score is consulted; digital fulfilment never precedes settlement confirmation. Triangulation indicators produce a payout hold plus review, never an auto-block, and below-market price is never a signal on its own. | Rail block recorded, or hold plus review case opened with the indicator set. |
+| TSE-22 | Adjudicate review integrity | Detection runs on the fraud linkage graph, never on review data. Removal is an enforcement action requiring a cited rule, a Statement of Reasons to the review author and an appeal. Reputation and integrity are per-role; a ring in one role never contaminates another. | Review-removal decision recorded with cited rule, SoR and appeal route; per-role scope preserved. |
+| TSE-23 | Review authenticity or counterfeit claim | Three claim paths converge (buyer post-purchase dispute, brand notice, platform listing-time detection) and must never yield contradictory seller reasons. Trademark exhaustion is checked before any brand claim is actioned. Misrepresented provenance is adjudicated against the Shard 23 registry chain, not against detection; innocent misrepresentation is a dispute, not an offence. | Single reconciled outcome per listing with the claim path and exhaustion check recorded. |
+| TSE-24 | Respond to pre-release leak | Every delivery of an unreleased asset is watermarked per recipient at transfer and logged as a consequential action. A leak report matches the copy against the platform's own reference, extracts the watermark, traces the access log and produces a finding. The asset's release state changes the meaning of an identical match. | Forensic finding with watermark identity and access trace, or explicit no-attribution result. |
+| TSE-25 | Attach meetup safety layer | Offered at the moment the meeting is arranged, never buried in settings: suggested public exchange location, optional check-in/check-out timer, share-my-meetup with a trusted contact. A restricted party cannot arrange a meeting, not merely cannot message. Inform and offer; never block or moralise. | Immutable arrangement safety record persisted; clean check-out preserves rather than deletes it. |
+| TSE-26 | Apply TVEC removal | Two separate mechanisms: narrow automatic hash matching against designated-organisation sets, and broad written-policy judgment applied by a human with its reasoning in the risk register. No extremism scoring of users under any signal. Removal runs the ordinary enforcement ladder with a Statement of Reasons and an appeal. | Removal recorded against the mechanism actually used, with SoR and appeal route. |
 
 ### Global Interaction Rules
 
@@ -102,12 +118,15 @@ Shard 06 owns the protected case system for reports, moderation, sanctions, appe
 
 | Contract | Definition |
 |---|---|
-| `CaseKind` | `safety_report | moderation | dmca | fraud_review | transaction_dispute | impersonation | ownership | legal_process | illegal_content | crisis | governance` |
-| `CaseState` | `draft | received | triaged | queued | claimed | reviewing | awaiting_party | proposed | awaiting_control | decided | appealed | resolved | closed | capture_failed` |
-| `Severity` | `S0_illegal | S1_active_harm | S2_material | S3_standard | S4_low`; mapping is policy-versioned |
-| `Decision` | `no_action | warn | restrict | remove_object | suspend_scope | suspend_account | terminate_access | restore | refer_external | resources_only` |
-| `EvidenceClass` | `ordinary | sensitive | legal | restricted_preservation` |
-| `StandardError` | `VALIDATION_FAILED, UNAUTHENTICATED, ACTING_CONTEXT_STALE, FORBIDDEN, STEP_UP_REQUIRED, VERSION_CONFLICT, IDEMPOTENCY_MISMATCH, CASE_LEASE_LOST, POLICY_VERSION_INVALID, CONTROL_REQUIRED, COUNSEL_GATE_DISABLED, DISCLOSURE_PROHIBITED, PROVIDER_UNAVAILABLE, CAPTURE_FAILED` |
+| `CaseKind` | `safety_report \| moderation \| dmca \| fraud_review \| transaction_dispute \| impersonation \| ownership \| legal_process \| illegal_content \| crisis \| governance \| counterfeit_authenticity \| leak_forensics \| review_integrity \| meetup_safety` |
+| `CaseState` | `draft \| received \| triaged \| queued \| claimed \| reviewing \| awaiting_party \| proposed \| awaiting_control \| decided \| appealed \| resolved \| closed \| capture_failed` |
+| `Severity` | `S0_illegal \| S1_active_harm \| S2_material \| S3_standard \| S4_low`; mapping is policy-versioned |
+| `Decision` | `no_action \| warn \| restrict \| remove_object \| suspend_scope \| demonetize \| suspend_account \| terminate_access \| restore \| refer_external \| resources_only` |
+| `SanctionRung` | Closed ordered enum, `smallint` domain `0..8`, non-null on every sanction: `0 warn` (notice only, no state changed) \| `1 remove_object` (a specific object; fully reversible) \| `2 restrict_feature` (one capability on the account; fully reversible) \| `3 suspend_surface` (a marketplace or calendar surface; nominally reversible — perishable inventory may be lost) \| `4 demonetize` (payout eligibility on future earnings only; never touches accrued balances) \| `5 payout_hold` (**disabled**; a rung-5 request is refused `SANCTION_CLASS_GATED` pending the money-transmission posture — fraud withholding routes to the Payments risk reserve, which is a hold on undisbursed escrow, not a sanction on owed balance) \| `6 suspend_account` (time-boxed; login permitted, action blocked, data readable and exportable) \| `7 terminate_access` (permanent; ownership records, balances and credits preserved and exportable) \| `8 entity_action` (an entity's platform privileges only; never reaches a co-owner's account, share, credits or balance). Rung ≥ 6 or `indefinite` duration is the dual-human-control trigger in `AC-TSE-06`/`TSE-06`. |
+| `DecisionRungMap` | `warn → 0`; `remove_object → 1`; `restrict → 1` when `scope_type = object`, `→ 2` when `scope_type = feature`; `suspend_scope → 3` when `scope_type = domain` (marketplace or calendar surface), `→ 8` when `scope_type = entity`; `demonetize → 4`; `suspend_account → 6`, or `→ 8` when `scope_type = entity`; `terminate_access → 7`, or `→ 8` when `scope_type = entity`. `no_action`, `restore`, `refer_external` and `resources_only` are not sanctions and carry no rung. `payout_hold` (5) has no `Decision` member by design and cannot be reached. |
+| `ScopeType` | Closed ordered containment enum: `object ⊂ feature ⊂ domain ⊂ account ⊂ entity`. Mandatory on every sanction; the narrowest scope that addresses the harm is chosen and widening is an explicit escalation, never an implication. |
+| `EvidenceClass` | `ordinary \| sensitive \| legal \| restricted_preservation` |
+| `StandardError` | `VALIDATION_FAILED, UNAUTHENTICATED, ACTING_CONTEXT_STALE, FORBIDDEN, STEP_UP_REQUIRED, VERSION_CONFLICT, IDEMPOTENCY_MISMATCH, CASE_LEASE_LOST, POLICY_VERSION_INVALID, CONTROL_REQUIRED, SANCTION_CLASS_GATED, COUNSEL_GATE_DISABLED, DISCLOSURE_PROHIBITED, PROVIDER_UNAVAILABLE, CAPTURE_FAILED` |
 
 ### Intake, Case and Evidence
 
@@ -143,6 +162,22 @@ Shard 06 owns the protected case system for reports, moderation, sanctions, appe
 | `LegalDisclosure` | Requires verified requester/instrument/jurisdiction/scope/minimization/approval/prohibition state. No v1 self-service or 24/7 promise. |
 | `CounselGate` | Deny-by-default, named, versioned, review-bound and auditable; feature flag cannot substitute for approval record. |
 
+### Priority Lanes, Messaging Safety and Specialised Enforcement
+
+| Contract | Invariant |
+|---|---|
+| `TrustedFlaggerGrant` | Granted per entity with recorded basis and scope; grant sets a shortened policy-versioned SLA on reports it submits, never a direct priority override. Public content only. Bulk submission idempotent per item. Accuracy ledger write-back per item is mandatory; sustained inaccuracy throttles then suspends the lane by reasoned, appealable decision. |
+| `MessageSafetySignal` | Metadata/pattern evaluation only until a participant reports; only thread participants may report. Fails open — evaluation unavailability delivers the thread unwarned and never blocks or delays. Warning is dismissible and never blocks a send. |
+| `CardTestingDefense` | Velocity evaluated per device, session and card-BIN spread at the authorization rail ahead of any risk score; digital fulfilment never precedes settlement confirmation. Goods-agnostic. A legitimate volume spike (many distinct buyers, devices and funding sources) is the inverse fingerprint and must not throttle. |
+| `TriangulationReview` | Indicators produce a payout hold and human review, never an automatic block. Below-market price is never a standalone signal, and seller reputation never vetoes the finding. Detection is exogenous by construction; absence of on-platform signal is not absence of fraud. |
+| `ReviewIntegrityAdjudication` | Detection reads the fraud linkage graph, never review data. Removal requires cited rule version, Statement of Reasons to the author and appeal. Scope is per role; findings never cross role boundaries. |
+| `AuthenticityClaim` | Buyer dispute, brand notice and listing-time detection reconcile to one seller-facing reason. Trademark exhaustion is evaluated before any brand claim is actioned. Claim windows extend beyond ordinary dispute windows because authenticity failure surfaces years late. |
+| `LeakForensics` | Per-recipient watermark applied at transfer; access is a consequential audited action. Finding states watermark identity and access trace or explicitly states no attribution. Platform supplies evidence for external notices; it does not host the leak. |
+| `MeetupSafetyRecord` | Offered at arrangement time; immutable and preserved on clean check-out. Restriction edges block arrangement, not merely messaging. In-person incident routes to a safety case, never to the dispute engine. |
+| `TVECPath` | Hash matching and written-policy judgment are separate paths with separate evidence and separate authority; neither may be evaluated as the other. No user-level extremism score under any signal, including genre proxies. Removal uses the ordinary ladder with SoR and appeal. |
+
+Open upstream and not decided here: whether an independent musician may hold a priority lane for their own catalogue (ideation `24.01.04` Q-01) and counsel confirmation of the DSA Art 19 carve-out (`24.01.04` Q-02) are both deferred to `/create-prd`. `TrustedFlaggerGrant` eligibility therefore stays at the ideation wording — granted per entity with recorded basis and scope — and is not narrowed to rights-holder organisations.
+
 ## Data Models
 
 | Model | Key relationships and constraints |
@@ -165,6 +200,14 @@ Shard 06 owns the protected case system for reports, moderation, sanctions, appe
 | `legal_hold` / `retention_clock` | Basis/authorizer/manifest/release; effective retention is maximum clock, hold unbounded. |
 | `safety_risk_assessment` | Domain/release, harms, controls, evidence, gaps, approver and disposition. |
 | `audit_event` | Actor/context/action/target/before-after hashes/reason/step-up/request; separate from logs. |
+| `trusted_flagger_grant` / `flagger_accuracy_entry` | Entity, basis, scope, granted SLA profile, state/version; append-only per-item outcome attribution driving throttle/suspend. |
+| `message_safety_evaluation` | Thread, matched pattern codes, signal version, evaluated-at, fail-open marker; no message content retained absent a report. |
+| `rail_velocity_decision` / `triangulation_indicator` | Device/session/BIN-spread window, throttle/block outcome; and listing indicator set with hold reference. |
+| `review_integrity_finding` | Role scope, linkage-graph evidence hash, cited rule, removal decision reference. |
+| `authenticity_claim` | Listing/item, claim path, exhaustion check result, registry chain reference, reconciled seller reason. |
+| `leak_forensic_finding` | Asset, release state at match, watermark recipient identity, access-trace hash, attribution result. |
+| `meetup_safety_record` | Arrangement, offered controls, check-in/check-out timestamps, trusted-contact share state; immutable. |
+| `tvec_evaluation` | Mechanism (`hash_match` or `policy_judgment`), designated-set version or rule version, human decider where policy path. |
 
 ### Typed Field and Cardinality Registry
 
@@ -201,6 +244,16 @@ Field typing is deterministic: `*_id: uuid`, `*_at: timestamptz`, `*_date: date`
 - **`retention_clock`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Basis/authorizer/manifest/release; effective retention is maximum clock, hold unbounded..
 - **`safety_risk_assessment`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Domain/release, harms, controls, evidence, gaps, approver and disposition..
 - **`audit_event`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Actor/context/action/target/before-after hashes/reason/step-up/request; separate from logs..
+- **`trusted_flagger_grant`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Entity, basis, scope, granted SLA profile, state/version; append-only per-item outcome attribution driving throttle/suspend..
+- **`flagger_accuracy_entry`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Entity, basis, scope, granted SLA profile, state/version; append-only per-item outcome attribution driving throttle/suspend..
+- **`message_safety_evaluation`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Thread, matched pattern codes, signal version, evaluated-at, fail-open marker; no message content retained absent a report..
+- **`rail_velocity_decision`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Device/session/BIN-spread window, throttle/block outcome; and listing indicator set with hold reference..
+- **`triangulation_indicator`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Device/session/BIN-spread window, throttle/block outcome; and listing indicator set with hold reference..
+- **`review_integrity_finding`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Role scope, linkage-graph evidence hash, cited rule, removal decision reference..
+- **`authenticity_claim`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Listing/item, claim path, exhaustion check result, registry chain reference, reconciled seller reason..
+- **`leak_forensic_finding`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Asset, release state at match, watermark recipient identity, access-trace hash, attribution result..
+- **`meetup_safety_record`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Arrangement, offered controls, check-in/check-out timestamps, trusted-contact share state; immutable..
+- **`tvec_evaluation`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Mechanism (`hash_match` or `policy_judgment`), designated-set version or rule version, human decider where policy path..
 
 ## Access Control
 
@@ -216,12 +269,13 @@ Field typing is deterministic: `*_id: uuid`, `*_at: timestamptz`, `*_date: date`
 | Break-glass custodian | Time-boxed restricted validation with step-up and dual evidence | Export/copy/preview/party disclosure/persistent access |
 | System worker | Idempotent route/capture/project/notify with service identity | Human judgment absent approved automatic legal path |
 | Platform administrator | Capability/configuration/health | Decide case by admin status or weaken floors through settings |
+| Trusted flagger | Submit notices in the granted scope; read own accuracy record and lane decisions | Private messages, queue visibility, other flaggers' records, any content outside the grant scope |
+| Meetup participant | Own arrangement safety record and trusted-contact share | Counterparty's record |
 
 Protected tables use deny-by-default RLS and service RPC predicates. Staff identity is separate from consumer context; grants are scoped, temporary, non-wildcard and audited.
 
 ### Access Escalation
 
-- **Actor/capability:** a denial returns a typed reason and preserves canonical state; authority or evidence disputes route to the scoped case/Trust & Safety path, support handles mechanical recovery through an expiring purpose grant, and counsel/capability/privacy hard gates have no role override.
 - **Reporter/claimant:** a denial returns a typed reason and preserves canonical state; authority or evidence disputes route to the scoped case/Trust & Safety path, support handles mechanical recovery through an expiring purpose grant, and counsel/capability/privacy hard gates have no role override.
 - **Case party:** a denial returns a typed reason and preserves canonical state; authority or evidence disputes route to the scoped case/Trust & Safety path, support handles mechanical recovery through an expiring purpose grant, and counsel/capability/privacy hard gates have no role override.
 - **Public user:** a denial returns a typed reason and preserves canonical state; authority or evidence disputes route to the scoped case/Trust & Safety path, support handles mechanical recovery through an expiring purpose grant, and counsel/capability/privacy hard gates have no role override.
@@ -232,6 +286,8 @@ Protected tables use deny-by-default RLS and service RPC predicates. Staff ident
 - **Break-glass custodian:** a denial returns a typed reason and preserves canonical state; authority or evidence disputes route to the scoped case/Trust & Safety path, support handles mechanical recovery through an expiring purpose grant, and counsel/capability/privacy hard gates have no role override.
 - **System worker:** a denial returns a typed reason and preserves canonical state; authority or evidence disputes route to the scoped case/Trust & Safety path, support handles mechanical recovery through an expiring purpose grant, and counsel/capability/privacy hard gates have no role override.
 - **Platform administrator:** a denial returns a typed reason and preserves canonical state; authority or evidence disputes route to the scoped case/Trust & Safety path, support handles mechanical recovery through an expiring purpose grant, and counsel/capability/privacy hard gates have no role override.
+- **Trusted flagger:** a denial returns a typed reason and preserves canonical state; authority or evidence disputes route to the scoped case/Trust & Safety path, support handles mechanical recovery through an expiring purpose grant, and counsel/capability/privacy hard gates have no role override.
+- **Meetup participant:** a denial returns a typed reason and preserves canonical state; authority or evidence disputes route to the scoped case/Trust & Safety path, support handles mechanical recovery through an expiring purpose grant, and counsel/capability/privacy hard gates have no role override.
 
 ## Accessibility
 
@@ -257,6 +313,15 @@ Protected tables use deny-by-default RLS and service RPC predicates. Staff ident
 | `safety.evidence.sealed.v1` | Bundle/entry/class/source/hash/status | Case projector, retention/hold |
 | `safety.legal-disclosure.decided.v1` | Request/decision/prohibition/release hash | Legal audit, permitted notification |
 | `safety.risk-assessment.decided.v1` | Domain/release/disposition/gap/control hashes | Shard 05 launch gate, audit |
+| `safety.flagger.status-changed.v1` | Entity/state/accuracy-window/decision reference | Intake, transparency |
+| `safety.message-warning.raised.v1` | Thread/pattern codes/signal version | Messaging surface only |
+| `safety.rail.blocked.v1` | Device/session/BIN-window/outcome | Commerce/payment adapters |
+| `safety.triangulation.held.v1` | Listing/indicator codes/hold reference | Payout adapter, seller notice |
+| `safety.review.removed.v1` | Review/role scope/rule version/SoR reference | Reviews projection |
+| `safety.authenticity.decided.v1` | Listing/claim path/outcome/reason code | Marketplace, seller notice |
+| `safety.leak.finding.v1` | Asset/attribution state/finding hash | Rights holder notice, enforcement |
+| `safety.meetup.record-changed.v1` | Arrangement/control state/version | Arrangement surface |
+| `safety.tvec.decided.v1` | Object/mechanism/policy or set version/decision | Enforcement, transparency |
 
 Events exclude narratives, raw evidence, legal documents, reporter identity, private messages, protected traits and unrestricted PII. Consumers fetch authorized projections by opaque ID.
 
@@ -278,6 +343,19 @@ Events exclude narratives, raw evidence, legal documents, reporter identity, pri
 | Urgent after-hours legal request | Logged intake only; no improvised disclosure or 24/7 promise. |
 | CSAM provider path unavailable | Unapproved automatic path stays disabled; no false human-review claim or silent report loss. |
 | Appeal reverses multi-scope action | Per-item compensating commands; truthful partial restoration; idempotent convergence. |
+| Bulk notice retried after partial failure | Idempotent per item; no duplicate cases. |
+| Flagger claims content the provenance graph shows the target created | Notice does not win by default; the platform record is cited. |
+| Bulk notice exceeds review capacity | Weighted-fair lane share; safety-of-person capacity floor untouched. |
+| Non-participant reports a private thread | Rejected. |
+| Signal service unavailable | Fail-open; thread delivered unwarned; gap logged. |
+| Distributed card testing across a botnet | Per-device velocity is blind; aggregate BIN-level window required. |
+| Legitimate flash-sale spike | Must not throttle. |
+| Triangulator with spotless on-platform record | Reputation must not veto the finding. |
+| Honest dropshipping Trader | Trader flag disambiguates; must not block. |
+| Genuine below-market listing | Not a signal. |
+| Leaked asset matched after release | Non-event, not a crisis. |
+| Clean meetup check-out | Record preserved, never deleted. |
+| TVEC hash set unavailable | Policy path only; no automatic action. |
 
 ## Surface Applicability
 
@@ -308,7 +386,7 @@ Responsive web/PWA only. Consumer launch exposes report/flag and required notice
 
 ## Cross-Shard Dependencies
 
-- **Depends on:** [Shard 00](00-infrastructure.md) for request/event/error/audit/recovery; [Shard 01](01-identity-authority.md) for parties, acting context, aliases, organizations, mandates and succession; [Shard 05](05-platform-configuration-admin.md) for capabilities, guarded configuration, tasks, diagnostics, quality gates, retention and kill switches.
+- **Depends on:** [Shard 00 § Contracts](00-infrastructure.md#contracts) for request/event/error/audit/recovery; [Shard 01 § Contracts](01-identity-authority.md#contracts) for parties, acting context, aliases, organizations, mandates and succession; [Shard 05 § Contracts](05-platform-configuration-admin.md#contracts) for capabilities (see its `Capability grant` row, which is the binding for `CounselGate` and the Break-glass custodian), guarded configuration, tasks, diagnostics, quality gates, retention and kill switches.
 - **Depended on by:** Shards 11–16, 25–31, 33, 35–37 and 40 consume restrictions, findings, disputes, evidence references, policy decisions or risk signals. Those shards own transaction truth/capture points; Shard 06 owns case/evidence truth.
 
 ## Deep Dives Needed
@@ -317,14 +395,27 @@ Responsive web/PWA only. Consumer launch exposes report/flag and required notice
 
 ### Cross-Shard Section Contract Map
 
+- **Shard 00 — Cross-cutting platform foundation:** consume [Shard 00 — Cross-cutting platform foundation Contracts](00-infrastructure.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 00 — Cross-cutting platform foundation Event Schemas](00-infrastructure.md#event-schemas). Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
+- **Shard 01 — Identity authority and party governance:** consume [Shard 01 — Identity authority and party governance Contracts](01-identity-authority.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 01 — Identity authority and party governance Event Schemas](01-identity-authority.md#event-schemas). Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
+- **Shard 05 — Platform configuration, admin and quality:** consume [Shard 05 — Platform configuration, admin and quality Contracts](05-platform-configuration-admin.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 05 — Platform configuration, admin and quality Event Schemas](05-platform-configuration-admin.md#event-schemas). Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
 - **Shard 11 — Community graph:** consume [Shard 11 — Community graph Contracts](11-community-graph.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 11 — Community graph Event Schemas](11-community-graph.md#event-schemas). Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
+- **Shard 12 — Community spaces and events:** consume [Shard 12 — Community spaces and events Contracts](12-community-spaces-events.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 12 — Community spaces and events Event Schemas](12-community-spaces-events.md#event-schemas). Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
+- **Shard 13 — Opportunities and casting:** consume [Shard 13 — Opportunities and casting Contracts](13-opportunities-casting.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 13 — Opportunities and casting Event Schemas](13-opportunities-casting.md#event-schemas). Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
 - **Shard 14 — Services marketplace:** consume [Shard 14 — Services marketplace Contracts](14-services-marketplace.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 14 — Services marketplace Event Schemas](14-services-marketplace.md#event-schemas). Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
+- **Shard 15 — Education delivery:** consume [Shard 15 — Education delivery Contracts](15-education-delivery.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 15 — Education delivery Event Schemas](15-education-delivery.md#event-schemas). Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
+- **Shard 16 — Education credentials and institutions:** consume [Shard 16 — Education credentials and institutions Contracts](16-education-credentials-institutions.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 16 — Education credentials and institutions Event Schemas](16-education-credentials-institutions.md#event-schemas). Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
 - **Shard 25 — Gear market catalog:** consume [Shard 25 — Gear market catalog Contracts](25-gear-market-catalog.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 25 — Gear market catalog Event Schemas](25-gear-market-catalog.md#event-schemas). Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
 - **Shard 26 — Gear commerce and fulfilment:** consume [Shard 26 — Gear commerce and fulfilment Contracts](26-gear-commerce-fulfilment.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 26 — Gear commerce and fulfilment Event Schemas](26-gear-commerce-fulfilment.md#event-schemas). Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
 - **Shard 27 — Digital catalog and delivery:** consume [Shard 27 — Digital catalog and delivery Contracts](27-digital-catalog-delivery.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 27 — Digital catalog and delivery Event Schemas](27-digital-catalog-delivery.md#event-schemas). Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
 - **Shard 28 — Digital licensing and commerce:** consume [Shard 28 — Digital licensing and commerce Contracts](28-digital-licensing-commerce.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 28 — Digital licensing and commerce Event Schemas](28-digital-licensing-commerce.md#event-schemas). Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
+- **Shard 29 — Venues, studios and spaces:** consume [Shard 29 — Venues, studios and spaces Contracts](29-venues-spaces.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 29 — Venues, studios and spaces Event Schemas](29-venues-spaces.md#event-schemas). Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
 - **Shard 30 — Booking and contracts:** consume [Shard 30 — Booking and contracts Contracts](30-booking-contracts.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 30 — Booking and contracts Event Schemas](30-booking-contracts.md#event-schemas). Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
+- **Shard 31 — Agency, settlement and live-market intelligence:** consume [Shard 31 — Agency, settlement and live-market intelligence Contracts](31-live-settlement-intelligence.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 31 — Agency, settlement and live-market intelligence Event Schemas](31-live-settlement-intelligence.md#event-schemas). Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
+- **Shard 33 — Show-day execution and recovery:** consume [Shard 33 — Show-day execution and recovery Contracts](33-show-day-operations.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 33 — Show-day execution and recovery Event Schemas](33-show-day-operations.md#event-schemas). Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
+- **Shard 35 — Ticket products, sales, access packages and delivery:** consume [Shard 35 — Ticket products, sales, access packages and delivery Contracts](35-ticket-products-sales.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 35 — Ticket products, sales, access packages and delivery Event Schemas](35-ticket-products-sales.md#event-schemas). Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
 - **Shard 36 — Box office risk:** consume [Shard 36 — Box office risk Contracts](36-box-office-risk.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 36 — Box office risk Event Schemas](36-box-office-risk.md#event-schemas). Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
+- **Shard 37 — Fanbase and direct-to-fan:** consume [Shard 37 — Fanbase and direct-to-fan Contracts](37-fanbase-direct-to-fan.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 37 — Fanbase and direct-to-fan Event Schemas](37-fanbase-direct-to-fan.md#event-schemas). Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
+- **Shard 40 — Market intelligence, fraud and scouting signals:** consume [Shard 40 — Market intelligence, fraud and scouting signals Contracts](40-market-intelligence-signals.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 40 — Market intelligence, fraud and scouting signals Event Schemas](40-market-intelligence-signals.md#event-schemas). Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
 
 ## Changelog
 
@@ -332,30 +423,63 @@ Responsive web/PWA only. Consumer launch exposes report/flag and required notice
 |---|---|---|---|
 | 2026-08-02 | Initial skeleton and source-feature seeding | /decompose-architecture-structure | All |
 | 2026-08-03 | Reconciled 47 sources; locked case, policy, enforcement, dispute, legal and evidence contracts | /write-architecture-spec | All |
+| 2026-08-05 | A-05: added TSE-19..TSE-26 (trusted flagger, message safety, card-testing/triangulation, review integrity, authenticity, leak forensics, meetup safety, TVEC) with matching acceptance criteria, the Priority Lanes contracts sub-table, eight data models, nine events, two access rows, thirteen edge cases and the Phase 2+ scope statement | /resolve-ambiguity | Delivery Phases, Acceptance Criteria, Interactions, Contracts, Data Models, Access Control, Event Schemas, Edge Cases |
+| 2026-08-05 | A-06: typed the enforcement ladder as `SanctionRung` 0..8 with `DecisionRungMap` and `ScopeType`, added `demonetize` to `Decision`, gated rung 5 behind `SANCTION_CLASS_GATED`, and escaped the enum pipes that were breaking the Core Types table | /resolve-ambiguity | Contracts |
+| 2026-08-05 | A-07: added the three upstream and ten missing consumer entries to the Cross-Shard Section Contract Map (21 total), section-cited the upstream dependency line, and split Dependency References into Constrained by / Constrains | /resolve-ambiguity | Cross-Shard Dependencies, Dependency References |
+| 2026-08-05 | A-30 (partial): removed the `Actor/capability` table-header bullet from Access Escalation; the differentiated per-role routes remain unresolved | /resolve-ambiguity | Access Control |
 
 ## Dependency References
+
+### Constrained by
+
+- [[specs/ia/00-infrastructure|Shard 00 — Cross-cutting platform foundation]]
+- [[specs/ia/01-identity-authority|Shard 01 — Identity authority and party governance]]
+- [[specs/ia/05-platform-configuration-admin|Shard 05 — Platform configuration, admin and quality]]
 
 ### Constrains
 
 - [[specs/ia/11-community-graph|Shard 11 — Community graph]]
+- [[specs/ia/12-community-spaces-events|Shard 12 — Community spaces and events]]
+- [[specs/ia/13-opportunities-casting|Shard 13 — Opportunities and casting]]
 - [[specs/ia/14-services-marketplace|Shard 14 — Services marketplace]]
+- [[specs/ia/15-education-delivery|Shard 15 — Education delivery]]
+- [[specs/ia/16-education-credentials-institutions|Shard 16 — Education credentials and institutions]]
 - [[specs/ia/25-gear-market-catalog|Shard 25 — Gear market catalog]]
 - [[specs/ia/26-gear-commerce-fulfilment|Shard 26 — Gear commerce and fulfilment]]
 - [[specs/ia/27-digital-catalog-delivery|Shard 27 — Digital catalog and delivery]]
 - [[specs/ia/28-digital-licensing-commerce|Shard 28 — Digital licensing and commerce]]
+- [[specs/ia/29-venues-spaces|Shard 29 — Venues, studios and spaces]]
 - [[specs/ia/30-booking-contracts|Shard 30 — Booking and contracts]]
+- [[specs/ia/31-live-settlement-intelligence|Shard 31 — Agency, settlement and live-market intelligence]]
+- [[specs/ia/33-show-day-operations|Shard 33 — Show-day execution and recovery]]
+- [[specs/ia/35-ticket-products-sales|Shard 35 — Ticket products, sales, access packages and delivery]]
 - [[specs/ia/36-box-office-risk|Shard 36 — Box office risk]]
+- [[specs/ia/37-fanbase-direct-to-fan|Shard 37 — Fanbase and direct-to-fan]]
+- [[specs/ia/40-market-intelligence-signals|Shard 40 — Market intelligence, fraud and scouting signals]]
 
 
 <!-- spec-graph: auto-generated -->
 ## Related Specs
 
 ### References
+- [[specs/ia/00-infrastructure|Shard 00 — Cross-cutting platform foundation]]
+- [[specs/ia/01-identity-authority|Shard 01 — Identity authority and party governance]]
+- [[specs/ia/05-platform-configuration-admin|Shard 05 — Platform configuration, admin and quality]]
 - [[specs/ia/11-community-graph|Shard 11 — Social graph and collaborator network]]
+- [[specs/ia/12-community-spaces-events|Shard 12 — Communities, participatory spaces and events]]
+- [[specs/ia/13-opportunities-casting|Shard 13 — Opportunities and casting lifecycle]]
 - [[specs/ia/14-services-marketplace|Shard 14 — Services marketplace lifecycle]]
+- [[specs/ia/15-education-delivery|Shard 15 — Lessons, practice and mentorship delivery]]
+- [[specs/ia/16-education-credentials-institutions|Shard 16 — Courses, credentials, institutions and special practice]]
 - [[specs/ia/25-gear-market-catalog|Shard 25 — Gear catalog, listings and market data]]
 - [[specs/ia/26-gear-commerce-fulfilment|Shard 26 — Gear transactions, fulfilment and possession models]]
 - [[specs/ia/27-digital-catalog-delivery|Shard 27 — Digital catalog, entitlement, delivery and vendor QA]]
 - [[specs/ia/28-digital-licensing-commerce|Shard 28 — Digital licensing, commerce, revocation and revenue]]
+- [[specs/ia/29-venues-spaces|Shard 29 — Venues, studios and spaces]]
 - [[specs/ia/30-booking-contracts|Shard 30 — Booking, negotiation and contracts]]
+- [[specs/ia/31-live-settlement-intelligence|Shard 31 — Agency, settlement and live-market intelligence]]
+- [[specs/ia/33-show-day-operations|Shard 33 — Show-day execution and recovery]]
+- [[specs/ia/35-ticket-products-sales|Shard 35 — Ticket products, sales, access packages and delivery]]
 - [[specs/ia/36-box-office-risk|Shard 36 — Door access, box office, reconciliation and ticketing risk]]
+- [[specs/ia/37-fanbase-direct-to-fan|Shard 37 — Fanbase and direct-to-fan]]
+- [[specs/ia/40-market-intelligence-signals|Shard 40 — Market intelligence, fraud and scouting signals]]

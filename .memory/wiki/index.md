@@ -51,7 +51,6 @@
 - [[specs/audits/2026-08-03-ia-ambiguity-report|IA Ambiguity Audit — Initial Fresh Run]] — audit — spec-vault
 - [[specs/audits/2026-08-03-ia-ambiguity-rerun-1|IA Ambiguity Audit — Fresh Rerun 1]] — audit — spec-vault
 - [[specs/audits/2026-08-05-ia-ambiguity-report|IA Ambiguity Audit — Fresh Run (2026-08-05)]] — audit — spec-vault
-- [[specs/audits/2026-08-05-ia-remediation-worklist|IA Remediation Worklist — 2026-08-05]] — audit — spec-vault
 - [[specs/audits/architecture/2026-08-02-architecture-design-ambiguity-rerun-1|Architecture Ambiguity Audit — Architecture Design Fresh Rerun 1]] — audit — spec-vault
 - [[specs/audits/architecture/2026-08-02-architecture-design-ambiguity-rerun-2|Architecture Ambiguity Audit — Architecture Design Fresh Rerun 2]] — audit — spec-vault
 - [[specs/audits/architecture/2026-08-02-architecture-design-ambiguity-rerun-3|Architecture Ambiguity Audit — Architecture Design Fresh Rerun 3]] — audit — spec-vault
@@ -1397,6 +1396,7 @@
 
 ## Structured Memory
 
+- pattern: PAT-015: compile.mjs rewrites every file under .memory/wiki/specs/ — never park a working document there (2026-08-05) — 2026-08-05T07:28:19.253Z
 - decision: DEC-099: Vault access binds to a per-role vault_role_class, shipped as non-enforceable profile_version 0 with a review floor (2026-08-05) — 2026-08-05T06:54:22.747Z
 - decision: DEC-098: Shard 04 delivery eligibility learns dispute/rights/licence state by inbound command, not upward read (2026-08-05) — 2026-08-05T06:54:22.708Z
 - pattern: PAT-014: Calibrate a deterministic screen against real doc conventions before trusting its flags (2026-08-05) — 2026-08-05T06:09:09.158Z

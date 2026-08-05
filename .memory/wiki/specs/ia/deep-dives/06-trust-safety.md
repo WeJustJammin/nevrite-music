@@ -37,7 +37,7 @@ This deep dive owns protected-case mechanics, policy-bound decisions, scoped/rev
 | `policy_rule_version` | `id, rulebook_kind, rule_key, version_no, authoritative_locale, text_hash, machine_rule jsonb, effective_from, effective_until?, supersedes_id?, published_at`; published row immutable. |
 | `case_decision` | `id, case_id, finding, rule_version_id, evidence_manifest_hash, rationale_ciphertext, target_scope, proposed_by, proposed_at, activated_at?, state, version`. |
 | `decision_control` | `decision_id, control_kind, required_reason, reviewer_staff_id?, prior_decider_id?, reaffirm_after?, satisfied_at, evidence_hash`; distinct-person predicate when concurrence applies. |
-| `sanction` | `id, decision_id, subject_person/party, action, rung?, scope_type/id, starts_at, ends_at?, indefinite, state, reversal_id?, version`; excludes ownership mutation. |
+| `sanction` | `id, decision_id, subject_person/party, action, rung: smallint NOT NULL CHECK (rung BETWEEN 0 AND 8), scope_type/id, starts_at, ends_at?, indefinite, state, reversal_id?, version`; `rung` derives from `(action, scope_type)` per `DecisionRungMap` and is stored, not recomputed at read; `rung = 5` is rejected at write with `SANCTION_CLASS_GATED`; excludes ownership mutation. |
 | `statement_of_reasons` | `id, decision_id, locale, plain_summary, structured_payload, delivery_state, supersedes_id?, created_at`; immutable correction chain. |
 | `appeal` | `id, decision_id, appellant_party/person, supplement_id?, reviewer_staff_id?, state, result_by_item jsonb, decided_at?, version`; reviewer distinct from original. |
 | `repeat_infringer_entry` | `id, policy_version, subject, claimant_key, asset_id, infringement_event_id, notice_id, state, counted_at?`; unique strike unit. |
@@ -100,7 +100,7 @@ Hold: `proposed -> active -> released`. Active hold contributes an unbounded ret
 2. If entity-level effect requested, resolve responsible actor and mandate from Shard 01 snapshot. Ambiguity blocks collective action.
 3. Compute required control:
    - ordinary: authorized moderator;
-   - S1 or rung ≥6/indefinite with at least two human moderators: distinct-human concurrence;
+   - S1 or rung ≥ 6 (`suspend_account`, `terminate_access`, `entity_action`) or `indefinite` with at least two human moderators: distinct-human concurrence;
    - same impact with solo team: cited rule, rationale, audit, guaranteed review route and separate-sitting cooling-off reaffirmation;
    - urgent S0/S1: same four compensating controls but no cooling-off delay.
 4. Original decider cannot satisfy concurrence or appeal. AI/model output cannot satisfy either.
@@ -199,6 +199,7 @@ Every downstream skeleton listed as dependent on Shard 06 contains a reciprocal 
 |---|---|---|---|
 | 2026-08-02 | Initial deep-dive skeleton | /decompose-architecture-validate | All |
 | 2026-08-03 | Locked state machines, algorithms, abuse controls, counsel gates and convergence behavior | /write-architecture-spec-deepen | All |
+| 2026-08-05 | A-06: retyped `sanction.rung` as a required `smallint` 0..8 derived from `DecisionRungMap` and stored, rejected `rung = 5` at write, and made the dual-control predicate concrete | /resolve-ambiguity | Data Models, Decision Control Algorithm |
 
 ## Dependency References
 

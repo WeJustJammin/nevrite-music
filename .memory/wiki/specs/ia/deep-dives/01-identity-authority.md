@@ -168,9 +168,9 @@ For every protected command, evaluate in this order:
 | Shard 02 profiles/claims | Party kind, alias ownership periods, public/private linkage, identity/identifier provenance, ownership state. |
 | Shards 03–05 CMS/admin | Canonical party references and named platform capabilities; CMS cannot create authority. |
 | Shards 06–18 collaboration/commerce/rights | Acting party, subject party, current authority snapshot, party identifier eligibility, legal-disclosure boundary. |
-| Shard 20 fanbase | Alias/band lifecycle, name disposition, successor/fork lineage, memorialised projection. |
-| Shard 23 finance | Party/payee identity and treasury authorization; no pooled/multi-party entitlement. |
-| Shard 24 moderation | Disputed membership, identifier collision, false death, succession, merge/claim case references; moderation does not rewrite evidence. |
+| Shard 37 fanbase | Alias/band lifecycle, name disposition, successor/fork lineage, memorialised projection. |
+| Shard 41 finance | Party/payee identity and treasury authorization; no pooled/multi-party entitlement. |
+| Shard 06 moderation | Disputed membership, identifier collision, false death, succession, merge/claim case references; moderation does not rewrite evidence. |
 | Shards 25/27/29/30/37/39 | Viewer-relative party projection and consented relationship identifiers; no inferred authority. |
 
 Every downstream command stores the `actingPartyId`, human actor, authority source relationship/mandate ID, and source version needed to explain why the act was allowed.
@@ -213,6 +213,7 @@ Every downstream command stores the `actingPartyId`, human actor, authority sour
 |---|---|---|---|
 | 2026-08-02 | Initial deep-dive skeleton | /decompose-architecture-validate | All |
 | 2026-08-02 | Authored field, state, authority, concurrency, disclosure, dependency, and abuse contracts | /write-architecture-spec-deepen | All |
+| 2026-08-05 | A-24: retargeted three Cross-Shard Contracts consumer rows from ideation-domain numbers to IA shard numbers (20→37 fanbase, 23→41 finance, 24→06 moderation) | /resolve-ambiguity | Cross-Shard Contracts |
 
 ## Dependency References
 

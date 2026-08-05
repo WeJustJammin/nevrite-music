@@ -267,7 +267,7 @@ Responsive web/PWA is the sole launch surface. Wallet/print tickets and door loo
 ## Cross-Shard Dependencies
 
 - **Depends on:** [[specs/ia/00-infrastructure|Shard 00]], [[specs/ia/06-trust-safety|Shard 06]], [[specs/ia/29-venues-spaces|Shard 29]], [[specs/ia/30-booking-contracts|Shard 30]]
-- **Depended on by:** [[specs/ia/36-box-office-risk|Shard 36]], [[specs/ia/37-ticket-resale-refunds|Shard 37]], [[specs/ia/39-fan-discovery|Shard 39]]
+- **Depended on by:** [[specs/ia/36-box-office-risk|Shard 36]], [[specs/ia/37-fanbase-direct-to-fan|Shard 37]], [[specs/ia/38-promotion-marketing|Shard 38]], [[specs/ia/39-analytics-ingestion-reporting|Shard 39]]
 
 
 ### Cross-Shard Section Contract Map
@@ -277,8 +277,9 @@ Responsive web/PWA is the sole launch surface. Wallet/print tickets and door loo
 - **Shard 29:** consume [Shard 29 Contracts](29-venues-spaces.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 29 Event Schemas](29-venues-spaces.md#event-schemas). Canonical ownership stays with the producer; typed failure/unknown states cross the same boundary.
 - **Shard 30:** consume [Shard 30 Contracts](30-booking-contracts.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 30 Event Schemas](30-booking-contracts.md#event-schemas). Canonical ownership stays with the producer; typed failure/unknown states cross the same boundary.
 - **Shard 36:** consume [Shard 36 Contracts](36-box-office-risk.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 36 Event Schemas](36-box-office-risk.md#event-schemas). Canonical ownership stays with the producer; typed failure/unknown states cross the same boundary.
-- **Shard 37:** consume [Shard 37 Contracts](37-ticket-resale-refunds.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 37 Event Schemas](37-ticket-resale-refunds.md#event-schemas). Canonical ownership stays with the producer; typed failure/unknown states cross the same boundary.
-- **Shard 39:** consume [Shard 39 Contracts](39-fan-discovery.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 39 Event Schemas](39-fan-discovery.md#event-schemas). Canonical ownership stays with the producer; typed failure/unknown states cross the same boundary.
+- **Shard 37:** consume [Shard 37 Contracts](37-fanbase-direct-to-fan.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 37 Event Schemas](37-fanbase-direct-to-fan.md#event-schemas). Canonical ownership stays with the producer; typed failure/unknown states cross the same boundary.
+- **Shard 38:** consume [Shard 38 Contracts](38-promotion-marketing.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 38 Event Schemas](38-promotion-marketing.md#event-schemas). Canonical ownership stays with the producer; typed failure/unknown states cross the same boundary.
+- **Shard 39:** consume [Shard 39 Contracts](39-analytics-ingestion-reporting.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 39 Event Schemas](39-analytics-ingestion-reporting.md#event-schemas). Canonical ownership stays with the producer; typed failure/unknown states cross the same boundary.
 
 ## Changelog
 
@@ -286,6 +287,7 @@ Responsive web/PWA is the sole launch surface. Wallet/print tickets and door loo
 |---|---|---|---|
 | 2026-08-02 | Initial skeleton and source-feature seeding | `/decompose-architecture-structure` | All |
 | 2026-08-03 | Authored and deepened complete IA contract | `/write-architecture-spec` | All |
+| 2026-08-05 | A-21 — replaced the two nonexistent consumer shards (`37-ticket-resale-refunds`, `39-fan-discovery`) with the four shards that actually declare an inbound edge from this shard: 36, 37 fanbase, 38 promotion, 39 analytics | `/resolve-ambiguity` | Cross-Shard Dependencies, Cross-Shard Section Contract Map |
 
 
 <!-- spec-graph: auto-generated -->
@@ -297,3 +299,6 @@ Responsive web/PWA is the sole launch surface. Wallet/print tickets and door loo
 - [[specs/ia/00-infrastructure|Shard 00 — Cross-cutting platform foundation]]
 - [[specs/ia/06-trust-safety|Shard 06 — Trust, safety, disputes and evidence]]
 - [[specs/ia/36-box-office-risk|Shard 36 — Door access, box office, reconciliation and ticketing risk]]
+- [[specs/ia/37-fanbase-direct-to-fan|Shard 37 — Fanbase and direct-to-fan]]
+- [[specs/ia/38-promotion-marketing|Shard 38 — Promotion and marketing]]
+- [[specs/ia/39-analytics-ingestion-reporting|Shard 39 — Analytics ingestion, matching and reporting]]

@@ -134,18 +134,20 @@ Shard 08 converts authorized Shard 07 contribution records into purpose-specific
 
 ### AI Disclosure Entry V1
 
-| Field | Constraint |
-|---|---|
-| `kind` | One of V1 kinds; new kind requires new vocabulary version |
-| `scope` | Bounded contribution-local description such as full, section, element or process |
-| `tool_name` / `tool_version?` | Plain text, length-limited, no links/markup |
-| `model_name?` | Optional factual identifier supplied by contributor |
-| `subject_is_own_model?` | Optional boolean only where modelling applies |
-| `note?` | Optional bounded plain text; not used for policy evaluation |
+Entries are JSON objects inside `ai_disclosure_version.entries`. They are **not** entities and have no `id`, `owner_id`, `state` or `version` of their own — identity, state and versioning belong to the parent `ai_disclosure_version` row, whose `vocabulary version` column records which member set the entries were written against. A contribution with zero entries is "not disclosed" — silence, never a human-origin claim.
+
+| Field | Type | Constraint |
+|---|---|---|
+| `kind` | open versioned enum | `generation` \| `assistance` \| `modelling` \| `separation` \| `correction`. `generation` = a part produced by a model; `assistance` = human-led work with AI aid; `modelling` = a modelled instrument or voice; `separation` = stem/source separation; `correction` = pitch/time correction. Open and additive by design — a new member requires a new vocabulary version on the parent row, never a schema break. |
+| `scope` | closed enum | `whole` \| `partial` — whether the AI involvement covers the entire contribution or a portion of it. |
+| `scope_detail?` | text | Optional, ≤ 280 characters, plain text, no links or markup. Present only for `partial`: which portion (e.g. "final chorus vocal only"). Descriptive, never adjudicated; not used for policy evaluation. |
+| `tool_name?` / `tool_version?` | text | Optional, ≤ 120 characters each, plain text, no links or markup. Never required. |
+| `model_name?` | text | Optional, ≤ 120 characters. Factual identifier supplied by the contributor. Never required. |
+| `subject_is_own_model?` | boolean | Optional, default `false`. Marks the contested "a model of the artist's own voice, used by that artist" case. Recorded as a fact, judged by no one. |
 
 ### Typed Field and Cardinality Registry
 
-Field typing is deterministic: `*_id: uuid`, `*_at: timestamptz`, `*_date: date`, `*_minor: bigint`, `*_count: integer`, `currency: char(3)`, `is_*|has_*: boolean`, `state|status|type|kind|class: closed enum`, `version: bigint`, ratios `numeric(9,6)`, checksums `text`, and URLs `text`. Every named contract field uses this registry unless its contract declares a stricter type.
+Field typing is deterministic: `*_id: uuid`, `*_at: timestamptz`, `*_date: date`, `*_minor: bigint`, `*_count: integer`, `currency: char(3)`, `is_*|has_*: boolean`, `state|status|type|kind|class: closed enum`, `version: bigint`, ratios `numeric(9,6)`, checksums `text`, and URLs `text`. Every named contract field uses this registry unless its contract declares a stricter type. Entries in the `AI Disclosure Entry V1` table above are JSON keys of `ai_disclosure_version.entries`, not entities; they take no core fields and no registry bullet.
 
 - **`output_request`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Kind, requester/context, purpose, source scope/hash, profile/version, state, idempotency, version..
 - **`output_gap`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Request, source object/version, code, severity, safe message, remediation route; hidden records never represented..
@@ -159,14 +161,6 @@ Field typing is deterministic: `*_id: uuid`, `*_at: timestamptz`, `*_date: date`
 - **`ai_disclosure_version`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Contribution, author, vocabulary version, entries JSON, reason, state, supersedes, created-at, version..
 - **`destination_policy_version`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Destination, disclosure/identifier/tier requirements, effective interval and source evidence..
 - **`output_audit_event`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Actor/context/action/artifact/source/recipient/before-after/request hashes; immutable..
-- **`Field`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Constraint.
-- **`kind`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: One of V1 kinds; new kind requires new vocabulary version.
-- **`scope`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Bounded contribution-local description such as full, section, element or process.
-- **`tool_name`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Plain text, length-limited, no links/markup.
-- **`tool_version?`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Plain text, length-limited, no links/markup.
-- **`model_name?`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Optional factual identifier supplied by contributor.
-- **`subject_is_own_model?`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Optional boolean only where modelling applies.
-- **`note?`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Optional bounded plain text; not used for policy evaluation.
 
 ## Access Control
 
@@ -277,6 +271,7 @@ Responsive web/PWA only. Human-readable reports and receipts are server-renderab
 |---|---|---|---|
 | 2026-08-02 | Initial skeleton and source-feature seeding | /decompose-architecture-structure | All |
 | 2026-08-03 | Locked reporting, portability, RIN, gear and AI-disclosure contracts under standing autonomy | /write-architecture-spec | All |
+| 2026-08-05 | A-08: replaced the AI Disclosure Entry V1 table with the ratified 02.10 v1 shape, deleted eight generation-artifact registry bullets, and pinned entries as JSON keys in the registry preamble | /resolve-ambiguity | Data Models |
 
 ## Dependency References
 

@@ -815,48 +815,541 @@ EDIT 2 — in § Cross-Shard Section Contract Map, replace lines 280-281 with th
 `- **Shard 38:** consume [Shard 38 Contracts](38-promotion-marketing.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 38 Event Schemas](38-promotion-marketing.md#event-schemas). Canonical ownership stays with the producer; typed failure/unknown states cross the same boundary.`
 `- **Shard 39:** consume [Shard 39 Contracts](39-analytics-ingestion-reporting.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 39 Event Schemas](39-analytics-ingestion-reporting.md#event-schemas). Canonical ownership stays with the producer; typed failure/unknown states cross the same boundary.`
 
-EDIT 3 — § Related Specs at the foot of the file is marked `
+EDIT 3 — § Related Specs at the foot of the file is marked `<!-- spec-graph: auto-generated -->`. Do not hand-edit it; run `node .memory/pipeline/compile.mjs` after edits 1-2 so the graph picks up Shards 38 and 39.
 
+EDIT 4 (changelog) — append to § Changelog:
+`| 2026-08-05 | Corrected consumer list and contract map to the four real consumers (36, 37, 38, 39); removed nonexistent 37-ticket-resale-refunds / 39-fan-discovery targets | audit remediation A-21 | Cross-Shard Dependencies |`
 
-<!-- spec-graph: auto-generated -->
-## Related Specs
+SCOPE NOTE for whoever applies this — the same stale-slug family defect exists at `29-venues-spaces.md:312` and `:323` (`35-discovery-recommendations`, `32-event-operations`), `30-booking-contracts.md:346` and `:358` (`31-live-settlement`, `32-event-operations`, `35-discovery-recommendations`) and `31-live-settlement-intelligence.md:321` (`34-event-ticketing`, `41-career-business`). They are separate findings; fixing them uses the same three authorities (index.md, decomposition-plan.md, reciprocal `Depends on` declarations) and should be done in the same sweep.
+```
 
-### Constrained by
-- [[decisions.md#d-01|D-01]]
-- [[decisions.md#d-09|D-09]]
-- [[decisions.md#d-05|D-05]]
-- [[decisions.md#d-08|D-08]]
-- [[decisions.md#d-06|D-06]]
-- [[decisions.md#d-02|D-02]]
-- [[decisions.md#d-03|D-03]]
-- [[decisions.md#d-04|D-04]]
-- [[decisions.md#d-07|D-07]]
-- [[decisions.md#d-14|D-14]]
-- [[decisions.md#d-15|D-15]]
-- [[decisions.md#d-12|D-12]]
-- [[decisions.md#d-11|D-11]]
-- [[decisions.md#d-10|D-10]]
-- [[decisions.md#d-13|D-13]]
+**Challenge result.** CONFIRMED — Defect site verified verbatim. `35-ticket-products-sales.md:270` reads `- **Depended on by:** [[specs/ia/36-box-office-risk|Shard 36]], [[specs/ia/37-ticket-resale-refunds|Shard 37]], [[specs/ia/39-fan-discovery|Shard 39]]`, and the contract-map bullets at :280/:281 point at `37-ticket-resale-refunds.md` and `39-fan-discovery.md`. `ls .memory/wiki/specs/ia/` returns no file matching `resale` or `fan-discovery` — both targets are dangling. The three claimed authorities all hold: index.md rows are `| 37 | 37-fanbase-direct-to-fan.md | Fanbase and direct-to-fan |`, `| 38 | 38-promotion-marketing.md | Promotion and marketing |`, `| 39 | 39-analytics-ingestion-reporting.md | Analytics ingestion, matching and reporting |`. decomposition-plan.md `Depends On` cells: row 36 `00, 06, 33, 35`; row 37 `00, 01, 06, 11, 22, 35`; row 39 `00, 01, 07, 22, 35, 38`. Reciprocal declarations confirm all four
 
-### References
-- [[specs/ia/00-infrastructure|Shard 00 — Cross-cutting platform foundation]]
-- [[specs/ia/01-identity-authority|Shard 01 — Identity authority and party governance]]
-- [[specs/ia/06-trust-safety|Shard 06 — Trust, safety, disputes and evidence]]
-- [[specs/ia/11-community-graph|Shard 11 — Social graph and collaborator network]]
-- [[specs/ia/29-venues-spaces|Shard 29 — Venues, studios and spaces]]
-- [[specs/ia/35-ticket-products-sales|Shard 35 — Ticket products, sales, access packages and delivery]]
-- [[specs/ia/17-realtime-sessions|Shard 17 — Real-time jamming and remote sessions]]
-- [[specs/ia/32-show-production-planning|Shard 32 — Event production planning and advancing]]
-- [[specs/ia/18-royalty-accounting|Shard 18 — Royalty registration, ingestion, calculation and payout]]
-- [[specs/ia/14-services-marketplace|Shard 14 — Services marketplace lifecycle]]
-- [[specs/ia/22-release-distribution|Shard 22 — Release and distribution lifecycle]]
-- [[specs/ia/37-fanbase-direct-to-fan|Shard 37 — Fanbase and direct-to-fan]]
-- [[specs/ia/38-promotion-marketing|Shard 38 — Promotion and marketing]]
-- [[specs/ia/36-box-office-risk|Shard 36 — Door access, box office, reconciliation and ticketing risk]]
-- [[specs/ia/39-analytics-ingestion-reporting|Shard 39 — Analytics ingestion, matching and reporting]]
-- [[specs/ia/41-career-finance|Shard 41 — Career finance and business operations]]
-- [[specs/ia/26-gear-commerce-fulfilment|Shard 26 — Gear transactions, fulfilment and possession models]]
-- [[specs/ia/28-digital-licensing-commerce|Shard 28 — Digital licensing, commerce, revocation and revenue]]
-- [[specs/ia/31-live-settlement-intelligence|Shard 31 — Agency, settlement and live-market intelligence]]
+### A-22 — `37-fanbase-direct-to-fan.md`
+
+**Tier.** 2
+
+**Sources.**
+- `.memory/wiki/specs/ideation/20-fanbase-direct-to-fan/20.04-direct-to-fan-storefront/20.04.03-digital-sales-name-your-price-bundles.md (§ Behavior, § Edge Cases, § Decisions D-01..D-11, § Open Questions)`
+- `.memory/wiki/specs/ideation/moscow-ledger.md:210 (inside `## MUST (230)`, header at line 31)`
+- `.memory/wiki/specs/ia/37-fanbase-direct-to-fan.md:39 (Products row), :126 (`ProductListingV1`), :152 (data-model row), :184 (typed-field registry), :71-74 (AC-37.11..37.14), :100-103 (interaction rows)`
+- `.memory/wiki/specs/ia/deep-dives/37-fanbase-direct-to-fan.md:238 (duplicate purchase — already carries D-04)`
+
+**Source quote.** 20.04.03 § Behavior — "**Name-your-price**: the artist sets a **minimum** (may be £0) and an optional **suggested price** (≥ minimum). The fan enters any amount ≥ minimum. ... The entered amount is validated **server-side** against the minimum on every submission; a client that posts below the minimum is rejected ... never silently floored." · "**Bundles** ... one purchase, two lifecycles. Digital entitles instantly and irreversibly; physical ships in a lead time the artist states at listing ... At listing the artist records a **notional value per component** (digital £X, physical £Y, bundle price £Z where typically Z ≤ X+Y); these captured values — not an after-the-fact fraction — govern any partial refund" · § Decisions D-06 — "Partial refunds use component notional values captured at listing, scaled to the price paid" · § Edge Cases — "If bundle price £20 < notional sum £23, the physical notional is scaled proportionally (£15 × 20/23 = £13.04) so refunds can never exceed what was paid." · "Amounts above a per-item confirmation threshold (default **£1,000**) require an explicit 'yes, I meant to pay this' interstitial and pass through CX-M01 fraud screening before capture." · "a multi-owner work (rights record shows >1 payee) rejects a £0 minimum unless every payee has consented to zero-floor pricing at listing."
+
+**Fix.**
+
+```
+All edits are to `.memory/wiki/specs/ia/37-fanbase-direct-to-fan.md` unless stated. Content is transcribed from 20.04.03; nothing below is invented.
+
+EDIT 1 — § Architecture Decisions, replace the `Products` row (line 39) with:
+`| Products | Shared product shell delegates kind-specific data for digital, own-stock physical, POD merchandise and bundles. Pricing mode is `fixed` or `name_your_price`; NYP carries a minimum (may be zero) and an optional suggested amount at or above the minimum, is validated server-side against the listing's current minimum on every submission and is never silently floored. Amounts at or above a versioned per-item confirmation threshold (default GBP 1,000 equivalent) require explicit fan confirmation and fraud screening before capture. A zero minimum on a multi-payee work is refused until every payee consents to zero-floor pricing. Finite variants reserve stock for 15 minutes; price holds 30 minutes; money uses integer minor units and immutable sale currency. |`
+
+EDIT 2 — § Architecture Decisions, add a new row directly after it:
+`| Bundles | A bundle is one order with independent component lifecycles. Each component records an immutable notional value at listing. The digital component entitles at settlement and is never revoked by any physical outcome. Partial refunds pay the failed component's captured notional, scaled by (price paid / sum of notionals) when that sum exceeds the price paid, so a refund can never exceed what was paid. Deferred-fulfilment pre-order bundles remain subject to the existing preorder fund-custody gate. |`
+
+EDIT 3 — § Contracts, replace the `ProductListingV1` row (line 126) with:
+`| `ProductListingV1` | Storefront → catalog projection | entity, kind, source object, payout-term version, pricing mode, price or (minimum, suggested), currency, fulfillment policy | Currency immutable after first sale; `suggested >= minimum`; zero minimum requires recorded consent from every payee on a multi-payee work; stale writes return conflict |`
+
+EDIT 4 — § Contracts, insert two new rows after it:
+`| `BundleCompositionV1` | Storefront → catalog projection | bundle listing, ordered components, per-component kind and notional minor units, bundle price, stated lead time | At least two components; notionals immutable after first sale; refund apportionment scales notionals to price paid |`
+`| `NamedPriceCaptureV1` | Checkout → payment | listing revision, entered amount, listing minimum at capture, confirmation-threshold acknowledgement, idempotency key | Amount below the re-read listing minimum is refused; amount at or above threshold without acknowledgement is refused |`
+
+EDIT 5 — § Data Models, insert after line 152:
+`| `bundle` / `bundle_component` | One bundle listing per store; ordered components with immutable per-component notional minor units; component fulfillment states are independent |`
+
+EDIT 6 — § Typed Field and Cardinality Registry (bullet list starting line 184), add two bullets in the same generated form as the existing `product_listing` bullet, with the Constraints/relationships text taken from EDIT 5:
+`- **`bundle`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: One bundle listing per store; ordered components with immutable per-component notional minor units; component fulfillment states are independent.`
+`- **`bundle_component`:** (same core-field sentence) Constraints/relationships: N:1 to `bundle`; immutable notional minor units captured at listing; independent fulfillment state per component.`
+
+EDIT 7 — § Acceptance Criteria, add two entries after AC-37.14, in the existing generated form:
+`- **AC-37.25 — Set listing price mode:** Given Authorized entity actor and a resolved rights record, when the actor invokes this flow, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) Set listing price mode, and (6) return Fixed price or name-your-price minimum and optional suggested amount persist with the listing revision; if the flow cannot complete, Suggested below minimum, or a zero minimum on a multi-payee work without recorded payee consent, returns a typed refusal.`
+`- **AC-37.26 — Capture named price:** Given Published name-your-price listing and fan checkout, when the actor invokes this flow, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) Capture named price, and (6) return Entered amount is validated server-side against the listing's re-read minimum and captured with the order; if the flow cannot complete, Below-minimum amounts are refused rather than floored, and amounts at or above the confirmation threshold are held pending explicit acknowledgement and fraud screening.`
+
+EDIT 8 — § User Interactions, add the two matching rows after line 103 (37.14). Escape any literal pipe inside a cell:
+`| 37.25 | Set listing price mode | Authorized entity actor and resolved rights record | Fixed or NYP (minimum, optional suggested) persists on the listing revision | Suggested below minimum, or zero minimum on a multi-payee work without payee consent, is refused |`
+`| 37.26 | Capture named price | Published NYP listing and fan checkout | Entered amount validated against re-read minimum and captured with the order | Below minimum is refused, never floored; threshold amount holds for acknowledgement and fraud screening |`
+
+EDIT 9 — § Edge Cases, append four bullets (transcribed from 20.04.03's edge-case table):
+`- A tampered checkout posting an amount below the listing minimum, or a negative amount, is refused server-side; the minimum is re-read from the listing and never trusted from the client.`
+`- A named price at or above the versioned confirmation threshold requires explicit fan acknowledgement and passes fraud screening before capture.`
+`- Two fans buy the last unit of a finite bundle component simultaneously: physical stock decrements atomically at settlement; the loser's physical component declines with no charge for it, and the digital-only purchase remains available at its captured notional.`
+`- A bundle's physical component is cancelled after the digital was delivered: the digital entitlement stands, and the refund equals the captured physical notional, scaled by price paid over notional sum when the bundle was discounted.`
+
+EDIT 10 — § Edge-Case Coverage Matrix, add rows `37.25 Set listing price mode` and `37.26 Capture named price` using the standard three-column boilerplate already used by every other row.
+
+EDIT 11 — § Changelog:
+`| 2026-08-05 | Authored name-your-price pricing and bundle composition from ideation 20.04.03 (D-01, D-03, D-06, D-08, D-11) | audit remediation A-22 | Architecture Decisions, Acceptance Criteria, User Interactions, Contracts, Data Models, Typed Field Registry, Edge Cases |`
+
+EDIT 12 — deep dive `.memory/wiki/specs/ia/deep-dives/37-fanbase-direct-to-fan.md`, § Commerce state machine (around line 70, where physical fulfillment already runs `unfulfilled → accepted → dispatched → delivered`): add that a bundle order projects one payment state over two independent component fulfillment states, and that refund apportionment reads the captured notionals, never a re-derived fraction of the bundle price.
+```
+
+**Challenge result.** CONFIRMED — The gap is real: `grep -niE 'name[- ]your[- ]price|nyp|bundle|notional|minimum'` over `37-fanbase-direct-to-fan.md` and its deep dive returns exactly one hit — line 237, `bundled acceptance`, about consent checkboxes. The IA Products row (:39) reads `Shared product shell delegates kind-specific data for digital, own-stock physical and POD merchandise` with no pricing mode and no bundle; `ProductListingV1` (:126) carries `price, currency` with no minimum/suggested; no `bundle` data model exists at :148-156. Every claimed quote is in 20.04.03 verbatim, including the NYP minimum/suggested/server-side-validation paragraph, the two-lifecycle bundle paragraph with per-component notionals, D-06 (`Partial refunds use component notional values captured at listing, scaled to the price paid`), the £20/£23/£13.04 scaling edge case, the £1,000 confirmation-threshold edge case, and the multi-owner zer
+
+### A-23 — `42-career-planning-risk.md`
+
+**Tier.** 2
+
+**Sources.**
+- `.memory/wiki/specs/ideation/23-career-finance-business/career-finance-business-cx.md:175 (INV-03)`
+- `.memory/wiki/specs/ideation/23-career-finance-business/23.05-career-progression-benchmarking/23.05.01-career-goals-roadmap-templates.md:85 (Q-01, RESOLVED) and :38 (edge-case row)`
+- `.memory/wiki/specs/ideation/23-career-finance-business/23.01-income-aggregation-financial-identity/23.01-income-aggregation-financial-identity-index.md:44 (D-03)`
+- `.memory/wiki/specs/ia/41-career-finance.md:30 (Trust row) and :113 (`IssuedFinancialSnapshotV1`, "trust bands")`
+- `.memory/wiki/specs/ia/42-career-planning-risk.md:9, :27, :49, :63, :77, :90, :105, :137, :152, :162 (the defect sites)`
+
+**Source quote.** career-finance-business-cx.md:175 — "| INV-03 | **Verified and declared are never summed.** Trust tiering is a property of every row and is destroyed by any consumer that averages across it. | 23.01 D-03, 23.05.03 D-04, 23.06.01 D-02 |" · 23.05.01:85 Q-01 — "**RESOLVED — it counts, and it is never merged into one figure.** The domain-wide invariant **INV-03** ... binds every consumer of the ledger, and a goal is one. ... So a goal derives over both tiers and reports them segregated — never one blended bar" · 23.01 index D-03 — "Verified and declared income are **separately totalled and never silently merged**" · 41-career-finance.md:30 — "| Trust | Only platform-observed source facts can be `verified`; imports are permanently `declared`. Verified and declared never merge into one statement headline. |"
+
+**Fix.**
+
+```
+All edits are to `.memory/wiki/specs/ia/42-career-planning-risk.md`.
+
+EDIT 1 — § Contracts, replace the `GoalProgressV1` row (line 77) with:
+`| `GoalProgressV1` | Source projections → goal view | goal, per-tier progress values keyed by trust tier (`verified`, `declared`), per-tier state, source revision, integrity/freshness, derived-at | Verified and declared are never summed into one figure (Domain 23 INV-03); trust tier is emitter-assigned by Shard 41 and never re-tiered here; unknown/stale cannot become achieved |`
+
+EDIT 2 — § Architecture Decisions, replace the `Goals` row (line 27) with:
+`| Goals | A goal is target predicate + derivation query + cadence + visibility. Unsupported manual trackers are not offered as platform goals. A goal whose derivation reads trust-tiered source facts derives over both tiers and reports them segregated; no view, projection, event or notification may present a single blended figure across `verified` and `declared`. |`
+
+EDIT 3 — § Data Models, replace the `goal_progress_projection` row (line 90) with:
+`| `goal_progress_projection` | Disposable source-versioned per-tier value/state plus integrity/freshness; one row per (goal, trust tier); no cross-tier aggregate is stored or derivable |`
+
+EDIT 4 — § Typed Field and Cardinality Registry, replace the trailing `Constraints/relationships:` clause of the `goal_progress_projection` bullet (line 105) so it reads the same text as EDIT 3.
+
+EDIT 5 — § Acceptance Criteria, replace AC-42.02 (line 49) with:
+`- **AC-42.02 — View goal progress:** Given Current source projection and integrity, when the actor invokes this flow, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) View goal progress, and (6) return Progress/unknown state derives per trust tier with source and freshness, verified and declared reported separately and never summed; if the flow cannot complete, Stale/incomplete source never renders achieved, and a tier whose source is unavailable renders unknown for that tier rather than collapsing into the other.`
+
+EDIT 6 — § User Interactions, replace the 42.02 row (line 63) with:
+`| 42.02 | View goal progress | Current source projection and integrity | Per-tier progress/unknown state derives with source and freshness; verified and declared render separately | Stale/incomplete source never renders achieved; an unavailable tier renders unknown, never merged into the other |`
+
+EDIT 7 — § Event Schemas, replace the `career.goal.progress_changed.v1` row (line 152) with:
+`| `career.goal.progress_changed.v1` | goal, per-tier state/value keyed by trust tier, source revision, integrity, derived-at | timeline/notification |`
+
+EDIT 8 — § Accessibility (line 137), extend the existing bullet to:
+`- Goals identify target, source, cadence, visibility and unknown/stale state in text; progress is not communicated by color/progress bar alone; the trust tier of each reported value is stated in text and never carried by color, position or adjacency alone.`
+
+EDIT 9 — § Edge Cases, insert after the existing "Source metric disappears" bullet (line 162):
+`- Goal derives over both trust tiers: verified and declared progress are computed and reported separately; no view, export or notification sums them or averages across them (Domain 23 INV-03).`
+`- Only one tier has data: the other tier renders explicitly empty rather than absent, so a declared-only goal is never mistaken for a verified one.`
+`- A source row is re-tiered upstream: Shard 41 owns the tier; Shard 42 re-derives both tier values from the new source revision and never promotes declared to verified locally.`
+
+EDIT 10 — § Overview, amend line 9 so the consumed contract matches:
+replace "verified income/runway/finance facts from [[specs/ia/41-career-finance|Shard 41]]" with "trust-tiered (`verified` and `declared`) income/runway/finance facts from [[specs/ia/41-career-finance|Shard 41]], with the tier preserved end to end".
+
+EDIT 11 — § Changelog:
+`| 2026-08-05 | Segregated goal progress by trust tier per Domain 23 INV-03 and ideation 23.05.01 Q-01 | audit remediation A-23 | Overview, Architecture Decisions, Acceptance Criteria, User Interactions, Contracts, Data Models, Typed Field Registry, Accessibility, Event Schemas, Edge Cases |`
+
+DO NOT change the `Cohorts` row at line 32 ("Verified income only") — that is 23.05.03's separate, correct rule for peer distributions and is unrelated to goal progress.
+```
+
+**Challenge result.** CONFIRMED — All four quotes are verbatim in the cited files. career-finance-business-cx.md INV-03: `| INV-03 | **Verified and declared are never summed.** Trust tiering is a property of every row and is destroyed by any consumer that averages across it. | 23.01 D-03, 23.05.03 D-04, 23.06.01 D-02 |`. 23.05.01 Q-01 is struck-through and resolved: `**RESOLVED — it counts, and it is never merged into one figure.**` ... `So a goal derives over both tiers and reports them segregated — never one blended bar`, Owner User, status `✅ Resolved — INV-03 ... + 23.01 D-03` — a ratified resolution, not an aspiration. 23.01 index D-03: `Verified and declared income are **separately totalled and never silently merged**`. 41-career-finance.md:30: `Only platform-observed source facts can be verified; imports are permanently declared. Verified and declared never merge into one statement headline.` and :113 `IssuedFinan
+
+### A-24 — `deep-dives/01-identity-authority.md`
+
+**Tier.** 2
+
+**Sources.**
+- `.memory/wiki/specs/ideation/ideation-index.md:140, :143, :144 (ideation domain numbering)`
+- `.memory/wiki/specs/ia/index.md § Shards rows 06, 20, 23, 24, 37, 41, 42 (IA numbering)`
+- `.memory/wiki/specs/ia/decomposition-plan.md § Domain Boundary Table (`Features Included` and `Depends On` columns for 06, 20, 23, 24, 37, 41, 42)`
+- `.memory/wiki/specs/ia/06-trust-safety.md:60 and :83 (AC-TSE-13 / TSE-13)`
+- `.memory/wiki/specs/ia/37-fanbase-direct-to-fan.md:9 and :36`
+- `.memory/wiki/specs/ia/41-career-finance.md:48 (Band treasury) and :277 (Depends on — missing Shard 01)`
+- `.memory/wiki/specs/ia/01-identity-authority.md:47, :70, :115, :279`
+- `.memory/wiki/specs/ia/deep-dives/01-identity-authority.md:166-174 (the defect site)`
+
+**Source quote.** ideation-index.md:140 — "| 20 | Fanbase & Direct-to-Fan | [20-fanbase-direct-to-fan/](./20-fanbase-direct-to-fan/) |"; :143 — "| 23 | Career, Finance & Business Management |"; :144 — "| 24 | Trust, Safety & Disputes |" · decomposition-plan.md — "| 37 | 37-fanbase-direct-to-fan.md | Fanbase and direct-to-fan | 20.01–20.07 |", "| 41 | 41-career-finance.md | Career finance and business operations | 23.01–23.04, 23.06–23.07 |", "| 06 | 06-trust-safety.md | Trust, safety, disputes and evidence | 24.01–24.09 |" · 06-trust-safety.md:83 — "| TSE-13 | Resolve identity/ownership case | Shard 01 party, alias, credit, membership and mandate truth controls; credential possession is not ownership. |" · 41-career-finance.md:48 — "| Band treasury | Member-funded costs are visible debts before profit. Distribution rule captured early from identity governance; record-only allocation, not royalty split or transfer. |" · 37-fanbase-direct-to-fan.md:9 — "It consumes identity from [[specs/ia/01-identity-authority|Shard 01]]"
+
+**Fix.**
+
+```
+EDIT 1 — `.memory/wiki/specs/ia/deep-dives/01-identity-authority.md`, § Cross-Shard Contracts. Replace lines 170-174 (five rows) with these six rows, in this order. Lines 166-169 (header, Shard 02, Shards 03–05) are unchanged:
+`| Shards 06–18, 20, 23–24 collaboration/commerce/rights/licensing/gear | Acting party, subject party, current authority snapshot, party identifier eligibility, legal-disclosure boundary. |`
+`| Shard 06 trust and safety (case-specific) | Disputed membership, identifier collision, false death, succession, merge/claim case references; moderation does not rewrite evidence. |`
+`| Shard 37 fanbase and direct-to-fan | Alias/band lifecycle, name disposition, successor/fork lineage, memorialised projection. |`
+`| Shard 41 career finance | Party/payee identity and treasury authorization; no pooled/multi-party entitlement. |`
+`| Shards 25/27/29/30/39 | Viewer-relative party projection and consented relationship identifiers; no inferred authority. |`
+
+EDIT 2 — same file, add this sentence immediately below the table so the duplicate appearance of Shard 06 is not later read as a defect:
+`Shard 06 appears twice by design: it consumes the general acting-party contract as a member of the 06–18 band, and a case-specific contract for identity and membership disputes. All shard numbers in this table are IA shard numbers per [ia/index.md](../index.md); they are not ideation domain numbers.`
+
+EDIT 3 — `.memory/wiki/specs/ia/41-career-finance.md:277`, § Cross-Shard Dependencies. Add Shard 01 to the `Depends on` list (numeric order), so it reads:
+`- **Depends on:** [[specs/ia/00-infrastructure|Shard 00]], [[specs/ia/01-identity-authority|Shard 01]], [[specs/ia/14-services-marketplace|Shard 14]], [[specs/ia/18-royalty-accounting|Shard 18]], [[specs/ia/26-gear-commerce-fulfilment|Shard 26]], [[specs/ia/28-digital-licensing-commerce|Shard 28]], [[specs/ia/31-live-settlement-intelligence|Shard 31]]`
+
+EDIT 4 — same file, § Cross-Shard Section Contract Map. Add as the first entry after the Shard 00 row, matching that file's existing boilerplate wording:
+`- **Shard 01:** consume [Shard 01 Contracts](01-identity-authority.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 01 Event Schemas](01-identity-authority.md#event-schemas). Canonical ownership stays with the producer; typed failure/unknown states cross the same boundary.`
+
+EDIT 5 — `.memory/wiki/specs/ia/01-identity-authority.md:279`. Replace with:
+`- **Depended on by:** Shards 02–18, 20, 23–25, 27, 29–30, 37, 39 and 41 according to the approved decomposition, plus Shard 41 for party/payee identity and treasury authorization (band-governance distribution rule, [Shard 41 § Architecture Decisions — Band treasury](41-career-finance.md)).`
+
+EDIT 6 — `.memory/wiki/specs/ia/decomposition-plan.md` § Domain Boundary Table, row 41: change the `Depends On` cell from `00, 14, 18, 26, 28, 31` to `00, 01, 14, 18, 26, 28, 31`, so the plan and the authored shards agree.
+
+EDIT 7 — changelogs. Add to `deep-dives/01-identity-authority.md`, `01-identity-authority.md` and `41-career-finance.md`:
+`| 2026-08-05 | Renumbered Cross-Shard Contracts consumers from ideation domain numbers to IA shard numbers (20→37, 23→41, 24→06); declared the previously implicit 41→01 identity/treasury edge | audit remediation A-24 | Cross-Shard Contracts / Cross-Shard Dependencies |`
+
+EDIT 8 — run `node .memory/pipeline/compile.mjs` afterwards so the auto-generated `<!-- spec-graph -->` § Related Specs blocks in 01, 41 and the deep dive pick up the new edge.
+
+VERIFICATION after applying: `grep -n 'Shard 2[034] ' .memory/wiki/specs/ia/deep-dives/01-identity-authority.md` should return only the intended `Shards 06–18, 20, 23–24` row, and `grep -c '01-identity-authority' .memory/wiki/specs/ia/41-career-finance.md` should be at least 3.
+```
+
+**Challenge result.** CONFIRMED — The mixed-numbering defect is real and provable inside one table. deep-dives/01-identity-authority.md § Cross-Shard Contracts (:166 header, :168-174 rows) contains `| Shard 20 fanbase |`, `| Shard 23 finance |`, `| Shard 24 moderation |` alongside `| Shards 25/27/29/30/37/39 |`. IA shard 20 is `20-licensing-core.md` (licensing, ideation 11.01–11.04), IA 23 is `23-gear-provenance-registry.md`, IA 24 is `24-gear-holdings-operations.md` — none is fanbase, finance or moderation. ideation-index.md confirms the other reading: `| 20 | Fanbase & Direct-to-Fan |` (:140), `| 23 | Career, Finance & Business Management |` (:143), `| 24 | Trust, Safety & Disputes |` (:144). decomposition-plan.md maps those ideation domains to IA 37 (`20.01–20.07`), 41 (`23.01–23.04, 23.06–23.07`) and 06 (`24.01–24.09`) exactly as claimed. The `25/27/29/30/37/39` row cannot be ideation numbers (ideation stops at 25), 
+
+### A-26 — `00-infrastructure.md`
+
+**Tier.** 2 (architecture spec) + the shard's own normative sections
+
+**Sources.**
+- `/home/rob/Projects/WeJammin/.memory/wiki/specs/2026-08-02-architecture-design.md § Schema and Contract Approach, line 648`
+- `/home/rob/Projects/WeJammin/.memory/wiki/specs/ia/00-infrastructure.md § Data Models preamble, line 168`
+- `/home/rob/Projects/WeJammin/.memory/wiki/specs/ia/00-infrastructure.md § Infrastructure Records, lines 170-181`
+- `/home/rob/Projects/WeJammin/.memory/wiki/specs/ia/00-infrastructure.md § Field-Level Constraints, lines 183-194`
+- `/home/rob/Projects/WeJammin/.memory/wiki/specs/ia/00-infrastructure.md § Relationships, lines 202-207`
+- `/home/rob/Projects/WeJammin/.memory/wiki/specs/ia/00-infrastructure.md § State Machines, lines 209-217`
+
+**Source quote.** 2026-08-02-architecture-design.md line 648: "Every mutable aggregate has UUID identity, lifecycle state, immutable created metadata, updated/version metadata, and explicit actor/acting-party provenance where applicable. State machines use constrained enums/tables and guarded commands, not arbitrary status strings." — and 00-infrastructure.md line 168: "All canonical models reside in Supabase PostgreSQL. Identifiers are UUIDs, timestamps are UTC `timestamptz`, mutable rows carry `version bigint`, and authorization-sensitive tables have RLS with deny-by-default policies."
+
+**Fix.**
+
+```
+File: /home/rob/Projects/WeJammin/.memory/wiki/specs/ia/00-infrastructure.md, § Typed Field and Cardinality Registry (line 219 to the end of the bullet list at line 244).
+
+KEEP the opening paragraph unchanged ("Field typing is deterministic: `*_id: uuid` ... unless its contract declares a stricter type.").
+
+REPLACE the 21 bullets with the scoping rule below plus exactly 8 entity bullets. DELETE all 13 non-entity bullets: `Common`, `Idempotency` (x2), `Outbox`, `Job` (x2 duplicates), `Webhook receipt` (x2), `Provider operation` (x2), `Object/upload`, `Audit`, `Object`. Their content already lives in § Field-Level Constraints and § State Machines and is folded into the entity bullets below.
+
+Insert immediately after the typing paragraph:
+
+"Core-field scope: per the architecture design § Schema and Contract Approach, core identity/state/version/updated metadata is required of **mutable aggregates only**. Append-only and immutable records are exempt from `state`, `version` and `updated_at`; they carry `id`, their occurrence timestamp, and nothing that implies in-place mutation. The `Required fields` column of § Infrastructure Records is the authoritative field list for each entity — this registry types those fields and states cardinality, and adds no field to any entity. Ownership/scope is the entity's own named column, not a generic `owner_id`."
+
+Then the 8 bullets:
+
+- **`IdempotencyRecord`** (mutable): `id: uuid`; scope column `actor_id: uuid` with `operation`; `state: closed enum` (`reserved | completed | failed_retryable`); `created_at: timestamptz`, `expires_at: timestamptz` with `expires_at > created_at`; `key_hash`/`request_hash` fixed-length digests, request hash immutable; `response_ref` nullable until completion. Unique (actor, operation, key). Cardinality: N:1 to its actor; 1:1 to the protected command it guards. Retention 30 days.
+- **`OutboxEvent`** (immutable — no `state`, no `version`, no `updated_at`): `id: uuid`, `event_type`, `schema_version: integer > 0`, `aggregate_type`, `aggregate_id: uuid`, `aggregate_version: bigint > 0`, `correlation_id: uuid`, `causation_id: uuid`, `payload jsonb`, `occurred_at: timestamptz`, `dispatched_at: timestamptz` nullable and set only after accepted delivery. Cardinality: N:1 to its aggregate; 1:0..1 to a resulting `Job`. Payload excludes unnecessary PII.
+- **`Job`** (mutable): `id: uuid`, `job_type`, `actor_id: uuid`, `acting_party_id: uuid`, `state: closed enum` (`queued | running | succeeded | failed | cancelled`; retryable failure returns to `queued`; terminal states cannot reopen), `progress jsonb` nullable and Zod-validated, `attempt_count: integer default 0 check >= 0`, `lease_until: timestamptz`, `result_ref`, `error_code`, `created_at`, `updated_at`. Cardinality: N:1 to the `OutboxEvent` that caused it; 1:N leased attempts but exactly 1 canonical terminal result.
+- **`WebhookReceipt`** (mutable): `id: uuid`, `provider` (non-empty), `external_event_id` (non-empty), `payload_digest` fixed-length, `signature_verified_at: timestamptz` required before `accepted`, `received_at: timestamptz`, `state: closed enum` (`received | accepted | duplicate | rejected | processed | failed`), `operation_id: uuid`. Unique (provider, external_event_id). Cardinality: N:1 to `ProviderOperation`. Invalid signatures never create trusted work; duplicate never repeats the effect.
+- **`ProviderOperation`** (mutable): `id: uuid`, `provider`, `operation_type`, `actor_id: uuid`, `state: closed enum` (`planned | pending | confirmed | failed | manual_review`), `intent_hash` immutable, `provider_ref` nullable, `last_attempt_at`, `reconciliation_at` nullable until evidence is checked, `version: bigint`. State/version changes are compare-and-swap. Cardinality: **1:N to `WebhookReceipt`** — one operation may reference many deduplicated receipts, and reconciliation updates only the matching current operation/version.
+- **`ObjectRecord`** (mutable): `id: uuid`, `bucket`, `object_key` (server-generated, normalized), scope column `owner_party_id: uuid`, `purpose`, `media_type`, `byte_size` non-negative, `checksum` from an allowlisted algorithm, `state: closed enum` (`pending_upload | uploaded | verifying | ready | rejected | quarantined`; only `ready` is consumable), `version: bigint`. Unique (bucket, object_key). Cardinality: 1:1 to its authorizing `UploadIntent`.
+- **`UploadIntent`** (mutable): `id: uuid`, `object_id: uuid`, `actor_id: uuid`, `max_bytes`, `allowed_media_types`, `expires_at: timestamptz` (cannot exceed 15 minutes from creation), `state: closed enum`. Cardinality: 1:1 to `ObjectRecord` — a single object target; cannot authorize after expiry.
+- **`AuditEvent`** (append-only; UPDATE/DELETE revoked — no `owner_id`, no `state`, no `version`, no `updated_at`): `id: uuid`, `action`, `actor_id: uuid` (may be null only for named system principals), `acting_party_id: uuid`, `target_type`, `target_id: uuid`, `decision: closed enum` (`allowed | denied | completed | failed`), `reason_code`, `correlation_id: uuid`, `occurred_at: timestamptz`. Cardinality: N:1 to its target entity; 1:N per protected command. Excludes secrets, bodies, payment/evidence data and private content.
+
+Also DELETE the blanket sentence "cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness" wherever it survives — § Relationships is authoritative and the per-entity cardinalities above already carry it.
+
+Note for the remediator: the identical boilerplate paragraph appears in every other parent shard's registry (e.g. 04-cms-delivery-media.md lines 131-146). Those are separate audit findings; this fix is scoped to 00-infrastructure.md.
+```
+
+**Challenge result.** CONFIRMED — Both quotes are verbatim in the cited files. 2026-08-02-architecture-design.md line 648 (§ Schema and Contract Approach) reads exactly: "Every mutable aggregate has UUID identity, lifecycle state, immutable created metadata, updated/version metadata, and explicit actor/acting-party provenance where applicable. State machines use constrained enums/tables and guarded commands, not arbitrary status strings." 00-infrastructure.md line 168 reads exactly: "All canonical models reside in Supabase PostgreSQL. Identifiers are UUIDs, timestamps are UTC `timestamptz`, mutable rows carry `version bigint`, and authorization-sensitive tables have RLS with deny-by-default policies." These are ratified tier-2/tier-1 normative text, not ideation aspiration, and neither is a downstream BE spec. The defect is real and the sources answer it. Lines 223-243 assert for all 21 bullets that required core fields 
+
+### A-27 — `00-infrastructure.md`
+
+**Tier.** 2 (architecture spec) + the shard's own Access Control, Contracts, Edge Cases and Runtime sections
+
+**Sources.**
+- `/home/rob/Projects/WeJammin/.memory/wiki/specs/2026-08-02-architecture-design.md § Failure Handling, line 616 (queue dead-letter/replay)`
+- `/home/rob/Projects/WeJammin/.memory/wiki/specs/2026-08-02-architecture-design.md § Observability, line 320 (solo-owner alerting)`
+- `/home/rob/Projects/WeJammin/.memory/wiki/specs/2026-08-02-architecture-design.md line 515 (Hono Worker fallback: rollback immutable artifact) and line 701 (provider operation reconciliation)`
+- `/home/rob/Projects/WeJammin/.memory/wiki/specs/ia/00-infrastructure.md § Access Control, lines 247-259`
+- `/home/rob/Projects/WeJammin/.memory/wiki/specs/ia/00-infrastructure.md § Edge Cases, lines 321-351`
+- `/home/rob/Projects/WeJammin/.memory/wiki/specs/ia/00-infrastructure.md § State Machines, lines 209-217 and § Runtime and Release, lines 158-165`
+- `/home/rob/Projects/WeJammin/.memory/wiki/specs/ia/06-trust-safety.md § Cross-Shard Dependencies (Shard 05 owns capabilities, tasks, diagnostics, kill switches)`
+
+**Source quote.** 2026-08-02-architecture-design.md line 616: "Queue failures retry only under the consumer's bounded policy, then enter a visible terminal/dead-letter state with replay controls, current-state revalidation, and immutable attempt history." — and line 320: "the solo owner receives immediate email alerts for full outage, security/auth compromise indicators, money or ledger integrity failures, migration failure, audit-write failure, legal/takedown failure, and CMS publication divergence. Lower-severity and transient issues aggregate into the admin task inbox and scheduled review."
+
+**Fix.**
+
+```
+File: /home/rob/Projects/WeJammin/.memory/wiki/specs/ia/00-infrastructure.md, § Access Escalation (lines 262-271). Replace all eight bullets with the following. Note the deliberate deletion of the phrase "support handles mechanical recovery through an expiring purpose grant" everywhere — no `support` principal exists in the Access Control table.
+
+- **Anonymous browser:** a denial returns a typed reason and preserves canonical state. The only escalation is authentication — the principal is returned to the authentication entry point named in INF-01/INF-02. There is no case path, no operator override and no grant for an anonymous denial; a denial must not disclose whether the target exists.
+- **Authenticated user:** a denial returns a typed reason and preserves canonical state. Identity alone grants no organization/party authority, so escalation is to obtain acting-party authority from the party itself through a Shard 01 membership/mandate grant. Where the underlying facts are contested (disputed membership, identifier collision, contested evidence), escalation is a scoped Shard 06 case. No internal actor can grant party authority on the user's behalf.
+- **Acting-party principal:** a denial returns a typed reason and preserves canonical state; mandate, NDA, visibility and commercial authority are re-evaluated server-side on every attempt and party ID is never taken from client trust. Escalation is a widened mandate or capability granted by the party through Shard 01, or a scoped Shard 06 case where the facts are contested. Counsel, capability and privacy hard gates have no role override.
+- **Internal capability operator:** a denial returns a typed reason and preserves canonical state, and the reason, target, decision and actor are audited. Escalation is an explicit bounded capability grant plus recent step-up, administered through Shard 05 (capability grants, guarded configuration, task inbox, kill switches). There is no blanket bypass, and counsel/privacy hard gates are not grantable by any capability.
+- **Queue/schedule principal:** a failure never escalates to a human grant, because the Queue envelope is not authority and the consumer must re-read canonical state. Failures retry only under the consumer's bounded policy, then enter a visible terminal/dead-letter state with replay controls, current-state revalidation and immutable attempt history. An unknown envelope schema version dead-letters without execution; a known stale version is handled idempotently; an expired lease resumes from canonical state on a later attempt. Recovery is replay after the canonical cause is fixed, surfaced in the Shard 05 admin task inbox.
+- **Provider webhook:** a rejected signature, a timestamp outside the provider replay window, or an unverifiable payload produces no trusted receipt and no business effect, and exposes no signature-oracle detail. The provider endpoint itself has no escalation path. The corresponding `ProviderOperation` remains `pending` and is resolved by bounded provider poll or a later verified receipt; unresolved ambiguity transitions to `manual_review`, which is the only human path. A pending operation is never blindly resent.
+- **Deployment principal:** a refused promotion is a CI or approval outcome, not an authorization dispute, and has no case path. A missing route/consumer SLO registration or any failing gate fails before artifact promotion. A migration that fails after expansion stops the promotion, leaves old code compatible, and takes no destructive rollback migration. Escalation is fix-forward plus a fresh protected production approval; rollback restores the immutable artifact and config and never erases committed business effects. Migration failure raises an immediate owner email alert.
+- **Service role:** a denial on the narrow server-only RLS-bypass path is an operational defect or an abuse signal, never a grantable request. Its use is isolated, logged, reviewed and BOLA-tested, and it is never exposed to the browser. Escalation is the runbook plus the owner alert channel. Widening the bypass, granting the role to another principal, or routing it through a Trust & Safety case is prohibited.
+
+SECOND EDIT (same defect, different files): delete the stray bullet "- **Principal/context:**" at /home/rob/Projects/WeJammin/.memory/wiki/specs/ia/01-identity-authority.md line 185 and /home/rob/Projects/WeJammin/.memory/wiki/specs/ia/02-profiles-verification.md line 173 — it is the Access Control table's column header rendered as a principal. The identical pasted block in shards 01-04 needs the same per-principal rewrite against each shard's own Access Control table; that work is tracked separately as A-29/A-30 for shards 05 and 06.
+```
+
+**Challenge result.** CONFIRMED — Every cited line is verbatim. 2026-08-02-architecture-design.md line 616: "Queue failures retry only under the consumer's bounded policy, then enter a visible terminal/dead-letter state with replay controls, current-state revalidation, and immutable attempt history." Line 320 (§ Monitoring and Observability, Confirmed): "the solo owner receives immediate email alerts for full outage, security/auth compromise indicators, money or ledger integrity failures, migration failure, audit-write failure, legal/takedown failure, and CMS publication divergence. Lower-severity and transient issues aggregate into the admin task inbox and scheduled review." Line 515: "Hono Worker | canonical error envelope with request ID; no unsafe automatic mutation retry; rollback immutable application artifact". Line 701 carries the provider row verbatim including "timeout/unknown outcome remains `pending`; signed 
+
+### A-28 — `00-infrastructure.md`
+
+**Tier.** 2 (architecture spec) + the shard's own Interactions, Contracts and Edge Cases sections
+
+**Sources.**
+- `/home/rob/Projects/WeJammin/.memory/wiki/specs/ia/00-infrastructure.md § Interactions, lines 56-72 (INF-01..INF-12 behaviour and completion)`
+- `/home/rob/Projects/WeJammin/.memory/wiki/specs/ia/00-infrastructure.md § Command Guarantees, lines 147-157`
+- `/home/rob/Projects/WeJammin/.memory/wiki/specs/ia/00-infrastructure.md § Edge Cases, lines 321-351`
+- `/home/rob/Projects/WeJammin/.memory/wiki/specs/ia/00-infrastructure.md § Runtime and Release, lines 158-165`
+- `/home/rob/Projects/WeJammin/.memory/wiki/specs/2026-08-02-architecture-design.md line 616 (queue dead-letter) and line 701 (provider reconciliation and revocation ordering)`
+
+**Source quote.** 00-infrastructure.md § Command Guarantees: "| Idempotency | Key is bound to actor, operation, and normalized request hash; ordinary records remain 30 days; same binding returns the original result, mismatched content conflicts. |" and § Contracts: "| Idempotency | Protected retryable creates/effects require `Idempotency-Key`: 8–128 printable ASCII characters, scoped and hashed before persistence. |" — establishing that keys do not apply to reads; and § Edge Cases: "| Migration fails after expansion | Stop promotion; old code remains compatible; no destructive rollback migration. |", "| Recovery restores data but RLS/RPC checks fail | Keep service/protected writes closed until integrity and authorization checks pass. |"
+
+**Fix.**
+
+```
+File: /home/rob/Projects/WeJammin/.memory/wiki/specs/ia/00-infrastructure.md, § Edge-Case Coverage Matrix (line 367 onward). Replace the twelve identical rows with the following. Column order is unchanged: Flow | Concurrent access | Invalid input / authority | Deletion, revocation or cascade.
+
+- **INF-01 Public read** | No `Idempotency-Key` applies; concurrency is version-addressed. A read returns one versioned contract with its cache key/ETag, and a concurrent activation does not mutate the served version — the newer version becomes visible only after event-driven purge. | Zod rejects malformed path/query before any projection read; a non-public or unauthorized target returns a typed refusal without existence leakage. | Revocation, takedown, privacy or legal state removes the active public pointer and purges by version; a revoked version is never served as last-known-good. Immutable audit rows survive.
+- **INF-02 Authenticated read** | No key applies. The response is `no-store`; local caches key user, acting party, audience, contract and entity version and purge on logout or acting-context change. | Session, acting-context and RLS are evaluated as distinct decisions with distinct error codes; a valid user supplying another party/resource ID is denied under server capability check and RLS with sanitized security telemetry. | Loss of read authority takes effect on the next request, not on cache expiry; derived private caches are purged on context change.
+- **INF-03 Protected command** | `Idempotency-Key` bound to actor, operation and normalized request hash: same binding returns the original result, mismatched body returns 409 without executing. `If-Match`/expected version is verified in the same transaction; a stale version returns 409 with sanitized current-version guidance and no partial effects. | Boundary validation precedes authorization; both fail before any mutation, audit records the denial with reason code, and no outbox row is written. | Owner/source deletion or revocation commits with the mutation: derived access and projections are removed, dependent invalidation is queued idempotently, and immutable audit/evidence rows are retained.
+- **INF-04 High-risk/admin command** | As INF-03, plus the step-up assertion is re-verified at commit; a concurrent capability revocation loses the race and the command fails closed. | INF-03 plus an explicit internal capability; user-facing role labels grant nothing. A forged acting-party ID or user-editable JWT role is ignored, resolved server-side, denied, and recorded as sanitized abuse telemetry. | Decision and reason are audited without storing protected request content; the audit row survives every downstream deletion.
+- **INF-05 Long-running job** | The accepting command is idempotent; the job holds one canonical status. Lease changes are version-checked, and a worker that dies while leased has its lease expire so a later attempt resumes from canonical state without duplicating the effect. | Validation and authority are checked at acceptance, and the worker re-reads canonical state before acting; terminal results are immutable and cannot reopen. | Deletion of the job's subject during execution causes the worker to observe the canonical change on re-read and terminate without effect; the attempt history is retained.
+- **INF-06 Object upload** | Upload completion is deduplicated by object intent; a second completion for the same intent returns the same verification outcome. Bytes at an already-`ready` object are rejected — replacement creates a new object/version. | Declared and detected media type, byte count, checksum and state must all satisfy the intent, or the object is rejected/quarantined. Keys containing traversal or control characters are rejected before signing. A signed upload that expires mid-transfer leaves an unverified, unusable object. | Bytes without matching governing metadata are quarantined or removed by retention policy; revoke access first, delete bytes only when no retained reference, dispute hold, contract duty or legal hold remains.
+- **INF-07 Offline intent** | On reconnect the server assigns an operation UUID and revalidates identity, authority, version and request content; a stale expected version conflicts rather than overwriting, and the intent stays visible and retryable. | Accepted intents follow INF-03/INF-05 validation in full; unauthorized or stale intents are refused with a typed reason and are not silently discarded. | If the intent's target was deleted while offline, the intent fails with a typed reason naming the missing target; no tombstone is resurrected.
+- **INF-08 Realtime hint** | No key and no concurrency contract — a hint is non-authoritative. Missed or duplicated hints are recovered by poll or navigation refetch; a hint never determines correctness and never authorizes a client action. | Hints carry only entity/event identifiers, so there is no input to validate; the client's subsequent refetch is authorized normally under INF-02. | A hint for a deleted or newly unauthorized entity resolves to the refetch's typed refusal; the client must not render from the hint payload.
+- **INF-09 Inbound webhook** | Receipt identity is unique per (provider, external event ID); a duplicate or replayed delivery is acknowledged safely without repeating the business effect. | Raw-body signature and replay-window validation precede parse; a valid signature outside the replay window is rejected with no trusted receipt and no signature-oracle detail. Invalid signatures never create trusted work. | A receipt whose referenced operation no longer exists is recorded and marked `rejected`; receipt evidence is retained even when the operation is cancelled.
+- **INF-10 Provider effect** | Local intent, idempotency and audit commit before the network call; `intent_hash` is immutable and state/version changes are compare-and-swap, so a concurrent attempt cannot double-send. | Contract validation and authority are enforced before the provider call, never after. A timeout or ambiguous outcome keeps the operation `pending` — it is never blindly resent — and reconciles by provider idempotency, webhook or bounded poll. Unresolved ambiguity moves to `manual_review`. | Revoke local eligibility/access first, then enqueue provider cancel/suppress where supported; retain the minimum local receipt/tombstone required by financial, legal and audit policy and track provider inability as an exception.
+- **INF-11 Release promotion** | Promotion is single-artifact and gated by protected approval; a second promotion of a different artifact cannot interleave. Expand → backfill → switch → contract keeps application and database mutually compatible throughout rollout. | CI fails before artifact promotion when contracts, tests, security, accessibility, build, migrations, route/consumer SLO registration or artifact identity do not pass. A migration that fails after expansion stops the promotion and leaves old code compatible. | Not applicable as an owner cascade — releases have no owner entity. Rollback restores the immutable artifact and config and never erases committed business effects; no destructive rollback migration is taken. Migration failure raises an immediate owner alert.
+- **INF-12 Maintenance/recovery** | Recovery is operator-serialized under the runbook; protected writes stay closed while it runs, so there is no concurrent canonical mutation to reconcile. | Restore integrity, RLS policies and RPC authorization are validated before service resumes; failing checks keep service and protected writes closed. If PITR is missing or older than the required window, protected production writes for money, rights and publication are disabled and escalated via runbook. | Not applicable as an owner cascade. Restored state must not resurrect rows that were deleted, revoked or legally held before the restore point; reconciliation re-applies revocation and hold state before protected writes reopen, and scheduled maintenance is announced ≥48 hours ahead with truthful scope.
+
+Note for the remediator: the identical twelve-row block appears in shards 01-04 keyed to their own flow IDs (confirmed in 02-profiles-verification.md lines 242-257 and 04-cms-delivery-media.md). Each needs the same treatment against its own § Interactions and § Edge Cases; this fix is scoped to 00-infrastructure.md.
+```
+
+**Challenge result.** CONFIRMED — All four quotes are verbatim. 00-infrastructure.md line 151 (§ Command Guarantees): "| Idempotency | Key is bound to actor, operation, and normalized request hash; ordinary records remain 30 days; same binding returns the original result, mismatched content conflicts. |" Line 129 (§ Transport Headers and Base Errors): "| Idempotency | Protected retryable creates/effects require `Idempotency-Key`: 8–128 printable ASCII characters, scoped and hashed before persistence. |" Line 339: "| Migration fails after expansion | Stop promotion; old code remains compatible; no destructive rollback migration. |" Line 350: "| Recovery restores data but RLS/RPC checks fail | Keep service/protected writes closed until integrity and authorization checks pass. |" The defect is real and severe: lines 371-382 repeat one identical triple across all twelve flows, which is factually wrong for at least five of th
+
+### A-30 — `06-trust-safety.md`
+
+**Tier.** 2 — upstream spec (architecture design), plus this shard's own declared Shard 05 dependency
+
+**Sources.**
+- `.memory/wiki/specs/2026-08-02-architecture-design.md line 746 (Support operator role definition)`
+- `.memory/wiki/specs/ia/06-trust-safety.md line 207 (Access Control header), lines 209-219 (ten actor rows), line 222-234 (defective Access Escalation block), line 311 (Cross-Shard Dependencies — declares Shard 05 owns capabilities), line 118 (`ClaimCase` — reviewer eligible/unconflicted), line 74 (TSE-04), line 53 (AC-TSE-06 concurrence/solo controls), line 54 (AC-TSE-07 appeal)`
+- `.memory/wiki/specs/ia/05-platform-configuration-admin.md line 61 (CFG-11 grant/revoke admin capability), line 95 (Capability grant contract)`
+- `.memory/wiki/specs/ideation/24-trust-safety-disputes/24.02-enforcement-appeals-policy/24.02.02-appeals-internal-complaints.md line 127 (Q-04, [OWNER], deferred to /create-prd — cited as the boundary of this fix, NOT as its source)`
+- `.memory/wiki/specs/ideation/meta/constraints.md line 185 (§ Team — solo owner plus AI agents)`
+
+**Source quote.** From `2026-08-02-architecture-design.md` line 746: "| Support operator | view minimum support projection, correlate request IDs, execute named recovery workflows with reason | content/body access by default, payment/legal evidence, role grants, direct database mutation |". And from `ia/06-trust-safety.md` line 311: "**Depends on:** [Shard 00](00-infrastructure.md) for request/event/error/audit/recovery; [Shard 01](01-identity-authority.md) for parties, acting context, aliases, organizations, mandates and succession; [Shard 05](05-platform-configuration-admin.md) for capabilities, guarded configuration, tasks, diagnostics, quality gates, retention and kill switches."
+
+**Fix.**
+
+```
+THREE EDITS, all in `.memory/wiki/specs/ia/06-trust-safety.md`.
+
+EDIT 1 — delete line 224 entirely (the `- **Actor/capability:** ...` bullet). It is the Access Control table header rendered as an actor and has no referent.
+
+EDIT 2 — `## Access Control` table: insert a new final row after `| Platform administrator | ... |` (line 218), keeping the `| Actor/capability | Permitted | Explicitly denied |` column order:
+
+| Support operator | Minimum safe status/request-ID projection for one named case, and named mechanical recovery workflows — re-deliver a notice, re-issue an expired link, unstick a capture job — under an expiring purpose grant with a stated reason | Case evidence, narrative or media by default; queue browsing; reviewer identity; any policy, decision, sanction or SoR mutation; granting or altering any capability; direct database mutation |
+
+(Derived by narrowing architecture line 746's permitted/denied lists to this shard's objects. Architecture already denies content/body access, legal evidence, role grants and direct DB mutation; the case-specific denials — queue browsing, reviewer identity, decision mutation — mirror this shard's own Moderator and Platform administrator denial cells at lines 212 and 218.)
+
+EDIT 3 — replace the whole `### Access Escalation` block (lines 222-234) with a stated route split plus ten differentiated bullets. Route split first:
+
+> A denial returns a typed reason and preserves canonical state. Routes are not interchangeable, and **this shard does not adjudicate its own reviewers' access**. (a) A **staff capability denial** — no capability, expired lease, unresolved conflict, stale step-up — escalates through Shard 05 `CFG-11` to the `grantor` recorded on the actor's `admin_capability_grant`; it never opens a Trust & Safety case. (b) A **user's denial against a case** escalates on the `TSE-07` appeal path where the actor is an eligible subject. (c) **Mechanical recovery** is performed by a Support operator under a purpose grant naming one case object. (d) A **conflicted reviewer** is reassigned by `TSE-03` routing, never granted an override. Counsel, capability and privacy hard gates have no role override by any route.
+
+Then the ten bullets (each written from that row's own Explicitly-denied cell — no new policy):
+
+- **Reporter/claimant:** no route to the queue, other reports, signals, reviewer identity or sealed evidence exists at any tier. The only surfaces are the opaque receipt's safe own-status view and, once a decision exists and they are an eligible subject, `TSE-07`.
+- **Case party:** disclosure and evidence denials escalate to Legal/counsel, never to the deciding moderator. Decision denials escalate on `TSE-07`. Snapshot, finding and counterparty-private evidence are hard denials with no route.
+- **Public user:** no escalation route. A denial is a typed refusal with no case-existence leakage; only published policy and aggregate transparency are reachable.
+- **Moderator:** capability, lease and conflict denials escalate to the grant's `grantor` via Shard 05 `CFG-11`. A conflicted case is reassigned by `TSE-03`, not overridden. Self-concurrence, restricted evidence, general DB/search and ownership mutation are hard denials with no route, and a moderator never files a Trust & Safety case about their own access.
+- **Independent reviewer:** capability denial escalates as for Moderator. An ineligible-concurrence denial — not distinct from the decider, or conflicted — is a hard gate: under `TSE-06` the case waits on solo compensating controls and cooling-off rather than escalating. (Who supplies independence below the concurrence threshold is ideation `24.02.02` Q-04, `[OWNER]`, still open at `/create-prd`; nothing here presumes it.)
+- **Fraud/safety specialist:** purpose or queue scope denial escalates to the grantor via `CFG-11`. Marketing reuse and unrelated profiling/enforcement are hard denials with no route.
+- **Legal/counsel:** unlogged disclosure, blanket access and retroactive policy change are hard gates with no route. A disclosure needing wider authority escalates on the `TSE-15` legal-process path, not by grant.
+- **Break-glass custodian:** denial escalates only to the break-glass grantor and issues under Shard 05's Capability grant contract with MFA, reason, bounded term, notification and dual evidence. Export, copy, preview, party disclosure and persistent access are hard denials with no route.
+- **System worker:** no human escalation route. A denial is a typed refusal plus an operations task against the registered service identity; a Support operator may not recover a worker by grant.
+- **Platform administrator:** capability and configuration denials escalate through Shard 05 `CFG-11`. Deciding a case by admin status, and weakening any floor through settings, are hard gates with no route.
+```
+
+**Challenge result.** CONFIRMED — I read every cited line and each one is there. Architecture line 746 is verbatim as quoted. Shard 06 line 311 is verbatim: "**Depends on:** [Shard 00](00-infrastructure.md) for request/event/error/audit/recovery; [Shard 01](01-identity-authority.md) for parties, acting context, aliases, organizations, mandates and succession; [Shard 05](05-platform-configuration-admin.md) for capabilities, guarded configuration, tasks, diagnostics, quality gates, retention and kill switches." — so routing staff capability denials to Shard 05 CFG-11 is the shard's own declared dependency, not an invention. The defect is real and exactly as described: line 224 reads "- **Actor/capability:** a denial returns a typed reason...", which is the table header (line 207 "| Actor/capability | Permitted | Explicitly denied |") rendered as an eleventh actor with no referent; lines 225-234 are then ten byte-identical 
+
+### A-31 — `07-credits-core.md`
+
+**Tier.** 2 — upstream spec (ideation domain 02), corroborated by sibling IA Shard 02
+
+**Sources.**
+- `.memory/wiki/specs/ideation/02-credits-attribution/02.01-credit-graph-discography/02.01.01-credit-record-contribution-ledger.md line 145 (Record Lifecycle States — Unacknowledged), line 190 (cross-cut: claim inbox is the destination), line 213 (D-10)`
+- `.memory/wiki/specs/ideation/02-credits-attribution/02.04-attestation-credit-confidence/02.04.01-attestation-request-confirmation.md line 251 (D-11)`
+- `.memory/wiki/specs/ideation/02-credits-attribution/02.04-attestation-credit-confidence/02.04.02-provenance-tiers-credit-confidence.md line 199 (D-03)`
+- `.memory/wiki/specs/ideation/02-credits-attribution/02.01-credit-graph-discography/02.01.02-public-discography.md line 20 (Role Lens), line 47 (ordering within a family), line 70 (merge unions pin sets past the cap), line 82 (concurrent curation LWW per family), line 152 (D-04), line 155 (D-07), line 161 (D-13), line 125 (band/org/estate governance routing)`
+- `.memory/wiki/specs/ia/02-profiles-verification.md line 44 (AC-PRF-12), line 65 (PRF-12), line 99 (Contracts — Curation), line 165 (Access Control — Full owner/mandate curates own projection)`
+- `.memory/wiki/specs/ia/07-credits-core.md line 83, line 93 (CreditState), line 95 (PageCuration), line 100-108 (Credit and Visibility contracts incl. AssertCredit, ProjectDiscography), lines 59-76 (CRD interactions), line 148 + 172 (discography_curation), line 200 (Credited party), line 234 (credit.record.changed.v1), line 292-293 (Cross-Shard Dependencies)`
+- `.memory/wiki/specs/ia/deep-dives/07-credits-core.md line 38 (Credit state machine), line 74 (derivation step 6)`
+
+**Source quote.** Half 1 — `ideation/02-credits-attribution/02.01-credit-graph-discography/02.01.01-credit-record-contribution-ledger.md` line 145: "| Unacknowledged | Self-asserted by a party other than the named one, no capture, no import (D-10) | Asserter: \"sent for confirmation\". Named party: claim-inbox item. Public: absent |" and line 213: "| D-10 | A **self-asserted credit naming another party does not publish to that party's page** — it queues for acknowledgement | The fabrication gate. ... The gate is deliberately narrow — session capture and external import both pass, so it costs the cold start and the growth loop nothing. |". Rung effect, `02.04.01` line 251: "| D-11 | The attester may never be the credited party — including through a band entity they are a member of | Self-attestation is self-assertion, and `02.04.02` D-03 says self-assertion never raises the tier. |" Half 2 — `02.01.02-public-discography.md` line 161: "| D-13 | **The platform never computes prominence.** Ordering within a family is owner-pinned highlights first (owner's order), then reverse chronological | ... Pins are capped at 6 per family (a shortlist stops being one past that), enforced on write, never on read. |" and line 20: "Owns their discography page: designates up to 3 **primary role families** (expanded by default), pins up to 6 highlight credits per family, and sets per-credit visibility via `02.01.05` ... the only authored state on it is curation (pins, primary families, family order)." Corroborated by `ia/02-profiles-verification.md` line 99: "| Curation | Emphasis orders; `Unlisted` removes a credit from this party page only; neither edits the source ledger. |"
+
+**Fix.**
+
+```
+SEVEN EDITS. Six in `.memory/wiki/specs/ia/07-credits-core.md`, one in `.memory/wiki/specs/ia/02-profiles-verification.md`.
+
+EDIT 1 — `07-credits-core.md`, Interactions table (after CRD-18, line 76), add two rows in the table's `| ID | Name | Rule | Outcome |` shape:
+
+| CRD-19 | Acknowledge asserted credit | The named credited party — or a current Shard 01 mandate holder acting for a band/organization party — acknowledges a credit another party asserted in their name. Acknowledgement releases the publication gate to that party's discography page and records actor, acting context and time. It is not attestation: it is never evidence, is never an input to `provenance_derivation`, and never raises the rung. Refusal routes to CRD-17 contest; silence leaves the record `asserted` and absent from the party page indefinitely. | `asserted → acknowledged` committed on the immutable version; `credit.record.changed.v1` emitted; no derivation input changes. |
+| CRD-20 | Curate party discography | Page-controlling party sets, for their own party page only: `listed|unlisted` per credit, up to 3 primary role families, family order, and pin rank within a family. At most 6 pinned credits per (party, role family), enforced on write and never on read — a party merge unions both pin sets and may exceed the cap until the survivor re-curates. Curation never edits the ledger, never changes confidentiality and never feeds the rung. Concurrent edits are last-write-wins scoped per role family, not per page. | `discography_curation` version committed; ledger and visibility unchanged; that party page's public projection cache key invalidated. |
+
+EDIT 2 — `07-credits-core.md`, Acceptance Criteria list (after AC-CRD-18), add AC-CRD-19 and AC-CRD-20 in this shard's fixed sentence form: "Given a valid request with current identity, authority, source state and required inputs, when the actor invokes this flow, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) <the Rule cell above>, and (6) return <the Outcome cell above>; if the flow cannot complete, invalid input, stale authority, revision conflict or dependency failure returns a typed refusal and no contradictory canonical mutation."
+
+EDIT 3 — `07-credits-core.md` line ~101, extend the `AssertCredit` contract row with the D-10 gate (this is the sentence the shard is missing entirely):
+
+| `AssertCredit` | Unique active record per party/role/work/scope; one role, many instruments; contribution/assertion dates and asserter distinct. A record whose asserter is neither the named party nor a session-capture or import origin commits as `asserted` and is withheld from the named party's discography page until CRD-19 acknowledgement; the work ledger projection is unaffected. |
+
+EDIT 4 — `07-credits-core.md` Access Control (line 200): amend the Credited party row's Permitted cell to add "acknowledge a credit asserted in their name (CRD-19); curate own party page listing, primary families and pin rank (CRD-20)". Amend the Producer/session owner row's denial cell (line 202) to add "acknowledge or curate on a credited party's behalf".
+
+EDIT 5 — `07-credits-core.md` Data Models (line 148): replace the `discography_curation` row with:
+
+| `discography_curation` | Party + credit `listed|unlisted`, primary-family designation and pin rank; unique on (party, credit); pin rank is a contiguous order within (party, role_family) with a write-time maximum of 6 pinned credits per family and at most 3 primary families per party; read paths never enforce the cap; cannot change ledger visibility or confidentiality. |
+
+And mirror the same constraint sentence into the Typed Field and Cardinality Registry entry at line 172, replacing its trailing "Party + credit listed/unlisted and pin rank; cannot change ledger visibility."
+
+EDIT 6 — `07-credits-core.md` Cross-Shard Dependencies (line 292) and the Cross-Shard Section Contract Map: add Shard 02 to **Depends on** as "[Shard 02](02-profiles-verification.md) § Contracts → Profile, Portfolio, and EPK for the profile-surface entry point that invokes CRD-20", and add the matching Contract Map row targeting that named section.
+
+EDIT 7 — `.memory/wiki/specs/ia/02-profiles-verification.md` line 99, make the Curation row reference rather than restate the rule (the layer's own author-where-owned convention):
+
+| Curation | Emphasis orders; `Unlisted` removes a credit from this party page only; neither edits the source ledger. Credit-page curation state and its caps are owned by [Shard 07](07-credits-core.md) `CRD-20` / `discography_curation`; PRF-12 is the profile-surface entry point and adds only reel-item selection. No completeness score, career timeline density, or aggregate provenance score. |
+
+APPLICATION NOTE for whoever lands this: confirm that `administer` is the correct activity in Shard 01's closed seven-activity mandate enum (`01.03.03` D-01) for acknowledging on a band's behalf. That is a lookup inside an already-ratified enum, but the mapping is mine, not quoted.
+```
+
+**Challenge result.** CONFIRMED — All eight ideation citations are verbatim and the IA gap is demonstrably real. 02.01.01 line 145 is exactly "| Unacknowledged | Self-asserted by a party other than the named one, no capture, no import (D-10) | Asserter: \"sent for confirmation\". Named party: claim-inbox item. Public: absent |" and line 213 D-10 exactly as quoted including "The gate is deliberately narrow — session capture and external import both pass". Line 190 confirms the inbox destination and that a gated record naming an unclaimed shell may be "invisible to the human it names, possibly forever" — which is what licenses the fix's "silence leaves the record `asserted`... indefinitely". 02.04.01 line 251 D-11 and 02.04.02 line 199 D-03 ("Claiming and self-assertion never raise the rung") are verbatim, corroborated by deep-dives/07 line 74 "Self-assertion/claim/import agreement never promotes" — so "acknowledgement is 
+
+### A-32 — `07-credits-core.md`
+
+**Tier.** 2
+
+**Sources.**
+- `.memory/wiki/specs/ia/07-credits-core.md — lines 292-293 (Cross-Shard Dependencies), 299-308 (Cross-Shard Section Contract Map), 319-330 (Dependency References → Constrains)`
+- `.memory/wiki/specs/ia/decomposition-plan.md — line 65 (shard 19 row, dependency column '00, 07, 09, 18')`
+- `.memory/wiki/specs/ia/08-credit-reporting-disclosure.md — Cross-Shard Section Contract Map (convention proof: upstream rows 00, 01, 07 precede downstream rows)`
+- `.memory/wiki/specs/ia/05-platform-configuration-admin.md — Cross-Shard Section Contract Map (convention proof: upstream rows 00, 01, 03, 04)`
+- `.memory/wiki/specs/ia/19-royalty-reporting-forecasting.md — line 1 (canonical H1 title), line 167 (Depends on), lines 190-193 (its own map)`
+- `.memory/wiki/specs/ia/deep-dives/07-credits-core.md — line 122 ('Shards 08, 18–20, 22, 23, 39 | Receive authorized rung/taxonomy/credit projections only')`
+- `.memory/wiki/specs/ia/01-identity-authority.md — lines 85-119 (Contracts § Party and Identity, § Organization and Relationship)`
+
+**Source quote.** decomposition-plan.md:65 — "| 19 | 19-royalty-reporting-forecasting.md | Performance reporting, money-in-flight and forecasting | 10.06–10.07, 10.09–10.10 | 4 | Medium | Feature domain | No | 00, 07, 09, 18 |" · 08-credit-reporting-disclosure.md § Cross-Shard Section Contract Map — "- **Shard 00 — Cross-cutting platform foundation:** consume [Shard 00 — Cross-cutting platform foundation Contracts](00-infrastructure.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 00 — Cross-cutting platform foundation Event Schemas](00-infrastructure.md#event-schemas). Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary."
+
+**Fix.**
+
+```
+FILE 1 — .memory/wiki/specs/ia/07-credits-core.md § Cross-Shard Section Contract Map (currently lines 301-308).
+
+Insert TWO upstream bullets immediately after the '### Cross-Shard Section Contract Map' heading, BEFORE the existing '- **Shard 08 — …**' bullet at line 301. Use this shard's own sentence template (note: shard 07 uses 'and typed failure/unknown states', with 'and', not the semicolon variant used by shards 29-36):
+
+- **Shard 00 — Cross-cutting platform foundation:** consume [Shard 00 — Cross-cutting platform foundation Contracts](00-infrastructure.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 00 — Cross-cutting platform foundation Event Schemas](00-infrastructure.md#event-schemas). Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
+- **Shard 01 — Identity authority and party governance:** consume [Shard 01 — Identity authority and party governance Contracts](01-identity-authority.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 01 — Identity authority and party governance Event Schemas](01-identity-authority.md#event-schemas). Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary. `MergePartyShell` and `ClaimCredit` resolve party, alias, membership, mandate and identity-merge facts against that section's `§ Party and Identity` and `§ Organization and Relationship` contracts; Shard 07 owns no person identity and never re-points a party ID on its own authority.
+
+Insert ONE downstream bullet between the existing Shard 18 bullet (line 304) and the Shard 20 bullet (line 305), preserving ordinal order:
+
+- **Shard 19 — Performance reporting, money-in-flight and forecasting:** consume [Shard 19 — Performance reporting, money-in-flight and forecasting Contracts](19-royalty-reporting-forecasting.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 19 — Performance reporting, money-in-flight and forecasting Event Schemas](19-royalty-reporting-forecasting.md#event-schemas). Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
+
+FILE 1, second location — § Dependency References → ### Constrains (lines 319-330, hand-authored, above the `<!-- spec-graph: auto-generated -->` marker at line 331). Insert between the Shard 18 and Shard 20 entries:
+
 - [[specs/ia/19-royalty-reporting-forecasting|Shard 19 — Performance reporting, money-in-flight and forecasting]]
-- [[specs/ia/07-credits-core|Shard 07 — Credit graph, capture and confidence]]
+
+FILE 2 — .memory/wiki/specs/ia/19-royalty-reporting-forecasting.md, for reciprocity required by decomposition-plan.md:65.
+(a) Line 167, append to the 'Depends on' list: `; [[specs/ia/07-credits-core|Shard 07]] for credit, provenance and taxonomy projections`.
+(b) In its § Cross-Shard Section Contract Map, add before the Shard 18 bullet at line 190 (this file uses the plain `**Shard NN:**` label form — keep it):
+
+- **Shard 07:** consume [Shard 07 Contracts](07-credits-core.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 07 Event Schemas](07-credits-core.md#event-schemas). Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
+
+FILE 3 — .memory/wiki/specs/ia/09-projects-collaboration.md line 343: replace the label 'Shard 19 — Royalty reporting and forecasting' (three occurrences in that one bullet) with 'Shard 19 — Performance reporting, money-in-flight and forecasting' to match decomposition-plan.md:65 and the file's own H1. Link targets on that line are already correct; only the display text is stale.
+```
+
+**Challenge result.** CONFIRMED — Every cited source opened and checked; nothing overturned. (1) 07-credits-core.md L292-293 reads exactly as quoted by the audit: "**Depends on:** [Shard 00](00-infrastructure.md) for contracts/events/offline/idempotency/projections; [Shard 01](01-identity-authority.md) for parties, aliases, acting context, memberships, mandates and non-automatic identity merges." and "**Depended on by:** Shards 08-10, 18-20, 22, 23 and 39 consume credit/provenance/taxonomy projections." The Cross-Shard Section Contract Map at L299-308 contains exactly eight bullets — 08, 09, 10, 18, 20, 22, 23, 39. Shard 19 sits inside the declared 18-20 range and is absent; no 00 or 01 bullet exists. Defect real. (2) Convention proof holds. 08-credit-reporting-disclosure.md L266-272: the map opens "- **Shard 00 — Cross-cutting platform foundation:** consume [Shard 00 … Contracts](00-infrastructure.md#contracts) into thi
+
+### A-33 — `22-release-distribution.md`
+
+**Tier.** 2
+
+**Sources.**
+- `.memory/wiki/specs/ideation/12-release-distribution/12.01-release-builder/12.01.05-label-copy-distributor-of-record.md — Role Lens (17-24), Behavior (28-39), Field Rules table (41-57), Happy Path (59-68), Edge Cases (70-82), States (84-93), Decisions D-01/D-02 (111-116), Open Questions Q-01/Q-02 (118-123)`
+- `.memory/wiki/specs/ideation/12-release-distribution/12.01-release-builder/12.01.03-delivery-readiness-gate.md — line 86 (Family B header), lines 95-96 (rows B-4 and B-5), lines 341-344 (cross-cut note resolving CX-06)`
+- `.memory/wiki/specs/ideation/12-release-distribution/12.01-release-builder/12.01-release-builder-cx.md — CX-04 (label entity drives identifier prefix), CX-06 (divergence blocking question), R-02/R-04 (explicit non-interactions)`
+- `.memory/wiki/specs/ideation/12-release-distribution/12.07-identifier-assignment-at-delivery.md — line 264 (distributor of record determines whose ISRC prefix is used)`
+- `.memory/wiki/specs/ia/22-release-distribution.md — lines 17, 138, 161-162 (only surviving traces); 73-95 (Interactions DST-01..DST-20); 106-132 (Contracts); 134-156 (Data Models); 187-198 (Access Control); 218-233 (Event Schemas); 235-254 (Edge Cases)`
+- `.memory/wiki/specs/ia/10-rights-ownership.md — line 28 (sources ideation 09.01 Rights Registry), line 106 (`RightType` includes `master`, `composition_publisher`)`
+- `.memory/wiki/specs/audits/owner-decision-queue.md — line 509 (Q-02 still open, unratified)`
+
+**Source quote.** 12.01.05 D-01 — "(P)/(C) lines derive from the rights record (09); divergence requires a recorded justification visible to co-owners" · 12.01.05 D-02 — "Distributor of record is stated in plain language at the moment it is set, with its exit consequences" · 12.01.05 Field Rules — "There are exactly five fields. None is free-form where the platform already holds the truth." and "The **override reason** is a single required text field that appears only when a derived (P)/(C) value is changed. It is stored with the release and surfaced to co-owners (from 09)." · 12.01.03 B-4 — "| B-4 | (P) line diverges from the 09 ownership record **and a co-owner has objected** | **Blocking** | Resolves [CX-06](./12.01-release-builder-cx.md). An objected divergence is a conflict — Family B — and belongs to 09/24. |" · 12.01.03 B-5 — "| B-5 | (P) line diverges from 09, **unobjected** | **Warning** | 12.01.05 D-01 already collects a recorded justification and notifies co-owners. Escalating to a block when nobody has objected makes the platform the adjudicator of an uncontested claim … The notified co-owner decides; the gate does not decide for them. |"
+
+**Fix.**
+
+```
+All edits are to .memory/wiki/specs/ia/22-release-distribution.md. Seven insertions; every value below is taken from the sources cited, nothing invented.
+
+1) § Interactions (table at lines 73-95) — append after the DST-20 row:
+| DST-21 | Owner sets label copy | Derive (P)/(C) from the Shard 10 ownership record at the release year; owner may override name or year only with a recorded reason disclosed to co-owners; set label entity, catalogue number and distributor of record with a plain-language consequence statement at set time. | Versioned label copy with per-field provenance and a co-owner-visible divergence record. |
+
+2) § Acceptance Criteria (list at lines 52-72) — append, using the shard's fixed six-step template verbatim:
+- **AC-DST-21 — Owner sets label copy:** Given a valid request with current identity, authority, source state and required inputs, when the actor invokes this flow, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) Derive (P)/(C) from the Shard 10 ownership record at the release year, require a recorded reason on any override of a derived value and disclose the divergence to Shard 10 co-owners, and state distributor-of-record consequences including exit effects in plain language at set time, and (6) return Versioned label copy with per-field provenance and a co-owner-visible divergence record; if the flow cannot complete, invalid input, stale authority, revision conflict or dependency failure returns a typed refusal and no contradictory canonical mutation.
+
+3) § Contracts → Types and Errors (table at lines 110-116) — add one type row:
+| `LabelCopyProvenance` | `derived`, `overridden`, `asserted`, `empty`; `overridden` requires a persisted non-empty reason and a co-owner disclosure record. |
+and append three codes to the existing Errors row: `LABEL_COPY_OVERRIDE_REASON_REQUIRED`, `LABEL_COPY_DIVERGENCE_OBJECTED`, `LABEL_COPY_LOCKED`.
+
+4) § Contracts → Build, Delivery and Lifecycle Contracts (table at lines 118-132) — add after `AddReleaseRecording`:
+| `SetLabelCopy` | Exactly five fields: `p_line`, `c_line`, `label_name`, `catalogue_number`, `distributor_of_record`; none is free text where Shard 10 holds the fact. `(P)` defaults to `(P) {release year} {sound-recording owner from Shard 10}` and `(C)` to `(C) {release year} {composition/work owner from Shard 10}`. Overriding a derived name or year requires a non-empty recorded reason persisted with the release version and disclosed to Shard 10 co-owners; a `(C)` mismatch warns and never blocks, because publishing splits route to registration. `label_name` resolves to a Shard 01 organization party the actor is a member of, or an asserted external label string. `catalogue_number` auto-increments within an existing series, is otherwise nullable, and blank is valid. `distributor_of_record` requires a plain-language consequence statement including exit effects presented at set time. Producer is read-only: a Producer's disagreement with the `(P)` line is a Shard 10/06 rights dispute, never a metadata edit. Label copy on a published release version is immutable; changes route to `RedeliverRelease`. |
+
+5) § Data Models (table at lines 136-155) — add after the `release` / `release_version` row:
+| `release_label_copy` | 1:1 with `release_version`; `p_line_text`, `p_line_year`, `c_line_text`, `c_line_year`, `label_party_id` (nullable, Shard 01 organization) or asserted `label_name`, `catalogue_number` (nullable), `distributor_of_record`, per-field `LabelCopyProvenance`, `override_reason` (required when any field is `overridden`), co-owner disclosure record and consequence-statement acknowledgement; immutable once the release version is published. |
+
+6) § Edge Cases (table at lines 237-254) — add seven rows:
+| (P) line diverges from the Shard 10 ownership record, unobjected | Warning plus required recorded reason; co-owners disclosed; readiness not blocked — the platform does not adjudicate an uncontested claim. |
+| (P) line diverges from Shard 10 and a co-owner objects | Blocking readiness conflict (`social_blocked`), routed to Shard 10/06; Shard 22 never adjudicates the ownership question. |
+| (C) line names a publisher absent from the rights record | Warning only; never blocks delivery. |
+| No ownership record exists for the recording | Label copy stays empty and blocks at readiness with `RIGHTS_UNRESOLVED`; never substituted with free text. |
+| No release year set | (P)/(C) year cannot derive; fields flagged incomplete at the readiness gate. |
+| Two co-owners edit label copy concurrently | Expected-revision serialization; the loser sees the winner's value before re-saving. Last-write-wins is not permitted on an ownership assertion. |
+| Label copy or distributor of record changed on a live release | Requires redelivery through `RedeliverRelease`; never an in-place edit. |
+
+7) § Access Control (table at lines 189-197) and § Event Schemas (table at lines 220-231):
+- Co-owner/contributor Allowed: append 'label-copy divergence disclosure and objection'.
+- Producer Denied: append 'label copy edit (read-only; disputes route to Shard 10/06)'.
+- Add event row: | `distribution.label-copy.changed.v1` | Release/version/field provenance/divergence flag/version | Rights/identifiers/promotion |  — payload carries no (P)/(C) text, consistent with the section's existing exclusion of private rights evidence.
+
+RESIDUAL — DO NOT INVENT. The permitted VALUE set of `distributor_of_record` is owner-gated and must be written as an explicit open item, not enumerated. Ideation 12.01.05 records its default as 'WeJammin (pending Q-01)', and Q-01 ('Is WeJammin always the distributor of record, or can an artist deliver through WeJammin while naming their own label?') plus Q-02 ('[OWNER] Does WeJammin operate a label services tier … or is it strictly a conduit?', still open at owner-decision-queue.md:509) are both unratified. Everything above — the five fields, the derivation rule, the override-reason requirement, the co-owner disclosure, the B-4/B-5 gate semantics and the mandatory plain-language statement — is decided and must be written now; only the value enumeration waits.
+```
+
+**Challenge result.** CONFIRMED — I read 12.01.05 in full (133 lines) plus 12.01.03, the CX file, 12.07, shard 22, shard 10 and the owner-decision queue. Every quote is verbatim and the fix's substance is sourced. Quotes verified word-for-word in 12.01.05-label-copy-distributor-of-record.md: - L115 D-01: "(P)/(C) lines derive from the rights record (09); divergence requires a recorded justification visible to co-owners" - L116 D-02: "Distributor of record is stated in plain language at the moment it is set, with its exit consequences" - L43: "There are exactly five fields. None is free-form where the platform already holds the truth." - L53-55: "The **override reason** is a single required text field that appears only when a derived (P)/(C) value is changed. It is stored with the release and surfaced to co-owners (from 09)." Field Rules L47-51 give the exact defaults the fix reuses: "`(P) {release year} {sound-recording 
+
+### A-34 — `30-booking-contracts.md`
+
+**Tier.** 2
+
+**Sources.**
+- `.memory/wiki/specs/ia/decomposition-plan.md — lines 76-82 and 87 (canonical filename + domain title per shard)`
+- `.memory/wiki/specs/ia/30-booking-contracts.md — line 346 (Depended on by), lines 356-358 (Cross-Shard Section Contract Map rows for 31, 32, 35)`
+- `.memory/wiki/specs/ia/31-live-settlement-intelligence.md — line 321 (Depended on by), lines 330-331 (map rows for 34, 41)`
+- `.memory/wiki/specs/ia/32-show-production-planning.md — line 246 (Depended on by), lines 256-257 (map rows for 33, 34)`
+- `.memory/wiki/specs/ia/33-show-day-operations.md — line 258 (Depended on by), lines 267-268 (map rows for 34, 36)`
+- `.memory/wiki/specs/ia/29-venues-spaces.md — line 312 (Depended on by), lines 322-323 (map rows for 32, 35) — additional occurrence not named in the audit`
+- `.memory/wiki/specs/ia/34-touring-operations.md — Cross-Shard Section Contract Map (control: already carries the correct slugs)`
+
+**Source quote.** decomposition-plan.md — "| 31 | 31-live-settlement-intelligence.md | Agency, settlement and live-market intelligence | 17.08–17.13 | 6 | High | Feature domain | Yes | 00, 06, 18, 30 |" · "| 32 | 32-show-production-planning.md | Event production planning and advancing | 18.01–18.05, 18.19 | 6 | High | Feature domain | Yes | 00, 09, 24, 29, 30 |" · "| 35 | 35-ticket-products-sales.md | Ticket products, sales, access packages and delivery | 19.01–19.03, 19.08, 19.11–19.12 | 6 | High | Feature domain | Yes | 00, 06, 29, 30 |" · "| 34 | 34-touring-operations.md | Tour routing, logistics, finance and reporting | …" · "| 36 | 36-box-office-risk.md | Door access, box office, reconciliation and ticketing risk | …" · "| 41 | 41-career-finance.md | Career finance and business operations | …" · "| 33 | 33-show-day-operations.md | Show-day execution and recovery | …"
+
+**Fix.**
+
+```
+Pure string substitution across five files. Each map row contains the stale slug twice (the Contracts link and the Event Schemas link), so replace all occurrences on the named lines. Keep the `**Shard NN:**` plain-label form and the semicolon sentence variant used by this shard group — do not restyle.
+
+30-booking-contracts.md
+  L346 (Depended on by): `specs/ia/31-live-settlement` → `specs/ia/31-live-settlement-intelligence`; `specs/ia/32-event-operations` → `specs/ia/32-show-production-planning`; `specs/ia/35-discovery-recommendations` → `specs/ia/35-ticket-products-sales`
+  L356: `31-live-settlement.md` → `31-live-settlement-intelligence.md` (x2)
+  L357: `32-event-operations.md` → `32-show-production-planning.md` (x2)
+  L358: `35-discovery-recommendations.md` → `35-ticket-products-sales.md` (x2)
+
+31-live-settlement-intelligence.md
+  L321: `specs/ia/34-event-ticketing` → `specs/ia/34-touring-operations`; `specs/ia/41-career-business` → `specs/ia/41-career-finance`
+  L330: `34-event-ticketing.md` → `34-touring-operations.md` (x2)
+  L331: `41-career-business.md` → `41-career-finance.md` (x2)
+
+32-show-production-planning.md
+  L246: `specs/ia/33-show-day-tour-operations` → `specs/ia/33-show-day-operations`; `specs/ia/34-event-ticketing` → `specs/ia/34-touring-operations`
+  L256: `33-show-day-tour-operations.md` → `33-show-day-operations.md` (x2)
+  L257: `34-event-ticketing.md` → `34-touring-operations.md` (x2)
+
+33-show-day-operations.md
+  L258: `specs/ia/34-event-ticketing` → `specs/ia/34-touring-operations`; `specs/ia/36-live-reporting` → `specs/ia/36-box-office-risk`
+  L267: `34-event-ticketing.md` → `34-touring-operations.md` (x2)
+  L268: `36-live-reporting.md` → `36-box-office-risk.md` (x2)
+
+29-venues-spaces.md (not named in the audit entry; same defect)
+  L312: `specs/ia/32-event-operations` → `specs/ia/32-show-production-planning`; `specs/ia/35-discovery-recommendations` → `specs/ia/35-ticket-products-sales`
+  L322: `32-event-operations.md` → `32-show-production-planning.md` (x2)
+  L323: `35-discovery-recommendations.md` → `35-ticket-products-sales.md` (x2)
+
+Verification after applying: `grep -rn '31-live-settlement\.md\|32-event-operations\|35-discovery-recommendations\|34-event-ticketing\|41-career-business\|36-live-reporting\|33-show-day-tour-operations' .memory/wiki/specs/ia/` must return zero rows. Auto-generated `<!-- spec-graph -->` blocks are unaffected — every stale slug is in hand-authored dependency text.
+```
+
+**Challenge result.** CONFIRMED — Purely mechanical and fully verified line-by-line; the fix is exactly right and its file list is complete. `ls` on .memory/wiki/specs/ia/ returns the real files: 29-venues-spaces.md, 30-booking-contracts.md, 31-live-settlement-intelligence.md, 32-show-production-planning.md, 33-show-day-operations.md, 34-touring-operations.md, 35-ticket-products-sales.md, 36-box-office-risk.md, 41-career-finance.md. None of `31-live-settlement.md`, `32-event-operations.md`, `35-discovery-recommendations.md`, `34-event-ticketing.md`, `41-career-business.md`, `36-live-reporting.md`, `33-show-day-tour-operations.md` exists. decomposition-plan.md rows confirm the canonical titles the fix relies on — 31 "Agency, settlement and live-market intelligence", 32 "Event production planning and advancing", 33 "Show-day execution and recovery", 34 "Tour routing, logistics, finance and reporting", 35 "Ticket products, 

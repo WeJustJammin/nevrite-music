@@ -36,6 +36,7 @@ Shard 28 owns digital purchase/lease offers, withdrawal consent, refunds, entitl
 | Promotions | Single-vendor bundles/sales allowed with price allocation and ownership-aware adjustment. Multi-vendor bundles require an approved split before sale. |
 | Contributor splits | Domain 10 owns contributor shares/consent. This shard allocates per-asset commerce accrual and holds unresolved shares without forfeiture. |
 | Payout gate | Accrual/statements may operate; multi-payee external disbursement remains behind the approved B3 counsel/provider gate. |
+| Cent rounding | Consumes Shard 18 `RoundPayableAggregate`; this shard never authors a second rounding rule. Accrual arithmetic is exact decimal at >=9 dp and never rounds line-by-line. Rounding happens once, at the payable boundary — the contributor period close — on the per-payee period aggregate, by largest remainder, so the sum of rounded payee figures equals the rounded period total exactly. Ties break on the Shard-10 ledger row key `(pool, party-id, role, contribution-basis)`, comparing `party-id` as unsigned UTF-8 bytes per DEC-011; list order, insertion/retrieval order and `entered-by` are prohibited inputs. The residue is always allocated to a named payee and is never platform float, revenue or a rounding sink. |
 
 ## Features
 
@@ -103,7 +104,7 @@ Shard 28 owns digital purchase/lease offers, withdrawal consent, refunds, entitl
 | `ExecuteLicenceTransfer` | entitlement, parties, territory/policy/provider proof, escrow | Same record changes holder; funds/deactivation/writing atomic |
 | `SavePromotion` | vendor products, allocations, eligibility, effective window | Multi-vendor requires accepted split; existing owners not double-charged |
 | `AccrueDigitalRevenue` | acquisition/download asset, consideration allocation, split/rate/period versions | Asset is accrual unit; re-download deduped; immutable ledger |
-| `CloseContributorPeriod` | period, frozen rate/splits, accrual set, gate status | Forward-only split edits; statement totals equal ledger |
+| `CloseContributorPeriod` | period, frozen rate/splits, accrual set, gate status | Forward-only split edits; statement totals equal ledger; exactly one rounding pass over per-payee period aggregates per Shard 18 `RoundPayableAggregate`; a non-zero difference between the sum of per-payee payable figures and the rounded period total blocks the close and is never absorbed |
 
 ### Cross-Domain Contracts
 
@@ -112,6 +113,7 @@ Shard 28 owns digital purchase/lease offers, withdrawal consent, refunds, entitl
 - Shared payment rail owns capture/refund/escrow/payout; this shard owns digital eligibility and allocation.
 - Release flows consume structured terms and preserved-past/future-revoked disposition without inferring from refund alone.
 - Jurisdiction/seller-capacity policy is counsel-authored, versioned and required before consumer activation.
+- [[specs/ia/18-royalty-accounting|Shard 18]] owns the platform's cent remainder policy (`RoundPayableAggregate`). This shard consumes that rule for contributor accrual and period close and never defines its own rounding direction, boundary or tie key.
 
 ## Data Models
 
@@ -125,8 +127,8 @@ Shard 28 owns digital purchase/lease offers, withdrawal consent, refunds, entitl
 | `DigitalRefundCase` | order/entitlement, snapshot, reason, evidence, path/SLA, outcome/reason/cause, appeal | Pre-delivery cancellation is not a case |
 | `RevocationTrigger` | entitlement, refund/chargeback/blacklist source, effective time, appeal, version | First trigger authoritative; later triggers historical |
 | `TransferPolicyDecision` | entitlement/product, territory, vendor policy, legal/provider versions, result | Unknown fails closed |
-| `PromotionAllocation` | promotion, product consideration values, ownership adjustment, split refs | Every acquired item has deterministic consideration |
-| `ContributorAccrual` | asset/acquisition, period, gross/net basis, rate, split, payee, amount, reversal | Append-only and penny-reconcilable |
+| `PromotionAllocation` | promotion, product consideration values, ownership adjustment, split refs | Every acquired item has deterministic consideration recorded as the entitlement's allocated price in the transaction currency; any minor-unit residue from apportioning one consideration across N items is allocated by largest remainder on the same stable tie key |
+| `ContributorAccrual` | asset/acquisition, period, gross/net basis, rate, split, payee, amount, reversal | Append-only and penny-reconcilable; `amount` is exact decimal at >=9 dp and is never a rounded minor-unit value |
 | `HeldContributorFunds` | payee/split, source accruals, amount/currency, reason, claim path | Never forfeited/redistributed by timeout/erasure |
 
 ### Typed Field and Cardinality Registry
@@ -141,8 +143,8 @@ Field typing is deterministic: `*_id: uuid`, `*_at: timestamptz`, `*_date: date`
 - **`DigitalRefundCase`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: order/entitlement, snapshot, reason, evidence, path/SLA, outcome/reason/cause, appeal | Pre-delivery cancellation is not a case.
 - **`RevocationTrigger`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: entitlement, refund/chargeback/blacklist source, effective time, appeal, version | First trigger authoritative; later triggers historical.
 - **`TransferPolicyDecision`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: entitlement/product, territory, vendor policy, legal/provider versions, result | Unknown fails closed.
-- **`PromotionAllocation`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: promotion, product consideration values, ownership adjustment, split refs | Every acquired item has deterministic consideration.
-- **`ContributorAccrual`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: asset/acquisition, period, gross/net basis, rate, split, payee, amount, reversal | Append-only and penny-reconcilable.
+- **`PromotionAllocation`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: promotion, product consideration values, ownership adjustment, split refs | Every acquired item has deterministic consideration recorded as the entitlement's allocated price in the transaction currency; any minor-unit residue from apportioning one consideration across N items is allocated by largest remainder on the same stable tie key.
+- **`ContributorAccrual`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: asset/acquisition, period, gross/net basis, rate, split, payee, amount, reversal | Append-only and penny-reconcilable; `amount` is exact decimal at >=9 dp and is never a rounded minor-unit value.
 - **`HeldContributorFunds`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: payee/split, source accruals, amount/currency, reason, claim path | Never forfeited/redistributed by timeout/erasure.
 
 ## Access Control
@@ -218,6 +220,7 @@ Events contain IDs/versions and money values only; no licence bytes, payment sec
 | Contributor agrees split but not use | Publish blocked; money agreement cannot substitute rights consent |
 | Split unresolved after period | Pay/disburse only where counsel/provider gate allows; unresolved share remains held, never redistributed |
 | Contributor erased/departs | Pseudonymous split/accrual/held-funds record survives and claim path remains |
+| Split produces an indivisible minor unit | Largest remainder on the stable tie key allocates the leftover minor unit to a named payee; it is never retained as platform float, revenue or a rounding sink |
 
 ## Dependency References
 
@@ -225,6 +228,8 @@ Events contain IDs/versions and money values only; no licence bytes, payment sec
 - Uses Shard 10 rights/splits and shared payment/ledger/payout infrastructure.
 - Supplies refund/revocation/clearance dispositions back to library, delivery and release workflows.
 - Subscription credits, rent-to-own and used transfers remain behind product, counsel and provider gates.
+- Consumes the cent remainder policy from Shard 18; Domain 10 retains sole ownership of that policy (DEC-011).
+- BLOCKED / not authored here: the apportionment basis for a single-vendor bundle — how one consideration is split across N items before the residue rule applies — is not determined by any source and is raised as a separate item citing ideation `14.02.01` DT-08 and `14.07.04` D-03. This shard states the residue rule only, never the basis.
 
 ## Edge-Case Coverage Matrix
 
@@ -253,16 +258,22 @@ Events contain IDs/versions and money values only; no licence bytes, payment sec
 
 - **Shard 27:** consume [Shard 27 Contracts](27-digital-catalog-delivery.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 27 Event Schemas](27-digital-catalog-delivery.md#event-schemas). Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
 - **Shard 10:** consume [Shard 10 Contracts](10-rights-ownership.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 10 Event Schemas](10-rights-ownership.md#event-schemas). Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
+- **Shard 18:** consume [Shard 18 Contracts](18-royalty-accounting.md#contracts) into this shard `§ Contracts`. Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
 
 ## Changelog
 
 - 2026-08-03: Initial complete interaction architecture authored from 28 source documents and 18 child capabilities.
 - 2026-08-03: Locked perpetual/beat launch commerce, waiver-gated delivery, evidence-first refunds, future-use revocation and Shard-10-backed contributor accrual.
+- 2026-08-05: A-17 applied by `/resolve-ambiguity` — cent rounding is consumed from Shard 18 `RoundPayableAggregate` (DEC-011 bytewise `party-id` tie key, largest remainder, one pass at period close) rather than authored here; `CloseContributorPeriod`, `PromotionAllocation`, `ContributorAccrual`, the registry mirrors, the edge cases, the dependency references and the cross-shard contract map updated to match.
 
 
 <!-- spec-graph: auto-generated -->
 ## Related Specs
 
+### Constrained by
+- [[decisions.md#d-03|D-03]]
+
 ### References
 - [[specs/ia/27-digital-catalog-delivery|Shard 27 — Digital catalog, entitlement, delivery and vendor QA]]
 - [[specs/ia/10-rights-ownership|Shard 10 — Rights and ownership]]
+- [[specs/ia/18-royalty-accounting|Shard 18 — Royalty registration, ingestion, calculation and payout]]

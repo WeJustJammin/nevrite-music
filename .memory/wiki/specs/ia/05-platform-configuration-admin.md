@@ -79,7 +79,7 @@ Shard 05 is the governed operating surface for product variables and platform ad
 | Definition identity | Lowercase immutable key/UUID owned by code/contract release; label/help may version; key never reused. |
 | Value kinds | `boolean, integer, decimal, short_text, enum, duration, timestamp, json_object, string_list, percentage`; each strict bounded schema. No secret/binary/code/HTML. |
 | Allowed scopes | Definition explicitly chooses among `platform, environment, party, site, route, feature, user`; unsupported scope cannot store a value. |
-| Resolution | Definition lists exact high→low precedence and merge mode `replace|append_unique|object_merge_allowlist`; no universal implicit hierarchy. |
+| Resolution | Definition lists exact high→low precedence and merge mode `replace \| append_unique \| object_merge_allowlist`; no universal implicit hierarchy. |
 | Provenance | Every resolved value returns definition/value version, source scope/subject, default/inherited flag, effective interval, evaluator version and correlation ID. |
 | Protected exclusions | Credentials/secrets, Auth/RLS/capability semantics, legal floors, money/ledger/tax, rights/provenance, transactional state machines, migrations, holds/evidence and security limits cannot be ordinary values. |
 
@@ -93,6 +93,7 @@ Shard 05 is the governed operating surface for product variables and platform ad
 | Kill switch | Predeclared safe fallback, scope and independent signed runtime snapshot. Cannot bypass authorization or create alternate business truth. |
 | Bulk operation | Exact command registry + target ID/version snapshot + dry run + maximum protected batch + idempotency; no SQL/expression/arbitrary field mutation. |
 | Capability grant | Named actions/resources/scope/term, no wildcard; grantor cannot exceed own authority; revocation immediate; break-glass time-bounded and fully evidenced. |
+| Purpose grant | The support form of a capability grant: an `AdminCapabilityGrant` whose `resource_type/id` names exactly one case, order, request or record; whose `actions[]` are drawn only from the registered mechanical-recovery workflow keys; whose `ends` is mandatory and set by the grantor at issue per CFG-11; and which can never carry grant/revoke actions. No wildcard resource or action. Expiry is automatic, revocation immediate, and every use is audited with the stated reason. |
 
 ### Portability, Quality, and Retention
 
@@ -162,19 +163,28 @@ Field typing is deterministic: `*_id: uuid`, `*_at: timestamptz`, `*_date: date`
 | Admin operator | Work assigned tasks/search/bulk/diagnostics under named capabilities. | General private browsing, wildcard export, direct database editing. |
 | Privacy/legal operator | Review assigned lifecycle/hold/export cases with MFA and sealed evidence. | Ordinary content access beyond case, erase holds/audit/third-party rights. |
 | Service principal | Evaluate one setting or run one registered task/check/import/export consumer. | Interactive authority, arbitrary key/command, wildcard data. |
+| Support operator | View the minimum support projection for a named case/request, correlate request IDs, and execute named mechanical recovery workflows with a stated reason under a purpose grant. | Content/body access by default, payment/legal evidence, granting or altering any capability, direct database mutation. |
 
 No administrator is a universal tenant. Every protected operation rechecks actor, acting context, named capability, scope, assignment, term, MFA freshness, target/version and RLS/RPC at commit.
 
 ### Access Escalation
 
-- **Settings editor:** a denial returns a typed reason and preserves canonical state; authority or evidence disputes route to the scoped case/Trust & Safety path, support handles mechanical recovery through an expiring purpose grant, and counsel/capability/privacy hard gates have no role override.
-- **Configuration approver:** a denial returns a typed reason and preserves canonical state; authority or evidence disputes route to the scoped case/Trust & Safety path, support handles mechanical recovery through an expiring purpose grant, and counsel/capability/privacy hard gates have no role override.
-- **Release manager:** a denial returns a typed reason and preserves canonical state; authority or evidence disputes route to the scoped case/Trust & Safety path, support handles mechanical recovery through an expiring purpose grant, and counsel/capability/privacy hard gates have no role override.
-- **Experiment operator:** a denial returns a typed reason and preserves canonical state; authority or evidence disputes route to the scoped case/Trust & Safety path, support handles mechanical recovery through an expiring purpose grant, and counsel/capability/privacy hard gates have no role override.
-- **Incident operator:** a denial returns a typed reason and preserves canonical state; authority or evidence disputes route to the scoped case/Trust & Safety path, support handles mechanical recovery through an expiring purpose grant, and counsel/capability/privacy hard gates have no role override.
-- **Admin operator:** a denial returns a typed reason and preserves canonical state; authority or evidence disputes route to the scoped case/Trust & Safety path, support handles mechanical recovery through an expiring purpose grant, and counsel/capability/privacy hard gates have no role override.
-- **Privacy/legal operator:** a denial returns a typed reason and preserves canonical state; authority or evidence disputes route to the scoped case/Trust & Safety path, support handles mechanical recovery through an expiring purpose grant, and counsel/capability/privacy hard gates have no role override.
-- **Service principal:** a denial returns a typed reason and preserves canonical state; authority or evidence disputes route to the scoped case/Trust & Safety path, support handles mechanical recovery through an expiring purpose grant, and counsel/capability/privacy hard gates have no role override.
+A denial returns a typed reason and preserves canonical state. Three routes exist and they are not interchangeable.
+
+- (a) A **capability or authority denial** — missing, expired or revoked grant, insufficient scope, stale MFA — escalates to the `grantor` recorded on the actor's `AdminCapabilityGrant`, or to a capable administrator per CFG-11 where no current grantor exists. It never routes to Trust & Safety.
+- (b) An **evidence or party-authority dispute about the target of a change** routes to the Shard 06 scoped case path.
+- (c) **Mechanical recovery** — a stuck job, a lost artifact, an unresolvable request ID — is performed by a Support operator under a purpose grant naming that single object; a Support operator can never grant, widen or restore a capability.
+
+Counsel, capability and privacy hard gates have no role override by any route. Per-capability routes:
+
+- **Settings editor:** denial for an unassigned definition or out-of-scope value escalates to the grantor via CFG-11. Key creation, scope broadening, risk lowering and secret access are hard denials with no route.
+- **Configuration approver:** self-approval of a protected change and editing a candidate during review are separation-of-duties hard gates with no escalation.
+- **Release manager:** using a flag as an authorization, legal or business rule is a hard gate with no override. Environment or canary scope denial escalates to the grantor via CFG-11.
+- **Experiment operator:** protected-trait targeting and covert access/price/eligibility discrimination are hard gates with no override. Cohort, metric or consent-scope denial escalates to the grantor.
+- **Incident operator:** denial of an unassigned kill switch or break-glass escalates to the break-glass grantor and issues under the Capability grant contract with MFA, reason, bounded term, notification and evidence. Arbitrary mutation and permanent elevation are hard denials with no route.
+- **Admin operator:** task, search or bulk scope denial escalates to the grantor. A request to reach a party's private data routes to the Shard 06 case path or to a Privacy/legal operator — never to a broader admin grant.
+- **Privacy/legal operator:** hold, erasure and third-party-rights conflicts escalate to counsel; the counsel gate has no override. A denied ordinary-content read beyond the case has no escalation route.
+- **Service principal:** no human escalation route exists. A denial is a typed refusal to the caller plus an operations task against the registered consumer; a Support operator may not recover a service principal by grant.
 
 ## Accessibility
 
@@ -271,6 +281,7 @@ All events use Shard 00 identifier-only envelopes.
 | 2026-08-02 | Initial skeleton and source-feature seeding | /decompose-architecture-structure | All |
 | 2026-08-02 | Authored complete configuration/admin/quality IA from 20 source documents | /write-architecture-spec-design | All |
 | 2026-08-02 | Resolved scope, risk, flag/switch, admin, portability, quality and lifecycle variance | /write-architecture-spec-deepen | Contracts, Models, Access, Events, Edge Cases |
+| 2026-08-05 | A-29: added the Support operator capability row and the Purpose grant contract, and replaced the eight identical escalation bullets with a three-route common rule plus differentiated per-capability routes | /resolve-ambiguity | Contracts, Access Control |
 
 ## Dependency References
 

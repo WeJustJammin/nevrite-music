@@ -6,7 +6,7 @@
 
 ## Scope
 
-This deep dive owns route/menu/discovery manifests, media governance and read delivery. Shard 03 owns definitions, entries, composition, approvals, schedule and canonical publication. Shard 05 owns settings/admin/diagnostics/import/export. Domain rights/safety shards own adjudication; this shard consumes their state and executes delivery consequences.
+This deep dive owns route/menu/discovery manifests, media governance and read delivery. Shard 03 owns definitions, entries, composition, approvals, schedule and canonical publication. Shard 05 owns settings/admin/diagnostics/import/export. Domain rights/safety shards own adjudication; per DEC-098 they assert their outcome into this shard by calling its protected inbound delivery commands, and this shard executes the delivery consequence without ever reading their stores or adjudicating.
 
 ## Deepening Record
 
@@ -28,7 +28,7 @@ This deep dive owns route/menu/discovery manifests, media governance and read de
 | `menu_item_version` | `menu_version_id, item_id, parent_item_id?, position, label, target_kind, target_ref, visibility jsonb, description?, icon_key?`; parent same version; unique position/sibling. |
 | `route_manifest_version` | `id, version_no, publication_set_hash, state, generated_at, activated_at?`; immutable complete manifest. |
 | `route_record` | `manifest_id, route_id, normalized_path, locale, target_kind, target_id/version, canonical, cache_class, audience`; unique manifest/path/locale. |
-| `redirect_record` | `manifest_id, source_path, destination_path/route_id, status 301|308, reason, active`; source unique; graph acyclic and ≤5 hops. |
+| `redirect_record` | `manifest_id, source_path, destination_path/route_id, status 301 \| 308, reason, active`; source unique; graph acyclic and ≤5 hops. |
 | `discovery_metadata_version` | `publication_id, locale, title, description, canonical_url, noindex, social_asset_id?, breadcrumb jsonb, structured_data jsonb, policy_overrides[], hash`. |
 
 ### Assets, Rights, and Renditions
@@ -49,7 +49,7 @@ This deep dive owns route/menu/discovery manifests, media governance and read de
 | Model | Fields and constraints |
 |---|---|
 | `publication_projection` | `id, publication_id, route_manifest_id, locale, audience, render_payload jsonb, render_hash, discovery_hash, required_refs jsonb, state, version`; no drafts/admin fields. |
-| `projection_consumer_state` | `publication_id, consumer route|render|menu|media|search|sitemap|cache|social, expected_version, state, attempts, last_error_code, updated_at`; unique publication/consumer. |
+| `projection_consumer_state` | `publication_id, consumer route \| render \| menu \| media \| search \| sitemap \| cache \| social, expected_version, state, attempts, last_error_code, updated_at`; unique publication/consumer. |
 | `active_delivery_pointer` | `route/locale/audience, publication_projection_id, route_manifest_id, switched_at, version`; transactionally switched. |
 | `preview_session` | Shard 03 token hash plus user/context, exact version set, route/locale/audience, expires/revoked; delivery never broadens scope. |
 
@@ -57,12 +57,12 @@ This deep dive owns route/menu/discovery manifests, media governance and read de
 
 | Aggregate | Allowed transitions |
 |---|---|
-| Menu/route/discovery version | `draft → review → approved → active → superseded|revoked`; active immutable. |
-| Asset | `pending_upload → uploaded → inspecting → quarantined|ready|rejected`; ready → restricted|archived|takedown|erasure_pending; held blocks byte deletion. |
-| Right | `claimed → reviewing → verified|restricted|unknown|rejected`; verified → expired|disputed|revoked; any ineligible state removes affected uses. |
-| Rendition | `queued → processing → ready|failed_retryable|failed_terminal|revoked`; source/right change may revoke use without deleting output evidence. |
-| Projection | `building → ready|blocked|failed_retryable → active → superseded|revoked`. |
-| Purge | `requested → dispatching → verifying → completed|partial|failed_retryable`; urgent partial remains incident/open. |
+| Menu/route/discovery version | `draft → review → approved → active → superseded \| revoked`; active immutable. |
+| Asset | `pending_upload → uploaded → inspecting → quarantined \| ready \| rejected`; ready → `restricted \| archived \| takedown \| erasure_pending`; held blocks byte deletion. |
+| Right | `claimed → reviewing → verified \| restricted \| unknown \| rejected`; verified → `expired \| disputed \| revoked`; any ineligible state removes affected uses. A transition into `restricted`, `disputed` or `revoked` is written only by an inbound `RevokeDeliveryEligibility` command from Shard 06, 10 or 20 (DEC-098). |
+| Rendition | `queued → processing → ready \| failed_retryable \| failed_terminal \| revoked`; source/right change may revoke use without deleting output evidence. |
+| Projection | `building → ready \| blocked \| failed_retryable → active → superseded \| revoked`. |
+| Purge | `requested → dispatching → verifying → completed \| partial \| failed_retryable`; urgent partial remains incident/open. |
 
 ## Route and Menu Compilation
 
@@ -85,9 +85,9 @@ This deep dive owns route/menu/discovery manifests, media governance and read de
 
 ## Rights and Reference Evaluation
 
-- Eligibility requires active asset/object, clean inspection, matching use purpose, effective right/consent, allowed territory/audience, required attribution/accessibility, no dispute/takedown/hold conflict, and current source-domain permission.
+- Eligibility requires active asset/object, clean inspection, matching use purpose, effective right/consent, allowed territory/audience, required attribution/accessibility, no dispute/takedown/hold conflict, and current source-domain permission. Every one of those facts is read from this shard's own `asset_right` and `TakedownCaseLink` rows; the evaluation performs no cross-shard read.
 - Territories use ISO-3166-1 alpha-2 or sole `WORLDWIDE`; time bounds are UTC instants; empty use/territory never means universal.
-- Upload/possession/self-claim is never verified rights. Shard 10/20/06 state may verify, dispute, revoke, or hold.
+- Upload/possession/self-claim is never verified rights. Shards 10, 20 and 06 may verify, dispute, revoke or hold — and they do so by calling this shard's protected `ApplyDeliveryHold`, `ReleaseDeliveryHold` and `RevokeDeliveryEligibility` commands with their own case reference (DEC-098). This shard records the assertion, attributes it to the calling shard and case, and executes the consequence; it never evaluates or overturns the caller's adjudication.
 - Replacement creates a new asset/reference plan. Editors approve each semantic/crop/right change or bounded equivalent set; old references remain until switch.
 - Urgent revocation marks affected references/projections ineligible and writes purge intent in one transaction before provider/cache work.
 - Byte deletion happens only after no active/retained reference, right/evidence/dispute/legal hold, export/backup duty, or retention rule remains.
@@ -124,6 +124,8 @@ This deep dive owns route/menu/discovery manifests, media governance and read de
 - Slug changes reserve normalized path and redirect source in one transaction.
 - Publication projection and active-pointer switch are idempotent by publication/version; stale builders cannot replace newer pointer.
 - Purge attempts preserve one canonical purge ID and append provider attempt evidence; replay never changes business reason/scope.
+- Inbound delivery commands deduplicate by calling shard, that shard's case reference, subject scope and expected version; a replay returns the first outcome and creates no second hold, right transition or purge.
+- Because a lost command would leave this shard's materialised hold/right state behind the caller's adjudication, an outbox-backed reconciliation sweep re-asserts each calling shard's current case set against `TakedownCaseLink` and `asset_right`. A subject whose command state cannot be confirmed remains held; reconciliation never releases on uncertainty.
 
 ## Abuse and Recovery Verification
 
@@ -146,7 +148,11 @@ This deep dive owns route/menu/discovery manifests, media governance and read de
 | Shard 03 | Consumes exact publication/version manifests; returns projection/consumer readiness and purge evidence. |
 | Shard 05 | Supplies protected route/cache/media policy definitions and consumes diagnostics; cannot weaken rights/privacy/security floors. |
 | Shard 01/02 | Consumes party authority and viewer-safe profile/provenance constraints; CMS cannot publish hidden identity facts. |
-| Shard 06/10/20 | Consumes dispute/takedown/right/licence state and performs delivery revoke/purge; does not adjudicate. |
+| Shard 06 | Calls this shard's protected `ApplyDeliveryHold` / `ReleaseDeliveryHold` / `RevokeDeliveryEligibility` commands with its own dispute or takedown case reference. This shard writes `TakedownCaseLink`, performs delivery revoke/purge and returns completion evidence; it never reads Shard 06 state and does not adjudicate. |
+| Shard 10 | Calls the same protected commands with its own rights-conflict or freeze case reference, setting `AssetRight.state` to `restricted`, `disputed` or `revoked`. This shard executes the delivery consequence; it never reads Shard 10 state and does not adjudicate ownership. |
+| Shard 20 | Calls the same protected commands with its own licence or instrument-lifecycle case reference. This shard executes hold and eligibility consequences; it never reads Shard 20 state and does not adjudicate licence validity. |
+
+All three edges point downward (06 → 04, 10 → 04, 20 → 04) and satisfy DEC-097; this shard declares no dependency on Shards 06, 10 or 20. DEC-098 fixes the inbound-command inversion as the mechanism, in place of an upward read or event-consumption edge.
 
 ## Implementation Envelope
 
@@ -162,6 +168,7 @@ This deep dive owns route/menu/discovery manifests, media governance and read de
 |---|---|---|---|
 | 2026-08-02 | Initial deep-dive skeleton | /decompose-architecture-validate | All |
 | 2026-08-02 | Authored route, media, rights, rendition, projection, signing, cache, purge and recovery contracts | /write-architecture-spec-deepen | All |
+| 2026-08-05 | A-25 — applied DEC-098 inbound-command inversion: replaced the undeclared `Shard 06/10/20` consumer row with three downward caller rows, restated eligibility as a local-state read, and added inbound-command idempotency plus the reconciliation sweep | `/resolve-ambiguity` | Scope, Rights and Reference Evaluation, Concurrency and Idempotency, Cross-Shard Contracts |
 
 ## Dependency References
 

@@ -51,6 +51,7 @@ Shard 07 owns contribution truth: immutable credit records, session-time capture
 - **AC-CRD-16 — Derive provenance:** Given a valid request with current identity, authority, source state and required inputs, when the actor invokes this flow, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) Current eligible evidence computes categorical rung plus internal score; score cannot cross rung; failure renders unavailable, not lowest, and (6) return Versioned derivation and explanation stored; if the flow cannot complete, invalid input, stale authority, revision conflict or dependency failure returns a typed refusal and no contradictory canonical mutation.
 - **AC-CRD-17 — Contest credit:** Given a valid request with current identity, authority, source state and required inputs, when the actor invokes this flow, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) Participant marks dispute; public line remains at existing tier without marker; participant view shows contest and evidence ladder, and (6) return Shard 06 case link and contest state committed; if the flow cannot complete, invalid input, stale authority, revision conflict or dependency failure returns a typed refusal and no contradictory canonical mutation.
 - **AC-CRD-18 — Resolve pending taxonomy alias:** Given a valid request with current identity, authority, source state and required inputs, when the actor invokes this flow, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) Admin promotes/maps/rejects bounded literal; first mapping completes resolution without changing claim identity or invalidating attestations, and (6) return Canonical link/version added; retained literal preserved; if the flow cannot complete, invalid input, stale authority, revision conflict or dependency failure returns a typed refusal and no contradictory canonical mutation.
+- **AC-CRD-19 — Curate discography page:** Given a valid request with current identity, authority, source state and required inputs, when the actor invokes this flow, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) Credited party sets page curation `listed`/`unlisted`, designates at most three primary role families, orders families and pins at most six highlight credits per family in their own order; curation never adds, edits or reorders a credit, never changes record confidentiality, never alters the work ledger and never invokes computed prominence, and (6) return Curation version commits with caps enforced on write and never on read; concurrent edits resolve last-write-wins scoped per role family; if the flow cannot complete, invalid input, stale authority, revision conflict or dependency failure returns a typed refusal and no contradictory canonical mutation.
 
 ## Interactions
 
@@ -74,6 +75,7 @@ Shard 07 owns contribution truth: immutable credit records, session-time capture
 | CRD-16 | Derive provenance | Current eligible evidence computes categorical rung plus internal score; score cannot cross rung; failure renders unavailable, not lowest. | Versioned derivation and explanation stored. |
 | CRD-17 | Contest credit | Participant marks dispute; public line remains at existing tier without marker; participant view shows contest and evidence ladder. | Shard 06 case link and contest state committed. |
 | CRD-18 | Resolve pending taxonomy alias | Admin promotes/maps/rejects bounded literal; first mapping completes resolution without changing claim identity or invalidating attestations. | Canonical link/version added; retained literal preserved. |
+| CRD-19 | Curate discography page | Credited party sets page curation `listed`/`unlisted`, designates at most three primary role families, orders families and pins at most six highlight credits per family in their own order; curation never adds, edits or reorders a credit, never changes record confidentiality, never alters the work ledger and never invokes computed prominence. | Curation version commits; caps enforced on write and never on read; concurrent edits resolve last-write-wins scoped per role family. |
 
 ### Global Interaction Rules
 
@@ -89,12 +91,12 @@ Shard 07 owns contribution truth: immutable credit records, session-time capture
 
 | Contract | Definition |
 |---|---|
-| `CreditScope` | `recording | composition | both`; required |
-| `CreditState` | `asserted | acknowledged | contested | superseded | withdrawn` |
-| `Confidentiality` | `public | embargoed | confidential`; record-wide |
-| `PageCuration` | `listed | unlisted`; party-page only |
-| `ProvenanceRung` | `imported | asserted | witnessed | attested | captured_verified`; exact labels/version owned here |
-| `AttestationAnswer` | `confirm | refuse | dont_know` |
+| `CreditScope` | `recording \| composition \| both`; required |
+| `CreditState` | `asserted \| acknowledged \| contested \| superseded \| withdrawn` |
+| `Confidentiality` | `public \| embargoed \| confidential`; record-wide |
+| `PageCuration` | `listed \| unlisted`; party-page only |
+| `ProvenanceRung` | `imported \| asserted \| witnessed \| attested \| captured_verified`; exact labels/version owned here |
+| `AttestationAnswer` | `confirm \| refuse \| dont_know` |
 | `StandardError` | `VALIDATION_FAILED, FORBIDDEN, ACTING_CONTEXT_STALE, VERSION_CONFLICT, IDEMPOTENCY_MISMATCH, EMBARGOED_NOT_FOUND, CLAIM_CONFLICT, ATTESTATION_INELIGIBLE, RATE_LIMITED, TAXONOMY_UNAVAILABLE, DISPUTE_REQUIRED` |
 
 ### Credit and Visibility
@@ -104,6 +106,7 @@ Shard 07 owns contribution truth: immutable credit records, session-time capture
 | `AssertCredit` | Unique active record per party/role/work/scope; one role, many instruments; contribution/assertion dates and asserter distinct. |
 | `QualifyCredit` | `not_in_final_master` and similar qualifiers preserve contribution; they never delete or widen visibility. |
 | `ProjectDiscography` | Public eligibility = confidentiality + release/lift + page curation. Counts/pagination computed after authorization. |
+| `CurateDiscographyPage` | Party-page only, authored solely by the credited party; curation authority after death is Shard 01 estate governance. At most three primary role families and at most six pins per role family, enforced on write and never on read; pin rank is unique per party and role family and holds the owner's order. Rendering is pinned highlights first, then reverse chronology — the platform never computes prominence. Curation never changes record confidentiality and never alters the work ledger. A party merge unions both pin sets past the cap and prompts re-curation rather than dropping a pin. Concurrent edits are last-write-wins scoped per role family, never per page. |
 | `LiftEmbargo` | Requires release event, verified public evidence after objection window, or authorized manual lift. Reachability is evidence, not authorization. |
 | `ProposeCorrection` | In-place edit prohibited; party change routes claim transfer/dispute, not ordinary amendment. Material party/role/work change invalidates attestations. |
 | `MergePartyShell` | Person merge always human-confirmed; re-points party IDs only and preserves record visibility/history. |
@@ -134,7 +137,7 @@ Shard 07 owns contribution truth: immutable credit records, session-time capture
 | Contract | Invariant |
 |---|---|
 | `ResolveRole` | Exact/alias resolves visibly; fuzzy offers ≤5 and never auto-selects; no-hit commits bounded pending literal. Import never fuzzy-resolves. |
-| `RoleVersion` | Canonical base + optional modifier, admitted party types, family, locale labels and DDEX fidelity exact/broader/none. |
+| `RoleVersion` | Canonical base + optional modifier, admitted party types, family, locale labels and DDEX fidelity exact/broader/none, plus an optional `vault_role_class` attribute valued from Shard 09's `SensitivityClass` (`roster \| review \| stems \| takes \| restricted`). Per DEC-099 `vault_role_class` is the sole enforced binding for Shard 09 vault authorization; a taxonomy admin assigns it, it is never inferred from `family` (families group for discography presentation, not confidentiality), and it is absent by default. A `role_version` carrying no `vault_role_class` — including every `pending_role_alias` — floors to `review` on the consumer side. |
 | `InstrumentVersion` | Separate functional hierarchy; make/model forbidden. Credit may reference multiple instruments. |
 | `TaxonomyChange` | Deprecation never rewrites credits. First pending-alias mapping completes resolution without attestation invalidation. |
 
@@ -145,7 +148,7 @@ Shard 07 owns contribution truth: immutable credit records, session-time capture
 | `work_credit` | Party, role version, retained literal, work/recording IDs, scope, qualifier, dates, asserter/context, confidentiality, state, version. |
 | `credit_instrument` | Credit + instrument version; unique pair. |
 | `credit_order_assertion` | Work/release owner, ordered credit IDs, version; display only. |
-| `discography_curation` | Party + credit listed/unlisted and pin rank; cannot change ledger visibility. |
+| `discography_curation` | Party + credit `listed`/`unlisted`, primary role families (≤3), family order and pin rank unique per party and role family (≤6, enforced on write only); cannot change ledger visibility. |
 | `credit_visibility_version` | Credit/session, confidentiality, source/inheritance, evidence, effective interval, exposure-window audit. |
 | `credit_amendment` | Original/successor, proposal hash, required approvals, reminder/escalation state. |
 | `party_merge_assertion` | Candidate IDs, proposer, evidence, decision/negative assertion, re-point manifest. |
@@ -158,7 +161,7 @@ Shard 07 owns contribution truth: immutable credit records, session-time capture
 | `attestation_request` / `attestation` | Credit claim hash, attester, requester, cadence/state; immutable answer/retraction chain. |
 | `provenance_derivation` | Credit/evidence-set hash, rung, internal score, explanation/version, unavailable reason. |
 | `credit_contest` | Credit, opener, reason, participant visibility, Shard 06 case ID, outcome. |
-| `role_version` / `role_alias` / `pending_role_alias` | Canonical structure, party types, family, DDEX fidelity, locale alias and requester-scoped pending literal. |
+| `role_version` / `role_alias` / `pending_role_alias` | Canonical structure, party types, family, optional `vault_role_class`, DDEX fidelity, locale alias and requester-scoped pending literal; `pending_role_alias` never carries a `vault_role_class`. |
 | `instrument_version` | Functional hierarchy, locale labels, version/deprecation. |
 | `credit_audit_event` | Immutable actor/context/action/target/before-after/evidence/request hashes. |
 
@@ -169,7 +172,7 @@ Field typing is deterministic: `*_id: uuid`, `*_at: timestamptz`, `*_date: date`
 - **`work_credit`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Party, role version, retained literal, work/recording IDs, scope, qualifier, dates, asserter/context, confidentiality, state, version..
 - **`credit_instrument`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Credit + instrument version; unique pair..
 - **`credit_order_assertion`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Work/release owner, ordered credit IDs, version; display only..
-- **`discography_curation`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Party + credit listed/unlisted and pin rank; cannot change ledger visibility..
+- **`discography_curation`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Party + credit `listed`/`unlisted`, primary role families (≤3), family order and pin rank unique per party and role family (≤6, enforced on write only); cannot change ledger visibility..
 - **`credit_visibility_version`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Credit/session, confidentiality, source/inheritance, evidence, effective interval, exposure-window audit..
 - **`credit_amendment`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Original/successor, proposal hash, required approvals, reminder/escalation state..
 - **`party_merge_assertion`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Candidate IDs, proposer, evidence, decision/negative assertion, re-point manifest..
@@ -186,9 +189,9 @@ Field typing is deterministic: `*_id: uuid`, `*_at: timestamptz`, `*_date: date`
 - **`attestation`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Credit claim hash, attester, requester, cadence/state; immutable answer/retraction chain..
 - **`provenance_derivation`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Credit/evidence-set hash, rung, internal score, explanation/version, unavailable reason..
 - **`credit_contest`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Credit, opener, reason, participant visibility, Shard 06 case ID, outcome..
-- **`role_version`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Canonical structure, party types, family, DDEX fidelity, locale alias and requester-scoped pending literal..
-- **`role_alias`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Canonical structure, party types, family, DDEX fidelity, locale alias and requester-scoped pending literal..
-- **`pending_role_alias`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Canonical structure, party types, family, DDEX fidelity, locale alias and requester-scoped pending literal..
+- **`role_version`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Canonical structure, party types, family, optional `vault_role_class`, DDEX fidelity, locale alias and requester-scoped pending literal; `pending_role_alias` never carries a `vault_role_class`..
+- **`role_alias`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Canonical structure, party types, family, optional `vault_role_class`, DDEX fidelity, locale alias and requester-scoped pending literal; `pending_role_alias` never carries a `vault_role_class`..
+- **`pending_role_alias`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Canonical structure, party types, family, optional `vault_role_class`, DDEX fidelity, locale alias and requester-scoped pending literal; `pending_role_alias` never carries a `vault_role_class`..
 - **`instrument_version`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Functional hierarchy, locale labels, version/deprecation..
 - **`credit_audit_event`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Immutable actor/context/action/target/before-after/evidence/request hashes..
 
@@ -197,12 +200,12 @@ Field typing is deterministic: `*_id: uuid`, `*_at: timestamptz`, `*_date: date`
 | Actor | Permitted | Explicitly denied |
 |---|---|---|
 | Public/Fan | Public discography and bounded work-party traversal | Hidden counts/status, participant graph, confidence score, session roll |
-| Credited party | Own credits including embargoed, export, claim/correction/attestation request, contest | Change another party's credit or lift Producer confidentiality alone |
+| Credited party | Own credits including embargoed, export, claim/correction/attestation request, contest, curate own discography page (`listed`/`unlisted`, primary families, family order, pins) | Change another party's credit, curate another party's page or lift Producer confidentiality alone |
 | Session participant | Own/overlapping roll view, relevant ledger, attest witnessed facts, request lift | Non-overlapping attendance, confidential unrelated sessions |
 | Producer/session owner | Manage roll, attribute roll parties, ordering, close reconciliation, visibility within ratchet | Delete contributions, assert rights/splits, suppress contest |
 | Operator/room | Room facts and witnessed mode, scoped session support | Attest creative contribution merely as facility/operator |
 | Work/release owner | Billing order and approved publication evidence | Rewrite contributor identity/evidence |
-| Taxonomy admin | Promote/deprecate/map vocabulary through reviewed capability | Edit credit claims, derive rights or retroactively rewrite assertions |
+| Taxonomy admin | Promote/deprecate/map vocabulary through reviewed capability; assign `vault_role_class` per `role_version` | Edit credit claims, derive rights or retroactively rewrite assertions |
 | Dispute reviewer | Privileged case-scoped record/evidence projection | Publish embargoed facts or mutate original evidence |
 | System worker | Idempotent derivation/projection/notification/import commands | Auto-merge people, auto-select fuzzy role, auto-publish import |
 
@@ -239,7 +242,7 @@ Field typing is deterministic: `*_id: uuid`, `*_at: timestamptz`, `*_date: date`
 | `credit.attestation.changed.v1` | Attestation/credit/answer/state/evidence hash | Provenance derivation |
 | `credit.provenance.derived.v1` | Credit/evidence hash/rung/availability/version | Discography, search, Shards 08/10/18–20/22/39 |
 | `credit.contest.changed.v1` | Credit/case/state/outcome/version | Participant projection, provenance refresh |
-| `credit.taxonomy.changed.v1` | Kind/canonical/version/change/pending mapping | Pickers, resolver, export adapters |
+| `credit.taxonomy.changed.v1` | Kind/canonical/version/change/pending mapping/`vault_role_class` | Pickers, resolver, export adapters, Shard 09 vault authorization |
 
 Events omit private session names, narratives, embargo existence, refusal identity, internal score, ring flags and unrestricted PII.
 
@@ -259,6 +262,8 @@ Events omit private session names, narratives, embargo existence, refusal identi
 | Person merge uncertain | Never automatic; rejection persists as negative assertion. |
 | Taxonomy unavailable/new term | Commit bounded literal and pending alias; credit flow never blocks. |
 | Contest remains unresolved | Credit stays attached/visible per existing policy, zero weight in derived discovery, participant marker only. |
+| Party merge leaves more than six pins in a family | Pin sets union past the cap; every merged pin renders and the survivor is prompted to re-curate. Curation is never silently dropped. |
+| Owner curates on two devices at once | Last-write-wins scoped per role family, never per page; concurrent edits to different families both survive. |
 
 ## Surface Applicability
 
@@ -286,6 +291,15 @@ Responsive web/PWA. Server-rendered discography/provenance remains understandabl
 | CRD-16 Derive provenance | Same idempotency key returns the same result; competing expected revisions serialize one winner and return typed conflict to the loser without duplicate effect. | Schema, authority and policy validation fail before mutation/provider effect and return a typed refusal without existence leakage. | Owner/source deletion or revocation preserves required immutable evidence/tombstone, removes derived access/projection, and queues idempotent dependent invalidation so no orphan remains. |
 | CRD-17 Contest credit | Same idempotency key returns the same result; competing expected revisions serialize one winner and return typed conflict to the loser without duplicate effect. | Schema, authority and policy validation fail before mutation/provider effect and return a typed refusal without existence leakage. | Owner/source deletion or revocation preserves required immutable evidence/tombstone, removes derived access/projection, and queues idempotent dependent invalidation so no orphan remains. |
 | CRD-18 Resolve pending taxonomy alias | Same idempotency key returns the same result; competing expected revisions serialize one winner and return typed conflict to the loser without duplicate effect. | Schema, authority and policy validation fail before mutation/provider effect and return a typed refusal without existence leakage. | Owner/source deletion or revocation preserves required immutable evidence/tombstone, removes derived access/projection, and queues idempotent dependent invalidation so no orphan remains. |
+| CRD-19 Curate discography page | Same idempotency key returns the same result; competing curation edits resolve last-write-wins scoped per role family, so edits to different families both survive. | Schema, authority and policy validation fail before mutation/provider effect and return a typed refusal without existence leakage. | Owner/source deletion or revocation preserves required immutable evidence/tombstone, removes derived access/projection, and queues idempotent dependent invalidation so no orphan remains. |
+
+## Blocked on Upstream Decisions
+
+This item is named by the spec and deliberately not authored. It is blocked on a decision no source in any tier answers; it may not be invented downstream.
+
+| Item | Blocked on | Status |
+|---|---|---|
+| `CreditState.acknowledged` — who acknowledges a credit, and what acknowledgement means for provenance | An owner product decision (audit A-31, 2026-08-05). No interaction, contract, algorithm or event produces the transition, and the two candidates are ruled out by their own contracts: `ClaimCredit` "does not confirm credit", and `RequestAttestation` requires an attester independent of the credited party, so an attestation is not the credited party acknowledging. | OPEN — not authored. The enum member is retained and currently unreachable. No flow may set it, and until the decision lands acknowledgement has no defined effect on the provenance rung; `DeriveProvenance`'s rule that self-assertion never promotes a rung is unchanged. |
 
 ## Cross-Shard Dependencies
 
@@ -298,10 +312,13 @@ Responsive web/PWA. Server-rendered discography/provenance remains understandabl
 
 ### Cross-Shard Section Contract Map
 
+- **Shard 00 — Cross-cutting platform foundation:** consume [Shard 00 Contracts](00-infrastructure.md#contracts) into this shard `§ Contracts` — request/event, offline, idempotency and projection contracts; publish this shard `§ Event Schemas` to [Shard 00 Event Schemas](00-infrastructure.md#event-schemas). Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
+- **Shard 01 — Identity and authority:** consume [Shard 01 Contracts](01-identity-authority.md#contracts) into this shard `§ Contracts` — parties, aliases, acting context, memberships, mandates and non-automatic identity merges; `MergePartyShell` and `ClaimCredit` both consume the Shard 01 identity-merge evidence that governs the shell-to-party re-point across this boundary. Publish this shard `§ Event Schemas` to [Shard 01 Event Schemas](01-identity-authority.md#event-schemas). Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
 - **Shard 08 — Credit reporting and disclosure:** consume [Shard 08 — Credit reporting and disclosure Contracts](08-credit-reporting-disclosure.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 08 — Credit reporting and disclosure Event Schemas](08-credit-reporting-disclosure.md#event-schemas). Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
 - **Shard 09 — Projects and collaboration:** consume [Shard 09 — Projects and collaboration Contracts](09-projects-collaboration.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 09 — Projects and collaboration Event Schemas](09-projects-collaboration.md#event-schemas). Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
 - **Shard 10 — Rights and ownership:** consume [Shard 10 — Rights and ownership Contracts](10-rights-ownership.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 10 — Rights and ownership Event Schemas](10-rights-ownership.md#event-schemas). Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
 - **Shard 18 — Royalty accounting:** consume [Shard 18 — Royalty accounting Contracts](18-royalty-accounting.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 18 — Royalty accounting Event Schemas](18-royalty-accounting.md#event-schemas). Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
+- **Shard 19 — Royalty reporting and forecasting:** consume [Shard 19 — Royalty reporting and forecasting Contracts](19-royalty-reporting-forecasting.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 19 — Royalty reporting and forecasting Event Schemas](19-royalty-reporting-forecasting.md#event-schemas) — specifically the `credit.provenance.derived.v1` projection this shard already declares Shard 19 a consumer of. Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
 - **Shard 20 — Licensing core:** consume [Shard 20 — Licensing core Contracts](20-licensing-core.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 20 — Licensing core Event Schemas](20-licensing-core.md#event-schemas). Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
 - **Shard 22 — Release and distribution:** consume [Shard 22 — Release and distribution Contracts](22-release-distribution.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 22 — Release and distribution Event Schemas](22-release-distribution.md#event-schemas). Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
 - **Shard 23 — Gear provenance registry:** consume [Shard 23 — Gear provenance registry Contracts](23-gear-provenance-registry.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 23 — Gear provenance registry Event Schemas](23-gear-provenance-registry.md#event-schemas). Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
@@ -313,6 +330,7 @@ Responsive web/PWA. Server-rendered discography/provenance remains understandabl
 |---|---|---|---|
 | 2026-08-02 | Initial skeleton and source-feature seeding | /decompose-architecture-structure | All |
 | 2026-08-03 | Reconciled 27 in-scope sources and locked credit, capture, confidence, dispute and taxonomy contracts | /write-architecture-spec | All |
+| 2026-08-05 | A-31 — specified the CRD-19 discography curation write path (pin cap, pin-rank uniqueness, authority, merge and concurrency) and recorded `CreditState.acknowledged` as blocked on an owner decision; A-32 — added the missing Shard 00/01 upstream entries and the Shard 19 consumer entry to the Cross-Shard Section Contract Map; A-10 (reciprocal) — added the `vault_role_class` attribute to `RoleVersion` per DEC-099 | /resolve-ambiguity | Acceptance Criteria, Interactions, Contracts, Data Models, Access Control, Event Schemas, Edge Cases, Edge-Case Coverage Matrix, Blocked on Upstream Decisions, Cross-Shard Section Contract Map, Dependency References |
 
 ## Dependency References
 
@@ -322,6 +340,7 @@ Responsive web/PWA. Server-rendered discography/provenance remains understandabl
 - [[specs/ia/09-projects-collaboration|Shard 09 — Projects and collaboration]]
 - [[specs/ia/10-rights-ownership|Shard 10 — Rights and ownership]]
 - [[specs/ia/18-royalty-accounting|Shard 18 — Royalty accounting]]
+- [[specs/ia/19-royalty-reporting-forecasting|Shard 19 — Royalty reporting and forecasting]]
 - [[specs/ia/20-licensing-core|Shard 20 — Licensing core]]
 - [[specs/ia/22-release-distribution|Shard 22 — Release and distribution]]
 - [[specs/ia/23-gear-provenance-registry|Shard 23 — Gear provenance registry]]
@@ -336,6 +355,7 @@ Responsive web/PWA. Server-rendered discography/provenance remains understandabl
 - [[specs/ia/09-projects-collaboration|Shard 09 — Music projects and collaboration]]
 - [[specs/ia/10-rights-ownership|Shard 10 — Rights and ownership]]
 - [[specs/ia/18-royalty-accounting|Shard 18 — Royalty registration, ingestion, calculation and payout]]
+- [[specs/ia/19-royalty-reporting-forecasting|Shard 19 — Performance reporting, money-in-flight and forecasting]]
 - [[specs/ia/20-licensing-core|Shard 20 — Licensing core and instrument lifecycle]]
 - [[specs/ia/22-release-distribution|Shard 22 — Release and distribution lifecycle]]
 - [[specs/ia/23-gear-provenance-registry|Shard 23 — Gear identity, provenance and recovery]]

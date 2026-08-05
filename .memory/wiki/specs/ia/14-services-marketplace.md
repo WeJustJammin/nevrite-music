@@ -94,11 +94,13 @@ Shard 14 owns craft-service listings, exact quotes, requirements-gated engagemen
 
 | Contract | Definition |
 |---|---|
-| `PricingShape` | `flat | per_unit | hourly | day_halfday | tiered_volume | minimum_plus | points | hybrid` |
-| `AnonymityLevel` | `open | delayed | aliased | sealed` |
-| `EngagementState` | `requirements | active | buyer_wait | seller_work | delivered | revision | accepted | auto_accepted | cancelled | abandoned | mutually_released | closed` |
-| `RightsPosture` | Closed master and composition vocabularies; `creates_none` explicit; no default/free text |
-| `ExitKind` | `buyer_cancel | seller_cancel | abandonment | mutual_release` |
+| `PricingShape` | `flat \| per_unit \| hourly \| day_halfday \| tiered_volume \| minimum_plus \| points \| hybrid` |
+| `AnonymityLevel` | `open \| delayed \| aliased \| sealed` |
+| `EngagementState` | `requirements \| active \| buyer_wait \| seller_work \| delivered \| revision \| accepted \| auto_accepted \| cancelled \| abandoned \| mutually_released \| closed` |
+| `MasterPosture` | `assignment \| licence \| co_ownership \| points` — closed; no default, no free text, no `other` |
+| `CompositionPosture` | `creates_none \| assignment \| co_ownership \| licence` — closed; `creates_none` is an explicit required declaration, never an absent field |
+| `RightsPosture` | The pair `(master: MasterPosture, composition: CompositionPosture)` elected per listing TIER, not per listing. Both required. A posture missing any required parameter below is `unelected`, never partial |
+| `ExitKind` | `buyer_cancel \| seller_cancel \| abandonment \| mutual_release` |
 | `StandardError` | `VALIDATION_FAILED, FORBIDDEN, ACTING_CONTEXT_STALE, VERSION_CONFLICT, IDEMPOTENCY_MISMATCH, LISTING_GATE_FAILED, QUOTE_EXPIRED, SELF_ACCEPTANCE_FORBIDDEN, PAYMENT_AUTH_FAILED, REQUIREMENTS_INCOMPLETE, QC_FAILED, DELIVERY_INCOMPLETE, REVISION_RACE, RIGHTS_EXECUTION_FAILED, CREDIT_EMISSION_FAILED, COUNSEL_GATE_DISABLED` |
 
 ### Listings and Quotes
@@ -106,6 +108,8 @@ Shard 14 owns craft-service listings, exact quotes, requirements-gated engagemen
 | Contract | Invariant |
 |---|---|
 | `PublishListing` | Exactly one primary craft, curated facets, legal pricing model/minimum/currency/tax, structured exclusions/add-ons and both rights postures. Craft immutable live. |
+| `ElectRightsPosture` | Per tier, per copyright. Required parameters by member: `assignment` — none (the label is total), plus the determining facts in `posture_determining_facts`. `licence` — `exclusivity: exclusive\|non_exclusive`, `term: years\|perpetual`, `territory: worldwide\|named[]`, `permitted_uses: enum[]` from the deliverable/use vocabulary (selection only, never free text), `sublicensable: boolean`. `co_ownership` — `retained_share: decimal(2dp)` plus `administration: closed enum` (who may licence, on whose consent). `points` — `asset: master\|publishing\|both` plus `percentage`; the points PRICE and the points POSTURE are one object, not two fields validated against each other. `creates_none` — none. Where effect is deferred: `trigger_condition` and `vesting_term` are additionally required, on top of (never instead of) the elected posture's own parameter set. Missing any required parameter yields `unelected` and blocks tier publish with a named reason. |
+| `PostureDeterminingFacts` | Recorded alongside the label on every election: governing law, seller jurisdiction ASSERTED AT SIGNATURE (not at election, not the account's current value), commission-vs-employment, craft, signed-writing status, asserted capacity. Immutable evidence; the label is an opinion about the law, the facts are what survive. |
 | `EvaluatePrice` | Ordered tier/add-on/volume/rounding arithmetic; same contract currency; indicative buyer conversion timestamped; cash/rights never summed. |
 | `IssueQuote` | Immutable version, mandatory expiry, normative carried terms and structured fields only. Superseded version void; listing/rate/capacity changes do not. |
 | `AcceptQuote` | Exact version and material acknowledgements; compare-and-set; payment authorization + engagement creation atomic. Same human cannot represent both sides alone. |
@@ -122,6 +126,7 @@ Shard 14 owns craft-service listings, exact quotes, requirements-gated engagemen
 | `PublishDelivery` | Complete frozen artifact set plus declarations; QC failure is not delivery. No partial delivery outside milestones. |
 | `AcceptDelivery` | Explicit/auto states distinct; fixed 3-business-day to 30-calendar-day window; revision within deadline+120s wins. |
 | `ExecuteAcceptance` | Payment release + rights execution + credit emission atomic with retries then rollback/page. |
+| `ExecuteRightsPosture` | The SRV-16 execution rule, per elected member, against Shard 10: `assignment` → chain-of-title assignment instrument on the named copyright; `licence` → licence instrument carrying the five parameters; `co_ownership` → share allocation validated against Shard 10's AGGREGATE for the recording, never the engagement; `points` → participation payee record into Shard 18, plus the Shard 10 encumbrance; `creates_none` → writes no composition instrument. The credit is emitted to Shard 07 regardless of posture — a buyout moves the money, never the credit. |
 
 ### Exit, Supply and Custody
 
@@ -137,7 +142,7 @@ Shard 14 owns craft-service listings, exact quotes, requirements-gated engagemen
 
 | Model | Key relationships and constraints |
 |---|---|
-| `service_listing` / `listing_version` | Seller party, primary craft, facets, tiers/add-ons, mode/SLA/capacity, rights postures, state/version. |
+| `service_listing` / `listing_version` | Seller party, primary craft, facets, tiers/add-ons, mode/SLA/capacity, rights postures, state/version. Rights postures are TIER-scoped, so a three-tier listing holds six posture values (one master and one composition posture per tier). |
 | `pricing_model_version` | Shape, required inputs, minimum, currency/tax, rounding, breaks/overtime, effective state. |
 | `quote_request` / `quote_version` | Parties/context, ordered scope/price/requirements/artifacts/revisions/rights/exit/anonymity/expiry and supersession. |
 | `quote_acknowledgement` | Buyer authority, exact quote/material term, method/time/evidence. |
@@ -152,7 +157,7 @@ Shard 14 owns craft-service listings, exact quotes, requirements-gated engagemen
 | `exit_settlement` | Exit kind/fault, consumed work/capacity, four leg amounts/bases, rights disposition, state. |
 | `recall` | Engagement, support kind, count/window, state/outcome. |
 | `substitution` / `supply_composition` | Original/actual parties, consent, stages/engagements/title chain/payout gate. |
-| `rights_election` / `rights_execution` | Quote/engagement, master/composition posture/facts/triggers, Shard 10 instrument IDs/state. |
+| `rights_election` / `rights_execution` | Quote/engagement, master/composition posture/facts/triggers, Shard 10 instrument IDs/state. `rights_election` carries `master_posture`, `composition_posture`, their per-member parameter sets, `posture_determining_facts` and `deferred_effect: {trigger_condition, vesting_term} \| null`; elections are tier-scoped. |
 | `performance_declaration` / `source_warranty` | Delivery/version, author, human/AI/source state, evidence, supersession. |
 | `custody_handoff` / `condition_record` | Item/custodian/from/to, mutual condition/media/time/value/estimate scope. |
 | `inspection_report` / `damage_claim` | Template/result/conflict/payment and custody evidence/case link. |
@@ -161,6 +166,8 @@ Shard 14 owns craft-service listings, exact quotes, requirements-gated engagemen
 ### Typed Field and Cardinality Registry
 
 Field typing is deterministic: `*_id: uuid`, `*_at: timestamptz`, `*_date: date`, `*_minor: bigint`, `*_count: integer`, `currency: char(3)`, `is_*|has_*: boolean`, `state|status|type|kind|class: closed enum`, `version: bigint`, ratios `numeric(9,6)`, checksums `text`, and URLs `text`. Every named contract field uses this registry unless its contract declares a stricter type.
+
+These named fields are additionally `closed enum` even though their names do not match the `state|status|type|kind|class` suffix rule: `master_posture`, `composition_posture`, `exclusivity`, `territory_kind`, `administration`, `points_asset`.
 
 - **`service_listing`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Seller party, primary craft, facets, tiers/add-ons, mode/SLA/capacity, rights postures, state/version..
 - **`listing_version`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Seller party, primary craft, facets, tiers/add-ons, mode/SLA/capacity, rights postures, state/version..
@@ -259,6 +266,9 @@ Events exclude quote free text, private rates/benchmarks, files, media, NDA term
 | Custody item damaged | Preserve mutual condition chain; fee escrow never represented as item coverage. |
 | Seller cancels | Refund/cover/reputation facts; no reverse kill-fee obligation. |
 | Points-only exit | Rights disposition only; no manufactured cash settlement. |
+| Seller and buyer are the same human | Election allowed; execution writes no self-referential grant. |
+| Co-owner shares across sellers exceed the buyer's holding | Blocked at execution against Shard 10's aggregate for the recording; never a false green at election time. |
+| Listing posture edited while a quote is outstanding | The issued quote is untouched; no mutation upstream of an issued quote may alter that quote's posture. |
 
 ## Surface Applicability
 
@@ -308,6 +318,7 @@ Responsive web/PWA only. Large files use resumable protected uploads/streams. Ph
 |---|---|---|---|
 | 2026-08-02 | Initial skeleton and source-feature seeding | /decompose-architecture-structure | All |
 | 2026-08-03 | Reconciled 46 sources; locked listing, quote, engagement, delivery, supply, rights and custody contracts | /write-architecture-spec | All |
+| 2026-08-05 | A-13 — stated the closed four-member `MasterPosture` and `CompositionPosture` vocabularies, added `ElectRightsPosture` per-member required parameters, `PostureDeterminingFacts` and `ExecuteRightsPosture`'s Shard 10 mapping; scoped elections per tier | /resolve-ambiguity | Contracts, Data Models, Edge Cases |
 
 ## Dependency References
 

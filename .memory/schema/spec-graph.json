@@ -1,7 +1,7 @@
 {
-  "builtAt": "2026-08-05T06:54:32.848Z",
-  "nodeCount": 1481,
-  "edgeCount": 9862,
+  "builtAt": "2026-08-05T07:28:28.888Z",
+  "nodeCount": 1480,
+  "edgeCount": 9857,
   "nodes": [
     {
       "id": "plan:2026-08-02-architecture-design",
@@ -246,13 +246,6 @@
       "type": "audit",
       "label": "IA Ambiguity Audit — Fresh Run (2026-08-05)",
       "path": ".memory/wiki/specs/audits/2026-08-05-ia-ambiguity-report.md",
-      "shardId": "2026"
-    },
-    {
-      "id": "audit:audits/2026-08-05-ia-remediation-worklist",
-      "type": "audit",
-      "label": "IA Remediation Worklist — 2026-08-05",
-      "path": ".memory/wiki/specs/audits/2026-08-05-ia-remediation-worklist.md",
       "shardId": "2026"
     },
     {
@@ -9727,13 +9720,6 @@
       "shardId": null
     },
     {
-      "id": "decision:d-09",
-      "type": "decision",
-      "label": "D-09",
-      "path": ".memory/wiki/decisions.md#d-09",
-      "shardId": null
-    },
-    {
       "id": "decision:d-05",
       "type": "decision",
       "label": "D-05",
@@ -9755,13 +9741,6 @@
       "shardId": null
     },
     {
-      "id": "decision:d-13",
-      "type": "decision",
-      "label": "D-13",
-      "path": ".memory/wiki/decisions.md#d-13",
-      "shardId": null
-    },
-    {
       "id": "decision:d-entry",
       "type": "decision",
       "label": "D-entry",
@@ -9769,10 +9748,24 @@
       "shardId": null
     },
     {
+      "id": "decision:d-09",
+      "type": "decision",
+      "label": "D-09",
+      "path": ".memory/wiki/decisions.md#d-09",
+      "shardId": null
+    },
+    {
       "id": "decision:d-18",
       "type": "decision",
       "label": "D-18",
       "path": ".memory/wiki/decisions.md#d-18",
+      "shardId": null
+    },
+    {
+      "id": "decision:d-13",
+      "type": "decision",
+      "label": "D-13",
+      "path": ".memory/wiki/decisions.md#d-13",
       "shardId": null
     },
     {
@@ -10585,222 +10578,6 @@
     {
       "from": "audit:audits/2026-08-05-ia-ambiguity-report",
       "to": "ia-spec:ia/35-ticket-products-sales",
-      "type": "references",
-      "source": "wikilink"
-    },
-    {
-      "from": "audit:audits/2026-08-05-ia-remediation-worklist",
-      "to": "decision:d-01",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/2026-08-05-ia-remediation-worklist",
-      "to": "decision:d-09",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/2026-08-05-ia-remediation-worklist",
-      "to": "decision:d-05",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/2026-08-05-ia-remediation-worklist",
-      "to": "decision:d-08",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/2026-08-05-ia-remediation-worklist",
-      "to": "decision:d-06",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/2026-08-05-ia-remediation-worklist",
-      "to": "decision:d-02",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/2026-08-05-ia-remediation-worklist",
-      "to": "decision:d-03",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/2026-08-05-ia-remediation-worklist",
-      "to": "decision:d-04",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/2026-08-05-ia-remediation-worklist",
-      "to": "decision:d-07",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/2026-08-05-ia-remediation-worklist",
-      "to": "decision:d-14",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/2026-08-05-ia-remediation-worklist",
-      "to": "decision:d-15",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/2026-08-05-ia-remediation-worklist",
-      "to": "decision:d-12",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/2026-08-05-ia-remediation-worklist",
-      "to": "decision:d-11",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/2026-08-05-ia-remediation-worklist",
-      "to": "decision:d-10",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/2026-08-05-ia-remediation-worklist",
-      "to": "decision:d-13",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/2026-08-05-ia-remediation-worklist",
-      "to": "ia-spec:ia/00-infrastructure",
-      "type": "references",
-      "source": "wikilink"
-    },
-    {
-      "from": "audit:audits/2026-08-05-ia-remediation-worklist",
-      "to": "ia-spec:ia/01-identity-authority",
-      "type": "references",
-      "source": "wikilink"
-    },
-    {
-      "from": "audit:audits/2026-08-05-ia-remediation-worklist",
-      "to": "ia-spec:ia/06-trust-safety",
-      "type": "references",
-      "source": "wikilink"
-    },
-    {
-      "from": "audit:audits/2026-08-05-ia-remediation-worklist",
-      "to": "ia-spec:ia/11-community-graph",
-      "type": "references",
-      "source": "wikilink"
-    },
-    {
-      "from": "audit:audits/2026-08-05-ia-remediation-worklist",
-      "to": "ia-spec:ia/29-venues-spaces",
-      "type": "references",
-      "source": "wikilink"
-    },
-    {
-      "from": "audit:audits/2026-08-05-ia-remediation-worklist",
-      "to": "ia-spec:ia/35-ticket-products-sales",
-      "type": "references",
-      "source": "wikilink"
-    },
-    {
-      "from": "audit:audits/2026-08-05-ia-remediation-worklist",
-      "to": "ia-spec:ia/17-realtime-sessions",
-      "type": "references",
-      "source": "wikilink"
-    },
-    {
-      "from": "audit:audits/2026-08-05-ia-remediation-worklist",
-      "to": "ia-spec:ia/32-show-production-planning",
-      "type": "references",
-      "source": "wikilink"
-    },
-    {
-      "from": "audit:audits/2026-08-05-ia-remediation-worklist",
-      "to": "ia-spec:ia/18-royalty-accounting",
-      "type": "references",
-      "source": "wikilink"
-    },
-    {
-      "from": "audit:audits/2026-08-05-ia-remediation-worklist",
-      "to": "ia-spec:ia/14-services-marketplace",
-      "type": "references",
-      "source": "wikilink"
-    },
-    {
-      "from": "audit:audits/2026-08-05-ia-remediation-worklist",
-      "to": "ia-spec:ia/22-release-distribution",
-      "type": "references",
-      "source": "wikilink"
-    },
-    {
-      "from": "audit:audits/2026-08-05-ia-remediation-worklist",
-      "to": "ia-spec:ia/37-fanbase-direct-to-fan",
-      "type": "references",
-      "source": "wikilink"
-    },
-    {
-      "from": "audit:audits/2026-08-05-ia-remediation-worklist",
-      "to": "ia-spec:ia/38-promotion-marketing",
-      "type": "references",
-      "source": "wikilink"
-    },
-    {
-      "from": "audit:audits/2026-08-05-ia-remediation-worklist",
-      "to": "ia-spec:ia/36-box-office-risk",
-      "type": "references",
-      "source": "wikilink"
-    },
-    {
-      "from": "audit:audits/2026-08-05-ia-remediation-worklist",
-      "to": "ia-spec:ia/39-analytics-ingestion-reporting",
-      "type": "references",
-      "source": "wikilink"
-    },
-    {
-      "from": "audit:audits/2026-08-05-ia-remediation-worklist",
-      "to": "ia-spec:ia/41-career-finance",
-      "type": "references",
-      "source": "wikilink"
-    },
-    {
-      "from": "audit:audits/2026-08-05-ia-remediation-worklist",
-      "to": "ia-spec:ia/26-gear-commerce-fulfilment",
-      "type": "references",
-      "source": "wikilink"
-    },
-    {
-      "from": "audit:audits/2026-08-05-ia-remediation-worklist",
-      "to": "ia-spec:ia/28-digital-licensing-commerce",
-      "type": "references",
-      "source": "wikilink"
-    },
-    {
-      "from": "audit:audits/2026-08-05-ia-remediation-worklist",
-      "to": "ia-spec:ia/31-live-settlement-intelligence",
-      "type": "references",
-      "source": "wikilink"
-    },
-    {
-      "from": "audit:audits/2026-08-05-ia-remediation-worklist",
-      "to": "ia-spec:ia/19-royalty-reporting-forecasting",
-      "type": "references",
-      "source": "wikilink"
-    },
-    {
-      "from": "audit:audits/2026-08-05-ia-remediation-worklist",
-      "to": "ia-spec:ia/07-credits-core",
       "type": "references",
       "source": "wikilink"
     },
@@ -12912,6 +12689,12 @@
     },
     {
       "from": "ia-spec:ia/02-profiles-verification",
+      "to": "ia-spec:ia/06-trust-safety",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "ia-spec:ia/02-profiles-verification",
       "to": "ia-spec:ia/15-education-delivery",
       "type": "references",
       "source": "wikilink"
@@ -13038,13 +12821,55 @@
     },
     {
       "from": "ia-spec:ia/06-trust-safety",
+      "to": "ia-spec:ia/00-infrastructure",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "ia-spec:ia/06-trust-safety",
+      "to": "ia-spec:ia/01-identity-authority",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "ia-spec:ia/06-trust-safety",
+      "to": "ia-spec:ia/05-platform-configuration-admin",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "ia-spec:ia/06-trust-safety",
       "to": "ia-spec:ia/11-community-graph",
       "type": "references",
       "source": "wikilink"
     },
     {
       "from": "ia-spec:ia/06-trust-safety",
+      "to": "ia-spec:ia/12-community-spaces-events",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "ia-spec:ia/06-trust-safety",
+      "to": "ia-spec:ia/13-opportunities-casting",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "ia-spec:ia/06-trust-safety",
       "to": "ia-spec:ia/14-services-marketplace",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "ia-spec:ia/06-trust-safety",
+      "to": "ia-spec:ia/15-education-delivery",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "ia-spec:ia/06-trust-safety",
+      "to": "ia-spec:ia/16-education-credentials-institutions",
       "type": "references",
       "source": "wikilink"
     },
@@ -13074,13 +12899,49 @@
     },
     {
       "from": "ia-spec:ia/06-trust-safety",
+      "to": "ia-spec:ia/29-venues-spaces",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "ia-spec:ia/06-trust-safety",
       "to": "ia-spec:ia/30-booking-contracts",
       "type": "references",
       "source": "wikilink"
     },
     {
       "from": "ia-spec:ia/06-trust-safety",
+      "to": "ia-spec:ia/31-live-settlement-intelligence",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "ia-spec:ia/06-trust-safety",
+      "to": "ia-spec:ia/33-show-day-operations",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "ia-spec:ia/06-trust-safety",
+      "to": "ia-spec:ia/35-ticket-products-sales",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "ia-spec:ia/06-trust-safety",
       "to": "ia-spec:ia/36-box-office-risk",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "ia-spec:ia/06-trust-safety",
+      "to": "ia-spec:ia/37-fanbase-direct-to-fan",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "ia-spec:ia/06-trust-safety",
+      "to": "ia-spec:ia/40-market-intelligence-signals",
       "type": "references",
       "source": "wikilink"
     },
@@ -13105,6 +12966,12 @@
     {
       "from": "ia-spec:ia/07-credits-core",
       "to": "ia-spec:ia/18-royalty-accounting",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "ia-spec:ia/07-credits-core",
+      "to": "ia-spec:ia/19-royalty-reporting-forecasting",
       "type": "references",
       "source": "wikilink"
     },
@@ -13164,6 +13031,12 @@
     },
     {
       "from": "ia-spec:ia/09-projects-collaboration",
+      "to": "decision:d-06",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ia-spec:ia/09-projects-collaboration",
       "to": "ia-spec:ia/10-rights-ownership",
       "type": "references",
       "source": "wikilink"
@@ -13176,6 +13049,12 @@
     },
     {
       "from": "ia-spec:ia/09-projects-collaboration",
+      "to": "ia-spec:ia/17-realtime-sessions",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "ia-spec:ia/09-projects-collaboration",
       "to": "ia-spec:ia/19-royalty-reporting-forecasting",
       "type": "references",
       "source": "wikilink"
@@ -13183,6 +13062,12 @@
     {
       "from": "ia-spec:ia/09-projects-collaboration",
       "to": "ia-spec:ia/22-release-distribution",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "ia-spec:ia/09-projects-collaboration",
+      "to": "ia-spec:ia/32-show-production-planning",
       "type": "references",
       "source": "wikilink"
     },
@@ -13404,6 +13289,12 @@
     },
     {
       "from": "ia-spec:ia/18-royalty-accounting",
+      "to": "decision:d-02",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ia-spec:ia/18-royalty-accounting",
       "to": "ia-spec:ia/00-infrastructure",
       "type": "references",
       "source": "wikilink"
@@ -13422,13 +13313,25 @@
     },
     {
       "from": "ia-spec:ia/18-royalty-accounting",
+      "to": "ia-spec:ia/06-trust-safety",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "ia-spec:ia/18-royalty-accounting",
+      "to": "ia-spec:ia/07-credits-core",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "ia-spec:ia/18-royalty-accounting",
       "to": "ia-spec:ia/10-rights-ownership",
       "type": "references",
       "source": "wikilink"
     },
     {
       "from": "ia-spec:ia/18-royalty-accounting",
-      "to": "ia-spec:ia/06-trust-safety",
+      "to": "ia-spec:ia/22-release-distribution",
       "type": "references",
       "source": "wikilink"
     },
@@ -13596,6 +13499,12 @@
     },
     {
       "from": "ia-spec:ia/22-release-distribution",
+      "to": "ia-spec:ia/18-royalty-accounting",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "ia-spec:ia/22-release-distribution",
       "to": "ia-spec:ia/deep-dives/22-release-distribution",
       "type": "references",
       "source": "wikilink"
@@ -13716,6 +13625,12 @@
     },
     {
       "from": "ia-spec:ia/28-digital-licensing-commerce",
+      "to": "decision:d-03",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ia-spec:ia/28-digital-licensing-commerce",
       "to": "ia-spec:ia/27-digital-catalog-delivery",
       "type": "references",
       "source": "wikilink"
@@ -13723,6 +13638,12 @@
     {
       "from": "ia-spec:ia/28-digital-licensing-commerce",
       "to": "ia-spec:ia/10-rights-ownership",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "ia-spec:ia/28-digital-licensing-commerce",
+      "to": "ia-spec:ia/18-royalty-accounting",
       "type": "references",
       "source": "wikilink"
     },
@@ -13783,6 +13704,24 @@
     {
       "from": "ia-spec:ia/30-booking-contracts",
       "to": "ia-spec:ia/00-infrastructure",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "ia-spec:ia/30-booking-contracts",
+      "to": "ia-spec:ia/31-live-settlement-intelligence",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "ia-spec:ia/30-booking-contracts",
+      "to": "ia-spec:ia/32-show-production-planning",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "ia-spec:ia/30-booking-contracts",
+      "to": "ia-spec:ia/35-ticket-products-sales",
       "type": "references",
       "source": "wikilink"
     },
@@ -13925,6 +13864,24 @@
       "source": "wikilink"
     },
     {
+      "from": "ia-spec:ia/35-ticket-products-sales",
+      "to": "ia-spec:ia/37-fanbase-direct-to-fan",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "ia-spec:ia/35-ticket-products-sales",
+      "to": "ia-spec:ia/38-promotion-marketing",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "ia-spec:ia/35-ticket-products-sales",
+      "to": "ia-spec:ia/39-analytics-ingestion-reporting",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
       "from": "ia-spec:ia/36-box-office-risk",
       "to": "ia-spec:ia/35-ticket-products-sales",
       "type": "references",
@@ -13947,6 +13904,12 @@
       "to": "ia-spec:ia/06-trust-safety",
       "type": "references",
       "source": "wikilink"
+    },
+    {
+      "from": "ia-spec:ia/37-fanbase-direct-to-fan",
+      "to": "decision:d-11",
+      "type": "constrained_by",
+      "source": "decision-ref"
     },
     {
       "from": "ia-spec:ia/37-fanbase-direct-to-fan",
@@ -69549,14 +69512,14 @@
     "byNodeType": {
       "plan": 12,
       "architecture": 17,
-      "audit": 78,
+      "audit": 77,
       "ia-spec": 85,
       "ideation": 1186,
       "decision": 103
     },
     "byEdgeType": {
-      "constrained_by": 9338,
-      "references": 521,
+      "constrained_by": 9327,
+      "references": 527,
       "split_from": 3
     }
   }

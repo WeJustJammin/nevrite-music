@@ -20,7 +20,7 @@ Shard 09 is the private working record for songs, releases, project membership, 
 | Added or removed feature boundaries | 0 |
 | V1 bridge boundary | No local agent, watch folder, DAW parser, take ingest, environment manifest or moment-of-use prompt |
 | V1 substitute | Manual upload, inferred/asked lineage, PWA push/in-app close prompt, roster/session prefill, labelled zip archives |
-| Proposed “won’t” capabilities | Format-specific master logic and Atmos product surface collapse to purpose-labelled/parallel lineage data |
+| Proposed “won’t” capabilities | Format-specific master logic and Atmos product surface collapse to purpose-labelled/parallel lineage data; public remix stem programs (`07.08.05`, MoSCoW WON'T) are out of scope — 07 retains only the stem set (07.04.04) and the source-declaration clearance gate (07.08.04) |
 | Split handling | Parent IA plus one approved high-complexity deep dive |
 
 ## Features
@@ -32,7 +32,7 @@ Shard 09 is the private working record for songs, releases, project membership, 
 - **07.05 Review, Feedback & Approval** — timestamp/range comments, safe share links, Producer triage, version-pinned approvals and advisory revision counting.
 - **07.06 Sessions, Documentation & Recall** — first-class sessions, close/capture arbitration, labelled archives and combined track/channel/recall sheets.
 - **07.07 Mix & Master Workflow** — reference briefs, variant matrix, objective loudness reporting and purpose-labelled/parallel deliverables.
-- **07.08 Delivery, Readiness & QC** — pinned recipient packages, narrow objective QC, target-specific debt ledger, source declarations and gated remix stems.
+- **07.08 Delivery, Readiness & QC** — pinned recipient packages, narrow objective QC, target-specific debt ledger and source declarations.
 - **07.09 DAW Bridge & Capture-at-Source** — future watch-folder/parser/local capture surfaces behind explicit evidence gate; no non-web client in v1.
 
 ### Delivery Phases
@@ -41,7 +41,7 @@ Shard 09 is the private working record for songs, releases, project membership, 
 |---|---|
 | Consumer launch | Song/release board, creative docs, roster/access/vault, manual version upload/canonical slots, review/share/approval, sessions/close prompt, manual package/QC/readiness |
 | Later activation | Local watch-folder agent, supported DAW parsing, take/comp ingest, environment manifests, missing-media resolution and moment-of-use declarations |
-| Explicitly excluded | Audio-hosted commercial references, arbitrary project stages, per-asset hand grants, silent auto-canonical, claimed leak prevention, DAW plugin before agent evidence, automated rights/split inference |
+| Explicitly excluded | Audio-hosted commercial references, arbitrary project stages, per-asset hand grants, silent auto-canonical, claimed leak prevention, DAW plugin before agent evidence, automated rights/split inference, public remix stem programs and any Fan/anonymous vault audience |
 
 ## Acceptance Criteria
 
@@ -65,6 +65,9 @@ Shard 09 is the private working record for songs, releases, project membership, 
 - **AC-PRJ-18 — Run QC/readiness:** Given a valid request with current identity, authority, source state and required inputs, when the actor invokes this flow, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) Target-specific objective checks and actionable debt derive on demand; unverifiable is distinct from passed, and (6) return Live readiness projection or pinned package result; if the flow cannot complete, invalid input, stale authority, revision conflict or dependency failure returns a typed refusal and no contradictory canonical mutation.
 - **AC-PRJ-19 — Declare source use:** Given a valid request with current identity, authority, source state and required inputs, when the actor invokes this flow, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) Authorized contributor appends sample/interpolation/AI source fact to asset/section; unknown/not-reviewed/none remain distinct, and (6) return Declaration version and downstream clearance reference emitted; if the flow cannot complete, invalid input, stale authority, revision conflict or dependency failure returns a typed refusal and no contradictory canonical mutation.
 - **AC-PRJ-20 — Activate DAW bridge:** Given a valid request with current identity, authority, source state and required inputs, when the actor invokes this flow, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) Owner may enable only after architecture evidence gate, supported-agent version and least-read-scope proof; unavailable in v1, and (6) return Signed device grant/agent state or gated denial; if the flow cannot complete, invalid input, stale authority, revision conflict or dependency failure returns a typed refusal and no contradictory canonical mutation.
+- **AC-PRJ-21 — Open/close revision round:** Given a valid request with current identity, authority, source state and required inputs, when the actor invokes this flow, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) Producer opens a round against an accepted triage batch and closes it on delivery of a new immutable version; the count informs and never blocks or bills; a batching window accumulates drip-fed feedback into one round, and (6) return Round version, contents manifest and both-party-visible count commit; if the flow cannot complete, invalid input, stale authority, revision conflict or dependency failure returns a typed refusal and no contradictory canonical mutation.
+- **AC-PRJ-22 — Maintain mix brief:** Given a valid request with current identity, authority, source state and required inputs, when the actor invokes this flow, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) Author adds reference pointers with timestamped annotations and optional prose; a reference-only brief is complete; contradictory references are surfaced, never adjudicated, and (6) return Living brief version and annotation commit; no stage gate; if the flow cannot complete, invalid input, stale authority, revision conflict or dependency failure returns a typed refusal and no contradictory canonical mutation.
+- **AC-PRJ-23 — Author recall sheet:** Given a valid request with current identity, authority, source state and required inputs, when the actor invokes this flow, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) One combined track sheet, channel map and recall sheet document carries a derived half and an analogue half; a photograph of the paper sheet is a first-class input; completion is primarily by templating from a prior session; authoring is never prompted and never rides along with the close/capture prompt, and (6) return Sheet version with attributed edits, inheriting the session's sensitivity; if the flow cannot complete, invalid input, stale authority, revision conflict or dependency failure returns a typed refusal and no contradictory canonical mutation.
 
 ## Interactions
 
@@ -90,6 +93,9 @@ Shard 09 is the private working record for songs, releases, project membership, 
 | PRJ-18 | Run QC/readiness | Target-specific objective checks and actionable debt derive on demand; unverifiable is distinct from passed. | Live readiness projection or pinned package result. |
 | PRJ-19 | Declare source use | Authorized contributor appends sample/interpolation/AI source fact to asset/section; unknown/not-reviewed/none remain distinct. | Declaration version and downstream clearance reference emitted. |
 | PRJ-20 | Activate DAW bridge | Owner may enable only after architecture evidence gate, supported-agent version and least-read-scope proof; unavailable in v1. | Signed device grant/agent state or gated denial. |
+| PRJ-21 | Open/close revision round | Producer opens a round against an accepted triage batch and closes it on delivery of a new immutable version; the count informs and never blocks or bills; a batching window accumulates drip-fed feedback into one round. | Round version, contents manifest and both-party-visible count commit. |
+| PRJ-22 | Maintain mix brief | Author adds reference pointers with timestamped annotations and optional prose; a reference-only brief is complete; contradictory references are surfaced, never adjudicated. | Living brief version and annotation commit; no stage gate. |
+| PRJ-23 | Author recall sheet | One combined track sheet, channel map and recall sheet document carries a derived half and an analogue half; a photograph of the paper sheet is a first-class input; completion is primarily by templating from a prior session; authoring is never prompted and never rides along with the close/capture prompt. | Sheet version with attributed edits, inheriting the session's sensitivity. |
 
 ### Global Interaction Rules
 
@@ -106,14 +112,16 @@ Shard 09 is the private working record for songs, releases, project membership, 
 
 | Contract | Definition |
 |---|---|
-| `SongLifecycle` | `active | shelved | archived | unadministered` |
+| `SongLifecycle` | `active \| shelved \| archived \| unadministered` |
 | `ProductionStage` | Fixed versioned set from idea through delivered; no arbitrary admin/user stages |
-| `SensitivityClass` | `roster | review | stems | takes | restricted` with approved role-profile version |
-| `VersionResidency` | `hot | cold | tombstoned`; record always retained |
-| `LineageCharacter` | `same_recording | new_recording` |
-| `SessionGrade` | `captured | confirmed | reconstructed` |
-| `ReadinessGap` | `blocking_integrity | warning | opaque_dependency | unverifiable` |
-| `StandardError` | `VALIDATION_FAILED, FORBIDDEN, ACTING_CONTEXT_STALE, VERSION_CONFLICT, IDEMPOTENCY_MISMATCH, ROLE_UNRESOLVED, NDA_REQUIRED, ACCESS_REVOKED, ASSET_NOT_FOUND, UPLOAD_UNSETTLED, INTEGRITY_FAILED, CANONICAL_UNSET, SOURCE_STALE, BRIDGE_DISABLED` |
+| `SensitivityClass` | `roster \| review \| stems \| takes \| restricted`. The enforced class for a roster role is the `vault_role_class` attribute carried by that role's Shard 07 `role_version` (DEC-099); values are drawn from this enum. |
+| `VersionResidency` | `hot \| cold \| tombstoned`; record always retained |
+| `LineageCharacter` | `same_recording \| new_recording` |
+| `SessionGrade` | `captured \| confirmed \| reconstructed` |
+| `ReadinessGap` | `blocking_integrity \| warning \| opaque_dependency \| unverifiable` |
+| `RoundState` | `disabled \| configured \| open \| closed \| exhausted \| out_of_scope \| error`. `disabled` is the default where no revision agreement exists (non-commercial work); `error` covers an unreadable count and renders with retry, never as a zero count. |
+| `ScopeVerdict` | `in_scope \| out_of_scope`; producer-authored with a reason, never platform-computed |
+| `StandardError` | `VALIDATION_FAILED, FORBIDDEN, ACTING_CONTEXT_STALE, VERSION_CONFLICT, IDEMPOTENCY_MISMATCH, ROLE_UNRESOLVED, ROLE_CLASS_UNASSIGNED, NDA_REQUIRED, ACCESS_REVOKED, ASSET_NOT_FOUND, UPLOAD_UNSETTLED, INTEGRITY_FAILED, CANONICAL_UNSET, SOURCE_STALE, BRIDGE_DISABLED` |
 
 ### Containers, Roster and Access
 
@@ -123,7 +131,8 @@ Shard 09 is the private working record for songs, releases, project membership, 
 | `ChangeRoster` | Per-song append-only event. Role is Shard 07 taxonomy; unresolved role commits literal/claim but derived access fails closed. |
 | `EndInvolvement` | Revokes derived access immediately while attribution persists. Retract claim is separate Shard 07/06 path. |
 | `IssueInvitation` | T0 previews inviter/role only; T1 may stream non-confidential pinned rough; T2 requires identity and NDA before grants. |
-| `ResolveVaultAccess` | Union of current roster roles intersected with asset sensitivity, block state, NDA and role-profile version; no hand grants. |
+| `ResolveVaultAccess` | Union of current roster roles intersected with asset sensitivity, block state, NDA and role-profile version; no hand grants. Per DEC-099 the role side of that intersection is the `vault_role_class` attribute assigned per `role_version` in the Shard 07 taxonomy, valued from `SensitivityClass`; the union takes the highest class held by any live role. A `role_version` carrying no `vault_role_class` — including every `pending_role_alias` — floors to `review` and returns `ROLE_CLASS_UNASSIGNED` with an explained denial for anything above it. Never per-asset ACLs, project-wide grants or an owner-configured-only access model. |
+| `RoleAccessProfileVersion` | Versioned candidate role-to-`SensitivityClass` grant matrix. `profile_version: 0` carries the six ideation candidate rows (song owner, producer/project runner, songwriter, session player, mix engineer, mastering engineer) and is explicitly a non-enforceable draft — evidence, never a contract. No profile version is enforceable until practitioner validation approves one (DEC-016); enforcement reads `vault_role_class` only. |
 | `RevokeAccess` | Invalidates active URLs/tokens and future streams immediately; bytes already downloaded cannot be reclaimed or represented as protected. |
 
 ### Versions, Review and Sessions
@@ -137,6 +146,9 @@ Shard 09 is the private working record for songs, releases, project membership, 
 | `CreateShareLink` | Pins version; recipient-specific identity/watermark/analytics/expiry policy. Roster identity supersedes link identity. |
 | `RecordApproval` | Exact version, approver set, proxy strength and open-comment hash; append-only. |
 | `CloseSession` | Close transaction precedes outbox asks; reopen rules never recall dispatched asks. Attendance remains independent from contribution. |
+| `RevisionRound` | Producer-writable, contributor-readable. Off unless a revision agreement exists. Round contents are always visible to both parties. Exhaustion is visible, never blocking. Scope classification (revision vs new request) is producer-authored with a reason and is disputable via Shard 06; the platform never classifies. |
+| `MixBrief` | Living document, never a contract and never stage-gated. Commercial references are stored as external timestamped links only — the platform never hosts or streams third-party playback. In-platform unreleased references by the same party play natively. Reference loudness/tonal targets carry forward to the mastering flow automatically. |
+| `RecallSheet` | One combined track sheet, channel map and recall sheet document with a derived half and an analogue half; both halves ship and the analogue half carries the design effort. A photograph of the paper sheet is a first-class, unstructured input. Templating from a prior session is the primary completion mechanism. Never prompted and never bundled with the close/capture prompt — authored any time before the paper is lost, never at close. Sheet inherits the session's sensitivity. Structured row schema and the Operator projection are OPEN — see `§ Blocked on Upstream Decisions`. |
 
 ### Delivery, QC and Bridge
 
@@ -145,7 +157,7 @@ Shard 09 is the private working record for songs, releases, project membership, 
 | `BuildPackage` | Recipient-spec version plus resolved canonical IDs become immutable pins. Oversending prohibited. Integrity failure blocks; all other gaps warn. |
 | `EvaluateAudioQC` | Narrow objective checks only; true peak/loudness/plausibility may warn, integrity may block; dismissal sticky per project/check version. |
 | `EvaluateReadiness` | Target-selected live weighted gap list; no global score or nagging; inaccessible dependency shown opaque. |
-| `RecordSourceDeclaration` | Asset/section-scoped append-only fact with author and state `none | unknown | declared | not_reviewed`; removal returns to not-reviewed. |
+| `RecordSourceDeclaration` | Asset/section-scoped append-only fact with author and state `none \| unknown \| declared \| not_reviewed`; removal returns to not-reviewed. |
 | `ActivateBridge` | Requires approved local-agent evidence, signed version, least-readable path proof and revocable device grant. No v1 implementation. |
 
 ## Data Models
@@ -161,14 +173,17 @@ Shard 09 is the private working record for songs, releases, project membership, 
 | `contributor_invitation` | Entries, disclosure tier, recipient binding, typed response, delegate/delegator, expiry/contact suppression. |
 | `asset` / `asset_blob` | Song/version linkage, sensitivity, media metadata; immutable blob hash and residency. |
 | `nda_acceptance` / `access_grant` | Identity/terms/version/time plus derived short-lived grant/revocation. |
+| `role_access_profile_version` | Versioned candidate role-to-`SensitivityClass` matrix; `profile_version: 0` holds the six ideation candidate rows as non-enforceable draft. Referenced by `roster_event.access_profile_version`; never the enforcement source. |
 | `audio_version` / `lineage_edge` | Song sequence, author, producer label, type suggestion, checksums, metadata, parent/character. |
 | `canonical_slot` / `canonical_movement` | Stage/variant/format pointer, reservation/proxy state and immutable movement log. |
 | `review_comment` / `comment_anchor` / `triage_record` | Version/audience/body history, temporal/musical anchor, carry/reopen/triage state. |
 | `share_link` / `share_access_event` | Pinned version, recipient/public mode, watermark, expiry/cap, analytics consent and anomaly state. |
 | `approval_gate` / `approval_record` | Configured approvers and version/open-comment snapshot/proxy evidence. |
+| `revision_agreement` / `revision_round` | Song, optional `engagement_ref` (nullable pointer only, never a second writer), included round count, batching window and state; round carries sequence, open/close times, delivered version, contents manifest and `RoundState`. |
+| `mix_brief` / `brief_reference` | Song-scoped living brief and its reference pointers: kind `external_link` or `platform_version`, external URI or source version ID, optional timestamp, annotation and version. |
 | `session` / `attendance_assertion` | Owner, source links, grade, sensitivity, active/closed/reopen times and set-valued attendance. |
 | `capture_moment` / `capture_ask` | Close/batch key, tier budget, payload owner, dispatch/answer/debt state. |
-| `environment_archive` / `recall_sheet_version` | Labelled asset archive/manifest availability and filtered track/channel/room data. |
+| `environment_archive` / `recall_sheet_version` | Labelled asset archive/manifest availability; one combined recall sheet version per session carrying a derived half, an analogue half and a first-class paper photograph, with attributed edits and inherited session sensitivity. Structured row schema is OPEN — see `§ Blocked on Upstream Decisions`. |
 | `recipient_spec_version` / `handoff_package` | Owned spec, canonical pins, exact manifest, validation and artifact checksum. |
 | `qc_result` / `readiness_projection` | Check/spec/source versions, outcome/dismissal and target-specific gap manifest. |
 | `source_declaration` | Asset/section, declaration kind/state/details, author, supersession and clearance reference. |
@@ -197,6 +212,7 @@ Field typing is deterministic: `*_id: uuid`, `*_at: timestamptz`, `*_date: date`
 - **`asset_blob`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Song/version linkage, sensitivity, media metadata; immutable blob hash and residency..
 - **`nda_acceptance`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Identity/terms/version/time plus derived short-lived grant/revocation..
 - **`access_grant`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Identity/terms/version/time plus derived short-lived grant/revocation..
+- **`role_access_profile_version`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Versioned candidate role-to-`SensitivityClass` matrix; `profile_version: 0` holds the six ideation candidate rows as non-enforceable draft. Referenced by `roster_event.access_profile_version`; never the enforcement source..
 - **`audio_version`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Song sequence, author, producer label, type suggestion, checksums, metadata, parent/character..
 - **`lineage_edge`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Song sequence, author, producer label, type suggestion, checksums, metadata, parent/character..
 - **`canonical_slot`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Stage/variant/format pointer, reservation/proxy state and immutable movement log..
@@ -208,12 +224,16 @@ Field typing is deterministic: `*_id: uuid`, `*_at: timestamptz`, `*_date: date`
 - **`share_access_event`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Pinned version, recipient/public mode, watermark, expiry/cap, analytics consent and anomaly state..
 - **`approval_gate`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Configured approvers and version/open-comment snapshot/proxy evidence..
 - **`approval_record`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Configured approvers and version/open-comment snapshot/proxy evidence..
+- **`revision_agreement`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Song, optional `engagement_ref` (nullable pointer only, never a second writer), included round count, batching window and state..
+- **`revision_round`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Sequence, open/close times, delivered version, contents manifest and `RoundState`..
+- **`mix_brief`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Song-scoped living brief; never a contract and never stage-gated..
+- **`brief_reference`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Kind `external_link` or `platform_version`, external URI or source version ID, optional timestamp, annotation and version..
 - **`session`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Owner, source links, grade, sensitivity, active/closed/reopen times and set-valued attendance..
 - **`attendance_assertion`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Owner, source links, grade, sensitivity, active/closed/reopen times and set-valued attendance..
 - **`capture_moment`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Close/batch key, tier budget, payload owner, dispatch/answer/debt state..
 - **`capture_ask`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Close/batch key, tier budget, payload owner, dispatch/answer/debt state..
 - **`environment_archive`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Labelled asset archive/manifest availability and filtered track/channel/room data..
-- **`recall_sheet_version`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Labelled asset archive/manifest availability and filtered track/channel/room data..
+- **`recall_sheet_version`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: One combined recall sheet version per session carrying a derived half, an analogue half and a first-class paper photograph, with attributed edits and inherited session sensitivity; structured row schema is OPEN..
 - **`recipient_spec_version`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Owned spec, canonical pins, exact manifest, validation and artifact checksum..
 - **`handoff_package`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Owned spec, canonical pins, exact manifest, validation and artifact checksum..
 - **`qc_result`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Check/spec/source versions, outcome/dismissal and target-specific gap manifest..
@@ -296,6 +316,14 @@ Events exclude asset bytes, titles for confidential songs, comments, invite cont
 | Integrity check fails | Block package and name exact file/action; other QC warnings remain non-blocking. |
 | V1 source declaration lacks DAW prompt | Voluntary manual declaration only; not-reviewed remains honest default. |
 | Local agent requested in v1 | `BRIDGE_DISABLED` with evidence-gate explanation; no hidden desktop dependency. |
+| Roster role carries no `vault_role_class` | Access floors to `review` and returns `ROLE_CLASS_UNASSIGNED` with an explained denial above it; a `pending_role_alias` never reaches a higher class. |
+| Revision rounds exhausted | Exhaustion is visible to both parties and never blocks; no work is refused and nothing is billed. |
+| Small fix requested | No round opens; the count is advisory and a trivial correction never consumes one. |
+| Round count or scope disputed | Routes to Shard 06 with the round contents manifest as evidence; the platform never classifies scope itself. |
+| No revision agreement exists | The revision surface is hidden; rounds are off by default. |
+| Brief references contradict | Both are surfaced with their annotations; the platform never adjudicates between them. |
+| Brief revised mid-mix | Normal and expected; the brief is living and carries an attributed change history. |
+| Recall sheet exists only as a photograph | Valid and first-class; no structured extraction is performed or implied while the row schema is OPEN. |
 
 ## Surface Applicability
 
@@ -325,6 +353,19 @@ Responsive web/PWA only at launch. Manual uploads, streaming review, offline ide
 | PRJ-18 Run QC/readiness | Same idempotency key returns the same result; competing expected revisions serialize one winner and return typed conflict to the loser without duplicate effect. | Schema, authority and policy validation fail before mutation/provider effect and return a typed refusal without existence leakage. | Owner/source deletion or revocation preserves required immutable evidence/tombstone, removes derived access/projection, and queues idempotent dependent invalidation so no orphan remains. |
 | PRJ-19 Declare source use | Same idempotency key returns the same result; competing expected revisions serialize one winner and return typed conflict to the loser without duplicate effect. | Schema, authority and policy validation fail before mutation/provider effect and return a typed refusal without existence leakage. | Owner/source deletion or revocation preserves required immutable evidence/tombstone, removes derived access/projection, and queues idempotent dependent invalidation so no orphan remains. |
 | PRJ-20 Activate DAW bridge | Same idempotency key returns the same result; competing expected revisions serialize one winner and return typed conflict to the loser without duplicate effect. | Schema, authority and policy validation fail before mutation/provider effect and return a typed refusal without existence leakage. | Owner/source deletion or revocation preserves required immutable evidence/tombstone, removes derived access/projection, and queues idempotent dependent invalidation so no orphan remains. |
+| PRJ-21 Open/close revision round | Same idempotency key returns the same result; competing expected revisions serialize one winner and return typed conflict to the loser without duplicate effect. | Schema, authority and policy validation fail before mutation/provider effect and return a typed refusal without existence leakage. | Owner/source deletion or revocation preserves required immutable evidence/tombstone, removes derived access/projection, and queues idempotent dependent invalidation so no orphan remains. |
+| PRJ-22 Maintain mix brief | Same idempotency key returns the same result; competing expected revisions serialize one winner and return typed conflict to the loser without duplicate effect. | Schema, authority and policy validation fail before mutation/provider effect and return a typed refusal without existence leakage. | Owner/source deletion or revocation preserves required immutable evidence/tombstone, removes derived access/projection, and queues idempotent dependent invalidation so no orphan remains. |
+| PRJ-23 Author recall sheet | Same idempotency key returns the same result; competing expected revisions serialize one winner and return typed conflict to the loser without duplicate effect. | Schema, authority and policy validation fail before mutation/provider effect and return a typed refusal without existence leakage. | Owner/source deletion or revocation preserves required immutable evidence/tombstone, removes derived access/projection, and queues idempotent dependent invalidation so no orphan remains. |
+
+## Blocked on Upstream Decisions
+
+These items are named by the spec and deliberately not authored. Each is blocked on a tracked upstream question; none may be invented downstream.
+
+| Item | Blocked on | Status |
+|---|---|---|
+| Structured `recall_sheet_row` schema for PRJ-23 (typed derived and analogue rows) | Ideation `07.06.04` Q-03 — photo-only artifact vs structured model; `[OWNER]`, deferred to `/create-prd` | OPEN — not authored. The sheet ships as one combined document with a first-class paper photograph; no row-level schema is specified. |
+| Operator room-scoped recall projection for PRJ-23 (`07.06.04` D-06) | Ideation `07.06.04` Q-02 — whether to build the Operator room-scoped view at all; `[OWNER]`, deferred to `/create-prd` | OPEN — not authored. If built, it is room gear and patching only, never track names, creative content, songs or attendance. |
+| Origin of the included-round count for PRJ-21 (`engagement_ref`) | Ideation `07.05.05` Q-01 — whether the count originates in a Shard 14 service order or here; deferred to `/create-prd-architecture` | OPEN — `engagement_ref` is modelled as a nullable pointer and never as a second writer. |
 
 ## Cross-Shard Dependencies
 
@@ -337,12 +378,15 @@ Responsive web/PWA only at launch. Manual uploads, streaming review, offline ide
 
 ### Cross-Shard Section Contract Map
 
+- **Shard 00 — Cross-cutting platform foundation:** consume [Shard 00 Contracts](00-infrastructure.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 00 Event Schemas](00-infrastructure.md#event-schemas). Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
+- **Shard 01 — Identity and authority:** consume [Shard 01 Contracts](01-identity-authority.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 01 Event Schemas](01-identity-authority.md#event-schemas). Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
+- **Shard 07 — Credits core:** consume [Shard 07 Contracts](07-credits-core.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 07 Event Schemas](07-credits-core.md#event-schemas). PRJ-05's roster event publishes the Shard 07 claim command across this boundary; canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
 - **Shard 10 — Rights and ownership:** consume [Shard 10 — Rights and ownership Contracts](10-rights-ownership.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 10 — Rights and ownership Event Schemas](10-rights-ownership.md#event-schemas). Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
 - **Shard 14 — Services marketplace:** consume [Shard 14 — Services marketplace Contracts](14-services-marketplace.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 14 — Services marketplace Event Schemas](14-services-marketplace.md#event-schemas). Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
-- **Shard 17 — Royalty splits:** consume [Shard 17 — Royalty splits Contracts](17-royalty-splits.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 17 — Royalty splits Event Schemas](17-royalty-splits.md#event-schemas). Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
+- **Shard 17 — Real-time jamming and remote sessions:** consume [Shard 17 — Real-time jamming and remote sessions Contracts](17-realtime-sessions.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 17 — Real-time jamming and remote sessions Event Schemas](17-realtime-sessions.md#event-schemas). Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
 - **Shard 19 — Royalty reporting and forecasting:** consume [Shard 19 — Royalty reporting and forecasting Contracts](19-royalty-reporting-forecasting.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 19 — Royalty reporting and forecasting Event Schemas](19-royalty-reporting-forecasting.md#event-schemas). Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
 - **Shard 22 — Release and distribution:** consume [Shard 22 — Release and distribution Contracts](22-release-distribution.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 22 — Release and distribution Event Schemas](22-release-distribution.md#event-schemas). Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
-- **Shard 32 — Venue operations:** consume [Shard 32 — Venue operations Contracts](32-venue-operations.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 32 — Venue operations Event Schemas](32-venue-operations.md#event-schemas). Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
+- **Shard 32 — Event production planning and advancing:** consume [Shard 32 — Event production planning and advancing Contracts](32-show-production-planning.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 32 — Event production planning and advancing Event Schemas](32-show-production-planning.md#event-schemas). Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
 
 ## Changelog
 
@@ -350,6 +394,7 @@ Responsive web/PWA only at launch. Manual uploads, streaming review, offline ide
 |---|---|---|---|
 | 2026-08-02 | Initial skeleton and source-feature seeding | /decompose-architecture-structure | All |
 | 2026-08-03 | Reconciled 55 sources; locked project, roster, access, version, review, session, delivery and bridge boundaries | /write-architecture-spec | All |
+| 2026-08-05 | A-09 — corrected the Shard 17 and Shard 32 Cross-Shard Section Contract Map rows to their real files/domains and added the missing Shard 00/01/07 upstream entries; A-10 — bound vault authorization to the Shard 07 `vault_role_class` attribute with a `review` floor per DEC-099; A-11 — removed the `07.08.05` remix-stem WON'T capability and specified PRJ-21 revision rounds, PRJ-22 mix brief and PRJ-23 recall sheet, recording three sub-parts as blocked on tracked upstream questions | /resolve-ambiguity | Scope Reconciliation, Features, Delivery Phases, Acceptance Criteria, Interactions, Contracts, Data Models, Edge Cases, Edge-Case Coverage Matrix, Blocked on Upstream Decisions, Cross-Shard Section Contract Map, Dependency References |
 
 ## Dependency References
 
@@ -357,17 +402,22 @@ Responsive web/PWA only at launch. Manual uploads, streaming review, offline ide
 
 - [[specs/ia/10-rights-ownership|Shard 10 — Rights and ownership]]
 - [[specs/ia/14-services-marketplace|Shard 14 — Services marketplace]]
-- [[specs/ia/17-royalty-splits|Shard 17 — Royalty splits]]
+- [[specs/ia/17-realtime-sessions|Shard 17 — Real-time jamming and remote sessions]]
 - [[specs/ia/19-royalty-reporting-forecasting|Shard 19 — Royalty reporting and forecasting]]
 - [[specs/ia/22-release-distribution|Shard 22 — Release and distribution]]
-- [[specs/ia/32-venue-operations|Shard 32 — Venue operations]]
+- [[specs/ia/32-show-production-planning|Shard 32 — Event production planning and advancing]]
 
 
 <!-- spec-graph: auto-generated -->
 ## Related Specs
 
+### Constrained by
+- [[decisions.md#d-06|D-06]]
+
 ### References
 - [[specs/ia/10-rights-ownership|Shard 10 — Rights and ownership]]
 - [[specs/ia/14-services-marketplace|Shard 14 — Services marketplace lifecycle]]
+- [[specs/ia/17-realtime-sessions|Shard 17 — Real-time jamming and remote sessions]]
 - [[specs/ia/19-royalty-reporting-forecasting|Shard 19 — Performance reporting, money-in-flight and forecasting]]
 - [[specs/ia/22-release-distribution|Shard 22 — Release and distribution lifecycle]]
+- [[specs/ia/32-show-production-planning|Shard 32 — Event production planning and advancing]]

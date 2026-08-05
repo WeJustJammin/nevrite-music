@@ -2,8 +2,8 @@
 
 ## Summary
 
-- **Total patterns**: 14
-- **Unique pattern titles**: 14
+- **Total patterns**: 15
+- **Unique pattern titles**: 15
 
 ## PAT-001: Verify a generated claim against the kit's own reference before propagating it (2026-07-16)
 
@@ -224,6 +224,22 @@
 - **Pattern**: The first screen of the IA layer flagged all 43 shards, and nearly every flag was false: it searched for a `User Interactions` heading (the real one is `Interactions`), matched `Then` case-sensitively when the ACs use lowercase `then`, and treated `skeleton`/`placeholder` as lazy markers when they are Changelog rows and a real rig-member domain concept. A separate regex missed 54 genuinely broken links because it only matched paths prefixed `./` or `../`, skipping same-directory links. Before reporting screen output as findings, open two or three sample documents, confirm the actual conventions, and re-run. A screen that flags 100% of inputs is measuring itself, not the corpus — and one that flags 0% may simply be looking in the wrong place.
 - **Source**: IA audit 2026-08-05, both failure directions hit in the same session.
 
+## PAT-015: compile.mjs rewrites every file under .memory/wiki/specs/ — never park a working document there (2026-08-05)
+
+- **Occurrences**: 1
+- **Latest timestamp**: 2026-08-05T07:28:19.253Z
+- **Agents**: claude
+- **Sources**: /resolve-ambiguity all ia
+- **Index**: [[index]]
+
+- **Type**: anti-pattern
+- **Confidence**: 0.6
+- **Context**: Writing any generated or working document anywhere under `.memory/wiki/specs/`, including `specs/audits/`.
+- **Pattern**: `.memory/pipeline/compile.mjs` invokes `.memory/pipeline/spec-graph.mjs`, which rewrites every Markdown file under `.memory/wiki/specs/` to inject an auto-generated `## Related Specs` footer. `specs/audits/` is not exempt — `compile.mjs` classifies it as `'audit'` and still processes it. A 250 KB remediation worklist written to `specs/audits/` was silently rewritten to 159 KB by the next compile, dropping 11 of its 34 gap sections. The loss was invisible: the file still parsed, still looked complete, and the truncation was only caught because a downstream agent reported a missing section. This is the same failure class as PAT-006 (hand-edits to derived wiki files destroyed by compile), but wider than PAT-006 states — it is not only the three derived files `patterns.md`/`decisions.md`/`blockers.md` that compile owns, it is the whole `specs/` tree.
+- **Rule**: working documents, worklists and generated reports intended to survive go outside `.memory/wiki/specs/` — `.memory/pipeline/progress/` is safe and is where the IA remediation worklist now lives. If a document must sit under `specs/`, re-verify it after every compile by checking a structural invariant (section count, heading count, byte size), not by eyeballing it.
+- **Corollary**: a spec whose `## Related Specs` block is marked `<!-- spec-graph: auto-generated -->` must never be hand-edited there; edit the source relationships and re-run compile instead.
+- **Source**: IA remediation 2026-08-05 — compile run to land DEC-098/099 silently truncated the worklist that the apply pass then consumed.
+
 ## Full Log
 
 ### PAT-001: Verify a generated claim against the kit's own reference before propagating it (2026-07-16)
@@ -430,3 +446,18 @@
 - **Context**: Running any regex or structural sweep across a spec layer.
 - **Pattern**: The first screen of the IA layer flagged all 43 shards, and nearly every flag was false: it searched for a `User Interactions` heading (the real one is `Interactions`), matched `Then` case-sensitively when the ACs use lowercase `then`, and treated `skeleton`/`placeholder` as lazy markers when they are Changelog rows and a real rig-member domain concept. A separate regex missed 54 genuinely broken links because it only matched paths prefixed `./` or `../`, skipping same-directory links. Before reporting screen output as findings, open two or three sample documents, confirm the actual conventions, and re-run. A screen that flags 100% of inputs is measuring itself, not the corpus — and one that flags 0% may simply be looking in the wrong place.
 - **Source**: IA audit 2026-08-05, both failure directions hit in the same session.
+
+### PAT-015: compile.mjs rewrites every file under .memory/wiki/specs/ — never park a working document there (2026-08-05)
+
+- **Timestamp**: 2026-08-05T07:28:19.253Z
+- **Agent**: claude
+- **Source**: /resolve-ambiguity all ia
+- **Tags**: pattern, anti-pattern, tooling, memory-pipeline
+
+- **Type**: anti-pattern
+- **Confidence**: 0.6
+- **Context**: Writing any generated or working document anywhere under `.memory/wiki/specs/`, including `specs/audits/`.
+- **Pattern**: `.memory/pipeline/compile.mjs` invokes `.memory/pipeline/spec-graph.mjs`, which rewrites every Markdown file under `.memory/wiki/specs/` to inject an auto-generated `## Related Specs` footer. `specs/audits/` is not exempt — `compile.mjs` classifies it as `'audit'` and still processes it. A 250 KB remediation worklist written to `specs/audits/` was silently rewritten to 159 KB by the next compile, dropping 11 of its 34 gap sections. The loss was invisible: the file still parsed, still looked complete, and the truncation was only caught because a downstream agent reported a missing section. This is the same failure class as PAT-006 (hand-edits to derived wiki files destroyed by compile), but wider than PAT-006 states — it is not only the three derived files `patterns.md`/`decisions.md`/`blockers.md` that compile owns, it is the whole `specs/` tree.
+- **Rule**: working documents, worklists and generated reports intended to survive go outside `.memory/wiki/specs/` — `.memory/pipeline/progress/` is safe and is where the IA remediation worklist now lives. If a document must sit under `specs/`, re-verify it after every compile by checking a structural invariant (section count, heading count, byte size), not by eyeballing it.
+- **Corollary**: a spec whose `## Related Specs` block is marked `<!-- spec-graph: auto-generated -->` must never be hand-edited there; edit the source relationships and re-run compile instead.
+- **Source**: IA remediation 2026-08-05 — compile run to land DEC-098/099 silently truncated the worklist that the apply pass then consumed.
