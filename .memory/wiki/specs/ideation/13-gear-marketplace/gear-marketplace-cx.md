@@ -3,7 +3,7 @@
 > **Level**: domain
 > **Scope**: Connections between children of [Gear Marketplace (Physical Goods)](./gear-marketplace-index.md)
 > **Status**: [DEEP] — 13 children classified; 21 intra-domain pairs mapped and synthesised (Step 6).
-> **Last updated**: 2026-07-18
+> **Last updated**: 2026-07-23
 
 ## Cross-Cut Map
 
@@ -22,7 +22,7 @@
 | CX-11 | [13.13 Authorized Dealer & MAP](./13.13-authorized-dealer-map-pricing.md) | [13.04 Price Discovery](./13.04-price-discovery-market-data/) | A transparent comp guide publishes the below-MAP prices MAP exists to suppress — possibly mutually exclusive products | Operator (poor fit), all | Medium | 13.13 DT-02 |
 | CX-12 | [13.10 Rental](./13.10-gear-rental-backline/) | [13.03 Listings & Inventory](./13.03-listings-inventory/) | Rental reserves a range via CX-M05 scheduling; sale claims a unit via locking. Different problem shapes entirely | Operator, Musician | Medium | 13.10.02 DT-01 |
 | CX-13 | [13.12 Storefront Policies](./13.12-gear-seller-storefront-policies.md) | [13.08 Returns](./13.08-returns-rma-warranty/) | Statutory rights override seller policy — and the same "no returns" text is lawful from a private seller and misleading from a trader | Musician, Fan | High | 13.12 DT-02; 13.08.01 DT-01 |
-| CX-14 | [13.01 Catalog](./13.01-canonical-gear-catalog/) | [13.02 Condition & Originality](./13.02-condition-originality-disclosure/) | Category drives one **per-category structured-attribute schema** — attribute set, flaw checklist, component set — and the model is the as-shipped baseline the grade measures deviation from (semantic prerequisite) | All (as seller) | High | 13.02.01 DT-01/D-04; 13.02.02 (category→checklist); 13.01.01 |
+| CX-14 | [13.01 Catalog](./13.01-canonical-gear-catalog/) | [13.02 Condition & Originality](./13.02-condition-originality-disclosure/) | Category drives one **per-category structured-attribute schema** — attribute set, flaw checklist, component set, **and the flaw→grade `(axis, severity-token)` projection** — held by catalog moderation; and the model is the as-shipped baseline the grade measures deviation from (semantic prerequisite) | All (as seller) | High | 13.02.01 DT-01/D-04/D-14; 13.02.02 D-13; 13.01.01 D-14 (owner-ratified, DQ-12.O2) |
 | CX-15 | [13.01 Catalog](./13.01-canonical-gear-catalog/) | [13.03 Listings & Inventory](./13.03-listings-inventory/) | Listing↔Model Matching (13.01.04) is the bind that joins a listing to the catalog; no match → generic fallback, weakened grade, no compliance derivation; bulk uses (seller, SKU) memoisation | All (as seller) | High | 13.01.04 D-05/D-08; 13.02.02 |
 | CX-16 | [13.01 Catalog](./13.01-canonical-gear-catalog/) | [13.07 Logistics](./13.07-gear-logistics-cross-border/) | Model attributes derive compliance: materials → CITES gate, category → tariff class, dims+weight → freight class. A mis-bound listing makes the voltage/CITES warning **underivable** | All | High | 13.01.01 → 13.07.01/02/03; 13.01.04 CX-04 |
 | CX-17 | [13.01 Catalog](./13.01-canonical-gear-catalog/) | [13.06 Cart & Orders](./13.06-cart-checkout-orders/) | The model bind is **snapshotted onto the order** at creation; a merge cannot re-point a comp set under an in-flight transaction (the buyer bought the listing, not the model) | All | High | 13.01.04 CX-03 synthesis Q5 / D-10 |
@@ -69,7 +69,7 @@
 2. **Trigger chain**: Grade + originality + version set at listing → sale → comp enters the bucket **only if itemised and arm's-length**. A modified/provenanced unit has no valid clean bucket and the guide declines (13.04.01 D-03).
 3. **Permission intersection**: All four read; three write the axes.
 4. **Notification fan-out**: None.
-5. **State transition conflict**: A definition-version publication mid-series — **flagged for `/write-architecture-spec` as an invariant**: comps are keyed to the version in force at sale, and re-versioning never retroactively re-buckets a sold comp.
+5. **State transition conflict**: A definition-version publication mid-series — **flagged for `/write-architecture-spec` as an invariant**: comps are keyed to the version in force at sale, and re-versioning never retroactively re-buckets a sold comp. **The DQ-12 ratifications are deliberately version-neutral**: the `(axis, severity-token)` carrier (13.02.02 D-13) and the repair-quality split (13.02.01 D-15) change no grade's published meaning, so they take **no version bump** and require no comp re-bucketing or published mapping (13.04.01). The corollary is the guard-rail: a severity-option edit must never be able to reach the comp key.
 
 ### CX-03: Condition & Originality ↔ Returns
 
@@ -170,7 +170,7 @@
 
 ### CX-09: Local Pickup ↔ Cart & Orders
 
-**Relationship**: 13.11 DT-01 — a hole through the middle of the domain. Local pickup dissolves **three** mechanisms: escrow has no delivery proof to release against, the evidence pack has no dispatch/arrival baseline, and **ownership transfer (13.06.05) never fires** because a cash meetup never settles. The domain's entire provenance contribution is silently skipped on what may be the category's most common transaction shape.
+**Relationship**: 13.11 DT-01 — a hole through the middle of the domain, since narrowed to one branch by **13.11 D-04 (P-09)**: settlement on a pickup is a per-listing seller choice, so pickup comes in a platform-settled shape and an off-platform one. On the **off-platform** branch local pickup dissolves **three** mechanisms: escrow has no delivery proof to release against, the evidence pack has no dispatch/arrival baseline, and **ownership transfer (13.06.05) never fires** because a cash meetup never settles — the domain's provenance contribution falls back to 15.01.03 D-01's manual handshake rather than being recorded (13.06.05 DT-11). On the **platform-settled** branch the handover is the delivery (13.06.02) and the transfer writes as normal. The hole is therefore per-listing and disclosed, not categorical.
 
 **Role scoping**:
 - **Musician**: cheap-gear transactions are mostly local, therefore mostly invisible to the chain.
@@ -179,10 +179,10 @@
 
 **Synthesis questions answered**:
 1. **Shared state conflict**: If money doesn't move through the platform, there is no settlement event and no shared state — the platform introduced two people and learned nothing.
-2. **Trigger chain**: **Broken by design.** Purchase → meetup → (nothing).
+2. **Trigger chain**: **Broken by design on the off-platform branch** (D-04). Purchase → meetup → (nothing). On the settled branch the chain is intact: purchase → meetup → pickup confirmation → settlement → transfer.
 3. **Permission intersection**: n/a.
 4. **Notification fan-out**: n/a.
-5. **State transition conflict**: The strategic one. **13.11 Q-01 ("does money move through the platform on local pickup?") is the most consequential open question in the domain** — copying the incumbent's fee-free local product copies a hole through the thesis.
+5. **State transition conflict**: The strategic one, and now **answered**: 13.11 Q-01 ("does money move through the platform on local pickup?") is resolved by **13.11 D-04 (P-09)** — settlement on a pickup is a **per-listing seller choice**, platform-settled or off-platform, never a single global rule. So the hole through the thesis is real but bounded: it exists only on the branch a seller opted out on, and there it degrades to 15.01.03 D-01's manual handshake rather than to nothing (13.06.05 DT-11). What is left of this conflict is presentation — never implying the off-platform branch produced an equivalent chain (13.11 Q-04).
 
 ### CX-10: Trade-In & Consignment ↔ Ownership Transfer
 
@@ -240,15 +240,15 @@
 
 ### CX-14: Catalog ↔ Condition & Originality
 
-**Relationship**: Step 6's highest-value intra reconciliation. Three features (13.01.01 attribute schemas, 13.02.02 flaw checklists, 13.03.01 "what's included" component sets) independently reach for the **same per-category structured-attribute mechanism** — "fret wear" is meaningless on a microphone; the checklist is derived from the bound category, not authored per listing. And the model is not decorative: it defines the **as-shipped baseline** against which a grade measures deviation (13.02.01 D-04/DT-03), so model binding is a *semantic prerequisite* for grading. An unmatched listing has no baseline → weakened grade semantics (E-08), which publishes anyway (domain D-03) with a generic 6-item fallback.
+**Relationship**: Step 6's highest-value intra reconciliation, **now ratified**. Three features (13.01.01 attribute schemas, 13.02.02 flaw checklists, 13.03.01 "what's included" component sets) independently reached for the **same per-category structured-attribute mechanism** — "fret wear" is meaningless on a microphone; the checklist is derived from the bound category, not authored per listing. **Owner ratification (DQ-12.O2) makes it one mechanism, owned by 13.01.01 (D-14) with catalog moderation holding the standing** — resolving 13.02.03 Q-02 in the affirmative as a side effect. A **fourth** thing now rides it: the flaw→grade `(axis, severity-token)` pair authored on each **severity option** (13.02.02 D-13), which is what lets 13.02.01's single ceiling table execute without either file copying the other's vocabulary. That field caps what every seller in a category may claim, so moderation holding it is a genuine authority grant, not bookkeeping. And the model is not decorative: it defines the **as-shipped baseline** against which a grade measures deviation (13.02.01 D-04/DT-03), so model binding is a *semantic prerequisite* for grading. An unmatched listing has no baseline → weakened grade semantics (E-08), which publishes anyway (domain D-03) with a generic 6-item fallback.
 
 **Role scoping**:
 - **Musician/Producer/Operator (as sellers)**: fill category-derived values; never author the attribute schema (that is moderation, 13.01.02 DT-10).
 - **Fan**: reads the derived warnings; no write access.
 
 **Synthesis questions answered**:
-1. **Shared state conflict**: The per-category attribute schema is owned by catalog moderation (13.01.02); condition/disclosure/component-set features are read-consumers. A schema change is a moderation event, versioned; contributors add models and fill values, never attributes (D-09/DT-10).
-2. **Trigger chain**: Category assigned via bind → attribute schema resolved → flaw checklist + component set + grade-ceiling table instantiated. No category (unmatched) → generic fallback, synchronous, degrades not blocks.
+1. **Shared state conflict**: The per-category attribute schema is owned by catalog moderation (13.01.02); condition/disclosure/component-set features are read-consumers. A schema change is a moderation event, versioned; contributors add models and fill values, never attributes (D-09/DT-10). **The `(axis, severity-token)` projection is authored under the same standing** (13.01.01 D-14) — it is a property of an authored severity option, not a model attribute value, so it carries no consequence class and is never seller-facing.
+2. **Trigger chain**: Category assigned via bind → attribute schema resolved → flaw checklist + component set instantiated → each answered severity option's `(axis, severity-token)` pair projects onto 13.02.01's **single** grade-ceiling table. No category (unmatched) → generic fallback, synchronous, degrades not blocks. A **severity-option change is a checklist-schema change, never a grade-definition change** — it takes no `definition_version` bump and must never re-key a sold comp (CX-02).
 3. **Permission intersection**: Adding an attribute is a comp dimension and a catalog-schema act (moderator standing); filling a value is a seller act. The boundary is the enforcement (open attribute creation fragments the comp space).
 4. **Notification fan-out**: A schema version publication is audit-logged (CX-M19); sellers with live listings on that category are not notified per-edit (would be noise).
 5. **State transition conflict**: Category re-binding on a live listing re-instantiates the checklist under a filled disclosure — items whose attribute survived carry over; orphaned answers revert to unanswered rather than silently persisting a claim the seller never re-made.
@@ -354,7 +354,7 @@
 
 **Synthesis questions answered**:
 1. **Shared state conflict**: The unit's condition history is the shared entity, keyed on the serial-keyed unit (domain D-04). Each first-party record is append-only; disclosure reads them, never mutates them.
-2. **Trigger chain**: Listing created for a unit with platform history → checklist pre-filled → contradictions (seller claims Mint, last rental return logged a dent) → flagged for the seller to reconcile → publishes with the flag if unresolved (D-03).
+2. **Trigger chain**: Listing created for a unit with platform history → checklist pre-filled → contradictions (seller claims Mint, last rental return logged a dent) → flagged for the seller to reconcile → publishes with the flag if unresolved (D-03). **Owner ratification (DQ-12.O3) gives these records a second, sharper job**: they corroborate the **repair-quality** severity option that decides an Excellent-vs-Good ceiling (13.02.01 D-15) — 13.08.02 D-04 supplies what was replaced and by whom, 13.09.03 D-05 supplies a professional bench assessment. Two limits are stated rather than papered over: the off-platform half is blocked until **13.08.02 Q-02** resolves (13.02.01 Q-06), and **most vintage repairs predate the platform**, so the common case has no first-party record at all and the split degrades to seller-asserted-only, showing nothing rather than guessing.
 3. **Permission intersection**: The seller cannot edit or suppress a first-party record; they may only add their own (challengeable) claim alongside it.
 4. **Notification fan-out**: A seller-claim-contradicts-first-party-record event is an integrity signal to domain 24 (CX-M08 scorecard), not a per-listing scarlet letter.
 5. **State transition conflict**: A repair logged after listing publication — the disclosure re-triggers its contradiction check on every affirmation, not only at first publish (13.02.02).
@@ -428,3 +428,25 @@
 | R-08 | 13.05 Offers & Auctions | 13.13 Authorized Dealer & MAP | MAP might floor an accepted offer. Rejected — MAP governs *advertised* price on **new** gear; offers/auctions operate on the used, qty=1 inventory that has no MAP. No overlap in the objects each touches. |
 
 > **Notes:** CX-14 through CX-21 are Step 6 additions from the deep-think intra pass; CX-01/02/03/15/18 were enriched with resolutions to previously-`[PENDING]` synthesis questions. Intra-*sub-domain* feature pairs (13.01.04↔13.01.05 fitment, 13.01.01↔13.01.02 contribution, 13.02.01↔13.02.02 grade-ceiling) are resolved in their respective sub-domain CX files, not here.
+
+
+<!-- spec-graph: auto-generated -->
+## Related Specs
+
+### Constrained by
+- [[decisions.md#d-01|D-01]]
+- [[decisions.md#d-07|D-07]]
+- [[decisions.md#d-02|D-02]]
+- [[decisions.md#d-03|D-03]]
+- [[decisions.md#d-04|D-04]]
+- [[decisions.md#d-14|D-14]]
+- [[decisions.md#d-13|D-13]]
+- [[decisions.md#d-05|D-05]]
+- [[decisions.md#d-08|D-08]]
+- [[decisions.md#d-10|D-10]]
+- [[decisions.md#d-11|D-11]]
+- [[decisions.md#d-09|D-09]]
+- [[decisions.md#d-15|D-15]]
+- [[decisions.md#d-12|D-12]]
+- [[decisions.md#d-16|D-16]]
+- [[decisions.md#d-4a|D-4a]]

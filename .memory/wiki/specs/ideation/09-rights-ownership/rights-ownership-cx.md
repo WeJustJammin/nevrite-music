@@ -3,7 +3,7 @@
 > **Level**: domain
 > **Scope**: Connections between children (sub-domains) of [Rights & Ownership](./rights-ownership-index.md)
 > **Status**: [DEEP] — 6 sub-domains; all sub-domain pairs synthesised from Step-6 feature-level evidence.
-> **Last updated**: 2026-07-18
+> **Last updated**: 2026-07-23
 
 > This file connects the domain's **sub-domains** (09.01–09.06). Feature-to-feature interactions
 > *within* one sub-domain (e.g. 09.01.02 ↔ 09.01.04 anchoring, 09.02.01 ↔ 09.02.04 re-consent) are
@@ -18,7 +18,7 @@
 |---|--------|--------|--------------|----------------|------------|----------|
 | CX-01 | [09.02 Split Capture](./09.02-split-capture-agreements/) | [09.01 Rights Registry](./09.01-rights-registry/) | Capture is the **only write path** that produces a consented ledger. Registry owns invariants + state; capture owns prompting, consent and lock. The `unallocated` alarm is exposed in 09.01.02, acted on in 09.02.01. | Musician, Producer | High | Registry D-04 scopes the validator out of deal semantics; capture is the sole author of `consented`. |
 | CX-02 | [09.03 Chain of Title & Lifecycle](./09.03-chain-of-title-lifecycle/) | [09.01 Rights Registry](./09.01-rights-registry/) | Two views of one truth: the chain says **how** a row came to be; the registry says **what** it is now. Registry state is derivable from chain events; divergence is a defect, not an opinion. | Musician, Producer | High | Reversion/termination move title with no actor; both must propagate to registry atomically. |
-| CX-03 | [09.04 Conflicts & Disputes](./09.04-rights-conflicts-disputes/) | [09.01 Rights Registry](./09.01-rights-registry/) | A conflict is **about** a ledger; a resolution **corrects** one. `disputed` freezes payouts and blocks every exploitation verdict. The ledger does not defend itself; the platform does not rule (D-04). | Musician, Producer | High | 09.04 D-01: the remedy is a corrected ledger, never a refund; freeze is share-scoped. |
+| CX-03 | [09.04 Conflicts & Disputes](./09.04-rights-conflicts-disputes/) | [09.01 Rights Registry](./09.01-rights-registry/) | A conflict is **about** a ledger; a resolution **corrects** one. `disputed` freezes payouts. Its release/licensing verdict is **Unknown — dispute policy unresolved** pending 09.04 Q-02 / 09.04.03 Q-04; consumers needing a positive verdict fail closed. The ledger does not defend itself; the platform does not rule (D-04). | Musician, Producer | High | 09.04 D-01: the remedy is a corrected ledger, never a refund; freeze is share-scoped. |
 | CX-04 | [09.05 AI, Voice & Likeness](./09.05-ai-voice-likeness-consent/) | [09.01 Rights Registry](./09.01-rights-registry/) | Training consent is **anchored** to the ownership ledger — a grant means something only from parties who demonstrably hold the right. **NIL is not anchored at all** (ownership ≠ control). | Musician | High | 09.05 D-01/09.05.02 D-03: a buyout extinguishes the copyright, never the voice. |
 | CX-05 | [09.06 Evidence & Public Record](./09.06-rights-evidence-public-record/) | [09.01 Rights Registry](./09.01-rights-registry/) | The lookup reads a **publication-safe projection**, deliberately never the ledger — privacy is opt-in by construction. Writer identity may be public; percentages, deal types and rates never cross. | Musician, Producer, Operator, Fan | High | 09.06.04 D-01/R-02; domain Q-06 (what is public). |
 | CX-06 | [09.04 Conflicts & Disputes](./09.04-rights-conflicts-disputes/) | [09.02 Split Capture](./09.02-split-capture-agreements/) | Resolution is applied as a **consented amendment** ([09.02.04](./09.02-split-capture-agreements/09.02.04-split-amendment-reconsent.md)), never a unilateral write. No admin path into the ledger exists — including for dispute resolution. | Musician, Producer | High | 09.02.04 D-02: an override is the domain's highest-value attack surface. |
@@ -88,9 +88,12 @@ is wrong in one direction.
 ### CX-03: Conflicts & Disputes ↔ Rights Registry
 
 **Relationship**: A conflict is *about* a ledger and a resolution *corrects* one; disputes never produce
-their own truth. `disputed` is a registry state that **freezes payouts and blocks every exploitation
-verdict** in a master's Control Summary. Because freeze is **share-scoped, not work-scoped**, the ledger
-must support a **partially-frozen** state where uncontested rows keep paying while contested rows escrow
+their own truth. `disputed` is a registry state that **freezes payouts**. Whether it also blocks
+live/continued release or licensing is the owner decision 09.04 Q-02 / 09.04.03 Q-04, so those Control
+Summary verdicts remain **Unknown — dispute policy unresolved**; a consumer that needs permission fails
+closed rather than treating uncertainty as a clean result. Pre-delivery release eligibility is separately
+blocked by domain 12. Because freeze is **share-scoped, not work-scoped**, the ledger must support a
+**partially-frozen** state where uncontested rows keep paying while contested rows escrow
 (09.01.02 ↔ 09.04.03). Conflict causes of action include: a stranger claiming an unclaimed stub, an
 ISRC collision across differently-consented ledgers, a cover-link dispute, and an off-platform society
 registration that disagrees with the ledger — the last originating **outside** the platform entirely.
@@ -274,6 +277,11 @@ inheritance — shared-state and version discipline follow CX-02; trigger/rollba
 CX-03/CX-06. Promote to full synthesis at `/write-architecture-spec` once the detection trigger point is
 fixed.
 
+**Outstanding decision governance.** The double-assignment detection trigger is an architecture decision:
+the **Owner** is Agent; the hard decision deadline is immediately before
+`/write-architecture-spec` begins; and it blocks the authoritative event that opens the conflict,
+freezes the contested share, and emits downstream notification.
+
 ---
 
 ## Cross-Cut Mechanisms (routed OUT of this domain)
@@ -300,7 +308,7 @@ fixed.
 | Concern | Route to | Why |
 |---|---|---|
 | **Territory as a dimension of the ownership model** | `/create-prd-architecture` | **Emergent — not in the registry.** Territory is a *dimension of the ownership/grant model*, not an attribute of one grant (09.03.02 D-01): term, reversion, public domain, moral rights, licensing scope, sub-publishing and distribution all vary by territory and *differently from each other*. Effective share is a right-type × territory **matrix**, not a scalar (09.01.04 D-07). The 8/90 interaction budget cannot absorb a territory prompt at capture, so it is flagged-not-designed at capture (Q-05). The highest-leverage schema decision touching this domain. |
-| **Effective-vs-nominal share resolution** | `/create-prd-architecture` | **Emergent — not in the registry.** [Domain 10](../10-royalties-collections/) (payouts), [domain 11](../11-music-licensing/) (one-stop clearance) and [domain 23](../23-career-finance-business-management/) (forecasting) all need the **effective** net after the encumbrance waterfall, co-pub shares-of-shares and recoupment — never the nominal ledger figure. Forecasting on nominal overstates income for every writer in a co-pub deal (26.85% in the worked example). The waterfall **tier order** (gross → net → owners' share) is a rights fact declared in 09.01.03 and *executed* in domain 10. A shared derivation, currently implicit. |
+| **Effective-vs-nominal share resolution** | `/create-prd-architecture` | **Emergent — not in the registry.** [Domain 10](../10-royalties-collections/) (payouts), [domain 11](../11-music-licensing/) (one-stop clearance) and [domain 23](../23-career-finance-business/) (forecasting) all need the **effective** net after the encumbrance waterfall, co-pub shares-of-shares and recoupment — never the nominal ledger figure. Forecasting on nominal overstates income for every writer in a co-pub deal (26.85% in the worked example). The waterfall **tier order** (gross → net → owners' share) is a rights fact declared in 09.01.03 and *executed* in domain 10. A shared derivation, currently implicit. |
 | **Exact rational share representation** | `/create-prd-architecture` | 09.01.02 DT-01: three co-writers is the most common configuration and is exactly what decimals cannot represent (33.33 × 3 = 99.99). Ledger owes exact rationals **plus a deterministic canonical row order**; domain 10 owns cent allocation + sub-cent remainder. Without canonical order, two runs of one distribution pay differently. Trivial now, unfixable after a million rows. |
 | **Ledger-version binding / as-of resolution** | `/create-prd-architecture` | Distribution binds to the ledger **version current at run start** (or one period is computed against two splits, unreconcilable); licences record the version they resolved against; statements name the version ID + bind timestamp. An application of the registry's *Audit Log & Provenance Ledger* (point-in-time/as-of) — not a new mechanism, but a hard requirement the ledger imposes. |
 | **Escrow as regulated fund-holding** | `/create-prd-stack`, `/create-prd-security` | 09.04.03 DT-02: holding third-party funds pending a dispute is a regulated activity. The rights half (which share, contested by whom) is domain-owned; the money-transmission half is domain 10 + *Payments/Escrow* mechanism. Activates the KYC/AML items `[PENDING]` in `meta/constraints.md`. |
@@ -321,3 +329,19 @@ fixed.
 | R-04 | [09.05 AI, Voice & Likeness](./09.05-ai-voice-likeness-consent/) | [09.01.05 Performer & Neighbouring Rights](./09.01-rights-registry/09.01.05-performer-neighbouring-rights.md) | Tempting to fuse "performer identity for neighbouring-rights payout" with "performer NIL consent" — but one is a **money entitlement paid by an exploiter via a society**, the other a **veto over use of the person**. Fusing them would imply consenting to AI use forfeits neighbouring-rights income, or vice versa. Disjoint by design. |
 | R-05 | [09.03 Chain of Title & Lifecycle](./09.03-chain-of-title-lifecycle/) | [09.05 AI, Voice & Likeness](./09.05-ai-voice-likeness-consent/) | An AI training grant transfers no ownership, creates no encumbrance on title, and does not appear in a title search — a revocable permission that leaves the ownership record untouched. Recording grants in the chain would make every consent look like an assignment. |
 | R-06 | [09.01.05 Performer & Neighbouring Rights](./09.01-rights-registry/09.01.05-performer-neighbouring-rights.md) | [09.01.02 Ownership Ledger](./09.01-rights-registry/09.01.02-ownership-ledger-validation.md) | *Intra-09.01, recorded to prevent re-linking.* Disjoint records over one human: a session drummer is a 0%-or-absent ledger row **and** a full performer record. Ledger presence must not imply performer presence, or vice versa — neighbouring-rights entitlement is explicitly **not** an encumbrance on the master (paid by the exploiter via a society, DT-06 REJECTED). |
+
+
+<!-- spec-graph: auto-generated -->
+## Related Specs
+
+### Constrained by
+- [[decisions.md#d-04|D-04]]
+- [[decisions.md#d-01|D-01]]
+- [[decisions.md#d-03|D-03]]
+- [[decisions.md#d-02|D-02]]
+- [[decisions.md#d-10|D-10]]
+- [[decisions.md#d-07|D-07]]
+- [[decisions.md#d-05|D-05]]
+- [[decisions.md#d-11|D-11]]
+- [[decisions.md#d-08|D-08]]
+- [[decisions.md#d-06|D-06]]

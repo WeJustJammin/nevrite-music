@@ -1,0 +1,280 @@
+# Shard 12 — Communities, participatory spaces and events
+
+> **Architecture Source**: [2026-08-02-architecture-design.md](../2026-08-02-architecture-design.md)
+> **Decomposition Source**: [decomposition-plan.md](decomposition-plan.md)
+> **Document Type**: Feature domain
+> **Status**: Complete — design and deepening approved under standing owner autonomy
+
+## Overview
+
+Shard 12 owns evidence-grounded scenes, craft discussion, contests, informal local-event discovery, professional listening rooms and bounded conference networking. It does not create authority from membership, enumerate local people, fabricate cold-start activity, infer correctness from reputation, transfer submission rights silently, own realtime room transport or permanently relax reachability.
+
+### Scope Reconciliation
+
+| Check | Result |
+|---|---|
+| Source boundaries loaded | 6 |
+| In-scope source documents loaded | 16 |
+| Child capabilities reconciled | 12 |
+| Added or removed feature boundaries | 0 |
+| Consumer launch | Readable scenes/discovery and bounded participation surfaces may phase after core graph/moderation readiness |
+| Enterprise features | Deferred; no sponsor CRM, exhibitor lead capture, corporate event directory or enterprise moderation |
+| Split handling | Medium complexity; no deep-dive file required |
+
+## Features
+
+- **03.06 Scenes & Communities** — offered overlapping memberships, evidenced density, density-gated stewardship and fact-only premises/event seeding.
+- **03.07 Forums & Craft Q&A** — craft discussion without participation reputation; credentials are context and Fans are read-only.
+- **03.08 Contests, Challenges & Beat Battles** — frozen briefs/eligibility, rights-safe deliberate submissions, craft-scoped judging and pre-funded/specific prizes.
+- **03.09 Local Jam & Open Mic Discovery** — freshness-labelled discovery of informal recurring opportunities without owning event recurrence.
+- **03.10 Peer & Scene Listening Rooms** — professional-only, scene/peer-scoped use of shared room transport/presence.
+- **03.11 Conference & Industry Event Networking Mode** — attendee-only temporary reachability relaxation with durable consented relationship follow-up.
+
+## Acceptance Criteria
+
+- **AC-SPC-01 — Discover/join scene:** Given a valid request with current identity, authority, source state and required inputs, when the actor invokes this flow, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) System offers resident/visiting membership from evidenced work location or labelled profile fallback; user confirms; never automatic, and (6) return Membership version and evidence/expiry commit; if the flow cannot complete, invalid input, stale authority, revision conflict or dependency failure returns a typed refusal and no contradictory canonical mutation.
+- **AC-SPC-02 — Leave/dismiss scene:** Given a valid request with current identity, authority, source state and required inputs, when the actor invokes this flow, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) Leaving writes permanent anti-reinference signal; dismissing offer only suppresses current offer, and (6) return Membership/offer state updates without notification; if the flow cannot complete, invalid input, stale authority, revision conflict or dependency failure returns a typed refusal and no contradictory canonical mutation.
+- **AC-SPC-03 — View scene:** Given a valid request with current identity, authority, source state and required inputs, when the actor invokes this flow, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) Viewer sees evidence-based density, aggregate aliveness and bounded non-exhaustive samples; roster cannot enumerate, and (6) return Viewer-safe projection and freshness labels returned; if the flow cannot complete, invalid input, stale authority, revision conflict or dependency failure returns a typed refusal and no contradictory canonical mutation.
+- **AC-SPC-04 — Steward scene:** Given a valid request with current identity, authority, source state and required inputs, when the actor invokes this flow, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) Eligible evidence-backed local role performs bounded curation/reporting after density gate; cannot remove members or intercept safety escalation, and (6) return Steward action/audit or safe denial; if the flow cannot complete, invalid input, stale authority, revision conflict or dependency failure returns a typed refusal and no contradictory canonical mutation.
+- **AC-SPC-05 — Seed/claim premises/event:** Given a valid request with current identity, authority, source state and required inputs, when the actor invokes this flow, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) System publishes corroborated non-residential premises/events as derived/unclaimed; verified claimant takes forward-looking control only, and (6) return Seed/claim lifecycle and provenance commit; if the flow cannot complete, invalid input, stale authority, revision conflict or dependency failure returns a typed refusal and no contradictory canonical mutation.
+- **AC-SPC-06 — Ask/answer craft question:** Given a valid request with current identity, authority, source state and required inputs, when the actor invokes this flow, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) Professional actor posts bounded question/answer; credentials shown as context only; Fan reads but cannot post, and (6) return Thread/revision/moderation state commits; if the flow cannot complete, invalid input, stale authority, revision conflict or dependency failure returns a typed refusal and no contradictory canonical mutation.
+- **AC-SPC-07 — Publish contest brief:** Given a valid request with current identity, authority, source state and required inputs, when the actor invokes this flow, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) Organizer defines eligibility, judging, rights, submission use, deadlines and funded/specific prize; rights check required, and (6) return Immutable published brief version created; if the flow cannot complete, invalid input, stale authority, revision conflict or dependency failure returns a typed refusal and no contradictory canonical mutation.
+- **AC-SPC-08 — Submit contest entry:** Given a valid request with current identity, authority, source state and required inputs, when the actor invokes this flow, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) Entrant deliberately submits under frozen brief; intake evaluates/fixes eligibility where possible and pins asset/version, and (6) return Submission/eligibility/evidence state commits; if the flow cannot complete, invalid input, stale authority, revision conflict or dependency failure returns a typed refusal and no contradictory canonical mutation.
+- **AC-SPC-09 — Judge/award contest:** Given a valid request with current identity, authority, source state and required inputs, when the actor invokes this flow, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) Craft-scoped judges disclose conflicts, score/reason under brief; no peer voting; winner eligibility rechecked, and (6) return Reasoned verdict and prize instruction commit; if the flow cannot complete, invalid input, stale authority, revision conflict or dependency failure returns a typed refusal and no contradictory canonical mutation.
+- **AC-SPC-10 — Confirm local jam/open mic:** Given a valid request with current identity, authority, source state and required inputs, when the actor invokes this flow, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) Operator/attendee confirms or flags informal listing attributes/freshness; stale stays visibly unconfirmed, and (6) return Freshness assertion and listing projection update; if the flow cannot complete, invalid input, stale authority, revision conflict or dependency failure returns a typed refusal and no contradictory canonical mutation.
+- **AC-SPC-11 — Join peer listening room:** Given a valid request with current identity, authority, source state and required inputs, when the actor invokes this flow, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) Eligible professional enters scene/peer-scoped room through shared transport; room policy and moderation enforced server-side, and (6) return Participation grant/state without Fan access; if the flow cannot complete, invalid input, stale authority, revision conflict or dependency failure returns a typed refusal and no contradictory canonical mutation.
+- **AC-SPC-12 — Enable conference mode:** Given a valid request with current identity, authority, source state and required inputs, when the actor invokes this flow, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) Verified attendee opts into bounded event window and contact scope; reachability reverts automatically at end, and (6) return Attendee grant/expiry and persistence choices commit; if the flow cannot complete, invalid input, stale authority, revision conflict or dependency failure returns a typed refusal and no contradictory canonical mutation.
+- **AC-SPC-13 — Persist event relationship:** Given a valid request with current identity, authority, source state and required inputs, when the actor invokes this flow, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) Participants explicitly connect/follow/save private contact through owning Shard 11 flows; proximity alone creates nothing, and (6) return Typed downstream edge/contact command records; if the flow cannot complete, invalid input, stale authority, revision conflict or dependency failure returns a typed refusal and no contradictory canonical mutation.
+
+## Interactions
+
+| ID | Interaction | Required behavior | Completion |
+|---|---|---|---|
+| SPC-01 | Discover/join scene | System offers resident/visiting membership from evidenced work location or labelled profile fallback; user confirms; never automatic. | Membership version and evidence/expiry commit. |
+| SPC-02 | Leave/dismiss scene | Leaving writes permanent anti-reinference signal; dismissing offer only suppresses current offer. | Membership/offer state updates without notification. |
+| SPC-03 | View scene | Viewer sees evidence-based density, aggregate aliveness and bounded non-exhaustive samples; roster cannot enumerate. | Viewer-safe projection and freshness labels returned. |
+| SPC-04 | Steward scene | Eligible evidence-backed local role performs bounded curation/reporting after density gate; cannot remove members or intercept safety escalation. | Steward action/audit or safe denial. |
+| SPC-05 | Seed/claim premises/event | System publishes corroborated non-residential premises/events as derived/unclaimed; verified claimant takes forward-looking control only. | Seed/claim lifecycle and provenance commit. |
+| SPC-06 | Ask/answer craft question | Professional actor posts bounded question/answer; credentials shown as context only; Fan reads but cannot post. | Thread/revision/moderation state commits. |
+| SPC-07 | Publish contest brief | Organizer defines eligibility, judging, rights, submission use, deadlines and funded/specific prize; rights check required. | Immutable published brief version created. |
+| SPC-08 | Submit contest entry | Entrant deliberately submits under frozen brief; intake evaluates/fixes eligibility where possible and pins asset/version. | Submission/eligibility/evidence state commits. |
+| SPC-09 | Judge/award contest | Craft-scoped judges disclose conflicts, score/reason under brief; no peer voting; winner eligibility rechecked. | Reasoned verdict and prize instruction commit. |
+| SPC-10 | Confirm local jam/open mic | Operator/attendee confirms or flags informal listing attributes/freshness; stale stays visibly unconfirmed. | Freshness assertion and listing projection update. |
+| SPC-11 | Join peer listening room | Eligible professional enters scene/peer-scoped room through shared transport; room policy and moderation enforced server-side. | Participation grant/state without Fan access. |
+| SPC-12 | Enable conference mode | Verified attendee opts into bounded event window and contact scope; reachability reverts automatically at end. | Attendee grant/expiry and persistence choices commit. |
+| SPC-13 | Persist event relationship | Participants explicitly connect/follow/save private contact through owning Shard 11 flows; proximity alone creates nothing. | Typed downstream edge/contact command records. |
+
+### Global Interaction Rules
+
+- Commands carry `actor_person_id`, `acting_party_id`, `acting_context_version`, `idempotency_key`, `expected_version?` and `request_id`.
+- Shard 06 restrictions/moderation override membership, posting, entry, judging, rooms and networking without leaking reasons.
+- Scene membership grants no ranking boost, stewardship, authority, contact access or event eligibility.
+- Location is declared/evidenced record data; never device-derived. Residential addresses and seeded person profiles are prohibited.
+- Terms, rights, judging and prizes freeze at first contest submission; later correction requires visible versioned cancellation/restart policy.
+- Every freshness/verification claim names source, evidence class, observed-at and expiry; stale/unknown never renders confirmed.
+
+## Contracts
+
+### Core Types and Errors
+
+| Contract | Definition |
+|---|---|
+| `SceneMembershipKind` | `resident | visiting` |
+| `SceneMembershipState` | `offered | active | dormant | left | expired` |
+| `SeedRecordState` | `derived_unclaimed | claimed | objected | suppressed | retired` |
+| `ContestState` | `draft | published | accepting | judging | awarded | cancelled | closed` |
+| `SubmissionState` | `draft | eligible | ineligible | submitted | withdrawn | judged` |
+| `FreshnessState` | `confirmed | attendee_reported | unconfirmed | stale` |
+| `StandardError` | `VALIDATION_FAILED, FORBIDDEN, ACTING_CONTEXT_STALE, VERSION_CONFLICT, IDEMPOTENCY_MISMATCH, MEMBERSHIP_NOT_AUTHORITY, RESIDENTIAL_SEED_PROHIBITED, RIGHTS_CHECK_FAILED, BRIEF_FROZEN, ELIGIBILITY_FAILED, PRIZE_UNFUNDED, ROOM_SCOPE_DENIED` |
+
+### Scene, Participation and Networking
+
+| Contract | Invariant |
+|---|---|
+| `OfferSceneMembership` | Evidence ranks work activity before profile location; geo uses largest defensible local unit; offer requires user confirmation. |
+| `ProjectScene` | Density uses evidenced collaborations, not headcount. Roster non-enumerable; aggregate plus bounded sample only. |
+| `SetStewardship` | Requires approved density and evidence threshold; stewardship never grants member removal or safety-case authority. |
+| `SeedPremises` | Two independent agreeing sources or one first-party fact; no residential address/person record; no search indexing before claim. |
+| `PostCraftContent` | Professional only; no participation points/reputation. Credentials never alter correctness/rank by themselves. |
+| `OpenListeningRoom` | Consumes shared room transport/presence; professional eligibility and room scope enforced, Fan denied. |
+| `ActivateConferenceMode` | Verified attendee/event/window required; direct reachability change expires automatically and cannot override blocks. |
+
+### Contest and Discovery
+
+| Contract | Invariant |
+|---|---|
+| `PublishContest` | Rights defaults entrant-retains plus narrow purpose licence; eligibility/judging/unused-submission/prize exact; failed rights check blocks. |
+| `SubmitEntry` | Deliberate action; pins brief/asset/eligibility versions. Posting/upload alone never enters. |
+| `RecordJudgment` | Judge craft scope/conflict required; public/peer voting absent by default; verdict reasoned and auditable. |
+| `AuthorizePrize` | Cash prize funded/escrow-evidenced before stated; non-cash specific/deliverable; “exposure” invalid. Losing rights revert fully. |
+| `ConfirmInformalListing` | Listing discovery only; Operator confirmation + attendee flags produce freshness, never platform verification. |
+
+## Data Models
+
+| Model | Key relationships and constraints |
+|---|---|
+| `scene` | Partition kind/key, geographic subject, descriptive name, provenance, lifecycle/version; flat overlapping peers. |
+| `scene_membership` | Scene, party, kind, evidence refs, offered/confirmed/expiry, state, negative-reinference flag. |
+| `scene_density_projection` | Scene, evidenced collaboration count/classes/window, aliveness count, thinness label, version. |
+| `scene_stewardship` | Scene, party, basis evidence, capability scope, starts/expires/state/version. |
+| `seed_premises` / `seed_event` | Place/source assertions, corroboration, claim/suppression/index state, provenance/version. |
+| `forum_thread` / `forum_post` | Scene/topic, author party, bounded content/history, moderation/state/version. |
+| `contest` / `contest_brief_version` | Organizer, scope, eligibility, judging, rights/licence, deadline/prize, frozen-at, state. |
+| `contest_submission` | Contest/brief, entrant, asset/version, eligibility snapshot, submitted-at, state. |
+| `judge_appointment` / `contest_verdict` | Judge/craft/conflict, rubric outcomes/reason, submission and version. |
+| `prize_commitment` | Contest, kind/value/deliverable, funding/escrow evidence, eligibility, state. |
+| `informal_event_listing` | Place, recurring-description, informal attributes, source, freshness assertions/state/version. |
+| `listening_room_scope` | Room reference, scene/peer eligibility, policy/moderation version and active window. |
+| `conference_attendee_grant` | Event, party, verification, networking scope, starts/expires/revoked/version. |
+| `space_audit_event` | Immutable actor/context/action/target/before-after/evidence/request hashes. |
+
+### Typed Field and Cardinality Registry
+
+Field typing is deterministic: `*_id: uuid`, `*_at: timestamptz`, `*_date: date`, `*_minor: bigint`, `*_count: integer`, `currency: char(3)`, `is_*|has_*: boolean`, `state|status|type|kind|class: closed enum`, `version: bigint`, ratios `numeric(9,6)`, checksums `text`, and URLs `text`. Every named contract field uses this registry unless its contract declares a stricter type.
+
+- **`scene`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Partition kind/key, geographic subject, descriptive name, provenance, lifecycle/version; flat overlapping peers..
+- **`scene_membership`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Scene, party, kind, evidence refs, offered/confirmed/expiry, state, negative-reinference flag..
+- **`scene_density_projection`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Scene, evidenced collaboration count/classes/window, aliveness count, thinness label, version..
+- **`scene_stewardship`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Scene, party, basis evidence, capability scope, starts/expires/state/version..
+- **`seed_premises`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Place/source assertions, corroboration, claim/suppression/index state, provenance/version..
+- **`seed_event`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Place/source assertions, corroboration, claim/suppression/index state, provenance/version..
+- **`forum_thread`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Scene/topic, author party, bounded content/history, moderation/state/version..
+- **`forum_post`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Scene/topic, author party, bounded content/history, moderation/state/version..
+- **`contest`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Organizer, scope, eligibility, judging, rights/licence, deadline/prize, frozen-at, state..
+- **`contest_brief_version`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Organizer, scope, eligibility, judging, rights/licence, deadline/prize, frozen-at, state..
+- **`contest_submission`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Contest/brief, entrant, asset/version, eligibility snapshot, submitted-at, state..
+- **`judge_appointment`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Judge/craft/conflict, rubric outcomes/reason, submission and version..
+- **`contest_verdict`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Judge/craft/conflict, rubric outcomes/reason, submission and version..
+- **`prize_commitment`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Contest, kind/value/deliverable, funding/escrow evidence, eligibility, state..
+- **`informal_event_listing`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Place, recurring-description, informal attributes, source, freshness assertions/state/version..
+- **`listening_room_scope`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Room reference, scene/peer eligibility, policy/moderation version and active window..
+- **`conference_attendee_grant`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Event, party, verification, networking scope, starts/expires/revoked/version..
+- **`space_audit_event`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: Immutable actor/context/action/target/before-after/evidence/request hashes..
+
+## Access Control
+
+| Actor | Permitted | Explicitly denied |
+|---|---|---|
+| Fan | Read scenes/forums/public contest/local discovery | Post, judge, steward, professional listening rooms or conference networking |
+| Professional party | Confirm own memberships, post, enter contests, join eligible rooms/events | Enumerate scene roster, infer residence or gain authority from membership |
+| Scene steward | Bounded curation/labels/escalation under capability | Remove people, adjudicate reports or alter graph evidence |
+| Contest organizer | Brief, submissions within disclosed scope, judge/prize administration | Change frozen terms, take entrant rights beyond brief or claim unfunded prize |
+| Judge | Assigned submission/rubric and reasoned verdict | Browse unrelated private entries, hide conflicts or weight graph authority |
+| Operator/venue claimant | Claim premises, maintain forward specs/listings/freshness | Delete historical performance records or see creative attendance |
+| Moderator | Assigned content/contest/room safety actions | Scene membership expulsion by default or private CRM access |
+| System worker | Idempotent offers, density, expiry, projection, validation and notifications | Auto-join, device-location inference, fabricated seed activity or peer-vote ranking |
+
+### Access Escalation
+
+- **Fan:** a denial returns a typed reason and preserves canonical state; authority or evidence disputes route to the scoped case/Trust & Safety path, support handles mechanical recovery through an expiring purpose grant, and counsel/capability/privacy hard gates have no role override.
+- **Professional party:** a denial returns a typed reason and preserves canonical state; authority or evidence disputes route to the scoped case/Trust & Safety path, support handles mechanical recovery through an expiring purpose grant, and counsel/capability/privacy hard gates have no role override.
+- **Scene steward:** a denial returns a typed reason and preserves canonical state; authority or evidence disputes route to the scoped case/Trust & Safety path, support handles mechanical recovery through an expiring purpose grant, and counsel/capability/privacy hard gates have no role override.
+- **Contest organizer:** a denial returns a typed reason and preserves canonical state; authority or evidence disputes route to the scoped case/Trust & Safety path, support handles mechanical recovery through an expiring purpose grant, and counsel/capability/privacy hard gates have no role override.
+- **Judge:** a denial returns a typed reason and preserves canonical state; authority or evidence disputes route to the scoped case/Trust & Safety path, support handles mechanical recovery through an expiring purpose grant, and counsel/capability/privacy hard gates have no role override.
+- **Operator/venue claimant:** a denial returns a typed reason and preserves canonical state; authority or evidence disputes route to the scoped case/Trust & Safety path, support handles mechanical recovery through an expiring purpose grant, and counsel/capability/privacy hard gates have no role override.
+- **Moderator:** a denial returns a typed reason and preserves canonical state; authority or evidence disputes route to the scoped case/Trust & Safety path, support handles mechanical recovery through an expiring purpose grant, and counsel/capability/privacy hard gates have no role override.
+- **System worker:** a denial returns a typed reason and preserves canonical state; authority or evidence disputes route to the scoped case/Trust & Safety path, support handles mechanical recovery through an expiring purpose grant, and counsel/capability/privacy hard gates have no role override.
+
+## Accessibility
+
+- Scene density/thinness uses text and evidence explanations, not maps/color alone; membership offers state exact basis and expiration.
+- Non-enumerable scene samples are presented as examples, never implied complete rosters.
+- Forum and contest forms are keyboard complete with preserved drafts, semantic rubrics and clear frozen-term references.
+- Eligibility/right/prize failures identify consequence and remediation before submission; focus moves to exact field.
+- Listening rooms expose captions/text chat/participant controls through shared accessible transport and provide non-audio participation route.
+- Conference expiry and reachability scope are announced before activation and remain visible with absolute end time.
+
+## Event Schemas
+
+| Event | Payload minimum | Consumers |
+|---|---|---|
+| `community.scene-membership.changed.v1` | Scene/party/kind/state/evidence class/expiry/version | Scene projection and safe discovery |
+| `community.scene-density.changed.v1` | Scene/count band/thinness/window/version | Public scene projection |
+| `community.seed-record.changed.v1` | Record/kind/place/state/provenance/version | Discovery/search claim workflow |
+| `community.forum-content.changed.v1` | Thread/post/author party/state/moderation/version | Forum projection |
+| `community.contest.changed.v1` | Contest/brief/state/deadline/rights/prize versions | Discovery and submission UI |
+| `community.contest-submission.changed.v1` | Submission/contest/entrant/state/eligibility/version | Organizer/entrant/judging projectors |
+| `community.informal-listing.changed.v1` | Listing/place/freshness/source/version | Local discovery |
+| `community.event-networking.changed.v1` | Event/party/scope/state/expiry/version | Shard 11 reachability and persistence prompts |
+
+Events exclude residential addresses, scene roster/member lists, private entry assets, judge notes beyond verdict, attendee proximity, room content and unrestricted PII.
+
+## Edge Cases
+
+| Case | Required result |
+|---|---|
+| User relocates | New scene membership adds; old does not auto-remove. |
+| User explicitly leaves | Permanent negative signal prevents re-inference; manual rejoin remains possible. |
+| Scene has little evidence | Render thin honestly; no fabricated members/events or inflated density. |
+| Scene graph/metrics unavailable | Unknown/unavailable, never zero or no community. |
+| Seed source refresh conflicts with claimant | Notify claimant; never overwrite claimed record. |
+| Residential venue appears in source | Reject/suppress regardless corroboration. |
+| Contest receives first submission | Freeze exact brief; amendments require visible cancellation/republication policy. |
+| Prize funding fails | Contest cannot state/publish cash prize; existing contest pauses before new submissions. |
+| Judge conflict found after verdict | Preserve verdict history, invalidate/re-run under brief policy and notify entrants. |
+| Informal listing ages out | Mark stale/unconfirmed; do not silently remove or show current. |
+| Listening room transport degrades | Preserve room scope/moderation; expose degraded mode, never broaden audience. |
+| Conference ends | Reachability reverts automatically; only explicitly persisted Shard 11 edges/contacts remain. |
+| Block/restriction arrives mid-event | Revoke interaction route immediately without reason leak. |
+
+## Surface Applicability
+
+Responsive web/PWA only. Listening rooms consume shared web transport. Location is record-based and never background/device-derived. No enterprise event app or native proximity scanning.
+
+## Edge-Case Coverage Matrix
+
+| Flow | Concurrent access | Invalid input / authority | Deletion, revocation or cascade |
+|---|---|---|---|
+| SPC-01 Discover/join scene | Same idempotency key returns the same result; competing expected revisions serialize one winner and return typed conflict to the loser without duplicate effect. | Schema, authority and policy validation fail before mutation/provider effect and return a typed refusal without existence leakage. | Owner/source deletion or revocation preserves required immutable evidence/tombstone, removes derived access/projection, and queues idempotent dependent invalidation so no orphan remains. |
+| SPC-02 Leave/dismiss scene | Same idempotency key returns the same result; competing expected revisions serialize one winner and return typed conflict to the loser without duplicate effect. | Schema, authority and policy validation fail before mutation/provider effect and return a typed refusal without existence leakage. | Owner/source deletion or revocation preserves required immutable evidence/tombstone, removes derived access/projection, and queues idempotent dependent invalidation so no orphan remains. |
+| SPC-03 View scene | Same idempotency key returns the same result; competing expected revisions serialize one winner and return typed conflict to the loser without duplicate effect. | Schema, authority and policy validation fail before mutation/provider effect and return a typed refusal without existence leakage. | Owner/source deletion or revocation preserves required immutable evidence/tombstone, removes derived access/projection, and queues idempotent dependent invalidation so no orphan remains. |
+| SPC-04 Steward scene | Same idempotency key returns the same result; competing expected revisions serialize one winner and return typed conflict to the loser without duplicate effect. | Schema, authority and policy validation fail before mutation/provider effect and return a typed refusal without existence leakage. | Owner/source deletion or revocation preserves required immutable evidence/tombstone, removes derived access/projection, and queues idempotent dependent invalidation so no orphan remains. |
+| SPC-05 Seed/claim premises/event | Same idempotency key returns the same result; competing expected revisions serialize one winner and return typed conflict to the loser without duplicate effect. | Schema, authority and policy validation fail before mutation/provider effect and return a typed refusal without existence leakage. | Owner/source deletion or revocation preserves required immutable evidence/tombstone, removes derived access/projection, and queues idempotent dependent invalidation so no orphan remains. |
+| SPC-06 Ask/answer craft question | Same idempotency key returns the same result; competing expected revisions serialize one winner and return typed conflict to the loser without duplicate effect. | Schema, authority and policy validation fail before mutation/provider effect and return a typed refusal without existence leakage. | Owner/source deletion or revocation preserves required immutable evidence/tombstone, removes derived access/projection, and queues idempotent dependent invalidation so no orphan remains. |
+| SPC-07 Publish contest brief | Same idempotency key returns the same result; competing expected revisions serialize one winner and return typed conflict to the loser without duplicate effect. | Schema, authority and policy validation fail before mutation/provider effect and return a typed refusal without existence leakage. | Owner/source deletion or revocation preserves required immutable evidence/tombstone, removes derived access/projection, and queues idempotent dependent invalidation so no orphan remains. |
+| SPC-08 Submit contest entry | Same idempotency key returns the same result; competing expected revisions serialize one winner and return typed conflict to the loser without duplicate effect. | Schema, authority and policy validation fail before mutation/provider effect and return a typed refusal without existence leakage. | Owner/source deletion or revocation preserves required immutable evidence/tombstone, removes derived access/projection, and queues idempotent dependent invalidation so no orphan remains. |
+| SPC-09 Judge/award contest | Same idempotency key returns the same result; competing expected revisions serialize one winner and return typed conflict to the loser without duplicate effect. | Schema, authority and policy validation fail before mutation/provider effect and return a typed refusal without existence leakage. | Owner/source deletion or revocation preserves required immutable evidence/tombstone, removes derived access/projection, and queues idempotent dependent invalidation so no orphan remains. |
+| SPC-10 Confirm local jam/open mic | Same idempotency key returns the same result; competing expected revisions serialize one winner and return typed conflict to the loser without duplicate effect. | Schema, authority and policy validation fail before mutation/provider effect and return a typed refusal without existence leakage. | Owner/source deletion or revocation preserves required immutable evidence/tombstone, removes derived access/projection, and queues idempotent dependent invalidation so no orphan remains. |
+| SPC-11 Join peer listening room | Same idempotency key returns the same result; competing expected revisions serialize one winner and return typed conflict to the loser without duplicate effect. | Schema, authority and policy validation fail before mutation/provider effect and return a typed refusal without existence leakage. | Owner/source deletion or revocation preserves required immutable evidence/tombstone, removes derived access/projection, and queues idempotent dependent invalidation so no orphan remains. |
+| SPC-12 Enable conference mode | Same idempotency key returns the same result; competing expected revisions serialize one winner and return typed conflict to the loser without duplicate effect. | Schema, authority and policy validation fail before mutation/provider effect and return a typed refusal without existence leakage. | Owner/source deletion or revocation preserves required immutable evidence/tombstone, removes derived access/projection, and queues idempotent dependent invalidation so no orphan remains. |
+| SPC-13 Persist event relationship | Same idempotency key returns the same result; competing expected revisions serialize one winner and return typed conflict to the loser without duplicate effect. | Schema, authority and policy validation fail before mutation/provider effect and return a typed refusal without existence leakage. | Owner/source deletion or revocation preserves required immutable evidence/tombstone, removes derived access/projection, and queues idempotent dependent invalidation so no orphan remains. |
+
+## Cross-Shard Dependencies
+
+- **Depends on:** [Shard 00](00-infrastructure.md) for requests/events/search/realtime; [Shard 01](01-identity-authority.md) for parties/claims/places; [Shard 06](06-trust-safety.md) for moderation/restrictions; [Shard 11](11-community-graph.md) for follows/reachability/graph persistence.
+- **Depended on by:** None in current decomposition; future consumers use safe typed projections/events, never scene rosters, private submissions or attendee data.
+
+## Deep Dives Needed
+
+- None. Medium-complexity workflows converge within this shard.
+
+### Cross-Shard Section Contract Map
+
+- **Shard 00 — Cross-cutting platform foundation:** consume [Shard 00 — Cross-cutting platform foundation Contracts](00-infrastructure.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 00 — Cross-cutting platform foundation Event Schemas](00-infrastructure.md#event-schemas). Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
+- **Shard 01 — Identity authority and party governance:** consume [Shard 01 — Identity authority and party governance Contracts](01-identity-authority.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 01 — Identity authority and party governance Event Schemas](01-identity-authority.md#event-schemas). Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
+- **Shard 06 — Trust, safety, disputes and evidence:** consume [Shard 06 — Trust, safety, disputes and evidence Contracts](06-trust-safety.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 06 — Trust, safety, disputes and evidence Event Schemas](06-trust-safety.md#event-schemas). Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
+- **Shard 11 — Social graph and collaborator network:** consume [Shard 11 — Social graph and collaborator network Contracts](11-community-graph.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 11 — Social graph and collaborator network Event Schemas](11-community-graph.md#event-schemas). Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
+
+## Changelog
+
+| Date | Change | Workflow | Sections Affected |
+|---|---|---|---|
+| 2026-08-02 | Initial skeleton and source-feature seeding | /decompose-architecture-structure | All |
+| 2026-08-03 | Reconciled 16 sources; locked scene, forum, contest, discovery, room and event-networking contracts | /write-architecture-spec | All |
+
+## Dependency References
+
+- [[specs/ia/00-infrastructure|Shard 00 — Cross-cutting platform foundation]]
+- [[specs/ia/01-identity-authority|Shard 01 — Identity authority and party governance]]
+- [[specs/ia/06-trust-safety|Shard 06 — Trust, safety, disputes and evidence]]
+- [[specs/ia/11-community-graph|Shard 11 — Social graph and collaborator network]]
+
+
+<!-- spec-graph: auto-generated -->
+## Related Specs
+
+### References
+- [[specs/ia/00-infrastructure|Shard 00 — Cross-cutting platform foundation]]
+- [[specs/ia/01-identity-authority|Shard 01 — Identity authority and party governance]]
+- [[specs/ia/06-trust-safety|Shard 06 — Trust, safety, disputes and evidence]]
+- [[specs/ia/11-community-graph|Shard 11 — Social graph and collaborator network]]

@@ -1,0 +1,223 @@
+{
+  "reportKind": "ambiguity-audit-raw",
+  "run": 7,
+  "domain": "21-promotion-marketing",
+  "unitsAudited": 7,
+  "filesRead": 41,
+  "coverageNote": "Read all 41 current Markdown sources across the root domain plus six nested sub-domains (7 units: 7 indexes, 7 cross-cut documents, and 27 feature documents). Applied all eight Vision dimensions per unit.",
+  "applicableCheckpoints": 56,
+  "findings": [
+    {
+      "findingId": "R7-21-D2-001",
+      "unit": "21-promotion-marketing",
+      "severity": "blocking",
+      "dimension": "Persona Specificity",
+      "claim": "The gatekeeper population that the pitching and directory features act on has no settled persona or counterparty representation. The source explicitly records the gap, leaves the fifth-persona decision open, and says no gatekeeper profile exists, so their pain, workaround, success criteria, and switching trigger cannot be specified.",
+      "evidence": [
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/21-promotion-marketing/promotion-marketing-index.md",
+          "line": 147,
+          "excerpt": "**The pitch target is not one of the four personas** — recorded as a structural gap, not a detail"
+        },
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/21-promotion-marketing/promotion-marketing-index.md",
+          "line": 159,
+          "excerpt": "Curators, journalists and programmers are the population the domain exists to reach, have no seat in the persona model"
+        },
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/21-promotion-marketing/promotion-marketing-index.md",
+          "line": 159,
+          "excerpt": "nothing is decided, no gatekeeper profile exists"
+        }
+      ],
+      "forcedInvention": "A downstream spec writer must invent whether a gatekeeper is an off-platform data subject, a counterparty profile, or a fifth platform role, then invent the corresponding interests and access controls.",
+      "failureScenario": "The CRM team builds per-target response-rate and opt-out handling for people with no account or contestation path; a later decision to support an on-platform curator inbox then requires a new identity and permissions model that invalidates those choices."
+    },
+    {
+      "findingId": "R7-21-D4-001",
+      "unit": "21.01-release-campaign-planner",
+      "severity": "blocking",
+      "dimension": "Constraint Explicitness",
+      "claim": "The asset-readiness specification simultaneously retains the rights-clearance boundary as unresolved and declares the same question resolved with the opposite implementation boundary. A reader cannot determine whether an uncleared sample blocks this gate or only downstream release/delivery.",
+      "evidence": [
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/21-promotion-marketing/21.01-release-campaign-planner/21.01.02-asset-readiness-gate.md",
+          "line": 84,
+          "excerpt": "Boundary unresolved (see Q-01)."
+        },
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/21-promotion-marketing/21.01-release-campaign-planner/21.01.02-asset-readiness-gate.md",
+          "line": 98,
+          "excerpt": "RESOLVED — clearance blocks release/delivery, not asset readiness, and this gate never adjudicates it."
+        }
+      ],
+      "forcedInvention": "An implementer must choose whether clearance participates in the asset gate's Ready/Blocked transition or is only surfaced on the dependent delivery row.",
+      "failureScenario": "For a declared but uncleared sample marked final, one implementation blocks the asset gate and replans the campaign while another leaves the asset Ready and blocks only release delivery, producing incompatible release-state behavior."
+    },
+    {
+      "findingId": "R7-21-D4-002",
+      "unit": "21.03-pitch-targets-crm",
+      "severity": "blocking",
+      "dimension": "Constraint Explicitness",
+      "claim": "Private CRM notes are acknowledged as a defamatory and special-category-data exposure, but the source only flags it as a probable security concern. Its open-question register covers erasure, band ownership, and import instead; it assigns no owner, deadline, or required policy for this compliance constraint.",
+      "evidence": [
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/21-promotion-marketing/21.03-pitch-targets-crm/21.03.02-private-contact-crm.md",
+          "line": 56,
+          "excerpt": "Artist stores something in notes that is defamatory or is special-category data ... flagged rather than designed"
+        },
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/21-promotion-marketing/21.03-pitch-targets-crm/21.03.02-private-contact-crm.md",
+          "line": 99,
+          "excerpt": "Does a GDPR erasure request against the directory reach an artist's private address book?"
+        },
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/21-promotion-marketing/21.03-pitch-targets-crm/21.03.02-private-contact-crm.md",
+          "line": 101,
+          "excerpt": "Should contact import be supported at all?"
+        }
+      ],
+      "forcedInvention": "The implementer must invent whether notes accept, detect, redact, retain, export, or restrict special-category and defamatory third-party content.",
+      "failureScenario": "A musician records a journalist's health information in a contact note; one implementation stores and exports it indefinitely while another rejects it, because neither the allowed-content rule nor the data lifecycle is defined."
+    },
+    {
+      "findingId": "R7-21-D7-001",
+      "unit": "all 7 units",
+      "severity": "blocking",
+      "dimension": "Open Question Resolution",
+      "claim": "All 34 current open-question tables use only Question, Owner, and Deferred To. The audit counted 98 unresolved question rows: each has an owner, but none has a deadline field; a pipeline route is not a deadline. This fails the required owner + deadline + blocked-decision control for every active question.",
+      "evidence": [
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/21-promotion-marketing/promotion-marketing-index.md",
+          "line": 157,
+          "excerpt": "| # | Question | Owner | Deferred To |"
+        },
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/21-promotion-marketing/21.01-release-campaign-planner/21.01-release-campaign-planner-index.md",
+          "line": 53,
+          "excerpt": "| # | Question | Owner | Deferred To |"
+        },
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/21-promotion-marketing/21.02-pitching-outreach/21.02-pitching-outreach-index.md",
+          "line": 72,
+          "excerpt": "| # | Question | Owner | Deferred To |"
+        },
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/21-promotion-marketing/21.03-pitch-targets-crm/21.03-pitch-targets-crm-index.md",
+          "line": 65,
+          "excerpt": "| # | Question | Owner | Deferred To |"
+        },
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/21-promotion-marketing/21.04-smart-links-presave-attribution/21.04.02-presave-preadd-authorization.md",
+          "line": 119,
+          "excerpt": "| # | Question | Owner | Deferred To |"
+        },
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/21-promotion-marketing/21.05-paid-promotion/21.05-paid-promotion-index.md",
+          "line": 67,
+          "excerpt": "| # | Question | Owner | Deferred To |"
+        },
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/21-promotion-marketing/21.08-event-tour-marketing/21.08-event-tour-marketing-index.md",
+          "line": 62,
+          "excerpt": "| # | Question | Owner | Deferred To |"
+        },
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/21-promotion-marketing/promotion-marketing-index.md",
+          "line": 160,
+          "excerpt": "Do pitch emails send as the artist or as WeJammin? ... | User | `/create-prd` |"
+        }
+      ],
+      "forcedInvention": "When a deferred stage begins before the question is answered, its implementer must select the unresolved product or architecture branch without an authorized decision date.",
+      "failureScenario": "The rate-limit team must build around the sender-identity question: one path makes artist-sent limits advisory, while another makes WeJammin-sent limits globally enforceable. With only `/create-prd` and no due date, either behavior can be shipped before the prerequisite decision is made."
+    },
+    {
+      "findingId": "R7-21-D5-001",
+      "unit": "21.04-smart-links-presave-attribution and 21.08-event-tour-marketing",
+      "severity": "warning",
+      "dimension": "Success Measurability",
+      "claim": "The specification identifies decision measures but supplies no numeric success target or timeframe. Pre-save conversion is explicitly unobservable, while the proposed tour metric is only named as cost per ticket sold and the Recovered state is merely trajectory improved.",
+      "evidence": [
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/21-promotion-marketing/21.04-smart-links-presave-attribution/21.04.03-campaign-attribution.md",
+          "line": 80,
+          "excerpt": "The pre-save count is a vanity metric, and the metric that would matter (pre-save → release-day stream conversion) is unobservable to us"
+        },
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/21-promotion-marketing/21.08-event-tour-marketing/21.08.03-ticket-sale-attribution.md",
+          "line": 85,
+          "excerpt": "The number that matters is cost per ticket sold"
+        },
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/21-promotion-marketing/21.08-event-tour-marketing/21.08.02-geo-date-promotion-soft-seat.md",
+          "line": 75,
+          "excerpt": "| Recovered | Trajectory improved | Attribution says whether the spend did it (21.08.03) |"
+        }
+      ],
+      "forcedInvention": "An implementer must invent the acceptable cost-per-ticket target, comparison baseline, and evaluation period that turn an observed trajectory into a success or stop-spend decision.",
+      "failureScenario": "After a boost improves sales, one team labels the date Recovered and recommends more spend while another treats the same cost per ticket as failure, because neither the target nor the timeframe is specified."
+    },
+    {
+      "findingId": "R7-21-D7-002",
+      "unit": "21.01, 21.02, 21.05, and 21.08 cross-cuts",
+      "severity": "warning",
+      "dimension": "Open Question Resolution",
+      "claim": "Five cross-cut rows explicitly leave implementation-shaping choices unresolved or needing validation, but record no owner, deadline, or decision block. These are open questions outside the controlled question registers.",
+      "evidence": [
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/21-promotion-marketing/21.01-release-campaign-planner/21.01-release-campaign-planner-cx.md",
+          "line": 13,
+          "excerpt": "Needs validation against real campaign data before we design the gate as an early-warning system."
+        },
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/21-promotion-marketing/21.02-pitching-outreach/21.02-pitching-outreach-cx.md",
+          "line": 13,
+          "excerpt": "Whether this needs a system-level guard or is merely a copy warning is unresolved."
+        },
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/21-promotion-marketing/21.02-pitching-outreach/21.02-pitching-outreach-cx.md",
+          "line": 14,
+          "excerpt": "whether the system should model that contention or leave it to the human is open."
+        },
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/21-promotion-marketing/21.05-paid-promotion/21.05-paid-promotion-cx.md",
+          "line": 12,
+          "excerpt": "Whether the platform should model the trade-off or simply show both spends is unresolved"
+        },
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/21-promotion-marketing/21.08-event-tour-marketing/21.08-event-tour-marketing-cx.md",
+          "line": 13,
+          "excerpt": "Whether this is a re-announce or a new announce is unresolved and matters for fan fatigue."
+        }
+      ],
+      "forcedInvention": "Each receiving team must choose a behavior—early-warning trigger, confidentiality enforcement, exclusive-contention handling, budget guidance, or announce type—without a designated decision owner.",
+      "failureScenario": "One press-composer implementation treats an unpublished DSP pitch as a copy warning while another treats it as an enforced confidentiality rule, allowing one surface to disclose the pitch status that another surface forbids."
+    },
+    {
+      "findingId": "R7-21-D8-001",
+      "unit": "21-promotion-marketing",
+      "severity": "warning",
+      "dimension": "Structural Compliance",
+      "claim": "The root child summary says the domain has eight children, but the current child table is numbered through 09. The source does not resolve whether the EPK is a distinct ninth child or part of the stated eight-child structure.",
+      "evidence": [
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/21-promotion-marketing/promotion-marketing-index.md",
+          "line": 62,
+          "excerpt": "8 children from 12 candidates: 6 sub-domains, 2 features, plus 1 Deep Think addition (21.09)."
+        },
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/21-promotion-marketing/promotion-marketing-index.md",
+          "line": 75,
+          "excerpt": "| 01 | Release Campaign Planner | sub-domain |"
+        },
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/21-promotion-marketing/promotion-marketing-index.md",
+          "line": 83,
+          "excerpt": "| 09 | Campaign Press Kit (EPK) & Asset Pack | feature |"
+        }
+      ],
+      "forcedInvention": "A planner must decide whether 21.09 is a required independent child or is implicitly folded into another child to reconcile the count.",
+      "failureScenario": "A phase plan generated from the eight-child summary omits the EPK slice, while a plan generated from the table includes it and its coverage cross-cuts, leaving inconsistent delivery scope."
+    }
+  ]
+}

@@ -93,7 +93,7 @@ anyone computes it.
 
 **Synthesis questions answered**:
 1. **Shared state conflict**: The setlist owns durations; the schedule owns times. The schedule reads and never writes — but measured durations from the performed setlist (18.06.04) flow back into the plan, so the loop closes through a third object.
-2. **Trigger chain**: Setlist change → set duration → schedule → curfew re-check. A song added at 17:00 can breach a licence condition, and nobody currently makes that connection.
+2. **Trigger chain**: Setlist change → set duration → schedule → curfew re-check. A song added at 17:00 can breach the room's hard stop — a statutory condition where the regime profile declares an instrument, the Operator's own stated ceiling where it does not (18.07.02 D-06; `16.02.03` D-01/D-13) — and nobody currently makes that connection.
 3. **Permission intersection**: Band members have Full access to the setlist; a re-order by a member can therefore move a venue's curfew margin. **Permission in the act's most private document reaches into the venue's legal exposure** — a genuinely surprising path.
 4. **Notification fan-out**: A margin change should reach the Operator, because they pay the fine (18.07.02 DT-05).
 5. **State transition conflict**: Estimated durations produce an estimated margin (±8 min on a 4-min margin means nobody knows). The uncertainty must propagate visibly and is the strongest argument for CX-12.
@@ -176,7 +176,8 @@ in money moving, which is why it's the clearest argument that 18 and 13/16 belon
 - **Fan**: no visibility.
 
 **Synthesis questions answered**:
-1. **Shared state conflict**: Owned items reference registry 15; rented items belong to a supplier and exist for one date. They cannot share an ownership model (18.09 Q-02, unresolved).
+1. **Shared state conflict**: Owned items reference registry 15; rented items are supplier-owned,
+date-scoped manifest ghosts. They deliberately do not share an ownership model (18.09.01 D-05).
 2. **Trigger chain**: Shortfall → rental → manifest → plot → load-out check. If the rental never arrives, the manifest promised something that doesn't exist.
 3. **Permission intersection**: A venue-supplied rental is the Operator's item on the act's manifest — item-level visibility inside one document.
 4. **Notification fan-out**: The aggregate insight (rented on 9 of 11 dates → carry it) exists only because the tour is one object (CX-10).
@@ -427,3 +428,20 @@ the settlement itself die silently.
 > - **Three edges depend on the domain's weakest link.** CX-06 (the cascade), CX-08 (the venue-truth loop) and CX-16 (the whole provenance/settlement chain) all require someone to record what actually happened (18.07.03 DT-03 / 18.06.04). CX-16 is the button they all wait on.
 > - **CX-13, CX-14, CX-15 and CX-16 are new in the Step 6 synthesis.** CX-13 adds Safety/Permits as the advance's non-downgradable third source; CX-14 promotes the freeze to an explicit change-control hub spanning three sub-domains; CX-15 resolves the show-state-vs-per-act-completeness tension; CX-16 makes the `performed` press the domain's single point of failure.
 > - The rejected pairs are mostly **subject-matter adjacency**: weather and water, merch and rooms, insurance and insurance, costs and borders. The discipline is shared state or a direct trigger — not "these things co-occur at a show".
+
+
+<!-- spec-graph: auto-generated -->
+## Related Specs
+
+### Constrained by
+- [[decisions.md#d-01|D-01]]
+- [[decisions.md#d-02|D-02]]
+- [[decisions.md#d-03|D-03]]
+- [[decisions.md#d-04|D-04]]
+- [[decisions.md#d-05|D-05]]
+- [[decisions.md#d-06|D-06]]
+- [[decisions.md#d-15|D-15]]
+- [[decisions.md#d-13|D-13]]
+- [[decisions.md#d-18|D-18]]
+- [[decisions.md#d-14|D-14]]
+- [[decisions.md#d-08|D-08]]

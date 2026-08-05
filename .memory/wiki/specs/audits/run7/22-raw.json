@@ -1,0 +1,162 @@
+{
+  "reportKind": "ambiguity-audit-raw",
+  "run": 7,
+  "domain": "22-analytics-market-intelligence",
+  "unitsAudited": 9,
+  "filesRead": 44,
+  "coverageNote": "Read all 44 current source Markdown files recursively: the root domain unit (2 files) and eight child units (42 files). Applied the eight Vision rubric dimensions at the unit level (72 checkpoints); no audit/history paths were read and no source files were edited.",
+  "applicableCheckpoints": 72,
+  "findings": [
+    {
+      "findingId": "R7-22-001",
+      "unit": "22-analytics-market-intelligence",
+      "severity": "blocking",
+      "dimension": "Vision Dimension 7 — Open Question Resolution",
+      "claim": "The decision register records only Question, Owner, and Deferred To; it omits both a deadline and the decision blocked. Active PENDING questions also bypass the register without an owner.",
+      "evidence": [
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/22-analytics-market-intelligence/analytics-market-intelligence-index.md",
+          "line": 134,
+          "excerpt": "| # | Question | Owner | Deferred To |"
+        },
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/22-analytics-market-intelligence/22.01-source-connections-ingestion/22.01-source-connections-ingestion-cx.md",
+          "line": 73,
+          "excerpt": "1. **Shared state conflict**: unresolved — `[PENDING — /ideate-discover Step 5 deepening]`. Candidate precedence: live DSP connection > distributor file > manual entry, with the superseded value retained and inspectable rather than overwritten."
+        },
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/22-analytics-market-intelligence/22.02-external-identity-catalog-matching/22.02-external-identity-catalog-matching-cx.md",
+          "line": 38,
+          "excerpt": "5. **State transition conflict**: yes — a catalog match confirmed while its parent artist match is being contested. Candidate: freeze dependent confirmations while a parent is contested. `[PENDING — Step 5]`."
+        },
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/22-analytics-market-intelligence/22.07-ar-scouting-watchlists/22.07-ar-scouting-watchlists-cx.md",
+          "line": 72,
+          "excerpt": "4. **Notification fan-out**: does revocation notify the scouts who were watching? Telling them is itself a disclosure (\"someone stopped letting you watch them\"); not telling them leaves a silently-dead watchlist. `[PENDING — Step 5]`."
+        }
+      ],
+      "forcedInvention": "A delivery lead must invent a deadline and determine which implementation decision each unresolved item gates, including source precedence, match-race handling, and revocation notification.",
+      "failureScenario": "Teams can start dependent work while treating Deferred To as optional rather than time-bound, choose incompatible defaults, and later expose contested or superseded metrics in different report paths."
+    },
+    {
+      "findingId": "R7-22-002",
+      "unit": "22.01-source-connections-ingestion",
+      "severity": "blocking",
+      "dimension": "Vision Dimension 3 — Feature Completeness",
+      "claim": "Conflicting live-DSP, distributor, and manual metrics have no confirmed precedence, override authorization, or notification behavior.",
+      "evidence": [
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/22-analytics-market-intelligence/22.01-source-connections-ingestion/22.01-source-connections-ingestion-cx.md",
+          "line": 63,
+          "excerpt": "**Relationship**: Both write the same logical series. When they disagree for the same date, someone must win, and the losing number must not vanish."
+        },
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/22-analytics-market-intelligence/22.01-source-connections-ingestion/22.01-source-connections-ingestion-cx.md",
+          "line": 73,
+          "excerpt": "Candidate precedence: live DSP connection > distributor file > manual entry, with the superseded value retained and inspectable rather than overwritten."
+        },
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/22-analytics-market-intelligence/22.01-source-connections-ingestion/22.01-source-connections-ingestion-cx.md",
+          "line": 75,
+          "excerpt": "3. **Permission intersection**: whoever can import can override — which is a quiet integrity risk if a delegated manager can silently inflate a number the artist then quotes commercially. Flagged."
+        },
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/22-analytics-market-intelligence/22.01-source-connections-ingestion/22.01.04-manual-file-based-metric-import.md",
+          "line": 50,
+          "excerpt": "| File disagrees with a live connection for the same date | Conflict flagged; neither value is destroyed | Side-by-side with the precedence rule applied and the superseded value inspectable. See `22.01-source-connections-ingestion-cx.md#CX-03` |"
+        }
+      ],
+      "forcedInvention": "For each colliding date, an implementer must choose the canonical source, whether a delegated importer may replace it, and who receives a conflict or override notification.",
+      "failureScenario": "A live DSP series reports 100 streams while a delegated manager imports 300; one implementation renders 100 and another renders 300, allowing an unauthorized inflated total to reach dashboards or proof."
+    },
+    {
+      "findingId": "R7-22-003",
+      "unit": "22.02-external-identity-catalog-matching",
+      "severity": "blocking",
+      "dimension": "Vision Dimension 3 — Feature Completeness",
+      "claim": "The parent-artist-match revocation and contested-parent race lack a state-transition contract for dependent catalog matches.",
+      "evidence": [
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/22-analytics-market-intelligence/22.02-external-identity-catalog-matching/22.02-external-identity-catalog-matching-cx.md",
+          "line": 35,
+          "excerpt": "Sync-vs-async is `[PENDING — Step 5]`, but the cascade itself is non-negotiable."
+        },
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/22-analytics-market-intelligence/22.02-external-identity-catalog-matching/22.02-external-identity-catalog-matching-cx.md",
+          "line": 38,
+          "excerpt": "a catalog match confirmed while its parent artist match is being contested. Candidate: freeze dependent confirmations while a parent is contested. `[PENDING — Step 5]`."
+        },
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/22-analytics-market-intelligence/22.02-external-identity-catalog-matching/22.02.01-external-artist-profile-matching-claiming.md",
+          "line": 80,
+          "excerpt": "Binding-uniqueness check fails the second write. First confirm binds; second returns `409 {error:\"profile_already_claimed\", code:\"MATCH_CONFLICT\"}` and the profile moves to `contested`; neither binding is treated as settled once contested — the first is frozen too."
+        }
+      ],
+      "forcedInvention": "An implementer must choose the transactional boundary, temporary visibility state, and retry behavior when a parent contest races a child catalog confirmation.",
+      "failureScenario": "A catalog confirmation completes as its parent claim becomes contested; one worker publishes the catalog's metrics while another quarantines them, causing a contested claimant to retain visible data or proof."
+    },
+    {
+      "findingId": "R7-22-004",
+      "unit": "22.03-playlist-chart-tracking",
+      "severity": "warning",
+      "dimension": "Vision Dimension 3 — Feature Completeness",
+      "claim": "Placement tracking identifies an unobservable remove-and-readd interval but does not specify whether the timeline must disclose that blind spot or how it affects event-derived features.",
+      "evidence": [
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/22-analytics-market-intelligence/22.03-playlist-chart-tracking/22.03-playlist-chart-tracking-cx.md",
+          "line": 36,
+          "excerpt": "5. **State transition conflict**: a placement removed and re-added inside one sync window may be observed as no event at all. Polling cannot see transitions it never sampled — an honest limit of the method, recorded rather than hidden. `[PENDING — Step 5]` for whether that matters."
+        }
+      ],
+      "forcedInvention": "An implementer must choose between silently recording no event, exposing an uncertainty/coverage state, or changing the collection contract before building placement history and alerts.",
+      "failureScenario": "A playlist drops and restores a track between polls; one implementation shows uninterrupted placement while another warns of an unobserved interval, so users receive incompatible causal histories and alerts."
+    },
+    {
+      "findingId": "R7-22-005",
+      "unit": "22.06-streaming-fraud-detection",
+      "severity": "blocking",
+      "dimension": "Vision Dimension 3 — Feature Completeness",
+      "claim": "The vendor-risk score's Disputed state has no defined visibility or resolution behavior despite the feature's acknowledged reputational harm.",
+      "evidence": [
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/22-analytics-market-intelligence/22.06-streaming-fraud-detection/22.06.02-promo-vendor-risk-scoring.md",
+          "line": 54,
+          "excerpt": "| Vendor disputes their score | Real business, real reputational harm | `[PENDING — Step 5]` — is there a right of reply? A vendor is not our user and has no account. See Q-01 |"
+        },
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/22-analytics-market-intelligence/22.06-streaming-fraud-detection/22.06.02-promo-vendor-risk-scoring.md",
+          "line": 67,
+          "excerpt": "| Disputed | Vendor contests | `[PENDING — Step 5]` |"
+        },
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/22-analytics-market-intelligence/22.06-streaming-fraud-detection/22.06.02-promo-vendor-risk-scoring.md",
+          "line": 97,
+          "excerpt": "| Q-01 | Does a vendor get a right of reply? They are not our user and have no account — but they are the subject of a reputational claim we publish. | User | `/create-prd-security` |"
+        }
+      ],
+      "forcedInvention": "An implementer must decide whether a disputed score remains public, is suspended, is labelled, or is replaced by a response workflow, and what evidence can change it.",
+      "failureScenario": "A vendor disputes a high-risk score; one implementation keeps it visible as a settled fact while another hides it, producing materially different artist decisions and legal exposure."
+    },
+    {
+      "findingId": "R7-22-006",
+      "unit": "22.07-ar-scouting-watchlists",
+      "severity": "blocking",
+      "dimension": "Vision Dimension 4 — Constraint Explicitness",
+      "claim": "The minors default-off decision lacks an age-assurance and unknown-age rule, so its safety/compliance constraint cannot be applied consistently.",
+      "evidence": [
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/22-analytics-market-intelligence/22.07-ar-scouting-watchlists/22.07.04-scouted-artist-visibility-consent.md",
+          "line": 84,
+          "excerpt": "| Minor / under-18 user | Scouting a child | `[PENDING]` — D-13 flags age assurance as a live statutory duty. Default-off for minors is the only defensible position, and it may be legally required |"
+        },
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/22-analytics-market-intelligence/22.07-ar-scouting-watchlists/22.07.04-scouted-artist-visibility-consent.md",
+          "line": 120,
+          "excerpt": "| D-05 | Minors are **default-off**, pending legal review | D-13's age assurance duty; scouting a child is not a thing to get wrong once. |"
+        }
+      ],
+      "forcedInvention": "An implementer must decide whether an account with missing or unverified age is treated as a minor, what age evidence is required, and when consent can become eligible.",
+      "failureScenario": "Treating unknown age as adult can expose an actual minor to scouting; treating it as minor can block consenting adults indefinitely. Both outcomes contradict the intended default-off protection."
+    }
+  ]
+}

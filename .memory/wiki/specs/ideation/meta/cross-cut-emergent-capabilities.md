@@ -270,3 +270,26 @@ pattern of a pure cross-cut consumer, arguing *for* the split.
 Delivery Layer, the Graded-Attestation primitive, and the Outbound Deliverability Commons). Carry **one** genuine
 domain-merge decision forward — **07/08 (Overdub)** — and four shared-owner/relocation decisions (17/18 tour
 container, 17/19 count binding, 13/15 unit owner, 14.05 & 13.10 relocation) as explicit ratification items.
+
+**Open-decision governance — 07/08 (Overdub).** The **Owner** is User; the hard decision deadline is
+immediately before `/create-prd` begins; and the decision blocks whether domain 08 remains a separate
+vision domain or folds into domain 07. The four shared-owner and relocation items above are architecture
+ratification work for the named downstream stages; they do not reopen the 24-domain decision.
+
+
+<!-- spec-graph: auto-generated -->
+## Related Specs
+
+### Constrained by
+- [[decisions.md#d-17|D-17]]
+- [[decisions.md#d-07|D-07]]
+- [[decisions.md#d-01|D-01]]
+- [[decisions.md#d-09|D-09]]
+- [[decisions.md#d-15|D-15]]
+- [[decisions.md#d-04|D-04]]
+- [[decisions.md#d-13|D-13]]
+- [[decisions.md#d-21|D-21]]
+- [[decisions.md#d-20|D-20]]
+- [[decisions.md#d-18|D-18]]
+- [[decisions.md#d-05|D-05]]
+- [[decisions.md#d-08|D-08]]

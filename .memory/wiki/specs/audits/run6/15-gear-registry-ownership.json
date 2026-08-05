@@ -1,0 +1,136 @@
+{
+  "domain": "15-gear-registry-ownership",
+  "unitsAudited": 6,
+  "filesRead": 36,
+  "coverageNote": "Enumerated from disk: 6 units (the domain directory itself plus 15.01, 15.02, 15.05, 15.06, 15.07), 36 .md files — exactly matching the expected 6 units / 36 files. Every file read in full through the 3a implementer simulation, 3b rubric scoring, 3c devil's-advocate pass. Rubric dimensions 4 (Constraint Explicitness), 5 (Success Measurability) and 6 (Competitive Positioning) are marked N/A across all six units: budget/timeline/compliance axes, launch metrics and competitor analysis are owned by meta/constraints.md, meta/problem-statement.md and meta/competitive-landscape.md, which the domain explicitly references rather than redefines ('Persona definitions live in meta/personas.md — referenced, never redefined here'). Dimension 2 is scored applicable and ✅ because every index carries a populated Role Matrix and every feature file a Role Lens with per-role specific behaviour. Roughly a dozen further candidate findings were dropped in 3c — notably 'does a contested flag block a listing' (answered by 15.02.04's state table), 'per-item value public on a collection' (the 15.04 row is aggregate-scoped), and ~6 stale [PENDING — /ideate-discover Step 5 deepening] inline markers in 15.06/15.07 whose items are properly tracked by owner-bearing Open Question rows in the same unit.",
+  "units": [
+    {
+      "unit": "15-gear-registry-ownership",
+      "applicableCheckpoints": 5,
+      "points": 1.0,
+      "naDimensions": [4, 5, 6]
+    },
+    {
+      "unit": "15.01-instrument-identity-provenance",
+      "applicableCheckpoints": 5,
+      "points": 1.0,
+      "naDimensions": [4, 5, 6]
+    },
+    {
+      "unit": "15.02-stolen-gear-registry-recovery",
+      "applicableCheckpoints": 5,
+      "points": 1.0,
+      "naDimensions": [4, 5, 6]
+    },
+    {
+      "unit": "15.05-valuation-appraisal-insurance",
+      "applicableCheckpoints": 5,
+      "points": 0.5,
+      "naDimensions": [4, 5, 6]
+    },
+    {
+      "unit": "15.06-rig-profile-compatibility",
+      "applicableCheckpoints": 5,
+      "points": 0,
+      "naDimensions": [4, 5, 6]
+    },
+    {
+      "unit": "15.07-studio-backline-asset-register",
+      "applicableCheckpoints": 5,
+      "points": 0,
+      "naDimensions": [4, 5, 6]
+    }
+  ],
+  "findings": [
+    {
+      "findingId": "15-gear-registry-ownership#001",
+      "unit": "15-gear-registry-ownership",
+      "severity": "blocking",
+      "dimension": 3,
+      "claim": "15.09 Gear Discography gives the gear owner a consent-to-display lever over discography links in its Role Lens, while its Decisions, its own edge table and the domain CX file state that a link's visibility is owned entirely by the credit and cannot be narrowed. Both statements are unmarked, and they cannot both hold for an already-public credit.",
+      "evidence": "15.09-gear-discography.md:23 Musician Role Lens — \"Sees which of their gear appears on which records, and **consents to or declines display** — but cannot assert a link\"; :25 Operator — \"They consent to display of their room's gear\"; :26 Fan — \"Sees only what everyone consented to publish — never a hidden link, never a hidden-link count\". Against: :117 D-02 — \"The link inherits the credit's visibility and never widens it\"; :74 edge case — \"Owner privacy narrows *their* surface; it cannot retract an already-public credit — the link never widens but also cannot un-widen a fact the session already published\"; gear-registry-ownership-cx.md:371 CX-14 — \"The collection setting governs the owner's surface; the discography link's visibility is owned by the credit (domain 02). They can disagree, and the credit wins for the public fact.\"",
+      "forcedInvention": "Whether an owner-side veto exists on the public gear-discography surface (the passport panel and marketplace listing). One implementer builds a per-link owner consent flag that suppresses display; another builds pure inheritance from the domain-02 credit with no owner lever at all. The Musician's and Operator's declared access level in every Role Matrix is ⚙️ Config, which is vacuous under the second reading."
+    },
+    {
+      "findingId": "15-gear-registry-ownership#002",
+      "unit": "15-gear-registry-ownership",
+      "severity": "warning",
+      "dimension": 7,
+      "claim": "The domain CX file states twice that standing to file a theft report is unresolved, and points at a question number that does not carry that subject, while both features that own the rule record it as ratified and closed.",
+      "evidence": "gear-registry-ownership-cx.md:228 CX-08 — \"When owner and holder differ, both may file, but standing rules are unresolved (Q-04).\"; :239 — \"3. **Permission intersection**: Who has standing to file? Unresolved — 15.08 Q-01.\" Against: 15.08-custody-loans-consignment.md:114 Q-01 — \"**RESOLVED (D-64 / DQ-MG-04, ratified 2026-07-21)** — **both**, bounded\"; 15.02-.../15.02.01-theft-report-serial-flagging.md:99 Q-01 — \"**Resolved by DQ-MG-04 / D-05 (2026-07-21):** the owner **or** a party in a custody state `15.08` already enumerates may file, with filing capacity recorded on the flag.\" The cited \"(Q-04)\" resolves to gear-registry-ownership-index.md:137 Q-04, which is the authenticity-assertion question, not a standing question.",
+      "forcedInvention": "An implementer reading the domain cross-cut treats theft-report standing as an undecided permission and defers it; an implementer reading the features implements owner-or-custodian filing with capacity recorded. The dangling (Q-04) pointer gives no way to reconcile them from the CX file alone."
+    },
+    {
+      "findingId": "15-gear-registry-ownership#003",
+      "unit": "15-gear-registry-ownership",
+      "severity": "warning",
+      "dimension": 7,
+      "claim": "A genuinely open permission item — standing to file a theft report under `stale` or `disputed` custody — is stated only inside a question row marked RESOLVED, so it carries no owner and no deferral target anywhere in the tree.",
+      "evidence": "15.08-custody-loans-consignment.md:114 Q-01 — row headline is \"**RESOLVED (D-64 / DQ-MG-04, ratified 2026-07-21)**\", Deferred To column is \"✅ [ideation-index.md](../ideation-index.md) D-64 · [15.02.01](...) Q-01\", yet the row's final sentence reads \"Standing under `stale` and `disputed` custody remains open.\" The same residual appears in the edge table at :60 — \"Standing under `stale` and `disputed` custody is still open\" — and 15.02.01-theft-report-serial-flagging.md:99 Q-01, also marked resolved, does not mention the residual at all. `stale` and `disputed` are both first-class custody states (15.08:75, :76).",
+      "forcedInvention": "Whether a holder whose custody record has decayed to `stale`, or whose custody is `disputed` between holder and owner, may file a theft flag. Both states are enumerated as real, the answer is declared open, and no owner or downstream stage is assigned to take it."
+    },
+    {
+      "findingId": "15-gear-registry-ownership#004",
+      "unit": "15.01-instrument-identity-provenance",
+      "severity": "warning",
+      "dimension": 3,
+      "claim": "A consented duplicate merge is specified to produce a new third record, while the same feature forbids any record from having a terminal state or being deleted — leaving the disposition of the two source records unspecified and unsatisfiable as written.",
+      "evidence": "15.01.01-gear-record-serial-identity.md:141 — \"**Merge strategy on a genuine duplicate** … Records are **never auto-merged**. A merge requires both claim-holders to consent, and produces a new record whose chain contains both source chains as explicit, labelled branches\". Against :221 D-10 — \"**The record has no terminal state.** \\\"Destroyed\\\" is an appended, reversible fact; deletion is not offered\". 15.01.05-non-serialized-contested-identity.md:94 D-04 speaks only to the pre-consent state — \"two records resolving to one identity key **never auto-merge** — both are retained, both claim-holders are notified, and a merge requires mutual consent\".",
+      "forcedInvention": "What happens to the two source records after a consented merge: tombstone-and-redirect (which invents a terminal state D-10 forbids), silent deletion (explicitly not offered), or leave both live alongside the merged record (which defeats the merge and leaves three records matchable by point-of-sale screening on one composite key)."
+    },
+    {
+      "findingId": "15-gear-registry-ownership#005",
+      "unit": "15.01-instrument-identity-provenance",
+      "severity": "warning",
+      "dimension": 7,
+      "claim": "A ratified decision declares 15.01.05 the canonical author of the identity-confidence value set and forbids 15.01.01 from defining its own, but 15.01.05 contains no enumeration at all — and the only enumeration on disk, in 15.01.01, is self-declared provisional and flagged pending synthesis against a set that does not exist.",
+      "evidence": "15.01.05-non-serialized-contested-identity.md:93 D-03 — \"**DQ-MG-05:** this file **authors** the canonical identity-confidence value set; `15.01.01` renders it and never defines its own … The values are the six already in use on disk\" — yet the file lists no value set, mentioning only \"photo-bound, no serial\" (:45) and \"era-unknown\" (:57) in passing. 15.01.01-gear-record-serial-identity.md:87-94 carries the only six-value table, and :96-98 states \"15.01.05 owns resolution logic and the authoritative value set; this feature owns the render and the record's behaviour at each level. The vocabulary above is proposed from the render side and is flagged for Step 6 synthesis against 15.01.05's.\" No owner or pipeline stage is attached to that flag, and no second set exists to synthesise against.",
+      "forcedInvention": "Whether the six rendered values are the ratified enum or a provisional render vocabulary awaiting replacement, and where the authoritative definition lives. The relocation D-03 ratifies was never executed, so the file the tree points at as authoritative is silent."
+    },
+    {
+      "findingId": "15-gear-registry-ownership#006",
+      "unit": "15.01-instrument-identity-provenance",
+      "severity": "warning",
+      "dimension": 3,
+      "claim": "The provenance chain reduces an event's attestation strength when its attester's account is banned or deleted — a rule that exists nowhere in the feature that owns claim strength, and that contradicts the chain's own decision that it is a view owning no facts.",
+      "evidence": "15.01.04-provenance-chain-view.md:57 — \"An event's attester was later banned or deleted their account (15.01.02) | The event survives … but its attestation strength drops to reflect that the witness can no longer be reached to re-confirm | … event kept, confidence for that link reduced, never silently removed\". Against :91 D-01 — \"The chain is a view, not a store. Every fact it shows is owned by the feature that produced it\"; 15.01-instrument-identity-provenance-cx.md:99 CX-04 — \"Claims own strength; the chain reads it. Read-only, no conflict\"; 15.01.02-ownership-claim-verification.md:112 D-03 — \"The tier is the maximum of standing confirmed evidence, recomputable downward … \\\"Confirmed\\\" means \\\"confirmed and not withdrawn\\\"\" — under which a ban or account deletion is not a withdrawal and leaves the tier untouched.",
+      "forcedInvention": "Whether a banned or deleted attester demotes the owning claim's tier (Counter-attested → Documented/Asserted) or only alters a per-link render in the chain, and by how much — \"strength drops\" names no scale and no rule. 15.01.02's tier model, which is exhaustive as written, produces no drop at all."
+    },
+    {
+      "findingId": "15-gear-registry-ownership#007",
+      "unit": "15.01-instrument-identity-provenance",
+      "severity": "warning",
+      "dimension": 7,
+      "claim": "The sub-domain CX file leaves two items marked unresolved with their only deferral target being a pipeline stage the domain index records as already completed, and no owner assigned.",
+      "evidence": "15.01-instrument-identity-provenance-cx.md:79 — \"Handshake timeout `[PENDING — /ideate-discover Step 5 deepening]` writes the unconfirmed state\"; :120 — \"Which record keeps the serial? Unresolved — `[PENDING — /ideate-discover Step 5 deepening]`. This is a genuine product decision, not an implementation detail.\" Against gear-registry-ownership-index.md:30 — \"Step 5 deepening has run\". The real tracking has since moved and neither marker points at it: 15.01.03-ownership-transfer-handshake.md:100 Q-01 routes the timeout to `/create-prd-compile` (Owner: User) and 15.01.06-identity-continuity-modification.md:96 Q-01 routes the serial-on-fork call to `/create-prd` (Owner: User, `[OWNER]`). The same file's sibling units demonstrate the correction was applied elsewhere — e.g. 15.06.01:99 \"Deferral re-pointed from the completed `/ideate-discover` Step 5.\"",
+      "forcedInvention": "Nothing in the CX file tells a reader these two items are live owner decisions; the stated target has already executed without resolving them, so the deferral resolves to no stage and no owner."
+    },
+    {
+      "findingId": "15-gear-registry-ownership#008",
+      "unit": "15.02-stolen-gear-registry-recovery",
+      "severity": "warning",
+      "dimension": 7,
+      "claim": "The sub-domain CX file marks two mechanisms as pending against a completed pipeline stage, when both were subsequently decided in the features it cross-cuts.",
+      "evidence": "15.02-stolen-gear-registry-recovery-cx.md:57 — \"An insurance payout (15.05.03) transfers ownership to the insurer in most policies — which should *change* the flag rather than clear it … `[PENDING — /ideate-discover Step 5 deepening]`\"; :105 — \"A flag contested mid-checkout. The purchase and the state change can race. `[PENDING — /ideate-discover Step 5 deepening]`\". Against 15.02.01-theft-report-serial-flagging.md:101 Q-03 — \"**Resolved (2026-07-23): the flag survives the payout and is never cleared … the claimant identity under the flag is reassigned owner → insurer**\"; and 15.02.02-point-of-sale-serial-screening.md:56-57, which specify both mid-checkout races in full — \"the purchase-time re-screen is the authoritative gate — it runs at payment commit, inside the same transaction that mints the witnessed transfer (15.01.03)\" and \"Flag moves **active → contested** mid-checkout | Not a block … checkout pauses on an interstitial requiring explicit re-confirmation\".",
+      "forcedInvention": "An implementer working from the cross-cut treats the payout-title change and the checkout race as unspecified and defers both, against a stage that has already run; the ratified behaviour is two files away with no pointer to it."
+    },
+    {
+      "findingId": "15-gear-registry-ownership#009",
+      "unit": "15.02-stolen-gear-registry-recovery",
+      "severity": "warning",
+      "dimension": 3,
+      "claim": "The flag state machine makes the `resolved` state's sale-blocking behaviour a function of an outcome vocabulary that is never enumerated anywhere in the tree.",
+      "evidence": "15.02.04-false-flag-dispute-lifecycle.md:43 state table — \"| `resolved` | Dispute reached a terminal external outcome (terminal) | **Per outcome** | outcome recorded, not adjudicated by platform |\", where every other state gives an explicit Yes/No. The transitions that reach it are open-ended: :52-55 — \"`contested` → … → `resolved` (external authority settles and a party reports it, or the matter is routed to domain 24 and closed there)\" and :92 — \"Both parties have genuine claims (band split, gear bought jointly) … | Flag → `resolved` (routed out)\". No outcome set is defined here, in 15.02.02 (which renders the state at point of sale), or in the sub-domain CX. Q-01 (:145) defers only \"binding those states, their transitions and their guard conditions into a contract\" to `/write-be-spec`, treating the state set itself as \"locked at Level 1\".",
+      "forcedInvention": "The set of terminal external outcomes and which of them block a listing. A flag routed out to domain 24 after a band split lands in `resolved`; one implementer leaves the listing sellable, another keeps it held — and 15.02.02's screening render has no rule to consult."
+    },
+    {
+      "findingId": "15-gear-registry-ownership#010",
+      "unit": "15.05-valuation-appraisal-insurance",
+      "severity": "warning",
+      "dimension": 7,
+      "claim": "15.05.03's edge table defers three rows to a pipeline stage that has already completed, and the first of them is recorded as settled by that file's own Open Question row.",
+      "evidence": "15.05.03-insurance-schedule-claim-pack.md:57 — \"Insurance pays out | Title typically passes to the insurer, who is off-platform | `[PENDING — /ideate-discover Step 5 deepening]` — see 15.02.01 Q-03\"; :58 — \"Gear recovered after payout | Owner no longer owns it; the insurer does | `[PENDING — /ideate-discover Step 5 deepening]`\"; :60 — \"Pack used to support a fraudulent claim | … `[PENDING — /ideate-discover Step 5 deepening]` — see Q-02\". Against the same file's :101 Q-01 — \"**The ownership/flag half is now settled** — [15.02.01] Q-03, resolved 2026-07-23 … What remains is only how an off-platform insurer is **represented** as that claimant/owner\", routed to `/write-be-spec`; and gear-registry-ownership-index.md:30 — \"Step 5 deepening has run\".",
+      "forcedInvention": "Whether the payout/recovery behaviour in the claim-pack surface is decided or open. The edge rows say open against a dead stage; the question row says settled with a narrow representational residual routed elsewhere."
+    }
+  ]
+}

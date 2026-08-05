@@ -1,0 +1,82 @@
+{
+  "domain": "21-promotion-marketing",
+  "verdicts": [
+    {
+      "findingId": "21-promotion-marketing#001",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "no-real-divergence",
+      "reason": "Quote is verbatim at 21.02.05-embargo-premiere-exclusives.md:64, but the finding reads across two columns of the same row with different jobs. The normative column ('What Happens') says 'Not merged — separate objects, separate lift times, **both binding**'; the presentational column ('User Sees') says 'Both shown; the earliest lift governs what is actually public' — a statement about de facto publicness once the first outlet publishes, not a publish-gate rule. The gate rule is stated unambiguously two rows up at :59 ('Artist or Producer posts inside the window via 21.06 | Blocked before publication — this is the feature's primary job'), and 'both binding' means every active embargo gates. No competent implementer unblocks an asset an object in the same cell declares still binding. Additionally, D-04 at :101 explicitly routes the generic time-lock mechanism out of this [SURFACE] file to the `Timed Reveal / Embargo Lock` cross-cut ('The generic time-lock mechanism is routed to a cross-cut; premiere negotiation stays here'), so multi-embargo gate arithmetic is not this file's to state. 21.02-pitching-outreach-cx.md:36 says only that the two must not be merged, which is consistent with both-binding."
+    },
+    {
+      "findingId": "21-promotion-marketing#002",
+      "upheld": true,
+      "finalSeverity": "warning",
+      "refutationReason": "not-refuted",
+      "reason": "All three quotes verified verbatim at 21.09-campaign-press-kit-epk.md:63, :79 and :116. The text fixes an invariant ('never silently rendered as verified') and then offers two conformant renderings joined by a bare 'Or' with no selection rule and no owner. The States table at :79 carries only `Blocked`; there is no `claimed-credit` state, so the two branches are not even represented symmetrically. Checked for a resolution elsewhere and found none: promotion-marketing-cx.md CX-05 (:181-221) governs coverage-quote strength, not credit confirmation; the adjacent quote row at :69 ('Artist wants a quote we cannot verify | Their EPK, their call | Included, marked claimed') establishes artist-choice for quotes but is explicitly a different object and cannot be transposed, since :63's own 'What Happens' says the EPK *cannot* claim unconfirmed credits. None of Q-01–Q-04 (:124-127) touches it. Two implementers genuinely diverge on whether a third party's inaction withholds the artist's press kit. Warning, not blocking: the shared invariant means neither branch produces a false verification, so the product is wrong-shaped rather than unbuildable."
+    },
+    {
+      "findingId": "21-promotion-marketing#003",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "Both quotes verified (promotion-marketing-cx.md:183-184; 21.07-coverage-clipping-log.md:90, :92, :143), and the glosses do differ. But the tree states an explicit ownership rule that resolves which governs, in the CX file itself and in three other places. promotion-marketing-cx.md:193 (inside the CORRECTED note): '21.07 owns the taxonomy — as §1 below already concedes'. CX-05 synthesis Q1 at :209-210: 'the quote's verification strength is owned by 21.07; the EPK holds a *reference* plus a pinned snapshot, **not an independent copy of the verdict**'. 21.07 D-06 at :144: 'This file **owns** the verification taxonomy'. Domain D-08 at promotion-marketing-index.md:144 ratifies the precedence rule generally — 'ratified on **ownership, not recency**' — not narrowly on the pitch-provenance clause. The finding is right that the DQ-20.1 notice's subject is the `verified` gloss, but the notice's stated ratio (21.07 owns the taxonomy) is general and is what an implementer applies. A parenthetical shorthand in a cross-cut summary does not compete with the owning file's States table plus D-05."
+    },
+    {
+      "findingId": "21-promotion-marketing#004",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "Quotes verified at 21.07-coverage-clipping-log.md:92, :72, :81 and 21.09-campaign-press-kit-epk.md:43-45, but the decay target is determinate once the owning file's definitions are applied. promotion-marketing-cx.md:211-212 gives the chain explicitly: 'link rot detected (21.07) → **downgrade badge** → propagate to embedded EPKs → re-render distinction'. The badge set is closed at three by 21.07 D-05 (:143), so the 'fourth badge' branch is excluded by decision, not left open. Within that closed set only one target survives: `verified` requires a 'Live URL, retrievable' source (:89) which a 404 is not, and `verified-at-timestamp` requires a '**Live** but mutable source confirmed' (:90) which a 404 is also not — leaving `claimed`. 21.07:81 names that same landing in the analogous case in the same verb ('badge **decays toward claimed** unless a snapshot was captured'), and :72 uses the identical verb for the article case ('The verification claim decays with the link'). All three of the finding's implementers except A are ruled out by text already on disk."
+    },
+    {
+      "findingId": "21-promotion-marketing#005",
+      "upheld": true,
+      "finalSeverity": "warning",
+      "refutationReason": "not-refuted",
+      "reason": "Quote verified verbatim at 21.07-coverage-clipping-log.md:151, target column reads a bare 'MoSCoW'. The stage is discharged: moscow-ledger.md:3 records the pass ('Generated from the `/ideate-discover` breadth pass, 2026-07-16'), and 21.07 was placed under `## SHOULD (285)` at row 463 with a rationale that speaks only to DT-01 and never reaches the monitoring question. Grepped the whole ledger for 'monitor' — no domain-21 row exists at any band. This is not a valid tracked deferral: the target cannot take the question again and nothing recorded the placement as an answer. Confirmed the malformation against the domain's own convention — every other outlived row was updated (21.06:109 'RESOLVED — built, but at `Could`'; promotion-marketing-index.md:159 'RESOLVED — the MoSCoW pass ran'; 21.01 index Q-01/Q-02/Q-03 and 21.04.02 Q-01/Q-02/Q-03 all carry '**Re-targeted**'). Decisive corroboration that the row is stale rather than answered: 21.02.05:107 re-targets its twin question and names this one as still-live and mis-stationed — 'The neighbouring monitoring capability ([21.07] Q-01, automated coverage monitoring) is the same class of dependency' — routing that class to `/create-prd-stack` while 21.07 Q-01 still points at MoSCoW. Warning not blocking: 21.07 D-02 and DT-02 bound monitoring's behaviour (suggest, never auto-insert), so only the build/no-build scope call is orphaned."
+    },
+    {
+      "findingId": "21-promotion-marketing#006",
+      "upheld": true,
+      "finalSeverity": "warning",
+      "refutationReason": "not-refuted",
+      "reason": "Verified exhaustively by grepping every `> **Status**` line in the domain. promotion-marketing-index.md:62-63 reads '> All `[SURFACE]` — classified and outlined, not yet deepened' and every Children row at :67-75 reads '`[SURFACE]`'. On disk: 21.01/21.02/21.03/21.04/21.05 indexes are `[BREADTH]`; 21.07 and 21.09 are `[PARTIAL]`; 21.02.06, 21.05.03 and promotion-marketing-cx.md are `[DEEP]`; only 21.08 is still `[SURFACE]`. Fourteen further descendants are `[PARTIAL]`. The index's own header is `[BREADTH]` with 'Last updated: 2026-07-23', so the file was revised without the Children table being carried forward — a stale record, not a deliberate abstraction. No convention note anywhere in the file says the parent table records status at time of classification. Two normative records disagree about the same fact. Warning rather than blocking because the child header is the conventional source of truth in a fractal tree, so the damage is to depth-gating workflows that read the parent first, not to product behaviour."
+    },
+    {
+      "findingId": "21-promotion-marketing#007",
+      "upheld": true,
+      "finalSeverity": "warning",
+      "refutationReason": "not-refuted",
+      "reason": "All quotes verified: promotion-marketing-index.md:101 ('| 21.01 Release Campaign Planner | ✅ Full | 👁️ Read-only | ❌ None | ❌ None |'), the reinforcing note at :118-122, 21.01-release-campaign-planner-index.md:37 ('| 21.01.02 Asset Readiness Gate | ✅ Full | ⚙️ Config | ❌ None | ❌ None |'), and 21.01.02-asset-readiness-gate.md:20 (Producer 'Owns and marks state on **their** rows only … Can flag a recall'). Tested the obvious refutation — that a domain rollup legitimately shows the typical rather than the strongest access — and it fails against the file's own convention: promotion-marketing-index.md:104 gives 21.04 Fan '✅ Full', which is reachable only from 21.04.02 (21.04 index:42-45 shows the other three children at 👁️/❌). The rollup is therefore max-across-children, and under that rule the 21.01 Producer cell should be ⚙️ Config. The domain legend at :111 carries ⚙️ Config, so the cell is an error, not a vocabulary limit. Warning not blocking: the write capability survives in two lower records, so a spec writer who opens 21.01 recovers it; the risk is confined to one who stops at the domain matrix, which the note at :118-122 actively encourages by characterising every Producer row as a view."
+    },
+    {
+      "findingId": "21-promotion-marketing#008",
+      "upheld": true,
+      "finalSeverity": "warning",
+      "refutationReason": "not-refuted",
+      "reason": "Verified at 21.01.02-asset-readiness-gate.md:69 — '| At risk | Red or not-started within N days of a hard deadline | Escalated in the roll-up and to the Musician |'. `N` is a literal unbound variable in a normative trigger, with no default and no marker. Confirmed the States table at :61-70 enumerates Loading / Empty / Not started / In progress / Ready / Was-final / At risk / Blocked and contains no `Red`; 'Red' recurs normatively and undefined at :19, 21.01.01-backward-planned-campaign-grid.md:73, and 21.01-release-campaign-planner-cx.md:33 and :35 ('An asset going red near its deadline **must** notify the Musician'). Since the row distinguishes 'Red **or** not-started', Red is neither `Not started` nor `At risk` itself, and the file never says which of `Was-final` / `Blocked` / other it denotes. Checked tracking: Q-01 is struck and RESOLVED (clearance boundary), Q-02 covers machine-checkable specs — neither touches the window or the colour, and there is no `[PENDING]`. This falls below the tree's own demonstrated standard: 21.02.06:30-31 binds every numeric ('Default: **10 pitches per channel per rolling 7 days**') and routes tuning to a named question. Warning not blocking: the escalation exists either way; only its firing set and timing diverge."
+    },
+    {
+      "findingId": "21-promotion-marketing#009",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "no-real-divergence",
+      "reason": "Both quotes verified (21.03.01-media-target-directory.md:80; 21.02.06-pitch-rate-limits-curator-protection.md:35-36 and :107) and the numbers do differ. But the divergence is not one an implementer can act on. The '8 per week' appears inside a DT-01 *Source* narrative cell arguing why staleness is costly, and that same clause names its own authority — 'a budget of 8 per week **(21.02.06)**' — pointing the reader at the owning file. 21.02.06 states the value normatively and immediately qualifies it at :30-31: 'All numeric values below are **design defaults** — behavioural starting points, not architecture — and their exact tuning is a product/operations decision (Q-05).' The budget meter is rendered by 21.02.06 (:107-110), not by the directory; 21.03.01's only functional link to that feature is opt-out (Cross-Cut Notes :87). No competent implementer takes a cap from a cross-referencing rationale over the cited owner that declares the number tunable and tracks the tuning. The DT-01 argument is unchanged at 8 or 10. An inaccurate citation, not a specification conflict."
+    },
+    {
+      "findingId": "21-promotion-marketing#010",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "Quotes verified at 21.04-smart-links-presave-attribution-index.md:70 and 21.04.01-smart-link-builder.md:128, and the target stage has indeed run. But the finding supplies its own refutation: promotion-marketing-index.md:159 (verified verbatim) records the beachhead question as '**RESOLVED — the MoSCoW pass ran and confirmed the row's own suspicion**', citing 2-of-195 Musts and D-31's release split, and states the conclusion in terms that answer 21.04's rows directly — 'the beachhead is decided and is not this domain'. The answer therefore exists, one level up, in the domain index a downstream reader opens first, and 21.04.01:128 already defers to the sub-domain index which sits directly beneath it. The auditor also concedes the point: forcedInvention is recorded as 'None product-shaped'. Contrast finding #005, where the ledger genuinely does not contain the answer. Stale row hygiene, not an ambiguity — and materially different from a question whose answer exists nowhere."
+    },
+    {
+      "findingId": "21-promotion-marketing#011",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "Quotes verified at 21.04.02-presave-preadd-authorization.md:114, :90, :59 and :122. The cancellation branch — the one the failure scenario turns on — is specified, not open: :59 says a cancelled release means 'Grants **must** expire', and the cross-referenced 12.04.03-pre-save-pre-add-links.md:65 states the same from the release side, 'the permission **must still be dropped**'. Implementer B (holding live library-write grants for four months past a cancellation) therefore contradicts explicit text in two files and is not a competent reading, which collapses the stated divergence. What genuinely remains unbound is the age-out horizon for a release that is delayed but not cancelled — and that is tracked, not silent: Q-02 at :122 covers per-DSP 'token lifetimes' and states 'Token lifetime directly determines the expiry failure rate', which is the practical ceiling on how long any grant can be held, with the `Expired` state at :87 ('Token died before release') as its consequence. Q-01 at :121 routes the grant's consent model to `/create-prd-security`, where a retention horizon belongs. Owner and target present on both rows."
+    }
+  ]
+}

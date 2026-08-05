@@ -4,6 +4,27 @@
 > Consumed by: every domain index Role Matrix (24), every feature file Role Lens.
 > Short names for Role Matrix columns: **Musician** · **Producer** · **Operator** · **Fan**
 
+> ### 👉 Companion file: [counterparties.md](./counterparties.md)
+>
+> **Some real users of WeJammin are deliberately not personas.** The commercial licence buyer — the
+> music supervisor / brand / agency, and the monetised creator — is described in
+> [counterparties.md](./counterparties.md) as two **counterparty profiles**, authored 2026-07-22 by
+> owner decision **D-71**.
+>
+> Those profiles use the same six fields as the personas below, plus Workflow and Anti-Persona
+> Behavior — but they are **not personas**: D-19 stays at **four**, and they add **no Role Matrix
+> column** anywhere. A reader who consults only this file will miss them, which is why this pointer
+> exists. D-71 is narrow: it closes the licence buyer only. Every other non-persona actor —
+> dealer, Admin/Moderator, curator, stagehand, insurer, accountant, manager, fee-paying parent —
+> remains open; see Q-01, Q-02 and Q-05 below and the non-closure table in `counterparties.md`.
+>
+> **Identifier note — D-71 = domain-11 D-10.** The same ratification is registered in two registers:
+> globally as **D-71** here and in [`ideation-index.md`](../ideation-index.md), and locally as
+> **D-10** in [`11-music-licensing/music-licensing-index.md`](../11-music-licensing/music-licensing-index.md).
+> One decision, two identifiers — a reader arriving by either should land on the other. Domain-11's
+> local D-10 is **not** the global D-10 in `ideation-index.md` (rights-stack priority), which is
+> unrelated.
+
 ## The Structural Fact
 
 Music's defining identity characteristic is the **multi-hyphenate**: one human simultaneously
@@ -131,18 +152,49 @@ and Producer personas — it is not a fifth persona.
 | 01 Identity · 02 Credits · 03 Community · 04 Opportunities | Musician | ✅ |
 | 05 Services · 07 Projects · 08 Jamming | Musician + Producer | ✅ |
 | 06 Education | Musician (both sides — teacher and student are both Musicians) | ✅ |
-| 09 Rights · 10 Royalties · 11 Licensing · 12 Release | Musician + Producer | ✅ |
+| 09 Rights · 10 Royalties · 12 Release | Musician + Producer | ✅ |
+| 11 Licensing | Musician + Producer on the **sell** side. The **buy** side is served by two non-persona counterparty profiles ([counterparties.md](./counterparties.md), D-71) — no Role Matrix column added. | ✅ (sell) · ✅ by reference (buy) |
 | 13 Gear · 14 Digital Goods · 15 Gear Registry | Musician (as buyer **and** seller) | ⚠️ see Q-01 |
 | 16 Venues/Studios · 17 Live Booking · 18 Show Production · 19 Ticketing | Operator (+ Musician as counterparty) | ✅ |
 | 20 Fanbase · 21 Promotion | Fan + Musician | ✅ |
 | 22 Analytics · 23 Career/Finance | Musician | ✅ |
 | 24 Trust & Safety | All four + Admin | ⚠️ see Q-02 |
 
+## D-76 — Non-Persona Actor Taxonomy
+
+> Owner-ratified 2026-08-02 (Batch 1, A3). This preserves D-19's four primary personas and
+> classifies the actors that must not silently become a fifth Role Matrix column.
+
+| Actor | Classification | Boundary |
+|---|---|---|
+| Professional dealer / plugin developer; dealer counterparty | Bounded seller account/counterparty role | Uses only the named marketplace, stock, consignment, or trade-in workflow; never a primary persona. |
+| Function/private-hire buyer | Bounded buyer account/counterparty role | May request, book, pay for, and communicate about a live engagement only through its named workflow. |
+| Local crew / stagehand | Bounded crew account/counterparty role | May hold the named hire, roster, credential, or availability workflow; does not need a Musician persona. |
+| Fee-paying parent / guardian | Bounded guardian account/counterparty role | Exists for child-directed booking, payment, and consent; it does not become a fifth persona. |
+| Manager / agent | Bounded representation account/counterparty role | May act only through a recorded mandate, including a separately explicit `communicate` grant where speaking as the party is required. |
+| Admin / Moderator | Internal staff role | Separate internal console and permission boundary; never a primary persona or ordinary acting context. |
+| Curator / journalist / radio / DSP gatekeeper | Off-platform v1 target | May be represented as directory/contact reference data for outbound pitching; no on-platform account, inbox, or Role Matrix column ships in v1. |
+| Insurer / accountant | Off-platform counterparty handoff | Existing document, claim, and tax-pack handoffs remain external; no new persona or v1 account workflow is created. |
+
 ## Open Questions
+
+**Open-question governance.** Every unresolved row in this table is an explicit delivery hold. The **Owner** cell is accountable; the **hard decision deadline** is the gate immediately before the pipeline stage named in **Deferred To** begins; and the **Question** text is the exact policy, behavior, or contract decision blocked. **Deferred To** names the destination only and never replaces the deadline. No downstream stage may begin until its owner resolves the row or records a formally approved supersession.
 
 | # | Question | Owner | Deferred To |
 |---|----------|-------|-------------|
-| Q-01 | Domains 13/14/15 are served by "Musician acting as seller". Is a **professional dealer/plugin-developer** a distinct persona, or a Musician in a selling context? The owner chose 4 over 5 — revisit if the Gear/Digital Role Matrices come out thin during drilling. | User | `/ideate-validate` |
-| Q-02 | **Admin/Moderator** is not a persona but domain 24 needs one, and every domain has an admin layer per `vertical-slices.md`. Is Admin a persona, or an internal operator role outside the persona set? | User | `/create-prd` |
+| Q-01 | ~~Domains 13/14/15 are served by "Musician acting as seller". Is a professional dealer/plugin-developer a distinct persona, or a Musician in a selling context?~~ **RESOLVED — D-76.** Professional dealer/plugin-developer and dealer-counterparty behavior is a bounded seller account/counterparty role, not a fifth persona and not an assumption that every seller is a Musician. | User | ✅ Owner ratification A3, 2026-08-02 |
+| Q-02 | ~~Is Admin/Moderator a persona, or an internal operator role outside the persona set?~~ **RESOLVED — D-76.** Admin/Moderator is internal staff, with a separate console and permission boundary; it is never a primary persona or ordinary acting context. | User | ✅ Owner ratification A3, 2026-08-02 |
 | Q-03 | Teacher and Student are both "Musician" — does domain 06 need them split, or does the Role Lens handle it contextually? | Agent | drilling, domain 06 |
 | Q-04 | How is the multi-hyphenate modelled — one account with many roles, or many contexts under one identity? Personas assume the former. | Agent | `/create-prd-architecture` |
+| Q-05 | ~~Which remaining non-persona actors get a counterparty profile, a persona, or neither?~~ **RESOLVED — D-76.** The four primary personas remain fixed. Dealer/plugin-developer, private-hire buyer, crew, guardian, and manager use bounded account/counterparty roles; Admin/Moderator is internal staff; gatekeepers, insurers, and accountants remain off-platform v1 counterparts. A later capability expansion requires a new explicit feature decision, not a persona expansion by implication. | User | ✅ Owner ratification A3, 2026-08-02 |
+
+
+<!-- spec-graph: auto-generated -->
+## Related Specs
+
+### Constrained by
+- [[decisions.md#d-19|D-19]]
+- [[decisions.md#d-71|D-71]]
+- [[decisions.md#d-10|D-10]]
+- [[decisions.md#d-11|D-11]]
+- [[decisions.md#d-76|D-76]]

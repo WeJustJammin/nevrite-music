@@ -1,0 +1,156 @@
+{
+  "record": "R5D2-D3-domain09-propagation",
+  "shard": "09-rights-ownership",
+  "generated": "2026-07-30",
+  "agent": "claude",
+  "decisions": [
+    {
+      "findingId": "09-rights-ownership#003",
+      "ratified": "2026-07-30",
+      "option": "B",
+      "statement": "A bought-out (work-for-hire) contributor is ABSENT from the ownership ledger, not a 0% row. INV-6 is rescoped to non-featured performers only. The consent/visibility model is NOT touched: 09.01.02 D-01, 09.01.02 D-07 and 09.02.01 D-09 all stand exactly as written. The agreement-vs-absence distinction is carried by the designation record per 09.02.03 DT-01 — present in the view, structurally distinct in the record.",
+      "newIds": [
+        {
+          "file": ".memory/wiki/specs/ideation/09-rights-ownership/09.01-rights-registry/09.01.02-ownership-ledger-validation.md",
+          "id": "D-18",
+          "allocatedFrom": "previous max D-17",
+          "summary": "Bought-out contributor absent from the ledger, not a 0% row; INV-6 rescoped; D-01 and D-07 untouched."
+        }
+      ],
+      "edits": [
+        {
+          "file": ".memory/wiki/specs/ideation/09-rights-ownership/09.01-rights-registry/09.01.02-ownership-ledger-validation.md",
+          "anchor": "INV-6 (invariants table)",
+          "change": "Rescoped to a non-featured performer named on the sheet who takes no share. States explicitly that a bought-out contributor is absent from this ledger, and that the 0%-by-agreement vs 0%-because-nobody-said distinction is carried by the designation record (09.02.03 D-02, DT-01). Absence-vs-zero principle preserved, carrier moved."
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/09-rights-ownership/09.01-rights-registry/09.01.02-ownership-ledger-validation.md",
+          "anchor": "Edge case 'Party listed with 0%'",
+          "change": "Rewritten. 'Paid by fee, not by share' row copy removed; the row now renders '0% — named, no share'. A buyout renders nothing on this ledger and renders instead as 'Fee, no share — consented, £200' against the designation. 3 columns preserved."
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/09-rights-ownership/09.01-rights-registry/09.01.02-ownership-ledger-validation.md",
+          "anchor": "Cross-Cut Note → 09.02.03 Work-for-Hire & Buyout",
+          "change": "The claim 'WFH is why INV-6 exists' is reversed: WFH is NOT why INV-6 exists. The note now carries the real obligation between the two features — the share→fee shortfall is shown and explicitly reallocated, never auto-filled (09.02.03 D-08)."
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/09-rights-ownership/09.01-rights-registry/09.01.02-ownership-ledger-validation.md",
+          "anchor": "Cross-Cut Note → 02 Credits & Attribution",
+          "change": "'The 0% WFH contributor has a full credit' → 'The bought-out contributor, absent from this ledger entirely, has a full credit', with the added instruction that domain 02 must never read ledger absence as contributor absence."
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/09-rights-ownership/09.01-rights-registry/09.01.02-ownership-ledger-validation.md",
+          "anchor": "Cross-Cut Note → 09.01.05 Performer & Neighbouring Rights",
+          "change": "'a 0% ledger row (or absent entirely)' disambiguated: 0% row when named without a share (INV-6), absent entirely when bought out (D-18), full performer record in both cases."
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/09-rights-ownership/09.02-split-capture-agreements/09.02.01-moment-of-creation-split-capture.md",
+          "anchor": "Q-06",
+          "change": "CLOSED. Struck through with the resolution in the last column per tree convention. D-09 ratified as written and unnarrowed; its premise (09.02.03 removes fee parties from the ledger) is now the ratified position; D-01 and D-07 never fire for a fee party and were not narrowed."
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/09-rights-ownership/09.02-split-capture-agreements/09.02.01-moment-of-creation-split-capture.md",
+          "anchor": "D-09",
+          "change": "Trailing 'Derived from ratified decisions rather than owner-stated; see Q-06' replaced with the 2026-07-30 owner ratification, as written and unnarrowed."
+        }
+      ],
+      "notTouched": [
+        "09.01.02 D-01 (whole-ledger consent)",
+        "09.01.02 D-07 (read on that ledger only)",
+        "09.02.01 D-09 (fee parties see shape, not percentages) — ratified, not narrowed",
+        "09.02.03 D-02 and DT-01 — already the winning position"
+      ]
+    },
+    {
+      "findingId": "09-rights-ownership#004",
+      "ratified": "2026-07-30",
+      "option": "A with interim (C-for-extinguishment, session closes on the fee designation)",
+      "statement": "Ensemble buyout: agency is modelled in domain 01. The contractor's consent binds only where domain 01 records the agency relationship — the players authorised it in advance, so the consents are delegated, not manufactured, which is what makes 09.02.01 D-12 true without violating 09.02.03 D-16. Interim, until domain 01 models agency: require the 14 individual extinguishments, but let the session close on the fee designation so money and credits are right while the buyout is pending. 09.02.03 D-16 stands.",
+      "newIds": [
+        {
+          "file": ".memory/wiki/specs/ideation/09-rights-ownership/09.02-split-capture-agreements/09.02.01-moment-of-creation-split-capture.md",
+          "id": "D-18",
+          "allocatedFrom": "previous max D-17",
+          "summary": "Interim posture: extinguishments individual (14, not 1), session closes on the fee designation. Accepted cost and end condition stated."
+        }
+      ],
+      "edits": [
+        {
+          "file": ".memory/wiki/specs/ideation/09-rights-ownership/09.02-split-capture-agreements/09.02.01-moment-of-creation-split-capture.md",
+          "anchor": "D-12",
+          "change": "Narrowed. The contractor's single consent binds the players only where domain 01 records the agency relationship; an attestation alone does not. Delegated-not-manufactured rationale added. 'Resolves Q-03' replaced with 'No longer resolves Q-03, which is reopened'."
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/09-rights-ownership/09.02-split-capture-agreements/09.02.01-moment-of-creation-split-capture.md",
+          "anchor": "D-18 (new)",
+          "change": "Interim posture authored here because capture owns session close. Accepted cost: an ensemble record can sit consented-and-paid with an incomplete buyout, and must read as pending everywhere it renders. End condition: domain 01 records the contractor→player agency relationship, consent load returns to 4, posture retires."
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/09-rights-ownership/09.02-split-capture-agreements/09.02.01-moment-of-creation-split-capture.md",
+          "anchor": "Q-03",
+          "change": "REOPENED with owner User and deferral target /create-prd-security. Was ✅ RESOLVED on DT-06 / D-12. Restated as: on what recorded authority may a contractor's single consent extinguish 14 players' rights. The engagement-shape half of DT-06 is explicitly not reopened."
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/09-rights-ownership/09.02-split-capture-agreements/09.02.01-moment-of-creation-split-capture.md",
+          "anchor": "Edge case 'Session had 14 people (orchestra, choir, horn section)'",
+          "change": "Attestation is not an agency record and carries no extinguishment. Interim posture stated. Consent load split into two numbers: 4 to close the session, 14 to complete the buyout (4 once agency is recorded). Producer copy now 'Horn section (4) — engaged via {contractor}, fee — buyout pending on 11 of 14'. 3 columns preserved."
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/09-rights-ownership/09.02-split-capture-agreements/09.02.01-moment-of-creation-split-capture.md",
+          "anchor": "DT-06",
+          "change": "'Consent load is 4, not 14' and 'This resolves Q-03' struck through; superseded-in-part note appended. Engagement-shape reading and the performer-rows/credits half stand. 4 columns preserved."
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/09-rights-ownership/09.02-split-capture-agreements/09.02.03-work-for-hire-buyout.md",
+          "anchor": "Edge case 'Ensemble session — 14 players, one contractor'",
+          "change": "D-16 restated as standing unchanged. Agency condition added; attestation under D-05 explicitly not an agency record. Interim posture cited to 09.02.01 D-18. UI column: the session is not held open; the pending buyout never renders as a silent green tick. 3 columns preserved."
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/09-rights-ownership/09.02-split-capture-agreements/09.02.03-work-for-hire-buyout.md",
+          "anchor": "Q-06",
+          "change": "REFRAMED, stays open. The 'only whether agency is modelled' framing is corrected as understating the disagreement — with an agency record the buyout closes on 4 taps, without one the contractor's tap carries no extinguishment and the same session needs 14. Direction settled (model agency in domain 01); the agency model itself is what remains open. Owner User, deferred to /create-prd-security. Now cites 09.02.01 Q-03 as reopened rather than resolved."
+        }
+      ],
+      "notTouched": [
+        "09.02.03 D-16 (bulk propose, never bulk consent) — stands verbatim",
+        "09.02.01 D-14 (record asserted authority, never infer it)",
+        "09.02.04 ensemble-amendment edge case — still correctly tracked at 09.02.01 Q-03, now a reopened question"
+      ]
+    }
+  ],
+  "reopened": [
+    {
+      "id": "09.02.01 Q-03",
+      "previousState": "RESOLVED (Agent, on DT-06 / D-12)",
+      "newState": "REOPENED",
+      "owner": "User",
+      "deferredTo": "/create-prd-security"
+    }
+  ],
+  "closed": [
+    {
+      "id": "09.02.01 Q-06",
+      "newState": "RESOLVED 2026-07-30 (owner)",
+      "resolution": "D-09 ratified as written and unnarrowed; premise settled by 09.01.02 D-18."
+    }
+  ],
+  "crossDomainNotes": [
+    {
+      "targetDomain": "01-identity-profiles-organizations",
+      "writtenIn": ".memory/wiki/specs/ideation/09-rights-ownership/09.02-split-capture-agreements/09.02.03-work-for-hire-buyout.md",
+      "anchor": "Cross-Cut Notes → 01 Identity, Profiles & Organizations (fourth dependency)",
+      "note": "The contractor→player agency relationship. An ensemble buyout can close on one consent only where domain 01 holds a record that the players authorised the contractor to bind them in advance — that record is what makes the 14 consents delegated rather than manufactured, and it is the sole end condition on 09.02.01 D-18's interim posture. Domain 01 owns the authority, its engagement scope, its evidence and its revocation. Domain 09 owns none of it, must not infer it (09.02.01 D-14), and will not bulk-consent without it (09.02.03 D-16). Routed via 09.02.03 Q-06 and 09.02.01 Q-03 at /create-prd-security.",
+      "domain01Edited": false
+    }
+  ],
+  "filesChanged": [
+    ".memory/wiki/specs/ideation/09-rights-ownership/09.01-rights-registry/09.01.02-ownership-ledger-validation.md",
+    ".memory/wiki/specs/ideation/09-rights-ownership/09.02-split-capture-agreements/09.02.01-moment-of-creation-split-capture.md",
+    ".memory/wiki/specs/ideation/09-rights-ownership/09.02-split-capture-agreements/09.02.03-work-for-hire-buyout.md"
+  ],
+  "verification": {
+    "tableColumnCounts": "checked programmatically across all three files — every markdown table row matches its header pipe count",
+    "residualContradictionScan": "domain-wide grep for 'WFH is why INV-6', '0% WFH', 'Resolves Q-03', 'consent load 4, not 14' — no live contradictions remain; surviving hits are struck-through text carrying its own supersession note, or unrelated Q-03 ids in 09.02.02",
+    "scopeRespected": "no file outside 09-rights-ownership/ was modified"
+  }
+}

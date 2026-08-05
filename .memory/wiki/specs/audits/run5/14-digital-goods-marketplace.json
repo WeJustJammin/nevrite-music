@@ -1,0 +1,129 @@
+{
+  "domain": "14-digital-goods-marketplace",
+  "unitsAudited": 11,
+  "filesRead": 64,
+  "coverageNote": "Enumerated from disk: 11 units (the domain root plus 14.01-14.10), 64 files - exactly matching the expected counts. Every file was read. For the 12 largest files (>20 KB) the '## Deep Think Annotations', '## Cross-Cut Notes' and '## Related Specs' sections were read in condensed form (headers retained, rationale bodies omitted) to keep the ~1.2 MB tree inside working context; all normative sections (Overview, Role Lens/Role Matrix, Behavior, Happy Path, Edge Cases, States, Decisions, Open Questions) were read in full at line granularity for every file. Cross-file claims were verified programmatically where countable (CX inventory counts, feature-status tables, stranded-marker enumeration). Rubric dimensions 1, 2, 4, 5 and 6 are N/A across all 11 units: problem statement, personas, constraints, success metrics and competitive landscape are owned by .memory/wiki/specs/ideation/meta/, not by a domain sub-tree. Dimensions 3, 7 and 8 are applicable everywhere, giving 3 checkpoints per unit and 33 in total.",
+  "units": [
+    { "unit": "14-digital-goods-marketplace", "applicableCheckpoints": 3, "points": 0.5, "naDimensions": [1, 2, 4, 5, 6] },
+    { "unit": "14.01-catalog-compatibility", "applicableCheckpoints": 3, "points": 1.0, "naDimensions": [1, 2, 4, 5, 6] },
+    { "unit": "14.02-licensing-activation-entitlement", "applicableCheckpoints": 3, "points": 1.0, "naDimensions": [1, 2, 4, 5, 6] },
+    { "unit": "14.03-delivery-versioning-library", "applicableCheckpoints": 3, "points": 1.0, "naDimensions": [1, 2, 4, 5, 6] },
+    { "unit": "14.04-sound-content-catalogs", "applicableCheckpoints": 3, "points": 0.5, "naDimensions": [1, 2, 4, 5, 6] },
+    { "unit": "14.05-beat-instrumental-licensing", "applicableCheckpoints": 3, "points": 0.5, "naDimensions": [1, 2, 4, 5, 6] },
+    { "unit": "14.06-used-licence-transfer", "applicableCheckpoints": 3, "points": 1.5, "naDimensions": [1, 2, 4, 5, 6] },
+    { "unit": "14.07-monetisation-models-pricing", "applicableCheckpoints": 3, "points": 0, "naDimensions": [1, 2, 4, 5, 6] },
+    { "unit": "14.08-vendor-portal-build-qa", "applicableCheckpoints": 3, "points": 0, "naDimensions": [1, 2, 4, 5, 6] },
+    { "unit": "14.09-digital-refunds-revocation", "applicableCheckpoints": 3, "points": 0.5, "naDimensions": [1, 2, 4, 5, 6] },
+    { "unit": "14.10-contributor-revenue-royalty-pool", "applicableCheckpoints": 3, "points": 0, "naDimensions": [1, 2, 4, 5, 6] }
+  ],
+  "findings": [
+    {
+      "findingId": "14-digital-goods-marketplace#001",
+      "unit": "14-digital-goods-marketplace",
+      "severity": "warning",
+      "dimension": 8,
+      "claim": "The domain index's inventory of its own cross-cut file is wrong on all four counts, understating the confirmed cross-cuts by more than half. A reader who trusts the index enumerates 11 of the 27 intra-domain cross-cuts, 5 of the 7 rejected pairs, 9 of the 10 escalated platform cross-cuts and 11 of the 13 routed-out concerns.",
+      "evidence": "digital-goods-marketplace-index.md:44 - \"> **Intra-domain cross-cuts**: [digital-goods-marketplace-cx.md](./digital-goods-marketplace-cx.md) - 11 confirmed pairs, 5 rejected pairs, 9 cross-cuts escalated to the global CX, 11 not-product concerns routed out.\" Verified against digital-goods-marketplace-cx.md by parsing: 27 `### CX-NN` detail sections and 27 `| CX-NN |` map rows (CX-01 through CX-27, e.g. digital-goods-marketplace-cx.md:507 \"### CX-27: Sound Content ↔ Vendor Portal & QA (Two-Part Attestation)\"); 7 rejected-pair rows R-01..R-07 (digital-goods-marketplace-cx.md:528-534); 10 rows in \"## Cross-Cuts Escalated to the Global CX\" (digital-goods-marketplace-cx.md:544-553); 13 rows in \"## Not-Product Concerns Routed Out\" (digital-goods-marketplace-cx.md:561-573).",
+      "forcedInvention": "None - this is a structural-map inaccuracy, not a behavioural gap."
+    },
+    {
+      "findingId": "14-digital-goods-marketplace#002",
+      "unit": "14.01-catalog-compatibility",
+      "severity": "warning",
+      "dimension": 3,
+      "claim": "The Musician-vendor Role Lens states flatly that this persona never sees a support matrix, while the same file's required-sections table makes the compatibility matrix a publish-gating required section for exactly the three product types that persona sells, and the sub-domain Role Matrix grants them Config access to it. An implementer deciding whether to render the matrix editor to a Musician vendor gets two opposite answers.",
+      "evidence": "14.01.01-digital-product-listing-spec-sheet.md:27 (Role Lens, Musician) - \"**Vendor**: the realistic day-one vendor per DT-02 - a musician with a folder of samples, presets or beats. Authors title, media, demos (labelled per DT-05), manifest, price, licence terms and the type-conditional required sections inside 14.08.01. Never ships an executable, so never sees a support matrix (D-02).\" Contradicted by 14.01.01-digital-product-listing-spec-sheet.md:53 - \"| Compatibility matrix (14.01.02) | ✅ full axes | ⚠️ collapses to file format + sample rate + bit depth | ✅ host axes only | ✅ full axes | ⚠️ collapses to file format |\" (columns: plugin, sample-pack, preset-pack, template, beat) and by 14.01.01:99 - \"Vendor completes the compatibility matrix (14.01.02) ... publish is blocked until both are complete for the types that require them\", and by 14.01-catalog-compatibility-index.md:36 - \"| 14.01.02 Compatibility Matrix | 👁️ Read-only / ⚙️ Config as vendor | ...\". 14.01-catalog-compatibility-cx.md:12 also gates publish: \"a listing cannot go live with an empty matrix\".",
+      "forcedInvention": "Whether a `preset-pack` vendor (a Musician selling a Serum bank) is shown the host-axes matrix form at submission, and whether publish is gated on it for them."
+    },
+    {
+      "findingId": "14-digital-goods-marketplace#003",
+      "unit": "14.01-catalog-compatibility",
+      "severity": "warning",
+      "dimension": 7,
+      "claim": "Three open items in this unit are deferred to `/ideate-discover Step 5 deepening`, a stage the ideation index records as complete. The deferral target is unreachable, so these items will never be picked up - and the tree's own remediation convention (re-pointing such markers 'from the completed /ideate-discover Step 5') was applied to sibling rows in the same sub-domain but not to these.",
+      "evidence": "14.01-catalog-compatibility-cx.md:37 - \"5. **State transition conflict**: A buyer editing their rig mid-checkout can flip a verdict after the withdrawal-waiver (14.09.01) was shown but before download. `[PENDING — /ideate-discover Step 5 deepening]`\"; also 14.01-catalog-compatibility-cx.md:59 and :90. Stage completion: ideation-index.md:65 - \"| Must features at [DEEP] | **195 / 195** — Step 5 complete |\" and ideation-index.md:66 - \"| Should features at [PARTIAL] | **285 / 285** — Step 5 Level-1 complete |\". The project's own re-pointing convention, applied two rows away in the same sub-domain: 14.01.04-rig-profile-compatibility-checker.md:56 - \"Deferral re-pointed from the completed `/ideate-discover` Step 5 to `/create-prd-security`\".",
+      "forcedInvention": "What happens to a captured withdrawal waiver and an already-shown compatibility verdict when the buyer edits their rig after the waiver gate but before the first byte moves - the verdict is snapshotted onto the order (14.01.04 DT-02) but the snapshot moment is not defined relative to the waiver."
+    },
+    {
+      "findingId": "14-digital-goods-marketplace#004",
+      "unit": "14.02-licensing-activation-entitlement",
+      "severity": "warning",
+      "dimension": 7,
+      "claim": "Two substantive product questions and one unfilled CX section in this unit are deferred to stages the ideation index records as complete (`/ideate-discover Step 5 deepening` and Step 6 synthesis), and neither is covered by any tracked Open Question in the sub-domain. 14.02.01 explicitly notes the CX gap and points it at Step 6 - which is also complete.",
+      "evidence": "14.02.03-offline-activation-drm-bridges.md:63 - \"| Third-party account linked to a different person than the buyer | Effectively an undeclared gift/transfer, bypassing 14.06 | `[PENDING — /ideate-discover Step 5 deepening]` |\"; 14.02.04-serial-blacklisting-anti-piracy.md:52 - \"| Chargeback triggers automatic blacklist, but the chargeback was fraud against the *buyer* | Victim of card theft is punished twice | `[PENDING — /ideate-discover Step 5 deepening]` |\"; 14.02-licensing-activation-entitlement-cx.md:109 - \"**Role scoping**: `[PENDING — /ideate-discover Step 5 deepening]`\", which 14.02.01-licence-issuance-entitlement-record.md:165 acknowledges: \"See `#CX-05` — whose Role Scoping is still unfilled in the CX file; flagged for Step 6 synthesis, which owns that file.\" Both stages are complete: ideation-index.md:65 \"Step 5 complete\"; ideation-index.md:76 - \"| Cross-domain interaction pairs synthesized | **206** (184 full synthesis, 22 tracked) — Step 6 complete |\".",
+      "forcedInvention": "(a) Whether depositing a bridged licence into a third party's iLok account is permitted, blocked, or treated as a transfer under 14.06's policy registry. (b) Whether a chargeback that was itself card fraud against the buyer blacklists the buyer's entitlement, and what evidence reverses it."
+    },
+    {
+      "findingId": "14-digital-goods-marketplace#005",
+      "unit": "14.02-licensing-activation-entitlement",
+      "severity": "warning",
+      "dimension": 3,
+      "claim": "14.02.05 D-16 mints a third kind of entitlement - a zero-price self-entitlement created at project-placement time - but 14.02.01, which owns the entitlement record, enumerates only two trigger paths and forbids a second entitlement for the same product and holder. The new mint path has no origin value, no state-machine entry, and no stated interaction with the one-per-product-per-holder rule.",
+      "evidence": "14.02.05-licence-terms-registry.md:205 (D-16) - \"A **zero-price self-entitlement** is minted when a vendor places their own product into a project | Per edge case 23. The vendor needs no grant — they hold the rights — but the *chain* must be complete or the composite returns `unknown` on their own pack.\" Contradicted in scope by 14.02.01-licence-issuance-entitlement-record.md:196 (D-06) - \"Issuance has two trigger paths — **purchase** and **grant** — producing one identical record; a grant records grantor and reason\" and 14.02.01:197 (D-07) - \"**One entitlement per product per holder, always.**\" 14.02.01's grant-origin enumeration (14.02.01:112) lists only \"Freeware / NFR / promo / prize (D-06)\", and its lifecycle-state table (14.02.01:131-140) has no placement-minted entry. The path is acknowledged only in a third file: 14.08.01-vendor-onboarding-product-submission.md:134 - \"Distinct from *placing* their own product into a project, which is not a purchase and mints a zero-price self-entitlement instead (14.02.05 D-16).\"",
+      "forcedInvention": "The origin value recorded on a placement-minted entitlement; whether it is flagged self-purchase and therefore excluded from payout/rank/reviews/loyalty per 14.02.01 D-11; which terms version binds to it; and what happens when the vendor already holds a self-purchased entitlement for the same product, which D-07 says cannot coexist with a second one."
+    },
+    {
+      "findingId": "14-digital-goods-marketplace#006",
+      "unit": "14.03-delivery-versioning-library",
+      "severity": "blocking",
+      "dimension": 3,
+      "claim": "The delivery URL's lifetime is specified two incompatible ways inside one sub-domain. 14.03.01 D-04 makes the grant URL stable for 72 hours and states in terms that a short-lived URL and resumability are incompatible - a freshly minted signed URL is a new download to a browser, so the resume silently becomes a restart. The sub-domain CX and 14.03.03 both still specify a short-lived URL, unmarked. D-04 itself flags that the refinement was not carried through, and it was not.",
+      "evidence": "14.03.01-download-delivery-resumable-transfer.md:191 (D-04) - \"**The delivery unit is a transfer grant: a stable, buyer-scoped, artifact-bound URL valid 72 h, re-authorised on every range request** | ... A freshly-minted signed URL is a *new download* to a browser, so \\\"short-lived URL\\\" and \\\"resumable\\\" are incompatible as stated — the resume silently becomes a restart. ... **Refines CX-01's \\\"short-lived URL\\\" phrasing; Step 6 should carry the refinement.**\" and 14.03.01:76 - \"| Grant window | **72 hours** from mint, resumable throughout |\". Contradicted, unmarked, by 14.03-delivery-versioning-library-cx.md:24-25 - \"Each download is authorised against a live entitlement check ... and served via a short-lived, buyer-scoped URL\" and by 14.03.03-licence-portal-purchased-library.md:115 - \"Every download authorises through here, per request, against a live entitlement check, via a short-lived buyer-scoped URL (14.03.01 D-01). There are no static links.\" and 14.03.03:136-137 - \"The row authorises against the live entitlement, mints a **short-lived URL**, and hands off to delivery (14.03.01)\".",
+      "forcedInvention": "Whether the library mints a short-lived URL per download (breaking resume on the 40-100 GB libraries the sub-domain exists for, and breaking 14.03.01 E-01/E-02/E-03/E-28's stated behaviour) or a 72-hour stable grant URL. Two competent implementers reading 14.03.03 and 14.03.01 respectively build mutually incompatible delivery layers."
+    },
+    {
+      "findingId": "14-digital-goods-marketplace#007",
+      "unit": "14.04-sound-content-catalogs",
+      "severity": "warning",
+      "dimension": 3,
+      "claim": "The product-type enum value for project templates is stated two ways. 14.01.01 locks a five-value enum in which the value is `template`; 14.04.03 declares its listings are of type `project-template`. The enum is load-bearing - it selects the required-section schema and is immutable after first publish - so a divergent value is not cosmetic.",
+      "evidence": "14.01.01-digital-product-listing-spec-sheet.md:40 - \"**One entity, five product types, per-type required-section schemas** (D-02). The types are `plugin` · `sample-pack` · `preset-pack` · `template` · `beat`. Type is chosen first and is **immutable after first publish** (D-03)\". Contradicted by 14.04.03-project-template-catalog-dependency-manifest.md:27 - \"A template is a listing (14.01.01) of product type `project-template` carrying: target DAW and version, and a manifest of every referenced dependency\". The sibling catalogs use the locked values correctly - 14.04.01-sample-loop-pack-catalog.md:34 \"of product type `sample-pack`\" and 14.04.02-preset-patch-catalog.md:27 \"of product type `preset-pack`\" - so this is a single divergent value, not a naming convention.",
+      "forcedInvention": "Which string the type enum actually carries for templates, and therefore which required-section schema (14.01.01:53-57 has a `template` column) resolves for a project-template listing."
+    },
+    {
+      "findingId": "14-digital-goods-marketplace#008",
+      "unit": "14.04-sound-content-catalogs",
+      "severity": "warning",
+      "dimension": 3,
+      "claim": "14.04.01 D-10 adds a second contributor question (consent to the pack use, as distinct from the split percentage) whose refusal blocks publish. The feature that owns the contributor gate, 14.10.03, does not carry that question at all and states the opposite rule - that contributor state never blocks publish, only payout. 14.04.01's own States table repeats the opposite rule two sections later. Nothing anywhere defines the case the new gate creates: a contributor who has not yet answered when publish fires, or who refuses after publish.",
+      "evidence": "14.04.01-sample-loop-pack-catalog.md:289 (D-10) - \"**The contributor gate asks two questions: the split, and the use** — a refusal of the use blocks publish | The session drummer consented to a record, not to a sample pack. ... unlike a split it cannot be settled later with a number.\" and 14.04.01:173 - \"A contributor may accept the split and refuse the use — and that refusal blocks publish\". Contradicted by 14.10.03-multi-contributor-pack-splits.md:97 (D-02) - \"Publish is **not** blocked on a split; **payout** is | Per DT-02. Blocking publish costs supply; blocking money makes the paperwork finish itself.\" - and 14.10.03's D-01, its Behavior section (:28-34), its Happy Path (:41-46) and its Edge Cases (:52-59) contain no use-consent question of any kind. 14.04.01 also contradicts itself: 14.04.01:137 - \"Publish is **not** blocked on confirmation; **payout** is (14.10.03 D-02)\" and 14.04.01:224 - \"splits block *payout*, attestations block *publish*\".",
+      "forcedInvention": "Whether an un-answered use question blocks publish or permits it; and what happens when a contributor refuses the use after the pack has published and been sold - unpublish, refund holders, or nothing."
+    },
+    {
+      "findingId": "14-digital-goods-marketplace#009",
+      "unit": "14.05-beat-instrumental-licensing",
+      "severity": "warning",
+      "dimension": 3,
+      "claim": "Index Q-02 and 14.05.02 Q-01 are both marked RESOLVED - existing non-exclusive leases survive an exclusive sale and the exclusive buyer takes subject to them - but the resolution was not propagated into the behaviour text. 14.05.02's Behavior, Happy Path, D-01 and Q-04 all still specify a lease-resolution step 'per policy', and 14.05.03 still states the outcome as an open disjunction. An implementer reading either feature builds a lease-termination branch that four other sources say must not exist.",
+      "evidence": "Resolution: 14.05-beat-instrumental-licensing-index.md:63 - \"~~Q-02~~ ... ✅ **RESOLVED — they survive; the exclusive buyer takes subject to them.**\"; 14.05.02-exclusive-rights-purchase-auto-delist.md:96 - \"~~Q-01~~ ... ✅ **RESOLVED — they survive**\"; corroborated by 14.02.01-licence-issuance-entitlement-record.md:202 (D-12) - \"**Exclusive issuance** (14.05) atomically terminates the product's availability and does **not** revoke prior non-exclusive leases\" and digital-goods-marketplace-cx.md:29 (CX-18). Un-propagated text: 14.05.02:26-27 - \"An exclusive purchase atomically: takes payment, delists the beat at every tier (CX-01), **resolves existing leases per policy** (CX-02), and records a rights transfer into domain 09\"; 14.05.02:41 - \"5. Existing leases are resolved per policy; every lessee is notified (CX-02).\"; 14.05.02:88 (D-01) - \"The exclusive sale, delist, **lease resolution** and rights transfer to 09 are atomic\"; 14.05.02:99 (Q-04) - \"Unwinding a copyright transfer and **resurrecting terminated leases** may simply be impossible\"; and 14.05.03-lease-lifecycle-caps-expiry.md:56 - \"| Exclusive sold on the beat (CX-02) | Existing leases **survive or terminate per policy**; either way the lessee must be told |\".",
+      "forcedInvention": "What the 'lease resolution' step in the atomic exclusive-sale transaction actually does, given the resolved answer is that it does nothing to existing leases."
+    },
+    {
+      "findingId": "14-digital-goods-marketplace#010",
+      "unit": "14.06-used-licence-transfer",
+      "severity": "blocking",
+      "dimension": 3,
+      "claim": "The escrow's settlement contract and the clawback mechanism it delegates to are not jointly satisfiable. 14.06.02 D-01 enumerates seller-machine deactivation as a part of an atomic settlement in which any part failing rolls the whole transfer back; 14.09.03 D-01 states that deactivation routinely and permanently fails - 'revoked-but-running' is an accepted terminal state under the fail-open posture. Taken literally, every transfer whose seller has an offline machine must roll back forever, which nullifies the feature; taken the other way, D-01's atomicity guarantee is false for its most consequential component.",
+      "evidence": "14.06.02-licence-transfer-escrow.md:96 (D-01) - \"Settlement is atomic across funds, seller-stripping, **deactivation**, buyer-writing and vendor fee — **any failure rolls back entirely** | A half-transferred licence has two claimants or none. There is no partial state that is safe.\" and 14.06.02:32-36 - \"Settlement is atomic and multi-part: funds captured, seller's entitlement stripped and their machines deactivated (via 14.09.03's clawback, per `#R-02` — not a second mechanism) ... Any part failing must roll the whole thing back.\" Contradicted by 14.09.03-licence-revocation-entitlement-clawback.md:94 (D-01) - \"Clawback is **best-effort** and is described as such internally and to vendors — never reported as completed recovery | ... \\\"Revoked-but-running\\\" is a real, permanent, accepted state\" and 14.09.03:50 - \"| Machine is offline and never checks in | The clawback never lands. Under fail-open (14.02.02 D-01) the software keeps working forever. |\". The case is left explicitly unanswered at 14.06.02-licence-transfer-escrow.md:55 - \"| Seller's machine is offline and cannot be deactivated | Under fail-open (14.02.02 D-01), the seller's copy keeps working after they sold it | `[PENDING — /ideate-discover Step 5 deepening]` — the fail-open posture's cost, arriving here |\".",
+      "forcedInvention": "Whether a transfer settles or rolls back when the seller's machine cannot be deactivated - i.e. whether deactivation is a settlement precondition (D-01) or a best-effort post-condition (14.09.03 D-01). The buyer's money, the seller's licence, and whether the product is sellable at all all hang on which reading an implementer picks."
+    },
+    {
+      "findingId": "14-digital-goods-marketplace#011",
+      "unit": "14.06-used-licence-transfer",
+      "severity": "warning",
+      "dimension": 7,
+      "claim": "The unit's sharpest open case - and the one that makes its settlement contract unsatisfiable (see #010) - is tracked only by a marker pointing at `/ideate-discover Step 5 deepening`, a stage the ideation index records as complete. A second unit-level CX section is stranded the same way. Neither has an owner or a reachable deferral target, so neither will be picked up by any downstream stage.",
+      "evidence": "14.06.02-licence-transfer-escrow.md:55 - \"| Seller's machine is offline and cannot be deactivated | Under fail-open (14.02.02 D-01), the seller's copy keeps working after they sold it | `[PENDING — /ideate-discover Step 5 deepening]` |\" and 14.06-used-licence-transfer-cx.md:73 - \"**Role scoping**: `[PENDING — /ideate-discover Step 5 deepening]`\". Stage completion: ideation-index.md:65 - \"| Must features at [DEEP] | **195 / 195** — Step 5 complete |\". Contrast the properly-tracked sibling rows in the same unit, which carry an owner and a live stage: 14.06.02:104 (Q-01, User → `/create-prd`), 14.06.02:105 (Q-02, Agent → `/create-prd-architecture`), 14.06.03-bundled-software-with-used-hardware.md:99 (Q-03, User → `/create-prd`).",
+      "forcedInvention": "See #010 - the behaviour this marker defers is the settlement/rollback rule for an undeactivatable seller machine."
+    },
+    {
+      "findingId": "14-digital-goods-marketplace#012",
+      "unit": "14.09-digital-refunds-revocation",
+      "severity": "warning",
+      "dimension": 3,
+      "claim": "14.02.01 D-10 requires `chargeback` to be recorded as a distinct revocation trigger 'everywhere', naming 14.09.03's revocation explicitly. 14.09.03 enumerates a closed set of three triggers and does not include it - in its Behavior, its Happy Path, or any of its six decisions. 14.02.01 notes the gap in passing but attaches no owner and no deferral target to it, so it is not tracked anywhere.",
+      "evidence": "14.02.01-licence-issuance-entitlement-record.md:200 (D-10) - \"A **chargeback is recorded as a distinct trigger from a refund**, everywhere: the holder's library, the vendor's reporting, and **14.09.03's revocation** | Per DT-06. No vendor consent, no policy check, arrives after payout.\" and its state machine 14.02.01:138 - \"| `revoked` | Refund, **chargeback**, transfer stripping the seller (14.06.02), hardware return (14.06.03), blacklist (14.02.04) |\". Contradicted by 14.09.03-licence-revocation-entitlement-clawback.md:31-33 - \"The mechanism is shared by **three triggers** with the same physics: refund (CX-02), used-licence transfer stripping the seller (14.06.02 `#R-02` ...), and hardware return (14.06.03).\" and 14.09.03:40 - \"1. A refund is granted (14.09.02) — or a transfer settles, or hardware returns.\" The gap is noted but untracked at 14.02.01:179 - \"**New trigger**: `chargeback`, distinct from `refund` (D-10, DT-06) — 14.09.03 currently enumerates refund, transfer and hardware return only.\" Domain CX-19 (digital-goods-marketplace-cx.md:366) repeats it: \"A **chargeback** is a new trigger, distinct from `refund` — 14.09.03 currently enumerates refund / transfer / hardware-return only.\"",
+      "forcedInvention": "Whether a chargeback-driven revocation follows 14.09.03's refund path (including its appeal route, which 14.03.03:175 says must instead point at the payment dispute) or a separate path, and which reason/trigger pair the library row and vendor report carry."
+    }
+  ]
+}

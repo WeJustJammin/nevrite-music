@@ -1,0 +1,43 @@
+{
+  "shard": "03-community-networking",
+  "generated": "2026-07-30",
+  "totalFindings": 1,
+  "counts": { "mechanical": 0, "owner": 1, "notADefect": 0 },
+  "items": [
+    {
+      "findingId": "03-community-networking#004",
+      "unit": "03.01-connections-follows-endorsements",
+      "severity": "warning",
+      "dimension": 7,
+      "classification": "owner",
+      "summary": "The expiry horizon for unanswered inbound connection requests is a value nobody ever specified — no period appears in this file, this domain, or anywhere in the tree — so the value itself is an owner decision. The finding holds. What was mechanically fixable, and has been fixed, is the marker hygiene: 03.01.02-professional-connections.md:71 carried a bare `[PENDING]` with neither owner nor deferral target, on a parameter the same file makes load-bearing (DT-05, line 98: the mechanism 'needs three cooperating parts — a quota, a same-pair re-send cooldown, and inbound expiry — not one') and whose mechanism Behavior declares settled (line 52: 'What the default protects against is settled'). The marker now routes to a tracked Q-05 with an explicit owner and deferral target, matching the file's own two well-formed precedents — line 54 '`[PENDING — owner decision, Q-01]`' and line 77 '`[PENDING — Step 5 Must-depth or /write-be-spec]`'. The horizon was routed, not invented.",
+      "canonicalSource": "03.01.02-professional-connections.md:98 (DT-05) fixes the NEED for inbound expiry as one of three cooperating parts and states 'The shape of the quota stays open (Q-01); the need for all three parts does not.' 03.01.02-professional-connections.md:48-50 (Behavior, layer 3) states requests 'expire rather than accumulating an unbounded pending queue'. Neither states a period, and a domain-wide grep for expiry values returns none for this feature. Nearest structural precedent for the routing: 03.03.03-open-to-status-availability-signals.md:117 Q-01 — 'What is the expiry horizon (DT-01)? ... a lifecycle parameter, decided where the signal's contract is written. | User | `/write-be-spec`'.",
+      "filesChanged": [
+        "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/03-community-networking/03.01-connections-follows-endorsements/03.01.02-professional-connections.md"
+      ],
+      "editsApplied": [
+        {
+          "location": "03.01.02-professional-connections.md:71 (Edge Cases, 'Request is ignored indefinitely')",
+          "before": "Requests expire — `[PENDING]` on the period.",
+          "after": "Requests expire — the period is `[PENDING — owner decision, Q-05]`.",
+          "rationale": "Bare marker given an owner and a deferral target via a tracked question, matching line 54's identical construction. Table column count unchanged (3)."
+        },
+        {
+          "location": "03.01.02-professional-connections.md:52-57 (Behavior, settled-vs-open paragraph)",
+          "before": "The mechanism above functions on the conservative flat-quota default until the owner chooses.",
+          "after": "... until the owner chooses. The *period* on layer 3's inbound expiry is open on precisely the same terms and tracked as Q-05 — DT-05 fixes that the queue must drain, not how fast it drains, and no horizon is stated anywhere in this tree.",
+          "rationale": "The paragraph declared the mechanism settled while naming only the cap's shape as open, which is what made the bare marker on line 71 read as an oversight rather than a routed decision. Now both open parameters are named in the one place that enumerates them. Does not contradict Q-01 — the flat-quota default is untouched."
+        },
+        {
+          "location": "03.01.02-professional-connections.md:127 (Open Questions, new Q-05)",
+          "before": "(absent)",
+          "after": "New Q-05 row — owner `User`, deferred to `/write-be-spec`.",
+          "rationale": "Registers the un-invented value as a tracked owner question with the two couplings the file itself states. Table column count preserved (4), matching the header and Q-01..Q-04."
+        }
+      ],
+      "ownerBrief": "DECISION NEEDED: how long does an unanswered inbound connection request sit before it expires?\n\nWHERE IT BITES: 03.01.02 Professional Connections. A connection request is the manual edge for a working relationship that has no credit behind it yet — the A&R you met at a conference, the booker you have played for. The feature's survival mechanism is a three-layer throttle: an eligibility gate, a mandatory context note, and a rate limit. DT-05 in that file records why the rate limit alone is not enough: a quota is defeated both by the withdraw-and-resend loop and by a pending queue that never drains. So the mechanism needs three cooperating parts — an outbound quota, a same-pair re-send cooldown, and inbound expiry. That inbound expiry is settled as a requirement. Its period has never been stated, here or anywhere in the tree.\n\nWHY IT IS YOURS AND NOT OURS: nothing in the tree implies a number, and the number is not a tuning knob with a safe middle. It sets how much of a stranger's effort the product is willing to throw away, and how much guilt it is willing to leave sitting on your highest-value personas.\n\nTHE TWO FAILURE DIRECTIONS:\n  - Too short. The Producer persona lives in a DAW and the Operator works, per personas.md, 'on a phone at a loading dock'. Neither opens this surface daily. A short horizon means genuine requests they would have accepted evaporate before they are seen, and the requester is never told why — their effort is destroyed silently. This is the same persona fact that drove 03.03.03 D-01 and 03.01.01 D-06.\n  - Too long. The guilt backlog returns, just more slowly. The whole point of expiry, per the Edge Cases row, is that 'an unbounded queue the Producer will simply stop opening' is the failure state — and a Producer who stops opening the queue is a Producer whose trust-broker value the product no longer captures.\n\nTWO COUPLINGS YOU CANNOT DECIDE THIS IN ISOLATION FROM:\n  1. The same-pair re-send cooldown (03.01.02 Edge Cases, currently `[PENDING — Step 5 Must-depth or /write-be-spec]`). That row states withdraw-and-resend 'must not reset the quota or bypass expiry'. A cooldown shorter than the expiry period lets a requester withdraw and immediately re-send to reset the pending clock — which is precisely the bypass the row forbids. The two numbers must be chosen together, not separately.\n  2. Q-01, the open decision on the shape of the cap (flat quota, graph-distance tiering, or a costed request). If you choose a costed request, expiry then decides whether an expired request forfeits or refunds the cost — a monetisation call that follows directly from this horizon, and one no later stage can take for you.\n\nRECOMMENDATION ON PROCESS, NOT ON THE NUMBER: this is registered as Q-05, owner `User`, deferred to `/write-be-spec` — the same routing the tree already uses for the only structurally identical question it contains, 03.03.03 Q-01 ('What is the expiry horizon ... a lifecycle parameter, decided where the signal's contract is written'). Decide it alongside Q-01 and the re-send cooldown in one sitting, since all three are parameters of one mechanism, and the request contract is where the three land together. Nothing downstream is blocked before that point: the mechanism is fully specified, only the horizon is open, and it is now visible in the two places an implementer will look rather than hidden behind a bare marker.",
+      "crossDomainImpact": "none — all edits confined to 03-community-networking"
+    }
+  ],
+  "crossDomainNotes": []
+}

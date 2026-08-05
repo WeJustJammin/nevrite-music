@@ -1,0 +1,51 @@
+{
+  "domain": "13-gear-marketplace",
+  "verifiedAt": "2026-07-30",
+  "inputFindings": 6,
+  "upheld": 1,
+  "refuted": 5,
+  "verdicts": [
+    {
+      "findingId": "13-gear-marketplace#001",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "tracked-deferral",
+      "reason": "Quotes verify (13.12:52, 13.12:194, 13.08 index:46, meta/constraints.md:267), but the exact decision the finding says is untracked is tracked verbatim, with an owner and a target. 13.08.01-returns-refunds.md:255 Q-01 carries an explicit [OWNER] marker and reads: 'with no federal statutory floor in the primary market, D-04's \"statutory rights are honoured regardless\" has nothing to anchor to for a US private-seller sale, so the owner must decide what return floor the platform itself imposes and whether it differs by classification' | User | `/create-prd`. The 13.08 sub-domain index routes to it at 13.08-returns-rma-warranty-index.md:46 ('the product call on what floor the platform imposes where no federal statutory floor exists is 13.08.01 Q-01 ... `/create-prd`'). 13.12 is not the owning file for the floor value: its D-02 (13.12:191) defines the floor as resolving on the delivery destination and 13.12 Q-01 (Open Questions) establishes the pattern that this file 'consumes and renders the classification ... it never determines it'. D-05 (13.12:194) requires that no *field* is unset at storefront creation, not that this file authors the statutory constant. The finding's own forcedInvention concedes the tracking exists and reduces the complaint to a missing cross-reference from 13.12 to 13.08.01 Q-01 — a navigability nitpick, not a forced invention."
+    },
+    {
+      "findingId": "13-gear-marketplace#002",
+      "upheld": true,
+      "finalSeverity": "warning",
+      "refutationReason": "not-refuted",
+      "reason": "Every quote verifies and the contradiction is live. gear-marketplace-index.md:129 carries Q-06 with no strikethrough, no resolution text, owner User, target `/create-prd`, and names its source as 13.11 Q-01 — but 13.11-local-pickup-meetup-safety.md:90 has that exact question struck through and closed ('**Resolved by P-09 / D-04:** the **seller chooses per listing**' | Owner | ✅ `/ideate-validate`, 2026-07-21), backed by D-04 at 13.11:84. The staleness is not confined to one row: six downstream sites cite the domain row as still-open — 13.06.01:101, 13.06.01:148, 13.06.01:186 ('Blocked on domain Q-06 (does money move on local pickup)'), 13.06.02:100, 13.06.02:164, 13.08.01:148, and 13.02.04:135. Meanwhile 13.06.05:154 Q-07 and 13.11 Q-04/Q-05 (13.11:93-94) are all written against the resolution as settled ('Per P-09 / D-04'), so two halves of the same domain now read the settlement model as decided and as blocked. The defect is confirmed as a bookkeeping defect rather than a deliberate reopening: the domain index rewrote every other resolved mirror row to its resolution (Q-08 at :131, Q-11 at :134, Q-13 at :136 all carry strikethrough plus the answer); Q-06 alone was left in its pre-resolution form. Held at warning, not blocking: no product behaviour must be invented — a reader who follows the citation the row itself supplies lands on D-04's answer — but 13.06.01 Q-04's declared block is a real, propagated misdirection."
+    },
+    {
+      "findingId": "13-gear-marketplace#003",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "tracked-deferral",
+      "reason": "Quotes verify (13.10.02:79, 13.10.02:39, open questions at 13.10.02:87-89), but the unit's depth and scope are both explicitly tracked, and nothing will be built from this file. 13.10.02-rental-availability-reservation.md:5 reads '**Status**: [SURFACE]' — an undeepened node, where locked constants are not yet expected; contrast the file the finding cites as the convention (13.12-gear-seller-storefront-policies.md:5, '**Status**: [DEEP]', whose seed constants at :54-64 are the product of the deepening pass 13.10 has not had. Scope is closed against it too: 13.10-gear-rental-backline-index.md:48 Q-02 is struck through and RESOLVED — 'all three children (13.10.01, 13.10.02, 13.10.03) sit in the **WONT** section ... **Not in scope for launch**', corroborated at moscow-ledger.md:747 (13.10.02 in the `## WONT (53)` section, line 713). The unit's disposition is further held open as an owner call at gear-marketplace-index.md:130 Q-07 ('Should rental (13.10) be promoted out of this domain?' | User | `/create-prd`), which would move the file to another domain entirely. A missing default on a [SURFACE] node in a WONT bucket whose placement is an open owner question is a tracked deferral, not an ambiguity that forces invention. The finding concedes the WONT placement itself."
+    },
+    {
+      "findingId": "13-gear-marketplace#004",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "no-real-divergence",
+      "reason": "Quotes verify (13.10.03:82, :54, :39; open questions at :88-90), but the claimed three-way inconsistency is not one. The three statements are mutually reinforcing, not divergent: :82 'bounded and short', :54 'a bounded window, not indefinite', and :39 'Assessment window is minutes at a loading dock, not days' — the third is the most specific and rules out precisely the day-scale reading the finding says an implementer might pick, so both competent readings converge on a minutes-to-hours dock check. The finding characterises 'minutes at a loading dock, not days' as a third inconsistent magnitude when it is the file's own disambiguation of the other two. Independently, the unit is out of reach: 13.10.03-deposits-damage-return-condition.md:5 reads '**Status**: [SURFACE]', and 13.10-gear-rental-backline-index.md:48 Q-02 records the whole sub-domain as RESOLVED to '**Not in scope for launch**' (moscow-ledger.md:748, `## WONT` section). The sale-flow comparator the finding offers (13.08.01 D-15's 72h) sits in a [DEEP] file in the MUST/SHOULD path; expecting the same precision from an undeepened WONT node is not a defect of this file."
+    },
+    {
+      "findingId": "13-gear-marketplace#005",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "tracked-deferral",
+      "reason": "Quotes verify (13.04.02:78 D-03, DT-02 at :60, edge case at :41, open questions at :85-87), and DT-02's full text does call the bounds load-bearing ('Bounds — floor, rate limit, adjustment ceiling — are load-bearing', 13.04.02:60). But the segment where the rate is load-bearing is itself an open, owned question in the same table: 13.04.02:86 Q-02 — 'Should auto-repricing be permitted on counted stock (13.03.05) where DT-02's mitigation doesn't apply?' | User | `/create-prd`. DT-02 states the race is structurally damped on the qty=1 non-fungible majority and only bites on counted stock, so the number the finding demands cannot be set before Q-02 decides whether that surface exists at all. Two further owner questions gate the feature's shipping shape (Q-01 at :85, [OWNER], whether the platform accepts that suggestions shape the market; Q-03 at :87, [OWNER], whether auto-repricing is a paid tier). The file is also undeepened and deprioritised: 13.04.02:5 reads '**Status**: [SURFACE]', and moscow-ledger.md:594 places it in the `## COULD (201)` section (line 507) with the rationale 'Downstream of a guide that cannot exist at launch ... needing an owner position (Q-01) before shipping'. A frequency cap on an opt-in tool whose permissibility, segment and commercial packaging are all tracked owner calls is a deferred parameter, not a forced invention."
+    },
+    {
+      "findingId": "13-gear-marketplace#006",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "tracked-deferral",
+      "reason": "The factual premise checks out — 13.02.04-condition-evidence-pack.md:170 does say 'meta/constraints.md has GDPR/CCPA and consumer protection both `[PENDING]`', and that is stale: meta/constraints.md:261 carries CCPA/CPRA at **v1** and :267 carries Consumer protection / returns at **v1.5**, neither with a [PENDING] marker (the surviving [PENDING] rows are at :25-29, :295 and :366, all unrelated stack/API items). The sibling row at 13.02-condition-originality-disclosure-index.md:49 does record the premise as stale. But the tracking is well-formed and the question is genuinely open on its own terms: Q-02 asks how long a sealed pack is retained, owner User, target `/create-prd-security`, and its primary reasoning does not depend on the stale clause — 'the **durations** are statutory (return window vs. insurance claim window vs. dispute window vs. GDPR erasure), they will not naturally align (13.08.01 Q-03 hits the identical seam)'. The finding's own forcedInvention concedes 'Nothing is forced at build time — the question is properly owned'. A stale supporting citation inside a correctly-owned open question changes neither the owner, the target, nor the answer, and does not meet the malformed-tracking exception. The two rows are also not jointly unsatisfiable in the way claimed: index Q-03 resolves *jurisdictional disclosure variance*, a different subject from *evidence retention durations*, so the sibling row does not answer Q-02 and their coexistence is not a contradiction — only an uncorrected rationale sentence."
+    }
+  ]
+}

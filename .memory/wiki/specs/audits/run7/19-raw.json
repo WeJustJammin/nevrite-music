@@ -1,0 +1,709 @@
+{
+  "reportKind": "ambiguity-audit-raw",
+  "run": 7,
+  "domain": "19-ticketing-box-office",
+  "unitsAudited": 10,
+  "filesRead": 58,
+  "coverageNote": "Completed 3a implementer simulation, 3b Vision Rubric scoring, and 3c devil's-advocate probing for all 58 scoped Markdown source files across 10 audit units.",
+  "applicableCheckpoints": 80,
+  "findings": [
+    {
+      "findingId": "R7-19-001",
+      "unit": "19.01-ticket-config-scaling-allocations",
+      "severity": "high",
+      "dimension": 7,
+      "claim": "The unit's unresolved-question records provide Owner and Deferred To but omit both a deadline and the decision blocked; manifest authority is still unresolved.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/19-ticketing-box-office/19.01-ticket-config-scaling-allocations/19.01-ticket-config-scaling-allocations-index.md",
+          "line": 46,
+          "excerpt": "| # | Question | Owner | Deferred To |"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/19-ticketing-box-office/19.01-ticket-config-scaling-allocations/19.01-ticket-config-scaling-allocations-index.md",
+          "line": 50,
+          "excerpt": "Who owns the manifest when a venue hosts an external promoter's show — Operator or the promoter?"
+        }
+      ],
+      "forcedInvention": "Choose the authority that owns manifests, holds, and release notifications for promoter-led shows.",
+      "failureScenario": "A promoter hold has no authorized actor, so staff either bypass access controls or leave sellable inventory stranded."
+    },
+    {
+      "findingId": "R7-19-002",
+      "unit": "19.02-on-sale-announce-presale",
+      "severity": "high",
+      "dimension": 7,
+      "claim": "The unit's unresolved-question records omit a deadline and explicit blocked decision, including who can make an on-sale decision for an external promoter show.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/19-ticketing-box-office/19.02-on-sale-announce-presale/19.02-on-sale-announce-presale-index.md",
+          "line": 49,
+          "excerpt": "| # | Question | Owner | Deferred To |"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/19-ticketing-box-office/19.02-on-sale-announce-presale/19.02-on-sale-announce-presale-index.md",
+          "line": 53,
+          "excerpt": "Who is the on-sale's decision-maker when a venue hosts an external promoter's show?"
+        }
+      ],
+      "forcedInvention": "Choose the actor allowed to schedule, amend, and release an externally promoted on-sale.",
+      "failureScenario": "An on-sale can be opened, delayed, or changed by the wrong party during a live commercial dispute."
+    },
+    {
+      "findingId": "R7-19-003",
+      "unit": "19.03-guest-list-comps",
+      "severity": "high",
+      "dimension": 7,
+      "claim": "The unit's unresolved-question records omit a deadline and explicit blocked decision for comp-budget source-of-truth ownership.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/19-ticketing-box-office/19.03-guest-list-comps/19.03-guest-list-comps-index.md",
+          "line": 46,
+          "excerpt": "| # | Question | Owner | Deferred To |"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/19-ticketing-box-office/19.03-guest-list-comps/19.03-guest-list-comps-index.md",
+          "line": 48,
+          "excerpt": "Do comp budgets originate as deal terms in domain 17 and flow here, or are they re-keyed by the Operator?"
+        }
+      ],
+      "forcedInvention": "Choose whether a comp budget is contract-derived or a locally editable ticketing value.",
+      "failureScenario": "The contract promises 20 comps while the door roster only admits 10, creating a live admission and settlement dispute."
+    },
+    {
+      "findingId": "R7-19-004",
+      "unit": "19.04-door-scanning-access-control",
+      "severity": "high",
+      "dimension": 7,
+      "claim": "The unit's unresolved-question records omit a deadline and explicit blocked decision even though the hardware target determines the offline scanning architecture.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/19-ticketing-box-office/19.04-door-scanning-access-control/19.04-door-scanning-access-control-index.md",
+          "line": 50,
+          "excerpt": "| # | Question | Owner | Deferred To |"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/19-ticketing-box-office/19.04-door-scanning-access-control/19.04-door-scanning-access-control-index.md",
+          "line": 52,
+          "excerpt": "What is the door hardware target — Operator's own phone, a dedicated scanner, or both?"
+        }
+      ],
+      "forcedInvention": "Choose device capabilities, operating conditions, and the scan-client deployment target.",
+      "failureScenario": "A scanner workflow is built against unsupported device capabilities or lacks the offline guarantees required at the door."
+    },
+    {
+      "findingId": "R7-19-005",
+      "unit": "19.05-box-office-counts-drops",
+      "severity": "high",
+      "dimension": 7,
+      "claim": "The unit's unresolved-question records omit a deadline and explicit blocked decision for the promoter or agent recipient that consumes drop reports.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/19-ticketing-box-office/19.05-box-office-counts-drops/19.05-box-office-counts-drops-index.md",
+          "line": 53,
+          "excerpt": "| # | Question | Owner | Deferred To |"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/19-ticketing-box-office/19.05-box-office-counts-drops/19.05-box-office-counts-drops-index.md",
+          "line": 57,
+          "excerpt": "The Promoter has no persona and is the primary consumer of a drop report."
+        }
+      ],
+      "forcedInvention": "Choose the counterparty profile, access scope, and delivery authority for promoter and agent reports.",
+      "failureScenario": "Commercially sensitive sales data is either sent to an unauthorized actor or withheld from the party relying on it."
+    },
+    {
+      "findingId": "R7-19-006",
+      "unit": "19.06-refunds-cancellations-rescheduling",
+      "severity": "high",
+      "dimension": 7,
+      "claim": "The unit's unresolved-question records omit a deadline and explicit blocked decision for the core refund policy.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/19-ticketing-box-office/19.06-refunds-cancellations-rescheduling/19.06-refunds-cancellations-rescheduling-index.md",
+          "line": 44,
+          "excerpt": "| # | Question | Owner | Deferred To |"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/19-ticketing-box-office/19.06-refunds-cancellations-rescheduling/19.06-refunds-cancellations-rescheduling-index.md",
+          "line": 46,
+          "excerpt": "What is the refund policy? Are fees refundable? Are individual refunds granted at all, or only on cancellation?"
+        }
+      ],
+      "forcedInvention": "Choose refund eligibility, fee treatment, and the individual-refund right.",
+      "failureScenario": "Two equally situated buyers receive different outcomes because the refund engine has no governing policy."
+    },
+    {
+      "findingId": "R7-19-007",
+      "unit": "19.07-external-ticketing-integration",
+      "severity": "high",
+      "dimension": 7,
+      "claim": "The unit's unresolved-question records omit a deadline and explicit blocked decision for the provider set and legal viability of connectors.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/19-ticketing-box-office/19.07-external-ticketing-integration/19.07-external-ticketing-integration-index.md",
+          "line": 49,
+          "excerpt": "| # | Question | Owner | Deferred To |"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/19-ticketing-box-office/19.07-external-ticketing-integration/19.07-external-ticketing-integration-index.md",
+          "line": 51,
+          "excerpt": "Which platforms, and in what order? Some have no API or forbid this use in their terms."
+        }
+      ],
+      "forcedInvention": "Choose permitted external providers and the connector capabilities that the product will support.",
+      "failureScenario": "The product ships an integration against a forbidden or unavailable data surface and cannot reconcile externally ticketed shows."
+    },
+    {
+      "findingId": "R7-19-008",
+      "unit": "19.08-vip-packages-meet-and-greet",
+      "severity": "medium",
+      "dimension": 7,
+      "claim": "The unit's unresolved-question records omit a deadline and explicit blocked decision for the VIP package shape that determines whether merch dependencies are required.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/19-ticketing-box-office/19.08-vip-packages-meet-and-greet/19.08-vip-packages-meet-and-greet-index.md",
+          "line": 46,
+          "excerpt": "| # | Question | Owner | Deferred To |"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/19-ticketing-box-office/19.08-vip-packages-meet-and-greet/19.08-vip-packages-meet-and-greet-index.md",
+          "line": 49,
+          "excerpt": "Whether a ticket-only VIP shape ships first remains open."
+        }
+      ],
+      "forcedInvention": "Choose whether the first VIP offer includes merchandise or only admission and meet-and-greet entitlements.",
+      "failureScenario": "Implementation begins against merchandise inventory and fulfilment dependencies that the MVP later excludes."
+    },
+    {
+      "findingId": "R7-19-009",
+      "unit": "19.09-ticketing-fraud-bot-resale-controls",
+      "severity": "high",
+      "dimension": 7,
+      "claim": "The unit's unresolved-question records omit a deadline and explicit blocked decision for the purchase-limit effect of ticket transfer.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/19-ticketing-box-office/19.09-ticketing-fraud-bot-resale-controls/19.09.02-ticket-transfer-delivery-controls.md",
+          "line": 108,
+          "excerpt": "| # | Question | Owner | Deferred To |"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/19-ticketing-box-office/19.09-ticketing-fraud-bot-resale-controls/19.09.02-ticket-transfer-delivery-controls.md",
+          "line": 110,
+          "excerpt": "Does transfer decrement the sender's holding for purchase-limit purposes?"
+        }
+      ],
+      "forcedInvention": "Choose whether transferred inventory restores a sender's purchase-limit allowance.",
+      "failureScenario": "A scalper either bypasses the limit by cycling transfers or a legitimate buyer is permanently locked out after gifting a ticket."
+    },
+    {
+      "findingId": "R7-19-010",
+      "unit": "ticketing-box-office-root",
+      "severity": "high",
+      "dimension": 7,
+      "claim": "The root open-question record omits a deadline and explicit blocked decision for promoter and agent authority despite their ownership of core ticketing actions.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/19-ticketing-box-office/ticketing-box-office-index.md",
+          "line": 97,
+          "excerpt": "| # | Question | Owner | Deferred To |"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/19-ticketing-box-office/ticketing-box-office-index.md",
+          "line": 101,
+          "excerpt": "The 4-persona model has no PROMOTER, and the promoter and agent are unowned."
+        }
+      ],
+      "forcedInvention": "Choose the authorization and data-access model for promoter and agent counterparties.",
+      "failureScenario": "Authority for pricing, on-sale, inventory, and reports is silently assigned to the wrong existing role."
+    },
+    {
+      "findingId": "R7-19-011",
+      "unit": "19.01-ticket-config-scaling-allocations",
+      "severity": "high",
+      "dimension": 3,
+      "claim": "Post-on-sale pricing has no deterministic concurrent-edit rule or price-guarantee policy.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/19-ticketing-box-office/19.01-ticket-config-scaling-allocations/19.01-ticket-config-scaling-allocations-cx.md",
+          "line": 31,
+          "excerpt": "Concurrent edits by Operator staff during a live on-sale are a real race. [PENDING]"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/19-ticketing-box-office/19.01-ticket-config-scaling-allocations/19.01-ticket-config-scaling-allocations-cx.md",
+          "line": 34,
+          "excerpt": "A price-level change after on-sale must notify existing buyers only if it lowers the price and a price-guarantee policy exists. [PENDING]"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/19-ticketing-box-office/19.01-ticket-config-scaling-allocations/19.01.01-ticket-types-price-scaling.md",
+          "line": 124,
+          "excerpt": "Is a price-guarantee policy platform-wide, per-venue, or per-show?"
+        }
+      ],
+      "forcedInvention": "Choose update serialization, effective-price precedence, and whether past buyers receive a credit after a decrease.",
+      "failureScenario": "Two buyers in the same tier are charged different totals or receive inconsistent refunds after a concurrent price change."
+    },
+    {
+      "findingId": "R7-19-012",
+      "unit": "19.02-on-sale-announce-presale",
+      "severity": "critical",
+      "dimension": 3,
+      "claim": "Inventory lifecycle precedence and the payment-authorization hold race are intentionally left unresolved.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/19-ticketing-box-office/19.02-on-sale-announce-presale/19.02-on-sale-announce-presale-cx.md",
+          "line": 69,
+          "excerpt": "Hold expiry, window close, and tier advance can all fire on the same inventory within the same second. [PENDING]"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/19-ticketing-box-office/19.02-on-sale-announce-presale/19.02.04-queue-waiting-room-cart-hold.md",
+          "line": 48,
+          "excerpt": "Hold expires during payment authorisation ... [PENDING] — a genuine race with money on both sides."
+        }
+      ],
+      "forcedInvention": "Choose event ordering, authorization-extension behavior, and compensation when payment succeeds after inventory release.",
+      "failureScenario": "A buyer is charged for a ticket already returned to inventory, causing oversell or a paid-without-ticket incident."
+    },
+    {
+      "findingId": "R7-19-013",
+      "unit": "19.02-on-sale-announce-presale",
+      "severity": "high",
+      "dimension": 3,
+      "claim": "Access-code partial redemption has no state transition across sessions.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/19-ticketing-box-office/19.02-on-sale-announce-presale/19.02.03-access-code-issuance-redemption.md",
+          "line": 52,
+          "excerpt": "Use count and ticket limit must permit resumption or explicitly not. [PENDING]"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/19-ticketing-box-office/19.02-on-sale-announce-presale/19.02.03-access-code-issuance-redemption.md",
+          "line": 103,
+          "excerpt": "Whether a partial redemption leaves a resumable remainder or closes the code is undecided."
+        }
+      ],
+      "forcedInvention": "Choose the code use-count state machine, remainder expiry, and interaction with the per-buyer limit.",
+      "failureScenario": "A partially used code either locks allocation indefinitely or is reused to exceed its intended entitlement."
+    },
+    {
+      "findingId": "R7-19-014",
+      "unit": "19.02-on-sale-announce-presale",
+      "severity": "high",
+      "dimension": 3,
+      "claim": "Access-code brute-force protection requires high entropy and throttling but supplies no implementable entropy or rate-limit values.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/19-ticketing-box-office/19.02-on-sale-announce-presale/19.02.03-access-code-issuance-redemption.md",
+          "line": 57,
+          "excerpt": "Codes must be high-entropy and rate-limited ... [PENDING — entropy length + rate-limit thresholds]."
+        }
+      ],
+      "forcedInvention": "Choose token entropy, per-account and per-IP attempt windows, lock duration, and retry behavior.",
+      "failureScenario": "Attackers enumerate valid presale codes or legitimate fans are blocked by arbitrary throttling behavior."
+    },
+    {
+      "findingId": "R7-19-015",
+      "unit": "19.03-guest-list-comps",
+      "severity": "high",
+      "dimension": 3,
+      "claim": "Guest-list writes and statement certification have no defined separation-of-duties rule.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/19-ticketing-box-office/19.03-guest-list-comps/19.03-guest-list-comps-cx.md",
+          "line": 61,
+          "excerpt": "The right to add a guest and the right to certify a statement should not sit with the same person unchecked. [PENDING]"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/19-ticketing-box-office/19.03-guest-list-comps/19.03.03-door-time-guest-list-changes.md",
+          "line": 52,
+          "excerpt": "A duplicate guest against two party allocations is a real double-admit and settlement question."
+        }
+      ],
+      "forcedInvention": "Choose the approval, counter-signature, or role-separation rule for door-time guest changes and certification.",
+      "failureScenario": "One staff member adds uncompensated guests and certifies the resulting count without independent review."
+    },
+    {
+      "findingId": "R7-19-016",
+      "unit": "19.04-door-scanning-access-control",
+      "severity": "critical",
+      "dimension": 3,
+      "claim": "Offline scan conflict ordering, durable peer recovery, and replica PII protection remain uncontracted.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/19-ticketing-box-office/19.04-door-scanning-access-control/19.04.02-offline-manifest-sync-reconciliation.md",
+          "line": 130,
+          "excerpt": "A device that dies with unpushed scans loses them irrecoverably unless peers hold copies."
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/19-ticketing-box-office/19.04-door-scanning-access-control/19.04.02-offline-manifest-sync-reconciliation.md",
+          "line": 132,
+          "excerpt": "No mechanism is selected for trusting device clocks enough to order conflicts."
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/19-ticketing-box-office/19.04-door-scanning-access-control/19.04.02-offline-manifest-sync-reconciliation.md",
+          "line": 133,
+          "excerpt": "Exactly which PII fields the replica carries and how it is encrypted at rest remain open."
+        }
+      ],
+      "forcedInvention": "Choose a durable sync topology, conflict clock, replica field set, encryption boundary, and data lifetime.",
+      "failureScenario": "A lost or stolen scanner both corrupts the certified attendance count and exposes attendee data."
+    },
+    {
+      "findingId": "R7-19-017",
+      "unit": "19.04-door-scanning-access-control",
+      "severity": "high",
+      "dimension": 3,
+      "claim": "An ignored stale-manifest warning has no escalation or operational response.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/19-ticketing-box-office/19.04-door-scanning-access-control/19.04.02-offline-manifest-sync-reconciliation.md",
+          "line": 134,
+          "excerpt": "No source in the tree defines any escalation from an ignored amber warning."
+        }
+      ],
+      "forcedInvention": "Choose escalation recipients, timing, degraded-mode behavior, and whether new scans can continue.",
+      "failureScenario": "A scanner stays stale through a whole event, admitting refunded or transferred tickets without an accountable response."
+    },
+    {
+      "findingId": "R7-19-018",
+      "unit": "19.04-door-scanning-access-control",
+      "severity": "high",
+      "dimension": 3,
+      "claim": "Token re-entry leaves a transferable wristband as an unresolved age-verification credential.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/19-ticketing-box-office/19.04-door-scanning-access-control/19.04-door-scanning-access-control-cx.md",
+          "line": 73,
+          "excerpt": "Not re-checking makes the wristband a transferable age credential, which is precisely how a 16-year-old gets in."
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/19-ticketing-box-office/19.04-door-scanning-access-control/19.04.03-multi-scanner-coordination-re-entry.md",
+          "line": 100,
+          "excerpt": "Whether an 18+ show needs a distinguishable band is an unresolved risk-acceptance and scope call."
+        }
+      ],
+      "forcedInvention": "Choose whether the system models a physical age band, forces an ID re-check, or accepts the licensing risk.",
+      "failureScenario": "An under-age person uses a transferred re-entry band to bypass both ticket and ID verification."
+    },
+    {
+      "findingId": "R7-19-019",
+      "unit": "19.04-door-scanning-access-control",
+      "severity": "high",
+      "dimension": 3,
+      "claim": "Composite age restrictions lack an adult-to-minor binding rule and an authored outcome when a restriction rises after sale.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/19-ticketing-box-office/19.04-door-scanning-access-control/19.04.04-door-age-id-verification.md",
+          "line": 31,
+          "excerpt": "Whether one adult may vouch for more than one minor is [PENDING]."
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/19-ticketing-box-office/19.04-door-scanning-access-control/19.04.04-door-age-id-verification.md",
+          "line": 51,
+          "excerpt": "A restriction raised after tickets sold is treated as a material change and gets a refund route. [PENDING]"
+        }
+      ],
+      "forcedInvention": "Choose adult-to-minor proof and ratio semantics, and the material-change/refund rule for newly ineligible holders.",
+      "failureScenario": "Door staff apply inconsistent minor admission rules or deny a paid attendee without a legally and commercially defined remedy."
+    },
+    {
+      "findingId": "R7-19-020",
+      "unit": "19.05-box-office-counts-drops",
+      "severity": "high",
+      "dimension": 3,
+      "claim": "Cart-expiry inventory at sell-out has contradictory destinations: the waitlist rule and open-storefront behavior both claim the case.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/19-ticketing-box-office/19.05-box-office-counts-drops/19.05.01-live-count-manifest-state.md",
+          "line": 138,
+          "excerpt": "When carted units expire at sell-out, the rules point different ways: route through the waitlist or reappear openly on the storefront."
+        }
+      ],
+      "forcedInvention": "Choose the routing rule for newly available cart-expiry inventory and its anti-bot behavior.",
+      "failureScenario": "Some expiring carts create an unannounced public mini-on-sale while waitlisted fans are bypassed."
+    },
+    {
+      "findingId": "R7-19-021",
+      "unit": "19.05-box-office-counts-drops",
+      "severity": "medium",
+      "dimension": 5,
+      "claim": "Sales-pacing alerts lack the measurable reference curve, cold-start model, and numeric alert bands that determine when an Operator is warned.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/19-ticketing-box-office/19.05-box-office-counts-drops/19.05.03-sales-pacing-on-sale-health.md",
+          "line": 30,
+          "excerpt": "The specific curve shape, per-genre and per-room fitting, and cold-start default are [PENDING]."
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/19-ticketing-box-office/19.05-box-office-counts-drops/19.05.03-sales-pacing-on-sale-health.md",
+          "line": 32,
+          "excerpt": "Exact percentages and alert bands are [PENDING]."
+        }
+      ],
+      "forcedInvention": "Choose a baseline curve, data source, cold-start behavior, alert percentages, and alert-band semantics.",
+      "failureScenario": "A healthy show is incorrectly escalated or a genuinely failing on-sale receives no actionable warning."
+    },
+    {
+      "findingId": "R7-19-022",
+      "unit": "19.05-box-office-counts-drops",
+      "severity": "high",
+      "dimension": 3,
+      "claim": "The settlement consequence of a lapsed or declined counter-attestation is unresolved.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/19-ticketing-box-office/19.05-box-office-counts-drops/19.05.05-box-office-close-certified-statement.md",
+          "line": 129,
+          "excerpt": "May settlement run on a single-party-certified, un-countered statement, or is a counter-attestation a hard precondition for payout?"
+        }
+      ],
+      "forcedInvention": "Choose whether a lapse blocks payout, permits payout with disclosure, or triggers another resolution path.",
+      "failureScenario": "Settlement either pays on an unagreed count or indefinitely strands funds when a counterparty is unresponsive."
+    },
+    {
+      "findingId": "R7-19-023",
+      "unit": "19.06-refunds-cancellations-rescheduling",
+      "severity": "high",
+      "dimension": 3,
+      "claim": "Refund eligibility and reschedule or postponement windows are still owner choices without authored policy values.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/19-ticketing-box-office/19.06-refunds-cancellations-rescheduling/19.06-refunds-cancellations-rescheduling-index.md",
+          "line": 46,
+          "excerpt": "What is the refund policy? Are fees refundable? Are individual refunds granted at all, or only on cancellation?"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/19-ticketing-box-office/19.06-refunds-cancellations-rescheduling/19.06.03-reschedule-postponement-handling.md",
+          "line": 105,
+          "excerpt": "How long is the opt-out window, and what sets it — statute, deal, or platform policy?"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/19-ticketing-box-office/19.06-refunds-cancellations-rescheduling/19.06.03-reschedule-postponement-handling.md",
+          "line": 106,
+          "excerpt": "What is the postponement deadline — a fixed platform period, or jurisdiction-derived?"
+        }
+      ],
+      "forcedInvention": "Choose refund eligibility, fee handling, opt-out duration, and the date at which postponement turns into a remedy.",
+      "failureScenario": "Buyers receive inconsistent refund outcomes and inventory remains frozen indefinitely after a postponed show."
+    },
+    {
+      "findingId": "R7-19-024",
+      "unit": "19.06-refunds-cancellations-rescheduling",
+      "severity": "high",
+      "dimension": 3,
+      "claim": "Mass refunds lack an approved alternative payout rail for dead payment methods and an unclaimed-cash disposition rule.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/19-ticketing-box-office/19.06-refunds-cancellations-rescheduling/19.06.02-event-cancellation-mass-refund.md",
+          "line": 127,
+          "excerpt": "Which alternative rail is offered when the original payment method is dead — store credit, bank transfer, or manual payout?"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/19-ticketing-box-office/19.06-refunds-cancellations-rescheduling/19.06.02-event-cancellation-mass-refund.md",
+          "line": 132,
+          "excerpt": "What unclaimed-funds retention and legally permitted handoff procedure applies to an unpresented anonymous cash-refund claim?"
+        }
+      ],
+      "forcedInvention": "Choose fallback payment rails, identity checks, retention periods, and legally permitted disposition of unclaimed funds.",
+      "failureScenario": "Cancelled-event refunds become unrecoverable liabilities or are routed through an unauthorized payout and retention process."
+    },
+    {
+      "findingId": "R7-19-025",
+      "unit": "19.07-external-ticketing-integration",
+      "severity": "critical",
+      "dimension": 3,
+      "claim": "Cross-currency external sales preserve source currency but do not define the FX rate source, timing, or rounding used for settlement.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/19-ticketing-box-office/19.07-external-ticketing-integration/19.07.02-count-ingestion-manifest-mapping.md",
+          "line": 55,
+          "excerpt": "Conversion is a settlement-time act with an explicit, timestamped rate; FX mechanics are [PENDING]."
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/19-ticketing-box-office/19.07-external-ticketing-integration/19.07.02-count-ingestion-manifest-mapping.md",
+          "line": 109,
+          "excerpt": "Rate source, timing, rounding, and settlement mechanics remain open."
+        }
+      ],
+      "forcedInvention": "Choose the rate provider, rate timestamp, rounding boundaries, failure handling, and audit record.",
+      "failureScenario": "The two sides settle the same foreign-currency sale using different exchange rates and disagree on payout."
+    },
+    {
+      "findingId": "R7-19-026",
+      "unit": "19.08-vip-packages-meet-and-greet",
+      "severity": "high",
+      "dimension": 3,
+      "claim": "VIP package component remedies and transfer semantics are unresolved even though the components have different recipients and fulfillment states.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/19-ticketing-box-office/19.08-vip-packages-meet-and-greet/19.08.02-meet-and-greet-scheduling.md",
+          "line": 45,
+          "excerpt": "A fan who misses a meet-and-greet slot has a non-retryable fulfilment and what is owed is [PENDING]."
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/19-ticketing-box-office/19.08-vip-packages-meet-and-greet/19.08.02-meet-and-greet-scheduling.md",
+          "line": 104,
+          "excerpt": "Whether a transferred package's meet-and-greet is honored by default or requires artist consent is unresolved."
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/19-ticketing-box-office/19.08-vip-packages-meet-and-greet/19.08.03-vip-redemption-fulfilment.md",
+          "line": 108,
+          "excerpt": "Cancelled show with shipped goods: the physical-goods refund treatment remains open."
+        }
+      ],
+      "forcedInvention": "Choose component-level remedies, artist-consent requirements, merchandise ownership, and transfer effects on the meet-and-greet roster.",
+      "failureScenario": "A buyer receives a refund, a stranger appears on the artist roster, or shipped merchandise is charged twice after cancellation."
+    },
+    {
+      "findingId": "R7-19-027",
+      "unit": "19.09-ticketing-fraud-bot-resale-controls",
+      "severity": "high",
+      "dimension": 3,
+      "claim": "Purchase limits depend on an undefined buyer-assurance model and unresolved transfer-accounting rule.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/19-ticketing-box-office/19.09-ticketing-fraud-bot-resale-controls/19.09-ticketing-fraud-bot-resale-controls-cx.md",
+          "line": 35,
+          "excerpt": "Concurrent purchases across accounts racing one limit are [PENDING]."
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/19-ticketing-box-office/19.09-ticketing-fraud-bot-resale-controls/19.09.01-purchase-limits-bot-mitigation.md",
+          "line": 101,
+          "excerpt": "The assurance level of a buyer's account at checkout is a question that no ideation file owns."
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/19-ticketing-box-office/19.09-ticketing-fraud-bot-resale-controls/19.09.01-purchase-limits-bot-mitigation.md",
+          "line": 102,
+          "excerpt": "Whether transfer decrements the sender's holding is a rule in the transfer and limit-check contracts."
+        }
+      ],
+      "forcedInvention": "Choose account assurance, cross-account correlation, concurrent-limit serialization, and whether transferred tickets restore allowance.",
+      "failureScenario": "A scalper uses low-assurance accounts and transfers to defeat the cap, or a legitimate fan is unfairly blocked."
+    },
+    {
+      "findingId": "R7-19-028",
+      "unit": "19.09-ticketing-fraud-bot-resale-controls",
+      "severity": "critical",
+      "dimension": 3,
+      "claim": "The resale exchange lacks its required money-to-ticket commit and compensating-reversal contract.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/19-ticketing-box-office/19.09-ticketing-fraud-bot-resale-controls/19.09.03-resale-price-caps-face-value-exchange.md",
+          "line": 53,
+          "excerpt": "The charge does not stand unless the holder change commits; the commit-and-compensating-reversal mechanism is [PENDING]."
+        }
+      ],
+      "forcedInvention": "Choose transaction boundaries, idempotency keys, reversal timing, ownership-lock semantics, and recovery after partial failure.",
+      "failureScenario": "A buyer is charged without receiving the ticket, or a seller is paid while still retaining a usable admission token."
+    },
+    {
+      "findingId": "R7-19-029",
+      "unit": "19.09-ticketing-fraud-bot-resale-controls",
+      "severity": "high",
+      "dimension": 3,
+      "claim": "Resale does not define face value after fees or priority between a fan listing and unsold venue inventory.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/19-ticketing-box-office/19.09-ticketing-fraud-bot-resale-controls/19.09.03-resale-price-caps-face-value-exchange.md",
+          "line": 102,
+          "excerpt": "What is face value once fees exist? Whether a reseller is made whole on fees remains an owner policy."
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/19-ticketing-box-office/19.09-ticketing-fraud-bot-resale-controls/19.09.03-resale-price-caps-face-value-exchange.md",
+          "line": 105,
+          "excerpt": "When a fan lists while the venue has unsold inventory, who sells first is unresolved."
+        }
+      ],
+      "forcedInvention": "Choose the fee-inclusive resale cap, buyer and seller fee treatment, and inventory-ordering rule.",
+      "failureScenario": "The exchange either violates its advertised price cap or unfairly suppresses a fan listing to protect venue sales."
+    },
+    {
+      "findingId": "R7-19-030",
+      "unit": "ticketing-box-office-root",
+      "severity": "high",
+      "dimension": 3,
+      "claim": "Attendee-data consent scope and withdrawal after export are unresolved at the boundary where legal duties must be enforced.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/19-ticketing-box-office/19.10-attendee-data-capture-consent.md",
+          "line": 118,
+          "excerpt": "Is consent per-event, per-artist, or per-venue?"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/19-ticketing-box-office/19.10-attendee-data-capture-consent.md",
+          "line": 119,
+          "excerpt": "How does withdrawal propagate once a party has exported the list off-platform?"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/19-ticketing-box-office/19.10-attendee-data-capture-consent.md",
+          "line": 51,
+          "excerpt": "Propagation past the platform boundary is a duty the platform can signal but not enforce. [PENDING]"
+        }
+      ],
+      "forcedInvention": "Choose consent scope, retention and renewal rules, export terms, revocation notices, and third-party accountability.",
+      "failureScenario": "A party continues marketing after consent withdrawal or the same person is subjected to inconsistent consent prompts."
+    },
+    {
+      "findingId": "R7-19-031",
+      "unit": "ticketing-box-office-root",
+      "severity": "high",
+      "dimension": 3,
+      "claim": "RSVP admission is not bounded for an unregistered private room and has no policy when a free event becomes ticketed.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/19-ticketing-box-office/19.11-rsvp-free-private-event-admission.md",
+          "line": 61,
+          "excerpt": "An unregistered private room is the residual open case and the feature can operate outside a venue."
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/19-ticketing-box-office/19.11-rsvp-free-private-event-admission.md",
+          "line": 62,
+          "excerpt": "Whether existing RSVPs are honored free, converted, prioritized, or voided when the show becomes ticketed is [PENDING]."
+        }
+      ],
+      "forcedInvention": "Choose capacity and safety authority outside a registered venue, plus the commercial conversion rule for existing RSVPs.",
+      "failureScenario": "An unlicensed or over-capacity private event is admitted without a governing cap, or RSVP holders are charged or refused inconsistently."
+    },
+    {
+      "findingId": "R7-19-032",
+      "unit": "ticketing-box-office-root",
+      "severity": "high",
+      "dimension": 2,
+      "claim": "Promoter and agent authority is not represented by a role even though those actors own on-sale, pricing, and report consumption in real ticketing workflows.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/19-ticketing-box-office/ticketing-box-office-index.md",
+          "line": 101,
+          "excerpt": "The promoter buys the show, sets the price and owns the on-sale, but the promoter and agent are unowned."
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/19-ticketing-box-office/19.05-box-office-counts-drops/19.05-box-office-counts-drops-index.md",
+          "line": 57,
+          "excerpt": "The Promoter has no persona and is the primary consumer of a drop report."
+        }
+      ],
+      "forcedInvention": "Choose whether these actors become counterparty profiles and their permitted inventory, pricing, and report actions.",
+      "failureScenario": "Existing Operator or Musician accounts are overloaded with promoter powers, exposing price and sales data to the wrong party."
+    },
+    {
+      "findingId": "R7-19-033",
+      "unit": "ticketing-box-office-root",
+      "severity": "high",
+      "dimension": 3,
+      "claim": "The external-ticketing door-scanning decision is unresolved even though reconciliation depends on the independent scanned count.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/19-ticketing-box-office/ticketing-box-office-index.md",
+          "line": 103,
+          "excerpt": "Does WeJammin scan tickets on externally-ticketed shows? The door and reconciliation stand or fall together."
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/19-ticketing-box-office/19.07-external-ticketing-integration/19.07-external-ticketing-integration-index.md",
+          "line": 53,
+          "excerpt": "If the incumbent owns the barcode, the door is theirs and reconciliation loses its independent check."
+        }
+      ],
+      "forcedInvention": "Choose whether external tickets are scannable, how barcode authority is integrated, and the reconciliation level when they are not.",
+      "failureScenario": "The system claims independently reconciled external attendance while only re-reporting the venue's own numbers."
+    }
+  ]
+}

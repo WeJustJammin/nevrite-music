@@ -1,0 +1,133 @@
+{
+  "domain": "12-release-distribution",
+  "verdicts": [
+    {
+      "findingId": "12-release-distribution#001",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "Both quotes exist verbatim (12.08-catalog-migration-exit.md:36-39 and :76), but the conditional reading has nothing behind it. 12.08:36-39 settles retention explicitly and cites the owning feature; 12.07-identifier-assignment-at-delivery.md:161-162 Happy Path step 3 states it normatively — 'Recordings that already carry one keep it. No new allocation, no second identifier, whatever prefix it came from' — and 12.07:200 gives the migration edge case: 'Migrated catalog arrives with ISRCs from the prior distributor's prefix | Kept, provenance = a third party's'. No prefix condition that would gate retention is defined anywhere in the tree, so the Happy-Path prose at :76 is loose narrative summarising the settled rule, not a competing rule. 12.07 Q-04:297 even quotes that exact clause and reads it as covering 'only identifiers that already exist'. Nothing to invent."
+    },
+    {
+      "findingId": "12-release-distribution#002",
+      "upheld": true,
+      "finalSeverity": "warning",
+      "refutationReason": "not-refuted",
+      "reason": "Quotes verify exactly. 12.03.02-per-store-delivery-status.md:44-55 is a closed board vocabulary with no Held; :110 resolves the sibling case by name ('Transport failure is not a state here — it is 12.02.03's Failed and stays Sent'); 12.03.02:62-74 + 12.03-dsp-store-territory-management-index.md:71 D-05 (dated owner ratification 2026-07-20) resolved the partially-accepted gap. Held is the residue: 12.02.03-delivery-choreography-acknowledgement.md:302 and :335 route all three gaps to Step 6 synthesis, ideation-index.md:76/D-25 records Step 6 complete, and two of the three were closed on the owner's side while Held was not. No marker now points anywhere for it, and 'Unknown' is defined at 12.03.02:55 as 'We genuinely cannot tell', which is false for a known credential lapse — so the board projection for a suspended partner has to be invented. Downgraded from blocking: an implementer can proceed by holding the row at its pre-ack state and surfacing 12.02.03:302's message-level Held copy, so this blocks fidelity, not construction."
+    },
+    {
+      "findingId": "12-release-distribution#003",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "tracked-deferral",
+      "reason": "The exit table cell the finding attacks is itself a marker: 12.08-catalog-migration-exit.md:54 reads '| ISRC/UPC from our prefix | (warning) The whole question | See DT-02 |', and DT-02 resolves to 12.08 Q-01:163, an '[OWNER]' question with Owner 'User' and Deferred To '/create-prd (with domain Q-05; UPC half is 12.07 Q-03)'. That same row states 'this row decides ISRC only' and hands the UPC half to 12.07-identifier-assignment-at-delivery.md:296 Q-03, also Owner 'User' / '/create-prd'. Both halves of the alleged conflation therefore carry an owner and a target. The missing third row is answered rather than invented: 12.07 D-01:275 makes the ISRC travel with the recording forever and 12.07:200 fixes third-party-prefix migrated ISRCs as 'Kept, provenance = a third party's'. Well-formed deferral plus detail one file over."
+    },
+    {
+      "findingId": "12-release-distribution#004",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "Quotes verify at 12.07-identifier-assignment-at-delivery.md:121-124, :287 D-13, :24 and :266. But the mapping is stated, not missing: 12.07:143-148 defines the third value operationally — 'a prefix belonging to neither the platform nor the artist' — and :266 pins it to '01 Identity, Profiles & Organizations ... a label entity from 01 holding a registrant code, distinct from the human who supplied it'. That resolves all four source values: 'my registrant prefix' -> the artist's; 'my label's prefix' -> the label entity, i.e. a third party's; 'issued by a prior distributor' -> a third party's (:200 states this case verbatim); 'from an existing release of this recording' -> the provenance already recorded, since D-01 carries the identifier unchanged. There is also no behavioural consequence to a wrong pick — D-01:275 makes the ISRC travel with the recording under either non-ours value."
+    },
+    {
+      "findingId": "12-release-distribution#005",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "no-real-divergence",
+      "reason": "All three quotes verify (release-distribution-index.md:26-27, :36, :38; 12.08-catalog-migration-exit.md:5; 12.06-content-id-ugc-claiming-index.md:5). But release-distribution-index.md:26-27 explicitly dates itself — 'Classified through the Node Classification Gate during /ideate-discover Step 3 ... depth is allocated by MoSCoW in Step 5' — so the Children table is a Step-3 snapshot, not a live status claim, and the child file is authoritative. The MoSCoW band is fixed independently at ideation-index.md:171 ('| Should | 285 | [PARTIAL] — Level 1 |') and by moscow-ledger placement, neither of which the parent table can override. No product behaviour turns on the label; two implementers build identically. Documentation staleness, not ambiguity."
+    },
+    {
+      "findingId": "12-release-distribution#006",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "The finding reads only half of the gate. 12.01.03-delivery-readiness-gate.md:40-54 defines two layers, and the exhaustiveness claim at :56-57 is scoped explicitly to 'Conditions ... the gate's own: social checks over facts other humans own'. The routed items are precondition-class, and P-1 at :52 absorbs them: 'Zero blocking validation findings (warnings and advisories do not gate) | 12.01.02 | Gate not presented; user is still in validation'. A missing (P)/(C) year (12.01.05:82) and missing territory data (12.03.01 D-04) are blocking validation findings; an absent 09 ownership record (12.01.05:92) is foreclosed upstream and the gate says so at :105 — '12.01.01 D-02 gates add-eligibility on rights position, so \"no rights position at all\" is caught upstream'. Nothing lands nowhere."
+    },
+    {
+      "findingId": "12-release-distribution#007",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "The quote at 12.01.04-audio-artwork-asset-conformance.md:187 is verbatim, but {N} is an interpolation token, not an unfilled placeholder — the same file uses {stores} (:182), {artist} (:184) and the pattern throughout. The value is deliberately not a spec constant: :76 states 'Partner-sourced numbers are data, not code. Every floor, ceiling and target above lives in a...' and D-14:265 ratifies it — 'Partner floors, ceilings and targets live in a versioned asset spec pack, not in code'. :104 already lists 'File size | Against the target's ceiling | Blocking for that target'. The contrasted values the finding cites (3000x3000, -60 dBFS) are universal floors, which is exactly why they are literal and this one is not."
+    },
+    {
+      "findingId": "12-release-distribution#008",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "The stale text is real (12.02.03-delivery-choreography-acknowledgement.md:96, :298, :301) and the ratification is real (12.03-dsp-store-territory-management-index.md:71 D-05, dated 2026-07-20; 12.03.02-per-store-delivery-status.md:62-74 and :110), but precedence is stated on both sides and points one way. 12.03.02:100-103 — 'This feature owns the status object (CX-02), so the refinement is made here ... must be reconciled as one vocabulary during synthesis' — and 12.02.03:325 DT-07 marks its own claim as 'Flagged to Step 6 rather than fixed here', with :335 listing the same three gaps as Step-6 items. An implementer following the declared owner builds D-18's attached rejected-item details; there is no second model to choose. The unfixed prose is a staleness defect, not a forced invention."
+    },
+    {
+      "findingId": "12-release-distribution#009",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "12.01.03-delivery-readiness-gate.md:84 B-3 verifies verbatim and is itself the normative rule, naming its own site: 'withheld from the delivered metadata (ERN 12.02.01, RIN 02.08) until resolved'. The cited counter-doctrine does not collide with it. 12.02.01-ern-message-generation.md:210 D-01 forbids defaulting and authoring — 'Generation is a pure projection; nothing is defaulted or authored' — and withholding an input is neither; :219 D-10 forbids collapsing a person to a primary role, which is about role fidelity for multi-hyphenates (DT-08), not about disputed-credit inclusion. The dispute state is an input fact owned by 02.05, so excluding it upstream leaves generation a pure projection of what remains. Detail carried one file over, with the owning file naming the consumer."
+    },
+    {
+      "findingId": "12-release-distribution#010",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "no-real-divergence",
+      "reason": "The row verifies verbatim at 12.02-ddex-delivery-messaging-index.md:75, and the Owner cell does hold a stage rather than a person-class. But the question is not untracked: the same row carries Deferred To '/create-prd-architecture', and ERN-version support is a technical conformance decision (agent/architecture class), not a product-owner call — so the stage naming is coherent content rather than a lost accountability. Compare Q-03 at :76, which resolves with 'Agent'. No implementer is forced to invent product behaviour by this cell; the question is named, scoped and targeted at a stage that will answer it. Column-hygiene slip, not a Dimension-7 gap."
+    },
+    {
+      "findingId": "12-release-distribution#011",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "tracked-deferral",
+      "reason": "All three quotes verify (12.03.04-artist-profile-linking-disambiguation.md:60, :101, :135 D-05), and the tension is the exact subject of a well-formed open question on the same page: Q-04 at :144 — 'For a Tier-B store (addressable, not claimable), what is the acceptable evidence bar before an asserted link is treated as trusted enough to emit — or are Tier-B links always emitted-with-warning?' — Owner 'Agent', Deferred To '/write-be-spec'. The tier row at :60 defers to D-05 by name ('see D-05') rather than contradicting it silently, and :63-64 already routes the per-store tier matrix to /write-be-spec. Owner and target both present; this is the documented mechanism working, on a unit at declared [PARTIAL] depth."
+    },
+    {
+      "findingId": "12-release-distribution#012",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "Quotes verify (12.04.03-pre-save-pre-add-links.md:107 D-04 and :64; 12.04-release-scheduling-windows-cx.md:80; 12.04.01-release-date-lead-time.md:289). But the feature has taken the position and the CX note is the exploratory artifact, not a competing rule: 12.04.03:64 states it as an edge-case outcome ('Pre-saves must survive it | Must hold') and D-04 ratifies it. The CX raises a per-store feasibility risk, which is a delivery-capability question for partner-profile data, not a divergence in specified behaviour. The moved-earlier case is not the same case and is fully specified with its own artist-facing copy at 12.04.01:289. 12.04.03 is also declared [SURFACE] (ideation-index.md:67, 'correctly out of Step 5 scope'), so deeper per-store confirmation is not yet due."
+    },
+    {
+      "findingId": "12-release-distribution#013",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "tracked-deferral",
+      "reason": "12.04-release-scheduling-windows-cx.md:68 verifies verbatim and does carry a marker — the item is named, characterised ('Rare, real, and unhandled') and marked '[PENDING — Step 5]'. The units it lands on are declared not-yet-deepened: 12.04.02-editorial-pitch-windows.md:5 is [PARTIAL] (Level-1 only per ideation-index.md D-24: 'Behavior, Happy Path, primary edge cases, States') and 12.04.03-pre-save-pre-add-links.md:5 is [SURFACE], explicitly out of Step 5 scope (ideation-index.md:67). 12.04.02:61 already carries the sibling '[PENDING — Step 5] — per-store behaviour unknown' for the adjacent date-move case, so this is the file's declared depth posture, not an untracked hole. Both state tables also have a clean regression trigger ('Delivery not accepted' — 12.04.02:70, 12.04.03:74)."
+    },
+    {
+      "findingId": "12-release-distribution#014",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "downstream-detail",
+      "reason": "12.05-catalog-lifecycle-after-release-cx.md:62-63 verifies verbatim, marker included. What is actually missing is recovery orchestration and retry policy, which the tree routes out of the vision layer by name: 12.02.03-delivery-choreography-acknowledgement.md:321 DT-03 — 'the retry policy itself is an architecture concern routed to /create-prd-architecture'. The observable product states already exist: 12.03.02-per-store-delivery-status.md:113-116 makes 'Withdrawn' a real board state reachable only back to 'Sent' 'via an explicit new delivery (12.05.02)', and 12.05.02-metadata-update-redelivery.md:116 carries 'Partial | Some stores took it | Per-store breakdown — the honest state'. 12.05.02 is also [PARTIAL] (Level-1 depth), so secondary failure branches are not yet due."
+    },
+    {
+      "findingId": "12-release-distribution#015",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "12.05-catalog-lifecycle-after-release-cx.md:64 and the two permission rows verify. But the domain's answer for this shape is established and repeated: 12.05.02-metadata-update-redelivery.md:146 D-01 requires the cost 'stated per field, per store, before the click', and :62-64 phase 2 requires explicit confirmation of the split outcome before anything ships — so a decomposing update cannot happen silently. Where the actor is not the owner, :149 D-04 fixes the shape — 'Credited contributors get a request path, not an edit path, on releases they don't own' — and 12.07-identifier-assignment-at-delivery.md:286 D-12 states it as the domain's recurring Producer pattern ('a request path, never an edit path ... the domain's recurring Producer shape'). 12.05.02:27 also notes 'Producer is typically the release owner', in which case they hold takedown rights anyway."
+    },
+    {
+      "findingId": "12-release-distribution#016",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "no-real-divergence",
+      "reason": "Both sides verify (12.05-catalog-lifecycle-after-release-cx.md:31, :70, :80 vs 12.05.02-metadata-update-redelivery.md:102, :118 and 12.05.03-involuntary-takedown-suspension.md:75). But a leaning in a CX synthesis note is not a normative statement — :80 says only 'Leaning: ... That distinction is worth carrying', while the feature files state the rule outright with artist-facing copy and a state row. Where a feature file has taken a definite position, every reasonable implementer builds the blanket block; nobody ships a carve-out on the strength of a note that calls itself unresolved. The 12.05 unit is [PARTIAL] (ideation-index.md D-24, Level-1 only), so a refinement of the block is a later-depth item, not a contradiction to resolve now."
+    },
+    {
+      "findingId": "12-release-distribution#017",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "tracked-deferral",
+      "reason": "12.06-content-id-ugc-claiming-cx.md:33 and :37 verify verbatim, including the '[PENDING — Step 5]' marker. The unit is declared out of that scope rather than failing it: 12.06-content-id-ugc-claiming-index.md:5 is '[SURFACE]', 12.06.02-claim-whitelist-management.md:5 is '[SURFACE]', and ideation-index.md:67 records 'Could/Won't features at [SURFACE] | 254 — correctly out of Step 5 scope'. Whitelist re-derivation mechanics are exactly the depth a [SURFACE] node has not been given, and the CX marker is the record that it is owed. Holding a breadth-pass node to [DEEP] edge-case completeness inverts the tree's declared depth allocation."
+    }
+  ],
+  "adjustedUnits": [
+    { "unit": ".", "applicableCheckpoints": 8, "adjustedPoints": 0 },
+    { "unit": "12.01-release-builder", "applicableCheckpoints": 7, "adjustedPoints": 0 },
+    { "unit": "12.02-ddex-delivery-messaging", "applicableCheckpoints": 7, "adjustedPoints": 0 },
+    { "unit": "12.03-dsp-store-territory-management", "applicableCheckpoints": 7, "adjustedPoints": 0.5 },
+    { "unit": "12.04-release-scheduling-windows", "applicableCheckpoints": 7, "adjustedPoints": 0 },
+    { "unit": "12.05-catalog-lifecycle-after-release", "applicableCheckpoints": 7, "adjustedPoints": 0 },
+    { "unit": "12.06-content-id-ugc-claiming", "applicableCheckpoints": 7, "adjustedPoints": 0 }
+  ]
+}

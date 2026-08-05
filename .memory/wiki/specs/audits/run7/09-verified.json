@@ -1,0 +1,185 @@
+{
+  "reportKind": "ambiguity-audit-verification",
+  "run": 7,
+  "domain": "09-rights-ownership",
+  "rawReport": "09-raw.json",
+  "rawFindingCount": 7,
+  "verdicts": [
+    {
+      "findingId": "R7-09-001",
+      "upheld": true,
+      "finalSeverity": "blocking",
+      "reason": "Q-04 remains an owner-only legal-posture decision with no deadline; the table records only a destination stage. Its unresolved choice changes e-sign, identity, jurisdiction, and liability requirements, while the double-assignment trigger remains expressly pending. Implementing either behavior would require invention.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/09-rights-ownership/rights-ownership-index.md",
+          "line": 130,
+          "excerpt": "| # | Question | Owner | Deferred To |"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/09-rights-ownership/rights-ownership-index.md",
+          "line": 135,
+          "excerpt": "Is a WeJammin split sheet enforceable or evidentiary? Drives e-sign rigour, identity verification, jurisdiction handling, and the platform's whole liability posture."
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/09-rights-ownership/rights-ownership-cx.md",
+          "line": 273,
+          "excerpt": "of exactly where detection fires (at the second assignment vs at a later title search)."
+        }
+      ]
+    },
+    {
+      "findingId": "R7-09-002",
+      "upheld": true,
+      "finalSeverity": "blocking",
+      "reason": "The source says the any-owner-non-exclusive rule has no authored meaning, forbids inference from the US default, and leaves its authorization and Control Summary effects open. It has an owner and target stage, but no deadline; an implementer cannot safely supply the missing rule.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/09-rights-ownership/09.01-rights-registry/09.01.03-master-rights-ownership.md",
+          "line": 89,
+          "excerpt": "its meaning is not yet written — see Q-10"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/09-rights-ownership/09.01-rights-registry/09.01.03-master-rights-ownership.md",
+          "line": 343,
+          "excerpt": "| # | Question | Owner | Deferred To |"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/09-rights-ownership/09.01-rights-registry/09.01.03-master-rights-ownership.md",
+          "line": 353,
+          "excerpt": "What does `any-owner-non-exclusive` actually authorize?"
+        }
+      ]
+    },
+    {
+      "findingId": "R7-09-003",
+      "upheld": true,
+      "finalSeverity": "blocking",
+      "reason": "The sub-domain's Q-01 still lacks a deadline and leaves the enforceable-versus-evidentiary posture to the owner even though e-sign, identity, jurisdiction, and liability requirements depend on it. The raw finding's CX-05 rationale is no longer needed: contribution scope is directly specified, but that does not resolve Q-01's forced-invention gap.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/09-rights-ownership/09.02-split-capture-agreements/09.02-split-capture-agreements-index.md",
+          "line": 62,
+          "excerpt": "| # | Question | Owner | Deferred To |"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/09-rights-ownership/09.02-split-capture-agreements/09.02-split-capture-agreements-index.md",
+          "line": 64,
+          "excerpt": "The answer changes e-sign requirements, identity verification, jurisdiction handling, and the platform's liability posture."
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/09-rights-ownership/09.02-split-capture-agreements/09.02.03-work-for-hire-buyout.md",
+          "line": 215,
+          "excerpt": "Designation is scoped to a **contribution**, not a person"
+        }
+      ]
+    },
+    {
+      "findingId": "R7-09-004",
+      "upheld": true,
+      "finalSeverity": "warning",
+      "reason": "Bulk asserted-history import remains an explicit owner scope call with no deadline or stated blocked decision. The new-work scope keeps it outside v1's immediate implementation, reducing the impact to a warning, but no current source resolves whether the import path exists for the later chain feature.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/09-rights-ownership/09.03-chain-of-title-lifecycle/09.03.01-chain-of-title-ledger.md",
+          "line": 109,
+          "excerpt": "| # | Question | Owner | Deferred To |"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/09-rights-ownership/09.03-chain-of-title-lifecycle/09.03.01-chain-of-title-ledger.md",
+          "line": 112,
+          "excerpt": "whether the bulk path exists at all is still a scope call."
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/09-rights-ownership/rights-ownership-index.md",
+          "line": 139,
+          "excerpt": "**RESOLVED — new-work play.**"
+        }
+      ]
+    },
+    {
+      "findingId": "R7-09-005",
+      "upheld": true,
+      "finalSeverity": "blocking",
+      "reason": "The dispute terminal-state and live-release choices are still expressly unsolved owner decisions. The source records a stage target but no deadline; choosing a terminal path or whether to block exploitation would invent a core rights policy.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/09-rights-ownership/09.04-rights-conflicts-disputes/09.04-rights-conflicts-disputes-index.md",
+          "line": 58,
+          "excerpt": "| # | Question | Owner | Deferred To |"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/09-rights-ownership/09.04-rights-conflicts-disputes/09.04-rights-conflicts-disputes-index.md",
+          "line": 60,
+          "excerpt": "how does a dispute ever end when both parties dig in?"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/09-rights-ownership/09.04-rights-conflicts-disputes/09.04-rights-conflicts-disputes-index.md",
+          "line": 61,
+          "excerpt": "Does a dispute make the work unusable (release-blocked, licence-blocked) or only unpaid (escrowed)?"
+        }
+      ]
+    },
+    {
+      "findingId": "R7-09-006",
+      "upheld": true,
+      "finalSeverity": "blocking",
+      "reason": "The first-party AI-training question remains open and says the consent registry must gate WeJammin itself if the answer is yes. No current source supplies the answer, a deadline, or a concrete blocked-decision record, so authorizing a training pipeline would be invented.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/09-rights-ownership/09.05-ai-voice-likeness-consent/09.05.01-ai-training-consent-registry.md",
+          "line": 108,
+          "excerpt": "| # | Question | Owner | Deferred To |"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/09-rights-ownership/09.05-ai-voice-likeness-consent/09.05.01-ai-training-consent-registry.md",
+          "line": 111,
+          "excerpt": "Do **WeJammin's own** AI features (anywhere in the platform) train on user content?"
+        }
+      ]
+    },
+    {
+      "findingId": "R7-09-007",
+      "upheld": true,
+      "finalSeverity": "blocking",
+      "reason": "The publication and internet-access boundaries remain owner decisions, with only a stage target and no deadline. Direct feature source confirms the privacy exclusions are partial proposals and the positive projection remains undecided, so an implementer would have to invent what becomes public.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/09-rights-ownership/09.06-rights-evidence-public-record/09.06-rights-evidence-public-record-index.md",
+          "line": 66,
+          "excerpt": "| # | Question | Owner | Deferred To |"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/09-rights-ownership/09.06-rights-evidence-public-record/09.06-rights-evidence-public-record-index.md",
+          "line": 68,
+          "excerpt": "**[OWNER]** **What is public?**"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/09-rights-ownership/09.06-rights-evidence-public-record/09.06.04-public-rights-lookup.md",
+          "line": 129,
+          "excerpt": "The tier table above is a proposal, not a decision."
+        }
+      ]
+    }
+  ],
+  "coverage": {
+    "rawFindingIds": [
+      "R7-09-001",
+      "R7-09-002",
+      "R7-09-003",
+      "R7-09-004",
+      "R7-09-005",
+      "R7-09-006",
+      "R7-09-007"
+    ],
+    "verdictCount": 7,
+    "upheldCount": 7,
+    "refutedCount": 0,
+    "warningCount": 1,
+    "sourceScope": ".memory/wiki/specs/ideation/09-rights-ownership/",
+    "rubricsRead": [
+      ".agents/skills/pipeline-rubrics/references/vision-rubric.md",
+      ".agents/skills/pipeline-rubrics/references/scoring.md"
+    ]
+  }
+}

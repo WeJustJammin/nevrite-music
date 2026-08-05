@@ -3,7 +3,7 @@
 > **Level**: domain
 > **Scope**: Connections between children of [Venues, Studios & Spaces](./venues-studios-spaces-index.md)
 > **Status**: [DEEP] — Step 6 synthesis. 7 children; 11 intra-domain cross-cuts confirmed, 50 feature-level cross-cut notes folded in.
-> **Last updated**: 2026-07-18
+> **Last updated**: 2026-07-23
 
 ## Cross-Cut Map
 
@@ -11,7 +11,7 @@
 |---|--------|--------|--------------|----------------|------------|----------|
 | CX-01 | [16.06 Booking](./16.06-space-booking-reservations/) | [16.05 Curation](./16.05-curation-provenance-data-integrity/) | **The domain's power supply** — a completed reservation is the proof of presence that triggers the harvest and makes a report first-hand | Musician, Producer, Operator | High | 16.06.03 DT-01; 16.05.06 DT-03 |
 | CX-02 | [16.05 Curation](./16.05-curation-provenance-data-integrity/) | [16.02 Venue Spec](./16.02-venue-technical-specification/) | The spec's truth is maintained by curation, not by its owner — provenance is derived from **relationship to the record, not persona lens** (D-12) | Musician, Producer, Operator | High | 16.02.02 DT-03; 16.05.04 D-01; 16.02.01 D-12/DT-13 |
-| CX-03 | [16.01 Place Records](./16.01-place-records-rooms/) | [16.02](./16.02-venue-technical-specification/) · [16.03](./16.03-studio-technical-specification/) · [16.04](./16.04-rehearsal-practice-space-specification.md) | Composition — the room is the spec-carrying unit; the licence record supplies statutory ceilings (date-scoped); accessibility displacement enters the capacity chain | Operator, Musician, Producer | High | 16.01.01 D-01; 16.01.02 D-01; 16.02.01 DT-06/DT-15 |
+| CX-03 | [16.01 Place Records](./16.01-place-records-rooms/) | [16.02](./16.02-venue-technical-specification/) · [16.03](./16.03-studio-technical-specification/) · [16.04](./16.04-rehearsal-practice-space-specification.md) | Composition — the room is the spec-carrying unit; the statutory record supplies ceilings (date-scoped) **where the regime profile declares them**; accessibility displacement enters the capacity chain | Operator, Musician, Producer | High | 16.01.01 D-01; 16.01.02 D-01; 16.01.06 D-05; 16.02.01 DT-06/DT-15/D-16 |
 | CX-04 | [16.02 Venue Spec](./16.02-venue-technical-specification/) · [16.03 Studio Spec](./16.03-studio-technical-specification/) | [16.07 Conformance Check](./16.07-spec-conformance-check-rider-room.md) | The spec is one half of the match; the **field triple** (typed value + closed-vocab caveat + display-only note) makes the check computable | Musician, Producer, Operator | High | 16.07 DT-04; 16.02.02 D-05; 16.02.03 |
 | CX-05 | [16.03 Studio Spec](./16.03-studio-technical-specification/) | [16.06 Booking](./16.06-space-booking-reservations/) | The staffing model and the **pooled mic locker** change what a booking is — a room, a room + person, or a room + a specific contended asset | Producer, Operator, Musician | High | 16.03.03 DT-01; 16.03.02 D-08; 16.06.05 D-01 |
 | CX-06 | [16.01 Place Records](./16.01-place-records-rooms/) | [16.05 Curation](./16.05-curation-provenance-data-integrity/) | The registry substrate — every field is seeded, claimed, suggested, provenance-ranked, decayed; the claim **anchor class** now includes the address, and an in-window edit invalidates it | All | High | 16.01.01 D-09/DT-10; 16.05 index |
@@ -82,7 +82,7 @@ policy (16.05.04 D-02).
 **Synthesis questions answered**:
 1. **Shared-state owner + merge**: The record owns the field; the provenance ranking (16.05.03 D-02) settles most. What reaches 16.05.04 is owner-vs-first-hand, both credible — last-agreed stands, contest visible.
 2. **Trigger chain + rollback**: Harvest contradiction → contest → corroboration → `[PENDING]` flip or escalate to 24. Async; no rollback (append-only revision history).
-3. **Permission intersection**: Inverted for statutory fields — the owner cannot write curfew/dB-limit/licensed-capacity (16.01.06 D-02); a rival Operator's false edit routes through the suggested-edit queue, never a unilateral write.
+3. **Permission intersection**: Inverted for statutory fields — the owner cannot write the operating-hours limit, the dB limit or the occupancy ceiling **where the record's regime profile declares an instrument that imposes them** (16.01.06 D-02/D-05). Where it declares none — as the US launch profile does not for the operating conditions — the same numbers are the Operator's own claims labelled as claims (16.02.03 D-01/D-13) and the inversion has no input. A rival Operator's false edit routes through the suggested-edit queue either way, never a unilateral write.
 4. **Notification fan-out**: Contests notify the Operator. A stream of "more people say you're wrong" is a real defection risk — a product tension, not just a mechanism.
 5. **State-transition race**: **A large share of "conflicts" are conditionality failures** (16.05.04 DT-05) — the ramp was out one week and not the next; both parties told the truth and the flat spec model could not hold it. Fixing conditionality (index Q-03) would *remove* conflicts, not resolve them.
 
@@ -93,8 +93,10 @@ policy (16.05.04 D-02).
 **Relationship**: Composition, and the reason the type set works (16.01.01 D-01/D-06). A building typed
 `[venue, studio]` does not carry two spec sheets — its **rooms** do, individually. Model the spec on the
 place instead of the room and a band books "the venue" and arrives at the wrong room. Step 6 added the
-supply chain that feeds capacity: the **licensed ceiling is date-scoped, not scalar** (a temporary
-licence at 499 for one weekend is a second, time-bounded ceiling — 16.02.01 DT-06), and a **wheelchair
+supply chain that feeds capacity: the **statutory ceiling is date-scoped, not scalar** (a temporary
+permission at 499 for one weekend is a second, time-bounded ceiling — 16.02.01 DT-06 — **where the
+regime profile declares a temporary-permission instrument**, 16.01.06 D-05 / 16.02.03 D-13; where it
+does not, the date-scoping machinery is unchanged and has one ceiling to resolve), and a **wheelchair
 bay physically displaces standing places** (16.02.01 DT-15), so accessible provision is a term in the
 capacity subtraction chain, not a parallel concern — a fact currently owned by nobody. Configurations
 belong to the room (D-04); a **divisible room** (airwall / combinable rehearsal rooms) is not a
@@ -107,11 +109,11 @@ simultaneously and no capacity property can express that.
 - **Fan**: sees the place and a room name on a ticket; on a `[venue, studio]` record the studio rooms are absent from the Fan payload, not merely collapsed.
 
 **Synthesis questions answered**:
-1. **Shared-state owner + merge**: The record owns identity/claim; the room owns spec/calendar; the licence record owns the statutory ceiling consumed here as a hard cap. Removing a type from the set while a room of that type exists is **blocked, not cascaded**. Room subdivision/merge must **freeze** the retired room's configurations for historical bookings (a 2024 settlement stays readable).
-2. **Trigger chain + rollback**: Claim → write access to all rooms. A licence-ceiling drop while a hold exists **suspends the configuration but never voids the hold** (no tickets exist yet); the holder is notified to decide before conversion.
-3. **Permission intersection**: Write access is record-level and inherited; room-level delegation (16.01.02 D-09) is a new grantable power the sublease question forces.
+1. **Shared-state owner + merge**: The record owns identity/claim; the room owns spec/calendar; the statutory record owns the ceiling consumed here as a hard cap — **where the regime profile declares an occupancy-ceiling slot** (16.01.06 D-05/D-06); where it does not, there is no ceiling, no contradiction detection, and every figure is an unverified Operator claim (16.02.01 D-16). Removing a type from the set while a room of that type exists is **blocked, not cascaded**. Room subdivision/merge must **freeze** the retired room's configurations for historical bookings (a 2024 settlement stays readable).
+2. **Trigger chain + rollback**: Claim → write access to all rooms. A ceiling drop while a hold exists **suspends the configuration but never voids the hold** (no tickets exist yet); the holder is notified to decide before conversion.
+3. **Permission intersection**: Write access is record-level and inherited **except on a room carrying its own operating org**. That authority now has **two origins** (16.01.01 D-12): a **grant** (16.01.02 D-09 — instant, no claim unit, the cooperative default) and a **room-scoped claim** (16.05.02 D-16 — L7 on the sublease, Provisional until reviewed, for the landlord who will not cooperate). A grant is **not unilaterally revocable**: revocation is adjudicated, and the room stays live and bookable throughout (16.01.02 D-16).
 4. **Notification fan-out**: Record-level events (closure) reach everyone with a reservation on any room.
-5. **State-transition race**: Closure racing a booking — closure wins and rolls back; a licence-condition change must cascade to confirmed reservations the way closure does, and currently nothing does (16.02.03 gap).
+5. **State-transition race**: Closure racing a booking — closure wins and rolls back; a **statutory-condition** change must cascade to confirmed reservations the way closure does, and currently nothing does (16.02.03 gap, Q-04). Where the profile declares no such condition (16.01.06 D-05) the cascade has no trigger — the equivalent Operator-claim edit is 16.02.03 D-08's "the negotiation holds the value it was quoted against", which is a different rule with a different owner.
 
 ---
 
@@ -213,8 +215,10 @@ requirements land in booking: the graph must be **evaluated at hold and re-evalu
 commit wins, the loser's hold released with a named reason** — otherwise two exclusive siblings both
 confirm. Place closure cascades to every room and **wins unconditionally**; **Out of Service** (16.01.02
 D-10) is its room-scoped counterpart with a narrow cascade (this room's live bookings only) — a flooded
-live room is not a closed studio. Statutory records gate transactions: a hirer-PLI requirement must
-surface at enquiry, not at the door (16.01.06 D-04).
+live room is not a closed studio. Statutory records gate transactions: a hirer
+liability-cover requirement must surface at enquiry, not at the door (16.01.06 D-04) — a **slot** that
+survives every regime profile, because it is what the place demands of the hirer rather than what a
+statute demands of the place.
 
 **Role scoping**:
 - **Operator**: declares the graph and Out-of-Service; owns the closure cascade.
@@ -224,7 +228,7 @@ surface at enquiry, not at the door (16.01.06 D-04).
 **Synthesis questions answered**:
 1. **Shared-state owner + merge**: The room graph is owned by 16.01.02; the calendar state is owned by 16.06.01. One graph, two readings — no merge conflict by construction.
 2. **Trigger chain + rollback**: Hold evaluates the graph → confirm re-evaluates → first commit wins → loser rolled back with a named reason. Closure → cascade → live bookings cancelled with the inverted refund ladder.
-3. **Permission intersection**: Live/bookable is gated on the place being claimed (D-11); room-level delegation (D-09) grants booking authority on one room without a partial-claim concept.
+3. **Permission intersection**: Live/bookable is gated on the place being claimed (D-11); room-level **grant** (16.01.02 D-09) confers booking authority on one room instantly and with no claim unit — **and, since DQ-13.1, a room-scoped claim (16.05.02 D-16) is the second origin** for the operator whose landlord will not cooperate, which runs L7 and is Provisional (no calendar, no rate card) until reviewed. So the "no partial-claim concept" framing is superseded: the room *is* a claim unit, it is simply not the fast path.
 4. **Notification fan-out**: Hold-loss notifies the loser; closure notifies every reservation holder; Out-of-Service notifies only this room's holders.
 5. **State-transition race**: The domain's central race — two exclusive siblings confirming simultaneously; resolved by evaluate-at-hold + re-evaluate-at-confirm, first commit wins.
 
@@ -293,8 +297,8 @@ policy is quietly defeated.
 
 | Mechanism | Serves | What stays domain-owned |
 |-----------|--------|------------------------|
-| **Roles, Permissions & Delegated Authority** | 16, 01, 02, 15, 23 | Room-level delegation on a single claim (D-09); one record referencing N operating orgs (D-06) |
-| **Canonical Data, Taxonomy & Entity Resolution** (curation, dedup/merge) | 16, 01, 02, 12, 15 | The source-class ranking (statutory > owner > first-hand > community > seeded); negative merge rules (same-address ≠ same-place; relocation ≠ duplicate; two rooms ≠ two records); the `not-a-place` event-brand class |
+| **Roles, Permissions & Delegated Authority** | 16, 01, 02, 15, 23 | Room-level **grant** on a single claim (16.01.02 D-09) *and* a **room-scoped claim unit** (16.05.02 D-16); one record referencing N operating orgs (D-06); revocation of a grant as an **adjudicated dispute**, never an act (16.01.02 D-16) |
+| **Canonical Data, Taxonomy & Entity Resolution** (curation, dedup/merge) | 16, 01, 02, 12, 15 | The source-class ranking (statutory > owner > first-hand > community > seeded); negative merge rules (same-address ≠ same-place; relocation ≠ duplicate; two rooms ≠ two records); the `not-a-place` event-brand class; the **capability-gated decisive statutory key** — equality proves and inequality refutes *where the regime profile declares one*, no input where it does not (16.05.07 D-08) |
 | **Availability, Scheduling & Reservations** | 16, 05, 06, 08, 17, 18 | The hold ranking + challenge protocol; the room graph evaluated at hold and confirm; the pooled-asset detector (missing) |
 | **Reviews, Ratings & Portable Reputation** | 16, 05, 13, 17, 24 | 16.05.06 is explicitly **not** this — facts, not opinions (16.05.06 DT-01) |
 | **Payments, Escrow & Payouts** | 16, 05, 06, 13, 17, 19 | Operator-fault refund inversion; escrow as the **precondition** for automatic ladder enforcement (16.06.03 DT-08); the perishable-inventory asymmetry |
@@ -321,3 +325,24 @@ policy is quietly defeated.
 | R-05 | 16.04 Rehearsal | 16.05 Curation | **Inverted into a finding, not a pair**: rehearsal is the best test case for the harvest loop, but lockout produces no completion events (CX-08). Real for hourly rehearsal, absent for lockout — too conditional to record as a confirmed pair, too important to drop (index Q-10). |
 | R-06 | 16.06 Booking | 16.07 Conformance Check | Considered: should a failed check block a booking? Rejected — 16.07 D-05: a conflict is information, never a verdict. The band decides whether 4 monitor mixes is workable; a platform blocking bookings on possibly-stale data overrides two consenting parties. |
 | R-07 | 16.02.03 Curfew/Limiter | 16.01.05 At-Risk Signalling | **Boundary defended, no dependency created** (16.02.03): temporary access loss (roadworks, broken lift) is a field-level date-range exception, not an at-risk signal. At-risk means a room's existence is threatened and is Fan-facing to rally a constituency; reusing it for roadworks would cry wolf. Rejected as a pair to keep the semantics clean. |
+
+
+<!-- spec-graph: auto-generated -->
+## Related Specs
+
+### Constrained by
+- [[decisions.md#d-12|D-12]]
+- [[decisions.md#d-01|D-01]]
+- [[decisions.md#d-05|D-05]]
+- [[decisions.md#d-16|D-16]]
+- [[decisions.md#d-08|D-08]]
+- [[decisions.md#d-09|D-09]]
+- [[decisions.md#d-10|D-10]]
+- [[decisions.md#d-04|D-04]]
+- [[decisions.md#d-03|D-03]]
+- [[decisions.md#d-02|D-02]]
+- [[decisions.md#d-13|D-13]]
+- [[decisions.md#d-06|D-06]]
+- [[decisions.md#d-11|D-11]]
+- [[decisions.md#d-18|D-18]]
+- [[decisions.md#d-20|D-20]]

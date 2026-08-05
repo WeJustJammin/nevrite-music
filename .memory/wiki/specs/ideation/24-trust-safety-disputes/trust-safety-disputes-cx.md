@@ -3,7 +3,7 @@
 > **Level**: domain
 > **Scope**: Connections between children of [Trust, Safety & Disputes](./trust-safety-disputes-index.md)
 > **Status**: [DEEP] — 9 children; intra-domain cross-cuts synthesised from Step 6 edge evidence
-> **Last updated**: 2026-07-18
+> **Last updated**: 2026-07-23
 
 This domain is a single adjudication machine wearing nine faces. Its cross-cuts are not incidental
 couplings — they are the machine's own wiring. One decision record is authored at the queue, sealed by
@@ -60,7 +60,9 @@ feeder into this pipe.
 1. **Shared state conflict**: intake owns the case; enforcement owns the sanction; both reference **one**
    structured decision record whose schema is fixed by Art 17's required fields — which is why it must exist
    before the first sanction, not after the first regulator. The record is authored progressively (queue
-   captures cited rule + evidence ref + reviewer + concurrence; enforcement seals it) and is never
+   captures cited rule + evidence ref + reviewer + concurrence — the last of these
+   optional-with-a-reason since the concurrence requirement was scale-gated, never blank, 24.02.03 D-08;
+   enforcement seals it) and is never
    double-authored. Concurrent sanctions on one object serialise via the enforcement-state machine (409 on
    conflict, 24.02.03 → 24.02.01).
 2. **Trigger chain**: report → dedup → route → review → decide → sanction + SoR (atomic) → appeal window.
@@ -207,7 +209,9 @@ that must be un-softenable *by design*.
 
 **Relationship**: A carve-out defined at intake, executed downstream. Three reason families leave the general
 queue before any classifier touches them: CSAM (→ 24.08.01, preservation duty), factual rights/credit
-disputes (→ domains 02/09, wrong remedy), and **self-harm (→ 24.06.03, no sanction ever)**. The self-harm
+disputes (→ domains 02/09, wrong remedy — the *remedy* leaves, the *adjudication work* does not: those cases
+return as case classes on the shared `Dispute Case Engine`, see **Inbound Adjudication Load** below), and
+**self-harm (→ 24.06.03, no sanction ever)**. The self-harm
 bypass must fire *before* any queue enqueue (24.01.01 → 24.06.03) so a welfare case can never be sanctioned.
 
 **Role scoping**:
@@ -362,17 +366,19 @@ default everywhere in this domain — here, non-disclosure is mandatory.
 
 **Synthesis questions answered**:
 1. **Shared state conflict**: the CSAM case (24.08) and the enforcement record (24.02) are linked, but the
-   enforcement record's user-facing reason field is deliberately generic — 24.02 must not leak a CSAM-specific
-   reason into an SoR.
+enforcement record's user-facing reason field is deliberately generic — 24.02 must not leak a CSAM-specific
+reason into an SoR. The 24.09 preservation bundle is `restricted-preservation`: it has no party view
+or redacted derivative, while the enforcement record supplies only the generic appeal-safe projection.
 2. **Trigger chain**: match → account action proposed → 24.02 applies a generic suspension → subject sees the
    standard notice. A false positive → standard suspension-review → reinstatement, CSAM basis never surfaced.
-3. **Permission intersection**: the moderator handling the ordinary suspension review has no CSAM-case access;
-   the two adjudication contexts are permission-separated.
+3. **Permission intersection**: the moderator handling the ordinary suspension review has no CSAM-case access,
+and the subject has no preservation-bundle access. The two contexts are permission-separated: the
+break-glass path returns only a sealed non-content validation outcome to the generic review.
 4. **Notification fan-out**: subject gets the generic suspension notice only; the true basis stays inside the
    preservation path.
 5. **State transition conflict**: an appeal against the *generic* suspension runs through the normal path and
-   must not force disclosure of the underlying CSAM case — the appeal can succeed (reinstate) or fail without
-   ever exposing the real reason.
+must not force disclosure of the underlying CSAM case. The subject receives the generic appeal-safe projection;
+the appeal can succeed (reinstate) or fail without a bundle, a redacted derivative, or the real reason.
 
 ---
 
@@ -411,3 +417,54 @@ default everywhere in this domain — here, non-disclosure is mandatory.
 | **CSAM hash-set access & NCMEC pipeline integration** | cand. 22 → product half is [24.08.01](./24.08-illegal-content-legal-process/24.08.01-csam-detection-preservation-reporting.md) | `/create-prd-security` + `/create-prd-stack` | Access to industry hash sets is a **vetted vendor relationship with strict handling rules**, not an API signup. May gate the launch of image upload entirely. |
 | **Credential architecture: MFA, session, device binding, recovery mechanics** | cand. 08 → product half is [24.03.02](./24.03-fraud-risk-operations/24.03.02-ato-ban-evasion-ring-detection.md) and [24.07.02](./24.07-identity-abuse-ownership-disputes/24.07.02-entity-ownership-account-recovery-disputes.md) | `/create-prd-security` | Trust owns **detection and contested recovery**; architecture owns the credential and the forgot-password flow. |
 | **Data retention schedules & legal-hold machinery** | cands. 22/24 → product half is [24.08.03](./24.08-illegal-content-legal-process/24.08.03-law-enforcement-legal-process-portal.md) and [24.09](./24.09-case-evidence-locker.md) | `/create-prd-security` | Trust owns the **decision** to place a hold; the machinery that enforces it across every store is architecture — and `Privacy` already flags the erasure-vs-retention collision as an architecture-time decision. |
+
+---
+
+## Inbound Adjudication Load
+
+> Case classes **owned elsewhere but adjudicated here**. The deciding semantics stay with the source domain;
+> the reviewer time, the SLA and the appeal path land on this domain's machinery. Recorded so capacity
+> planning sees the load rather than discovering it.
+
+| Case class | Source | What domain 24 absorbs | Budget status |
+|---|---|---|---|
+| **Contested evidence-based lift objection** | [02.01.05](../02-credits-attribution/02.01-credit-graph-discography/02.01.05-credit-visibility-embargo.md) D-19/D-20/D-21/D-22 → [02.05](../02-credits-attribution/02.05-credit-dispute-resolution.md) D-07, riding the `Dispute Case Engine` cross-cut (serves 02, 05, 09, 13, 14, 17, 19, 24) | Human adjudication **per objection**, under a **mandatory resolution SLA** — the credit stays embargoed at the status quo while contested, so an embargoed status quo plus an unbounded resolver is a de facto Producer veto, the outcome the axis was decided to avoid. Plus the appeal path, and the serial-objector pattern: re-submission of evidence after an objection is deliberately **uncapped** (no cap, no cooldown, no escalation counter), so a repeat objector must keep **winning on the merits** *here* rather than blocking for free — the resolver bounds the loop, not a counting rule nobody sourced | **Unbudgeted.** No current 24 spec allocates per-objection reviewer capacity for this class. It is **not** general-queue load — it never enters the moderation queue, so CX-06's carve-out holds — but it is reviewer time on the same unrotatable one-person team ([index](./trust-safety-disputes-index.md) Q-06, Q-07). The SLA *value* is deferred, not the requirement: `02.01.05` Q-06 — Owner: User, `/create-prd` |
+
+**What the adjudicator is and is not asked.** The question is a **predicate check on a closed ground list**
+(`02.01.05` D-19): (i) the evidence identifies a different recording; (ii) the URL/identifier is not publicly
+reachable; (iii) other — free text. It is never a factual argument about who contributed what; that is
+`02.05`'s ordinary credit dispute, and `02.05` D-07 keeps the two case classes distinct precisely so a
+predicate check is not run as a contribution argument. Inline platform re-verification runs first, *outside*
+this domain, and reaches a human only when it fails to settle the stated ground — grounds (i)/(ii) give the
+re-check something the first automated pass did not have. A ground-(iii) objection has nothing for the
+re-check to check, so it is logged, shown and routed straight to a human here: **never auto-handled, never
+auto-resolved**.
+
+**Publicly reachable but unauthorised.** Public access is discovery evidence, never authorisation. A leak
+or bootleg is a ground-(iv) human review under `02.01.05` D-24: the reviewer records the cited object,
+claimant authority, and publisher release/licence/authority evidence. Public availability alone does not
+defeat the claim; unresolved cases retain the temporary embargo path rather than an invented approval.
+
+**Reading the embargoed record.** The adjudicator is not a session participant and must still read the
+credit under `02.01.05` D-18's logged, non-publishing, case-scoped grant — the same shape as CX-02's
+case-scoped, read-only locker access: a privileged read that never publishes.
+
+
+<!-- spec-graph: auto-generated -->
+## Related Specs
+
+### Constrained by
+- [[decisions.md#d-02|D-02]]
+- [[decisions.md#d-01|D-01]]
+- [[decisions.md#d-08|D-08]]
+- [[decisions.md#d-18|D-18]]
+- [[decisions.md#d-03|D-03]]
+- [[decisions.md#d-13|D-13]]
+- [[decisions.md#d-07|D-07]]
+- [[decisions.md#d-06|D-06]]
+- [[decisions.md#d-05|D-05]]
+- [[decisions.md#d-19|D-19]]
+- [[decisions.md#d-20|D-20]]
+- [[decisions.md#d-21|D-21]]
+- [[decisions.md#d-22|D-22]]
+- [[decisions.md#d-24|D-24]]

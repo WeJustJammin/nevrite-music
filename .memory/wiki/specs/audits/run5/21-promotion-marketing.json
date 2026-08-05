@@ -1,0 +1,160 @@
+{
+  "domain": "21-promotion-marketing",
+  "unitsAudited": 7,
+  "filesRead": 41,
+  "coverageNote": "Enumeration matched the expected 7 units / 41 files exactly. Units = the domain directory itself (promotion-marketing-index.md, promotion-marketing-cx.md, 21.06-social-publishing-cross-post.md, 21.07-coverage-clipping-log.md, 21.09-campaign-press-kit-epk.md = 5 files) plus the six sub-domain directories 21.01 (6), 21.02 (8), 21.03 (6), 21.04 (6), 21.05 (5), 21.08 (5). Every file was read in full through the 3a implementer-simulation / 3b rubric / 3c devil's-advocate cycle. Rubric dimensions 1 (Problem Clarity), 2 (Persona Specificity) and 6 (Competitive Positioning) are scored N/A across all units: this tree explicitly delegates them to meta/ ('Personas from meta/personas.md - referenced, never redefined', promotion-marketing-index.md:97), and per the audit brief dimension 6 belongs to meta/competitive-landscape.md. Dimensions 3, 4, 5, 7, 8 are scored everywhere. Units carrying an implementer-simulation forced invention (dimension 0) get one extra applicable checkpoint for it. Findings dropped on the 3c pass and NOT reported, with the reason: (a) the undefined 'silence after N days' in 21.02.02:49/21.02.03:75 - resolved by cross-reference, 21.03.03:74 tracks N explicitly as '[PENDING - /write-be-spec]'; (b) the small-n response-rate suppression threshold in 21.03.01 D-02 - explicitly routed, 21.03-index Q-02 sends 'the consent, contestation and suppression mechanism' to /create-prd-security; (c) the pre-save grant 'aged out' TTL in 21.04.02 - practically bounded by tracked Q-02 on DSP token lifetimes; (d) domain CX-07's bare '(open Q-01)' and '(Q-04 -> create-prd-compile)' references, which resolve to 21.04.02 Q-01 and Q-04 and change nothing about what gets built; (e) post-window click handling flagged 'see CX-04' in the 21.04 CX - answered by 21.04.03 'Out of window' state and tracked window length at 21.04.04 Q-02; (f) inconsistent relative paths to domains 22/24 across files - link hygiene, not product ambiguity; (g) domain CX-03's shorthand listing of PAYOLA_DISCLOSURE_REQUIRED as a block code - 21.05.03 unambiguously owns and defines the taxonomy.",
+  "units": [
+    {
+      "unit": "21-promotion-marketing (domain root)",
+      "applicableCheckpoints": 6,
+      "points": 2.0,
+      "naDimensions": [1, 2, 6]
+    },
+    {
+      "unit": "21.01-release-campaign-planner",
+      "applicableCheckpoints": 5,
+      "points": 0.5,
+      "naDimensions": [1, 2, 6]
+    },
+    {
+      "unit": "21.02-pitching-outreach",
+      "applicableCheckpoints": 6,
+      "points": 1.5,
+      "naDimensions": [1, 2, 6]
+    },
+    {
+      "unit": "21.03-pitch-targets-crm",
+      "applicableCheckpoints": 5,
+      "points": 0,
+      "naDimensions": [1, 2, 6]
+    },
+    {
+      "unit": "21.04-smart-links-presave-attribution",
+      "applicableCheckpoints": 5,
+      "points": 1.0,
+      "naDimensions": [1, 2, 6]
+    },
+    {
+      "unit": "21.05-paid-promotion",
+      "applicableCheckpoints": 5,
+      "points": 1.0,
+      "naDimensions": [1, 2, 6]
+    },
+    {
+      "unit": "21.08-event-tour-marketing",
+      "applicableCheckpoints": 6,
+      "points": 1.5,
+      "naDimensions": [1, 2, 6]
+    }
+  ],
+  "findings": [
+    {
+      "findingId": "21-promotion-marketing#001",
+      "unit": "21.02-pitching-outreach",
+      "severity": "blocking",
+      "dimension": 0,
+      "claim": "The rate-limiter's enforcement scope is stated two incompatible ways with no marker on either: 21.02.06 names 21.02.01 (DSP editorial) among 'the channels it constrains' and gives radio its own full per-channel budget, while the sub-domain CX file rejects the 21.02.06-to-21.02.01 pair as 'No interaction ... theatre' and says limits apply only 'weakly' to radio.",
+      "evidence": "21.02.06-pitch-rate-limits-curator-protection.md:130-131 — \"Touches **21.02.02** and **21.02.03** (and 21.02.01 / 21.02.04) — the channels it constrains; the per-channel budget model means each channel feature reads this feature's caps.\"  |  21.02.06-pitch-rate-limits-curator-protection.md:33-36 — \"**Per-sender caps** — how many pitches one sender account may send in a rolling window, counted **per channel** (playlist, press/blog, radio are separate budgets so exhausting one does not block another). Default: **10 pitches per channel per rolling 7 days**\"  |  21.02-pitching-outreach-cx.md:46-47 — \"It does not apply to 21.02.01 (the DSP's own form has its own one-shot rule) and applies weakly to 21.02.04 (radio pitching is low-volume and relationship-gated by nature).\"  |  21.02-pitching-outreach-cx.md:87 — \"| R-02 | 21.02.06 Rate Limits | 21.02.01 DSP Editorial Pitch | No interaction. The DSP's own tool enforces its own one-pitch-per-track rule on their side ... Applying our limits here would be theatre. |\"",
+      "forcedInvention": "The implementer must invent (a) whether the DSP editorial path consumes or is gated by any WeJammin budget at all, and (b) a numeric meaning for 'weakly' on the radio channel — a full 10-per-7-days budget as 21.02.06 states, some smaller cap, or none. Both are enforcement-surface decisions on the feature the domain calls 'the domain's immune system'."
+    },
+    {
+      "findingId": "21-promotion-marketing#002",
+      "unit": "21-promotion-marketing (domain root)",
+      "severity": "blocking",
+      "dimension": 0,
+      "claim": "What an EPK does with a credit the credit graph has not confirmed is left as an unresolved disjunction inside 21.09 ('blocked ... Or included as claimed'), and 21.01.02 states the opposite half flatly as a hard block. Neither statement carries a marker and no open question covers the choice.",
+      "evidence": "21.09-campaign-press-kit-epk.md:63 — \"| Credits not yet confirmed in 02 | The EPK cannot claim credits the credit graph has not confirmed ... | Blocked on the unconfirmed credit, with a link to 02. Or included as **claimed**, visibly distinguished. Never silently rendered as verified |\"  |  21.09-campaign-press-kit-epk.md:116 — \"| D-03 | Unverified credits are blocked or marked claimed, never rendered as verified |\"  |  21.09-campaign-press-kit-epk.md:79 — \"| Blocked | Credits unconfirmed in 02 | Named blocker; the alternative is claiming what we cannot verify |\"  |  21.01.02-asset-readiness-gate.md:53 — \"| Credits not yet confirmed but press kit needs them | Blocked — the EPK (21.09) cannot claim credits the credit graph has not confirmed | Blocked state linking to domain 02 |\"",
+      "forcedInvention": "The implementer must decide whether an unconfirmed credit hard-blocks EPK assembly (21.01.02's reading, and 21.09's own 'Blocked' state) or renders as a visibly-distinguished 'claimed' item (21.09's edge-case alternative). These are materially different products: one stops the artist from sending an EPK until domain 02 confirms, the other ships the EPK with a weaker badge. 21.09's Open Questions Q-01 to Q-04 cover polymorphism, leak control, photo licences and provenance rendering — none of them this."
+    },
+    {
+      "findingId": "21-promotion-marketing#003",
+      "unit": "21.08-event-tour-marketing",
+      "severity": "blocking",
+      "dimension": 0,
+      "claim": "The Operator-as-sender local-press path is simultaneously executable, unbuilt, and undecided: 21.08.02 gives the Operator 'a local press push' as a chooseable response, 21.08 contains no outreach feature or target source for it, 21.08 Q-03 says whether to admit Operator-facing press scope at all is an open feature-inclusion choice, and 21.02.06 Q-03 is marked RESOLVED on the premise that this sender path exists in 21.08.",
+      "evidence": "21.08.02-geo-date-promotion-soft-seat.md:49 — \"5. Musician (or Operator, for their date) chooses a response: geo-targeted spend, a local press push, a fan email to that city.\"  |  21.08.02-geo-date-promotion-soft-seat.md:34 — \"3. **Spend.** Geo-targeted ads, local press, fan email to that city, a support-act announcement.\"  |  21.08-event-tour-marketing-index.md:26-28 — children are only \"01 | Tour Announce & On-Sale Campaign\", \"02 | Geo-Targeted Date Promotion & Soft-Seat Response\", \"03 | Ticket-Sale Attribution\" (no outreach feature; no press row in the Role Matrix at :34-36)  |  21.08-event-tour-marketing-index.md:66 — \"| Q-03 | [OWNER] Where do Operator **contacts** live (local press, promoters, regulars)? 21.03's CRM is release-cycle media and does not fit them ... Whether to admit a new Operator-facing scope at all is a feature-inclusion choice no later stage takes on its own.\"  |  promotion-marketing-cx.md:49 — \"| CX-11 | ... Operator-as-sender (venue → local press) is the same spam-cannon shape as artist pitching ... rate-limit / opt-out protection is NOT inherited and must be re-instantiated in 21.08.\"  |  21.02.06-pitch-rate-limits-curator-protection.md:171 — \"| ~~Q-03~~ | ... **RESOLVED — yes, its own instance; the underlying ledger and budget are one shared platform primitive.** ... the *sender path* in 21.08 is instantiated separately\"",
+      "forcedInvention": "An implementer building 21.08.02's 'local press push' must invent the entire capability: where the Operator's local-press targets come from (21.03.01 is scoped to release-cycle media and 21.03's Role Matrix gives the Operator None on all four children), whether a rate-limit/opt-out instance exists for the Operator sender, and what the composer/send path is. Alternatively they must decide the response option is not buildable and silently drop it from the soft-seat response set — a scope reduction no document authorises."
+    },
+    {
+      "findingId": "21-promotion-marketing#004",
+      "unit": "21-promotion-marketing (domain root)",
+      "severity": "warning",
+      "dimension": 8,
+      "claim": "The domain index's Children table asserts every child is `[SURFACE]` and 'not yet deepened', which the same file's own decision log and every child file contradict — children are variously [BREADTH], [SURFACE], [PARTIAL] and [DEEP].",
+      "evidence": "promotion-marketing-index.md:62-63 — \"> 8 children from 12 candidates ... All `[SURFACE]` — classified and outlined, not yet deepened.\" and the Status column at :67-75 reads `[SURFACE]` for all nine rows  |  promotion-marketing-index.md:145 — D-09: \"would land that new surface on 21.09, which is `[PARTIAL]` with `[PENDING]` pin/retention mechanics\"  |  promotion-marketing-index.md:144 — D-08: \"`promotion-marketing-cx.md` is `[DEEP]` ... and 21.07 is `[PARTIAL]`\"  |  21.07-coverage-clipping-log.md:5 — \"> **Status**: [PARTIAL]\"  |  21.09-campaign-press-kit-epk.md:5 — \"> **Status**: [PARTIAL]\"  |  21.02-pitching-outreach-index.md:5 — \"> **Status**: [BREADTH]\" with child 21.02.06 at :38 marked `[DEEP]` and 21.05.03 at 21.05-paid-promotion-index.md:31 marked `[DEEP]`",
+      "forcedInvention": "A downstream stage reading the domain index's structure map to decide which nodes still need deepening gets the wrong answer for at least six of the nine children, including the two [DEEP] guardrail features (21.02.06, 21.05.03) that carry the domain's only two MUST items."
+    },
+    {
+      "findingId": "21-promotion-marketing#005",
+      "unit": "21-promotion-marketing (domain root)",
+      "severity": "warning",
+      "dimension": 7,
+      "claim": "21.07 Q-01 is deferred to `MoSCoW`, a stage the domain index itself records as already run and discharged, and it carries none of the 'Re-targeted' notes that ~15 sibling rows across this domain received when their targets expired.",
+      "evidence": "21.07-coverage-clipping-log.md:151 — \"| Q-01 | Is automated coverage monitoring in scope, or is the log manual-first? Manual is honest and depends on artists doing work they may not do. Monitoring is a real capability with a real cost and a real false-positive problem (DT-02). | User | MoSCoW |\"  |  promotion-marketing-index.md:159 — Q-09: \"**RESOLVED — the MoSCoW pass ran and confirmed the row's own suspicion.** Domain 21 carries **2 of 195 Musts** — [ideation-index.md](../ideation-index.md) § MoSCoW Summary\"  |  contrast 21.03.01-media-target-directory.md:104 — \"**Re-targeted**: `/ideate-validate` has already run. DT-02 above rejected scraping *as a default* ... | User | `/create-prd` |\"",
+      "forcedInvention": "Whether the coverage log ships manual-first or with automated monitoring (and therefore whether the suggestion-with-confirmation pipeline of D-02 exists at all) has no live owner stage. The MoSCoW ledger placed the feature, not this in-feature scope split."
+    },
+    {
+      "findingId": "21-promotion-marketing#006",
+      "unit": "21.04-smart-links-presave-attribution",
+      "severity": "warning",
+      "dimension": 7,
+      "claim": "Two open questions in this unit are deferred to `MoSCoW`, a completed stage, and the domain index already records the answer they were waiting for — so the unit presents as open a question the tree has closed elsewhere.",
+      "evidence": "21.04-smart-links-presave-attribution-index.md:70 — \"| Q-02 | Is this sub-domain the **beachhead**? `meta/problem-statement.md` Q-03 asks which consolidation surface wins users first ... It is a plausible wedge and a plausible waste. | User | MoSCoW |\"  |  21.04.01-smart-link-builder.md:128 — \"| Q-02 | Is this the beachhead? See Q-02 on the sub-domain index. | User | MoSCoW |\"  |  promotion-marketing-index.md:159 — \"**D-31**'s release split puts 21 outside both windows — \\\"**v1 — session spine** (01, 02, 05, 07, **09-capture**)\\\" and \\\"**v1.5 — marketplaces** (13, 14, 15)\\\" — so it is phase-2+, and the beachhead is decided and is not this domain.\"",
+      "forcedInvention": "A reader of 21.04 is told the beachhead question is live and pointed at a stage that cannot be re-run; a reader of the domain index is told it is settled negatively. Nothing in 21.04 records the phase-2+ placement that governs its own sequencing."
+    },
+    {
+      "findingId": "21-promotion-marketing#007",
+      "unit": "21.02-pitching-outreach",
+      "severity": "warning",
+      "dimension": 7,
+      "claim": "Two cross-cut rows in this unit's CX file state unresolved build-or-don't-build questions in prose with no owner, no deferral target, and no synthesis section, and neither appears in the sub-domain's Open Questions table.",
+      "evidence": "21.02-pitching-outreach-cx.md:13 — \"| CX-04 | Embargo | DSP | Confidentiality runs the *other* way — a DSP pitch is confidential and its existence must not leak into press outreach | ... | Whether this needs a system-level guard or is merely a copy warning is unresolved.\"  |  21.02-pitching-outreach-cx.md:14 — \"| CX-05 | Press | Radio | ... the competition for the exclusive is real (a radio-first strategy can cost a print exclusive) but whether the system should model that contention or leave it to the human is open.\"  |  21.02-pitching-outreach-index.md:74-77 — the Open Questions table carries only Q-01 (gatekeeper persona), Q-02 (sender identity), Q-03 (DSP mechanics) and Q-04 (radio scope, resolved); neither CX item appears  |  contrast promotion-marketing-cx.md:334-338, where CX-09 and CX-10's deferred synthesis is explicitly noted",
+      "forcedInvention": "The implementer must decide unaided whether to build a system-level guard preventing DSP-pitch existence from leaking into press outreach copy, and whether the exclusive-contention between press and radio is modelled as a constraint or left entirely to the user."
+    },
+    {
+      "findingId": "21-promotion-marketing#008",
+      "unit": "21.05-paid-promotion",
+      "severity": "warning",
+      "dimension": 7,
+      "claim": "CX-03 in this unit's CX file states an unresolved product question with no owner, no deferral target and no synthesis section, and it is absent from both the sub-domain's and 21.05.01's Open Questions tables.",
+      "evidence": "21.05-paid-promotion-cx.md:12 — \"| CX-03 | Ads | Seeding | Both draw down one finite budget, and the allocation is the actual strategic decision | Musician | Medium | Budget contention is real. Whether the platform should model the trade-off or simply show both spends is unresolved — modelling it requires claiming a comparative effectiveness we cannot measure (21.04.03 DT-01). |\"  |  21.05-paid-promotion-index.md:69-72 — Open Questions carry only Q-01 (money handling), Q-02 (fan-graph audiences), Q-03 (seeding scope, resolved), Q-04 (sanction history)  |  21.05.01-paid-ad-campaigns.md:101-103 — Q-01 to Q-03 cover shape, fan-graph consent and support burden; none covers budget allocation modelling",
+      "forcedInvention": "Whether the paid-promotion surface presents a modelled ads-vs-seeding allocation recommendation or merely reports both spends side by side is left to the implementer, in a domain whose D-07 ('honest attribution over impressive attribution') makes exactly this class of modelling a values decision."
+    },
+    {
+      "findingId": "21-promotion-marketing#009",
+      "unit": "21.08-event-tour-marketing",
+      "severity": "warning",
+      "dimension": 7,
+      "claim": "CX-04 in this unit's CX file states an unresolved behavioural question with no owner, no deferral target and no synthesis section, and it appears in neither the sub-domain index's nor 21.08.01's Open Questions tables.",
+      "evidence": "21.08-event-tour-marketing-cx.md:13 — \"| CX-04 | Soft-Seat Response | Announce | A date added or moved after announce re-opens the announce for that market only | Musician, Operator | Medium | Routing changes mid-cycle are normal in live music. Whether this is a re-announce or a new announce is unresolved and matters for fan fatigue. |\"  |  21.08-event-tour-marketing-index.md:64-67 — Open Questions carry only Q-01 (polymorphism), Q-02 (domain ownership), Q-03 (Operator contacts), Q-04 (co-op spend)  |  21.08.01-tour-announce-onsale.md:103-105 — Q-01 to Q-03 cover polymorphism, embargo binding of counterparties, and fan-out collapse; the added-date row at :56 says only \"Cannot be assessed by the same rule (CX-02); needs its own tagged links or it becomes the one date with no data\"",
+      "forcedInvention": "The implementer must invent whether a date added after announce triggers a distinct 'new announce' object (its own embargo, its own fan-out) or re-opens the existing announce for one market, which determines the fan-notification behaviour the file itself flags as costing 'a follower per city' (21.08.01:60)."
+    },
+    {
+      "findingId": "21-promotion-marketing#010",
+      "unit": "21.01-release-campaign-planner",
+      "severity": "warning",
+      "dimension": 5,
+      "claim": "The at-risk escalation threshold is written as an unfilled parameter in one file and an adjective in the other, and no open question anywhere in the unit tracks it — unlike the structurally identical 'Silent after N days' threshold elsewhere in the domain, which is explicitly tracked.",
+      "evidence": "21.01.02-asset-readiness-gate.md:69 — \"| At risk | Red or not-started within N days of a hard deadline | Escalated in the roll-up and to the Musician |\"  |  21.01.01-backward-planned-campaign-grid.md:73 — \"| At-risk | A hard row's dependent asset is red near its deadline | The row escalates; the campaign header carries the risk summary |\"  |  21.01.01-backward-planned-campaign-grid.md:48 — \"7. Hard-deadline rows begin emitting escalating reminders as they approach.\"  |  21.01.02-asset-readiness-gate.md:99 and 21.01-release-campaign-planner-index.md:55-57 — the unit's open questions cover channel-rule ownership, campaign polymorphism, DSP mechanics and machine-checkable specs; none names this threshold  |  contrast 21.03.03-pitch-tracking-response-log.md:74 — \"| Silent | N days elapsed with no recorded outcome (N is a threshold set at `/write-be-spec`; `[PENDING — /write-be-spec]` for the exact value) |\"",
+      "forcedInvention": "N, plus the escalation curve for 'escalating reminders as they approach'. Two implementers will pick different values and different escalation shapes for the alarm that the sub-domain's own overview says exists to prevent 'a specific, common, unrecoverable loss'."
+    },
+    {
+      "findingId": "21-promotion-marketing#011",
+      "unit": "21.05-paid-promotion",
+      "severity": "warning",
+      "dimension": 5,
+      "claim": "The seeding escrow-release condition is stated three times as 'still up after N days' with N never given and never tracked; the unit's only related open question explicitly scopes itself to the observation path rather than the duration.",
+      "evidence": "21.05.02-creator-seeding.md:51 — \"6. Platform verifies: posted, disclosed, still up after N days.\"  |  21.05.02-creator-seeding.md:58 — \"| Creator deletes the post after payment | The classic seeding fraud | Verification must persist past payment — \\\"still up after N days\\\" as an escrow condition, not a checkbox at payout |\"  |  21.05.02-creator-seeding.md:99 — \"| D-03 | Verification persists past payment (\\\"still up after N days\\\") |\"  |  21.05.02-creator-seeding.md:108 — Q-03: \"What is undecided is the observation path for content the platform does not host — third-party API read, creator attestation, or evidence upload — which is a component-boundary and data-flow design, not a product choice. D-03's \\\"still up after N days\\\" verification condition depends on the same path.\"",
+      "forcedInvention": "N — the post-payment survival window that gates escrow release and therefore decides when a creator is actually paid. The observation-path question (Q-03) settles how the check is made, not how long the obligation runs."
+    },
+    {
+      "findingId": "21-promotion-marketing#012",
+      "unit": "21.04-smart-links-presave-attribution",
+      "severity": "warning",
+      "dimension": 3,
+      "claim": "The smart link's core fan-facing behaviour is specified two ways with no marker: DT-03 makes silent redirect on a remembered preference the default, while the landing page's own Populated render state describes a chooser with the remembered service listed first, and no Decision in the file records either.",
+      "evidence": "21.04.01-smart-link-builder.md:103 — DT-03: \"⚠️ CONFIRMED WITH A GUARD, not wholesale. Silent redirect on a remembered preference is the right default — it honours D-03 ... The behaviour: redirect on remembered preference, but always land through a page that offers a visible \\\"not your service? / other options\\\" escape within the first interaction — never a redirect the fan cannot get back from.\"  |  21.04.01-smart-link-builder.md:94 — \"| Populated | Destinations resolved | Remembered service surfaced first, then the plausible options, then the full list — the honest routing hierarchy |\"  |  21.04.01-smart-link-builder.md:33-34 — \"Routing is by the listener's revealed or remembered preference. The honest hierarchy is: remember what they chose last time, then offer the plausible options, then let them pick.\"  |  21.04.01-smart-link-builder.md:118-121 — D-01 to D-04 record destination derivation, no-capture, remembered-beats-inference and rot surfacing; none records the redirect-vs-chooser behaviour",
+      "forcedInvention": "Whether the page auto-advances a returning fan to their remembered DSP (with an escape affordance) or renders a chooser with that service first. The file calls this surface 'the most latency-sensitive surface in the domain' (:61, :93), so the two builds differ materially in the metric the feature is judged on, and DT-03's own '⚠️ CONFIRMED WITH A GUARD' outcome was never promoted into a Decision that the States table could be reconciled against."
+    }
+  ]
+}

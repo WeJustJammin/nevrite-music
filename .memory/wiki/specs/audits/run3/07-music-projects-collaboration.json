@@ -1,0 +1,281 @@
+{
+  "domain": "07-music-projects-collaboration",
+  "auditedAt": "2026-07-30",
+  "root": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/07-music-projects-collaboration",
+  "unitsAudited": 10,
+  "filesRead": 57,
+  "expected": { "units": 10, "files": 57 },
+  "coverageNote": "Disk enumeration matched the expected 10 units / 57 files exactly. Every file in every unit was read in full (8,717 lines total). Dimension 4 (Constraint Explicitness) and Dimension 6 (Competitive Positioning) were scored N/A for all 10 units: budget/timeline/team/compliance/performance axes live in meta/constraints.md and competitor analysis in meta/competitive-landscape.md, and every unit in this domain references those without redefining them. Applicable checkpoints are therefore 6 per unit (D1, D2, D3, D5, D7, D8) = 60 total. Points 11.0 -> 18.3% domain ambiguity.",
+  "units": [
+    { "unit": "07-music-projects-collaboration (domain root)", "files": 2, "applicableCheckpoints": 6, "naDimensions": [4, 6], "marks": { "1": "OK", "2": "OK", "3": "WARN", "5": "OK", "7": "WARN", "8": "OK" }, "points": 1.0 },
+    { "unit": "07.01-song-release-production-board", "files": 5, "applicableCheckpoints": 6, "naDimensions": [4, 6], "marks": { "1": "OK", "2": "WARN", "3": "WARN", "5": "WARN", "7": "WARN", "8": "OK" }, "points": 2.0 },
+    { "unit": "07.02-songwriting-composition-workspace", "files": 5, "applicableCheckpoints": 6, "naDimensions": [4, 6], "marks": { "1": "OK", "2": "OK", "3": "FAIL", "5": "WARN", "7": "WARN", "8": "OK" }, "points": 2.0 },
+    { "unit": "07.03-contributors-access-confidentiality", "files": 5, "applicableCheckpoints": 6, "naDimensions": [4, 6], "marks": { "1": "OK", "2": "OK", "3": "FAIL", "5": "OK", "7": "OK", "8": "OK" }, "points": 1.0 },
+    { "unit": "07.04-audio-version-control-lineage", "files": 8, "applicableCheckpoints": 6, "naDimensions": [4, 6], "marks": { "1": "OK", "2": "OK", "3": "WARN", "5": "WARN", "7": "OK", "8": "OK" }, "points": 1.0 },
+    { "unit": "07.05-review-feedback-approval", "files": 7, "applicableCheckpoints": 6, "naDimensions": [4, 6], "marks": { "1": "OK", "2": "OK", "3": "WARN", "5": "OK", "7": "OK", "8": "WARN" }, "points": 1.0 },
+    { "unit": "07.06-sessions-documentation-recall", "files": 6, "applicableCheckpoints": 6, "naDimensions": [4, 6], "marks": { "1": "OK", "2": "OK", "3": "WARN", "5": "WARN", "7": "OK", "8": "OK" }, "points": 1.0 },
+    { "unit": "07.07-mix-master-workflow", "files": 7, "applicableCheckpoints": 6, "naDimensions": [4, 6], "marks": { "1": "OK", "2": "OK", "3": "OK", "5": "WARN", "7": "OK", "8": "OK" }, "points": 0.5 },
+    { "unit": "07.08-delivery-readiness-qc", "files": 7, "applicableCheckpoints": 6, "naDimensions": [4, 6], "marks": { "1": "OK", "2": "OK", "3": "WARN", "5": "WARN", "7": "OK", "8": "OK" }, "points": 1.0 },
+    { "unit": "07.09-daw-bridge-capture-at-source", "files": 5, "applicableCheckpoints": 6, "naDimensions": [4, 6], "marks": { "1": "OK", "2": "OK", "3": "OK", "5": "OK", "7": "WARN", "8": "OK" }, "points": 0.5 }
+  ],
+  "totals": { "applicableCheckpoints": 60, "points": 11.0, "ambiguityPercent": 18.3 },
+  "findings": [
+    {
+      "id": "F1",
+      "unit": "07.06-sessions-documentation-recall",
+      "severity": "blocking",
+      "dimension": 3,
+      "category": "silent-contradiction",
+      "claim": "Two [DEEP] siblings give different inactivity thresholds for when a session ends, with no marker on either.",
+      "evidence": "07.06.01-session-record-attendance.md:261 D-18 — \"**Auto-close at 12h of inactivity**; **resume within 6h re-opens the same session**. Auto-close **defers** the prompt, never auto-confirms it\". 07.06.02-session-close-capture-prompt.md:146 edge case — \"Session runs past midnight / ten hours, 1am, exhausted | The **design case, not the edge case**. A session is a continuous working block bounded by a wrap signal or **6 h of inactivity** — calendar days are irrelevant (`02.02.01` D-12).\"",
+      "failureScenario": "A producer stops work at 20:00 and never taps end-session. At 02:00 (6h idle) an implementer following 07.06.02 closes the session and fires the capture prompt; an implementer following 07.06.01 D-18 keeps it Active until 08:00. The two builds fire the domain's most important interaction six hours apart, and 07.06.01 D-18 additionally makes the 07.06.02 build skip the 'Deferred, never auto-confirmed' rule that only D-18 states.",
+      "forcedInvention": "Which inactivity window ends a session — 6h or 12h — and therefore when 07.06.02's Tier 1 and Tier 2 cards dispatch.",
+      "note": "07.06.01 Q-07 tracks that the windows are unmeasured, but not that they disagree with the sibling."
+    },
+    {
+      "id": "F2",
+      "unit": "07.06-sessions-documentation-recall",
+      "severity": "warning",
+      "dimension": 5,
+      "category": "unsatisfiable-rule",
+      "claim": "07.06.01's own auto-close, resume-merge and reopen windows cannot all hold; one edge case is arithmetically impossible.",
+      "evidence": "07.06.01-session-record-attendance.md:152 — \"Auto-closes after **12h with no activity**\". :153 — \"Activity resuming within **6h** of the last activity **re-opens the same session**. Beyond 6h it is a new session.\" :154 — \"Auto-closed session resumes at hour 13 | Reopens (within the 6h window) and un-closes.\" Compare 07.06.02-session-close-capture-prompt.md:148 — \"Reopen within **30 minutes** un-closes the session and re-arms the moment... After 30 minutes it is a new session.\"",
+      "failureScenario": "Take line 154 literally: a session auto-closed at 12h of inactivity is resumed at hour 13, i.e. 13h after its last activity — which is outside line 153's 6h window, so line 153 says it must be a new session while line 154 says it reopens. Conversely any resume before 12h finds the session still Active, so line 153's reopen rule has no reachable case at all. An implementer must invent a coherent state machine, and 07.06.02's 30-minute reopen window gives a third number for the same same-session-or-new decision.",
+      "forcedInvention": "A consistent set of close/resume/reopen windows, and which of 6h / 12h / 30min governs the same-session-or-new-session decision."
+    },
+    {
+      "id": "F3",
+      "unit": "07.05-review-feedback-approval",
+      "severity": "blocking",
+      "dimension": 3,
+      "category": "silent-contradiction",
+      "claim": "The post-revocation grace for an in-flight comment is specified as 60 s in one [DEEP] feature and 120 s in its sibling's decision, unmarked in both.",
+      "evidence": "07.05.01-timestamped-waveform-review.md:204 — \"Link revoked while the recipient is mid-compose | A post submitted within **60 s of revocation** is accepted (parent CX-01 — losing feedback someone took the trouble to give is worse than a slightly late close). After that the post is refused and **the text stays on screen to copy**\". 07.05.02-private-share-links-listen-analytics.md:206 D-15 — \"Revocation **fails closed for audio** (next segment refused; audible stop <=10 s) but **accepts an in-flight comment for 120 s**\" (restated at :102 — \"a comment whose composition began before revocation is accepted for **120 s** after\").",
+      "failureScenario": "An owner revokes a link at 14:00:00 as a leak response. The recipient submits a comment at 14:01:30. Under 07.05.02 D-15 it posts and notifies the roster ('left after the link was revoked'); under 07.05.01 it is refused and the text is left on screen to copy. Two implementers ship opposite behaviour on a leak-response path, and the revoked-link comment either does or does not enter the triage stream.",
+      "forcedInvention": "The single post-revocation comment grace value, and which file owns it."
+    },
+    {
+      "id": "F4",
+      "unit": "07.03-contributors-access-confidentiality",
+      "severity": "blocking",
+      "dimension": 3,
+      "category": "silent-contradiction",
+      "claim": "Whether accepting a band invitation produces one section credit or one plus four member credits is stated both ways across the unit, and the sibling misquotes the ratified framing it cites.",
+      "evidence": "07.03.01-contributor-roster-role-assignment.md:252 D-10 — \"**Bands and organizations may hold roster entries** where the role admits the party type; **band membership never fans out to member entries or member credits**... The horn section is one negotiation and one section credit. Fan-out fabricates a credit for the member who missed the session\", restated at :167 — \"**One** section credit, frozen to the contribution-date lineup (D-10, `02.01.01` D-07). It does **not** create four member credits and it does **not** grant four vault logins.\" 07.03.02-contributor-invitation-scoped-onboarding.md:152 — \"acceptance by any one of them creates a **single band roster entry**. Individual member credits are separate entries created afterward — the horn section is one negotiation and four credits (parent Q-03's framing).\" The parent it cites says the opposite: 07.03-contributors-access-confidentiality-index.md:57 Q-03 — \"the horn section is one negotiation and one section credit; band membership never fans out to member entries or member credits.\"",
+      "failureScenario": "A fixer accepts a horn-section invitation for a four-piece. Following 07.03.02 the acceptance flow creates the band entry plus four individual member credit entries; following 07.03.01 D-10 it creates exactly one section credit and explicitly forbids the four. The 07.03.02 build fabricates a credit for the member who missed the session — the precise harm D-10 exists to prevent — and does so through the acceptance path, where nobody is watching for it.",
+      "forcedInvention": "Whether the band-invitation acceptance flow emits member-level credit entries, and if so by what act and with what attestation state."
+    },
+    {
+      "id": "F5",
+      "unit": "07.01-song-release-production-board",
+      "severity": "warning",
+      "dimension": 3,
+      "category": "silent-contradiction",
+      "claim": "07.01.03 states P-03 is unresolved in two places and resolved in two others, in the same file, on the same date.",
+      "evidence": "07.01.03-production-stage-board-milestones.md:38 — \"P-03 (approval behavior after a backward move) remains a separate unresolved decision.\" :89 — \"A backwards table move preserves the current interim rule: later sign-offs become superseded, while **P-03 alone decides** whether a later re-advance re-collects them.\" Against, in the same file: :110 — \"On re-advance, `07.05.04` D-07 governs: they reinstate iff no new version landed in between, otherwise the gate re-collects.\" and :161 Q-02 — \"**Resolved by P-03 / `07.05.04` D-07:** superseded approvals reinstate on re-advance iff no new version landed in between\". Parent: 07.01-song-release-production-board-index.md:47 D-05 — \"**P-03:** superseded approvals reinstate on re-advance iff no new version landed in between... Owner decision, 2026-07-21\".",
+      "failureScenario": "An implementer reading the Overview and the Catalogue-Table Parity section builds only the interim half (mark superseded, never reinstate) and treats re-advance re-collection as out of scope pending a decision that was in fact ratified on 2026-07-21. Byte-identical masters then re-collect approvals from every approver, which D-05 exists to prevent.",
+      "forcedInvention": "Whether to implement reinstatement at all, since the file's normative prose says the rule is still undecided."
+    },
+    {
+      "id": "F6",
+      "unit": "07.01-song-release-production-board",
+      "severity": "warning",
+      "dimension": 3,
+      "category": "silent-contradiction",
+      "claim": "The sub-domain CX file declares P-03 unresolved thirteen lines before resolving it.",
+      "evidence": "07.01-song-release-production-board-cx.md:31 — \"P-02 independently resolves catalogue presentation... P-01 validation did not decide that presentation policy. **P-03 re-approval after backward moves remains unresolved.**\" :44 — \"**P-03 resolves the re-advance**: they reinstate iff no new version landed in between; otherwise the gate re-collects against its current approver set (`07.05.04` D-07). The predicate is version identity on the append-only timeline, so the outcome is identical from board or table.\"",
+      "failureScenario": "Same as F5, reached from the CX file: a reader takes line 31 as the synthesis conclusion and does not implement the reinstatement predicate, leaving the board and the catalogue table to diverge from 07.05.04 D-07 on backward-then-forward transitions."
+    },
+    {
+      "id": "F7",
+      "unit": "07-music-projects-collaboration (domain root)",
+      "severity": "warning",
+      "dimension": 3,
+      "category": "stale-normative-claim",
+      "claim": "The domain CX file names the backward-transition/approval edge as the domain's most persistent unresolved question after it was ratified, and the domain Decision Log carries no P-03 row to correct it.",
+      "evidence": "music-projects-collaboration-cx.md:123 — \"Backwards stage transitions superseding approvals (`07.01` Q-03) remains the domain's most persistent unresolved edge.\" :142 — \"**State transition conflict**: backwards transitions supersede approvals again (`07.01` Q-03).\" Against: 07.01-song-release-production-board-index.md:56 Q-03 — \"**Resolved by P-03 / D-05:** backwards transitions are allowed and normal; later-stage sign-offs are marked superseded, never deleted, and reinstate on re-advance iff no new version landed in between\" and 07.05.04-approval-gates-signoff-trail.md:118 D-07. The domain index's Decision Log (D-01..D-11) and Open Questions (Q-01..Q-12) contain no P-03 entry at all.",
+      "failureScenario": "A downstream stage reading the domain CX for the domain's open risks records supersede/reinstate as unresolved and either re-opens a settled owner decision or designs around its absence, while 07.01 and 07.05.04 have already locked the predicate."
+    },
+    {
+      "id": "F8",
+      "unit": "07.04-audio-version-control-lineage",
+      "severity": "warning",
+      "dimension": 3,
+      "category": "stale-normative-claim",
+      "claim": "The sub-domain CX still frames live downstream resolution as the default, contradicting the revised canonical-resolver decision; the domain CX identified this exact line for correction and it was not corrected.",
+      "evidence": "07.04-audio-version-control-lineage-cx.md:36 — \"**Trigger chain**: nominating a canonical fires a notification to the roster and updates every downstream reference *that is not pinned*.\" Against: 07.04.02-canonical-version-resolver.md:239 D-03 — \"**Resolution happens once, at the act, and pins there.** Live resolution exists only where the question literally is 'what is canonical right now' — the panel\" (per its DT-04, which rejects the transient/committed axis outright). The domain CX already flagged it: music-projects-collaboration-cx.md:108 — \"**Consequence for whoever owns the `07.04` sub-domain CX file**: its CX-01 synthesis Q2 still reads 'updates every downstream reference that is not pinned', framing live resolution as the default; it is now stale against revised D-03 and should be corrected.\"",
+      "failureScenario": "An implementer building the nomination write path implements a live-resolution fan-out for any consumer that did not explicitly pin — the class 07.04.02 D-03 says does not exist — and a review link or an approval silently re-points when the canonical moves, destroying 07.05.01's version-anchored comments (the failure DT-04 spells out)."
+    },
+    {
+      "id": "F9",
+      "unit": "07.02-songwriting-composition-workspace",
+      "severity": "blocking",
+      "dimension": 3,
+      "category": "unspecified-core-behaviour",
+      "claim": "The chart reading surface — which the feature calls its own centre of gravity — has no specified behaviour, and its only tracking marker has no owner and points at a stage that has already run.",
+      "evidence": "07.02.03-chord-arrangement-chart-workspace.md:58 — \"Reading on a phone on a stand, mid-take | `[PENDING — /ideate-discover Step 5 deepening]` — the reading surface (font scaling, contrast, auto-scroll, page turns, hands-free advance) is under-specified and is arguably the whole feature | —\" (Owner column empty). The file nevertheless locks it as required: :96 D-05 — \"Reading mode is a first-class state\"; :67 States — \"Reading mode | Opened on a small screen / explicitly entered | High-contrast, large-type, minimal-chrome view built for a music stand\"; :102 Q-01 — \"The reading surface (DT-01) is the feature's centre of gravity\". Step 5 is complete by the same file's own words — :103 Q-02 and :104 Q-03 both read \"`/ideate-discover` Step 5 has run without deciding it\".",
+      "failureScenario": "Two implementers build 'reading mode' from D-05 and the States row. One ships a static large-type render; the other ships auto-scroll locked to tempo with hands-free page advance. Both satisfy every written requirement, and the feature the file says is 'the document a session runs from' either does or does not work one-handed in a dark room. No open question covers the behaviour (Q-01 covers only whether the PWA is an acceptable v1 surface).",
+      "forcedInvention": "Font scaling policy, contrast targets, auto-scroll behaviour and tempo coupling, page-turn model, and hands-free advance input — all named in the file as missing."
+    },
+    {
+      "id": "F10",
+      "unit": "07.03-contributors-access-confidentiality",
+      "severity": "warning",
+      "dimension": 3,
+      "category": "missing-normative-content",
+      "claim": "The vault's sensitivity-class enumeration and role x class grant matrix omit `takes`, which a sibling decision requires and which the domain CX asserts as settled behaviour.",
+      "evidence": "07.03.03-rights-aware-asset-vault-nda-gating.md:27 — \"Every asset carries a sensitivity class derived from what it is (`rough mix`, `mix reference`, `stems`, `session file`, `master`, `pre-release master`, `tracklist/metadata`)\" — no takes class — and the \"**Default access profiles**\" table at :36-43 has columns \"Rough mix / mix ref | Stems | Session file | Master | Tracklist / metadata | Other songs\" and no takes column. Required by 07.04.03-take-comp-management.md:103 D-05 — \"Takes get a **stricter sensitivity class than stems** | Per DT-03 — outtakes are the most personally exposing audio in the product\" and its :91 Cross-Cut Note — \"per DT-03, takes need their own, stricter sensitivity class\". Asserted as settled at music-projects-collaboration-cx.md:231 — \"a session player sees rough mixes, not stem sets, not takes (`07.04.03` D-05, the strictest class)\".",
+      "failureScenario": "An implementer building the vault from 07.03.03's table has no takes class, so takes fall through to the nearest neighbour (session file or stems) and a mix engineer's default grant exposes a singer's outtakes — the exact material 07.04.03 DT-03 identifies as the most personally sensitive audio in the platform.",
+      "forcedInvention": "The takes sensitivity class and its grant value for each of the six roster roles in the default-profile table."
+    },
+    {
+      "id": "F11",
+      "unit": "07.03-contributors-access-confidentiality",
+      "severity": "warning",
+      "dimension": 3,
+      "category": "silent-contradiction",
+      "claim": "The vault states pre-claim asset access is impossible; the invitation feature grants pre-claim streaming. Only the invitation side carries a marker.",
+      "evidence": "07.03.03-rights-aware-asset-vault-nda-gating.md:82 — \"Access granted to an unclaimed identity | **Impossible** — you cannot grant stems to an email address. Access waits for the claim (`07.03.01` D-02) | Entry shows \\\"access pending claim\\\"\" (no marker, no cross-reference). Against: 07.03.02-contributor-invitation-scoped-onboarding.md:64 T1 row — \"**T1 — address proven** | Entering a 6-digit code sent to the invited address. **Not a signup.** | The credit in full... and — **if the song is not marked confidential** — streaming (never download) of assets the role's default profile allows\", locked as :296 D-06. The conflict is tracked only from that side: :319 Q-06 — \"**Does the T1 streaming grant belong to this feature or to `07.03.03`?** D-06 creates an access tier for a proven address with no identity and no roster membership — which the vault's model... does not currently contemplate. The boundary needs one owner.\"",
+      "failureScenario": "An implementer building the vault's access resolver from 07.03.03 returns deny for every unclaimed identity, which silently kills 07.03.02's T1 rough-mix streaming — the step the invitation flow depends on to convert a non-user before any signup. The vault file gives no hint that an exception exists."
+    },
+    {
+      "id": "F12",
+      "unit": "07.03-contributors-access-confidentiality",
+      "severity": "warning",
+      "dimension": 3,
+      "category": "undefined-referent",
+      "claim": "An access-expiry mechanism called the \"grant window\" is invoked normatively but defined in no unit.",
+      "evidence": "07.03.02-contributor-invitation-scoped-onboarding.md:245 lifecycle state — \"Access-expired | 30 days of T1 inactivity, **or grant window elapsed** | **Attribution persists; access does not** (D-04)\", on the strength of :294 D-04 — \"Attribution never expires; access grants **may**\". The vault that owns grants specifies only explicit revocation and role recomputation: 07.03.03-rights-aware-asset-vault-nda-gating.md:122 D-04 — \"Revocation is **immediate and fails closed**, including live URLs and download tokens\" — and defines no expiry at all; no grant duration appears in 07.03.01 either.",
+      "failureScenario": "An implementer must decide whether a T2 roster member's vault grant expires on a clock, and if so after how long. One build never expires grants (matching 07.03.03), the other expires them at some invented horizon (matching this state row) and locks a mix engineer out mid-job.",
+      "forcedInvention": "Whether a grant window exists at all, its duration, and which asset classes it applies to."
+    },
+    {
+      "id": "F13",
+      "unit": "07.01-song-release-production-board",
+      "severity": "warning",
+      "dimension": 5,
+      "category": "untestable-trigger",
+      "claim": "The tracklist loudness advisory fires on \"wildly inconsistent\" loudness with no threshold anywhere in the tree.",
+      "evidence": "07.01.02-release-container-sequencing-assembly.md:59 — \"Masters have **wildly inconsistent** loudness across the tracklist | Detected at assembly, surfaced as an advisory, never a block | \\\"Track 4 is 3.2 LU louder than the record's average\\\" — an advisory the Producer acts on (see `07.07.03`)\". The cited owner sets no threshold either: 07.07.03-mastering-workflow-loudness-targets.md:55 — \"Alternates measure differently from the primary | The standard failure (parent CX-02) | \\\"The instrumental is 1.8 LU quieter than the primary\\\"\", and its D-01/D-02 prescribe nothing about deviation.",
+      "failureScenario": "One implementer fires the advisory at >=1 LU from the tracklist mean, another at >=3 LU. On a deliberately dynamic record the first build flags eight of eleven tracks and the producer mutes the channel; the second stays silent on a genuinely broken 4 LU outlier. The example value (3.2 LU) is an illustration, not a rule.",
+      "forcedInvention": "The LU deviation threshold (and the statistic - mean, median, or neighbour-to-neighbour) that triggers the advisory."
+    },
+    {
+      "id": "F14",
+      "unit": "07.07-mix-master-workflow",
+      "severity": "warning",
+      "dimension": 5,
+      "category": "untestable-trigger",
+      "claim": "The Mismatched state's trigger is \"differs from the primary\", which as written fires on any non-zero difference.",
+      "evidence": "07.07.02-alternate-version-matrix.md:71 States — \"Mismatched | Variant's loudness/profile **differs** from the primary | Advisory naming the discrepancy\". The only quantities in the unit are illustrative and inconsistent with each other as a bound: 07.07.03-mastering-workflow-loudness-targets.md:47 happy path — \"All three alternates return from the same pass, measuring within 0.2 LU of each other\"; 07.07.02:56 edge case — \"\\\"The instrumental is 1.8 LU quieter than the primary\\\"\".",
+      "failureScenario": "Two masters bounced in the same pass measure 0.05 LU apart. Read literally, they \"differ\", so every variant on every song renders Mismatched and the advisory becomes permanent noise; an implementer who instead invents a tolerance may pick anything between 0.2 and 1.8 LU, changing how often the sub-domain's stated expensive failure is caught.",
+      "forcedInvention": "The loudness/profile tolerance below which a variant is considered to match the primary."
+    },
+    {
+      "id": "F15",
+      "unit": "07.08-delivery-readiness-qc",
+      "severity": "warning",
+      "dimension": 5,
+      "category": "untestable-trigger",
+      "claim": "Three of the seven checks in the normative QC set have no threshold, in a feature whose defining decision is that the set is objective.",
+      "evidence": "07.08.02-automated-audio-qc-spec-validation.md:45 — \"Digital clipping (**consecutive samples at full scale**) | An error, not a choice — unless it is (see DT-02)\" (no count); :46 — \"Unintended silence / dropouts | A missing region is a fault\" (no duration); :48 — \"DC offset | Objectively wrong, invisible, easily fixed\" (no offset threshold). Against its own standard: :107 D-01 — \"The check set is **narrow, fixed, and objective** — every addition must pass \\\"imperceptible **and** unambiguously a fault\\\"\" and :90 DT-01 — \"Every proposed addition must pass one test: *is the user unable to perceive this, and is it unambiguously a fault?*\". The same file specifies true peak precisely (\"over 0 dBTP\"), so the omissions are not a house style.",
+      "failureScenario": "Implementer A flags clipping at 3 consecutive full-scale samples and silence at 500 ms; implementer B at 10 samples and 3 s. On the same hard-clipped drum bus one build warns and the other passes clean, and D-02's sticky-dismissal record is keyed to warnings that only one build ever raises.",
+      "forcedInvention": "Consecutive-sample count for clipping, minimum duration for a silence/dropout fault, and the DC offset threshold."
+    },
+    {
+      "id": "F16",
+      "unit": "07.08-delivery-readiness-qc",
+      "severity": "warning",
+      "dimension": 3,
+      "category": "unspecified-core-behaviour",
+      "claim": "The contributor objection window that gates an irrevocable public stem release has no duration and no silence semantics.",
+      "evidence": "07.08.05-remix-stems-delivery-programs.md:109 D-03 — \"**Contributors are notified with an objection window before publication** | Per DT-02 — publishing someone's isolated performance to an unbounded audience is a material exposure they never agreed to.\" :79 States — \"Awaiting contributors | Roster notified, objection window open | Who has been notified, who has objected\". :56 happy path — \"**Every contributor on the roster is notified and can object** before publication (DT-02)\". No duration appears, and nothing states what happens when a contributor never responds. Q-01 tracks only whether an objection can veto: \"can a contributor **veto** publication of their stem, or only object?\"",
+      "failureScenario": "A roster includes an unclaimed, uncontactable session drummer (routine per 07.03.01 D-02 and 07.03.02 D-14). One implementer holds publication indefinitely on silence, blocking the artist's commercial decision forever; another treats silence as consent after an invented 48 hours and publishes an isolated take from someone who was never reachable — the exposure DT-02 exists to prevent. The act is explicitly irrevocable (D-02).",
+      "forcedInvention": "The objection window's duration, whether silence is consent, and how an uncontactable contributor resolves."
+    },
+    {
+      "id": "F17",
+      "unit": "07.05-review-feedback-approval",
+      "severity": "warning",
+      "dimension": 8,
+      "category": "broken-normative-reference",
+      "claim": "07.05.01's Behavior section cites decision numbers that resolve to different decisions in its own Decisions table — five instances.",
+      "evidence": "07.05.01-timestamped-waveform-review.md:71 — \"**Playback never stops to compose** (D-04)\" but :287 D-04 is the anchor/confidence-tier decision and :288 D-05 is \"Playback **never stops** to compose a comment\". :114 — \"**7. A new version never resolves anything** (D-08 / DT-07)\" but :291 D-08 is the carry-forward model and :293 D-10 is \"**A new version resolves nothing.** No auto-resolve, ever.\" :118 — \"**8. Resolution requires a reason, a resolving version, or both — never neither** (D-05, D-09)\" but that rule is :294 D-11. :159 — \"**Comments are never deleted** (D-05)\" but that is :289 D-06. :160 — \"**Edits are a typo window, not a revision system** (D-11)\" but the 5-minute window is :299 D-16.",
+      "failureScenario": "A BE/FE spec writer tracing 'no auto-resolve' to D-08 implements the carry-forward view model and never implements the auto-resolve prohibition; tracing the edit window to D-11 they implement resolution-requires-a-reason and leave comments editable indefinitely. Every rule is stated in prose somewhere, but the numbered citations a downstream stage follows point at the wrong requirement in five places."
+    },
+    {
+      "id": "F18",
+      "unit": "07-music-projects-collaboration (domain root)",
+      "severity": "warning",
+      "dimension": 7,
+      "category": "malformed-deferral",
+      "claim": "The question that gates the domain's largest deferred sub-domain has an owner but explicitly no deferral target, and the chain that feeds it terminates there.",
+      "evidence": "music-projects-collaboration-index.md:132 Q-11 — \"**Who gathers the four reopen-evidence items on the non-web-client gate (D-08 / `07.09` D-05)?** The gate is written and its exit condition is enumerated, but **nobody is currently assigned to gather the evidence**... Until someone is, the gate holds a door open that nothing is walking through: `07.09.01` and `07.09.02` have no answer at any horizon. | User | Follow-on to D-08 — not gated on any pipeline stage\". Q-08 routes into it rather than to a stage: :129 — \"| User | Owner-decision input to `07.09` D-05 (see Q-11)\".",
+      "failureScenario": "No pipeline stage owns the row, so no stage surfaces it. `/create-prd` and `/create-prd-stack` both proceed under D-08 (correctly, since nothing is required for v1), and the four evidence items are never gathered — by the tree's own words leaving 07.09.01 and 07.09.02 'no answer at any horizon' while they remain `Should` and unphased rather than `Won't`, which D-06 says must be revisited together if the gate never reopens."
+    },
+    {
+      "id": "F19",
+      "unit": "07.09-daw-bridge-capture-at-source",
+      "severity": "warning",
+      "dimension": 7,
+      "category": "malformed-deferral",
+      "claim": "Three of the sub-domain's four questions terminate at an unassigned owner-decision input rather than at a stage, mirroring the domain-level gap.",
+      "evidence": "07.09-daw-bridge-capture-at-source-index.md:120 Q-04 — \"**Who gathers D-05's four reopen-evidence items?**... **nobody is assigned**, and the four items are owner-decision inputs rather than tracked engineering work. Until someone is, `07.09.01` and `07.09.02` have no answer at any horizon | User | Follow-on to D-05 — not gated on any pipeline stage\"; :111 — \"> **Nobody is currently assigned to gather these** (Q-04).\" Mirrored in the leaves: 07.09.01-bounce-watch-folder-auto-ingest.md:117 Q-02 — \"| User | Owner-decision input to `07.09` D-05\"; 07.09.02-daw-session-parsing-track-mapping.md:125 Q-03 — \"now **reopen-evidence item (b)** on the surface gate... with **nobody assigned** (`07.09` Q-04)\".",
+      "failureScenario": "The gate's exit condition is enumerated and unreachable: no stage collects items (a)-(d), so the sub-domain stays permanently at `Should`/unphased with three [PARTIAL] features that no later stage may either build or retire. D-06's own instruction — 'If the gate later closes without reopening, this must be revisited to `Won't` together with that re-scope' - has no trigger that can fire."
+    },
+    {
+      "id": "F20",
+      "unit": "07.01-song-release-production-board",
+      "severity": "warning",
+      "dimension": 7,
+      "category": "malformed-deferral",
+      "claim": "The sub-domain CX carries two unowned `[PENDING]` markers pointing at a stage that has completed; one leaves a Role scoping block unwritten on a question the index records as resolved, the other leaves real release behaviour unspecified.",
+      "evidence": "07.01-song-release-production-board-cx.md:73 — \"**Role scoping**: `[PENDING — /ideate-discover Step 5 deepening]` — depends on resolving Q-02.\" with :12 still reading \"Medium | Compilations and deluxe editions are routine; needs validation (see Q-02 in the index)\" — while 07.01-song-release-production-board-index.md:55 Q-02 states \"**Resolved — yes, many-to-many on the membership edge, and nothing cascades**... CX-03's \\\"needs validation\\\" note is satisfied.\" And :61 — \"If domain 12 rejects the package (spec failure), the Release must be able to fall back — `[PENDING — /ideate-discover Step 5 deepening]`.\" Neither marker names an owner, and Step 5 is complete (07.01.02 Q-01/Q-02 both read \"`/ideate-discover` Step 5 ran without taking it\").",
+      "failureScenario": "Domain 12 rejects a delivered package on a spec failure. The Release is in `Ready`, its Songs are all at the approved-master terminal semantic, and no rule says what state it returns to or whether readiness recomputes - so one implementer leaves it Ready (contradicting the rejection) and another un-readies it without any Song having moved (contradicting 'readiness is derived from the stage board'). The blocking marker points at a stage that will not run again.",
+      "forcedInvention": "The Release's post-rejection state and re-readiness rule, plus CX-03's Role scoping."
+    },
+    {
+      "id": "F21",
+      "unit": "07.02-songwriting-composition-workspace",
+      "severity": "warning",
+      "dimension": 7,
+      "category": "malformed-deferral",
+      "claim": "The CX file marks shared-inbox graduation notification as pending in one synthesis answer and asserts it as settled in the next, with no owner and a completed deferral target.",
+      "evidence": "07.02-songwriting-composition-workspace-cx.md:35 — \"**Permission intersection**: an idea captured in a shared band inbox is visible to the band; graduating it into a Song owned by one member is a **quiet appropriation risk**... Graduation from a shared inbox should notify the inbox's members. `[PENDING — /ideate-discover Step 5 deepening]`\" immediately followed by :36 — \"**Notification fan-out**: graduation from a shared inbox notifies its members (per the above).\" The stage is complete: 07.02-songwriting-composition-workspace-index.md:52 Q-03 — \"`/ideate-discover` Step 5 has run without taking this decision\". The leaf implements the notification as settled: 07.02.01-idea-capture-inbox.md:51 — \"Permitted but notified... | Band members notified: \\\"Alex made 'riff idea 14 Nov' into a song\\\"\".",
+      "failureScenario": "The behaviour is implementable from the leaf, but the unowned marker leaves the appropriation-risk mitigation itself (beyond a notification) formally open with nothing scheduled to close it, and a reader of the CX cannot tell whether the notification is a decision or a proposal."
+    },
+    {
+      "id": "F22",
+      "unit": "07.04-audio-version-control-lineage",
+      "severity": "warning",
+      "dimension": 5,
+      "category": "unbounded-override",
+      "claim": "The change-summary edit window carries an unbounded owner override with no range and an ambiguous \"Owner\", on the exact surface the file identifies as its forgery vector.",
+      "evidence": "07.04.01-audio-version-control-lineage-timeline.md:225 D-11 — \"The change summary is editable **by its author, within 60 minutes**, and the window closes **immediately** on approval, canonical nomination, or a dispute opening... The typo problem is real and 60 minutes covers it. The moment a note becomes evidence it stops being editable; an editable evidentiary note is not evidence. Corrections append per D-06. **Owner may override the window length.**\" No bound, no actor definition; the tree uses \"owner\" for the song's owning party and \"product owner\" for the platform (e.g. 07.01.03:22 \"the product owner must approve one immutable version\"). The same file's DT-07 is built on the opposite premise: :181 — \"append-only is necessary and not sufficient. What makes a log evidence is that the reading surface shows the appends\".",
+      "failureScenario": "A song owner sets the override to 30 days. A contributor's change summary is now silently editable for a month after the fact by its author, so 'vocal up 1dB, de-essed' can be rewritten once a dispute is foreseeable but before it is formally opened - defeating D-11's own rationale on the surface DT-07 names as the attack surface.",
+      "forcedInvention": "Which owner may override, the permitted range, and whether the override is retroactive to already-written summaries."
+    },
+    {
+      "id": "F23",
+      "unit": "07.04-audio-version-control-lineage",
+      "severity": "warning",
+      "dimension": 5,
+      "category": "untestable-requirement",
+      "claim": "A/B switch latency is declared a hard functional requirement with no number; the only quantity given is an example of failure.",
+      "evidence": "07.04.06-stem-player-version-ab-compare.md:98 D-02 — \"Switch latency is a **hard functional requirement**, not polish | Per DT-02 — auditory memory decays in hundreds of milliseconds; a slow switch means the feature does not work at all.\" The Behavior section gives only \"switching is instantaneous and gapless — **the switch must be imperceptible**\" and \"A 300 ms stall between A and B means you are no longer comparing mixes\" (:31-34). Contrast the sibling 07.05.01, which sets \"<= 250 ms at maximum zoom regardless of version length\" for its own anchor precision.",
+      "failureScenario": "Acceptance is untestable: one team ships a 200 ms switch and passes its own reading of 'not 300 ms', another targets 20 ms and buffers both streams fully - which then collides with Q-01's bandwidth reality differently in each build. The feature's single defining requirement has no pass/fail line.",
+      "forcedInvention": "The switch-latency budget in milliseconds."
+    },
+    {
+      "id": "F24",
+      "unit": "07.04-audio-version-control-lineage",
+      "severity": "warning",
+      "dimension": 5,
+      "category": "untestable-trigger",
+      "claim": "The plausibility half of integrity - the check that catches a truncated bounce - has no deviation threshold.",
+      "evidence": "07.04.05-file-integrity-missing-media.md:105 D-01 — \"Integrity means **bytes and plausibility** — checksum plus semantic comparison against the parent version | Per DT-02 — a truncated bounce is intact and wrong.\" The only expression of the trigger is an example: :69 — \"Truncated audio that is still a valid file (a bounce that stopped early) | **Checksums cannot catch this**... Needs duration comparison against the parent version. | \\\"This mix is 12 s shorter than v6 — intentional?\\\"\", echoed verbatim at 07.04.01:139. No tolerance is given for duration, sample rate or channel-count comparison.",
+      "failureScenario": "A legitimate radio edit is 40 s shorter than its parent and a legitimate fade trim is 1.5 s shorter. With no threshold, one build warns on both (training dismissal on the routine case) and another warns on neither (missing the truncated bounce D-01 exists to catch).",
+      "forcedInvention": "The duration-delta threshold (absolute or proportional) at which the plausibility warning fires."
+    }
+  ]
+}

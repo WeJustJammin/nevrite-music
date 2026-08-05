@@ -1,0 +1,339 @@
+{
+  "domain": "02-credits-attribution",
+  "auditedAt": "2026-07-30",
+  "root": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation",
+  "unitsAudited": 5,
+  "filesRead": 33,
+  "coverageNote": "Enumeration matches the expected 5 units / 33 files exactly. Units: the domain directory itself (02-credits-attribution, 8 files: index, cx, 02.05-02.10) plus the four sub-domain directories 02.01-credit-graph-discography (8), 02.02-session-capture (6), 02.03-claiming-cold-start-seeding (5), 02.04-attestation-credit-confidence (6). Every file was read in full through the sandbox (~900 KB) via line-numbered dumps; no sampling.",
+  "units": [
+    {
+      "unit": "02-credits-attribution",
+      "files": [
+        "credits-attribution-index.md",
+        "credits-attribution-cx.md",
+        "02.05-credit-dispute-resolution.md",
+        "02.06-credit-role-instrument-taxonomy.md",
+        "02.07-union-performer-session-reporting.md",
+        "02.08-credit-export-ddex-rin.md",
+        "02.09-gear-credit-linkage.md",
+        "02.10-ai-contribution-disclosure.md"
+      ],
+      "applicableCheckpoints": 8,
+      "naDimensions": [],
+      "points": 0.5,
+      "ambiguityPct": 6.25,
+      "scores": {
+        "1_problem_clarity": "PASS — credits-attribution-index.md:11 'The verified graph of who did what on every session, work and recording — captured at creation, attested by the people in the room, resolvable to industry identifiers, and disputable.' Single sentence, specific users (session players/producers/rooms), specific pain, falsifiable.",
+        "2_persona_specificity": "PASS — Role Matrix populated for all 10 children across 4 named personas with scoped qualifiers (credits-attribution-index.md:74-85), plus two carried findings at :88-89. Personas referenced from meta/personas.md, never redefined. Every leaf carries a Role Lens with explicit absences (e.g. 02.10:20 'Operator | None | The room does not know how a part was made').",
+        "3_feature_completeness": "WARN — MoSCoW present and mutually exclusive (credits-attribution-index.md:115-120); every Must has 2+ levels and every leaf has an extensive Edge Cases table. Downgraded for two unresolved structural defects: 02.06 does not expose the role family/leaf hierarchy 02.01.02 D-07 declares a hard requirement (finding 3), and 02.10's Producer Role Lens contradicts its own D-04 (finding 4).",
+        "4_constraint_explicitness": "PASS — compliance and legal axes carry explicit values or explicit owner-held gates: source licensing (index Q-10), GDPR erasure (Q-09), consent for shells (Q-11), DDEX fidelity grades exact/broader/none (02.06 D-17), 64-char alias bound (02.06 D-13). Budget/timeline/team-size axes belong to meta/constraints.md, not to a domain node.",
+        "5_success_measurability": "PASS — normative claims in this unit carry numbers with units: 02.06:70 '≥10 distinct users across ≥5 distinct works within 90 days', 02.06:126 '≤64 characters', 02.10:39 '≤ 280 chars', 02.08 D-06's rung 1-2 exclusion. Where a value is absent it is owner-tracked (02.05 Q-03, 02.07 Q-01).",
+        "6_competitive_positioning": "PASS — credits-attribution-index.md:13 names Jaxsta, Muso.AI, Sound Credit and Discogs, states the shared capability gap ('they reconstruct after the fact from whoever remembers'), and the moat mechanism ('Only a platform present at the session captures them at source'). 02.08 DT-01 states the defensible mechanism: 'The moat is not the data — it is being the place where the work happens'.",
+        "7_open_question_resolution": "PASS — every open row in credits-attribution-index.md:128-144 carries Owner + Deferred To (Q-03 User/create-prd-architecture ... Q-15 User/create-prd-security), resolved rows are struck through with the resolving decision cited. Same pattern in 02.05, 02.06, 02.07, 02.08, 02.09, 02.10.",
+        "8_structural_compliance": "PASS — domain dir has credits-attribution-index.md + credits-attribution-cx.md; Children table (index:29-40) matches the folder tree on disk exactly (4 sub-domain dirs + 6 leaf .md); no sub-domain has fewer than 2 children (02.03 has 3); every leaf has a Role Lens; Candidate Disposition accounts for all 11 sweep candidates."
+      }
+    },
+    {
+      "unit": "02.01-credit-graph-discography",
+      "files": [
+        "02.01-credit-graph-discography-index.md",
+        "02.01-credit-graph-discography-cx.md",
+        "02.01.01-credit-record-contribution-ledger.md",
+        "02.01.02-public-discography.md",
+        "02.01.03-credit-search-graph-traversal.md",
+        "02.01.04-identifier-resolution-duplicate-merge.md",
+        "02.01.05-credit-visibility-embargo.md",
+        "02.01.06-credit-correction-amendment.md"
+      ],
+      "applicableCheckpoints": 8,
+      "naDimensions": [],
+      "points": 1.0,
+      "ambiguityPct": 12.5,
+      "scores": {
+        "1_problem_clarity": "PASS — 02.01-...-index.md:10 'The canonical record of who did what, and every surface that reads it', with the sub-domain justification at :12 naming the five interacting capabilities.",
+        "2_persona_specificity": "PASS — Role Matrix for all 6 children (index:27-34); each leaf's Role Lens states access plus explicit absence rationale (02.01.01:21 'fans have no write path into the graph at any tier').",
+        "3_feature_completeness": "WARN — edge-case depth is exceptional (02.01.05 has 40 rows, 02.01.02 has 28). Downgraded for the unpropagated Axis-A/Axis-B rename (findings 5 and 6), the undefined billing-order owner and default (finding 7), the unquantified merge-proposal floor and unmerge window (finding 8), and the ambiguous 'Operator review' actor (finding 9).",
+        "4_constraint_explicitness": "PASS — 02.01.02 D-12 '≤ 60 s' restrictive propagation, 02.01.02 Q-05 '60 req/min/IP unauthenticated with per-ASN aggregation', 02.01.05 '72-hour objection window' / '90 days' / '4 unanswered nudges' / '7 days' revert, 02.01.03 D-04 density floor '< 20 / 20-99 / >= 100'.",
+        "5_success_measurability": "WARN — most thresholds are numeric and testable, but 02.01.04:35 'above a confidence floor' and :47 'available for a bounded window' are normative and unquantified with no tracked question owning either value (finding 8).",
+        "6_competitive_positioning": "PASS — 02.01.02 DT-02/DT-04 name Discogs, AllMusic and Jaxsta, and DT-04 states the defensible mechanism: the page 'exports the claim ... and never the evidence ... A competitor who scrapes every page gets Discogs — which already exists and already lost.' 02.01.06 D-04 states the deliberate divergence from Discogs/MusicBrainz crowd correction.",
+        "7_open_question_resolution": "PASS — every open row carries Owner + Deferred To (index Q-01 Agent//create-prd-architecture, Q-02 [OWNER] User//create-prd; 02.01.05 Q-02..Q-07 all User + stage; 02.01.06's inline marker names its stage: '[PENDING — Step 5 Must-depth / /write-be-spec: re-emission trigger + royalty correction-filing deadline]').",
+        "8_structural_compliance": "PASS — index + cx present; Children table (index:16-23) matches the 6 leaf files on disk; Role Matrix populated; all 6 leaves carry a Role Lens."
+      }
+    },
+    {
+      "unit": "02.02-session-capture",
+      "files": [
+        "02.02-session-capture-index.md",
+        "02.02-session-capture-cx.md",
+        "02.02.01-session-roll-call.md",
+        "02.02.02-per-track-contribution-log.md",
+        "02.02.03-session-close-capture-prompt.md",
+        "02.02.04-session-attendance-proof.md"
+      ],
+      "applicableCheckpoints": 8,
+      "naDimensions": [],
+      "points": 1.0,
+      "ambiguityPct": 12.5,
+      "scores": {
+        "1_problem_clarity": "PASS — 02.02-session-capture-index.md:10 'recording who did what while it is happening, as a byproduct of running the session rather than as an admin task afterwards', tied to problem-statement.md's 'absence at the point of truth'.",
+        "2_persona_specificity": "PASS — Role Matrix for all 4 children (index:25-30); 02.02.01:20-23 gives each persona concrete affordances and interaction budgets (Producer 'one tap per person ... < 100 ms').",
+        "3_feature_completeness": "WARN — 30-row edge-case tables and full state machines throughout. Downgraded for the participant-visibility contradiction with 02.01.05 (finding 1), the unreconciled trigger-chain contradiction the file itself flags (finding 2), 02.02.02's v1-unavailable happy path (finding 7) and the 6h/72h session-boundary mismatch (finding 8).",
+        "4_constraint_explicitness": "PASS — quantified throughout: '< 100 ms' entry render, '300 ms' duplicate check, '30 per session per hour' freehand cap, '30 entries' bulk threshold, '6h' auto-close, '24h' reopen/link expiry, '15 minutes' interval grace, '5 s (P95)' prompt fire, '20 h' suppression, '120 characters' part label.",
+        "5_success_measurability": "PASS — every performance and cadence claim carries a number and a unit; the re-offer schedule is wall-clock-anchored (02.02.03 D-11 'next local morning, 09:00-11:00') rather than adjectival.",
+        "6_competitive_positioning": "PASS — index:10 'Every competitor (Jaxsta, Muso.AI, Sound Credit, Discogs) reconstructs credits later from whoever remembers; this sub-domain is the entire reason WeJammin does not have to.' 02.02.02 DT-02 states the failure mode of the alternative ('if the answer is a form, the wedge is Sound Credit, which already exists and already failed').",
+        "7_open_question_resolution": "WARN — index Q-01/Q-02/Q-03 and every leaf Q row carry Owner + Deferred To, but two trackers are malformed: 02.02.04:49 leaves '[PENDING — Step 5]' as the entire user-visible behaviour for the collusion case, with no owner and a target stage that has already run (finding 9); and 02.02.02 Q-01 routes to domain Q-04, which is closed for the v1 window (finding 7).",
+        "8_structural_compliance": "PASS — index + cx present; Children table (index:16-21) matches the 4 leaves on disk; Role Matrix populated; all leaves carry Role Lens + States tables."
+      }
+    },
+    {
+      "unit": "02.03-claiming-cold-start-seeding",
+      "files": [
+        "02.03-claiming-cold-start-seeding-index.md",
+        "02.03-claiming-cold-start-seeding-cx.md",
+        "02.03.01-external-catalog-import.md",
+        "02.03.02-claim-inbox-suggested-claims.md",
+        "02.03.03-claim-adjudication.md"
+      ],
+      "applicableCheckpoints": 8,
+      "naDimensions": [],
+      "points": 1.5,
+      "ambiguityPct": 18.75,
+      "scores": {
+        "1_problem_clarity": "PASS — index:10 'How the graph gets populated with history that predates WeJammin, and how a human takes possession of the credits that are theirs', with the self-undermining tension stated explicitly at :12.",
+        "2_persona_specificity": "PASS — Role Matrix for all 3 children (index:26-30); 02.03.02:18-21 differentiates Musician/Producer/Operator inbox behaviour and states the Fan absence with reasoning.",
+        "3_feature_completeness": "WARN — the unresolvable-contest path is specified end to end (02.03.03 D-02/D-05/D-06 plus a documented interim rule for OQ-01 in the CX file at :67). Downgraded because the years-later contest unwind is left as a bare stale marker (finding 10) and the suggestion match floor is unquantified (finding 11).",
+        "4_passsee_note": null,
+        "4_constraint_explicitness": "PASS — the legal gate is explicit and owner-held (index Q-01, 02.03.01 Q-01/Q-02), import is throttled to human review capacity (02.03.01 D-04), and the CX file states a binding interim rule so no implementer guesses reactivation semantics (cx:67).",
+        "5_success_measurability": "WARN — 02.03.02:46 'High match floor; show few, show confident' and D-02 'Precision over recall on suggestions' are normative but carry no number, and no tracked question owns the value (finding 11). The adjacent ranking cut is properly deferred ('[PENDING — /write-be-spec]', 02.03.01:46), which is what makes the untracked one visible.",
+        "6_competitive_positioning": "PASS — index:12 names MusicBrainz, Discogs, DDEX and PRO data as the reconstruction sources and states the differentiator (permanent tier capping); 02.03.01 Q-02 names Sound Credit and Jaxsta as competitor sources; 02.03.01 DT-01 states the failure mode ('the product has quietly become Jaxsta with a nicer onboarding').",
+        "7_open_question_resolution": "WARN — index Q-01/Q-03 and the leaves' Q rows carry Owner + Deferred To, and the CX file adds a properly-formed OQ-01 with options, owner and target stage. Downgraded for 02.03.03:69's '[PENDING — Step 5]' — no owner, and the named stage has already completed (finding 10).",
+        "8_structural_compliance": "PASS — index + cx present; Children table (index:19-22) matches the 3 leaves on disk; Role Matrix populated; all leaves carry Role Lens."
+      }
+    },
+    {
+      "unit": "02.04-attestation-credit-confidence",
+      "files": [
+        "02.04-attestation-credit-confidence-index.md",
+        "02.04-attestation-credit-confidence-cx.md",
+        "02.04.01-attestation-request-confirmation.md",
+        "02.04.02-provenance-tiers-credit-confidence.md",
+        "02.04.03-attestation-retraction.md",
+        "02.04.04-attestation-ring-collusion-detection.md"
+      ],
+      "applicableCheckpoints": 8,
+      "naDimensions": [],
+      "points": 0.5,
+      "ambiguityPct": 6.25,
+      "scores": {
+        "1_problem_clarity": "PASS — index:10 'The machinery that turns an assertion into a verified fact, and the model that says how well any given credit is known', with the competitor gap named in the same paragraph.",
+        "2_persona_specificity": "PASS — Role Matrix for all 4 children (index:25-30), including the deliberate all-None row for 02.04.04 with its rationale at :34. 02.04.01:18-21 states two directions of use per persona.",
+        "3_feature_completeness": "WARN — the rung ladder, score inputs, derivation properties and materiality boundary are all specified with 30+ edge cases. Downgraded for two internal inconsistencies: the 'Verified marker' state label contradicting D-02's ban (finding 12) and the 'rung 3 -> 6' illustrations contradicting rung 6's own gate (finding 13).",
+        "4_constraint_explicitness": "PASS — 02.04.01 D-09 gives the full cadence ('1 request + <=2 nudges per (credit x attester), at >=7d and >=21d', '<=5 outstanding, <=10 per rolling 30 days', '5 consecutive unanswered -> dormant'), D-13 bounds the note at '<=200 chars, plain text, no links', and 02.04.02:91 proposes 'P95 < 60 s' for re-derivation with the ratification stage named.",
+        "5_success_measurability": "PASS — the two numeric schedules are tabulated with values and explicitly flagged as proposed defaults with a calibration owner (02.04.02:62-63, Q-05); 02.04.04's undecidable values are consolidated into one tracked deferral (Q-04) rather than left adjectival.",
+        "6_competitive_positioning": "PASS — index:10 'Jaxsta, Muso.AI, Sound Credit and Discogs all hold credits, and every one of them holds them at a single undifferentiated tier of \"someone said so\"', with the defensible mechanism in 02.04.02 DT-10: rung 6 requires contemporaneity and therefore 'cannot be backfilled ... Contemporaneity is a rate limit on fraud'.",
+        "7_open_question_resolution": "PASS — every open row carries Owner + Deferred To (index Q-01/Q-02 [OWNER] User//create-prd, Q-03 User//create-prd-security; 02.04.04 Q-02/Q-04 User + stage), and resolved rows cite the resolving decision. 02.04.04:87's inline '[PENDING — /create-prd-security]' names its stage and is owned by Q-02.",
+        "8_structural_compliance": "PASS — index + cx present; Children table (index:16-21) matches the 4 leaves on disk; Role Matrix populated including the all-None row; all leaves carry Role Lens."
+      }
+    }
+  ],
+  "findings": [
+    {
+      "id": "F-01",
+      "unit": "02.02-session-capture",
+      "severity": "blocking",
+      "dimension": 3,
+      "category": "silent-contradiction",
+      "claim": "02.02.01 D-09 scopes a participant's roll visibility to overlapping presence intervals specifically so an async contributor cannot learn a session's unreleased personnel, but 02.01.05 D-14/DT-13 explicitly reject interval scoping and give every roll party read access to the whole session's credits — which enumerate that personnel.",
+      "evidence": "02.02-session-capture/02.02.01-session-roll-call.md:145 '**Async contributor tries to see who else played** | They have no overlapping interval, so they see only themselves and the session owner (D-09). They cannot learn the unreleased personnel of a record they sent one part to'; and :178 (DT-10) 'What it prevents is real: an **asynchronous** contributor who emailed one part learning the full unreleased personnel of a record, weeks before announcement, from a tool nobody thought of as a leak.' Against 02.01-credit-graph-discography/02.01.05-credit-visibility-embargo.md:115 'Explicitly rejected: scoping a participant's visibility to the intervals they attended (DT-13). A dep who played 2pm-3pm sees the session's credits, not a 60-minute slice — an NDA covers the project, not your hours', with :113 defining the participant set as 'the session roll (`02.02.01`) — every party on it' and Happy Path step 4 (:134) 'Credits are visible to participants and to each credited party'.",
+      "forcedInvention": "Whether interval scoping applies to credit reads as well as roll reads. An implementer must invent either (a) an interval-scoped participant predicate for embargoed credit visibility, contradicting 02.01.05 D-14/DT-13, or (b) full-session credit visibility for every roll party, which defeats the protection 02.02.01 D-09/DT-10 claims to provide.",
+      "failureScenario": "A remote string player who emailed one 40-minute part is on the roll with a contribution window and no overlapping presence interval. Under 02.02.01 D-09 they see only themselves plus the session owner on the roll. They then open the work's embargoed credit ledger, where 02.01.05 D-14 makes them a participant with access to the session's credits, and read the full unreleased personnel of a major-artist album weeks before announcement — the exact disclosure 02.02.01 DT-10 says the rule exists to prevent."
+    },
+    {
+      "id": "F-02",
+      "unit": "02.02-session-capture",
+      "severity": "blocking",
+      "dimension": 3,
+      "category": "silent-contradiction",
+      "claim": "The sub-domain CX file states the sequential trigger chain (wrap -> reconcile -> prompt -> confirmations) that 02.02.03 D-05/DT-04 identifies as the design's central error and replaces with two independently-firing halves. 02.02.03 flagged the reconciliation as owed to a later step and it was never made, leaving both orderings live and unmarked in the CX file.",
+      "evidence": "02.02-session-capture/02.02-session-capture-cx.md:56 '2. **Trigger chain**: Wrap signal → reconcile → prompt → per-row confirmations → credit records.' Against 02.02-session-capture/02.02.03-session-close-capture-prompt.md:206 (D-05) '**The contributor asks and the Producer's reconciliation are two independently-firing halves.** Both fire within 5 s of the wrap signal; neither gates the other'; :170 (DT-04) 'DT-04 ... ❌ **REJECTED — this was the design's central error, and it inverted its own thesis.**'; and the unactioned flag at :185 'Step 6 must reconcile CX-02's trigger chain against D-05: CX-02 records \"wrap → reconcile → prompt → confirmations\", which is the sequential model DT-04 rejects. The corrected chain is \"wrap → {contributor asks ∥ reconciliation} → confirmations\" ... This is a change to a sibling artifact I do not own, flagged rather than made.'",
+      "forcedInvention": "Whether contributor confirmation cards are gated on the Producer completing reconciliation. The two documents specify opposite orderings for the domain's single most important moment, and neither carries a deferral marker.",
+      "failureScenario": "An implementer building the close prompt from the sub-domain CX file's trigger chain gates the contributor cards behind the Producer's review. At a 4am wrap the Producer never reviews, so no card is ever dispatched, and every in-room tap — the perishable input 02.02.03 D-05 exists to capture, and the only evidence that reaches rung 5/6 — is lost for that session."
+    },
+    {
+      "id": "F-03",
+      "unit": "02-credits-attribution",
+      "severity": "blocking",
+      "dimension": 3,
+      "category": "unmet-hard-requirement",
+      "claim": "02.01.02 D-07 and the domain CX declare a hard structural requirement that 02.06 expose a stable role family/leaf hierarchy with every leaf in exactly one family. 02.06 defines no family tier on the role axis at all — roles carry base + optional modifier, and the only functional hierarchy defined is on the instrument axis.",
+      "evidence": "02.01-credit-graph-discography/02.01.02-public-discography.md:155 (D-07) '**Grouping is by role *family* (taxonomy parent tier), with the leaf role rendered per line** ... Places a hard requirement on `02.06`: a stable family/leaf hierarchy, every leaf in exactly one family.' Reinforced at :134 '`02.06` must expose a stable family/leaf hierarchy in which every leaf has exactly one family. A flat vocabulary makes the page's core structure unbuildable', and credits-attribution-cx.md:21 (CX-06) 'the discography **groups on the FAMILY tier and renders the leaf role per line** (`02.01.02` D-07), so `02.06` must expose a stable family/leaf hierarchy where every leaf has exactly one family.' Against 02.06-credit-role-instrument-taxonomy.md:44 '| **Internal structure** | `base` + optional `modifier` (Additional, Assistant, Co-, Vocal, Executive, Associate) — D-06 | A functional hierarchy: Rhodes → Electric Piano → Keys (D-07) |' and :209 (D-07) 'Instruments carry a **functional** hierarchy (keys / guitars / drums & percussion / strings / brass / woodwind / voice / electronic production)' — the hierarchy is instrument-only; no role family/leaf tier is defined anywhere in the file.",
+      "forcedInvention": "The role-family grouping key for the Must-have public discography. An implementer must invent either that role 'family' means the base of base+modifier (which collapses every performer into one group and cannot produce 02.01.02's own worked header 'Drums 1,612 · Engineering 201 · Production 34'), or that families come from the instrument hierarchy for performer roles and from role bases otherwise — a hybrid rule no source states.",
+      "failureScenario": "A drummer/mixer's discography is built by grouping on role base. Every performance credit lands in a single 'Performer' group regardless of instrument, so the page renders 'Performer 1,612 · Engineer 201 · Producer 34' instead of the specified 'Drums 1,612 · Engineering 201 · Production 34', and the owner's designation of 'up to 3 primary role families' cannot express 'Drums' at all — the multi-hyphenate smear D-01 exists to prevent, reintroduced through the grouping key."
+    },
+    {
+      "id": "F-04",
+      "unit": "02-credits-attribution",
+      "severity": "blocking",
+      "dimension": 3,
+      "category": "silent-contradiction",
+      "claim": "02.10's Producer Role Lens grants Full access and session-level AI disclosure, which contradicts its own D-04 (you disclose your own contribution only), 02.02.02's refusal of Producer writes on another party's disclosure axis, and the per-field ownership model in the domain CX. No session-level disclosure object exists in the v1 vocabulary.",
+      "evidence": "02.10-ai-contribution-disclosure.md:19 '| Producer | Full | Discloses at the session level and per contribution. The de-facto compliance point, because they assemble the record and they are who a label asks.' Against :122 (D-04) '| D-04 | You disclose your own contribution only | Disclosing someone else's work as AI is an assertion about their craft and is defamatory if wrong. |'; 02.02-session-capture/02.02.02-per-track-contribution-log.md:109 'Producer tries to set the AI disclosure axis on someone else's contribution | Refused. `02.10` D-04: you disclose your own contribution only ... | Disclosure control is absent on rows the Producer does not own'; and credits-attribution-cx.md:29 (CX-14) 'the Producer owns the attribution, the named contributor owns its AI axis'. The v1 schema at 02.10:33 attaches disclosure to a contribution only — 'A disclosure attached to a contribution is **zero or more involvement entries**' — and no session-level entity, state or display is defined anywhere in the file. The domain Role Matrix repeats the grant: credits-attribution-index.md:85 '| 02.10 AI Contribution Disclosure | ⚙️ Config (own contributions) | ✅ Full | ❌ None | 👁️ Read-only |'.",
+      "forcedInvention": "Whether a session-level AI disclosure exists, what it attaches to, what it renders as, and whether the Producer may write the disclosure axis on contributions they do not own. The Role Lens and the Role Matrix say yes; D-04, 02.02.02 and CX-14 say no.",
+      "failureScenario": "An implementer builds the Producer a session-level 'AI used in this session' control per the Role Lens's Full grant. It writes a disclosure that is, per D-04's own reasoning, a defamatory assertion about every named contributor's craft — and it has no schema, no state and no display rule, so it renders inconsistently against the per-contribution entries the rest of the domain reads."
+    },
+    {
+      "id": "F-05",
+      "unit": "02.01-credit-graph-discography",
+      "severity": "warning",
+      "dimension": 3,
+      "category": "silent-contradiction",
+      "claim": "02.01.01's credit-record field table still models visibility as one three-value enum including 'Private', which 02.01.05 D-06 replaced with two orthogonal axes and an explicit rename to 'Unlisted'. The superseded enum also omits the Confidential level entirely.",
+      "evidence": "02.01-credit-graph-discography/02.01.01-credit-record-contribution-ledger.md:37 '| **Visibility** | Public / Embargoed / Private (`02.01.05`). Enforced at the record, evaluated at query. |' Against 02.01-credit-graph-discography/02.01.05-credit-visibility-embargo.md:270 (D-06) 'Visibility is **two orthogonal axes**: Confidentiality (Public / Embargoed / Confidential — record-level, binds everywhere) and Page curation (Listed / Unlisted — one party's discography only). \"Private\" is renamed **Unlisted**', and :31 'The breadth pass modelled visibility as one three-value ladder (Public / Embargoed / Private) ... That instinct was right and the model was wrong', with :231 (DT-12) '❌ **REJECTED — the model was a shippable lie.**' Both files are dated 2026-07-23 and neither statement carries a marker.",
+      "forcedInvention": "The shape of the credit record's visibility field: one 3-value enum (per 02.01.01) or one 3-value confidentiality axis plus a per-party Listed/Unlisted axis (per 02.01.05 D-06).",
+      "failureScenario": "A data model built from 02.01.01's field table gives the credit a single visibility enum. Setting it to 'Private' then suppresses the credit from the work's ledger and from co-contributors' pages — the unilateral scrubbing of a joint assertion that 02.01.05 DT-12 calls a shippable lie — and there is nowhere to store the permanent Confidential level that ghost production depends on."
+    },
+    {
+      "id": "F-06",
+      "unit": "02.01-credit-graph-discography",
+      "severity": "warning",
+      "dimension": 3,
+      "category": "unpropagated-decision",
+      "claim": "02.01.05 D-06 renames the page-level control to 'Unlisted' and mandates specific truth-in-labelling copy, but 02.01.02 — the feature that renders that control — never uses the word 'Unlisted' and calls it 'Private' nine times, including in its own decision row.",
+      "evidence": "02.01-credit-graph-discography/02.01.02-public-discography.md:20 'sets per-credit visibility via `02.01.05` (Private hides a line from the page without deleting the record)'; :69 'they set the credit **Private** on their own page unilaterally (`02.01.05`)'; :154 (D-06) 'A party contesting a credit *naming them* sets it Private unilaterally (`02.01.05`)'; also :23, :66, :81, :98, :156. Zero occurrences of 'Unlisted' in the file. Against 02.01-credit-graph-discography/02.01.05-credit-visibility-embargo.md:50 'So Axis B is a page-level opt-out and must be **labelled as one**: the UI says \"Removed from your discography. The work's credit list still shows you, because <N> other people also credit you here.\" Calling it Private would be a truth-in-labelling failure that users discover only after they have relied on it.'",
+      "forcedInvention": "The control's label and whether the mandated co-contributor disclosure string is rendered. 02.01.05 makes both normative; 02.01.02 specifies the same control under the forbidden name with no disclosure copy.",
+      "failureScenario": "The discography ships a per-credit 'Private' toggle with no disclosure sentence. A session player marks a credit Private expecting it gone, then finds their name still on the work's public ledger and on four co-contributors' pages — the exact post-reliance discovery 02.01.05 D-06 was written to prevent."
+    },
+    {
+      "id": "F-07",
+      "unit": "02.01-credit-graph-discography",
+      "severity": "warning",
+      "dimension": 1,
+      "category": "forced-invention",
+      "claim": "Billing/display order is declared a ledger property asserted by 'the work owner', but the term is never defined, the same file also attributes the order to the Producer, and no default is specified for a ledger whose owner never asserts one — while a stable sequence is a hard precondition for RIN emission.",
+      "evidence": "02.01-credit-graph-discography/02.01.01-credit-record-contribution-ledger.md:206 (D-12) '**Billing/display order is a property of the ledger**, asserted by the work owner — not of the individual record, and never attestable'; :93 (Happy Path 8) 'Record appears on the work's ledger, in the Producer's declared billing order (D-12)'; :152 'Ledger in the work owner's billing order (D-12)'. The requirement it feeds: credits-attribution-cx.md:22 (CX-07) 'Exact role codes, resolved identifiers, and a stable display sequence are hard preconditions for a valid RIN' and 02.01.01:163 (DT-04) 'an unordered ledger cannot emit a valid one'. No definition of 'work owner' appears in the domain, and 02.08's pre-flight gap list (02.08-credit-export-ddex-rin.md:57-64) names unanchored parties and unmappable roles but never a missing display sequence.",
+      "forcedInvention": "Who holds the ordering pen (work owner vs Producer — different parties on a hired session), and what sequence a ledger renders and emits when nobody has asserted one.",
+      "failureScenario": "An imported work with no asserted order is exported as RIN. The emitter has no specified sequence and no pre-flight gap for the absence, so it invents one (insertion order), and a featured-artist billing position that was contractually negotiated is silently reordered in a package delivered to a label."
+    },
+    {
+      "id": "F-08",
+      "unit": "02.01-credit-graph-discography",
+      "severity": "warning",
+      "dimension": 5,
+      "category": "untestable-threshold",
+      "claim": "02.01.04 gates merge-proposal creation on an unnamed 'confidence floor' and bounds unmerge availability by an unnamed 'bounded window'. Neither value is given and neither is covered by a tracked question.",
+      "evidence": "02.01-credit-graph-discography/02.01.04-identifier-resolution-duplicate-merge.md:35 '2. System scores the match and, above a confidence floor, raises a merge proposal — it does not merge'; :56 '| Proposed | Match scored above floor | Merge proposal in the adjudicator's inbox |'; :47 '\"Undo this merge\" available for a bounded window; on undo, both discographies reappear as they were pre-merge'. The file's three open questions cover unmerge-after-edits (Q-01), deceased adjudication (Q-02) and minting identifiers (Q-03) — none owns either value. Sibling features do quantify comparable cuts, e.g. 02.01.03 D-04's '< 20 / 20-99 / >= 100' density floor.",
+      "forcedInvention": "The match-score threshold at which a merge proposal is raised, and the duration for which unmerge remains available.",
+      "failureScenario": "Two implementers ship 0.80 and 0.95 proposal floors and 24-hour and 30-day undo windows. In the first, users are buried in low-quality merge proposals until they stop reading them (the nag failure 02.01.04 DT-03 warns of); in the second, a wrongly-confirmed person-merge — the irreversible harm D-01 exists to prevent — becomes unrecoverable after a day."
+    },
+    {
+      "id": "F-09",
+      "unit": "02.01-credit-graph-discography",
+      "severity": "warning",
+      "dimension": 3,
+      "category": "actor-ambiguity",
+      "claim": "02.01.06 D-07 routes an orphaned credit's correction-blocked state to 'Operator review', but Operator is a defined persona in this corpus (the studio/room), and the same file's Role Lens gives that persona read-only access with no visibility into contributor corrections.",
+      "evidence": "02.01-credit-graph-discography/02.01.06-credit-correction-amendment.md:104 (D-07) 'it enters a defined `correction-blocked` state, stays readable/unchanged, and is flagged for Operator review'; :65 same phrase in the edge case; :111 (Q-02) 'who may ultimately authorize a correction on an orphaned credit (Operator override, quorum of adjacent session participants, or permanent lock)'. Against the same file's Role Lens at :20 '| Operator | Read-only | Can propose a correction to their room's own credit ... **No visibility into contributor corrections on sessions they hosted.**' The persona is fixed corpus-wide as the room, e.g. credits-attribution-index.md:88 'Operator is not a bystander in this domain. \"Recorded at <Studio>\" is a standard liner-note credit'.",
+      "forcedInvention": "Who owns the correction-blocked review queue — the studio Operator persona (which the Role Lens forbids from seeing contributor corrections) or platform staff / domain 24 (which the term never names).",
+      "failureScenario": "The correction-blocked queue is routed to the room Operator of the session that produced the credit. That Operator has no access to contributor corrections by the same file's Role Lens, so the queue is unopenable and orphaned credits stay permanently uncorrectable; alternatively the routing hands a studio review authority over its clients' credit corrections, which the Role Lens denies."
+    },
+    {
+      "id": "F-10",
+      "unit": "02.01-credit-graph-discography",
+      "severity": "warning",
+      "dimension": 3,
+      "category": "forced-invention",
+      "claim": "A self-only correction that changes 'provenance-bearing fields' is 'flagged', but the field set is never enumerated and the flag's destination is never named.",
+      "evidence": "02.01-credit-graph-discography/02.01.06-credit-correction-amendment.md:64 '| Proposer is also the credit's only required approver (self-attested, unattested credit) | Applies with notice to the named party, per the unattested rule — but a self-only correction that also changes provenance-bearing fields is flagged, so nobody silently self-upgrades their own record |'. The record's provenance inputs are enumerated elsewhere (02.01.01:33-36 assertion date, asserter, origin; D-04/D-05) but no source states which of them an amendment may touch, and the file's Q-01/Q-02 cover only the reminder window and orphaned-credit authority.",
+      "forcedInvention": "Which fields count as provenance-bearing for this check, and who or what receives the flag (the named party, an admin queue, domain 24, the tier model).",
+      "failureScenario": "A self-asserting user amends their own unattested credit's contribution date to close the assertion gap that 02.01.01 D-04 makes the provenance signal. With no enumerated field set the check does not fire, no flag is raised anywhere, and the record silently self-upgrades — the exact outcome the sentence claims to prevent."
+    },
+    {
+      "id": "F-11",
+      "unit": "02.02-session-capture",
+      "severity": "warning",
+      "dimension": 3,
+      "category": "stale-against-ratified-decision",
+      "claim": "02.02.02's governing design constraint and its entire Happy Path are written on a session-environment (DAW) channel that the ratified v1 decision removes, and its Q-01 defers the derived-capture ceiling to a domain question that is closed for the v1 window. Unlike its siblings, the file carries no v1 branch.",
+      "evidence": "02.02-session-capture/02.02.02-per-track-contribution-log.md:27 'So the log is either populated from inside the session environment, or it is not populated. Every rule below is downstream of that.'; Happy Path :81 '2. The session environment reports its structure. Parts appear in the log with no action from anyone.'; Q-01 :204 'What can a DAW plugin actually read ... Rolls up to domain Q-04.' Against the ratified answer, carried by the siblings: 02.02-session-capture-index.md:48 (Q-02) '**CLOSED FOR THE v1 WINDOW (owner decision 2026-07-22, D-70 / DQ-08.2): none of them.** No non-web client is authorised'; 02.02.03-session-close-capture-prompt.md:46-52 'No non-web client on the producer's machine is authorised, so the plugin channel rungs 2 and 3 have no source in v1'; credits-attribution-cx.md:340 '**NO v1 CHANNEL** ... every consumer above must degrade to its no-channel branch for the whole v1 window'. 02.02.02 is dated 2026-07-23, one day after the decision.",
+      "forcedInvention": "What the v1 log's primary path is. The only no-environment behaviour is filed as an edge case (:95 'No session environment at all — no parts are known | Manual capture only. The log's axis inverts'), so an implementer must decide for themselves that the file's stated Happy Path and its 'design constraint that decides everything else' are both inoperative in v1.",
+      "failureScenario": "A slice is planned from 02.02.02's Happy Path and builds a derived-suggestion pipeline fed by DAW structure that has no source in v1, while the manual roll-first path — the only channel that exists — is implemented as the degraded branch. Take-level capture (D-01) is scoped in and is unreachable, and the v1 log ships with the axis the file calls inverted."
+    },
+    {
+      "id": "F-12",
+      "unit": "02.02-session-capture",
+      "severity": "warning",
+      "dimension": 3,
+      "category": "silent-contradiction",
+      "claim": "02.02.01 D-12 bounds a session at 6h of inactivity and auto-closes it, while 02.02.03's wrap ladder rung 5 waits 72h of inactivity and describes 'the session that never closes' as a real and common state — which D-12 makes impossible.",
+      "evidence": "02.02-session-capture/02.02.01-session-roll-call.md:219 (D-12) '**A session is one continuous working block**, bounded by a wrap signal or **6h of no roll/log activity**, whichever comes first'; :162 '| Closed | Wrap signal, or 6h inactivity auto-close (D-12) | Read-only roll'; :119 'The session auto-closes after 6h of inactivity (D-12) and the roll persists as provisional-only'. Against 02.02-session-capture/02.02.03-session-close-capture-prompt.md:41 '| 5 | 72 h of no capture activity, no wrap signal | Always | The backstop for the session that never closes (a real and common state) |' and :120 '| Session never closes — open for weeks | 72 h of no capture activity auto-wraps.' Neither statement carries a marker.",
+      "forcedInvention": "Whether the roll and log stay editable between 6h and 72h of inactivity, and whether the 6h auto-close emits a wrap signal (02.02.01:119 says it does not, which leaves a 66-hour window in which the session is closed, read-only, and un-wrapped).",
+      "failureScenario": "A session goes quiet at 20:00. At 02:00 the roll auto-closes read-only per D-12 with inferred departures stamped. The Producer returns on day three to finish logging, finds the roll frozen and outside the 24h reopen window, and the prompt's reconciliation half only fires at 72h against a session whose working data was already sealed — so the late contributions must route through amendment instead of capture."
+    },
+    {
+      "id": "F-13",
+      "unit": "02.02-session-capture",
+      "severity": "warning",
+      "dimension": 7,
+      "category": "malformed-deferral",
+      "claim": "02.02.04 leaves '[PENDING — Step 5]' as the entire user-visible behaviour for its central attack case. The marker has no owner and names an ideation step that has already run, so nothing carries the gap forward.",
+      "evidence": "02.02-session-capture/02.02.04-session-attendance-proof.md:49 '| Everyone co-signs a fabricated session | The attack. Corroboration is only as honest as the corroborators ... **Accepted cost, stated plainly**: a fully corroborated fiction keeps its top rung indefinitely | `[PENDING — Step 5]` |'. Step 5 (the deepening pass) has completed across this tree — e.g. 02.02-session-capture-index.md:49 cites 'the deepening pass hardened `02.02.03` D-01's provisional answer into its D-05' — and the file's own Q-01/Q-02/Q-03 (:93-95) do not cover this cell. Contrast the well-formed inline marker at 02.01.06:66 '[PENDING — Step 5 Must-depth / /write-be-spec: re-emission trigger + royalty correction-filing deadline]'.",
+      "forcedInvention": "What a user sees when corroboration is fully green on a fabricated session — the row's Scenario and What Happens columns are specified, the user-facing half is not, and no owner or downstream stage holds it.",
+      "failureScenario": "The attendance-proof surface is built with no defined presentation for the fully-corroborated case, so it renders the same green corroboration state as an honest session with no plain-language framing. The dangling marker is invisible to every downstream stage because it names a completed step, so the gap is never picked up."
+    },
+    {
+      "id": "F-14",
+      "unit": "02.03-claiming-cold-start-seeding",
+      "severity": "warning",
+      "dimension": 7,
+      "category": "malformed-deferral",
+      "claim": "02.03.03's years-later contest case states that accumulated downstream effects 'must unwind' and then leaves the behaviour as '[PENDING — Step 5]' — no owner, and a target stage that has already completed.",
+      "evidence": "02.03-claiming-cold-start-seeding/02.03.03-claim-adjudication.md:69 '| Claim contested years after attachment | Same path; the credit has by then accumulated downstream effects (royalty registration, reputation, traversal edges) that must unwind | `[PENDING — Step 5]` |'. The file's six open questions (:114-119) cover ownership, claimant identity disclosure, common-name unattachability, the powerless true owner, unbounded pendency and the disputed-identity shell — none owns the unwind. Comparable unwinds elsewhere are properly assigned: 02.04.03 Q-03 resolves 'not domain 02' and cites the owner ('10 owns registration ... 02 supplies the credit + date + role').",
+      "forcedInvention": "Whether a re-attached claim unwinds royalty registration, reputation weighting and traversal edges, and which domain performs it.",
+      "failureScenario": "A claim contested five years after attachment resolves to the second claimant. Nothing specifies the unwind, so the credit re-points while the royalty registration filed against the first claimant, their accumulated traversal edges and their reputation weighting all stand — the career-transfer harm 02.03.03 D-02 refuses to inflict on a guess, arriving instead through an unspecified success path."
+    },
+    {
+      "id": "F-15",
+      "unit": "02.03-claiming-cold-start-seeding",
+      "severity": "warning",
+      "dimension": 5,
+      "category": "untestable-threshold",
+      "claim": "The claim inbox's suggestion gate is stated only as 'a high match floor' with no value and no tracked question owning it, in the one place the file says the product's competence is judged in the first thirty seconds.",
+      "evidence": "02.03-claiming-cold-start-seeding/02.03.02-claim-inbox-suggested-claims.md:46 '| Suggestions are wrong (common names) | Bad suggestions are worse than none — a user shown forty strangers' credits learns the product doesn't know them | High match floor; show few, show confident |'; D-02 at :89 '| D-02 | Precision over recall on suggestions | DT-03. The suggestion is the product's first demonstration of competence, delivered before trust exists. |'; DT-03 at :73 'that is a judgement about the whole product, formed in the first thirty seconds. Precision over recall, permanently.' The file's Q-01/Q-02/Q-03 (:97-99) cover the invitation channel, shell publication and shell refusal — none owns the floor, and the adjacent import cut is properly deferred at 02.03.01:46 '[PENDING — /write-be-spec]'.",
+      "forcedInvention": "The match score above which a shell is suggested, and how many suggestions 'show few' means.",
+      "failureScenario": "Two implementers set the floor at 0.6 and 0.9. At 0.6 a drummer's first session on the platform opens onto forty credits belonging to three other John Smiths — precisely the first-thirty-seconds verdict DT-03 says is fatal — and nothing in the spec makes that build wrong."
+    },
+    {
+      "id": "F-16",
+      "unit": "02.04-attestation-credit-confidence",
+      "severity": "warning",
+      "dimension": 3,
+      "category": "silent-contradiction",
+      "claim": "02.04.01's attestation state table renders the confirmed state as a 'Verified marker', which 02.04.02 D-02 forbids and which the sub-domain flags as a liability surface rather than a copy choice.",
+      "evidence": "02.04-attestation-credit-confidence/02.04.01-attestation-request-confirmation.md:181 '| Attested | Confirmed | Verified marker; tier reflects who attested |'. Against 02.04-attestation-credit-confidence/02.04.02-provenance-tiers-credit-confidence.md:198 (D-02) '| D-02 | Labels describe the evidence, not the conclusion | DT-02. \"Confirmed by 4 people present\" is defensible; \"verified\" is a claim the platform cannot support. |'; 02.04-attestation-credit-confidence-index.md:55 (Q-03) '\"Verified\" is a strong word with legal weight if it turns out to be wrong. The tier label is a liability surface, not just a UI string'; and the rule as consumed elsewhere, 02.01-credit-graph-discography/02.01.01-credit-record-contribution-ledger.md:138 '| Attested | Named party confirmed (`02.04.01`) | Evidence-describing label (\"confirmed by 4 people present\") — never the word \"verified\" (`02.04.02` D-02) |'.",
+      "forcedInvention": "The confirmed state's user-visible label — an evidence-describing sentence or a verified marker. The two current files specify opposite copy for the same state.",
+      "failureScenario": "The attestation surface ships a 'Verified' marker on every confirmed credit. The platform then asserts adjudicated truth on a signal that 02.04.02 DT-02 says measures only how it knows — and which a colluding room reproduces exactly — landing squarely on the liability surface index Q-03 names."
+    },
+    {
+      "id": "F-17",
+      "unit": "02.04-attestation-credit-confidence",
+      "severity": "warning",
+      "dimension": 3,
+      "category": "silent-contradiction",
+      "claim": "Two places in 02.04.02 illustrate a rung transition from 3 to 6, but rung 6's own gate requires rung 4 (contemporaneous platform observation), which rung 3 by definition lacks — and the file's Happy Path states the reachable transitions as 3->5 or 4->6.",
+      "evidence": "02.04-attestation-credit-confidence/02.04.02-provenance-tiers-credit-confidence.md:53 '| 6 | **Captured and confirmed** | Rung 4 **and** >=1 independent co-present confirmation with lag <= 7 days |'; :92 (Happy Path 9) 'Rung crosses from 3 → 5, or 4 → 6'. Against :76 '6. **Settles once, does not flicker.** Concurrent confirmations at close (`02.02.03`) converge to one derivation. An observer sees rung 3 → rung 6, never 3→4→5→6.' and :126 '| 4 people tap confirm simultaneously at close | Converges to one derivation; settles once | Rung 3 → 6. No flicker, no intermediate rungs |'.",
+      "forcedInvention": "Whether rung 6 requires the rung-4 evidence kind at all, or whether a lag-bounded independent confirmation alone promotes to 6 — i.e. whether the top rung means 'contemporaneous and corroborated' or just 'corroborated quickly'.",
+      "failureScenario": "The derivation is implemented from the 3->6 illustrations, so a credit asserted by a session owner with no real-time platform observation reaches the top rung on one same-day confirmation. Rung 6 stops meaning 'the thing no competitor can retroactively manufacture' (DT-10) and becomes backfillable by any pair of cooperating users, since contemporaneity — the stated rate limit on fraud — is no longer required."
+    },
+    {
+      "id": "F-18",
+      "unit": "02-credits-attribution",
+      "severity": "warning",
+      "dimension": 3,
+      "category": "stale-against-ratified-decision",
+      "claim": "The domain CX's central cross-cut states that with no DAW plugin the prompt mistimes and the domain degrades to a failed competitor, and asserts the plugin question is the wedge. The antecedent is now ratified true for v1, and the correction appears only in a different table of the same file.",
+      "evidence": "credits-attribution-cx.md:65 (CX-02) 'The corollary stays uncomfortable: **if the wrap signal is unreliable (`02.02` Q-02 — no DAW plugin), the prompt mistimes, the taps do not happen in the room, and the domain degrades to Sound Credit, which already failed.** The plugin question *is* the wedge.' Against the ratified answer carried in the same file at :340 '**NO v1 CHANNEL (owner decision 2026-07-22, D-70 / DQ-08.2)**: no non-web client on the producer's machine is authorised, so this mechanism has **no v1 implementation** and every consumer above must degrade to its no-channel branch for the whole v1 window', and credits-attribution-index.md:133 (Q-04) '**ANSWERED FOR v1 ... no.** ... The domain's v1 wrap ladder is rungs 1, 4 and 5 (`02.02.03`) ... and the v1 thesis is restated to **capture at the first sharing moment**.' CX-02 also cites `02.02` Q-02, which its own index now records as closed for v1 (02.02-session-capture-index.md:48).",
+      "forcedInvention": "Whether domain 02's v1 has a viable capture wedge. CX-02's conditional now holds and its stated consequence (degradation to a failed product) is left unreconciled in the block that calls itself the domain's central economic fact.",
+      "failureScenario": "An architect reading CX-02 during /create-prd-architecture concludes the v1 wedge is structurally broken and either re-litigates the closed desktop decision or de-scopes the close prompt, when 02.02.03's ratified v1 ladder (rungs 1, 4, 5 on PWA web push plus in-app) is the specified mitigation."
+    }
+  ]
+}

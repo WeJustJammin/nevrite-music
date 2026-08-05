@@ -3,7 +3,7 @@
 > **Level**: domain
 > **Parent**: [WeJammin Ideation Index](../ideation-index.md)
 > **Status**: [BREADTH]
-> **Last updated**: 2026-07-16
+> **Last updated**: 2026-07-23
 > **Novelty**: `industry-standard` | **Priority**: `core`
 
 ## Overview
@@ -13,7 +13,7 @@ and risk operations, transaction disputes and protection programs, copyright enf
 identity abuse, and the duties the platform owes to a state rather than to a user.
 
 **Why this is a top-level domain**: Not a cross-cut despite serving every domain: it has a dedicated
-operator persona, its own destination surfaces (report flow, resolution centre, appeal, moderation queues)
+internal staff operating role, its own destination surfaces (report flow, resolution centre, appeal, moderation queues)
 and legally mandated machinery — DSA notice-and-action with statements of reasons and internal complaint
 handling, UK OSA illegal-harms duties, and DMCA safe harbour conditional on a reasonably implemented
 repeat-infringer policy (the exact failure that produced nine- and ten-figure verdicts in BMG v. Cox and
@@ -67,15 +67,15 @@ Three findings reshaped the domain and belong at the top of it:
 
 | # | Name | Type | Path | Status | Deep Think |
 |---|------|------|------|--------|------------|
-| 24.01 | Reporting, Moderation & Notice-and-Action | sub-domain | [24.01-reporting-moderation/](./24.01-reporting-moderation/24.01-reporting-moderation-index.md) | `[SURFACE]` | 15 hypotheses (5 features) |
-| 24.02 | Enforcement, Appeals & Policy | sub-domain | [24.02-enforcement-appeals-policy/](./24.02-enforcement-appeals-policy/24.02-enforcement-appeals-policy-index.md) | `[SURFACE]` | 18 hypotheses (6 features) |
-| 24.03 | Fraud & Risk Operations | sub-domain | [24.03-fraud-risk-operations/](./24.03-fraud-risk-operations/24.03-fraud-risk-operations-index.md) | `[SURFACE]` | 18 hypotheses (6 features) |
-| 24.04 | Transaction Disputes & Protection | sub-domain | [24.04-transaction-disputes-protection/](./24.04-transaction-disputes-protection/24.04-transaction-disputes-protection-index.md) | `[SURFACE]` | 12 hypotheses (4 features) |
-| 24.05 | Copyright & Authenticity Enforcement | sub-domain | [24.05-copyright-authenticity-enforcement/](./24.05-copyright-authenticity-enforcement/24.05-copyright-authenticity-enforcement-index.md) | `[SURFACE]` | 12 hypotheses (4 features) |
-| 24.06 | Personal Safety & Threat Response | sub-domain | [24.06-personal-safety-threat-response/](./24.06-personal-safety-threat-response/24.06-personal-safety-threat-response-index.md) | `[SURFACE]` | 9 hypotheses (3 features) |
+| 24.01 | Reporting, Moderation & Notice-and-Action | sub-domain | [24.01-reporting-moderation/](./24.01-reporting-moderation/24.01-reporting-moderation-index.md) | `[SURFACE]` | 25 hypotheses (5 features) |
+| 24.02 | Enforcement, Appeals & Policy | sub-domain | [24.02-enforcement-appeals-policy/](./24.02-enforcement-appeals-policy/24.02-enforcement-appeals-policy-index.md) | `[SURFACE]` | 26 hypotheses (6 features) |
+| 24.03 | Fraud & Risk Operations | sub-domain | [24.03-fraud-risk-operations/](./24.03-fraud-risk-operations/24.03-fraud-risk-operations-index.md) | `[SURFACE]` | 21 hypotheses (6 features) |
+| 24.04 | Transaction Disputes & Protection | sub-domain | [24.04-transaction-disputes-protection/](./24.04-transaction-disputes-protection/24.04-transaction-disputes-protection-index.md) | `[SURFACE]` | 14 hypotheses (4 features) |
+| 24.05 | Copyright & Authenticity Enforcement | sub-domain | [24.05-copyright-authenticity-enforcement/](./24.05-copyright-authenticity-enforcement/24.05-copyright-authenticity-enforcement-index.md) | `[SURFACE]` | 15 hypotheses (4 features) |
+| 24.06 | Personal Safety & Threat Response | sub-domain | [24.06-personal-safety-threat-response/](./24.06-personal-safety-threat-response/24.06-personal-safety-threat-response-index.md) | `[SURFACE]` | 11 hypotheses (3 features) |
 | 24.07 | Identity Abuse & Ownership Disputes | sub-domain | [24.07-identity-abuse-ownership-disputes/](./24.07-identity-abuse-ownership-disputes/24.07-identity-abuse-ownership-disputes-index.md) | `[SURFACE]` | 9 hypotheses (3 features) |
-| 24.08 | Illegal Content & Legal Process | sub-domain | [24.08-illegal-content-legal-process/](./24.08-illegal-content-legal-process/24.08-illegal-content-legal-process-index.md) | `[SURFACE]` | 12 hypotheses (4 features) |
-| 24.09 | Case Evidence Locker & Chain of Custody | feature | [24.09-case-evidence-locker.md](./24.09-case-evidence-locker.md) | `[SURFACE]` | 3 hypotheses |
+| 24.08 | Illegal Content & Legal Process | sub-domain | [24.08-illegal-content-legal-process/](./24.08-illegal-content-legal-process/24.08-illegal-content-legal-process-index.md) | `[SURFACE]` | 14 hypotheses (4 features) |
+| 24.09 | Case Evidence Locker & Chain of Custody | feature | [24.09-case-evidence-locker.md](./24.09-case-evidence-locker.md) | `[SURFACE]` | 6 hypotheses |
 
 > **Type column values:**
 > - `sub-domain` — a grouping with 2+ interacting capabilities (folder with index + CX)
@@ -135,8 +135,30 @@ Three findings reshaped the domain and belong at the top of it:
 |---|----------|-------|-------------|
 | Q-01 | ✅ **RESOLVED** — 29 candidates classified: 8 sub-domains, 36 features, 3 cross-cuts, 4 not-product halves. | Agent | `/ideate-discover` (done) |
 | Q-02 | ✅ **RESOLVED** — three candidates were cross-cuts (D-06); recorded in [trust-safety-disputes-cx.md](./trust-safety-disputes-cx.md) and returned for the global CX file. | Agent | `/ideate-discover` (done) |
-| Q-03 | **Admin/Moderator is not a persona** (`personas.md` Q-02) and this domain has *five* non-persona actors. Three of nine children have an all-`❌` Role Matrix row. **This domain cannot be specified until Q-02 is resolved.** | User | `/create-prd` |
-| Q-04 | **MoSCoW here is a function of the beachhead** (`problem-statement.md` Q-03). Gear-marketplace fraud, chargebacks and CITES are irrelevant if gear does not launch; CSAM reporting and DMCA are not, because they bind from user one regardless. The domain cannot be prioritised before the beachhead is chosen. | User | MoSCoW / `/ideate-validate` |
+| Q-03 | ~~Admin/Moderator is not a persona and this domain cannot be specified until the actor resolves.~~ **RESOLVED — D-76.** Admin/Moderator is internal staff with a separate console and permission boundary, not a fifth persona or ordinary acting context. Domain specifications consume that staff boundary; the detailed console and security controls remain their normal architecture work. | User | ✅ Owner ratification A3, 2026-08-02 |
+| Q-04 | ~~**MoSCoW here is a function of the beachhead** (`problem-statement.md` Q-03). Gear-marketplace fraud, chargebacks and CITES are irrelevant if gear does not launch; CSAM reporting and DMCA are not, because they bind from user one regardless. The domain cannot be prioritised before the beachhead is chosen.~~ **RESOLVED — the beachhead is chosen.** [ideation-index](../ideation-index.md) **D-31**: "**v1 = session spine** (01, 02, 05, 07, 09-capture) ~45 Musts… **v1.5 = the 3 marketplaces** (13, 14, 15) ~26 Musts… Phase 2+ = the remaining ~124 Musts." This domain appears in neither release list, so its **8 Musts sit in phase 2+**, and its gear-facing work (fraud, chargebacks, CITES) is no longer hypothetical because gear ships at v1.5. All 195 Musts are retained (D-20). D-31 makes no carve-out for the bind-from-user-one items (CSAM reporting, DMCA) — moving any of them earlier is a release-scope change under D-20/D-31, not an open beachhead question. | User | ✅ Resolved — ideation-index D-31 (+ D-20) |
 | Q-05 | **Every DSA scale-gate reading in this domain is an agent's reading.** Art 16 (Section 2, no carve-out) vs Art 19 disapplying Section 3 for micro/small; Art 17 SoR vs Art 15(2) transparency. This reasoning moves four features between Must and Could and **must be confirmed by counsel**, not by an agent. | User + counsel | `/create-prd-security` |
-| Q-06 | **`meta/constraints.md` describes no platform team — so the owner is the first moderator.** That makes reviewer wellbeing a business-continuity control ([24.01.03](./24.01-reporting-moderation/24.01.03-moderation-queue-reviewer-ops.md) DT-01), makes conflict-of-interest recusal structurally impossible (24.01.03 Q-02), and puts CSAM and crisis review on one unrotatable person. **This is a founder-welfare question, not only a staffing one.** | User | `/ideate-validate` |
-| Q-07 | Music adjudication needs **domain literacy** ("is that a sample or an interpolation?", "is that NSBM or Nordic folk?", "is that refinished?"). Skill-routed queues conflict with a small team, which may mean: only launch the domains whose queues you can staff. That makes the beachhead a Trust & Safety decision, not only a growth one. | User | `/ideate-validate` |
+| Q-06 | [OWNER] **`meta/constraints.md` describes no platform team — so the owner is the first moderator.** That makes reviewer wellbeing a business-continuity control ([24.01.03](./24.01-reporting-moderation/24.01.03-moderation-queue-reviewer-ops.md) DT-01), makes conflict-of-interest recusal structurally impossible (24.01.03 Q-02), and puts CSAM and crisis review on one unrotatable person. **This is a founder-welfare question, not only a staffing one.** It now also carries a **new, unbudgeted inbound load**: every contested evidence-based lift objection that survives inline platform re-verification becomes per-objection human adjudication under a *mandatory* resolution SLA (`02.01.05` D-21 → `02.05` D-07; SLA value deferred to `02.01.05` Q-06). See **Inbound Adjudication Load** in [trust-safety-disputes-cx.md](./trust-safety-disputes-cx.md). Team = solo is locked ([ideation-index](../ideation-index.md) D-28), so this is not a resourcing forecast but a live owner choice about what the founder will personally review and what the product must therefore not ship. | User | `/create-prd` |
+| Q-07 | [OWNER] Music adjudication needs **domain literacy** ("is that a sample or an interpolation?", "is that NSBM or Nordic folk?", "is that refinished?"). Skill-routed queues conflict with a small team, which may mean: only launch the domains whose queues you can staff. That makes the beachhead a Trust & Safety decision, not only a growth one. **The beachhead half is now settled — [ideation-index](../ideation-index.md) D-31 fixed v1 (01, 02, 05, 07, 09-capture) and v1.5 (13, 14, 15) on growth grounds** — so what remains is the owner's call: build skill-routed queues, or accept generalist adjudication on the domains D-31 already committed to launching. | User | `/create-prd` |
+
+
+<!-- spec-graph: auto-generated -->
+## Related Specs
+
+### Constrained by
+- [[decisions.md#d-10|D-10]]
+- [[decisions.md#d-18|D-18]]
+- [[decisions.md#d-11|D-11]]
+- [[decisions.md#d-01|D-01]]
+- [[decisions.md#d-16|D-16]]
+- [[decisions.md#d-02|D-02]]
+- [[decisions.md#d-03|D-03]]
+- [[decisions.md#d-04|D-04]]
+- [[decisions.md#d-05|D-05]]
+- [[decisions.md#d-06|D-06]]
+- [[decisions.md#d-07|D-07]]
+- [[decisions.md#d-76|D-76]]
+- [[decisions.md#d-31|D-31]]
+- [[decisions.md#d-20|D-20]]
+- [[decisions.md#d-21|D-21]]
+- [[decisions.md#d-28|D-28]]

@@ -1,0 +1,510 @@
+{
+  "reportKind": "ambiguity-audit-verification",
+  "run": 7,
+  "domain": "01-identity-profiles-organizations",
+  "rawReport": "01-raw.json",
+  "rawFindingCount": 20,
+  "verdicts": [
+    {
+      "findingId": "R7-01-001",
+      "upheld": true,
+      "finalSeverity": "warning",
+      "reason": "The current open-question ledgers retain only Question, Owner, and Deferred To. A deferred workflow stage is neither a deadline nor a record of the implementation decision blocked, so the dimension-7 requirement remains unmet.",
+      "evidence": [
+        {
+          "file": ".agents/skills/pipeline-rubrics/references/vision-rubric.md",
+          "line": 11,
+          "excerpt": "Every open question has: owner + deadline + what decision it blocks."
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/01-identity-profiles-organizations/01.01-person-identity-roles/01.01-person-identity-roles-index.md",
+          "line": 55,
+          "excerpt": "| # | Question | Owner | Deferred To |"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/01-identity-profiles-organizations/01.01-person-identity-roles/01.01.04-legal-identity-vs-public-identity.md",
+          "line": 92,
+          "excerpt": "What is the platform's safety posture for a user who must not be locatable (stalking)? ... | User | `/create-prd-security` |"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/01-identity-profiles-organizations/identity-profiles-organizations-index.md",
+          "line": 114,
+          "excerpt": "| # | Question | Owner | Deferred To |"
+        }
+      ]
+    },
+    {
+      "findingId": "R7-01-002",
+      "upheld": true,
+      "finalSeverity": "blocking",
+      "reason": "No current decision settles whether a person may transact without an organization or how one on-platform party represents legally separate entities. Organization creation is a Must Have, so a seller/payee model would be invented during implementation.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/moscow-ledger.md",
+          "line": 39,
+          "excerpt": "| 01.02.02 | Organization Creation & Lifecycle |"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/01-identity-profiles-organizations/01.02-organizations-entity-model/01.02-organizations-entity-model-index.md",
+          "line": 56,
+          "excerpt": "Can a person-with-no-org sell, book and get paid ... Determines whether org creation is on the critical path."
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/01-identity-profiles-organizations/01.02-organizations-entity-model/01.02.03-organization-type-transitions.md",
+          "line": 101,
+          "excerpt": "When an on-platform party is legally two entities ... does the platform model one party with two types, or two parties?"
+        }
+      ]
+    },
+    {
+      "findingId": "R7-01-003",
+      "upheld": true,
+      "finalSeverity": "blocking",
+      "reason": "The Must Have acting-context switcher still has no communication authority rule. The source expressly says either an eighth activity or an explicit scope rule is needed, leaving a real authorization choice to an implementer.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/moscow-ledger.md",
+          "line": 37,
+          "excerpt": "| 01.01.03 | Acting Context Switcher |"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/01-identity-profiles-organizations/01.01-person-identity-roles/01.01.03-acting-context-switcher.md",
+          "line": 218,
+          "excerpt": "The mandate vocabulary ... has no communication verb ... Needs either an eighth activity or an explicit statement that speech rides scope."
+        }
+      ]
+    },
+    {
+      "findingId": "R7-01-004",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "reason": "The cited representation and mandate features are Should Haves. The exact feature-completeness rubric applies its depth and edge-case requirement to Must Haves, so these future contract details are not a qualifying dimension-3 forced-invention finding.",
+      "evidence": [
+        {
+          "file": ".agents/skills/pipeline-rubrics/references/vision-rubric.md",
+          "line": 7,
+          "excerpt": "Every Must Have has ≥2 levels of sub-features. Every sub-feature has at least one edge case."
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/moscow-ledger.md",
+          "line": 237,
+          "excerpt": "| 01.03.02 | Representation & Roster Relationships |"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/moscow-ledger.md",
+          "line": 238,
+          "excerpt": "| 01.03.03 | Mandate Scope & Delegated Authority |"
+        }
+      ]
+    },
+    {
+      "findingId": "R7-01-005",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "reason": "Treasury Mandate is classified as a Should Have. Its unresolved precedence question is not a dimension-3 Must-Have completeness failure under the exact rubric.",
+      "evidence": [
+        {
+          "file": ".agents/skills/pipeline-rubrics/references/vision-rubric.md",
+          "line": 7,
+          "excerpt": "Every Must Have has ≥2 levels of sub-features. Every sub-feature has at least one edge case."
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/moscow-ledger.md",
+          "line": 239,
+          "excerpt": "| 01.04.03 | Treasury Mandate |"
+        }
+      ]
+    },
+    {
+      "findingId": "R7-01-006",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "reason": "The cited partnership-terms and dissolution flows are Could Haves. Their retained product questions do not create a current Must-Have feature-completeness gap under the exact rubric.",
+      "evidence": [
+        {
+          "file": ".agents/skills/pipeline-rubrics/references/vision-rubric.md",
+          "line": 7,
+          "excerpt": "Every Must Have has ≥2 levels of sub-features. Every sub-feature has at least one edge case."
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/moscow-ledger.md",
+          "line": 525,
+          "excerpt": "| 01.04.01 | Partnership Terms & Decision Rules |"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/moscow-ledger.md",
+          "line": 527,
+          "excerpt": "| 01.04.04 | Dissolution & Succession |"
+        }
+      ]
+    },
+    {
+      "findingId": "R7-01-007",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "reason": "Current source supplies buildable defaults: safety mode fails closed to the most restrictive visibility posture, and the split flow requires legal-identity disclosure. The open questions seek later legal and cross-domain refinement, not a choice an implementer must invent now.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/01-identity-profiles-organizations/01.01-person-identity-roles/01.01.04-legal-identity-vs-public-identity.md",
+          "line": 37,
+          "excerpt": "The flow states plainly: signing discloses their legal name to the other signatories."
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/01-identity-profiles-organizations/01.01-person-identity-roles/01.01.04-legal-identity-vs-public-identity.md",
+          "line": 50,
+          "excerpt": "Interim posture — fail closed to most-restrictive ... Any surface that cannot honour suppression fails closed."
+        }
+      ]
+    },
+    {
+      "findingId": "R7-01-008",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "reason": "Current source specifies retain-and-route behavior rather than requiring deletion-policy invention: erased alias ownership severs while the alias retires with credits intact, and a membership-erasure request retains the edge and routes for review.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/01-identity-profiles-organizations/01.01-person-identity-roles/01.01.02-artist-names-aliases-projects.md",
+          "line": 83,
+          "excerpt": "Alias is not deleted. Ownership link severs; alias retires; credits persist."
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/01-identity-profiles-organizations/01.03-membership-representation-mandate/01.03.01-membership-records-lifecycle.md",
+          "line": 95,
+          "excerpt": "Interim posture: the edge is retained, the request routes to the erasure flow, and 24/legal decides."
+        }
+      ]
+    },
+    {
+      "findingId": "R7-01-009",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "reason": "Contested Claims is a Should Have, outside the exact dimension-3 Must-Have requirement. The current source also defines the safe active path—freeze control, continue committed operations, hold payouts in escrow, and block transfer—so the cited contract is not an immediate forced invention.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/moscow-ledger.md",
+          "line": 240,
+          "excerpt": "| 01.05.03 | Contested Claims & Ownership Transfer |"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/01-identity-profiles-organizations/01.05-profile-claiming-verification/01.05.03-contested-claims-ownership-transfer.md",
+          "line": 64,
+          "excerpt": "The incumbent retains operate-only rights ... pending payouts held in escrow; no new obligations may be created."
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/01-identity-profiles-organizations/01.05-profile-claiming-verification/01.05.03-contested-claims-ownership-transfer.md",
+          "line": 65,
+          "excerpt": "Transfer is blocked while any contest is open."
+        }
+      ]
+    },
+    {
+      "findingId": "R7-01-010",
+      "upheld": true,
+      "finalSeverity": "blocking",
+      "reason": "Claim Initiation & Proof Methods is a Must Have, and the current source explicitly admits that a five-account collusion ring passes Tier C while no weighting rule resolves it. Existing Tier-A criteria and an optional-contact fallback narrow the issue, but they do not remove the unclosed assurance decision.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/moscow-ledger.md",
+          "line": 42,
+          "excerpt": "| 01.05.02 | Claim Initiation & Proof Methods |"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/01-identity-profiles-organizations/01.05-profile-claiming-verification/01.05.02-claim-initiation-proof-methods.md",
+          "line": 152,
+          "excerpt": "A 5-account ring across fabricated sessions passes. Known gap — see Q-01."
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/01-identity-profiles-organizations/01.05-profile-claiming-verification/01.05.02-claim-initiation-proof-methods.md",
+          "line": 244,
+          "excerpt": "How is counter-attestation weighted against a collusion ring?"
+        }
+      ]
+    },
+    {
+      "findingId": "R7-01-011",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "reason": "The canonical constraints set a specific US-first compliance baseline and phases. Current feature sources then provide buildable act-gating, credential-expiry handling, parameterized statutory slots, and fail-closed trader behavior; pending empirical instrument names or copy do not leave the compliance axis undefined or force an implementation choice.",
+      "evidence": [
+        {
+          "file": ".agents/skills/pipeline-rubrics/references/vision-rubric.md",
+          "line": 8,
+          "excerpt": "Every axis (budget, timeline, team size, compliance, performance) has a specific value or explicit \"not applicable\"."
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/meta/constraints.md",
+          "line": 261,
+          "excerpt": "CCPA/CPRA + state privacy patchwork ... Design for access/deletion/opt-out of sale/portability."
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/meta/constraints.md",
+          "line": 263,
+          "excerpt": "Contracts / e-signature (ESIGN Act / UETA) ... v1 ... enforceable."
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/01-identity-profiles-organizations/01.07-professional-credential-verification.md",
+          "line": 56,
+          "excerpt": "At Level 1: the lapse is surfaced ... and the affected booking is flagged."
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/01-identity-profiles-organizations/01.08-trader-status-classification.md",
+          "line": 97,
+          "excerpt": "The record and the flow ... ship as written, and D-04's gate still fails closed at launch."
+        }
+      ]
+    },
+    {
+      "findingId": "R7-01-012",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "reason": "Trader Status is a Should Have, so its residual disposition question is not a dimension-3 Must-Have completeness gap. The current source also blocks listings for an undetermined seller, avoiding an invented unsafe fallback.",
+      "evidence": [
+        {
+          "file": ".agents/skills/pipeline-rubrics/references/vision-rubric.md",
+          "line": 7,
+          "excerpt": "Every Must Have has ≥2 levels of sub-features. Every sub-feature has at least one edge case."
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/moscow-ledger.md",
+          "line": 243,
+          "excerpt": "| 01.08 | Trader vs Private Seller Classification |"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/01-identity-profiles-organizations/01.08-trader-status-classification.md",
+          "line": 52,
+          "excerpt": "Seller is `undetermined` and tries to list | Cannot."
+        }
+      ]
+    },
+    {
+      "findingId": "R7-01-013",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "reason": "The scoped treasury feature expressly leaves money rails, KYB, and payable-party mechanics to Payments, while defining a record-only tax posture. The unresolved provider choice is outside this feature's owner boundary, so a treasury implementer need not invent custody or withholding behavior.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/01-identity-profiles-organizations/01.04-band-ensemble-governance/01.04.03-treasury-mandate.md",
+          "line": 35,
+          "excerpt": "KYB, the payable party and the payout rails belong to Payments ... This file owns who is authorised, not how money moves."
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/01-identity-profiles-organizations/01.04-band-ensemble-governance/01.04.03-treasury-mandate.md",
+          "line": 57,
+          "excerpt": "Platform does not compute, withhold, or file tax ... exposes those records as a downloadable per-member statement."
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/01-identity-profiles-organizations/01.04-band-ensemble-governance/01.04.03-treasury-mandate.md",
+          "line": 93,
+          "excerpt": "Payments owns rails/KYB/payable party; this file owns who the band authorised."
+        }
+      ]
+    },
+    {
+      "findingId": "R7-01-014",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "reason": "Current source defines fail-safe behavior for unavailable or conflicting verification: unavailable registries yield a self-asserted identifier, and unresolved collisions or unverified claims never route royalties. A per-namespace integration list remains deferred, but no routing behavior must be invented.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/01-identity-profiles-organizations/01.09-party-identifier-resolution.md",
+          "line": 49,
+          "excerpt": "Identifier is claimed but not verifiable ... Recorded as self-asserted ... Unverified marker."
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/01-identity-profiles-organizations/01.09-party-identifier-resolution.md",
+          "line": 54,
+          "excerpt": "Neither identifier routes royalties or is presented as verified while the collision is open."
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/01-identity-profiles-organizations/01.09-party-identifier-resolution.md",
+          "line": 55,
+          "excerpt": "Where none exists, it is self-asserted and must never confer verified status or downstream royalty routing on its own."
+        }
+      ]
+    },
+    {
+      "findingId": "R7-01-015",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "reason": "Estates is a Could Have whose source deliberately separates early successor nomination from the later legal administration flow. It also prevents public change on an unverified report, so the cited future estate questions are not a current forced-invention gap.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/moscow-ledger.md",
+          "line": 528,
+          "excerpt": "| 01.10 | Estates, Deceased Users & Legacy Accounts |"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/01-identity-profiles-organizations/01.10-estates-legacy-accounts.md",
+          "line": 72,
+          "excerpt": "Successor nomination is one field ... Memorialisation, verification and estate administration are a genuine flow with legal edges, and they are late-cohort."
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/01-identity-profiles-organizations/01.10-estates-legacy-accounts.md",
+          "line": 93,
+          "excerpt": "Nothing public changes on an unverified report."
+        }
+      ]
+    },
+    {
+      "findingId": "R7-01-016",
+      "upheld": true,
+      "finalSeverity": "blocking",
+      "reason": "Credit-Backed Portfolio is a Must Have and requires rendering unclaimed parties. The account-free remedy is defined, but the current source expressly says it does not provide the lawful basis; no canonical source resolves publication or indexing, so implementation would invent a privacy posture.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/moscow-ledger.md",
+          "line": 44,
+          "excerpt": "| 01.06.02 | Credit-Backed Portfolio |"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/01-identity-profiles-organizations/01.06-portfolio-media-epk/01.06.02-credit-backed-portfolio.md",
+          "line": 213,
+          "excerpt": "The portfolio ... renders for unclaimed parties."
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/01-identity-profiles-organizations/01.06-portfolio-media-epk/01.06.02-credit-backed-portfolio.md",
+          "line": 230,
+          "excerpt": "D-08 supplies the remedy; it does not supply the basis."
+        }
+      ]
+    },
+    {
+      "findingId": "R7-01-017",
+      "upheld": true,
+      "finalSeverity": "warning",
+      "reason": "Profile Page Composition is a Must Have, and its current source keeps the Media Reel as a load-bearing section while explicitly leaving upload, storage, formats, ordering, takedown, and publication rights without an owning component or rights position.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/moscow-ledger.md",
+          "line": 43,
+          "excerpt": "| 01.06.01 | Profile Page Composition |"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/01-identity-profiles-organizations/01.06-portfolio-media-epk/01.06.01-profile-page-composition.md",
+          "line": 228,
+          "excerpt": "Reel upload, storage, formats, ordering and takedown mechanics have no owning component yet."
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/01-identity-profiles-organizations/01.06-portfolio-media-epk/01.06.01-profile-page-composition.md",
+          "line": 229,
+          "excerpt": "Needs a rights position before the reel ships."
+        }
+      ]
+    },
+    {
+      "findingId": "R7-01-018",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "reason": "EPK Generation & Sharing is a Should Have. Its retained sharing-policy questions do not meet the exact dimension-3 requirement, which applies feature-completeness depth and edge cases to Must Haves.",
+      "evidence": [
+        {
+          "file": ".agents/skills/pipeline-rubrics/references/vision-rubric.md",
+          "line": 7,
+          "excerpt": "Every Must Have has ≥2 levels of sub-features. Every sub-feature has at least one edge case."
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/moscow-ledger.md",
+          "line": 241,
+          "excerpt": "| 01.06.03 | EPK Generation & Sharing |"
+        }
+      ]
+    },
+    {
+      "findingId": "R7-01-019",
+      "upheld": true,
+      "finalSeverity": "warning",
+      "reason": "The Must Have profile feature depends on descriptors as its primary matching key and requires durable attribution of first-person content, yet the current source states that neither a vocabulary governor nor an authorship record location exists. These are real implementation choices with no resolving source.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/moscow-ledger.md",
+          "line": 43,
+          "excerpt": "| 01.06.01 | Profile Page Composition |"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/01-identity-profiles-organizations/01.06-portfolio-media-epk/01.06.01-profile-page-composition.md",
+          "line": 232,
+          "excerpt": "Still unowned after cross-cut consolidation ... Naming the single owning component is a structural call."
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/01-identity-profiles-organizations/01.06-portfolio-media-epk/01.06.01-profile-page-composition.md",
+          "line": 233,
+          "excerpt": "Where is a mandate holder's authorship of first-person content recorded?"
+        }
+      ]
+    },
+    {
+      "findingId": "R7-01-020",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "reason": "The current source explicitly separates Fan discovery from page composition and says the composition model does not need the findability decision. The retained owner question therefore does not force invention for the scoped feature.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/01-identity-profiles-organizations/01.06-portfolio-media-epk/01.06.01-profile-page-composition.md",
+          "line": 23,
+          "excerpt": "Whether a Fan's page is findable is a product decision the composition model does not need answered."
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/01-identity-profiles-organizations/01.06-portfolio-media-epk/01.06-portfolio-media-epk-index.md",
+          "line": 57,
+          "excerpt": "What remains is whether a Fan's page is indexed, linked and findable."
+        }
+      ]
+    }
+  ],
+  "coverage": {
+    "sourceRoot": ".memory/wiki/specs/ideation/01-identity-profiles-organizations/",
+    "rubricSources": [
+      ".agents/skills/pipeline-rubrics/references/vision-rubric.md",
+      ".agents/skills/pipeline-rubrics/references/scoring.md"
+    ],
+    "directCanonicalSourcesChecked": [
+      ".memory/wiki/specs/ideation/moscow-ledger.md",
+      ".memory/wiki/specs/ideation/meta/constraints.md"
+    ],
+    "expectedFindingIds": [
+      "R7-01-001",
+      "R7-01-002",
+      "R7-01-003",
+      "R7-01-004",
+      "R7-01-005",
+      "R7-01-006",
+      "R7-01-007",
+      "R7-01-008",
+      "R7-01-009",
+      "R7-01-010",
+      "R7-01-011",
+      "R7-01-012",
+      "R7-01-013",
+      "R7-01-014",
+      "R7-01-015",
+      "R7-01-016",
+      "R7-01-017",
+      "R7-01-018",
+      "R7-01-019",
+      "R7-01-020"
+    ],
+    "verifiedFindingIds": [
+      "R7-01-001",
+      "R7-01-002",
+      "R7-01-003",
+      "R7-01-004",
+      "R7-01-005",
+      "R7-01-006",
+      "R7-01-007",
+      "R7-01-008",
+      "R7-01-009",
+      "R7-01-010",
+      "R7-01-011",
+      "R7-01-012",
+      "R7-01-013",
+      "R7-01-014",
+      "R7-01-015",
+      "R7-01-016",
+      "R7-01-017",
+      "R7-01-018",
+      "R7-01-019",
+      "R7-01-020"
+    ],
+    "allRawFindingsCoveredExactlyOnce": true
+  }
+}

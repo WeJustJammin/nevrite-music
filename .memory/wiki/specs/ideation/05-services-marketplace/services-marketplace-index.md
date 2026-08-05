@@ -2,7 +2,7 @@
 
 > **Level**: domain
 > **Parent**: [WeJammin Ideation Index](../ideation-index.md)
-> **Status**: [BREADTH]
+> **Status**: [BREADTH] — all 7 sub-domains and 32 leaves enumerated; **deepening is partial**: 10 leaves `[DEEP]`, 13 `[PARTIAL]`, 9 `[SURFACE]`. Each leaf's own file is authoritative for its status; the Children table below restates its sub-domain index.
 > **Last updated**: 2026-07-16
 > **Novelty**: `in-source` | **Priority**: `core`
 
@@ -26,7 +26,8 @@ Buying and selling human music work — mixing, mastering, production, remote se
 > **Classification complete.** 25 sweep candidates ran through the Node Classification Gate:
 > 24 became nodes, 1 routed to a cross-cut, 2 were narrowed against other domains' boundaries.
 > 8 Deep Think additions were created that the sweep did not surface. Result: **7 sub-domains,
-> 32 leaf features**, all `[SURFACE]`.
+> 32 leaf features**, all `[SURFACE]` at the close of the breadth pass. Deepening since has moved
+> 10 to `[DEEP]` and 13 to `[PARTIAL]`; 9 are still `[SURFACE]`, including all three of 05.07's.
 
 | # | Name | Type | Path | Status | Deep Think |
 |---|------|------|------|--------|------------|
@@ -36,7 +37,7 @@ Buying and selling human music work — mixing, mastering, production, remote se
 | 05.04 | Delivery, QC & Acceptance | sub-domain | [05.04-delivery-qc-acceptance/](./05.04-delivery-qc-acceptance/) | `[BREADTH]` | 12 hypotheses across 4 features |
 | 05.05 | Multi-Party Supply | sub-domain | [05.05-multi-party-supply/](./05.05-multi-party-supply/) | `[BREADTH]` | 10 hypotheses across 4 features |
 | 05.06 | Rights, Warranties & Transfer | sub-domain | [05.06-rights-warranties-transfer/](./05.06-rights-warranties-transfer/) | `[BREADTH]` | 15 hypotheses across 5 features |
-| 05.07 | Custodial & Physical Services | sub-domain | [05.07-custodial-physical-services/](./05.07-custodial-physical-services/) | `[BREADTH]` | 9 hypotheses across 3 features |
+| 05.07 | Custodial & Physical Services | sub-domain | [05.07-custodial-physical-services/](./05.07-custodial-physical-services/) | `[SURFACE]` | 9 hypotheses across 3 features |
 
 > **Type column values:**
 > - `domain` — a top-level grouping within a surface (folder with index + CX)
@@ -97,15 +98,34 @@ Buying and selling human music work — mixing, mastering, production, remote se
 
 | # | Question | Owner | Deferred To |
 |---|----------|-------|-------------|
-| Q-01 | **The domain's flagship leverage is absent from two significant deal shapes.** Escrow release ↔ rights transfer is the stated differentiator, but points-only engagements have no cash to hold (05.01.03 DT-01) and retainers are paid in advance (05.03.04 DT-02). Both are shapes where exploitation is most common. Does the owner accept that the contract carries the load there, or must something else? | User | `/ideate-validate` |
+| Q-01 | **[OWNER]** **The domain's flagship leverage is absent from two significant deal shapes.** Escrow release ↔ rights transfer is the stated differentiator, but points-only engagements have no cash to hold (05.01.03 DT-01) and retainers are paid in advance (05.03.04 DT-02). Both are shapes where exploitation is most common. Does the owner accept that the contract carries the load there, or must something else? Mechanism exists on both sides — retainer rights attach to the instrument rather than an escrow release (05.03.04 D-04) and a points-only exit settles as a rights disposition, not a fee (05.03.05 D-17) — but owner acceptance of the reduced protection is not on record. Repeats 05.01.03 Q-01 and 05.03.04 Q-01. | User | `/create-prd` |
 | Q-02 | **Auto-accept executes a copyright assignment by silence** (05.04.01 DT-01, 05.06.03 DT-02). Several jurisdictions require signed writing for an assignment. The mitigation — escrow releases on the timer, rights need a signature — breaks the atomicity that *is* the differentiator. Needs counsel, not a design decision. | User | `/create-prd-security` |
-| Q-03 | **Who keeps the partial work when a creative engagement is cancelled?** (05.03.05 DT-03). A half-built website transfers; a half-produced album does not. Both obvious answers are indefensible. No other marketplace's rules apply. | User | MoSCoW / `/ideate-validate` |
+| Q-03 | ~~**Who keeps the partial work when a creative engagement is cancelled?** (05.03.05 DT-03). A half-built website transfers; a half-produced album does not.~~ — **ANSWERED: nothing transfers.** At cancellation no rights vest, so the seller keeps the session and the buyer holds delivered files with no licence to use them; the quote's declared **rights disposition** (clean unwind / licence-back / buyout — undeclared and unagreed → nothing transfers and 24 decides) is what makes that outcome survivable. | User | ✅ **RESOLVED** — [05.03.05 Cancellation, Abandonment & Kill Fee](./05.03-engagement-lifecycle/05.03.05-cancellation-abandonment-kill-fee.md) **D-09**, deterministic from [05.03.02](./05.03-engagement-lifecycle/) D-01 + [05.06.03](./05.06-rights-warranties-transfer/) D-03. Residual — *which* disposition is the platform's proposed default — is tracked as 05.03.05 Q-02 |
 | Q-04 | **Can a listing's seller be an entity (band, studio, agency) rather than a person?** Surfaced independently from 05.01 (who is the payee?) and 05.05 (who must consent to substitution?). A question that determines both money and consent in unrelated sub-domains is architectural. | Agent | `/create-prd-architecture` — coordinate with 01 |
 | Q-05 | **Do engagement files live here or in a Music Project (07)?** A mix engagement's stems, revisions and timestamped comments are exactly what 07 exists to hold — and duplicating them creates two homes for the same audio. But not every engagement has a project. | Agent | `/create-prd-architecture` — coordinate with 07 |
 | Q-06 | **Where does the audio DSP run?** QC (05.04.02) and watermarking (05.04.03) both need loudness/spectral analysis and watermark embedding over multi-GB stem sets. `meta/constraints.md` locks Cloudflare Workers; the domain map already routes heavy audio DSP to not-product as a hard constraint. Neither feature can proceed without a service that is not in the locked stack. | User | `/create-prd-stack` — hard constraint |
-| Q-07 | **Off-platform humans.** The best dep is a friend with no account (05.05.01 Q-02); a fixer's book is thirty years of phone numbers (05.05.02 Q-03). Refusing them makes the multi-party features useless in their most common case; allowing them punches a hole in every guarantee the platform makes. | User | `/ideate-validate` — coordinate with 01, 02 |
-| Q-08 | **Ghost production requires the platform to hold secrets** (05.02.02 DT-01). A sealed credit is recorded and not displayed — which preserves the thesis and means the platform holds a record it will not show, of work it will not name, possibly forever. Values decision. | User | `/ideate-validate` |
-| Q-09 | **Is custodial work (05.07) in scope for a web-only surface?** The workflow is a phone at a workbench: photograph the damage, confirm the condition, sign at handover. `meta/constraints.md` already flags the mobile-surface question as open; this sub-domain is another argument for it. | User | `/ideate-validate` |
+| Q-07 | **[OWNER]** **Off-platform humans.** The best dep is a friend with no account (05.05.01 Q-02); a fixer's book is thirty years of phone numbers (05.05.02 Q-03). Refusing them makes the multi-party features useless in their most common case; allowing them punches a hole in every guarantee the platform makes. | User | `/create-prd` — coordinate with 01, 02 |
+| Q-08 | **[OWNER]** **Ghost production requires the platform to hold secrets** (05.02.02 DT-01). A sealed credit is recorded and not displayed — which preserves the thesis and means the platform holds a record it will not show, of work it will not name, possibly forever. Values decision. The mechanism is already specified (05.02.02 D-01, D-02) and that decision states it *"requires owner ratification … because it means the platform holds secrets"*; ratification is what is outstanding, plus for how long and who can ever unseal. Repeats 05.02 Q-01. | User | `/create-prd` |
+| Q-09 | ~~**Is custodial work (05.07) in scope for a web-only surface?** The workflow is a phone at a workbench: photograph the damage, confirm the condition, sign at handover. `meta/constraints.md` already flags the mobile-surface question as open.~~ — **ANSWERED: yes, and the mobile-surface question is no longer open.** The v1 web app is responsive and *"must serve on-the-go use (gig/venue/studio contexts)"*, and is installable as a **PWA** which *"serves the phone-shaped workflows without a separate surface"*; a native surface is phase 2. The workbench workflow runs on the v1 PWA. | User | ✅ **RESOLVED** — [meta/constraints.md](../meta/constraints.md) § Project Surfaces, Web app + Mobile (PWA) rows; classification confirmed 2026-07-18, **D-28**. Sub-domain copy: 05.07 Q-03 |
 | Q-10 | **Does a repair write to Gear Registry (15)?** Service history is what a registry is for, and 15's declared-value record would fix custody's weakest field (05.07.03 DT-01). The strongest argument for 15 found in this drilling arrived from a repair workflow. | Agent | `/create-prd-architecture` — coordinate with 15 |
 | Q-11 | Which candidate children are sub-domains vs features? | Agent | ✅ **RESOLVED** — see Children table and D-02 |
 | Q-12 | Are any candidate children actually cross-cuts? | Agent | ✅ **RESOLVED** — one (candidate 13, escrow → Payments cross-cut). See D-03 and [services-marketplace-cx.md](./services-marketplace-cx.md) |
+
+
+<!-- spec-graph: auto-generated -->
+## Related Specs
+
+### Constrained by
+- [[decisions.md#d-07|D-07]]
+- [[decisions.md#d-19|D-19]]
+- [[decisions.md#d-01|D-01]]
+- [[decisions.md#d-16|D-16]]
+- [[decisions.md#d-02|D-02]]
+- [[decisions.md#d-03|D-03]]
+- [[decisions.md#d-04|D-04]]
+- [[decisions.md#d-05|D-05]]
+- [[decisions.md#d-06|D-06]]
+- [[decisions.md#d-08|D-08]]
+- [[decisions.md#d-09|D-09]]
+- [[decisions.md#d-17|D-17]]
+- [[decisions.md#d-28|D-28]]

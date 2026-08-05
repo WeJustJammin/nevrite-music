@@ -1,0 +1,213 @@
+{
+  "reportKind": "ambiguity-audit-verification",
+  "run": 7,
+  "domain": "03-community-networking",
+  "rawReport": "03-raw.json",
+  "rawFindingCount": 8,
+  "verdicts": [
+    {
+      "findingId": "R7-03-ROOT-D7-001",
+      "upheld": true,
+      "finalSeverity": "blocking",
+      "reason": "Q-05 remains open in a table that records only an owner and destination, not a deadline or the decision it blocks. Separately, the Unconfirmed state still leaves the exact freshness window pending, forcing an implementation to invent the classification and sorting threshold.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/03-community-networking/community-networking-index.md",
+          "line": 121,
+          "excerpt": "| # | Question | Owner | Deferred To |"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/03-community-networking/community-networking-index.md",
+          "line": 127,
+          "excerpt": "[OWNER] **How does a musician with no credits get discovered?**"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/03-community-networking/03.09-local-jam-open-mic-discovery.md",
+          "line": 82,
+          "excerpt": "Listing not confirmed within the freshness window (proposed 30 days; exact window `[PENDING — /write-be-spec]`)"
+        }
+      ]
+    },
+    {
+      "findingId": "R7-03-01-D7-001",
+      "upheld": true,
+      "finalSeverity": "blocking",
+      "reason": "The request-expiry horizon remains an unchosen lifecycle value with no deadline or blocked-decision record. The cross-cut also still leaves post-severance endorsement handling unresolved, so the connection lifecycle cannot be implemented without choosing behavior the source does not specify.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/03-community-networking/03.01-connections-follows-endorsements/03.01.02-professional-connections.md",
+          "line": 121,
+          "excerpt": "| # | Question | Owner | Deferred To |"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/03-community-networking/03.01-connections-follows-endorsements/03.01.02-professional-connections.md",
+          "line": 127,
+          "excerpt": "What is the expiry horizon on an unanswered inbound connection request?"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/03-community-networking/03.01-connections-follows-endorsements/03.01-connections-follows-endorsements-cx.md",
+          "line": 36,
+          "excerpt": "Whether that evaluation retracts, hides, or does nothing is Q-01 — an unresolved product decision, not an implementation detail."
+        }
+      ]
+    },
+    {
+      "findingId": "R7-03-02-D7-001",
+      "upheld": true,
+      "finalSeverity": "blocking",
+      "reason": "Q-04 still assigns a workflow rather than a decision owner and has no deadline or blocked-decision field. The source separately leaves the control-change consequence unresolved, so a fan-out implementation must invent rebuild-versus-staleness behavior.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/03-community-networking/03.02-activity-feed-ranking/03.02.01-feed-composition-event-sources.md",
+          "line": 109,
+          "excerpt": "| # | Question | Owner | Deferred To |"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/03-community-networking/03.02-activity-feed-ranking/03.02.01-feed-composition-event-sources.md",
+          "line": 114,
+          "excerpt": "Fan-out on write or on read? At D-13a volumes, with a band at 40k followers, this is the decision that sets the platform's write amplification."
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/03-community-networking/03.02-activity-feed-ranking/03.02-activity-feed-ranking-cx.md",
+          "line": 38,
+          "excerpt": "If fan-out is on write, changing a control means either rebuilding that reader's feed or accepting staleness. `[PENDING — /ideate-discover Step 5 deepening]`"
+        }
+      ]
+    },
+    {
+      "findingId": "R7-03-03-D7-001",
+      "upheld": true,
+      "finalSeverity": "blocking",
+      "reason": "Response handling and high-volume triage remain explicitly pending, while Q-03 supplies only an owner and workflow destination. The selection and domain-boundary behavior therefore remain forced implementation choices without a deadline or blocked-decision record.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/03-community-networking/03.03-collaborator-discovery-matchmaking/03.03.04-open-collaboration-calls.md",
+          "line": 38,
+          "excerpt": "[PENDING — Q-01/Q-03 / /create-prd-architecture] — response handling (how a responder is evaluated, whether there is a shortlist) is deliberately unspecified"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/03-community-networking/03.03-collaborator-discovery-matchmaking/03.03.04-open-collaboration-calls.md",
+          "line": 58,
+          "excerpt": "Call attracts 200 responses ... `[PENDING — Q-03 / /create-prd-architecture]`"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/03-community-networking/03.03-collaborator-discovery-matchmaking/03.03.04-open-collaboration-calls.md",
+          "line": 108,
+          "excerpt": "How are high-response calls triaged without becoming domain 04's shortlist?"
+        }
+      ]
+    },
+    {
+      "findingId": "R7-03-04-D7-001",
+      "upheld": true,
+      "finalSeverity": "blocking",
+      "reason": "The error state still makes fail-open versus fail-closed an explicit unresolved choice. Q-04 has an owner and routing destination only; it gives no deadline or blocked decision, despite applying to every inbound contact attempt.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/03-community-networking/03.04-warm-intros-collaboration-graph/03.04.04-reachability-inbound-policy.md",
+          "line": 89,
+          "excerpt": "**Fail open or closed?** Failing closed silently drops legitimate contact; failing open lets the flood through on every degradation. Unresolved — Q-04"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/03-community-networking/03.04-warm-intros-collaboration-graph/03.04.04-reachability-inbound-policy.md",
+          "line": 124,
+          "excerpt": "| # | Question | Owner | Deferred To |"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/03-community-networking/03.04-warm-intros-collaboration-graph/03.04-warm-intros-collaboration-graph-cx.md",
+          "line": 62,
+          "excerpt": "Every inbound contact attempt (DM, connection request, call response) triggers a path query."
+        }
+      ]
+    },
+    {
+      "findingId": "R7-03-05-D7-001",
+      "upheld": true,
+      "finalSeverity": "blocking",
+      "reason": "Author confirmation protects against an automatic wrong match, but the reconciliation trigger and confidence model are still pending. The Fan-subject policy is also pending, and its question record has no deadline or blocked-decision field; neither safety-critical choice is resolved by the current source.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/03-community-networking/03.05-private-rolodex-crm/03.05.01-contact-records-shadow-contacts.md",
+          "line": 41,
+          "excerpt": "[PENDING — /ideate-discover Step 5 deepening] — the reconciliation trigger and matching confidence model."
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/03-community-networking/03.05-private-rolodex-crm/03.05.02-private-notes-tags-lists.md",
+          "line": 59,
+          "excerpt": "User writes notes about a Fan ... `[PENDING]` — likely should be prohibited"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/03-community-networking/03.05-private-rolodex-crm/03.05.02-private-notes-tags-lists.md",
+          "line": 102,
+          "excerpt": "May a user keep private notes about a Fan? Fans are users (D-11) but a private file on a non-professional is a different object with a different risk."
+        }
+      ]
+    },
+    {
+      "findingId": "R7-03-06-D7-001",
+      "upheld": true,
+      "finalSeverity": "blocking",
+      "reason": "The feature expressly leaves the steward power set unresolved, and the Lapsed state still lacks its recovery transition. Appointment is likewise an open owner question with no deadline or blocked-decision record, so authority and recovery behavior remain forced choices.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/03-community-networking/03.06-scenes-communities/03.06.03-scene-stewardship-moderation.md",
+          "line": 32,
+          "excerpt": "[PENDING — /ideate-discover Step 5 deepening] — the steward's actual powers are unresolved and are the feature's central question."
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/03-community-networking/03.06-scenes-communities/03.06.03-scene-stewardship-moderation.md",
+          "line": 74,
+          "excerpt": "| Lapsed | Steward inactive | `[PENDING]` — reverts to unclaimed |"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/03-community-networking/03.06-scenes-communities/03.06.03-scene-stewardship-moderation.md",
+          "line": 107,
+          "excerpt": "Who appoints stewards (parent Q-04)? Self-appointment invites capture; platform appointment does not scale to thousands of scenes."
+        }
+      ]
+    },
+    {
+      "findingId": "R7-03-08-D7-001",
+      "upheld": true,
+      "finalSeverity": "blocking",
+      "reason": "The judging state machine still has a Stalled state with no deadline or fallback. Q-04 merely routes the missing transition to a later stage and records no deadline or blocked decision, leaving payout-safe completion behavior to be invented.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/03-community-networking/03.08-contests-challenges-beat-battles/03.08.03-judging-voting-anti-gaming.md",
+          "line": 62,
+          "excerpt": "Judge never judges ... Deadline plus fallback needed"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/03-community-networking/03.08-contests-challenges-beat-battles/03.08.03-judging-voting-anti-gaming.md",
+          "line": 76,
+          "excerpt": "| Stalled | Judge inactive past deadline | Fallback needed — `[PENDING]` |"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/03-community-networking/03.08-contests-challenges-beat-battles/03.08.03-judging-voting-anti-gaming.md",
+          "line": 113,
+          "excerpt": "What is the fallback when a judge goes silent? Every volunteer-judged contest hits this."
+        }
+      ]
+    }
+  ],
+  "coverage": {
+    "sourceDirectory": ".memory/wiki/specs/ideation/03-community-networking/",
+    "rawFindingIdsExpected": [
+      "R7-03-ROOT-D7-001",
+      "R7-03-01-D7-001",
+      "R7-03-02-D7-001",
+      "R7-03-03-D7-001",
+      "R7-03-04-D7-001",
+      "R7-03-05-D7-001",
+      "R7-03-06-D7-001",
+      "R7-03-08-D7-001"
+    ],
+    "rawFindingIdsVerified": 8,
+    "verdictCount": 8,
+    "allRawFindingIdsAppearExactlyOnce": true,
+    "directlyReferencedCanonicalSourcesRead": [],
+    "auditArtifactsRead": [
+      ".memory/wiki/specs/audits/run7/03-raw.json"
+    ]
+  }
+}

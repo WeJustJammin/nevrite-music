@@ -1,0 +1,65 @@
+{
+  "shard": "21-promotion-marketing",
+  "generated": "2026-07-30",
+  "findingsIn": 2,
+  "findingsResolved": 2,
+  "classificationCounts": {
+    "mechanical": 2,
+    "owner": 0,
+    "not-a-defect": 0
+  },
+  "items": [
+    {
+      "findingId": "21-promotion-marketing#004",
+      "severity": "warning",
+      "dimension": 8,
+      "classification": "mechanical",
+      "summary": "The domain index's Children table asserted `[SURFACE]` for all nine children and prefaced it with 'All `[SURFACE]` — classified and outlined, not yet deepened'. Seven of the nine cells were wrong against the children's own headers. Each child file owns its status line; the index merely restates it, so the index is the drifted location. Rewrote the seven wrong cells to mirror the canonical headers and replaced the prose note with one that explains the shape instead of flattening it.",
+      "canonicalSource": "Each child node's own header — 21.01-release-campaign-planner-index.md:5 `[BREADTH]`, 21.02-pitching-outreach-index.md:5 `[BREADTH]`, 21.03-pitch-targets-crm-index.md:5 `[BREADTH]`, 21.04-smart-links-presave-attribution-index.md:5 `[BREADTH]`, 21.05-paid-promotion-index.md:5 `[BREADTH]`, 21.06-social-publishing-cross-post.md:5 `[SURFACE]`, 21.07-coverage-clipping-log.md:5 `[PARTIAL]`, 21.08-event-tour-marketing-index.md:5 `[SURFACE]`, 21.09-campaign-press-kit-epk.md:5 `[PARTIAL]`. Depth-allocation rule: ideation-index.md:168-173 § Domain Exhaustion — 'Must | 195 | `[DEEP]` … Should | 285 | `[PARTIAL]` — Level 1 … Could | 201 | `[SURFACE]` — intentionally minimal'.",
+      "filesChanged": [
+        "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/21-promotion-marketing/promotion-marketing-index.md"
+      ],
+      "evidenceForClassification": [
+        "The index's own decision log already contradicted its own table before this fix: D-08 (:144) calls 21.07 `[PARTIAL]`, D-09 (:145) calls 21.09 `[PARTIAL]`. One file cannot be canonical against itself — the Status column is the restatement, the decision log and the child headers are the record.",
+        "The tree has an established remediation precedent for exactly this sweep: commit 89659e9 ('Step 5 complete — all 195 Musts deepened & verified') rewrote domain 02's identical Status column from `[SURFACE]` to the children's real values (02.01-02.04 → `[BREADTH]`, 02.06 → `[DEEP]`) and left the Deep Think column untouched. Domain 21 was never swept. This fix follows that precedent exactly, including leaving Deep Think alone.",
+        "Every corrected value was verified programmatically against the child file's header line after the edit — 9/9 match.",
+        "The MoSCoW depth-allocation rule explains all three feature rows without residue: moscow-ledger.md places 21.07 and 21.09 under § SHOULD (285) → `[PARTIAL]`, and 21.06 under § COULD (201) → `[SURFACE]`. No value was invented."
+      ],
+      "changeDetail": "Status cells 01-05 `[SURFACE]` → `[BREADTH]`; 07 and 09 `[SURFACE]` → `[PARTIAL]`; 06 and 08 unchanged at `[SURFACE]`. The note above the table now states that the column mirrors each child's own header and never overrides it, cites ideation-index.md's MoSCoW depth allocation as the reason the two `Should` features are `[PARTIAL]` and the `Could` feature is `[SURFACE]`, and names the two `[DEEP]` guardrail leaves the table cannot show (21.02.06 Pitch Rate Limits, 21.05.03 Payola Guardrail — the domain's 2 of 195 Musts per Q-09) so the forced invention in the finding is closed at its root: a downstream reader is told explicitly to open the child rather than trust the row.",
+      "tableIntegrity": "Children table: 6 columns before and after (verified — all 11 lines report 8 pipe-separated fields).",
+      "residualQuestion": null
+    },
+    {
+      "findingId": "21-promotion-marketing#005",
+      "severity": "warning",
+      "dimension": 7,
+      "classification": "mechanical",
+      "summary": "21.07 Q-01 (manual-first log vs automated coverage monitoring) was deferred to `MoSCoW`, a stage that has since run and been discharged — the domain index records it closed at Q-09 and the ledger placed 21.07 at `Should`. The question had no live owner stage. Applied the same 'Re-targeted' sweep this domain gave ~15 sibling rows whose targets expired, routing it to `/create-prd` with the reasoning stated and the owner unchanged.",
+      "canonicalSource": "moscow-ledger.md § SHOULD (285), row 21.07 'Coverage & Clipping Log' — the pass placed the feature and split nothing inside it. promotion-marketing-index.md:159 Q-09 — '**RESOLVED — the MoSCoW pass ran and confirmed the row's own suspicion.**' Sweep precedent inside this same shard: 21.02.01-dsp-editorial-pitch.md:110 — '**Re-targeted**: the MoSCoW pass ran and placed *this feature* at `Should` (moscow-ledger.md § SHOULD (285), row 21.02.01) but never enumerated a DSP set, so the deferral is discharged without an answer.'",
+      "filesChanged": [
+        "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/21-promotion-marketing/21.07-coverage-clipping-log.md"
+      ],
+      "evidenceForClassification": [
+        "The stale value is the deferral target, not the question. Re-pointing an expired stage does not decide the question — the row stays open, owner unchanged at User, and no scope answer is asserted. That is squarely the 'stale value a later ratification superseded but never swept' case.",
+        "The target choice is read off the domain's own routing rule rather than invented: promotion-marketing-index.md:153 Q-03 sends a cost/legal-risk acceptance to `/create-prd` ('a cost/legal-risk acceptance no later stage can take'), and :160 Q-10 sends a feature-inclusion choice to the same stage ('a feature-inclusion choice, not a structural one'). Q-01 is both — a real capability with a real cost, on a `Should` feature.",
+        "Nothing behavioural was left open by the MoSCoW pass, which is why this is not an OWNER brief in disguise: D-02 (:140) already locks the shape monitoring takes if it ships ('Monitoring suggests; it never auto-inserts') and DT-02 (:121) already priced the false-positive risk and rejected auto-insertion. The only undecided axis is whether the capability is bought — the owner's call, now with a stage that will actually ask it."
+      ],
+      "changeDetail": "Q-01's Deferred To changed from `MoSCoW` to `` `/create-prd` ``; Owner unchanged (User). The question cell keeps its original wording verbatim and gains a **Re-targeted** clause in the domain's house voice, citing the ledger row, the domain's Q-09 closure of the same pass, D-02/DT-02 for what is already locked, and 21 Q-03/Q-10 as the routing precedent.",
+      "tableIntegrity": "Open Questions table: 4 columns before and after (verified — all 5 lines report 6 pipe-separated fields).",
+      "residualQuestion": "Q-01 remains open and tracked, owner User, deferral target `/create-prd`. This is intentional — the scope/cost call is genuinely the owner's."
+    }
+  ],
+  "inShardObservationsNotActedOn": [
+    {
+      "note": "Two further rows in this shard carry the same expired `MoSCoW` deferral and were NOT in the confirmed pool, so they were left untouched: 21.04-smart-links-presave-attribution-index.md:70 Q-02 and 21.04.01-smart-link-builder.md:128 Q-02, both asking 'Is this the beachhead?'. Unlike 21.07 Q-01 these may be substantively resolved rather than merely re-targeted — promotion-marketing-index.md:159 Q-09 states the beachhead 'is decided and is not this domain', citing D-31's release split which puts 21 outside both the v1 and v1.5 windows. Deciding whether that closes them is a resolution judgement, not a sweep, so it was deliberately not taken here. Recommend routing to whoever owns the next deferral-expiry sweep.",
+      "files": [
+        "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/21-promotion-marketing/21.04-smart-links-presave-attribution/21.04-smart-links-presave-attribution-index.md",
+        "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/21-promotion-marketing/21.04-smart-links-presave-attribution/21.04.01-smart-link-builder.md"
+      ]
+    }
+  ],
+  "crossDomainNotes": [
+    "Domain 02's Children table (02-credits-attribution/credits-attribution-index.md:26-27, :35, :38) carries the same defect class this shard's #004 fixed, and was only half-swept by commit 89659e9: its sub-domain rows were corrected to `[BREADTH]` and 02.06 to `[DEEP]`, but its prose note still reads 'All `[SURFACE]`' while 02.05 and 02.08 are listed `[SURFACE]` against `[PARTIAL]` headers in their own files. Outside this shard — not touched.",
+    "Domains 09 and 20 still assert a blanket `[SURFACE]` across every Children row (09-rights-ownership/rights-ownership-index.md:28-37, 20-fanbase-direct-to-fan/fanbase-direct-to-fan-index.md:34-43). Whether that is drift or accurate depends on their children's headers, which were not read. Outside this shard — flagged only so the pattern is not mistaken for a domain-21 quirk. Worth a single tree-wide mechanical sweep: the fix is deterministic (mirror each child's header status), and it is cheaper to run once across 24 domains than to keep promoting one domain per audit round."
+  ]
+}

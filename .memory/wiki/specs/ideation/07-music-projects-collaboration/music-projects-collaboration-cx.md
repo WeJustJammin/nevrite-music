@@ -9,7 +9,7 @@
 
 | # | Source | Target | Relationship | Roles Affected | Confidence | Evidence |
 |---|--------|--------|--------------|----------------|------------|----------|
-| CX-01 | [07.09 DAW Bridge](./07.09-daw-bridge-capture-at-source/) | [07.06 Sessions](./07.06-sessions-documentation-recall/) · [07.04 Version Control](./07.04-audio-version-control-lineage/) · [07.08 Delivery](./07.08-delivery-readiness-qc/) | **The domain's spine.** The bridge supplies the facts that make the capture prompt pre-fillable, lineage inferable, source declaration promptable, and the review musical-anchor computable. | Producer | High | Seven features across four sub-domains independently named the bridge as a hard dependency in their own Deep Think. `07.04.01`→`07.09.01` (DT-01); `07.05.01`→`07.09` (DT-04). |
+| CX-01 | [07.09 DAW Bridge](./07.09-daw-bridge-capture-at-source/) | [07.06 Sessions](./07.06-sessions-documentation-recall/) · [07.04 Version Control](./07.04-audio-version-control-lineage/) · [07.08 Delivery](./07.08-delivery-readiness-qc/) | **The domain's spine — and it does not run in v1** (domain D-08, 2026-07-22; see the detail block). Post-gate, the bridge supplies the facts that make the capture prompt pre-fillable, lineage inferable, source declaration promptable, and the review musical-anchor computable; in the v1 window it supplies none of them. | Producer | High | Seven features across four sub-domains independently named the bridge as a hard dependency in their own Deep Think. `07.04.01`→`07.09.01` (DT-01); `07.05.01`→`07.09` (DT-04). v1 state: `07.09` D-05, `07.09.02` D-09. |
 | CX-02 | [07.03 Contributors](./07.03-contributors-access-confidentiality/) | [07.06 Sessions](./07.06-sessions-documentation-recall/) | The roster is the **subject list** the capture prompt names. No roster → the prompt has nobody to pre-fill; attendance is the independence signal that keeps a self-asserted claim honest. | Producer, Musician | High | `07.06.02` DT-01 names `07.03.01` an INPUT not a peer; `07.03.01`→`07.06.01`, attendance (D-04, coarse) is exactly the independence signal DT-04 needs. |
 | CX-03 | [07.04 Version Control](./07.04-audio-version-control-lineage/) | [07.05 Review & Approval](./07.05-review-feedback-approval/) | Comments and approvals **pin immutable versions** — and a link PINS, it never resolves live. Immutability is what makes "you approved it" answerable. | Musician, Producer | High | `07.05.04` DT-01; `07.05.02` D-02 pins per `07.04.02` D-03 (**contradiction found and resolved** — see detail). `07.05.01`→`07.04.01` carry-forward walks lineage (D-08). |
 | CX-04 | [07.01 Song & Board](./07.01-song-release-production-board/) | [07.06 Sessions](./07.06-sessions-documentation-recall/) | Stage transitions are the **second firing moment** for the capture prompt, after session close. | Producer, Musician | High | `07.01.03` D-02 and `07.06.02` — the board is a trigger surface. Board is the single writer of `current_stage` (last-write-wins, attributed toast — no lock). |
@@ -43,11 +43,26 @@ across four sub-domains independently concluded, in their own Deep Think, that t
 | `07.06.01` Session Record | A calendar form nobody fills in |
 | `07.04.03` Take & Comp | Empty — comp maps exist only in the DAW |
 | `07.04.05` File Integrity | Checksums only; no missing-media detection |
-| `07.05.01` Musical Anchor | The tempo/section map that anchors a comment falls to the uncertain tier (a MoSCoW coupling, `07.05.01` DT-04 / Q-05) |
+| `07.05.01` Musical Anchor | The tempo/section map that anchors a comment falls to the uncertain tier (`07.05.01` DT-04). The MoSCoW coupling Q-05 raised is **resolved and does not fire** — `07.05.01` D-18, per domain D-10 |
 
 That convergence is evidence, not coincidence. **Without the bridge, domain 07 is a good review-and-versioning
 tool that asks people to remember** — which `meta/problem-statement.md` identifies as the exact defect every
 competitor already has.
+
+> **Ratified 2026-07-22 — the bridge is absent for the whole v1 window, by decision (domain D-08, DQ-08.2).** No
+> non-web client on the producer's machine is authorised; the `meta/constraints.md` Desktop row now reads "not
+> authorised; reopens only on the enumerated evidence", with the four reopen items written out in full at
+> [`07.09` D-05](./07.09-daw-bridge-capture-at-source/07.09-daw-bridge-capture-at-source-index.md). This does
+> **not** weaken the table above — it makes every row of it the **v1 state**, which is precisely why domain D-11
+> restates the v1 thesis to *capture at the first sharing moment* (`07.05.02`) plus the close prompt, with
+> capture-at-source described as the direction rather than the current claim. Three consequences for this
+> cross-cut specifically: (1) **the spine's trigger chain does not run in v1** — bounce → ingest → parse → hints
+> is unavailable, so the prompt's pre-fill sources are the session roll (`07.06.01`) and the roster
+> (`07.03.01`) only, and `07.06.02` D-11 suppresses a card with neither; (2) **the moment still has a delivery
+> surface** — domain D-09 assigns PWA web push + in-app as the v1 delivery of the Tier 1 and Tier 2 cards, so
+> SQ4's fan-out survives the bridge's absence; (3) **`07.09.*` keep `Should`, unphased** (domain D-10), so this
+> cross-cut is not re-scoped and `07.04.01` Q-05's re-scope trigger does not fire. If the gate later closes
+> without reopening, this entry must be revisited together with that re-scope.
 
 **Role scoping**:
 - **Producer**: the only active participant. The bridge exists for them, at one moment, because that moment is where the platform's value is created.
@@ -286,10 +301,10 @@ the transfer confirmation must say so and route anyone who meant a rights transf
 | **Forensic Audio Watermarking & Leak Tracing** (per-recipient, marks the STREAM not only the download) | 05, 07, 11, 12, 14 | **Not covered.** Registry's *Media Handling* has audition watermarking only; forensic per-recipient stream encoding + leak investigation is distinct. Emergent — see below. |
 | **Fine-Grained Session Attendance Time Tracking** (opt-in, person-controlled, invisible to Operator; union AFM/MU hour reports) | 05, 06, 07, 16, 17, 23 | **Not covered.** Payments/Tax do not track hours. Emergent — see below. |
 | **Audio DSP Analysis Compute** (null test, true peak, loudness) | 07, 12, 14 | **Not covered.** Registry's *Audio Fingerprinting* is content-ID, not loudness/peak DSP. Emergent — see below. |
-| **DAW Session Format Parsing & Parser-Rot Monitoring** | 07 (feeds 02, 09) | **Not covered.** Silent-failure parsing of proprietary formats. Emergent — see below. |
+| **DAW Session Format Parsing & Parser-Rot Monitoring** | 07 (feeds 02, 09) | **Not covered.** Silent-failure parsing of proprietary formats. Emergent — see below. **Not a v1 requirement** (domain D-08): no client is authorised, so there is no parse in v1; the mechanism stays registered against `07.09.02` for the post-gate horizon. |
 | **Large-Asset Resumable Upload/Download** (chunked, multi-GB stem packs over studio upstream) | 05, 07, 08, 12, 14 | Partially — *Object & Evidence Storage* covers durable storage + signed URLs, not resumable chunked ingest. Emergent extension. |
 | **Media Handling & Audio Playback** (waveform, streaming, gapless A/B) | 05, 06, 07, 08, 12, 14, 20 | **Covered** — registry *Media Handling & Audio Playback*. `07.04.06`/`07.05.02` consume it; loudness-matched position-locked A/B stays local. |
-| **Notifications & Alerts** (needs **native OS notification** channel + per-slot severity) | all | **Covered**, but `07.09.03` needs a native-OS channel and `07.04.02` DT-12 needs per-slot (not per-feature) severity — extensions to the registry entry. |
+| **Notifications & Alerts** (needs **PWA web push** channel in v1 + per-slot severity) | all | **Covered**, with two extensions to the registry entry. (1) **v1 channel — corrected 2026-07-22 (domain D-09)**: the capture moment is delivered by **PWA web push + in-app**, not by a native-OS notification. `07.09.03`'s native-OS channel is deferred with the client surface itself (domain D-08) and becomes live only if that gate reopens. The Tier 1 requirement this must satisfy is `07.06.02` D-09 — ≤ 5 s after the close signal, ungated. (2) `07.04.02` DT-12 still needs per-slot (not per-feature) severity. |
 | **Realtime Rooms, Presence & Audio Transport** | 03, 06, 07, 08 | **Covered** (registry, owner 08). `07.06.01` consumes presence-as-attendance. |
 | **Privacy, Consent & Data Portability** | all | **Covered.** The provenance-graph export question (`07.08.01` Q-02, DDEX RIN) is a values decision that rides this mechanism. |
 | **Analytics Instrumentation & Reporting / Completeness Scoring** | 01, 07, 12, 13, 14, 16 | **Covered** (registry folds completeness/readiness scoring into Analytics). `07.08.03`'s song-specific readiness expression stays local. |
@@ -305,7 +320,7 @@ the transfer confirmation must say so and route anyone who meant a rights transf
 | **Tamper-Evident Append-Only Audit Log** | `/create-prd-security` | Necessary but not sufficient (`07.04.01` DT-07): the correction affordance (D-03/D-06) is the forgery surface. |
 | **Audio DSP Analysis Compute** (null test, true peak, loudness) | `/create-prd-architecture` | `07.04.04` Q-01, `07.07.03` Q-03, `07.08.02` Q-01 — three features, one answer. |
 | **DAW Session Format Parsing & Parser-Rot Monitoring** | `/create-prd-architecture` | `07.09.02` DT-03 — reverse-engineered formats that fail **silently**; unmonitored rot is indistinguishable from users not being credited. |
-| **Local Agent Distribution, Signing, Auto-Update & Security Model** | `/create-prd` | `07.09.01` DT-03 — a second surface with real operational weight for a solo-built platform (domain Q-01). |
+| **Local Agent Distribution, Signing, Auto-Update & Security Model** | `/create-prd` — **not required for v1** | `07.09.01` DT-03 — a second surface with real operational weight for a solo-built platform (was domain Q-01). **Resolved 2026-07-22 (domain D-08)**: no non-web client is authorised, so **`/create-prd-stack` designs no agent distribution, signing, notarisation or auto-update for v1** and is unblocked on this point. A costed statement of that same build/update/signing/notarisation/support load against Team=Solo and Budget=Lean is *reopen-evidence item (c)* on the gate (`07.09` D-05) — an owner-decision input, not tracked work (domain Q-11). |
 | **Signed URL / Token Issuance & Revocation** | `/create-prd-security` | `07.05.02` — unguessable non-enumerable tokens, fail-closed revocation ≤10 s, passcode rate limiting. |
 | **Audio Fingerprinting & Similarity Matching** | `/create-prd-architecture` | `07.04.01` — sonically-identical-different-bytes detection, parentless lineage inference, duplicated-session mis-file check. |
 | **Checksum Mechanism & Storage Durability Guarantees** | `/create-prd-architecture` | `07.04.05` DT-03 — the plumbing half; missing-media detection stays as product. |
@@ -322,3 +337,23 @@ the transfer confirmation must say so and route anyone who meant a rights transf
 | R-04 | 07.07 Mix & Master | 07.06 Sessions | Linking the mastering stage to a session record. Rejected: mastering is frequently done by an **outside engineer not on the platform** (`07.07.03` edge cases) — no session, no attendance, the master arrives as an email attachment. Forcing a session entity around it models a fiction. The mastering *credit* is captured by the ordinary roster machinery (unclaimed identities), which is sufficient and honest. |
 | R-05 | 07.05 Review & Approval | 07.08 Delivery & QC | Gating delivery on unresolved review comments. Rejected on D-04 (non-blocking) + D-05 (measure, never judge): an unresolved comment is craft, and QC checks only objective faults (`07.08.02` D-04). Coupling them would make the platform adjudicate taste — the precise thing every domain decision refuses. The legitimate link runs through readiness (CX-07), which *shows* an open comment count without blocking on it. |
 | R-06 | 07.01 Song & Board | 07.02 Composition | Treating the composition workspace as a stage on the board (writing → tracking → mix). Rejected: composition is not a board stage but a parallel workspace with its own read-only-by-default access (R-03) and its own lifecycle; a lyric can change after `mix`. The board reads the Song's stage; it does not own the lyric's state. Folding composition into the stage machine would force a linear order the craft does not obey. |
+
+
+<!-- spec-graph: auto-generated -->
+## Related Specs
+
+### Constrained by
+- [[decisions.md#d-08|D-08]]
+- [[decisions.md#d-05|D-05]]
+- [[decisions.md#d-09|D-09]]
+- [[decisions.md#d-04|D-04]]
+- [[decisions.md#d-02|D-02]]
+- [[decisions.md#d-03|D-03]]
+- [[decisions.md#d-15|D-15]]
+- [[decisions.md#d-10|D-10]]
+- [[decisions.md#d-01|D-01]]
+- [[decisions.md#d-18|D-18]]
+- [[decisions.md#d-11|D-11]]
+- [[decisions.md#d-12|D-12]]
+- [[decisions.md#d-14|D-14]]
+- [[decisions.md#d-06|D-06]]

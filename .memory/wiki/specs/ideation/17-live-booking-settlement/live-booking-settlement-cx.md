@@ -3,7 +3,7 @@
 > **Level**: domain
 > **Scope**: Connections between children of [Live Booking & Settlement](./live-booking-settlement-index.md)
 > **Status**: [DEEP] — 14 children; 24 intra-domain cross-cuts synthesised, 7 rejected pairs held.
-> **Last updated**: 2026-07-18
+> **Last updated**: 2026-07-30
 
 > **Reading note.** This file connects the domain's **14 children** (8 sub-domains + 6 features) to
 > each other. Leaf-to-leaf edges that live *inside* one child — e.g. `17.01.01 ↔ 17.01.02` (both under
@@ -20,7 +20,7 @@
 | CX-03 | [17.02 Offers & Negotiation](./17.02-offers-negotiation/) | [17.04 Performance Contracts](./17.04-performance-contracts-deal-memos.md) | The accepted version generates the contract — terms flow through as data, never retyped | Musician, Operator | High | A retyped contract is a second source of truth that disagrees with the first at settlement |
 | CX-04 | [17.04 Performance Contracts](./17.04-performance-contracts-deal-memos.md) | [17.05 Deposits, Balances & Cancellation](./17.05-deposits-balances-cancellation/) | Deposit, balance and cancellation terms are contract terms; execution starts the schedule | Musician, Operator | High | The schedule has no terms until a contract executes |
 | CX-05 | [17.05 Deposits, Balances & Cancellation](./17.05-deposits-balances-cancellation/) | [17.01 Availability, Holds & Confirmation](./17.01-availability-holds-confirmation/) | Deposit receipt is an announce precondition; deposit failure reverts the booking — **but does not restore the destroyed holds** | Musician, Operator | High | 17.01 CX-03: confirmation destroys inferior holds irreversibly; revert is compensating, not rollback |
-| CX-06 | [17.09 Settlement & Reconciliation](./17.09-settlement-reconciliation/) | [17.10 Live Income Payout & Tax](./17.10-live-income-payout-tax/) | Final signoff is the disbursement trigger; the settled pool is what the split divides | Musician | High | Nothing moves until both parties sign — a proposal is not a payment |
+| CX-06 | [17.09 Settlement & Reconciliation](./17.09-settlement-reconciliation/) | [17.10 Live Income Payout & Tax](./17.10-live-income-payout-tax/) | Final signoff releases the full payable; a **refusal** releases the undisputed floor and holds the contested delta — two release events, not one | Musician | High | 17.09.05 D-09: "Refusal blocks finality, not payment — the undisputed floor is payable immediately"; 17.09.06 Q-03 resolved: payable without a second signature |
 | CX-07 | [17.09 Settlement & Reconciliation](./17.09-settlement-reconciliation/) | [17.08 Agency Representation & Commission](./17.08-agency-representation-commission/) | Commission accrues from the settlement — an amendment after disbursement is a **clawback from a third party** | Musician | High | 17.08.02 DT-02: settlements get amended; agencies have been paid and have spent it |
 | CX-08 | [17.09 Settlement & Reconciliation](./17.09-settlement-reconciliation/) | [17.11 Draw History & Market Intelligence](./17.11-draw-history-market-intelligence/) | **Settlement is the generator.** A signed settlement is what makes a draw record verified rather than claimed | Musician, Operator | High | Domain index: settlement is "the source dataset for draw intelligence" |
 | CX-09 | [17.09 Settlement & Reconciliation](./17.09-settlement-reconciliation/) | [17.12 Counterparty Relationship & Payment Reliability](./17.12-counterparty-relationship-payment-reliability.md) | Settlement facts derive the reliability record — paid on time, count matched, contested or not | Musician, Operator | High | Domain index: settlement is "the source of payment-reliability reputation" |
@@ -28,10 +28,10 @@
 | CX-11 | [17.03 Deal Structures](./17.03-deal-structures-economics/) | [17.05 Deposits, Balances & Cancellation](./17.05-deposits-balances-cancellation/) | Cross-collateralization makes a single date's cancellation non-self-contained | Musician, Operator | Medium | 17.03.03: a cancelled date inside a run changes 11 other dates' economics |
 | CX-12 | [17.14 Bill Construction](./17.14-bill-construction-support-slots.md) | [17.10 Live Income Payout & Tax](./17.10-live-income-payout-tax/) | Support fees come **off the top** before the headliner's split — a deduction the single-artist model did not have | Musician | High | 17.14 DT-01: most shows have 2-3 acts on separate deals |
 | CX-13 | [17.14 Bill Construction](./17.14-bill-construction-support-slots.md) | [17.11 Draw History](./17.11-draw-history-market-intelligence/) | **The slot qualifier originates here.** 600 as an opener is not a 600 draw | Musician | High | 17.11.01 DT-01: without the slot, the record flatters the artist |
-| CX-14 | [17.06 Radius Clause](./17.06-radius-clause-exclusivity.md) | [17.01 Availability, Holds & Confirmation](./17.01-availability-holds-confirmation/) | The radius check fires at **three moments** — publish (warn), hold (warn), confirm (hard block); the artist's own conflicts surface to the artist alone | Musician, Operator | High | 17.06 DT-02/DT-10/DT-12; D-13/D-15; permission asymmetry [30] |
+| CX-14 | [17.06 Radius Clause](./17.06-radius-clause-exclusivity.md) | [17.01 Availability, Holds & Confirmation](./17.01-availability-holds-confirmation/) | The radius check fires at **three moments** — publish (warn), hold (warn), confirm (**hard block**, one rule everywhere). The block's door is 17.06's timed waiver-request instrument; the only override is a principal-only break-glass while a challenge clock is live. The artist's own conflicts surface to the artist alone | Musician, Operator | High | 17.06 DT-02/D-04; 17.01.04 C-06/D-13; 17.01.03 D-15 (radius half revised, run-3 D6); permission asymmetry [30] |
 | CX-15 | [17.07 Booking Enquiry Inbox](./17.07-booking-enquiry-inbox-rfq.md) | [17.01 Availability, Holds & Confirmation](./17.01-availability-holds-confirmation/) | Auto-qualification reads published avails; a qualified enquiry converts into a hold — and an **off-platform link recipient's reply lands here as an enquiry** because they cannot self-hold | Musician, Operator | Medium | Invite-only avail scoping complicates the read (17.01.01 Q-02); link-recipient reply [4] |
 | CX-16 | [17.13 Fan Demand Signals](./17.13-fan-demand-signals.md) | [17.11 Draw History](./17.11-draw-history-market-intelligence/) | **Opposite provenance** — a settled fact vs an expressed wish. They must never render alike | Musician, Operator, Fan | High | 17.13 DT-02: requesting costs nothing; attending costs £20 and a Tuesday |
-| CX-17 | [17.01 Availability, Holds & Confirmation](./17.01-availability-holds-confirmation/) | [17.08 Agency Representation & Commission](./17.08-agency-representation-commission/) | Booking authority gates every hold, publish and confirm; **positions belong to the act, not the placing agent** — representation change carries them, representation *end* freezes the windows | Musician (+ agent lens), Operator | High | [5],[13] — D-11/DT-15, D-15 |
+| CX-17 | [17.01 Availability, Holds & Confirmation](./17.01-availability-holds-confirmation/) | [17.08 Agency Representation & Commission](./17.08-agency-representation-commission/) | Booking authority gates every hold, publish and confirm — `book` **and** `live booking`, conjoined at the act (`01.03.02` D-05); **positions belong to the act, not the placing agent** — representation change carries them, representation *end* freezes the windows | Musician (+ agent lens), Operator | High | [5],[13] — D-11/DT-15, D-15 |
 | CX-18 | [17.01 Availability, Holds & Confirmation](./17.01-availability-holds-confirmation/) | [17.12 Counterparty Relationship & Payment Reliability](./17.12-counterparty-relationship-payment-reliability.md) | **The most under-modelled edge in the domain.** The ladder emits reliability facts 17.12 does not yet know exist: hold→confirm conversion, no-response lapse, repudiation, confirm-then-revert | Musician, Operator | High | [8],[21],[37] |
 | CX-19 | [17.01 Availability, Holds & Confirmation](./17.01-availability-holds-confirmation/) | [17.14 Bill Construction & Support Slots](./17.14-bill-construction-support-slots.md) | Billing intent **selects the ladder** — support and headline holds never contend; bill shape is an avail field and a "fill date" is usually a support conversation | Musician, Operator | High | [7],[10] — D-05 |
 | CX-20 | [17.01 Availability, Holds & Confirmation](./17.01-availability-holds-confirmation/) | [17.11 Draw History](./17.11-draw-history-market-intelligence/) | Draw is an **advisory read** into the ladder and the announce gate — never wired into position assignment; it also explains the guarantee floor/ceiling asymmetry | Musician, Operator | High | [6],[16],[44] — D-03/DT-02 |
@@ -175,8 +175,11 @@ destroyed.** Those parties have re-routed and moved on.
 
 ### CX-06: Settlement & Reconciliation ↔ Live Income Payout & Tax
 
-**Relationship**: Final bilateral signoff is the disbursement trigger; the settled pool is exactly what
-the split divides. Nothing moves until both parties sign — a proposal is not a payment.
+**Relationship**: Final bilateral signoff is the disbursement trigger for the **full** payable; the settled
+pool is exactly what the split divides. An unanswered proposal moves nothing — but a **refusal** is not
+silence, and it releases the **undisputed floor**, the sheet re-evaluated with every disputed line conceded
+to the counterparty, holding only the contested delta ([17.09.05](./17.09-settlement-reconciliation/17.09.05-settlement-signoff-variance.md)
+D-09). Refusal blocks finality, not payment; the floor is payable without a second signature.
 
 **Role scoping**:
 - **Musician**: the split divides the settled pool among the act's members and payees.
@@ -187,7 +190,9 @@ the split divides. Nothing moves until both parties sign — a proposal is not a
 1. **Shared state conflict**: The settled pool is owned by the settlement (17.09); the split (17.10.01) is
    a separate pinned agreement dividing it. Party ≠ payee — a split can be valid with an unresolved payee
    (a dep with no account); disbursement is what blocks, not the split (domain-01 CX; [61]).
-2. **Trigger chain**: Bilateral signoff → disburse via the Payments/Escrow rail. Per-member deductions
+2. **Trigger chain**: Bilateral signoff → disburse the full payable via the Payments/Escrow rail; **refusal →
+   disburse the undisputed floor only**, delta held until the amendment is signed (17.09.05 D-09, D-14). So
+   17.10.02 has two release events, not one, and its idempotency is per release. Per-member deductions
    (per diems, float — 18.13.01) land *after* division, costing one member entirely; pool deductions cost
    everyone proportionally ([63]).
 3. **Permission intersection**: The split's approval rule is consumed from 01.04, the same rule that binds
@@ -222,7 +227,8 @@ box-office number — and that is a clawback from an agency that has been paid a
 
 **Relationship**: **Settlement is the generator, not a consumer.** A signed settlement emits a draw record
 (17.11.01) that exists nowhere else in the industry — verified, slot-qualified (CX-13), and unfalsifiable
-because both parties agreed the show happened and how many came. The domain's clearest expression of the
+because both parties agreed the show happened and how many **paid to be there** — the draw is `admissions_paid`,
+not the all-bodies total (17.11.01 D-06, D-07). The domain's clearest expression of the
 D-18 provenance thesis.
 
 **Role scoping**:
@@ -358,6 +364,18 @@ cannot legally be sold, so the check runs at **publish** (warn); a hold inside a
 and the obligation is actually breached the moment a conflicting date is **confirmed**, so confirm is a
 **hard check** (C-06, DT-10) — a breach found later means two live contracts and one must break.
 
+**One rule at confirm, and it is a block.** This entry previously stated both readings — hard block in
+the summary row, warn-and-override in the trigger chain below — because 17.01.04 (C-06, D-13) and
+17.01.03 (D-15) had ratified opposite rules for the same commit. Owner ratification (run-3 D6) settled
+it: **the block stands everywhere, including under a challenge clock.** 17.01.03's never-block argument
+was about **latency** — "consent is obtainable, just not within 48h" — not about permission, so the fix
+is 17.06's **waiver-request instrument** (D-04 there): an in-app, timed, escalating request against the
+constraining Operator, capped by the deadline of the decision it unblocks. The single override is a
+**break-glass** with four conjunctive conditions — a live challenge clock, the **artist principal in
+person** (never a delegate), the constraining Operator notified **at the moment of use**, and a named
+`radius-break-glass` breach event attributed to the confirming party (17.12). Routing (18) keeps
+warn-and-override: 18 owns feasibility, not permission.
+
 **Role scoping**:
 - **Musician**: warned before double-booking themselves into a lawsuit; **their own radius conflicts
   surface to the artist alone** — showing them to an Operator would disclose who else booked them ([30]).
@@ -367,13 +385,18 @@ and the obligation is actually breached the moment a conflicting date is **confi
 **Synthesis questions answered**:
 1. **Shared state conflict**: The clause is owned by 17.06; 17.01 owns the *moment* it is surfaced. The
    clause never mutates the calendar — it annotates and, at confirm, blocks.
-2. **Trigger chain**: Publish → warn · Hold → warn · Confirm → check (radius conflicts warn-and-override
-   with the override recorded; radius clauses are waived routinely, so a hard block would be wrong — [23]).
-   Nobody checks a radius clause at 4am on deadline day, so the check must be pre-computed and surfaced,
-   not left to the user to run.
+2. **Trigger chain**: Publish → warn · Hold → warn · Confirm → **block** absent a waiver on file, with the
+   waiver-request instrument offered inline and a principal-only break-glass reachable only under a live
+   challenge clock ([23] superseded by run-3 D6). Nobody checks a radius clause at 4am on deadline day, so
+   the check must be pre-computed and surfaced, not left to the user to run — and a check nobody runs is
+   exactly why the last irreversible step is the wrong place to put a dismissible warning.
 3. **Permission intersection**: The permission asymmetry above is the load-bearing rule — the artist's
-   pipeline is confidential from the buy side.
-4. **Notification fan-out**: A prospective breach warns the artist's side; an override is logged.
+   pipeline is confidential from the buy side. Break-glass is the one place it yields: the constraining
+   Operator learns of the breach against their own clause immediately, which is the minimum that makes an
+   override honest, and they learn only that fact — not the terms or the counterparty of the new date.
+4. **Notification fan-out**: A prospective breach warns the artist's side. A waiver request notifies the
+   constraining Operator on 17.01.03's escalation ladder. A break-glass notifies them **in the same
+   instant it is used**, and writes a permanent attributed record; there is no quiet override.
 5. **State transition conflict**: A confirm racing against a just-signed conflicting date elsewhere — the
    window between two confirms is where a real double-obligation is born.
 
@@ -425,8 +448,8 @@ costs nothing; attending costs £20 and a Tuesday night.
 
 ### CX-17: Availability, Holds & Confirmation ↔ Agency Representation & Commission
 
-**Relationship**: Agency representation supplies the **publishing and booking authority** for an act's
-windows, scoped by territory (D-11/DT-15). Publishing dates for — or holding in the name of — an act you
+**Relationship**: Agency representation supplies the **authority to publish and to book** an act's
+windows, scoped by territory and by commercial domain (D-11/DT-15; `01.03.02` D-05). Publishing dates for — or holding in the name of — an act you
 do not represent is a real, current industry harm. The load-bearing rule: **a hold and a published window
 belong to the act, not to the agent who placed them.** A representation change *carries positions across*
 (D-15) — a departing agent must not be able to burn a roster's ladder — and representation *ending* must
@@ -443,16 +466,22 @@ belong to the act, not to the agent who placed them.** A representation change *
    relationship is a delegated-authority grant (resolved through domain 01 / the Roles & Delegated
    Authority cross-cut), not an ownership. On a representation change the positions do not move — only the
    operator of them does.
-2. **Trigger chain**: Grant representation → agent may publish/hold/confirm within territory scope. Revoke
+2. **Trigger chain**: Grant representation → agent may publish/hold/confirm within territory scope **and** where
+   the edge carries `live booking` in its `domains` (`01.03.02` D-05). Revoke
    representation → **freeze** windows (no new holds, existing positions preserved for the act). A naive
    "delete the agent's holds" would be the burn hazard D-15 forbids.
-3. **Permission intersection**: Booking authority gates *every* hold request and confirm; territory scope
-   limits *which* windows an agent may touch. Authority to negotiate (17.02.03) is a separate grant from
-   authority to publish availability.
+3. **Permission intersection**: Booking authority gates *every* hold request and confirm, and it is a
+   **conjunction** — `book` in the edge's `activities` **and** `live booking` in its `domains`
+   (`01.03.02` D-05); territory scope limits *which* windows an agent may touch. Authority to negotiate
+   (17.02.03) is a separate grant from the authority to publish availability. A **membership** edge carries
+   the activity axis alone and resolves to every domain, so a `permanent` band member's seeded `book`
+   needs no domain configured (`01.03.03` D-07).
 4. **Notification fan-out**: A representation change notifies the incoming and outgoing agents and the
    Operators with live holds on the act — those holds now have a new operator, same owner.
 5. **State transition conflict**: An agent placing a hold as representation is being revoked — the write
-   must resolve against the authority state at commit time, or a just-fired agent lands a hold the act
+   must resolve against the authority state at commit time, on **both axes**: a scope narrowed from
+   `live booking + recording` to `recording` revokes booking authority without ending the edge, and a
+   check that only tests whether the edge is live would let a just-fired agent land a hold the act
    never authorised.
 
 ### CX-18: Availability, Holds & Confirmation ↔ Counterparty Relationship & Payment Reliability
@@ -695,3 +724,24 @@ a knowing simplification (DT-05), not an oversight.
 | R-06 | 17.12 Counterparty Reliability | 17.02 Offers & Negotiation | Rejected as an automatic edge. Reliability could plausibly *shape an offer* — shakier promoter, bigger deposit ask — but that path runs through **17.05's deposit terms**, not offer composition. **Reliability informs humans; it does not price deals.** A direct edge would let a derived score alter deal terms silently (the automated-judgement failure 17.01.02 DT-02 rejects). |
 | R-07 | 17.13 Fan Demand Signals | 17.07 Booking Enquiry Inbox | Rejected, load-bearing. Both are inbound "someone wants a show" signals, so a merge looks natural. But an enquiry is a **professional, addressed, structured request that converts into a deal**; a demand signal is an **aggregate, unaddressed, one-way count that converts into nothing**. Merging them would put a consumer-scale pipe into a professional inbox — the harassment vector `meta/personas.md` names and 17.07 DT-03 rejects. |
 | R-08 | 17.09 Settlement & Reconciliation | 17.13 Gear/Merch inventory (17.09.04 ↔ 13) | Recorded to prevent a false entity merge: **merch inventory is not gear inventory** ([13 cross]). A settlement's merch reconciliation shares no entity with the gear marketplace's stock; the resemblance is nominal only. |
+
+
+<!-- spec-graph: auto-generated -->
+## Related Specs
+
+### Constrained by
+- [[decisions.md#d-01|D-01]]
+- [[decisions.md#d-09|D-09]]
+- [[decisions.md#d-04|D-04]]
+- [[decisions.md#d-13|D-13]]
+- [[decisions.md#d-15|D-15]]
+- [[decisions.md#d-05|D-05]]
+- [[decisions.md#d-11|D-11]]
+- [[decisions.md#d-03|D-03]]
+- [[decisions.md#d-20|D-20]]
+- [[decisions.md#d-14|D-14]]
+- [[decisions.md#d-02|D-02]]
+- [[decisions.md#d-06|D-06]]
+- [[decisions.md#d-07|D-07]]
+- [[decisions.md#d-18|D-18]]
+- [[decisions.md#d-08|D-08]]

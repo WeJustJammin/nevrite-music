@@ -1,0 +1,369 @@
+{
+  "domain": "14-digital-goods-marketplace",
+  "root": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/14-digital-goods-marketplace",
+  "unitsAudited": 11,
+  "filesRead": 64,
+  "expected": { "units": 11, "files": 64 },
+  "moscowBands": {
+    "must": ["14.01.01", "14.02.01", "14.02.05", "14.03.01", "14.03.03", "14.04.01", "14.07.01", "14.08.01", "14.09.01", "14.09.02"],
+    "should": ["14.01.02", "14.01.03", "14.03.02", "14.03.04", "14.04.02", "14.04.04", "14.05.01", "14.05.04", "14.08.03", "14.08.05", "14.09.03", "14.10.03"],
+    "could": ["14.01.04", "14.02.02", "14.02.04", "14.02.06", "14.03.05", "14.04.03", "14.05.02", "14.05.03", "14.06.01", "14.06.03", "14.07.02", "14.07.04", "14.07.05", "14.08.02", "14.08.04"],
+    "wont": ["14.02.03", "14.06.02", "14.07.03", "14.10.01", "14.10.02"]
+  },
+  "method": {
+    "enumeration": "Walked the domain tree from disk: 64 files, 11 directories containing an *-index.md (domain root + 14.01..14.10). Matches the expected counts exactly.",
+    "fullDepthReads": [
+      "digital-goods-marketplace-index.md (165 lines, full)",
+      "digital-goods-marketplace-cx.md (593 lines, full, in 4 chunks)",
+      "14.09-digital-refunds-revocation-index.md (full)",
+      "14.09-digital-refunds-revocation-cx.md (full)",
+      "14.09.01-withdrawal-right-waiver-capture.md (full, 256 lines)",
+      "14.01.02-format-os-daw-compatibility-matrix.md (full)",
+      "14.03.05-per-buyer-forensic-watermarking.md (full)",
+      "14.09.02 + 14.09.03 (all sections except Role Lens / Deep Think / Cross-Cut Notes)"
+    ],
+    "sectionSelectiveReads": "All remaining 54 files: every Decisions row, every Open Questions row (206 rows parsed across the domain), plus targeted full-text reads of specific Edge Case / Concrete-parameter / States rows surfaced by the cross-file sweeps below.",
+    "crossFileSweeps": [
+      "Structural compliance sweep over all 64 files: required section presence per file kind (leaf: Role Lens/Behavior/Edge Cases/States/Decisions/Open Questions/Deep Think; index: Children/Role Matrix/Decision/Open Questions; cx: Cross-Cut/Rejected) — zero missing sections.",
+      "Open-Question tracking sweep: 206 Q rows parsed; every unresolved row carries both an owner and a deferral target (0 malformed).",
+      "Tracking-marker inventory over all 64 files: 77 [OWNER], 24 [PARTIAL], 23 [PENDING — /ideate-discover Step 5 deepening], 15 bare [PENDING], 4 [PENDING — /write-be-spec], plus 6 other typed PENDING targets.",
+      "Numeric-claim sweep: 206 quantity-bearing sentences extracted domain-wide and cross-compared by concept (grant window, chargeback windows, retention, suppression window, restore SLA, withdrawal window, revocation kill time). No numeric divergence found — 72 h grant, 30 s revocation kill, 12 h restore, 180 days cold/draft, 30-day promo suppression, 7-year waiver retention, 120-day card / 13-month SEPA are stated identically wherever they recur.",
+      "Checksum/hash sweep across all 64 files (the sweep that produced finding F-01)."
+    ]
+  },
+  "units": [
+    {
+      "unit": "14-digital-goods-marketplace (domain root)",
+      "files": ["digital-goods-marketplace-index.md", "digital-goods-marketplace-cx.md"],
+      "applicableCheckpoints": 7,
+      "naDimensions": [5],
+      "scores": {
+        "1_problem_clarity": "✅ — index:11 states one problem for one named user set: 'Multi-vendor sale and delivery of DAW plugins, sample packs, presets, beats, MIDI, stems and project templates — with licensing, activation, compatibility, updates, and the buyer's permanent library.' Falsifiable domain-status argument at index:13.",
+        "2_persona_specificity": "✅ — Role Matrix (index:81-92) populated for all 10 children × 4 personas with qualified cells ('✅ Full (seats = rooms)', '👁️ Read-only (via domain 20 only)'), plus three named material findings including the missing commercial-vendor column escalated as Q-04.",
+        "3_feature_completeness": "✅ — 24 sweep candidates → 10 sub-domains / 42 leaf features, each ledger row traced (index:50-74); disk enumeration confirms exactly 42 leaf feature files and 10 sub-domain folders. MoSCoW bands held in moscow-ledger.md, mutually exclusive.",
+        "4_constraint_explicitness": "✅ — cx:559-572 'Not-Product Concerns Routed Out' names each constraint axis with an explicit owner stage (Cloudflare edge/CDN → /create-prd-architecture, consumer-credit perimeter → /create-prd, storage/egress cost model → /create-prd).",
+        "5_success_measurability": "N/A — success metrics are owned by meta/ (out of this unit's scope).",
+        "6_competitive_positioning": "✅ — index:13 names Plugin Boutique, Splice, ADSR, Loopmasters and Reverb, with the differentiation stated as a specific capability gap (per-vendor transfer-policy registry; verified credits as the answer to zero reviews) rather than a claim of quality.",
+        "7_open_question_resolution": "⚠️ — see F-13: Q-12 is marked RESOLVED while carrying an unassigned corrective action.",
+        "8_structural_compliance": "✅ — index + cx present; Children table paths all resolve on disk; no folder with fewer than 3 children; no flat feature carrying ≥3 sub-features."
+      },
+      "points": 0.5
+    },
+    {
+      "unit": "14.01-catalog-compatibility",
+      "applicableCheckpoints": 5,
+      "naDimensions": [4, 5, 6],
+      "scores": {
+        "1_problem_clarity": "✅ — the unit answers one question ('will this run for me?') across four interacting parts (index D-01).",
+        "2_persona_specificity": "✅ — Role Matrix populated; leaf Role Lenses are role-specific and pain-bearing (14.01.02:22 Operator: '\"Supports macOS 15+\" is a purchase blocker for a room pinned to macOS 13').",
+        "3_feature_completeness": "⚠️ — see F-03: one edge-case outcome cell is undefined (14.01.04:53).",
+        "7_open_question_resolution": "⚠️ — see F-03: 4 markers deferring to a completed stage.",
+        "8_structural_compliance": "✅ — index + cx present, 4 leaves, all sections present."
+      },
+      "points": 1.0
+    },
+    {
+      "unit": "14.02-licensing-activation-entitlement",
+      "applicableCheckpoints": 5,
+      "naDimensions": [4, 5, 6],
+      "scores": {
+        "1_problem_clarity": "✅",
+        "2_persona_specificity": "✅",
+        "3_feature_completeness": "⚠️ — see F-04: four edge-case outcome cells undefined.",
+        "7_open_question_resolution": "⚠️ — see F-04: 5 markers deferring to a completed stage.",
+        "8_structural_compliance": "✅ — 6 leaves, index + cx, all sections present."
+      },
+      "points": 1.0
+    },
+    {
+      "unit": "14.03-delivery-versioning-library",
+      "applicableCheckpoints": 5,
+      "naDimensions": [4, 5, 6],
+      "scores": {
+        "1_problem_clarity": "✅ — index:11 'unusually hostile to naive delivery: a sample library is routinely 40–100 GB'.",
+        "2_persona_specificity": "✅",
+        "3_feature_completeness": "❌ — see F-01: the delivery contract is unsatisfiable as written for every content product.",
+        "7_open_question_resolution": "⚠️ — see F-02 (untracked 'flagged for confirmation' decision) and F-08 (stale deferral marker).",
+        "8_structural_compliance": "✅ — 5 leaves, index + cx, all sections present."
+      },
+      "points": 1.5
+    },
+    {
+      "unit": "14.04-sound-content-catalogs",
+      "applicableCheckpoints": 5,
+      "naDimensions": [4, 5, 6],
+      "scores": {
+        "1_problem_clarity": "✅ — index D-02 separates 'will this run on my machine' from 'what does this sound like and will it fit my track'.",
+        "2_persona_specificity": "✅",
+        "3_feature_completeness": "⚠️ — see F-05 (undefined edge cell 14.04.03:55) and F-02b (D-06's delivery-time byte write leaves the published-checksum consequence unstated).",
+        "7_open_question_resolution": "⚠️ — see F-05: 3 markers deferring to a completed stage.",
+        "8_structural_compliance": "✅ — 4 leaves, index + cx."
+      },
+      "points": 1.0
+    },
+    {
+      "unit": "14.05-beat-instrumental-licensing",
+      "applicableCheckpoints": 5,
+      "naDimensions": [4, 5, 6],
+      "scores": {
+        "1_problem_clarity": "✅",
+        "2_persona_specificity": "✅",
+        "3_feature_completeness": "⚠️ — see F-06: the lease-vs-exclusive commit race has no defined outcome (14.05.02:51), which is a money-and-copyright race.",
+        "7_open_question_resolution": "⚠️ — see F-06. Note the positive: every struck-through Q row in this unit carries a full cited resolution (e.g. 14.05.02 Q-01 resolved against 09.01.03 D-03; 14.05.03 Q-01 resolved against 14.02.05 DT-06).",
+        "8_structural_compliance": "✅ — 4 leaves, index + cx."
+      },
+      "points": 1.0
+    },
+    {
+      "unit": "14.06-used-licence-transfer",
+      "applicableCheckpoints": 5,
+      "naDimensions": [4, 5, 6],
+      "scores": {
+        "1_problem_clarity": "✅",
+        "2_persona_specificity": "✅",
+        "3_feature_completeness": "⚠️ — see F-07: two edge-case outcome cells undefined (both in COULD/WONT features).",
+        "7_open_question_resolution": "⚠️ — see F-07: 3 markers deferring to a completed stage.",
+        "8_structural_compliance": "✅ — 3 leaves, index + cx."
+      },
+      "points": 1.0
+    },
+    {
+      "unit": "14.07-monetisation-models-pricing",
+      "applicableCheckpoints": 5,
+      "naDimensions": [4, 5, 6],
+      "scores": {
+        "1_problem_clarity": "✅",
+        "2_persona_specificity": "✅",
+        "3_feature_completeness": "✅ — 5 leaves, each with populated edge-case tables; the rent-to-own-mid-exit gap named in the domain CX is carried as tracked owner questions (14.07.03 Q-02, 14.08.05 Q-01).",
+        "7_open_question_resolution": "⚠️ — see F-09: 1 marker deferring to a completed stage.",
+        "8_structural_compliance": "✅"
+      },
+      "points": 0.5
+    },
+    {
+      "unit": "14.08-vendor-portal-build-qa",
+      "applicableCheckpoints": 5,
+      "naDimensions": [4, 5, 6],
+      "scores": {
+        "1_problem_clarity": "✅",
+        "2_persona_specificity": "✅",
+        "3_feature_completeness": "✅ — 5 leaves; 13 decisions on 14.08.01 alone, each with a concrete gate (three-tier gate D-05, provenance-as-sources D-06, atomic attestation D-13).",
+        "7_open_question_resolution": "⚠️ — see F-10: 1 marker deferring to a completed stage.",
+        "8_structural_compliance": "✅"
+      },
+      "points": 0.5
+    },
+    {
+      "unit": "14.09-digital-refunds-revocation",
+      "applicableCheckpoints": 5,
+      "naDimensions": [4, 5, 6],
+      "scores": {
+        "1_problem_clarity": "✅ — index:10 'Undoing a digital sale — which is not possible.'",
+        "2_persona_specificity": "✅ — Role Matrix distinguishes the B2B Operator ('a studio buyer is often a business — B2B may not have the right at all') and routes the Fan to domain 20.",
+        "3_feature_completeness": "⚠️ — see F-12: the pre-delivery cancellation path and the decline-state copy are specified against a statutory basis the locked launch market does not supply.",
+        "7_open_question_resolution": "⚠️ — see F-11: 1 marker deferring to a completed stage. Otherwise exemplary: 14.09.01 Q-04 is closed with a quoted owner decision, and every remaining row is [OWNER] → /create-prd.",
+        "8_structural_compliance": "✅"
+      },
+      "points": 1.0
+    },
+    {
+      "unit": "14.10-contributor-revenue-royalty-pool",
+      "applicableCheckpoints": 5,
+      "naDimensions": [4, 5, 6],
+      "scores": {
+        "1_problem_clarity": "✅",
+        "2_persona_specificity": "✅",
+        "3_feature_completeness": "✅ — 3 leaves; the WONT-band pool features retain full decision sets and 14.10.03 is explicitly decoupled from them (D-05).",
+        "7_open_question_resolution": "⚠️ — see F-14: 1 marker deferring to a completed stage.",
+        "8_structural_compliance": "✅"
+      },
+      "points": 0.5
+    }
+  ],
+  "totals": {
+    "points": 10.5,
+    "applicableCheckpoints": 57,
+    "ambiguityPercent": 18.42
+  },
+  "findings": [
+    {
+      "id": "F-01",
+      "unit": "14.03-delivery-versioning-library",
+      "severity": "blocking",
+      "dimension": 3,
+      "category": "silent-contradiction",
+      "claim": "Delivery specifies a single per-artifact SHA-256, published before any bytes move and auto-verified against on completion, while the same delivery step is specified elsewhere to rewrite the artifact's bytes per buyer (embedded tempo/key/loop metadata, and a per-buyer forensic watermark). Both cannot hold: for every content product the delivered bytes cannot match the published hash, so the specified verification fails and E-19's escalation path quarantines correctly-delivered builds.",
+      "evidence": "14.03.01-download-delivery-resumable-transfer.md:73 '| Checksum | **SHA-256, published as copyable text** beside the download control | Auto-verified for the Musician; hand-verifiable for the air-gapped Operator (D-09). |' — :82 '3. System shows, **before any bytes move**: download size, **unpacked size** (D-02), version, SHA-256…' — :89 '10. On completion, SHA-256 is verified automatically against the published checksum.' — :114 (E-19) 'A second failure means the **stored artifact** is bad — every buyer of that build will hit it. Escalate: alert vendor and platform, quarantine the build from new grants.' — :184 (D-09) 'The SHA-256 is published as **copyable text**, so the Operator verifies by hand on a machine that has never met us.' CONTRADICTED BY 14.03.05-per-buyer-forensic-watermarking.md:32 'Marking makes each delivered artifact unique, which is why it collides head-on with edge caching (CX-04)…' and :39 '3. Delivery generates a buyer-unique mark and stamps it during transfer (CX-04).' AND BY 14.04.01-sample-loop-pack-catalog.md:275 (D-06) '**Delivered files carry embedded tempo/key/loop metadata**; an estimated key is embedded only where declaration and extraction agree' AND BY digital-goods-marketplace-cx.md:35 (CX-24) 'Delivered audio must be **written** with embedded tempo/key/loop metadata (ACIDized-WAV / Apple-Loops), not merely served… This lands on the *same* delivery step as per-buyer watermarking: two writers on one artifact.'",
+      "notFlagged": "No marker on either side. The nearest tracked question, 14.04.01 Q-07, asks only 'which feature owns writing bytes at delivery?' and names caching as the consequence: 'Embedded metadata (D-06) and per-buyer watermarking (14.03.05) both modify the same file on the same delivery step, and 14.03.05 DT-02 already establishes that this step cannot be cached at the edge… Two writers on an uncacheable path is an architecture question with a product trigger' (14.04.01:293). It never reaches the published checksum. 14.03.01 Q-05 likewise enumerates only CDN, P2P and delta patching as the foreclosed defences.",
+      "materiality": "14.03.01, 14.03.03 and 14.04.01 are all MUST-band (moscow-ledger.md:136-138); metadata embedding is not optional for the store's declared launch inventory. Watermarking (14.03.05) is COULD, so metadata embedding alone is enough to fire the contradiction.",
+      "forcedInvention": "An implementer must invent the integrity contract: (a) publish the pre-write artifact hash and accept that every content download fails E-19 verification and quarantines the build; (b) compute a per-grant hash after the stamp, which cannot be shown 'before any bytes move' on a 100 GB streamed write and destroys D-09's hand-verification story; or (c) hash only the unwritten payload and invent a second, unspecified verification object. Nothing in the tree chooses."
+    },
+    {
+      "id": "F-02",
+      "unit": "14.03-delivery-versioning-library",
+      "severity": "warning",
+      "dimension": 7,
+      "category": "untracked-unconfirmed-decision",
+      "claim": "A row in the Decisions table is not a decision — it is a recommendation explicitly awaiting confirmation, with no owner and no deferral target, and no Open Question covering it.",
+      "evidence": "14.03.05-per-buyer-forensic-watermarking.md:89 '| D-03 | A stamping failure serves the file unmarked and logs, rather than blocking the download | Recommendation per the edge-case table: never block a paying customer for an anti-piracy convenience. **Flagged for confirmation.** |' The file's three Open Questions cover the mark's survivability (Q-01), buyer consent (Q-02) and vendor-enabled-vs-default (Q-03) — none covers the failure posture. Contrast the correctly-tracked sibling 14.02.02:83 '| D-01 | Recommend fail-**open**… Recorded as a recommendation, not a lock: this is a product decision (Q-01).'",
+      "forcedInvention": "Whether the stamping-failure posture is locked or still open — an implementer cannot tell whether to build to D-03 or wait for a confirmation nobody is assigned to give."
+    },
+    {
+      "id": "F-03",
+      "unit": "14.01-catalog-compatibility",
+      "severity": "warning",
+      "dimension": 7,
+      "category": "stale-deferral-target",
+      "claim": "Four cells defer to `/ideate-discover Step 5 deepening`, a stage that has already completed — so no future stage resolves them. One is an Edge Cases outcome cell, leaving a failure mode with no defined behaviour and no owner.",
+      "evidence": "14.01-catalog-compatibility-cx.md:37 '5. **State transition conflict**: A buyer editing their rig mid-checkout can flip a verdict after the withdrawal-waiver (14.09.01) was shown but before… `[PENDING — /ideate-discover Step 5 deepening]`'; :59 '5. **State transition conflict**: `[PENDING — /ideate-discover Step 5 deepening]`'; :90 '**Role scoping**: `[PENDING — /ideate-discover Step 5 deepening]`'; 14.01.04-rig-profile-compatibility-checker.md:53 '| Buyer's declared rig is wrong (says macOS 14, actually on 12) | … `[PENDING — /ideate-discover Step 5 deepening]`'. That the tree treats this stage as complete is stated at digital-goods-marketplace-index.md:135-143, where every owner question is 'Deferral re-pointed from the completed `/ideate-validate`'.",
+      "materiality": "14.01.04 is COULD-band, which caps the blast radius; the rig-wrong refund outcome is separately settled at 14.09.02 D-02, so the undefined cell is a documentation gap rather than a behavioural void.",
+      "forcedInvention": "Nothing at all for the CX role-scoping cells; for 14.01.04:53 the reader must decide whether the cell's outcome is 14.09.02 D-02's unconditional refund or something narrower."
+    },
+    {
+      "id": "F-04",
+      "unit": "14.02-licensing-activation-entitlement",
+      "severity": "warning",
+      "dimension": 7,
+      "category": "stale-deferral-target",
+      "claim": "Five cells defer to the completed `/ideate-discover Step 5`; four of them are Edge Cases outcome cells, so four named failure modes have no defined behaviour and no owner.",
+      "evidence": "14.02.02-activation-seats-machine-authorisation.md:46 '| Hardware upgrade changes the fingerprint (new RAM, new drive) | Fingerprint drifts; a strict match deactivates a machine that never moved | `[PENDING — /ideate-discover Step 5 deepening]`'; 14.02.03-offline-activation-drm-bridges.md:61 '| Third-party DRM provider is down at purchase | Payment taken, deposit fails | `[PENDING — /ideate-discover Step 5 deepening]`'; :63 '| Third-party account linked to a different person than the buyer | Effectively an undeclared gift/transfer, bypassing 14.06 | `[PENDING …]`'; 14.02.04-serial-blacklisting-anti-piracy.md:52 '| Chargeback triggers automatic blacklist, but the chargeback was fraud against the *buyer* | Victim of card theft is punished twice | `[PENDING …]`'; 14.02-licensing-activation-entitlement-cx.md:109 '**Role scoping**: `[PENDING — /ideate-discover Step 5 deepening]`'.",
+      "materiality": "All four affected features are COULD (14.02.02, 14.02.04, 14.02.06) or WONT (14.02.03) — none is in the launch set. 14.02.02's fingerprint tolerance is separately tracked as Q-02 ('How tolerant is the machine fingerprint to hardware change?', owner Agent), so that cell is duplicative rather than orphaned.",
+      "forcedInvention": "The chargeback-fraud blacklist outcome (14.02.04:52) has no counterpart question anywhere in the unit: an implementer must invent whether a card-theft victim is blacklisted, notified, or exempted."
+    },
+    {
+      "id": "F-05",
+      "unit": "14.04-sound-content-catalogs",
+      "severity": "warning",
+      "dimension": 7,
+      "category": "stale-deferral-target",
+      "claim": "Three cells defer to the completed `/ideate-discover Step 5`; one is an Edge Cases outcome cell describing a permanently-broken buyer state with no defined remedy.",
+      "evidence": "14.04.03-project-template-catalog-dependency-manifest.md:55 '| Vendor doesn't bundle, buyer can't get the loops (pack delisted) | Session permanently uncompletable for that buyer | `[PENDING — /ideate-discover Step 5 deepening]`'; 14.04-sound-content-catalogs-cx.md:99 '5. **State transition conflict**: `[PENDING — /ideate-discover Step 5 deepening]`'; :109 '**Role scoping**: `[PENDING — /ideate-discover Step 5 deepening]`'.",
+      "materiality": "14.04.03 is COULD-band.",
+      "forcedInvention": "Whether a buyer holding an uncompletable template gets a refund, a substitute, or a disclosure — no tracked question in 14.04.03 (Q-01 formats, Q-02 legality of bundling, Q-03 product-vs-education) covers the remedy."
+    },
+    {
+      "id": "F-06",
+      "unit": "14.05-beat-instrumental-licensing",
+      "severity": "warning",
+      "dimension": 7,
+      "category": "stale-deferral-target",
+      "claim": "Two cells defer to the completed `/ideate-discover Step 5`; one is the outcome cell for the exclusivity commit race — the sharpest money-and-copyright race in the domain.",
+      "evidence": "14.05.02-exclusive-rights-purchase-auto-delist.md:51 '| Lease checkout completes microseconds before the exclusive | The exclusive is encumbered by a lease sold after the buyer decided to buy | `[PENDING — /ideate-discover Step 5 deepening]`'; 14.05-beat-instrumental-licensing-cx.md:110 '**Role scoping**: `[PENDING — /ideate-discover Step 5 deepening]`'.",
+      "materiality": "Partially covered elsewhere: digital-goods-marketplace-cx.md:359 (CX-18 q5) states 'A non-exclusive lease checkout racing an exclusive checkout — resolved at the same hard-lock as CX-15; if the exclusive commits first, the pending lease is refused, not grandfathered.' That answers the exclusive-first ordering but not the lease-first ordering the cell actually names. 14.05.02 is COULD-band.",
+      "forcedInvention": "Whether a lease that commits microseconds before an exclusive is honoured (encumbering the exclusive the buyer just paid for), voided, or disclosed-and-honoured."
+    },
+    {
+      "id": "F-07",
+      "unit": "14.06-used-licence-transfer",
+      "severity": "warning",
+      "dimension": 7,
+      "category": "stale-deferral-target",
+      "claim": "Three cells defer to the completed `/ideate-discover Step 5`; two are Edge Cases outcome cells.",
+      "evidence": "14.06.02-licence-transfer-escrow.md:55 '| Seller's machine is offline and cannot be deactivated | Under fail-open (14.02.02 D-01), the seller's copy keeps working after they sold it | `[PENDING — /ideate-discover Step 5 deepening]`'; 14.06.03-bundled-software-with-used-hardware.md:52 '| Hardware arrives dead; buyer returns it | Licence must claw back (14.09.03) — and the seller may have already deactivated their machines | `[PENDING …]`'; 14.06-used-licence-transfer-cx.md:73 '**Role scoping**: `[PENDING — /ideate-discover Step 5 deepening]`'.",
+      "materiality": "Lowest in the domain: 14.06.02 is WONT and 14.06.03 is COULD (moscow-ledger.md:751, :612), and the offline-seller physics is stated honestly at digital-goods-marketplace-cx.md:231 ('under fail-open (14.02.02 D-01), a seller's offline machine keeps running after they sold the licence').",
+      "forcedInvention": "Whether the escrow blocks settlement on an un-deactivatable seat or settles and accepts the double-running licence."
+    },
+    {
+      "id": "F-08",
+      "unit": "14.03-delivery-versioning-library",
+      "severity": "warning",
+      "dimension": 7,
+      "category": "stale-deferral-target",
+      "claim": "A CX role-scoping cell defers to the completed `/ideate-discover Step 5`.",
+      "evidence": "14.03-delivery-versioning-library-cx.md:135 '**Role scoping**: `[PENDING — /ideate-discover Step 5 deepening]`'.",
+      "forcedInvention": "Nothing behavioural — the affected pair's roles are recoverable from the leaf Role Lenses. Recorded because the marker names a stage that cannot run again."
+    },
+    {
+      "id": "F-09",
+      "unit": "14.07-monetisation-models-pricing",
+      "severity": "warning",
+      "dimension": 7,
+      "category": "stale-deferral-target",
+      "claim": "A CX role-scoping cell defers to the completed `/ideate-discover Step 5`.",
+      "evidence": "14.07-monetisation-models-pricing-cx.md:113 '**Role scoping**: `[PENDING — /ideate-discover Step 5 deepening]`'.",
+      "forcedInvention": "Nothing behavioural."
+    },
+    {
+      "id": "F-10",
+      "unit": "14.08-vendor-portal-build-qa",
+      "severity": "warning",
+      "dimension": 7,
+      "category": "stale-deferral-target",
+      "claim": "A CX role-scoping cell defers to the completed `/ideate-discover Step 5`.",
+      "evidence": "14.08-vendor-portal-build-qa-cx.md:91 '**Role scoping**: `[PENDING — /ideate-discover Step 5 deepening]`'.",
+      "forcedInvention": "Nothing behavioural."
+    },
+    {
+      "id": "F-11",
+      "unit": "14.09-digital-refunds-revocation",
+      "severity": "warning",
+      "dimension": 7,
+      "category": "stale-deferral-target",
+      "claim": "CX-03's role scoping defers to the completed `/ideate-discover Step 5`, and the sibling file has already supplied the answer the marker is waiting for.",
+      "evidence": "14.09-digital-refunds-revocation-cx.md:69 '**Role scoping**: `[PENDING — /ideate-discover Step 5 deepening]`' — while 14.09.01-withdrawal-right-waiver-capture.md:189 says the scoping is available now: 'Step 6 should scope CX-03's currently-unscoped role question using D-06: the pre-download refund is a distinct trivial path (E-02) *and* it self-resolves at day 15'.",
+      "forcedInvention": "Nothing behavioural — the answer exists at 14.09.01:189 and 14.09.02 D-06; the marker is stale bookkeeping."
+    },
+    {
+      "id": "F-12",
+      "unit": "14.09-digital-refunds-revocation",
+      "severity": "warning",
+      "dimension": 3,
+      "category": "silent-contradiction",
+      "claim": "The decline state is specified to offer, in words, a 14-day cancel-for-full-refund right, while the same file forbids naming a cancellation right to non-EU/UK buyers — and the locked launch market makes every launch buyer non-EU/UK, with the above-floor policy explicitly unset. The existence and the wording of the pre-delivery cancellation path at launch are therefore both undetermined.",
+      "evidence": "14.09.01-withdrawal-right-waiver-capture.md:125 (E-01) User Sees: '\"You can download once you accept that delivery starts immediately. Or cancel for a full refund within 14 days — or wait: from <date> this download will start without asking.\" The third option is stated, because concealing it would be the hostile version of an honest rule.' — :126 (E-02) 'A distinct, one-click \"Cancel this order\" path on the library row for 14 days' — :161 (States/Empty) 'a plain \"Cancel for a full refund until <date>\" beside it'. CONTRADICTED BY :144 (E-20) '**Buyer outside the EU/UK/EEA** | The gate still fires — no territorial branch (D-08) — but with neutral wording that does not assert a right they never had. Naming a 14-day right to a buyer who has none is a misrepresentation that could manufacture the very right it describes. | \"By downloading now you agree delivery starts immediately.\" **No mention of a cancellation right.**' Launch audience per 14.09.01:232 (Q-04, RESOLVED): 'launch sales are US-first… every launch buyer meets the neutral wording D-08 already specifies for non-EU/UK'. Policy above the floor is open: :229 (Q-01) 'with a US-first launch there is no statutory floor to sit above, so the policy is not a top-up — it is the entire consumer position.' The same statutory framing is restated as unconditional behaviour in the sibling: 14.09.02-digital-refund-eligibility-adjudication.md:149 'Statutory backstop: this path must remain available for **14 days from purchase** (Art. 9(2)(a)) regardless of the store's discretionary policy' and :279 (D-06).",
+      "materiality": "14.09.01 and 14.09.02 are both MUST-band and both ship in v1.5 (moscow-ledger.md:141-142). The gate's firing behaviour itself is unambiguous (D-08, D-15); what is contradictory is the cancellation entitlement the decline/empty states advertise.",
+      "forcedInvention": "For a US buyer who declines the waiver, an implementer must invent either (a) the promise, offering a one-click 14-day full refund with no policy decision behind it, or (b) the silence, leaving the Declined and Empty states with no stated exit and contradicting E-01's explicit 'the third option is stated' requirement and D-09's 'the decline message states the date the gate stops asking'."
+    },
+    {
+      "id": "F-13",
+      "unit": "14-digital-goods-marketplace (domain root)",
+      "severity": "warning",
+      "dimension": 7,
+      "category": "resolved-row-with-unassigned-action",
+      "claim": "Q-12 is marked RESOLVED while carrying a corrective action against another document, with no owner and no deferral target — so the participant-list defect it names has nobody to fix it. The defect is real: the global row still omits 14.",
+      "evidence": "digital-goods-marketplace-index.md:144 '**One registration gap carried forward**: the global row's Serves list reads `03,04,05,06,13,16,17,20,24` and omits **14** — ownership is settled, the participant list needs 14 added. | Agent | ✅ `ideation-cx.md` (Reviews, Ratings & Portable Reputation) + `digital-goods-marketplace-cx.md` escalation table'. Verified against the cited source: ideation-cx.md:25 '| **Reviews, Ratings & Portable Reputation** | pure-cross-cut | 03,04,05,06,13,16,17,20,24 | …' — 14 is absent, while digital-goods-marketplace-cx.md:549 registers this domain as a participant: '| **Reviews & Ratings** | 05, 13, 14, 16 | …'.",
+      "forcedInvention": "Nothing product-level; the risk is that a downstream reader of ideation-cx.md alone concludes domain 14 is not a participant in the reviews cross-cut and omits the listing's reserved review surface (DT-06)."
+    },
+    {
+      "id": "F-14",
+      "unit": "14.10-contributor-revenue-royalty-pool",
+      "severity": "warning",
+      "dimension": 7,
+      "category": "stale-deferral-target",
+      "claim": "A CX role-scoping cell defers to the completed `/ideate-discover Step 5`.",
+      "evidence": "14.10-contributor-revenue-royalty-pool-cx.md:66 '**Role scoping**: `[PENDING — /ideate-discover Step 5 deepening]`'.",
+      "forcedInvention": "Nothing behavioural."
+    }
+  ],
+  "hostileHypothesesRaisedAndKILLED": [
+    {
+      "hypothesis": "The EU/UK withdrawal-waiver gate (14.09.01, MUST) is built for a market the locked launch decision excludes — an implementer cannot tell whether the gate fires for a US buyer, and 'no waiver → no bytes' would block all launch deliveries.",
+      "killedBy": "14.09.01:216 (D-08) 'The gate does **not branch on territory**; it fires for every buyer, and only the **wording** varies by locale' + :223 (D-15) enumerating the only four non-firing cases + :232 (Q-04) closing the jurisdiction question with a quoted owner decision. Two implementers reading this build the same gate."
+    },
+    {
+      "hypothesis": "Domain CX-07 ('Subscription revenue is the pool's only funding source. No subscription, no pool.') contradicts CX-20/CX-21, which settle contributor payout against each entitlement's allocated sale price.",
+      "killedBy": "digital-goods-marketplace-cx.md:530 (R-03) reconciles them explicitly: 'Note: this is distinct from CX-21, where a *chargeback on an entitlement* does reverse a contributor accrual — that reversal flows through the entitlement/allocated-price path, not through the subscription pool.' Reinforced by 14.10.03 D-05's decoupling of splits from the pool."
+    },
+    {
+      "hypothesis": "The domain CX admits an undefined behaviour — 'Rent-to-own schedules in flight have **no defined behaviour** — an open gap' (cx:134) — with no owner or deferral target.",
+      "killedBy": "The gap is carried as two properly tracked owner questions: 14.07.03 Q-02 '`[OWNER]` Per DT-02: **what happens when a vendor exits mid-schedule?**' (User → /create-prd) and 14.08.05 Q-01. Tracked deferral is the documented mechanism; 14.07.03 is also WONT-band."
+    },
+    {
+      "hypothesis": "The domain root's Role Matrix section header says 'Two findings from this matrix, both material:' and then lists three.",
+      "killedBy": "Cosmetic miscount (index:96-105); it changes nothing an implementer builds. Dropped as noise."
+    },
+    {
+      "hypothesis": "The domain root index/cx filenames lack the `14-` numeric prefix its children use, breaking the structure map.",
+      "killedBy": "Convention check against siblings: 13-gear-marketplace/gear-marketplace-index.md, 05-services-marketplace/services-marketplace-index.md, 09-rights-ownership/rights-ownership-index.md all follow the same unprefixed-root pattern. Consistent, not a defect."
+    },
+    {
+      "hypothesis": "14.09.03:53 carries a bare `[PENDING]` with no owner and no target.",
+      "killedBy": "The same file tracks it as Q-03 with owner and target: 'Per 14.02.05 Q-02: does revoking a pack retroactively un-clear a track already released with it? … | User | /create-prd'. Cross-reference carries it."
+    },
+    {
+      "hypothesis": "Numeric parameters drift across the 64 files (grant windows, chargeback windows, retention, SLAs).",
+      "killedBy": "206 quantity-bearing sentences extracted and cross-compared; every recurring value is stated identically wherever it appears (72 h grant window incl. the 'starts on restore' variant, 30 s revocation kill, 12 h restore, 180 days cold-storage/draft, 30-day promo suppression, 7-year waiver retention, 120-day card / 8-week / 13-month SEPA, T-90/T-30/T-7 term notices)."
+    }
+  ],
+  "coverageNote": "Enumeration matches the expected 11 units / 64 files exactly. Depth is not uniform and the difference is disclosed: the corpus is 1,173,597 characters (~290K tokens), which cannot be ingested raw in one session. Read at full depth: the domain root index and CX in full, the whole 14.09 unit (index, CX, 14.09.01 in full; 14.09.02 and 14.09.03 with all sections except Role Lens / Deep Think / Cross-Cut Notes), 14.03.05 in full, 14.01.02 in full. Read section-selective for the remaining 54 files: every Decisions row and every Open Questions row (206 Q rows, 100% parsed), plus targeted full-text reads of Edge Case / Concrete-parameter / States rows surfaced by four whole-corpus programmatic sweeps (required-section presence on all 64 files; tracking-marker inventory on all 64; 206-sentence numeric-claim cross-comparison on all 64; checksum/integrity sweep on all 64). Skipped at prose level in those 54 files: Role Lens tables, Deep Think rationale narrative, and Cross-Cut Notes pointer lists — presence of each was verified programmatically, and the blocking finding F-01 was in fact recovered from a sweep rather than a linear read. Scoring denominators are small (5 applicable checkpoints for each sub-domain unit) because Constraint Explicitness, Success Measurability and Competitive Positioning are owned by meta/constraints.md, meta/ success metrics and meta/competitive-landscape.md respectively — none of which is in this domain's scope; the domain root retains Constraint Explicitness and Competitive Positioning because it authors both (cx:559-572 routing table; index:13 named-competitor differentiation). The small denominators inflate the percentage per finding: 10.5 points / 57 checkpoints = 18.42%, of which 9.0 points are ⚠️ half-marks and 1.0 is the single ❌. One structural caveat worth passing upstream: 23 of the tree's PENDING markers point at `/ideate-discover Step 5`, a stage this tree elsewhere treats as complete (every owner question in the domain index reads 'Deferral re-pointed from the completed /ideate-validate'), so those 23 cells are unreachable by any future stage — findings F-03 through F-11 and F-14 enumerate all of them by file and line."
+}

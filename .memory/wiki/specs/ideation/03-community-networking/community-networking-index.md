@@ -38,7 +38,7 @@ The social layer — connections and follows, the activity feed, collaborator ma
 | 03.06 | Scenes & Communities | sub-domain | [03.06-scenes-communities/](./03.06-scenes-communities/) | [BREADTH] | 14 hypotheses |
 | 03.07 | Forums & Craft Q&A | feature | [03.07-forums-craft-qa.md](./03.07-forums-craft-qa.md) | [SURFACE] | 3 hypotheses |
 | 03.08 | Contests, Challenges & Beat Battles | sub-domain | [03.08-contests-challenges-beat-battles/](./03.08-contests-challenges-beat-battles/) | [BREADTH] | 14 hypotheses |
-| 03.09 | Local Jam & Open Mic Discovery | feature | [03.09-local-jam-open-mic-discovery.md](./03.09-local-jam-open-mic-discovery.md) | [SURFACE] | 3 hypotheses |
+| 03.09 | Local Jam & Open Mic Discovery | feature | [03.09-local-jam-open-mic-discovery.md](./03.09-local-jam-open-mic-discovery.md) | [SURFACE] | 4 hypotheses |
 | 03.10 | Peer & Scene Listening Rooms | feature | [03.10-peer-scene-listening-rooms.md](./03.10-peer-scene-listening-rooms.md) | [SURFACE] | 3 hypotheses |
 | 03.11 | Conference & Industry Event Networking Mode | feature | [03.11-conference-event-networking-mode.md](./03.11-conference-event-networking-mode.md) | [SURFACE] | 3 hypotheses |
 
@@ -118,19 +118,21 @@ The social layer — connections and follows, the activity feed, collaborator ma
 
 ## Open Questions
 
+> **Open-question governance.** Every unresolved row in this table is an explicit delivery hold. The **Owner** cell is accountable; the **hard decision deadline** is the gate immediately before the pipeline stage named in **Deferred To** begins; and the **Question** text is the exact policy, behavior, or contract decision blocked. **Deferred To** names the destination only and never replaces the deadline. No downstream stage may begin until its owner resolves the row or records a formally approved supersession.
+
 | # | Question | Owner | Deferred To |
 |---|----------|-------|-------------|
 | Q-01 | ~~Which candidate children are sub-domains vs features?~~ **RESOLVED** — see the Children table and Classification Record. | Agent | ✅ `/ideate-discover` Step 3 |
 | Q-02 | ~~Are any candidate children actually cross-cuts?~~ **RESOLVED** — 6 mechanisms routed; see `community-networking-cx.md`. Notably **Direct Messaging was absent from all 16 candidates** yet every contact surface here terminates in one. | Agent | ✅ `/ideate-discover` Step 3 |
-| Q-03 | **Is 03.03.04 (Open Collaboration Calls) a duplicate of domain 04 (Opportunities & Casting)?** The stated boundary is "has a hiring process", which is thin — and users do not classify their own needs. The counter-argument for keeping it: 03.03.04 DT-02 finds a call is the earliest possible split-capture point, which is thesis-shaped. The single most likely structural error in this domain. | User | `/ideate-validate` |
-| Q-04 | **How is the seeded-population / zero-density contradiction resolved?** (`community-networking-cx.md#CX-04`) A seeded scene shows 60 venues and a graph density of zero on the same screen — two of this domain's own decisions producing an incoherent joint claim. Both escapes are unattractive. | User | `/ideate-discover` Step 5 |
-| Q-05 | **How does a musician with no credits get discovered?** (03.03.01 DT-02) Evidence-first ranking is a rich-get-richer machine: you need credits to be discoverable, discoverability to get hired, and hiring to get credits. The domain has only two escapes — contests (03.08.02 DT-02) and jams (03.09 DT-01) — and the first only works if a contest generates a credit (03.08 Q-03). | User | `/ideate-discover` Step 5 |
-| Q-06 | **Does the collaboration graph read booking data (domain 17), not just credits?** (03.04.01 DT-03) If it reads credits only, the **Operator persona is invisible in the graph** — no paths to venues, no intros to bookers — and domains 16/17 lose this domain's core mechanism entirely. | User | `/ideate-discover` Step 5 |
-| Q-07 | **What is the reachability default, given that one human is routinely three personas in a day?** (03.04.04 DT-04) The Producer needs a wall, the Musician needs openness, and they are the same person on the same account. Keying the default to a persona is impossible. | User | `/ideate-discover` Step 5 |
+| Q-03 | **Is 03.03.04 (Open Collaboration Calls) a duplicate of domain 04 (Opportunities & Casting)?** The stated boundary is "has a hiring process", which is thin — and users do not classify their own needs. The counter-argument for keeping it: 03.03.04 DT-02 finds a call is the earliest possible split-capture point, which is thesis-shaped. The single most likely structural error in this domain. | User | `/create-prd-architecture` |
+| Q-04 | ~~**How is the seeded-population / zero-density contradiction resolved?** (`community-networking-cx.md#CX-04`) A seeded scene shows 60 venues and a graph density of zero on the same screen.~~ **RESOLVED** — city facts and platform density are answers to **different questions with different subjects** and must never share an axis or a widget; the contradiction was a presentation defect, so nothing is hidden, nothing is blended, and no edge is seeded (03.04.01 D-01 holds). | User | ✅ Resolved — [03.06.04](./03.06-scenes-communities/03.06.04-scene-seeding-claiming-cold-start.md) D-13 / DT-13; `community-networking-cx.md#CX-04` |
+| Q-05 | [OWNER] **How does a musician with no credits get discovered?** (03.03.01 DT-02) Evidence-first ranking is a rich-get-richer machine: you need credits to be discoverable, discoverability to get hired, and hiring to get credits. The domain has only two escapes — contests (03.08.02 DT-02) and jams (03.09 DT-01) — and the first only works if a contest generates a credit (03.08 Q-03). | User | `/create-prd` |
+| Q-06 | ~~**Does the collaboration graph read booking data (domain 17), not just credits?** (03.04.01 DT-03)~~ **RESOLVED** — yes. Edges are **multi-source with per-source evidentiary class**, decided precisely because "a credit-only graph makes the Operator persona invisible and strands domains 16/17". Which domain-17 edges qualify (public performance vs consented private booking) is the narrower residue, tracked as 03.04.01 Q-04. | User | ✅ Resolved — [03.04.01](./03.04-warm-intros-collaboration-graph/03.04.01-collaboration-graph-path-finding.md) D-02 |
+| Q-07 | **What is the reachability default, given that one human is routinely three personas in a day?** (03.04.04 DT-04) The Producer needs a wall, the Musician needs openness, and they are the same person on the same account. Keying the default to a persona is impossible. 03.04.04 D-04 fixes only the launch posture (density-gated, permissive until the graph is dense); the steady-state default is the inbound-contact permission model itself. | User | `/create-prd-security` |
 | Q-08 | **What is the DSAR answer for third-party-authored statements about a person?** (03.05.02 DT-02, 03.01.03 DT-04) Private rolodex notes and endorsements are the **same problem twice** and need one answer: honouring exposes the author, refusing may be unlawful. | User | `/create-prd-security` |
-| Q-09 | **Is the feed a Must at all?** (03.02 Q-02) It is the most expensive way to manufacture daily utility and the easiest to get wrong. 03.02.02 DT-02 finds the Fan's actual value rides on an **alert path that bypasses ranking entirely** — which may be the real Must, with the feed as a Could. | User | MoSCoW |
-| Q-10 | Is "temporal scene membership" one mechanism serving three surfaces? (`#CX-07`) Conference mode (03.11 DT-02) and the touring musician (03.06.01 DT-03) were found independently and describe the same thing. | User | `/ideate-validate` |
-| Q-11 | Q-01 in personas.md asks whether a dealer persona is needed for domains 13/14/15. Not triggered here — this domain's Role Matrix is well served by the four personas, with the Operator's thinness (see the Role Matrix note) being a **graph-source problem** (Q-06), not a persona gap. | Agent | — (evidence for `/ideate-validate`) |
+| Q-09 | ~~**Is the feed a Must at all?** (03.02 Q-02)~~ **RESOLVED** — no. The MoSCoW ledger places **03.02.01 Feed Composition at Should**, **03.02.02 Ranking & Feed Controls at Could** and **03.02.03 Native Posts at Won't**, while **03.01.01 Follows is a Must** — the edge the Fan's alert path rides on. 03.02.02's rationale states it directly: "the Fan's actual value (gig alerts) bypasses ranking, and at cold start there is no engagement data to rank on anyway." The alert path is the Must; the feed is not. | User | ✅ Resolved — [moscow-ledger.md](../moscow-ledger.md) |
+| Q-10 | Is "temporal scene membership" one mechanism serving three surfaces? (`#CX-07`) Conference mode (03.11 DT-02) and the touring musician (03.06.01 DT-03) were found independently and describe the same thing. Step 6 narrowed it to a **composition** (temporal membership + bounded reachability relaxation) explicitly "without pre-empting" the fold question; what remains is the component boundary. | User | `/create-prd-architecture` |
+| Q-11 | ~~Q-01 in personas.md asks whether a dealer persona is needed for domains 13/14/15.~~ **RESOLVED for this domain** — not triggered here: the Role Matrix is served by the four personas, and the Operator's thinness (see the Role Matrix note) was a **graph-source problem** now closed by Q-06 (03.04.01 D-02, multi-source edges), not a persona gap. The dealer-persona question itself remains open under its own owner and has been re-pointed to `/create-prd`. | Agent | ✅ Resolved — [personas.md](../meta/personas.md) Q-01 · [vision.md](../../vision.md) Q-05 |
 
 ## Not-Product Concerns Routed Out
 
@@ -140,3 +142,23 @@ The social layer — connections and follows, the activity feed, collaborator ma
 |---|---|---|
 | **Graph storage + 2-hop traversal on a hot path** | Per `#CX-02`, reachability makes graph traversal run on **every inbound contact attempt**, and per `#CX-01` matching runs it per-candidate per-query. Recursive CTEs over Supabase Postgres at this frequency is an architecture decision, not a product one — and it is the largest technical consequence of this domain. | `/create-prd-architecture` |
 | **Feed fan-out on read vs write** | Per D-13a a band with 40k fan followers sets the platform's write amplification; per `#CX-03` a suppression control that stops fan-out (rather than filtering at render) changes the model again. | `/create-prd-architecture` |
+
+
+<!-- spec-graph: auto-generated -->
+## Related Specs
+
+### Constrained by
+- [[decisions.md#d-15|D-15]]
+- [[decisions.md#d-19|D-19]]
+- [[decisions.md#d-18|D-18]]
+- [[decisions.md#d-01|D-01]]
+- [[decisions.md#d-16|D-16]]
+- [[decisions.md#d-02|D-02]]
+- [[decisions.md#d-03|D-03]]
+- [[decisions.md#d-04|D-04]]
+- [[decisions.md#d-05|D-05]]
+- [[decisions.md#d-06|D-06]]
+- [[decisions.md#d-07|D-07]]
+- [[decisions.md#d-08|D-08]]
+- [[decisions.md#d-13|D-13]]
+- [[decisions.md#d-13a|D-13a]]

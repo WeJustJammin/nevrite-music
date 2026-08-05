@@ -1,0 +1,96 @@
+{
+  "domain": "12-release-distribution",
+  "verdicts": [
+    {
+      "findingId": "12-release-distribution#001",
+      "upheld": true,
+      "finalSeverity": "warning",
+      "refutationReason": "not-refuted",
+      "reason": "All quotes verified verbatim. release-distribution-index.md:85-86 states 'the rows above are the **maximum** access any child in that node grants'; the matrix at :73-81 violates that rule in five rows. 12.01-release-builder-index.md:45-46 grants Producer Full on 12.01.03 and 12.01.04 (domain row says Config); 12.02-ddex-delivery-messaging-index.md:46 grants Musician AND Producer Config on 12.02.04 (domain row says Read-only / None); 12.03-...-index.md:49, 12.05-...-index.md:39 and 12.06-...-index.md:43 each grant Producer Config (domain rows say Read-only). Legend at :82 orders Full > Config > Read-only > None, so Config on a child is strictly more than the Read-only/None the parent advertises. No file reconciles this: the 'Reading the matrix' prose at :92-96 in fact reinforces the wrong reading ('their *permissions* are mostly read-only'), naming 12.01.03 and 12.01.04 as places the Producer's *facts* matter while their permissions do not — precisely the two rows where the child grants them Full. Downgraded from nothing (already warning) rather than blocking: the per-child matrices are one link away and are the operative source, so the divergence risk is real but bounded."
+    },
+    {
+      "findingId": "12-release-distribution#002",
+      "upheld": true,
+      "finalSeverity": "warning",
+      "refutationReason": "not-refuted",
+      "reason": "Both mismatches verified verbatim. release-distribution-index.md:36 carries `[BREADTH]` for 12.06 while 12.06-content-id-ugc-claiming/12.06-content-id-ugc-claiming-index.md:5 reads '> **Status**: [SURFACE]'. release-distribution-index.md:38 carries `[SURFACE]` for 12.08 while 12.08-catalog-migration-exit.md:5 reads '> **Status**: [PARTIAL]'. The other five sub-domain indexes all read [BREADTH] at line 5 and match their parent rows, so this is drift in exactly two nodes, not a vocabulary mismatch across the board. [PARTIAL] appears nowhere in the domain's stated status vocabulary at all. Nothing in either file, the domain index note at :26-27, or the CX file reconciles the two readers. Warning is the right level — this is process metadata, not product behaviour, so no implementer invents anything, but two depth-driven consumers do disagree about which nodes are still owed work."
+    },
+    {
+      "findingId": "12-release-distribution#003",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "Quotes are accurate — 12.08's exit table (12.08-catalog-migration-exit.md:52-58) does have only two prefix rows, and 12.07:259 does say it owes 12.08 a third. But the disposition the finding calls forced invention is stated in three places. (1) 12.08:36-39, in the same file: 'imported ISRCs are kept whatever prefix they came from ... (\"Kept, provenance = *a third party's*. They are not ours and not the artist's\"). **Nothing here is pending.**' (2) 12.08:62-64 fixes the exit posture outright — 'they take **everything**, and the reason they stay is that no other platform can *use* it'. (3) 12.08:87 specifies the manifest content — 'Export is produced: masters, **identifiers with prefix provenance**, credits, splits, attestations'. The contested row is textually scoped to WeJammin's own prefix only: 12.08 Q-01:163 reads 'Do **WeJammin-prefix** ISRCs leave with the artist?' and domain Q-05 is scoped the same way, so the failure scenario's second implementer — who routes a third-party prefix into Q-01 — is misreading a question that names its own scope. WeJammin is not the registrant of a third-party prefix and therefore has nothing to withhold; 12.07 D-01 ('One recording, one ISRC, forever') carries it with the recording. The missing table row is a presentation gap over an answer both files already give."
+    },
+    {
+      "findingId": "12-release-distribution#004",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "The finding's load-bearing assertion — that 12.01.05 'lists exactly five fields ... none described as selecting a prefix pool' — is contradicted by the file it cites. 12.01.05-label-copy-distributor-of-record.md:35-37 reads: 'The **distributor of record** is the party the DSP holds responsible for the delivery. Naming [it] determines ... who the DSP talks to, who can issue a takedown, **whose ISRC prefix is used**, and what happens at exit.' Distributor of record is one of the five label-copy fields (:51), so 'label copy determines which prefix pool' is a correct paraphrase, not an unsourced CX claim. 12.07 states the same link in its own Cross-Cut Notes (12.07-identifier-assignment-at-delivery.md:265): 'CX-07: distributor of record determines whose prefix is used, and 12.01.05 already commits to stating that in plain language at the moment it is set' — so the mechanism is present in 12.07, just not in the 'Allocation rules' subsection the finding checked. The residual (can an artist name their own label entity?) is a well-formed tracked deferral with an owner and a target in two places: 12.01.05 Q-01:122 ('Is WeJammin **always** the distributor of record, or can an artist deliver through WeJammin while naming their own label?' | User | `/create-prd`) and 12.07 Q-01:295 (registrant-vs-aggregator pool | User | `/create-prd`). 12.01.05:51 even supplies the interim default — 'Distributor of record | WeJammin (pending Q-01)' — so no implementer is forced to invent a pool-selection rule today."
+    },
+    {
+      "findingId": "12-release-distribution#005",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "The claim '12.02.03 has not been changed' is false on the file. 12.02.03-delivery-choreography-acknowledgement.md:335 records the reconciliation as done and ratified, in the qualifier form: '**Ratified division of the two waits**: the **ack wait** ... is what raises `Sent · overdue` / `Received · overdue`; the **live wait** ... stays 12.03.02's own concern, evaluated against store-local midnight plus the partner's publish window (12.03.02 D-07).' The qualifier vocabulary is used throughout the same file — :198 ('never raises an artist-facing `Overdue` qualifier'), :249 and :250 ('no `Overdue` qualifier'), both citing 12.03.02 D-11 — and its DT-01 scope note at :319 states 'The per-ack-stage axis was declined outright and the live wait stays with 12.03.02 — neither is folded in.' 12.03.02 DT-15 supplies the explicit joint reading rather than leaving a standoff: 'Silence stays first-class (12.02.03 D-01 is preserved); it attaches to the state it interrupts rather than replacing it.' So D-01 and DT-15 are stated to be simultaneously true, and 12.03.02 D-19 (:393) — which the failure scenario says 'cannot be implemented at all' — is precisely what 12.02.03:335 ratifies. What survives is one stale cell in the transport table at :299 mapping to a board state that no longer exists; that is drift in a summary column, not two normative statements that cannot both hold. Blocking is not supportable."
+    },
+    {
+      "findingId": "12-release-distribution#006",
+      "upheld": true,
+      "finalSeverity": "warning",
+      "refutationReason": "not-refuted",
+      "reason": "Verified on both halves. (a) `Partially accepted`: 12.02.03:298 still reads '**no equivalent — gap**' and its ack-normalisation row :96 reads 'Board has no equivalent — see Cross-Cut Notes', and the Cross-Cut Note at :335 goes further — 'partially-accepted (DT-07) **cannot be represented at all**, because 12.03.02's status object is per (release × store × territory) with **no track axis**'. All three are now false: 12.03.02:392 D-18 is an owner ratification dated 2026-07-20 ('Mixed DSP outcomes stay in one `(release × store × territory)` row with structured rejected-item details; the parent projects `Partial acceptance`'), specified in full at 12.03.02:62-75, and mirrored in 12.02-ddex-delivery-messaging-cx.md CX-07:16/:59. A ratified decision resolved the gap and the sibling file still advertises it as unresolvable. (b) `Held`: 12.03.02's vocabulary (:44-56) lists ten states and contains no `Held`; 12.02.03:302 and :335 both say it has nowhere to land ('a credential lapse currently has nowhere honest to land'), while 12.02.02:270/:275/:317 promise the consequence to the artist ('releases **held, not failed**'). The stated deferral target for both was 'Step 6 synthesis', which has run (12.07 Q-02 is closed '✅ `/ideate-discover` Step 6 / global CX') and resolved items (2) and (3) but not `Held`. Warning, not blocking — the `Held` rows arguably remain `Queued` under 12.02.02's own phrasing, so the divergence is over rendering, not over whether the release is sent."
+    },
+    {
+      "findingId": "12-release-distribution#007",
+      "upheld": true,
+      "finalSeverity": "warning",
+      "refutationReason": "not-refuted",
+      "reason": "Verified verbatim at 12.02-ddex-delivery-messaging/12.02-ddex-delivery-messaging-index.md:75 — '| Q-02 | Which **ERN version(s)**? ... | `/create-prd` | `/create-prd-architecture` |'. A scan of every `| Q-NN` row across all 39 files in the domain returns 71 rows, of which exactly 70 carry an actor in the Owner column (38 'User', 7 'Agent' → /create-prd, 10 'User' → /create-prd-security, and so on) and exactly one — this row — carries a workflow name instead. This is the malformed-tracking case, not a valid tracked deferral: the deferral target is legible but the accountable party is absent, and the question is genuinely downstream of a User-owned commercial call (12.02 Q-01 / domain Q-03, direct-vs-aggregator), so 'the architecture stage decides' is not a safe default. Warning rather than blocking: the answer is largely determined once Q-01 resolves, so nothing is blocked today — this is an accountability defect, not a forced invention."
+    },
+    {
+      "findingId": "12-release-distribution#008",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "tracked-deferral",
+      "reason": "All three quotes are verbatim (12.03.04-artist-profile-linking-disambiguation.md D-05:135, tier table :60, Q-04:144), but the residual is a well-formed tracked deferral that names the finding's forced invention almost word for word. Q-04:144: 'For a Tier-B store (addressable, not claimable), what is the acceptable evidence bar before an asserted link is treated as trusted enough to emit — **or are Tier-B links always emitted-with-warning**? Feeds the T&S (24) impersonation model. | Agent | `/write-be-spec`'. Owner present, target present, not elapsed. Read together the file also converges rather than diverges: D-05 gates on verification, the edge case at :88 scopes the block to 'Tier-B **unverifiable** links ... not used for delivery', and DT-05:113 says 'asserted-but-unverifiable IDs are flagged to Trust & Safety (24) and **gated**'. The consistent reading is that Tier-B links are gated until Q-04 sets the bar — the tier table's 'can be emitted and held' explicitly defers to D-05 in the same cell ('— see D-05'). No implementer is forced to pick between omit and emit; the safe posture is stated and the exception is owned."
+    },
+    {
+      "findingId": "12-release-distribution#009",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "misquoted",
+      "reason": "The CX-05 quote is not verbatim and the misquote removes the tracking. The finding renders 12.04-release-scheduling-windows-cx.md CX-05 §1 as '... may be an intent, not a guarantee'. The actual text at :80 is: 'Whether a store's pre-save survives a date change is **the store's behaviour, not our decision**, which means D-04 in 12.04.03 (\"pre-saves survive a date change\") may be an intention we cannot actually honour. **That needs confirming per store before it is stated to artists.** `[PENDING — Step 5]`'. The finding then asserts 'Neither CX-05 nor 12.04.03 carries an open question on the survival guarantee' — but the very sentence it paraphrased ends in a `[PENDING — Step 5]` marker on exactly that guarantee, and the auditor's quote stops one clause short of it. The tree also explains why the marker is unfilled rather than lost: moscow-ledger.md:588 bands 12.04.03 Pre-Save & Pre-Add Links under **COULD**, and 12.06.01 Q-02 records the convention explicitly — '`/ideate-discover` Step 5 ran without taking it (the feature is banded `could`, so it was correctly out of Step 5's Must/Should scope)'. 12.04.03 also carries the standing banner at :45, '`[PENDING — /ideate-discover Step 5 deepening]` — per-store mechanics ...'. A finding whose central negative claim is disproved by the omitted half of its own quotation does not survive."
+    },
+    {
+      "findingId": "12-release-distribution#010",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "tracked-deferral",
+      "reason": "Both markers exist verbatim (12.04.03-pre-save-pre-add-links.md:79 states table, :65 edge case), but the premise that their target has elapsed unaccountably is wrong. moscow-ledger.md:588 places 12.04.03 in the **COULD** band (section starts :507), and the tree states its own rule for that case at 12.06.01 Q-02: '**Re-targeted** — `/ideate-discover` Step 5 ran without taking it (the feature is banded `could`, so it was correctly out of Step 5's Must/Should scope and the deferral expired unanswered).' The whole feature carries the matching standing marker at :45 — '`[PENDING — /ideate-discover Step 5 deepening]` — per-store mechanics, OAuth scopes, and whether a platform-hosted landing page or a link-out is correct' — and its parent is declared `[BREADTH]` in release-distribution-index.md:34, so the depth status and the markers agree. This is the tree's documented, node-status-corroborated depth convention, applied consistently across at least nine feature files, not a per-item ownerless gap. The substantive half is also already answered in the marker's own row ('the permission must still be dropped', corroborated by 12.05.01) and the fan-notification half has a recorded lean at 12.04 CX-05 §4 ('it is the artist's news to break, not ours ... 20/21 own any fan-facing message')."
+    },
+    {
+      "findingId": "12-release-distribution#011",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "The CX-03 §3 quote is verbatim (12.05-catalog-lifecycle-after-release-cx.md:64), but the feature that owns the behaviour closes the hole in two independent ways, and the finding read the sub-domain Role Matrix as if access were per-persona. 12.05.02-metadata-update-redelivery.md:27, Producer row: 'Producer is **typically the release owner**, so their edit access to asset and credit fields is direct.' When the Producer is the owner they hold Full on takedown too, so no asymmetry exists. When they are not the owner, 12.05.02 D-04:149 governs: 'Credited contributors get a **request** path, not an edit path, on releases they don't own ... the owner decides' — so the confirm step the finding says is undetermined is escalated to the release owner by a ratified decision. 12.07 D-12 states the same rule for the same actor on the same question ('given a **request path, never an edit path** ... Mirrors 12.05.02 Q-02: a request flow is not a permission grant'). This is the domain's ratified relationship-not-persona access model (12.03.02 D-12 at :30-34; 12.02.03 DT-11), under which 'Config' is a lens on a relationship, never an account flag. Both branches converge on the owner confirming the *redeliver* trade at 12.05.02 Behavior phase 2. Blocking is not supportable and the hole does not materialise."
+    },
+    {
+      "findingId": "12-release-distribution#012",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "The stale marker is real — 12.05.01-voluntary-takedown.md:98 does read '`[PENDING — Step 5]` — a fan who paid should not lose what they bought' — but the divergence the finding predicts cannot occur, because the answer sits in the same file and the marker's own text already states it. Q-03 at :146 of the same file: '**Resolved — nothing happens. A takedown ends store presence and never touches a completed purchase.**', sourced to 20.04.03 D-01 ('The digital entitlement survives everything — ... artist delists ... the download stands'). The parent index repeats it at 12.05-catalog-lifecycle-after-release-index.md:71 with 20.06.03 D-03 ('Entitlements survive delisting'). The Fan Role Lens line the finding also cites (:22) ends '— see parent Q-03', routing the reader to the resolution. So the marker's residue and the resolution agree in substance: no competent implementer revokes an entitlement here, and the marker text points the same way as the answer. A stale `[PENDING]` label over a correct and twice-stated answer is hygiene, not a divergence."
+    },
+    {
+      "findingId": "12-release-distribution#013",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "tracked-deferral",
+      "reason": "The two adjacent rows exist as quoted (12.06.01-fingerprint-registration.md:68 blocked cover-as-original, :69 live-recording-of-a-cover `[PENDING — Step 5]`), but this is the same documented depth convention, and this file is where the tree explains it. 12.06.01 Q-02:115: '**Re-targeted** — `/ideate-discover` Step 5 ran without taking it (**the feature is banded `could`, so it was correctly out of Step 5's Must/Should scope and the deferral expired unanswered**).' moscow-ledger.md:590 confirms 12.06.01 sits in the COULD band, the file carries the standing banner at :46 ('`[PENDING — /ideate-discover Step 5 deepening]` — per-platform registration mechanics'), and the sibling row directly above the flagged one ('Recording is co-owned; only one owner registers') carries the identical marker — so this is a class of un-deepened edge case, not a singled-out gap. The whole sub-domain's existence is additionally gated on an open owner-assigned question: 12.06.01 Q-01:114, 'Is **YouTube Content ID access** even available to WeJammin? ... This is a commercial question that determines whether the feature exists' | User | `/create-prd`. Nothing is forced now; the deepening owed is declared, banded, and node-status-corroborated ([SURFACE] at 12.06-content-id-ugc-claiming-index.md:5)."
+    }
+  ]
+}

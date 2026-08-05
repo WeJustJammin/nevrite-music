@@ -1,0 +1,176 @@
+{
+  "domain": "10-royalties-collections",
+  "unitsAudited": 6,
+  "filesRead": 40,
+  "coverageNote": "Enumerated from disk: 6 units (the domain directory itself plus 10.01-10.05), 40 files. Matches the expected 6 units / 40 files exactly. Every file was read in full (10.02.01, 10.02.05, 10.03.01, 10.03.02, 10.05.01 required paged reads; all pages consumed). Dimensions 4 (Constraint Explicitness) and 6 (Competitive Positioning) are marked N/A for all six units: both are properties of meta/constraints.md and meta/competitive-landscape.md, which this domain references (royalties-collections-index.md Q-04/Q-07 cite constraints.md; Q-03 cites competitive-landscape.md) and never redefines. Scoring therefore uses 6 applicable checkpoints per unit (dimensions 1, 2, 3, 5, 7, 8) = 36 total. Cross-checks performed and passing: Deep Think hypothesis counts reconcile at every level (10.01=19, 10.02=68, 10.03=32, 10.04=11, 10.05=18, flat features 3 each, domain total 163); leaf count reconciles (23 sub-domain leaves + 5 top-level features = 28); every child table row matches a file on disk; every Role Matrix row has a corresponding Role Lens in the child file with matching access level; sub-domain CX files marked [SURFACE] carry synthesis detail for a subset of edges, which is consistent with their declared depth (the [DEEP] parent CX carries the five synthesis answers on every High-confidence edge, and its only Medium edge, CX-11, correctly has none). Arithmetic in worked examples was recomputed: 10.03.02's step-by-step example and 10.03.01's precision-floor calculation both check out; 10.02.02's tolerance example does not (finding 001).",
+  "units": [
+    {
+      "unit": "10-royalties-collections (domain root: royalties-collections-index.md, royalties-collections-cx.md, 10.06-10.10)",
+      "applicableCheckpoints": 6,
+      "naDimensions": [4, 6],
+      "points": 0.5,
+      "scoring": {
+        "1_problem_clarity": "PASS - Overview names a specific user and a specific falsifiable pain: 'money arrives not because you own a work but because you registered it with the right body, in the right territory, in the right format - and the hard part is the rejection loop nobody notices for a year.'",
+        "2_persona_specificity": "PASS - Role Matrix covers all 10 children x 4 personas, personas referenced from meta/personas.md and never redefined, no generic 'users'; the D-19 note explicitly rejects the sweep's provisional persona list. Every flat feature carries a Role Lens.",
+        "3_feature_completeness": "PASS - MoSCoW proposal has mutually exclusive Must/Should/Could/Won't over all 28 leaves; Candidate Disposition accounts for all 18 sweep candidates plus 7 Deep Think additions; every flat feature has Edge Cases and States tables.",
+        "5_success_measurability": "WARN (0.5) - two normative gates in this unit are stated without any testable value or tracked question: 10.09 D-05 'Tolerance before alarm' (finding 007) and 10.10 D-03 'Silence on thin data' (finding 008).",
+        "7_open_question_resolution": "PASS - Q-01..Q-13 each carry an owner and a deferral target; four are [OWNER]-tagged; resolved rows are struck through with a citation to the resolving artifact.",
+        "8_structural_compliance": "PASS - index + cx present; Role Matrix fully populated; Structure Map matches the folder tree verified against disk; no folder has fewer than 2 children; no flat feature carries 3+ sub-features."
+      }
+    },
+    {
+      "unit": "10.01-society-registration-delivery",
+      "applicableCheckpoints": 6,
+      "naDimensions": [4, 6],
+      "points": 0.5,
+      "scoring": {
+        "1_problem_clarity": "PASS - 'Money does not arrive because you own something; it arrives because you are registered, in the right territory, with the right identifiers, in a format the society accepted.'",
+        "2_persona_specificity": "PASS - Role Matrix over 7 children; the Operator-absent and Fan-absent findings are stated as deliberate facts with reasons rather than left blank.",
+        "3_feature_completeness": "PASS - all 7 children have Edge Cases and States; D-04 justifies why mechanical/neighbouring/sub-publishing stay separate rather than collapsing into a nullable-column registration record.",
+        "5_success_measurability": "WARN (0.5) - 10.01.04 D-05 states the feature's success metric as 'time-to-known-outcome, not rejection rate' with no number, unit or timeframe. Directional only.",
+        "7_open_question_resolution": "PASS - every open question in the index and all 7 children carries an owner and a deferral target; 10.01.05 Q-04 and 10.01.01 Q-03 are [OWNER]-tagged; 10.01.06 Q-03 and 10.01.07 Q-01 are struck through with the resolving decision cited.",
+        "8_structural_compliance": "PASS - index + cx present, Role Matrix populated, all 7 leaves carry a Role Lens matching their matrix row."
+      }
+    },
+    {
+      "unit": "10.02-statement-ingestion-normalization",
+      "applicableCheckpoints": 6,
+      "naDimensions": [4, 6],
+      "points": 1.5,
+      "scoring": {
+        "1_problem_clarity": "PASS - 'Every source has its own format, its own period convention, its own currency, its own identifiers and its own idea of what a line is; none of them agree, and none of them will change for us.'",
+        "2_persona_specificity": "PASS - Role Matrix plus per-feature Role Lens; the finding that Musician/Producer diverge on volume and permission scope rather than capability is stated explicitly to stop downstream spec writers building two products.",
+        "3_feature_completeness": "PASS - five children, all [DEEP], each with extensive Edge Cases, dual state models and a closed reason taxonomy (10.02.05 D-09, 11 causes).",
+        "5_success_measurability": "FAIL (1.0) - the reconciliation gate's tolerance, the only hard numeric gate in the domain, is self-contradictory: the worked example disagrees with the stated formula by a factor of 13 (finding 001) and D-10's rationale reverses which statement class the fixed-penny alternative fails on (finding 003).",
+        "7_open_question_resolution": "WARN (0.5) - 10.02.05 Q-04 is presented as open on a premise its sibling 10.02.01 explicitly falsifies (finding 006); every other question carries a valid owner and target.",
+        "8_structural_compliance": "PASS - index + cx present, Role Matrix populated, all five leaves carry a Role Lens."
+      }
+    },
+    {
+      "unit": "10.03-calculation-recoupment",
+      "applicableCheckpoints": 6,
+      "naDimensions": [4, 6],
+      "points": 1.0,
+      "scoring": {
+        "1_problem_clarity": "PASS - 'Every other platform's royalty statement is unauditable because the split was reconstructed and the deal terms were interpreted by the person who owed the money.'",
+        "2_persona_specificity": "PASS - Role Matrix, plus the explicit finding that nobody holds Full access anywhere in the sub-domain and that Musician/Producer divergence is payee-vs-payer rather than a permission tier.",
+        "3_feature_completeness": "FAIL (1.0) - two sibling features specify opposite product behaviour for the same state (a deal known to exist whose terms are unrecorded): 10.03.01 D-16 produces no amount, 10.03.02 renders a raw-split figure (finding 002).",
+        "5_success_measurability": "PASS - unusually numeric: the >=9 dp precision floor is derived arithmetically (6 dp = ~GBP 1.20/statement material, 9 dp = ~GBP 0.0012 immaterial, both recomputed and correct), the worked example in 10.03.02 is arithmetically consistent end to end, and rate validation bounds (0 <= r <= 100) are stated.",
+        "7_open_question_resolution": "PASS - all questions across the index and four children carry owners and targets; six are [OWNER]-tagged; resolved rows cite the resolving decision.",
+        "8_structural_compliance": "PASS - index + cx present, Role Matrix populated, all four leaves carry a Role Lens."
+      }
+    },
+    {
+      "unit": "10.04-disbursement-payee-statements",
+      "applicableCheckpoints": 6,
+      "naDimensions": [4, 6],
+      "points": 1.0,
+      "scoring": {
+        "1_problem_clarity": "PASS - 'a payout with no statement is a bank transfer, and a statement with no traceable derivation is what the industry already sends.'",
+        "2_persona_specificity": "PASS - Role Matrix over four children, with the 'nobody can release their own escrowed money' finding stated as a deliberate departure from the platform's usual let-the-parties-settle posture.",
+        "3_feature_completeness": "WARN (0.5) - 10.04.02's redaction rule for a payer-issued statement contradicts the resolved disclosure rule its upstream owner 10.03.01 claims authority over (finding 004).",
+        "5_success_measurability": "PASS - no untestable normative claims; thresholds are explicitly deferred as policy with an owner (10.04.03 D-04 makes the threshold visible, justified and ideally payee-set rather than asserting a value).",
+        "7_open_question_resolution": "WARN (0.5) - three edge-case deferrals in this unit carry no owner and a deferral target that has already been completed (finding 005).",
+        "8_structural_compliance": "PASS - index + cx present, Role Matrix populated, all four leaves carry a Role Lens."
+      }
+    },
+    {
+      "unit": "10.05-recovery-leakage",
+      "applicableCheckpoints": 6,
+      "naDimensions": [4, 6],
+      "points": 0.0,
+      "scoring": {
+        "1_problem_clarity": "PASS - 'Leakage is invisible by construction - it is an absence, and absences produce no events.'",
+        "2_persona_specificity": "PASS - Role Matrix plus the explicit 'Reports for everyone and Config for nobody' finding with its reason (a leakage finding is a diagnosis derived from state owned elsewhere).",
+        "3_feature_completeness": "PASS - three children with dual state models, closed candidate typing (10.05.01 D-06/D-08), and a detector table mapping every expectation source to its reality source.",
+        "5_success_measurability": "PASS - where a number cannot honestly be produced the file says so as a decision rather than leaving it vague (10.05.03 D-02, 10.05.01 D-12); where a window is asserted it is concrete (90-day sweep alarm).",
+        "7_open_question_resolution": "PASS - every question carries an owner and a target; five are [OWNER]-tagged and each names why no later stage can take the decision.",
+        "8_structural_compliance": "PASS - index + cx present, Role Matrix populated, all three leaves carry a Role Lens."
+      }
+    }
+  ],
+  "findings": [
+    {
+      "findingId": "10-royalties-collections#001",
+      "unit": "10.02-statement-ingestion-normalization",
+      "severity": "blocking",
+      "dimension": 5,
+      "claim": "The reconciliation tolerance formula and its own worked example disagree by a factor of 13, and the prose conclusion drawn from the example is false under the formula. This is the gate that decides whether a parsed statement proceeds to matching or is blocked, so the two readings produce opposite behaviour on the same file.",
+      "evidence": "10.02-statement-ingestion-normalization/10.02.02-statement-parsing-format-adapters.md:44-53 - 'The tolerance is **computed from the file, never a constant** (D-10). Where lines are printed to `p` decimal places, the total to `q`, and there are `n` detail lines: ```tolerance = 0.5 x 10^-q  +  n x 0.5 x 10^-p``` - A 12-line PRS statement with `p = q = 2` -> tolerance GBP 0.005. Effectively exact; a penny out is a real failure. - A 400,000-line DSR with `p = 6`, `q = 2` -> tolerance ~ GBP 0.205. A penny out is *expected* and means nothing.' Recomputing the first example from the stated formula: 0.5x10^-2 + 12 x 0.5x10^-2 = 0.005 + 0.060 = GBP 0.065, not GBP 0.005. (The second example is correct: 0.005 + 400000 x 0.0000005 = 0.205.) Restated as a locked decision at 10.02.02-statement-parsing-format-adapters.md:199 - 'D-10 | Reconciliation tolerance is **computed from the file** - `0.5x10^-q + n x 0.5x10^-p` - never a constant'. The gate itself is hard: 10.02.02-statement-parsing-format-adapters.md:36-38 - 'Monetary reconciliation - Sigma(parsed line net) equals the stated total ... within the tolerance derived below (D-10). **Both gate.** A statement passes to `10.02.03` only when both are clean.'",
+      "failure_scenario": "A 12-line PRS statement (p=q=2, 12 detail lines) reconciles to GBP 0.01 away from its stated total. Implementer A codes the formula literally: tolerance = GBP 0.065, the discrepancy is inside it, the statement is recorded as 'the source's own rounding' and flows to matching, calculation and payout. Implementer B codes the stated example and prose ('tolerance GBP 0.005 ... a penny out is a real failure'): tolerance = GBP 0.005, the statement is blocked, ages, and raises a money-denominated alarm under D-12. Same file, same source, opposite outcomes - one pays out on a statement the other refuses to trust, and neither implementer has done anything wrong.",
+      "verdict": "CONFIRMED"
+    },
+    {
+      "findingId": "10-royalties-collections#002",
+      "unit": "10.03-calculation-recoupment",
+      "severity": "blocking",
+      "dimension": 3,
+      "claim": "Two sibling features in the same sub-domain specify opposite behaviour for the same state - a deal that is known to exist and whose terms are unrecorded. 10.03.01 D-16 forbids producing any amount; 10.03.02 renders a raw-split figure with the gap priced. Neither file carries a marker acknowledging the other.",
+      "evidence": "10.03-calculation-recoupment/10.03.01-royalty-calculation-engine.md:256 - 'D-16 | **\"No deal\" and \"deal exists, terms unrecorded\" are different states.** The first produces the raw split as the correct answer, stated plainly. The second produces **no amount at all** | `DT-13`. Sharpens `D-06`: a number with a warning attached is still a number.' Reinforced at 10.03.01-royalty-calculation-engine.md:143 - 'Deal terms are unrecorded, and a deal is known to exist | ... **No amount is produced.** A raw split shown to a signed artist is wrong by up to a factor of two and looks authoritative; a number with a warning attached is still a number, and users read numbers (`D-16`)'. Contradicted by 10.03-calculation-recoupment/10.03.02-deal-terms-rate-application.md:132 - 'Contract exists as a PDF nobody typed in | The genuinely modal case | The gap is visible and money-denominated: *\"3 lines totalling GBP 412.06 calculated on raw split - Nightjar's deal is unrecorded\"*. An untyped deal is an uncomputable one'. Same position again in its view states at 10.03.02-deal-terms-rate-application.md:183 - 'Empty | User has no deals recorded at all | Not a blank page: the money already computed on raw splits, with the gap priced. *\"GBP 412.06 across 3 works is calculated without deal terms. Record a deal to see what you actually receive.\"*'. 10.03.02 still cites the superseded D-06 rather than D-16 at 10.03.02-deal-terms-rate-application.md:238 - 'D-05 | An unrecorded deal produces a **flagged gap**, never an assumed standard term | `10.03.01` D-06.' File headers show the divergence was never reconciled: 10.03.01 '**Last updated**: 2026-07-20', 10.03.02 '**Last updated**: 2026-07-16'.",
+      "failure_scenario": "A user has a signed record deal whose PDF has never been typed in, and three matched PRS lines totalling GBP 412.06 gross. Implementer A follows 10.03.01 D-16: the engine emits no amount, the calculation state is `Unparameterised`, and the screen says what is missing and who can supply it. Implementer B follows 10.03.02: the screen shows 'GBP 412.06 calculated on raw split' with a gap notice. Under a real 18%-of-net-receipts-less-25%-packaging deal the payee's actual share is under GBP 60, so implementer B has shown a figure roughly 7x too high on the platform whose stated discipline is that it never states a number it made up - which is exactly the outcome 10.03.01 DT-13 rejects by name.",
+      "verdict": "CONFIRMED"
+    },
+    {
+      "findingId": "10-royalties-collections#003",
+      "unit": "10.02-statement-ingestion-normalization",
+      "severity": "warning",
+      "dimension": 5,
+      "claim": "D-10's stated rationale reverses which statement class a fixed-penny tolerance fails on, directly contradicting the Behavior section of the same file two paragraphs earlier. A reader who implements from the decision table alone infers the opposite calibration to the one the formula produces.",
+      "evidence": "Behavior, 10.02-statement-ingestion-normalization/10.02.02-statement-parsing-format-adapters.md:53 - 'A fixed \"GBP 0.01 tolerance\" is simultaneously too tight for the second and far too loose for the first - which is the whole reason this is a formula rather than a config value.' (the second = the 400,000-line DSR needing ~GBP 0.205; the first = the 12-line PRS statement). Decision table, 10.02.02-statement-parsing-format-adapters.md:199 - 'D-10 | ... | A fixed penny is too tight for a 12-line PRS statement and far too loose for a 400,000-line DSR.' The two sentences assign the same two failure modes to the opposite statements.",
+      "failure_scenario": "An implementer or downstream spec writer reads only the Decisions table (the canonical, quotable part of the file) and concludes that small society statements need a *looser* tolerance than a penny and large DSRs a tighter one. They calibrate any per-adapter override, test fixture or acceptance criterion in the wrong direction on both statement classes, and the error is invisible because both configurations still reconcile most files.",
+      "verdict": "CONFIRMED"
+    },
+    {
+      "findingId": "10-royalties-collections#004",
+      "unit": "10.04-disbursement-payee-statements",
+      "severity": "warning",
+      "dimension": 3,
+      "claim": "10.04.02 states unconditionally that a payer-issued statement redacts co-payees' split percentages, contradicting 10.03.01's D-11 and its explicitly resolved Q-06, which hold that a party to the split sees the whole ledger. 10.03.01 claims ownership of exactly this rule and says 10.04.02 merely consumes it.",
+      "evidence": "10.04-disbursement-payee-statements/10.04.02-payee-royalty-statements.md:53 - 'Payer-issued statement to one session player | ... | Own four lines + own derivation drillable; co-payees' amounts and **split percentages redacted**; the session's existence is shown (it is why the number is trustworthy) but others' shares are not. Exact redaction boundary -> `Q-02`, `/create-prd-security`'. Contradicted by 10.03-calculation-recoupment/10.03.01-royalty-calculation-engine.md:251 - 'D-11 | The derivation is **computed whole and disclosed scoped** | `DT-08`. ... Your amount and **the split you agreed at full depth**; a third party's term as a named, sized deduction with unreadable parameters.' And by the resolution of the question that asked precisely this, 10.03.01-royalty-calculation-engine.md:268 - 'Q-06 | ~~**Is the agreed split fully visible to every party in it?**~~ ... RESOLVED - yes, for every party *in* the ledger; `D-11`'s permissive reading holds. [09.02.01] `D-09`: \"**Ledger parties see the whole ledger; fee parties see its shape, not its percentages**\"'. Ownership is claimed by 10.03.01, not 10.04.02, at 10.03.01-royalty-calculation-engine.md:225 - '**Permission boundary**: `DT-08`'s scoped disclosure constrains the derivation's *structure*, so it is owned here and consumed there.' Headers show the divergence is a currency failure: 10.03.01 '**Last updated**: 2026-07-20', 10.04.02 '**Last updated**: 2026-07-17'.",
+      "failure_scenario": "A four-writer session where the drummer holds a 10% ledger share is paid by the producer. Implementer A builds from 10.04.02 and redacts every co-payee percentage, so the drummer cannot see the 90% they consented to as a whole ledger - the disclosure 09.02.01 D-09 guarantees them and that 10.03.01 D-11 says the derivation is structured to deliver. Implementer B builds from 10.03.01 and renders the whole ledger, which under 10.04.02's rule is a disclosure defect. The distinction that actually governs (ledger party vs bought-out fee party) appears in neither statement, so both implementations are wrong for one of the two payee classes.",
+      "verdict": "CONFIRMED"
+    },
+    {
+      "findingId": "10-royalties-collections#005",
+      "unit": "10.04-disbursement-payee-statements",
+      "severity": "warning",
+      "dimension": 7,
+      "claim": "Three deferrals in this unit are malformed: they name no owner and their deferral target is a pipeline pass that has already completed. The tree itself documents this exact failure mode elsewhere and promoted a comparable marker to a tracked question; these three were not.",
+      "evidence": "10.04-disbursement-payee-statements/10.04.03-thresholds-holds-unpayable-balances.md:62 - 'Platform shuts down | Whose money is it then? | The question every held balance implies and nobody asks. `[PENDING - Step 5]`'. 10.04-disbursement-payee-statements/10.04.04-disputed-royalty-escrow.md:49 - 'Held money earns interest | Whose? Real at scale, and legally loaded (parent `Q-02`) | `[PENDING - /ideate-discover Step 5 deepening]`'. 10.04.04-disputed-royalty-escrow.md:53 - 'Platform is the disputant | A platform-detected leakage or misattribution | `[PENDING - Step 5]` - who adjudicates against the house?'. None of the three names an owner. The deferral target has run: the same tree records a marker being rescued from it at 10.01-society-registration-delivery/10.01.05-mechanical-rights-administration.md:95 - 'Q-04 | `[OWNER]` Does v1 handle **US pre-1972 statutory mechanical oddities** at all ...? Promoted from Edge Cases, where it had **expired against `/ideate-discover` Step 5**.' Step 5 closure is likewise recorded at 10.01.06-neighbouring-rights-performer-registration.md:114 - '~~`/ideate-discover` Step 5~~ - closed'.",
+      "failure_scenario": "'Held money earns interest - whose?' is a live product and regulatory decision on client-money custody (it is the same family as the unit's own Q-02 on regulated activity). Because it sits in an Edge Cases cell with no owner and a target that has already been passed, no downstream stage picks it up: /create-prd-security reads the Open Questions table and finds nothing, and the escrow feature ships with interest accrual undefined - which, on a balance held for the duration of a dispute, is money accruing to a party nobody has chosen. The same applies to 'who adjudicates when the platform is the disputant' and to the disposition of held balances on wind-down.",
+      "verdict": "CONFIRMED"
+    },
+    {
+      "findingId": "10-royalties-collections#006",
+      "unit": "10.02-statement-ingestion-normalization",
+      "severity": "warning",
+      "dimension": 7,
+      "claim": "10.02.05 Q-04 is presented as an open question resting on a factual premise about its sibling that the sibling explicitly falsifies. 10.02.01 adds both requested fields as ratified decisions and states in its own cross-cut notes that this question is resolved there; 10.02.05 asserts twice that neither field exists.",
+      "evidence": "10.02-statement-ingestion-normalization/10.02.05-unmatched-line-exception-queue.md:326 - 'Q-04 | Does `10.02.01`'s **source registry hold the remittee and the source's correction window**? `D-15` requires the first ... and `D-17` requires the second ... **Neither is stated in `10.02.01` today.** This is a data-model addition to a sibling feature'. Repeated at 10.02.05-unmatched-line-exception-queue.md:281 - 'the registry must hold (a) the **remittee** ... and (b) the source's **correction window** ... **Neither is currently stated in `10.02.01`.**' Falsified by 10.02-statement-ingestion-normalization/10.02.01-statement-source-ingestion.md:322 - 'D-06 | The registry holds the **remittee**, and the money sentence is **derived** from it ... resolves `10.02.05` Q-04a and supplies `10.02.05` D-15.' and 10.02.01-statement-source-ingestion.md:332 - 'D-16 | The registry holds the source's **correction window**; an undeclared window is a **finding** ... Resolves `10.02.05` Q-04b and anchors `10.02.05` D-17's ladder.' 10.02.01 states the closure directly at 10.02.01-statement-source-ingestion.md:292 - 'Touches **10.02.05 Exception Queue** ... - **`Q-04` there is resolved here** (`D-06`, `D-16`)'. Both files carry '**Last updated**: 2026-07-16'.",
+      "failure_scenario": "A downstream spec writer working the exception queue reads Q-04, believes the registry has no remittee field, and either designs a second remittee record local to the queue (the second-source-of-truth failure the sub-domain's R-01 and 10.02.01 D-09 both forbid) or defers 10.02.05 D-15's derived headline and D-17's ageing ladder as blocked on a sibling change that has in fact already been decided - stalling the two mechanisms that stop the queue becoming the platform's own black box.",
+      "verdict": "CONFIRMED"
+    },
+    {
+      "findingId": "10-royalties-collections#007",
+      "unit": "10-royalties-collections (domain root)",
+      "severity": "warning",
+      "dimension": 0,
+      "forcedInvention": "The length of the tolerance window between a society's published distribution date and the point at which the platform declares a distribution overdue. No value, no range, no derivation rule and no anchor to an external fact is given anywhere in 10.09, and no open question in the file covers it.",
+      "claim": "10.09 makes 'tolerance before alarm' a ratified decision and a state transition trigger without giving the tolerance any testable value, rule or anchor - in a feature whose own D-04 makes it the precondition for the domain's leakage detector.",
+      "evidence": "10.09-distribution-calendar-money-in-flight.md:95 - 'D-05 | Late != leaked | Societies slip. **Tolerance before alarm**, or the feature cries wolf and gets muted.' The same undefined quantity is a state trigger at 10.09-distribution-calendar-money-in-flight.md:66 - 'Overdue | **Past the distribution date + tolerance** | -> `10.05.03` finding' and an edge-case behaviour at 10.09-distribution-calendar-money-in-flight.md:52 - 'Distribution late | Societies slip | **Tolerance before alarming**; a slipped distribution is not a leak'. The domain CX describes it as a band without sizing it, royalties-collections-cx.md:136 - 'An expectation is a band, not a point; a distribution inside the band closes it silently.' The file's three open questions cover calendar maintenance (Q-01), estimation (Q-02, resolved) and receivable financing (Q-03) - none covers the tolerance. Contrast the sibling that faced the identical problem and solved it: 10.02-statement-ingestion-normalization/10.02.05-unmatched-line-exception-queue.md:315 - 'D-17 | The clock is anchored to the **source's declared correction window** ... the platform's 12-month fallback is **labelled as the platform's deadline, not the source's**' with its calibration explicitly tracked at 10.02.05 Q-09.",
+      "failure_scenario": "PRS's March cycle passes with no statement for a user. Implementer A sets tolerance to 7 days and the platform raises a 10.05.03 leakage finding in the first week of April; implementer B sets 90 days and raises nothing until July. Under 10.09 D-04 this feature is the sole precondition for detecting a missing distribution, so the two builds differ on when - and, for a source that slips a full cycle, whether - the domain's highest-confidence leakage input ever fires. 10.05.03 D-06 ('conservative beats comprehensive') and 10.09 D-05 ('or the feature cries wolf and gets muted') push in opposite directions with no value to arbitrate between them.",
+      "verdict": "CONFIRMED"
+    },
+    {
+      "findingId": "10-royalties-collections#008",
+      "unit": "10-royalties-collections (domain root)",
+      "severity": "warning",
+      "dimension": 0,
+      "forcedInvention": "The threshold that separates 'thin history' from 'enough history' - the single branch that decides whether a forecast is shown to a user at all. No count of periods, distributions, works, revenue floor, variance bound or rule is given, and no open question in the file covers it.",
+      "claim": "10.10's entire state machine turns on an undefined 'thin data' boundary. D-03 makes silence-on-thin-data a ratified decision and the file calls the resulting state 'the most common' one, yet nothing in the file makes the boundary testable or tracks it as an open question.",
+      "evidence": "10.10-royalty-forecasting.md:88 - 'D-03 | **Silence on thin data** | DT-01. Most users are unforecastable, and no forecast beats a fabricated one.' The boundary is the sole branch of the state model, 10.10-royalty-forecasting.md:59-61 - 'Insufficient data | **Thin history** | **No forecast.** The most common and most honest state' versus 'Forecast | **Enough history** | A range, clearly separated from in-flight'. Stated only qualitatively in Behavior, 10.10-royalty-forecasting.md:32 - 'The honest version is therefore modest: **a range, not a number**; explicitly separated from in-flight; and **silent where the data is too thin to say anything**' and in the Happy Path, 10.10-royalty-forecasting.md:36 - 'A catalogue has **enough distribution history to be statistically meaningful**'. The file's three open questions are Q-01 (persona fit, resolved), Q-02 (lending against a forecast) and Q-03 (whether in-flight alone is the product, resolved) - none covers the threshold. Contrast the domain's own treatment of an equivalent unvalidated cut-off, which is tracked rather than left implicit: 10.02.03-line-matching-catalogue-resolution.md:207 - 'Q-05 | **Threshold and drift calibration.** ... Ship the rules, instrument the outcomes, calibrate on data.'",
+      "failure_scenario": "A working musician has six quarters of PRS distributions, one of which contains a sync placement. Implementer A requires 4+ distributions and shows a range; implementer B requires 12+ and shows nothing. Both claim to implement D-03. Under DT-02's own reliance argument the difference is material harm rather than a cosmetic one: the file states that a user who reads a forecast makes decisions 'about rent, about turning down a gig, about buying gear', and one of the two builds shows a forecast to a user the file's own DT-01 classifies as structurally unforecastable.",
+      "verdict": "CONFIRMED"
+    }
+  ]
+}

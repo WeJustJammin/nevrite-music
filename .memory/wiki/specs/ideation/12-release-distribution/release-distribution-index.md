@@ -23,25 +23,27 @@ Getting finished music onto stores and streaming services — release building, 
 
 ## Children
 
-> Classified through the Node Classification Gate during `/ideate-discover` Step 3. All `[SURFACE]`
-> — breadth pass; depth is allocated by MoSCoW in Step 5.
+> Classified through the Node Classification Gate during `/ideate-discover` Step 3, where every
+> child was seeded `[SURFACE]`. The Status column below carries each child's **current** depth after
+> MoSCoW allocated it in Step 5, and it mirrors the status in that child's own header — the child
+> file is the owning statement, this column is the restatement.
 
 | # | Name | Type | Path | Status | Deep Think |
 |---|------|------|------|--------|------------|
-| 12.01 | Release Builder & Delivery Readiness | sub-domain | [12.01-release-builder/](./12.01-release-builder/12.01-release-builder-index.md) | `[BREADTH]` | 16 hypotheses (5 features) |
-| 12.02 | DDEX Delivery Messaging | sub-domain | [12.02-ddex-delivery-messaging/](./12.02-ddex-delivery-messaging/12.02-ddex-delivery-messaging-index.md) | `[BREADTH]` | 12 hypotheses (4 features) |
-| 12.03 | DSP Store & Territory Management | sub-domain | [12.03-dsp-store-territory-management/](./12.03-dsp-store-territory-management/12.03-dsp-store-territory-management-index.md) | `[BREADTH]` | 12 hypotheses (4 features) |
-| 12.04 | Release Scheduling & Windows | sub-domain | [12.04-release-scheduling-windows/](./12.04-release-scheduling-windows/12.04-release-scheduling-windows-index.md) | `[BREADTH]` | 12 hypotheses (4 features) |
-| 12.05 | Catalog Lifecycle After Release | sub-domain | [12.05-catalog-lifecycle-after-release/](./12.05-catalog-lifecycle-after-release/12.05-catalog-lifecycle-after-release-index.md) | `[BREADTH]` | 9 hypotheses (3 features) |
-| 12.06 | Content ID & UGC Claiming | sub-domain | [12.06-content-id-ugc-claiming/](./12.06-content-id-ugc-claiming/12.06-content-id-ugc-claiming-index.md) | `[BREADTH]` | 9 hypotheses (3 features) |
-| 12.07 | Identifier Assignment at Delivery | feature | [12.07-identifier-assignment-at-delivery.md](./12.07-identifier-assignment-at-delivery.md) | `[DEEP]` | 3 hypotheses |
-| 12.08 | Catalog Migration & Exit | feature | [12.08-catalog-migration-exit.md](./12.08-catalog-migration-exit.md) | `[SURFACE]` | 3 hypotheses |
+| 12.01 | Release Builder & Delivery Readiness | sub-domain | [12.01-release-builder/](./12.01-release-builder/12.01-release-builder-index.md) | `[BREADTH]` | 65 hypotheses (5 features) |
+| 12.02 | DDEX Delivery Messaging | sub-domain | [12.02-ddex-delivery-messaging/](./12.02-ddex-delivery-messaging/12.02-ddex-delivery-messaging-index.md) | `[BREADTH]` | 44 hypotheses (4 features) |
+| 12.03 | DSP Store & Territory Management | sub-domain | [12.03-dsp-store-territory-management/](./12.03-dsp-store-territory-management/12.03-dsp-store-territory-management-index.md) | `[BREADTH]` | 39 hypotheses (4 features) |
+| 12.04 | Release Scheduling & Windows | sub-domain | [12.04-release-scheduling-windows/](./12.04-release-scheduling-windows/12.04-release-scheduling-windows-index.md) | `[BREADTH]` | 26 hypotheses (4 features) |
+| 12.05 | Catalog Lifecycle After Release | sub-domain | [12.05-catalog-lifecycle-after-release/](./12.05-catalog-lifecycle-after-release/12.05-catalog-lifecycle-after-release-index.md) | `[BREADTH]` | 10 hypotheses (3 features) |
+| 12.06 | Content ID & UGC Claiming | sub-domain | [12.06-content-id-ugc-claiming/](./12.06-content-id-ugc-claiming/12.06-content-id-ugc-claiming-index.md) | `[SURFACE]` | 9 hypotheses (3 features) |
+| 12.07 | Identifier Assignment at Delivery | feature | [12.07-identifier-assignment-at-delivery.md](./12.07-identifier-assignment-at-delivery.md) | `[DEEP]` | 13 hypotheses |
+| 12.08 | Catalog Migration & Exit | feature | [12.08-catalog-migration-exit.md](./12.08-catalog-migration-exit.md) | `[PARTIAL]` | 3 hypotheses |
 
 > **Type column values:**
 > - `sub-domain` — a grouping with 2+ interacting capabilities (folder with index + CX)
 > - `feature` — a leaf node describing a single capability (.md file)
 
-**Totals**: 6 sub-domains · 25 leaf features (23 in sub-domains + 2 at domain level) · 76 Deep Think hypotheses logged.
+**Totals**: 6 sub-domains · 25 leaf features (23 in sub-domains + 2 at domain level) · 209 Deep Think hypotheses logged.
 
 ### Classification Notes — how the 8 sweep candidates became these 8 children
 
@@ -70,12 +72,12 @@ Getting finished music onto stores and streaming services — release building, 
 
 | Child | Musician | Producer | Operator | Fan |
 |-------|----------|----------|----------|-----|
-| 12.01 Release Builder & Delivery Readiness | ✅ Full | ⚙️ Config | ❌ None | ❌ None |
-| 12.02 DDEX Delivery Messaging | 👁️ Read-only | ❌ None | ❌ None | ❌ None |
-| 12.03 DSP Store & Territory Management | ✅ Full | 👁️ Read-only | ❌ None | ❌ None |
+| 12.01 Release Builder & Delivery Readiness | ✅ Full | ✅ Full | ❌ None | ❌ None |
+| 12.02 DDEX Delivery Messaging | ⚙️ Config | ⚙️ Config | ❌ None | ❌ None |
+| 12.03 DSP Store & Territory Management | ✅ Full | ⚙️ Config | ❌ None | ❌ None |
 | 12.04 Release Scheduling & Windows | ✅ Full | ⚙️ Config | 👁️ Read-only | ✅ Full |
-| 12.05 Catalog Lifecycle After Release | ✅ Full | 👁️ Read-only | ❌ None | ❌ None |
-| 12.06 Content ID & UGC Claiming | ✅ Full | 👁️ Read-only | ❌ None | ❌ None |
+| 12.05 Catalog Lifecycle After Release | ✅ Full | ⚙️ Config | ❌ None | ❌ None |
+| 12.06 Content ID & UGC Claiming | ✅ Full | ⚙️ Config | ❌ None | ❌ None |
 | 12.07 Identifier Assignment at Delivery | ✅ Full | 👁️ Read-only | ❌ None | ❌ None |
 | 12.08 Catalog Migration & Exit | ✅ Full | 👁️ Read-only | ❌ None | ❌ None |
 
@@ -87,13 +89,24 @@ Getting finished music onto stores and streaming services — release building, 
 
 ### Reading the matrix — the shape of this domain
 
-- **Musician is the protagonist**, except in 12.02 (read-only) and 12.05.03 (read-only — the only
-  place in the domain where they cannot act on their own release, which is what "involuntary" means).
-- **Producer is high-power, low-authority throughout.** Their *facts* are load-bearing — the
-  attestation that clears the gate (12.01.03), the master that passes conformance (12.01.04), the
-  knowledge that settles an ownership conflict (12.06.03) — while their *permissions* are mostly
-  read-only. This is an unusual shape and it recurs in every sub-domain. Per personas.md they are
-  the trust broker; the domain depends on them and grants them almost nothing.
+- **These rows are maximums, and a maximum is often one child wide.** The 12.02 row reads `Config`
+  for both Musician and Producer solely because of 12.02.04 (MEAD enrichment, where the artist and
+  the producer genuinely hold the authoritative descriptors); the sub-domain's other three children
+  are read-only or `None` and 12.02.02 has no persona surface at all. Read a row as "the ceiling
+  somewhere inside this node", never as "what this node feels like". The per-child matrices are the
+  owning statements; this table only takes their max.
+- **Musician is the protagonist**, except in 12.02 (where their only write is a MEAD descriptor —
+  they never touch the message) and 12.05.03 (read-only — the only place in the domain where they
+  cannot act on their own release, which is what "involuntary" means).
+- **Producer is high-power, low-authority throughout.** Their *facts* are load-bearing and their
+  permissions are scoped to exactly the facts that are theirs alone: `Config` in five of the six
+  sub-domains, narrowed each time to one thing — the asset-caused rejection they and nobody else can
+  fix (12.03.03), the corrected master (12.05.02), the knowledge that settles an ownership conflict
+  (12.06.03), the session descriptors the artist does not remember (12.02.04). They reach `Full` in
+  exactly two children, and both are the same case: the readiness gate whose blocking facts only
+  they can supply (12.01.03) and asset conformance, where the fix is a re-render in their DAW
+  (12.01.04). Per personas.md they are the trust broker — the domain depends on them everywhere and
+  grants them authority over their own contribution and nothing else.
 - **Operator is `None` almost everywhere, and that is correct, not a gap.** An Operator has no
   stake in a release object. The single exception is a read-only lens on the rollout plan (12.04.04)
   where it contains a booking they are already party to via 16/17 — Medium confidence, gated by
@@ -132,14 +145,35 @@ Getting finished music onto stores and streaming services — release building, 
 
 ## Open Questions
 
+**Open-question governance.** Every unresolved row in this table is an explicit delivery hold. The **Owner** cell is accountable; the **hard decision deadline** is the gate immediately before the pipeline stage named in **Deferred To** begins; and the **Question** text is the exact policy, behavior, or contract decision blocked. **Deferred To** names the destination only and never replaces the deadline. No downstream stage may begin until its owner resolves the row or records a formally approved supersession.
+
 | # | Question | Owner | Deferred To |
 |---|----------|-------|-------------|
 | Q-01 | ~~Which candidate children are sub-domains vs features?~~ **RESOLVED** — see Children table and Classification Notes | Agent | ✅ `/ideate-discover` Step 3 |
 | Q-02 | ~~Are any candidate children actually cross-cuts?~~ **RESOLVED** — two routed out (D-06) | Agent | ✅ `/ideate-discover` Step 3 |
 | Q-03 | **Direct DSP delivery or via an aggregator?** (12.02 Q-01.) The largest scoping question in the domain. Direct means owning ~150 partner relationships, certifications and fifteen years of accumulated rejection knowledge we do not have (12.02.02 DT-02). Via-aggregator collapses 12.02 to one integration. D-10 is about *rights*, not *transport* — it does not settle this. | User | `/create-prd` |
-| Q-04 | **Hard gate or soft gate?** (12.01.03 Q-01, and CX-06.) The domain's defining tension and a direct line to D-18 and problem-statement.md Q-02. Recommend investigating **freeze the money, not the record** (12.01.03 Q-02) — holding a payout is more defensible and more effective than holding an announced release hostage over a contributor's silence. | User | MoSCoW / `/ideate-validate` |
-| Q-05 | **Do WeJammin-prefix ISRCs leave with a departing artist?** (12.08 Q-01, CX-10.) The most direct possible answer to "is the lock-in earned or hostile?". Recommend yes — it forfeits the retention mechanism every competitor relies on, which is the price of D-18 being true rather than marketed. | User | `/ideate-validate` |
-| Q-06 | **Does WeJammin claim against its own fans?** (12.06 Q-02.) A fan's video using an artist's track is claimable revenue and a claim against a first-class user (D-11). No competitor faces this because none has both sides. A genuinely novel values question. | User | `/ideate-validate` |
-| Q-07 | **Physical formats** — vinyl, cassette, CD. Pressing, catalog numbers, retail barcodes, distribution to record stores. Genuinely part of "release" for independent artists and a completely different machine from DDEX. No directive points either way. | User | `/ideate-validate` |
+| Q-04 | `[OWNER]` **Hard gate or soft gate?** (12.01.03 Q-01, and CX-06.) The domain's defining tension and a direct line to D-18 and problem-statement.md Q-02. Recommend investigating **freeze the money, not the record** (12.01.03 Q-02) — holding a payout is more defensible and more effective than holding an announced release hostage over a contributor's silence. **Still open** — MoSCoW and `/ideate-validate` both ran without taking it. 12.01.03 Q-01 (already re-pointed at `/create-prd`) records that its child rows sit behind this one, and 12.01.03 D-13 narrows the scope: under either answer the *record* says the identical thing, so this decides exactly one bit — whether the delivery button is reachable. 12.01.03 D-09 places Family C (third-party rights) permanently out of its reach, and DT-05's `Exhausted` state is required either way, so nothing downstream is blocked except whether an override affordance exists at all. | User | `/create-prd` (with 12.01.03 Q-01 / Q-04 and 12.01.01 Q-01) |
+| Q-05 | `[OWNER]` **Do WeJammin-prefix ISRCs leave with a departing artist?** (12.08 Q-01, CX-10.) The most direct possible answer to "is the lock-in earned or hostile?". Recommend yes — it forfeits the retention mechanism every competitor relies on, which is the price of D-18 being true rather than marketed. **Still open** — `/ideate-validate` ran without taking it, as did 12.08 Q-01 at the same expired target. CX-10 records a concurring recommendation from both features, never a ratification, and 12.08 DT-02 ends "Owner's call". Scoped to **ISRC only**: 12.07 Q-03 splits the UPC half out, because a GS1 company prefix is an annual licence naming us as brand owner rather than a permanent registrant allocation. | User | `/create-prd` (with 12.08 Q-01; UPC half is 12.07 Q-03) |
+| Q-06 | `[OWNER]` **Does WeJammin claim against its own fans?** (12.06 Q-02.) A fan's video using an artist's track is claimable revenue and a claim against a first-class user (D-11). No competitor faces this because none has both sides. A genuinely novel values question. **Still open** — `/ideate-validate` ran without taking it, as did 12.06 Q-02 at the same expired target, which states plainly that it "is a genuinely novel values question the owner must answer". Downstream of 12.06 Q-01 (is Content ID in scope for v1 at all), so take that first. | User | `/create-prd` (with 12.06 Q-01 / Q-02) |
+| Q-07 | `[OWNER]` **Physical formats** — vinyl, cassette, CD. Pressing, catalog numbers, retail barcodes, distribution to record stores. Genuinely part of "release" for independent artists and a completely different machine from DDEX. No directive points either way. **Still open** — `/ideate-validate` ran without taking it. 12.01.01 Q-03 is already re-pointed at `/create-prd` and explicitly waits on this row ("strictly downstream of the physical-format scope call; do not answer it separately"), noting that vinyl side-breaks are a *physical* sequencing constraint the digital model has no field for — so this is a shape change, not an additive flag. 12.07 Q-06 (music video) is the same class of v1 scope call and travels with it. | User | `/create-prd` (with 12.01.01 Q-03 and 12.07 Q-06) |
 | Q-08 | How does **export work for multi-party provenance**? (12.08 Q-02.) A split sheet is not one user's data; GDPR erasure by one party damages three people's record. No precedent — no competitor holds facts worth this problem. | User | `/create-prd-security` |
-| Q-09 | Should **witnessed** and **imported** records carry a visible confidence tier across the product? (12.06.03 Q-03, 12.01.01 Q-02.) Honest, protects the record's value, and tells users their imported catalog is second-class — which is true and unwelcome. | User | `/ideate-validate` |
+| Q-09 | `[OWNER]` Should **witnessed** and **imported** records carry a visible confidence tier across the product? (12.06.03 Q-03, 12.01.01 Q-02.) Honest, protects the record's value, and tells users their imported catalog is second-class — which is true and unwelcome. **Still open** — `/ideate-validate` ran without taking it, and this row is the *escalation target* rather than a duplicate: 12.01.01 Q-02 is resolved ("The origin fact is recorded always; the path is equal in capability; the **visibility** of a witnessed-vs-imported tier product-wide is escalated to domain Q-09"), so the origin fact is settled and only its product-wide visibility is not. 12.01.03 DT-16 and 12.08 D-02 both argue for it locally ("imported catalog being visibly second-class is true, unwelcome, and the entire point") but neither can make the product-wide call. It is a positioning decision with a commercial cost, not a UI detail — so it precedes `/write-fe-spec` rather than belonging to it. | User | `/create-prd` |
+
+
+<!-- spec-graph: auto-generated -->
+## Related Specs
+
+### Constrained by
+- [[decisions.md#d-10|D-10]]
+- [[decisions.md#d-04|D-04]]
+- [[decisions.md#d-02|D-02]]
+- [[decisions.md#d-05|D-05]]
+- [[decisions.md#d-03|D-03]]
+- [[decisions.md#d-01|D-01]]
+- [[decisions.md#d-16|D-16]]
+- [[decisions.md#d-06|D-06]]
+- [[decisions.md#d-07|D-07]]
+- [[decisions.md#d-18|D-18]]
+- [[decisions.md#d-13|D-13]]
+- [[decisions.md#d-09|D-09]]
+- [[decisions.md#d-11|D-11]]

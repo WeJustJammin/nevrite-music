@@ -160,7 +160,7 @@
 
 ### CX-11: Income Aggregation ↔ Budgeting & Project/Tour P&L (realised FX)
 
-**Relationship**: Distinct from CX-01's projection concern. FX in 23.01.03 is normally a *derived reporting projection* over an immutable native amount. But a tour **budgeted in GBP and spent in EUR** realises an actual FX gain or loss between commitment and settlement — and that delta is a genuine cost line the tour P&L (23.07) must book, not a display choice. The same multi-country reality (shared with 18 Touring) manufactures FX, withholding and per-diems as real tour costs. Medium confidence: whether realised FX is modelled as its own P&L line or absorbed into each converted row is unresolved and routes to `/create-prd-architecture` with Q-06.
+**Relationship**: Distinct from CX-01's projection concern. FX in 23.01.03 is normally a *derived reporting projection* over an immutable native amount. But a tour **budgeted in GBP and spent in EUR** realises an actual FX gain or loss between commitment and settlement — and that delta is a genuine cost line the tour P&L (23.07) must book, not a display choice. The same multi-country reality (shared with 18 Touring) manufactures FX, withholding and per-diems as real tour costs. **Open-question governance, CX-11-Q-01:** Owner: User (architecture choice). Hard decision deadline: the gate immediately before /create-prd-architecture begins. Blocks: the project/tour P&L schema's realised-FX representation — a dedicated cost line or conversion embedded in each native-currency row. Q-06 concerns tax-jurisdiction placement and does not own this decision; no downstream P&L model may assume either representation until the owner resolves or formally supersedes CX-11-Q-01.
 
 ---
 
@@ -201,3 +201,16 @@
 | R-04 | 23.03 Invoicing & Receivables | 23.05 Career Progression & Benchmarking | Considered: should payment-history data inform career benchmarks ("peers get paid in 30 days, you wait 90")? Rejected — it is 23.03.03's counterparty-reputation question (DT-03, Q-01) wearing a benchmarking costume, and routing it through 23.05 would smuggle a de-facto credit rating on named businesses in through a side door while bypassing the values decision that question demands. |
 | R-05 | 23.07 Budgeting & Project/Tour P&L | 23.03 Invoicing & Receivables | Considered — a tour's income arrives partly via invoices, so the two touch money for the same event. Rejected as **indirect**: both resolve through 23.01's ledger (CX-01), which is precisely what a spine is for. A direct link would be a second path between the same two facts and would drift from the first. |
 | R-06 | 23.02 Expenses & Tax Readiness | 23.06 Advances, Commission & Recoupment | Considered because both "reduce a number": deductions reduce taxable profit, commission/recoupment reduce net income. Rejected — they net against **different bases in different orders** (tax profit vs gross receipts) and share no row and no trigger. Conflating them is the classic error INV-01/INV-05 guard against; each holds its own order-of-operations. |
+
+
+<!-- spec-graph: auto-generated -->
+## Related Specs
+
+### Constrained by
+- [[decisions.md#d-05|D-05]]
+- [[decisions.md#d-04|D-04]]
+- [[decisions.md#d-02|D-02]]
+- [[decisions.md#d-14|D-14]]
+- [[decisions.md#d-01|D-01]]
+- [[decisions.md#d-19|D-19]]
+- [[decisions.md#d-03|D-03]]

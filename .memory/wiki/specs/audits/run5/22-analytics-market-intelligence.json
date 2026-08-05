@@ -1,0 +1,143 @@
+{
+  "domain": "22-analytics-market-intelligence",
+  "unitsAudited": 9,
+  "filesRead": 44,
+  "coverageNote": "Enumerated from disk: 9 units (the domain directory itself plus 22.01-22.08), 44 .md files, 0 non-md files. Matches the expected 9 units / 44 files exactly. Every file read in full through the 3a (implementer simulation) -> 3b (rubric scoring) -> 3c (devil's advocate) cycle; no sampling. Freshness gate observed: nothing under .memory/wiki/specs/audits/ was opened except this run5 output path. Sources consulted outside the domain, all inside the ideation tree under audit and used only to test whether a deferral target is still live: ideation-index.md (D-23/D-24 record /ideate-discover Step 5 complete 2026-07-18; D-25 Step 6 complete; /ideate-validate self-check dated 2026-07-18; D-31 release split) and moscow-ledger.md (tier rows for 22.03.01, 22.05.04, 22.06.02, 22.07.01/.03). Scoring: dimensions 2 (Persona Specificity), 4 (Constraint Explicitness) and 5 (Success Measurability) marked N/A on every unit -- they are meta/ concerns (meta/personas.md, meta/constraints.md, vision) and scoring them here would either flatter (auto-check) or penalise absence of something never in scope. Dimension 6 (Competitive Positioning) is applicable only at the domain unit, where >=3 named competitors, a specific capability gap and a defensible moat mechanism are actually argued; N/A at sub-domain level. Dimensions 1, 3, 7, 8 applied everywhere. Roughly 24 of ~33 [PENDING] markers in this domain were traced to a properly-owned Open Question elsewhere in the same file or a sibling and were dropped on the 3c pass under the cross-reference rule; only the uncovered ones are reported.",
+  "units": [
+    { "unit": "22-analytics-market-intelligence", "applicableCheckpoints": 5, "points": 0.5, "naDimensions": [2, 4, 5] },
+    { "unit": "22.01-source-connections-ingestion", "applicableCheckpoints": 4, "points": 1.0, "naDimensions": [2, 4, 5, 6] },
+    { "unit": "22.02-external-identity-catalog-matching", "applicableCheckpoints": 4, "points": 1.0, "naDimensions": [2, 4, 5, 6] },
+    { "unit": "22.03-playlist-chart-tracking", "applicableCheckpoints": 4, "points": 0.5, "naDimensions": [2, 4, 5, 6] },
+    { "unit": "22.04-audience-geography-routing-insight", "applicableCheckpoints": 4, "points": 0.5, "naDimensions": [2, 4, 5, 6] },
+    { "unit": "22.05-cross-source-dashboard-reporting", "applicableCheckpoints": 4, "points": 0.5, "naDimensions": [2, 4, 5, 6] },
+    { "unit": "22.06-streaming-fraud-detection", "applicableCheckpoints": 4, "points": 0.5, "naDimensions": [2, 4, 5, 6] },
+    { "unit": "22.07-ar-scouting-watchlists", "applicableCheckpoints": 4, "points": 0.5, "naDimensions": [2, 4, 5, 6] },
+    { "unit": "22.08-credit-linked-performance", "applicableCheckpoints": 4, "points": 0.5, "naDimensions": [2, 4, 5, 6] }
+  ],
+  "findings": [
+    {
+      "findingId": "22-analytics-market-intelligence#001",
+      "unit": "22-analytics-market-intelligence",
+      "severity": "blocking",
+      "dimension": 3,
+      "claim": "Silent contradiction about WHERE flagged fraudulent streams are excluded. 22.04.01 D-04 places the single exclusion inside the geography map feature; the domain CX file, 22.08's CX file, 22.08.01 and 22.08.03 all cite that same decision as the authority for streams being excluded 'upstream'/'at the source' for surfaces that never read the map (the unified dashboard, the credit rollup, the exported verified proof). The two loci cannot both be the one filter, and the choice decides whether fraudulent streams end up inside a public 'verified proof' claim.",
+      "evidence": "22.04-audience-geography-routing-insight/22.04.01-audience-geography-map.md:98 -- '| D-04 | Flagged fraudulent streams are excluded **in the map**, not at each consumer | Single filter, single truth; duplicated filters drift apart. |'  ||  analytics-market-intelligence-cx.md:131 -- 'The exclusion happens **once, at the map** (22.04.01 D-04), so every downstream consumer inherits one correction.'  ||  analytics-market-intelligence-cx.md:121 -- 'none -- 22.06 flags; consumers read the flag. Flagged streams are excluded upstream once, so downstream features consume corrected data and do not re-decide fraud.'  ||  22.08-credit-linked-performance/22.08-credit-linked-performance-cx.md:84 -- 'it is a **source-data question already answered upstream**: 22.04.01 D-04 established that flagged streams are excluded once, at the source, and every consumer inherits the correction.'  ||  22.08-credit-linked-performance/22.08.01-contribution-catalog-performance.md:126 -- 'flagged streams are already excluded upstream (cx `R-02`), so this feature consumes corrected data and does not re-decide fraud.'  ||  22.08-credit-linked-performance/22.08.03-verified-performance-proof-service-listings.md:58 -- '| Streams later found fraudulent | Excluded upstream (22.04.01 D-04); proof shrinks | Restatement disclosed |'",
+      "forcedInvention": "The implementer must invent the exclusion point: (a) filter flagged streams in the ingestion/metrics layer, making 22.04.01 D-04's 'in the map' redundant and correcting every rollup, dashboard series and proof; or (b) filter at map build as D-04 literally states, in which case 22.05.01's stream curve, 22.08.01's rollup and 22.08.03's published proof all include artificial streams while three files assert they do not."
+    },
+    {
+      "findingId": "22-analytics-market-intelligence#002",
+      "unit": "22.01-source-connections-ingestion",
+      "severity": "blocking",
+      "dimension": 3,
+      "claim": "22.01.04 states twice that a precedence rule resolves a disagreement between an imported file and a live connection for the same date, and points at the CX file for it -- but the CX file records that precedence as unresolved, offering only a 'candidate'. The deferral carries no owner and targets `/ideate-discover Step 5 deepening`, a stage ideation-index.md D-23/D-24 record as complete (2026-07-18). Which value renders is therefore undefined.",
+      "evidence": "22.01-source-connections-ingestion/22.01.04-manual-file-based-metric-import.md:50 -- '| File disagrees with a live connection for the same date | Conflict flagged; neither value is destroyed | Side-by-side with the precedence rule applied and the superseded value inspectable. See `22.01-source-connections-ingestion-cx.md#CX-03` |'  ||  same file:54 -- '| Overlapping files (Jan-Mar, then Feb-Apr) | Overlap detected; per-date precedence applied | Explicit overlap report, not a silent double-count |'  ||  22.01-source-connections-ingestion/22.01-source-connections-ingestion-cx.md:73 -- '1. **Shared state conflict**: unresolved -- `[PENDING -- /ideate-discover Step 5 deepening]`. Candidate precedence: live DSP connection > distributor file > manual entry, with the superseded value retained and inspectable rather than overwritten.'  ||  ideation-index.md:210 -- '**Step 5 is now fully complete**: 195 Must=[DEEP], 285 Should=[PARTIAL], all 24 domains=[BREADTH].'",
+      "forcedInvention": "The implementer must invent the per-date precedence order between a live DSP series, a distributor file and a manual entry (and whether the loser is retained, shadowed or discarded), because the only statement of it is labelled a 'candidate' inside an unresolved cell."
+    },
+    {
+      "findingId": "22-analytics-market-intelligence#003",
+      "unit": "22.01-source-connections-ingestion",
+      "severity": "warning",
+      "dimension": 3,
+      "claim": "22.01.02 emits a health state `actionable` that 22.01.03 -- the file that explicitly owns the freshness state machine -- does not define. 22.01.03 enumerates exactly five states (fresh, stale, degraded, broken, terminal) and maps the user-actionable case onto `broken`. Two implementers will build different state enums from these two files.",
+      "evidence": "22.01-source-connections-ingestion/22.01.02-social-account-connection-sync.md:65 -- '| Access token expires (~60d on Meta, shorter elsewhere) | Ingestion halts at the lapse date; health -> `actionable`; **notifies** (this is the one social failure that is not silent, per D-01) |'  ||  same file:40 -- 'and expiry as `actionable` (it notifies), which is the one failure class D-01 does *not* silence.'  ||  22.01-source-connections-ingestion/22.01.03-ingestion-health-gaps-freshness.md:52-58 -- state-machine table rows are exactly '| `fresh` | ... | `stale` | ... | `degraded` | ... | `broken` | An attempt returned auth failure (401/403, `invalid_grant`, `token_revoked`) | ... | `terminal` |'  ||  same file:39-41 -- 'A transient failure (`degraded`) is silent; only user-actionable (`broken`) or permanent (`terminal`) failures surface'  ||  22.01.01-dsp-account-connection-sync.md:48 -- 'Classifying that timestamp into `fresh` / `stale` / `degraded` / `broken` / `terminal` is 22.01.03's job and this feature does not restate its thresholds'",
+      "forcedInvention": "The implementer must decide whether `actionable` is a sixth state or an alias for `broken`, and therefore whether an expired social token opens a named gap (which `broken` does per 22.01.03) or not."
+    },
+    {
+      "findingId": "22-analytics-market-intelligence#004",
+      "unit": "22.01-source-connections-ingestion",
+      "severity": "warning",
+      "dimension": 3,
+      "claim": "The Coverage Rule's attested set A admits only sources in state `fresh` or `stale`, so a source in `degraded` is counted as a loss and can push the coverage ratio below 0.80 -- flipping a rollup from a plain figure to a refusal. That contradicts the same file's repeated rule that `degraded` means the data is late rather than missing and must produce no alarm and no gap.",
+      "evidence": "22.01-source-connections-ingestion/22.01.03-ingestion-health-gaps-freshness.md:72-74 -- 'Let `A` subset of `M` = sources whose state over the window is `fresh` or `stale` **with no open gap overlapping the window**, contributing an **attested** value (not import-claimed). Let **coverage ratio** `c = |A| / |M|`.'  ||  same file:62 -- '`degraded` never opens a gap -- the data is late, not missing.'  ||  same file:105 -- '| Rate limit (transient, HTTP 429) | `degraded`; exponential backoff; no notification, no gap (data isn.t missing, it.s late) | Freshness indicator only |'  ||  same file:135 -- '| Degraded | Transient failure (429/5xx) in backoff | Freshness timestamp only; deliberately no alarm |'  ||  same file:82 -- '| `c < 0.80` **or** dominant-loss >= 0.20 | **Refuse to state a single figure.** Render \"at least X across N of M sources\" with every gap named.'",
+      "forcedInvention": "The implementer must decide whether a transiently rate-limited source counts toward attested coverage. Excluding it (the literal reading) means one HTTP 429 on a 5-source rollup silently converts a headline number into a refusal, which is the warning-blindness DT-03 and DT-05 exist to prevent; including it contradicts the definition of A."
+    },
+    {
+      "findingId": "22-analytics-market-intelligence#005",
+      "unit": "22.01-source-connections-ingestion",
+      "severity": "warning",
+      "dimension": 7,
+      "claim": "An edge-case row in 22.01.04 leaves the behaviour for currency/territory columns entirely undefined, with `[PENDING]` in the user-facing column and a deferral that names no owner and targets the completed `/ideate-discover Step 5 deepening`. The file's Q-01 tracks the domain-10 ownership boundary but not what the importer does with those columns.",
+      "evidence": "22.01-source-connections-ingestion/22.01.04-manual-file-based-metric-import.md:57 -- '| Currency/territory columns present | `[PENDING -- /ideate-discover Step 5 deepening]` -- overlaps domain 10.s royalty ingestion; boundary unresolved | `[PENDING]` |'  ||  same file:97 Q-01 tracks only the parser-ownership question: 'Does domain 10 own statement parsing with 22 subscribing, or do both parse? Affects whether 22 depends on 10.s ship order. ... | Agent | `/create-prd-architecture`'  ||  ideation-index.md:210 -- '**Step 5 is now fully complete**'",
+      "forcedInvention": "The implementer must invent whether currency and territory columns are ignored, stored as dimensions on the imported metric, or rejected -- and territory in particular feeds 22.04.01's geography map, so the choice is visible in the product."
+    },
+    {
+      "findingId": "22-analytics-market-intelligence#006",
+      "unit": "22.02-external-identity-catalog-matching",
+      "severity": "warning",
+      "dimension": 7,
+      "claim": "Four synthesis answers in the sub-domain CX file -- including two on the High-confidence CX-01 pair -- are deferred to `/ideate-discover Step 5`, a stage recorded complete, with no owner named. The substantive one is whether a dependent catalog match may be confirmed while its parent artist match is contested; the file offers a 'candidate' and stops.",
+      "evidence": "22.02-external-identity-catalog-matching/22.02-external-identity-catalog-matching-cx.md:38 -- '5. **State transition conflict**: yes -- a catalog match confirmed while its parent artist match is being contested. Candidate: freeze dependent confirmations while a parent is contested. `[PENDING -- Step 5]`.'  ||  same file:35 -- 'Sync-vs-async is `[PENDING -- Step 5]`, but the cascade itself is non-negotiable.'  ||  same file:73-74 -- '4. **Notification fan-out**: `[PENDING -- /ideate-discover Step 5 deepening]`. 5. **State transition conflict**: `[PENDING -- Step 5]`.'  ||  same file:10 records CX-01 as 'High' confidence, so the CX template's Medium/Low deferral rule does not cover it  ||  22.02-external-identity-catalog-matching-index.md:58 shows the same file re-pointing a different question off that stage: 'Re-pointed from the completed `/ideate-discover` Step 5.'",
+      "forcedInvention": "The implementer must decide whether confirmations on child catalog matches are frozen, allowed-then-invalidated, or unaffected while the parent artist match sits in `contested` -- 22.02.03 D-02 blocks binding for the contested record itself but says nothing about its dependents."
+    },
+    {
+      "findingId": "22-analytics-market-intelligence#007",
+      "unit": "22.03-playlist-chart-tracking",
+      "severity": "warning",
+      "dimension": 7,
+      "claim": "22.03.01 Q-02 asks whether contribution estimation ships at all, and defers it to 'MoSCoW' -- a stage completed 2026-07-18 that tiered the feature but did not take this sub-decision. Meanwhile the same file's Role Lens, edge cases and D-03 all describe contribution estimates as existing. Sibling files were explicitly re-targeted off completed stages; this row was not.",
+      "evidence": "22.03-playlist-chart-tracking/22.03.01-playlist-placement-tracking.md:106 -- '| Q-02 | Do we attempt contribution estimation at all in v1, or show placement events and streams side-by-side and let the user infer? The latter is more honest and less impressive. | User | MoSCoW |'  ||  same file:19 -- 'the add/remove/move events on a timeline against their streams, and the estimated contribution of each placement'  ||  same file:98 -- '| D-03 | Contribution is **always labelled an estimate**, and never feeds verified proof |'  ||  contrast the re-targeting done elsewhere, 22.01.04-manual-file-based-metric-import.md:99 -- '**Re-targeted**: MoSCoW ran in `/ideate-validate` and tiered the feature, not the per-format parser backlog.'  ||  moscow-ledger.md:467 tiers 22.03.01 itself but records no estimation decision",
+      "forcedInvention": "The implementer must decide whether to build the estimated-contribution figure at all; the body text assumes it exists while the only tracked question about it points at a stage that has already run."
+    },
+    {
+      "findingId": "22-analytics-market-intelligence#008",
+      "unit": "22.04-audience-geography-routing-insight",
+      "severity": "warning",
+      "dimension": 3,
+      "claim": "22.04.03 treats 'cancelled' and 'rescheduled' as one case and justifies the outcome with 'a show that didn't happen has no impact' -- but a rescheduled show does happen, on a later date. The States table only recognises 'Invalidated | Show cancelled', so whether the played-later show ever gets an attribution window is unstated.",
+      "evidence": "22.04-audience-geography-routing-insight/22.04.03-show-impact-attribution.md:55 -- '| Show cancelled/rescheduled after the window opened | Window invalidated, not measured | Nothing measured; a show that didn.t happen has no impact. See `#CX-02` synthesis Q5 |'  ||  same file:71 -- '| Invalidated | Show cancelled | Removed silently -- nothing to report |'  ||  same file:43-44 happy path -- '1. A show completes (domain 17 booking record). 2. Attribution window opens'  ||  22.04-audience-geography-routing-insight-cx.md:56 -- 'a cancelled or rescheduled show (common) must invalidate an open attribution window rather than measure a show that never happened. Flagged for Step 5.' (no owner; Step 5 is complete)",
+      "forcedInvention": "The implementer must invent whether a reschedule opens a fresh attribution window on the new date (and what happens to the pre-show baseline captured for the original date) or permanently forfeits attribution for that show."
+    },
+    {
+      "findingId": "22-analytics-market-intelligence#009",
+      "unit": "22.05-cross-source-dashboard-reporting",
+      "severity": "warning",
+      "dimension": 7,
+      "claim": "The sub-domain index still carries the beachhead question as open and defers it to 'MoSCoW' (complete), while its own child 22.05.01 records the identical question as RESOLVED by ideation-index.md D-31, and the domain index likewise marks it resolved. The parent row is stale and unmarked, so the tree simultaneously asserts the question is open and closed.",
+      "evidence": "22.05-cross-source-dashboard-reporting/22.05-cross-source-dashboard-reporting-index.md:57 -- '| Q-03 | Which is the beachhead render -- the dashboard (consolidation) or the credit-linked view (provenance)? The domain.s answer to problem-statement Q-03. | User | MoSCoW |'  ||  22.05-cross-source-dashboard-reporting/22.05.01-unified-performance-dashboard.md:125 -- '| Q-03 | ~~Is the dashboard or the credit-linked view (22.08) the **beachhead** render? (Parent Q-03; problem-statement Q-03.)~~ **RESOLVED -- neither.** ... | User | Resolved -- `ideation-index.md` D-31 |'  ||  analytics-market-intelligence-index.md:141 Q-06 -- '**RESOLVED -- the domain.s own reading was right, and the beachhead went elsewhere.**'  ||  ideation-index.md:217 D-31 dated 2026-07-18",
+      "forcedInvention": "None strictly forced -- but a reader arriving at the sub-domain index is told a settled sequencing decision is still open and is pointed at a stage that has already run."
+    },
+    {
+      "findingId": "22-analytics-market-intelligence#010",
+      "unit": "22.05-cross-source-dashboard-reporting",
+      "severity": "warning",
+      "dimension": 7,
+      "claim": "The behaviour of 22.05.04 for the platform's ratified primary persona -- the session player with no artist identity -- is left `[PENDING -- Step 5]` with no owner, against a completed stage. Q-04 settles only the ownership/re-parenting structure ('22.05.04 consuming this rollup as an input'); DT-03 frames the credit-graph cohort as a future direction, not as this feature's behaviour.",
+      "evidence": "22.05-cross-source-dashboard-reporting/22.05.04-peer-benchmarking-cohort-comparison.md:57 -- '| Session player with no artist identity | Cohort of *what*? | `[PENDING -- Step 5]` -- the interesting case: 22.08.s credit-linked cohort (\"drummers with comparable credit graphs\") may be the only defensible benchmark for the primary persona. See DT-03 |'  ||  same file:76 DT-03 -- 'Conventional artist benchmarking simply **has no subject for them** ... Recorded as the strongest future direction for this feature'  ||  same file:104 Q-04 resolves only structure -- 'The correct structure is 22.05.04 consuming this rollup as an input.'  ||  ideation-index.md:210 -- 'Step 5 is now fully complete'",
+      "forcedInvention": "The implementer must decide what a session player sees when they open Compare: a Suppressed state, a Declined state, the feature hidden entirely, or a credit-graph cohort that no ratified decision authorises for this feature."
+    },
+    {
+      "findingId": "22-analytics-market-intelligence#011",
+      "unit": "22.06-streaming-fraud-detection",
+      "severity": "warning",
+      "dimension": 7,
+      "claim": "Whether a live campaign triggers a warning when its vendor's score deteriorates is deferred in a circle: the feature row points at CX-01 Q4, and CX-01 Q4 is itself `[PENDING -- Step 5]` on a completed stage. No Open Question in either file covers it, and the CX text calls it 'a genuinely new alert class'.",
+      "evidence": "22.06-streaming-fraud-detection/22.06.02-promo-vendor-risk-scoring.md:57 -- '| Score deteriorates while an artist.s campaign is live | Arguably owed a warning | `[PENDING -- Step 5]` -- a new alert class. See `#CX-01` Q4 |'  ||  22.06-streaming-fraud-detection/22.06-streaming-fraud-detection-cx.md:36 -- '4. **Notification fan-out**: an anomaly notifies the artist. A vendor.s score changing notifies nobody -- but an artist with an **active campaign** from a vendor whose score just deteriorated is arguably owed a warning, and that is a genuinely new alert class. `[PENDING -- Step 5]`.'  ||  22.06.02 Open Questions Q-01..Q-04 (lines 97-100) cover right-of-reply, rebranding, self-scoring and the monetisation principle -- none covers this alert  ||  22.06.02 Role Lens line 20 nevertheless promises it: 'and a warning if a vendor they.ve used deteriorates'",
+      "forcedInvention": "The implementer must invent whether a deteriorating vendor score notifies artists with live campaigns -- the Role Lens promises the warning, the edge case and the CX both leave it undecided, and it is a message class that spends 22.05.02's noise budget."
+    },
+    {
+      "findingId": "22-analytics-market-intelligence#012",
+      "unit": "22.07-ar-scouting-watchlists",
+      "severity": "warning",
+      "dimension": 3,
+      "claim": "22.07.03 is a ratified WONT, but 22.07.01 (COULD, i.e. buildable) still routes its Empty state CTA to it and the sub-domain CX still rests CX-01 on it, arguing that without search a watchlist is 'an address book, not a scouting tool'. Nothing in 22.07.01 or the CX acknowledges the cut, so the surviving feature's entry point has no target.",
+      "evidence": "22.07-ar-scouting-watchlists/22.07.01-artist-watchlists.md:58 -- '| Empty | No watchlists | CTA routing to discovery (22.07.03) |'  ||  22.07-ar-scouting-watchlists/22.07-ar-scouting-watchlists-cx.md:10 -- 'CX-01 | 22.07.03 Discovery Search | 22.07.01 Watchlists | Search populates watchlists -- the discovery->track pipeline | ... | High | A watchlist you can only fill by typing a name you already know is an address book, not a scouting tool'  ||  22.07.03-scouting-discovery-search.md:91 -- '**RESOLVED -- no. It was cut.** [moscow-ledger.md] places **22.07.03 in WONT (53)**'  ||  moscow-ledger.md:766 carries 22.07.03 in the WONT block; moscow-ledger.md:688 carries 22.07.01 in COULD  ||  22.07-ar-scouting-watchlists-index.md:83 -- '**22.07.01 and 22.07.02 in COULD**, and **22.07.03 in WONT**'",
+      "forcedInvention": "The implementer of 22.07.01 must invent the empty-state entry point (free-text name lookup? domain 05's consented search? no CTA at all?) now that the only named discovery path is cut."
+    },
+    {
+      "findingId": "22-analytics-market-intelligence#013",
+      "unit": "22.02-external-identity-catalog-matching",
+      "severity": "warning",
+      "dimension": 8,
+      "claim": "Dangling intra-tree cross-reference: 22.02.01 links the proof exporter to a directory that does not exist on disk. The real path is 22.08-credit-linked-performance/.",
+      "evidence": "22.02-external-identity-catalog-matching/22.02.01-external-artist-profile-matching-claiming.md:119 -- '- Touches **22.08.03 Exported Proof** ([22.08.03](../22.08-credit-rollup-proof/)) -- why: the evidence tier stamped here is the floor the proof exporter enforces (Q-01).'  ||  disk enumeration of .memory/wiki/specs/ideation/22-analytics-market-intelligence/ lists only: 22.01-source-connections-ingestion, 22.02-external-identity-catalog-matching, 22.03-playlist-chart-tracking, 22.04-audience-geography-routing-insight, 22.05-cross-source-dashboard-reporting, 22.06-streaming-fraud-detection, 22.07-ar-scouting-watchlists, 22.08-credit-linked-performance"
+    },
+    {
+      "findingId": "22-analytics-market-intelligence#014",
+      "unit": "22.08-credit-linked-performance",
+      "severity": "warning",
+      "dimension": 8,
+      "claim": "Dangling intra-tree cross-reference: 22.08.01 links the fraud sub-domain to a directory that does not exist on disk. The real path is 22.06-streaming-fraud-detection/.",
+      "evidence": "22.08-credit-linked-performance/22.08.01-contribution-catalog-performance.md:126 -- '- Touches **22.06 Fraud / Anomaly** ([22.06](../22.06-fraud-anomaly/)) -- why: the \"fabricated credits\" edge case emits a fraud signal; flagged streams are already excluded upstream (cx `R-02`)'  ||  disk enumeration shows the sub-domain directory is named 22.06-streaming-fraud-detection; ../22.06-fraud-anomaly/ does not resolve"
+    }
+  ]
+}

@@ -1,0 +1,154 @@
+{
+  "domain": "10-royalties-collections",
+  "unitsAudited": 6,
+  "filesRead": 40,
+  "coverageNote": "Enumerated from disk: 6 units (domain root + 10.01–10.05), 40 .md files — matches the expected 6 units / 40 files. Every file read in full through the 3a→3b→3c cycle. Rubric dimensions 1 (Problem Clarity), 2 (Persona Specificity), 4 (Constraint Explicitness), 5 (Success Measurability) and 6 (Competitive Positioning) are marked N/A throughout: this domain's files reference meta/problem-statement.md, meta/personas.md, meta/constraints.md and meta/competitive-landscape.md and are explicitly forbidden from redefining them ('Personas from meta/personas.md — referenced, never redefined'). Applicable checkpoints per unit = files-in-unit × 3 (dimensions 3, 7, 8). Points = dimension scores plus implementer-simulation ❌ items. Dimension 8 (Structural Compliance) scores ✅ in all six units: every unit directory carries *-index.md + *-cx.md, every domain/sub-domain index has a populated Role Matrix, every leaf feature file has a Role Lens, the Children tables match the directory tree exactly, and there are no Classification Gate violations. Dimension 7 scores ✅ in five units — every row of every Open Questions table carries both an owner and a deferral target — and ⚠️ in 10.04 only, for three inline deferral markers pointing at a completed /ideate-discover step with no owner. Sub-domain CX files whose Cross-Cut Details sections cover only some mapped edges were NOT scored as gaps: each declares Status [SURFACE] ('children classified; intra-sub-domain cross-cuts mapped'), and only royalties-collections-cx.md claims [DEEP] coverage — which it delivers for every High-confidence edge (CX-11 is the sole Medium-confidence edge and is the sole one without a detail section, consistent with its own stated scope). Devil's-advocate pass dropped 9 candidate findings that did not survive: stale [SURFACE]/[PARTIAL] status markers in the domain Children table, Deep-Think hypothesis counts that differ between the breadth-pass index and the deepened children, the D-11-vs-D-13 mis-citation of the global 'fans are first-class users' decision, four broken relative links (24-trust-safety/, 01-identity-profile/, 02.03-credit-import-claiming/, 10.04.02-royalty-statements-to-payees.md), 10.03.02's Role Lens giving Musician Config-as-payer against the parent Role Matrix's Read-only (explicitly named and ruled on by its own DT-10/D-12, therefore disclosed rather than silent), and 10.04.03 Q-03's resolution post-dating the parent CX's 'unresolved' marker.",
+  "units": [
+    {
+      "unit": "10-royalties-collections (domain root: index, cx, 10.06–10.10)",
+      "applicableCheckpoints": 21,
+      "naDimensions": [1, 2, 4, 5, 6],
+      "points": 1.5
+    },
+    {
+      "unit": "10.01-society-registration-delivery",
+      "applicableCheckpoints": 27,
+      "naDimensions": [1, 2, 4, 5, 6],
+      "points": 1.0
+    },
+    {
+      "unit": "10.02-statement-ingestion-normalization",
+      "applicableCheckpoints": 21,
+      "naDimensions": [1, 2, 4, 5, 6],
+      "points": 3.0
+    },
+    {
+      "unit": "10.03-calculation-recoupment",
+      "applicableCheckpoints": 18,
+      "naDimensions": [1, 2, 4, 5, 6],
+      "points": 1.0
+    },
+    {
+      "unit": "10.04-disbursement-payee-statements",
+      "applicableCheckpoints": 18,
+      "naDimensions": [1, 2, 4, 5, 6],
+      "points": 2.5
+    },
+    {
+      "unit": "10.05-recovery-leakage",
+      "applicableCheckpoints": 15,
+      "naDimensions": [1, 2, 4, 5, 6],
+      "points": 2.0
+    }
+  ],
+  "findings": [
+    {
+      "findingId": "10-royalties-collections#001",
+      "unit": "10-royalties-collections",
+      "severity": "warning",
+      "dimension": 3,
+      "claim": "The MoSCoW reasoning asserts the Must set is 'exactly D-03's ungated half', but four of D-03's six named ungated items sit in Should in the same file's own MoSCoW table.",
+      "evidence": "royalties-collections-index.md:139 — \"**Reasoning**: the Must set is **exactly D-03's ungated half**.\" Contradicted by royalties-collections-index.md:112 (D-03) — \"*Ungated* (needs nobody's permission): ingest statements the user already receives (`10.02`), calculate (`10.03`), search public unclaimed pools (`10.05.01`), detect leakage (`10.05.03`), show the pipeline (`10.09`)\" — and by royalties-collections-index.md:134-135, where Must contains only `10.02.01`–`10.02.05`, `10.03.01`, `10.03.02`, `10.05.01`, while `10.03.03`, `10.03.04`, `10.05.03` and `10.09` are listed under **Should**.",
+      "forcedInvention": "An implementer sequencing the launch slice must decide whether the ungated half means D-03's list (10.03 whole, 10.05.03, 10.09 included) or the Must table (four of them deferred). The two differ by four features."
+    },
+    {
+      "findingId": "10-royalties-collections#002",
+      "unit": "10-royalties-collections",
+      "severity": "warning",
+      "dimension": 0,
+      "claim": "10.09 D-05 makes 'tolerance before alarm' the rule that separates a slipped distribution from a leakage finding, but never states the tolerance and no open question tracks it.",
+      "evidence": "10.09-distribution-calendar-money-in-flight.md:95 (D-05) — \"| D-05 | Late ≠ leaked | Societies slip. **Tolerance before alarm**, or the feature cries wolf and gets muted. |\"; States table 10.09-distribution-calendar-money-in-flight.md:66 — \"| Overdue | Past the distribution date **+ tolerance** | → `10.05.03` finding |\"; Edge Cases 10.09:52 — \"| Distribution late | Societies slip | Tolerance before alarming; a slipped distribution is not a leak |\". Open Questions (10.09:101-103) cover calendar maintenance (Q-01), estimation (Q-02, resolved) and receivable financing (Q-03) — none covers the tolerance value or its derivation.",
+      "forcedInvention": "The number of days (or the per-society derivation) after a published distribution date before an expectation becomes an Overdue leakage finding. Compare 10.02.05 D-17, which specifies a full 50/75/90/100% ladder anchored to the source's correction window with a labelled 12-month fallback and defers only calibration via its Q-09; 10.09 supplies no anchor at all. Two implementers will pick different windows, and the choice decides when 10.05.03 fires."
+    },
+    {
+      "findingId": "10-royalties-collections#003",
+      "unit": "10.01-society-registration-delivery",
+      "severity": "warning",
+      "dimension": 0,
+      "claim": "The sub-domain index states without qualification that every child is gated on the parent's accreditation question, while 10.01.06 D-02 ratifies that it is not gated at all — and neither statement carries a marker pointing at the other.",
+      "evidence": "10.01-society-registration-delivery-index.md:14 — \"**The gate that hangs over all of it**: nobody can register works with a PRO unless they are an accredited publisher or administrator, or they act through one. See parent `Q-03`. **Every child in this sub-domain is downstream of that answer.**\" and 10.01-society-registration-delivery-index.md:61 (Q-01) — \"Everything here is gated on the parent's `Q-03`… If the answer is 'neither', this sub-domain reduces to `10.01.02` validation plus an export\". Contradicted by 10.01.06-neighbouring-rights-performer-registration.md:102 (D-02) — \"| D-02 | Not gated on platform accreditation — the **performer's own membership is the credential** | DT-02. Materially changes this feature's MoSCoW position relative to its siblings. |\" and 10.01.06:30 — \"**This substantially dodges the parent's `Q-03` accreditation gate**\". royalties-collections-cx.md:18 (CX-07) and royalties-collections-index.md:120 (D-11) both confirm 10.01.06 escapes the gate.",
+      "forcedInvention": "Whether 10.01.06 can be built and shipped before Q-03 is answered. The index's universal claim would defer it; D-11/CX-07/D-02 make it the least-gated feature in the domain and argue it should be the first Should promoted."
+    },
+    {
+      "findingId": "10-royalties-collections#004",
+      "unit": "10.02-statement-ingestion-normalization",
+      "severity": "blocking",
+      "dimension": 0,
+      "claim": "The reconciliation tolerance formula and its own worked example disagree by a factor of thirteen, and the surrounding prose is only satisfiable by the example — so the domain's single hard gate has two incompatible pass/fail definitions for the modal statement.",
+      "evidence": "10.02.02-statement-parsing-format-adapters.md:47 gives the formula \"tolerance = 0.5 × 10^-q  +  n × 0.5 × 10^-p\". Line 50 then states \"- A 12-line PRS statement with `p = q = 2` → tolerance £0.005. Effectively exact; **a penny out is a real failure**.\" The formula yields 0.5×10⁻² + 12×0.5×10⁻² = 0.005 + 0.060 = **£0.065**, under which a penny out is comfortably *inside* tolerance. The second example checks out (line 51: p=6, q=2, n=400,000 → 0.005 + 0.200 = £0.205 ≈ the stated \"£0.205\"), which isolates the defect to the first. Line 53 compounds it: \"A fixed \\\"£0.01 tolerance\\\" is simultaneously too tight for the second and **far too loose for the first**\" — true against £0.005, false against the formula's £0.065, where a fixed penny would be six times *tighter*. D-10 (10.02.02:199) restates the formula verbatim and D-02 (10.02.02:191) makes the outcome a hard gate: \"A failed reconciliation **stops the pipeline**; it does not warn.\"",
+      "forcedInvention": "Whether a 1p discrepancy on a 12-line society statement blocks the whole statement (and with it matching, calculation and every payee statement beneath it) or is recorded as the source's own rounding. Both readings are stated as ratified in the same file, and 10.02.02 is in the Must set as the load-bearing feature of the ungated half."
+    },
+    {
+      "findingId": "10-royalties-collections#005",
+      "unit": "10.02-statement-ingestion-normalization",
+      "severity": "warning",
+      "dimension": 0,
+      "claim": "10.02.05 states three times that the source registry does not hold the remittee or the correction window and files an open question demanding they be added, while 10.02.01 already specifies both as registry fields, ratifies them as D-06 and D-16, and records the question as resolved.",
+      "evidence": "10.02.05-unmatched-line-exception-queue.md:326 (Q-04) — \"Does `10.02.01`'s **source registry hold the remittee and the source's correction window**? … **Neither is stated in `10.02.01` today.**\"; repeated at 10.02.05:78 — \"(`D-15`, and it requires a registry field that `10.02.01` does not currently state: `Q-04`)\", 10.02.05:266 (DT-06) — \"requiring a registry field `10.02.01` does not currently state (`Q-04`, `D-15`)\", and 10.02.05:281 — \"**two new hard requirements this pass places on a sibling** (`Q-04`) … **Neither is currently stated in `10.02.01`.**\" Contradicted by 10.02.01-statement-source-ingestion.md:47 — \"| **Remittee** | *Who the money was actually paid to* … **Required by `10.02.05` D-15**\" — and 10.02.01:51 — \"| **Correction window** | **Required by `10.02.05` D-17**\" — ratified at 10.02.01:322 (D-06) and 10.02.01:332 (D-16), with 10.02.01:292 stating \"**`Q-04` there is resolved here** (`D-06`, `D-16`)\".",
+      "forcedInvention": "Whether the registry data model already carries remittee and correction window or whether a second design pass must add them. An implementer working from 10.02.05 would either duplicate the fields into the queue or block on a sibling requirement that is already satisfied."
+    },
+    {
+      "findingId": "10-royalties-collections#006",
+      "unit": "10.02-statement-ingestion-normalization",
+      "severity": "warning",
+      "dimension": 0,
+      "claim": "The exception queue declares a closed reason taxonomy in which every identity carries exactly one reason code, then specifies that a `reversed` identity re-enters under a different code — leaving it undefined which code a reversed identity actually holds.",
+      "evidence": "10.02.05-unmatched-line-exception-queue.md:58 — \"Every queued identity carries **exactly one reason code** and a route (`D-09`). The set is closed: a line that fits none of these is a defect, not a new category.\" The taxonomy then lists `reversed` as one of the eleven codes (10.02.05:70): \"| `reversed` | Was attributed; the mapping was reversed and the line returned | `10.02.03` D-10 | **Re-enters under its original cause.** |\", and the States table repeats it (10.02.05:253): \"| Reversed | A mapping was reversed (`10.02.03` D-10) | **Returned to the queue under its original cause.** |\". The domain CX asserts the opposite (royalties-collections-cx.md:71): \"un-moved money returns to `10.02.05` **under cause `reversed`**\", repeated at royalties-collections-cx.md:293: \"un-moved money returns to `10.02.05` **under cause `reversed`**\".",
+      "forcedInvention": "Which reason code a reversed identity carries — `reversed`, or the `no-candidate`/`sub-threshold`/etc. cause it originally had. The choice decides which resolution route is offered and which correction window anchors its ageing ladder (D-17), and D-09's exactly-one-code invariant forbids carrying both."
+    },
+    {
+      "findingId": "10-royalties-collections#007",
+      "unit": "10.03-calculation-recoupment",
+      "severity": "warning",
+      "dimension": 0,
+      "claim": "The sub-domain ratifies that nothing in it is user-editable, while its own Role Matrix grants Producers Config on two of its four children and its own CX file describes a Producer editing a term alone in a settings screen as the sub-domain's sharpest structural risk.",
+      "evidence": "10.03-calculation-recoupment-index.md:50 (D-05) — \"| D-05 | **Nothing in this sub-domain is user-editable** | Every input has an upstream owner. An editable calculation is a second source of truth for the split, created at the moment of maximum financial motivation. |\" Contradicted by its own Role Matrix at 10.03-calculation-recoupment-index.md:34-35 — \"| 10.03.02 Deal Terms → Rate Application | 👁️ Read-only | **⚙️ Config (terms on deals they administer)** |\" and \"| 10.03.03 Advances & Recoupment Position | 👁️ Read-only | **⚙️ Config (advances they paid out)** |\" — and by 10.03-calculation-recoupment-cx.md:98 (CX-05) — \"**a Producer can, months after the session, in a settings screen, alone, adjust a term in their own favour** and thereby claw back money already paid to a Musician\". 10.03.02-deal-terms-rate-application.md:245 (D-12) makes term editing a first-class capability: \"**Config derives from the payer/administrator relationship on a specific deal**\".",
+      "forcedInvention": "Whether the sub-domain exposes any write surface at all. Read literally, D-05 forbids the term-recording and advance-recording flows that 10.03.02 and 10.03.03 are entirely built around; read as intended (the calculation is not editable) it permits them, but the text never draws that line."
+    },
+    {
+      "findingId": "10-royalties-collections#008",
+      "unit": "10.04-disbursement-payee-statements",
+      "severity": "warning",
+      "dimension": 0,
+      "claim": "Escrow release is specified as having no trigger that is either party's decision, and the very next line names one of the three triggers as the disputant deciding to drop the dispute.",
+      "evidence": "10.04.04-disputed-royalty-escrow.md:27 — \"Release has exactly three triggers, and **none of them is either party's decision**:\" followed immediately at 10.04.04:29 — \"- **Withdrawal** — **the disputant dropped it.** Releases to the original allocation.\" D-02 (10.04.04:88) restates the absolute form — \"| D-02 | **No party can release escrow** — not the payee, not the payer, not the administrator | Whoever can release it can use it as leverage. |\" — and the sub-domain index elevates it to a domain finding (10.04-disbursement-payee-statements-index.md:38): \"**Nobody can release their own escrowed money** — not the payee, not the payer, not the administrator.\"",
+      "forcedInvention": "Whether a disputant can unilaterally release held money by withdrawing their own dispute. Under the withdrawal trigger they can (and the money returns to the original allocation, favouring the party who held it); under D-02 they cannot, and a withdrawal must instead route to the dispute engine for closure. The two readings differ on exactly the leverage D-02 exists to remove."
+    },
+    {
+      "findingId": "10-royalties-collections#009",
+      "unit": "10.04-disbursement-payee-statements",
+      "severity": "warning",
+      "dimension": 7,
+      "claim": "Three product decisions in this sub-domain are deferred with `[PENDING — Step 5]` markers that carry no owner and point at an /ideate-discover step this tree has already completed — the same expiry the domain elsewhere recognised and repaired by promoting the item to an owned question.",
+      "evidence": "10.04.03-thresholds-holds-unpayable-balances.md:62 — \"| Platform shuts down | **Whose money is it then?** | The question every held balance implies and nobody asks. `[PENDING — Step 5]` |\"; 10.04.04-disputed-royalty-escrow.md:49 — \"| Held money earns interest | **Whose?** Real at scale, and legally loaded (parent `Q-02`) | `[PENDING — /ideate-discover Step 5 deepening]` |\"; 10.04.04-disputed-royalty-escrow.md:53 — \"| Platform is the disputant | A platform-detected leakage or misattribution | `[PENDING — Step 5]` — **who adjudicates against the house?** |\". None names an owner or a pipeline stage. That this form of marker has expired is established inside the domain itself — 10.01.05-mechanical-rights-administration.md:95 (Q-04): \"Promoted from Edge Cases, where it had **expired against `/ideate-discover` Step 5**\" — where the repair was to promote the item to an `[OWNER]` question deferred to `/create-prd`. The same repair was not applied here.",
+      "forcedInvention": "Three owner-grade product/legal positions are unassigned: the disposition of held client money on platform wind-down, the beneficiary of interest accrued on escrowed third-party money (which parent Q-02 flags as regulated activity), and the adjudication path when the platform is itself the disputant. No downstream stage is named to receive any of them."
+    },
+    {
+      "findingId": "10-royalties-collections#010",
+      "unit": "10.04-disbursement-payee-statements",
+      "severity": "warning",
+      "dimension": 0,
+      "claim": "Unpayable balances are required to age and alarm on a clock the feature never anchors — no window, no per-cause differentiation, and no open question covering it.",
+      "evidence": "10.04.03-thresholds-holds-unpayable-balances.md:98 (D-03) — \"| D-03 | Held balances **age and alarm** | Third independent occurrence of the domain's pattern (`10.01.03` D-03, `10.02.01` D-02, `10.02.05` D-05): an absence produces no event, so the clock must. |\"; States table 10.04.03:72 — \"| Ageing | **Held past a threshold** | Escalating alarm, sized in money |\"; Behavior 10.04.03:40 — \"A balance sitting for three years is the black box forming in real time.\" No value, ladder or anchor is given, and the three cited siblings all supply one (10.01.03 D-03 anchors on the society's known turnaround; 10.02.05 D-17 anchors on the source's correction window with a labelled 12-month fallback and a 50/75/90/100% ladder). The Open Questions (10.04.03:106-108) cover terminal disposition (Q-01), custody (Q-02) and the shell-outreach message (Q-03, resolved) — none covers the ageing threshold.",
+      "forcedInvention": "The threshold at which a held balance becomes Ageing and the escalation schedule thereafter, for each of six causes with materially different remedies (below threshold, no method, unclaimed shell, KYC, deceased, sanctioned). A below-threshold accrual and an unreachable shell cannot share one clock honestly, and the text supplies neither clock."
+    },
+    {
+      "findingId": "10-royalties-collections#011",
+      "unit": "10.05-recovery-leakage",
+      "severity": "blocking",
+      "dimension": 0,
+      "claim": "The candidate ranking is ratified as sweep-imminence first and money second, while two other ratified decisions in the same file state the platform does not know a candidate's amount and that pools publishing no sums is the normal case — so the second sort key has no defined value in the modal case.",
+      "evidence": "10.05.01-black-box-unclaimed-search.md:227 (D-09) — \"| D-09 | Candidates rank by **sweep-imminence first, money second** | DT-07. A £40 candidate expiring in six weeks outranks a £400 one with three years left\"; restated at 10.05.01:100 (Happy Path 3) — \"ranked by `D-09`'s order — **sweep-imminent first, money second**\" — and at 10.05.01:175 — \"Ranked by `D-09` — **sweep-imminence first, money second**\". Contradicted by 10.05.01:230 (D-12) — \"| D-12 | The platform **states that it does not know the amount**, in the same breath as the count, with the reason |\" — by 10.05.01:221 (D-03) — \"| D-03 | **No promised amounts.** ' 43 possible matches', never '£800 is yours' |\" — and decisively by the edge case at 10.05.01:144 — \"| **Amounts aren't published** | Some pools list entries, not sums. **The normal case** | *'43 entries. We do not know what they are worth. Neither does anyone, until a body agrees'* (`D-12`) |\". The file's tracked open question on ranking inputs (Q-04, 10.05.01:242) covers only the sweep calendar: \"`D-09`'s entire ranking depends on them\" — nothing tracks the money key.",
+      "forcedInvention": "Where the per-candidate monetary value used by D-09's second sort key comes from when the pool publishes no sum, which is stated to be the normal case. An implementer must invent either an estimate (forbidden by D-03/D-12 and by domain D-15), a fallback ordering the decision does not name, or a silent restriction of D-09 to the minority of pools that publish amounts. This orders the activation screen — the domain's designated strongest activation event, in the Must set."
+    },
+    {
+      "findingId": "10-royalties-collections#012",
+      "unit": "10.05-recovery-leakage",
+      "severity": "warning",
+      "dimension": 0,
+      "claim": "The gate count that drives the sub-domain's MoSCoW spine is stated as one for search in 10.05.02, as two in the sub-domain CX and the domain CX, and 10.05.02's own enumeration contains two.",
+      "evidence": "10.05.02-claim-submission-evidence-pack.md:74 (DT-02) enumerates the gates — \"(1) a credits graph the new user does not have (`10.05.01` DT-02), which needs import, which is gated on source licensing…; (2) bulk access to unclaimed corpora, gated on their terms (parent `Q-01`); (3) a mandate…; (4) standing with each body…; (5) societies that read evidence\" — then concludes \"Meanwhile `10.05.01` **search alone is gated on one**, and delivers most of the emotional payload\". Its own items (1) and (2) both bind search. Contradicted by 10.05-recovery-leakage-cx.md:75 — \"**Search** (`10.05.01`) needs: a credits graph the new user does not have…; **plus** bulk access to unclaimed corpora, gated on their terms (parent `Q-01`)\" — and by royalties-collections-cx.md:115 — \"Detection: zero external gates. **Search: two.** Claiming: five. The roadmap should follow the gates, not the drama.\"",
+      "forcedInvention": "How many external permissions block the search half, which is the stated basis for MoSCoW placement ('This split is the sub-domain's MoSCoW spine', 10.05-recovery-leakage-index.md:46). One gate makes search near-shippable; two puts it behind a legal question on bulk corpus ingestion (parent Q-01) as well as the import licensing gate."
+    }
+  ]
+}

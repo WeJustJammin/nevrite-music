@@ -1,0 +1,313 @@
+{
+  "reportKind": "ambiguity-audit-verification",
+  "run": 7,
+  "domain": "16-venues-studios-spaces",
+  "rawReport": "16-raw.json",
+  "rawFindingCount": 17,
+  "verdicts": [
+    {
+      "findingId": "R7-16-001",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "reason": "The cited registries use active question records with a named owner, a pipeline-stage resolution deadline, and the affected decision in the question text. Their headers alone do not force an implementer to invent blocking status or escalation timing.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/16-venues-studios-spaces/venues-studios-spaces-index.md",
+          "line": 155,
+          "excerpt": "| **User** | `/create-prd` — **owner scope/ownership decision** |"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/16-venues-studios-spaces/16.01-place-records-rooms/16.01-place-records-rooms-index.md",
+          "line": 73,
+          "excerpt": "| User | `/create-prd` |"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/16-venues-studios-spaces/16.02-venue-technical-specification/16.02-venue-technical-specification-index.md",
+          "line": 76,
+          "excerpt": "| Agent | `/create-prd-architecture` — structural; taken once with 16.02.01 Q-04 and 16.02.04 Q-03 |"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/16-venues-studios-spaces/16.03-studio-technical-specification/16.03-studio-technical-specification-index.md",
+          "line": 70,
+          "excerpt": "| User | `/create-prd-architecture` |"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/16-venues-studios-spaces/16.05-curation-provenance-data-integrity/16.05-curation-provenance-data-integrity-index.md",
+          "line": 83,
+          "excerpt": "| Agent | `/create-prd-architecture` |"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/16-venues-studios-spaces/16.06-space-booking-reservations/16.06-space-booking-reservations-index.md",
+          "line": 90,
+          "excerpt": "| **User** | `/create-prd` — owner scope decision · cross-check with 05 (same call as 16.06.05 Q-01) |"
+        }
+      ]
+    },
+    {
+      "findingId": "R7-16-002",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "reason": "The grant-versus-claim precedence decision is explicitly recorded once for the User, with the required cross-checks and the `/create-prd` resolution deadline. The source forbids an implementer from choosing the semantics ad hoc.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/16-venues-studios-spaces/16.01-place-records-rooms/16.01.01-place-record-type-taxonomy.md",
+          "line": 332,
+          "excerpt": "precedence semantics are a product choice, not something a later stage derives. | **User** | `/create-prd` · **cross-check with 16.05.02 and 16.01.02 mandatory** |"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/16-venues-studios-spaces/16.01-place-records-rooms/16.01.02-room-space-first-class-entity.md",
+          "line": 290,
+          "excerpt": "Mirrors 16.01.01 Q-10 and must be answered with it, once. | **User** | `/create-prd` · **cross-check with 16.05.02 and 16.01.01 mandatory** |"
+        }
+      ]
+    },
+    {
+      "findingId": "R7-16-003",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "reason": "The claim-to-room handoff is recorded as Q-05 with an explicit architecture owner and resolution stage; its cold-start consequence is documented, so no component owner must be invented during implementation.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/16-venues-studios-spaces/16.05-curation-provenance-data-integrity/16.05.01-place-data-seeding-ingestion.md",
+          "line": 362,
+          "excerpt": "Neither owns the transition, and the cold-start answer fails quietly without it. An unowned boundary between two components. | Agent | `/create-prd-architecture` |"
+        }
+      ]
+    },
+    {
+      "findingId": "R7-16-004",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "reason": "Studio access and logistics are a recorded component-boundary decision with three stated implementation shapes, an architecture owner, and a designated resolution stage.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/16-venues-studios-spaces/16.03-studio-technical-specification/16.03.01-studio-rooms-acoustics.md",
+          "line": 327,
+          "excerpt": "Deferral re-pointed from the completed `/ideate-discover` Step 6 — the choice is a component-boundary call, not new discovery. | Agent | `/create-prd-architecture` |"
+        }
+      ]
+    },
+    {
+      "findingId": "R7-16-005",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "reason": "The local source routes the publication-path issue to its directly cited canonical 15.07 record, which assigns the User and `/create-prd` with domain 01 to choose the entity or register model. The exclusion is tracked rather than delegated to implementation.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/16-venues-studios-spaces/16.03-studio-technical-specification/16.03.02-signal-chain-mic-locker-inventory.md",
+          "line": 310,
+          "excerpt": "Does 15.07.03 accept a personal collection as a publication source for an individual Operator, or does 16 need a path that does not exist? **Not decidable from this side.**"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/15-gear-registry-ownership/15.07-studio-backline-asset-register/15.07-studio-backline-asset-register-index.md",
+          "line": 65,
+          "excerpt": "Does the entity model admit a single-person org, does this sub-domain admit a person-owned register, or is that supply out of scope? | User | `/create-prd`, with domain 01 |"
+        }
+      ]
+    },
+    {
+      "findingId": "R7-16-006",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "reason": "The cross-domain dry-hire-plus-engineer boundary is an explicit owner-scope decision for the User at `/create-prd`, with the required cross-check to domain 05. It is not an unassigned implementation responsibility.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/16-venues-studios-spaces/16.06-space-booking-reservations/16.06.05-compound-multi-resource-booking.md",
+          "line": 133,
+          "excerpt": "The platform's clearest structural cross-sell, currently nobody's feature, and it will fall down the gap between 16 and 05. | **User** | `/create-prd` — owner scope/ownership decision · cross-check with 05 |"
+        }
+      ]
+    },
+    {
+      "findingId": "R7-16-007",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "reason": "The pass-through incompatibility is recorded as a product decision preceding the stack decision, with the User as owner and `/create-prd-stack` as its resolution deadline. The source prevents an implementer from selecting a payment model or silently weakening guarantees.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/16-venues-studios-spaces/16.06-space-booking-reservations/16.06.03-reservation-lifecycle.md",
+          "line": 413,
+          "excerpt": "**The question is not \"which payments provider\" but \"do D-04 and D-05 exist at all\".** | **User** | `/create-prd-stack` — but the *product* half is a User decision before the stack call |"
+        }
+      ]
+    },
+    {
+      "findingId": "R7-16-008",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "reason": "The calendar-name disclosure decision records both the legal determination required and its security-stage owner/deadline. It is a deliberate owner ratification, not a missing compliance behavior for an implementer to invent.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/16-venues-studios-spaces/16.06-space-booking-reservations/16.06.02-external-calendar-sync.md",
+          "line": 394,
+          "excerpt": "Needs an owner call on the principle and a lawful-basis determination (controller/processor split, GDPR Art. 6, and whether disclosure suffices or consent is required). | **User** + `/create-prd-security` | Owner ratification · `/create-prd-security` |"
+        }
+      ]
+    },
+    {
+      "findingId": "R7-16-009",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "reason": "The conflicting backline representation is explicitly assigned to the BE specification stage with mandatory 16.04 and 15.07.03 cross-checks. The source describes the exact two alternatives, so implementation does not supply a silent reconciliation rule.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/16-venues-studios-spaces/16.02-venue-technical-specification/16.02.02-stage-pa-backline-spec.md",
+          "line": 275,
+          "excerpt": "Small, real, and load-bearing because 16.04 D-08 cites G2/G7 as the structural precedent for typing a provision posture beside a read-through. | Agent | `/write-be-spec` · cross-check with 16.04 and 15.07.03 |"
+        }
+      ]
+    },
+    {
+      "findingId": "R7-16-010",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "reason": "The conditional-value unification is recorded as a single structural decision, assigned to the architecture stage with the linked venue and provenance questions. It is not an undocumented consumer contract.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/16-venues-studios-spaces/venues-studios-spaces-index.md",
+          "line": 150,
+          "excerpt": "A data-model/component-structure question — taken once with 16.02 Q-01 and 16.05.04 Q-04. | Agent | `/create-prd-architecture` — highest-value structural question |"
+        }
+      ]
+    },
+    {
+      "findingId": "R7-16-011",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "reason": "The remaining authority-policy map is an explicit owner values decision, including its decision frame and `/create-prd` deadline. It is not left to an implementer to decide which report wins.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/16-venues-studios-spaces/16.05-curation-provenance-data-integrity/16.05.04-owner-vs-community-conflict-resolution.md",
+          "line": 116,
+          "excerpt": "the remaining classes are unmapped and no later stage maps them. | **User** | `/create-prd` — **owner decision required** |"
+        }
+      ]
+    },
+    {
+      "findingId": "R7-16-012",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "reason": "The low-traffic anonymity trade-off is explicitly reserved for the User at `/create-prd`, with the available suppression, acceptance, and corroboration options stated. The source does not require an implementation default.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/16-venues-studios-spaces/16.05-curation-provenance-data-integrity/16.05.06-post-gig-session-data-harvesting.md",
+          "line": 398,
+          "excerpt": "This is a risk/values trade the owner should make, not an agent. | **User** | `/create-prd` — **owner decision** |"
+        }
+      ]
+    },
+    {
+      "findingId": "R7-16-013",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "reason": "Both parts of the statutory-profile claim have active owner records: instrument and issuer mapping is assigned to `/create-prd-security`, while post-launch profile governance is assigned to `/create-prd`. The source states the downstream ingest impact rather than leaving legal vocabulary or governance to implementation.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/16-venues-studios-spaces/16.01-place-records-rooms/16.01.06-licences-insurance-statutory-records.md",
+          "line": 161,
+          "excerpt": "Downstream this is what unblocks 16.05.01's ingest mapping row for the statutory class, which stays provisional until it lands. | **User** | `/create-prd-security` |"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/16-venues-studios-spaces/16.01-place-records-rooms/16.01.06-licences-insurance-statutory-records.md",
+          "line": 162,
+          "excerpt": "Ownership of a legal-vocabulary authoring process is a business/governance choice — a later stage can specify the evidence bar once the owner has said who holds the pen. | **User** | `/create-prd` |"
+        }
+      ]
+    },
+    {
+      "findingId": "R7-16-014",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "reason": "The directly cited canonical 18.03.02 source records the vocabulary and boundary ratification as one architecture decision with an Agent owner and `/create-prd-architecture` deadline. The conflict is tracked at its shared-contract owner.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/16-venues-studios-spaces/16.07-spec-conformance-check-rider-room.md",
+          "line": 150,
+          "excerpt": "the two sides name the same outcome differently — 16 says `conflict`, 18 says `shortfall`"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/18-show-production-touring/18.03-show-advancing/18.03.02-venue-capability-diff.md",
+          "line": 319,
+          "excerpt": "The ratification must land as one component boundary (16 owns field-level comparison semantics, 18 owns the advance workflow) with one shared outcome vocabulary, or two domains ship two matchers. | Agent | `/create-prd-architecture` |"
+        }
+      ]
+    },
+    {
+      "findingId": "R7-16-015",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "reason": "The proposed billing-cycle completion event is explicitly marked as requiring the lifecycle feature's agreement and assigned to the architecture stage with a 16.06.09 cross-check. It is not an unowned event contract.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/16-venues-studios-spaces/16.05-curation-provenance-data-integrity/16.05.06-post-gig-session-data-harvesting.md",
+          "line": 399,
+          "excerpt": "It is a proposal from this feature into another's lifecycle and needs that feature's agreement, not this one's assertion — a cross-component event contract. | Agent | `/create-prd-architecture` · cross-check with 16.06.09 |"
+        }
+      ]
+    },
+    {
+      "findingId": "R7-16-016",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "reason": "Current decisions already assign room binding and booking-time allocation to domain 16, capture the selected gear dependency at booking, and require a surfaced non-blocking second-booking conflict. The residual interaction specification is explicitly assigned to the booking shard, so the raw claim overstates the unresolved scope.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/16-venues-studios-spaces/16.03-studio-technical-specification/16.03.02-signal-chain-mic-locker-inventory.md",
+          "line": 296,
+          "excerpt": "15 is org-scoped, 16 D-06 is room-scoped, and the join belongs to whoever owns the room — which is 16."
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/16-venues-studios-spaces/16.03-studio-technical-specification/16.03.02-signal-chain-mic-locker-inventory.md",
+          "line": 298,
+          "excerpt": "A reservation captures its gear dependency at book time, from the filter that produced it"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/16-venues-studios-spaces/16.03-studio-technical-specification/16.03.02-signal-chain-mic-locker-inventory.md",
+          "line": 299,
+          "excerpt": "A pooled-asset conflict is surfaced at the second booking, never blocked"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/16-venues-studios-spaces/16.03-studio-technical-specification/16.03.02-signal-chain-mic-locker-inventory.md",
+          "line": 313,
+          "excerpt": "the outcome is decided, so what is left is the interaction spec inside the booking shard. | Agent | `/write-architecture-spec` |"
+        }
+      ]
+    },
+    {
+      "findingId": "R7-16-017",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "reason": "The statutory cascade has no launch-profile input, so it does not force current implementation behavior; for a later authored profile it is a recorded User decision with the required booking and show-domain cross-checks.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/16-venues-studios-spaces/16.02-venue-technical-specification/16.02.03-access-logistics-curfew-limiter.md",
+          "line": 374,
+          "excerpt": "so it does not bite in the US launch profile and reopens with the first profile that declares one."
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/16-venues-studios-spaces/16.02-venue-technical-specification/16.02.03-access-logistics-curfew-limiter.md",
+          "line": 374,
+          "excerpt": "| **User** | `/create-prd` · cross-check with 16.06.03, 17, 18 |"
+        }
+      ]
+    }
+  ],
+  "coverage": {
+    "rawFindingIdsAccountedFor": true,
+    "rawFindingIdsVerifiedExactlyOnce": true,
+    "verdictCount": 17,
+    "upheldCount": 0,
+    "refutedCount": 17,
+    "openQuestionRecordsChecked": {
+      "registries": 6,
+      "activeRecords": 28,
+      "missingOwners": 0,
+      "missingResolutionStages": 0,
+      "missingDecisionDescriptions": 0
+    },
+    "directCanonicalSourcesChecked": [
+      ".memory/wiki/specs/ideation/15-gear-registry-ownership/15.07-studio-backline-asset-register/15.07-studio-backline-asset-register-index.md",
+      ".memory/wiki/specs/ideation/18-show-production-touring/18.03-show-advancing/18.03.02-venue-capability-diff.md"
+    ]
+  }
+}

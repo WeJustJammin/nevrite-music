@@ -1,0 +1,119 @@
+{
+  "domain": "14-digital-goods-marketplace",
+  "verifiedAgainst": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation",
+  "inputFindings": 14,
+  "upheld": 2,
+  "refuted": 12,
+  "verdicts": [
+    {
+      "findingId": "14-digital-goods-marketplace#001",
+      "upheld": true,
+      "finalSeverity": "blocking",
+      "refutationReason": "not-refuted",
+      "reason": "Every quote verified verbatim. 14.03.01-download-delivery-resumable-transfer.md:73 publishes a single per-artifact SHA-256 as copyable text; :82 shows it 'before any bytes move'; :89 auto-verifies it on completion; :114 (E-19) escalates a second mismatch as a bad stored artifact and quarantines the build; :184 (D-09) builds the air-gapped hand-verification workflow on that published value. The same delivery step is normatively specified to rewrite bytes per delivery: digital-goods-marketplace-cx.md:455 and :464 (CX-24 q2) fix the order 'Grant issued -> embed tempo/key/loop metadata -> apply per-buyer watermark -> serve', 14.04.01-sample-loop-pack-catalog.md:275 (D-06) requires embedded tempo/key/loop metadata in delivered files, and 14.03.05-per-buyer-forensic-watermarking.md:39 stamps a buyer-unique mark during transfer. Band check kills the 'only a COULD feature' escape: moscow-ledger.md:136 (14.03.01) and :138 (14.04.01) are both in the MUST band (lines 17-216), so the metadata writer alone collides with the checksum at launch, watermarking aside. I searched every occurrence of sha-256/checksum/hash across all 62 files of domain 14 - the only hits are 14.03.01:73,74,82,89,100,104,114,119,132,180,184,193 and 14.09.03:52. Nothing anywhere reconciles a pre-published hash with delivery-time byte writes, and no [PENDING]/[OWNER]/[DEFERRED] marker covers it. The omission is conspicuous rather than accidental: 14.03.01 works out the watermark interaction in detail elsewhere - :85 and :105 (E-10) force a deterministic per-grant seed so resumed ranges regenerate byte-identically, :122 (E-27) handles stamping failure, DT-03/DT-07/DT-08 at :147,:151,:152 close out CDN, P2P and delta patching under marking - yet never touches the checksum. Two normative statements that cannot both hold, with no marker on either, and the failure is user-visible: under the spec as written every content download mismatches, trips E-19 twice and quarantines a correctly-delivered build while telling the buyer 'This file didn't verify. That's on us'. Blocking: the implementer cannot ship delivery without inventing an integrity contract (master hash vs post-stamp per-grant hash vs a second verification object), and D-09's hand-verification product promise changes under each choice."
+    },
+    {
+      "findingId": "14-digital-goods-marketplace#002",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "The quote is near-verbatim (the auditor added bold around 'Flagged for confirmation.' which 14.03.05-per-buyer-forensic-watermarking.md:89 does not carry), and it is true that no Open Question at :95-:97 covers the failure posture. But the behaviour an implementer needs is fully and consistently stated in two places, one of them a MUST-band feature. 14.03.05:48 records the edge case as '~~Serve unmarked or fail the download?~~ **Resolved - this file's D-03**' and 14.03.05:63 gives the Error state ('download proceeds, incident logged; buyer sees nothing'). 14.03.01-download-delivery-resumable-transfer.md:122 (E-27) then restates it as binding delivery behaviour with no hedge at all - 'Per 14.03.05 D-03: serve unmarked, log the incident, never block a paying buyer... But the grant must record that this artifact is unmarked' - and 14.03.01 is MUST per moscow-ledger.md:136 while 14.03.05 is COULD per moscow-ledger.md:607. Two competent implementers both build fail-open-and-log; 'flagged for confirmation' is a note that the owner may later revisit a decision that is already made and already consumed downstream, not an unanswered question. No divergence, no forced invention."
+    },
+    {
+      "findingId": "14-digital-goods-marketplace#003",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "misquoted",
+      "reason": "The load-bearing cell is misquoted by ellipsis. 14.01.04-rig-profile-compatibility-checker.md:53 actually reads '| Buyer's declared rig is wrong (says macOS 14, actually on 12) | Verdict was confidently wrong; the good is non-returnable - the buyer is refunded regardless, cause `buyer-rig-error` | ~~`[PENDING - /ideate-discover Step 5 deepening]`~~ **RESOLVED -> 14.09.02 D-02** (via Q-02 below)'. The marker is struck through and explicitly resolved; the finding's '...' hides that, and its forcedInvention ('the reader must decide whether the cell's outcome is 14.09.02 D-02's unconditional refund or something narrower') is answered by name in the very cell quoted. The claim 'One is an Edge Cases outcome cell, leaving a failure mode with no defined behaviour' is therefore false. The supporting evidence is also misquoted: 'digital-goods-marketplace-index.md:135-143, where every owner question is Deferral re-pointed from the completed /ideate-validate' - only Q-06 (:138) and Q-07 (:139) carry that phrase, it names /ideate-validate not /ideate-discover, and Q-03/Q-04/Q-05/Q-09/Q-10/Q-11 say no such thing. The three surviving cells are tracked by the ratified depth plan: 14.01-catalog-compatibility-cx.md:90 is the role-scoping line of CX-04, a 'Medium confidence' pair whose synthesis is deferred at :92, exactly the mechanism ideation-index.md:211 (D-25) ratifies ('5 questions answered for high-confidence pairs'); and 14.01.04 is COULD (moscow-ledger.md:603, COULD band 507-712), which ideation-index.md:210 (D-24) holds at [SURFACE] as 'correctly out of Step 5 scope'."
+    },
+    {
+      "findingId": "14-digital-goods-marketplace#004",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "tracked-deferral",
+      "reason": "All five quotes exist verbatim, but every one sits in a unit the ratified depth plan deliberately leaves undeepened. moscow-ledger.md places 14.02.02 at :604 and 14.02.04 at :605 in the COULD band (507-712) and 14.02.03 at :750 in the WONT band (713-772); ideation-index.md:210 (D-24) locks that as intended state - 'Coulds (201) and Won'ts (53) correctly remain [SURFACE] - out of Step 5 scope'. An unfilled Edge Cases outcome on a [SURFACE] COULD/WONT feature is the documented output of the plan, not a gap in it, and none of these features is in the launch set, so no implementer is forced to invent anything to build v1. The chargeback-fraud cell (14.02.04-serial-blacklisting-anti-piracy.md:52) additionally sits in a feature whose own DT-01 the domain records as near-useless on this catalog (cited at digital-goods-marketplace-index.md and 14.03.05:12-13). The fifth cell, 14.02-licensing-activation-entitlement-cx.md:109, is the role-scoping line of CX-05, a 'Medium confidence' pair (:104) whose synthesis at :111 is explicitly 'Deferred - Medium confidence; contingent on reseller integration being obtainable at all (14.02.03 Q-01)' - a named contingency pointing at a tracked question, and precisely the medium-confidence carve-out ratified at ideation-index.md:211 (D-25)."
+    },
+    {
+      "findingId": "14-digital-goods-marketplace#005",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "tracked-deferral",
+      "reason": "Quotes verified. 14.04.03-project-template-catalog-dependency-manifest.md:55 is an Edge Cases cell in a COULD-band feature (moscow-ledger.md:608, COULD band 507-712), which ideation-index.md:210 (D-24) holds at [SURFACE] as 'correctly out of Step 5 scope' - the cell is undeepened by design, and the feature is not in the launch set. Its central problem is separately tracked: 14.04.03:76 (DT-02) is marked 'DEFERRED - escalated to index Q-02'. 14.04-sound-content-catalogs-cx.md:109 is the role-scoping line of CX-05, a 'Medium confidence' pair (:105-:107) whose synthesis at :111 reads 'Deferred - Medium confidence', the carve-out ratified at ideation-index.md:211 (D-25). 14.04-sound-content-catalogs-cx.md:99 is q5 of CX-04, whose licensing conflict - the actual substance - is answered in the same block at :95-:97 and routed to 14.04.03 DT-02 / 14.02.05 DT-03. Nothing here forces an invention at the vision layer."
+    },
+    {
+      "findingId": "14-digital-goods-marketplace#006",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "tracked-deferral",
+      "reason": "Both quotes verified. 14.05.02-exclusive-rights-purchase-auto-delist.md:51 is an Edge Cases cell in a COULD-band feature (moscow-ledger.md:609, COULD band 507-712), held at [SURFACE] and out of Step 5 scope per ideation-index.md:210 (D-24). The race the finding calls 'the sharpest money-and-copyright race in the domain' is in fact answered one file over for the commit-ordering case: digital-goods-marketplace-cx.md:359 (CX-15/CX-18 synthesis) states 'A non-exclusive lease checkout racing an exclusive checkout - resolved at the same hard-lock as CX-15; if the exclusive commits first, the pending lease is refused, not grandfathered', and 14.05.02:55 tracks the refund leg to index Q-03. 14.05-beat-instrumental-licensing-cx.md:110 is the role-scoping line of CX-05, a 'Medium confidence' pair (:106) whose synthesis at :112-:113 is 'Deferred - Medium confidence, and contingent on index Q-01 (whether this sub-domain's rights model belongs to domain 11 at all)' - a named contingency, per the D-25 carve-out."
+    },
+    {
+      "findingId": "14-digital-goods-marketplace#007",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "tracked-deferral",
+      "reason": "Quotes verified, but both leaf cells are in units the plan cuts or defers. 14.06.02-licence-transfer-escrow.md:55 is in a WONT-band feature (moscow-ledger.md:751, WONT band 713-772) - the transfer market itself is cut, which digital-goods-marketplace-index.md:140 (Q-08) records as 'RESOLVED structurally - the transfer market is cut; the registry survives as consumer information'. An unspecified edge case in a feature that is not being built is not a forced invention. 14.06.03-bundled-software-with-used-hardware.md:52 is COULD (moscow-ledger.md:612), held at [SURFACE] per ideation-index.md:210 (D-24); its sibling CX block at 14.06-used-licence-transfer-cx.md:62 already states the posture for the neighbouring race ('Hardware return racing licence activation. See 14.06.03 DT-01'). 14.06-used-licence-transfer-cx.md:73 is the role-scoping line of CX-03, a 'Medium confidence' pair (:68) whose synthesis at :75-:76 is 'Deferred - Medium confidence; per-vendor variation is unmapped and the registry's shape depends on it' - the D-25 carve-out with a stated reason."
+    },
+    {
+      "findingId": "14-digital-goods-marketplace#008",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "tracked-deferral",
+      "reason": "Quote verified at 14.03-delivery-versioning-library-cx.md:135, and the finding concedes its own forcedInvention is 'Nothing behavioural'. Context refutes the premise that the deferral is untracked: the marker is the role-scoping line of CX-06, declared 'Medium confidence' at :131, and the very next entry at :137-:139 reads 'Synthesis questions: Deferred - Medium confidence. Key open case: a sample pulled for a rights reason... collides with 14.02.05 Q-02 and is unresolved'. That is a stated contingency pointing at an owned question, and ideation-index.md:211 (D-25) ratifies the mechanism - Step 6 answered the 5 synthesis questions 'for high-confidence pairs', leaving medium/low pairs tracked. The stage label on the marker is stale, but the deferral itself carries a target; nothing behavioural is missing and no implementer diverges."
+    },
+    {
+      "findingId": "14-digital-goods-marketplace#009",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "tracked-deferral",
+      "reason": "Quote verified at 14.07-monetisation-models-pricing-cx.md:113; the finding's own forcedInvention is 'Nothing behavioural'. It is the role-scoping line of CX-05, declared 'Medium confidence' at :109, and :115-:116 states 'Synthesis questions: Deferred - Medium confidence, and contingent on index Q-01 (whether both models exist at launch at all)'. That contingency is itself already closed against this pair: digital-goods-marketplace-index.md:142 (Q-10) is 'RESOLVED - perpetual only at launch', with 14.07.02 and 14.07.03 out of the launch set (moscow-ledger.md COULD/WONT bands). A deferral with a named contingency, on a pair that does not exist at launch, under the medium-confidence carve-out ratified at ideation-index.md:211 (D-25)."
+    },
+    {
+      "findingId": "14-digital-goods-marketplace#010",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "tracked-deferral",
+      "reason": "Quote verified at 14.08-vendor-portal-build-qa-cx.md:91; the finding's own forcedInvention is 'Nothing behavioural'. It is the role-scoping line of CX-04, declared 'Medium confidence' at :86, with ':93 Synthesis questions: Deferred - Medium confidence' immediately after - the carve-out ratified at ideation-index.md:211 (D-25), where Step 6 answered the 5 questions for high-confidence pairs only. The pair's substance is not missing either: :86-:89 states the posture in full (an exited vendor's last build is permanent, so the legacy archive at 14.03.02 is 'not optional', per 14.03.02 DT-01), and the roles are recoverable from the leaf Role Lenses in 14.08.05 and 14.03.02. Bookkeeping, not ambiguity."
+    },
+    {
+      "findingId": "14-digital-goods-marketplace#011",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "The finding refutes itself. It states the answer already exists, and it does: 14.09.01-withdrawal-right-waiver-capture.md:189 reads 'Step 6 should scope CX-03's currently-unscoped role question using D-06: the pre-download refund is a distinct trivial path (E-02) and it self-resolves at day 15'. The CX file agrees rather than contradicting - 14.09-digital-refunds-revocation-cx.md:64-:67 declares CX-03 'Medium confidence' and :71-:73 states 'Synthesis questions: Deferred - Medium confidence. The useful open question is whether a pre-download refund is modelled as a distinct, trivial path... It almost certainly should be' - and that question is then closed outright at 14.09.02-digital-refund-eligibility-adjudication.md:279 (D-06): 'A pre-delivery refund is a cancellation, not an adjudication... Resolves CX-03's open question in the affirmative.' Detail carried one file over, with the marker stale rather than the content missing. The finding's own forcedInvention says 'Nothing behavioural - the marker is stale bookkeeping'."
+    },
+    {
+      "findingId": "14-digital-goods-marketplace#012",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "tracked-deferral",
+      "reason": "All quotes verified verbatim, but the contradiction does not survive the surrounding normative text. 14.09.01-withdrawal-right-waiver-capture.md:216 (D-08) is the governing rule: 'The gate does not branch on territory; it fires for every buyer, and only the wording varies by locale... Neutral wording outside the EU/UK/EEA'. E-20 (:144) is that locale variant, and E-01 (:125) is the EU/UK variant of the same message - the mechanism for selecting between them is stated, so an implementer does not choose between 'the promise' and 'the silence'; they render the locale variant D-08 mandates. The finding also misreads which element E-01 requires to be stated: the sentence lists three options and 'The third option is stated' refers to the day-15 self-disable ('or wait: from <date> this download will start without asking'), confirmed by D-09 at :217 - 'the decline message states the date the gate stops asking'. Neutral wording therefore still has a stated exit, and the claimed contradiction with D-09 evaporates. What genuinely remains open - whether a US buyer with no statutory floor is offered a discretionary pre-download cancellation - is tracked with both an owner and a target, on exactly this reasoning: 14.09.01:229 (Q-01) '`[OWNER]` ... what is the refund policy above the statutory floor ... Sharpened by Q-04's resolution: with a US-first launch there is no statutory floor to sit above, so the policy is not a top-up - it is the entire consumer position. | User | `/create-prd`', mirrored at 14.09.02:293 (Q-01). Finally, the sibling is not 'restated as unconditional behaviour': 14.09.02:149-:150 and :279 (D-06) cite 2011/83/EU Art. 9(2)(a) by name, and :164 scopes the duty explicitly - 'refusal is unlawful in the EU/UK'."
+    },
+    {
+      "findingId": "14-digital-goods-marketplace#013",
+      "upheld": true,
+      "finalSeverity": "warning",
+      "refutationReason": "not-refuted",
+      "reason": "Verified in all three places. digital-goods-marketplace-index.md:144 marks Q-12 '~~...~~ **RESOLVED**' yet its body carries an unassigned corrective action - 'One registration gap carried forward: the global row's Serves list reads `03,04,05,06,13,16,17,20,24` and omits **14** - ownership is settled, the participant list needs 14 added' - with the Deferred To cell holding a completed pointer ('✅ `ideation-cx.md` ... + `digital-goods-marketplace-cx.md` escalation table') rather than a stage that can act on it. The defect it names is real and current: ideation-cx.md:25 still reads '| **Reviews, Ratings & Portable Reputation** | pure-cross-cut | 03,04,05,06,13,16,17,20,24 |' with 14 absent, while digital-goods-marketplace-cx.md:549 registers '| **Reviews & Ratings** | 05, 13, 14, 16 |'. Two registries disagree on whether domain 14 participates in a platform cross-cut, and the only record of the disagreement is inside a question marked resolved, with no target that resolves it. Warning rather than blocking: nothing product-level is forced, and the domain-local reserved review surface is specified at digital-goods-marketplace-cx.md:549 (DT-06); the exposure is that a reader of ideation-cx.md alone drops domain 14 from the cross-cut's participant set."
+    },
+    {
+      "findingId": "14-digital-goods-marketplace#014",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "tracked-deferral",
+      "reason": "Quote verified at 14.10-contributor-revenue-royalty-pool-cx.md:66; the finding's own forcedInvention is 'Nothing behavioural'. It is the role-scoping line of CX-03, declared 'Medium confidence' at :62, with :68-:69 stating 'Synthesis questions: Deferred - Medium confidence, and contingent on index Q-02 (fixed vs pro-rata rate) and index Q-01 (whether the pool exists at all)' - two named contingencies pointing at owned index questions, under the medium-confidence carve-out ratified at ideation-index.md:211 (D-25). The sub-domain is additionally recorded as not live: 14.10.03-multi-contributor-pack-splits.md:57 notes 'pool funding and download accrual are **WONT**'. Stale stage label on a deferral that is otherwise tracked; no divergence."
+    }
+  ],
+  "adjustedUnits": [
+    { "unit": "14.01-catalog-compatibility", "applicableCheckpoints": 5, "adjustedPoints": 0 },
+    { "unit": "14.02-licensing-activation-entitlement", "applicableCheckpoints": 5, "adjustedPoints": 0 },
+    { "unit": "14.03-delivery-versioning-library", "applicableCheckpoints": 5, "adjustedPoints": 1 },
+    { "unit": "14.04-sound-content-catalogs", "applicableCheckpoints": 5, "adjustedPoints": 0 },
+    { "unit": "14.05-beat-instrumental-licensing", "applicableCheckpoints": 5, "adjustedPoints": 0 },
+    { "unit": "14.06-used-licence-transfer", "applicableCheckpoints": 5, "adjustedPoints": 0 },
+    { "unit": "14.07-monetisation-models-pricing", "applicableCheckpoints": 5, "adjustedPoints": 0 },
+    { "unit": "14.08-vendor-portal-build-qa", "applicableCheckpoints": 5, "adjustedPoints": 0 },
+    { "unit": "14.09-digital-refunds-revocation", "applicableCheckpoints": 5, "adjustedPoints": 0 },
+    { "unit": "14.10-contributor-revenue-royalty-pool", "applicableCheckpoints": 5, "adjustedPoints": 0 }
+  ]
+}

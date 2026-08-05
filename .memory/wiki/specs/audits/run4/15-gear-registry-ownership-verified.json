@@ -1,0 +1,75 @@
+{
+  "domain": "15-gear-registry-ownership",
+  "verdicts": [
+    {
+      "findingId": "15-gear-registry-ownership#001",
+      "upheld": true,
+      "finalSeverity": "warning",
+      "refutationReason": "not-refuted",
+      "reason": "All three sub-claims verified verbatim against disk. gear-registry-ownership-index.md:48 says '10 confirmed pairs, 5 rejected' while gear-registry-ownership-cx.md:5 says '19 intra-domain cross-cuts synthesised, 6 pairs rejected' and the CX map carries CX-01..CX-19 (cx:26-44) and R-01..R-06 (cx:497-502). index:29 says '21 leaf features total' while the same file's MoSCoW at index:105-107 enumerates 1 Must + 10 Should + 13 Could = 24, and the tree holds 24 (6+4+3+3+3 sub-domain leaves plus 15.03/15.04/15.08/15.09/15.10). Status column index:33-42 lists 15.05/15.06/15.07 as [BREADTH] while their own indexes are [SURFACE] on disk, and lists 15.04/15.08/15.09 as [SURFACE] while those files carry [PARTIAL]; the prose 'All [SURFACE]' at index:29 also contradicts the [BREADTH] values in its own table. Three independent, arithmetically checkable divergences in the domain's pipeline-key summary. Warning not blocking: no product behaviour is invented, and the authoritative source in each case (the CX file, the tree, the file front-matter) is unambiguous."
+    },
+    {
+      "findingId": "15-gear-registry-ownership#002",
+      "upheld": true,
+      "finalSeverity": "warning",
+      "refutationReason": "not-refuted",
+      "reason": "Every cited anchor verified against the CX map at gear-registry-ownership-cx.md:26-44. Confirmed stale: 15.03-service-repair-modification-history.md:56 and :82 cite #CX-04 for service->revaluation (CX-04 is Identity<->Custody at cx:29; the real pair is CX-10 at cx:35). 15.04-gear-collection-visibility.md:86, gear-registry-ownership-index.md:128, 15.01.01:162, 15.01.01:191 and 15.07.03:103 all cite CX-07 for the exposure/targeting hazard, but cx:168 titles CX-06 'THE EXPOSURE HAZARD' and cx:170 calls it 'the domain's most important cross-cut', while CX-07 (cx:199) is Stolen Registry <-> Valuation & Insurance. 15.08:93 cites #CX-05 for theft-report standing (actual CX-08, cx:222) and 15.08:94 cites #CX-06 for rig/asset-register dependence (actual CX-15/CX-18). 15.06.02:83, 15.07.03:98 and 15.07-...-cx.md:122 cite CX-10 for oracle<->published-backline (actual CX-17, cx:42). 15.06.01:81 and 15.10:81 cite #CX-09 for rig<->case many-to-many (actual CX-16, cx:41). cx:161 verbatim admits 'see CX-08 in the old numbering'. Warning not blocking: the citing sentences name their target feature, so a reader is misdirected rather than left inventing behaviour."
+    },
+    {
+      "findingId": "15-gear-registry-ownership#003",
+      "upheld": true,
+      "finalSeverity": "warning",
+      "refutationReason": "not-refuted",
+      "reason": "Verified verbatim at 15.08-custody-loans-consignment.md:114: the Q-01 row is closed ('RESOLVED (D-64 / DQ-MG-04, ratified 2026-07-21)', Deferred To column marked with a checkmark) yet ends 'Standing under `stale` and `disputed` custody remains open.' The residual carries no owner and no target stage - the row's Owner/Deferred To cells describe the resolved part. Echoed at 15.02.01:60. Not answered elsewhere: the ratified rule reads 'a party in a `15.08` custody state may file', and stale (15.08:75) / disputed (15.08:76) ARE states in that file's States table, so one reading says they are covered while the file's own closing sentence says they are not - the two cannot both hold. This is the abuse case (a holder whose return the owner disputes filing a theft flag), so it is a product decision, not downstream detail. Warning not blocking: the mainline standing rule is settled, so only the stale/disputed corner is open."
+    },
+    {
+      "findingId": "15-gear-registry-ownership#004",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "Quotes are accurate (15.09-gear-discography.md:73, :102; 15.01.01-gear-record-serial-identity.md:118, :221) but the cross-referenced unit answers the question decisively and in the same direction. 15.01.01:221 D-10 and :118 state there is no terminal state, deletion is not offered, and erasure obligations are tracked as 15.01.01 Q-04 (:231, 'Append-only history vs the right to erasure', Owner: User, Deferred To: /create-prd-security). 15.09's row defers explicitly ('per 15.01 deletion rules') and its operative content - the credit survives, the identity is 'tombstoned, not vaporised' - agrees with D-10 that the record is never removed. No implementer would build a delete path off an edge row whose owning feature forbids deletion, and the only route by which the scenario could become reachable (erasure) is an owned, targeted open question. The residual defect is a mis-numbered pointer (15.01.03 carries only D-01/D-02 at :93-94 and nothing on deletion) where the sub-domain-level reference at 15.09:73 is correct - a citation typo, not forced invention."
+    },
+    {
+      "findingId": "15-gear-registry-ownership#005",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "Quotes verified (15.01.05-non-serialized-contested-identity.md:93; 15.01.01:87-94 and :96-98) and it is true that 15.01.05 contains no enumeration anywhere (checked the whole file, lines 1-114). But D-03's own Context cell answers the question the finding says is forced: 'The values are the six already in use on disk; relocating them costs nothing because no downstream literal binds to them today.' There is exactly one value set on disk (15.01.01:89-94) and D-03 ratifies it as canonical while assigning authorship. There is no competing set for a synthesis pass to reconcile, so no two implementers can diverge on the vocabulary - both land on the same six values. What remains is a stale sentence at 15.01.01:96-98 still describing the vocabulary as 'proposed from the render side' after DQ-MG-05 ratified it; that is a housekeeping leftover, not an ambiguity that forces invention."
+    },
+    {
+      "findingId": "15-gear-registry-ownership#006",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "Quotes verified (15.01.04-provenance-chain-view.md:57, :91; 15.01.02-ownership-claim-verification.md:112) but the normative half of the question is decided by the very decisions quoted. 15.01.04 D-01 (:91) makes the chain a view that owns no facts, and 15.01.02 D-03 (:112) recomputes the claim tier only on withdrawn evidence with 'Confirmed' defined as 'confirmed and not withdrawn' - a ban is neither, so the tier a buyer reads at point of sale is unchanged and the drop is a per-link chain render. That per-link rendering is already the established shape: 15.01.04 States (:66) 'Timeline with per-event attestation strength' and DT-02 (:75) 'confidence must be bounded by the weakest link and must show attestation strength per link'. The only residual - the magnitude of the reduction and its display form - is carried by 15.01.04 Q-01 (:98, Owner: User, Deferred To: /write-fe-spec) and is scoring/render detail for a later layer, not ideation-level product behaviour."
+    },
+    {
+      "findingId": "15-gear-registry-ownership#007",
+      "upheld": true,
+      "finalSeverity": "warning",
+      "refutationReason": "not-refuted",
+      "reason": "Upheld on the CX half only; the edge-table half of the claim does not survive. 15.02.01-theft-report-serial-flagging.md:51 does state the substantive rule inline ('Both the owner and the holder may file ... the flag records who filed and in which capacity'), so an implementer reading that row alone does not invent standing - the finding's forcedInvention is overstated there. What is real: gear-registry-ownership-cx.md:239 flatly says 'Who has standing to file? Unresolved - 15.08 Q-01' and cx:228 says 'standing rules are unresolved (Q-04)', against 15.08:114 and 15.02.01:99 both recording it ratified 2026-07-21 - two normative statements of record that cannot both hold, plus a dangling pointer (15.08 Q-04 is the dealer-persona question, not standing). Separately confirmed: 15.02.01:99 cites 'D-05' but that file's Decisions table holds only D-01/D-02 (:92-93) and the parent 15.02 index holds only D-01..D-04 (:50-53), so the citation resolves to nothing in this unit. Warning not blocking: the feature files agree with each other, so only the CX narrative is stale."
+    },
+    {
+      "findingId": "15-gear-registry-ownership#008",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "tracked-deferral",
+      "reason": "Quote verified at 15.02.04-false-flag-dispute-lifecycle.md:43 ('Per outcome'), but the guard conditions on the locked state set are an owned, targeted deferral: Q-01 (:145, Owner: Agent, Deferred To: /write-be-spec) states 'What remains is binding those states, their transitions and their guard conditions into a contract, which is where a state machine is actually written' - a sale-block guard on `resolved` is exactly that. The finding's forcedInvention is also answered in the file: the transition note at :53-54 and the edge row at :92 ('Flag -> `resolved` (routed out); the dispute continues in the ownership-claim surface, not here') establish that a flag routed to domain 24 as an ownership dispute closes here and the buyer protection continues via the ownership-claim tier, per 15.01.02 D-01 (:110, 'Showing the buyer \"two people claim this\" lets them decline'). The platform explicitly does not adjudicate (15.02.04 D-03/DT-03), so an enumerated platform-side outcome vocabulary is not something ideation can or should author."
+    },
+    {
+      "findingId": "15-gear-registry-ownership#009",
+      "upheld": true,
+      "finalSeverity": "warning",
+      "refutationReason": "not-refuted",
+      "reason": "Verified verbatim at 15.06.03-rig-spec-sheet-source-data.md:54 - the disclosure of held-not-owned gear on an outgoing sheet carries only '[PENDING - /ideate-discover Step 5 deepening]', while Q-01 (:97), Q-02 (:98) and Q-03 (:99) in the same file each close with 'Deferral re-pointed from the completed `/ideate-discover` Step 5', so the marker's target stage is dead by the file's own admission - the tracking is malformed, with no owner and no live target. None of the three Q rows covers this case (they cover live-read-vs-snapshot, stage-plot scope, and serial stripping). Not answered elsewhere: 15.06 index Q-02 (:59) resolves that unowned gear legitimately belongs in a rig but says nothing about disclosing it outward, and both 15.06-...-cx.md:56 and gear-registry-ownership-cx.md:395 record the export-side permission intersection as 'real and unresolved (CX-18 sibling)'. Two implementers genuinely diverge: include borrowed/house gear in the exported sheet (the document's stated purpose) or strip it absent owner consent. Warning not blocking: the sheet ships either way and the mainline owned-gear case is fully specified."
+    },
+    {
+      "findingId": "15-gear-registry-ownership#010",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "Quotes verified (15.07.03-backline-list-publication.md:74; 15.07.02-asset-condition-availability-state.md:65; the completed-stage re-pointing at 15.07.03:119-121 and 15.07.02:112-113), but the behaviour the finding says must be invented is stated normatively elsewhere. Re-notification on a material change: 15.07.02:62 - 'Fault on an asset with a live booking | Someone booked the room *for* that asset | Must notify the booker (domain 17), not silently update a page they've already read'; gear-registry-ownership-cx.md:441 (CX-17 synthesis 2) - 'A register change should re-run open checks and re-notify'; and the notification contract itself is owned and tracked at 15.07.02 Q-05 (:116, Agent -> /write-architecture-spec, with domain 16, on 16.03.02 D-08). The symmetric snapshot-vs-live-read question is likewise owned: 15.06.03 Q-01 (:97, Agent -> /create-prd-architecture) explicitly frames it as fixing 'staleness symmetrically with 15.07.03', and 15.07.03:74 names itself the mirror of it. What the room commercially owes a band for a failed asset is a domain 17/18 settlement matter, not this domain's to author."
+    }
+  ]
+}

@@ -1,0 +1,186 @@
+{
+  "domain": "07-music-projects-collaboration",
+  "verifier": "adversarial",
+  "treeRoot": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/07-music-projects-collaboration",
+  "counts": { "attacked": 24, "upheld": 9, "refuted": 15 },
+  "verdicts": [
+    {
+      "unit": "07.06-sessions-documentation-recall",
+      "claim": "Two [DEEP] siblings give different inactivity thresholds for when a session ends — 12h and 6h — unmarked, deciding when the capture prompt fires.",
+      "severity": "blocking",
+      "upheld": false,
+      "reason": "REFUTED — the two numbers are two different mechanisms, both stated together in the same decision. 07.06.01-session-record-attendance.md:261 D-18 reads 'Auto-close at 12h of inactivity; resume within 6h re-opens the same session', and :153 states the identity boundary explicitly: 'Activity resuming within 6h of the last activity re-opens the same session. Beyond 6h it is a new session.' 07.06.02-session-close-capture-prompt.md:146 ('a continuous working block bounded by a wrap signal or 6 h of inactivity') asserts exactly that 6h identity boundary — same number, same meaning, not a competing close timer. 07.06.02 nowhere dispatches the prompt at 6h idle; its close signals are enumerated at :229 D-18 as 'producer tap, booked end and the 72 h backstop'. The 'no marker on either' prong is also false: 07.06.01:280 Q-07 tracks both windows by name ('the 12h inactivity auto-close and 6h resume-merge windows … not measured'), Owner Agent, target /create-prd-architecture."
+    },
+    {
+      "unit": "07.05-review-feedback-approval",
+      "claim": "Post-revocation grace for an in-flight comment is 60 s in one [DEEP] feature and 120 s in its sibling's decision, unmarked in both.",
+      "severity": "warning",
+      "severityChange": "blocking -> warning",
+      "upheld": true,
+      "verdict": "CONFIRMED",
+      "reason": "UPHELD, downgraded. Both values verified verbatim and both cite the same rationale (parent CX-01): 07.05.01-timestamped-waveform-review.md:204 'A post submitted within 60 s of revocation is accepted'; 07.05.02-private-share-links-listen-analytics.md:206 D-15 'accepts an in-flight comment for 120 s', restated at :102 and :142. Parent 07.05-review-feedback-approval-cx.md:37 states the principle with no number, so nothing reconciles them. Downgraded from blocking because ownership is pointed, not ambiguous: 07.05.01:268 itself assigns the grace to the sibling ('The link supplies the weak identity, the per-link isolation boundary (D-14), and the 60 s post-revocation grace'), so the fix is a one-token edit in 07.05.01 and a careful implementer converges on the owner's 120 s. Divergence is confined to posts landing 60–120 s after revocation."
+    },
+    {
+      "unit": "07.03-contributors-access-confidentiality",
+      "claim": "Whether accepting a band invitation produces one section credit or one plus four member credits is stated both ways inside the unit.",
+      "severity": "blocking",
+      "upheld": false,
+      "reason": "REFUTED — no fan-out is stated anywhere. 07.03.02-contributor-invitation-scoped-onboarding.md:151-153 says 'acceptance by any one of them creates a single band roster entry. Individual member credits are separate entries created afterward' — i.e. acceptance emits exactly one entry, which is what 07.03.01-contributor-roster-role-assignment.md:252 D-10 requires ('band membership never fans out to member entries or member credits'). Independently-created member credits are not a contradiction but the ratified independence rule, quoted at 07.03.01:95: 'band credits and member credits are independent records; neither is derived from the other' (02.01.01 D-07). The failure scenario ('the acceptance flow creates the band entry plus four member credit entries') has no textual support. Residual defect is cosmetic only: the parenthetical tail 'one negotiation and four credits (parent Q-03's framing)' misquotes the parent, which reads 'one negotiation and one section credit' (07.03-contributors-access-confidentiality-index.md:57) — a wrong attribution in an illustrative clause whose own sentence states the operative rule correctly."
+    },
+    {
+      "unit": "07.02-songwriting-composition-workspace",
+      "claim": "The chart reading surface has no specified behaviour and its only marker has no owner and points at a completed stage.",
+      "severity": "blocking",
+      "upheld": false,
+      "reason": "REFUTED on both prongs. The 'Owner column empty' evidence is a misread of the table: 07.02.03-chord-arrangement-chart-workspace.md:55 header is 'Scenario | What Happens | User Sees' — the Edge Cases table has no Owner column anywhere in this tree, so the '—' at :58 is the User-Sees cell, not a missing owner. The reading surface is tracked with an owner and a live target: :102 Q-01 is '[OWNER] The reading surface (DT-01) is the feature's centre of gravity … is the PWA reading mode accepted as the v1 answer for a chart on a music stand', Owner User, target /create-prd. Behaviour is also not absent — :67 specifies the state ('High-contrast, large-type, minimal-chrome view built for a music stand') and :39 names legibility, transposition and page-turn as the product. Of the listed inventions, font scaling and contrast targets are FE-spec detail, and nothing in the file binds the chart to a transport or tempo clock, so no implementer is pushed to invent tempo-locked auto-scroll. Residual: the :58 '[PENDING — /ideate-discover Step 5 deepening]' target is stale (Step 5 has run per :103/:104) — cheap cleanup, not an ambiguity."
+    },
+    {
+      "unit": "07.06-sessions-documentation-recall",
+      "claim": "07.06.01's auto-close, resume-merge and reopen windows cannot all hold; one edge case is arithmetically impossible.",
+      "severity": "warning",
+      "upheld": true,
+      "verdict": "CONFIRMED",
+      "reason": "UPHELD. Verified verbatim and internally irreconcilable: 07.06.01-session-record-attendance.md:153 'Activity resuming within 6h of the last activity re-opens the same session. Beyond 6h it is a new session' against :154 'Auto-closed session resumes at hour 13 | Reopens (within the 6h window) and un-closes.' A resume at hour 13 is 13h after last activity, so :153 mandates a new session while :154 mandates a reopen — the two rows cannot both hold unless the window is re-based on the close event, which no line says. The auto-close clock is :152 ('Auto-closes after 12h with no activity'), so a same-session resume never encounters a closed record and :153's 'un-close' reading has no reachable case either. Nothing reconciles it: the sub-domain index and CX carry no close/resume state machine, and 07.06.01:280 Q-07 tracks only whether the durations are correctly *measured*, not whether the transitions are coherent. Narrowing: the 30-minute figure at 07.06.02-session-close-capture-prompt.md:148 / :227 D-16 is a separate decided rule for a mistaken manual close, not a third value for this case."
+    },
+    {
+      "unit": "07.01-song-release-production-board",
+      "claim": "07.01.03 states P-03 is unresolved and also applies it as resolved, in the same file.",
+      "severity": "warning",
+      "upheld": true,
+      "verdict": "CONFIRMED",
+      "reason": "UPHELD. 07.01.03-production-stage-board-milestones.md:38 reads 'P-03 (approval behavior after a backward move) remains a separate unresolved decision', while the same file's normative edge case at :110 applies the rule ('On re-advance, 07.05.04 D-07 governs: they reinstate iff no new version landed in between, otherwise the gate re-collects') and :161 Q-02 records 'Resolved by P-03 / 07.05.04 D-07 … Owner, ✅ /ideate-validate, 2026-07-21'. The parent ratifies it: 07.01-song-release-production-board-index.md:47 D-05, 'Owner decision, 2026-07-21'. Narrowed from the filing: the second cited instance, :89 ('P-03 alone decides whether a later re-advance re-collects them'), assigns the question to P-03 and is compatible with P-03 being resolved, so only :38 is defective. A charitable reading of :38 ('not resolved by this P-01 gate') exists, but the sentence as written states present-tense status and is stale against an owner-ratified decision — a downstream stage reading it may re-open a settled call."
+    },
+    {
+      "unit": "07.01-song-release-production-board",
+      "claim": "The sub-domain CX file declares P-03 unresolved thirteen lines before resolving it.",
+      "severity": "warning",
+      "upheld": true,
+      "verdict": "CONFIRMED",
+      "reason": "UPHELD, verbatim and with no charitable reading available. 07.01-song-release-production-board-cx.md:31 ends the CX-01 synthesis with 'P-03 re-approval after backward moves remains unresolved.' :44 then states 'P-03 resolves the re-advance: they reinstate iff no new version landed in between; otherwise the gate re-collects against its current approver set (07.05.04 D-07).' Both are flat status assertions about the same decision in the same file; the second matches the ratified 07.01-song-release-production-board-index.md:47 D-05 and 07.05.04-approval-gates-signoff-trail.md:118 D-07, so :31 is the stale line."
+    },
+    {
+      "unit": "07-music-projects-collaboration (domain root)",
+      "claim": "The domain CX names the backward-transition/approval edge as the domain's most persistent unresolved question after it was ratified.",
+      "severity": "warning",
+      "upheld": true,
+      "verdict": "CONFIRMED",
+      "reason": "UPHELD on the primary prong. music-projects-collaboration-cx.md:123 reads 'Backwards stage transitions superseding approvals (07.01 Q-03) remains the domain's most persistent unresolved edge', but 07.01-song-release-production-board-index.md:56 Q-03 is struck through and marked 'Resolved by P-03 / D-05 … Owner, ✅ /ideate-validate, 2026-07-21', with the predicate owned at 07.05.04-approval-gates-signoff-trail.md:118 D-07. A downstream stage harvesting domain-level open risks would record a ratified owner decision as open. Narrowed: the second cited instance, :142 ('backwards transitions supersede approvals again (07.01 Q-03)'), merely restates the supersede behaviour and is not a staleness claim; and the missing P-03 row in the domain Decision Log (D-01..D-11) is not a defect — P-03 is a sub-domain decision correctly logged at 07.01 index D-05 and 07.05.04 D-07."
+    },
+    {
+      "unit": "07.04-audio-version-control-lineage",
+      "claim": "The sub-domain CX still frames live downstream resolution as the default, contradicting revised D-03 — and the domain CX flagged this exact line for correction.",
+      "severity": "warning",
+      "upheld": true,
+      "verdict": "CONFIRMED",
+      "reason": "UPHELD, and self-documented as outstanding. 07.04-audio-version-control-lineage-cx.md:36 still reads 'nominating a canonical fires a notification to the roster and updates every downstream reference that is not pinned', against 07.04.02-canonical-version-resolver.md:239 D-03 'Resolution happens once, at the act, and pins there. Live resolution exists only where the question literally is what is canonical right now — the panel', marked 'Per DT-04, revised'. music-projects-collaboration-cx.md:108-110 names the defect and the file: 'its CX-01 synthesis Q2 still reads updates every downstream reference that is not pinned, framing live resolution as the default; it is now stale against revised D-03 and should be corrected.' The instruction was not carried out, so the correction is verifiably owed rather than a matter of judgement."
+    },
+    {
+      "unit": "07.03-contributors-access-confidentiality",
+      "claim": "The vault's sensitivity-class enumeration and role x class matrix omit `takes`, which a sibling decision requires.",
+      "severity": "warning",
+      "upheld": false,
+      "reason": "REFUTED — the requirement is carried one file over and explicitly aimed at this file. 07.04.03-take-comp-management.md:103 D-05 states 'Takes get a stricter sensitivity class than stems', and its cross-cut note at :91 directs it at the vault by path ('Touches 07.03.03 Asset Vault … per DT-03, takes need their own, stricter sensitivity class'), with the resulting behaviour asserted at music-projects-collaboration-cx.md:231. The grant values the finding wants are exactly what 07.03.03-rights-aware-asset-vault-nda-gating.md:34-35 declares provisional and routes for validation — 'proposed defaults … validation against how real sessions share files is Q-03, User-owned' — with :134 Q-03 owned by User, target /write-be-spec. The 'stricter than stems' constraint also bounds the answer (the takes grant set must be a subset of the stems set), and takes do not exist in v1 at all per 07.04.03:105 D-06 ('no take ingest and no comp map … Empty is the normal state of the take list'), so no v1 build can leak them."
+    },
+    {
+      "unit": "07.03-contributors-access-confidentiality",
+      "claim": "The vault states pre-claim asset access is impossible while the invitation feature grants pre-claim streaming; only one side carries a marker.",
+      "severity": "warning",
+      "upheld": false,
+      "reason": "REFUTED — properly tracked, and the two statements barely overlap. 07.03.02-contributor-invitation-scoped-onboarding.md:319 Q-06 is a well-formed deferral that quotes both sides: 'Does the T1 streaming grant belong to this feature or to 07.03.03? D-06 creates an access tier for a proven address with no identity and no roster membership — which the vault's model (07.03.03 \"you cannot grant stems to an email address\") does not currently contemplate. The boundary needs one owner.' Owner Agent, target /write-architecture-spec (with 07.03.03). On the merits the literal texts do not collide: the vault's claim at 07.03.03-rights-aware-asset-vault-nda-gating.md:82 is about granting *stems* to an email address, and the T1 tier at 07.03.02:64 explicitly withholds 'Downloads. Stems regardless of role. Anything on a confidential song.' The residual (streaming of non-confidential rough mixes pre-claim) is precisely what Q-06 assigns."
+    },
+    {
+      "unit": "07.03-contributors-access-confidentiality",
+      "claim": "An access-expiry mechanism called the 'grant window' is invoked normatively but defined in no unit.",
+      "severity": "warning",
+      "upheld": false,
+      "reason": "REFUTED — the phrase is a conditional pointer, not an undefined trigger, and both sides converge on 'no timed expiry in v1'. 07.03.02-contributor-invitation-scoped-onboarding.md:245 gives the definite rule in the same cell ('30 days of T1 inactivity, or grant window elapsed') on the strength of :294 D-04, whose wording is permissive rather than mandatory: 'Attribution never expires; access grants may.' The vault that owns grants specifies revocation only (07.03.03-rights-aware-asset-vault-nda-gating.md:122 D-04, 'Revocation is immediate and fails closed'), i.e. grants do not expire on a clock — a definite answer, not a hole. No line anywhere sets or permits setting a grant duration (grep over the sub-domain returns the single occurrence at :245), so nothing pressures an implementer to invent a horizon; the buildable reading is 'the grant's window, where one exists', and none exists."
+    },
+    {
+      "unit": "07.01-song-release-production-board",
+      "claim": "The tracklist loudness advisory fires on 'wildly inconsistent' loudness with no threshold here or in the feature it defers to.",
+      "severity": "warning",
+      "upheld": false,
+      "reason": "REFUTED as downstream calibration. The product behaviour is fully decided at 07.01.02-release-container-sequencing-assembly.md:60 — detected at assembly, 'surfaced as an advisory, never a block', stating the per-track deviation in LU — and the owner feature deliberately refuses to prescribe: 07.07.03-mastering-workflow-loudness-targets.md:95 D-01 'The platform measures and projects; it never prescribes a loudness target or judges a master', with :96 D-02 reserving flags for true-peak overs. The measurement layer is explicitly routed onward at 07.07.03:89 ('Routes Loudness/True-Peak Analysis Compute to /create-prd-architecture'), which is where an LU tolerance belongs alongside 07.07.03:105 Q-01 (target-data maintenance) and :107 Q-03 (DSP viability). Divergence in the trigger value changes advisory noise on a never-blocking surface, not what gets built."
+    },
+    {
+      "unit": "07.07-mix-master-workflow",
+      "claim": "The Mismatched state's trigger is 'differs from the primary', which as written fires on any non-zero difference.",
+      "severity": "warning",
+      "upheld": false,
+      "reason": "REFUTED as downstream calibration, same class as the tracklist advisory. 07.07.02-alternate-version-matrix.md:71 decides the behaviour ('Advisory naming the discrepancy'), and the substantive rule it guards is stated numerically-free on purpose at :100 D-04, 'Every variant is mastered in the same pass, in the same chain as the primary'; the detection is described at :56 as 'Detectable by comparing loudness/tonal profile against the primary'. The measurement itself is 07.07.03's, whose analysis compute is routed to /create-prd-architecture at 07.07.03-mastering-workflow-loudness-targets.md:89, and whose D-01 (:95) forbids the platform from turning loudness into a verdict. A tolerance is a detector parameter for a never-blocking advisory, not a vision-layer product decision."
+    },
+    {
+      "unit": "07.08-delivery-readiness-qc",
+      "claim": "Three of the seven checks in the normative QC set carry no threshold.",
+      "severity": "warning",
+      "upheld": false,
+      "reason": "REFUTED as downstream detector parameters. The three cells are quoted accurately (07.08.02-automated-audio-qc-spec-validation.md:45 clipping, :46 silence/dropouts, :48 DC offset), but D-01 at :107 constrains the *kind* of check admitted — 'every addition must pass \"imperceptible and unambiguously a fault\"' — not its numeric tolerance, and every product-behaviour axis is decided: warns and never blocks (:110 D-04), sticky dismissal (:108 D-02), consequence-not-measurement to the Musician (:112 D-05), unverifiable never renders as passed (:113 D-06). The analysis layer is explicitly routed: :101 'Routes Audio Analysis Compute (true peak, null test, DC offset) to /create-prd-architecture', with :117 Q-01 confirming three features share that one stack answer. 'True peak over 0 dBTP' is precise because 0 dBTP is a spec boundary, not a tuned tolerance — so the asymmetry the finding reads as neglect is a real distinction between a boundary and a detector setting."
+    },
+    {
+      "unit": "07.08-delivery-readiness-qc",
+      "claim": "The contributor objection window gating an irrevocable public stem release has no duration and no silence semantics.",
+      "severity": "warning",
+      "upheld": false,
+      "reason": "REFUTED — gated on two tracked [OWNER] questions, and the silence semantics *are* the tracked question. 07.08.05-remix-stems-delivery-programs.md:118 Q-01 is '[OWNER] … can a contributor veto publication of their stem, or only object? A veto gives a session player a hold over the artist's commercial decision; no veto means their performance goes public over their stated objection. A real rights question, not a UX one' — Owner User. 'Does silence publish or hold?' is that question restated, and no duration is meaningful before it resolves. :119 Q-02 is a second [OWNER] question on whether the feature belongs in domain 07 at all, with :112 D-06 recording the proposed split under which 'there is barely a feature left here'. Specifying a window duration ahead of both would be inventing on top of an open owner decision, which is what the marker exists to prevent."
+    },
+    {
+      "unit": "07.05-review-feedback-approval",
+      "claim": "07.05.01's Behavior section cites decision numbers that resolve to different decisions in its own Decisions table — five instances.",
+      "severity": "warning",
+      "upheld": true,
+      "verdict": "CONFIRMED",
+      "reason": "UPHELD — all five verified, plus a sixth. In 07.05.01-timestamped-waveform-review.md the table rows are D-04 at :287 (anchor/confidence tiers), D-05 :288 (playback never stops), D-06 :289 (never deleted), D-08 :291 (carry-forward model), D-10 :293 (a new version resolves nothing), D-11 :294 (resolution requires a reason), D-16 :299 (5-minute typo window). Against that: :71 cites D-04 for 'Playback never stops to compose' (is D-05); :114 cites 'D-08 / DT-07' for 'A new version never resolves anything' (is D-10); :118 cites 'D-05, D-09' for 'Resolution requires a reason, a resolving version, or both' (is D-11); :159 cites D-05 for 'Comments are never deleted' (is D-06) and D-10 for retraction (is D-16); :160 cites D-11 for the edit typo window (is D-16). The pattern is a uniform off-by-one-to-five drift, i.e. prose written against an earlier table. Harm is bounded — each citation sits beside prose that states the rule in full — but this tree's downstream stages trace decision IDs, and six wrong pointers in one [DEEP] file is a traceability defect with no marker."
+    },
+    {
+      "unit": "07.04-audio-version-control-lineage",
+      "claim": "The change-summary edit window carries an unbounded owner override with no range and an ambiguous 'Owner'.",
+      "severity": "warning",
+      "upheld": true,
+      "verdict": "CONFIRMED",
+      "reason": "UPHELD. 07.04.01-audio-version-control-lineage-timeline.md:225 D-11 ends 'Owner may override the window length.' with no range, no actor definition and no tracking anywhere in the file's Open Questions (:Q-01..Q-05 cover storage horizons, entity model, new-recording edges, erasure and MoSCoW). The actor is genuinely polysemous in this tree — 'owner' is the song's owning party throughout the behaviour rules, while 'product owner' is the platform role (07.01.03-production-stage-board-milestones.md:22) and 'Owner decision' is the human operator in decision tables — and the two readings authorise different people. The rationale in the same cell argues against an open-ended value ('The moment a note becomes evidence it stops being editable; an editable evidentiary note is not evidence'), and DT-07 at :181 names this surface the attack surface ('the natural attack is precisely to correct lineage after the stakes are known'). Narrowing: exposure is smaller than filed — the window still closes immediately on approval, canonical nomination or dispute opening (:225), and :147 adds 'only while the version is unreferenced' — so the abusable span is between bounce and first reference, not an unconditional month."
+    },
+    {
+      "unit": "07.04-audio-version-control-lineage",
+      "claim": "A/B switch latency is declared a hard functional requirement with no number.",
+      "severity": "warning",
+      "upheld": false,
+      "reason": "REFUTED as a performance budget owned downstream, and it is routed. 07.04.06-stem-player-version-ab-compare.md:98 D-02 decides the posture ('a hard functional requirement, not polish'), :31-33 give the qualitative standard and the failure exemplar, and :81 DT-02's confirmation explicitly hands the number's constraint onward: '✅ CONFIRMED — with a consequence for /create-prd-architecture: both versions must be decoded and buffered simultaneously, which conflicts directly with the bandwidth reality … Escalated as Q-01', with :106 Q-01 owned by User at /create-prd. Millisecond budgets in this pipeline are established in the architecture PRD's performance-budget pass, not at the vision layer, and the cited counter-example (07.05.01's waveform render bound) is a different measurand whose presence does not obligate every feature to carry a number."
+    },
+    {
+      "unit": "07.04-audio-version-control-lineage",
+      "claim": "The plausibility half of integrity has no deviation threshold, so the truncated-bounce check has no trigger.",
+      "severity": "warning",
+      "upheld": false,
+      "reason": "REFUTED as downstream detector calibration. 07.04.05-file-integrity-missing-media.md:105 D-01 decides the mechanism ('checksum plus semantic comparison against the parent version'), :69 names the comparand ('Needs duration comparison against the parent version') and the surface is an advisory question, never a block, consistent with :107 D-03 and the domain's non-blocking rule. The unquantified part is a tolerance on a measured delta — the same class this file already routes onward at :Q-02 ('Background sweep frequency and cost … Agent, /create-prd-architecture'). No product-behaviour axis is missing: the warning's wording, audience, timing and non-blocking status are all specified, and a differing tolerance changes advisory sensitivity rather than what gets built."
+    },
+    {
+      "unit": "07-music-projects-collaboration (domain root)",
+      "claim": "The question gating the domain's largest deferred sub-domain has an owner but explicitly no deferral target, and the chain feeding it terminates there.",
+      "severity": "warning",
+      "upheld": false,
+      "reason": "REFUTED — this is precise tracking, not malformed tracking. music-projects-collaboration-index.md:132 Q-11 names an owner (User) and states the target honestly: 'Follow-on to D-08 — not gated on any pipeline stage', with the row's own purpose spelled out — 'Recorded as a follow-on so the absence is stated rather than discovered later.' The four evidence items are owner-decision inputs (locked-down studio machines, real-session track-name evidence, a costed agent-support statement, a verifiable read-scope model per 07.09-daw-bridge-capture-at-source-index.md:106-109), none of which a pipeline stage can gather on the owner's behalf; assigning them to a stage would be the actual defect. Q-08 at :129 routing into Q-11 is the same by design. The MoSCoW consequence is separately ratified at :104 D-10 ('07.09.01/.02/.03 keep Should, unphased — no ledger change')."
+    },
+    {
+      "unit": "07.09-daw-bridge-capture-at-source",
+      "claim": "Three of the sub-domain's four questions terminate at an unassigned owner-decision input rather than at any stage.",
+      "severity": "warning",
+      "upheld": false,
+      "reason": "REFUTED for the same reason as the domain-level row. 07.09-daw-bridge-capture-at-source-index.md:120 Q-04 carries Owner User and the explicit, accurate target 'Follow-on to D-05 — not gated on any pipeline stage', and states the trade-off as accepted rather than overlooked: '… which is the known, accepted cost of choosing a deferral over a decision. Recorded so the absence is stat[ed]'. :111 repeats the warning in-line ('Nobody is currently assigned to gather these (Q-04). They are owner-decision inputs, not tracked work.'). The leaf rows (07.09.01-bounce-watch-folder-auto-ingest.md:117 Q-02, 07.09.02-daw-session-parsing-track-mapping.md:125 Q-03) route into it correctly. Nothing is unowned; an owner-action item that no stage can discharge is exactly what this marker shape is for."
+    },
+    {
+      "unit": "07.01-song-release-production-board",
+      "claim": "The sub-domain CX carries two unowned [PENDING] markers aimed at a completed stage; one leaves real release behaviour unspecified.",
+      "severity": "warning",
+      "upheld": true,
+      "verdict": "CONFIRMED",
+      "reason": "UPHELD — malformed tracking plus one genuinely unwritten behaviour. Both markers verified in 07.01-song-release-production-board-cx.md: :73 'Role scoping: [PENDING — /ideate-discover Step 5 deepening] — depends on resolving Q-02' and :61 'If domain 12 rejects the package (spec failure), the Release must be able to fall back — [PENDING — /ideate-discover Step 5 deepening]'. The target stage has run — 07.01.02-release-container-sequencing-assembly.md:105 and :106 both read '/ideate-discover Step 5 ran without taking it' — so neither marker points at anything that will fire. Its stated dependency is already discharged: 07.01-song-release-production-board-index.md:55 Q-02 is 'Resolved 2026-07-23' and states in terms 'CX-03's \"needs validation\" note is satisfied', while cx:12 still carries 'Medium | … needs validation (see Q-02 in the index)'. The :61 gap is real product behaviour: readiness is derived from Song stages, and a domain-12 spec rejection moves no Song, so nothing in 07.01.02 (its only un-ready trigger is :57, a Song leaving the terminal semantic) says what state the Release returns to."
+    },
+    {
+      "unit": "07.02-songwriting-composition-workspace",
+      "claim": "The CX marks shared-inbox graduation notification as pending in one synthesis answer and asserts it as settled in the next.",
+      "severity": "warning",
+      "upheld": false,
+      "reason": "REFUTED — the answer is in the leaf, stated as a decided rule. 07.02.01-idea-capture-inbox.md:51 specifies it fully: 'Idea graduated from a shared band inbox by one member into a personally-owned Song | Permitted but notified — this is a quiet-appropriation risk (parent CX-01, synthesis Q3) | Band members notified: \"Alex made riff idea 14 Nov into a song\"'. 07.02-songwriting-composition-workspace-cx.md:36 restates that outcome, so the leftover '[PENDING — /ideate-discover Step 5 deepening]' token at :35 sits on a line whose very next line and whose owning leaf both resolve it — stale text with no behavioural consequence, worth a one-token cleanup rather than a finding. The residual the filing gestures at (some further mitigation beyond a notification) is not required by any line in the tree; 'permitted but notified' is the decision. The index question the filing cites (07.02-songwriting-composition-workspace-index.md:52 Q-03) is about which domain owns the inbox, not about graduation notices, and is itself owned (Agent, /create-prd-architecture)."
+    }
+  ]
+}

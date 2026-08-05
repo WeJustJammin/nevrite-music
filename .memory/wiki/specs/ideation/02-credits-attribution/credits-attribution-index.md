@@ -3,7 +3,7 @@
 > **Level**: domain
 > **Parent**: [WeJammin Ideation Index](../ideation-index.md)
 > **Status**: [BREADTH]
-> **Last updated**: 2026-07-17
+> **Last updated**: 2026-07-23
 > **Novelty**: `whitespace` | **Priority**: `core`
 
 ## Overview
@@ -33,7 +33,7 @@ The verified graph of who did what on every session, work and recording — capt
 | 02.03 | Claiming & Cold-Start Seeding | sub-domain | [02.03-claiming-cold-start-seeding/](./02.03-claiming-cold-start-seeding/) | `[BREADTH]` | 8 hypotheses (3 children) |
 | 02.04 | Attestation & Credit Confidence | sub-domain | [02.04-attestation-credit-confidence/](./02.04-attestation-credit-confidence/) | `[BREADTH]` | 11 hypotheses (4 children) |
 | 02.05 | Credit Dispute Resolution | feature | [02.05-credit-dispute-resolution.md](./02.05-credit-dispute-resolution.md) | `[SURFACE]` | 3 hypotheses |
-| 02.06 | Credit Role & Instrument Taxonomy | feature | [02.06-credit-role-instrument-taxonomy.md](./02.06-credit-role-instrument-taxonomy.md) | `[DEEP]` | 3 hypotheses |
+| 02.06 | Credit Role & Instrument Taxonomy | feature | [02.06-credit-role-instrument-taxonomy.md](./02.06-credit-role-instrument-taxonomy.md) | `[DEEP]` | 14 hypotheses |
 | 02.07 | Union & Performer Session Reporting | feature | [02.07-union-performer-session-reporting.md](./02.07-union-performer-session-reporting.md) | `[SURFACE]` | 2 hypotheses |
 | 02.08 | Credit Export & DDEX RIN Emission | feature | [02.08-credit-export-ddex-rin.md](./02.08-credit-export-ddex-rin.md) | `[SURFACE]` | 3 hypotheses |
 | 02.09 | Gear ↔ Credit Linkage | feature | [02.09-gear-credit-linkage.md](./02.09-gear-credit-linkage.md) | `[SURFACE]` | 3 hypotheses |
@@ -100,8 +100,12 @@ The verified graph of who did what on every session, work and recording — capt
 | D-06 | Candidate "Contribution Ledger → DDEX RIN Emission" **reduced** to `02.08` | The "contribution ledger" was a near-duplicate of the credit record; merged into `02.01.01`. Emission is the real capability. | Node Classification Gate, Step 3 |
 | D-07 | Candidate "Endorsements & Credit-Weighted Vouching" **split** | The credit-derived *weight* is `02.04.02`'s; the endorsement *surface* is a platform reputation mechanism serving 01, 03, 04 and 05 — routed to the global CX. Domain 02 supplies the signal, not the surface. | Node Classification Gate, Step 3 |
 | D-08 | **Evidence sets the tier; it never gates the credit** — proposed as a domain-level principle | Reached independently three times (`02.01.01` DT-02, `02.02.04` DT-02, `02.03` D-01). It is what separates this product from both Jaxsta (records everything, distinguishes nothing) and a verification-gated graph (distinguishes everything, records nothing). Most true credits will never be confirmed; hiding them recreates the empty-database failure. | Deep Think, Step 3 |
-| D-09 | **The tier is derived, never stamped** | Attestations arrive late, get retracted, and get demoted. A stamped tier would report a credit as verified after the only person who verified it withdrew. Real cost: derived-on-read at fan-scale volume is a live constraint on the locked Supabase decision. | `02.04.02` D-01, DT-01 |
+| D-09 | **The tier is derived, never stamped** | Attestations arrive late and get retracted; ring detection demotes the internal score. A stamped tier would report a credit as verified after the only person who verified it withdrew. Real cost: derived-on-read at fan-scale volume is a live constraint on the locked Supabase decision. | `02.04.02` D-01, DT-01 |
 | D-10 | **The platform does not adjudicate truth** | It records who asserted what, with accountability. `02.04.02` DT-02 (tier ≠ truth), `02.05` DT-02 (disputes about captured work are *cheap*, not *settled well*), `02.10` DT-03 (no AI detection) all reduce to this. The honest claim is about evidence quality and cost, not about verdicts — and "verified" is a liability surface (`02.04` Q-03), not a copy choice. | Deep Think, Step 3 |
+| D-11 | **The provenance rung is invariant to ring detection, and every rung-gated consumer reads the same rung** | Owner ratification of DQ-06.1 + DQ-06.2. Demotion moves the continuous internal score only. Consequences that cross child boundaries: `02.01.02` publishes no label change on demotion; `02.08` **drops demotion from its re-emission staleness trigger**; `02.01.03` traversal rank is where the defence actually lands; out-of-domain rung gates (`06.02.02`'s rung ≥ 5 credential block) do not move, and domain 10 keeps its own registration-floor call. **Accepted cost**: a fully corroborated fiction keeps its top-rung label and its rung-gated credentials indefinitely. | `02.04.02` D-19/D-20; `02.04.04` D-08/D-09; `02.04` D-07/D-08 |
+| D-12 | **Materiality has exactly one boundary — `02.04.01` D-10's flat (party, role, work) identity test — and no taxonomy operation ever invalidates an attestation** | Owner ratification of DQ-05.1 + DQ-05.2. `02.04.02` D-13/DT-08's entailment layer is superseded: it was internally incoherent, its worked carrying example was an instrument change (outside the claim identity per `02.01.01` D-03 / `02.06` D-16), and it would have commissioned a role-strength ordering `02.06` does not define and could not keep stable. Accepted cost: the routine "Producer" → "Additional Production" correction re-asks, bounded by `02.04.01` D-09/D-21. Accepted blind spot: an admin pending-alias mapping error silently changes a canonical on an attested credit until someone notices; the remedy routes through `02.01.06`. | `02.04.01` D-10; `02.04.02` D-17/D-18; `02.06` D-23/D-24; `02.01.06` |
+| D-13 | **An objection to an evidence-based embargo lift is a stated-ground challenge that pauses at the status quo and resolves on the dispute engine — never a Producer veto** | Owner ratification of DQ-03 axes A2–A5, extended by E8. Closed ground list includes public-but-unauthorised as a human-only authority-evidence review; public reachability is discovery evidence, never permission. Platform re-verification is the free first rung where applicable; a resolution SLA is mandatory; re-submission is unbounded. | `02.01.05` D-19–D-24; `02.05` D-07 |
+| D-14 | **A contested claim stays attached to the first claimant until the contest closes; on `Unresolvable` it detaches and returns to its unclaimed shell** | Owner ratification of DQ-04.1 + DQ-04.2. Reverses `02.03.03`'s Happy Path step 2 and `02.03.02`'s Contested row, and corrects `02.03.03` D-03's suppression rule to match `02.01.02` D-06 / `02.01.01` D-11 (a contest is never published and never suppresses). The shell fallback is the pre-claim status quo — zero new state, zero new render mode — and deliberately does **not** answer `02.03.02` Q-02 (what a shell publishes). Two follow-on gaps recorded: the true owner has no unilateral control over the line (`02.03.03` Q-04), and pendency is unbounded where no corroborator exists (`02.03.03` Q-05). | `02.03.03` D-05/D-06; `02.03.02` states |
 
 ## MoSCoW Proposal
 
@@ -125,13 +129,47 @@ The verified graph of who did what on every session, work and recording — capt
 |---|----------|-------|-------------|
 | Q-01 | ~~Which candidate children are sub-domains vs features?~~ | Agent | ✅ Resolved this pass — see Candidate Disposition |
 | Q-02 | ~~Are any candidate children actually cross-cuts?~~ | Agent | ✅ Resolved — 4 routed out (D-02, D-03, D-05, D-07) |
-| Q-03 | **Who owns the `session` entity — domain 02 or domain 07?** Both need it. Duplicating it is the single worst structural error available in this domain. | User | `/ideate-validate` |
-| Q-04 | **Is there a DAW plugin?** `02.02` Q-02 and CX-02 converge on this: without a reliable wrap signal the close prompt mistimes, the in-room tap does not happen, and the domain degrades to an async attestation chase — which is Sound Credit, which already exists and already failed. **The plugin question is not downstream of the wedge; it is the wedge.** | User | `/create-prd` |
-| Q-05 | **What is the actual invitation channel for unclaimed shells?** (`02.03.02` Q-01, CX-04.) Shells have no notification channel, so the growth loop depends on a Producer telling a human — an act the platform can prompt but never perform. The growth model's load-bearing unknown. | User | `/ideate-validate` |
+| Q-03 | **Who owns the `session` entity — domain 02 or domain 07?** Both need it. Duplicating it is the single worst structural error available in this domain. **An interim rule is already in force and downstream must hold it** (`ideation-cx.md` § 02-07): "**07 owns the `session` entity** as the project-level grouping where work happens; **02 reads it and captures credits AT the session, never owning the entity**" — consistent with `07.06.01` D-01 ("the **Session is a first-class entity** — the atomic unit of provenance"). What remains is ratifying first-class-07 versus jointly-owned 02/07, plus its storage representation. | User | `/create-prd-architecture` |
+| Q-04 | **Is there a DAW plugin?** `02.02` Q-02 and CX-02 converge on this: without a reliable wrap signal the close prompt mistimes, the in-room tap does not happen, and the domain degrades to an async attestation chase — which is Sound Credit, which already exists and already failed. **The plugin question is not downstream of the wedge; it is the wedge.** — **ANSWERED FOR v1 (owner decision 2026-07-22, `ideation-index` D-70, queue entry DQ-08.2): no.** No non-web client on the producer's machine is authorised, so there is no plugin, no watch-folder agent and no DAW-close signal in v1. The domain's v1 wrap ladder is rungs 1, 4 and 5 (`02.02.03`), the cards ship on **PWA web push + in-app** (`07.06.02` D-17), and the v1 thesis is restated to **capture at the first sharing moment** (`vision.md`; D-70(d)). The question reopens **only** on the four enumerated evidence items in `meta/constraints.md` § Desktop Surface — Reopen Evidence; `07.09` D-04's parser gate is separate and additional. | User | `/create-prd` (post-gate only) |
+| Q-05 | ~~**What is the actual invitation channel for unclaimed shells?**~~ (`02.03.02` Q-01, CX-04.) | User | ✅ **Resolved — the Producer's social act at roll call (`02.02.01`); the platform prompts it and never performs it.** `02.01.05` DT-15: "the Producer can still tell the human directly, **which is domain Q-05's real answer regardless**"; `credits-attribution-cx.md` CX-04: "**Producer**: creates the most shells and is **the only viable invitation channel**." There is no platform-side channel — a shell has no notification channel and emailing one needs contact data nobody consented to give (`02.03.02` DT-01) — and while a credit is embargoed no invitation fires at all; it fires at lift (`02.01.05` D-15). The acquisition tax is **confirmed as a cost and rejected as a bug** (`02.01.05` DT-15). |
 | Q-06 | **Credit vs split at the close prompt** (`02.02.03` DT-02). `personas.md` pairs them in one moment; they are different facts with different weight, and domain 09 owns the split. The highest-risk intersection on the map, and it runs through one UI. | User | `/create-prd` |
-| Q-07 | **Ring detection's false positives are unappealable** (`02.04.04` Q-02). A real tight scene is topologically near-identical to a collusion ring; demotion is silent; the wrongly-demoted have their careers quietly devalued with no notice. The domain's hardest open question. | User | `/ideate-validate` |
-| Q-08 | **Re-emission after change** (`02.08` Q-01). Amendment, retraction and demotion all mutate credits after export; downstream consumers hold stale facts. Flagged by four features, solved by none. | User | `/create-prd` |
+| Q-07 | **[OWNER] Ring detection's false positives are unappealable** (`02.04.04` Q-02). A real tight scene is topologically near-identical to a collusion ring, and demotion is silent. **Narrowed by D-11**: the harm no longer reaches the public label, the rung, or any rung-gated consumer — it is bounded to traversal rank, search placement and per-edge dispute weighting. Still invisible, still unappealable, still the domain's hardest open question; what is open is whether *that* bounded harm is acceptable. | User | `/create-prd` |
+| Q-08 | **Re-emission after change** (`02.08` Q-01). Amendment and retraction mutate credits after export; downstream consumers hold stale facts. **Demotion has dropped off this list** (D-11) — it is score-only and stales nothing an emitted package carries. Flagged by three features, solved by none. | User | `/create-prd` |
 | Q-09 | **GDPR erasure vs the joint factual record** (`02.01.01` Q-01). A credit is several people's assertion; erasing one party's link rewrites others' history. Likely de-identification rather than deletion — but it is a legal/product collision, not a preference. | User | `/create-prd-security` |
 | Q-10 | **Source licensing for import** (`02.03` Q-01). MusicBrainz, Discogs, DDEX and PRO data have materially different terms; some may prohibit exactly what `02.03.01` proposes. A legal gate on a whole sub-domain. | User | `/create-prd` |
 | Q-11 | **Consent for shells** (`02.02.01` Q-02, `02.03.02` Q-02/Q-03). Roll call and import create public-ish records about people who never signed up. What is visible pre-claim, and can a person refuse a shell whose credits are other people's true assertions? | User | `/create-prd-security` |
-| Q-12 | Q-03 from `personas.md` (teacher/student split) has a sibling here: does the **Band as entity** hold credits directly, or only its members? Liner notes do both. | Agent | `/ideate-discover` Step 5 |
+| Q-12 | Q-03 from `personas.md` (teacher/student split) has a sibling here: does the **Band as entity** hold credits directly, or only its members? Liner notes do both. Constrained but not answered by `02.02.03` DT-12 — entities cannot tap, so an entity's row is attested by an authorised human or not at all ("This does not resolve domain Q-12 (whether the Band *holds* credits), but it constrains it"). An entity-model call on the credit graph. | Agent | `/create-prd-architecture` |
+| Q-13 | **The resolution SLA for a contested embargo-lift objection** (`02.01.05` Q-06). D-13 makes an SLA mandatory — without one, an embargoed status quo plus an unbounded resolver is a de facto Producer veto. The requirement is specified; the number is not, and it is bounded by `02.05`'s ladder and domain 24's adjudication capacity, which does not currently budget for this load. | User | `/create-prd` |
+| Q-14 | **Resolved under owner autonomy (2026-08-02):** public reachability is discovery evidence, never authorisation. A leak or bootleg follows `02.01.05` D-24's human authority-evidence review; unresolved cases remain on the temporary embargo path. | Owner autonomy | Resolved — E8 |
+| Q-15 | **Unbounded pendency and the powerless true owner in a claim contest** (`02.03.03` Q-04, Q-05). Under D-14 the credit stays with the first claimant while contested; no corroboration SLA exists anywhere, so pendency is unbounded in the worst case, and the true owner cannot set the line Unlisted because `02.01.05`'s controls belong to a party *named* on the record. Both are consequences the decision accepted, and both need a bound or a control before implementation. | User | `/create-prd-security` |
+
+
+<!-- spec-graph: auto-generated -->
+## Related Specs
+
+### Constrained by
+- [[decisions.md#d-02|D-02]]
+- [[decisions.md#d-03|D-03]]
+- [[decisions.md#d-05|D-05]]
+- [[decisions.md#d-04|D-04]]
+- [[decisions.md#d-06|D-06]]
+- [[decisions.md#d-07|D-07]]
+- [[decisions.md#d-01|D-01]]
+- [[decisions.md#d-16|D-16]]
+- [[decisions.md#d-08|D-08]]
+- [[decisions.md#d-09|D-09]]
+- [[decisions.md#d-10|D-10]]
+- [[decisions.md#d-11|D-11]]
+- [[decisions.md#d-19|D-19]]
+- [[decisions.md#d-20|D-20]]
+- [[decisions.md#d-12|D-12]]
+- [[decisions.md#d-13|D-13]]
+- [[decisions.md#d-21|D-21]]
+- [[decisions.md#d-17|D-17]]
+- [[decisions.md#d-18|D-18]]
+- [[decisions.md#d-23|D-23]]
+- [[decisions.md#d-24|D-24]]
+- [[decisions.md#d-14|D-14]]
+- [[decisions.md#d-70|D-70]]
+- [[decisions.md#d-15|D-15]]
+- [[decisions.md#d-22|D-22]]

@@ -21,7 +21,7 @@
 | CX-10 | [12.07 Identifier Assignment](./12.07-identifier-assignment-at-delivery.md) | [12.08 Catalog Migration & Exit](./12.08-catalog-migration-exit.md) | Prefix provenance decides what leaves with a departing artist — the crux of the earned-vs-hostile question | Musician, Producer | High | 12.07 DT-02; 12.08 DT-02 |
 | CX-11 | [12.05 Catalog Lifecycle](./12.05-catalog-lifecycle-after-release/12.05-catalog-lifecycle-after-release-index.md) | [12.03 Store & Territory](./12.03-dsp-store-territory-management/12.03-dsp-store-territory-management-index.md) | Post-delivery, changing where a release is sold is a takedown, not a picker edit. Same gesture, opposite meanings across the delivery boundary | Musician | High | 12.03 CX-03 / R-04 — the pre/post-delivery asymmetry |
 | CX-12 | [12.08 Catalog Migration & Exit](./12.08-catalog-migration-exit.md) | [12.06 Content ID](./12.06-content-id-ugc-claiming/12.06-content-id-ugc-claiming-index.md) | Imported catalog carries no attestations, so the evidence advantage in conflicts does not apply to it | Musician | High | 12.06.03 DT-02 — the boundary of the thesis |
-| CX-13 | [12.04 Scheduling & Windows](./12.04-release-scheduling-windows/12.04-release-scheduling-windows-index.md) | [12.02 DDEX Delivery](./12.02-ddex-delivery-messaging/12.02-ddex-delivery-messaging-index.md) | Lead times and expected-response windows are per-partner profile data; a release date is a date PLUS per-partner timezone/chart-week semantics, computed from the same store the messages are | Musician | High | 12.04.01 DT-02; 12.02.01 DT-13; 12.02.03 D-01 |
+| CX-13 | [12.04 Scheduling & Windows](./12.04-release-scheduling-windows/12.04-release-scheduling-windows-index.md) | [12.02 DDEX Delivery](./12.02-ddex-delivery-messaging/12.02-ddex-delivery-messaging-index.md) | Lead times are per-partner profile data and expected-response windows are per **(partner × message type)** profile data; a release date is a date PLUS per-partner timezone/chart-week semantics, computed from the same store the messages are | Musician | High | 12.04.01 DT-02; 12.02.01 DT-13; 12.02.03 D-01/D-05; 12.02.02 D-12/D-13 |
 | CX-14 | [12.01 Release Builder](./12.01-release-builder/12.01-release-builder-index.md) | [12.05 Catalog Lifecycle](./12.05-catalog-lifecycle-after-release/12.05-catalog-lifecycle-after-release-index.md) | **The builder writes future obligations into the lifecycle**: a term-limited licensed inclusion schedules a takedown dated at licence expiry (recorded at add-time); a replaced master post-release is not a metadata update but a takedown + new ISRC | Musician, Producer | High | 12.01.01 D-12/DT-12 (scheduled takedown); 12.01.04 DT-09 (master replacement forfeits stream count) |
 | CX-15 | [12.02 DDEX Delivery](./12.02-ddex-delivery-messaging/12.02-ddex-delivery-messaging-index.md) | [12.03 Store & Territory](./12.03-dsp-store-territory-management/12.03-dsp-store-territory-management-index.md) | The Deal & Parties fact classes: the ERN message is where the rights record leaves the building and becomes actionable by a third party, and where the wrong-artist-page disaster is committed (a party reference, not a string) | Musician, Producer | High | 12.02.01 DT-04 (Deals), 12.02.01→12.03.04 (Parties) — a guessed party delivers flawlessly to the wrong person |
 | CX-16 | [12.01 Release Builder](./12.01-release-builder/12.01-release-builder-index.md) | [12.03 Store & Territory](./12.03-dsp-store-territory-management/12.03-dsp-store-territory-management-index.md) | **Silent normalisation**: DSPs do not only reject metadata, they silently rewrite accepted metadata — the board reports `Delivered` while the store displays something the artist never wrote. A read-back is the only detector, and the divergence is a learning signal as valuable as a rejection | Musician | Medium | 12.01.02 DT-10 / Q-03; 12.02.02 PC-13 read-back flag — a partner with no read-back can only be inferred, never checked |
@@ -174,13 +174,13 @@
 
 ### CX-13: The Schedule Is Computed From The Message Store (12.04 ↔ 12.02)
 
-**Relationship**: Lead times and expected-response windows are both per-partner **profile** data, and a release date is a date PLUS per-partner semantics (12.02.01 DT-13): naive projection drops the record early in Auckland or late in LA, can push first-week numbers into the wrong chart week (Global Release Day Friday, chart weeks Fri–Thu), and forfeits new-release playlist consideration. The schedule is computed from the same partner-knowledge store the messages are.
+**Relationship**: Lead times and expected-response windows are both **profile** data — lead times per partner (PC-09), response windows per **(partner × message type)** (PC-10, 12.02.02 D-13) — and a release date is a date PLUS per-partner semantics (12.02.01 DT-13): naive projection drops the record early in Auckland or late in LA, can push first-week numbers into the wrong chart week (Global Release Day Friday, chart weeks Fri–Thu), and forfeits new-release playlist consideration. The schedule is computed from the same partner-knowledge store the messages are.
 
 **Synthesis questions answered**:
-1. **Shared-state owner**: The partner-knowledge store (CX-02) owns lead times, response windows (PC-09/PC-10) and date semantics; the schedule reads them.
+1. **Shared-state owner**: The partner-knowledge store (CX-02) owns lead times, response windows (PC-09/PC-10) and date semantics; the schedule reads them. The response window resolves per (partner × message type) and its precedence is **observed over contractual** (12.02.02 D-12).
 2. **Trigger chain**: Chosen date + profile timezone/window data → per-partner dispatch times computed.
 3. **Permission intersection**: None.
-4. **Notification fan-out**: An expected-response window breach (no ack in PC-10 P90) is the delivery alarm 21/20 ultimately feel.
+4. **Notification fan-out**: An expected-response window breach — **no first terminal ack within the observed p95 window for that (partner × message type)**, counted in partner business days (12.02.03 D-05/D-07) — is the delivery alarm 21/20 ultimately feel. Where that window is `unmeasured`, no artist-facing alarm is raised at all; only the internal ceiling (10 partner-business-days, 12.02.02 D-12) fires, and it never reaches an artist, so 21/20 feel nothing until the release date itself does the alarming.
 5. **State-transition race**: A profile window update between schedule computation and dispatch shifts a partner's real go-live moment.
 
 ### CX-14: The Builder Writes Future Obligations Into The Lifecycle (12.01 → 12.05)
@@ -254,3 +254,22 @@ See CX-04 / CX-16. Retained as a distinct map row because the mechanism (store r
 | R-05 | 12.06 Content ID | 12.02 DDEX Delivery | Considered because both are partner integrations with asset submission. Rejected — Content ID platforms do not consume DDEX. Different protocol, partners, assertion. "Both are integrations" is a category, not a relationship. Recorded because integration-shaped things attract false coupling. |
 | R-06 | 12.05 Catalog Lifecycle | 12.06 Content ID | Considered: does taking down a release withdraw its fingerprint? Rejected — independent by design. A recording can be withdrawn from stores and still claim on YouTube (off sale; UGC revenue continues). Coupling them would silently destroy an income stream on an unrelated commercial decision. |
 | R-07 | 12.01.02 Metadata Validation | 12.01.04 Asset Conformance | Considered again at depth: asset duration feeds a metadata rule (RC-10), so are they coupled? Rejected — reading an asset-derived value is a metadata rule *consuming* a value, not a coupling. D-06 draws the line: 12.01.04 owns measured-vs-spec, 12.01.02 owns measured-vs-declared. One measures and publishes; the other adjudicates a human's claim. Recorded so spec writers do not re-invent the coupling. |
+
+
+<!-- spec-graph: auto-generated -->
+## Related Specs
+
+### Constrained by
+- [[decisions.md#d-01|D-01]]
+- [[decisions.md#d-07|D-07]]
+- [[decisions.md#d-02|D-02]]
+- [[decisions.md#d-06|D-06]]
+- [[decisions.md#d-05|D-05]]
+- [[decisions.md#d-12|D-12]]
+- [[decisions.md#d-13|D-13]]
+- [[decisions.md#d-03|D-03]]
+- [[decisions.md#d-10|D-10]]
+- [[decisions.md#d-18|D-18]]
+- [[decisions.md#d-08|D-08]]
+- [[decisions.md#d-09|D-09]]
+- [[decisions.md#d-11|D-11]]

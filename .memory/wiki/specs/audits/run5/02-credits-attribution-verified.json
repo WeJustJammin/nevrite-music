@@ -1,0 +1,85 @@
+{
+  "domain": "02-credits-attribution",
+  "treeRoot": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation",
+  "verifiedAt": "2026-07-30",
+  "counts": { "input": 11, "upheld": 1, "refuted": 10 },
+  "verdicts": [
+    {
+      "findingId": "02-credits-attribution#001",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "Quotes are accurate (02.10:19, :71, :86, :122; credits-attribution-index.md:85; credits-attribution-cx.md:266 all verified verbatim), but the behaviour the finding says is uninvented is specified three times, including exact UI copy. 02.02-session-capture/02.02.02-per-track-contribution-log.md:109 — 'Producer tries to set the AI disclosure axis on someone else's contribution | Refused. `02.10` D-04 ... | Disclosure control is absent on rows the Producer does not own; the row shows \"disclosure: contributor's to set\"'. credits-attribution-cx.md:260 states a per-field authorization model ('the Producer owns the attribution on the row, and the named contributor owns its AI-disclosure axis ... One row, two owners of two fields') and :267 routes it to /write-be-spec. 02.10's own happy path step 3 (02.10-ai-contribution-disclosure.md:62) is normative and unambiguous — 'Disclosure attaches to the contribution, alongside its role, not inside it'. Against that, the Role Lens 'session level' phrase (:19) and the bare '✅ Full' in the Role Matrix (index:85) are prose role descriptions, not control specs; the Role Matrix legend (index:72) is a coarse access legend, not a scope grammar. Every reasonable implementer builds own-contributions-only per-contribution disclosure. A session-level convenience control over the Producer's OWN rows would violate nothing."
+    },
+    {
+      "findingId": "02-credits-attribution#002",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "Quote verified (02.08-credit-export-ddex-rin.md:50 — 'embargoed credits excluded unless the recipient is a participant'), and the word is loose. But the scope rule is stated authoritatively in three places, one of them nine lines below the quoted line in the same file: 02.08:59 — 'Embargoed credits in scope | Excluded by default; participant-scoped export may include them'. credits-attribution-cx.md:200 records it as settled — 'Step 5 resolved the pending scope question: participant-scoped export may include embargoed credits; catalog-scoped export excludes them' — and :207 names scope 'the permission that decides whether embargoed rows are eligible at all', with :206 giving the sequence 'Export request → scope check → embargo filter → emit'. 02.01.05-credit-visibility-embargo.md:163 opens with 'Resolved:' and supplies the exact UI string 'Export as participant to include them.' A numbered happy-path narrative loses to a Resolved cross-cut, an edge-case row in its own file, and a copy string. No implementer builds a recipient-participation test the platform cannot evaluate."
+    },
+    {
+      "findingId": "02-credits-attribution#003",
+      "upheld": true,
+      "finalSeverity": "warning",
+      "refutationReason": "not-refuted",
+      "reason": "Verified verbatim and it is a real residual viewer-scope contradiction on the surface 02.01.01 owns. 02.01.01-credit-record-contribution-ledger.md:104 User Sees — 'Contested badge on the work's ledger for all who can see the work.' The ledger is reachable by non-participants: 02.01.02-public-discography.md:55 ('clicks a work (→ its ledger, 02.01.01, itself viewer-scoped)') and 02.01.01:151, whose Empty state splits 'For a Producer on their own work' from 'For everyone else'. Against it, five statements scope the marker to participants: 02.01.02:137 ('contest = a public marker on the record view for participants only'), 02.05-credit-dispute-resolution.md:21 ('participant-and-credited-party record-view information, never a public disclosure'), credits-attribution-cx.md:292 ('Fan sees the unchanged public page (no contest state leaks)'), 02.03.03-claim-adjudication.md:66 ('Visitors: an unchanged line ... Parties: the contested marker on the record view'), 02.04.02-provenance-tiers-credit-confidence.md:123 ('Contested marker on the record view for participants; ... nothing on the public page'). DOWNGRADED from blocking: 02.01.02:137 self-designates as 'The single winning rule, stated once' and 02.04.02:123 calls the question 'reconciled, not open', so an implementer who reads the corpus is not forced to invent behaviour — but 02.01.02:137 enumerates exactly which files it corrects (02.05 D-02, 02.03.03 D-03) and 02.01.01 is not among them, so the stale User Sees cell survives in the very file that owns the ledger view. Remedy is a one-cell edit, not a decision."
+    },
+    {
+      "findingId": "02-credits-attribution#004",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "no-real-divergence",
+      "reason": "Quotes verified (02.01.03-credit-search-graph-traversal.md:87 D-04, and the same term at :43, :60, :61; the six rungs at 02.04.02-provenance-tiers-credit-confidence.md:48-53 contain no rung literally named 'attested'). But the corpus uses 'attested' consistently and determinately as 'confirmed by a party other than the asserter', which maps onto exactly one rung boundary. 02.01.01-credit-record-contribution-ledger.md:101 contrasts them directly — 'persists at producer-asserted tier, not attested' — putting rung 3 below the line; 02.01.01:138 defines the Attested state as 'Named party confirmed (02.04.01)'; 02.01.06-credit-correction-amendment.md:19 splits 'unattested' from 'attested' on the same confirmation axis; 02.09-gear-credit-linkage.md:86 — 'never attested; permanently self-asserted tier'. Rung 4 is explicitly 'still one interested party' (02.04.02:51), so it is unattested under that vocabulary and the cut lands at rung 5 'Confirmed'. The finding's own alternatives (rung ≥4 vs rung ≥5) differ only in the population counted by a cold-start tuning heuristic whose thresholds (20/100) are already acknowledged as tunable; no product behaviour is invented either way."
+    },
+    {
+      "findingId": "02-credits-attribution#005",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "tracked-deferral",
+      "reason": "Quote verified (02.01.04-identifier-resolution-duplicate-merge.md:47 — '\"Undo this merge\" available for a bounded window'), and no duration appears anywhere. But the unmerge behaviour itself is fully specified in the same cell ('splits the collapsed node back into the two originals, restores each original's pre-merge credit set and identifiers, and re-activates the loser's URL'), and the open half is tracked with an owner and a stage: 02.01.04:90 Q-01 — owner 'Agent', deferred to '/create-prd-architecture' — and it defers precisely the restoration-fidelity question the window is a parameter of: 'clean restoration after subsequent edits to the merged node ... That is settled by the record's storage model, not by a product call: it is sub-domain Q-01 (append-only with event history vs mutable with an audit log)'. How long pre-merge state remains restorable is a direct consequence of that storage choice (append-only history admits an unbounded window; mutable-plus-audit-log does not), so the number cannot be fixed before the deferral resolves. The harm framing is also overstated: 02.01.04:82 D-01 makes person merges 'never automatic, at any confidence', so the 'Wrong merge confirmed' row is a human-confirmed merge, and Q-02 (owner 'User', '/create-prd') tracks the absent-party variant."
+    },
+    {
+      "findingId": "02-credits-attribution#006",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "Both quotes verified (02.02-session-capture-cx.md:56 does record 'Wrap signal → reconcile → prompt → per-row confirmations → credit records'; 02.02.03-session-close-capture-prompt.md:206 D-05 and :170 DT-04 do reject it). This is a stale sibling artifact, not an ambiguity: the owning file states the ratified answer as a numbered decision — D-05, 'The contributor asks and the Producer's reconciliation are two independently-firing halves. Both fire within 5 s of the wrap signal; neither gates the other' — and 02.02.03:185 spells out the replacement chain verbatim for whoever reads the CX: 'The corrected chain is \"wrap → {contributor asks ∥ reconciliation} → confirmations\", with the two halves running concurrently.' The finding's forcedInvention ('whether contributor confirmation cards are dispatched at wrap independently of the Producer's review') is therefore answered twice in the file that owns the decision, with the conflicting artifact named. A CX synthesis note cannot outrank a ratified decision in the feature file it summarises. Hygiene defect (a stale line to delete), not a divergence."
+    },
+    {
+      "findingId": "02-credits-attribution#007",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "Quotes verified (02.02.02-per-track-contribution-log.md:194 D-12 and :76; 02.01.05-credit-visibility-embargo.md:39, :181, :293; credits-attribution-cx.md:46). They do not conflict — they are the capture side and the honouring side of one design, and 02.02.02:76 says so explicitly: 'A contribution carries a visibility intent set at capture ... and `02.01.05` is where the intent is honoured.' D-12 records an intent on the row; 02.01.05 governs whether it takes effect, and it already answers the finding's first question bilaterally: :39 'Confidential | Per credit, permanent | The credited party + the work's ledger owner | Never, unless both parties agree to lift', :181 'requiring the assent of both the credited party and the work's ledger owner ... Producer + party both confirm'. DT-07 at 02.02.02:150 also shows the actor D-12 exists for is the ghost producer suppressing their OWN credit, not a Producer suppressing someone else's. The second question — whether the level exists in v1 — is a properly formed tracked deferral: 02.01.05:293 Q-02 carries '[OWNER]', owner 'User', target '/create-prd', with a stated recommendation ('yes, narrowly'), and Q-05 at :296 is explicitly gated on it."
+    },
+    {
+      "findingId": "02-credits-attribution#008",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "no-real-divergence",
+      "reason": "Quotes verified (02.02.01-session-roll-call.md:216 D-09 and :178 DT-10; 02.01.05-credit-visibility-embargo.md:115 and :278 D-14), but they govern two different objects and both ship as written — which the finding concedes ('Implemented literally, both rules ship'). D-09 scopes the SESSION ROLL (02.02.01), which includes present-but-uncredited parties: 02.01.05:113 — 'every party on it, including those the roll records as present-but-uncredited (a label rep on the couch is on the roll and gets no credit)'. DT-13/D-14 scope EMBARGOED CREDIT reads (02.01.05). The two sets are not the same personnel, so D-09's protection is not void: the roll discloses attendance the credits never carry. The async contributor case is further disjoint — 02.02.01:124 records them 'marked `remote — asynchronous`, with a contribution window rather than a presence interval', so interval overlap is not even defined for them. No implementer must choose between the rules; the finding is a critique of how much leakage protection D-09 buys, not a spec contradiction."
+    },
+    {
+      "findingId": "02-credits-attribution#009",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "The marker is real and its target is stale — 02.02.04-session-attendance-proof.md:49 does read '`[PENDING — Step 5]`' with no owner, and the row's What Happens cell cites 02.04.02 D-19 and 02.04.04 D-08 (header 'Last updated: 2026-07-23'), so Step 5 has run. But the User Sees value is fully determined by ratified decisions elsewhere, exhaustively and by name: 02.01.03-credit-search-graph-traversal.md:88 D-05 — 'No collusion-specific threshold, hiding, label, tooltip, placeholder, rationale, notification, or detector metadata exists.' 02.01.02-public-discography.md:133 — 'nothing on this page moves: no label change, no notification, no reordering.' 02.04.04-attestation-ring-collusion-detection.md:87 — the harm 'remains invisible'. 02.04.02-provenance-tiers-credit-confidence.md:101, the same scenario in the tier file, fills the cell outright: '**Nothing, ever, on the page.** Accepted cost, stated plainly (D-19): a fully corroborated fiction keeps its top-rung public label indefinitely.' The answer is 'nothing'; the cell is a leftover, not an unmade decision."
+    },
+    {
+      "findingId": "02-credits-attribution#010",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "Marker verified at 02.03.03-claim-adjudication.md:69 and its 'Step 5' target is stale. But the row opens 'Same path' and that path is rendered in full three rows above: :66 — 'The public line is unchanged and is never hidden ... the credit stays attached to the first claimant while contested (D-05) | Visitors: an unchanged line on the first claimant's page. Parties: the contested marker on the record view' — plus D-05 (:107) and D-06 (:108) fixing where the credit goes on Unresolvable. The unwind question is explicitly owned and resolved, contrary to the finding's claim that no owner was assigned: 02.04.03-attestation-retraction.md:91 Q-03 is struck through and marked '✅ **Resolved — not domain 02, and the ownership is already recorded**', citing ideation-cx.md item 20 ('10 owns registration, the featured/non-featured pay mapping ... and any rung-gate') and 02.04.02's boundary, '02 supplies rung-at-time-T (DT-16) so the consumer can justify then; **it does not unwind anything**'. 02.04.02:125 states the same rule for any downstream consumer that cached a rung, and 02.04.04's edge cases route split unwind to 09/10 on the same shape. Traversal edges and reputation follow the credit's attachment state, which D-06 fixes."
+    },
+    {
+      "findingId": "02-credits-attribution#011",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "Quotes verified, but the finding's load-bearing premise is false against the file it names. It asserts 'Nothing in 02.04.01 blocks the request'; 02.04.01-attestation-request-confirmation.md:126 blocks it at step 2, before the context floor is ever reached — 'The addressable set is derived from the session roll (`02.02.01`) — never guessed, never inferred from the credit'. An imported credit has no roll, so the set is empty, and the file gives that exact outcome its own state: :177 'Unaddressable | No roll, no context floor, or attester unreachable/blocked/muted | No request affordance at all — absent, not disabled', :167 'Historical credit — witnesses dead, retired, or unreachable | No addressable set ... the credit sits at asserted tier permanently and honestly', :194 Empty — 'Credit has no addressable attesters (historical, no roll, all muted)'. The finding also misreads D-14: the floor requires '≥1 other named party who was **present**' (:101), a roll fact, not the credited-party list a Discogs row carries. The ceiling rule is then stated positively: credits-attribution-cx.md:93 — 'A later contemporaneous attestation can exceed the cap only if a real session record appears; otherwise the cap holds' — matching 02.04.02:102 ('Still rung 1, source-marked') and 02.03.01:47. The mechanism the finding says must be invented is precisely the third option it lists, and it is already specified."
+    }
+  ]
+}

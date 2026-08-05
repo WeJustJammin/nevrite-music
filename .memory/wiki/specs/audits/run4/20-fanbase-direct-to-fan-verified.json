@@ -1,0 +1,84 @@
+{
+  "domain": "20-fanbase-direct-to-fan",
+  "verifiedAt": "2026-07-30",
+  "treeRoot": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/20-fanbase-direct-to-fan",
+  "counts": {
+    "input": 10,
+    "upheld": 5,
+    "refuted": 5,
+    "blocking": 1,
+    "warning": 4
+  },
+  "verdicts": [
+    {
+      "findingId": "20-fanbase-direct-to-fan#001",
+      "upheld": true,
+      "finalSeverity": "blocking",
+      "refutationReason": "not-refuted",
+      "reason": "All three quotes exist verbatim. 20.07-fan-demand-show-requests.md:69 and :110 (D-05, a locked Decision, not a marker) mandate a k-anonymity floor on the map, using the sparse-cell case '3 fans in Inverness' as the justification. fanbase-direct-to-fan-cx.md:255 (CX-10 Q3) states the opposite about the same object: 'aggregate geo-density is unfloored map data'. A sparse map cell IS aggregate geo-density, so the two normative statements cannot both hold. Checked for arbitration and found none: the only marker in 20.07 is :45 '[PENDING - /create-prd-architecture] - map granularity and weighting', which covers cell size and quality weighting, not suppression; 20.07 Q-01/Q-02/Q-03 (:117-118) cover request publicity, follow-inclusion and operator scope, none of them the floor. The sibling authority both sides invoke, 20.02.01-segment-builder.md:99 (DT-03), sides with CX-10 by putting the floor on send/export and excluding counting - which makes 20.07 D-05 the outlier, not the marked one. Two implementers diverge on whether an Inverness cell renders at all."
+    },
+    {
+      "findingId": "20-fanbase-direct-to-fan#003",
+      "upheld": true,
+      "finalSeverity": "warning",
+      "refutationReason": "not-refuted",
+      "reason": "Downgraded from blocking. The mis-citation is confirmed: 20.03.03-send-scheduling-throttling.md:61, :81 (DT-04) and :93 route per-fan frequency capping to '20.02 Segmentation & Superfan Intelligence' and to a '-cx.md frequency-fatigue thread', and a recursive grep for 'frequency|fatigue' returns ZERO hits across every file in 20.02-segmentation-superfan-intelligence/ and zero in 20.03-broadcast-fan-messaging-cx.md - both named homes are empty. But the claim 'nor anywhere in the domain' is refuted: 20.01.03-fan-preference-centre.md:42-44 and D-05 (:163) own a per-(fan, entity) frequency tier system, and :61-62 places it in the send-time gate - 'and the tier's frequency cap is not already exhausted for the period'. That is a real per-fan frequency-cap policy the dispatch gate can consume. The residual defect, which is genuine, is that the ownership pointer is wrong and that no tier produces the same-day deferral 20.03.03:61 illustrates ('1,090 fans already got a message today'): the 'All' default tier (20.01.03:49) admits every permitted send and Highlights (:50) caps monthly, so nothing yields a today-scoped cap. Warning, not blocking - the substrate exists and is wireable."
+    },
+    {
+      "findingId": "20-fanbase-direct-to-fan#007",
+      "upheld": true,
+      "finalSeverity": "warning",
+      "refutationReason": "not-refuted",
+      "reason": "Quotes verified verbatim and the underlying fact checked directly at source. 20.03.02-channel-routing-bulk-delivery.md:40-44 asserts as current fact that 'meta/constraints.md declares web as the only surface, with mobile an open question' and concludes 'push is, today, a channel this domain mostly cannot use'. meta/constraints.md:287 (Project Surfaces) :293 declares 'Mobile (PWA) ... v1: web is installable as a PWA (home-screen, web push for gig alerts...)' - so the asserted premise about the constraints file is factually false. The same file's Q-04 (:119) records this RESOLVED on 2026-07-18 as D-28 and states 'push is not lost: it arrives in v1 as PWA web push', and the file's own channel table (:38) and happy path (:49, '40 push') both assume push exists. The stale paragraph carries no strikethrough, no marker, and no date. Confirmed the premise is quoted onward unmarked at 20.06.02-gig-alerts-near-me.md:32, whose own Q-01 (:124) likewise records D-28. Warning rather than blocking: the resolved rows arbitrate within each file, so a thorough reader converges - but the normative Behavior prose in two files states the opposite of a locked constraint."
+    },
+    {
+      "findingId": "20-fanbase-direct-to-fan#008",
+      "upheld": true,
+      "finalSeverity": "warning",
+      "refutationReason": "not-refuted",
+      "reason": "Confirmed, and the authorization side is even more consistently stated than the finding claims - six occurrences, not four. 20.04.04-d2f-revenue-split-payout.md binds at authorization at :82 ('the payout plan version live at payment authorization'), :99, :115, :120, :121 and :178 (D-11 consequence: 'plan version at payment authorization'). 20.04.03-digital-sales-name-your-price-bundles.md:108 binds at the other instant - 'The payout plan version is bound at payment settlement, not at add-to-cart, and the entitlement records that version' - and, tellingly, cites '(20.04.04)' in the same row as if agreeing, which is what makes the divergence silent rather than acknowledged. 20.04.01-storefront-product-catalog.md:140 uses the third, vaguer phrase 'the plan version at sale time'. Both [DEEP] siblings enumerate the same triggering scenario (a domain 09 split change mid-checkout) and resolve it to different instants, so the disagreement is live exactly where both files say it matters. No marker on either side; no third statement arbitrates. Warning is proportionate - the auth/settle window is short, but it is precisely the window both files legislate for."
+    },
+    {
+      "findingId": "20-fanbase-direct-to-fan#009",
+      "upheld": true,
+      "finalSeverity": "warning",
+      "refutationReason": "not-refuted",
+      "reason": "Confirmed literally. A grep of Open Question row ids in 20.06.02-gig-alerts-near-me.md returns Q-01 (:124), Q-02 (:125), Q-03 (:126), Q-04 (:127) and Q-04 (:128) - two consecutive rows in the same table share the id Q-04, with no suffix or disambiguation. :127 is a live '[OWNER]' question (is the 25 mi alert radius the same setting as 20.01.03's 80 km / 50 mi?) and :128 is marked 'Resolved'. Both in-file references are ambiguous as claimed: D-06 (:116) says 'See Q-04' and D-07 (:117) says 'Resolves Q-04'. This falls squarely in the carve-out to the tracked-deferral rule - the tracking itself is malformed, so the [OWNER] marker does not protect it. The underlying radius conflict it points at is real (20.06.02 D-06 = 25 mi / 40 km vs 20.01.03 D-05 = 80 km / 50 mi, 10-500 km range) and is the thing a duplicate-id collection pass would silently drop."
+    },
+    {
+      "findingId": "20-fanbase-direct-to-fan#002",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "tracked-deferral",
+      "reason": "The exact question the finding calls forced invention is explicitly tracked, and the finding quotes the tracker itself: 20.01-fan-graph-owned-audience-cx.md:41 - '[PENDING - /ideate-discover Step 5 deepening] on whether weak-provenance records are sendable-with-warning or hard-blocked until re-permissioned'. That is a well-formed marker with a named stage target. The 'target has already run' argument is not established by anything in the tree, and I am barred from consulting audit history to establish it. Separately, the owning file is internally coherent and distinguishes the two tiers the finding conflates: 20.01.04-fan-list-import-hygiene.md:45-46 puts provenance-ANSWERED records in the artist-asserted warm-up tier (throttled, sendable), while :52, :55 and the States row :67 reserve the 'unmarketable' tier for the provenance-UNANSWERED case ('Import succeeded, provenance unanswered | Records exist, marked unmarketable'). 20.01.02-consent-legal-basis.md:93 agrees with the sendable reading ('artist-asserted, deliverability-downgraded tier'); the ':88 (unmarketable-until-re-permissioned)' parenthetical is a loose gloss in one edge-case row, contradicted by its own file 5 lines later and superseded by the tracked question."
+    },
+    {
+      "findingId": "20-fanbase-direct-to-fan#004",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "tracked-deferral",
+      "reason": "The claim 'unmarked on both sides' is false - every side is marked, and CX-14 explicitly disclaims the ownership the finding attributes to it. Reading past the quoted :340-341: fanbase-direct-to-fan-cx.md:342-343 says 'The keep-vs-lose policy is owned by 20.05 (its open Q-01...)'; :351 says 'Musician: sets the keep-vs-lose policy (20.05.02 Q-01) that this edge enforces'; :354 heads the whole synthesis block '*(Medium confidence - pending 20.05.02 Q-01 resolution)*'; :355 says 'The library never decides the policy; it renders the current entitlement'; and :359 closes 'the keep-vs-lose policy ... is the unresolved 20.05.02 Q-01 that must be answered before this edge is fully specifiable'. CX-14 therefore governs the propagation race (an entitlement change must reach the library atomically), not the entitlement policy, and its ':356 never shows a stale unlocked state' is about staleness relative to current entitlement, not about which items remain entitled. The owning files carry matching markers: 20.05.02-exclusive-content-vault.md:73 is '[PENDING - Q-01, user product decision]' and 20.06.03-fan-library-collection.md:120 ends 'Final keep-vs-lose policy = Q-04'. Under the interim default (items opened while entitled stay accessible) those rows are still entitled, so rendering them unlocked is not a stale unlocked state - the readings converge."
+    },
+    {
+      "findingId": "20-fanbase-direct-to-fan#005",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "Every quote checks out - 20.01.02-consent-legal-basis.md:23 and :39 carry the three-purpose tuple, DT-04 (:115) confirms the purposes are orthogonal and non-substitutable, 20.01.03-fan-preference-centre.md:57 lists exactly four campaign purpose-types with no `service`, and Q-03 (:155) does track only the transactional/marketing line. But the omission is correct scoping, not a gap, and the same file says so. 20.01.03:56-57 scopes the enum explicitly to campaigns: 'each campaign carries a purpose-type ... tagged by the sender at compose time' - it is the broadcast-campaign gate, not a universal message enum. And 20.01.02 DT-01 (:112) draws the ownership line directly: 'What is domain-owned is **marketing** consent: which artist may sell to which fan ... platform Notifications (CX-M07) are the platform's own transactional messages. The mechanism is shared; the product is not.' Service-class messages are therefore CX-M07's to gate, and the `service` leg of the consent tuple is recorded here for evidentiary completeness and consumed outside this domain - which is exactly what an append-only evidentiary ledger (D-01) is for. No implementer is forced to invent a carrier that 20.03's campaign model was never scoped to provide."
+    },
+    {
+      "findingId": "20-fanbase-direct-to-fan#006",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "no-real-divergence",
+      "reason": "Both quotes are accurate but the governing sentence sits two lines above the table and settles it. 20.01.03-fan-preference-centre.md:44: 'Frequency is a **per-(fan, entity)** setting, orthogonal to the per-channel toggles and to the global opt-out.' A per-(fan, entity) setting that is orthogonal to the channel toggles is by construction not counted per channel - that is the whole meaning of orthogonal here, and it is stated as the framing rule for the tier table that follows. The operative enforcement rule in the Suppresses column (:50) then says 'The 2nd+ marketing **send** in a month is dropped, not queued' - send, not email - and the Notes column adds 'Cap is per-entity, not global', scoping the cap by entity rather than by channel. 'At most 1 marketing email per calendar month' in the Admits column is loose prose describing the dominant channel, not a channel predicate; nothing anywhere offers a per-channel counter or a rule for resetting one. Both competent readings land on one marketing message per entity per calendar month, whichever channel D-06 routing picks."
+    },
+    {
+      "findingId": "20-fanbase-direct-to-fan#010",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "The primary quote is real - 20.02.01-segment-builder.md:44 does list the Membership family's Source domain as '20.04', and a grep of 20.04-direct-to-fan-storefront/ for 'membership tier|lapsed' returns nothing relevant, so the pointer is wrong. But the correct owner is stated twice inside the same sub-domain and domain, which is precisely the answered-elsewhere test: the sibling file 20.02.02-superfan-score.md:34 sources 'Membership tenure / active tier' to 20.05.01-membership-tiers-benefits.md, and fanbase-direct-to-fan-cx.md:183 states 'Membership state is owned by 20.05.01 (billing engine is CX-M24); the score reads it.' An implementer who follows '20.04' finds nothing and finds 20.05.01 in the adjacent file - no one builds a membership model inside the storefront. The finding's own corroborating citation is also wrong: it attributes the ownership sentence to '20.02-segmentation-superfan-intelligence-cx.md:18 (CX-07)', but that file contains only CX-01 through CX-04 (headings at :21, :43, :65, :85) and has no CX-07 and no such line. A stale cross-reference cell, not a divergence."
+    }
+  ]
+}

@@ -1,0 +1,225 @@
+{
+  "domain": "21-promotion-marketing",
+  "treeRoot": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/21-promotion-marketing",
+  "unitsAudited": 7,
+  "filesRead": 41,
+  "coverageNote": "Enumeration from disk matches the expectation exactly: 7 units (the domain directory itself plus 6 sub-domain directories, each containing an *-index.md) and 41 .md files. All 41 files were read in full through the 3a -> 3b -> 3c cycle; no sampling. The domain-root unit holds 5 files (promotion-marketing-index.md, promotion-marketing-cx.md, and the three leaf feature files 21.06, 21.07, 21.09 that sit directly in the domain directory). Sub-domain 21.02 holds 8 files, 21.01/21.03/21.04 hold 6 each, 21.05 and 21.08 hold 5 each. Scoring applies dimensions 3, 5, 7 and 8 to every unit; dimension 1 additionally to the domain-root unit (it states the domain's problem). Dimensions 2, 4 and 6 are N/A throughout: personas are referenced from meta/personas.md and never redefined ('Personas from meta/personas.md - referenced, never redefined', promotion-marketing-index.md:105), constraints live in meta/constraints.md, and competitive positioning lives in meta/competitive-landscape.md. Dimension 1 is N/A on sub-domain units, where the problem statement is inherited from the domain. Devil's-advocate pass refuted 11 additional candidate findings before reporting; they are listed under refutedCandidates.",
+  "units": [
+    {
+      "unit": "21-promotion-marketing (domain root: index, cx, 21.06, 21.07, 21.09)",
+      "files": 5,
+      "applicableCheckpoints": 4,
+      "naDimensions": [2, 4, 5, 6],
+      "scores": { "1": "OK", "3": "WARN", "7": "OK", "8": "OK" },
+      "points": 0.5,
+      "ambiguityPct": 12.5
+    },
+    {
+      "unit": "21.01-release-campaign-planner",
+      "files": 6,
+      "applicableCheckpoints": 4,
+      "naDimensions": [1, 2, 4, 6],
+      "scores": { "3": "OK", "5": "WARN", "7": "OK", "8": "OK" },
+      "points": 0.5,
+      "ambiguityPct": 12.5
+    },
+    {
+      "unit": "21.02-pitching-outreach",
+      "files": 8,
+      "applicableCheckpoints": 4,
+      "naDimensions": [1, 2, 4, 6],
+      "scores": { "3": "WARN", "5": "OK", "7": "WARN", "8": "OK" },
+      "points": 1.0,
+      "ambiguityPct": 25.0
+    },
+    {
+      "unit": "21.03-pitch-targets-crm",
+      "files": 6,
+      "applicableCheckpoints": 4,
+      "naDimensions": [1, 2, 4, 6],
+      "scores": { "3": "OK", "5": "WARN", "7": "OK", "8": "OK" },
+      "points": 0.5,
+      "ambiguityPct": 12.5
+    },
+    {
+      "unit": "21.04-smart-links-presave-attribution",
+      "files": 6,
+      "applicableCheckpoints": 4,
+      "naDimensions": [1, 2, 4, 6],
+      "scores": { "3": "OK", "5": "OK", "7": "WARN", "8": "OK" },
+      "points": 0.5,
+      "ambiguityPct": 12.5
+    },
+    {
+      "unit": "21.05-paid-promotion",
+      "files": 5,
+      "applicableCheckpoints": 4,
+      "naDimensions": [1, 2, 4, 6],
+      "scores": { "3": "OK", "5": "WARN", "7": "OK", "8": "OK" },
+      "points": 0.5,
+      "ambiguityPct": 12.5
+    },
+    {
+      "unit": "21.08-event-tour-marketing",
+      "files": 5,
+      "applicableCheckpoints": 4,
+      "naDimensions": [1, 2, 4, 6],
+      "scores": { "3": "WARN", "5": "OK", "7": "OK", "8": "OK" },
+      "points": 0.5,
+      "ambiguityPct": 12.5
+    }
+  ],
+  "totals": {
+    "applicableCheckpoints": 28,
+    "points": 3.5,
+    "ambiguityPct": 12.5,
+    "blocking": 1,
+    "warning": 9
+  },
+  "findings": [
+    {
+      "findingId": "21-promotion-marketing#001",
+      "unit": "21-promotion-marketing (domain root)",
+      "severity": "blocking",
+      "dimension": 3,
+      "claim": "21.09 never resolves whether an EPK with unconfirmed credits is BLOCKED from being built or is built with those credits rendered as `claimed`. Three statements in the same file present the disjunction and none of them picks a branch, and no open question tracks it.",
+      "evidence": "21.09-campaign-press-kit-epk.md:63 (Edge Cases) — 'Credits not yet confirmed in 02 | The EPK cannot claim credits the credit graph has not confirmed - that would be manufacturing the exact thing we verify | Blocked on the unconfirmed credit, with a link to 02. **Or** included as **claimed**, visibly distinguished. Never silently rendered as verified'. 21.09-campaign-press-kit-epk.md:79 (States) — 'Blocked | Credits unconfirmed in 02 | Named blocker; the alternative is claiming what we cannot verify'. 21.09-campaign-press-kit-epk.md:116 (D-03) — 'Unverified credits are blocked or marked claimed, never rendered as verified'. Open Questions Q-01..Q-04 (lines 124-127) cover polymorphism, leak control, photo licences and provenance rendering — none covers this.",
+      "forcedInvention": "The implementer must invent (a) whether an unconfirmed credit halts EPK creation at all, (b) if both paths exist, who chooses between them and when, and (c) whether the `Blocked` state in the States table is reachable at all if 'included as claimed' is always available. These produce materially different products: one where an artist cannot ship an EPK until domain 02 confirms every credit, and one where they always can.",
+      "twoImplementerTest": "Implementer A builds the States table literally: unconfirmed credit => EPK enters `Blocked`, no share link. Implementer B builds the edge-case alternative: unconfirmed credit renders with a `claimed` badge and the EPK ships. Both satisfy D-03's invariant (never rendered as verified) and produce different products."
+    },
+    {
+      "findingId": "21-promotion-marketing#002",
+      "unit": "21-promotion-marketing (domain root)",
+      "severity": "warning",
+      "dimension": 3,
+      "claim": "`verified-at-timestamp` carries two incompatible definitions across the unit, and as a consequence nothing states what badge the EPK renders for a `Decayed` item. 21.07 owns the taxonomy and defines the middle badge as a mutable-source artefact (a playlist add), with link rot handled by a separate fourth state `Decayed`; the domain CX defines the same badge as a rotted-article state. The EPK renders only three badges.",
+      "evidence": "promotion-marketing-cx.md:184 (CX-05) — '**verified-at-timestamp** (was verified, link since changed)'. Against 21.07-coverage-clipping-log.md:143 (D-05) — 'verified (fixed article), verified-at-timestamp (mutable playlist add), claimed (typed / self-attested)' and 21.07-coverage-clipping-log.md:92 (States) — 'Decayed | Source link rotted | Verification lapses; the artist is told before the EPK quietly weakens'. The EPK's rendering vocabulary is exactly three: 21.09-campaign-press-kit-epk.md:43-44 — 'The EPK renders the strength 21.07 computed - `verified` / `verified-at-timestamp` / `claimed`'. CX-05's propagation rule assumes a downgrade target it never names: promotion-marketing-cx.md:211-212 — 'link rot detected (21.07) -> downgrade badge -> propagate to embedded EPKs -> re-render distinction'. Note the DQ-20.1 correction block at promotion-marketing-cx.md:191-201 corrects only the provenance clause of this paragraph, not the taxonomy gloss.",
+      "forcedInvention": "The implementer must invent the EPK rendering for a decayed article quote. 21.07 DT-03 says the verified-at-timestamp badge 'decays toward claimed' for a mutated playlist, which points at `claimed`; CX-05's definition of verified-at-timestamp as 'was verified, link since changed' points at the middle badge. Nothing states which a rotted article becomes on the EPK, and the EPK has no fourth badge for `Decayed`.",
+      "twoImplementerTest": "Implementer A (reading 21.07 as taxonomy owner per D-06) renders a decayed article quote as `claimed`. Implementer B (reading CX-05) renders it as `verified-at-timestamp`. The whole point of the feature is that these two labels make different public trust claims (21.07 D-01: 'Verified and claimed coverage are rendered **differently**, never identically')."
+    },
+    {
+      "findingId": "21-promotion-marketing#003",
+      "unit": "21.02-pitching-outreach",
+      "severity": "warning",
+      "dimension": 7,
+      "claim": "Two cross-cut rows in the 21.02 CX file state open product questions inside their Evidence column with no owner, no deferral target and no Cross-Cut Details section, and neither question appears in any Open Questions table in the sub-domain or its six children.",
+      "evidence": "21.02-pitching-outreach-cx.md:13 (CX-04) — 'a DSP pitch is confidential and its existence must not leak into press outreach ... Whether this needs a system-level guard or is merely a copy warning is unresolved.' 21.02-pitching-outreach-cx.md:14 (CX-05) — 'the competition for the exclusive is real (a radio-first strategy can cost a print exclusive) but whether the system should model that contention or leave it to the human is open.' The file's Cross-Cut Details section (lines 18-78) carries CX-01, CX-02 and CX-03 only, and unlike promotion-marketing-cx.md:334-338 there is no note deferring the missing syntheses. Checked against every Q table in the unit: 21.02-pitching-outreach-index.md Q-01..Q-04 (persona, sender identity, DSP mechanics, radio scope), 21.02.01 Q-01..Q-03, 21.02.02 Q-01..Q-03, 21.02.03 Q-01..Q-02, 21.02.04 Q-01..Q-03, 21.02.05 Q-01..Q-03, 21.02.06 Q-01..Q-05 — none covers either.",
+      "forcedInvention": "The implementer must invent whether composing a press pitch that references a live DSP editorial pitch is blocked, warned, or unremarked; and whether the system detects and surfaces contention between a radio first-play and a print exclusive for the same asset, or stays silent.",
+      "twoImplementerTest": "One implementer ships a hard confidentiality guard on the press composer; another ships help text. Both are consistent with everything written."
+    },
+    {
+      "findingId": "21-promotion-marketing#004",
+      "unit": "21.02-pitching-outreach",
+      "severity": "warning",
+      "dimension": 3,
+      "claim": "The two-embargoes-on-one-asset rule is under-determined to the point of self-conflict: the row says both embargoes bind, then says the earliest lift governs what is public — which is the weaker constraint winning, the opposite of the stricter-wins convention the domain uses elsewhere, and it leaves unstated whether the later embargo's block is released at the earlier lift.",
+      "evidence": "21.02.05-embargo-premiere-exclusives.md:64 (Edge Cases) — 'Two embargoes on one asset (print exclusive + radio first-play) | Not merged - separate objects, separate lift times, both binding | Both shown; the earliest lift governs what is actually public'. The sub-domain CX states only the modelling half and no governance rule: 21.02-pitching-outreach-cx.md:36 — 'Two embargoes on one asset (a print exclusive and a radio first-play) must be modelled as separate objects with separate lift times, not merged.' Compare the domain's convention for a competing-verdict case, promotion-marketing-cx.md:41 (CX-03) — 'the classifier is single source of truth and the stricter verdict wins'.",
+      "forcedInvention": "The implementer must invent what happens to the second embargo's block at the first lift: whether every bound surface unblocks at T1 (making the later embargo unenforceable, contradicting 'both binding'), or each embargo keeps blocking its own bound content until its own lift (contradicting 'the earliest lift governs what is actually public'). Nothing states whether the two embargoes bind disjoint content scopes or the same asset.",
+      "twoImplementerTest": "Implementer A unblocks all publication surfaces at the earliest lift; Implementer B keeps the radio surface blocked until the radio lift. The premiere partner's exclusivity value differs completely between the two."
+    },
+    {
+      "findingId": "21-promotion-marketing#005",
+      "unit": "21.03-pitch-targets-crm",
+      "severity": "warning",
+      "dimension": 5,
+      "claim": "The directory's two governing thresholds — small-n statistical suppression and confidence decay to `Stale` — are stated as rules with no value and no tracked question for the value, in a unit where one of them is explicitly a re-identification control.",
+      "evidence": "21.03.01-media-target-directory.md:60 (Edge Cases) — 'Small-n response rate (target received 3 pitches total) | The statistic is noise and, worse, re-identifiable | Suppressed below a threshold.' 21.03.01-media-target-directory.md:96 (D-02) — 'Small-n statistics are suppressed | Below threshold a response rate is both noise and re-identifiable.' 21.03.01-media-target-directory.md:71 (States) — 'Stale | Confidence decayed past threshold | Explicitly marked'. The re-identification risk is quantified nowhere but described concretely at 21.03-pitch-targets-crm-cx.md:34 — 'if a curator received 3 pitches this month, a 33% response rate identifies a specific artist's outcome to anyone who knows two of them'. Open questions in the unit are Q-01 cold start, Q-02 publish-per-target-or-band, Q-03 contributed-contact verification, Q-04 band CRM ownership (21.03-pitch-targets-crm-index.md:67-70) plus 21.03.01 Q-01..Q-03 — none sets or defers either number.",
+      "forcedInvention": "The implementer must invent the suppression n and the decay function plus its staleness cut-off. Both are user-visible product behaviour: the first decides when a named individual's performance statistic becomes publishable, the second decides when a contact is labelled stale against a scarce pitch budget.",
+      "twoImplementerTest": "One implementer suppresses below n=5, another below n=20; a curator with 8 pitches is either publicly rated or not. The tree's own standard for this is 21.02.06, which states every number as a design default with a tracked tuning question (21.02.06 Behavior lines 33-69 and Q-05)."
+    },
+    {
+      "findingId": "21-promotion-marketing#006",
+      "unit": "21.01-release-campaign-planner",
+      "severity": "warning",
+      "dimension": 5,
+      "claim": "The asset gate's `At risk` escalation threshold is written as a literal unfilled variable with no value, no default and no deferral marker — unlike the identical construct elsewhere in the tree, which is explicitly tracked.",
+      "evidence": "21.01.02-asset-readiness-gate.md:69 (States) — 'At risk | Red or not-started within N days of a hard deadline | Escalated in the roll-up and to the Musician'. The related escalation behaviour is asserted without a schedule at 21.01.01-backward-planned-campaign-grid.md:48 — 'Hard-deadline rows begin emitting escalating reminders as they approach.' Contrast the tree's own handling of the same construct at 21.03.03-pitch-tracking-response-log.md:74 — 'Silent | N days elapsed with no recorded outcome (N is a threshold set at `/write-be-spec`; `[PENDING - /write-be-spec]` for the exact value)'. 21.01.02's open questions are Q-01 (resolved, clearance boundary) and Q-02 (which specs are machine-checkable); neither covers N.",
+      "forcedInvention": "The implementer must invent when an asset row escalates. This is product behaviour on the sub-domain's stated purpose — 21.01.02 Overview line 13: 'It converts a calendar of dates into a calendar of *risks*' — and the risk roll-up's contents depend on it ('2 assets red, 1 blocking a hard deadline in 6 days', line 19).",
+      "twoImplementerTest": "N=3 and N=21 produce a different product: the first escalates when nothing can be done, the second cries wolf on every row for three weeks."
+    },
+    {
+      "findingId": "21-promotion-marketing#007",
+      "unit": "21.04-smart-links-presave-attribution",
+      "severity": "warning",
+      "dimension": 7,
+      "claim": "Two live open questions in this unit are deferred to `MoSCoW`, a stage that has already run and been recorded as closed elsewhere in the same tree. Neither row was re-targeted or resolved, so as written they are routed to a stage that will never run again — the only two rows in the whole domain in that position.",
+      "evidence": "21.04-smart-links-presave-attribution-index.md:70 (Q-02) — 'Is this sub-domain the **beachhead**? ... It is a plausible wedge and a plausible waste. | User | MoSCoW'. 21.04.01-smart-link-builder.md:128 (Q-02) — 'Is this the beachhead? See Q-02 on the sub-domain index. | User | MoSCoW'. The stage is recorded as discharged at promotion-marketing-index.md:167 (Q-09) — '**RESOLVED — the MoSCoW pass ran and confirmed the row's own suspicion** ... **D-31**'s release split puts 21 outside both windows ... so it is phase-2+, and the beachhead is decided and is not this domain.' Every other discharged row in this domain carries an explicit re-target or resolution annotation (e.g. 21.02.04 Q-01 'RESOLVED — the MoSCoW pass ran and kept it, at `Could`'; 21.07 Q-01 '**Re-targeted**: the MoSCoW pass ran ... so the deferral is discharged without an answer').",
+      "twoImplementerTest": "N/A — this is a tracking-integrity failure rather than a behaviour fork. Reported because rubric dimension 7 requires each open question to carry a live route to a decision, and a completed stage is not one. The substantive answer appears to exist (domain Q-09 / D-31) and has simply not been propagated to these two rows."
+    },
+    {
+      "findingId": "21-promotion-marketing#008",
+      "unit": "21.08-event-tour-marketing",
+      "severity": "warning",
+      "dimension": 3,
+      "claim": "Within one file, the soft-seat detector's gating condition is stated two incompatible ways: the States table and the edge-case table gate on 'off-platform ticketing' (no data, no loop), while the file's own resolved Q-02 establishes that most dates are off-platform and are nonetheless assessable from ingested or attested counts. The state row was never corrected in place.",
+      "evidence": "21.08.02-geo-date-promotion-soft-seat.md:77 (States) — 'Not assessable | Off-platform ticketing | No data, no loop - stated, not faked'. 21.08.02-geo-date-promotion-soft-seat.md:59 (Edge Cases) — 'Ticketing is off-platform | No sales data, no detection, no loop | The loop simply does not exist for that date.' Against the same file, 21.08.02-geo-date-promotion-soft-seat.md:109 (Q-02, RESOLVED) — 'Most shows on the platform - especially early on, and possibly forever - will be sold by DICE, Eventbrite, Ticketmaster ... detection's normal input is an ingested or attested count of stated provenance and freshness ... rather than a WeJammin sale. The \"Ticketing is off-platform -> no data, no loop\" edge case above is the *no-connector, no-attestation* case, not every off-platform date.'",
+      "forcedInvention": "The implementer must decide the actual gate for the `Not assessable` state — ticketing venue (as the trigger column says) or absence of any ingested/attested count (as Q-02 says). Under the first reading the feature is unavailable for the majority of dates; under the second it is available for nearly all of them.",
+      "twoImplementerTest": "Implementer A keys the state on 'is this ticketed by WeJammin', Implementer B on 'do we hold a count'. Note the tree's own convention for exactly this situation is an in-place correction marker (21.07-coverage-clipping-log.md:98-116 authors the convention; promotion-marketing-cx.md:191 and :296 apply it); it was not applied here."
+    },
+    {
+      "findingId": "21-promotion-marketing#009",
+      "unit": "21.08-event-tour-marketing",
+      "severity": "warning",
+      "dimension": 3,
+      "claim": "The sub-domain index and CX assert the closed measurement loop as an unqualified fact and as the sub-domain's reason to exist, while the leaf that owns it has since resolved that the loop is rare and that the feature must be specified degraded-first. The consequence was never propagated up.",
+      "evidence": "21.08-event-tour-marketing-index.md:12 (Overview) — 'the attribution that - uniquely in this platform - actually works, because we own the transaction'; :18 — 'a closed loop that the release-cycle features cannot close'. 21.08-event-tour-marketing-cx.md:10 (CX-01) — 'This is the only closed marketing loop in the platform. Ticket sales are observable because 19 owns the transaction, so \"did the boost work?\" has a real answer here'. Against 21.08.03-ticket-sale-attribution.md:108 (Q-01, RESOLVED) — 'Most shows ... WeJammin does not own that rail and mostly will not.\" That makes **D-04 the default path rather than the exception** ... 19.07's ingestion supplies *counts* ... never a per-purchase source, so it can never restore the join key. The closed loop is real where it exists and is rare; this feature must therefore be specified degraded-first, with the true-attribution case as the better sub-case.'",
+      "forcedInvention": "A spec writer taking the index and CX at face value builds the closed loop as the primary path and the click-only case as an exception; the resolved Q-01 requires the inverse. Nothing in the index or CX signals which framing governs, and the parent files carry no correction marker.",
+      "twoImplementerTest": "The default UI, the empty states and the headline metric (cost per ticket sold vs clicks per date) differ between the two framings for the majority of dates."
+    },
+    {
+      "findingId": "21-promotion-marketing#010",
+      "unit": "21.05-paid-promotion",
+      "severity": "warning",
+      "dimension": 5,
+      "claim": "The seeding verification window that gates escrow release is written as an unfilled variable with no value and no tracked question for the value, even though the decision it belongs to makes it an escrow condition rather than a display detail.",
+      "evidence": "21.05.02-creator-seeding.md:99 (D-03) — 'Verification persists past payment (\"still up after N days\") | Post-deletion is the category's classic fraud; a payout-time checkbox catches none of it.' Same construct at :51 (Happy Path) — 'Platform verifies: posted, disclosed, still up after N days' and :58 (Edge Cases) — '\"still up after N days\" as an escrow condition, not a checkbox at payout'. The unit's open questions are 21.05.02 Q-01 (resolved, Won't), Q-02 (resolved, Content ID whitelisting) and Q-03, which covers only the observation *path* — 'What is undecided is the observation path for content the platform does not host - third-party API read, creator attestation, or evidence upload' (:108) — not the duration. Context: this feature is ratified `Won't` (21.05-paid-promotion-index.md:71), which lowers the practical stakes but does not resolve the number for the disclosure cross-cut that inherits the verification obligation.",
+      "forcedInvention": "The implementer must invent how long a seeded post must stay up before escrow releases. That number is the entire anti-fraud control described in D-03."
+    }
+  ],
+  "refutedCandidates": [
+    {
+      "candidate": "21.02.02 and 21.02.03 States tables both read 'Silent | N days' with no value.",
+      "refutation": "The pitch outcome lifecycle is owned by 21.03.03, which tracks the value explicitly: 'Silent | N days elapsed with no recorded outcome (N is a threshold set at `/write-be-spec`; `[PENDING - /write-be-spec]` for the exact value)' (21.03.03:74). Cross-reference to the owning unit carries the detail."
+    },
+    {
+      "candidate": "The 21.04 CX map lists CX-04 with no Cross-Cut Details section, and CX-03 synthesis Q5 points at it for the post-window-click behaviour.",
+      "refutation": "The behaviour is specified in the owning feature: 21.04.03 States — 'Out of window | Clicks after close | Recorded separately; not folded into campaign figures' (21.04.03:71), and the window length is tracked at 21.04.04 Q-02 (owner Agent, /create-prd-compile)."
+    },
+    {
+      "candidate": "promotion-marketing-cx.md defers the CX-09 and CX-10 five-question syntheses 'to sub-domain drilling' with no owner.",
+      "refutation": "Both are explicitly identified as facets of mechanisms specified elsewhere ('facets of the same 21.01.04 date-change cascade and the 21.01.02 asset pack respectively', :334-338), and both mechanisms are fully specified — 21.01.03 States carries Stranded/Published, 21.01.04 carries the recomputable/escaped/externally-committed classification, 21.09 Edge Cases carries the pinned-snapshot rule. No behaviour is missing."
+    },
+    {
+      "candidate": "21.03 CX lists CX-04 (Pitch Tracking <-> Private CRM) in the map with no details section.",
+      "refutation": "The relationship is fully specified in the owning features (21.03.03 Happy Path step 2, 21.03.02 Happy Path steps 2-3, D-01 in both) and the map row embeds no unresolved question, unlike 21.02 CX-04/CX-05."
+    },
+    {
+      "candidate": "21.02.06 Cross-Cut Notes claim the caps constrain 21.02.01 and 21.02.04, while 21.02 CX R-02 says rate limits have no interaction with DSP editorial ('Applying our limits here would be theatre').",
+      "refutation": "21.02.06 is the owning [DEEP] feature and its Behavior section enumerates the channel budgets exactly — 'counted **per channel** (playlist, press/blog, radio are separate budgets)' (:33-35) — with DSP absent. The parenthetical in the Cross-Cut Notes is loose prose against an authoritative enumeration in the same file."
+    },
+    {
+      "candidate": "promotion-marketing-cx.md CX-03 synthesis Q2 lists PAYOLA_DISCLOSURE_REQUIRED as a block code.",
+      "refutation": "Clerical. The owning feature's classification table is unambiguous (21.05.03:37-44: PAYOLA_DISCLOSURE_REQUIRED is the allow-with-disclosure verdict). No implementer builds from the CX summary over the owner's table."
+    },
+    {
+      "candidate": "21.05.03 D-01 states 'Pay-for-consideration only; never pay-for-placement' while D-06 default-denies consideration.",
+      "refutation": "Explicitly reconciled in the same file: 'Until Q-01 is resolved by the owner, the classifier holds it as blocked-with-explanation, never silently allows it' (:43), with Q-01 owned by User at /create-prd. The enforced default is stated, complete and unambiguous."
+    },
+    {
+      "candidate": "21.05 CX-03 embeds an unresolved question (whether the platform models the ads-vs-seeding budget trade-off) with no owner, and has no details section.",
+      "refutation": "Moot: 21.05.02 Creator Seeding was ratified `Won't` by the MoSCoW pass (21.05-paid-promotion-index.md:71), so there is no seeding spend for ad spend to contend with. No behaviour is left undecided."
+    },
+    {
+      "candidate": "21.05 CX-01 synthesis Q5 leaves 'whether we re-evaluate running campaigns against changed rules' unresolved.",
+      "refutation": "Resolved in the owning feature: 21.05.03 D-08 makes verdicts terms-version-bound and re-classification unconditional, and the residual policy branch is tracked as 21.05.03 Q-02 (owner User, /create-prd) — 'The mechanism ... is defined and unconditional; only this policy branch is open.'"
+    },
+    {
+      "candidate": "Several edge-case rows across 21.01, 21.02 and 21.03 carry `[PENDING - /ideate-discover Step 5 deepening]` although Step 5 has run.",
+      "refutation": "Each checked row cross-references a live Open Question with an owner and a re-targeted stage (21.01.01 stale-rule row -> 21.01 Q-01 User//create-prd; 21.02.02 payment row -> its Q-01 User//create-prd; 21.02.02 purge row -> Q-03; 21.03.01 contributed-contact row -> Q-03 Agent//create-prd-security; 21.04.02 minor row -> /create-prd-security). Tracking is well-formed; only the inline marker text is stale."
+    },
+    {
+      "candidate": "21.09 D-04 cites '21.04.04 D-01' while the edge-case row for the same rule cites '21.04.04 DT-01'.",
+      "refutation": "Both citations are correct and point at the same rule stated twice in 21.04.04 (DT-01 and D-01 both say retirement is a behaviour choice, never a 404). Clerical, not build-changing."
+    }
+  ]
+}

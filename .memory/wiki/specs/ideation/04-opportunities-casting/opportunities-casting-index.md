@@ -43,7 +43,7 @@ The demand side of work — posted gigs, dep calls, auditions, band vacancies, c
 > - `sub-domain` — a grouping with 2+ interacting capabilities (folder with index + CX)
 > - `feature` — a leaf node describing a single capability (.md file)
 
-**Totals**: 5 sub-domains · 22 leaf feature files · 59 Deep Think hypotheses logged.
+**Totals**: 5 sub-domains · 23 leaf feature files · 156 Deep Think hypotheses logged.
 
 ## Role Matrix
 
@@ -61,10 +61,9 @@ The demand side of work — posted gigs, dep calls, auditions, band vacancies, c
 | 04.06 Band & Member Wanted | ✅ Full — the only real user | ✅ Full — project bands; member-who-also-engineers | ❌ None — an Operator in a band is being a Musician | 👁️ Read-only — the likeliest Fan→Musician conversion path |
 | 04.07 Open Calls | ✅ Full — the applicant, usually via a Band entity | 👁️ Read-only — appears as a credit on submitting acts | ✅ Full — the curator (festival, showcase, competition) | 👁️ Read-only — **explicitly excluded from voting** (04.07 D-03) |
 
-> **Persona gaps found during drilling** — see Q-01 and Q-02. Two populations in this domain are not
-> covered by the 4 personas: the **function/private-hire buyer** (who posts the gigs this domain
-> calls its clearest displacement target) and **crew** (a lighting tech is not a Musician). Same
-> shape as the dealer-persona gap already open in `meta/personas.md` Q-01.
+> **Non-persona roles resolved by D-76.** The function/private-hire buyer is a bounded buyer
+> account/counterparty role, and crew is a bounded crew account/counterparty role. Neither becomes
+> a fifth persona or a new Role Matrix column.
 
 ## Decision Log
 
@@ -84,13 +83,32 @@ The demand side of work — posted gigs, dep calls, auditions, band vacancies, c
 |---|----------|-------|-------------|
 | Q-01 | Which candidate children are sub-domains vs features? | Agent | ✅ **RESOLVED** — 5 sub-domains, 2 domain-level features, 22 leaf features. See Children table and D-02. |
 | Q-02 | Are any candidate children actually cross-cuts? | Agent | ✅ **RESOLVED** — 6 cross-cuts routed out (availability, notification delivery, reputation, verified-credit-as-evidence, pitchable asset packet, split-capture trigger). Candidate 12 (Song Catalog & Pitch One-Sheet) was entirely a cross-cut. |
-| Q-03 | **The function/private-hire buyer** (wedding, corporate) posts the gigs this domain calls its clearest displacement target, but is not a Musician, Producer, Operator or Fan. Out of scope, civilian/Fan-tier account, or a 5th persona? | User | `/ideate-validate` |
-| Q-04 | **Crew are not covered by the 4 personas.** A lighting tech is not a Musician. Same shape as `meta/personas.md` Q-01 (dealer persona). | User | `/ideate-validate` |
-| Q-05 | **Is "no applicant-side fees, ever" a permanent commitment (D-03)?** It is encoded structurally (unrepresentable, not prohibited), which makes reversal expensive. It forecloses the revenue line Sonicbids used, from the users least able to refuse. | User | `/ideate-validate` |
-| Q-06 | **Cold-start seeding is this domain's biggest risk.** A board's entire value is other people's supply, and an empty board teaches users the product is dead. Where does the first supply come from? | User | `/ideate-validate` |
-| Q-07 | **Does matching rank by fit or by quality?** Ranking humans by fitness for paid work is the domain's sharpest fairness hazard, and it bites hardest in the triage queue where the ranking becomes a decision. | User | `/ideate-validate` |
-| Q-08 | **The evidence/blind-review contradiction (04.03 Q-01).** Evidence-backed applications and anonymised review negate each other; both are legitimate. Retained unresolved rather than silently dropping either. | User | `/ideate-validate` |
-| Q-09 | **Is acceptance a contract (04.04.03 Q-01)?** Binding means penalties and disputes; non-binding is an expensive fiction against the Operator's perishable inventory. | User | `/ideate-validate` |
-| Q-10 | **Is the close-out obligation enforced or encouraged (04.05 Q-01)?** A gate has teeth and costs supply; a nag is ignored by the posters who ghost most. | User | `/ideate-validate` |
-| Q-11 | Is the board **public/SEO-indexable** or login-walled? Public aids cold start and makes the Fan read-only lens load-bearing; it also exposes the pool to scraping. | User | `/ideate-validate` |
+| Q-03 | ~~Is the function/private-hire buyer out of scope, civilian/Fan-tier, or a fifth persona?~~ **RESOLVED — D-76.** A wedding or corporate buyer is a bounded buyer account/counterparty role for the live-opportunity request, booking, payment, and authorised communication workflow. It is not a Fan-tier substitute and adds no fifth persona or Role Matrix column. | User | ✅ Owner ratification A3, 2026-08-02 |
+| Q-04 | ~~Are crew a persona gap?~~ **RESOLVED — D-76.** Crew is a bounded account/counterparty role for its named crew, hire, roster, credential, availability, and communication workflows. A lighting technician need not impersonate a Musician persona to use those routes. | User | ✅ Owner ratification A3, 2026-08-02 |
+| Q-05 | **[OWNER]** **Is "no applicant-side fees, ever" a permanent commitment (D-03)?** It is encoded structurally (unrepresentable, not prohibited), which makes reversal expensive. It forecloses the revenue line Sonicbids used, from the users least able to refuse. Canonical at `04.01.03` Q-01, which records it as "a product-values decision, not an agent call"; 04.01.03 D-10 (no admin override) removed the escape hatch and 04.07 DT-01 is where it costs real money. No later pipeline stage can take this call. Re-pointed from the completed `/ideate-validate`. | User | `/create-prd` |
+| Q-06 | **[OWNER]** **Cold-start seeding is this domain's biggest risk.** A board's entire value is other people's supply, and an empty board teaches users the product is dead. Where does the first supply come from — import, partnership, manual seeding, or a narrow geographic/scene beachhead? `04.02.01` D-16 specifies the board's *behaviour* under a sparse pool and holds under any answer; `04.02.01` Q-02 records that the supply question "is a go-to-market decision and cannot be answered by a spec". Re-pointed from the completed `/ideate-validate`. | User | `/create-prd` |
+| Q-07 | **[OWNER]** **Does matching rank by fit or by quality?** Ranking humans by fitness for paid work is the domain's sharpest fairness hazard, and it bites hardest in the triage queue where the ranking becomes a decision. `04.02.02` Q-03 calls it "a product-values decision"; `04.04.01` Q-03 sharpens it at Step 5 — DT-09 showed every other volume lever is mechanical, so ranking is **the only remaining lever at scale** and declining it is a real cost rather than a free abstention. Re-pointed from the completed `/ideate-validate`. | User | `/create-prd` |
+| Q-08 | **[OWNER]** **The evidence/blind-review contradiction (04.03 Q-01).** Evidence-backed applications and anonymised review negate each other; both are legitimate. Retained unresolved rather than silently dropping either. `04.03` Q-01 enumerates the three options (blind disables evidence; evidence reduced to unattributable aggregates; blind scoped to types where evidence does not matter) and records it as "a product decision with a values component". Re-pointed from the completed `/ideate-validate`. | User | `/create-prd` |
+| Q-09 | **[OWNER]** **Is acceptance a contract (04.04.03 Q-01)?** Binding means penalties and disputes; non-binding is an expensive fiction against the Operator's perishable inventory. **Widened at Step 5 and the widening is the point**: 04.04.03 Q-01 records that the poster's cancellation is at least as common and lands harder, so a design where acceptance binds the candidate and nothing binds the poster is the platform taking the poster's side. Re-pointed from the completed `/ideate-validate`. | User | `/create-prd` |
+| Q-10 | **[OWNER]** **Is the close-out obligation enforced or encouraged (04.05 Q-01)?** A gate has teeth and costs supply; a nag is ignored by the posters who ghost most. **Sharpened at Step 5**: 04.05.01 Q-01 moves the lever off *closing* — a close gate manufactures the debt it punishes (DT-04) and catches only the conscientious (DT-03) — onto **the next post**, leaving one values call, block or warn, with a real cost either way. Re-pointed from the completed `/ideate-validate`. | User | `/create-prd` |
+| Q-11 | **[OWNER]** Is the board **public/SEO-indexable** or login-walled? Public aids cold start and makes the Fan read-only lens load-bearing; it also exposes the pool to scraping — 04.02.04 DT-09 adds that a public board turns the alert pipe into a free real-time mirroring firehose. `04.01.03` D-14 fixes only the *projection* (the public/logged-out board projection is the Fan projection; compensation never renders publicly) and states it does so "without pre-empting domain Q-11". Re-pointed from the completed `/ideate-validate`. | User | `/create-prd` |
 | Q-12 | **The sweep's blind spot is informative.** None of the 14 candidates connected casting to the credit graph — the domain's single most thesis-aligned feature (04.03.02) was absent. A category sweep finds category features; the differentiator is by definition not in the category yet. Worth testing whether other domains share this blind spot. | Agent | `/audit-ambiguity ideation` |
+
+
+<!-- spec-graph: auto-generated -->
+## Related Specs
+
+### Constrained by
+- [[decisions.md#d-03|D-03]]
+- [[decisions.md#d-76|D-76]]
+- [[decisions.md#d-01|D-01]]
+- [[decisions.md#d-16|D-16]]
+- [[decisions.md#d-02|D-02]]
+- [[decisions.md#d-04|D-04]]
+- [[decisions.md#d-05|D-05]]
+- [[decisions.md#d-18|D-18]]
+- [[decisions.md#d-06|D-06]]
+- [[decisions.md#d-07|D-07]]
+- [[decisions.md#d-10|D-10]]
+- [[decisions.md#d-14|D-14]]
+- [[decisions.md#d-71|D-71]]

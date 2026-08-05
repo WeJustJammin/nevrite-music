@@ -1,0 +1,119 @@
+{
+  "reportKind": "ambiguity-audit-raw",
+  "run": 7,
+  "domain": "meta",
+  "unitsAudited": 1,
+  "filesRead": 6,
+  "coverageNote": "All six current Markdown sources in .memory/wiki/specs/ideation/meta/ were audited as one meta unit through implementer simulation, rubric scoring, and devil's-advocate probing. Feature Completeness and Structural Compliance are not applicable to this meta-only source scope.",
+  "applicableCheckpoints": 6,
+  "findings": [
+    {
+      "findingId": "R7-META-001",
+      "unit": "meta",
+      "severity": "high",
+      "dimension": 7,
+      "claim": "Meta open-question records use an owner and a deferred stage or escalation, but omit the required deadline and the decision each question blocks.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/meta/competitive-landscape.md",
+          "line": 102,
+          "excerpt": "Q-01 asks which competitor to beat first and records only `User` and `/create-prd`."
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/meta/problem-statement.md",
+          "line": 111,
+          "excerpt": "Q-01 records the owner as `User` and the deferral as `/create-prd`, with no deadline or blocked decision."
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/meta/personas.md",
+          "line": 167,
+          "excerpt": "Q-01 about the dealer/plugin-developer has `User` and `/create-prd` only."
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/meta/constraints.md",
+          "line": 342,
+          "excerpt": "The Desktop reopen evidence is explicitly described as `Follow-on, unassigned`."
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/meta/counterparties.md",
+          "line": 121,
+          "excerpt": "The professional dealer/plugin-developer remains open with an owner but no deadline or decision-block record."
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/meta/cross-cut-emergent-capabilities.md",
+          "line": 259,
+          "excerpt": "The 07/08 merge candidate is escalated for a keep-or-fold decision without an owner or deadline."
+        }
+      ],
+      "forcedInvention": "An implementer must invent resolution timing and decide which architecture, authority, or delivery work may proceed while these questions remain unresolved.",
+      "failureScenario": "Different teams independently keep or fold domain 08, model non-persona actors, or design a prohibited desktop surface without an agreed resolution point, producing incompatible contracts and authority boundaries."
+    },
+    {
+      "findingId": "R7-META-002",
+      "unit": "meta",
+      "severity": "high",
+      "dimension": 4,
+      "claim": "The budget and performance axes lack the rubric-required specific values or an explicit `not applicable` value.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/meta/constraints.md",
+          "line": 160,
+          "excerpt": "Budget posture is `Lean — minimize monthly spend.`"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/meta/constraints.md",
+          "line": 168,
+          "excerpt": "The source states there is `no fixed $/month cap set.`"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/meta/constraints.md",
+          "line": 278,
+          "excerpt": "Latency says `real numbers set at /create-prd-compile.`"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/meta/constraints.md",
+          "line": 281,
+          "excerpt": "Availability is described as an aspiration, `not a locked budget.`"
+        }
+      ],
+      "forcedInvention": "An implementer must choose an acceptable monthly operating-cost ceiling and latency and availability limits when selecting media, data, queueing, and edge-runtime designs.",
+      "failureScenario": "One implementation introduces a fixed-cost or low-latency dependency that another rejects as incompatible with the solo, lean launch, leaving no authoritative way to arbitrate the tradeoff."
+    },
+    {
+      "findingId": "R7-META-003",
+      "unit": "meta",
+      "severity": "medium",
+      "dimension": 5,
+      "claim": "Declared success metrics omit a numeric target, unit, and timeframe.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/meta/personas.md",
+          "line": 52,
+          "excerpt": "Musician success says `time-to-book a session drops; credits are cited rather than claimed.`"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/meta/personas.md",
+          "line": 104,
+          "excerpt": "Operator success says `fewer no-shows; advancing takes minutes` without a threshold or period."
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/meta/counterparties.md",
+          "line": 50,
+          "excerpt": "Professional licence-buyer success names brief-to-licence time and clearance proportion without targets."
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/meta/counterparties.md",
+          "line": 78,
+          "excerpt": "Creator success names claims per upload and time-to-release without targets."
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/meta/cross-cut-emergent-capabilities.md",
+          "line": 211,
+          "excerpt": "Cross-domain handoff telemetry is called the key metric but has no numeric success threshold or timeframe."
+        }
+      ],
+      "forcedInvention": "Implementers and product operators must invent what booking speed, clearance rate, claim rate, release time, and cross-domain handoff outcome count as successful.",
+      "failureScenario": "Teams ship the same flows but declare opposite outcomes successful, so launch acceptance and subsequent prioritisation cannot be determined from the source truth."
+    }
+  ]
+}

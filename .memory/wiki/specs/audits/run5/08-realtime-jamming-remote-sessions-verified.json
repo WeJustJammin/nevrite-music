@@ -1,0 +1,145 @@
+{
+  "domain": "08-realtime-jamming-remote-sessions",
+  "verdicts": [
+    {
+      "findingId": "08-realtime-jamming-remote-sessions#001",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "Quotes exist (realtime-jamming-remote-sessions-index.md:45-46 'Overdub needs file storage and background jobs ... And it carries the provenance (08.05.04) intact.'; D-05 row 'carries the provenance intact'), but the claim that this asserts IDENTICAL CERTAINTY is a reading the text does not compel — in a decision-context cell about stack survivability, 'carries the provenance intact' most naturally means the provenance FEATURE ships with overdub, which is exactly domain D-04's point ('08.05.04 ... ships with any session mechanism, including Overdub'). The graded model is not absent from the index either: the same file's Q-03 states 'the real trade is provenance grade against infrastructure', so a reader of the domain index encounters the grade concept in the index itself. The owning feature file defines the grade as a first-class field (08.05.04-session-attendance-provenance.md:50 'Provenance grade | A live-room segment is observed-playing; an overdub is delivered-by by default'), and the domain CX marks the correction loudly rather than silently (realtime-jamming-remote-sessions-cx.md:23 CX-07). A contradiction flagged in writing by two sibling files is not a silent one, and no implementer building the attendance record works from a rationale paragraph in the domain index instead of 08.05.04's Behavior table."
+    },
+    {
+      "findingId": "08-realtime-jamming-remote-sessions#002",
+      "upheld": true,
+      "finalSeverity": "warning",
+      "refutationReason": "not-refuted",
+      "reason": "Verified exactly. realtime-jamming-remote-sessions-index.md:93 gives 08.03 Musician '👁️ Read-only'; 08.03-remote-monitoring-session-attendance-index.md:41-42 give Musician '✅ Full' on 08.03.03 and '⚙️ Config' on 08.03.04, and 08.03.03-live-listener-feedback-notes.md:21 confirms the write ('Can leave notes as a listener'). I independently confirmed the max-rollup convention holds on every other cell of the domain matrix: 08.01 children Full/Full/Read-only → Full; 08.02 Full/Read-only/Full → Full; 08.04 Read-only/Full/Full → Full; 08.05 Full/Read-only/Full/Full → Full; and Operator rolls up as max on all five rows (Config in each case). The 08.03 Musician cell is the sole row that is neither max nor min, and no precedence rule is stated anywhere in the tree to tell a reader which table wins. Two normative permission tables disagree with nothing marking the divergence. Warning rather than blocking: the affected children are Coulds, and the sub-domain matrix is the more specific of the two."
+    },
+    {
+      "findingId": "08-realtime-jamming-remote-sessions#003",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "Quotes verified (08.05.01-local-first-multitrack-capture.md:336 'indefinite, resumes on next open, no dead-letter'; 08.07-overdub-mode.md:248 'Persists until the request expires.'; DT-13 at :321 'time-boxed only by the request's expiry'). But 08.07's own edge table settles the operative behaviour two rows below the quoted one: 'Player delivers after the deadline | Accepted and aligned. **08 does not enforce commercial deadlines** — it records the timestamps and 05 decides what a late delivery costs. A platform that silently bins a late take has destroyed work to enforce someone else's policy.' — and the adjacent row defines request expiry AS the deadline passing ('Deadline passes → request state expired'). The 'Player uploads nothing' row likewise promises a 'Persistent prompt on return' with no expiry qualification, and D-07 makes deadline consequence 05's, never 08's. The queue-drop-at-expiry reading is therefore defeated by three statements in the same file; the only self-consistent reading is that resumption is generous and unbounded per D-03, which is what the sentence's own framing ('Resumption is not time-boxed short — a take abandoned at 90% is how work is lost') argues for. Loose citation of D-03, not divergent retention behaviour."
+    },
+    {
+      "findingId": "08-realtime-jamming-remote-sessions#004",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "The row exists verbatim at 08.01.03-shared-clock-click-countin.md:56. But the same file decides it: D-02 (08.01.03-shared-clock-click-countin.md:91) — 'The timing model cannot change mid-take | Shifting the timing reference while people play is destructive to the take and to the players' — and the edge row two lines above the flagged one, 'Timing model changed mid-take | Blocked. Changing the timing reference while people are playing is destructive. It is a prompt for the next take, never a live action.' Re-aligning the click live IS shifting the timing reference while people play, so hold-and-drift is the only reading consistent with the file's own decision log; the auditor's own failure scenario concedes live re-alignment is 'the exact class of damage 08.01.03 D-02 forbids', which is the refutation, not the harm. Additionally the feature is placed WONT by MoSCoW (moscow-ledger.md:732, under '## WONT (53)' at :713) and ideation-index.md:210 D-24 ratifies that 'Coulds (201) and Won'ts (53) correctly remain [SURFACE] — out of Step 5 scope', so the residual pending marker is a tracked state, not an oversight."
+    },
+    {
+      "findingId": "08-realtime-jamming-remote-sessions#005",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "Both quotes verified (08.01-latency-budget-playability-cx.md:36; 08.01.02-playability-verdict-tempo-ceiling.md:65). The domain states the governing rule absolutely and repeatedly, which converges the open half: 08.03-remote-monitoring-session-attendance-cx.md:59 CX-02 Q4 — 'A note during a live take must not interrupt the performer. Anything that pops up in front of someone who is playing is a defect wearing a feature's clothes'; 08.03.03-live-listener-feedback-notes.md:39-40 and D-02 repeat it; 08.01.03 D-02 forbids destructive mid-take actions on the same grounds. The auditor's own failure scenario states the rule is 'absolute' elsewhere — a rule stated absolutely in three files is what a competent implementer applies, and it yields exactly one answer (notify the Producer, never modal a performer mid-take). Also: 08.01.02 is COULD (moscow-ledger.md:559 under '## COULD (201)' at :507), and ideation-index.md:210 D-24 ratifies Coulds remain [SURFACE], out of Step 5 scope."
+    },
+    {
+      "findingId": "08-realtime-jamming-remote-sessions#006",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "Both rows exist as quoted (08.01-latency-budget-playability-index.md:57; 08.01.02-playability-verdict-tempo-ceiling.md:104), and MoSCoW has indeed run. But MoSCoW answered both questions rather than skipping them: moscow-ledger.md:559 places 08.01.02 in COULD with a rationale that engages the exact question asked — 'The BPM-ceiling framing is the domain's most differentiating cheap idea (DT-01, nobody in the category does it), but it gates rooms that may not ship. If Overdub is the shipping path, the verdict risks being a sophisticated...' — and moscow-ledger.md:732 places the room mechanism (08.01.03 Shared Clock) in WONT for the same reason. 'Is it worth building at all' was therefore answered by placement plus reasoning: keep at Could, cut the rooms' clock. The stale 'Deferred To: MoSCoW' label is bookkeeping drift, not an unowned decision — the label names the very document that contains the answer, one hop away. No invention is forced."
+    },
+    {
+      "findingId": "08-realtime-jamming-remote-sessions#007",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "tracked-deferral",
+      "reason": "Row verified at 08.01.01-latency-measurement-decomposition.md:56. 08.01.01 is placed COULD (moscow-ledger.md:558, under '## COULD (201)' at :507), and ideation-index.md:210 D-24 ratifies that 'Coulds (201) and Won'ts (53) correctly remain [SURFACE] — out of Step 5 scope' — so the pending marker records a deliberate, map-level scope decision rather than an oversight, and the domain's own files cite D-24 for exactly this purpose (08.03.04-monitoring-trust-playback-context.md:110). On substance the file already commits to the variance half: 'Measurement is unstable — jitter so high the number is meaningless | System reports a range and a confidence, not a point value. A wide range is itself the finding' (:54), plus D-02's fail-closed rule — so a point-value cherry-pick is already excluded. Rate-limiting an abuse vector is an implementation control belonging to /create-prd-security, not a vision-layer product decision."
+    },
+    {
+      "findingId": "08-realtime-jamming-remote-sessions#008",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "tracked-deferral",
+      "reason": "Quotes verified (08.02.02-route-aware-radius-correction.md:26, :42-43, :68-70). This is the opposite of a silent gap: the Behavior section is explicitly labelled '[PARTIAL] — the arbitration rule is the substance of this feature and it is genuinely undecided', and the four missing parameters are enumerated under an explicit marker. Self-declared incompleteness with the exact list of what is missing is tracking, not ambiguity. Decisively, 08.02.02 is placed WONT (moscow-ledger.md:733, under '## WONT (53)' at :713), and ideation-index.md:210 D-24 ratifies that Won'ts 'correctly remain [SURFACE] — out of Step 5 scope'. No implementer is asked to build this in v1, so no confidence model gets invented and the cited harm (a radius hardened on a transient fault) cannot occur."
+    },
+    {
+      "findingId": "08-realtime-jamming-remote-sessions#009",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "tracked-deferral",
+      "reason": "Both markers exist as quoted (08.02.02-route-aware-radius-correction.md:60 and 08.02-playable-radius-peer-matching-cx.md:36), and the pointer is genuinely circular. But the feature is placed WONT (moscow-ledger.md:733 under '## WONT (53)' at :713) and ideation-index.md:210 D-24 ratifies that Won'ts remain [SURFACE], out of Step 5 scope — the circularity is a residue of a node the map has deliberately left undeveloped, not an unowned live decision. The substantive rule that would govern the answer is also already fixed in the same file: D-04 requires corrections be 'explained by cause, not just shown as a number', and the Happy Path step 5 states 'If the change is material, the user is shown what changed and why' (:38) — which answers the notify question affirmatively for material changes, contrary to the finding's premise that only the explanation is specified."
+    },
+    {
+      "findingId": "08-realtime-jamming-remote-sessions#010",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "Row verified at 08.02.03-latency-aware-match-filter.md:110, and the sibling contrast is real. But MoSCoW ran and answered it: moscow-ledger.md:561 places 08.02.03 in COULD (heading '## COULD (201)' at :507) with a rationale that restates the question and resolves it — 'The mechanism by which a domain that may never be a destination still earns its keep. But if the rooms are cut, an "overdub-capable?" predicate replaces it — trivially true for everyone and therefore worthless. Dies with...'. The routing target named in the row is the document that contains the answer, so a reader following the label lands on the resolution in one hop. An un-struck-through question whose answer sits at the cited destination is stale formatting, not a decision nobody owns; nothing is invented."
+    },
+    {
+      "findingId": "08-realtime-jamming-remote-sessions#011",
+      "upheld": true,
+      "finalSeverity": "warning",
+      "refutationReason": "not-refuted",
+      "reason": "Verified against the ledger directly. 08.03-remote-monitoring-session-attendance-index.md:61 and 08.03.01-hifi-monitor-stream-quality-contract.md:126 both state 'MoSCoW then placed ... in moscow-ledger.md § **MUST (195)**'. The ledger contradicts this: moscow-ledger.md:291 (08.03.01) and :292 (08.03.02) fall under '## SHOULD (285)' at :217, while '## MUST (195)' spans :17-216 and contains only 08.05.01, 08.05.02, 08.05.04 and 08.07 from this domain (:80-83). I confirmed the quoted rationale fragments ('The one part of domain 08 with proven willingness to pay ... Crucially it is latency-TOLERANT'; 'Ships with monitoring — the stream cannot exist without it') are genuine but belong to the SHOULD rows. The consequence is real: these are the two features that carry the domain's media-infrastructure cost, and the domain's central open risk (index Q-03) turns on whether they are v1. Downgraded from blocking to warning: the ledger is the single authority for MoSCoW placement, both statements hyperlink directly to it, and a citation cannot override its source — so this is a propagable factual error rather than a forced invention."
+    },
+    {
+      "findingId": "08-realtime-jamming-remote-sessions#012",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "Both quotes verified (08.03.04-monitoring-trust-playback-context.md:50-52 pending list; :101 D-01). The file answers it unambiguously in two places besides D-01: the Behavior prose immediately above the pending marker — 'Trying to *detect* the playback chain via device fingerprinting or audio probing is both technically unreliable ... and a surveillance surface nobody asked for' (:38-42) — and the States table's 'Undeclared | Listener skipped | "Not declared" — never an inferred default' plus D-04. A stale breadth-pass residue sitting under three converging statements in the same file does not make detection an open design space; no implementer ships fingerprinting past a decision row reading 'Self-declaration only; no device fingerprinting or audio probing'. The feature is also COULD and self-flagged SPECULATIVE with an [OWNER] cut question (Q-01), so it is not being built on this basis either."
+    },
+    {
+      "findingId": "08-realtime-jamming-remote-sessions#013",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "tracked-deferral",
+      "reason": "Both markers verified (08.03.04-monitoring-trust-playback-context.md:79 Stale state; :69 mid-session change edge row). 08.03.04 is placed COULD (moscow-ledger.md:563, heading '## COULD (201)' at :507) and ideation-index.md:210 D-24 ratifies that Coulds 'correctly remain [SURFACE] — out of Step 5 scope'. The file itself cites that exact rule for its own shallowness at Q-01 (:110): 'Step 5 could never have answered it: per ideation-index.md D-24, "Coulds (201) and Won'ts (53) correctly remain [SURFACE] — out of Step 5 scope"'. The feature additionally carries an [OWNER] question asking whether it should exist at all ('Is this a real product? ... If the latter, cut it'), so staleness semantics on a speculative Could is not a gap that forces invention. D-04's 'never an assumed default' also constrains the fallback in the right direction rather than leaving it free."
+    },
+    {
+      "findingId": "08-realtime-jamming-remote-sessions#014",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "downstream-detail",
+      "reason": "All four markers verified (08.03-remote-monitoring-session-attendance-cx.md:37, :57, :71/:85, :74/:89). The one item the finding says nothing carries — active vs passive Musician notification of a listener joining — is a presentation choice, not a product decision: the same sentence fixes the normative content ('A listener joining notifies the Producer and is visible to Musicians ... but the information is not optional'), and 08.03.02 D-03 fixes the rule ('No anonymous listening — performers always see their audience'). Whether that visibility is a toast or a persistent roster panel is /write-fe-spec territory. The finding itself concedes the commenting grant is tracked with an owner (08.03.03 Q-01 → /create-prd-security), and the two 'Musician: [PENDING]' role-scoping cells belong to CX-03/CX-04, both of which cover 08.03.04 — a COULD feature deliberately left [SURFACE] per ideation-index.md:210 D-24."
+    },
+    {
+      "findingId": "08-realtime-jamming-remote-sessions#015",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "tracked-deferral",
+      "reason": "Row verified at 08.03.03-live-listener-feedback-notes.md:58. 08.03.03 is placed COULD (moscow-ledger.md:562, heading '## COULD (201)' at :507), and ideation-index.md:210 D-24 ratifies that Coulds 'correctly remain [SURFACE] — out of Step 5 scope' — the marker records that scope decision. The binding constraint an implementer must honour is already fixed and unambiguous (D-02 'Notes never interrupt a performer mid-take', restated at :39-40 and again in the sub-domain CX-02 Q4), and the residue — whether high note volume is collapsed by count, by time window, or by thread — is presentation mechanics for /write-fe-spec, not a vision-layer product choice. The file's stated intent ('invisible until used') further bounds it."
+    },
+    {
+      "findingId": "08-realtime-jamming-remote-sessions#016",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "no-real-divergence",
+      "reason": "Quotes verified (08.04-talkback-cue-mixes-index.md:37; 08.04.01-talkback-channel-ducking.md:21; 08.04-talkback-cue-mixes-cx.md:12; 08.04.03-cue-mix-recall-portable-profile.md:40). But the 'Read-only' label and the capability description sit in the SAME table row, and the prose is exhaustive about the boundary: 'Sets how much talkback intrudes into their own mix ... but cannot mute the engineer entirely ... Cannot key talkback themselves'. The label describes the Musician's relation to the talkback channel (they cannot key or mute it); the personal intrusion level is spelled out beside it and restated normatively as D-03 (:95) with its mechanism at :59 ('Level control bottoms out above silence'). Nobody derives a permission model from a two-word cell while ignoring the sentence in the adjacent cell of the same row and a decision row saying the same thing. All three 08.04 children are additionally placed WONT (moscow-ledger.md:734-736 under '## WONT (53)' at :713)."
+    },
+    {
+      "findingId": "08-realtime-jamming-remote-sessions#017",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "Quotes verified (08.04-talkback-cue-mixes-cx.md:61-64 and :71). The named 'open part' is answered by the child in the same sub-domain, exactly as the finding says — which is the refutation, not the defect: 08.04.01-talkback-channel-ducking.md:95 D-03 ('Performers control talkback's intrusion level but cannot mute it | Their monitoring is theirs; their reachability is the session's') plus the edge row at :59 ('Performer mutes talkback entirely | Not permitted ... Level control bottoms out above silence') give both the rule and the floor mechanism. A CX entry whose open item is settled one file down, in the child it names, resolves on the first hop and cannot produce an unbounded minimal-ducking preference. The whole 08.04 sub-domain is also WONT (moscow-ledger.md:734-736), covered by ideation-index.md:210 D-24."
+    },
+    {
+      "findingId": "08-realtime-jamming-remote-sessions#018",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "misquoted",
+      "reason": "The evidence is cut at the point where the alleged contradiction dissolves. The full bullet at 08.05.04-session-attendance-provenance.md:223 reads: 'Works identically under **08.07 Overdub Mode** ... — which is why this survives even if the real-time rooms are cut (domain D-05, D-06). **Note the honest cost: a solo overdub is `self-attested` end to end (DT-05), so the mode that survives infrastructure cuts produces the *weakest* records.**' The quoted fragment omits the second sentence, which states the certainty differential explicitly — so the Cross-Cut Note does not assert equal evidentiary weight; 'works identically' is about the machinery, and the record-strength cost is stated in the same bullet. The correction 08.07 DT-08 demanded targeted the edge-case row, and that row HAS been corrected (:166, per-segment delivery-certainty), alongside a first-class 'Provenance grade' row in the Behavior table (:50). An implementer cannot build 'one record type and no grade field' from a bullet that calls overdub records the weakest, in a file that tabulates the grade as an observed field."
+    },
+    {
+      "findingId": "08-realtime-jamming-remote-sessions#019",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "Quotes verified (08.05-session-capture-recall-cx.md:86 and :94). But the CX names its own resolution target, and that target is resolved: 08.05-session-capture-recall-index.md:64 Q-01 reads '**RESOLVED — it never does.** ... the presence→contribution bridge is kept material (08.05.03) + attestation (02.04.01) + declaration (02.06), and presence alone contributes zero.' A reader who follows the CX's explicit pointer ('the substance of index Q-01') lands on the full three-component bridge in one hop. 08.05.04 also tabulates the bridge (:77-86, 'Presence alone contributes zero ... That is the design, not a gap') and flags the CX as superseded in its own Cross-Cut Notes (:204, 'See CX-04, now answerable'). Stale wording in a derived summary file whose cited source is resolved does not force anyone to invent a highlights→credit weighting; D-02 and DT-09 forbid it outright."
+    },
+    {
+      "findingId": "08-realtime-jamming-remote-sessions#020",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "tracked-deferral",
+      "reason": "Quotes verified (08.05.03-auto-highlights-moment-flagging.md:105 D-01; :66 edge row; :88 DT-01). 08.05.03 is placed COULD (moscow-ledger.md:564, heading '## COULD (201)' at :507) and ideation-index.md:210 D-24 ratifies that Coulds 'correctly remain [SURFACE] — out of Step 5 scope'. The product-level decision — the anchor — is made (D-01: window ends at the gesture, never starts there), and DT-01 supplies the category default in the same file ('"capture the last 30 seconds" is the standard idiom for this problem'), so an implementer has both the rule and a stated reference value. What remains is a single tunable number, the same class as 08.05.02 Q-06 and 08.06 Q-03, which the domain routes to /create-prd-compile's performance budget; a duration parameter is not vision-layer product behaviour."
+    }
+  ]
+}

@@ -31,8 +31,8 @@ visas and carnets.
 
 | # | Name | Type | Path | Status | Deep Think |
 |---|------|------|------|--------|------------|
-| 01 | Event Record & Lifecycle States | feature | [18.01-event-record-lifecycle.md](./18.01-event-record-lifecycle.md) | `[SURFACE]` | 4 hypotheses |
-| 02 | Bill & Support Act Management | feature | [18.02-bill-support-acts.md](./18.02-bill-support-acts.md) | `[SURFACE]` | 4 hypotheses |
+| 01 | Event Record & Lifecycle States | feature | [18.01-event-record-lifecycle.md](./18.01-event-record-lifecycle.md) | `[SURFACE]` | 16 hypotheses |
+| 02 | Bill & Support Act Management | feature | [18.02-bill-support-acts.md](./18.02-bill-support-acts.md) | `[SURFACE]` | 5 hypotheses |
 | 03 | Show Advancing | sub-domain | [18.03-show-advancing/](./18.03-show-advancing/) | `[SURFACE]` | 22 across 5 children |
 | 04 | Riders | sub-domain | [18.04-riders/](./18.04-riders/) | `[SURFACE]` | 17 across 4 children |
 | 05 | Stage Plot & Input List | sub-domain | [18.05-stage-plot-input-list/](./18.05-stage-plot-input-list/) | `[SURFACE]` | 12 across 3 children |
@@ -82,7 +82,7 @@ visas and carnets.
 | 18.03 Show Advancing | 👁️ Read-only | ✅ Full | ✅ Full (own side) | ❌ None |
 | 18.04 Riders | ⚙️ Config (own needs) | ✅ Full | 👁️ Read-only | ❌ None |
 | 18.05 Stage Plot & Input List | ⚙️ Config (own gear) | ✅ Full | ⚙️ Config (patch column) | ❌ None |
-| 18.06 Setlist & Show Files | ✅ Full | ✅ Full | ❌ None | 👁️ Read-only (published setlist only) |
+| 18.06 Setlist & Show Files | ✅ Full | ✅ Full | 👁️ Read-only (durations only) + occurrence attest | 👁️ Read-only (published setlist only) |
 | 18.07 Show Day Schedule | 👁️ Read-only | ✅ Full | ✅ Full (venue-side items) | 👁️ Read-only (public times) |
 | 18.08 Crew & Credentials | 👁️ Read-only (own) | ✅ Full | ⚙️ Config (venue rules) | ❌ None |
 | 18.09 Backline & Gear Manifest | ⚙️ Config (own gear) | ✅ Full | 👁️ Read-only | ❌ None |
@@ -104,6 +104,18 @@ visas and carnets.
 > - Persona names come from `meta/personas.md` — use short names
 > - NEVER redefine a persona here — reference only
 > - Access icons are shorthand; detailed per-role behavior lives in each feature file's **Role Lens**
+
+> **On the 18.06 Operator cell.** The setlist itself is closed to the venue — 18.06 D-03, *"The
+> setlist is private to the act"* — but "no access to the sub-domain" is not what that decision
+> says, and the row must not overstate it. Two children give the Operator a surface:
+> [18.06.03 Show File Custody](./18.06-setlist-show-files/18.06.03-show-file-custody.md) shows them
+> *"only that tracks exist and their durations, because that affects set timing and their curfew"*,
+> and [18.06.04 Performed Setlist Capture](./18.06-setlist-show-files/18.06.04-performed-setlist-capture.md)
+> **DT-06** gives them the one write in the sub-domain — a counter-attestation of **occurrence, not
+> content**: the venue confirms the show happened in their room on that date and never sees the
+> songs, the personnel splits or the deps. That write is load-bearing, not cosmetic —
+> [CX-16](./show-production-touring-cx.md) makes the disinterested third party's occurrence attest
+> the difference between an attested show record and a self-asserted one.
 
 ### Persona Mapping (D-02 below)
 
@@ -142,11 +154,33 @@ narrow and deliberate: a published *performed* setlist (18.06.04), public doors/
 |---|----------|-------|-------------|
 | ~~Q-01~~ | ~~Which candidates are sub-domains vs features?~~ | — | ✅ **RESOLVED** — 11 sub-domains, 9 domain-level features, 37 leaves |
 | ~~Q-02~~ | ~~Are any candidates actually cross-cuts?~~ | — | ✅ **RESOLVED** — 9 mechanisms extracted to [show-production-touring-cx.md](./show-production-touring-cx.md); 5 concerns routed to `/create-prd` |
-| Q-03 | **Does the touring crew break the four-persona model?** A local stagehand hired for four hours is not a Musician, Producer, Operator or Fan. This corroborates `personas.md` Q-01 (the dealer persona) from a second, independent direction — two domains now report the same strain. | User | `/ideate-validate` |
-| Q-04 | **Does the tour object live in 18 or 17?** An agent routes a tour while booking it; a TM runs it after. Same set of dates, two owners. The domain's biggest unresolved boundary. | User | `/ideate-validate` |
-| Q-05 | **Operator adoption is the domain's central risk.** The diff needs venue data; venue data needs Operators to engage. The emailable advance sheet (18.03.04) is the cold-start hedge — is it enough on its own? | User | `/ideate-validate` |
-| Q-06 | **Offline on show day.** Three features independently demand it: the performer view (18.06.02), live slippage (18.07.03) and the day sheet (18.10). Venue basements have no signal. This is the domain's strongest input to the **mobile/PWA surface question** open in `meta/constraints.md`. | User | `/ideate-validate` |
-| Q-07 | **Three finance/commerce boundary questions of identical shape**: tour P&L (18.13 ↔ 23), tour merch (18.15 ↔ 20), withholding tax (18.14 ↔ 17/23). Each is an operational fact produced by touring and consumed by a finance domain. They should be answered together with one principle, not three times. | User | `/ideate-validate` |
+| Q-03 | `[OWNER]` **Does the touring crew break the four-persona model?** A local stagehand hired for four hours is not a Musician, Producer, Operator or Fan. This corroborates `personas.md` Q-01 (the dealer persona) from a second, independent direction — two domains now report the same strain. **Canonically owned by [`meta/personas.md`](../meta/personas.md) Q-05**, which lists the stagehand among the nine actors D-71 "explicitly does not close" and routes them to `/create-prd`. | User | `/create-prd` — **owner decision** |
+| Q-04 | **Does the tour object live in 18 or 17?** An agent routes a tour while booking it; a TM runs it after. Same set of dates, two owners. The domain's biggest unresolved boundary. A domain/component-ownership question, so it lands with system structure. | User | `/create-prd-architecture` |
+| Q-05 | `[OWNER]` **Operator adoption is the domain's central risk.** The diff needs venue data; venue data needs Operators to engage. The emailable advance sheet (18.03.04) is the cold-start hedge — is it enough on its own? A go-to-market risk judgement no later stage resolves on its own. | User | `/create-prd` — **owner decision** |
+| Q-06 | **Offline on show day.** Three features independently demand it: the performer view (18.06.02), live slippage (18.07.03) and the day sheet (18.10). Venue basements have no signal. **The surface half is now closed**: `meta/constraints.md` § Project Surfaces locks v1 as one Astro web app installable as a **PWA**, with native mobile in phase 2 (D-28 / D-70). What remains open is the offline *capability* — caching depth, queued writes, conflict resolution — which is a data-flow design, not a surface choice. | User | `/create-prd-architecture` |
+| Q-07 | **Three finance/commerce boundary questions of identical shape**: tour P&L (18.13 ↔ 23), tour merch (18.15 ↔ 20), withholding tax (18.14 ↔ 17/23). Each is an operational fact produced by touring and consumed by a finance domain. They should be answered together with one principle, not three times. Same class as Q-04 — component ownership, decided once at architecture. | User | `/create-prd-architecture` |
 | Q-08 | **One vocabulary or four?** The gear taxonomy and equivalence model is needed by 18.04.01 (rider), 16 (venue specs), 13 (marketplace) and 15 (registry). Same question asked four times — answer it once. | User | `/create-prd-architecture` |
-| Q-09 | **Data requirements this domain creates for others**: 16 must model performer-side accessibility (18.04.03 DT-03), console vs stage-box channels separately (18.05.02 D-03), and curfew as several distinct constraints (18.07.02 D-02). 15 must hold serials, values, weight and country of manufacture (18.14.02 D-02). These originate here and land elsewhere. | Agent | `/ideate-validate` |
+| Q-09 | **Data requirements this domain creates for others**: 16 must model performer-side accessibility (18.04.03 DT-03), console vs stage-box channels separately (18.05.02 D-03), and curfew as several distinct constraints (18.07.02 D-02). 15 must hold serials, values, weight and country of manufacture (18.14.02 D-02). These originate here and land elsewhere. Each is a field-level data-model requirement on another shard, so it lands where per-shard data models are locked. | Agent | `/write-architecture-spec` |
 | Q-10 | Depth limit — no node exceeded 4 levels, and none felt like it wanted to. The 4-level soft limit was not stressed by this domain. | — | ✅ No action |
+
+
+<!-- spec-graph: auto-generated -->
+## Related Specs
+
+### Constrained by
+- [[decisions.md#d-08|D-08]]
+- [[decisions.md#d-18|D-18]]
+- [[decisions.md#d-19|D-19]]
+- [[decisions.md#d-03|D-03]]
+- [[decisions.md#d-02|D-02]]
+- [[decisions.md#d-01|D-01]]
+- [[decisions.md#d-16|D-16]]
+- [[decisions.md#d-04|D-04]]
+- [[decisions.md#d-05|D-05]]
+- [[decisions.md#d-06|D-06]]
+- [[decisions.md#d-07|D-07]]
+- [[decisions.md#d-09|D-09]]
+- [[decisions.md#d-10|D-10]]
+- [[decisions.md#d-71|D-71]]
+- [[decisions.md#d-28|D-28]]
+- [[decisions.md#d-70|D-70]]

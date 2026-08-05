@@ -1,0 +1,127 @@
+{
+  "record": "R5D1-member-wanted-propagation",
+  "findingId": "04-opportunities-casting#001",
+  "shard": "04-opportunities-casting",
+  "ratifiedOn": "2026-07-30",
+  "appliedOn": "2026-07-30",
+  "status": "propagated",
+  "ratifiedRule": {
+    "statement": "A member-wanted post's decide-by derives from a DURATION, not a date: publication + 90 days.",
+    "option": "B (duration derivation)",
+    "optionsRefused": {
+      "A": "Ask for a real date on the ad — refused: adds a required field to the post type least able to bear it, and a band seeking a bassist has no honest value to put in it.",
+      "C": "Exempt member-wanted from D-16 — refused: reopens every bound D-16 closed (hold resolve-by ceiling, dormant denominator, auto-close)."
+    },
+    "ninetyDaysProvenance": "Ratified as a LIFECYCLE INPUT in 04.01.01 D-16 and 04.06 D-05. NOT inherited from 04.02.01's board half-life. 04.02.01 D-06 stands unchanged — board windows remain presentation only, never a lifecycle transition. The two 90s are separate numbers that coincide by ratification; tuning one at /create-prd does not move the other.",
+    "d16Universality": "Unchanged. Every post has a decide-by; no type can publish without one. Member wanted is an exception to the DERIVATION RULE, never to the field. Taxonomy arithmetic restated as 9 date-derived + 1 duration-derived + 2 asked = 12.",
+    "acceptedCost": "An unfilled member-wanted ad auto-closes at 90 days on a timer the poster never chose. Recorded explicitly in 04.01.01 D-16, 04.06 D-05, 04.06 Edge Cases, and 04.04.01's cross-cut note.",
+    "tunable": "Yes — at /create-prd, on the same footing as 04.01.01 D-13's intervals."
+  },
+  "idsAllocated": [
+    {
+      "id": "04.06 D-05",
+      "file": ".memory/wiki/specs/ideation/04-opportunities-casting/04.06-band-member-wanted.md",
+      "note": "Next free after D-04; checked before allocation. No new Q ids were needed."
+    }
+  ],
+  "questionsClosedOrNarrowed": [
+    {
+      "id": "04.06 Q-05",
+      "action": "RESOLVED",
+      "resolution": "Owner ratified option (b). Question struck through; resolution carried in the last column per this tree's convention."
+    },
+    {
+      "id": "04.02.01 Q-06",
+      "action": "NARROWED — stays open",
+      "owner": "Agent",
+      "deferredTo": "/create-prd-architecture",
+      "resolution": "Its member-wanted premise ('a 90-day recency curve') conflated the board half-life with a lifecycle bound and is now a ratified lifecycle value with an exact 90-day exposure ceiling. What remains open is the deadline-bearing case — briefs and open calls whose asked decide-by sits months out — which the ratification did not touch."
+    }
+  ],
+  "filesChanged": [
+    {
+      "path": ".memory/wiki/specs/ideation/04-opportunities-casting/04.01-opportunity-posting-targeting/04.01.01-opportunity-post-type-taxonomy.md",
+      "edits": [
+        "Design-principle 4 prose (~:80): names the duration derivation, ratifies the 90 as a lifecycle value, and states it is not borrowed from 04.02.01's board half-life.",
+        "Taxonomy row for `Member wanted` (:105): Decide-by column changed from 'Derived — the event date' to 'Derived from a duration — publication + 90 days'. 7 columns preserved. Date semantics (D-10) column deliberately untouched — the ratification did not license changing it.",
+        "Post-table arithmetic (~:109, ~:119): 'Ten of the twelve' → nine date-derived + a tenth deriving from a duration; 'no type can publish without a decide-by' preserved verbatim.",
+        "Expiry edge case (:213 region): 'On the ten derived types this branch never fires' → nine date-derived, plus the member-wanted case (no event date to pass).",
+        "Past-decide-by edge case (:232): ten derived split into nine date-derived plus member wanted, where publication + 90 days is in the future by construction.",
+        "Cross-cut note to 04.06 (:301): adds D-16's duration seam, one rule defined here and consumed there.",
+        "D-16 decision row (:332): presence-type list no longer contains 'member wanted'; the duration case added as a named exception; 'on the nine date-derived types the two are the same instant'. Context cell gains an 'Amended 2026-07-30' clause carrying the provenance of the 90, the D-06 non-inheritance, tunability, and the second accepted cost."
+      ]
+    },
+    {
+      "path": ".memory/wiki/specs/ideation/04-opportunities-casting/04.06-band-member-wanted.md",
+      "edits": [
+        "Behavior table Lifecycle row (~:36): 'Open-ended; runs for months — and this now contradicts 04.01.01 D-16' → 'Duration-bound, not date-bound', decide-by = publication + 90 days. 3 columns preserved.",
+        "States table `Open` row (~:63): 'Live, open-ended, no deadline' → 'Live for 90 days from publication', with the edit affordance and derived-not-asked property restated.",
+        "States table `Closed` row: trigger now includes the decide-by passing at publication + 90 days, and explicitly notes no new lifecycle state is invented — the post lifecycle is 04.01.01's.",
+        "Edge Cases: new row for an ad reaching 90 days unfilled, carrying the accepted cost and the close-out obligation. 3 columns preserved.",
+        "Cross-Cut Notes: new 04.01.01 note (decide-by is theirs to define; D-05 restates, never redefines) and new 04.02.01 note (the two 90s are different numbers).",
+        "Decisions: new D-05 recording the ratification, the two refused options, the provenance of the 90, tunability, and the accepted cost.",
+        "Q-05 struck through and resolved in the Deferred To column."
+      ]
+    },
+    {
+      "path": ".memory/wiki/specs/ideation/04-opportunities-casting/04.02-discovery-matching-alerts/04.02.01-opportunity-board-search.md",
+      "edits": [
+        "Board row (:61): 'Poster closes it, or 90 days elapse' → cites 04.01.01 D-16's decide-by and states the board renders that expiry, never causes it (D-06). 4 columns preserved.",
+        "New paragraph after the type table: 'The member-wanted row's two 90s are not the same 90' — states the direction of derivation explicitly so nobody re-derives it backwards, and notes tuning one does not move the other.",
+        "Assumed-stale edge case (~:181): 'closes on 04.01.01 D-16's dates' → enumerates the three derivation cases.",
+        "Expiry race edge case (~:179): ten derived → nine date-derived, plus member wanted having no second date to race.",
+        "D-06 context cell: adds an 'Unchanged by the 2026-07-30 amendment' clause. D-06 itself stands.",
+        "Q-06 narrowed (see questionsClosedOrNarrowed).",
+        "Line-number citations into 04.01.01 corrected for the +4-line shift: :102 → :106, :103 → :107 (two occurrences)."
+      ]
+    },
+    {
+      "path": ".memory/wiki/specs/ideation/04-opportunities-casting/04.04-triage-shortlist-decisioning/04.04.01-review-queue-triage.md",
+      "edits": [
+        "`dormant` trigger edge case (:123): cites the real bound — member wanted's decide-by is publication + 90 days, so dormant fires at publication + 45 days, the slowest trigger in the domain.",
+        "Cross-cut note to 04.01.01 (:193): records that the last unbounded case is closed, gives the resolve-by ceiling (90 days) and the dormant denominator (45 days), and carries the amendment's accepted cost across.",
+        "D-05 decision row (:212): the resolve-by ceiling now names publication + 90 days on member wanted — the last type where this bound was nominal rather than real."
+      ]
+    },
+    {
+      "path": ".memory/wiki/specs/ideation/04-opportunities-casting/opportunities-casting-cx.md",
+      "edits": [
+        "R-02 (:369): 'open-ended' → 'duration-bounded', with a 'Reconciled 2026-07-30' clause. The rejection survives and is sharpened — both types are bounded, by opposite instruments (a platform-derived duration vs an Operator-stated date). 4 columns preserved."
+      ]
+    },
+    {
+      "path": ".memory/wiki/specs/ideation/04-opportunities-casting/04.02-discovery-matching-alerts/04.02.04-alert-subscriptions-delivery.md",
+      "edits": [
+        "D-06 (:238) and Q-10 (:264): both said 'on the ten derived types they are the same instant'. Corrected to nine date-derived, with member wanted unaffected for the opposite reason — it carries no submission-closing date, so publication + 90 days is the only clock the tier could read. Q-10 stays open and unchanged in substance."
+      ],
+      "note": "Not in the brief's required-edit list; found by sweep. It carried the pre-amendment arithmetic and would have contradicted the ratified statement."
+    },
+    {
+      "path": ".memory/wiki/specs/ideation/04-opportunities-casting/04.05-outcome-response-handoff/04.05.01-disposition-close-out-obligation.md",
+      "edits": [
+        "Timezone edge case (:171): asserted the decide-by 'is derived from the post's own date' for every type. Corrected to name the one type with no date to inherit from, and to state that it resolves in the venue-local wall-clock semantics its taxonomy row already carries."
+      ],
+      "note": "Not in the brief's required-edit list; found by sweep. Same class of contradiction."
+    }
+  ],
+  "verification": {
+    "tableColumnCounts": "Whole domain re-scanned after edits. Every table in every changed file is internally consistent. One mismatch remains domain-wide: 04.01.01:267, the `Partial` row of the States table (4 cells in a 3-column table). PRE-EXISTING — recorded as a cross-domain note in the run-5 drain, outside this finding, and deliberately not merged so this diff stays traceable to the ratified statement.",
+    "staleTextSweep": "grep across the domain for 'open-ended', 'no deadline', 'dateless', 'ten derived', 'ten types' returns no surviving stale assertion. Remaining hits are the deliberate quotations of the withdrawn text inside the reconciliation prose.",
+    "lineNumberCitations": "All `04.01.01`:NN citations in the domain re-resolved after the +4-line shift. `04.04.01`:136 (cited from 04.01.01:219) unaffected — all 04.04.01 edits were line-preserving. No file cites 04.02.01, 04.06, 04.02.04 or 04.05.01 by line number.",
+    "lastUpdatedBumped": "All 7 changed files moved to 2026-07-30.",
+    "diffStat": "7 files changed, 56 insertions(+), 36 deletions(-)"
+  },
+  "invariantsHeld": [
+    "04.01.01 D-16 remains universal — every post carries a decide-by, none publishes without one.",
+    "04.02.01 D-06 stands — the board presents and never closes; its windows remain presentation only.",
+    "04.01.01 D-08 stands — no new post-level lifecycle state was invented for the timer; member wanted closes through the existing `Closed` transition.",
+    "04.01.01 D-10 untouched — the ratification governed decide-by derivation, not date semantics.",
+    "Nothing was invented beyond the ratified statement: the 90-day figure, the duration derivation, the universality of D-16, and the accepted cost are all licensed by it; the 45-day dormant figure is arithmetic on 04.04.01's existing 50%-of-window rule."
+  ],
+  "remainingOpenInThisArea": [
+    "04.02.01 Q-06 — narrowed to the deadline-bearing types; Agent, /create-prd-architecture.",
+    "04.02.04 Q-10 — untouched in substance; the tier clock question is unaffected by this ratification. Agent, /create-prd-architecture.",
+    "04.06 Q-02 (unpaid rehearsal line) and Q-04 (confidentiality) — unrelated, still open.",
+    "04.01.01:267 `Partial` row column defect — pre-existing, out of scope, still open."
+  ]
+}

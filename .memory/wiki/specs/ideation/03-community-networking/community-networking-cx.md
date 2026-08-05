@@ -11,7 +11,7 @@
 |---|--------|--------|--------------|----------------|------------|----------|
 | CX-01 | [03.04 Warm Intros & Collaboration Graph](./03.04-warm-intros-collaboration-graph/) | [03.03 Collaborator Discovery & Matchmaking](./03.03-collaborator-discovery-matchmaking/) | The graph is matching's proximity input; matching is the graph's largest consumer by query volume. Scoping tightened Step 6: scoring may use only paths rooted at the **searcher's** node (03.04.01 D-06), so proximity is a per-result-set fact, never a general graph statistic | Musician, Producer | High | 03.03 D-03 scopes scoring to the verified graph; 03.03.02 lists proximity as a first-class axis; 03.04.01 D-06 (ego-rooted only) |
 | CX-02 | [03.04 Warm Intros & Collaboration Graph](./03.04-warm-intros-collaboration-graph/) | [03.01 Connections, Follows & Endorsements](./03.01-connections-follows-endorsements/) | The derived graph **supersedes** the manual connection as the domain's real edge set; reachability governs who may request a connection. Step 6 adds a third traversal hot path: 03.01.01 D-06 tiers follow notifications on **2-hop graph distance**, putting a traversal on every follow *write* at fan volume | Musician, Producer, Operator | High | 03.01.02 DT-01 demotes the connection; 03.04.01 D-06/D-10 (manual edges never enter the graph — resolves 03.04.01 Q-01); 03.01.01 D-06 |
-| CX-03 | [03.06 Scenes & Communities](./03.06-scenes-communities/) | [03.02 Activity Feed & Ranking](./03.02-activity-feed-ranking/) | Scene membership is a feed-ranking axis and secondary fan-out set; the seeded scene is what makes a new user's feed non-empty. Step 6 hardens the direction: per 03.06.01 DT-12 the dependency runs **one way only** — if the feed is cut (domain Q-09), scenes must survive intact. A scene is not a feed weighting | Musician, Producer, Operator, Fan | High | 03.02.02 DT-03 (geography a primary ranking axis); 03.06.04 DT-01 (cold-start mechanism); 03.06.01 DT-12 |
+| CX-03 | [03.06 Scenes & Communities](./03.06-scenes-communities/) | [03.02 Activity Feed & Ranking](./03.02-activity-feed-ranking/) | Scene membership is a **secondary fan-out set — candidacy, never rank**; the seeded scene is what makes a new user's feed non-empty. The ranking axis is **geography** (03.02.02 D-03), an evidenced fact, not the join flag: per 03.06.01 D-08 ranking reads evidence, never membership. Step 6 hardens the direction: per 03.06.01 DT-12 the dependency runs **one way only** — if the feed is cut (domain Q-09), scenes must survive intact. A scene is not a feed weighting | Musician, Producer, Operator, Fan | High | 03.02.02 DT-03/D-03 (geography a primary ranking axis); 03.06.04 DT-01 (cold-start mechanism); 03.06.01 DT-12 + D-08 |
 | CX-04 | [03.06 Scenes & Communities](./03.06-scenes-communities/) | [03.04 Warm Intros & Collaboration Graph](./03.04-warm-intros-collaboration-graph/) | The scene graph (03.06.02) is a filtered view of the collaboration graph. **The seeded-population / zero-density contradiction is now RESOLVED** (DT-13/D-13): city facts and platform density are answers to different questions with different subjects and must never share an axis | Musician, Producer, Operator | High | 03.06.02 Q-01 resolved by 03.06.04 DT-13/D-13; 03.04.01 D-01 (edges from counter-attested credits only) |
 | CX-05 | [03.04 Warm Intros & Collaboration Graph](./03.04-warm-intros-collaboration-graph/) | [03.05 Private Rolodex & CRM](./03.05-private-rolodex-crm/) | The public evidenced graph and the private asserted rolodex answer different questions about the same people — and must never blend | Musician, Producer, Operator | High | `03.05-private-rolodex-crm-cx.md#R-01` forbids notes influencing shared computation; 03.05.01 DT-04 |
 | CX-06 | [03.08 Contests](./03.08-contests-challenges-beat-battles/) | [03.03 Collaborator Discovery & Matchmaking](./03.03-collaborator-discovery-matchmaking/) | Contests are an on-ramp for the uncredited — a partial answer to the rich-get-richer defect matching creates | Musician, Producer | Medium | 03.08.02 DT-02 vs 03.03.01 DT-02; hinges on the unresolved "does a contest generate a credit?" (03.08 Q-03) |
@@ -130,12 +130,12 @@ most-likely-to-be-cut feature (domain Q-09) and the scene is the cold-start mech
 the feed dies, scenes must survive intact.
 
 **Role scoping**:
-- **Musician / Producer**: scene-weighted feeds are how a thin platform feels local rather than dead.
+- **Musician / Producer**: scene-scoped feeds are how a thin platform feels local rather than dead.
 - **Operator**: per personas.md their context is a phone at a loading dock — a geo-scoped feed is the only version useful in a single glance.
-- **Fan**: per D-13a they are the volume, and per personas.md their need is entirely local — scene weighting is not a refinement, it is the product.
+- **Fan**: per D-13a they are the volume, and per personas.md their need is entirely local — scene scoping is not a refinement, it is the product.
 
 **Synthesis questions answered**:
-1. **Shared state conflict**: Scene membership is owned by 03.06.01; the feed reads it as a ranking axis and a fan-out set. Per DT-12 the feed may never write scene state — the dependency is strictly feed→scene-read.
+1. **Shared state conflict**: Scene membership is owned by 03.06.01; the feed reads it as a **fan-out set only** — candidacy, never rank, per 03.06.01 D-08 and §4. The ranking axis is geography (03.02.02 D-03). Per DT-12 the feed may never write scene state — the dependency is strictly feed→scene-read.
 2. **Trigger chain**: Joining a scene changes feed composition (async recompute or accept staleness — the fan-out-on-read-vs-write decision, `03.02-activity-feed-ranking-cx.md#CX-01`). If the recompute fails, the feed degrades to global ranking, never errors.
 3. **Permission intersection**: Scene content inherits each emitting domain's eligibility rules (03.02 D-04); membership grants no visibility of anything otherwise private.
 4. **Notification fan-out**: Scene-scoped events could notify members — at D-13a fan volume in a geo scene, this is a notification-storm surface, deduped via the Notifications cross-cut.
@@ -395,3 +395,26 @@ Two intra-domain sub-domain boundaries were tested in Step 6 and found **coheren
 - **03.06 (Scenes) vs 03.11 (Conference)** — composition, not duplication (CX-07); kept separate for privacy-posture reasons pending Q-10.
 
 The domain's genuinely *incoherent* boundaries are all **cross-domain** (03↔04 calls-vs-casting, 03↔05 create-vs-hire, 03↔20 professional-follow-vs-fan-follow, 03.09↔17 recurring-jam-vs-one-off-booking) — returned in the cross-domain rows below, not resolvable inside this domain.
+
+
+<!-- spec-graph: auto-generated -->
+## Related Specs
+
+### Constrained by
+- [[decisions.md#d-06|D-06]]
+- [[decisions.md#d-03|D-03]]
+- [[decisions.md#d-10|D-10]]
+- [[decisions.md#d-08|D-08]]
+- [[decisions.md#d-13|D-13]]
+- [[decisions.md#d-01|D-01]]
+- [[decisions.md#d-07|D-07]]
+- [[decisions.md#d-05|D-05]]
+- [[decisions.md#d-04|D-04]]
+- [[decisions.md#d-18|D-18]]
+- [[decisions.md#d-02|D-02]]
+- [[decisions.md#d-12|D-12]]
+- [[decisions.md#d-13a|D-13a]]
+- [[decisions.md#d-14|D-14]]
+- [[decisions.md#d-11|D-11]]
+- [[decisions.md#d-15|D-15]]
+- [[decisions.md#d-17|D-17]]

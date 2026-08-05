@@ -1,0 +1,48 @@
+{
+  "domain": "(root)",
+  "treeRoot": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation",
+  "verdicts": [
+    {
+      "findingId": "(root)#001",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "Quote verified: moscow-ledger.md:4 does read '> **Owner decision (D-20)**: all 195 Must-haves retained; sequencing deferred to `/plan-phase`.' and grep for 'D-31|v1.5|supersede' over the whole ledger returns zero hits, so the ledger genuinely carries no supersession marker. But the supersession is stated twice, unmissably, in the pipeline key file the ledger is only reachable from: ideation-index.md:206 rewrites the D-20 row itself with strikethrough plus '**— the \"defer the beachhead\" half is AMENDED by D-31**', and ideation-index.md:296-298 opens the MoSCoW section with '✅ Sequencing RESOLVED by D-31', with :314-316 spelling out 'It no longer needs to pick a beachhead — D-31 did.' The ledger link at ideation-index.md:265 sits inside that same MoSCoW section. Ledger line 3 dates the header block ('Generated from the /ideate-discover breadth pass, 2026-07-16'), framing line 4 as generation-time provenance rather than a live directive. The failure scenario requires a planner to consume the 794-line data table without the index that links to it, which the pipeline's index-first rule forecloses. Stale-copy hygiene, not a live divergence."
+    },
+    {
+      "findingId": "(root)#002",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "The structural observations check out — ideation-cx.md:4 and :56 do route per-pair detail to the source domain's *-cx.md, :57 does claim 184/206, the domain CX files are intra-domain (01's file at identity-profiles-organizations-cx.md:43-361 is CX-01..CX-20, all sub-domain pairs; 04's file has one cross-level section, CX-12 → 09), and §3 (ideation-cx.md:270-424) expands only 01-* and 02-* pairs. But the conclusion 'the IA author must invent' is wrong because the finding measured only the parent CX file. The cross-domain contract lives at leaf level, which is where the fractal structure puts it. For the flagged pair #45 (04↔24): 18 separate domain-04 leaf files carry an explicit 'Touches **24 Trust, Safety & Disputes**' section naming the specific edge (e.g. 04.01.03:200 'enforcement boundary. Description-field circumvention…', 04.03.01:183 'four distinct hand-offs', 04.05.01:229 'permission + abuse. Three edges'), and the exact item in the failure scenario is owned and tracked, not invented: meta/cross-cut-emergent-capabilities.md:152 assigns 'Occupational-requirement-vs-discrimination adjudication' to domain 24 ('Unowned in 04; belongs to 24'), and 04.02.01:278 registers it as Q-04, Owner=User, Deferred To=`/create-prd-security`. Same for pair #52 (05↔21): the payola edge is authored from the 21 side — 21.02.02:81 DT-03 ('the same offer will appear as a service listing in domain 05'), 21.02.02:85 and 21.05.03:126 both carry 'Touches **05 Services Marketplace** — the back door'. The Detail column pointing at the parent CX file is navigational imprecision; the synthesis is not absent."
+    },
+    {
+      "findingId": "(root)#003",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "Quotes verified: domain-map-proposal.md:341-373 is a 32-row 'Cross-cutting systems' table containing Accessibility (:362), Onboarding & Role-Aware Activation (:356), Promoted Placement & Advertising (:366), Referrals/Invites/Affiliates (:367), Follow, Save & Watchlist (:369) and Offline & Low-Connectivity Field Resilience (:373), and ideation-cx.md §1+§1b carry 25+2 rows with none of those names (grep: 'accessib' 1 hit — an accessible *seat* at :162; 'referral' 1 hit — a referral *channel* at :92; 'watchlist' 0; 'offline' 0). The 'two authoritative inventories' premise fails, though: domain-map-proposal.md:6 states 'This is a proposal for owner review… it does not create domain folders or alter scope', and ideation-index.md:220 (D-35) ratifies it as 'ratified evidence, not a competing structure', with scope 'governed by existing MoSCoW and release decisions… not by deleting domains'. ideation-cx.md:12 states the registry's own construction rule ('14-lens sweep, ratified D-16… pure architecture concerns route to /create-prd'). The individually named items are owned or tracked elsewhere: Promoted Placement is 21.05-paid-promotion (a real sub-domain with 21.05.03 Payola Guardrail); Referrals is tracked at meta/cross-cut-emergent-capabilities.md:150 with owner 03; Offline at the same file :120 ('Offline-First Admit & Reconcile Replica'); Follow/Save/Watchlist exist as owned features (moscow-ledger.md:40 03.01.01 Follows, :449 20.06.01 Artist Tracking & Follow, :688 22.07.01 Artist Watchlists). Accessibility is the one genuine absence, and it is a downstream NFR the kit assigns to /create-prd-design-system and /write-fe-spec, not an ideation-layer product cross-cut."
+    },
+    {
+      "findingId": "(root)#004",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "tracked-deferral",
+      "reason": "Both rows are quoted accurately (ideation-cx.md:182 pair #122, ideation-cx.md:248 pair #188, both non-pending), and both parent Detail files do lack the pair. The claim that fails is 'recorded nowhere a downstream stage will find it' — both questions are registered with an owner and a target. Pair #188: 23.05-career-progression-benchmarking-index.md:48 carries 'Q-02 | **Boundary with 22 Analytics & Market Intelligence**: 22 computes cohorts and market data; 23.05.03 asks career questions of them. Where is the line…' with Owner=User, Deferred To=`/create-prd-architecture`; the same index :41 already fixes half of it (D-04 'Cohort **computation** belongs to 22 Analytics; the **career framing** belongs here'); and the 22 side points at it explicitly — 22.05.01:99 'Touches **23 Career, Finance & Business** — why: \"is my career growing?\" is half an income question; 23 owns the money half of the same sentence. See Q-02.' Pair #122: the departing-member collision is registered as an edge case at 23.04.01-contract-vault-document-store.md:49 — 'A member leaves the band | Do they keep access to the deals they were party to?… | `[PENDING — /ideate-discover Step 5 deepening]` — collides with 01's entity model' — with :48 naming the same tension and 23.07.03:82 flagging 'the departing-member problem'; 01.03.01:163 D-04 supplies the governing rule ('Access revocation and historic-record preservation are separate operations')."
+    },
+    {
+      "findingId": "(root)#005",
+      "upheld": true,
+      "finalSeverity": "warning",
+      "refutationReason": "not-refuted",
+      "reason": "Independently reproduced over all 734 data rows of moscow-ledger.md: the Rationale column length histogram is 60s:2, 80s:4, 100s:3, 120s:5, 140s:6, 160s:22, 180s:38, 200s:132, 220s:521, 520s:1 — 521 rows land on exactly 220 characters and 603 end without terminal punctuation, most mid-word. Cited rows match byte-for-byte: :22 ends 'Credits mis-attach per', :23 'which the provenance thesis', :26 'at the moment it b', :30 'Unbuildable-by-its-subje', :294 'The base-is-required rule matte', :296 'Conditional-reversion detection'; 09.03.01 (line 295) ends '…the domain's honesty made st'. This is not recoverable elsewhere — the leaf file 09-rights-ownership/09.03-chain-of-title-lifecycle/09.03.01-chain-of-title-ledger.md records DT/decision rationale but no MoSCoW-tier rationale, and no other artifact in the tree carries the column. Not a misquote, not tracked, not downstream detail. Held at warning rather than blocking, and the stated failure scenario is overstated: the tier values themselves and the v1 membership are intact and independently fixed by D-31 at ideation-index.md:296-313 (v1 = 01/02/05/07/09-capture, ~45 Musts), so a truncated rationale degrades traceability rather than silently changing release scope."
+    },
+    {
+      "findingId": "(root)#006",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "no-real-divergence",
+      "reason": "Every quote is verbatim — ideation-index.md:205 (D-19, 'Band is an **entity** (domain 01), not a persona'), :70 ('Invented personas | **0**'), :220 (D-35), and the proposal's 'Personas.' lines at :60, :72, :84, :144, :288 listing band, A&R, union rep, scene organiser, dealer/shop. They do not collide. D-19 says '4 **primary** personas' and itself records two tracked extensions ('dealer persona for 13/14/15; Admin for 24'). The 'Invented personas: 0' metric is scoped by the line directly above it, ideation-index.md:69 — 'Role Lens coverage | **734 / 734** feature files (2,936 rows = 4 personas × 734, verified)' — i.e. it is a claim about the Role Lens rows in the feature tree, which the proposal's prose does not touch. The proposal's 'Personas.' lines are recovered audience descriptions in a document that states its own status at domain-map-proposal.md:6 ('This is a proposal for owner review… it does not create domain folders or alter scope') and is ratified at ideation-index.md:220 as 'ratified evidence, not a competing structure'. The actor model /create-prd-security actually consumes is the four-column Role Matrix carried by every domain index plus the 'Roles, Permissions & Delegated Authority' cross-cut (ideation-cx.md:27), which models band authority as membership/representation edges. No competent reader provisions RBAC principals from a recovery-evidence audience list."
+    }
+  ]
+}

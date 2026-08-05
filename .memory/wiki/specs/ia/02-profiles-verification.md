@@ -1,0 +1,307 @@
+# Shard 02 — Profiles, claiming and qualifications
+
+> **Architecture Source**: [2026-08-02-architecture-design.md](../2026-08-02-architecture-design.md)
+> **Decomposition Source**: [decomposition-plan.md](decomposition-plan.md)
+> **Deep Dive**: [deep-dives/02-profiles-verification.md](deep-dives/02-profiles-verification.md)
+> **Document Type**: Feature domain
+> **Status**: Complete — design approved under standing owner autonomy; deepening converged
+
+## Overview
+
+Shard 02 turns Shard 01 parties into truthful public/protected representations, provides bounded account-free shadow-party notice and remedy, governs reversible ownership claims and contests, composes fact-level provenance into profiles/portfolios/EPKs, records issuer-backed professional credentials, and classifies marketplace sellers. It never treats public text, a provider login, a registry identifier, or a self-declaration as authority or verification.
+
+### Scope Reconciliation
+
+| Check | Result |
+|---|---|
+| Source boundaries loaded | 4 |
+| Child capabilities reconciled | 8 |
+| Source documents loaded | 12 |
+| Added or removed feature boundaries | 0 |
+| Supersession applied | Owner-ratified non-public shadow rule overrides older public-unclaimed examples |
+| Split handling | Parent IA plus one approved deep dive |
+
+## Features
+
+- **01.05 Profile Claiming & Ownership Verification** — shadow-party creation by reference, bounded invitation, tiered claim proof, provisional control, contests, transfer, suppression, and correction without forced signup.
+- **01.06 Portfolio, Media Reel & EPK** — one fixed profile spine, fact-level provenance, credit-backed identity portfolio, rights-governed reel, live per-pitch EPK, and accessible derived export.
+- **01.07 Professional, Union & Credential Verification** — issuer/method/evidence/expiry-aware credential records whose domain requirements remain with consuming domains.
+- **01.08 Trader vs Private Seller Classification** — party-level situational declaration, mismatch review, jurisdiction rule-pack disclosure, and fail-closed listing eligibility.
+
+## Acceptance Criteria
+
+- **AC-PRF-01 — Create shadow by reference:** Given a valid request with current identity, authority, source state and required inputs, when the actor invokes this flow, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) A qualifying domain command names an absent party and atomically creates/reuses an inert Shard 01 party plus structured context; creation itself is never quota-blocked, and (6) return Original domain fact commits even if matching/invitation fails; if the flow cannot complete, invalid input, stale authority, revision conflict or dependency failure returns a typed refusal and no contradictory canonical mutation.
+- **AC-PRF-02 — Match possible duplicate:** Given a valid request with current identity, authority, source state and required inputs, when the actor invokes this flow, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) Return suggestions within 400ms; never block submit; continue matching after commit and offer merge/claim later, and (6) return No silent merge or dropped capture; if the flow cannot complete, invalid input, stale authority, revision conflict or dependency failure returns a typed refusal and no contradictory canonical mutation.
+- **AC-PRF-03 — Dispatch invitation:** Given a valid request with current identity, authority, source state and required inputs, when the actor invokes this flow, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) Apply creator-standing dispatch budget; queue excess; send day 0/3/14, one extra per new unrelated attester, lifetime maximum six, and (6) return Notice reveals attester, count, instrument/role—not work titles or portfolio; if the flow cannot complete, invalid input, stale authority, revision conflict or dependency failure returns a typed refusal and no contradictory canonical mutation.
+- **AC-PRF-04 — Account-free suppress/correct:** Given a valid request with current identity, authority, source state and required inputs, when the actor invokes this flow, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) Verify control of the contacted route or protected case evidence without requiring account creation, and (6) return Future outreach/public release is blocked; underlying third-party fact remains reviewable; if the flow cannot complete, invalid input, stale authority, revision conflict or dependency failure returns a typed refusal and no contradictory canonical mutation.
+- **AC-PRF-05 — Start/resume claim:** Given a valid request with current identity, authority, source state and required inputs, when the actor invokes this flow, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) Non-expiring link is only a pointer. Authenticate/create account, load current party/claim state, and offer fastest eligible fresh proof, and (6) return Claim remains resumable indefinitely; no link authenticates; if the flow cannot complete, invalid input, stale authority, revision conflict or dependency failure returns a typed refusal and no contradictory canonical mutation.
+- **AC-PRF-06 — Complete claim proof:** Given a valid request with current identity, authority, source state and required inputs, when the actor invokes this flow, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) Evaluate Tier A/B/C, independence, self-attestation, current party state, and contest status, and (6) return Full or provisional control is attached to the existing party; history never migrates to a new party; if the flow cannot complete, invalid input, stale authority, revision conflict or dependency failure returns a typed refusal and no contradictory canonical mutation.
+- **AC-PRF-07 — Convert provisional claim:** Given a valid request with current identity, authority, source state and required inputs, when the actor invokes this flow, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) Wait the entity-specific reversibility window or accept stronger independent proof; notify prior attesters on grant, and (6) return No open contest; ownership becomes full and provisional restrictions lift; if the flow cannot complete, invalid input, stale authority, revision conflict or dependency failure returns a typed refusal and no contradictory canonical mutation.
+- **AC-PRF-08 — Contest ownership:** Given a valid request with current identity, authority, source state and required inputs, when the actor invokes this flow, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) Notify both sides, preserve current operation, collect comparable proof for 14 days, and block transfer, and (6) return Strong uncontested challenger evidence may win reversibly; credible conflict freezes control and routes Shard 24; if the flow cannot complete, invalid input, stale authority, revision conflict or dependency failure returns a typed refusal and no contradictory canonical mutation.
+- **AC-PRF-09 — Consensual transfer:** Given a valid request with current identity, authority, source state and required inputs, when the actor invokes this flow, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) Current full owner names recipient; recipient accepts after step-up; live contest blocks transfer, and (6) return Org reversibility 14 days, person claim 30 days; 30-day public changed-hands marker; if the flow cannot complete, invalid input, stale authority, revision conflict or dependency failure returns a typed refusal and no contradictory canonical mutation.
+- **AC-PRF-10 — Compose public profile:** Given a valid request with current identity, authority, source state and required inputs, when the actor invokes this flow, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) Build Header → Now → Record → Detail from viewer-authorized facts; omit truly empty sections and render loading/denial/error distinctly, and (6) return Publication projection carries immutable version/cache key; if the flow cannot complete, invalid input, stale authority, revision conflict or dependency failure returns a typed refusal and no contradictory canonical mutation.
+- **AC-PRF-11 — Edit asserted profile:** Given a valid request with current identity, authority, source state and required inputs, when the actor invokes this flow, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) Authorized subject/mandate edits one section with expected version; author human and acting party are recorded, and (6) return Attested facts, layer order, and reserved provenance visuals cannot change; if the flow cannot complete, invalid input, stale authority, revision conflict or dependency failure returns a typed refusal and no contradictory canonical mutation.
+- **AC-PRF-12 — Curate portfolio/reel:** Given a valid request with current identity, authority, source state and required inputs, when the actor invokes this flow, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) Subject changes emphasis/listed state and selects only rights-eligible governed media; role travels with each clip, and (6) return Credit graph remains unchanged; every clip exposes rights basis and provenance; if the flow cannot complete, invalid input, stale authority, revision conflict or dependency failure returns a typed refusal and no contradictory canonical mutation.
+- **AC-PRF-13 — Generate/share EPK:** Given a valid request with current identity, authority, source state and required inputs, when the actor invokes this flow, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) Select recipient/purpose, public facts, optional consented member/private-alias facts, and approved contact/rate fields, and (6) return Revocable 90-day recipient link and optional timestamped accessible PDF are created; if the flow cannot complete, invalid input, stale authority, revision conflict or dependency failure returns a typed refusal and no contradictory canonical mutation.
+- **AC-PRF-14 — Record/verify credential:** Given a valid request with current identity, authority, source state and required inputs, when the actor invokes this flow, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) Validate jurisdiction-profile type, issuer, subject, dates, and evidence; verify by adapter or protected review, and (6) return State/method/expiry are visible; failure never renders verified; if the flow cannot complete, invalid input, stale authority, revision conflict or dependency failure returns a typed refusal and no contradictory canonical mutation.
+- **AC-PRF-15 — Declare trader status:** Given At first sale, ask situational jurisdiction questions and disclose exactly what will become public before submission., when the actor invokes this flow, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) Declare trader status, and (6) return Approved rule pack resolves `private; if the flow cannot complete, trader.
+- **AC-PRF-16 — Detect classification mismatch:** Given a valid request with current identity, authority, source state and required inputs, when the actor invokes this flow, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) Durable business signals trigger `review_required`; pause public listings and require re-declaration/review without silently calling the party a trader, and (6) return Audited disposition restores a valid classification or keeps listings blocked; if the flow cannot complete, invalid input, stale authority, revision conflict or dependency failure returns a typed refusal and no contradictory canonical mutation.
+
+## Interactions
+
+| ID | Interaction | Required behavior | Completion |
+|---|---|---|---|
+| PRF-01 | Create shadow by reference | A qualifying domain command names an absent party and atomically creates/reuses an inert Shard 01 party plus structured context; creation itself is never quota-blocked. | Original domain fact commits even if matching/invitation fails. |
+| PRF-02 | Match possible duplicate | Return suggestions within 400ms; never block submit; continue matching after commit and offer merge/claim later. | No silent merge or dropped capture. |
+| PRF-03 | Dispatch invitation | Apply creator-standing dispatch budget; queue excess; send day 0/3/14, one extra per new unrelated attester, lifetime maximum six. | Notice reveals attester, count, instrument/role—not work titles or portfolio. |
+| PRF-04 | Account-free suppress/correct | Verify control of the contacted route or protected case evidence without requiring account creation. | Future outreach/public release is blocked; underlying third-party fact remains reviewable. |
+| PRF-05 | Start/resume claim | Non-expiring link is only a pointer. Authenticate/create account, load current party/claim state, and offer fastest eligible fresh proof. | Claim remains resumable indefinitely; no link authenticates. |
+| PRF-06 | Complete claim proof | Evaluate Tier A/B/C, independence, self-attestation, current party state, and contest status. | Full or provisional control is attached to the existing party; history never migrates to a new party. |
+| PRF-07 | Convert provisional claim | Wait the entity-specific reversibility window or accept stronger independent proof; notify prior attesters on grant. | No open contest; ownership becomes full and provisional restrictions lift. |
+| PRF-08 | Contest ownership | Notify both sides, preserve current operation, collect comparable proof for 14 days, and block transfer. | Strong uncontested challenger evidence may win reversibly; credible conflict freezes control and routes Shard 24. |
+| PRF-09 | Consensual transfer | Current full owner names recipient; recipient accepts after step-up; live contest blocks transfer. | Org reversibility 14 days, person claim 30 days; 30-day public changed-hands marker. |
+| PRF-10 | Compose public profile | Build Header → Now → Record → Detail from viewer-authorized facts; omit truly empty sections and render loading/denial/error distinctly. | Publication projection carries immutable version/cache key. |
+| PRF-11 | Edit asserted profile | Authorized subject/mandate edits one section with expected version; author human and acting party are recorded. | Attested facts, layer order, and reserved provenance visuals cannot change. |
+| PRF-12 | Curate portfolio/reel | Subject changes emphasis/listed state and selects only rights-eligible governed media; role travels with each clip. | Credit graph remains unchanged; every clip exposes rights basis and provenance. |
+| PRF-13 | Generate/share EPK | Select recipient/purpose, public facts, optional consented member/private-alias facts, and approved contact/rate fields. | Revocable 90-day recipient link and optional timestamped accessible PDF are created. |
+| PRF-14 | Record/verify credential | Validate jurisdiction-profile type, issuer, subject, dates, and evidence; verify by adapter or protected review. | State/method/expiry are visible; failure never renders verified. |
+| PRF-15 | Declare trader status | At first sale, ask situational jurisdiction questions and disclose exactly what will become public before submission. | Approved rule pack resolves `private|trader|undetermined|review_required`; listing gate rechecks. |
+| PRF-16 | Detect classification mismatch | Durable business signals trigger `review_required`; pause public listings and require re-declaration/review without silently calling the party a trader. | Audited disposition restores a valid classification or keeps listings blocked. |
+
+### Global Interaction Rules
+
+- Shard 00 governs boundary validation, idempotency, version conflicts, object/media handling, jobs, errors, audit, and events; Shard 01 governs party, acting context, mandate, legal identity, and external identifiers.
+- A shadow is always a subject and never an agent. It has no public/search-indexed portfolio before claim or explicit consent plus approved release controls.
+- Provisional control may perform only actions the platform can fully reverse within the claim window; it cannot sign, transfer, redirect payout, dispose of identity, publish private evidence, or create durable rights facts.
+- Public profiles never read legal identity. Trader-required legal disclosures live on governed commerce listings unless an approved jurisdiction rule explicitly requires another surface.
+
+## Contracts
+
+### Claim Proof and Contest
+
+| Contract | Locked rule |
+|---|---|
+| Tier A | Independent control: matching own-domain challenge, provider-verified business OAuth, one-party DSP OAuth, postal challenge (30 days), or callback to public business number. Grants full control. |
+| Tier B | Fresh challenge to attester-designated route. One independent designation grants provisional; ≥2 independent same-route designations grant full. |
+| Tier C | Counter-attestation by eligible people who credited the party. One or many confirmations can grant provisional only; independent proof is required for durable full control. |
+| Independence | Attesters are different humans, not same org co-members, not in a mandate relation, not from the same project/session, and never the claimant through any acting party. |
+| Challenge | Email/voice code is six digits, single-use, maximum five attempts, expires in 15 minutes; storage is hashed; successful/expired use burns it. |
+| Contest | One open contest/target/person; three attempts/target/rolling 90 days then Shard 24 review; no fee; 14-day response; no default winner. |
+| Frozen operation | Existing committed obligations may be serviced through operate-only custody; no new obligations, transfer, ownership edits, or payout redirection. Custom escrow remains disabled. |
+
+### Profile, Portfolio, and EPK
+
+| Contract | Locked rule |
+|---|---|
+| Provenance states | `asserted|attested|confirmed_assertion|creator_asserted|disputed`; state belongs to each fact, not its section. Public never reveals attester identity; evidence class/count may render. |
+| Composition | Fixed Header → Now → Record → Detail. Record is one reverse-chronological/filterable body of work; Detail is sectioned by heterogeneous facet/type. No viewer-adaptive order or user theming. |
+| Portfolio | Query over Shard 02/credit graph, never stored document. Human aggregation includes only publicly linked aliases; all derived totals/collaborators are recomputed from that visible set. |
+| Curation | Emphasis orders; `Unlisted` removes a credit from this party page only; neither edits the source ledger. No completeness score, career timeline density, or aggregate provenance score. |
+| Reel | Credit proves participation, not media rights. Item requires governed media with owner/license/public-embed basis; role and credit reference travel with clip; takedown revokes item. |
+| EPK | Live generated view per pitch. Share wrapper contains public facts by default; private aliases/member credits require explicit per-send consent/inclusion. Sender sees material-change notices. |
+| EPK export | Optional PDF is a timestamped accessible snapshot with canonical live-link, source/version list, and “current as of” notice; never replaces live model. |
+
+### Credentials and Trader Status
+
+| Contract | Locked rule |
+|---|---|
+| Credential | Subject party, jurisdiction/profile type, issuer, identifier/reference, issue/expiry, method, evidence, and state are explicit. `verified` requires current evidence from configured adapter/reviewer. |
+| Jurisdiction | US profile is the only authored launch profile. Unknown/unapproved statutory instrument slots remain `unknown`, never borrow UK/EU names or behavior. |
+| Domain requirement | Credential state is supplied here; Shards 15/16 and other consumers own whether it blocks, warns, or notifies for their operation. |
+| Trader classification | Party-level, jurisdiction/effective-period aware, derived from versioned answers and rule-pack version; seller cannot directly choose legal label. |
+| Commerce gate | No listing publishes unless classification and counsel-approved disclosure rule pack are current for seller/buyer jurisdiction. Unknown or review-required fails closed. |
+
+## Data Models
+
+| Model | Purpose and core fields |
+|---|---|
+| `ShadowPartyContext` | party, creator human/context, source domain/entity, structured role/instrument, contact route ref, created time/version. |
+| `ShadowSuppression` | party/contact fingerprint, scope outreach/publication, evidence/case, state, time/version. |
+| `InvitationDispatch` | shadow, route, attempt number, reason, scheduled/sent/stopped state, provider ref. |
+| `ClaimCase` | target party, claimant person, claim type, state, control level, current proof/window, version. |
+| `ClaimProofAttempt` | claim, tier/method, challenge/evidence refs, independence result, state, timestamps. |
+| `OwnershipContest` | target, incumbent/challenger claims, state, deadline, resolution basis, reversibility end/version. |
+| `PartyOwnershipPeriod` | party, owner person, basis claim/transfer, starts/ends, provisional/full, case refs. |
+| `ProfileSectionRevision` | party, section code, structured content, author human/acting party, revision/version, state. |
+| `ProfileFactProjection` | source fact ID/version, party, provenance state/class/count, visibility, sort/filter keys. |
+| `ProfileEmphasis` | party/surface, ordered fact/role references, actor/version; cosmetic last-write-wins. |
+| `ReelItem` | party, credit, object/embed, role, rights basis/ref, order, state/version. |
+| `EpkShare` | party, creator/context, recipient label/hash, purpose, selected facts, consent refs, expires/revoked/version. |
+| `EpkOpenEvent` | share, coarse opened time/count; no recipient account, IP, fingerprint, or cross-site tracking. |
+| `CredentialRecord` | subject, type/profile, issuer, ref, issue/expiry, method/evidence, state/version. |
+| `TraderAssessment` | party, jurisdiction, answers, rule-pack version, classification, effective dates, state/version. |
+| `TraderMismatchSignal` | party, signal type, bounded metrics/evidence refs, state, generated/reviewed time. |
+
+Detailed fields, state transitions, policy values, and projection invariants are normative in the linked deep dive.
+
+### Typed Field and Cardinality Registry
+
+Field typing is deterministic: `*_id: uuid`, `*_at: timestamptz`, `*_date: date`, `*_minor: bigint`, `*_count: integer`, `currency: char(3)`, `is_*|has_*: boolean`, `state|status|type|kind|class: closed enum`, `version: bigint`, ratios `numeric(9,6)`, checksums `text`, and URLs `text`. Every named contract field uses this registry unless its contract declares a stricter type.
+
+- **`ShadowPartyContext`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: party, creator human/context, source domain/entity, structured role/instrument, contact route ref, created time/version..
+- **`ShadowSuppression`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: party/contact fingerprint, scope outreach/publication, evidence/case, state, time/version..
+- **`InvitationDispatch`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: shadow, route, attempt number, reason, scheduled/sent/stopped state, provider ref..
+- **`ClaimCase`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: target party, claimant person, claim type, state, control level, current proof/window, version..
+- **`ClaimProofAttempt`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: claim, tier/method, challenge/evidence refs, independence result, state, timestamps..
+- **`OwnershipContest`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: target, incumbent/challenger claims, state, deadline, resolution basis, reversibility end/version..
+- **`PartyOwnershipPeriod`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: party, owner person, basis claim/transfer, starts/ends, provisional/full, case refs..
+- **`ProfileSectionRevision`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: party, section code, structured content, author human/acting party, revision/version, state..
+- **`ProfileFactProjection`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: source fact ID/version, party, provenance state/class/count, visibility, sort/filter keys..
+- **`ProfileEmphasis`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: party/surface, ordered fact/role references, actor/version; cosmetic last-write-wins..
+- **`ReelItem`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: party, credit, object/embed, role, rights basis/ref, order, state/version..
+- **`EpkShare`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: party, creator/context, recipient label/hash, purpose, selected facts, consent refs, expires/revoked/version..
+- **`EpkOpenEvent`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: share, coarse opened time/count; no recipient account, IP, fingerprint, or cross-site tracking..
+- **`CredentialRecord`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: subject, type/profile, issuer, ref, issue/expiry, method/evidence, state/version..
+- **`TraderAssessment`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: party, jurisdiction, answers, rule-pack version, classification, effective dates, state/version..
+- **`TraderMismatchSignal`:** required core fields `id: uuid`, `owner_id: uuid`, `state: closed enum`, `version: bigint`, `created_at: timestamptz`, `updated_at: timestamptz`; domain fields are the named keys in Contracts and the model row above using the deterministic registry; cardinality is N:1 to its owner/aggregate and 1:N to additive events, revisions or evidence unless the row declares uniqueness. Constraints/relationships: party, signal type, bounded metrics/evidence refs, state, generated/reviewed time..
+
+## Access Control
+
+| Principal/context | Allowed | Explicit denial |
+|---|---|---|
+| Anonymous | Read approved public profile/EPK; enter claim pointer; submit bounded correction/suppression or contest initiation. | Non-public shadow portfolio, contact route, attester identity, private alias, evidence, trader answers. |
+| Shadow subject | Receive minimum notice and use account-free remedy. | Act as party, edit facts, see protected portfolio, gain control from link alone. |
+| Provisional owner | Reversible asserted edits and ordinary operation within claim/mandate. | Transfer, payout/redirection, signing/rights, identity disposal, durable authority grants, private export. |
+| Full owner/mandate | Edit eligible asserted sections, curate own projection, create EPK, submit credential/trader records. | Edit attested facts, reserved provenance treatment, another party's private data. |
+| Attester | Respond to a specific claim they are eligible to attest; receive grant/contest notice. | Self-attest, view other attesters, access claimant evidence or legal identity. |
+| Credential reviewer | Review assigned type/evidence after MFA under named capability. | General profile browsing, invent issuer facts, change consuming-domain policy. |
+| Identity/trader case operator | Review assigned contest/suppression/mismatch with reason/audit. | Legal adjudication beyond policy, silent owner override, direct evidence export. |
+| Public EPK recipient | View/forward active share and accessible export without account. | Discover unselected/private facts or recipient tracking beyond minimal opens. |
+
+### Access Escalation
+
+- **Principal/context:** a denial returns a typed reason and preserves canonical state; authority or evidence disputes route to the scoped case/Trust & Safety path, support handles mechanical recovery through an expiring purpose grant, and counsel/capability/privacy hard gates have no role override.
+- **Anonymous:** a denial returns a typed reason and preserves canonical state; authority or evidence disputes route to the scoped case/Trust & Safety path, support handles mechanical recovery through an expiring purpose grant, and counsel/capability/privacy hard gates have no role override.
+- **Shadow subject:** a denial returns a typed reason and preserves canonical state; authority or evidence disputes route to the scoped case/Trust & Safety path, support handles mechanical recovery through an expiring purpose grant, and counsel/capability/privacy hard gates have no role override.
+- **Provisional owner:** a denial returns a typed reason and preserves canonical state; authority or evidence disputes route to the scoped case/Trust & Safety path, support handles mechanical recovery through an expiring purpose grant, and counsel/capability/privacy hard gates have no role override.
+- **Full owner/mandate:** a denial returns a typed reason and preserves canonical state; authority or evidence disputes route to the scoped case/Trust & Safety path, support handles mechanical recovery through an expiring purpose grant, and counsel/capability/privacy hard gates have no role override.
+- **Attester:** a denial returns a typed reason and preserves canonical state; authority or evidence disputes route to the scoped case/Trust & Safety path, support handles mechanical recovery through an expiring purpose grant, and counsel/capability/privacy hard gates have no role override.
+- **Credential reviewer:** a denial returns a typed reason and preserves canonical state; authority or evidence disputes route to the scoped case/Trust & Safety path, support handles mechanical recovery through an expiring purpose grant, and counsel/capability/privacy hard gates have no role override.
+- **Identity/trader case operator:** a denial returns a typed reason and preserves canonical state; authority or evidence disputes route to the scoped case/Trust & Safety path, support handles mechanical recovery through an expiring purpose grant, and counsel/capability/privacy hard gates have no role override.
+- **Public EPK recipient:** a denial returns a typed reason and preserves canonical state; authority or evidence disputes route to the scoped case/Trust & Safety path, support handles mechanical recovery through an expiring purpose grant, and counsel/capability/privacy hard gates have no role override.
+
+## Accessibility
+
+- Profile provenance states use text, semantics, and icons; color alone never distinguishes asserted, attested, disputed, provisional, expired, or trader states.
+- Claim/contest steppers expose current step, alternatives, countdowns, proof requirements, and resumable status; code inputs support paste, one-time-code autocomplete, and non-destructive errors.
+- Empty, loading, denied, and failed sections remain distinct; a failed portfolio section never disappears as if the career were empty.
+- Fixed profile layers use landmarks/headings; record filters are keyboard operable, preserve focus, announce result counts, and expose an unfiltered route.
+- Reel media supplies captions/transcripts where applicable, accessible controls, no autoplay, reduced motion, and rights/takedown status.
+- EPK links and PDFs meet WCAG 2.2 AA, reflow/reading-order requirements, descriptive link text, tagged headings, image alternatives, and visible generated/current timestamps.
+- Trader/legal disclosure names fields and consequences before consent, requires an explicit confirmation, and restores focus/context after step-up.
+
+## Event Schemas
+
+All payloads use Shard 00 envelopes and identifiers only.
+
+| Event type | Payload | Consumer contract |
+|---|---|---|
+| `profile.shadow.created.v1` | `{ shadowPartyId, contextId }` | Matching/invitation jobs refetch suppression and context. |
+| `profile.claim.changed.v1` | `{ claimCaseId, partyId }` | Ownership/context/profile consumers refetch canonical state. |
+| `profile.contest.changed.v1` | `{ contestId, partyId }` | Shard 24, operations, notifications, commerce refetch. |
+| `profile.projection.invalidated.v1` | `{ partyId, sourceType, sourceId }` | Profile/EPK publication rebuilds viewer-safe projection. |
+| `profile.epk.material-change.v1` | `{ epkShareId, sourceType, sourceId }` | Notify sender after current-view recomputation. |
+| `profile.credential.changed.v1` | `{ credentialId, partyId }` | Owning domains re-evaluate current requirement. |
+| `profile.trader-status.changed.v1` | `{ assessmentId, partyId }` | Commerce pauses/rechecks listings and disclosures. |
+
+## Edge Cases
+
+| Case | Required result |
+|---|---|
+| Capture names abusive/mixed-script party | Create inert flagged record; no index/public page; structured fields prevent free-text spam. |
+| Invitation route typo | “Not you” stops all outreach without login; link never claims; fact remains protected/reviewable. |
+| Dispatch budget exceeded | Queue transparently; never reject capture or accuse creator. |
+| Two shadows likely same party | Suggest merge; preserve both until approved claim/merge; no automatic authority. |
+| Claim proof provider unavailable | Claim stays open; offer another method; no downgrade or hidden denial. |
+| Tier C ring confirms each other | Eligible only for provisional control; no full ownership/public trust/routing without independent proof. |
+| Claim target merges mid-flow | Redirect claim to survivor and re-run proof/visibility/conflict checks. |
+| Incumbent ignores contest | After 14 days, full-grade independent challenger evidence may win reversibly; weaker evidence freezes. |
+| Both claimants have credible proof | Freeze ownership, preserve operate-only committed work, route Shard 24; platform does not guess. |
+| Frozen party has pending payment | Use provider/local reconciliation and manual case; no custom escrow representation or payout redirection. |
+| Profile source fact is denied/errored | Render denial/error explicitly; never infer absence or leak existence. |
+| Private alias would change a total/collaborator edge | Recompute only visible-set projection; no observable variation from hidden alias. |
+| Subject unlists credit | Remove from their page only and explain source ledger/co-contributor pages remain. |
+| Reel clip lacks rights basis | Reject publication; credit remains visible; offer governed link/embed or rights workflow. |
+| EPK is forwarded | Works for stranger; reveals only selected data; recipient label is not an access guarantee. |
+| EPK source changes after send | Recipient sees current fact; sender receives material-change notice; old PDF remains timestamped snapshot. |
+| Credential expires during active booking | State becomes expired and event fires; consuming domain applies its predeclared policy. |
+| Jurisdiction credential type unknown | Render unknown/unverified and fail any hard gate; never substitute another regime. |
+| Trader mismatch signal fires | Pause listings, set review-required, preserve drafts/orders, and require review/re-declaration. |
+| Counsel-approved trader disclosure absent | Commerce listing activation remains disabled; no generic or invented legal copy. |
+
+## Surface Applicability
+
+- **Primary**: Responsive web/PWA profiles, claim/contest/remedy, portfolio/reel/EPK, credential, and seller-classification surfaces.
+- **Server**: Hono APIs, PostgreSQL/RLS/RPC projections and cases, Storage-governed media/evidence, Queue invitation/verification/publication jobs.
+- **Deferred/gated**: Public unclaimed portfolios, unapproved registry integrations, user-media reels without rights basis, and commerce without US disclosure rule pack.
+
+## Edge-Case Coverage Matrix
+
+| Flow | Concurrent access | Invalid input / authority | Deletion, revocation or cascade |
+|---|---|---|---|
+| PRF-01 Create shadow by reference | Same idempotency key returns the same result; competing expected revisions serialize one winner and return typed conflict to the loser without duplicate effect. | Schema, authority and policy validation fail before mutation/provider effect and return a typed refusal without existence leakage. | Owner/source deletion or revocation preserves required immutable evidence/tombstone, removes derived access/projection, and queues idempotent dependent invalidation so no orphan remains. |
+| PRF-02 Match possible duplicate | Same idempotency key returns the same result; competing expected revisions serialize one winner and return typed conflict to the loser without duplicate effect. | Schema, authority and policy validation fail before mutation/provider effect and return a typed refusal without existence leakage. | Owner/source deletion or revocation preserves required immutable evidence/tombstone, removes derived access/projection, and queues idempotent dependent invalidation so no orphan remains. |
+| PRF-03 Dispatch invitation | Same idempotency key returns the same result; competing expected revisions serialize one winner and return typed conflict to the loser without duplicate effect. | Schema, authority and policy validation fail before mutation/provider effect and return a typed refusal without existence leakage. | Owner/source deletion or revocation preserves required immutable evidence/tombstone, removes derived access/projection, and queues idempotent dependent invalidation so no orphan remains. |
+| PRF-04 Account-free suppress/correct | Same idempotency key returns the same result; competing expected revisions serialize one winner and return typed conflict to the loser without duplicate effect. | Schema, authority and policy validation fail before mutation/provider effect and return a typed refusal without existence leakage. | Owner/source deletion or revocation preserves required immutable evidence/tombstone, removes derived access/projection, and queues idempotent dependent invalidation so no orphan remains. |
+| PRF-05 Start/resume claim | Same idempotency key returns the same result; competing expected revisions serialize one winner and return typed conflict to the loser without duplicate effect. | Schema, authority and policy validation fail before mutation/provider effect and return a typed refusal without existence leakage. | Owner/source deletion or revocation preserves required immutable evidence/tombstone, removes derived access/projection, and queues idempotent dependent invalidation so no orphan remains. |
+| PRF-06 Complete claim proof | Same idempotency key returns the same result; competing expected revisions serialize one winner and return typed conflict to the loser without duplicate effect. | Schema, authority and policy validation fail before mutation/provider effect and return a typed refusal without existence leakage. | Owner/source deletion or revocation preserves required immutable evidence/tombstone, removes derived access/projection, and queues idempotent dependent invalidation so no orphan remains. |
+| PRF-07 Convert provisional claim | Same idempotency key returns the same result; competing expected revisions serialize one winner and return typed conflict to the loser without duplicate effect. | Schema, authority and policy validation fail before mutation/provider effect and return a typed refusal without existence leakage. | Owner/source deletion or revocation preserves required immutable evidence/tombstone, removes derived access/projection, and queues idempotent dependent invalidation so no orphan remains. |
+| PRF-08 Contest ownership | Same idempotency key returns the same result; competing expected revisions serialize one winner and return typed conflict to the loser without duplicate effect. | Schema, authority and policy validation fail before mutation/provider effect and return a typed refusal without existence leakage. | Owner/source deletion or revocation preserves required immutable evidence/tombstone, removes derived access/projection, and queues idempotent dependent invalidation so no orphan remains. |
+| PRF-09 Consensual transfer | Same idempotency key returns the same result; competing expected revisions serialize one winner and return typed conflict to the loser without duplicate effect. | Schema, authority and policy validation fail before mutation/provider effect and return a typed refusal without existence leakage. | Owner/source deletion or revocation preserves required immutable evidence/tombstone, removes derived access/projection, and queues idempotent dependent invalidation so no orphan remains. |
+| PRF-10 Compose public profile | Same idempotency key returns the same result; competing expected revisions serialize one winner and return typed conflict to the loser without duplicate effect. | Schema, authority and policy validation fail before mutation/provider effect and return a typed refusal without existence leakage. | Owner/source deletion or revocation preserves required immutable evidence/tombstone, removes derived access/projection, and queues idempotent dependent invalidation so no orphan remains. |
+| PRF-11 Edit asserted profile | Same idempotency key returns the same result; competing expected revisions serialize one winner and return typed conflict to the loser without duplicate effect. | Schema, authority and policy validation fail before mutation/provider effect and return a typed refusal without existence leakage. | Owner/source deletion or revocation preserves required immutable evidence/tombstone, removes derived access/projection, and queues idempotent dependent invalidation so no orphan remains. |
+| PRF-12 Curate portfolio/reel | Same idempotency key returns the same result; competing expected revisions serialize one winner and return typed conflict to the loser without duplicate effect. | Schema, authority and policy validation fail before mutation/provider effect and return a typed refusal without existence leakage. | Owner/source deletion or revocation preserves required immutable evidence/tombstone, removes derived access/projection, and queues idempotent dependent invalidation so no orphan remains. |
+| PRF-13 Generate/share EPK | Same idempotency key returns the same result; competing expected revisions serialize one winner and return typed conflict to the loser without duplicate effect. | Schema, authority and policy validation fail before mutation/provider effect and return a typed refusal without existence leakage. | Owner/source deletion or revocation preserves required immutable evidence/tombstone, removes derived access/projection, and queues idempotent dependent invalidation so no orphan remains. |
+| PRF-14 Record/verify credential | Same idempotency key returns the same result; competing expected revisions serialize one winner and return typed conflict to the loser without duplicate effect. | Schema, authority and policy validation fail before mutation/provider effect and return a typed refusal without existence leakage. | Owner/source deletion or revocation preserves required immutable evidence/tombstone, removes derived access/projection, and queues idempotent dependent invalidation so no orphan remains. |
+| PRF-15 Declare trader status | Same idempotency key returns the same result; competing expected revisions serialize one winner and return typed conflict to the loser without duplicate effect. | Schema, authority and policy validation fail before mutation/provider effect and return a typed refusal without existence leakage. | Owner/source deletion or revocation preserves required immutable evidence/tombstone, removes derived access/projection, and queues idempotent dependent invalidation so no orphan remains. |
+| PRF-16 Detect classification mismatch | Same idempotency key returns the same result; competing expected revisions serialize one winner and return typed conflict to the loser without duplicate effect. | Schema, authority and policy validation fail before mutation/provider effect and return a typed refusal without existence leakage. | Owner/source deletion or revocation preserves required immutable evidence/tombstone, removes derived access/projection, and queues idempotent dependent invalidation so no orphan remains. |
+
+## Cross-Shard Dependencies
+
+- **Depends on:** Shard 00 platform contracts and Shard 01 canonical party/authority.
+- **Depended on by:** Shard 15 and Shard 16 according to approved decomposition; profile/credential/trader projections may also inform later discovery and commerce through canonical party contracts without granting authority.
+
+## Deep Dives Needed
+
+- [Profiles, claiming and qualifications deep dive](deep-dives/02-profiles-verification.md) — proof tiers, states, projection/privacy invariants, media rights, credentials, trader rules, and abuse recovery.
+
+### Cross-Shard Section Contract Map
+
+- **Shard 00 — Cross-cutting platform foundation:** consume [Shard 00 — Cross-cutting platform foundation Contracts](00-infrastructure.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 00 — Cross-cutting platform foundation Event Schemas](00-infrastructure.md#event-schemas). Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
+- **Shard 01 — Identity authority and party governance:** consume [Shard 01 — Identity authority and party governance Contracts](01-identity-authority.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 01 — Identity authority and party governance Event Schemas](01-identity-authority.md#event-schemas). Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
+- **Shard 15 — Education delivery:** consume [Shard 15 — Education delivery Contracts](15-education-delivery.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 15 — Education delivery Event Schemas](15-education-delivery.md#event-schemas). Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
+- **Shard 16 — Education credentials and institutions:** consume [Shard 16 — Education credentials and institutions Contracts](16-education-credentials-institutions.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 16 — Education credentials and institutions Event Schemas](16-education-credentials-institutions.md#event-schemas). Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
+
+## Changelog
+
+| Date | Change | Workflow | Sections Affected |
+|---|---|---|---|
+| 2026-08-02 | Initial skeleton and source-feature seeding | /decompose-architecture-structure | All |
+| 2026-08-02 | Authored complete parent IA from 12 approved ideation sources | /write-architecture-spec-design | All |
+| 2026-08-02 | Resolved claim, projection, EPK, credential, trader and abuse-path variance | /write-architecture-spec-deepen | Contracts, Models, Access, Events, Edge Cases |
+
+## Dependency References
+
+- [[specs/ia/00-infrastructure|Shard 00 — Cross-cutting platform foundation]]
+- [[specs/ia/01-identity-authority|Shard 01 — Identity authority and party governance]]
+- [[specs/2026-08-02-architecture-design|WeJammin — Architecture Design]]
+- [[specs/data-placement-strategy|WeJammin — Data Placement Strategy]]
+- [[specs/design-system|WeJammin — Design System]]
+
+### Constrains
+
+- [[specs/ia/15-education-delivery|Shard 15 — Education delivery]]
+- [[specs/ia/16-education-credentials-institutions|Shard 16 — Education credentials and institutions]]
+
+
+<!-- spec-graph: auto-generated -->
+## Related Specs
+
+### References
+- [[specs/ia/00-infrastructure|Shard 00 — Cross-cutting platform foundation]]
+- [[specs/ia/01-identity-authority|Shard 01 — Identity authority and party governance]]
+- [[specs/2026-08-02-architecture-design|WeJammin — Architecture Design]]
+- [[specs/data-placement-strategy|Data Placement Strategy]]
+- [[specs/design-system|Design System]]
+- [[specs/ia/15-education-delivery|Shard 15 — Lessons, practice and mentorship delivery]]
+- [[specs/ia/16-education-credentials-institutions|Shard 16 — Courses, credentials, institutions and special practice]]

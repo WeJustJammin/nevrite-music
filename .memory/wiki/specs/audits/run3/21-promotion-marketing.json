@@ -1,0 +1,346 @@
+{
+  "domain": "21-promotion-marketing",
+  "root": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/21-promotion-marketing",
+  "unitsAudited": 7,
+  "filesRead": 41,
+  "expected": { "units": 7, "files": 41 },
+  "coverageNote": "Enumeration matches the expected 7 units / 41 files exactly. Units are the domain directory itself plus the six sub-domain directories 21.01, 21.02, 21.03, 21.04, 21.05, 21.08 (each holding an *-index.md). 21.06, 21.07 and 21.09 are leaf feature files at domain level and were audited as part of the root unit. Dimension 4 (Constraint Explicitness) is scored N/A for all 7 units: budget / timeline / team-size / performance axes are owned by meta/constraints.md, which every unit references rather than restates, and no unit in this domain is a constraints document. Dimension 6 (Competitive Positioning) is N/A for the six sub-domain units and applicable only to the root unit, where 21.06 DT-01 and 21.09 DT-01/DT-02 name concrete competitors (Buffer, Later, Hootsuite, Metricool, Jaxsta) with specific capability gaps and a stated moat. All other dimensions were scored for every unit.",
+  "units": [
+    {
+      "unit": "21-promotion-marketing (domain root: promotion-marketing-index.md, promotion-marketing-cx.md, 21.06, 21.07, 21.09)",
+      "applicableCheckpoints": 7,
+      "naDimensions": [4],
+      "points": 2.5,
+      "perDimension": {
+        "1": "✅ — promotion-marketing-index.md:15-27 names a specific user (publicist / plugger / playlist pitcher), a specific pain ('a personal spreadsheet that walks out the door when the person leaves') and a falsifiable unrecoverable loss ('missing the DSP editorial pitch window forfeits Release Radar for the cycle').",
+        "2": "✅ — Role Matrix populated for all 9 children with a substantive reading note (:113-131) that distinguishes access facts from interest facts; every leaf carries a 4-role Role Lens. The gatekeeper's absence from the persona model is tracked with owner + stage (Q-01), not silently omitted.",
+        "3": "❌ — the EPK's unconfirmed-credit behaviour is undecided between two different products (block vs render-as-claimed), plus the Decayed coverage state has no defined rendered strength and the domain CX mis-states a payola verdict code.",
+        "5": "⚠️ — no numeric, unit-bearing threshold appears anywhere in the root unit and no metric row is deferred with an owner: badge-decay propagation to embedded EPKs (promotion-marketing-cx.md:211-214) has no latency target, and 21.09's open-tracked signal ('sees it was opened — a weak but real signal') has no measurable definition. Directional only.",
+        "6": "✅ — ≥3 named competitors with capability gaps and a defensible mechanism: 21.06.md:85 'Buffer, Later, Hootsuite and Metricool are all better at this than we will be, and none of it compounds'; 21.09.md:95 'Jaxsta cannot build it (no daily hook, no session presence). Buffer cannot build it (no credit graph).'",
+        "7": "⚠️ — the great majority of rows carry owner + deferral target + what they block, and the re-target convention is applied rigorously; but four separate tracking defects survive (two inline PENDING markers naming already-completed stages, one Q row deferred to a completed MoSCoW pass, two mis-pointed bare Q references, and an [OWNER]-marked row assigned to Agent).",
+        "8": "⚠️ — index + cx exist, Role Matrix and Role Lenses are populated and the folder tree matches the Children table paths; but the Children table's Status column is stale for 7 of 9 rows and contradicts the same file's own D-08, and the domain Role Matrix understates the Producer's granted access in 21.01."
+      }
+    },
+    {
+      "unit": "21.01-release-campaign-planner",
+      "applicableCheckpoints": 6,
+      "naDimensions": [4, 6],
+      "points": 1.0,
+      "perDimension": {
+        "1": "✅ — 21.01-release-campaign-planner-index.md:10-15 states one derived artefact and one falsifiable loss ('miss the DSP editorial pitch window and the cycle's Release Radar placement is forfeit with no remedy at any price').",
+        "2": "✅ — Role Matrix per child; every leaf's Role Lens states exactly what the Producer sees ('final master due R−35') and why (21.01.01:21), with the constraint-without-plan shape made explicit.",
+        "3": "✅ — grid/gate/calendar/cascade each carry edge tables covering concurrency, permission leak, orphaned owner, race-with-send, un-finalisation, stranded vs escaped vs externally-committed classification. Two implementers would build the same three-way cascade classification.",
+        "5": "⚠️ — the asset-risk escalation threshold is a literal placeholder ('within N days of a hard deadline') with no tracked row that owns the number.",
+        "7": "⚠️ — every Q row has owner + stage and most carry explicit re-targeting, but three inline PENDING markers name `/ideate-discover Step 5 deepening`, a stage the same files record as already run.",
+        "8": "✅ — index + cx present, Children statuses accurate ([PARTIAL] ×4 matches disk), Role Matrix populated, no single-child folders, no flat feature carrying ≥3 sub-features."
+      }
+    },
+    {
+      "unit": "21.02-pitching-outreach",
+      "applicableCheckpoints": 6,
+      "naDimensions": [4, 6],
+      "points": 1.0,
+      "perDimension": {
+        "1": "✅ — 21.02-pitching-outreach-index.md:10-15 'Asking a gatekeeper to care' with the per-channel danger enumerated and the shared shape (target, pitch, embargo, result) justified.",
+        "2": "✅ — Role Matrix plus an explicit note defending the uniform Producer/Operator/Fan absence as a finding rather than laziness (:53-59); 21.02.05 grants the Producer the one non-None row and explains the constraint-without-plan access shape.",
+        "3": "⚠️ — two modelling divergences survive: the rate-limit counter keying differs between the CX file and the owning feature, and the embargo uniqueness key is pulled in two directions by adjacent edge rows.",
+        "5": "✅ — 21.02.06 states every threshold as a number with a unit and a window (10/channel/7d, 15/target/7d, ≥85% similarity across ≥3 targets, 2 overrides/7d) and tracks final tuning at Q-05 with owner User; the 'Silent after N days' state is owned by 21.03.03, which tracks N explicitly.",
+        "7": "⚠️ — CX-04 and CX-05 each state an unresolved product decision in prose with no owner and no deferral target; six inline PENDING markers name the completed `/ideate-discover Step 5 deepening`; and 21.02.03's Role Lens points at the wrong domain-index question.",
+        "8": "✅ — index + cx present, Children statuses accurate, Role Matrix populated with legend, Role Lens on all six leaves."
+      }
+    },
+    {
+      "unit": "21.03-pitch-targets-crm",
+      "applicableCheckpoints": 6,
+      "naDimensions": [4, 6],
+      "points": 1.0,
+      "perDimension": {
+        "1": "✅ — 21.03-pitch-targets-crm-index.md:10-14 'Who to pitch, and what happened last time', naming the wound and the two-object answer.",
+        "2": "✅ — single-persona matrix defended as a finding (:47-52); the homeless Operator gap is named in two places and tracked.",
+        "3": "✅ — directory decay model, small-n suppression, merge-survival, portability authorship line, empty-CRM export, export abuse/concurrency, silence-as-terminal are all specified with the failure mode and the user-visible outcome.",
+        "5": "⚠️ — the small-n suppression threshold that protects a re-identifiable statistic has no number and no tracked row owning it, while the neighbouring silence threshold does get an explicit `[PENDING — /write-be-spec]`.",
+        "7": "⚠️ — rows are otherwise exemplary (owner, stage, what they block, cross-links to twin rows), but four inline PENDING markers name the completed `/ideate-discover Step 5 deepening`.",
+        "8": "✅ — index + cx present, Children statuses accurate, Role Matrix populated, Role Lens on all four leaves."
+      }
+    },
+    {
+      "unit": "21.04-smart-links-presave-attribution",
+      "applicableCheckpoints": 6,
+      "naDimensions": [4, 6],
+      "points": 0.5,
+      "perDimension": {
+        "1": "✅ — 21.04-smart-links-presave-attribution-index.md:10-19 states the three instruments and why they are one sub-domain (they transform into each other).",
+        "2": "✅ — the Fan-as-actor note (:49-55) is the strongest persona reasoning in the domain; 21.04.02's Role Lens states verbatim what the fan is told before granting.",
+        "3": "✅ — mutation-at-release, retirement-is-not-deletion, rot detection, redirect-with-escape guard, grant expiry, failure counting, late-click handling all specified with user-visible outcomes.",
+        "5": "✅ — the two numeric unknowns are both tracked with owner and stage: attribution window length (21.04.04 Q-02 → `/create-prd-compile`) and release-day concurrency ceiling (21.04.02 Q-04 → `/create-prd-compile`); the landing-page budget is routed explicitly ('precise budget → `/create-prd`').",
+        "7": "⚠️ — two rows are deferred to `MoSCoW`, a stage that has run, and the domain index records the same question as resolved in the opposite direction.",
+        "8": "✅ — index + cx present, Children statuses accurate, Role Matrix populated with the Fan-access note, Role Lens on all four leaves."
+      }
+    },
+    {
+      "unit": "21.05-paid-promotion",
+      "applicableCheckpoints": 6,
+      "naDimensions": [4, 6],
+      "points": 0.5,
+      "perDimension": {
+        "1": "✅ — 21.05-paid-promotion-index.md:10-14 names the line that must not be crossed and whose track gets pulled when it is.",
+        "2": "✅ — two matrix notes, both real findings: the Fan's None-but-targeted stake and the universal Read-only row on the guardrail ('the absence of a Full/Config row anywhere in this table is the feature').",
+        "3": "✅ — 21.05.03 enumerates six verdicts with codes, fail-closed semantics, no-override, terms-version binding, free-text gaming, multi-hyphenate binding, and the 05 back door. Two implementers would build the same classifier.",
+        "5": "✅ — verdict codes, synchronous-before-money ordering and the fail-closed rule are all testable as written; the one open policy branch (halt-and-refund vs grandfather) is tracked at 21.05.03 Q-02 with owner User.",
+        "7": "⚠️ — 21.05-paid-promotion-cx.md CX-03 states an unresolved modelling decision with no owner and no deferral target, and its 5-question synthesis is absent without the deferral note the domain CX file uses for its own Medium rows.",
+        "8": "✅ — index + cx present, Children statuses accurate, Role Matrix populated, Role Lens on all three leaves; the Won't placement of 21.05.02 is recorded in both the parent index (Q-03) and the child (Q-01)."
+      }
+    },
+    {
+      "unit": "21.08-event-tour-marketing",
+      "applicableCheckpoints": 6,
+      "naDimensions": [4, 6],
+      "points": 1.0,
+      "perDimension": {
+        "1": "✅ — 21.08-event-tour-marketing-index.md:10-20 states the perishable-inventory problem, the Operator's first-class stake and why it is a different machine.",
+        "2": "✅ — the Operator note (:40-49) is specific about why Config on announce and Full on soft-seat, grounded in meta/personas.md ('an unsold Tuesday is gone forever').",
+        "3": "⚠️ — the off-platform-ticketing case is stated two incompatible ways: the live edge/state rows say there is no loop at all, while the resolved question rows say ingested or attested counts are the normal input and the feature must be specified degraded-first.",
+        "5": "✅ — the one numeric unknown (the 'soft' threshold) is tracked at 21.08.02 Q-03 with owner Agent and stage `/create-prd-compile`, and the behaviour it hangs off (advise, never auto-spend) is fixed by D-01.",
+        "7": "⚠️ — CX-04 states an unresolved decision ('Whether this is a re-announce or a new announce is unresolved and matters for fan fatigue') with no owner and no deferral target, and 21.08.01 carries an inline PENDING naming the completed Step 5.",
+        "8": "✅ — index + cx present, Children statuses accurate, Role Matrix populated with the Operator note, Role Lens on all three leaves."
+      }
+    }
+  ],
+  "findings": [
+    {
+      "unit": "21-promotion-marketing",
+      "severity": "blocking",
+      "dimension": 3,
+      "category": "unresolved-alternative",
+      "claim": "The EPK's behaviour when a credit is not yet confirmed in domain 02 is specified as two different products — a hard block on the EPK and a claimed-badge render — and a third signal (the Blocked state) argues against the second, with no marker deferring the choice.",
+      "evidence": "21.09-campaign-press-kit-epk.md:63 (Edge Cases) — 'Credits not yet confirmed in 02 | The EPK cannot claim credits the credit graph has not confirmed … | Blocked on the unconfirmed credit, with a link to 02. **Or** included as **claimed**, visibly distinguished. Never silently rendered as verified'. 21.09-campaign-press-kit-epk.md:79 (States) — 'Blocked | Credits unconfirmed in 02 | Named blocker; the alternative is claiming what we cannot verify' — which rejects the claimed option the edge row permits. 21.09-campaign-press-kit-epk.md:116 (D-03) — 'Unverified credits are blocked or marked claimed, never rendered as verified'. No open question in the file covers the choice: Q-01 is polymorphism, Q-02 leak control, Q-03 photo licences, Q-04 provenance rendering.",
+      "forcedInvention": "An implementer must invent whether an unconfirmed credit blocks EPK creation/sharing outright or renders inside the EPK with a claimed badge. The two produce different products: one gates the artist's send on another domain's state, the other ships a weaker document. The States table's Blocked row and D-03's disjunction point opposite ways, so no default can be read off the text.",
+      "verdict": "CONFIRMED"
+    },
+    {
+      "unit": "21-promotion-marketing",
+      "severity": "warning",
+      "dimension": 3,
+      "category": "undefined-state-render",
+      "claim": "A `Decayed` coverage item has no defined rendered strength, even though the EPK is required to render exactly one of three strengths per item and badge decay is required to propagate into every EPK that embedded the quote.",
+      "evidence": "21.07-coverage-clipping-log.md:92 (States) — 'Decayed | Source link rotted | Verification lapses; the artist is told before the EPK quietly weakens'. The three renderable strengths are closed: 21.09-campaign-press-kit-epk.md:44 — 'The EPK renders the strength 21.07 computed — `verified` / `verified-at-timestamp` / `claimed`'. The only decay target stated is class-bound to playlist adds: 21.07-coverage-clipping-log.md:81 — 'Add stays in the log, badge decays toward claimed unless a snapshot was captured', while 21.07:90 defines verified-at-timestamp by artefact class — 'Live but mutable source confirmed (playlist add)'. Propagation is mandatory: promotion-marketing-cx.md:187-189 — 'Badge decay — a verified link that later rots — must propagate to every EPK that embedded the quote, or the EPK asserts a verification it can no longer stand behind.'",
+      "forcedInvention": "For a rotted *article* (the `verified` class), an implementer must invent whether the EPK now shows `claimed`, shows `verified-at-timestamp` (which the taxonomy reserves for mutable playlist sources), or shows a fourth 'decayed' label the closed three-value vocabulary does not contain.",
+      "verdict": "CONFIRMED"
+    },
+    {
+      "unit": "21-promotion-marketing",
+      "severity": "warning",
+      "dimension": 3,
+      "category": "silent-contradiction",
+      "claim": "The domain CX file lists `PAYOLA_DISCLOSURE_REQUIRED` as a block verdict, while the owning feature defines it as an allow-with-obligation verdict — the same code cannot both block a spend and let it proceed.",
+      "evidence": "promotion-marketing-cx.md:142-144 (CX-03 synthesis Q2) — 'Trigger chain: `offer/pitch composed` → classifier evaluates → {allow | allow-with-disclosure | block (PAYOLA_AIRPLAY_BLOCKED / PAYOLA_DISCLOSURE_REQUIRED)}. Sync, blocking.' 21.05.03-payola-guardrail.md:40 (classification table) — 'Attention + endorsement (paid creator post, sponsored review, paid testimonial) | **Allowed with mandatory disclosure** | `PAYOLA_DISCLOSURE_REQUIRED` | A material connection exists; the audience must be told. Obligation attached, non-removable'. The CX list also omits `PAYOLA_PLACEMENT_BLOCKED`, the code that actually blocks the playlist-placement case CX-03 is about.",
+      "forcedInvention": "An implementer wiring the 21.02 send path from CX-03 would reject a paid-creator-post offer that the owning classifier allows with a label. The tree's ownership convention (CX-03 §1: 'the payola policy is owned solely by 21.05.03') resolves it, which is why this is a warning rather than blocking — but the CX statement is live, unmarked and wrong.",
+      "verdict": "CONFIRMED"
+    },
+    {
+      "unit": "21-promotion-marketing",
+      "severity": "warning",
+      "dimension": 8,
+      "category": "stale-status-map",
+      "claim": "The domain index's Children table asserts every child is `[SURFACE]` and 'not yet deepened'; seven of nine rows disagree with the files on disk, and the same document's D-08 contradicts its own table for 21.07.",
+      "evidence": "promotion-marketing-index.md:62-63 — '> 8 children from 12 candidates: 6 sub-domains, 2 features, plus 1 Deep Think addition (21.09).\\n> All `[SURFACE]` — classified and outlined, not yet deepened.' Table rows :67-75 mark all nine `[SURFACE]`. On disk: 21.01/21.02/21.03/21.04/21.05 indexes are '> **Status**: [BREADTH]', 21.07-coverage-clipping-log.md:5 is '> **Status**: [PARTIAL]', 21.09-campaign-press-kit-epk.md:5 is '> **Status**: [PARTIAL]'. The same index contradicts itself at :144 (D-08) — 'This overrules the later, deeper file: `promotion-marketing-cx.md` is `[DEEP]` (body authored 2026-07-18) and 21.07 is `[PARTIAL]` (body authored 2026-07-17)'. Contrast 21.01-release-campaign-planner-index.md:27-30, whose Status column is accurate, showing the column is maintained elsewhere in the tree.",
+      "forcedInvention": "A reader deciding which children still need deepening, or reconstructing the ownership-not-recency ratification argument D-08 depends on, gets two different answers from one file.",
+      "verdict": "CONFIRMED"
+    },
+    {
+      "unit": "21-promotion-marketing",
+      "severity": "warning",
+      "dimension": 8,
+      "category": "role-matrix-contradiction",
+      "claim": "The domain Role Matrix grants the Producer read-only access across 21.01 and explains that choice explicitly, but 21.01.02 grants the Producer write access (mark-final, flag-recall) that its own happy path requires.",
+      "evidence": "promotion-marketing-index.md:101 — '| 21.01 Release Campaign Planner | ✅ Full | 👁️ Read-only | ❌ None | ❌ None |', reinforced at :118-119 — '**Producer's `👁️` rows are narrow and real, never courtesy access.** They see the deadline that binds them (21.01)'. Against 21.01-release-campaign-planner-index.md:37 — '| 21.01.02 Asset Readiness Gate | ✅ Full | ⚙️ Config | ❌ None | ❌ None |' and 21.01.02-asset-readiness-gate.md:20 — 'Producer | Config | Owns and marks state on **their** rows only — master final, stems delivered … Can flag a recall on an asset they previously marked final', which 21.01.02's happy path step 4 depends on: 'Producer uploads/links the master and marks it final'.",
+      "forcedInvention": "An implementer deriving the permission model from the domain rollup denies the Producer the write the child feature's happy path is built on; one deriving it from the child grants a write the domain matrix says does not exist. No note reconciles the two levels.",
+      "verdict": "CONFIRMED"
+    },
+    {
+      "unit": "21-promotion-marketing",
+      "severity": "warning",
+      "dimension": 7,
+      "category": "stale-deferral-target",
+      "claim": "Two inline `[PENDING]` markers in 21.09 name stages that have already run, while the Q rows they belong to were explicitly re-targeted — so the file carries both a live and a dead pointer for the same gap.",
+      "evidence": "21.09-campaign-press-kit-epk.md:68 — 'Per-recipient/expiry link controls `[PENDING — Q-02, /ideate-validate]`', against the same file's :125 — 'Q-02 | **EPK leak control.** … **Re-targeted**: `/ideate-validate` has run. … the security stage's material. | User | `/create-prd-security`'. And :71 — 'Photos are not cleared for press use … `[PENDING — /ideate-discover Step 5 deepening]`', against :126 Q-03 (owner User, `/create-prd-security`) and the domain-wide record that Step 5 has run (e.g. 21.09:124 'Step 5 has run without settling it').",
+      "forcedInvention": "Nothing product-level, but a spec writer scanning for open work is pointed at two completed stages instead of `/create-prd-security`, and the tree's own re-target convention is silently broken.",
+      "verdict": "CONFIRMED"
+    },
+    {
+      "unit": "21-promotion-marketing",
+      "severity": "warning",
+      "dimension": 7,
+      "category": "stale-deferral-target",
+      "claim": "21.07 Q-01 (is automated coverage monitoring in scope?) is deferred to `MoSCoW`, a pass the domain index records as already run, and the row was neither resolved nor re-targeted even though the file was revised after that pass.",
+      "evidence": "21.07-coverage-clipping-log.md:151 — 'Q-01 | Is automated coverage monitoring in scope, or is the log manual-first? … | User | MoSCoW'. The pass is complete per promotion-marketing-index.md:159 — '**RESOLVED — the MoSCoW pass ran and confirmed the row's own suspicion.** Domain 21 carries **2 of 195 Musts**'. 21.07's header records a later revision than the pass it defers to: 21.07:6-7 — '> **Last updated**: 2026-07-23 … the `[PARTIAL]` body was authored **2026-07-17**'. Every comparable row in the domain carries a '**Re-targeted**' note in this situation (e.g. 21.07's sibling rows in 21.09, 21.02, 21.03).",
+      "forcedInvention": "Whether the log ships manual-first or with a suggestion-based monitor is a scope decision with an owner but no reachable stage; the deferral resolves to nothing.",
+      "verdict": "CONFIRMED"
+    },
+    {
+      "unit": "21-promotion-marketing",
+      "severity": "warning",
+      "dimension": 7,
+      "category": "misdirected-cross-reference",
+      "claim": "Two bare `Q-` references in the domain CX file point at domain-index questions that are about entirely different subjects, while a third bare reference in the same file resolves correctly — so the referencing convention is not decidable from the text.",
+      "evidence": "promotion-marketing-cx.md:252 (CX-07) — 'a consent obligation to notify, not a UX nicety (open Q-01)' and :269 — 'Release-day fan-out failures must be counted and surfaced, never silently absorbed (Q-04 → create-prd-compile)'. The domain-level rows are unrelated: promotion-marketing-index.md:151 'Q-01 | [OWNER] **Is there a fifth persona — the gatekeeper?**' and :154 'Q-04 | [OWNER] **Is honest attribution a competitive liability?** … | User | `/create-prd`'. The intended rows are in 21.04.02 (Q-01 'Are fans notified when a release they pre-saved moves?' → `/create-prd-security`; Q-04 'Release-day fan-out at scale …' → `/create-prd-compile`). The same file uses the bare form correctly for domain scope at :329 — '(Q-02 / sender-identity Q-01)', matching promotion-marketing-index.md:152 'Q-02 | **Do pitch emails send as the artist or as WeJammin?**'.",
+      "forcedInvention": "A spec writer following CX-07's citations lands on the gatekeeper-persona question and the attribution-positioning question, neither of which governs pre-save notification or release-day fan-out accounting.",
+      "verdict": "CONFIRMED"
+    },
+    {
+      "unit": "21-promotion-marketing",
+      "severity": "warning",
+      "dimension": 7,
+      "category": "malformed-owner",
+      "claim": "A question explicitly marked `[OWNER]` is assigned to owner `Agent`, so the row states two different deciders for the same feature-inclusion call — and its twin row in 21.03 repeats the same mismatch.",
+      "evidence": "promotion-marketing-index.md:160 — '| Q-10 | [OWNER] Do Operators need release-independent promo tooling (club nights, their own calendar) and their own local-press CRM? … Whether to admit a new Operator-facing scope at all is a feature-inclusion choice, not a structural one. | Agent | `/create-prd` |'. Twin: 21.03-pitch-targets-crm-index.md:69 — '| Q-03 | [OWNER] Do Operators need their own contact/CRM surface for local press and promoters? … | Agent | `/create-prd` |'. Compare the unambiguous rows in the same table, where `[OWNER]` and Owner=User agree (:151 Q-01, :153 Q-03, :154 Q-04, :157 Q-07, :158 Q-08).",
+      "forcedInvention": "At `/create-prd` an agent may take a scope decision the marker reserves for the owner, or defer one the Owner column assigns to it; nothing in the row breaks the tie.",
+      "verdict": "CONFIRMED"
+    },
+    {
+      "unit": "21.01-release-campaign-planner",
+      "severity": "warning",
+      "dimension": 5,
+      "category": "untestable-threshold",
+      "claim": "The asset-risk escalation threshold is a literal unbound placeholder ('within N days'), and the grid's mirror row says only 'near its deadline' — no row or question owns the number.",
+      "evidence": "21.01.02-asset-readiness-gate.md:69 (States) — '| At risk | Red or not-started within N days of a hard deadline | Escalated in the roll-up and to the Musician |'. The dependent surface repeats it qualitatively: 21.01.01-backward-planned-campaign-grid.md:73 — '| At-risk | A hard row's dependent asset is red near its deadline | The row escalates; the campaign header carries the risk summary |'. 21.01.02's open questions do not cover it: Q-01 is resolved (clearance boundary), Q-02 is 'Which asset specs are actually machine-checkable given distributor variance?'. Contrast the tree's handling of the comparable unknown at 21.03.03-pitch-tracking-response-log.md:74 — 'N is a threshold set at `/write-be-spec`; `[PENDING — /write-be-spec]` for the exact value'.",
+      "forcedInvention": "An implementer must invent the escalation window (and whether it is uniform or scales with the deadline's hardness), which directly determines whether the roll-up warns in time to be useful — the feature's stated purpose ('2 assets red, 1 blocking a hard deadline in 6 days').",
+      "verdict": "CONFIRMED"
+    },
+    {
+      "unit": "21.01-release-campaign-planner",
+      "severity": "warning",
+      "dimension": 7,
+      "category": "stale-deferral-target",
+      "claim": "Three inline PENDING markers defer to `/ideate-discover Step 5 deepening`, a stage the same files record as already run, while the Q rows covering the same gaps were re-targeted to live stages.",
+      "evidence": "21.01.01-backward-planned-campaign-grid.md:56 — 'Channel rule is stale … `[PENDING — /ideate-discover Step 5 deepening]` — see Q-01 on the sub-domain index'; :59 — 'Two campaigns target the same release | `[PENDING — /ideate-discover Step 5 deepening]` — likely rejected (one campaign per release)'; 21.01.04-date-change-cascade.md:59 — 'Pre-saves already authorised for the old date … `[PENDING — /ideate-discover Step 5 deepening]` — whether fans are notified of a date change is partly a consent question'. The same files record the stage as complete and re-target: 21.01.01:106 'Q-01 | … **Re-targeted**: `/ideate-discover` Step 5 has already run without closing it'; :107 Q-03 '**Re-targeted**: `/ideate-discover` Step 5 has already run and left the edge-case row (\"Two campaigns target the same release\") pending. … | Agent | `/create-prd-architecture`'; 21.01.04:99 'Q-01 | … | User | `/create-prd-security`'.",
+      "forcedInvention": "No product invention, but each marker names a stage that cannot act, so the gap has a dead pointer alongside its live one.",
+      "verdict": "CONFIRMED"
+    },
+    {
+      "unit": "21.02-pitching-outreach",
+      "severity": "warning",
+      "dimension": 3,
+      "category": "model-divergence",
+      "claim": "The sub-domain CX file specifies a per-(sender, target) rate counter that the owning feature's mechanism list does not contain, so the number of enforced counters is ambiguous.",
+      "evidence": "21.02-pitching-outreach-cx.md:54 (CX-02 synthesis Q1, Confidence High) — 'The limit counter is per (sender, target) and per target globally.' The owning feature enumerates a different pair: 21.02.06-pitch-rate-limits-curator-protection.md:33-35 — '**Per-sender caps** — how many pitches one sender account may send in a rolling window, counted **per channel** (playlist, press/blog, radio are separate budgets …). Default: **10 pitches per channel per rolling 7 days**' and :40-42 — '**Per-target global caps** — how many pitches any one target receives from **all** WeJammin senders combined. Default: … **15** … per rolling 7 days'. Nothing in 21.02.06, including D-05 ('the per-target **global** cap is the load-bearing protection; the per-sender cap is a softer courtesy limit'), defines a per-(sender, target) budget.",
+      "forcedInvention": "An implementer must decide whether a single sender re-pitching one target repeatedly is capped by a dedicated pair counter (CX-02) or only by their per-channel budget and the target's shared global budget (21.02.06). The behaviours differ for the exact abuse the feature exists to prevent.",
+      "verdict": "CONFIRMED"
+    },
+    {
+      "unit": "21.02-pitching-outreach",
+      "severity": "warning",
+      "dimension": 3,
+      "category": "undefined-uniqueness-key",
+      "claim": "Two adjacent edge rows require opposite uniqueness rules for embargoes on the same content, and the embargo object as defined has no scope field that would let both hold.",
+      "evidence": "21.02.05-embargo-premiere-exclusives.md:58 — 'A second outlet is promised the same exclusive | Caught at set time as a contradiction | \"This content is already exclusively promised to [outlet] until [time].\" Structural, not advisory'; :64 — 'Two embargoes on one asset (print exclusive + radio first-play) | Not merged — separate objects, separate lift times, both binding | Both shown; the earliest lift governs what is actually public'. The object definition offers no discriminating dimension: :26-27 — 'An embargo is an object: bound content, lift timestamp, bound parties, the outlet holding the exclusive, and the terms.' The CX file restates the permissive half only: 21.02-pitching-outreach-cx.md:36 — 'Two embargoes on one asset … must be modelled as separate objects with separate lift times, not merged.'",
+      "forcedInvention": "An implementer must invent the exclusivity scope on which uniqueness is enforced — per asset, per (asset × medium/channel), or per (asset × promised right) — because the block rule and the multi-embargo rule cannot both apply to a bare asset key.",
+      "verdict": "CONFIRMED"
+    },
+    {
+      "unit": "21.02-pitching-outreach",
+      "severity": "warning",
+      "dimension": 7,
+      "category": "untracked-open-question",
+      "claim": "Two CX rows state unresolved product decisions in prose with no owner and no deferral target, and neither is carried by any Q row in the sub-domain.",
+      "evidence": "21.02-pitching-outreach-cx.md:13 (CX-04) — 'Confidentiality runs the *other* way — a DSP pitch is confidential and its existence must not leak into press outreach … Whether this needs a system-level guard or is merely a copy warning is unresolved.' :14 (CX-05) — 'the competition for the exclusive is real (a radio-first strategy can cost a print exclusive) but whether the system should model that contention or leave it to the human is open.' Neither appears in the sub-domain index's Q table (21.02-pitching-outreach-index.md:74-77: Q-01 gatekeeper persona, Q-02 sender identity, Q-03 DSP mechanics, Q-04 radio scope — resolved), and CX-04/CX-05 receive no 5-question synthesis section, unlike CX-01/CX-02/CX-03. The domain CX file does mark such omissions explicitly (promotion-marketing-cx.md:334-338), so the silence here is inconsistent rather than conventional.",
+      "forcedInvention": "An implementer must decide unaided whether DSP-pitch confidentiality is enforced (a guard that blocks or warns on press copy referencing a pending pitch) or merely advised in copy, and whether cross-channel exclusive contention is modelled at all.",
+      "verdict": "CONFIRMED"
+    },
+    {
+      "unit": "21.02-pitching-outreach",
+      "severity": "warning",
+      "dimension": 7,
+      "category": "stale-deferral-target",
+      "claim": "Six inline PENDING markers across four leaves defer to `/ideate-discover Step 5 deepening`, which the same files record as already run.",
+      "evidence": "21.02.01-dsp-editorial-pitch.md:66 — 'Multiple tracks on a release, artist can pitch one | `[PENDING — /ideate-discover Step 5 deepening]`'; :67 — 'Platform's stored window rule is stale … `[PENDING — /ideate-discover Step 5 deepening]` — see 21.01 Q-01/Q-02'; 21.02.02-playlist-curator-pitching.md:56 — 'Artist wants to pay a curator for consideration | `[PENDING — /ideate-discover Step 5 deepening]`'; :61 — 'Placement happens, then the playlist is purged … `[PENDING — /ideate-discover Step 5 deepening]`'; 21.02.04-radio-plugging.md:56 — 'Spin data is not observable … `[PENDING — /ideate-discover Step 5 deepening]`'; 21.02.05-embargo-premiere-exclusives.md:60 — 'Artist posts on Instagram directly, outside WeJammin … `[PENDING — /ideate-discover Step 5 deepening]`'. Against the same files: 21.02.01:109 'Q-01 | … **Re-targeted**: `/ideate-discover` Step 5 has already run and did not close this'; 21.02.02:104 'Q-02 | … **Re-targeted**: `/ideate-discover` Step 5 has already run without doing the verification'; 21.02.04:98; 21.02.05:107.",
+      "forcedInvention": "Each gap carries a pointer to a stage that has closed; only the paired Q row is actionable, and three of the six markers do not name that row.",
+      "verdict": "CONFIRMED"
+    },
+    {
+      "unit": "21.02-pitching-outreach",
+      "severity": "warning",
+      "dimension": 7,
+      "category": "misdirected-cross-reference",
+      "claim": "21.02.03's Role Lens sends the reader to domain-index Q-02 for the Operator local-press gap, but that row is the sender-identity question; the gap is carried by domain Q-10.",
+      "evidence": "21.02.03-press-blog-outreach.md:21 — 'Operator | None | … A venue pitching local press about a show at their room does exist — and it lives in 21.08 … See Q-02 on the domain index.' The cited row is unrelated: promotion-marketing-index.md:152 — 'Q-02 | **Do pitch emails send as the artist or as WeJammin?** Architecture-shaping and it determines whether rate limiting (21.02.06) is enforceable or theatre.' The Operator gap is :160 — 'Q-10 | [OWNER] Do Operators need release-independent promo tooling … and their own local-press CRM?', mirrored at 21.08-event-tour-marketing-index.md:66 Q-03. The same file uses the pointer correctly for sender identity at :109 — 'Q-01 | Sender identity — as the artist or as WeJammin? See Q-02 on the sub-domain index.'",
+      "forcedInvention": "A reader tracing the Operator's homeless local-press scope is routed to the deliverability question instead of the two rows that actually track it.",
+      "verdict": "CONFIRMED"
+    },
+    {
+      "unit": "21.03-pitch-targets-crm",
+      "severity": "warning",
+      "dimension": 5,
+      "category": "untestable-threshold",
+      "claim": "The small-n suppression rule that prevents re-identification of another artist's rejection history has no threshold value and no question owning one, while the file's own analysis shows the number is the whole protection.",
+      "evidence": "21.03.01-media-target-directory.md:60 — 'Small-n response rate (target received 3 pitches total) | The statistic is noise and, worse, re-identifiable | Suppressed below a threshold. \"Not enough data\" beats a 33% that is one artist's outcome exposed'; :96 (D-02) — 'Small-n statistics are suppressed | Below threshold a response rate is both noise and re-identifiable.' The re-identification mechanism is spelled out but not bounded: 21.03-pitch-targets-crm-cx.md:34 — 'small-n targets make re-identification trivial (if a curator received 3 pitches this month, a 33% response rate identifies a specific artist's outcome to anyone who knows two of them)'. The file's open questions cover publication policy (Q-02 'publish or band?') and cold start (Q-01) and verification (Q-03), never the threshold.",
+      "forcedInvention": "An implementer must invent the suppression n (and whether it is a count of pitches, of distinct senders, or a per-window figure) — the single parameter that decides whether the directory leaks an identifiable artist's rejection.",
+      "verdict": "CONFIRMED"
+    },
+    {
+      "unit": "21.03-pitch-targets-crm",
+      "severity": "warning",
+      "dimension": 7,
+      "category": "stale-deferral-target",
+      "claim": "Four inline PENDING markers defer to `/ideate-discover Step 5 deepening`, a stage the same files record as complete, and one of them is the file's own evidence that the stage did not close the gap.",
+      "evidence": "21.03.01-media-target-directory.md:62 — 'Artist contributes a contact that is wrong or malicious … `[PENDING — /ideate-discover Step 5 deepening]` — contribution needs verification'; 21.03.02-private-contact-crm.md:53 — 'Directory target is removed (GDPR erasure) while a private contact references it … `[PENDING — /ideate-discover Step 5 deepening]`'; :56 — 'Artist stores something in notes that is defamatory or is special-category data … `[PENDING — /ideate-discover Step 5 deepening]`'; 21.03.03-pitch-tracking-response-log.md:60 — 'Artist deletes a contact … `[PENDING — /ideate-discover Step 5 deepening]`'. The completed-stage record is in the same files: 21.03.01:106 — 'Q-03 | … **Re-targeted**: `/ideate-discover` Step 5 has already run without closing it — the edge case still reads `[PENDING — /ideate-discover Step 5 deepening]`. | Agent | `/create-prd-security`'.",
+      "forcedInvention": "The markers point at a closed stage; only the paired Q rows (21.03.01 Q-03, 21.03.02 Q-01, 21.03.03 Q-02) are reachable, and two of the four markers do not name them.",
+      "verdict": "CONFIRMED"
+    },
+    {
+      "unit": "21.04-smart-links-presave-attribution",
+      "severity": "warning",
+      "dimension": 7,
+      "category": "stale-deferral-target",
+      "claim": "Two rows are deferred to `MoSCoW`, a pass that has run, and the domain index records the same beachhead question as resolved in the opposite direction — so both rows are simultaneously stale and contradicted.",
+      "evidence": "21.04-smart-links-presave-attribution-index.md:70 — '| Q-02 | Is this sub-domain the **beachhead**? `meta/problem-statement.md` Q-03 asks which consolidation surface wins users first. … It is a plausible wedge and a plausible waste. | User | MoSCoW |'; 21.04.01-smart-link-builder.md:128 — '| Q-02 | Is this the beachhead? See Q-02 on the sub-domain index. | User | MoSCoW |'. Against promotion-marketing-index.md:159 — 'Q-09 | … **RESOLVED — the MoSCoW pass ran** … **D-31**'s release split puts 21 outside both windows — \"**v1 — session spine** (01, 02, 05, 07, **09-capture**)\" and \"**v1.5 — marketplaces** (13, 14, 15)\" — so it is phase-2+, and the beachhead is decided and is not this domain.' Comparable rows elsewhere were updated when the pass ran: 21.06-social-publishing-cross-post.md:109 — '**RESOLVED — built, but at `Could`; not cut.** The MoSCoW pass ratified D-04's honest proposal exactly'.",
+      "forcedInvention": "A reader cannot tell whether the beachhead question is open (two live rows, no reachable stage) or closed against this domain (the parent index), which affects sequencing decisions taken at `/plan-phase`.",
+      "verdict": "CONFIRMED"
+    },
+    {
+      "unit": "21.05-paid-promotion",
+      "severity": "warning",
+      "dimension": 7,
+      "category": "untracked-open-question",
+      "claim": "The sub-domain CX file states an unresolved modelling decision with no owner and no deferral target, and gives the row no synthesis section, so the question exists nowhere else.",
+      "evidence": "21.05-paid-promotion-cx.md:12 (CX-03, Confidence Medium) — '| CX-03 | Ads | Seeding | Both draw down one finite budget, and the allocation is the actual strategic decision | Musician | Medium | Budget contention is real. Whether the platform should model the trade-off or simply show both spends is unresolved — modelling it requires claiming a comparative effectiveness we cannot measure (21.04.03 DT-01). |' Only CX-01 and CX-02 receive Cross-Cut Details sections (:18, :42), and no note records CX-03's deferral — unlike promotion-marketing-cx.md:334-338, which explicitly defers its own Medium rows. The sub-domain's Q table does not carry it: 21.05-paid-promotion-index.md:69-72 (Q-01 money handling, Q-02 fan-graph audiences, Q-03 seeding scope — resolved, Q-04 sanction verification).",
+      "forcedInvention": "An implementer must decide unaided whether the budget surface models an ads-vs-seeding trade-off (which 21.04.03 DT-01 says cannot be measured) or merely reports both spends.",
+      "verdict": "CONFIRMED"
+    },
+    {
+      "unit": "21.08-event-tour-marketing",
+      "severity": "warning",
+      "dimension": 3,
+      "category": "silent-contradiction",
+      "claim": "The live edge-case and state rows say off-platform ticketing means no sales data and no loop at all, while the resolved questions in the same files say external counts are ingested or attested as the normal case and the feature must be specified degraded-first — and the sub-domain's own rationale still rests on the superseded premise.",
+      "evidence": "Live rows: 21.08.02-geo-date-promotion-soft-seat.md:59 — 'Ticketing is off-platform | No sales data, no detection, no loop | The loop simply does not exist for that date'; :77 (States) — 'Not assessable | Off-platform ticketing | No data, no loop — stated, not faked'. Resolved rows: 21.08.02:109 — '**RESOLVED — a minority, and domain 19 states it as its own working assumption** … \"Most shows on the platform — especially early on, and possibly forever — will be sold by DICE, Eventbrite, Ticketmaster …\" … detection's normal input is an ingested or attested count of stated provenance and freshness … The \"Ticketing is off-platform → no data, no loop\" edge case above is the *no-connector, no-attestation* case, not every off-platform date'; 21.08.03-ticket-sale-attribution.md:108 — 'That makes **D-04 the default path rather than the exception** … this feature must therefore be specified degraded-first, with the true-attribution case as the better sub-case.' The uncorrected premise: 21.08-event-tour-marketing-index.md:11-12 — 'the attribution that — uniquely in this platform — actually works, because we own the transaction'; 21.08-event-tour-marketing-cx.md:10 — 'This is the only closed marketing loop in the platform … so \"did the boost work?\" has a real answer here'; and 21.08.03's Overview, Behavior, Happy Path and States all present the completed join as the primary path with 'Degraded' as an edge state. The domain's own correction convention forbids this: 21.07-coverage-clipping-log.md:101-104 — 'Wording superseded by a later owner ratification is **never deleted and never left standing unmarked**.'",
+      "forcedInvention": "An implementer must decide whether soft-seat detection and ticket attribution are built join-first (with off-platform dates unassessable) or ingestion-first over provenance-and-freshness-stamped external counts. The two produce different primary surfaces, different empty states, and a different answer to whether the sub-domain's headline claim holds for most dates.",
+      "verdict": "CONFIRMED"
+    },
+    {
+      "unit": "21.08-event-tour-marketing",
+      "severity": "warning",
+      "dimension": 7,
+      "category": "untracked-open-question",
+      "claim": "CX-04 states an unresolved decision with a named consequence but no owner and no deferral target, and no Q row in the sub-domain or its leaves carries it.",
+      "evidence": "21.08-event-tour-marketing-cx.md:13 (CX-04, Confidence Medium) — '| CX-04 | Soft-Seat Response | Announce | A date added or moved after announce re-opens the announce for that market only | Musician, Operator | Medium | Routing changes mid-cycle are normal in live music. **Whether this is a re-announce or a new announce is unresolved and matters for fan fatigue.** |' CX-04 receives no Cross-Cut Details section (only CX-01/CX-02/CX-03 do, :19/:42/:60) and no deferral note. The Q tables do not carry it: 21.08-event-tour-marketing-index.md:64-67 (polymorphism, domain ownership, Operator contacts, co-op spend) and 21.08.01-tour-announce-onsale.md:103-105 (polymorphism, counterparty binding, fan-out collapse); 21.08.01's nearest row addresses only data, not the reveal — :56 'Dates added after announce | No baseline, no comparable history, and the reach is gone | … needs its own tagged links'.",
+      "forcedInvention": "An implementer must invent whether a post-announce date fires a market-scoped re-announce against an existing campaign or creates a new announce object — which decides the fan-notification behaviour the row itself flags as costly to get wrong.",
+      "verdict": "CONFIRMED"
+    },
+    {
+      "unit": "21.08-event-tour-marketing",
+      "severity": "warning",
+      "dimension": 7,
+      "category": "stale-deferral-target",
+      "claim": "An inline PENDING marker defers to `/ideate-discover Step 5 deepening`, a stage the same sub-domain records as already run.",
+      "evidence": "21.08.01-tour-announce-onsale.md:59 — 'Announce fires while a date is being renegotiated | The reveal is a commitment; renegotiating an announced date is a public failure | `[PENDING — /ideate-discover Step 5 deepening]` — ties to 17's booking states'. The stage is recorded complete in the same file and its parent: 21.08.01:103 — 'Q-01 | … **Re-targeted**: `/ideate-discover` Step 5 has run and DT-03 above explicitly declines the ruling'; 21.08-event-tour-marketing-index.md:64 — '**Re-targeted**: `/ideate-discover` Step 5 has run without closing it'. No Q row in either file covers the announce-during-renegotiation case, so the dead pointer is the gap's only tracking.",
+      "forcedInvention": "The behaviour when an announce fires against a date under renegotiation is untracked in practice: the only pointer names a closed stage, and no owner is assigned.",
+      "verdict": "CONFIRMED"
+    }
+  ],
+  "notableStrengths": [
+    "21.02.06 (pitch rate limits) and 21.05.03 (payola guardrail) are the two [DEEP] files and are effectively unambiguous: every threshold is a number with a unit and a rolling window, every verdict has a code, fail-closed semantics are stated three ways, and the last-slot race, sybil evasion, opt-out sabotage and free-text gaming cases all have specified outcomes.",
+    "The re-target convention on open questions is applied with unusual rigour: most rows state which stage has already run, why it did not close the question, which sibling rows are the same decision, and what is enforced in the interim.",
+    "The DQ-20.1 / DQ-20.3 correction pass (verification strength = artefact class + retrievability; provenance is a log state, never rendered) is propagated consistently across promotion-marketing-index.md D-02/D-08/D-09, promotion-marketing-cx.md CX-05/CX-08, 21.07 D-06/D-07 and 21.09 D-05, with both superseded wordings preserved under an explicit correction convention."
+  ]
+}

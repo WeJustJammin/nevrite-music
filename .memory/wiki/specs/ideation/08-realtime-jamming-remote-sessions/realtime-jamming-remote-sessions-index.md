@@ -56,11 +56,11 @@ infrastructure-blocked. **The counter-consideration is in D-06 below and it is s
 |---|------|------|------|--------|------------|
 | 08.01 | Latency Budget & Playability | sub-domain | [08.01-latency-budget-playability/](./08.01-latency-budget-playability/08.01-latency-budget-playability-index.md) | `[BREADTH]` | 9 hypotheses (3 features) |
 | 08.02 | Playable Radius & Peer Matching | sub-domain | [08.02-playable-radius-peer-matching/](./08.02-playable-radius-peer-matching/08.02-playable-radius-peer-matching-index.md) | `[BREADTH]` | 9 hypotheses (3 features) |
-| 08.03 | Remote Monitoring & Session Attendance | sub-domain | [08.03-remote-monitoring-session-attendance/](./08.03-remote-monitoring-session-attendance/08.03-remote-monitoring-session-attendance-index.md) | `[BREADTH]` | 12 hypotheses (4 features) |
+| 08.03 | Remote Monitoring & Session Attendance | sub-domain | [08.03-remote-monitoring-session-attendance/](./08.03-remote-monitoring-session-attendance/08.03-remote-monitoring-session-attendance-index.md) | `[BREADTH]` | 14 hypotheses (4 features) |
 | 08.04 | Talkback & Cue Mixes | sub-domain | [08.04-talkback-cue-mixes/](./08.04-talkback-cue-mixes/08.04-talkback-cue-mixes-index.md) | `[BREADTH]` | 9 hypotheses (3 features) |
-| 08.05 | Session Capture & Recall | sub-domain | [08.05-session-capture-recall/](./08.05-session-capture-recall/08.05-session-capture-recall-index.md) | `[BREADTH]` | 12 hypotheses (4 features) |
+| 08.05 | Session Capture & Recall | sub-domain | [08.05-session-capture-recall/](./08.05-session-capture-recall/08.05-session-capture-recall-index.md) | `[BREADTH]` | 43 hypotheses (4 features) |
 | 08.06 | Session Pre-Flight & Rig Readiness Check | feature | [08.06-session-preflight-rig-readiness.md](./08.06-session-preflight-rig-readiness.md) | `[SURFACE]` | 3 hypotheses |
-| 08.07 | Overdub Mode (Latency-Independent Tracking) | feature | [08.07-overdub-mode.md](./08.07-overdub-mode.md) | `[DEEP]` | 3 hypotheses |
+| 08.07 | Overdub Mode (Latency-Independent Tracking) | feature | [08.07-overdub-mode.md](./08.07-overdub-mode.md) | `[DEEP]` | 15 hypotheses |
 | 08.08 | Interruption, Reconnect & Session Continuity | feature | [08.08-interruption-reconnect-continuity.md](./08.08-interruption-reconnect-continuity.md) | `[SURFACE]` | 3 hypotheses |
 
 > **Type column values:**
@@ -90,7 +90,7 @@ Session Attendance & Provenance**, 08.06 Pre-Flight, **08.07 Overdub Mode**, 08.
 |-------|----------|----------|----------|-----|
 | 08.01 Latency Budget & Playability | ✅ Full | ✅ Full | ⚙️ Config | ❌ None |
 | 08.02 Playable Radius & Peer Matching | ✅ Full | ✅ Full | ⚙️ Config | ❌ None |
-| 08.03 Remote Monitoring & Session Attendance | 👁️ Read-only | ✅ Full | ⚙️ Config | ❌ None |
+| 08.03 Remote Monitoring & Session Attendance | ✅ Full | ✅ Full | ⚙️ Config | ❌ None |
 | 08.04 Talkback & Cue Mixes | ✅ Full | ✅ Full | ⚙️ Config | ❌ None |
 | 08.05 Session Capture & Recall | ✅ Full | ✅ Full | ⚙️ Config | ❌ None |
 | 08.06 Session Pre-Flight & Rig Readiness | ✅ Full | ✅ Full | ⚙️ Config | ❌ None |
@@ -110,6 +110,14 @@ Session Attendance & Provenance**, 08.06 Pre-Flight, **08.07 Overdub Mode**, 08.
 > sells remote-session capability as an amenity. They configure their room's participation; they do not
 > run other people's sessions. Where an Operator runs a session, they are acting as Producer — per
 > `meta/personas.md`, personas are lenses on behaviour, not account types.
+>
+> **Every cell in this table is the widest grant any child confers — read the child matrix for the
+> per-feature truth.** The roll-up flatters 08.03 in particular: the Musician's `Full` there comes from
+> **08.03.03 Live Listener Feedback** alone (*"Can leave notes as a listener — a bandmate attending a mix
+> they are not playing on"*). On the stream itself (08.03.01) and the roster (08.03.02) the Musician is
+> `Read-only` — they are owed the fact that a stream of their performance is going somewhere, they do not
+> configure it — and on 08.03.04 they hold `Config` over their own declared playback chain and nothing
+> else. See the [08.03 Role Matrix](./08.03-remote-monitoring-session-attendance/08.03-remote-monitoring-session-attendance-index.md#role-matrix).
 
 ## Decision Log
 
@@ -118,8 +126,8 @@ Session Attendance & Provenance**, 08.06 Pre-Flight, **08.07 Overdub Mode**, 08.
 | D-01 | Established as a top-level domain | Renamed to drop the 'Collaboration' collision with domain 07, and narrowed hard in response to the strongest objection in the verification set. The transport pipe was extracted as a cross-cut; what survives has interacting capabilities unowned by any sibling. | 14-lens sweep + 3× adversarial verification; ratified by user 2026-07-16 (D-16) |
 | D-02 | Sweep candidates 05 and 06 MERGED into 08.05 Session Capture & Recall | Near-duplicates — both are "capture what happened in a network session". Highlights is a feature inside capture, not a parallel product. The sweep was tuned for coverage, not discipline. | Agent, Node Classification Gate, 2026-07-16 |
 | D-03 | The transport/interpretation line is the domain's organising boundary | D-15 extracted the pipe. This domain consistently owns *interpretation* (what a human is told, what they may do about it) and never *transport* (how packets move). Applied uniformly: 08.01 interprets latency, 08.03 contracts quality, 08.04 defines routing semantics, 08.08 decides what the room does on failure. | Agent, derived from D-15, 2026-07-16 |
-| D-04 | **08.05.04 (Session Attendance & Provenance) is the domain's thesis link and ships with any session mechanism, including Overdub** | A network session is the most instrumentable room that exists — the platform *is* the transport, so who played what is observed, not remembered. Per `meta/problem-statement.md` the root cause is "absence at the point of truth"; here absence is impossible. If domain 08 ships anything without this, it is pure consolidation with nothing that compounds — the exact failure the thesis warns against. | Agent, derived from D-18, 2026-07-16 |
-| D-05 | **Overdub Mode (08.07) is a first-class mode, not a fallback** | Most remote session work is latency-indifferent. The candidate list assumed simultaneity throughout — an artifact of the domain's *name*, not an observation about the work. Overdub also runs on the locked stack and carries the provenance intact. | Agent, Deep Think, 2026-07-16 |
+| D-04 | **08.05.04 (Session Attendance & Provenance) is the domain's thesis link and ships with any session mechanism, including Overdub** | A live network session is the most instrumentable room that exists — the platform *is* the transport, so who played what can be observed rather than remembered. Overdub carries the same provenance structure at its lower delivery-certainty grade unless a live witness observes a segment. Per `meta/problem-statement.md` the root cause is "absence at the point of truth"; here the available evidence is preserved and honestly labelled. If domain 08 ships anything without this, it is pure consolidation with nothing that compounds — the exact failure the thesis warns against. | Agent, derived from D-18, corrected by 08.07 Step 5 / 08.05.04, 2026-08-01 |
+| D-05 | **Overdub Mode (08.07) is a first-class mode, not a fallback** | Most remote session work is latency-indifferent. The candidate list assumed simultaneity throughout — an artifact of the domain's *name*, not an observation about the work. Overdub also runs on the locked stack and carries the same provenance structure at an honestly labelled delivery-certainty grade, never performance-certainty without a live witness. | Agent, Deep Think, corrected by 08.07 Step 5 / 08.05.04, 2026-08-01 |
 | D-06 | **The domain's own strongest objection is recorded, not argued away**: if Overdub is where the value is, this domain arguably dissolves into Projects (07) | 08.07 DT-03 rejected this *narrowly* — the machinery (local-first capture, alignment, provenance, pre-flight) genuinely lives in 08, and moving overdub to 07 would drag it along and leave 08 as a rump of infrastructure-blocked features. **That may be the correct outcome.** D-17 flags domain-count inflation as a live hypothesis and this domain is a prime candidate. Escalated as Q-04. | Agent, adversarial self-test, 2026-07-16 |
 | D-07 | Talkback exclusion from capture is a **structural** requirement, not a configuration | "Record everything, filter later" is a correct software default and a catastrophic audio one. The take it ruins is by definition the keeper. One sub-domain imposing an architectural constraint on another. | Agent, domain convention, 2026-07-16 |
 
@@ -129,8 +137,29 @@ Session Attendance & Provenance**, 08.06 Pre-Flight, **08.07 Overdub Mode**, 08.
 |---|----------|-------|-------------|
 | Q-01 | ~~Which candidate children are sub-domains vs features?~~ **RESOLVED** — 5 sub-domains, 3 domain-level features, 2 candidates merged. See Classification Record. | Agent | ✅ `/ideate-discover` |
 | Q-02 | ~~Are any candidate children actually cross-cuts?~~ **RESOLVED** — the transport pipe (already extracted by D-15, re-affirmed), the `playable-with?` predicate consumption, session attendance → provenance ledger, captured stems → project assets, live notes → project timeline, technical-failure record → billing/disputes. All recorded in the domain CX. | Agent | ✅ `/ideate-discover` |
-| Q-03 | **The infrastructure contradiction stands and is the domain's central risk.** Everything except Overdub Mode needs media infrastructure that `meta/constraints.md` does not have (Astro/Cloudflare Workers/Supabase). The domain index conceded this at ratification and the breadth pass confirms it. Does the owner accept dedicated media infra, or does the domain reduce to Overdub + capture + provenance? | User | MoSCoW / `/create-prd-stack` |
-| Q-04 | **Should this domain exist?** Per D-06 and 08.07 DT-03 — if Overdub is the value, and Overdub's machinery could live in Projects (07), domain 08 may be a rump. Raised against the agent's own interest in having found something. D-17 asks for exactly this scrutiny. | User | `/ideate-validate` |
-| Q-05 | Is the ~25–30 ms ceiling from D-15's rationale a real constant? 08.01.02 DT-02 rejected it as instrument-dependent — a drummer/bassist lock is far tighter than a vocalist over a bed. This does not weaken D-15; it means the playable radius is a *set* of radii by instrument pair, which makes matching richer. But the thresholds have no source yet. | User + Agent | `/ideate-discover` Step 5 |
-| Q-06 | Two probable merges surfaced: (a) live "keep this" note (08.03.03) vs highlight flag (08.05.03) — same gesture from opposite ends, both files raised it independently; (b) monitoring profile (08.04.03) vs playback context (08.03.04) — possibly one entity. | Agent | `/ideate-discover` Step 5 |
+| Q-03 | **The infrastructure contradiction stands and is the domain's central risk.** Everything except Overdub Mode needs media infrastructure that `meta/constraints.md` does not have (Astro/Cloudflare Workers/Supabase). The domain index conceded this at ratification and the breadth pass confirms it. Does the owner accept dedicated media infra, or does the domain reduce to Overdub + capture + provenance? MoSCoW has since run and did not decide this (D-24: Step 5 complete; the domain retains its Musts), and 08.07 DT-09 sharpens the question — the shippable mode is free on the locked stack and it is the **witness** (08.03) that costs media infrastructure, so the real trade is provenance grade against infrastructure. It is a provider/technology choice presented with options at the stack gate. Re-pointed off the completed MoSCoW pass. | User | `/create-prd-stack` |
+| Q-04 | **[OWNER]** **Should this domain exist?** Per D-06 and 08.07 DT-03 — if Overdub is the value, and Overdub's machinery could live in Projects (07), domain 08 may be a rump. Raised against the agent's own interest in having found something. D-17 asks for exactly this scrutiny. **D-17 has since been answered and this question survived it as the sole exception**: `ideation-index.md` D-26 — *"**D-17 resolved — keep 24 domains** … One genuine merge candidate survives: `08 Real-Time Jamming` → `07 Music Projects` (Overdub machinery; rejected only narrowly at 08.07 DT-03) — escalated to `/create-prd` for an explicit keep-or-fold."* So the domain-count hypothesis is closed; the keep-or-fold is an owner call that no later stage takes on its own. Tracked identically at 08.07 Q-05. | User | `/create-prd` |
+| Q-05 | Is the ~25–30 ms ceiling from D-15's rationale a real constant? 08.01.02 DT-02 rejected it as instrument-dependent — a drummer/bassist lock is far tighter than a vocalist over a bed. This does not weaken D-15; it means the playable radius is a *set* of radii by instrument pair, which makes matching richer. But the thresholds have no source yet. Step 5 has since completed without sourcing them: `08.01.02` Q-01 still asks where the instrument-pair table comes from, and 08.07 Q-02 inherits it for overdub residual tolerance. What remains is purely a set of numbers with a cost on both sides of being wrong — the same class as `08.05.02` Q-06's confidence-tier boundaries, already routed to the performance budget. Re-pointed from the completed `/ideate-discover` Step 5. | User + Agent | `/create-prd-compile` |
+| Q-06 | Two probable merges surfaced: (a) live "keep this" note (08.03.03) vs highlight flag (08.05.03) — same gesture from opposite ends, both files raised it independently; (b) monitoring profile (08.04.03) vs playback context (08.03.04) — possibly one entity. Step 5 has since completed and neither merge was taken — all four features remain separate on disk, and domain CX-12 still stands as `[Deferred — Step 5]`. Both are "is this one entity or two", which is a data-model and component-boundary call. Re-pointed from the completed `/ideate-discover` Step 5. | Agent | `/create-prd-architecture` |
 | Q-07 | Consent to recording: a jam room that silently records everyone is a surveillance product, but asking every time destroys the "byproduct of the session" property the thesis depends on. This tension is unresolved and it sits directly on the wedge. | User | `/create-prd-security` |
+
+
+<!-- spec-graph: auto-generated -->
+## Related Specs
+
+### Constrained by
+- [[decisions.md#d-01|D-01]]
+- [[decisions.md#d-09|D-09]]
+- [[decisions.md#d-18|D-18]]
+- [[decisions.md#d-06|D-06]]
+- [[decisions.md#d-15|D-15]]
+- [[decisions.md#d-13|D-13]]
+- [[decisions.md#d-16|D-16]]
+- [[decisions.md#d-02|D-02]]
+- [[decisions.md#d-03|D-03]]
+- [[decisions.md#d-04|D-04]]
+- [[decisions.md#d-05|D-05]]
+- [[decisions.md#d-17|D-17]]
+- [[decisions.md#d-07|D-07]]
+- [[decisions.md#d-24|D-24]]
+- [[decisions.md#d-26|D-26]]

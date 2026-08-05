@@ -29,7 +29,7 @@ Running the business of a music career — total income across every lumpy sourc
 
 | # | Name | Type | Path | Status | Deep Think |
 |---|------|------|------|--------|------------|
-| 23.01 | Income Aggregation & Financial Identity | sub-domain | [23.01-income-aggregation-financial-identity/](./23.01-income-aggregation-financial-identity/23.01-income-aggregation-financial-identity-index.md) | `[SURFACE]` | 15 hypotheses (5 features) |
+| 23.01 | Income Aggregation & Financial Identity | sub-domain | [23.01-income-aggregation-financial-identity/](./23.01-income-aggregation-financial-identity/23.01-income-aggregation-financial-identity-index.md) | `[SURFACE]` | 18 hypotheses (5 features) |
 | 23.02 | Expenses & Tax Readiness | sub-domain | [23.02-expenses-tax-readiness/](./23.02-expenses-tax-readiness/23.02-expenses-tax-readiness-index.md) | `[SURFACE]` | 12 hypotheses (4 features) |
 | 23.03 | Invoicing & Receivables | sub-domain | [23.03-invoicing-receivables/](./23.03-invoicing-receivables/23.03-invoicing-receivables-index.md) | `[SURFACE]` | 9 hypotheses (3 features) |
 | 23.04 | Deal & Contract Vault | sub-domain | [23.04-deal-contract-vault/](./23.04-deal-contract-vault/23.04-deal-contract-vault-index.md) | `[SURFACE]` | 12 hypotheses (4 features) |
@@ -116,13 +116,35 @@ Running the business of a music career — total income across every lumpy sourc
 
 ## Open Questions
 
+**Open-question governance.** Every unresolved row in this table is an explicit delivery hold. The **Owner** cell is accountable; the **hard decision deadline** is the gate immediately before the pipeline stage named in **Deferred To** begins; and the **Question** text is the exact policy, behavior, or contract decision blocked. **Deferred To** names the destination only and never replaces the deadline. No downstream stage may begin until its owner resolves the row or records a formally approved supersession.
+
 | # | Question | Owner | Deferred To |
 |---|----------|-------|-------------|
 | Q-01 | ~~Which candidate children are sub-domains vs features?~~ **RESOLVED** — see Children table and Candidate Disposition. | Agent | ✅ `/ideate-discover` Step 3 |
 | Q-02 | ~~Are any candidate children actually cross-cuts?~~ **RESOLVED** — candidate 13 routed to *Representation & Delegated Access*; three further mechanisms identified (Income Event Emission Contract, Document & Evidence Storage, Consent & Purpose Limitation). See the CX file. | Agent | ✅ `/ideate-discover` Step 3 |
-| Q-03 | **Does WeJammin collect on off-platform invoices?** (`#CX-02`, 23.03.02 Q-01) The domain's highest-leverage question: collection converts the unprovable half of a musician's income into platform-verified income, which is worth more to 23.01.04 and 23.06.01 than any feature inside them. Cost: the platform becomes an intermediary for work it never brokered. | User | `/ideate-validate` |
-| Q-04 | **INV-04 — how far into regulated territory does this domain go?** Filing, lending, commission routing, band-fund custody and insurance broking are each the maximal version of a feature here. The owner should answer this once, as a posture, rather than five times as five features. | User | `/ideate-validate` |
-| Q-05 | **Does the Career half (23.05) survive MoSCoW?** This domain's own rationale admits the merge exists to keep the thin half alive, and every 23.05 feature is proposed `could`. D-17 flags domain-count inflation as a live hypothesis — this sub-domain is where that hypothesis is most testable. | User | MoSCoW / `/ideate-validate` |
+| Q-03 | [OWNER] **Does WeJammin collect on off-platform invoices?** (`#CX-02`, 23.03.02 Q-01) The domain's highest-leverage question: collection converts the unprovable half of a musician's income into platform-verified income, which is worth more to 23.01.04 and 23.06.01 than any feature inside them. Cost: the platform becomes an intermediary for work it never brokered. Still open at source — 23.03.02 Q-01 carries the same question unresolved. | User | `/create-prd` |
+| Q-04 | **INV-04 — how far into regulated territory does this domain go?** Filing, lending, commission routing, band-fund custody and insurance broking are each the maximal version of a feature here. The owner should answer this once, as a posture, rather than five times as five features. MoSCoW settled only the lending edge (23.06.01/.05 → `Won't`); the other four remain live, so the posture is a compliance-model question. | User | `/create-prd-security` |
+| Q-05 | ~~**Does the Career half (23.05) survive MoSCoW?** This domain's own rationale admits the merge exists to keep the thin half alive, and every 23.05 feature is proposed `could`. D-17 flags domain-count inflation as a live hypothesis — this sub-domain is where that hypothesis is most testable.~~ **RESOLVED — yes, it survives.** MoSCoW has run and placed all three 23.05 features at `Could` in [moscow-ledger.md](../moscow-ledger.md#could-201) — 23.05.01, 23.05.02, 23.05.03 — with none demoted to `Won't`. The D-17 domain-count-inflation hypothesis was separately tested and closed by **D-35**, which reaffirmed the 24-domain map after four fresh independent audits and states that "Scope remains governed by existing MoSCoW and release decisions (D-20/D-31), not by deleting domains." | User | ✅ MoSCoW — [moscow-ledger.md](../moscow-ledger.md#could-201) + [ideation-index.md](../ideation-index.md) D-35 |
 | Q-06 | **Is "tax jurisdiction" an attribute of identity (01) rather than of 23?** 23.01.03, 23.02.02 and 23.02.04 all need it, and a touring musician may hold more than one simultaneously — which breaks the scalar assumption everywhere it is used. | Agent | `/create-prd-architecture` |
 | Q-07 | **Financial-record retention vs GDPR erasure.** Statutory retention (commonly 5–7 years) outlives account deletion, and a contract is a *mutual* document the user cannot unilaterally delete. Affects 23.01, 23.02.01 and 23.04.01 alike. | User | `/create-prd-security` |
-| Q-08 | **Q-01 from `meta/personas.md` restated from this domain**: the Musician persona's Role Lens here holds up, but 23.06's features (advances, commission, recoupment, catalogue stakes) serve a musician **with a manager, an agent or a label** — a minority of the persona. Is 23.06 built for the industry's middle class rather than the persona at the structural centre? | User | `/ideate-validate` |
+| Q-08 | ~~**Q-01 from `meta/personas.md` restated from this domain**: the Musician persona's Role Lens here holds up, but 23.06's features (advances, commission, recoupment, catalogue stakes) serve a musician **with a manager, an agent or a label** — a minority of the persona. Is 23.06 built for the industry's middle class rather than the persona at the structural centre?~~ **RESOLVED — the concern was upheld and priced into MoSCoW.** No 23.06 feature is a `Must`: 23.06.02/.03/.04 are `Could` and 23.06.01/.05 are `Won't` in [moscow-ledger.md](../moscow-ledger.md). Its 23.06.02 rationale records the finding verbatim — "Serves only musicians who have a manager/agent — a minority of the persona at the structural centre (Q-08)" — and 23.06.01 is `Won't` because "First-party origination is a licensed activity requiring regulatory permission, capital adequacy and KYC/AML". The sub-domain is retained but deprioritised, not built for the middle class at the persona's expense. | User | ✅ MoSCoW — [moscow-ledger.md](../moscow-ledger.md) |
+
+
+<!-- spec-graph: auto-generated -->
+## Related Specs
+
+### Constrained by
+- [[decisions.md#d-04|D-04]]
+- [[decisions.md#d-02|D-02]]
+- [[decisions.md#d-13|D-13]]
+- [[decisions.md#d-11|D-11]]
+- [[decisions.md#d-01|D-01]]
+- [[decisions.md#d-16|D-16]]
+- [[decisions.md#d-03|D-03]]
+- [[decisions.md#d-19|D-19]]
+- [[decisions.md#d-05|D-05]]
+- [[decisions.md#d-06|D-06]]
+- [[decisions.md#d-17|D-17]]
+- [[decisions.md#d-35|D-35]]
+- [[decisions.md#d-20|D-20]]
+- [[decisions.md#d-31|D-31]]

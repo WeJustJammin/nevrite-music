@@ -92,7 +92,7 @@ Once a stage is locked, downstream stages may not contradict it. To change a loc
 | 10 | `/validate-phase` | Completed phase | Full validation gate | Verification |
 | ↳ | `/validate-phase-quality` | Completed phase | Code quality gates — tests, coverage, lint, type-check, build, CI/CD, staging, migrations, spec coverage | Verification |
 | ↳ | `/validate-phase-readiness` | Quality gates passed | Production readiness gates — API docs, accessibility, performance, security, dependency audit, results | Verification |
-| 11 | `/evolve-contract` | Changed `{{CONTRACT_LIBRARY}}` schema | Safe schema migration | Maintenance |
+| 11 | `/evolve-contract` | Changed `Zod` schema | Safe schema migration | Maintenance |
 
 > **Note**: Rows marked with ↳ are independently-invocable sub-workflows (shards)
 > of their parent command. The parent orchestrates them in sequence, but each shard
@@ -104,23 +104,23 @@ Once a stage is locked, downstream stages may not contradict it. To change a loc
 > If `.memory/wiki/specs/ideation/ideation-index.md` does not exist, the pipeline has not started — run `/ideate` before any other workflow.
 
 > [!WARNING]
-> If `{{PLACEHOLDER}}` values appear anywhere in this file, bootstrap has not run — do not attempt implementation work.
+> If unresolved bootstrap template markers appear anywhere in this file, bootstrap has not run — do not attempt implementation work.
 
 ---
 
 ## Project Configuration
 
-# {{PROJECT_NAME}}
+# WeJammin
 
-{{DESCRIPTION}}
+Consumer-first music collaboration and provenance platform with services, rights capture, governed CMS/settings, marketplaces, and future ecosystem domains.
 
 ### Tech Stack
 
-**{{TECH_STACK_SUMMARY}}**
+**TypeScript; Astro hybrid web with React islands; Hono on Cloudflare Workers; Supabase Pro PostgreSQL/Auth/Storage/Realtime; Zod 4 REST/OpenAPI contracts; pnpm, Vitest, Playwright; GitHub Actions; Sentry and structured logs.**
 
 ### Architecture
 
-- [Architecture Design]({{ARCHITECTURE_DOC}}) — System design document
+- [Architecture Design](.memory/wiki/specs/2026-08-02-architecture-design.md) — System design document
 - [Engineering Standards](.memory/wiki/specs/ENGINEERING-STANDARDS.md) — Non-negotiable quality bar
 - [Data Placement Strategy](.memory/wiki/specs/data-placement-strategy.md) — Entity placement + PII boundaries
 
@@ -141,7 +141,7 @@ Rules in `.agents/rules/` are **always active** — they apply to every task, ev
 | Rule | What It Enforces |
 |------|-----------------|
 | 🔒 [security-first](.agents/rules/security-first.md) | PII isolation, input validation, secret handling |
-| 📜🧪 [tdd-contract-first](.agents/rules/tdd-contract-first.md) | `{{CONTRACT_LIBRARY}}` schemas before implementation, tests ARE the spec |
+| 📜🧪 [tdd-contract-first](.agents/rules/tdd-contract-first.md) | `Zod` schemas before implementation, tests ARE the spec |
 | 🔲 [vertical-slices](.agents/rules/vertical-slices.md) | All four surfaces or it's not done |
 | 🎯📏 [specificity-standards](.agents/rules/specificity-standards.md) | Testable acceptance criteria, exhaustive spec depth |
 | 🧩 [extensibility](.agents/rules/extensibility.md) | File limits, directory docs, anti-spaghetti |
@@ -153,13 +153,13 @@ Rules in `.agents/rules/` are **always active** — they apply to every task, ev
 
 ### Installed Skills
 
-{{INSTALLED_SKILLS}}
+See `.agents/skills/` for the synchronized project skill registry and `.codex/instructions/tech-stack.md` for the selected stack-to-skill map.
 
 ### Key Principles
 
 1. **Production-grade always** — No throwaway code, no shortcuts, no tech debt by design
 2. **Constraints before decisions** — Map what's already decided before presenting options
-3. **Contract-first** — `{{CONTRACT_LIBRARY}}` schema → failing test → implementation (never reverse)
+3. **Contract-first** — `Zod` schema → failing test → implementation (never reverse)
 4. **TDD: failing test before code** — Red → Green → Refactor, every slice, every surface
 5. **Security-first** — PII never leaks, inputs validated, secrets server-side only
 6. **Write decisions to disk immediately** — Every confirmed decision is written to its output file the moment the user confirms it. Never batch decisions in-memory across a long conversation. If the conversation truncates, all confirmed work must survive on disk.

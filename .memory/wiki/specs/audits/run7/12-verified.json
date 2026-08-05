@@ -1,0 +1,349 @@
+{
+  "reportKind": "ambiguity-audit-verification",
+  "run": 7,
+  "domain": "12-release-distribution",
+  "rawReport": "12-raw.json",
+  "rawFindingCount": 15,
+  "verdicts": [
+    {
+      "findingId": "R7-12.01-D7-001",
+      "upheld": true,
+      "finalSeverity": "warning",
+      "reason": "Upheld. The active question register exposes only Owner and Deferred To; it records neither a deadline nor a named decision blocked, so it fails Vision Rubric dimension 7.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/12-release-distribution/12.01-release-builder/12.01-release-builder-index.md",
+          "line": 71,
+          "excerpt": "| # | Question | Owner | Deferred To |"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/12-release-distribution/12.01-release-builder/12.01-release-builder-index.md",
+          "line": 73,
+          "excerpt": "| Q-01 | `[OWNER]` Is the readiness gate **hard**"
+        }
+      ]
+    },
+    {
+      "findingId": "R7-12.02-D7-001",
+      "upheld": true,
+      "finalSeverity": "warning",
+      "reason": "Upheld. The current active question register has no deadline or explicit blocked-decision field, as required by Vision Rubric dimension 7.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/12-release-distribution/12.02-ddex-delivery-messaging/12.02-ddex-delivery-messaging-index.md",
+          "line": 72,
+          "excerpt": "| # | Question | Owner | Deferred To |"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/12-release-distribution/12.02-ddex-delivery-messaging/12.02-ddex-delivery-messaging-index.md",
+          "line": 74,
+          "excerpt": "| Q-01 | Does WeJammin deliver **directly** to DSPs"
+        }
+      ]
+    },
+    {
+      "findingId": "R7-12.03-D7-001",
+      "upheld": true,
+      "finalSeverity": "warning",
+      "reason": "Upheld. The active register specifies Owner and Deferred To only; it supplies no deadline or explicit decision-blocked record.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/12-release-distribution/12.03-dsp-store-territory-management/12.03-dsp-store-territory-management-index.md",
+          "line": 75,
+          "excerpt": "| # | Question | Owner | Deferred To |"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/12-release-distribution/12.03-dsp-store-territory-management/12.03-dsp-store-territory-management-index.md",
+          "line": 77,
+          "excerpt": "| Q-01 | How is store-side truth reconciled — partner **webhook**, **polling**, or **scraping the public store**?"
+        }
+      ]
+    },
+    {
+      "findingId": "R7-12.04-D7-001",
+      "upheld": true,
+      "finalSeverity": "warning",
+      "reason": "Upheld. The current active question register lacks both a deadline and an explicit statement of the decision it blocks.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/12-release-distribution/12.04-release-scheduling-windows/12.04-release-scheduling-windows-index.md",
+          "line": 69,
+          "excerpt": "| # | Question | Owner | Deferred To |"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/12-release-distribution/12.04-release-scheduling-windows/12.04-release-scheduling-windows-index.md",
+          "line": 71,
+          "excerpt": "| Q-01 | Is the rollout plan a **12-native object** or an instance of a generic task/project system (07)?"
+        }
+      ]
+    },
+    {
+      "findingId": "R7-12.05-D7-001",
+      "upheld": true,
+      "finalSeverity": "warning",
+      "reason": "Upheld. The active question record is assigned and deferred, but has no deadline or explicit blocked-decision field, so it does not meet Vision Rubric dimension 7.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/12-release-distribution/12.05-catalog-lifecycle-after-release/12.05-catalog-lifecycle-after-release-index.md",
+          "line": 71,
+          "excerpt": "| # | Question | Owner | Deferred To |"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/12-release-distribution/12.05-catalog-lifecycle-after-release/12.05-catalog-lifecycle-after-release-index.md",
+          "line": 73,
+          "excerpt": "| Q-01 | **[OWNER]** Does a **split dispute** trigger an involuntary takedown, or only a payout freeze?"
+        }
+      ]
+    },
+    {
+      "findingId": "R7-12.06-D7-001",
+      "upheld": true,
+      "finalSeverity": "warning",
+      "reason": "Upheld. The active fan-claim question is assigned and deferred but has no deadline or explicit decision-blocked record.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/12-release-distribution/12.06-content-id-ugc-claiming/12.06-content-id-ugc-claiming-index.md",
+          "line": 66,
+          "excerpt": "| # | Question | Owner | Deferred To |"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/12-release-distribution/12.06-content-id-ugc-claiming/12.06-content-id-ugc-claiming-index.md",
+          "line": 69,
+          "excerpt": "| Q-02 | `[OWNER]` **Does WeJammin claim against its own fans?**"
+        }
+      ]
+    },
+    {
+      "findingId": "R7-12-ROOT-D7-001",
+      "upheld": true,
+      "finalSeverity": "warning",
+      "reason": "Upheld. Active domain questions use the same Owner/Deferred To-only structure, without a deadline or named downstream decision that each question blocks.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/12-release-distribution/release-distribution-index.md",
+          "line": 148,
+          "excerpt": "| # | Question | Owner | Deferred To |"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/12-release-distribution/release-distribution-index.md",
+          "line": 152,
+          "excerpt": "| Q-03 | **Direct DSP delivery or via an aggregator?** (12.02 Q-01.)"
+        }
+      ]
+    },
+    {
+      "findingId": "R7-12-ROOT-D2-001",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "reason": "Refuted. Current source names the internal actor and specifies authoring, certification, structural second review, attribution, and conflict-of-interest handling. Whether that internal role becomes a fifth persona remains open, but does not force invention of the asserted authorization model.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/12-release-distribution/12.02-ddex-delivery-messaging/12.02.02-per-partner-profile-conformance.md",
+          "line": 35,
+          "excerpt": "platform admin/integration engineer — a role ideation-index.md Q-02 flags as not yet a persona."
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/12-release-distribution/12.02-ddex-delivery-messaging/12.02.02-per-partner-profile-conformance.md",
+          "line": 172,
+          "excerpt": "Structural entries (PC-01..PC-06, PC-09, PC-12) require a **second reviewer**."
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/12-release-distribution/12.02-ddex-delivery-messaging/12.02.02-per-partner-profile-conformance.md",
+          "line": 175,
+          "excerpt": "An edit by an admin that unblocks a release they hold an interest in is **flagged for a second party**."
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/12-release-distribution/12.02-ddex-delivery-messaging/12.02.02-per-partner-profile-conformance.md",
+          "line": 244,
+          "excerpt": "Partner confirms conformance. Structural entries pass second review. Profile → `Active`."
+        }
+      ]
+    },
+    {
+      "findingId": "R7-12.01-D3-001",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "reason": "Refuted. The child specifications now settle each cited branch: objected versus unobjected (P)-line divergence, post-gate rule-pack changes, and a departed Producer with an asset failure. The older CX wording therefore does not force a delivery-gating choice.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/12-release-distribution/12.01-release-builder/12.01.03-delivery-readiness-gate.md",
+          "line": 95,
+          "excerpt": "| B-4 | (P) line diverges from the 09 ownership record **and a co-owner has objected** | **Blocking** | Resolves [CX-06]"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/12-release-distribution/12.01-release-builder/12.01.03-delivery-readiness-gate.md",
+          "line": 96,
+          "excerpt": "| B-5 | (P) line diverges from 09, **unobjected** | **Warning** |"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/12-release-distribution/12.01-release-builder/12.01.02-metadata-validation-conformance.md",
+          "line": 178,
+          "excerpt": "Release falls back to **Blocked on the affected store only**; unaffected stores stay on schedule."
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/12-release-distribution/12.01-release-builder/12.01.04-audio-artwork-asset-conformance.md",
+          "line": 176,
+          "excerpt": "**Not unfixable** — this is what per-target scoping is for (DT-05)."
+        }
+      ]
+    },
+    {
+      "findingId": "R7-12.03-D3-001",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "reason": "Refuted. Current child behavior fixes both alleged gaps: credited Producers receive the release-day summary, and rights drift is re-evaluated on every rights-record change with notification and artist-controlled withdrawal routing.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/12-release-distribution/12.03-dsp-store-territory-management/12.03.02-per-store-delivery-status.md",
+          "line": 238,
+          "excerpt": "the owning entity's members **and** to credited Producers."
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/12-release-distribution/12.03-dsp-store-territory-management/12.03.01-store-selection-territory-scoping.md",
+          "line": 190,
+          "excerpt": "Derivation is **re-evaluated on every 09/11 rights-record change event** affecting any recording on a delivered release."
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/12-release-distribution/12.03-dsp-store-territory-management/12.03.01-store-selection-territory-scoping.md",
+          "line": 193,
+          "excerpt": "If the re-derivation shrinks a **live** footprint, the artist is notified **immediately**."
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/12-release-distribution/12.03-dsp-store-territory-management/12.03.01-store-selection-territory-scoping.md",
+          "line": 196,
+          "excerpt": "**The platform does not withdraw it.**"
+        }
+      ]
+    },
+    {
+      "findingId": "R7-12.04-D3-001",
+      "upheld": true,
+      "finalSeverity": "blocking",
+      "reason": "Upheld. The distribution source resolves per-store grant handling but not whether a material date move triggers fan notice or its authorization boundary. The directly referenced campaign and pre-save sources retain the same decision as pending, so an implementer would have to invent the policy.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/12-release-distribution/12.04-release-scheduling-windows/12.04-release-scheduling-windows-cx.md",
+          "line": 99,
+          "excerpt": "Leaning: 12 surfaces the fact to the artist; 20/21 own any fan-facing message."
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/12-release-distribution/12.04-release-scheduling-windows/12.04.03-pre-save-pre-add-links.md",
+          "line": 64,
+          "excerpt": "Release date moves | Read the store's PC-13 date-change handling."
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/21-promotion-marketing/21.01-release-campaign-planner/21.01.04-date-change-cascade.md",
+          "line": 59,
+          "excerpt": "[PENDING — /ideate-discover Step 5 deepening] — whether fans are notified of a date change is partly a consent question, not a UX one."
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/21-promotion-marketing/21.04-smart-links-presave-attribution/21.04.02-presave-preadd-authorization.md",
+          "line": 121,
+          "excerpt": "Are fans notified when a release they pre-saved moves? Arguably a consent obligation"
+        }
+      ]
+    },
+    {
+      "findingId": "R7-12.05-D3-001",
+      "upheld": true,
+      "finalSeverity": "blocking",
+      "reason": "Upheld. A generic contest route exists, but the source expressly leaves unresolved whether claim-resolving evidence is a permitted suspension exception, a separate evidence act, or a prohibited mutation. No final classification or authorization rule removes that implementation choice.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/12-release-distribution/12.05-catalog-lifecycle-after-release/12.05-catalog-lifecycle-after-release-cx.md",
+          "line": 31,
+          "excerpt": "The unresolved question is whether a **claim-resolving** update is exempt (CX-04)."
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/12-release-distribution/12.05-catalog-lifecycle-after-release/12.05-catalog-lifecycle-after-release-cx.md",
+          "line": 81,
+          "excerpt": "Whether that is one act or two is unresolved and is the crux of the carve-out."
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/12-release-distribution/12.05-catalog-lifecycle-after-release/12.05-catalog-lifecycle-after-release-cx.md",
+          "line": 83,
+          "excerpt": "Leaning: allow **additive evidence** (clearances, credits, attestations) during suspension; block **mutations** of the claimed facts."
+        }
+      ]
+    },
+    {
+      "findingId": "R7-12.05-D3-002",
+      "upheld": true,
+      "finalSeverity": "blocking",
+      "reason": "Upheld. The current cross-cut explicitly identifies a destructive takedown-to-redelivery half-failure and leaves recovery pending; no compensation, retry boundary, or user-visible recovery state is specified.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/12-release-distribution/12.05-catalog-lifecycle-after-release/12.05-catalog-lifecycle-after-release-cx.md",
+          "line": 62,
+          "excerpt": "An update that decomposes into takedown+redeliver must be atomic in intent — a failure between the two halves leaves the release down and not back up."
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/12-release-distribution/12.05-catalog-lifecycle-after-release/12.05-catalog-lifecycle-after-release-cx.md",
+          "line": 63,
+          "excerpt": "The second path can fail halfway. Recovery is `[PENDING — Step 5]`."
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/12-release-distribution/12.05-catalog-lifecycle-after-release/12.05.02-metadata-update-redelivery.md",
+          "line": 68,
+          "excerpt": "redeliveries follow the takedown→redeliver path."
+        }
+      ]
+    },
+    {
+      "findingId": "R7-12.06-D3-001",
+      "upheld": true,
+      "finalSeverity": "blocking",
+      "reason": "Upheld. A conflict is routed for evidence and resolution on the originating platform, but no settled containment policy governs registration on the other UGC platforms. The direct rights authority contains no Content ID policy that resolves this per-platform decision.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/12-release-distribution/12.06-content-id-ugc-claiming/12.06-content-id-ugc-claiming-cx.md",
+          "line": 13,
+          "excerpt": "per-platform behaviour is `[PENDING — Step 5]`"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/12-release-distribution/12.06-content-id-ugc-claiming/12.06-content-id-ugc-claiming-cx.md",
+          "line": 60,
+          "excerpt": "Whether that is enforceable per-platform is unknown."
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/12-release-distribution/12.06-content-id-ugc-claiming/12.06.01-fingerprint-registration.md",
+          "line": 56,
+          "excerpt": "Assets are registered per platform; registration state is tracked per (recording × platform)."
+        }
+      ]
+    },
+    {
+      "findingId": "R7-12.06-D3-002",
+      "upheld": true,
+      "finalSeverity": "blocking",
+      "reason": "Upheld. The whitelist is derived and reviewed before registration, but its lifecycle after identity or credit changes is explicitly unresolved; no directly referenced identity or credit source defines a reconciliation action for this projection.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/12-release-distribution/12.06-content-id-ugc-claiming/12.06-content-id-ugc-claiming-cx.md",
+          "line": 33,
+          "excerpt": "Whether it re-derives is `[PENDING — Step 5]`"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/12-release-distribution/12.06-content-id-ugc-claiming/12.06-content-id-ugc-claiming-cx.md",
+          "line": 37,
+          "excerpt": "The two features' timelines diverge and nothing currently reconciles them."
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/12-release-distribution/12.06-content-id-ugc-claiming/12.06.02-claim-whitelist-management.md",
+          "line": 51,
+          "excerpt": "Before registration, the platform proposes a whitelist derived from the artist's channels, their band, the recording's contributors and their label."
+        }
+      ]
+    }
+  ],
+  "coverage": {
+    "rawFindingIdsVerified": 15,
+    "missingFindingIds": [],
+    "duplicateVerdictIds": [],
+    "verdictCounts": {
+      "blocking": 5,
+      "warning": 7,
+      "refuted": 3
+    }
+  }
+}

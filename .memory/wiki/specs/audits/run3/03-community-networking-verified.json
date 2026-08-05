@@ -1,0 +1,149 @@
+{
+  "domain": "03-community-networking",
+  "treeRoot": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation",
+  "verifiedAt": "2026-07-30",
+  "raw": 17,
+  "upheld": 5,
+  "refuted": 12,
+  "blockingSurviving": 0,
+  "verdicts": [
+    {
+      "unit": "03.01-connections-follows-endorsements",
+      "claim": "The 03.01 sub-domain CX still presents auto-follow-on-connection-accept as permitted/undecided while 03.01.01 D-12 and the parent CX forbid it, and the mandated reconciliation never happened.",
+      "upheld": true,
+      "severity": "warning",
+      "severityChange": "blocking -> warning",
+      "dimension": 3,
+      "reason": "Quotes verbatim. 03.01-connections-follows-endorsements-cx.md:58 does still read \"Accepting a connection MAY auto-create a mutual follow ... `[PENDING — /ideate-discover Step 5 deepening]`\", and 03.01.01-follows.md:180 (D-12) records \"No auto-follow on connection accept\", with community-networking-cx.md:387 (R-07) recording the rejection. 03.01.01-follows.md:152 states as a requirement that \"Step 6 must reconcile the CX file\", and community-networking-cx.md:5 claims Step 6 complete — so a self-documented reconciliation is provably not done. NOT blocking, and the claim is overstated on two points: (a) the CX text does not permit auto-follow, it marks the question `[PENDING]` with a stage, so it asserts undecided, not decided-yes; (b) the answer exists in the owning feature file's numbered decision and in the parent CX's rejected-pairs table, so an implementer following the PENDING marker's own citation chain converges on D-12. What survives is a stale marker plus a false completeness claim, not forced invention."
+    },
+    {
+      "unit": "03.01-connections-follows-endorsements",
+      "claim": "Whether a confirmed credit writes connection edges is asserted both ways with no marker (03.01.02 Q-02 vs domain D-02, domain CX:115, 03.01.01:145, 03.01.02:85).",
+      "upheld": false,
+      "severity": "blocking",
+      "dimension": 3,
+      "reason": "REFUTED — the marker the claim says is absent is the resolution itself. 03.01.02-professional-connections.md:122 is an explicitly RESOLVED Open Question that does the reconciliation in its own text: it derives the answer from 03.04.01 D-01/D-10 (\"Manual connections (03.01.02) never enter the graph, at any weight\", 03.04.01:232) and harmonises it with this file's own edge case at :74 (\"the collaboration edge already exists; a connection adds nothing\"). Every cited counter-statement is a paraphrase of DT-03 and points at DT-03, whose resolution IS Q-02: community-networking-cx.md:115 says \"**may** pre-seed connections (async, 03.01.02 DT-03)\" — non-mandatory and citation-forwarded; community-networking-index.md:111's clause sits inside a decision whose subject is that the derived graph supersedes the manual connection, so \"pre-seeded from verified credits rather than requested\" reads as the relationship arriving already established, which is exactly Q-02's reading; 03.01.02:85's Empty-state note is hedged (\"likely\"). D-12's conclusion at 03.01.01:180 does not depend on the premise (it forbids auto-follow either way), so no build diverges."
+    },
+    {
+      "unit": "03.01-connections-follows-endorsements",
+      "claim": "03.01.02 declares its connection-request quota settled as a shipped default but supplies neither value nor period, leaving the feature's survival mechanism unbuildable.",
+      "upheld": false,
+      "severity": "blocking",
+      "dimension": 3,
+      "reason": "REFUTED as a tracked deferral. Quotes are verbatim (03.01.02:48-50, :52-55), but 03.01.02:121 Q-01 is a well-formed `[OWNER]` question, owner User, deferred to `/create-prd`, and it asks which throttle model applies — flat quota per period, graph-distance tiering, or a costed request. A numeric quota cannot precede that choice: under tiering there is no single quota, and under a costed request there is no period. The number therefore falls inside the tracked decision rather than outside it, and Q-01 itself routes the residue. The claim that the mechanism is \"unbuildable\" also fails on its own terms — if the cap's shape is open, the cap is not buildable at this layer regardless of whether a numeral is stated. Contrast with 03.01.01:177 (D-09) is not evidence of a defect: follows have no open model question, so their numbers could be fixed."
+    },
+    {
+      "unit": "03.04-warm-intros-collaboration-graph",
+      "claim": "Whether reachability fails open or closed on traversal failure is simultaneously decided (03.04.01 D-03, naming 03.04.04) and listed as unresolved in 03.04.04's States table and Q-04.",
+      "upheld": true,
+      "severity": "warning",
+      "severityChange": "blocking -> warning",
+      "dimension": 3,
+      "reason": "Quotes verbatim on both sides. 03.04.01-collaboration-graph-path-finding.md:225 (D-03) reads \"All consumers fail closed on `unknown`\", :169 reads \"03.04.04 must not decide reachability on it\", and :210 asserts \"Reachability must fail closed on `unknown` (D-03), which sharpens its own Q-04\" — while 03.04.04-reachability-inbound-policy.md:89 and :129 (Q-04) present the same fork as unresolved. The \"sharpens\" hedge does assert both states in one sentence without reconciling them, and 03.04.04's Cross-Cut Notes:103 carries no trace of the constraint. NOT blocking: the answer exists and is unambiguous (fail closed), Q-04's owner is Agent — not User — so no product decision is being invented, the target is `/create-prd-architecture`, which is the correct layer for degraded-mode behaviour, and 03.04.04 is `[PARTIAL]` (:5), i.e. explicitly not yet deepened. This is unreconciled tracking after a cross-file constraint tightened, not two statements that cannot both hold."
+    },
+    {
+      "unit": "03.01-connections-follows-endorsements",
+      "claim": "The 2,000-entity onboarding import exceeds the 500/rolling-24h follow cap it is only partially exempted from, making the documented Fan onboarding path unsatisfiable.",
+      "upheld": false,
+      "severity": "warning",
+      "dimension": 3,
+      "reason": "REFUTED on a literal reading of the whole sentence. 03.01.01-follows.md:104 reads \"The import is **one reviewed action**, not N follow actions, and is exempt from the per-hour limit.\" The cap at :103 counts \"follow-creations\" (60/rolling hour, 500/rolling 24h). If the import is one action and not N follow actions, it consumes 1 against both windows, so 2,000 entities never meets 500 — the per-hour clause is an additional belt, not the entire exemption. D-09 at :177 states the same thing in the same order (\"exempt as one reviewed action, bounded at 2,000/import and 3 imports/30 days\"), so the two wordings agree rather than diverge. Both readings converge on the same write path: one batched action, bounded at 2,000 and 3/30 days."
+    },
+    {
+      "unit": "03.01-connections-follows-endorsements",
+      "claim": "Deferred behaviour in 03.01 is marked with bare `[PENDING]` tokens carrying neither owner nor stage, including the pending-request expiry period.",
+      "upheld": true,
+      "severity": "warning",
+      "dimension": 7,
+      "reason": "Upheld only for 03.01.02-professional-connections.md:71 — \"Requests expire — `[PENDING]` on the period\" is genuinely bare, and no Open Question covers the period: Q-01 (:121) is scoped to the cap's shape, and the sibling parameter in the same three-part mechanism IS tracked (:77, \"`[PENDING — Step 5 Must-depth or /write-be-spec]`\" on the re-send cooldown), so the file's own convention is breached in one cell. DT-05 (:98) names inbound expiry as one of three cooperating parts, so the untracked item is load-bearing within its own mechanism. Narrowed on the rest of the claim: the marker at :73 is not untracked (its cell reads \"See Q-01 in the parent index — unresolved product decision\", and that Q-01 exists at 03.01-connections-follows-endorsements-index.md:66), and 03.01.03:53 / :64 sit in a feature the tree has closed as `Won't` — 03.01-connections-follows-endorsements-index.md:69 (Q-04, RESOLVED) records \"MoSCoW placed 03.01.03 ... at `Won't`, depth `[SURFACE]` — retained for traceability, not built\" — so those markers govern nothing buildable."
+    },
+    {
+      "unit": "03.02-activity-feed-ranking",
+      "claim": "03.02.02 states in Behavior that suppression stops fan-out while its own Q-04 lists that choice as unresolved.",
+      "upheld": false,
+      "severity": "warning",
+      "dimension": 3,
+      "reason": "REFUTED — the Behavior text is a direction, not a decision, and the deferral is well-formed. 03.02.02-ranking-relevance-controls.md:37-38 reads \"a suppression **should** stop fan-out rather than filter at render\", tracing to 03.02-activity-feed-ranking-cx.md:27-28, which also says \"should\". Neither appears in 03.02.02's Decisions table (:95-96). 03.02.02:105 (Q-04) is owner Agent, deferred to `/create-prd-architecture`, and community-networking-index.md:146 routes the same item out under \"Not-Product Concerns Routed Out\" to `/create-prd-architecture` — three files agree it is an architecture decision with a stated preferred direction. Both readings converge: build fan-out suppression as the preference, confirm the write-amplification model at architecture. Stakes are further bounded — 03.02-activity-feed-ranking-index.md:69 records 03.02.02 at `Could` with no release phase."
+    },
+    {
+      "unit": "03.02-activity-feed-ranking",
+      "claim": "03.02's CX-03 defers its unresolved structural question to two references that do not carry it — a nonexistent 'Q-01 on this file' and a parent Q-01 that is a different, resolved question.",
+      "upheld": true,
+      "severity": "warning",
+      "dimension": 7,
+      "reason": "Both pointers verified broken. 03.02-activity-feed-ranking-cx.md:76 reads \"which is an argument for not building it (**Q-01 on this file**)\", and the file has no Open Questions section — its only `##` headings are Cross-Cut Map (:6), Cross-Cut Details (:18), Rejected Pairs (:82) and the auto-generated Related Specs (:91). The second pointer at :12 (\"see the parent's Q-01\") lands on 03.02-activity-feed-ranking-index.md:68, which is a struck-through, RESOLVED question about whether one feed serves a drummer and a fan — not the stream-vs-separate-surfaces question. So the posts-vs-work-events structural question has no owner and no deferral target anywhere. Kept at warning, not raised: the subject feature (03.02.03 Native Posts) is at `Won't` per 03.02-activity-feed-ranking-index.md:69, so nothing buildable rests on it — the defect is that the question can silently disappear."
+    },
+    {
+      "unit": "03.03-collaborator-discovery-matchmaking",
+      "claim": "The 'in the room' primary query axis hard-bounds distance but the bound is only '~a few hundred miles' with no value and no open question tracking it.",
+      "upheld": false,
+      "severity": "warning",
+      "dimension": 3,
+      "reason": "REFUTED — the constraint IS quantified, in the unit the spec treats as binding. The global decision at ideation-index.md:201 (D-15) fixes \"the ~25–30 ms desync ceiling caps playable radius at a few hundred miles\": the ceiling is the specified, testable criterion and the mileage is explicitly its approximation (the \"~\" is in every restatement). 03.03.01-collaborator-search-browse.md:109 (DT-03) frames it as physics, not policy — \"per D-15 the ~25–30 ms desync ceiling makes real-time collaboration physically impossible beyond a few hundred miles\" — and 03.03.01:90 already specifies the empty-radius behaviour. Converting a latency ceiling to an enforced geographic radius depends on measured network routing, which is an architecture computation, not a product decision; two implementers diverge on a derived constant, not on what to build. No forced invention of product behaviour."
+    },
+    {
+      "unit": "03.04-warm-intros-collaboration-graph",
+      "claim": "03.04.02 prescribes edge decay for stale broker paths citing '03.04.01 Q-03', but 03.04.01 rejects decay in D-11/DT-14 and its Q-03 is now graph-integrity monitoring — the pointer is stale and the remedy is the forbidden one.",
+      "upheld": true,
+      "severity": "warning",
+      "dimension": 7,
+      "reason": "Upheld on the citation half only; the remedy half is REFUTED. Refuted: 03.04.01:198 (DT-14) does not reject decay outright — it reads \"❌ REJECTED **as weighting** / ✅ CONFIRMED **as disclosure**\", it sources its own premise from \"03.04.02's edge cases\", and what ships is volume plus most-recent date. 03.04.02-warm-intro-requests-brokering.md:64's cell says only \"Decay\", never that the edge is weighted, so it names the concept DT-14 confirmed. Upheld: three citation pointers are wrong. 03.04.02:64 sends the reader to \"Q-03 on 03.04.01\", but 03.04.01:250 Q-03 is \"Is graph integrity monitoring built at derivation time, or handled reactively by domain 24?\"; 03.04.01:233 (D-11) claims to resolve \"parent Q-03/this file's Q-03\", but parent Q-03 at 03.04-warm-intros-collaboration-graph-index.md:77 is the traversal depth limit, already RESOLVED by D-05, and this file's Q-03 is the sybil question. A reader following any of the three lands on an unrelated item, and one of them could be read as closing a still-open question."
+    },
+    {
+      "unit": "03.04-warm-intros-collaboration-graph",
+      "claim": "D-11 states edges are never deleted, but the edge-case table specifies permanent edge removal when a dispute resolves against the claimant.",
+      "upheld": false,
+      "severity": "warning",
+      "dimension": 3,
+      "reason": "REFUTED — the two statements are scoped to different premises and both hold. 03.04.01:233 (D-11) and :80 give the rule with its rationale attached: \"The fact is permanent — deleting evidenced history is the reconstruction failure run in reverse\", i.e. the rule protects edges that record something that happened. The exception at :147 has the opposite premise stated in its own middle column — \"The fact was never true\" — so there is no evidenced history to preserve and D-11's rationale does not reach it. The neighbouring rows the finding cites as contrast confirm the distinction is deliberate rather than accidental: :157 and :162 use non-traversability precisely where the underlying fact survives (suppression, GDPR erasure), and :147 is the only row where the fact is adjudicated false. Both statements sit 86 lines apart in one file; an implementer reading it builds suspension for true facts and deletion for the adjudicated-false case."
+    },
+    {
+      "unit": "03.06-scenes-communities",
+      "claim": "Stewardship is density-gated and the gate drives a state transition, but the threshold has no value, its metric is undecided, and the CX routes the threshold to a parent question that asks something else.",
+      "upheld": false,
+      "severity": "warning",
+      "dimension": 5,
+      "reason": "REFUTED — the number is blocked behind a tracked owner decision and the carrier is itself a staged deferral. 03.06.02-scene-graph-density-map.md:99 (Q-02) is `[OWNER]`: \"What is the density metric — edges, components, path length, clustering?\" — a threshold cannot be specified before its metric, so the missing numeral is inside a tracked question, not outside one. The CX entry carrying the threshold opens with its own marker: 03.06-scenes-communities-cx.md:73 reads \"**Relationship**: `[PENDING — /ideate-discover Step 5 deepening]`\", with \"**Synthesis questions answered**: deferred — Medium confidence entry\" at :78. The misroute at :75-76 to parent Q-04 (03.06-scenes-communities-index.md:76, \"Who steward-appoints?\") is real but immaterial: it is one wrong pointer inside a cell already marked pending at a named stage, and 03.06.03:100 (D-03) plus :46-47 route the appointment half correctly. No product behaviour is forced."
+    },
+    {
+      "unit": "03.06-scenes-communities",
+      "claim": "A claimed premises record whose claimant deletes their account reverts to Unclaimed while retaining claimant-authored content, leaving its provenance marker and indexing status undefined.",
+      "upheld": false,
+      "severity": "warning",
+      "dimension": 3,
+      "reason": "REFUTED — the state machine in the same file answers both questions. 03.06.04-scene-seeding-claiming-cold-start.md:149 says the record \"reverts to **Unclaimed**\", and the Unclaimed state is fully defined at :164: \"Record with a visible **derived / unclaimed** marker, its source basis, and a claim entry point. Not search-indexed (DT-14)\". An implementer applies that definition — marker on, indexing off — so neither the label nor the indexing status is invented. The residue is an editorial imprecision, not a build fork: calling claimant-corrected fields \"derived\" is arguably imprecise, but the row itself explains why the corrections persist (\"the room's specs are facts about the room, not personal data\"), and D-15 at :227 makes indexing a claimant option that plainly lapses with the claim, since the state it attaches to is Claimed. No two competent implementers build different records here."
+    },
+    {
+      "unit": "03.06-scenes-communities",
+      "claim": "Whether an account under 30 days old may file a seed-record report is stated two ways — the actions table restricts the action to ≥30 days, the abuse edge case says such reports exist but do not count.",
+      "upheld": false,
+      "severity": "warning",
+      "dimension": 3,
+      "reason": "REFUTED — both statements are simultaneously satisfiable, so this fails the contradiction test. 03.06.04-scene-seeding-claiming-cold-start.md:94 is the actions table, the authority on who may perform the action, and gates Report at \"any signed-in professional account ≥30 days old\". :146's clause (\"reports from accounts <30 days old do not count toward the threshold\") is then redundant rather than contradictory — vacuously true given the gate, and consistent with the file's \"qualifying\" vocabulary used in the States table at :165-166 (\"≥1 qualifying report\", \"≥3 distinct qualifying reporters\"). The genuinely separate case is spelled out one row later at :147 for Fans (\"Fan reports route to domain 24's general reporting and do not count toward the 3-reporter suppression threshold\") — showing the file states explicitly when a report is accepted-but-discounted, which it does not do for <30-day accounts."
+    },
+    {
+      "unit": "03-community-networking (domain root)",
+      "claim": "The domain's structure map carries four mutually inconsistent depth-status claims: the Children table's preamble contradicts the table, and two sub-domain indexes plus one feature file disagree with the parent.",
+      "upheld": true,
+      "severity": "warning",
+      "dimension": 8,
+      "reason": "All four inconsistencies verified line-exact. community-networking-index.md:29 reads \"**All nodes `[SURFACE]`**; the domain is `[BREADTH]`\", contradicted by its own table at :33-38 and :40, which mark 03.01–03.06 and 03.08 as `[BREADTH]`. Parent-vs-child: :37 records 03.05 `[BREADTH]` while 03.05-private-rolodex-crm-index.md:5 reads `[SURFACE]`; :40 records 03.08 `[BREADTH]` while 03.08-contests-challenges-beat-battles-index.md:5 reads `[SURFACE]`; :41 records 03.09 `[SURFACE]` while 03.09-local-jam-open-mic-discovery.md:5 reads `[PARTIAL]`. Spot-checked every child index for completeness — the other seven agree. The 03.09 case is the consequential one because moscow-ledger.md:247 places it inside `## SHOULD` (section spans :217-506), so the one Should-tier item in this set is the one whose own depth marker the parent overwrites. Kept at warning: the defect is in the ledger a downstream stage reads to pick deepening targets, not in product behaviour."
+    },
+    {
+      "unit": "03-community-networking (domain root)",
+      "claim": "03.10 defers a rights hazard with a bare `[PENDING]` carrying no owner and no deferral stage, in a file whose surrounding markers are well-formed.",
+      "upheld": false,
+      "severity": "warning",
+      "dimension": 7,
+      "reason": "REFUTED on both scope and stakes. The marker at 03.10-peer-scene-listening-rooms.md:54 is bare, but the claim that Q-01 excludes it does not survive Q-01's actual wording at :97: \"**What is the platform's position on unreleased material played in social rooms (DT-01)?** Does a room persist as a recording; **who owns it**; does playing to 30 peers matter to domain 09/12?\" — that is scoped to unreleased material in rooms generally and explicitly asks the ownership question, which is the third-party case. It is owner User, deferred to `/create-prd-security`. Stakes are nil regardless: 03.10 is closed as `Won't` — moscow-ledger.md:724 places it inside `## WONT` (section spans :713-772), and 03.10:98 (Q-02, RESOLVED) records \"the low placement was taken. The MoSCoW ledger puts 03.10 in **Won't**\"."
+    },
+    {
+      "unit": "03-community-networking (domain root)",
+      "claim": "03.09's conflicting-report handling leaves the effect of one report undefined, while the sibling feature whose pattern it reuses specifies a full numeric report ladder.",
+      "upheld": false,
+      "severity": "warning",
+      "dimension": 3,
+      "reason": "REFUTED — 03.09 routes its numeric freshness parameters to a named stage and its single-signal behaviour is specified. 03.09-local-jam-open-mic-discovery.md:82 defines the Unconfirmed state on a time trigger with the numeral explicitly deferred: \"Listing not confirmed within the freshness window (proposed 30 days; exact window `[PENDING — /write-be-spec]`)\", so counts and windows in this feature belong to that stage by declaration. What one report does is stated at :63 — the listing carries the \"Unconfirmed — last confirmed {date}\" badge, is de-emphasised and sorted below confirmed listings, with a \"Still running? / Moved?\" prompt. The :72 row is scoped to its own scenario (\"Two users report the same jam as moved/dead at once\") and is about not flip-flopping. The 03.06.04 ladder is not the same object: D-04 (:117) borrows the claim/confirm pattern, and 03.06.04's numerals gate **suppression of a published record about a real business** (:146), a destructive act 03.09 has no counterpart for — its worst outcome is a badge."
+    }
+  ]
+}

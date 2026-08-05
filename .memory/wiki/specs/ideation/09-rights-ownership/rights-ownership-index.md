@@ -3,7 +3,7 @@
 > **Level**: domain
 > **Parent**: [WeJammin Ideation Index](../ideation-index.md)
 > **Status**: [BREADTH]
-> **Last updated**: 2026-07-16
+> **Last updated**: 2026-07-23
 > **Novelty**: `industry-standard` | **Priority**: `core`
 
 ## Overview
@@ -88,6 +88,13 @@ The authoritative record of who owns what — the work/recording duality, splits
 > Personas from [meta/personas.md](../meta/personas.md) — referenced, never redefined.
 >
 > **Legend**: ✅ Full access · ⚙️ Configuration only · 👁️ Read-only · 📊 Reports only · ❌ No access
+>
+> **How to read a domain-level row**: each cell is the **highest access any child grants that persona** — a
+> ceiling, not a typical value. A ✅ Full here means *at least one* child is Full, never that all of them are;
+> the sub-domain Role Matrix is where the per-feature truth lives, and it is the binding one. This is why
+> 09.02 shows Operator ⚙️ Config on the strength of [09.02.03](./09.02-split-capture-agreements/09.02.03-work-for-hire-buyout.md)
+> alone, and why 09.05 shows Fan 👁️ Read-only on the strength of [09.05.03](./09.05-ai-voice-likeness-consent/09.05.03-ai-generated-content-disclosure.md)
+> alone. Read a row as permission that exists *somewhere* below it, then go find where.
 
 | Child | Musician | Producer | Operator | Fan |
 |-------|----------|----------|----------|-----|
@@ -95,13 +102,13 @@ The authoritative record of who owns what — the work/recording duality, splits
 | 09.02 Split Capture & Agreements | ✅ Full | ✅ Full | ⚙️ Config | ❌ None |
 | 09.03 Chain of Title & Rights Lifecycle | ✅ Full | 👁️ Read-only | ❌ None | ❌ None |
 | 09.04 Rights Conflicts & Disputes | ✅ Full | ✅ Full | ❌ None | ❌ None |
-| 09.05 AI, Voice & Likeness Consent | ✅ Full | ⚙️ Config | ❌ None | 👁️ Read-only |
+| 09.05 AI, Voice & Likeness Consent | ✅ Full | ✅ Full | ❌ None | 👁️ Read-only |
 | 09.06 Rights Evidence & Public Record | ✅ Full | ✅ Full | 👁️ Read-only | 👁️ Read-only |
 
 **Reading the matrix — the shape is the finding:**
 
 - **Musician** is Full everywhere. This is their domain; they are the owner, the author, the person.
-- **Producer** is Full where the work is *made* (09.01, 09.02, 09.04, 09.06) and Read-only/Config where it is *transferred* (09.03) or *consented over* (09.05). They are in the room, not on the deed.
+- **Producer** is Full where the work is *made* (09.01, 09.02, 09.04, 09.06) and Read-only where it is *transferred* (09.03). They are in the room, not on the deed. **09.05 is the instructive exception**: the Producer is ⚙️ Config on the two children that dispose of someone else's right — training consent ([09.05.01](./09.05-ai-voice-likeness-consent/09.05.01-ai-training-consent-registry.md)) and NIL ([09.05.02](./09.05-ai-voice-likeness-consent/09.05.02-voice-name-likeness-rights.md), a right held only by the person) — but ✅ Full on AI disclosure ([09.05.03](./09.05-ai-voice-likeness-consent/09.05.03-ai-generated-content-disclosure.md)), because a disclosure is a statement of what *they did*, not a consent over what someone else owns. They ran the tools; they are "usually the only person who knows", and they declare at session close. Consenting over a right you do not hold is Config; reporting a fact only you possess is Full.
 - **Operator** is ❌ None in 4 of 6. Their only genuine stakes: a studio entity holding work-for-hire over its staff engineer ([09.02.03](./09.02-split-capture-agreements/09.02.03-work-for-hire-buyout.md)), the resulting ownership it confers ([09.01.03](./09.01-rights-registry/09.01.03-master-rights-ownership.md)), and resolving a recording in the public lookup. **The explicit absence is the useful output** — do not build Operator surfaces in this domain.
 - **Fan** is ❌ None in 4 of 6, with exactly two exceptions, both outward-facing by nature: AI disclosure ([09.05.03](./09.05-ai-voice-likeness-consent/09.05.03-ai-generated-content-disclosure.md) — a disclosure nobody can see is not a disclosure) and the public lookup ([09.06.04](./09.06-rights-evidence-public-record/09.06.04-public-rights-lookup.md) — the credits-curiosity case). Per `meta/personas.md`, the Fan will not tolerate professional-tool complexity: both are separate projections, not filtered professional views.
 
@@ -120,15 +127,35 @@ The authoritative record of who owns what — the work/recording duality, splits
 
 ## Open Questions
 
+> **Open-question governance.** Every unresolved row in this table is an explicit delivery hold. The **Owner** cell is accountable; the **hard decision deadline** is the gate immediately before the pipeline stage named in **Deferred To** begins; and the **Question** text is the exact policy, behavior, or contract decision blocked. **Deferred To** names the destination only and never replaces the deadline. No downstream stage may begin until its owner resolves the row or records a formally approved supersession.
+
 | # | Question | Owner | Deferred To |
 |---|----------|-------|-------------|
 | Q-01 | ~~Which candidate children are sub-domains vs features?~~ | Agent | ✅ **RESOLVED** — 6 sub-domains, 26 features. See Children. |
 | Q-02 | ~~Are any candidate children actually cross-cuts?~~ | Agent | ✅ **RESOLVED** — 5 cross-cut mechanisms and 7 not-product concerns routed out. See [rights-ownership-cx.md](./rights-ownership-cx.md). |
-| Q-03 | **Does the wedge require a DAW-side surface?** `meta/personas.md` states the Producer's work happens *"inside a DAW, not a browser"* and that any flow requiring them to leave the session *"will not be used"*. The Producer is the capture point; capture is the wedge; the declared surface model is browser-only (D-02). **The domain's highest-stakes open item** — if capture cannot reach the room, this domain is an empty database. See [09.02.01 DT-03](./09.02-split-capture-agreements/09.02.01-moment-of-creation-split-capture.md). | User | `/ideate-validate` — **surface-model implication** |
-| Q-04 | **Is a WeJammin split sheet enforceable or evidentiary?** Drives e-sign rigour, identity verification, jurisdiction handling, and the platform's whole liability posture. | User | `/ideate-validate` |
+| Q-03 | **Does the wedge require a DAW-side surface?** `meta/personas.md` states the Producer's work happens *"inside a DAW, not a browser"* and that any flow requiring them to leave the session *"will not be used"*. The Producer is the capture point; capture is the wedge; the declared surface model is browser-only (D-02). **The domain's highest-stakes open item** — if capture cannot reach the room, this domain is an empty database. See [09.02.01 DT-03](./09.02-split-capture-agreements/09.02.01-moment-of-creation-split-capture.md). **ANSWERED 2026-07-22 (owner decision, `ideation-index` D-70, queue entry DQ-08.2/DQ-08.3/DQ-08.5).** **No.** No non-web client on the producer's machine is authorised in v1 — `meta/constraints.md`'s Desktop row is now a prohibition with a named exit, reopening **only** on four enumerated evidence items. The wedge is therefore delivered on the surfaces v1 has: the **review link** (`07.05.02`) and the **session-close prompt** (`07.06.02`), the latter delivered by **PWA web push + in-app**. The residual gap this question names is **not closed, it is accepted and disclosed**: the v1 thesis is restated to *capture at the **first sharing moment***, with capture-at-source recorded as the direction rather than the claim (`vision.md`; domain 07 D-06 makes honesty an obligation). The question reopens un-inherited if the Desktop row reopens; `07.09` D-04's parser gate is separate and additional. | User | ✅ Answered by owner (post-gate reopen only) |
+| Q-04 | [OWNER] **Is a WeJammin split sheet enforceable or evidentiary?** Drives e-sign rigour, identity verification, jurisdiction handling, and the platform's whole liability posture. **Retargeted** — the `/ideate-validate` deferral expired without the call being taken. The same question is already queued at `/create-prd` in two places: [09.02 Q-01](./09.02-split-capture-agreements/09.02-split-capture-agreements-index.md) ("No later stage resolves it — it is a liability-posture and product-promise call") and [09.02.01 Q-02](./09.02-split-capture-agreements/09.02.01-moment-of-creation-split-capture.md). Three downstream questions wait on it: [09.02.01 Q-05](./09.02-split-capture-agreements/09.02.01-moment-of-creation-split-capture.md), [09.02.03 Q-05](./09.02-split-capture-agreements/09.02.03-work-for-hire-buyout.md) and [09.02.04 Q-05](./09.02-split-capture-agreements/09.02.04-split-amendment-reconsent.md). Answer once. | User | `/create-prd` |
 | Q-05 | **Does the rights model carry territory from day one?** See D-08. The single highest-leverage schema question in the domain, and unsurvivable to retrofit. | User | `/create-prd-architecture` |
-| Q-06 | **What is public in the rights lookup?** Names and roles are already public on any released record; percentages and deal terms are commercially sensitive and asymmetrically damaging. The domain's largest product decision. See [09.06 Q-01](./09.06-rights-evidence-public-record/09.06-rights-evidence-public-record-index.md). | User | `/ideate-validate` |
-| Q-07 | **What happens when a required consenter is unreachable or dead with no estate?** Blocks amendment permanently ([09.02.04 Q-01](./09.02-split-capture-agreements/09.02.04-split-amendment-reconsent.md)) and leaves escrow with no terminal state ([09.04.03 Q-01](./09.04-rights-conflicts-disputes/09.04.03-rights-freeze-royalty-escrow.md)). Each candidate answer — deemed consent, arbitration, permanent freeze — has a serious cost, and the last two are the strongest challenges to D-04. | User | `/ideate-validate` |
-| Q-08 | **Is this domain a catalogue play or a new-work play?** Chain of title, termination, estates and public domain serve users arriving with decades of existing rights. A new-work-first platform barely needs them at launch — which is what makes them cheap to skip and expensive to retrofit. Drives MoSCoW across all of 09.03. | User | MoSCoW / `/ideate-validate` |
+| Q-06 | [OWNER] **What is public in the rights lookup?** Names and roles are already public on any released record; percentages and deal terms are commercially sensitive and asymmetrically damaging. The domain's largest product decision. **Retargeted** — the `/ideate-validate` deferral expired without the call being taken. Same call, already `[OWNER]`/`/create-prd` at [09.06 Q-01](./09.06-rights-evidence-public-record/09.06-rights-evidence-public-record-index.md) and its per-feature instance [09.06.04 Q-01](./09.06-rights-evidence-public-record/09.06.04-public-rights-lookup.md). Partially fenced already — [09.06.04 D-02](./09.06-rights-evidence-public-record/09.06.04-public-rights-lookup.md) keeps percentages out by default, D-04 keeps disputes out, and [rights-ownership-cx.md](./rights-ownership-cx.md) CX-05 gives percentages and deal terms no code path to the lookup — but the **positive** line (what does project) is undecided and is an owner call. | User | `/create-prd` |
+| Q-07 | [OWNER] **What happens when a required consenter is unreachable or dead with no estate?** Blocks amendment permanently ([09.02.04 Q-01](./09.02-split-capture-agreements/09.02.04-split-amendment-reconsent.md)) and leaves escrow with no terminal state ([09.04.03 Q-01](./09.04-rights-conflicts-disputes/09.04.03-rights-freeze-royalty-escrow.md)). **Narrowed, not answered**: [09.02.04 DT-03](./09.02-split-capture-agreements/09.02.04-split-amendment-reconsent.md) forecloses deemed-consent-after-notice (it renders silence as an answer, which D-06 prohibits) and specifies the default behaviour as indefinite `blocked`; what is open is whether an escape hatch exists at all — arbitration (weakens D-04, the domain's spine) or permanent freeze (nobody gets paid). **Retargeted** — the `/ideate-validate` deferral expired; both live options cost something only the owner can choose to spend, and the same call already sits at `/create-prd` in [09.02.04 Q-01](./09.02-split-capture-agreements/09.02.04-split-amendment-reconsent.md), [09.04.03 Q-01](./09.04-rights-conflicts-disputes/09.04.03-rights-freeze-royalty-escrow.md) and [09.04 Q-01](./09.04-rights-conflicts-disputes/09.04-rights-conflicts-disputes-index.md). | User | `/create-prd` |
+| Q-08 | ~~**Is this domain a catalogue play or a new-work play?** Chain of title, termination, estates and public domain serve users arriving with decades of existing rights. Drives MoSCoW across all of 09.03.~~ **RESOLVED — new-work play.** [`ideation-index.md` D-31](../ideation-index.md) fixes v1 as the session spine: "**v1 = session spine** (01, 02, 05, 07, 09-capture) ~45 Musts — the wedge, shipped first and fast." MoSCoW is assigned across all six 09.03 children in [moscow-ledger.md](../moscow-ledger.md) with **no Must among them** — 09.03.01/.02 `SHOULD`, 09.03.04/.05/.06 `COULD`, 09.03.03 `WONT`. Restates the sub-domain's own resolution at [09.03 Q-02](./09.03-chain-of-title-lifecycle/09.03-chain-of-title-lifecycle-index.md) ("**Resolved — new-work play**"); catalogue arrivals are, per [09.03.03](./09.03-chain-of-title-lifecycle/09.03.03-termination-rights-notice-windows.md) DT-01, "a real segment, but not the beachhead". | User | ✅ **RESOLVED** — `ideation-index.md` D-31 + `moscow-ledger.md`; see [09.03 Q-02](./09.03-chain-of-title-lifecycle/09.03-chain-of-title-lifecycle-index.md) |
 | Q-09 | **Escrow implies regulated fund-holding.** A records domain quietly requiring a payments licence. Activates the KYC/AML and payments items already `[PENDING]` in [meta/constraints.md](../meta/constraints.md) and constrains an open `/create-prd-stack` decision. See [09.04.03 DT-02](./09.04-rights-conflicts-disputes/09.04.03-rights-freeze-royalty-escrow.md). | User | `/create-prd-stack` |
-| Q-10 | **Does WeJammin become an ISRC registrant?** Cheap in money; a **perpetual** obligation in practice — allocated codes outlive the company and orphaned codes leave permanent ambiguity on real recordings. An exit plan is needed before the first allocation. See [09.06.01 DT-03](./09.06-rights-evidence-public-record/09.06.01-identifier-issuance-reconciliation.md). | User | `/ideate-validate` |
+| Q-10 | [OWNER] **Does WeJammin become an ISRC registrant?** Cheap in money; a **perpetual** obligation in practice — allocated codes outlive the company and orphaned codes leave permanent ambiguity on real recordings. An exit plan is needed before the first allocation. See [09.06.01 DT-03](./09.06-rights-evidence-public-record/09.06.01-identifier-issuance-reconciliation.md) and [09.06.01 D-04](./09.06-rights-evidence-public-record/09.06.01-identifier-issuance-reconciliation.md) ("Becoming a registrant is a **perpetual commitment** requiring an exit plan before first allocation"). **Retargeted** — the `/ideate-validate` deferral expired. The same call is already `[OWNER]`/`/create-prd` at [09.06 Q-02](./09.06-rights-evidence-public-record/09.06-rights-evidence-public-record-index.md), [09.06.01 Q-01](./09.06-rights-evidence-public-record/09.06.01-identifier-issuance-reconciliation.md) and [12.07 Q-01](../12-release-distribution/12.07-identifier-assignment-at-delivery.md); it must be answered once, not four times. | User | `/create-prd` |
+
+
+<!-- spec-graph: auto-generated -->
+## Related Specs
+
+### Constrained by
+- [[decisions.md#d-01|D-01]]
+- [[decisions.md#d-16|D-16]]
+- [[decisions.md#d-02|D-02]]
+- [[decisions.md#d-03|D-03]]
+- [[decisions.md#d-18|D-18]]
+- [[decisions.md#d-04|D-04]]
+- [[decisions.md#d-05|D-05]]
+- [[decisions.md#d-06|D-06]]
+- [[decisions.md#d-07|D-07]]
+- [[decisions.md#d-08|D-08]]
+- [[decisions.md#d-70|D-70]]
+- [[decisions.md#d-31|D-31]]

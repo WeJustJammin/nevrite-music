@@ -1,0 +1,47 @@
+{
+  "shard": "23-career-finance-business",
+  "generated": "2026-07-30",
+  "findingsProcessed": 2,
+  "counts": { "mechanical": 2, "owner": 0, "notADefect": 0 },
+  "items": [
+    {
+      "findingId": "23-career-finance-business#004",
+      "unit": "23.01-income-aggregation-financial-identity",
+      "severity": "warning",
+      "classification": "mechanical",
+      "canonicalSource": "career-finance-business-cx.md:15 (CX-04 map row) and :90 (CX-04 §1) — 'an advance taken is a **liability** that must never re-enter the ledger as income'; 'Liabilities and income are separate records, never merged. An imported credit that is actually an advance must **net rather than count**'. Reinforced by 23.06.01-advance-underwriting-offers.md:23 — 'An accepted advance creates a recoupment position (`#CX-02`) and is recorded as a **liability, never as income**' and 23.01.02-off-platform-income-import.md:42 — 'Routed to advances, not income'.",
+      "summary": "23.01.05:25 listed `advance` as a member of the ledger row's income-type enum, which the domain CX and the owning advance feature both forbid. The drifted side is the consuming read projection, not an owning decision — 23.01.01 (the ledger's owner) never enumerates income types at all, so there is no opposed owning decision to weigh. Removed `advance` from the enumeration.",
+      "filesChanged": [
+        "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/23-career-finance-business/23.01-income-aggregation-financial-identity/23.01.05-income-to-work-linkage.md"
+      ],
+      "resolutionOfForcedInvention": "The auditor's 'forced invention' was: excluding `advance` leaves 23.01.05's gross vs net-to-me breakdown with no source for the advance leg. The tree already answers this one hop away — career-finance-business-cx.md:93 (CX-04 §2) states 'Recoupment state must be readable by the income-to-work projection (23.01.05) so a fully-recouped work still renders both gross and net-to-me.' The advance leg is the recoupment position netting the work's income rows, not an income-type member. No value was invented.",
+      "edits": [
+        "Behavior para (line 25): dropped `advance` from the income-type list; added the explicit prohibition citing CX-04 and 23.06.01 verbatim; restated the gross/net-to-me mechanism as the recoupment position netting against income rows, citing CX-04 §2.",
+        "Decisions table: added D-04 — '`advance` is not a member of the income-type breakdown; the advance leg is the recoupment position netting the work's rows'. 3-column table preserved."
+      ]
+    },
+    {
+      "findingId": "23-career-finance-business#005",
+      "unit": "23.07-budgeting-project-tour-pl",
+      "severity": "warning",
+      "classification": "mechanical",
+      "canonicalSource": "01-identity-profiles-organizations/01.04-band-ensemble-governance/01.04.03-treasury-mandate.md:25 — 'The distribution rule is one of exactly three shapes: **equal** (split N ways), **by income share** (the percentages fixed in 01.04.01), or **manual per event** (the mandate holder proposes a split, members see it, and — above the spend ceiling — governance's threshold from 01.04.01 must clear it). A band picks one default rule; a single inbound event may override to `manual` when the split is bespoke (a guest player on one gig).' Already cited as canonical by this file's own resolved Q-02 and by 23.07-budgeting-project-tour-pl-index.md:48 Q-03.",
+      "summary": "23.07.03's Behavior waterfall step 3 carried its own three-member enumeration (Equal / Weighted / Per-role) that predated the ratification its own Q-02 records. The distribution rule is a band-governance term owned by domain 01, so this file is a consumer restating an owner's enum — textbook drift. Rewrote step 3 to consume the canonical shapes.",
+      "filesChanged": [
+        "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/23-career-finance-business/23.07-budgeting-project-tour-pl/23.07.03-band-treasury-member-distribution.md"
+      ],
+      "resolutionOfForcedInvention": "The auditor's concern was that 'per-role' and 'manual per event' are different objects with different capture flows, so choosing between them invents product behaviour. It does not: 'per-role' as the file defined it — 'shares keyed to role/contribution ... still summing to 100%' — is a set of per-member percentages, which is exactly the canonical 'by income share' shape (01.04.01 DT-02 scopes income shares as 'percentages between the same people', explicitly distinct from domain 09's songwriting splits). The role-weighted intent survives as an expression of the income-share shape; nothing was dropped and no fourth shape was created. 'Manual per event' is added because the owner asserts it, quoted verbatim including the spend-ceiling governance clearance.",
+      "edits": [
+        "Behavior step 3: replaced the local enum with the canonical three shapes, linked to 01.04.03 and 01.04.01, and stated that role/contribution weighting is expressed as income-share percentages rather than a fourth shape.",
+        "Decisions table: added D-05 — the shapes are owned by 01.04.03 and not restated independently here; cites 01.04.01 D-05 (two surfaces must describe one band in the same words) as the reason a second enumeration is a defect rather than a convenience. 3-column table preserved.",
+        "Adjacent stale sweep (same unit, same canonical source): the 'No distribution rule exists' edge case still asked parent Q-03 as an open question — 'does the platform ask them to agree one ... or refuse to guess?' — while this file's own Q-02 and the parent index Q-03 both record it RESOLVED. Rewrote the row to carry the resolution (disclose the default that already governs them; never prompt, never guess). 3-column table preserved.",
+        "Open Questions: added Q-04 (Owner: User, Deferred To: `/create-prd-architecture`) for the genuine sub-question the resolution leaves open — whether the treasury may compute a distribution against the *disclosed* legal equal-shares default, or whether an equal split must be recorded by the band before any figure renders. Disclosure is a statement about the law; a computed share is a number people act on, and D-01 holds that a wrong share is a payment to the wrong friend. 4-column table preserved."
+      ]
+    }
+  ],
+  "crossDomainNotes": [
+    "No edits were required outside the shard. Both canonical sources for finding #005 live in `01-identity-profiles-organizations/01.04-band-ensemble-governance/` and were read only.",
+    "Live tension already tracked, not created here and not resolvable in this shard: 23.07.03 Behavior asserts a position-not-balance Level-1 model (the platform computes and displays, never custodies), while 01.04.03's Happy Path and Edge Cases describe a recorded band balance that movements serialise against. 23.07.03 Q-01 already names this and points it at `/create-prd-stack` tracking 01.04.03 Q-02. Flagged for the domain-01 owner so both sides land on one answer.",
+    "23.07.03 D-01 dissolves the treasurer role; the canonical `manual per event` shape imported from 01.04.03 names a 'mandate holder' who proposes the split. These reconcile — the proposal is visible to every member, and above the spend ceiling governance must clear it, so no member holds a private view — but domain 01 owns the mandate-holder concept and should confirm the reading if it ever tightens D-01's language."
+  ]
+}

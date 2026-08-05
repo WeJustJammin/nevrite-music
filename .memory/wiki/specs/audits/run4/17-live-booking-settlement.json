@@ -1,0 +1,136 @@
+{
+  "domain": "17-live-booking-settlement",
+  "unitsAudited": 9,
+  "filesRead": 55,
+  "coverageNote": "Enumerated from disk: 9 units (the domain directory itself plus 8 sub-domain directories each containing an *-index.md), 55 files total. Matches the expected 9 units / 55 files exactly. Every file was read in full (Deep Think Annotation tables and auto-generated 'Related Specs' tails were read via targeted passes and excluded from bulk printing once their content had been checked for normative claims). Rubric dimensions 2 (Persona Specificity), 4 (Constraint Explicitness), 5 (Success Measurability) and 6 (Competitive Positioning) are marked N/A across every unit: personas, constraints, success metrics and the competitive landscape are authored in .memory/wiki/specs/ideation/meta/ and are explicitly referenced-not-redefined here (every Role Lens carries 'Persona names come from meta/personas.md — never redefined here'). Dimensions 1, 3, 7 and 8 were scored on all 55 files, giving 220 applicable checkpoints domain-wide.",
+  "units": [
+    { "unit": "17-live-booking-settlement (domain root)", "applicableCheckpoints": 32, "points": 2.5, "naDimensions": [2, 4, 5, 6] },
+    { "unit": "17.01-availability-holds-confirmation", "applicableCheckpoints": 24, "points": 2.5, "naDimensions": [2, 4, 5, 6] },
+    { "unit": "17.02-offers-negotiation", "applicableCheckpoints": 24, "points": 0.5, "naDimensions": [2, 4, 5, 6] },
+    { "unit": "17.03-deal-structures-economics", "applicableCheckpoints": 20, "points": 1.0, "naDimensions": [2, 4, 5, 6] },
+    { "unit": "17.05-deposits-balances-cancellation", "applicableCheckpoints": 24, "points": 0, "naDimensions": [2, 4, 5, 6] },
+    { "unit": "17.08-agency-representation-commission", "applicableCheckpoints": 20, "points": 0.5, "naDimensions": [2, 4, 5, 6] },
+    { "unit": "17.09-settlement-reconciliation", "applicableCheckpoints": 36, "points": 0, "naDimensions": [2, 4, 5, 6] },
+    { "unit": "17.10-live-income-payout-tax", "applicableCheckpoints": 20, "points": 0, "naDimensions": [2, 4, 5, 6] },
+    { "unit": "17.11-draw-history-market-intelligence", "applicableCheckpoints": 20, "points": 0.5, "naDimensions": [2, 4, 5, 6] }
+  ],
+  "findings": [
+    {
+      "findingId": "17-live-booking-settlement#001",
+      "unit": "17.01-availability-holds-confirmation",
+      "severity": "blocking",
+      "dimension": 3,
+      "claim": "The confirmation gate's precondition set tests one hold ladder, but the ladder feature locks a two-ladder model in which both must resolve. 17.01.04 owns the exhaustive precondition set (C-01..C-06, declared 'all hard') and nowhere requires the artist-side ladder to be resolved; 17.01.02 D-04 states a promoter 1st on the room and 2nd on the artist can confirm nothing. Neither statement carries a marker, and 17.01.04 was updated later (2026-07-30) than 17.01.02 (2026-07-17), so this is not a pending edit.",
+      "evidence": "17.01-availability-holds-confirmation/17.01.04-confirmation-announce-gate.md:62 — \"| C-04 | This hold is at position 1, or every superior hold has collapsed | Position 3 confirming over a live 1st hold is the abuse the ladder prevents (CX-02, R-02) | Blocked, naming the position |\"; same file:51 — \"**Confirmation preconditions** — all hard, evaluated at the moment of commit\"; same file:146 Happy Path step 1 — \"A hold survives to a confirmable position — won challenge, or all superior holds collapsed\". Contradicted by 17.01-availability-holds-confirmation/17.01.02-hold-ladder-priority.md:251 — \"| D-04 | **Two ladders, both must resolve** — the room-side ladder (Operator-owned) and the artist-side ladder (Musician-side) are one primitive from opposite ends | Resolves sub-domain index Q-03 … A promoter 1st on the artist and 2nd on the room can confirm nothing\", and by the same file:231 — \"But D-04's two-ladder model means confirmation requires **both** ladders resolved, which its current single-ladder happy path ('a hold survives to a confirmable position') does not state.\" A domain-wide grep for 'two ladders | both ladders | artist-side ladder | room-side ladder' returns zero hits in 17.01.04.",
+      "forcedInvention": "An implementer must invent whether C-04 evaluates one ladder or two, and if two, which ladder 'this hold' names, whether both must be at position 1, and what the block message says when only one resolves. The 17.01.02 cross-cut note flags the reconciliation as owed to 'Step 6' — a completed stage — with no owner and no Open Question row, so nothing downstream picks it up."
+    },
+    {
+      "findingId": "17-live-booking-settlement#002",
+      "unit": "17-live-booking-settlement (domain root)",
+      "severity": "blocking",
+      "dimension": 3,
+      "claim": "17.14 states announce is blocked whenever a support slot is open; 17.01.04 — the feature that owns the announce precondition set — explicitly rejects that rule and replaces it with lineup honesty, under which an open slot marked TBA announces normally. Both are stated as normative behaviour with no marker on either side, and 17.14 cites '17.01.04 Q-01' for the rule, which no longer holds that question.",
+      "evidence": "17.14-bill-construction-support-slots.md:59 — \"| Bill has open slots at announce time | Announce is blocked — supports-locked is a precondition, so fans cannot buy a lineup that then changes | Announce action disabled with \\\"N support slot(s) still open\\\" (17.01.04 Q-01) |\"; same file:89 — \"supports-locked is an announce precondition; announcing an unlocked bill sells fans a lineup that changes.\" Contradicted by 17.01-availability-holds-confirmation/17.01.04-confirmation-announce-gate.md:229 — \"| DT-05 | \\\"Supports locked\\\" is an announce precondition | The feature's own `[SURFACE]` draft asserted it | ❌ REJECTED as stated, and **refined into something better** … '+ special guests TBA' is a completely standard announce and has been for decades. Blocking it would block the industry's normal behaviour.\"; same file:273 D-06 — \"The bill precondition is **lineup honesty** (named acts confirmed, or explicitly TBA), not 'supports locked'\"; same file:93 P-04 and :176 — \"| Announce fires before supports are locked | **Not a failure if the announce said TBA** (P-04, DT-05).\"",
+      "forcedInvention": "An implementer must decide whether the announce gate blocks on open slot count or on named-but-unconfirmed acts. Building 17.14's rule blocks the standard 'Headliner + TBA' announce, which 17.01.04 DT-05 identifies as the industry's normal behaviour; building 17.01.04's rule makes 17.14's Partial/Broken states and its announce-blocked messaging wrong."
+    },
+    {
+      "findingId": "17-live-booking-settlement#003",
+      "unit": "17.01-availability-holds-confirmation",
+      "severity": "warning",
+      "dimension": 3,
+      "claim": "Within 17.01.04, the normative C-05 precondition and an edge-case row both contradict the file's own resolved Q-04. C-05 hard-blocks on artist + venue-local date with no override 'of any kind, by any party, ever'; the edge case declares the underlying question unresolved and defers to the artist; Q-04 says it is resolved and that C-05 must evaluate per slot so a matinee-plus-evening double header is not blocked.",
+      "evidence": "17.01-availability-holds-confirmation/17.01.04-confirmation-announce-gate.md:63 — \"| C-05 | No existing `Confirmed` or `Announced` booking for the **same artist entity on the same venue-local date** | The canonical double-booking … | **Hard block**, naming the conflicting date |\"; same file:55 — \"C-01 through C-05 have no override of any kind, by any party, ever\"; same file:184 — \"| The other room's hold is for a different slot the same day (matinee vs evening) | Not a conflict at all. Depends on whether a hold attaches to a room-date or a show-slot — **unresolved** (sub-domain Q-01) and it bites hardest here | Retain path is offered with the slot named. **Until Q-01 resolves, the artist decides rather than the system** |\". Contradicted by the same file:293 — \"| Q-04 | ~~**Does a hold attach to a room-date or a show-slot?**~~ **RESOLVED — a bookable slot … C-05's same-date hard block and D-12's cross-room void prompt must therefore evaluate per slot, so a legitimate matinee + evening double-header and a two-stage room are no longer hard-blocked.**\", and by 17.01-availability-holds-confirmation/17.01-availability-holds-confirmation-index.md:59 which marks sub-domain Q-01 '✅ Resolved'.",
+      "forcedInvention": "An implementer building from the precondition table hard-blocks a legitimate in-store-plus-evening day; one building from Q-04 adds a slot dimension to C-05. The edge-case row additionally asserts a question is open that the same file marks closed, so the retain-vs-void prompt behaviour is undetermined."
+    },
+    {
+      "findingId": "17-live-booking-settlement#004",
+      "unit": "17.01-availability-holds-confirmation",
+      "severity": "warning",
+      "dimension": 3,
+      "claim": "The sub-domain CX file states the challenge countdown as a fixed 24–48h window; 17.01.03 D-16 sets a hard bound of 24h to 14 days with 48h as the platform default. The upper bound differs by a factor of seven and neither statement is marked or cross-referenced to the other.",
+      "evidence": "17.01-availability-holds-confirmation/17.01-availability-holds-confirmation-cx.md:54 — \"**Relationship**: Position N can challenge position N−1, starting a fixed countdown (24–48h) in which the superior holder must confirm the date on real terms or drop it.\" Contradicted by 17.01-availability-holds-confirmation/17.01.03-challenge-release-expiry.md:230 — \"| D-16 | Window bounds 24h ≤ W ≤ 14d, hard floor with no consent-based override | Below 24h is not a decision window, it is a trap … Above 14d it is not a challenge. |\", and the same file:61 — \"**Window bounds** | Room policy sets a default (platform default 48h). Per-challenge override permitted within **24h ≤ W ≤ 14d**.\"",
+      "forcedInvention": "An implementer reading the CX caps the per-challenge override at 48h and rejects a 7-day window a room policy is entitled to set; one reading the leaf accepts up to 14 days. The validation bound on a money-relevant clock is therefore not determined by the tree."
+    },
+    {
+      "findingId": "17-live-booking-settlement#005",
+      "unit": "17.01-availability-holds-confirmation",
+      "severity": "warning",
+      "dimension": 8,
+      "claim": "17.01.02's Decisions table defines two different decisions under the identical identifier D-14, and the table's numbering runs D-14, D-13, D-14. Four in-file citations of 'D-14' therefore resolve ambiguously to either the held-date-stays-available rule or the requests-lapse-holds-expire rule.",
+      "evidence": "17.01-availability-holds-confirmation/17.01.02-hold-ladder-priority.md:260 — \"| D-14 | **DQ-04.01:** a held date **stays available**, and only an **aggregate** hold state is disclosed — never counterparty identities |\"; same file:262 — \"| D-14 | **Requests lapse; holds expire.** Different objects, different clocks. A lapse closes as `no-response`, never as `declined` | DT-14. Resolves old Q-03 … Default 7 days, Operator-configurable 1–30, warned at day 5. |\". Both rows are in the same Decisions table, separated only by the D-13 row at :261. Ambiguous citations include the same file:148 (\"**Requests lapse; holds expire — they are different clocks** (D-14)\") and :230 (\"17.01.03's expiry clock and this feature's request-lapse clock (D-14) are different objects\").",
+      "forcedInvention": "A downstream reader resolving a 'D-14' citation must guess which of two unrelated decisions is meant; the id cannot be used as a stable join key into the decision ledger."
+    },
+    {
+      "findingId": "17-live-booking-settlement#006",
+      "unit": "17.02-offers-negotiation",
+      "severity": "warning",
+      "dimension": 8,
+      "claim": "17.02.03 has two different open questions both numbered Q-03, with different owners and different deferral targets, and an edge-case row that points at 'Q-03' resolves ambiguously between them. The same file cites 'this file's D-07' and 'this file's D-08' four times as the source of its Q-01 and Q-02 resolutions, but the Decisions table stops at D-06 — those two decisions are never recorded.",
+      "evidence": "17.02-offers-negotiation/17.02.03-offer-approval-chain.md:125 — \"| Q-03 | **Per DQ-04.03 / D-08 — does an extension re-open the hold ladder clock?** … | Agent | `/write-be-spec` |\"; same file:126 — \"| Q-03 | Does a lineup change between approval and show invalidate the approval? … | Agent | `/write-architecture-spec` (01 ↔ 17 approval-chain boundary) |\"; the ambiguous pointer at :73 — \"| Member approves, then the band's lineup changes before the show | `[PENDING — Q-03 → /write-architecture-spec]` | — |\". Missing decisions: same file:70 — \"**DQ-04.03 (D-08):** the offer expires. There is **no implicit grace window**\"; :71 — \"**DQ-04.02 (D-07):** this feature does not invent one\"; :123 — \"Source: this file's **D-07** (Edge Cases → 'Band has never configured a rule')\"; :124 — \"Source: this file's **D-08** (Edge Cases → 'Offer expires mid-approval')\". The Decisions table at :110–:117 contains only D-01 through D-06.",
+      "forcedInvention": "Two ratified owner decisions (DQ-04.02 and DQ-04.03) exist only as prose inside edge-case cells and are cited by identifiers that do not exist in the file's decision record, so a downstream stage extracting decisions from Decisions tables will silently drop both."
+    },
+    {
+      "findingId": "17-live-booking-settlement#007",
+      "unit": "17.03-deal-structures-economics",
+      "severity": "warning",
+      "dimension": 3,
+      "claim": "The free-text economic-signal detector is specified twice with materially different trigger rules. 17.02.01 requires proximity (an economic keyword within 40 characters of a number) and lists one keyword set; 17.03.01 fires on any free text containing a money keyword anywhere, with a different keyword set. Neither file defers to the other and neither marks the divergence.",
+      "evidence": "17.02-offers-negotiation/17.02.01-offer-sheet-composition.md:68 — \"Free text carries an **economic signal** with no structured counterpart — a currency symbol or ISO code adjacent to a number (`£500`, `EUR 750`); a number followed by `%`; an economic noun/verb **within 40 characters of a number** (`pay, plus, bonus, deduct, cut, fee, split, extra, additional, waive, cover, reimburse, per head, per ticket, comp`); a conditional near a number (`if`, `once`, `provided`, `subject to`, `in the event`) | **Warn and require acknowledgment** |\". Diverges from 17.03-deal-structures-economics/17.03.01-deal-term-grammar-types.md:172 — \"Detector fires at send: **any free text containing** a currency symbol, a number adjacent to `%`, or a money keyword (`fee`, `bonus`, `pay`, `cut`, `deduct`, `plus`, `less`, `owed`, `split`, `guarantee`) **blocks the send**\".",
+      "forcedInvention": "An implementer must invent the authoritative trigger set: whether keyword matches require numeric proximity, and which of two non-identical keyword lists applies (17.03.01 adds `less`/`owed`/`guarantee`; 17.02.01 adds `extra`/`additional`/`waive`/`cover`/`reimburse`/`per head`/`per ticket`/`comp` plus a conditional class). Under 17.03.01's rule a bespoke term reading 'the venue's cloakroom fee is the venue's business' gates the send; under 17.02.01's it does not."
+    },
+    {
+      "findingId": "17-live-booking-settlement#008",
+      "unit": "17.11-draw-history-market-intelligence",
+      "severity": "warning",
+      "dimension": 3,
+      "claim": "17.11.01 makes the slot qualifier a mandatory, never-inferred field on every draw record and enumerates it as headliner / direct support / opener, but the festival case — where none of those values applies and the file states the artist did not draw the crowd — is left as an untracked PENDING with no owner, no deferral target that survives, and no Open Question row.",
+      "evidence": "17.11-draw-history-market-intelligence/17.11.01-verified-draw-record.md:58 — \"| Festival slot with 8,000 in the field | The artist did not draw 8,000; the festival did | `[PENDING — /ideate-discover Step 5 deepening]` — festival draw is not draw |\". Against the same file:30 — \"**Slot** — **headliner, direct support, or opener.** This is the qualifier that makes or breaks the record's meaning and the one most likely to be dropped\"; :98 D-02 — \"Slot (headliner / support / opener) is mandatory and never inferred\"; :97 D-01 — \"Only signed settlements emit records\". The file's Open Questions (Q-01 resolved, Q-02 read-permission, Q-03 append-only adoption cost) do not carry it, and `/ideate-discover` Step 5 is recorded as completed throughout the domain (e.g. live-booking-settlement-index.md:135 'Re-pointed from the completed `/ideate-discover` Step 5').",
+      "forcedInvention": "A settled festival booking must emit or not emit a draw record, and if it emits one it must carry a slot value from an enum that has none for it. An implementer must invent whether festival settlements are excluded from the record entirely, coerced into 'headliner'/'support', or given a fourth slot value — and the choice propagates into 17.11.02 comparables and 17.11.03 guidance."
+    },
+    {
+      "findingId": "17-live-booking-settlement#009",
+      "unit": "17.03-deal-structures-economics",
+      "severity": "warning",
+      "dimension": 7,
+      "claim": "17.03.03 defers the forfeit treatment of a part-played, terminated run to `/create-prd` with no owner and no Open Question row, while stating in the same cell that no later stage will take it. The `Broken` lifecycle state depends entirely on that undecided policy and is itself left as a bare PENDING.",
+      "evidence": "17.03-deal-structures-economics/17.03.03-multishow-cross-collateralization.md:63 — \"| Run terminated mid-way (artist pulls out) | `[PENDING — /create-prd]` — unmodelled; the forfeit treatment of a part-played run is a commercial policy call, of the same class as Q-02, **and no later stage takes it on its own**. *Re-pointed from the completed `/ideate-discover` Step 5.* | `[PENDING — /create-prd]` |\"; same file:72 — \"| Broken | Run terminated early | `[PENDING — /create-prd]` — the state's content depends on the 'Run terminated mid-way' commercial policy call above. |\". The file's Open Questions (:105–:108) carry Q-01 grain, Q-02 advances, Q-03 run-entity ownership, Q-04 resolved — none covers termination forfeit.",
+      "forcedInvention": "The `Broken` state has no defined content: an implementer must invent whether a terminated run's played dates settle at their per-date terms, at the run's cross-collateralized terms recomputed over the played subset, or not at all, and which party the forfeit runs against. The cell names /create-prd as the target but assigns no owner and creates no queue row, so the decision has no route to an owner."
+    },
+    {
+      "findingId": "17-live-booking-settlement#010",
+      "unit": "17-live-booking-settlement (domain root)",
+      "severity": "warning",
+      "dimension": 7,
+      "claim": "17.06 leaves the survival of a radius clause after its protected show is cancelled as an untracked `[PENDING — Step 5]` with no owner, no Open Question row, and a deferral target that is a completed stage — while the same file's Cross-Cut Notes assert a definite answer the edge case contradicts.",
+      "evidence": "17.06-radius-clause-exclusivity.md:102 — \"| Clause on a show that is later cancelled | Does the clause die with the show? **Usually yes; not always** | `[PENDING — Step 5]` |\". Contradicted by the same file:139 — \"Touches **17.04 Performance Contracts & Deal Memos** … the clause becomes live on execution and **dies with the contract**.\" The file's Open Questions (:157–:161) carry Q-01 carve-outs, Q-02 entity-vs-human, Q-03 distance basis, Q-04 waiver clock, Q-05 standing pre-authorisation — none covers cancellation survival, and the States table (:109–:120) has no cancelled-show state.",
+      "forcedInvention": "C-06 is a hard confirmation block keyed on live clauses, so an implementer must decide whether a cancelled show's clause continues to block the artist's other dates. The Cross-Cut Note says it dies with the contract; the edge case says that is only usually true and marks the question open. Building either produces a hard block that is either over- or under-inclusive on every post-cancellation confirm."
+    },
+    {
+      "findingId": "17-live-booking-settlement#011",
+      "unit": "17-live-booking-settlement (domain root)",
+      "severity": "warning",
+      "dimension": 7,
+      "claim": "17.04's edge-case row for an Operator editing generated contract prose to change an economic term still reads 'either blocked or flagged' and carries a live PENDING marker, contradicting the same file's Q-02, which is marked resolved as 'detect and require acknowledgement; never block, never silently accept'.",
+      "evidence": "17.04-performance-contracts-deal-memos.md:60 — \"| Operator edits the generated contract's prose to change an economic term | … Economic fields are locked in the generated document; a prose edit that touches them is **either blocked or flagged as an off-formula override. Exact detect/block/accept policy is `[PENDING — Step 5 Must-depth / /write-be-spec]` (Q-02)** |\". Contradicted by the same file:114 — \"| Q-02 | ~~If an Operator edits generated prose to change an economic term … Detect, block, or accept?~~ **RESOLVED — detect and require acknowledgement; never block, never silently accept.** … `17.03.01` **D-09** … `live-booking-settlement-cx.md` **CX-23** completes it at the other end |\".",
+      "forcedInvention": "An implementer building from the edge-case row locks economic fields and blocks the prose edit; one building from the resolved Q-02 permits the edit with an attributed acknowledgement carried to the settlement sheet. The two produce different contract-editing behaviour on a document with legal force."
+    },
+    {
+      "findingId": "17-live-booking-settlement#012",
+      "unit": "17.08-agency-representation-commission",
+      "severity": "warning",
+      "dimension": 7,
+      "claim": "17.08.01 leaves the interaction between per-booking commission-version pinning and run-level netting as an untracked `[PENDING — Step 5 Must-depth]` with no owner and no Open Question row, on a case the same file describes as arising from a normal cross-collateralized run.",
+      "evidence": "17.08-agency-representation-commission/17.08.01-representation-commission-terms.md:81 — \"| Two versions in force across two bookings for the same show run | A cross-collateralized run (17.03.03) spans dates booked under different pinned versions | Each date computes under its own pinned version; `[PENDING — Step 5 Must-depth: interaction with run-level netting]` |\". The file's Open Questions (:133–:136) carry Q-01 sunset shapes, Q-02 structured-vs-free-text scope, Q-03 resolved, Q-04 work-type vocabulary — none covers run-level netting. Related but not covering: 17.08-agency-representation-commission/17.08.02-commission-accrual-deduction.md:104 Q-03 asks only whether commission on a provisional number is itself provisional and whether it may disburse before the run closes.",
+      "forcedInvention": "When a run's aggregate settles and its dates were booked under different pinned commission versions, an implementer must invent whether commission is evaluated per date against each date's pinned version and then summed, or against the run-level aggregate under one version — and if the latter, which version. The two produce different amounts owed to the agency on the same run."
+    },
+    {
+      "findingId": "17-live-booking-settlement#013",
+      "unit": "17-live-booking-settlement (domain root)",
+      "severity": "warning",
+      "dimension": 8,
+      "claim": "The domain index's Children table records every one of the 14 children as `[SURFACE]`, contradicting the status each child declares in its own front-matter — which ranges across `[DEEP]`, `[BREADTH]`, `[PARTIAL]` and `[SURFACE]`. The domain index also declares itself `[BREADTH]` while its own CX file declares `[DEEP]`.",
+      "evidence": "live-booking-settlement-index.md:52–:65 — every row of the Children table carries \"`[SURFACE]`\", e.g. \"| 17.01 | Availability, Holds & Confirmation | sub-domain | … | `[SURFACE]` | 12 hypotheses |\" and \"| 17.09 | Settlement & Reconciliation | sub-domain | … | `[SURFACE]` | 20 hypotheses |\". Contradicted on disk by 17.01-availability-holds-confirmation/17.01-availability-holds-confirmation-index.md:5 — \"> **Status**: [DEEP]\"; 17.09-settlement-reconciliation/17.09-settlement-reconciliation-index.md:5 — \"> **Status**: [BREADTH]\"; 17.04-performance-contracts-deal-memos.md:5 — \"> **Status**: [PARTIAL]\"; 17.12-counterparty-relationship-payment-reliability.md:5 — \"> **Status**: [PARTIAL]\". Self-inconsistent at the domain level: live-booking-settlement-index.md:5 — \"> **Status**: [BREADTH]\" against live-booking-settlement-cx.md:5 — \"> **Status**: [DEEP] — 14 children; 24 intra-domain cross-cuts synthesised\". The index's own Last-updated is 2026-07-16 while children were updated through 2026-07-30.",
+      "forcedInvention": "Depth status is load-bearing for scope decisions elsewhere in the tree (ideation-index.md D-24 is cited in 17.05.04 Q-03 as 'Coulds (201) and Won'ts (53) correctly remain `[SURFACE]`'), so a reader using the domain index to judge which children are ready or deferred is given a uniformly wrong answer for all 14."
+    }
+  ]
+}

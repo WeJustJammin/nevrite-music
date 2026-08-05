@@ -1,0 +1,130 @@
+{
+  "domain": "02-credits-attribution",
+  "unitsAudited": 5,
+  "filesRead": 33,
+  "coverageNote": "Enumerated from disk: 5 units (the domain directory itself plus 02.01-credit-graph-discography, 02.02-session-capture, 02.03-claiming-cold-start-seeding, 02.04-attestation-credit-confidence) and 33 files — exactly the expected count. Every file was opened. For the eight largest files (02.01.02, 02.01.05, 02.04.01, 02.04.04, 02.05, 02.06, 02.08, credits-attribution-cx.md) I read Behavior, Happy Path, Edge Cases, States, Decisions and Open Questions in full and consulted Deep Think Annotations / Cross-Cut Notes by targeted grep rather than end-to-end, to stay inside the context budget for an 881 KB tree; DT rows are argumentation rather than normative text, but this is a real depth limitation on those eight files. Scoring note: dimensions 1 (Problem Clarity), 2 (Persona Specificity), 4 (Constraint Explicitness) and 6 (Competitive Positioning) are marked N/A for every unit — they are owned by meta/problem-statement.md, meta/personas.md, meta/constraints.md and meta/competitive-landscape.md, which these files reference and never redefine ('Personas from meta/personas.md — referenced, never redefined'). That leaves 4 applicable checkpoints per unit, so per-unit percentages are coarse: a single blocking contradiction moves a unit by 25 points. This tree is unusually well specified — most candidate findings were refuted in the devil's-advocate pass because the text already carried an owner-and-target-tracked deferral, an explicit supersession row, or a cross-reference that resolved the gap. What survived is concentrated in text that was NOT reconciled after the 2026-07-22 D-70 ratification and after 02.01.05 D-06's two-axis visibility rename.",
+  "units": [
+    {
+      "unit": "02-credits-attribution (domain root: credits-attribution-index.md, credits-attribution-cx.md, 02.05-02.10)",
+      "applicableCheckpoints": 4,
+      "points": 0,
+      "naDimensions": [1, 2, 4, 6]
+    },
+    {
+      "unit": "02.01-credit-graph-discography",
+      "applicableCheckpoints": 4,
+      "points": 1.5,
+      "naDimensions": [1, 2, 4, 6]
+    },
+    {
+      "unit": "02.02-session-capture",
+      "applicableCheckpoints": 4,
+      "points": 1.5,
+      "naDimensions": [1, 2, 4, 6]
+    },
+    {
+      "unit": "02.03-claiming-cold-start-seeding",
+      "applicableCheckpoints": 4,
+      "points": 1.0,
+      "naDimensions": [1, 2, 4, 6]
+    },
+    {
+      "unit": "02.04-attestation-credit-confidence",
+      "applicableCheckpoints": 4,
+      "points": 1.0,
+      "naDimensions": [1, 2, 4, 6]
+    }
+  ],
+  "findings": [
+    {
+      "findingId": "02-credits-attribution#001",
+      "unit": "02.02-session-capture",
+      "severity": "blocking",
+      "dimension": 3,
+      "claim": "02.02.02 Per-Track Contribution Log was never reconciled with the ratified v1 no-plugin decision (D-70 / DQ-08.2, 2026-07-22). Its primary Happy Path, its 'Derived' capture channel, its 'Derived' state and decisions D-01, D-03 and D-10 all describe a DAW-supplied session environment, and its Q-01 is still carried as an open question deferred to /create-prd — while its own sub-domain index and the domain CX file both record the answer as 'no' for the whole v1 window and require every consumer to degrade to a no-channel branch. The sibling 02.02.03 carries an explicit v1-availability block; 02.02.02 (last updated 2026-07-23, one day AFTER the decision) carries none.",
+      "evidence": "02.02.02-per-track-contribution-log.md:80 — '1. Session is running; the roll is populated (`02.02.01`); the Producer is working in the DAW, not in a browser.'  02.02.02-per-track-contribution-log.md:81 — '2. The session environment reports its structure. Parts appear in the log with no action from anyone.'  02.02.02-per-track-contribution-log.md:204 — '| Q-01 | What can a DAW plugin actually read — track names, routing, input assignment, take lanes? The answer sets the ceiling on derived capture, decides whether D-01's take-level half is ever reachable, and therefore sizes the whole wedge. Rolls up to domain Q-04. | User | `/create-prd` |'  CONTRADICTED BY 02.02-session-capture-index.md:48 — '**CLOSED FOR THE v1 WINDOW (owner decision 2026-07-22, D-70 / DQ-08.2): none of them.** No non-web client is authorised, so no rung of this question has a v1 answer to give'  AND credits-attribution-cx.md:340 — '**NO v1 CHANNEL (owner decision 2026-07-22, D-70 / DQ-08.2)**: no non-web client on the producer's machine is authorised, so this mechanism has **no v1 implementation** and every consumer above must degrade to its no-channel branch for the whole v1 window.'  The file's own DT-06 predicted this exact failure: 02.02.02:149 — 'a spec writer reading \"per-track\" literally will build a feature that cannot run without a plugin, which inverts the dependency.'",
+      "forcedInvention": "What the v1 contribution log actually is. One implementer builds the derived/DAW-suggestion pipeline the Happy Path specifies (steps 2, 3, 5, the Derived state, D-10's deterministic pre-fill rule); another builds manual + delivery channels only and drops the derived channel entirely. The two products differ in their primary capture flow, their state machine and their take-level granularity ceiling (D-01)."
+    },
+    {
+      "findingId": "02-credits-attribution#002",
+      "unit": "02.01-credit-graph-discography",
+      "severity": "blocking",
+      "dimension": 3,
+      "claim": "02.01.01's authoritative record-model table defines Visibility as a single three-value field 'Public / Embargoed / Private', which is the superseded breadth-pass model. 02.01.05 D-06 replaced it with two orthogonal fields — Confidentiality (Public / Embargoed / Confidential, record-level) and Page curation (Listed / Unlisted, per party page) — and explicitly renamed 'Private' to 'Unlisted'. No value called 'Private' exists in either axis, and 'Confidential' does not appear in 02.01.01's field list. Both files are dated 2026-07-23; neither marks or supersedes the other.",
+      "evidence": "02.01.01-credit-record-contribution-ledger.md:37 — '| **Visibility** | Public / Embargoed / Private (`02.01.05`). Enforced at the record, evaluated at query. |'  CONTRADICTED BY 02.01.05-credit-visibility-embargo.md:270 — '| D-06 | Visibility is **two orthogonal axes**: Confidentiality (Public / Embargoed / Confidential — record-level, binds everywhere) and Page curation (Listed / Unlisted — one party's discography only). \"Private\" is renamed **Unlisted** and the UI states that the work's ledger still shows the party |'  AND 02.01.05-credit-visibility-embargo.md:48 — 'A credit therefore has one Axis-A value and one Axis-B value, and they do not interact'  AND 02.01.05-credit-visibility-embargo.md:31 — 'The breadth pass modelled visibility as one three-value ladder (Public / Embargoed / Private)'.",
+      "forcedInvention": "Whether a credit record carries one visibility field or two independent ones, and whether the third Axis-A value is 'Private' or 'Confidential'. The two models are not interconvertible: under 02.01.01 a credit set 'Private' is hidden everywhere; under 02.01.05 the same act (Unlisted) leaves it on the work's ledger and on co-contributors' pages. 02.01.05 line 50 states the rename exists precisely because 'A player who marks a credit Private, expecting it gone,' is misled — so building 02.01.01's field ships the harm the rename was ratified to prevent."
+    },
+    {
+      "findingId": "02-credits-attribution#003",
+      "unit": "02.01-credit-graph-discography",
+      "severity": "blocking",
+      "dimension": 3,
+      "claim": "02.01.02 D-08 makes a Private credit's canonical URL return 404. Within 02.01.02, 'Private' is unambiguously the unilateral party-side control (D-06), which under 02.01.05 D-06 is Axis B / Unlisted — and 02.01.05 defines Unlisted as leaving the credit on the work's ledger, on co-contributors' pages and in search. A credit that is still publicly reachable through the work's ledger cannot also 404 at its own URL. The two files state opposite observable behaviour for the same act, with no marker on either.",
+      "evidence": "02.01.02-public-discography.md:156 — '| D-08 | **Confidentiality beats citability; correction loses to it.** ... A Private or embargoed credit's URL 404s — never 403 |'  02.01.02-public-discography.md:154 — '| D-06 | ... A party contesting a credit *naming them* sets it Private unilaterally (`02.01.05`) — an immediate remedy requiring no adjudication |'  CONTRADICTED BY 02.01.05-credit-visibility-embargo.md:46 — '| **Unlisted** | Per credit, per party | Removed from that party's discography page **only** — still on the work's ledger, still on co-contributors' pages, still in [search]'  AND 02.01.05-credit-visibility-embargo.md:48 — 'an Unlisted credit on a released work is still public on the work page'.  Note also that Confidential (the other candidate reading) is not unilateral: 02.01.05 Q-02(b) says it 'requires both the credited party's and the ledger owner's assent', which rules it out as D-06's remedy.",
+      "forcedInvention": "What an Unlisted credit's canonical URL returns. One implementer 404s it (per 02.01.02 D-08, matching the embargo leak rule) and thereby breaks the ledger link 02.01.05 guarantees stays live; another returns 200 (per 02.01.05 Axis B) and thereby breaks D-08's stated confidentiality-beats-citability invariant. Both are defensible from the text and they are mutually exclusive."
+    },
+    {
+      "findingId": "02-credits-attribution#004",
+      "unit": "02.01-credit-graph-discography",
+      "severity": "blocking",
+      "dimension": 3,
+      "claim": "02.01.03 D-04 states the co-contribution density floor in a unit that does not exist in the tier model: 'attested-tier-or-higher nodes'. 02.04.02's ladder is six named rungs — Imported, Self-asserted, Asserted by the session owner, Session-logged, Confirmed, Captured and confirmed — none of which is called 'attested', and 02.04.02 requires every downstream consumer to implement against those six rungs in that exact sequence. Excluding 'self-asserted-tier edges' pins only rung 2; rungs 1, 3 and 4 are unassigned. The thresholds (20 / 100) are precise; the thing being counted is not.",
+      "evidence": "02.01.03-credit-search-graph-traversal.md:87 — '| D-04 | Density floor for co-contribution: **disabled** when the query's constraint scope (region × role/instrument, at the requested hop depth) has **< 20** reachable **attested-tier-or-higher** nodes; **degraded** (low-confidence banner) at **20–99**; **normal** at **≥ 100**. Self-asserted-tier edges do not count toward the floor. |'  CONTRADICTED BY 02.04.02-provenance-tiers-credit-confidence.md:46-53 (rung table: '1 | **Imported** ... 2 | **Self-asserted** ... 3 | **Asserted by the session owner** ... 4 | **Session-logged** ... 5 | **Confirmed** ... 6 | **Captured and confirmed**')  AND 02.04.02-provenance-tiers-credit-confidence.md:44 — 'The order tabulated below is the **authoritative working total order**: every downstream consumer (`02.01.02`'s tier-floor filter, the BE tier model) implements against these six rungs in this exact sequence now, and treats it as fixed.'",
+      "forcedInvention": "Which rung is the floor. Setting it at rung 3 (any producer assertion counts), rung 4 (session-logged), or rung 5 (independently confirmed) produces wildly different reachable-node counts and therefore different answers to whether co-contribution search is Disabled, Degraded or Normal for a given region/role — i.e. whether the product's flagship discovery feature runs at all in a given scope. No tracked question covers the mapping (02.01.03 Q-01 is marked RESOLVED by this very decision)."
+    },
+    {
+      "findingId": "02-credits-attribution#005",
+      "unit": "02.04-attestation-credit-confidence",
+      "severity": "blocking",
+      "dimension": 3,
+      "claim": "02.04.02's score-input table asserts two absolute rules whose interaction is unspecified and load-bearing: the rung 'sets the band' so the score never crosses a rung boundary, and ring-detection demotion is a negative multiplier that is 'never a cap'. Because a fully corroborated fiction reaches rung 6, and because demotion on traversal rank is stated to be the entire defence against collusion, the banding rule silently clamps the only defence the design has: a demoted rung-6 fabricated edge can never be ranked below a clean rung-4 or rung-5 edge.",
+      "evidence": "02.04.02-provenance-tiers-credit-confidence.md:61 — '| Rung | Sets the band | The score never crosses a rung boundary — a rung-6 credit is never scored below a rung-5 one. |'  02.04.02-provenance-tiers-credit-confidence.md:67 — '| Ring-detection demotion (`02.04.04`) | Negative multiplier, **never a cap** (DT-14) |'  02.04.02-provenance-tiers-credit-confidence.md:208 — '| D-12 | **Demotion is a weight, never a cap** | DT-14. A cap is a probe oracle...'  02.04.02-provenance-tiers-credit-confidence.md:101 — 'Everything is attested because everyone colludes | Rung reports rung 6 in a fiction ... The defence is real but operates only on ranking, search and dispute weighting — never on the label'  02.01.03-credit-search-graph-traversal.md:88 — '| D-05 | ... the demotion moves the continuous internal score, never the provenance rung ..., so traversal is where the whole defence lands.'",
+      "forcedInvention": "The clamp semantics when the rung band and the demotion multiplier conflict. One implementer computes score = f(rung_band, evidence) then applies the multiplier globally, letting a demoted rung-6 edge fall below a clean rung-4 one (violating the banding rule); another clamps to the rung's band floor, making demotion inert against exactly the fabricated top-rung edges 02.04.04 exists to catch (violating 'never a cap' and gutting the stated defence). Traversal results differ for every query touching a demoted cluster, and no tracked question covers it — 02.04.04 Q-04 defers only the score-side cut value, not the band interaction."
+    },
+    {
+      "findingId": "02-credits-attribution#006",
+      "unit": "02.02-session-capture",
+      "severity": "blocking",
+      "dimension": 3,
+      "claim": "Room-mode taps are simultaneously declared worthless as corroboration and counted as corroboration. 02.02.03 D-12 records them as 'witnessed, not attested' with evidentiary weight 'exactly the Producer's assertion', on the ground that a tap on the Producer's device is indistinguishable from the Producer tapping. But the sub-domain CX and 02.02.04 both state without qualification that confirmation taps at the close prompt ARE co-sign corroboration of presence — the strongest available signal — and neither carves out room mode. Room mode is the primary path offline, which the specs call the modal studio, so this decides the corroboration input for most captured credits.",
+      "evidence": "02.02.03-session-close-capture-prompt.md:78 — '**Room mode buys accuracy, not provenance** (DT-06). A tap on the Producer's device is indistinguishable from the Producer tapping, so its evidentiary weight is exactly the Producer's assertion ... Room-mode taps are recorded as **witnessed, not attested**'  02.02.03-session-close-capture-prompt.md:111 — 'Studio basement, no connectivity at all | The modal studio. ... Room mode is the primary path here, not a fallback (DT-06)'  CONTRADICTED BY 02.02-session-capture-cx.md:13 — '| CX-04 | ... Confirmation taps at the prompt *are* co-sign corroboration of **presence** — the strongest honest signal, collected free.'  AND 02.02.04-session-attendance-proof.md:27 — '**Co-sign** — other people on the roll confirm this person was there. Social, cheap, and the strongest one that does not require surveillance. It is also nearly free, since the close prompt (`02.02.03`) is already collecting taps from the same people.'",
+      "forcedInvention": "Whether a room-mode tap feeds 02.02.04's co-sign corroboration and therefore 02.04.02's score. Counting it means the corroboration signal for the modal (offline) session is manufactured entirely by one device the Producer holds — the exact self-corroboration 02.02.01 D-07 and 02.04.02 D-08 exist to prevent. Not counting it means offline sessions systematically carry no attendance corroboration at all, which no file states. Nothing in the corpus decides it."
+    },
+    {
+      "findingId": "02-credits-attribution#007",
+      "unit": "02.01-credit-graph-discography",
+      "severity": "warning",
+      "dimension": 3,
+      "claim": "Three files disagree on whether domain Q-12 (does a Band hold credits directly, or only its members?) has been answered. 02.01.01 Q-03 marks it resolved by D-07 and says D-07 'also answers domain Q-12'; the domain index still carries Q-12 as an open question owned by Agent and deferred to /create-prd-architecture; 02.02.01 D-13 says the band-as-credit-holder question 'remains open'; 02.02.03 D-15 says it 'constrains, but does not resolve' Q-12. No marker on any of them acknowledges the others.",
+      "evidence": "02.01.01-credit-record-contribution-ledger.md:214 — '| Q-03 | ~~Can a Band hold a credit directly, or only its members?~~ | Agent | ✅ **Resolved this pass — D-07.** Both, independently; neither derived from the other. Also answers domain Q-12. |'  CONTRADICTED BY credits-attribution-index.md:141 — '| Q-12 | ... does the **Band as entity** hold credits directly, or only its members? Liner notes do both. Constrained but not answered by `02.02.03` DT-12 ... An entity-model call on the credit graph. | Agent | `/create-prd-architecture` |'  AND 02.02.01-session-roll-call.md:220 — '| D-13 | Adding a **band** expands into one roll entry per member | DT-14. ... Answers the roll-call half of domain Q-12; the band-as-credit-holder question is untouched and remains open. |'  AND 02.02.03-session-close-capture-prompt.md:216 — '| D-15 | The prompt asks **only natural persons** | ... Constrains, but does not resolve, domain Q-12. |'",
+      "forcedInvention": "Whether the entity model is settled. An implementer following 02.01.01 D-07 builds Band-as-creditable-party now; one following the domain index defers the entity model to /create-prd-architecture and builds member-only credits. 02.01.01 D-07 is specific enough to build from, so the harm is that a ratified decision is still routed as an open question and may be re-decided against existing behaviour."
+    },
+    {
+      "findingId": "02-credits-attribution#008",
+      "unit": "02.01-credit-graph-discography",
+      "severity": "warning",
+      "dimension": 3,
+      "claim": "02.01.06's self-correction safeguard turns on a term that is defined nowhere in the domain. The rule flags a self-only correction that 'also changes provenance-bearing fields', but the phrase 'provenance-bearing fields' occurs exactly once across all 33 files and no file enumerates which fields those are. Neither the flag's recipient nor its effect is stated.",
+      "evidence": "02.01.06-credit-correction-amendment.md:64 — '| Proposer is also the credit's only required approver (self-attested, unattested credit) | Applies with notice to the named party, per the unattested rule — but a self-only correction that also changes provenance-bearing fields is flagged, so nobody silently self-upgrades their own record | \"Corrected — <named party> notified\" |'  Verified by grep across the domain: 'provenance-bearing' appears in exactly this one line; no definition exists in 02.01.01's record-field table (which names Party, Role, Work, Contribution date, Assertion date, Asserter, Origin, Provenance tier, Visibility) or in 02.04.02's rung/score inputs.",
+      "forcedInvention": "The field set that triggers the flag (contribution date? assertion date? asserter? origin? all four?), who receives the flag, and what the flag does. The rule's stated purpose — 'nobody silently self-upgrades their own record' — is unenforceable without it, and 02.04.01 D-10's flat identity test (party/role/work) explicitly does not cover assertion date, asserter or origin, so the flag is the only guard on exactly the fields 02.04.02 derives the rung from."
+    },
+    {
+      "findingId": "02-credits-attribution#009",
+      "unit": "02.03-claiming-cold-start-seeding",
+      "severity": "warning",
+      "dimension": 3,
+      "claim": "There is no re-entry rule after a claim contest closes as Unresolvable. D-02 leaves the credit unattached specifically so that it is not awarded on weak evidence, D-06 returns it to the unclaimed shell, and the edge case states the claim CTA is back on the surface where 'either could still claim it' — so either party to the closed contest can simply re-claim and, absent a second claim, take the credit on exactly the evidence D-02 refused. The loop claim -> contest -> Unresolvable -> re-claim has no stated bound.",
+      "evidence": "02.03.03-claim-adjudication.md:104 — '| D-02 | Unresolvable contests leave the credit unattached | Awarding on weak evidence hands one person the other's career on a guess. Unattached is honest and reversible; wrongly awarded is neither. |'  02.03.03-claim-adjudication.md:68 — 'Two real people with the same name, contest reaches `Unresolvable` | The credit returns to the unclaimed shell (D-06) — the pre-claim status quo, with the claim CTA on the surface where either could still claim it.'  02.03.03-claim-adjudication.md:79 — '| Unresolvable | No corroborator exists (import) | **Detaches** (D-02): the credit returns to the unclaimed shell it came from (D-06), permanently marked contested.'  The only adjacent tracked question covers a different case: 02.03-claiming-cold-start-seeding-cx.md:65 OQ-01 asks only whether NEW corroborating evidence reactivates a closed contest, and its interim rule ('`unresolvable` is treated as terminal ... any resolution path goes through a new claim') affirms re-filing without bounding it.",
+      "forcedInvention": "Whether a party to a closed Unresolvable contest may re-claim the same credit, and how many times. One implementer writes a negative assertion against both claimants (matching 02.03.02's Rejected state) so neither can re-claim; another allows unlimited re-claiming per the edge case's own wording. The first strands a genuinely-entitled claimant permanently; the second makes D-02's protection expire the moment one party clicks again."
+    },
+    {
+      "findingId": "02-credits-attribution#010",
+      "unit": "02.03-claiming-cold-start-seeding",
+      "severity": "warning",
+      "dimension": 5,
+      "claim": "02.03.02's claim-suggestion precision rule is normative, load-bearing and untestable as written, and — unlike the structurally identical rule in its sibling — carries no deferral marker. D-02 says 'Precision over recall' and the edge case says 'High match floor; show few, show confident', with no threshold, no count and no deferral target, while 02.03.01's analogous surfaced-vs-held cut is explicitly tracked as [PENDING — /write-be-spec].",
+      "evidence": "02.03.02-claim-inbox-suggested-claims.md:46 — '| Suggestions are wrong (common names) | Bad suggestions are worse than none — a user shown forty strangers' credits learns the product doesn't know them | High match floor; show few, show confident |'  02.03.02-claim-inbox-suggested-claims.md:89 — '| D-02 | Precision over recall on suggestions | DT-03. The suggestion is the product's first demonstration of competence, delivered before trust exists. |'  CONTRAST 02.03.01-external-catalog-import.md:46 — 'Candidates are ranked (identifier-resolved and role-mappable first; bare-name matches last) and only the top band is surfaced for review ... Exact ranking signals and the surfaced-vs-held cut are `[PENDING — /write-be-spec]`'  and 02.03.01 D-04's cadence rule, which names its own throttle basis.",
+      "forcedInvention": "The match floor and the suggestion count. 'Show few, show confident' admits any value; DT-03's worked failure case is 'forty credits belonging to three other John Smiths', which sets no bound. Because 02.03 D-03 makes the inbox the platform's acquisition surface and DT-03 says the judgement is 'formed in the first thirty seconds', the chosen value decides conversion for the growth loop, and no owner or stage is named to decide it."
+    }
+  ]
+}

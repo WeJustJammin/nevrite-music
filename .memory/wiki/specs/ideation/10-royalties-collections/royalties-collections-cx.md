@@ -333,3 +333,23 @@ This is a materially different origin from CX-08's disputes: CX-08 starts with a
 | R-06 | 10.09 Distribution Calendar | 10.04 Disbursement | Rejected, and the confusion is worth pre-empting because both are about "when money moves". `10.09` tracks **society distribution schedules** — when a third party pays *in*. `10.04.01` Q-02 asks about **payout cadence** — when the platform pays *out*. They are unrelated clocks with unrelated owners, and coupling them would suggest the platform's payout run should follow a society's calendar. It should not: a run pays whatever is payable from all sources, and a payee's money from six sources on six schedules is one transfer (`10.04.01` D-02). |
 | R-07 | 10.02.05 Unmatched Line Queue | 10.04.03 Thresholds, Holds & Unpayable Balances | Rejected as a **merge**, and the surface pass had this wrong (`10.02.05` DT-12). Both look like "held money", so the instinct is one queue. But a line cannot be both unattributed and unpayable, because **attribution precedes payment**: `10.02.05` holds money with **no known owner**; `10.04.03` holds money whose owner is **known but unreachable** (below threshold, no method, unclaimed shell). Opposite causes, opposite remedies — one needs a match, the other needs a payout route. They share only a clock (both age and alarm, D-04), which CX-06 records; merging their state would let a resolved attribution silently look like a payout failure, or vice versa. |
 | R-08 | 10.02.02 Statement Parsing | 10.02.05 Unmatched Line Queue | Rejected as a destination for **parse failures**, and the boundary is load-bearing (`10.02` R-03). An unparseable line is not an exception to be queued — it **blocks the whole statement at the reconciliation gate** (`10.02.02` D-02), because Σ(parseable lines) ≠ declared total by construction, which destroys the stated-total oracle. Routing parse failures into the unmatched queue would convert a platform-side parsing bug into what looks like ordinary unattributed money, hiding a defect the platform must fix behind money it tells the user is merely "pending a match". The only lines that reach `10.02.05` are cleanly parsed lines that matched nothing. |
+
+
+<!-- spec-graph: auto-generated -->
+## Related Specs
+
+### Constrained by
+- [[decisions.md#d-01|D-01]]
+- [[decisions.md#d-02|D-02]]
+- [[decisions.md#d-16|D-16]]
+- [[decisions.md#d-04|D-04]]
+- [[decisions.md#d-09|D-09]]
+- [[decisions.md#d-05|D-05]]
+- [[decisions.md#d-15|D-15]]
+- [[decisions.md#d-10|D-10]]
+- [[decisions.md#d-03|D-03]]
+- [[decisions.md#d-08|D-08]]
+- [[decisions.md#d-14|D-14]]
+- [[decisions.md#d-18|D-18]]
+- [[decisions.md#d-13|D-13]]
+- [[decisions.md#d-01s|D-01s]]

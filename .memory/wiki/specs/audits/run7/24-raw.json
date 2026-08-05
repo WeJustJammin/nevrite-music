@@ -1,0 +1,245 @@
+{
+  "reportKind": "ambiguity-audit-raw",
+  "run": 7,
+  "domain": "24-trust-safety-disputes",
+  "unitsAudited": 9,
+  "filesRead": 54,
+  "coverageNote": "Read all 54 current Markdown sources: 36 feature documents, eight subdomain indexes, eight subdomain cross-cut documents, plus the domain index and cross-cut; 24.09 is the ninth audited unit.",
+  "applicableCheckpoints": 8,
+  "findings": [
+    {
+      "findingId": "R7-24-RAW-001",
+      "unit": "24-trust-safety-disputes",
+      "severity": "warning",
+      "dimension": "Open Question Resolution",
+      "claim": "The domain-level active question register records owners and pipeline destinations but no deadline. At least Q-03 and Q-05 can remain unresolved indefinitely despite blocking domain specification and legal priority classification.",
+      "evidence": [
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/24-trust-safety-disputes/trust-safety-disputes-index.md",
+          "line": 134,
+          "excerpt": "| # | Question | Owner | Deferred To |"
+        },
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/24-trust-safety-disputes/trust-safety-disputes-index.md",
+          "line": 138,
+          "excerpt": "**This domain cannot be specified until Q-02 is resolved.** | User | `/create-prd` |"
+        },
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/24-trust-safety-disputes/trust-safety-disputes-index.md",
+          "line": 140,
+          "excerpt": "This reasoning moves four features between Must and Could and **must be confirmed by counsel**, not by an agent. | User + counsel | `/create-prd-security` |"
+        }
+      ],
+      "forcedInvention": "A downstream author must choose when Q-03 and Q-05 become due, or decide to proceed with unresolved actor and legal classification.",
+      "failureScenario": "If `/create-prd` is delayed, a later specification must either invent the moderator actor and Must/Could classification or stall indefinitely because neither active question has a deadline."
+    },
+    {
+      "findingId": "R7-24-RAW-002",
+      "unit": "24-trust-safety-disputes",
+      "severity": "blocking",
+      "dimension": "Persona Specificity",
+      "claim": "The domain's primary operating actors have no persona specification, and the source explicitly says the moderator actor, permission model, and console endpoints cannot be specified until the missing persona decision is resolved.",
+      "evidence": [
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/24-trust-safety-disputes/trust-safety-disputes-index.md",
+          "line": 91,
+          "excerpt": "**moderator, a risk analyst, a dispute agent, a law-enforcement officer and a regulator**. None of them is"
+        },
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/24-trust-safety-disputes/trust-safety-disputes-index.md",
+          "line": 95,
+          "excerpt": "**Q-02 must be resolved before `/write-be-spec`.**"
+        },
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/24-trust-safety-disputes/24.01-reporting-moderation/24.01.03-moderation-queue-reviewer-ops.md",
+          "line": 202,
+          "excerpt": "The actor's identity, permission model, and console endpoints cannot be specified until this resolves."
+        }
+      ],
+      "forcedInvention": "An implementer must invent the moderator's authority, success criteria, and permitted case actions without a defined persona.",
+      "failureScenario": "When a moderator handles an S1 case, independently built queue and enforcement surfaces can assign incompatible permissions and case visibility to the same undefined actor."
+    },
+    {
+      "findingId": "R7-24-RAW-003",
+      "unit": "24.01-reporting-moderation",
+      "severity": "blocking",
+      "dimension": "Success Measurability",
+      "claim": "Severity tiers expose only relative SLA labels; the numerical response windows and jurisdictional variants that calculate the user-visible deadline remain unset.",
+      "evidence": [
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/24-trust-safety-disputes/24.01-reporting-moderation/24.01.03-moderation-queue-reviewer-ops.md",
+          "line": 45,
+          "excerpt": "the committed minute/hour value per tier is set with counsel at `/create-prd-security` — see Q-04"
+        },
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/24-trust-safety-disputes/24.01-reporting-moderation/24.01.03-moderation-queue-reviewer-ops.md",
+          "line": 51,
+          "excerpt": "| S1 | Critical (statutory clock, financial harm in progress, active impersonation) |"
+        },
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/24-trust-safety-disputes/24.01-reporting-moderation/24.01.03-moderation-queue-reviewer-ops.md",
+          "line": 205,
+          "excerpt": "What is the committed SLA value (minutes/hours) per severity tier, and does it vary by jurisdiction?"
+        }
+      ],
+      "forcedInvention": "The implementation must choose the timer values, breach thresholds, and jurisdiction mapping that turn an S1 label into a concrete deadline.",
+      "failureScenario": "An S1 report needs a response-by timestamp and breach alert; choosing an arbitrary window can breach the statutory clock or create inconsistent promises for the same severity."
+    },
+    {
+      "findingId": "R7-24-RAW-004",
+      "unit": "24.08-illegal-content-legal-process",
+      "severity": "blocking",
+      "dimension": "Feature Completeness",
+      "claim": "A fully automatic CSAM action has no valid structured Statement-of-Reasons representation: the subject reason must be generic but nonempty and honest, while the closed concurrence enum has no value for an action that no human reviewed.",
+      "evidence": [
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/24-trust-safety-disputes/24.08-illegal-content-legal-process/24.08.01-csam-detection-preservation-reporting.md",
+          "line": 139,
+          "excerpt": "Fully automatic on match: block, preserve, report, action — no human decision"
+        },
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/24-trust-safety-disputes/24.02-enforcement-appeals-policy/24.02.03-statements-of-reasons.md",
+          "line": 41,
+          "excerpt": "null, or malformed — the whole unit is refused and the **sanction never applies**."
+        },
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/24-trust-safety-disputes/24.02-enforcement-appeals-policy/24.02.03-statements-of-reasons.md",
+          "line": 54,
+          "excerpt": "`below-concurrence-threshold` (with the cooling-off re-affirmation timestamp, where the rung-≥-6 path required one) or `s0-s1-clock-override`"
+        },
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/24-trust-safety-disputes/trust-safety-disputes-cx.md",
+          "line": 359,
+          "excerpt": "surfaces to the subject **only** as 24.02's generic suspension notice; the CSAM basis is never disclosed"
+        },
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/24-trust-safety-disputes/24.08-illegal-content-legal-process/24.08.01-csam-detection-preservation-reporting.md",
+          "line": 155,
+          "excerpt": "no file states what wording satisfies all three at once."
+        }
+      ],
+      "forcedInvention": "The implementer must invent a generic `facts-relied-on` value and either misuse an existing concurrence code or extend the closed enum.",
+      "failureScenario": "On a hash match, a blank field prevents the sanction, a specific field discloses the CSAM basis, and an invented concurrence value makes the decision record inaccurate."
+    },
+    {
+      "findingId": "R7-24-RAW-005",
+      "unit": "24.06-personal-safety-threat-response",
+      "severity": "blocking",
+      "dimension": "Feature Completeness",
+      "claim": "The crisis lane defines an `Escalated` state but leaves the emergency-services action and its malicious-report tradeoff pending, despite requiring a decision before the first case.",
+      "evidence": [
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/24-trust-safety-disputes/24.06-personal-safety-threat-response/24.06.03-crisis-welfare-escalation.md",
+          "line": 40,
+          "excerpt": "only thing that matters. It is deliberately left as an open question (24.06 Q-02) rather than answered by an agent."
+        },
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/24-trust-safety-disputes/24.06-personal-safety-threat-response/24.06.03-crisis-welfare-escalation.md",
+          "line": 73,
+          "excerpt": "| Escalated | Imminent-danger threshold | `[PENDING — Step 5 Must-depth / /create-prd-security]`"
+        },
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/24-trust-safety-disputes/24.06-personal-safety-threat-response/24.06.03-crisis-welfare-escalation.md",
+          "line": 107,
+          "excerpt": "Does the platform ever contact emergency services? High-liability, sometimes wrong, occasionally the only thing that matters. **Must be decided before the first case, in the calm.**"
+        }
+      ],
+      "forcedInvention": "The implementation must choose whether to contact emergency services and how to distinguish immediate danger from a weaponised welfare report.",
+      "failureScenario": "For an imminent-danger report, a product team must either contact authorities or not; an arbitrary contact path can turn a malicious report into swatting, while an arbitrary non-contact path can omit the intended intervention."
+    },
+    {
+      "findingId": "R7-24-RAW-006",
+      "unit": "24.08-illegal-content-legal-process",
+      "severity": "blocking",
+      "dimension": "Feature Completeness",
+      "claim": "The law-enforcement portal has no after-hours response path for a warrant received by the one-person team.",
+      "evidence": [
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/24-trust-safety-disputes/24.08-illegal-content-legal-process/24.08.03-law-enforcement-legal-process-portal.md",
+          "line": 65,
+          "excerpt": "| A one-person team receives a warrant at 2am | `meta/constraints.md` describes no legal team | `[PENDING]` — see Q-03 |"
+        },
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/24-trust-safety-disputes/24.08-illegal-content-legal-process/24.08.03-law-enforcement-legal-process-portal.md",
+          "line": 114,
+          "excerpt": "What is the actual answer — outside counsel on retainer, a defined escalation, or improvisation?"
+        }
+      ],
+      "forcedInvention": "The implementation must select an after-hours owner, counsel escalation, and response timing for a warrant without a decided legal posture.",
+      "failureScenario": "A valid warrant arrives overnight; the system and operator must produce, delay, or refuse data, so an improvised path can mishandle compelled disclosure or a user's data rights."
+    },
+    {
+      "findingId": "R7-24-RAW-007",
+      "unit": "trust-safety-disputes-cx",
+      "severity": "blocking",
+      "dimension": "Feature Completeness",
+      "claim": "A mandatory human-adjudicated inbound case has no defined test for a publicly reachable but unauthorised recording, so the reviewer cannot decide the case without inventing the predicate.",
+      "evidence": [
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/24-trust-safety-disputes/trust-safety-disputes-cx.md",
+          "line": 431,
+          "excerpt": "Human adjudication **per objection**, under a **mandatory resolution SLA**"
+        },
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/24-trust-safety-disputes/trust-safety-disputes-cx.md",
+          "line": 443,
+          "excerpt": "A recording that is publicly reachable but **unauthorised** (a leak or bootleg) has no ground on the closed list"
+        },
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/24-trust-safety-disputes/trust-safety-disputes-cx.md",
+          "line": 446,
+          "excerpt": "Such an objection can only be filed under ground (iii), which lands on a domain-24 human **with no defined test to apply**."
+        }
+      ],
+      "forcedInvention": "The reviewer must define what counts as authorised and choose an evidence threshold, even though the source says domain 24 is not the authority for that predicate.",
+      "failureScenario": "A producer contests a publicly available bootleg; one reviewer can uphold the embargo on an invented authorisation test while another releases it, defeating the mandatory resolution path's consistency."
+    },
+    {
+      "findingId": "R7-24-RAW-008",
+      "unit": "trust-safety-disputes-cx",
+      "severity": "blocking",
+      "dimension": "Constraint Explicitness",
+      "claim": "The same mandatory, uncapped human-adjudication stream is explicitly unbudgeted and has no reviewer-capacity allocation despite landing on the one-person team.",
+      "evidence": [
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/24-trust-safety-disputes/trust-safety-disputes-cx.md",
+          "line": 431,
+          "excerpt": "re-submission of evidence after an objection is deliberately **uncapped** (no cap, no cooldown, no escalation counter)"
+        },
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/24-trust-safety-disputes/trust-safety-disputes-cx.md",
+          "line": 431,
+          "excerpt": "**Unbudgeted.** No current 24 spec allocates per-objection reviewer capacity for this class."
+        },
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/24-trust-safety-disputes/trust-safety-disputes-index.md",
+          "line": 141,
+          "excerpt": "Team = solo is locked ... this is not a resourcing forecast but a live owner choice about what the founder will personally review"
+        }
+      ],
+      "forcedInvention": "A downstream designer must choose an admission bound, staffing capacity, queue policy, or exemption for the mandatory SLA.",
+      "failureScenario": "A serial objector resubmits evidence repeatedly; without a capacity bound or budget, the solo reviewer accumulates mandatory cases while the embargo stays in place, creating the de facto veto the source warns against."
+    },
+    {
+      "findingId": "R7-24-RAW-009",
+      "unit": "24.02-enforcement-appeals-policy",
+      "severity": "warning",
+      "dimension": "Structural Compliance",
+      "claim": "The entity-appeal rule cites its mandate source through a local path that does not exist, leaving the reference needed to resolve an appeal-capable member unavailable.",
+      "evidence": [
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/24-trust-safety-disputes/24.02-enforcement-appeals-policy/24.02.02-appeals-internal-complaints.md",
+          "line": 77,
+          "excerpt": "Any member holding an appeal-capable mandate in the entity's mandate graph ([domain 01](../../01-identity-profiles/)) may file"
+        },
+        {
+          "file": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/24-trust-safety-disputes/24.02-enforcement-appeals-policy/24.02.02-appeals-internal-complaints.md",
+          "line": 77,
+          "excerpt": "Exact mandate-to-appeal mapping and co-owner conflict rules defer to `/write-be-spec` against domain 01"
+        }
+      ],
+      "forcedInvention": "A downstream author must infer the appeal-capable mandate mapping or replace the unavailable reference.",
+      "failureScenario": "Two co-owners file competing entity appeals; without a resolvable mandate source, an implementation can arbitrarily decide which member binds the entity."
+    }
+  ]
+}

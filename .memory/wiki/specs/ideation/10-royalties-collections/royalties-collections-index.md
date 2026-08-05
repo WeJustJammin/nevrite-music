@@ -3,7 +3,7 @@
 > **Level**: domain
 > **Parent**: [WeJammin Ideation Index](../ideation-index.md)
 > **Status**: [BREADTH]
-> **Last updated**: 2026-07-16
+> **Last updated**: 2026-07-30
 > **Novelty**: `industry-standard` | **Priority**: `core` _(raised to core by D-10 — rights stack is the thesis)_
 
 ## Overview
@@ -25,19 +25,23 @@ Registering with the bodies that collect and turning what arrives into correct, 
 
 > Classified 2026-07-16 through the Node Classification Gate. 18 sweep candidates → **5 sub-domains
 > + 5 top-level features** (28 leaf features in total), with 1 candidate split, 2 re-cut, and
-> 7 Deep Think additions. 81 Deep Think hypotheses logged. All `[SURFACE]`.
+> 7 Deep Think additions. 81 Deep Think hypotheses logged at classification, every node `[SURFACE]`.
+> **That sentence is a record of 2026-07-16, not a claim about today** — deepening has since carried
+> the domain to **163 hypotheses**, and the Status and Deep Think columns below carry the current
+> figures, not the classification-pass ones. Where this table and a child disagree, **the child's own
+> `> **Status**:` header wins**: the node declares its depth, the index only restates it.
 
 | # | Name | Type | Path | Status | Deep Think |
 |---|------|------|------|--------|------------|
 | 10.01 | Society Registration & Delivery | sub-domain | [10.01-society-registration-delivery/](./10.01-society-registration-delivery/) | `[BREADTH]` | 19 hypotheses (7 children) |
-| 10.02 | Statement Ingestion & Normalization | sub-domain | [10.02-statement-ingestion-normalization/](./10.02-statement-ingestion-normalization/) | `[DEEP]` | 15 hypotheses (5 children) |
-| 10.03 | Royalty Calculation & Recoupment | sub-domain | [10.03-calculation-recoupment/](./10.03-calculation-recoupment/) | `[BREADTH]` | 12 hypotheses (4 children) |
+| 10.02 | Statement Ingestion & Normalization | sub-domain | [10.02-statement-ingestion-normalization/](./10.02-statement-ingestion-normalization/) | `[DEEP]` | 68 hypotheses (5 children) |
+| 10.03 | Royalty Calculation & Recoupment | sub-domain | [10.03-calculation-recoupment/](./10.03-calculation-recoupment/) | `[BREADTH]` | 32 hypotheses (4 children) |
 | 10.04 | Disbursement & Payee Statements | sub-domain | [10.04-disbursement-payee-statements/](./10.04-disbursement-payee-statements/) | `[BREADTH]` | 11 hypotheses (4 children) |
-| 10.05 | Recovery & Leakage | sub-domain | [10.05-recovery-leakage/](./10.05-recovery-leakage/) | `[BREADTH]` | 9 hypotheses (3 children) |
-| 10.06 | Live Performance Setlist → PRO Reporting | feature | [10.06-live-setlist-pro-reporting.md](./10.06-live-setlist-pro-reporting.md) | `[SURFACE]` | 3 hypotheses |
+| 10.05 | Recovery & Leakage | sub-domain | [10.05-recovery-leakage/](./10.05-recovery-leakage/) | `[BREADTH]` | 18 hypotheses (3 children) |
+| 10.06 | Live Performance Setlist → PRO Reporting | feature | [10.06-live-setlist-pro-reporting.md](./10.06-live-setlist-pro-reporting.md) | `[PARTIAL]` | 3 hypotheses |
 | 10.07 | Cue Sheets & Broadcast Performance Reporting | feature | [10.07-cue-sheets-broadcast-reporting.md](./10.07-cue-sheets-broadcast-reporting.md) | `[SURFACE]` | 3 hypotheses |
 | 10.08 | Statement Disputes & Audit Rights | feature | [10.08-statement-disputes-audit-rights.md](./10.08-statement-disputes-audit-rights.md) | `[SURFACE]` | 3 hypotheses |
-| 10.09 | Distribution Calendar & Money-in-Flight | feature | [10.09-distribution-calendar-money-in-flight.md](./10.09-distribution-calendar-money-in-flight.md) | `[SURFACE]` | 3 hypotheses |
+| 10.09 | Distribution Calendar & Money-in-Flight | feature | [10.09-distribution-calendar-money-in-flight.md](./10.09-distribution-calendar-money-in-flight.md) | `[PARTIAL]` | 3 hypotheses |
 | 10.10 | Royalty Forecasting | feature | [10.10-royalty-forecasting.md](./10.10-royalty-forecasting.md) | `[SURFACE]` | 3 hypotheses |
 
 > **Type column values:**
@@ -144,18 +148,45 @@ Registering with the bodies that collect and turning what arrives into correct, 
 
 ## Open Questions
 
+**Open-question governance.** Every unresolved row in this table is an explicit delivery hold. The **Owner** cell is accountable; the **hard decision deadline** is the gate immediately before the pipeline stage named in **Deferred To** begins; and the **Question** text is the exact policy, behavior, or contract decision blocked. **Deferred To** names the destination only and never replaces the deadline. No downstream stage may begin until its owner resolves the row or records a formally approved supersession.
+
 | # | Question | Owner | Deferred To |
 |---|----------|-------|-------------|
 | Q-01 | ~~Which candidate children are sub-domains vs features?~~ | Agent | ✅ Resolved this pass — see Candidate Disposition |
 | Q-02 | ~~Are any candidate children actually cross-cuts?~~ | Agent | ✅ Resolved — 5 routed out (D-05, D-06) |
-| Q-03 | **Is WeJammin an accredited rights administrator/publisher, a partner of one (the Songtrust model), or neither?** The domain's load-bearing question. It gates `10.01` entirely, `10.05.02` mostly, and `10.04` partly — and D-03's whole ungated/gated split hangs on it. Nothing else in this domain is worth deciding first. | User | `/ideate-validate` |
+| Q-03 | `[OWNER]` **Is WeJammin an accredited rights administrator/publisher, a partner of one (the Songtrust model), or neither?** The domain's load-bearing question. It gates `10.01` entirely, `10.05.02` mostly, and `10.04` partly — and D-03's whole ungated/gated split hangs on it. Nothing else in this domain is worth deciding first. The tree leans but does not decide: [meta/competitive-landscape.md](../meta/competitive-landscape.md) calls Songtrust/Kobalt *"likely an **integration partner**, not a rival"* and its own Q-03 defers partner-vs-rival to `/create-prd-stack`. A business-standing choice no later stage takes on its own. | User | `/create-prd` |
 | Q-04 | **Holding client money** — escrow (`10.04.04`), unpayable balances (`10.04.03`), royalty float — is regulated activity (e-money / payment institution) in most territories. It is already flagged in `constraints.md` under KYC/AML but not as *client-money custody*, which is a different and heavier permission. | User | `/create-prd-security` |
 | Q-05 | **Does domain 09's ledger support as-of reads?** D-02 requires it. If 09 models current state only, every restatement in `10.03` is silently wrong and **no test will catch it**. A structural dependency across a domain boundary, discovered here and unfixable here. | User | `/create-prd-architecture` |
 | Q-06 | **What happens to money nobody can claim?** `10.02.05` Q-01 (unattributable) and `10.04.03` Q-01 (unpayable) are one question. Hold forever is the societies' behaviour that `10.05.01` attacks; escheat is a real legal regime; redistribute is theft with extra steps. Every answer is uncomfortable and D-09 forbids the default. | User | `/create-prd` |
-| Q-07 | **Does WeJammin move money at all?** Compute-only is ungated, useful and shippable — a band leader who got a lump sum can be told exactly what each member is owed. Disbursing makes WeJammin a regulated financial institution. This decides whether `10.04` exists. | User | `/ideate-validate` |
+| Q-07 | `[OWNER]` **Does WeJammin move money at all?** Compute-only is ungated, useful and shippable — a band leader who got a lump sum can be told exactly what each member is owed. Disbursing makes WeJammin a regulated financial institution. This decides whether `10.04` exists. **Narrowed by evidence**: [meta/constraints.md](../meta/constraints.md) already commits to provider-held payouts (Stripe Connect, 1099-K issuance) for services and marketplace in v1/v1.5, so money movement *per se* is settled — what is open is **royalty disbursement and client-money custody**, which Q-04 flags as the heavier permission. | User | `/create-prd` |
 | Q-08 | **Who owns "the deal"?** Terms appear in 09 (producer agreements), 23 (contract vault) and `10.03.02` (executable rule). Three owners of one document is the second-source-of-truth failure the platform exists to prevent — and `10.03.02` DT-03 argues the *engine* is a cross-cut shared with 17 and 23 as well. | User | `/create-prd-architecture` |
 | Q-09 | **Source licensing**: can WeJammin ingest, store and re-present statements (`10.02.01`), society unclaimed data (`10.05.01`), and MLC public records (`10.01.05`)? Three legal gates on the Must set. Same family as `credits-attribution-index.md` Q-10. | User | `/create-prd` |
-| Q-10 | **D-16's tension**: recovery is the advertised hook; prevention is the competence that destroys its supply. "Recover the back catalogue, prevent from today" is the proposed answer and it must be *chosen*, because the two point at different first screens and different marketing. | User | `/ideate-validate` |
+| Q-10 | `[OWNER]` **D-16's tension**: recovery is the advertised hook; prevention is the competence that destroys its supply. "Recover the back catalogue, prevent from today" is the proposed answer and it must be *chosen*, because the two point at different first screens and different marketing. D-16 records it as a **proposed** resolution only, and D-31's phase-2 placement of collection defers the consequence without making the choice. Positioning, not sequencing — no later stage decides it. | User | `/create-prd` |
 | Q-11 | **D-10 is a threat to the domain's premise.** Capture-at-creation gives facts; societies need IPIs the platform cannot mint or look up. If there is no plan for getting a co-writer's IPI, registration only ever works for fully-onboarded, fully-affiliated rosters — i.e. almost nobody at launch. | User | `/create-prd` |
 | Q-12 | **Do societies consume evidence, or only forms?** (`10.05.02` Q-01.) The highest-value cheap question in the domain: one conversation with the MLC answers it, and it determines whether the platform's thesis has any purchase on claiming or is merely a nicer way to fill in the same form. | User | `/create-prd` |
-| Q-13 | Does the platform **charge a commission** on recovered money? It is the industry's model and it works. It is also a fee on money that was always the user's, charged by the platform that criticises the institutions holding it. | User | `/ideate-validate` |
+| Q-13 | `[OWNER]` Does the platform **charge a commission** on recovered money? It is the industry's model and it works. It is also a fee on money that was always the user's, charged by the platform that criticises the institutions holding it. A pricing/monetisation decision — no monetisation model is recorded anywhere in `meta/`, `vision.md` or the decision log, and no downstream stage sets one. | User | `/create-prd` |
+
+
+<!-- spec-graph: auto-generated -->
+## Related Specs
+
+### Constrained by
+- [[decisions.md#d-10|D-10]]
+- [[decisions.md#d-07|D-07]]
+- [[decisions.md#d-11|D-11]]
+- [[decisions.md#d-12|D-12]]
+- [[decisions.md#d-01|D-01]]
+- [[decisions.md#d-13|D-13]]
+- [[decisions.md#d-02|D-02]]
+- [[decisions.md#d-05|D-05]]
+- [[decisions.md#d-06|D-06]]
+- [[decisions.md#d-14|D-14]]
+- [[decisions.md#d-19|D-19]]
+- [[decisions.md#d-16|D-16]]
+- [[decisions.md#d-03|D-03]]
+- [[decisions.md#d-04|D-04]]
+- [[decisions.md#d-08|D-08]]
+- [[decisions.md#d-18|D-18]]
+- [[decisions.md#d-09|D-09]]
+- [[decisions.md#d-15|D-15]]
+- [[decisions.md#d-31|D-31]]

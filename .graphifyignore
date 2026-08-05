@@ -1,0 +1,23 @@
+# graphify scope for WeJammin
+#
+# In scope: .memory/ (all project documents, plans, memories), .claude/ (the
+# runtime we actually use), docs/, root config files — and any application code
+# once we start writing it.
+#
+# Out of scope: the redundant runtime mirrors. .agents/, .codex/, and .pi/ are
+# near-verbatim copies of .claude/ (each carries an identical ~330k-word
+# skill-library). Including them makes community detection cluster duplicates
+# instead of content.
+
+.agents/
+.codex/
+.pi/
+
+# Build output — generated from the maintained trees above, never edited directly.
+template/
+
+# graphify's own artifacts
+graphify-out/
+
+# Scratch
+.tmp-audit-batch.json

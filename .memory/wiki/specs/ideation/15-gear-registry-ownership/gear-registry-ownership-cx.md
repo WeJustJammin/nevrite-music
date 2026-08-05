@@ -2,7 +2,7 @@
 
 > **Level**: domain
 > **Scope**: Connections between children of [Gear Registry & Ownership](./gear-registry-ownership-index.md)
-> **Status**: [DEEP] — 10 children; 19 intra-domain cross-cuts synthesised, 6 pairs rejected, 5 mechanisms escalated to the platform level.
+> **Status**: [DEEP] — 10 children; 19 intra-domain cross-cuts synthesised, 6 pairs rejected, 6 mechanisms escalated to the platform level.
 > **Last updated**: 2026-07-18
 
 ## Reading this file
@@ -158,7 +158,7 @@ describe already-registered gear, gutting it at cold start (Q-08).
 
 **Synthesis questions answered**:
 1. **Shared state conflict**: Discography writes session-link events; identity owns the chain. No merge — links are appended.
-2. **Trigger chain**: A `observed` attestation mints no ownership claim; it appends a session-link event. A new link does **not** trigger revaluation (see CX-08 in the old numbering / the deliberate half-connection to valuation).
+2. **Trigger chain**: A `observed` attestation mints no ownership claim; it appends a session-link event. A new link does **not** trigger revaluation — the provenance premium is *surfaced, never priced* (15.05.01 DT-03), and the claim-pack path is severed outright at `#R-04`. No CX pair records valuation ↔ discography, and that absence is the deliberate half-connection, not an omission.
 3. **Permission intersection**: The link inherits the credit's visibility (15.09 D-02); the chain must never leak a hidden session. `observed`/`held` mints are rate-limited (5/account/24h) against fabrication.
 4. **Notification fan-out**: A near-collision at mint notifies the existing record-holder.
 5. **State transition conflict**: A disputed credit (domain 02) changes a chain fact — the chain renders the disputed state honestly, never as clean.
@@ -516,3 +516,15 @@ someone else's responsibility while it was worked on.
 | **Formal document generation** | 09, 15, 18, 23 | This domain alone produces five (claim pack, appraisal, insurance schedule, rig spec sheet, carnet source data). Split sheets, riders and invoices are the same mechanism elsewhere. |
 | **Custody / possession-vs-ownership tracking** | 05, 13, 15, 16, 18 | Custody (15.08) is modelled here but leaks outward: listing/consignment rights (13) derive from it, a service booking (05) creates it, room-resident gear (16) depends on it, and touring gear (18) moves through it. The concept is broader than one domain — flagged for the platform. |
 | **Entity ownership (person vs band vs studio vs label)** | 01, 09, 13, 15, 16 | personas.md establishes entities as first-class owners. Every gear record needs one; domain 01 defines it. |
+
+
+<!-- spec-graph: auto-generated -->
+## Related Specs
+
+### Constrained by
+- [[decisions.md#d-04|D-04]]
+- [[decisions.md#d-06|D-06]]
+- [[decisions.md#d-01|D-01]]
+- [[decisions.md#d-02|D-02]]
+- [[decisions.md#d-03|D-03]]
+- [[decisions.md#d-08|D-08]]

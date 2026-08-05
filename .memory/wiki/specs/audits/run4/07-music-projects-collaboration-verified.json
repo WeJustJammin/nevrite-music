@@ -1,0 +1,159 @@
+{
+  "domain": "07-music-projects-collaboration",
+  "verdicts": [
+    {
+      "findingId": "07-music-projects-collaboration#001",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "Quotes verified (music-projects-collaboration-index.md:65 roll-up row; :80-83 prose; D-04 at :98 is indeed 'Non-blocking is absolute', so the citation is wrong). But the actual Producer grant is stated identically in four granular places that all agree: 07.02-songwriting-composition-workspace-index.md:33 and :35 (Producer Full on 07.02.01 and 07.02.03), 07.02.01-idea-capture-inbox.md:20 Role Lens ('Producer | Full | Captures in-session fragments...'), 07.02.03-chord-arrangement-chart-workspace.md:21 Role Lens ('Producer | Full | Arrangement is squarely producer territory'), and music-projects-collaboration-cx.md:161. The domain matrix is a summary layer (it is demonstrably lossy elsewhere too: 07.08 rolls Fan up to Read-only from a single child, 07.07 rolls Musician to Config across children ranging None..Full). Nothing is invented — an implementer builds permissions from the feature Role Lens, which is unambiguous. The mis-citation is a documentation defect, not forced invention."
+    },
+    {
+      "findingId": "07-music-projects-collaboration#002",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "tracked-deferral",
+      "reason": "Quote verified at music-projects-collaboration-index.md:132, but the row is a well-formed tracked deferral: Owner = 'User', Deferred To = 'Follow-on to D-08 — not gated on any pipeline stage', with the reason stated ('Recorded as a follow-on so the absence is stated rather than discovered later'). Its consequences are already ratified rather than open: D-08 (:98) defers the whole surface behind the enumerated gate, D-10 keeps 07.09 'Should, unphased — no ledger change', and 07.09-daw-bridge-capture-at-source-index.md:120 Q-04 calls the absence 'the known, accepted cost of choosing a deferral over a decision'. No downstream stage is blocked because no 07.09 feature reaches v1 under any answer (D-08, D-10, D-11)."
+    },
+    {
+      "findingId": "07-music-projects-collaboration#003",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "Both 'unresolved' quotes verified (07.01-song-release-production-board-cx.md:31; 07.01.03-production-stage-board-milestones.md:38) and both are stale scoping notes about what the P-01 validation gate did NOT cover. The operative rule is stated three times with a date and is unmissable: 07.01-song-release-production-board-index.md:47 D-05 ('superseded approvals reinstate on re-advance iff no new version landed in between', Owner decision 2026-07-21), the same index Q-03 (:56) marked resolved, and — inside the very file that carries the stale sentence — 07.01.03:110 edge-case row ('On re-advance, 07.05.04 D-07 governs: they reinstate iff no new version landed in between, otherwise the gate re-collects') plus :161 Q-02 marked resolved. The behaviour table and the Decision Log both carry the rule; no implementer reaches the point of inventing it."
+    },
+    {
+      "findingId": "07-music-projects-collaboration#004",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "The markers exist as quoted (07.01-song-release-production-board-cx.md:73 and :75) and Q-02 is indeed resolved (index :55). But the forced-invention claim is false: 07.01.02-release-container-sequencing-assembly.md:19-21 Role Lens states exactly who may add a Song to a Release ('Musician | Full | Creates the release; drags the tracklist into order; picks which master version...'; 'Producer | Config | ... Does not normally own the running order'), :97 D-01 defines the membership edge's shared state ('Membership edges hold sequence, selected master and variant — the Release does not copy songs'), :63 defines the pinned-master transition, :66 refuses a song-roster contributor access to the Release, and CX-02 (cx.md:62 permission intersection, :63 notification fan-out) carries the visibility asymmetry and the notification rule. The unwritten CX-03 cells restate content that is already authored one level down."
+    },
+    {
+      "findingId": "07-music-projects-collaboration#005",
+      "upheld": true,
+      "finalSeverity": "warning",
+      "refutationReason": "not-refuted",
+      "reason": "Verified at 07.01-song-release-production-board-cx.md:61: 'If domain 12 rejects the package (spec failure), the Release must be able to fall back — `[PENDING — /ideate-discover Step 5 deepening]`' — no owner, and the named stage has run (stated across the tree, e.g. 07.01.02:105). Grepping the whole domain for delivery-rejection handling returns only this line, and 07.01.02's three open questions cover volume grouping, revised-version boundaries and gapless audition, none of which touches it. The gap is not merely unwritten, it is in tension with the governing rule: 07.01.02:31-32 states 'Readiness is derived, never declared. The Release cannot be marked ready', under which a domain-12 rejection cannot change Release state at all — so the CX's stated requirement ('must be able to fall back') is unimplementable without inventing a declared Release state that 07.01.02 forbids. Two implementers diverge on a user-visible state: one leaves the Release showing 'ready to deliver' after a rejection, one adds a rejected/blocked state. Warning rather than blocking: the blast radius is one derived status field, and domain 12 owns the rejection record itself (12.02.03 states, 12.03.03 triage)."
+    },
+    {
+      "findingId": "07-music-projects-collaboration#006",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "downstream-detail",
+      "reason": "Quote verified at 07.01.02-release-container-sequencing-assembly.md:59, but the comparison basis IS given in the same cell ('louder than the record's average') and the behaviour is fully specified: detected at assembly, advisory, never a block. What is missing is a numeric trigger threshold — a tuning parameter, not product behaviour. The domain's governing rule pushes toward no threshold at all: D-05 'Measure and show; never judge' (music-projects-collaboration-index.md:88) and 07.07.03-mastering-workflow-loudness-targets.md:95 D-01 (measure, never prescribe), with 07.07.03:69 defining the Inconsistent state as 'Advisory naming the discrepancy'. Every reasonable reading converges on surfacing the measured deviation; nothing product-level is invented."
+    },
+    {
+      "findingId": "07-music-projects-collaboration#007",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "tracked-deferral",
+      "reason": "Both quotes verified (07.02.01-idea-capture-inbox.md:50 and :98). The capability is a well-formed tracked deferral — Q-02 carries Owner = 'User' and Deferred To = 'MoSCoW → /create-prd-stack', and names the exact cost that decides it ('an ML dependency in a domain that otherwise has none'). The edge-case row is a forward-looking description of the accepted end state ('Accepted — this is the normal end state, not a defect'), not a normative requirement; its User Sees column commits only to 'Searchable list'. Nobody builds an ML pipeline off an edge-case cell when the same file's Open Questions table routes the decision to MoSCoW and the stack workflow."
+    },
+    {
+      "findingId": "07-music-projects-collaboration#008",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "downstream-detail",
+      "reason": "Quotes verified (07.02.03-chord-arrangement-chart-workspace.md:58 marker, :37-39 prose, :96 D-05). But reading mode's user-visible definition is authored in the States table at :63 — 'Reading mode | Opened on a small screen / explicitly entered | High-contrast, large-type, minimal-chrome view built for a music stand' — which covers the font-scaling and contrast half the finding lists. The surface question it hangs on is owner-tracked: Q-01 (:112) is `[OWNER]`, Owner = User, Deferred To = /create-prd, and asks precisely 'is the PWA reading mode accepted as the v1 answer for a chart on a music stand'. The node is `[SURFACE]` status by design (07.02-songwriting-composition-workspace-index.md:27), and auto-scroll / page-turn / hands-free advance are interaction mechanics that /write-fe-spec owns. Two implementers both build the state as described; neither invents contradictory product behaviour."
+    },
+    {
+      "findingId": "07-music-projects-collaboration#009",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "All three quotes verified, but they do not conflict once the T1 row is read whole. Its Discloses cell (07.03.02-contributor-invitation-scoped-onboarding.md:64) already draws the line the finding says is missing: 'The credit in full: song title, the inviter, the other roster members' display names, the free-text note, and — **if the song is not marked confidential** — streaming (never download)...' — the confidentiality condition attaches only to the streaming clause, so 'Anything on a confidential song' in Withholds scopes to that song's assets. This is confirmed twice more: the dedicated edge case at :217 ('Confidential song, invitee reaches T1 | Metadata renders (title, roster, note) because the invited address was proven. No streaming') and D-06 at :301 ('T1 (the credit in full + non-confidential streaming)'). The :194 quote reads 'they can stream a non-confidential rough mix, never download, never reach a confidential song' — an audio-access statement in an audio-access list. Convergent, not contradictory."
+    },
+    {
+      "findingId": "07-music-projects-collaboration#010",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "no-real-divergence",
+      "reason": "Quotes verified (07.03.03-rights-aware-asset-vault-nda-gating.md:27-28 class list; :36 six-column grant table; :33-34 the implication rule). The reconciliation is in the same sentence the finding quotes: sensitivity is 'derived from what it is (...) **and what stage its song is at**' (:27-28). `pre-release master` is the master type at a pre-release stage, not a seventh asset type — which is why the grant table, which is per asset type, has a `Master` column and no `pre-release master` column; the stage half drives the confidentiality/NDA gate (CX-03), not a separate grant row. The table is additionally flagged as unvalidated and owner-tracked: ':31-32' labels it 'proposed defaults per DT-01's least-privilege principle — validation against how real sessions share files is Q-03, User-owned', with Q-03 pointed at /write-be-spec."
+    },
+    {
+      "findingId": "07-music-projects-collaboration#011",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "Quotes verified (07.04-audio-version-control-lineage-cx.md:36; 07.04.02-canonical-version-resolver.md:239 revised D-03). The contradiction is explicitly reconciled in-tree by the finding's own third citation: music-projects-collaboration-cx.md:105-111 records it under 'Contradiction found and resolved (recorded per Debug-by-Test discipline)', names which side is authoritative ('it is now stale against revised D-03'), and states the correct rule. A reader therefore has the precedence written down; this is a stale-prose cleanup with the answer supplied, not a silent contradiction. The stale sentence also self-limits in its own next clause ('Release memberships (07.01.02 D-03) **are** pinned and deliberately do not move'), and 07.04.02 D-12 confirms 'Pinned consumers are unaffected because they pinned (D-03)'."
+    },
+    {
+      "findingId": "07-music-projects-collaboration#012",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "no-real-divergence",
+      "reason": "Quotes verified (07.04.04-stem-export-standards-naming.md:32 Behavior, :52 Happy Path step 1, :107 D-04). D-04's context sentence states what it actually rejects: 'there is no universal convention; the question is always \"does this satisfy the receiver\"' — i.e. the platform does not author a house standard; the content of a convention is a recipient spec. That is compatible with a project pinning one, which is exactly what the Happy Path spells out: 'Producer sets the project's stem convention (**or accepts the default recipient spec** — mastering, sync, live)'. The recipient spec is owned at 07.08.01 and supplies the QC ruleset (07.08.02:35). Both readings collapse to 'the project pins a recipient spec and exports validate against it'; the warn-never-block behaviour (D-03) is identical either way."
+    },
+    {
+      "findingId": "07-music-projects-collaboration#013",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "downstream-detail",
+      "reason": "Quotes verified (07.04.06-stem-player-version-ab-compare.md:31-34, :98 D-02). The product requirement is stated with a concrete failure bound ('A 300 ms stall between A and B means... the feature has failed at its one job') and the architecture consequence is tracked: Q-01 (Owner User → /create-prd-architecture) asks the buffering question that sets the budget, Q-02 (→ /create-prd-architecture) asks whether server-side mixdown 'DT-02's latency requirement may not survive', and D-04 specifies the degradation path. Numeric latency budgets are set by the architecture PRD's performance-budget pass, not by ideation — the sibling feature states this rule explicitly at 07.05.01:278 ('The numeric budget is that workflow's to set')."
+    },
+    {
+      "findingId": "07-music-projects-collaboration#014",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "no-real-divergence",
+      "reason": "Quotes verified (07.04.02-canonical-version-resolver.md:50 format row; :52-56 worked example), but the arithmetic reconciles. The example's declaration is 'both a streaming and a vinyl master' — the streaming master IS the default/primary format, so the format axis is {primary(streaming), vinyl} = 2, giving rough/primary 1 + mix×3 + master×3×2 = 10 exactly as stated. This is confirmed by the owning feature: 07.07.04-format-specific-masters.md:33-35 enumerates format masters as vinyl pre-master, DDP and Apple Digital Master — deliverables derived *from* the approved (streaming) master, never a separate 'streaming' declaration alongside primary. The variant axis is applied the same way ({primary, instrumental, clean}); only the label differs. Two implementers reading rule plus worked example converge on 10."
+    },
+    {
+      "findingId": "07-music-projects-collaboration#015",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "downstream-detail",
+      "reason": "Quotes verified (07.04.05-file-integrity-missing-media.md:69 and :105 D-01). The behaviour is fully specified — checksums cannot catch it, so duration is compared against the parent version, and the result is a dismissible question to the user ('This mix is 12 s shorter than v6 — intentional?'), never a block (domain D-04). What is unstated is a detection threshold, which is a tuning constant for a non-blocking prompt, and the sweep-cost half is already routed (Q-02). No product behaviour is invented: both implementers ship 'compare duration to parent, ask if it differs materially', and the consequence of a differently-tuned constant is one extra dismissible prompt."
+    },
+    {
+      "findingId": "07-music-projects-collaboration#016",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "tracked-deferral",
+      "reason": "The phrase is verified as a single occurrence at 07.05.01-timestamped-waveform-review.md:172, but the same file assigns the number explicitly, 106 lines later, at :278: '**Performance inputs for /create-prd-compile** (stated as product requirements, not budgets): clicking a marker must land at the anchor fast enough that the reviewer does not lose the moment... **The numeric budget is that workflow's to set.**' That is an owner-stage-targeted deferral of exactly this value, not an omission — the seek budget is deliberately named as a requirement here and quantified downstream, which is also why the file's other numbers (250 ms span, ±50 ms tier) are behavioural definitions rather than latency budgets."
+    },
+    {
+      "findingId": "07-music-projects-collaboration#017",
+      "upheld": true,
+      "finalSeverity": "warning",
+      "refutationReason": "not-refuted",
+      "reason": "All three quotes verified verbatim (07.06.01-session-record-attendance.md:152, :153, :154) and D-18 at :261 restates both rules without reconciling them. The logic does not close: auto-close requires 12h with no activity, so any post-auto-close resumption is by construction >12h after last activity, while :153 makes anything beyond 6h of last activity a new session — yet :154 asserts the auto-closed session 'Reopens (within the 6h window)'. The only way to save :154 is to run the 6h clock from the close event rather than from last activity, which :153 explicitly forbids. The consequence is user-visible and lands on the domain's load-bearing interaction: the deferred 07.06.02 capture prompt is either withdrawn (one session) or fires against the old session while a new one starts. Q-07 (:280) tracks whether the two numbers are well chosen, not whether the rules cohere, so nothing reconciles it. Downgraded from blocking to warning: the governing rule is stated twice (edge row :153 and Decision Log D-18) against one parenthetical in an edge case, so an implementer has a clear precedence path to follow while the row is fixed."
+    },
+    {
+      "findingId": "07-music-projects-collaboration#018",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "The deferral text is verified at 07.06-sessions-documentation-recall-cx.md:96-97, and the referenced 07.06.04 Q-01 is indeed closed — but it is closed *with the answer*, not abandoned. 07.06.04-track-sheet-channel-map-recall.md:107 reads '✅ RESOLVED — at no prompt at all: any time before the paper is lost', sourced to 07.06.02 DT-10 and D-09 Tier 3 ('recall/gear sheet: Never at close'), and states outright 'Parent CX-04's tension therefore resolves in favour of exclusion, and CX-04's Medium confidence was the correct instinct'. The finding's forced invention — whether a teardown prompt exists and where it sits against the four-second budget — is exactly what that row answers (no prompt; never at close; 07.06.04 D-05 and D-03/D-04 give the photo and template mechanisms instead)."
+    },
+    {
+      "findingId": "07-music-projects-collaboration#019",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "Quotes verified (07.07.01-mix-brief-reference-board.md:91 D-02, :93 D-04, :52; 07.07.03:35 and :59), but the measurement source is written in the decision D-04 derives from. 07.07.01 DT-03 states it directly: 'The platform can measure a reference's loudness and tonal profile (**from the user's own copy, or from published data**) and carry that target forward automatically.' D-02 forbids *hosting playback* of a commercial record, which is a licensing constraint on streaming, not on measurement — the two decisions govern different acts. The absence case is specified too: 07.07-mix-master-workflow-cx.md CX-01 synthesis Q2 — 'brief references → measured loudness/tonal targets → surfaced to mastering. **Passive; nothing breaks if absent.**' No invention is forced."
+    },
+    {
+      "findingId": "07-music-projects-collaboration#020",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "tracked-deferral",
+      "reason": "Quotes verified (07.07.04-format-specific-masters.md:95 D-03, :33, :48-49, :56), but the receiving feature does own it and does track it: 07.01.02-release-container-sequencing-assembly.md:105 Q-01 carries 'Remaining: **physical side grouping and its per-side runtime thresholds**' with Owner = Agent and Deferred To = '/create-prd (follows domain 12 Q-07 / 12.01 Q-03)', citing 12.01.01 Q-03 for the ~22-minute constraint and instructing 'Do not answer separately; this row travels with that scope call'. The stale prose sits in a feature that does not ship — 07.07.04 Q-01 is resolved 'it does not ship — MoSCoW ran and took the recommendation', and the node is retained at `[SURFACE]` 'for traceability, not built'."
+    },
+    {
+      "findingId": "07-music-projects-collaboration#021",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "All three quotes verified (07.08.02-automated-audio-qc-spec-validation.md:32-33, :69, :109 D-03). The edge-case row is not a competing specification — its middle cell is a pointer to the decision that kills it ('Weakest check in the set — **see DT-03**'), and DT-03 at :92 is an unambiguous '❌ REJECTED — and I am removing an inherited check... Tempo is dropped, and the removal is the honest outcome'. D-01 independently forecloses it (every check must be 'imperceptible **and** unambiguously a fault'), and the objective-check table at :41-49 omits tempo. Any implementer who follows the row's own cross-reference converges on no tempo check; the residual question of whether a project record carries a tempo field is a data-model detail settled elsewhere (07.01.01 D-10 puts key/tempo on versions, 07.02.03 on charts)."
+    },
+    {
+      "findingId": "07-music-projects-collaboration#022",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "Quotes verified (07.08.01-handoff-package-builder-recipient-spec.md:131; 07.08.05-remix-stems-delivery-programs.md:110 and :63; 07.04.02:107; 07.08.02:110). The reconciliation is written and dated at two levels, and the finding quotes one of them: 07.08-delivery-readiness-qc-index.md:69 Q-01 ('✅ Resolved 2026-07-23') enumerates both stops — 'asset-integrity failure (07.08.01 D-04) **and undeclared sources before publication** (07.08.05 D-04)' — and the domain index restates it at Q-03 with the same date. 07.08.01 D-04's 'without exception' clause is scoped in its own sentence to the package-builder's three warn cases (missing canonical, unmet spec expectation, unavailable referenced requirement), none of which is remix publication. Anyone building the remix path reads 07.08.05, whose D-04 and edge-case row both block it."
+    }
+  ]
+}

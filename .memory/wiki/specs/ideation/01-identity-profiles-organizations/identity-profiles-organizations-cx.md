@@ -2,8 +2,8 @@
 
 > **Level**: domain
 > **Scope**: Connections between children of [Identity, Profiles & Organizations](./identity-profiles-organizations-index.md)
-> **Status**: [DEEP] — sub-domain cross-cuts synthesised; 5-question synthesis answered for High-confidence entries; Step-5 pendings resolved where downstream evidence now exists.
-> **Last updated**: 2026-07-18
+> **Status**: [DEEP] — sub-domain cross-cuts synthesised; 5-question synthesis answered for High-confidence entries; Step-5 pendings resolved where downstream evidence now exists; owner ratifications DQ-01.A/B and DQ-02.3–.7 propagated.
+> **Last updated**: 2026-07-23
 
 ## Cross-Cut Map
 
@@ -12,7 +12,7 @@
 | CX-01 | [01.03 Membership, Representation & Mandate](./01.03-membership-representation-mandate/) | [01.01 Person Identity & Roles](./01.01-person-identity-roles/) | The acting-context list is a derived view over the membership/representation graph. Aliases + mandated orgs + represented parties = the switcher's contents | Musician, Producer, Operator | High | 01.01.03 D-01 (derivation) + 01.03 index D-01 |
 | CX-02 | [01.05 Profile Claiming](./01.05-profile-claiming-verification/) | [01.06 Portfolio, Media Reel & EPK](./01.06-portfolio-media-epk/) | Merging duplicate parties must **redirect** credits, never rewrite them — the portfolio's value rests on the credit record being immutable | Musician, Producer | High | 01.06.02 D-03 + 01.05.01 Edge Cases (duplicate shadows) |
 | CX-03 | [01.02 Organizations & Entity Model](./01.02-organizations-entity-model/) | [01.05 Profile Claiming](./01.05-profile-claiming-verification/) | Creation and claiming are the two doors to the same entity. Creation is a weak assertion; claiming is a proof. Duplicate detection at creation routes into the claim flow | Musician, Producer, Operator | High | 01.02.02 D-01/D-02 + 01.05 index D-03 |
-| CX-04 | [01.06 Portfolio, Media Reel & EPK](./01.06-portfolio-media-epk/) | [01.05 Profile Claiming](./01.05-profile-claiming-verification/) | The unclaimed party's portfolio — built entirely from other people's attestations — is the claim incentive, and its attesters are the claim's proof. The domain's growth loop | Musician, Producer, Operator | High | 01.05.01 DT-03 + 01.05.02 DT-03 + 01.06 index D-03 |
+| CX-04 | [01.06 Portfolio, Media Reel & EPK](./01.06-portfolio-media-epk/) | [01.05 Profile Claiming](./01.05-profile-claiming-verification/) | The unclaimed party's non-public credits-only projection supports bounded claim notice and proof; it is not public or search-indexed before a claim or explicit consent and the D-13 release controls. The domain's privacy-bounded growth loop | Musician, Producer, Operator | High | 01.06 index D-03 + 01.06.02 D-08/D-13 |
 | CX-05 | [01.09 Party Identifier Resolution](./01.09-party-identifier-resolution.md) | [01.01 Person Identity & Roles](./01.01-person-identity-roles/) | Identifiers attach to any party — including aliases, because ISNI is assigned per public identity, not per human | Musician, Producer | High | 01.09 D-02 + 01.01.02 D-01 |
 | CX-06 | [01.04 Band & Ensemble Governance](./01.04-band-ensemble-governance/) | [01.03 Membership, Representation & Mandate](./01.03-membership-representation-mandate/) | Governance should be the source of mandates; today they are independently editable and can contradict. The domain's sharpest unresolved conflict | Musician | High | 01.04.01 DT-03 + 01.04.03 Q-01 + 01.04 CX-01 |
 | CX-07 | [01.04 Band & Ensemble Governance](./01.04-band-ensemble-governance/) | [01.02 Organizations & Entity Model](./01.02-organizations-entity-model/) | `dissolved` is a band-specific terminal state governed by 01.04, executed against 01.02's lifecycle model. Ending one capability on a multi-type entity is a type removal, not a terminal state | Musician, Operator, Fan | High | 01.02.02 Behavior + 01.04.04 Behavior + 01.02.03 D-01/D-03 + 01.02.02→01.02.03 D-17/DT-15 |
@@ -53,8 +53,8 @@
 **Synthesis questions answered**:
 1. **Shared state conflict**: The graph (01.03) owns the edges; 01.01.03 holds no state and only reads. Nothing to merge.
 2. **Trigger chain**: Mandate granted → context appears. Revoked/expired → context vanishes, and any in-flight action fails authorisation at the call site rather than silently succeeding.
-3. **Permission intersection**: Yes, fundamentally — a membership without a mandate is presence without authority, and does not yield an actable context.
-4. **Notification fan-out**: Mandate changes notify the affected member. Silently *gaining* authority is a security event, not a convenience.
+3. **Permission intersection**: Yes, fundamentally — a membership without a mandate is presence without authority, and does not yield an actable context. **Made concrete by the ratified default (01.03.03 D-07/D-09)**: in a **band**, a `confirmed` `permanent` edge is seeded with authority, so the band becomes an actable context at the moment of confirmation with nobody configuring anything; a `touring`, `staff` or `honorary` edge is seeded with nothing, so those members are in the lineup and have **no band context at all** until the band grants something. Outside a band nothing is seeded (D-10 there), so the rule reads exactly as before.
+4. **Notification fan-out**: Mandate changes notify the affected member. Silently *gaining* authority is a security event, not a convenience. **Under the seed, confirmation *is* the gain** — so the invitation and the acceptance screen must state what is being received (01.03.01 Happy Path step 4), or the default becomes the silent gain this rule forbids.
 5. **State transition conflict**: Revocation mid-action is the live race; it fails closed (01.03.03 D-05) and preserves the draft.
 
 ---
@@ -99,19 +99,19 @@
 
 ### CX-04: Portfolio ↔ Profile Claiming (the growth loop)
 
-**Relationship**: The domain's flywheel, and the clearest expression of D-18's claim that consolidation and provenance are causally linked rather than bundled. The Producer captures credits at the session (consolidation puts us in the room). Those credits create shadow parties with portfolios (provenance). The portfolio — built by other people, unfakeable by its subject — is what makes claiming worth doing. And the attesters who built it are the proof that the claimant is real (01.05.02 DT-03).
+**Relationship**: The domain's privacy-bounded flywheel, and the clearest expression of D-18's claim that consolidation and provenance are causally linked rather than bundled. The Producer captures credits at the session (consolidation puts us in the room). Those credits create shadow parties with non-public credits-only projections (provenance). The projection supports bounded notice, remedy, and proof; it never becomes a public acquisition surface until the subject claims or explicitly consents and 01.06.02 D-13's release controls are approved.
 
 So the wedge feature *is* the acquisition mechanism, and the provenance graph *is* the identity-verification substrate. Neither was designed to be the other.
 
 **Role scoping**:
 - **Producer**: creates the loop's inputs at the session; rarely its subject.
-- **Musician**: the claimant, arriving to a career already on the page.
-- **Operator**: the same loop with business-shaped proof — their venue's show history is the bait.
+- **Musician**: the claimant, arriving through a bounded notice or claim route to a non-public projection.
+- **Operator**: the same loop with business-shaped proof — their venue's show history supports a private claim path, not a public listing.
 - **Fan**: outside the loop entirely, and must stay outside: fan attestation would make reputation purchasable at scale.
 
 **Synthesis questions answered**:
 1. **Shared state conflict**: The party record is the same object before and after claiming; claiming attaches an owner rather than creating anything, so the accumulated history survives the conversion by construction.
-2. **Trigger chain**: Capture → shadow party + portfolio → invitation (best-effort) → claim → proof via the same attesters → owned party. Every link is designed to survive its own failure: no contact route still leaves the credit standing (01.05.01 D-04).
+2. **Trigger chain**: Capture → shadow party + non-public projection → bounded invitation/notice (best-effort) → claim → proof via the same attesters → owned party. Every link is designed to survive its own failure: no contact route still leaves the credit standing (01.05.01 D-04).
 3. **Permission intersection**: A shadow party is a subject, never an agent (01.05.01 D-05). Claiming is the only thing that grants agency — the domain's cleanest authority boundary.
 4. **Notification fan-out**: The subject is invited; and on a successful claim the attesters **are** notified (01.05.02 D-11) — they are the fraud alarm, the only people who know "Big Mike" is Michael Adeyemi, and the notice closes their capture loop and re-engages them. **(Resolves the former Step-5 pending.)**
 5. **State transition conflict**: Credits accreting while a claim is in flight is safe — orthogonal writes to the same party.
@@ -140,6 +140,8 @@ So the wedge feature *is* the acquisition mechanism, and the provenance graph *i
 ### CX-06: Band Governance ↔ Membership/Mandate
 
 **Relationship**: The domain's sharpest unresolved conflict. Governance terms say "£2,000+ needs three of four"; the mandate graph says "the bassist can spend £500". Both are recorded, both display as true, and nothing reconciles them. Governance *ought* to be the source and mandate the derived enforcement — but mandate exists from org creation (01.02.02) while governance arrives years later, so the dependency currently runs backwards.
+
+**Sharpened, not resolved, by the ratified default (DQ-02.4/.5).** Mandate now exists on *every* confirmed permanent edge from the moment of confirmation, not just on the creator's — so the surface area for a terms-vs-mandate contradiction is every member rather than one, and the platform default (all seven activities to USD 1,000, including `administer`) is **wider** than the equal-shares partnership the governance disclosure describes. Two obligations follow immediately and are already recorded: both surfaces must state the same authority in the same words (01.04.01 D-05), and the flat ceiling is to be revisited against band-agreed thresholds once governance capture ships (01.03.03 Q-03). The precedence rule itself is still 01.04.03 Q-01's and still open.
 
 **Role scoping**: Musician (members) primarily. Producer where a member, or where relying on a band's ability to bind itself at the capture moment. Operator/Fan unaffected.
 
@@ -226,7 +228,7 @@ So the wedge feature *is* the acquisition mechanism, and the provenance graph *i
 2. **Trigger chain**: Alias with ≥1 release-or-credit → promotion → `band` org created carrying handle + followers + catalogue. If org creation fails mid-promotion, the alias must remain fully intact — never a half-migrated identity.
 3. **Permission intersection**: Creating an alias requires nothing; promoting it into an org others can join is a governance-establishing act — the promoter becomes the first owning mandate (01.02.02 / CX-15), and governance capture fires (CX-12).
 4. **Notification fan-out**: Followers of the promoted alias are told the name is now a band, with one-tap unfollow — a consent moment, the same fan-out as an alias transfer (domain 20).
-5. **State transition conflict**: Two members concurrently promoting the same shared alias — detection is best-effort; the residue is a merge (CX-03).
+5. **State transition conflict**: **The obvious race does not exist.** An alias has exactly one owner (01.01.02 D-04), and only that owner may dispose of it (D-08), so two people can never promote one name concurrently — there is nothing to merge. What survives is the ordinary double-submit, answered by item 2's all-or-nothing rule: the promotion completes wholly or the alias remains fully intact (E-15/E-28).
 
 ---
 
@@ -238,7 +240,7 @@ So the wedge feature *is* the acquisition mechanism, and the provenance graph *i
 
 **Synthesis questions answered**:
 1. **Shared state conflict**: The band org (01.02) is the entity; governance terms (01.04), the membership graph (01.03) and the alias origin (01.01.02) are all views over it. Governance attaches to the promoted party — nothing merges.
-2. **Trigger chain**: Shared alias created / alias promoted → governance capture offered **inline** (never forced). Skipping leaves the default mandate (Q-03) — so the design must make the skip legible, not silent.
+2. **Trigger chain**: Shared alias created / alias promoted → governance capture offered **inline** (never forced). Skipping leaves the default mandate — **now a known and consequential default** (Q-03 RESOLVED; domain D-09, 01.03.03 D-07..D-10): everyone named at capture who becomes a confirmed permanent member is seeded with all seven activities up to USD 1,000, including the authority to remove the others. So the skip must be **legible, not silent**, and the capture screen must say what skipping leaves in place — a band formed sideways out of a shared name inherits peer authority for everyone in it, which is exactly the population least likely to have discussed it.
 3. **Permission intersection**: Capturing governance terms is a member act; the alias creator seeds the first membership and mandate (CX-15).
 4. **Notification fan-out**: Bandmates named during capture are invited (the shared invitation cross-cut).
 5. **State transition conflict**: Governance captured while the alias is still solo-owned is safe; the live conflict is terms-vs-mandate (CX-06), which this seam **feeds** but does not itself create.
@@ -292,7 +294,7 @@ So the wedge feature *is* the acquisition mechanism, and the provenance graph *i
 **Synthesis questions answered**:
 1. **Shared state conflict**: The membership graph (01.03) owns the edges; the org (01.02) reads lineup from it. Nothing is stored twice, so nothing can drift.
 2. **Trigger chain**: Org created → creator's owning mandate created (and, if org creation happened *in* a context, the context must not capture the mandate — that would smuggle org-owns-org back in, 01.02.02 DT-12). Member added → lineup view changes with no write to the org.
-3. **Permission intersection**: A mandate covers the org UNIFORMLY today — a member mandated for the shop can also edit the venue. Per-type mandates are not defined, left as Q-04 rather than invented.
+3. **Permission intersection**: A mandate covers the org UNIFORMLY today — a member mandated for the shop can also edit the venue. Per-type mandates are not defined, left as an open question (01.03 index Q-02 / 01.03.03 Q-02) rather than invented. **Narrowed by DQ-02.7**: the question no longer touches *defaults*, because only bands are seeded (01.03.03 D-10) — a shop, venue or studio grants everything explicitly, and a band+label's seed is a fact about the band. What remains open is whether an *explicit* grant on a multi-type party can be scoped per type. Note the CX-15 uniformity claim was checked during ratification and does **not** support uniform seeding across org types: it is about scope across the types of one multi-type org, not about defaults across org types.
 4. **Notification fan-out**: Mandate grants/revocations notify the affected member; silently gaining authority is a security event (CX-01).
 5. **State transition conflict**: The cross-sub-domain race is departure-vs-mandate-recovery, which mortality forces open (CX-16); the intra-01.02 attribute-write-vs-type-removal race is handled at 01.02.03 D-04 (write rejected, value retained).
 
@@ -396,5 +398,27 @@ So the wedge feature *is* the acquisition mechanism, and the provenance graph *i
 | R-02 | 01.09 Party Identifiers | 01.04 Band Governance | A band holds an IPI, so a link looks plausible. But governance rules never read it, dissolution does not revoke it, and the identifier outlives the band by decades. Independent lifecycles, no shared state, no trigger. (The identifier-by-type dependency is with 01.02, not governance — see CX-18.) |
 | R-03 | 01.08 Trader Status | 01.06 Portfolio/EPK | Trader status is a commerce disclosure to a buyer; the EPK is a professional pitch to a booker. Different audiences, different artifacts, no shared state. A trader disclosure on an EPK would be noise; its absence there is correct. |
 | R-04 | 01.10 Estates | 01.08 Trader Status | A deceased trader's legal obligations pass to their estate in law, but on-platform the account simply stops selling. No live interaction worth modelling — the estate administers a catalogue (01.10's real subject), not a shop. |
-| R-05 | 01.02 Organizations | 01.01.02 Aliases | Considered modelling aliases as single-member orgs to unify the party model (01.01.02 DT-03). Rejected for the common case: a solo alias has no members, no treasury, no governance and no dissolution, so every alias would carry four empty concepts. **Reopened for the shared-alias case** (a duo) — which has all four, and is 01.01.02 Q-01/domain Q-08. The promotion path in CX-11 is how the two models connect without merging them. |
+| R-05 | 01.02 Organizations | 01.01.02 Aliases | Considered modelling aliases as single-member orgs to unify the party model (01.01.02 DT-03). Rejected for the common case: a solo alias has no members, no treasury, no governance and no dissolution, so every alias would carry four empty concepts. **Reopened for the shared-name case** (a duo) — which has all four — and **closed the org way**: 01.01.02 **D-04** makes a co-owned name a `band` org, not an alias with co-owners, resolving 01.01.02 Q-01 and domain Q-08 together. So the rejection stands for every alias that exists, because every alias that exists is single-owner. The promotion path in CX-11 is how the two models connect without merging them. |
 | R-06 | 01.07 Credential Verification | 01.01.01 Role Facets | Both describe "what you do professionally", so gating facets on credentials looks tidy. Rejected (01.01.01 D-02): facets are self-asserted and unverified *by design* — gating them would make the platform unusable for the long tail who hold no union card, which is most working musicians. The cost of a false facet is an empty portfolio, not a false credential. (The *non-gating* relationship — a badge decorating a facet — is real and kept as CX-19.) |
+
+
+<!-- spec-graph: auto-generated -->
+## Related Specs
+
+### Constrained by
+- [[decisions.md#d-01|D-01]]
+- [[decisions.md#d-03|D-03]]
+- [[decisions.md#d-02|D-02]]
+- [[decisions.md#d-13|D-13]]
+- [[decisions.md#d-08|D-08]]
+- [[decisions.md#d-17|D-17]]
+- [[decisions.md#d-05|D-05]]
+- [[decisions.md#d-04|D-04]]
+- [[decisions.md#d-07|D-07]]
+- [[decisions.md#d-16|D-16]]
+- [[decisions.md#d-14|D-14]]
+- [[decisions.md#d-09|D-09]]
+- [[decisions.md#d-10|D-10]]
+- [[decisions.md#d-18|D-18]]
+- [[decisions.md#d-11|D-11]]
+- [[decisions.md#d-15|D-15]]

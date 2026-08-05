@@ -1,0 +1,352 @@
+{
+  "reportKind": "ambiguity-audit-raw",
+  "run": 7,
+  "domain": "18-show-production-touring",
+  "unitsAudited": 12,
+  "filesRead": 70,
+  "coverageNote": "Read all current Markdown source files in the root unit and 11 sub-domain units. Each file completed 3a implementer simulation, 3b Vision Rubric scoring, and 3c devil's-advocate probing; no audit artifact was used as source material.",
+  "applicableCheckpoints": 96,
+  "findings": [
+    {
+      "findingId": "R7-18-ROOT-D7-001",
+      "unit": "18-show-production-touring",
+      "severity": "high",
+      "dimension": 7,
+      "claim": "The root unit's live-question table records an owner and a routing target but neither a decision deadline nor the decision blocked by the erasure/legal-basis question.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/18-show-production-touring/18.01-event-record-lifecycle.md",
+          "line": 193,
+          "excerpt": "| # | Question | Owner | Deferred To |"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/18-show-production-touring/18.01-event-record-lifecycle.md",
+          "line": 197,
+          "excerpt": "**A person's erasure request against a show a venue also legitimately holds.**"
+        }
+      ],
+      "forcedInvention": "An implementer must invent when the legal-basis decision is due and whether the erasure flow, credit history, or shared venue record can proceed first.",
+      "failureScenario": "An erasure request either removes shared show history without a retention rule or preserves personal data without an authorized lawful-basis decision."
+    },
+    {
+      "findingId": "R7-18-03-D7-001",
+      "unit": "18.03-show-advancing",
+      "severity": "high",
+      "dimension": 7,
+      "claim": "The advancing unit's live adoption question has no decision deadline or recorded blocked decision; its routing target does not supply either required field.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/18-show-production-touring/18.03-show-advancing/18.03.01-advance-checklist.md",
+          "line": 206,
+          "excerpt": "| # | Question | Owner | Deferred To |"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/18-show-production-touring/18.03-show-advancing/18.03.01-advance-checklist.md",
+          "line": 208,
+          "excerpt": "`[OWNER]` If the Operator won't adopt, does the emailable sheet fallback deliver enough value alone to sustain the wedge?"
+        }
+      ],
+      "forcedInvention": "An implementer must choose when to stop treating the email fallback as a hypothesis and whether it is sufficient to ship the advancing workflow.",
+      "failureScenario": "The product can invest in a venue-dependent workflow without a time-bound adoption decision, leaving the primary wedge unusable where Operators do not participate."
+    },
+    {
+      "findingId": "R7-18-04-D7-001",
+      "unit": "18.04-riders",
+      "severity": "high",
+      "dimension": 7,
+      "claim": "The rider-import question lacks a decision deadline and an explicit blocked decision, despite a wrong extraction being able to create a confidently incorrect capability diff.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/18-show-production-touring/18.04-riders/18.04-riders-index.md",
+          "line": 66,
+          "excerpt": "| # | Question | Owner | Deferred To |"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/18-show-production-touring/18.04-riders/18.04-riders-index.md",
+          "line": 68,
+          "excerpt": "Can an act import an existing PDF rider, and do we attempt structured extraction from it?"
+        }
+      ],
+      "forcedInvention": "An implementer must choose build, buy, or omission timing for extraction and whether the import path is included in the rider contract.",
+      "failureScenario": "A release either omits the primary rider on-ramp without a product call or parses a document into data that drives an unsafe, incorrect venue diff."
+    },
+    {
+      "findingId": "R7-18-05-D7-001",
+      "unit": "18.05-stage-plot-input-list",
+      "severity": "medium",
+      "dimension": 7,
+      "claim": "The stage-plot scope question omits both a decision deadline and the decision it blocks; the deferred route is not a time-bound resolution record.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/18-show-production-touring/18.05-stage-plot-input-list/18.05-stage-plot-input-list-index.md",
+          "line": 66,
+          "excerpt": "| # | Question | Owner | Deferred To |"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/18-show-production-touring/18.05-stage-plot-input-list/18.05-stage-plot-input-list-index.md",
+          "line": 68,
+          "excerpt": "Do we build a spatial plot editor, or is a structured list of positions sufficient?"
+        }
+      ],
+      "forcedInvention": "An implementer must choose whether the product contract includes a spatial editor or only structured position data, and when that scope must be fixed.",
+      "failureScenario": "The UI and export contracts can diverge because one team builds a canvas while another treats the list as the complete stage-plot artifact."
+    },
+    {
+      "findingId": "R7-18-06-D7-001",
+      "unit": "18.06-setlist-show-files",
+      "severity": "high",
+      "dimension": 7,
+      "claim": "The performed-setlist credit boundary remains open without a decision deadline or an explicit blocked decision, even though it governs which domain owns the resulting credit record.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/18-show-production-touring/18.06-setlist-show-files/18.06-setlist-show-files-index.md",
+          "line": 68,
+          "excerpt": "| # | Question | Owner | Deferred To |"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/18-show-production-touring/18.06-setlist-show-files/18.06-setlist-show-files-index.md",
+          "line": 71,
+          "excerpt": "Does a performed setlist constitute a live performance *credit* (domain 02)?"
+        }
+      ],
+      "forcedInvention": "An implementer must assign ownership, provenance, and creation timing for a performance credit without a deadline for the architecture boundary decision.",
+      "failureScenario": "The capture path can create duplicate or untrusted credits, or omit a credit that downstream royalty and career workflows expect."
+    },
+    {
+      "findingId": "R7-18-07-D7-001",
+      "unit": "18.07-show-day-schedule",
+      "severity": "high",
+      "dimension": 7,
+      "claim": "The public set-time liability question lacks a decision deadline and a recorded blocked decision, although it determines whether live schedule publishing creates an obligation to fans.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/18-show-production-touring/18.07-show-day-schedule/18.07-show-day-schedule-index.md",
+          "line": 66,
+          "excerpt": "| # | Question | Owner | Deferred To |"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/18-show-production-touring/18.07-show-day-schedule/18.07-show-day-schedule-index.md",
+          "line": 69,
+          "excerpt": "`[OWNER]` Does published set-time data flowing to fans (19/21) create an obligation when the show runs late?"
+        }
+      ],
+      "forcedInvention": "An implementer must decide what fan-facing commitment, update behavior, and liability posture apply when actual set times slip.",
+      "failureScenario": "The system can publish a time as either an actionable promise or a nonbinding estimate without a consistent consumer notice or exception path."
+    },
+    {
+      "findingId": "R7-18-08-D7-001",
+      "unit": "18.08-crew-credentials",
+      "severity": "high",
+      "dimension": 7,
+      "claim": "The local-stagehand persona decision has an owner and route but no deadline or recorded blocked decision, leaving the identity and payout authority model open.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/18-show-production-touring/18.08-crew-credentials/18.08-crew-credentials-index.md",
+          "line": 68,
+          "excerpt": "| # | Question | Owner | Deferred To |"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/18-show-production-touring/18.08-crew-credentials/18.08-crew-credentials-index.md",
+          "line": 70,
+          "excerpt": "**[OWNER]** **Does the touring crew break the four-persona model?**"
+        }
+      ],
+      "forcedInvention": "An implementer must invent whether a stagehand is a Producer, a lightweight non-persona account, or a fifth persona before assigning credentials and payout identity.",
+      "failureScenario": "A locally hired worker can receive credentials or payment through an account model that grants the wrong data access or cannot satisfy payout requirements."
+    },
+    {
+      "findingId": "R7-18-09-D7-001",
+      "unit": "18.09-backline-gear-manifest",
+      "severity": "high",
+      "dimension": 7,
+      "claim": "The backline-sourcing viability question omits a decision deadline and an explicit blocked decision despite governing whether the feature ships as a sourcing capability or only a shortfall report.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/18-show-production-touring/18.09-backline-gear-manifest/18.09.02-backline-sourcing.md",
+          "line": 91,
+          "excerpt": "| # | Question | Owner | Deferred To |"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/18-show-production-touring/18.09-backline-gear-manifest/18.09.02-backline-sourcing.md",
+          "line": 93,
+          "excerpt": "**[OWNER]** Is backline rental supply dense enough outside major cities for this to work?"
+        }
+      ],
+      "forcedInvention": "An implementer must decide whether supplier discovery and booking-adjacent remediation are in scope, and when that viability call closes.",
+      "failureScenario": "The diff can surface gear shortfalls with no reliable remediation path, creating a workflow that identifies operational risk without a product-owned next action."
+    },
+    {
+      "findingId": "R7-18-11-D7-001",
+      "unit": "18.11-tour-container-routing",
+      "severity": "medium",
+      "dimension": 7,
+      "claim": "The co-headline shared-cost question has no deadline or recorded blocked decision, leaving the budget allocation contract undefined.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/18-show-production-touring/18.11-tour-container-routing/18.11.01-tour-container.md",
+          "line": 102,
+          "excerpt": "| # | Question | Owner | Deferred To |"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/18-show-production-touring/18.11-tour-container-routing/18.11.01-tour-container.md",
+          "line": 106,
+          "excerpt": "Non-owner co-headline: two linked tours sharing a date list — how are shared costs (backline, transport) split across two budgets?"
+        }
+      ],
+      "forcedInvention": "An implementer must choose allocation authority and a split model for shared costs without a time-bound decision record.",
+      "failureScenario": "The same co-headline cost can be double-charged, omitted, or exposed to a tour that does not own it."
+    },
+    {
+      "findingId": "R7-18-12-D7-001",
+      "unit": "18.12-travel-logistics",
+      "severity": "medium",
+      "dimension": 7,
+      "claim": "The record-only travel feature's build-or-cut question has no deadline or explicit blocked decision, so its scope remains open while dependent day-sheet behavior is specified.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/18-show-production-touring/18.12-travel-logistics/18.12-travel-logistics-index.md",
+          "line": 64,
+          "excerpt": "| # | Question | Owner | Deferred To |"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/18-show-production-touring/18.12-travel-logistics/18.12-travel-logistics-index.md",
+          "line": 66,
+          "excerpt": "[OWNER] Is a record-only travel feature worth building at all?"
+        }
+      ],
+      "forcedInvention": "An implementer must choose whether travel and accommodation records exist as product entities or whether the day sheet has to function without them.",
+      "failureScenario": "The day sheet can depend on travel data that is later cut as busywork, forcing a late redesign of accommodation and transport displays."
+    },
+    {
+      "findingId": "R7-18-13-D7-001",
+      "unit": "18.13-tour-finance",
+      "severity": "high",
+      "dimension": 7,
+      "claim": "The tour P&L ownership boundary has no decision deadline or explicit blocked decision, despite directly determining which domain owns the budget schema.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/18-show-production-touring/18.13-tour-finance/18.13-tour-finance-index.md",
+          "line": 66,
+          "excerpt": "| # | Question | Owner | Deferred To |"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/18-show-production-touring/18.13-tour-finance/18.13-tour-finance-index.md",
+          "line": 68,
+          "excerpt": "**Does tour budget vs actual belong here or in domain 23?**"
+        }
+      ],
+      "forcedInvention": "An implementer must choose the schema owner, write authority, and cross-domain consumption contract for tour budget versus actuals.",
+      "failureScenario": "Tour costs and actuals can be duplicated across domains or lose a single authoritative P&L during reconciliation."
+    },
+    {
+      "findingId": "R7-18-14-D7-001",
+      "unit": "18.14-border-visas-carnets",
+      "severity": "high",
+      "dimension": 7,
+      "claim": "The withholding-tax ownership question lacks a decision deadline and an explicit blocked decision even though it determines where tax facts, settlement deductions, and tax-position data are modeled.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/18-show-production-touring/18.14-border-visas-carnets/18.14-border-visas-carnets-index.md",
+          "line": 66,
+          "excerpt": "| # | Question | Owner | Deferred To |"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/18-show-production-touring/18.14-border-visas-carnets/18.14-border-visas-carnets-index.md",
+          "line": 68,
+          "excerpt": "Does withholding tax belong in 18 (border-triggered), 17 (deducted at settlement) or 23 (the act's tax position)?"
+        }
+      ],
+      "forcedInvention": "An implementer must assign ownership and timing for withholding records without a time-bound boundary decision.",
+      "failureScenario": "A withholding amount can be modeled as a touring fact, a settlement deduction, and a tax credit at once, creating conflicting balances and reporting."
+    },
+    {
+      "findingId": "R7-18-03-D7-002",
+      "unit": "18.03-show-advancing",
+      "severity": "high",
+      "dimension": 7,
+      "claim": "The advancing cross-cut still marks freeze authority as unresolved, but its cited question is resolved: a hard venue item blocks only a clean freeze and the Producer can override. The stale unowned question forces a contradictory authority rule.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/18-show-production-touring/18.03-show-advancing/18.03-show-advancing-cx.md",
+          "line": 98,
+          "excerpt": "Can a venue-side open item block an artist's freeze? Unresolved — 18.03.01 Q-02."
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/18-show-production-touring/18.03-show-advancing/18.03.01-advance-checklist.md",
+          "line": 209,
+          "excerpt": "a hard venue-side item blocks a *clean* freeze, not the freeze — every freeze stays overridable per 18.03.05 D-03"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/18-show-production-touring/18.03-show-advancing/18.03.05-advance-freeze-change-control.md",
+          "line": 64,
+          "excerpt": "Freeze allowed with an explicit override + mandatory reason; the override is stamped into the pack"
+        }
+      ],
+      "forcedInvention": "An implementer must choose between rejecting a freeze for a hard item and allowing an attributed override.",
+      "failureScenario": "The lifecycle service can reject a freeze that the change-control flow allows, or record a frozen pack without the required override evidence."
+    },
+    {
+      "findingId": "R7-18-04-D7-002",
+      "unit": "18.04-riders",
+      "severity": "high",
+      "dimension": 7,
+      "claim": "The rider cross-cut labels the version chosen during an in-progress advance as unresolved, while the advance checklist already fixes the rider version at advance open. The stale unowned question leaves the versioning contract ambiguous.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/18-show-production-touring/18.04-riders/18.04-riders-cx.md",
+          "line": 38,
+          "excerpt": "Cutting a version while a date is mid-advance — does that date get v1 or v2? Unresolved; the safe default is that the advance holds its version at open"
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/18-show-production-touring/18.03-show-advancing/18.03.01-advance-checklist.md",
+          "line": 131,
+          "excerpt": "The rider version at advance open is the item basis. An amendment re-runs the diff as a change notice; it does not silently rewrite settled items"
+        }
+      ],
+      "forcedInvention": "An implementer must decide whether a newly cut rider version updates an active advance automatically, never, or only after a prompt.",
+      "failureScenario": "An active advance can silently move to a new rider version or ignore a material amendment, producing a diff and freeze pack based on different requirements."
+    },
+    {
+      "findingId": "R7-18-09-D7-002",
+      "unit": "18.09-backline-gear-manifest",
+      "severity": "high",
+      "dimension": 7,
+      "claim": "The backline cross-cut and the domain cross-cut still describe rental ownership as unresolved, although the sub-domain index resolves it to date-scoped ghosts. The stale unowned question leaves the manifest ownership model contradictory.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/18-show-production-touring/18.09-backline-gear-manifest/18.09-backline-gear-manifest-cx.md",
+          "line": 33,
+          "excerpt": "They cannot share an ownership model, which is 18.09 Q-02 and is unresolved."
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/18-show-production-touring/18.09-backline-gear-manifest/18.09-backline-gear-manifest-index.md",
+          "line": 66,
+          "excerpt": "RESOLVED — date-scoped ghosts, owned by nobody on the tour."
+        },
+        {
+          "file": ".memory/wiki/specs/ideation/18-show-production-touring/show-production-touring-cx.md",
+          "line": 179,
+          "excerpt": "They cannot share an ownership model (18.09 Q-02, unresolved)."
+        }
+      ],
+      "forcedInvention": "An implementer must choose whether a rental is a registry reference, a tour-owned item, or a date-scoped ghost.",
+      "failureScenario": "A hired rig can be attached to a false owner or missing from a load-out and carnet workflow because different consumers implement different ownership semantics."
+    },
+    {
+      "findingId": "R7-18-09-D7-003",
+      "unit": "18.09-backline-gear-manifest",
+      "severity": "critical",
+      "dimension": 7,
+      "claim": "The cross-cut leaves the state transition for a provisionally lost item genuinely unresolved and records no owner, deadline, or blocked decision for it.",
+      "evidence": [
+        {
+          "file": ".memory/wiki/specs/ideation/18-show-production-touring/18.09-backline-gear-manifest/18.09-backline-gear-manifest-cx.md",
+          "line": 74,
+          "excerpt": "If the loss is provisional (might turn up tomorrow), does the manifest change now or on confirmation? Changing too early creates phantom shortfalls; too late means arriving in Leeds without a bass rig and no time to hire one. Genuinely unresolved."
+        }
+      ],
+      "forcedInvention": "An implementer must invent whether a provisional loss changes availability immediately, creates a separate pending state, or waits for confirmation.",
+      "failureScenario": "The system either creates false shortfalls and unnecessary rentals or leaves unavailable gear marked present until there is no time to replace it."
+    }
+  ]
+}

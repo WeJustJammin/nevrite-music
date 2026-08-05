@@ -1,0 +1,130 @@
+{
+  "domain": "18-show-production-touring",
+  "unitsAudited": 12,
+  "filesRead": 70,
+  "coverageNote": "Enumerated from disk: 12 unit directories containing an *-index.md (the domain root plus 18.03, 18.04, 18.05, 18.06, 18.07, 18.08, 18.09, 18.11, 18.12, 18.13, 18.14 — note 18.01/18.02/18.10/18.15–18.20 are domain-level leaf feature files belonging to the root unit, and there is no 18.10 directory), totalling 70 .md files (888 KB). Matches the expected 12 units / 70 files exactly. Every file was read in full in-sandbox; Deep Think Annotation and auto-generated Related Specs blocks were excluded from context transfer only after being scanned for normative content. Rubric dimensions 2 (Persona Specificity), 4 (Constraint Explicitness), 5 (Success Measurability) and 6 (Competitive Positioning) are scored N/A for every unit in this domain: personas are owned by meta/personas.md and referenced-never-redefined by explicit rule in every Role Matrix; constraints and success metrics are owned by meta/constraints.md and meta/problem-statement.md; competitive positioning is owned by meta/competitive-landscape.md. Applicable checkpoints per unit are therefore dimensions 1, 3, 7 and 8.",
+  "units": [
+    { "unit": "18-show-production-touring (domain root: index, cx, 18.01, 18.02, 18.10, 18.15-18.20)", "applicableCheckpoints": 4, "naDimensions": [2, 4, 5, 6], "points": 0.5 },
+    { "unit": "18.03-show-advancing", "applicableCheckpoints": 4, "naDimensions": [2, 4, 5, 6], "points": 1.0 },
+    { "unit": "18.04-riders", "applicableCheckpoints": 4, "naDimensions": [2, 4, 5, 6], "points": 1.0 },
+    { "unit": "18.05-stage-plot-input-list", "applicableCheckpoints": 4, "naDimensions": [2, 4, 5, 6], "points": 0 },
+    { "unit": "18.06-setlist-show-files", "applicableCheckpoints": 4, "naDimensions": [2, 4, 5, 6], "points": 0.5 },
+    { "unit": "18.07-show-day-schedule", "applicableCheckpoints": 4, "naDimensions": [2, 4, 5, 6], "points": 0 },
+    { "unit": "18.08-crew-credentials", "applicableCheckpoints": 4, "naDimensions": [2, 4, 5, 6], "points": 0 },
+    { "unit": "18.09-backline-gear-manifest", "applicableCheckpoints": 4, "naDimensions": [2, 4, 5, 6], "points": 1.0 },
+    { "unit": "18.11-tour-container-routing", "applicableCheckpoints": 4, "naDimensions": [2, 4, 5, 6], "points": 0.5 },
+    { "unit": "18.12-travel-logistics", "applicableCheckpoints": 4, "naDimensions": [2, 4, 5, 6], "points": 0 },
+    { "unit": "18.13-tour-finance", "applicableCheckpoints": 4, "naDimensions": [2, 4, 5, 6], "points": 0.5 },
+    { "unit": "18.14-border-visas-carnets", "applicableCheckpoints": 4, "naDimensions": [2, 4, 5, 6], "points": 0 }
+  ],
+  "findings": [
+    {
+      "findingId": "18-show-production-touring#001",
+      "unit": "18.03-show-advancing",
+      "severity": "blocking",
+      "dimension": 3,
+      "claim": "18.03.01 defines the hard-outstanding count — the single number the advance freeze gates on — two incompatible ways in the same file. The normative definition counts every `hard` item not in a terminal state (and `answered` is explicitly NOT terminal); the edge-case table demotes an `answered`-but-unconfirmed item to soft-outstanding. A `hard` compliance item the venue has answered but nobody has counter-confirmed therefore both does and does not block a clean freeze.",
+      "evidence": "18.03-show-advancing/18.03.01-advance-checklist.md:46 — \"**Status** — `open → answered → confirmed | self-confirmed`, or `open → waived`. Terminal states are `confirmed`, `self-confirmed` and `waived`.\"  //  :67 — \"2. **The gate** is severity: the **hard-outstanding count** is every `hard` item not in a terminal state, regardless of band. This is the number 18.03.05's freeze reads.\"  //  :126 — \"| Venue answers, artist never confirms | An `answered` item that its counterpart never confirms is **soft**-outstanding — *except* where the answer is a negative (\\\"no, we don't have it\\\"), which is a shortfall and inherits the requirement's severity |\"  //  :193 D-06 — \"Compliance-sourced items (18.16) are `hard` and **non-downgradable by anyone**.\"",
+      "forcedInvention": "Whether `answered` counts toward the hard-outstanding gate. The implementer must invent the gate's arithmetic, and the two readings produce different freeze behaviour for the highest-consequence item class (statutory compliance): under :67 the Producer cannot freeze cleanly until the artist counter-confirms every answered permit item; under :126 the venue's answer alone clears the gate. D-06's 'non-downgradable by anyone' also conflicts with a state-based demotion to soft."
+    },
+    {
+      "findingId": "18-show-production-touring#002",
+      "unit": "18-show-production-touring (domain root: index, cx, 18.01, 18.02, 18.10, 18.15-18.20)",
+      "severity": "warning",
+      "dimension": 3,
+      "claim": "18.16 states inside one file that an unmet hard compliance requirement blocks the `advanced` state, and that proceeding without a required document is non-blocking. The rest of the domain rules unambiguously the second way, so the Behavior sentence is a live contradiction against both its own edge case and 18.03.01 D-07 / 18.03.05 D-03 / 18.01's day-of auto-freeze.",
+      "evidence": "18.16-show-safety-permits-insurance.md:28-29 — \"The check runs as part of the advance and blocks `advanced` state if a hard requirement is unmet.\"  //  :46 — \"| Show goes ahead without a required document | Non-blocking record of the override with who authorised it | \\\"Proceeding without noise permit — authorised by [name]\\\" |\"  //  18.03-show-advancing/18.03.01-advance-checklist.md:194 D-07 — \"A `hard` **venue-side** item counts in the hard-outstanding gate — so it blocks a **clean** freeze, not the freeze ... \\\"block\\\" means \\\"requires an override that goes on the record\\\"\"  //  18.01-event-record-lifecycle.md:80 — \"At 00:00 venue-local on the show date the record moves to `day-of`. If it was never frozen, it auto-freezes with open items recorded as unresolved\"",
+      "forcedInvention": "Whether the compliance check is a hard gate on the advancing→advanced transition or an overridable soft gate. Two implementers reading 18.16 alone versus 18.16 plus 18.03.01 build a blocking transition and an overridable one respectively; under the blocking reading, an event with an unmet permit can never reach `advanced` at all, which the day-of auto-freeze requires it to."
+    },
+    {
+      "findingId": "18-show-production-touring#003",
+      "unit": "18-show-production-touring (domain root: index, cx, 18.01, 18.02, 18.10, 18.15-18.20)",
+      "severity": "warning",
+      "dimension": 3,
+      "claim": "The domain CX asserts that 18.16 declares a statutory lead time per requirement and a non-downgradable hard flag, citing '18.16 D-05/D-06'. 18.16 contains only D-01, D-02 and D-03, and the words 'lead time' and 'hard item' appear nowhere in it. The attribute the advance's resolve-by computation consumes is therefore owned by no file.",
+      "evidence": "show-production-touring-cx.md:24 (CX-13 row) — \"**The third generation source** — statutory permits and safety certs are the diff's only non-downgradable hard items | Producer, Operator | High | 18.03.01 (gen source 2); **18.16 D-05/D-06** — statutory lead time drives resolve-by\"  //  :291 — \"the **only non-downgradable items** in the domain (**18.16 D-06**). A rider line is negotiable; a permit is not.\"  //  :292-293 — \"The feature declares a statutory **lead time** per requirement, and the advance's resolve-by computation consumes it\"  //  18.16-show-safety-permits-insurance.md:80-84 — Decisions table contains exactly \"D-01 | The platform never asserts legal compliance\", \"D-02 | Validity is evaluated against the show date, not the upload date\", \"D-03 | Requirements are venue/jurisdiction-derived; fulfilment is artist-side\" — no D-05, no D-06, and no lead-time concept anywhere in the file.  //  18.03-show-advancing/18.03.01-advance-checklist.md:176 — \"18.16 owns the statutory lead times this feature's resolve-by computation consumes.\"",
+      "forcedInvention": "Whether a compliance requirement carries a declared statutory lead time at all, and where its value comes from. 18.03.01 D-05 computes resolve-by as `show_date − item_lead_time` with a default of 0; an implementer building 18.16 from its own file produces requirements with no lead-time attribute, silently defaulting every permit's resolve-by to the freeze target and destroying the T-14d blocker behaviour CX-13 specifies."
+    },
+    {
+      "findingId": "18-show-production-touring#004",
+      "unit": "18.04-riders",
+      "severity": "warning",
+      "dimension": 3,
+      "claim": "18.04.02 D-01 derives every hospitality quantity from party size with no exclusion, while the crew CX states that local hires are on the roster and must not enter that roll-up. The sibling consumer 18.12.01 carries the exclusion in its own decision; 18.04.02 does not, so a naive count(roster) over-caters by the number of stagehands hired for the night.",
+      "evidence": "18.04-riders/18.04.02-hospitality-rider.md:94 D-01 — \"Quantities derive from party size, never typed | Catering for the band and forgetting the crew is the domain's most repeated error\"  //  18.08-crew-credentials/18.08-crew-credentials-cx.md:55 (CX-02 §3) — \"A local hire is on the roster but must not be in the party-size roll-up that drives catering (18.04.02 D-01), rooming (18.12.02) and per diems (18.13.01). A naive `count(roster)` would cater for three extra stagehands and book them hotel rooms. The roster's head count needs a *type* dimension — touring party vs local labour — or 18.08.01 D-04's downstream derivations break the moment this feature is used. **This is a real modelling requirement neither feature file states alone.**\"  //  18.12-travel-logistics/18.12.01-travel-accommodation.md:84 D-02 — \"Party size derives from the roster, excluding local labour\"  //  18.08-crew-credentials/18.08.01-crew-roster-call-times.md:96 D-04 — \"Party size is a published input, and edits to it must be visible downstream\" (no type dimension stated)",
+      "forcedInvention": "Whether the hospitality quantity denominator is count(roster) or count(roster where type = touring-party). The exclusion is asserted only in CX synthesis prose and in one of the three named consumers, so the implementer of 18.04.02 must invent it or reproduce the exact over-count the feature exists to prevent."
+    },
+    {
+      "findingId": "18-show-production-touring#005",
+      "unit": "18.13-tour-finance",
+      "severity": "warning",
+      "dimension": 3,
+      "claim": "Same defect on the per-diem side: 18.13.01 D-01 derives per diems from the roster with no local-labour exclusion, so every stagehand hired for a four-hour load-in accrues a daily per diem. The exclusion exists only in CX prose.",
+      "evidence": "18.13-tour-finance/18.13.01-per-diems-float.md:86 D-01 — \"Per diem = rate × days × person, derived from the roster | Typed amounts are how people get shorted for joining late\"  //  :26-27 Behavior — \"Per diem = rate × days × person, derived from the roster's date ranges (18.08.01) — so it computes rather than being counted.\"  //  18.13-tour-finance/18.13-tour-finance-cx.md:75 (CX-03 §1) — \"The local-labour exclusion (18.08-cx CX-02) applies here too: stagehands don't get per diems.\"  //  18.08-crew-credentials/18.08-crew-credentials-cx.md:44 (CX-02) — \"they don't eat the catering, sleep in the rooms, or take a per diem, so they must **not** inflate the party-size derivations that hospitality, rooming and finance consume.\"",
+      "forcedInvention": "Whether a roster entry created by 18.08.03 local crew hire is included in the per-diem derivation. Nothing in 18.13.01 or 18.08.01 carries a type dimension on the roster entity, so the implementer must invent both the attribute and the filter."
+    },
+    {
+      "findingId": "18-show-production-touring#006",
+      "unit": "18.04-riders",
+      "severity": "warning",
+      "dimension": 7,
+      "claim": "18.04-riders-cx CX-01 §5 leaves the mid-advance rider version question open with no owner and no deferral target, and states a 'safe default' (hold the version at open, prompt to update) that contradicts what 18.04.04 and 18.03.02 already specify (upcoming dates resolve to the new version and re-diff automatically).",
+      "evidence": "18.04-riders/18.04-riders-cx.md:38 (CX-01 §5) — \"5. **State transition conflict**: Cutting a version while a date is mid-advance — does that date get v1 or v2? Unresolved; the safe default is that the advance holds its version at open, with an explicit \\\"update to v2?\\\" prompt.\" (no owner, no deferral target, not carried into any Open Questions table)  //  18.04-riders/18.04.04-rider-templates-versioning.md:39 Happy Path 5 — \"Already-advanced dates keep v1; upcoming dates resolve to v2 and their diffs re-run.\"  //  :45 edge case — \"| Rider changes after dates were advanced | Advanced dates keep their version; upcoming dates re-diff |\"  //  18.03-show-advancing/18.03.02-venue-capability-diff.md:121 — \"| Rider, plot, input list, monitor or manifest change | Change-triggered |\"",
+      "forcedInvention": "Whether a mid-advance (advancing-but-not-advanced) date auto-resolves to the new rider version or waits behind an explicit opt-in prompt. The CX's default and the two feature files specify opposite behaviours, and the CX marks the question unresolved without assigning it."
+    },
+    {
+      "findingId": "18-show-production-touring#007",
+      "unit": "18.09-backline-gear-manifest",
+      "severity": "warning",
+      "dimension": 3,
+      "claim": "Both the sub-domain CX and the domain CX state that 18.09 Q-02 (owned vs rented ownership model) is unresolved and that 'the manifest currently pretends they can' share one. 18.09 Q-02 is resolved, and 18.09.01 D-05 specifies the answer. Three files carry a stale contradiction against a ratified decision.",
+      "evidence": "18.09-backline-gear-manifest/18.09-backline-gear-manifest-cx.md:33 (CX-01 §1) — \"**They cannot share an ownership model**, which is 18.09 Q-02 and is unresolved. A naive \\\"owner\\\" field forces a rental to belong to someone on the tour\"  //  :103 Notes — \"**CX-01's synthesis question 1 is the sub-domain's live modelling gap** (18.09 Q-02): owned items and rented items cannot share an ownership model, and the manifest currently pretends they can.\"  //  show-production-touring-cx.md:179 (CX-07 §1) — \"They cannot share an ownership model (18.09 Q-02, unresolved).\"  //  18.09-backline-gear-manifest/18.09-backline-gear-manifest-index.md:66 — \"~~Q-02~~ ... **RESOLVED — date-scoped ghosts, owned by nobody on the tour.** [18.09.01] D-05\"  //  18.09-backline-gear-manifest/18.09.01-gear-manifest.md:91 D-05 — \"Rentals are **date-scoped manifest entries**, not registry references\"",
+      "forcedInvention": "Nothing is forced if the implementer reads the index first, but the two CX files instruct a reader that the manifest's item model is an open modelling gap, which invites re-deciding a ratified decision (D-05) or building the 'fake ownership row' D-05 exists to forbid."
+    },
+    {
+      "findingId": "18-show-production-touring#008",
+      "unit": "18.09-backline-gear-manifest",
+      "severity": "warning",
+      "dimension": 7,
+      "claim": "18.09-cx CX-03 declares the provisional-loss timing question 'genuinely unresolved' with no owner and no deferral target, while §2 of the same cross-cut already asserts the opposite answer (the manifest updates on confirmation). The consequence is a named product failure in both directions.",
+      "evidence": "18.09-backline-gear-manifest/18.09-backline-gear-manifest-cx.md:74 (CX-03 §5) — \"5. **State transition conflict**: If the loss is provisional (might turn up tomorrow), does the manifest change now or on confirmation? Changing too early creates phantom shortfalls; too late means arriving in Leeds without a bass rig and no time to hire one. Genuinely unresolved.\" (no owner, no deferral target, no corresponding Open Questions row anywhere in the unit)  //  :73 (CX-03 §2) — \"**Trigger chain**: Loss confirmed → manifest updated for remaining dates → diffs re-run → new shortfalls → sourcing.\"  //  18.09-backline-gear-manifest/18.09.03-load-out-loss-damage.md:45 — \"| Item found later | Losses are provisional until confirmed; closing the log is normal |\"",
+      "forcedInvention": "When an unconfirmed loss mutates the tour manifest for remaining dates, and therefore whether the venue-capability diff for the next city reports a shortfall the same night or only after a human confirms the loss. Neither the sub-domain index nor 18.09.03 tracks this as an open question."
+    },
+    {
+      "findingId": "18-show-production-touring#009",
+      "unit": "18.11-tour-container-routing",
+      "severity": "warning",
+      "dimension": 7,
+      "claim": "18.11-cx names an unsolved permission problem — whether the Producer may see the contents of a 17 radius clause the feasibility check consumes — with no owner and no deferral target, and 18.11.02's own edge case already renders the clause's full parameters to that same Producer.",
+      "evidence": "18.11-tour-container-routing/18.11-tour-container-routing-cx.md:34 (CX-01 §3) — \"The check reads contract terms from 17 (radius clauses) that the Producer may not be entitled to see in full. It may need to report \\\"this date violates a contract term\\\" without exposing the contract — a real scoping problem, since the TM is often not the party to the agent's agreement.\"  //  :84 Notes — \"CX-01's synthesis question 3 (reading 17's contract terms without exposing them) is a real permission problem this pass has not solved.\"  //  18.11-tour-container-routing/18.11.02-routing-feasibility.md:47 — \"| Radius clause forbids a date | A contract term (17) makes a geographically fine date illegal | \\\"Radius clause: no show within 100 mi of [city] before 12 Apr\\\" |\"  //  18.11-tour-container-routing/18.11-tour-container-routing-index.md:69-71 — the unit's Open Questions cover tour-object ownership (Q-01) and two resolved rows; none covers term disclosure.",
+      "forcedInvention": "Whether an infeasibility verdict discloses the radius clause's distance, window and carve-outs to a TM who is not party to the agent's agreement, or reports only 'a contract term blocks this date'. The two files specify opposite disclosure levels and no tracked question owns the choice."
+    },
+    {
+      "findingId": "18-show-production-touring#010",
+      "unit": "18.03-show-advancing",
+      "severity": "warning",
+      "dimension": 3,
+      "claim": "18.03-show-advancing-cx CX-04 §3 presents the venue-item-blocks-freeze question as unresolved and points at 18.03.01 Q-02, which is struck through and resolved by D-06/D-07. The parent CX therefore instructs a reader that a ratified permission rule is still open.",
+      "evidence": "18.03-show-advancing/18.03-show-advancing-cx.md:98 (CX-04 §3) — \"3. **Permission intersection**: Can a venue-side open item block an artist's freeze? Unresolved — 18.03.01 Q-02.\"  //  18.03-show-advancing/18.03.01-advance-checklist.md:209 — \"| ~~Q-02~~ | ~~What is a \\\"hard-outstanding\\\" item vs a soft one — who classifies, and can a venue's item block the artist's freeze?~~ | — | ✅ **RESOLVED** — see **D-06** ... and **D-07** (a hard venue-side item blocks a *clean* freeze, not the freeze — every freeze stays overridable per 18.03.05 D-03) |\"",
+      "forcedInvention": "None strictly forced — the child file carries the answer — but the CX's stale 'Unresolved' marker on a permission rule that gates the domain's central state transition is exactly the kind of statement a downstream spec writer resolves by re-deciding rather than by reading D-07."
+    },
+    {
+      "findingId": "18-show-production-touring#011",
+      "unit": "18.06-setlist-show-files",
+      "severity": "warning",
+      "dimension": 7,
+      "claim": "18.06.03 carries a `[PENDING — /ideate-discover Step 5 deepening]` marker with no owner, deferring to a pipeline stage that has completed, on a question its own Q-03 has since resolved. The same dead deferral target appears again at 18.08.03:47.",
+      "evidence": "18.06-setlist-show-files/18.06.03-show-file-custody.md:47 — \"| Uncleared sample in a backing track | Rights exposure travels with the file — links to 09 | `[PENDING — /ideate-discover Step 5 deepening]` |\"  //  :95 Q-03 — \"✅ **RESOLVED** — warn, never gate. 09 owns the status and scopes its hard block to **release only** ... Performing to a stem is not a release, so the show file carries 09's visible flag (DT-05) and nothing is blocked.\"  //  18.08-crew-credentials/18.08.03-local-crew-hire.md:47 — \"| Union/collective agreement rules apply | Real in many territories, with rates and break rules the platform doesn't know | `[PENDING — /ideate-discover Step 5 deepening]` |\"",
+      "forcedInvention": "Whether an uncleared-sample flag blocks or merely annotates a show-file export. The edge-case row's PENDING marker (no owner, dead stage) and Q-03's ratified 'warn, never gate' answer point at different behaviours for the same cell."
+    },
+    {
+      "findingId": "18-show-production-touring#012",
+      "unit": "18-show-production-touring (domain root: index, cx, 18.01, 18.02, 18.10, 18.15-18.20)",
+      "severity": "warning",
+      "dimension": 7,
+      "claim": "18.17 Q-01 — the question that decides whether the whole feature exists — is deferred to 'MoSCoW', a stage that ran on 2026-07-16 and explicitly did not answer it; the ledger row instead cites the same open question as its reason for the tier. The question now has no future stage that will take it.",
+      "evidence": "18.17-weather-contingency.md:89 — \"| Q-01 | Are outdoor/festival productions in scope at all, or is the target the indoor club/theatre circuit? This decides whether this feature exists. | User | MoSCoW |\"  //  .memory/wiki/specs/ideation/moscow-ledger.md:3 — \"Generated from the `/ideate-discover` breadth pass, 2026-07-16.\"  //  moscow-ledger.md:775 — \"| 18.17 | Weather Monitoring & Contingency | ... Genuinely important ... and genuinely not the wedge. Serves outdoor/festival productions, which may not be in scope at all (Q-01) — that decides whether this featu…\"  //  Contrast the sibling pattern at 18.20-green-touring-carbon.md:91 — \"A viability call that decides whether the feature exists at all (it currently sits `wont` in the MoSCoW ledger). | User | `/create-prd` — **owner decision**\"",
+      "forcedInvention": "Whether outdoor/temporary-structure productions are in v1 scope. Every other existence-deciding question in this domain routes to `/create-prd` as an owner decision; this one routes to a completed stage that consumed the question rather than answering it, so no downstream stage owns it."
+    }
+  ]
+}

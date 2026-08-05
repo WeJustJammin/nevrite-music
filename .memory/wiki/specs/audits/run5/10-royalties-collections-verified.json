@@ -1,0 +1,51 @@
+{
+  "domain": "10-royalties-collections",
+  "verifiedAt": "2026-07-30",
+  "inputCount": 6,
+  "upheldCount": 1,
+  "refutedCount": 5,
+  "verdicts": [
+    {
+      "findingId": "10-royalties-collections#001",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "no-real-divergence",
+      "reason": "Quotes verified verbatim (10.02.01-statement-source-ingestion.md:258 Overdue row; :112 modal-cause row; :279 DT-09; :296 Cross-Cut Note; :195 Edge Case). The inference fails on three counts. (1) The claim 'provides no state for that modal cause' is false: 10.02.01-statement-source-ingestion.md:255 defines `Notified` — 'DKIM-signed arrival notice, **no file** … A nag to fetch the file — not a leak' — which is exactly the modal cause, made a first-class state by D-13 (:277 in the Decisions table: 'A source sitting `notified` is **a nag, not a leak**'). (2) The routing is not unconditional: the Overdue trigger at :258 is a fully computable three-part predicate ('Calendared cycle passed, nothing arrived, **and** the cross-user signal says the source distributed'), and the two adjacent states — `Cycle slipped` (:259) and `Undeterminable` (:260) — carve off cause (a) and the sub-quorum case. The States table is deterministic and gapless; nothing is left for an implementer to invent. (3) DT-09 at :279 does not require suppression — it names the residual (b)/(c) conflation as a known limit of the feature's own headline claim and says it 'should be stated rather than discovered', i.e. disclosed, and it supplies the only two discriminators that exist (the notification D-13, or the file). Where neither exists the platform is in Overdue by construction, and 10.02.01 D-04/DT-04 (:271 'permissive on entry, strict on inference'; 'a false negative — a source never registered — is money that can never be noticed missing, forever') sets the error budget in that direction explicitly. The Cross-Cut Note's 'feeding all three through' describes the naive design the States table already rejects (it feeds neither (a) nor a notified (c)). Two normative statements therefore both hold, and every competent implementer implements the States trigger because DT-09 tells them the alternative discriminator does not exist."
+    },
+    {
+      "findingId": "10-royalties-collections#002",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "Quotes verified (10.08-statement-disputes-audit-rights.md:29, :38, :62, :90, :93; 10.04.04-disputed-royalty-escrow.md:10). No contradiction: 'it stops' at :29 is scoped to the platform's power **against the counterparty** — the sentence completes 'It has no standing, no access, and no power', and the Edge Case at :45 restates it as 'here is the gap; we cannot compel them'. That says nothing about money the platform itself holds; the platform obviously cannot escrow a label's funds, so the only money in play was always the platform-computed disbursement. The 'unstated' question is in fact answered in full at 10.04.04: Behavior :25 — 'Escrow is triggered by a **contested claim on a specific amount** … scoped as tightly as the dispute: if one work's split is disputed, that work's royalties hold and everything else in the payee's run pays normally'; Happy Path :37 — 'Affected amounts — and only those — are held at the next payout run'; D-03 :89 — 'Scope is **per-amount**, never per-relationship'; D-04 :90 and Happy Path :38 — 'Held money is **named on every affected party's statement**', which directly answers the co-payee-freeze question in the affirmative for the disputed amount and the negative for everything else. That rule is stated per-amount and is indifferent to whether the underlying line came from a WeJammin statement or an ingested one, which is why 10.08 D-02's our-flow/their-flow split (:90) does not need to reach it: D-02 divides the *argument*, not the *hold*."
+    },
+    {
+      "findingId": "10-royalties-collections#003",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "Quotes verified (10.04.03-thresholds-holds-unpayable-balances.md:20 Role Lens, :81 DT-03, :99 D-04, :106-108 open questions; 10.04-disbursement-payee-statements-index.md:35 Role Matrix). Ownership is not contested — it is stated identically in three places, and the third one names precisely the consequence the finding says is unowned: 10.04-disbursement-payee-statements-cx.md:63 — '**Permission intersection**: The sharp one — a Producer's threshold policy determines whether a Musician gets paid this quarter or next', with :57 repeating 'Producer: threshold config'. Against three concordant normative statements, D-04's clause is hedged on its face and self-labels as aspiration rather than decision: the bolded, decided content at :99 is 'The **threshold is visible and justified**', and the trailing 'ideally the payee's to set' is glossed at :81 as 'the last of which nobody in the industry does'. No precedence rule is needed because only one role is granted Config, so no two-owner conflict can arise, and the default numeric value is a calibration parameter of a [SURFACE]-status feature (:5), not a contradiction. Every competent implementer builds one payer/administrator-scoped, visible, justified threshold."
+    },
+    {
+      "findingId": "10-royalties-collections#004",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "answered-elsewhere",
+      "reason": "Quotes verified (10.09-distribution-calendar-money-in-flight.md:52, :66, :95 D-05, :101 Q-01). But 10.09 does not own this clock, and its deepened sibling designs the tolerance construct out rather than parameterising it. 10.09 D-05's own Cross-Cut Note at :81 flags the overlap ('the same principle from the source side; the two expectations must not disagree'), and 10.02.01-statement-source-ingestion.md:298 resolves it: '10.09 owns the published cycle dates; the registry **reads them and stores no calendar** (D-09). The surface pass's *\"the two expectations must not disagree\"* (10.09 Cross-Cut Notes) is designed out rather than reconciled — two copies of one expectation is the second-source-of-truth failure the platform exists to prevent.' The single surviving overdue determination is 10.02.01's, and its mechanism is not a tolerance constant at all: D-14 (10.02.01:266) decides overdue 'with a **cross-user distribution signal** about the counterparty', with `Cycle slipped` and `Undeterminable` states (:259-260) doing the late-vs-leaked discrimination that 10.09 D-05 asked for. The remaining numbers are explicitly tracked as calibration, not principle, at 10.02.01 Q-06 (:286) — 'D-14's cross-user signal needs a quorum and a threshold … The principle is not at issue … Only the numbers are … ship the rule, instrument the outcomes, calibrate on data', Owner: Agent, deferred to /create-prd-architecture. 10.09 is [PARTIAL] (:5) and its Overdue row is the pre-deepening surface form of a mechanism now owned and specified elsewhere."
+    },
+    {
+      "findingId": "10-royalties-collections#005",
+      "upheld": false,
+      "finalSeverity": "refuted",
+      "refutationReason": "downstream-detail",
+      "reason": "Quotes verified (10.10-royalty-forecasting.md:36, :38, :47, :59, :88 D-03, :97-99 open questions). What the three missing numbers are is statistical-model calibration, not product behaviour: a sufficiency threshold, a confidence level and an interval-width rule are outputs of choosing and fitting a model, which is /create-prd-architecture and implementation work, and they cannot be fixed at ideation because there is no corpus — the same shape the domain elsewhere routes explicitly out of ideation (10.02.01-statement-source-ingestion.md:286 Q-06: 'ship the rule, instrument the outcomes, calibrate on data'). The product behaviour they would decide is already locked and unambiguous: D-02 (:87) 'A range, never a point figure'; D-03 (:88) silence on thin data; D-04 (:89) gated on registration state; and — the part the finding omits — D-05 (:90) '**Calibration is public** — the model reports its own error', with the `Calibrated` state (:63) making the actual confidence an observable output rather than a spec constant. Two implementers pick different numbers and ship the same product with its error published. The unit is [SURFACE] (:5) and ranked **COULD** in the ratified moscow-ledger per Q-01 (:97), so surface depth is the expected state, not a defect."
+    },
+    {
+      "findingId": "10-royalties-collections#006",
+      "upheld": true,
+      "finalSeverity": "warning",
+      "refutationReason": "not-refuted",
+      "reason": "Every element checks out against the files. royalties-collections-index.md:37 lists 10.06 as `[SURFACE]` while 10.06-live-setlist-pro-reporting.md:5 declares '[PARTIAL]'; :40 lists 10.09 as `[SURFACE]` while 10.09-distribution-calendar-money-in-flight.md:5 declares '[PARTIAL]'. The classification note at :28 ('All `[SURFACE]`.') sits directly above a table carrying `[BREADTH]` (:32, :34, :35, :36) and `[DEEP]` (:33). Deep Think counts are pre-deepening: :33 says 10.02 has '15 hypotheses (5 children)' against 17+13+13+10+15 = 68 in 10.02-statement-ingestion-normalization-index.md:20-24 and the child files themselves; :34 says 10.03 has 12 against 13+13+3+3 = 32 counted in the children; :36 says 10.05 has 9 against 12+3+3 = 18. The cause is visible and confirms staleness rather than excusing it: the index's own header is 'Last updated: 2026-07-16' while 10.06 and 10.09 were rewritten 2026-07-17, and ideation-index.md D-24 records that Step 5 took all 285 Should features from [SURFACE] to [PARTIAL] and claims '256 status cells' were reconciled deterministically — these cells were missed. No precedence rule anywhere states whether the key file or the child wins, and no open question tracks the drift. Held at warning, not blocking: this misleads a downstream stage about how much depth to expect and which nodes still need deepening, but it forces no invention of product behaviour."
+    }
+  ]
+}

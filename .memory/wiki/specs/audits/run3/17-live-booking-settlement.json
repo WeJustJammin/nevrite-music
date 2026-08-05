@@ -1,0 +1,310 @@
+{
+  "domain": "17-live-booking-settlement",
+  "root": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/17-live-booking-settlement",
+  "unitsAudited": 9,
+  "filesRead": 55,
+  "expected": { "units": 9, "files": 55 },
+  "coverageNote": "Enumeration matches the expected 9 units / 55 files exactly. Units: the domain root directory (index + cx + 6 flat feature files) and the 8 sub-domain directories 17.01, 17.02, 17.03, 17.05, 17.08, 17.09, 17.10, 17.11 (each index + cx + leaves). Leaf count verified against the domain index's claim of '14 children: 8 sub-domains + 6 features, containing 37 leaf feature files' — 31 sub-domain leaves + 6 flat features = 37. Confirmed.",
+  "scoringModel": {
+    "applicableDimensions": "Per unit: 1 Problem Clarity, 3 Feature Completeness, 5 Success Measurability, 7 Open Question Resolution, 8 Structural Compliance. Dimension 6 Competitive Positioning additionally applies to the domain root unit, whose index names competitors and states differentiation/moat.",
+    "naDimensions": "2 Persona Specificity and 4 Constraint Explicitness are N/A for every unit in this domain: personas are owned by meta/personas.md and these files are explicitly forbidden from redefining them ('Persona names come from meta/personas.md — never redefined here', 17.01.01 line 38); constraint axes (budget, timeline, team, compliance, performance) are owned by meta/constraints.md. Dimension 6 is N/A for the 8 sub-domain units, which carry no competitive framing and are not the place for it."
+  },
+  "units": [
+    {
+      "unit": "17-live-booking-settlement (domain root: live-booking-settlement-index.md, live-booking-settlement-cx.md, 17.04, 17.06, 17.07, 17.12, 17.13, 17.14)",
+      "applicableCheckpoints": 6,
+      "naDimensions": [2, 4],
+      "points": 2.0,
+      "ambiguityPct": 33.3,
+      "scores": {
+        "1_problem_clarity": "PASS — index Overview names the specific actor and pain ('Settlement itself happens in a back office at 1am with a calculator and information asymmetry running one direction') and is falsifiable.",
+        "3_feature_completeness": "FAIL — F4 (17.14 states a superseded announce precondition as normative), F10 (17.12 omits the fact vocabulary three other files impose on it).",
+        "5_success_measurability": "PARTIAL — F11 (17.13's 'Meaningful' state gated on an unnamed threshold with an undefined confidence).",
+        "6_competitive_positioning": "PASS — four named competitors (Prism.fm, Opendate, Gigwell, Muzeek) at index line 16, differentiation stated as a specific capability gap (verified draw record, derived payment-reliability record, proof the gig happened, index lines 36-41), moat is a defensible mechanism ('no competitor can retroactively manufacture').",
+        "7_open_question_resolution": "PARTIAL — Q-01..Q-10 all carry owner + deferral target or a cited resolution, but F12 (17.07's inline markers point at questions its own table records as RESOLVED).",
+        "8_structural_compliance": "PASS — index + cx present, Role Matrix populated for all 14 children, all 6 flat features carry a Role Lens, structure map matches the folder tree (14 children / 37 leaves verified on disk)."
+      }
+    },
+    {
+      "unit": "17.01-availability-holds-confirmation",
+      "applicableCheckpoints": 5,
+      "naDimensions": [2, 4, 6],
+      "points": 2.0,
+      "ambiguityPct": 40.0,
+      "scores": {
+        "1_problem_clarity": "PASS — 'The pre-deal state machine of a date', with the specific Operator pain quoted from meta/personas.md.",
+        "3_feature_completeness": "FAIL — F1 (radius-at-confirm contradiction across three leaves), F13 (C-05's evaluation grain).",
+        "5_success_measurability": "PASS — exceptional numeric specificity: 24h <= W <= 14d window bounds, 48h platform default, business-day rollforward to 12:00, 5-minute unadvertised grace, 60-second undo, >=1 delivery-confirmed warning >=12h prior, max 2x24h deferrals, 30-day stale threshold, 7-day request lapse (configurable 1-30, warn day 5), 3-in-30-days flapping limit, 42-day fill boundary, <=60s auto-lapse, 28-day interim announce-runway warning. 17.01.02 Q-07 explicitly flags the three agent-chosen constants for owner ratification rather than passing them off as industry fact.",
+        "7_open_question_resolution": "PARTIAL — every Open Questions row carries owner + deferral target, and resolved rows carry citations; but the sub-domain CX's synthesis blocks defer without an owner (CX-04 '[PENDING — /ideate-discover Step 5 deepening]', CX-05 'Medium confidence — deferred to Step 5 ... has not been validated with the owner').",
+        "8_structural_compliance": "PARTIAL — F6 (duplicate D-14 decision ID in 17.01.02 makes every 'D-14' citation ambiguous)."
+      }
+    },
+    {
+      "unit": "17.02-offers-negotiation",
+      "applicableCheckpoints": 5,
+      "naDimensions": [2, 4, 6],
+      "points": 2.0,
+      "ambiguityPct": 40.0,
+      "scores": {
+        "1_problem_clarity": "PASS — 'The vehicle that carries a deal from \"we like this date\" to \"we have agreed terms\"', with the canonical failure named (band approves v2, agent accepts v4).",
+        "3_feature_completeness": "FAIL — F3 (approval-invalidation rule stated two incompatible ways between 17.02.02 and the file that owns the approval chain).",
+        "5_success_measurability": "PASS — 5-minute idle editor-claim release, 10-second autosave, >=3 verified draws within 24 months, 2,000-character protest bound, six-field short form, explicit version-hash binding.",
+        "7_open_question_resolution": "PARTIAL — the sub-domain CX's CX-02 defers to 'Q-01 below' and the file has no Open Questions section, so the pointer resolves to nothing.",
+        "8_structural_compliance": "PARTIAL — F7 (two load-bearing decisions cited as D-07/D-08 are absent from 17.02.03's Decisions table) and F8 (duplicate Q-03 row IDs in 17.02.03)."
+      }
+    },
+    {
+      "unit": "17.03-deal-structures-economics",
+      "applicableCheckpoints": 5,
+      "naDimensions": [2, 4, 6],
+      "points": 0.5,
+      "ambiguityPct": 10.0,
+      "scores": {
+        "1_problem_clarity": "PASS — 'the deal structure IS the settlement formula', stated as an evaluable expression awaiting a count.",
+        "3_feature_completeness": "PASS — five required expression parts, seven enumerated deal types with payout functions, ten qualifying terms with value sets and default sources, a concrete ten-step deduction ladder, ~30 edge cases including the blocking-validation set (gross basis unset, cap mode unstated, promoter profit with no nut, splits >100%, run-scoped term on a single show).",
+        "5_success_measurability": "PARTIAL — F9 (the economic-content detector is specified twice with different match rules).",
+        "7_open_question_resolution": "PASS — Q-01..Q-06 each carry owner + deferral target; Q-02 and Q-04 carry cited resolutions; 17.03.03's per-show-finality conflict is escalated with [OWNER] rather than assumed.",
+        "8_structural_compliance": "PASS — index + cx present, Role Matrix populated with an explanatory note for the Read-only-for-both-principals pattern, all three leaves carry a Role Lens."
+      }
+    },
+    {
+      "unit": "17.05-deposits-balances-cancellation",
+      "applicableCheckpoints": 5,
+      "naDimensions": [2, 4, 6],
+      "points": 1.5,
+      "ambiguityPct": 30.0,
+      "scores": {
+        "1_problem_clarity": "PASS — 'The money that moves before the show ... where a confirmed date stops being a promise and becomes a commitment.'",
+        "3_feature_completeness": "FAIL — F5 (the cancellation tier ladder is required as a deal term but its shape is defined nowhere and it is absent from the enumerated deal-term vocabulary).",
+        "5_success_measurability": "PARTIAL — the tier ladder's only characterisation is untestable prose ('cancel six months out and it costs little; cancel on the day and the deposit is gone'); no tier boundary or forfeit basis is stated anywhere in the domain.",
+        "7_open_question_resolution": "PASS — Q-01 (escrow vs direct) carries owner + /create-prd-stack; Q-02 and Q-03 carry cited resolutions; 17.05.04 Q-01/Q-02 carry owner + target.",
+        "8_structural_compliance": "PASS — index + cx present, Role Matrix populated with an explicit direction note and the venue-hire inversion named, all four leaves carry a Role Lens."
+      }
+    },
+    {
+      "unit": "17.08-agency-representation-commission",
+      "applicableCheckpoints": 5,
+      "naDimensions": [2, 4, 6],
+      "points": 0.0,
+      "ambiguityPct": 0.0,
+      "scores": {
+        "1_problem_clarity": "PASS — 'the formula that turns a live settlement into the agency's money', with the sunset problem named as the real subject.",
+        "3_feature_completeness": "PASS — rate/basis/scope/sunset parameterised; the sunset shapes enumerated (all-dates-booked-while-live, fixed window of N months, sliding scale) with membership tracked as an owner call; edge cases cover mid-relationship term change, termination with dates outstanding, cancelled booked date, cross-version runs, three territorial agents, live-vs-recording agent split, undefined 'net', free-text scope, manager stacking.",
+        "5_success_measurability": "PASS — basis must reference a named settlement line rather than the word 'net' (D-03); commission is edge-level with rate as a single number; version pinning per booking.",
+        "7_open_question_resolution": "PASS — Q-01..Q-04 at both index and leaf level all carry [OWNER] or Agent plus a deferral target; Q-03 carries a cited resolution naming domain 23.",
+        "8_structural_compliance": "PASS — index + cx present, Role Matrix populated with the honest persona-strain note, all three leaves carry a Role Lens."
+      }
+    },
+    {
+      "unit": "17.09-settlement-reconciliation",
+      "applicableCheckpoints": 5,
+      "naDimensions": [2, 4, 6],
+      "points": 1.5,
+      "ambiguityPct": 30.0,
+      "scores": {
+        "1_problem_clarity": "PASS — 'the work that currently happens in a back office at 1am with a calculator, with information asymmetry running one direction'.",
+        "3_feature_completeness": "FAIL — F2 (the undisputed-floor payment path contradicts the disbursement rule stated by 17.10.02 and the domain CX).",
+        "5_success_measurability": "PASS — six-number count model, eight named arithmetic invariants, five-tier provenance ladder T0-T4, three-value provenance grade, >=5% of projected artist payable materiality (with Q-01 flagging it as an agent-chosen default needing ratification), 72-hour escalation offer, 14-day recommended amendment window, >=3 post-signature recomputations flag, 2,000-character protest bound.",
+        "7_open_question_resolution": "PARTIAL — F14 (17.09.06 defers a live question to '17.09.05 Q-01', which is now a different question).",
+        "8_structural_compliance": "PASS — index + cx present, Role Matrix populated for all seven children with the no-write-access-to-the-trail note, all seven leaves carry a Role Lens."
+      }
+    },
+    {
+      "unit": "17.10-live-income-payout-tax",
+      "applicableCheckpoints": 5,
+      "naDimensions": [2, 4, 6],
+      "points": 0.5,
+      "ambiguityPct": 10.0,
+      "scores": {
+        "1_problem_clarity": "PASS — 'Getting the settled money to the people who earned it, minus what the state takes first', with the live-split-is-not-the-recording-split insight stated as the reason for domain ownership.",
+        "3_feature_completeness": "PARTIAL — F16 (17.10.02 has no state or path for the partial floor release that 17.09.05/17.09.06 require it to execute). Otherwise exceptional: three party kinds with absorb-a-bad-night semantics, a stated order of operations, exact-sum determinism with largest-remainder residue and a pinned tiebreak, required absence and loss rules with no platform default, never-renormalize, per-show pinning at settlement-final.",
+        "5_success_measurability": "PASS — rounding to the pool currency's minor unit, exact-sum invariant that blocks on any non-zero difference, largest-remainder allocation with a worked example (GBP 1,000 / 3 = 333.33 x 3 + 1p to a named party).",
+        "7_open_question_resolution": "PASS — Q-01..Q-06 across index and leaves all carry owner + deferral target; 17.10.03 Q-01/Q-03 carry cited resolutions; Q-02 (the flag/advise liability line) correctly holds the tension between D-01 and the applied-rate behaviour.",
+        "8_structural_compliance": "PASS — index + cx present, Role Matrix populated with the 17.10.03 role-inversion note, all three leaves carry a Role Lens."
+      }
+    },
+    {
+      "unit": "17.11-draw-history-market-intelligence",
+      "applicableCheckpoints": 5,
+      "naDimensions": [2, 4, 6],
+      "points": 0.5,
+      "ambiguityPct": 10.0,
+      "scores": {
+        "1_problem_clarity": "PASS — 'What settlement leaves behind ... the answer to the only question that actually decides a booking: how many will come?'",
+        "3_feature_completeness": "PASS — the confidentiality gate is the classification rationale; cold start, differencing, thin-market non-anonymity, reciprocity coercion, write-back prohibition and staleness are all covered as edge cases with decisions attached.",
+        "5_success_measurability": "PARTIAL — F15 ('never render a cell below N shows' leaves N unnamed while D-03 makes the refuse-to-render behaviour depend on it).",
+        "7_open_question_resolution": "PASS — Q-01..Q-03 at index and leaf level all carry [OWNER]/Agent plus a deferral target; resolved rows cite moscow-ledger.md and the resolving decision.",
+        "8_structural_compliance": "PASS — index + cx present, Role Matrix populated with the nobody-gets-Full note, all three leaves carry a Role Lens."
+      }
+    }
+  ],
+  "totals": {
+    "sumPoints": 10.5,
+    "sumApplicableCheckpoints": 46,
+    "ambiguityPct": 22.8,
+    "blocking": 5,
+    "warning": 11
+  },
+  "findings": [
+    {
+      "id": "F1",
+      "unit": "17.01-availability-holds-confirmation",
+      "severity": "blocking",
+      "dimension": 3,
+      "claim": "A radius-clause conflict at confirmation is specified as a hard block in two files and as never-a-hard-block in a third, with no marker on either side, so an implementer cannot tell whether a confirm-under-challenge with a radius conflict and no waiver on file is refused or permitted with a recorded override.",
+      "evidence": "17.01.04-confirmation-announce-gate.md:51 introduces the set as '**Confirmation preconditions** — all hard, evaluated at the moment of commit, not at the moment the button rendered'. Line 61: '| C-06 | No radius-clause breach against an existing confirmed booking, **unless a waiver from the constraining promoter is on file** ([17.06](../17.06-radius-clause-exclusivity.md)) | The obligation is breached the moment the second date is confirmed, not when it announces (DT-10). Radius waivers are routinely negotiated — the block must have a legitimate door | Blocked with the constraining contract named and a \"request waiver\" route |'. Line 277: '| D-13 | Radius-clause compliance is checked at **confirm**, not announce, with a waiver-on-file exception |'. Line 248: '- Touches **[17.06 Radius Clause & Exclusivity Tracking](../17.06-radius-clause-exclusivity.md)** — *hard permission check at confirm* (C-06, DT-10), including the waiver-on-file path. This edge did not exist before Step 5 and it is a blocking one.' Corroborated by 17.01.02-hold-ladder-priority.md:259 '| D-12 | Radius conflicts are **warned at hold time**, blocked at confirmation |' and :158 'A waiver (17.06) is required before this can confirm.' CONTRADICTED BY 17.01.03-challenge-release-expiry.md:228 '| D-15 | Radius (17.06) and routing (18) checks run before confirm-under-challenge — **warn + override, recorded**; never hard-block | DT-12. ... But radius clauses are waived routinely — hard-blocking would lose an artist a date over a conflict whose consent is obtainable, just not within 48h.' Same file :142 'On conflict: **warn + require explicit override with the conflicting show named**; the override is recorded. Not a hard block'. Same file :201 'conflicts warn-and-override with the override recorded, never hard-block.' 17.01.03:109 routes that same path through the blocking gate: 'Confirmation hands off to 17.01.04, which owns the atomic transition'. The domain CX reproduces both sides inside one section without noticing: live-booking-settlement-cx.md:31 'The radius check fires at **three moments** — publish (warn), hold (warn), confirm (hard block)' versus :371 'Confirm → check (radius conflicts warn-and-override with the override recorded; radius clauses are waived routinely, so a hard block would be wrong — [23]).'",
+      "forcedInvention": "Which of the two confirm-time behaviours governs, and whether confirm-under-challenge is a carve-out from the C-01..C-06 precondition set (no file states that it is).",
+      "failureScenario": "An agent holds 1st position under a 48h challenge, has a live radius clause on a confirmed date 40 miles away, and no waiver on file. Implementer A builds 17.01.04's C-06 and refuses the confirm, so the act loses the date to the timeout. Implementer B builds 17.01.03's D-15 and lets the confirm through on a recorded override, creating the double obligation C-06 exists to prevent. Both are faithful to the spec."
+    },
+    {
+      "id": "F2",
+      "unit": "17.09-settlement-reconciliation",
+      "severity": "blocking",
+      "dimension": 3,
+      "claim": "Two files in 17.09 require money to move on an unsigned, non-final settlement (the 'undisputed floor'), while the file that owns disbursement and the domain CX both state that nothing moves until both parties sign — an unmarked contradiction about when funds leave the platform.",
+      "evidence": "17.09.05-settlement-signoff-variance.md:67 '| **Refuse** | Not agreed | **Undisputed floor** moves; the contested delta is held (D-09) | No — settlement stays open |'. Same file :86 'That evaluation is the **undisputed floor** — the amount neither party contests — and it is payable immediately.' :318 '| D-09 | **Refusal blocks finality, not payment** — the undisputed floor is payable immediately | ... Symmetric — an Operator refusal pays the floor too.' :297 states the requirement on the downstream file as settled: 'Touches **17.10.02 Disbursement Execution** ... **trigger dependency**: final signoff is the disbursement trigger; a **refusal releases the undisputed floor only**'. 17.09.06-settlement-audit-trail-disputes.md:267 '| D-08 | A disputed line does **not** block the undisputed remainder — the sheet has a **payable floor** and a **contested ceiling** |'; :284 'Q-03 ~~**Does the payable floor disburse on one signature or two?**~~ **RESOLVED — the floor is payable without a second signature**'. CONTRADICTED BY 17.10-live-income-payout-tax/17.10.02-disbursement-execution.md:67 '| Blocked | Settlement unsigned | Nothing moves; a proposal is not a payment |', whose Behavior (:26) begins 'Disbursement executes the split (CX-01) against whatever survives withholding (CX-03)' only after ':41 1. Settlement signs off (17.09.05); the number is final.' That file's only partial-payment concept is per-recipient, not partial-of-pool: ':101 | D-02 | Partial disbursement is a normal state | One member without a payout method must not stop the other four being paid.' And live-booking-settlement-cx.md:23 'CX-06 ... Final signoff is the disbursement trigger; the settled pool is what the split divides ... Nothing moves until both parties sign — a proposal is not a payment', repeated verbatim at :179.",
+      "forcedInvention": "Whether a refusal releases funds at all; if it does, what the floor payment does about the split, withholding sequencing and commission (all of which 17.10 defines only for a final settled pool), and what disbursement state represents a released floor.",
+      "failureScenario": "An artist refuses signoff over an GBP 800 security line on a GBP 4,800 sheet. Implementer A follows 17.09.05 D-09 and pays GBP 4,000 that night through the split. Implementer B follows 17.10.02's 'Blocked — Settlement unsigned — Nothing moves' and pays nothing, which is precisely the 'artist who checks the number gets stranded' outcome D-09 was written to eliminate."
+    },
+    {
+      "id": "F3",
+      "unit": "17.02-offers-negotiation",
+      "severity": "blocking",
+      "dimension": 3,
+      "claim": "The rule for what a new offer version does to existing approvals is stated unconditionally (every counter invalidates every approval) in the file that owns the approval chain, and conditionally (approvals carry forward when the new version is not worse for the approver) in its sibling — with no marker on either side and no precedence rule.",
+      "evidence": "17.02.02-counteroffer-thread-versions.md:270 '| D-05 | **Materiality is computed directionally, never judged as \"trivial\"**. Approval carries forward iff the new version is not worse for the approver on any term; free text, attachments and undefined-polarity terms are always material | Resolves the Step-5 Q-01.' Same file :70 '**Approval carries forward to a new version if and only if the new version is not worse for the approving side on any term** (D-05). Otherwise every approval bound to the superseded version is invalidated', with a per-change materiality table at :78-86 including '| A typed economic term moves **in the approver's favour**, all else identical | **Non-material** — approvals carry forward |'. CONTRADICTED BY 17.02.03-offer-approval-chain.md:68 '| New counter arrives after partial approval | Approvals bound to superseded versions are invalidated; approvers re-notified naming the version (CX-02) | \"Your approval of v2 no longer applies — the deal is now v4\" |' and its state machine at :88 '| Invalidated | A newer version superseded the approved one | Approvers re-notified; chain restarts against the new hash |'. 17.02.03 contains no occurrence of 'material' anywhere. The sub-domain CX carries the pre-resolution model and a dangling pointer: 17.02-offers-negotiation-cx.md:67 'New version → invalidate approvals bound to prior versions → re-notify approvers. If the counter is trivial (a typo fix), full re-approval is punitive — but auto-judging triviality is how the v2/v4 failure sneaks back in. Unresolved (Q-01 below).' — that file has no Q-01 and no Open Questions section. That D-05 is the domain's ratified policy is confirmed elsewhere: 17.04-performance-contracts-deal-memos.md:115 'Q-03 ... **RESOLVED — no lighter rule and no triviality judgement; the chain re-runs unless the change is computed non-adverse.** 17.02-offers-negotiation/17.02.02-counteroffer-thread-versions.md **D-05**'.",
+      "forcedInvention": "Whether the approval chain implements unconditional invalidation or the directional carry-forward, and — if carry-forward — where the per-term polarity table lives, since 17.02.03 models neither.",
+      "failureScenario": "A promoter raises the guarantee from GBP 2,000 to GBP 2,500 with every other term identical after two of three band members have approved v2. Implementer A (from 17.02.03) invalidates both approvals and restarts the chain, and the offer expires against the 48h clock that CX-03 calls the normal path. Implementer B (from 17.02.02 D-05) carries both approvals forward and the deal closes. The two systems produce opposite commercial outcomes on the most common favourable counter there is."
+    },
+    {
+      "id": "F4",
+      "unit": "17-live-booking-settlement (domain root)",
+      "severity": "blocking",
+      "dimension": 3,
+      "claim": "17.14 states as normative behaviour an announce precondition ('supports locked') that 17.01.04 — the file that owns the announce gate — explicitly rejects and replaces with lineup honesty plus TBA, and 17.14's citation for it points at a question that is now about something else.",
+      "evidence": "17.14-bill-construction-support-slots.md:59 '| Bill has open slots at announce time | **Announce is blocked — supports-locked is a precondition**, so fans cannot buy a lineup that then changes | Announce action disabled with \"N support slot(s) still open\" (17.01.04 Q-01) |'. Same file States :74 '| Partial | Some slots filled | Outstanding slots; announce blocked if it is a precondition |' and :75 '| Locked | All slots filled and confirmed | Announce precondition satisfied |'; Cross-Cut Notes :89 'supports-locked is an announce precondition; announcing an unlocked bill sells fans a lineup that changes.' CONTRADICTED BY 17.01.04-confirmation-announce-gate.md:226 '| DT-05 | \"Supports locked\" is an announce precondition | The feature's own `[SURFACE]` draft asserted it | ❌ REJECTED as stated, and **refined into something better**. A domain expert would immediately object: \"+ special guests TBA\" is a completely standard announce and has been for decades. Blocking it would block the industry's normal behaviour. The real precondition is **lineup honesty** (P-04): every act you *name* must be confirmed; anything else must say TBA.' Same file P-04 at :90 '| P-04 | **Lineup honesty**: every act *named* in the announce is confirmed, **or** the slot is explicitly marked TBA |'; edge case :173 '| Announce fires before supports are locked | **Not a failure if the announce said TBA** (P-04, DT-05).' 17.01.04 knows 17.14 was not updated — :251 'Touches **17.14 ...** — *precondition, reframed*: not \"supports locked\" but lineup honesty (P-04, DT-05)' — but 17.14 still carries the rejected rule with no marker. The citation '(17.01.04 Q-01)' is also stale: that file's Q-01 (:287) is now '**May the deposit precondition (P-07) be waivable at all?**'.",
+      "forcedInvention": "Whether a bill with an unfilled support slot can announce. An implementer building from 17.14 blocks it; one building from 17.01.04 permits it whenever the slot renders as TBA.",
+      "failureScenario": "A promoter wants to announce 'Headliner + special guests TBA' six weeks out with one opener slot unfilled — the standard industry announce 17.01.04 DT-05 exists to permit. The 17.14 implementation disables the announce action with 'N support slot(s) still open', the promoter announces on Instagram instead, and domains 19, 20 and 21 never receive the trigger — the exact 'absence at the point of truth' failure 17.01.04 DT-12 names."
+    },
+    {
+      "id": "F5",
+      "unit": "17.05-deposits-balances-cancellation",
+      "severity": "blocking",
+      "dimension": 3,
+      "claim": "The cancellation tier ladder is required to be an authored deal term and is the sole input to forfeit computation, but its shape is defined in no file, and it is absent from the enumerated deal-term vocabulary that the grammar declares to be closed — so an implementer must invent the tier structure and the forfeit basis.",
+      "evidence": "17.05.03-cancellation-tiers-forfeit.md:25 'Cancellation terms come from the contract (17.04) as a tiered ladder. Forfeit computation needs two facts, both owned by the schedule (17.05.02): **how much has been paid** and **how many days to the show**. It reads them; it does not keep its own copy.' Its D-01 requires a structured tier to be rendered: :100 '| D-01 | Forfeit is previewed before the cancellation is committed |' and Happy Path :42 'Forfeit is computed and shown to the cancelling party **before** they commit — with the number, the tier that produced it, and the contract clause it came from.' The only characterisation of the ladder anywhere is untestable prose, :10 'A tiered ladder priced by proximity to the date — cancel six months out and it costs little; cancel on the day and the deposit is gone and more may be owed'. The domain CX asserts it is a deal-authored term: live-booking-settlement-cx.md:131 'deposit due-dates, balance timing and the cancellation tier ladder are all authored in the deal and merely *operated* by 17.05.' But the deal grammar's enumerated qualifying-terms table (17.03-deal-structures-economics/17.03.01-deal-term-grammar-types.md:78-89) lists gross basis, expense cap, promoter profit, comp allowance, support cost, merch cut, deduction order, FX basis, curfew/overtime penalty and radius clause — and no cancellation-tier term; that file's D-02 (:267) forbids inventing terms outside the vocabulary ('Neither principal authors new deal types; the grammar is **platform vocabulary**'), and its :48 states 'A compiled deal expression has exactly five parts. Every one of them is required; there is no \"unspecified\" state that reaches an offer.' 17.02.01's T1 economic-term enumeration (17.02-offers-negotiation/17.02.01-offer-sheet-composition.md:49) likewise names 'deposit amount + due date' but no cancellation ladder. 17.04-performance-contracts-deal-memos.md:97 passes it through without shape: 'deposit and cancellation terms are contract terms; the machinery is 17.05's.' No Open Question in 17.05, 17.03 or 17.04 covers the ladder's shape.",
+      "forcedInvention": "The tier representation (are tiers (days-to-show, forfeit) pairs? how many? open or closed boundaries?), the forfeit basis (percentage of guarantee, of deposit, of paid-to-date, or an absolute amount), whether forfeit can exceed what has been paid ('more may be owed'), and whether the ladder is a structured T1 grammar term or free contract prose — which the grammar's closed-vocabulary rule says it cannot be.",
+      "failureScenario": "An artist cancels 21 days out having paid a 50% deposit. Implementer A models tiers as percentage-of-guarantee bands and computes a forfeit larger than the deposit held. Implementer B models them as percentage-of-deposit and can never produce the 'and more may be owed' case the Overview promises. Neither can render 'the tier that produced it and the contract clause it came from' as D-01 requires, because no schema for a tier exists."
+    },
+    {
+      "id": "F6",
+      "unit": "17.01-availability-holds-confirmation",
+      "severity": "warning",
+      "dimension": 8,
+      "claim": "17.01.02's Decisions table contains two different decisions both numbered D-14, making every 'D-14' citation in the file ambiguous.",
+      "evidence": "17.01.02-hold-ladder-priority.md:260 '| D-14 | **DQ-04.01:** a held date **stays available**, and only an **aggregate** hold state is disclosed — never counterparty identities | Confirms what D-13 and CX-01 already establish ...'. Line 262 '| D-14 | **Requests lapse; holds expire.** Different objects, different clocks. A lapse closes as `no-response`, never as `declined` | DT-14. Resolves old Q-03. ... Default 7 days, Operator-configurable 1–30, warned at day 5.' The rows are also out of sequence — D-13 appears between them at :261. Both IDs are cited elsewhere in the file: :148 '| Operator ghosts a hold request | **Requests lapse; holds expire — they are different clocks** (D-14)' resolves to the second, while the aggregate-disclosure rule has no unambiguous handle at all.",
+      "forcedInvention": "Which decision a downstream 'D-14' reference denotes, and what identifier the DQ-04.01 aggregate-disclosure ratification is carried under.",
+      "failureScenario": "A BE spec cites '17.01.02 D-14' for the request-lapse clock; a reviewer resolves it to the aggregate-disclosure decision and approves a spec that never implements the 7-day lapse, or vice versa. The ratified DQ-04.01 disclosure rule becomes uncitable and is silently dropped."
+    },
+    {
+      "id": "F7",
+      "unit": "17.02-offers-negotiation",
+      "severity": "warning",
+      "dimension": 8,
+      "claim": "17.02.03 repeatedly attributes two ratified resolutions to its own D-07 and D-08, but its Decisions table stops at D-06 — the two load-bearing decisions have no record.",
+      "evidence": "17.02.03-offer-approval-chain.md Decisions table runs D-01 (:112) to D-06 (:117) only. Yet the file cites D-07 and D-08 as its own seven times: :70 '| Offer expires mid-approval | **DQ-04.03 (D-08):** the offer expires. There is **no implicit grace window** ...'; :71 '| Band has never configured a rule | **DQ-04.02 (D-07):** this feature does not invent one.'; :72 '**Resolved (Q-01 / D-03, D-07, D-08).**'; :77 '**Resolved (Q-01 / D-03).** ... which is this file's \"revision pushes the fee above the delegated threshold\" row'; :123 'Source: this file's **D-07** (Edge Cases → \"Band has never configured a rule\") and `decisions.md` **DEC-046**'; :124 'Source: this file's **D-08** (Edge Cases → \"Offer expires mid-approval\")'. Two sibling files rely on the same phantom IDs: 17.02.04-offer-expiry-withdrawal.md:98 'Source: ... and `17.02.03-offer-approval-chain.md` **D-08**' and :58 '(D-01, D-02; `17.02.03` D-08)'.",
+      "forcedInvention": "Where the no-implicit-grace-window rule and the consume-domain-01's-governance-rule rule are recorded as decisions, given that both are cited as ratified (DQ-04.02, DQ-04.03, DEC-046) and neither appears in any Decisions table in the sub-domain.",
+      "failureScenario": "A downstream spec writer follows the pointer '17.02.03 D-08' to establish the expiry-grace rule, finds no such decision, and either re-litigates the grace window or implements an implicit grace — the exact stalling vector Q-02 was closed to prevent."
+    },
+    {
+      "id": "F8",
+      "unit": "17.02-offers-negotiation",
+      "severity": "warning",
+      "dimension": 8,
+      "claim": "17.02.03's Open Questions table contains two different questions both numbered Q-03, with different owners and different deferral targets.",
+      "evidence": "17.02.03-offer-approval-chain.md:125 '| Q-03 | **Per DQ-04.03 / D-08 — does an extension re-open the hold ladder clock?** ... `17.01.03` owns the ladder clock; this file must consume that answer rather than author a second one. | Agent | `/write-be-spec` |'. Line 126 '| Q-03 | Does a lineup change between approval and show invalidate the approval? ... | Agent | `/write-architecture-spec` (01 ↔ 17 approval-chain boundary) |'. The file's own Edge Cases row at :73 defers to one of them without disambiguating: '| Member approves, then the band's lineup changes before the show | `[PENDING — Q-03 → /write-architecture-spec]` |'.",
+      "forcedInvention": "Which Q-03 a cross-reference denotes, and which of two different pipeline stages owns each question.",
+      "failureScenario": "/write-be-spec picks up '17.02.03 Q-03' and answers the lineup-change question (an architecture-boundary matter) while the hold-ladder-clock question — the one actually routed to it — is never answered, so an extension mints a new offer version with undefined consequences for the hold position and any challenge in flight."
+    },
+    {
+      "id": "F9",
+      "unit": "17.03-deal-structures-economics",
+      "severity": "warning",
+      "dimension": 5,
+      "claim": "The same economic-content detector over free text is specified twice with materially different match rules — different keyword sets and, critically, a number-proximity requirement in one and none in the other — so the two specifications flag different text.",
+      "evidence": "17.02-offers-negotiation/17.02.01-offer-sheet-composition.md:68 defines it as '| Free text carries an **economic signal** with no structured counterpart — a currency symbol or ISO code adjacent to a number (`£500`, `EUR 750`); a number followed by `%`; an **economic noun/verb within 40 characters of a number** (`pay, plus, bonus, deduct, cut, fee, split, extra, additional, waive, cover, reimburse, per head, per ticket, comp`); a conditional near a number (`if`, `once`, `provided`, `subject to`, `in the event`) | **Warn and require acknowledgment** |', with a stated target at :70 'target ≥95% recall on T1 terms; precision is explicitly not optimised', ratified as D-06 at :235. 17.03-deal-structures-economics/17.03.01-deal-term-grammar-types.md:172 defines the same detector differently: 'Detector fires at send: any free text containing a currency symbol, a number adjacent to `%`, or **a money keyword** (`fee`, `bonus`, `pay`, `cut`, `deduct`, `plus`, `less`, `owed`, `split`, `guarantee`) **blocks the send**', ratified as D-09 at :274 with no recall target. The keyword sets differ in both directions (`less`, `owed`, `guarantee` appear only in 17.03.01; `extra`, `additional`, `waive`, `cover`, `reimburse`, `per head`, `per ticket`, `comp` only in 17.02.01), 17.03.01 has no proximity-to-a-number condition at all, and 17.03.01 omits the conditional-near-a-number clause entirely. The delegation note at 17.03.01:244 places the firing site but not the rule: 'The economic-content detector (D-09) fires **at that feature's send action**'.",
+      "forcedInvention": "Which keyword list and which proximity rule are authoritative, and whether the ≥95% recall target binds.",
+      "failureScenario": "An Operator writes 'the room will cover parking and the load-in crew'. Under 17.02.01's rule the word 'cover' only fires within 40 characters of a number, so the note passes; under 17.03.01's rule 'cover' is not a listed keyword either, so it also passes — but 'we owe you the balance less the backline' fires under 17.03.01 ('less', 'owed') and not under 17.02.01 (no number nearby). Two implementations produce different hard-stop behaviour on the same offer, and the recall target that justifies the whole over-flagging trade-off exists in only one of them."
+    },
+    {
+      "id": "F10",
+      "unit": "17-live-booking-settlement (domain root)",
+      "severity": "warning",
+      "dimension": 3,
+      "claim": "17.12 is required by three other files to carry a ladder-derived reliability fact vocabulary and a fault-free exclusion rule, and its own Behavior models neither — with no Open Question in 17.12 tracking the gap.",
+      "evidence": "17.12-counterparty-relationship-payment-reliability.md:32-35 enumerates the whole model as settlement- and payment-derived: '2. **Derived reliability signals** — computed from facts the platform holds: deposit paid on time (17.05.01), balance paid on the night (17.05.02), settlement contested or signed under protest (17.09.05), count disputed (17.09.02), cancellations and their tier (17.05.03), an accepted force majeure (which explicitly **does not** count — 17.05.04 D-03).' No ladder-derived fact appears anywhere in the file, and its Q-01..Q-03 cover contest-rate derivation, deposit sizing and private-vs-public — none of them this gap. The requirement is asserted three times elsewhere: 17.01-availability-holds-confirmation/17.01.02-hold-ladder-priority.md:236 'This feature emits five derived facts 17.12 does not yet know about: hold→confirm conversion rate; request lapse rate per Operator (`no-response`, distinct from `declined`); repudiation rate ...; flapping incidents; and slots that expired contended. ... **This is the sub-domain's most under-modelled edge.**' live-booking-settlement-cx.md:35 'CX-18 ... **The most under-modelled edge in the domain.** The ladder emits reliability facts 17.12 does not yet know exist' and :482 '**Hard constraint on 17.12**: the fact vocabulary must include fault-free reason codes (`timed-out-without-confirmed-delivery`, `voided-by-withdrawal`) so a merely unlucky counterparty is not scored as a bad one.' 17.01.04-confirmation-announce-gate.md:250 'Touches **17.12** — *new derived fact*: confirm-then-revert rate (DT-11). This is the only disincentive against defensive confirmation and it does not exist in 17.12 today. **This is a new requirement on 17.12, surfaced here.**' 17.01.03-challenge-release-expiry.md:203 '**Hard constraint on 17.12**: `timed-out-without-confirmed-delivery`, `voided-by-withdrawal`, `voided-by-insertion` and `expired-without-confirmed-warning` are **excluded from the reliability signal** (D-12, DT-15) ... collapsing these codes into one \"lost the date\" outcome is the single most likely downstream error in this feature.'",
+      "forcedInvention": "Whether 17.12's fact vocabulary includes the six ladder-derived facts and the four fault-free exclusion codes, since the file that owns aggregation lists none of them and the upstream files state the requirement as unmet rather than as an open question.",
+      "failureScenario": "An implementer specs 17.12 from 17.12 and builds a reliability record with no confirm-then-revert rate — removing the only disincentive against defensive confirmation under the 48h challenge clock — and with no fault-free codes, so a counterparty the platform failed to reach is scored as having gone silent, which 17.01.03 DT-15 names as 'both unjust and thesis-violating'."
+    },
+    {
+      "id": "F11",
+      "unit": "17-live-booking-settlement (domain root)",
+      "severity": "warning",
+      "dimension": 5,
+      "claim": "17.13's state machine gates a state on an unnamed threshold and reports an undefined 'confidence', with no tracked question covering either.",
+      "evidence": "17.13-fan-demand-signals.md:66 '| Meaningful | Signals above a threshold in a market | Aggregate count with its confidence |', preceded at :65 by '| Accumulating | Signals arriving | Demand map with low confidence |'. Neither the threshold value, the unit it is measured in (raw requests? requests per capita? per market population?), nor the definition or computation of 'confidence' appears anywhere in the file. The file's Open Questions (:102-104) cover whether a Fan touchpoint is wanted at all (Q-01), brigading (Q-02) and request-to-attendance conversion (Q-03) — none of them the threshold. By contrast the corpus routinely flags exactly this class of number for ratification, e.g. 17.01.02:277 'Q-07 **[OWNER]** **Three platform-default numbers are set here on reasoning, not on observed industry practice, and want owner ratification**'.",
+      "forcedInvention": "The threshold at which a market becomes 'Meaningful', its unit, and what 'confidence' is computed from — the boundary between the two rendered states.",
+      "failureScenario": "Implementer A shows the demand map from the first request with a low-confidence badge; Implementer B suppresses it until 500 requests in a market. The artist in the first product pitches a room on 12 clicks — precisely the 'artist who books on demand and does not sell has lost real money on a click' harm the domain CX names at CX-16."
+    },
+    {
+      "id": "F12",
+      "unit": "17-live-booking-settlement (domain root)",
+      "severity": "warning",
+      "dimension": 7,
+      "claim": "17.07 carries inline PENDING markers asserting that two matters are undecided, and points them at Q-01 and Q-03 — both of which its own Open Questions table records as RESOLVED.",
+      "evidence": "17.07-booking-enquiry-inbox-rfq.md:70 '| Operator ignores an enquiry | The industry's cheapest way to say no without saying no (17.01.02 Q-03) | `[PENDING — Step 5 Must-depth / User Q-01]` — whether enquiries expire or auto-decline is a product decision, undecided |' and States :101 '| Stale | No action after a period | `[PENDING — User Q-01]` — expiry-vs-auto-decline is an undecided product choice |'. But :138 'Q-01 | ~~Do unanswered enquiries expire or auto-decline?~~ **RESOLVED — they lapse as `no-response`; they never auto-decline.**' Same pattern at :72 '| Bulk enquiries from one sender across every room in a city | Legitimate ... at small scale, spam at large | `[PENDING — User Q-03]` |' against :140 'Q-03 | ~~Is there a cap on bulk enquiries from one sender?~~ **RESOLVED — no cap; disclose multiplicity and conversion instead.**' The deferral targets are also stale — 'Step 5 Must-depth' names a stage the file's own Open Questions describe as completed.",
+      "forcedInvention": "Whether the enquiry lifecycle implements the lapse-as-`no-response` behaviour and the no-cap-with-disclosure behaviour, or leaves both unbuilt as the Edge Cases and States tables instruct.",
+      "failureScenario": "A spec writer reads the States table, sees the Stale state marked as an undecided product choice, and ships an enquiry inbox with no lapse clock at all — so an ignored enquiry sits open forever, reinstating the exact silence D-03 ('Auto-decline gives a real reason, never silence') exists to end."
+    },
+    {
+      "id": "F13",
+      "unit": "17.01-availability-holds-confirmation",
+      "severity": "warning",
+      "dimension": 3,
+      "claim": "The canonical double-booking precondition C-05 is stated at date grain in its own row and at slot grain in the same file's resolution note, and no file defines how slots compare across two different venues — which is the only case C-05 exists for.",
+      "evidence": "17.01.04-confirmation-announce-gate.md:60 '| C-05 | No existing `Confirmed` or `Announced` booking for the **same artist entity on the same venue-local date** | The canonical double-booking. Detection is artist-scoped, not room-scoped (D-04) — each room's calendar looks clean in isolation | **Hard block**, naming the conflicting date |'. Same file :290 'Q-04 | ~~**Does a hold attach to a room-date or a show-slot?**~~ **RESOLVED — a bookable slot, defaulting to one slot per room-date. C-05's same-date hard block and D-12's cross-room void prompt must therefore evaluate per slot, so a legitimate matinee + evening double-header and a two-stage room are no longer hard-blocked.**' But the slot is defined room-locally: 17.01.02-hold-ladder-priority.md:63 '| **Slot** | A specific bookable slot, resolved from the Operator's room model (domain 16) and its billing positions (17.14) |' and :252 '| D-05 | **The ladder's unit is a bookable slot, not a room-date.** Default: one room-date = one slot |'; 17.01.01-availability-calendar-avails.md:281 '| D-03 | ... matinee + evening = two intervals; two stages = two rooms (16.01.02) |'. Nothing states how a slot at venue X is compared with a slot at venue Y for the cross-room case the row is written for, and the edge case at 17.01.04:181 still treats the question as live: '| The other room's hold is for a different slot the same day (matinee vs evening) | ... **unresolved** (sub-domain Q-01) ... Until Q-01 resolves, the artist decides rather than the system |'.",
+      "forcedInvention": "How C-05 evaluates 'same slot' across two different venues — by interval overlap, by a named slot type (matinee/evening), or by falling back to the date the resolution says is wrong.",
+      "failureScenario": "An act is confirmed for an in-store at 16:00 at venue X and an evening headline at 20:00 at venue Y on the same date. Implementer A evaluates C-05 at date grain and hard-blocks a legitimate double-header. Implementer B evaluates per slot, finds two room-local slots that are trivially not equal, and lets a genuine 20:00-versus-20:00 double-booking at two venues through — the failure C-05 is the domain's only defence against."
+    },
+    {
+      "id": "F14",
+      "unit": "17.09-settlement-reconciliation",
+      "severity": "warning",
+      "dimension": 7,
+      "claim": "17.09.06 defers a live behavioural question to '17.09.05 Q-01', which after renumbering is a different question — so the deferral resolves to nothing.",
+      "evidence": "17.09.06-settlement-audit-trail-disputes.md:249 'Touches **17.10.02 Disbursement Execution** ... — the **payable floor** (D-08) is what disburses while a line is contested; whether the floor may move on one signature defers to 17.09.05 Q-01.' 17.09.05-settlement-signoff-variance.md:332 'Q-01 | **Is 5% of projected artist payable the right materiality threshold** for gating the Operator's signature (D-05)?' — the original Q-01 (whether refusal blocks payment) was closed and absorbed into D-09, which 17.09.05:281 records: 'DT-09 | Whether refusal blocks payment is a genuine binary product trade-off | This file's own [SURFACE] draft raised it as Q-01 and deferred to the owner | ❌ REJECTED — **the binary is false**'.",
+      "forcedInvention": "Where the one-signature-floor-release question is actually owned, given that 17.09.06 Q-03 declares it resolved by citing a decision while its own Cross-Cut Notes still defer it to a question that no longer exists.",
+      "failureScenario": "A reviewer following the 17.09.06 pointer to settle whether the floor moves on one signature lands on a 5%-threshold calibration question, concludes the matter is open, and leaves the floor-release behaviour unspecified — compounding F2."
+    },
+    {
+      "id": "F15",
+      "unit": "17.11-draw-history-market-intelligence",
+      "severity": "warning",
+      "dimension": 5,
+      "claim": "17.11.02's refuse-to-render behaviour is gated on a minimum-shows threshold that is written as a symbol and never given a value, in the one place the file makes a hard behavioural commitment.",
+      "evidence": "17.11.02-market-comparables-benchmarks.md:30 'Aggregation thresholds (never render a cell below N shows, never attribute, never allow differencing) address *identifiability*.' The behaviour that depends on N is a decision: :94 '| D-03 | Below-corpus benchmarks refuse to render rather than degrade | A number from four shows will be believed and acted on; refusing is the honest behaviour (index Q-02).' The states depend on it too: :65 '| Unavailable | Corpus below threshold | Refuses to render — **the launch state** |' and :67 '| Suppressed | Cell below threshold or disclosure risk | Explicitly suppressed, not silently narrowed |'. What is routed out is the technique, not the number: :85 'Not-product: **statistical disclosure control** (k-anonymity, differencing defence). Architecture; routed to `/create-prd-security`.' None of Q-01 (consent policy), Q-02 (reciprocity) or Q-03 (relocation to domain 22) covers N.",
+      "forcedInvention": "The minimum sample size below which a comparable cell must refuse to render, and whether it is counted in shows, artists, rooms or promoters.",
+      "failureScenario": "The DT-02 hazard is quantitative — 'average guarantee, this genre, 400-cap rooms, Manchester is three promoters; an insider names them'. Implementer A sets the floor at 3 shows and ships exactly the identifiable cell DT-02 rejects; Implementer B sets it at 50 and the feature never renders. D-03's honest-refusal behaviour is unimplementable either way without the number."
+    },
+    {
+      "id": "F16",
+      "unit": "17.10-live-income-payout-tax",
+      "severity": "warning",
+      "dimension": 3,
+      "claim": "17.10.02 has no behaviour, state or path for the partial floor release that 17.09.05 and 17.09.06 require it to execute, and its 'Partial' state means something else entirely.",
+      "evidence": "17.10.02-disbursement-execution.md:36 '**Partial disbursement is normal, not an error.** One member without a payout method must not stop the other four being paid.' — a per-recipient concept, confirmed by D-02 at :101 and by the state at :69 '| Partial | Some recipients blocked | Others paid; blocked shares held with reasons |'. The file's entry condition admits no partial pool: :67 '| Blocked | Settlement unsigned | Nothing moves; a proposal is not a payment |' and Happy Path :41 '1. Settlement signs off (17.09.05); the number is final. 2. Split evaluates (17.10.01); withholding applies (17.10.03).' Meanwhile 17.09-settlement-reconciliation/17.09.05-settlement-signoff-variance.md:297 states the obligation on this file as already settled: 'a **refusal releases the undisputed floor only**', and 17.09.06-settlement-audit-trail-disputes.md:249 'the **payable floor** (D-08) is what disburses while a line is contested'.",
+      "forcedInvention": "How a floor release interacts with the split, withholding sequencing and commission accrual — all of which 17.10 defines only against a final settled pool — and what disbursement state represents a pool that is part-paid pending dispute resolution.",
+      "failureScenario": "The floor is released per 17.09.05 D-09. 17.10.01's exact-sum invariant ('sum(flat lines) + band fund + sum(member shares) + sum(withheld) == pool, **exactly**. A non-zero difference **blocks evaluation**') fails against a partial pool, so either evaluation blocks and nobody is paid, or the implementer invents a partial-pool allocation rule that no file authorises — deciding which parties absorb the withheld delta."
+    }
+  ]
+}

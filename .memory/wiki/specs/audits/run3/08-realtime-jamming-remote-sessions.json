@@ -1,0 +1,368 @@
+{
+  "domain": "08-realtime-jamming-remote-sessions",
+  "auditedAt": "2026-07-30",
+  "rubric": ".claude/skills/pipeline-rubrics/references/vision-rubric.md",
+  "unitsAudited": 6,
+  "filesRead": 32,
+  "enumeration": {
+    "expectedUnits": 6,
+    "expectedFiles": 32,
+    "actualUnits": 6,
+    "actualFiles": 32,
+    "note": "Disk enumeration matched the expected counts exactly. Units = the domain directory itself plus the five sub-domain directories, each containing an *-index.md."
+  },
+  "units": [
+    {
+      "unit": "08 (domain root: realtime-jamming-remote-sessions-index.md, -cx.md, 08.06, 08.07, 08.08)",
+      "files": 5,
+      "applicableCheckpoints": 8,
+      "naDimensions": [],
+      "scores": {
+        "1-problem-clarity": "✅",
+        "2-persona-specificity": "✅",
+        "3-feature-completeness": "❌",
+        "4-constraint-explicitness": "✅",
+        "5-success-measurability": "✅",
+        "6-competitive-positioning": "✅",
+        "7-open-question-resolution": "⚠️",
+        "8-structural-compliance": "⚠️"
+      },
+      "points": 2.0,
+      "ambiguityPct": 25.0
+    },
+    {
+      "unit": "08.01-latency-budget-playability",
+      "files": 5,
+      "applicableCheckpoints": 7,
+      "naDimensions": [6],
+      "scores": {
+        "1-problem-clarity": "✅",
+        "2-persona-specificity": "✅",
+        "3-feature-completeness": "✅",
+        "4-constraint-explicitness": "✅",
+        "5-success-measurability": "⚠️",
+        "6-competitive-positioning": "N/A",
+        "7-open-question-resolution": "⚠️",
+        "8-structural-compliance": "✅"
+      },
+      "points": 1.0,
+      "ambiguityPct": 14.3
+    },
+    {
+      "unit": "08.02-playable-radius-peer-matching",
+      "files": 5,
+      "applicableCheckpoints": 7,
+      "naDimensions": [6],
+      "scores": {
+        "1-problem-clarity": "✅",
+        "2-persona-specificity": "✅",
+        "3-feature-completeness": "⚠️",
+        "4-constraint-explicitness": "✅",
+        "5-success-measurability": "⚠️",
+        "6-competitive-positioning": "N/A",
+        "7-open-question-resolution": "⚠️",
+        "8-structural-compliance": "✅"
+      },
+      "points": 1.5,
+      "ambiguityPct": 21.4
+    },
+    {
+      "unit": "08.03-remote-monitoring-session-attendance",
+      "files": 6,
+      "applicableCheckpoints": 8,
+      "naDimensions": [],
+      "scores": {
+        "1-problem-clarity": "✅",
+        "2-persona-specificity": "✅",
+        "3-feature-completeness": "⚠️",
+        "4-constraint-explicitness": "✅",
+        "5-success-measurability": "✅",
+        "6-competitive-positioning": "✅",
+        "7-open-question-resolution": "⚠️",
+        "8-structural-compliance": "✅"
+      },
+      "points": 1.0,
+      "ambiguityPct": 12.5
+    },
+    {
+      "unit": "08.04-talkback-cue-mixes",
+      "files": 5,
+      "applicableCheckpoints": 7,
+      "naDimensions": [6],
+      "scores": {
+        "1-problem-clarity": "✅",
+        "2-persona-specificity": "✅",
+        "3-feature-completeness": "⚠️",
+        "4-constraint-explicitness": "✅",
+        "5-success-measurability": "⚠️",
+        "6-competitive-positioning": "N/A",
+        "7-open-question-resolution": "⚠️",
+        "8-structural-compliance": "✅"
+      },
+      "points": 1.5,
+      "ambiguityPct": 21.4
+    },
+    {
+      "unit": "08.05-session-capture-recall",
+      "files": 6,
+      "applicableCheckpoints": 8,
+      "naDimensions": [],
+      "scores": {
+        "1-problem-clarity": "✅",
+        "2-persona-specificity": "✅",
+        "3-feature-completeness": "⚠️",
+        "4-constraint-explicitness": "✅",
+        "5-success-measurability": "✅",
+        "6-competitive-positioning": "✅",
+        "7-open-question-resolution": "⚠️",
+        "8-structural-compliance": "✅"
+      },
+      "points": 1.0,
+      "ambiguityPct": 12.5
+    }
+  ],
+  "totals": {
+    "applicableCheckpoints": 45,
+    "points": 8.0,
+    "ambiguityPct": 17.8,
+    "blocking": 3,
+    "warning": 15
+  },
+  "findings": [
+    {
+      "id": "08-F01",
+      "unit": "08 (domain root)",
+      "severity": "blocking",
+      "dimension": 3,
+      "claim": "The domain index's Decision Log still asserts that Overdub carries the provenance 'intact' / that the attendance record 'ships with any session mechanism' — the exact claim 08.07 D-04 and domain CX-07 declare wrong — and the escalation route named for fixing it (Step 6) has already completed without touching the index.",
+      "evidence": "realtime-jamming-remote-sessions-index.md:122 — 'D-05 | **Overdub Mode (08.07) is a first-class mode, not a fallback** | ... Overdub also runs on the locked stack and **carries the provenance intact**.' and :121 — 'D-04 | **08.05.04 (Session Attendance & Provenance) is the domain's thesis link and ships with any session mechanism, including Overdub**'. Contradicted by 08.07-overdub-mode.md:353 — 'D-04 | **Provenance is captured without real-time transport, at a stated grade — NOT identically to a live session** ... The breadth pass claimed identical certainty; that was an overclaim (DT-08).' and by realtime-jamming-remote-sessions-cx.md:140 — 'But 08.05.04's edge row claiming \"overdub works identically → same record\" is **wrong** (DT-08).' 08.07:16-17 names the exact defect and its route: 'This correction must reach Step 6 — the domain index's D-05 carries the uncorrected claim, and this file does not own that index.' 08.07:333 — 'Step 6 must propagate the grade concept or the thesis claim for domain 08 is overstated at its most load-bearing point.' Step 6 has completed (realtime-jamming-remote-sessions-cx.md:5-6 'Status: [DEEP] / Last updated: 2026-07-18' and CX-07 exists), while the index is still 'Last updated: 2026-07-16' (index:6) and carries both uncorrected decisions.",
+      "forcedInvention": "An implementer reading the domain index builds one provenance record for overdub and live sessions; one reading 08.07/CX-07 builds a graded record where overdub defaults to delivered-by. The domain's headline thesis claim differs between the two.",
+      "twoImplementerTest": "fails"
+    },
+    {
+      "id": "08-F02",
+      "unit": "08 (domain root)",
+      "severity": "blocking",
+      "dimension": 3,
+      "claim": "08.07 both bounds pass-upload resumption at request expiry and mandates that a post-deadline delivery be accepted, using its own definition of expiry as 'deadline passed'. The two cannot both hold, and the states table gives Expired no exit.",
+      "evidence": "08.07-overdub-mode.md:248 — 'Upload interrupted | Resumable, chunked, survives app close (08.05.01 D-03). Resumption is not time-boxed short — a take abandoned at 90% is how work is lost. **Persists until the request expires.**' vs :251 — 'Player delivers after the deadline | **Accepted and aligned.** 08 does not enforce commercial deadlines — it records the timestamps and 05 decides what a late delivery costs. A platform that silently bins a late take has destroyed work to enforce someone else's policy.' Expiry is defined as deadline-pass at :250 — 'Player accepts then goes silent | Deadline passes → request state `expired`' and :291 — 'Expired | Deadline passed, nothing delivered'. No transition out of Expired exists in either states table (:277-292).",
+      "forcedInvention": "Whether an in-flight or not-yet-started upload survives the deadline. One implementer stops resumption at expiry (binning the take 251 forbids binning); another keeps uploading indefinitely (violating 248's stated bound) and must invent the state transition Expired → Delivered.",
+      "twoImplementerTest": "fails"
+    },
+    {
+      "id": "08-F03",
+      "unit": "08 (domain root)",
+      "severity": "blocking",
+      "dimension": 3,
+      "claim": "The provenance-grade enum — a value domains 02 and 09 consume — has three mutually inconsistent definitions across the files that define, own and export it: three values in 08.07, two values in the owning record 08.05.04, and a differently-named top rung in the domain CX.",
+      "evidence": "08.07-overdub-mode.md:172-176 defines three grades: '**Delivered-by** ... **Observed-playing** ... **Counter-attested** | The Producer accepted the pass into the project.' The record's owner lists only two: 08.05.04-session-attendance-provenance.md:50 — 'Provenance grade | A live-room segment is `observed-playing`; an overdub is `delivered-by` by default and becomes `observed-playing` only for segments a live witness observed (CX-09)' — with no third rung anywhere in its table, states (:170-183) or decisions (:222-239). The domain CX names a third, different rung and attributes the ladder to 08.07's DT-08: realtime-jamming-remote-sessions-cx.md:225 — '08.05.04 emits not a boolean but a *grade* (`delivered-by` < `observed-playing` < `session-captured+attested`, DT-08). 02.04.02 consumes the grade as the top rung of its tier ladder.'",
+      "forcedInvention": "The enum's cardinality and the identifier of its top value. An implementer must invent whether `counter-attested` and `session-captured+attested` are the same value, and whether 08.05.04 stores two grades or three — on a field explicitly exported to two other domains.",
+      "twoImplementerTest": "fails"
+    },
+    {
+      "id": "08-F04",
+      "unit": "08 (domain root)",
+      "severity": "warning",
+      "dimension": 3,
+      "claim": "The domain CX prescribes a correlation/timestamp alignment fallback that the owning feature proves is structurally impossible and forbids publishing as an alignment.",
+      "evidence": "realtime-jamming-remote-sessions-cx.md:82 — 'If the reference is absent *and* R2 was not pre-armed, alignment degrades to correlation/timestamp and must **state which method it used** — confidence differs materially.' 08.05.02-take-alignment-drift-correction.md:261 — 'DT-04 | **There is no acoustic bleed between endpoints, so track-to-track correlation is structurally impossible.** ... it invalidates the entire standard toolkit ... \"just correlate the tracks\" — the obvious first idea, and what the parent CX's \"degrade to correlation\" implies — cannot work on raw tracks.' :76-79 — '**R3 is not a tier of alignment — it is the trap wearing a tier's clothing.** It cannot measure drift, so by D-01 it cannot produce an aligned result. An R3 outcome is published as **unaligned with a placement hint**, never as an aligned track.' D-05 (:298) — 'Unalignable tracks are shown as unaligned, never silently placed at zero'.",
+      "forcedInvention": "Whether a session with no reference and no witness yields a low-confidence aligned set (domain CX) or an explicitly unaligned set with a placement hint (08.05.02). The CX was rewritten at Step 6 (2026-07-18) and kept the wording 08.05.02 DT-07 had already flagged.",
+      "twoImplementerTest": "fails"
+    },
+    {
+      "id": "08-F05",
+      "unit": "08 (domain root)",
+      "severity": "warning",
+      "dimension": 3,
+      "claim": "08.07 is the domain's designated shipping feature yet depends absolutely on 08.01.01 and 08.06, and the file's own flag that cutting them 'breaks' it was escalated only to Step 6, which completed without reconciling the placements.",
+      "evidence": "08.07-overdub-mode.md:327 — '**Depends on 08.01.01 Latency Measurement** — **NEW edge, and load-bearing.** Overdub discards the network half of the latency budget and depends absolutely on the **local** half ... *Why it matters to Step 6*: the domain CX has no 08.01.01↔08.07 pair, and MoSCoW currently treats 08.01 as cuttable and overdub as the survivor. **Cutting 08.01 breaks 08.07.**' and :312 — 'A MoSCoW cut of 08.01 would break the feature that was supposed to survive the cut.' Happy Path steps 5-6 (:222-223) make the overdub pre-flight and round-trip calibration mandatory ('Overdub pre-flight (08.06) runs ... Round-trip calibration measures ... **Measured, not assumed**'), and D-16 (:365) makes the checklist a requirement. The ledger places 08.07 in MUST and both dependencies outside it (ideation/moscow-ledger.md § COULD, rows for 08.01.01 and 08.06). No open question in 08.07, 08.01 or 08.06 carries the reconciliation.",
+      "forcedInvention": "Whether local round-trip calibration and the overdub pre-flight checklist are in the first shippable slice. Without them 08.07's alignment offset is uninventable; with them the COULD placement is wrong.",
+      "twoImplementerTest": "fails"
+    },
+    {
+      "id": "08-F06",
+      "unit": "08 (domain root)",
+      "severity": "warning",
+      "dimension": 3,
+      "claim": "08.07 bounds an accepted upload by 'the request's declared scope', but the request model it specifies declares no scope of that kind.",
+      "evidence": "08.07-overdub-mode.md:267 — 'Player delivers an implausibly large file | Accepted if it is genuinely a long multichannel pass — this is the mode where a 40-minute multitrack is legitimate. **Bounded by the request's declared scope, not by a guess.**' The request is specified as bed + fidelity + brief + deadline + target section(s) only — :218 'Producer creates an overdub request against a project (07): selects the bed, chooses its fidelity ..., writes the brief, sets the deadline, marks the target section(s)' — with no declared duration, size or channel bound anywhere in the file. Compare 08.05.01, which derives an explicit envelope: 08.05.01-local-first-multitrack-capture.md:259 — 'The expected size is *known* from the observed session (duration × channels × format).'",
+      "forcedInvention": "The upload acceptance bound: duration, byte size, channel count, or nothing. Overdub has no observed session envelope to derive it from, so the implementer must invent the field and its value.",
+      "twoImplementerTest": "fails"
+    },
+    {
+      "id": "08-F07",
+      "unit": "08 (domain root)",
+      "severity": "warning",
+      "dimension": 8,
+      "claim": "The domain index's Children preamble contradicts its own table, the child files' own headers, and its own record that MoSCoW has completed; its child-count sentence also double-counts the three domain-level features.",
+      "evidence": "realtime-jamming-remote-sessions-index.md:52-53 — '> Classified through the Node Classification Gate. 5 sub-domains, 3 domain-level features, 20 leaf features. > All `[SURFACE]` — breadth pass only; depth is allocated by MoSCoW in `/ideate-discover` Step 5.' The same table lists 08.01–08.05 as `[BREADTH]` (:57-61) and 08.07 as `[DEEP]` (:63). On disk, 08.01/08.02/08.04 index headers read `[SURFACE]`, 08.03/08.05 read `[BREADTH]`, and 08.05.01/08.05.02/08.05.04/08.07 read `[DEEP]`. MoSCoW is recorded complete in the same file: :132 — 'MoSCoW has since run and did not decide this (D-24: Step 5 complete; the domain retains its Musts)'. The count sentence reads as 3 + 20 = 23 feature files; disk holds 20 (17 under sub-domains + 3 domain-level), matching the parent's own 'ideation-index.md:125 | 08 | ... | 5 sub-domains + 20 features'.",
+      "forcedInvention": "Which status is authoritative for each child when a downstream stage allocates depth from it.",
+      "twoImplementerTest": "fails"
+    },
+    {
+      "id": "08-F08",
+      "unit": "08 (domain root)",
+      "severity": "warning",
+      "dimension": 7,
+      "claim": "Two domain-CX synthesis entries and one 08.08 edge case are deferred to stages that cannot resolve them: Step 5 (recorded complete) with no owner, and /create-prd-compile with no owner and no matching Open Questions row.",
+      "evidence": "realtime-jamming-remote-sessions-cx.md:208 — 'CX-11: Session Capture ↔ Playable Radius — `[Deferred — Step 5]`. ... The open question: does *completion* imply playability at all — people finish bad sessions?' and :212 — 'CX-13: Overdub ↔ Playable Radius — `[Deferred — Step 5]`.' Neither is carried by any owned Open Question (index Q-06 re-points only CX-12's merge pair; index Q-05 covers thresholds). Step 5's completion is recorded across the domain, e.g. index:134 'Re-pointed from the completed `/ideate-discover` Step 5.' Separately 08.08-interruption-reconnect-continuity.md:73 — 'Repeated flapping | Worse than a clean drop ... Needs a threshold that declares someone out. | `[Deferred — /create-prd-compile]` — the behaviour is settled (a threshold declares someone out); the missing part is the number' — no owner, and no Q row in that file's table (:124-126) carries it, unlike its siblings which all name an owner.",
+      "forcedInvention": "The flapping threshold that declares a participant out, and whether a completed live session may be written back as playability evidence.",
+      "twoImplementerTest": "fails"
+    },
+    {
+      "id": "08-F09",
+      "unit": "08.01-latency-budget-playability",
+      "severity": "warning",
+      "dimension": 7,
+      "claim": "Nine inline deferrals in this sub-domain point at `/ideate-discover Step 5`, a stage the tree records as complete, and none carries an owner; several are genuine product decisions that no Open Question covers.",
+      "evidence": "08.01-latency-budget-playability-cx.md:36 — 'Whether it notifies players is `[PENDING — Step 5]`.'; :55 — 'Last-write-wins with an audible warning is the likely rule — `[PENDING — Step 5]`.'; :59 — 'State transition conflict: `[PENDING — Step 5 deepening]`.'; :74 — 'Synthesis questions answered: `[PENDING — /ideate-discover Step 5 deepening]`' (CX-03's entire synthesis). 08.01.01:56 — 'User re-measures obsessively, hunting a better number | `[PENDING — /ideate-discover Step 5 deepening]` — whether to rate-limit, and whether to show variance across runs'. 08.01.02:62 — 'Verdict flips red mid-session | ... Whether players are interrupted is `[PENDING — Step 5]` — a modal mid-take is its own kind of damage.' 08.01.03:56 — 'Latency drifts during a take, breaking alignment | `[PENDING — Step 5]` — whether the click re-aligns live (which itself is an audible timing change) or holds and lets it drift. Both are bad; **this is a genuine product choice**.' Step 5 is recorded complete throughout the domain, e.g. 08.01.02:103 'Re-pointed from the completed `/ideate-discover` Step 5.'",
+      "forcedInvention": "Whether a mid-take click re-aligns or drifts; whether a mid-session verdict flip interrupts players; whether re-measurement is rate-limited. Each is a user-visible behaviour with no owner and a closed gate.",
+      "twoImplementerTest": "fails"
+    },
+    {
+      "id": "08-F10",
+      "unit": "08.01-latency-budget-playability",
+      "severity": "warning",
+      "dimension": 7,
+      "claim": "Two Open Questions are deferred to 'MoSCoW', which has completed and placed the features in question, so as written neither can ever be resolved.",
+      "evidence": "08.01-latency-budget-playability-index.md:57 — 'Q-02 | Does the playability verdict have any value if the real-time rooms it gates never ship? ... | User | MoSCoW'. 08.01.02-playability-verdict-tempo-ceiling.md:104 — 'Q-02 | If Overdub Mode is where most work actually lands, is the verdict worth building at all ...? | User | MoSCoW'. MoSCoW's completion is recorded by sibling files that closed their equivalents properly: 08.02-playable-radius-peer-matching-index.md:58 — '**RESOLVED by MoSCoW** ... Step 5/MoSCoW is complete and Coulds/Won'ts stay `[SURFACE]` (`ideation-index.md` D-24)' with 'Deferred To: ✅ MoSCoW'. The ledger placed both features (ideation/moscow-ledger.md § COULD, rows 08.01.01 and 08.01.02).",
+      "forcedInvention": "Whether the verdict is built at all — the question is live but its gate is closed.",
+      "twoImplementerTest": "fails"
+    },
+    {
+      "id": "08-F11",
+      "unit": "08.01-latency-budget-playability",
+      "severity": "warning",
+      "dimension": 5,
+      "claim": "The measurement's Stale state and the verdict's expiry both hinge on a 'validity window' that is given no value and no tracked question anywhere in the sub-domain.",
+      "evidence": "08.01.01-latency-measurement-decomposition.md:67 — 'Stale | Measurement older than its validity window | Ledger dimmed with an age label and a re-measure prompt. A stale number must never be presented as current.' 08.01-latency-budget-playability-cx.md:24 — 'a measurement older than the current network conditions must expire the verdict rather than show a stale green light.' 08.01.02:59 — 'Ledger is stale | Verdict expires with it.' No number, no formula, and no Open Question in 08.01.01 (:96-98), 08.01.02 (:103-105) or the index (:56-58) covers it — unlike the analogous pre-flight window, which is explicitly routed: 08.06:122 'Q-03 | How long is a pre-flight result valid? ... what is missing is the **number** ... | User | `/create-prd-compile`'.",
+      "forcedInvention": "The staleness threshold at which a ledger and its verdict expire — a user-visible state transition with no value and no owner.",
+      "twoImplementerTest": "fails"
+    },
+    {
+      "id": "08-F12",
+      "unit": "08.02-playable-radius-peer-matching",
+      "severity": "warning",
+      "dimension": 7,
+      "claim": "08.02.02 defers what it calls the substance of the feature — the confidence model, sample thresholds, decay rate and correction granularity — to the completed Step 5, with no owner, and none of its three Open Questions covers them.",
+      "evidence": "08.02.02-route-aware-radius-correction.md:26 — '`[PARTIAL]` — **the arbitration rule is the substance of this feature and it is genuinely undecided.**' :42-43 — '`[PENDING — /ideate-discover Step 5 deepening]`: the actual confidence model, the sample thresholds, the decay rate on old probes, and whether corrections are per-route or per-peer.' Its Open Questions (:103-105) cover only the shrink/grow asymmetry preference (Q-01), stale-context detection (Q-02) and retention (Q-03). The States table depends on the missing model: :69-70 — 'Learning | Some history, below confidence threshold ... Measured | Confidence threshold met'.",
+      "forcedInvention": "The confidence model, the sample count that promotes Learning → Measured, the probe decay rate, and whether correction is keyed per-route or per-peer — all of which decide when a person becomes discoverable to others.",
+      "twoImplementerTest": "fails"
+    },
+    {
+      "id": "08-F13",
+      "unit": "08.02-playable-radius-peer-matching",
+      "severity": "warning",
+      "dimension": 3,
+      "claim": "08.02.03 grants the Operator configuration of the instrument-pair thresholds their room is offered against, while the same file's D-02 reserves thresholds to domain 08 and its Role Lens says the Operator cannot alter the values behind the predicate.",
+      "evidence": "08.02.03-latency-aware-match-filter.md:22 — 'Operator | Config | Configures whether their room is offered as a real-time-capable endpoint in searches, **and against what instrument-pair thresholds**. Cannot alter the measured values behind the predicate — only whether they participate.' Contradicted by :100 — 'D-02 | Consuming domains may not apply their own thresholds | Four definitions of \"playable\" is worse than none. **Domain 08 owns the threshold**; consumers own presentation.' and by the sibling guard 08.02.01:21 — 'Cannot edit the measured radius, only whether the room is listed and how it is described. Per `meta/personas.md` this persona's worst intentional behaviour is misrepresenting the room's specs, so the number they most want to inflate is exactly the one they cannot touch.'",
+      "forcedInvention": "Whether Operator configuration is a per-instrument-pair participation opt-in or an editable threshold value. The second reading hands the party with the documented incentive to inflate control of the number.",
+      "twoImplementerTest": "fails"
+    },
+    {
+      "id": "08-F14",
+      "unit": "08.02-playable-radius-peer-matching",
+      "severity": "warning",
+      "dimension": 5,
+      "claim": "Whether a radius correction is surfaced turns on the change being 'material', with no threshold defined and the notification decision itself deferred to the completed Step 5.",
+      "evidence": "08.02.02-route-aware-radius-correction.md:51 — 'If the change is **material**, the user is shown what changed and why — with the cause named, not just the number.' :60 — 'Correction shrinks the radius materially | Bad news the user did not ask for. Whether to notify is a real product question — see parent CX-01. | `[PENDING — Step 5]`'. 08.02-playable-radius-peer-matching-cx.md:36 — 'Notification fan-out: `[PENDING — /ideate-discover Step 5 deepening]` — whether a materially shrunk radius notifies the user. It is bad news about their own connection and there is a real argument both ways.' No value or Open Question defines 'material'.",
+      "forcedInvention": "The materiality threshold for notifying a user their discoverability shrank, plus whether the notification exists at all.",
+      "twoImplementerTest": "fails"
+    },
+    {
+      "id": "08-F15",
+      "unit": "08.02-playable-radius-peer-matching",
+      "severity": "warning",
+      "dimension": 7,
+      "claim": "08.02.03 Q-03 is deferred to MoSCoW, which has completed and placed the feature, while sibling questions in the same sub-domain were properly closed against that same pass.",
+      "evidence": "08.02.03-latency-aware-match-filter.md:110 — 'Q-03 | If real-time rooms are cut at MoSCoW, does an \"overdub-capable?\" predicate replace this one — which would be trivially true for everyone and therefore worthless? If so this feature dies with the rooms. | User | MoSCoW'. Compare the correctly-closed siblings: 08.02-playable-radius-peer-matching-index.md:58 and 08.02.01:101, both '**RESOLVED by MoSCoW** ... Deferred To: ✅ MoSCoW'. The ledger placed 08.02.03 at COULD (ideation/moscow-ledger.md § COULD, row 08.02.03).",
+      "forcedInvention": "Whether the exported predicate survives a rooms cut — the answer exists in the ledger but the question still points forward at the pass that produced it.",
+      "twoImplementerTest": "fails"
+    },
+    {
+      "id": "08-F16",
+      "unit": "08.03-remote-monitoring-session-attendance",
+      "severity": "warning",
+      "dimension": 3,
+      "claim": "08.03.04's Behavior section lists as pending two questions its own Decisions table has already answered, so the file simultaneously forbids and defers device detection and listener-visible assessment.",
+      "evidence": "08.03.04-monitoring-trust-playback-context.md:51-53 — '`[PENDING — /ideate-discover Step 5 deepening]`: whether any detection is acceptable; how the tension warning is worded ...; whether the listener sees their own context assessment.' Already decided in the same file: :101 — 'D-01 | Self-declaration only; no device fingerprinting or audio probing | Detection is unreliable and is a surveillance surface. The gain does not justify either cost.' and :102 — 'D-02 | Producer-only visibility; the listener never sees an assessment of their own credibility'. The wording third is separately owned (:112 'Q-03 ... | User | `/write-fe-spec`'), leaving the two decided items pointed at a completed stage.",
+      "forcedInvention": "Whether detection is in scope at all, and whether the listener sees their own assessment — an implementer reading Behavior treats both as undecided and may build them.",
+      "twoImplementerTest": "fails"
+    },
+    {
+      "id": "08-F17",
+      "unit": "08.03-remote-monitoring-session-attendance",
+      "severity": "warning",
+      "dimension": 7,
+      "claim": "Six deferrals in the sub-domain CX and three in its features point at the completed Step 5 with no owner, including two entire synthesis blocks and a States row whose trigger is the marker itself.",
+      "evidence": "08.03-remote-monitoring-session-attendance-cx.md:37 — 'Whether the Musician is notified actively or passively is `[PENDING — Step 5]`, but the information is not optional.'; :71 — 'Musician: `[PENDING — Step 5]`.'; :74 — 'Synthesis questions answered: `[PENDING — /ideate-discover Step 5 deepening]`' (CX-03 entire); :85 and :89 — the same for CX-04. 08.03.03-live-listener-feedback-notes.md:58 — 'High note volume from an enthusiastic client | The Producer is running a session, not a ticket queue. Some collapsing or batching is needed. | `[PENDING — Step 5]`' — not covered by that file's Q-01/Q-02/Q-03. 08.03.04:69 — 'Listener changes their playback mid-session (unplugs headphones) | The declaration is now stale and nothing knows. Realistic and common. | `[PENDING — Step 5]`' and :79 — 'Stale | `[PENDING — Step 5]` | `[PENDING]`' — a declared state with no trigger and no user-facing behaviour.",
+      "forcedInvention": "Note batching behaviour under load; whether a stale playback declaration is detected or ignored, and what the Stale state does; whether the Musician's audience notification is active or passive.",
+      "twoImplementerTest": "fails"
+    },
+    {
+      "id": "08-F18",
+      "unit": "08.04-talkback-cue-mixes",
+      "severity": "warning",
+      "dimension": 5,
+      "claim": "Talkback ducking is specified only as needing to be 'fast', with the failure it prevents named but no attack/release threshold anywhere in the sub-domain and no tracked question about it.",
+      "evidence": "08.04-talkback-cue-mixes-cx.md:34 — 'Trigger chain: Talkback keyed → targeted cue mixes duck → voice → release → recover. Synchronous and **must be fast**; a slow duck means the first word is lost, which is precisely the word that says \"stop\". If ducking fails, talkback must still be *sent*.' 08.04.01-talkback-channel-ducking.md:56 — 'Ducking fails or is slow | Talkback is still sent. An inaudible engineer beats a silent one. A slow duck loses the first word — which is usually \"stop\".' Ducking depth is likewise unquantified and per-performer (:20 'sets ducking depth'; CX:23 'the ducking depth is per-performer too'). No number, and none of 08.04.01 Q-01..Q-03 or the index Q-01..Q-03 tracks it.",
+      "forcedInvention": "Duck attack/release times and default depth. 'Fast' is exactly the class of adjective the rubric forbids, and the stated failure (losing the first word) is only testable against a number.",
+      "twoImplementerTest": "fails"
+    },
+    {
+      "id": "08-F19",
+      "unit": "08.04-talkback-cue-mixes",
+      "severity": "warning",
+      "dimension": 3,
+      "claim": "08.04.02 leaves cue-mix survival across a reconnect pending on a completed stage, while 08.08 ratifies it as a decision and builds its happy path on it.",
+      "evidence": "08.04.02-per-performer-cue-mixes.md:70 — 'Cue mix state lost on reconnect | Must survive a reconnect — rebuilding a mix mid-session is a real cost. Interacts with 08.08. | `[PENDING — Step 5]`'. Settled elsewhere: 08.08-interruption-reconnect-continuity.md:118 — 'D-05 | **Cue mixes and profiles survive a reconnect** | Rebuilding mid-session is a real cost paid at the worst moment.', :62 — 'Participant reconnects; their cue mix and profile are restored rather than rebuilt.', and :87 — 'Reconnecting | Link returning | Progress; cue mix restoring.'",
+      "forcedInvention": "Whether cue-mix restoration is in scope. The owning feature says undecided; the consuming feature says decided and shows the restoring state.",
+      "twoImplementerTest": "fails"
+    },
+    {
+      "id": "08-F20",
+      "unit": "08.04-talkback-cue-mixes",
+      "severity": "warning",
+      "dimension": 7,
+      "claim": "CX-03's synthesis — which holds an unresolved authority question between a performer's stored ducking preference and the Producer's need to be heard — is deferred to the completed Step 5 with no owner.",
+      "evidence": "08.04-talkback-cue-mixes-cx.md:61-64 — 'CX-03: Talkback ↔ Recall. `[PARTIAL]` — ... The open part is whether a performer may carry a *minimal ducking* preference into a room where the Producer needs to be heard, which is a small instance of the same authority question CX-01 answers.' :71 — 'Synthesis questions answered: `[PENDING — /ideate-discover Step 5 deepening]` — Medium confidence, deferred per the CX template's rule for non-High entries.' The interacting rules exist but do not settle it: 08.04.01 D-03 (:95) 'Performers control talkback's intrusion level but cannot mute it' and 08.04.03 D-01 (:103) stores 'Talkback ducking depth' as a portable preference. No Open Question in either file covers the carried-preference override.",
+      "forcedInvention": "Whether a stored minimal-ducking preference is honoured, clamped, or overridden on join.",
+      "twoImplementerTest": "fails"
+    },
+    {
+      "id": "08-F21",
+      "unit": "08.05-session-capture-recall",
+      "severity": "warning",
+      "dimension": 3,
+      "claim": "The sub-domain CX still describes the presence-to-contribution relationship as unresolved and as the substance of index Q-01, which has since been resolved with a three-component bridge.",
+      "evidence": "08.05-session-capture-recall-cx.md:83-87 — 'CX-04: Auto-Highlights ↔ Attendance Record. `[PARTIAL]` — presence is not contribution ... **The exact relationship is genuinely unresolved and is the substance of index Q-01.**' and :94 — 'Synthesis questions answered: `[PENDING — /ideate-discover Step 5 deepening]`'. Resolved in 08.05-session-capture-recall-index.md:64 — 'Q-01 | ~~Does the attendance record's certainty actually translate into a *credit*?~~ **RESOLVED — it never does.** ... | ✅ Resolved' and specified in 08.05.04-session-attendance-provenance.md:77-86 — 'The bridge from presence to contribution has exactly three components ... | Kept material | 08.05.03 highlights survived into a take | ... **Presence alone contributes zero.**'",
+      "forcedInvention": "Whether the highlight→attendance relationship is an open design question or the specified three-component bridge.",
+      "twoImplementerTest": "fails"
+    },
+    {
+      "id": "08-F22",
+      "unit": "08.05-session-capture-recall",
+      "severity": "warning",
+      "dimension": 3,
+      "claim": "08.05.04's Cross-Cut Notes still assert overdub 'works identically', the precise wording 08.07 DT-08 and domain CX-07 declare wrong, contradicting the corrected edge row in the same file and misidentifying the cost as attestation rather than provenance grade.",
+      "evidence": "08.05.04-session-attendance-provenance.md:218 — '**Works identically under 08.07 Overdub Mode** — which is why this survives even if the real-time rooms are cut (domain D-05, D-06). Note the honest cost: a solo overdub is `self-attested` end to end (DT-05), so the mode that survives infrastructure cuts produces the *weakest* records.' The same file's edge row was corrected: :166 — 'Overdub session (no real-time room) | The record has delivery-certainty, not performance-certainty ... as `delivered-by`.' And the correction target was this wording: realtime-jamming-remote-sessions-cx.md:140 — '08.05.04's edge row claiming \"overdub works identically → same record\" is **wrong** (DT-08).'",
+      "forcedInvention": "Whether overdub's record differs from a live session's, and on which axis (grade vs attestation). Two named axes are conflated in the file that owns the record.",
+      "twoImplementerTest": "fails"
+    },
+    {
+      "id": "08-F23",
+      "unit": "08.05-session-capture-recall",
+      "severity": "warning",
+      "dimension": 7,
+      "claim": "Three CX obligations 08.05.02 flagged for Step 6 remain absent from the sub-domain CX, which alone among the six CX files also carries no Status or Last-updated header to show whether it was revisited.",
+      "evidence": "08.05.02-take-alignment-drift-correction.md:279 — '**New — capture must record the timing witness**: per DT-05/DT-07, R2 requires 08.05.01 to record a pre-talkback inbound witness *at capture time* ... This is a **new obligation on 08.05.01 that CX-01 does not currently carry** ... It also adds a (small) disk cost to 08.05.01 D-04's headroom check. **Flagged for Step 6 synthesis.**' :285 — '**No CX entry exists for 08.05.02 → 08.05.04. Flagged for Step 6.**' 08.05-session-capture-recall-cx.md:10 (CX-01) still describes only offset/drift and carries no witness obligation or disk cost, and its header (:1-4) has only Level and Scope — compare realtime-jamming-remote-sessions-cx.md:5-6 which carries 'Status: [DEEP] / Last updated: 2026-07-18'.",
+      "forcedInvention": "Whether capture must reserve disk for, and record, a pre-talkback witness — a capture-time decision 08.05.02 states cannot be retrofitted ('You cannot fall back to R2 if nobody recorded a witness', :83).",
+      "twoImplementerTest": "fails"
+    }
+  ],
+  "notableStrengths": [
+    "08.05.01 and 08.05.02 are effectively unambiguous: quantified arithmetic (8.64 MB per channel-minute, 2x headroom rule, ±20-100 ppm drift table, 1/5/20 ms tiers, -60 dBFS over 30 s, 3 consecutive full-scale samples, 2 s → 5 min backoff, session_end + 24 h seal) with every threshold either stated or routed to an owned question.",
+    "Failure postures are deliberately opposed where the cost differs, and the files say so: 08.01.01 D-02 fails closed, 08.02.03 D-04 fails open, 08.03.02 D-05 fails closed — each citing the other as a contrast.",
+    "Adversarial self-tests are recorded against the tree's own interest (08.07 DT-03/Q-05 on dissolving the domain; 08.03.04 DT-03 'Absence of a feature in a mature category is evidence, not opportunity')."
+  ]
+}

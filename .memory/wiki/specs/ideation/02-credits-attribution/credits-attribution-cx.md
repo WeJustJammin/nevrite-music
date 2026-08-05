@@ -3,7 +3,7 @@
 > **Level**: domain
 > **Scope**: Connections between children of [Credits & Attribution](./credits-attribution-index.md)
 > **Status**: [DEEP] — children deepened (Step 5); intra-domain cross-cuts synthesised with rollback, race, and per-field permission detail.
-> **Last updated**: 2026-07-18
+> **Last updated**: 2026-07-23
 
 ## Cross-Cut Map
 
@@ -14,7 +14,7 @@
 | # | Source | Target | Relationship | Roles Affected | Confidence | Evidence |
 |---|--------|--------|--------------|----------------|------------|----------|
 | CX-01 | [02.02 Session Capture](./02.02-session-capture/02.02-session-capture-index.md) | [02.01 Credit Graph & Discography](./02.01-credit-graph-discography/02.01-credit-graph-discography-index.md) | The close prompt commits working session data into immutable credit records; the commit is the mutable→fact boundary, and visibility intent (incl. permanent ghosting) is captured *at* the contribution | Musician, Producer, Operator | High | 02.02.03→02.01.01; 02.02.02→02.01.05 (D-12/DT-07); 02.01.01 happy path |
-| CX-02 | [02.02 Session Capture](./02.02-session-capture/02.02-session-capture-index.md) | [02.04 Attestation & Confidence](./02.04-attestation-credit-confidence/02.04-attestation-credit-confidence-index.md) | The in-room tap at close *is* the attestation — same act, best conversion moment; the log also supplies asserter identity + assertion timing, tier inputs that exist nowhere else | Musician, Producer, Operator | High | 02.04.01 DT-03; 02.02.03 D-01; 02.02.02→02.04.02 (DT-04, DT-10) |
+| CX-02 | [02.02 Session Capture](./02.02-session-capture/02.02-session-capture-index.md) | [02.04 Attestation & Confidence](./02.04-attestation-credit-confidence/02.04-attestation-credit-confidence-index.md) | The in-room **reciprocal** tap at close *is* an attestation — same act, best conversion moment — but a contributor's own-row tap is not one and lifts no rung (`02.04.01` D-11, `02.04.02` D-03; `02.02.03` D-17); the log also supplies asserter identity + assertion timing, tier inputs that exist nowhere else | Musician, Producer, Operator | High | 02.04.01 DT-03, D-11; 02.02.03 D-01, D-08, D-17; 02.02.02→02.04.02 (DT-04, DT-10) |
 | CX-03 | [02.03 Claiming & Seeding](./02.03-claiming-cold-start-seeding/02.03-claiming-cold-start-seeding-index.md) | [02.04 Attestation & Confidence](./02.04-attestation-credit-confidence/02.04-attestation-credit-confidence-index.md) | Imported credits are permanently tier-capped; claiming verifies the *person*, never the *fact* | Musician, Producer, Operator | High | 02.03 D-01; 02.03.02 D-01 |
 | CX-04 | [02.02 Session Capture](./02.02-session-capture/02.02-session-capture-index.md) | [02.03 Claiming & Seeding](./02.03-claiming-cold-start-seeding/02.03-claiming-cold-start-seeding-index.md) | Roll call creates unclaimed shells; the claim inbox is where they become users — the growth loop's two halves, joined by a broken notification channel | Musician, Producer | High | 02.02.01 DT-03; 02.02.01→02.03.02; 02.03.02 DT-01 |
 | CX-05 | [02.04 Attestation & Confidence](./02.04-attestation-credit-confidence/02.04-attestation-credit-confidence-index.md) | [02.01 Credit Graph & Discography](./02.01-credit-graph-discography/02.01-credit-graph-discography-index.md) | The tier renders per discography line (viewer-relative) and weights every traversal edge; unweighted traversal is the laundering exploit | All four | High | 02.01.02→02.04.02; 02.01.03 D-01; 02.04.02 DT-01, DT-03 |
@@ -28,8 +28,12 @@
 | CX-13 | [02.03 Claiming & Seeding](./02.03-claiming-cold-start-seeding/02.03-claiming-cold-start-seeding-index.md) | [02.01 Graph](./02.01-credit-graph-discography/02.01.04-identifier-resolution-duplicate-merge.md) (Resolution & Merge) | Import is the source of essentially all duplication; claim and merge are one act from the user's side, and a merge chain A→B→C must 301 in a single hop | Musician, Producer, Operator | High | 02.01.04 behavior; 02.01.02→02.01.04; 02.03.01 behavior |
 | CX-14 | [02.10 AI Disclosure](./02.10-ai-contribution-disclosure.md) | [02.02 Session Capture](./02.02-session-capture/02.02-session-capture-index.md) | The AI-disclosure axis is captured on the contribution row, but ownership of that field is *split*: the Producer owns the attribution, the named contributor owns its AI axis | Musician, Producer | High | 02.02.02→02.10 (D-04); per-field permission model |
 | CX-15 | [02.06 Taxonomy](./02.06-credit-role-instrument-taxonomy.md) | [02.02 Session Capture](./02.02-session-capture/02.02-session-capture-index.md) | Capture is where role and instrument bind as separate axes; pending aliases are accepted and never block, and the taxonomy must express *doubling* (one party, two instruments, one date) because it is a payment-relevant fact | Musician, Producer | High | 02.02.02→02.06 (D-02, D-03); 02.02.01→02.06 (DT-05 doubling) |
-| CX-16 | [02.05 Dispute Resolution](./02.05-credit-dispute-resolution.md) | [02.01 Credit Graph & Discography](./02.01-credit-graph-discography/02.01-credit-graph-discography-index.md) | "Contested" is a state of the *record*: a filed dispute produces no public page state, and contest marks/zero-weights a credit but never suppresses it | Musician, Producer, Fan | High | 02.01.02→02.05 (D-06); 02.01.01→contested (D-11) |
+| CX-16 | [02.05 Dispute Resolution](./02.05-credit-dispute-resolution.md) | [02.01 Credit Graph & Discography](./02.01-credit-graph-discography/02.01-credit-graph-discography-index.md) | "Contested" is a state of the *record*: a filed dispute produces no public page state, and contest marks/zero-weights a credit but never suppresses it. **The same rule now governs a claim contest** (`02.03.03` D-03 corrected), where the credit additionally stays attached to the first claimant until the contest closes | Musician, Producer, Fan | High | 02.01.02→02.05 (D-06); 02.01.01→contested (D-11); 02.03.03 D-03/D-05 |
 | CX-17 | [02.07 Union Reporting](./02.07-union-performer-session-reporting.md) | [02.02 Session Capture](./02.02-session-capture/02.02.01-session-roll-call.md) (Roll Call) | Union filings are paid by the hour — the temporal roll (personnel, instruments, doubles, window) *is* their billable substance | Musician, Producer | Medium | 02.07 DT-02; 02.02.01→02.07 (D-14) |
+| CX-18 | [02.04.04 Ring Detection](./02.04-attestation-credit-confidence/02.04.04-attestation-ring-collusion-detection.md) | [02.05 Dispute Resolution](./02.05-credit-dispute-resolution.md) | `CollusionEvidenceConstraintV1` supplies `contractVersion`, opaque `attestationEdgeId`, per-attestation-edge `negativeMultiplier`, and `requiresNonTopologicalCorroboration: true`; topology never identifies a party, hard-excludes testimony, or opens/advances a case | None (internal only) | High | CQ-03 Option B; 02.04.04 D-07; 02.05 D-06 |
+| CX-19 | [02.01 Graph](./02.01-credit-graph-discography/02.01.05-credit-visibility-embargo.md) (Embargo) | [02.05 Dispute Resolution](./02.05-credit-dispute-resolution.md) | A Producer's objection to an evidence-based lift is a **stated-ground challenge, not a veto**: closed ground list over `02.01.05` D-03's own predicate, lift paused at the embargoed status quo, inline platform re-verification first, then the dispute engine under a **mandatory** resolution SLA; re-submission of evidence is unbounded | Musician, Producer | High | DQ-03 A2–A5; 02.01.05 D-19–D-22; 02.05 D-07 |
+| CX-20 | [02.04 Attestation & Confidence](./02.04-attestation-credit-confidence/02.04-attestation-credit-confidence-index.md) | [02.01 Graph](./02.01-credit-graph-discography/02.01-credit-graph-discography-index.md) + [02.08 Export & DDEX RIN](./02.08-credit-export-ddex-rin.md) | **Demotion is score-only and the rung is invariant to detection**, so the discography label never moves, every rung-gated consumer reads one rung, and demotion **drops off** `02.08`'s re-emission staleness trigger | None (invisible) | High | DQ-06.1/06.2; 02.04.02 D-19/D-20; 02.04.04 D-08/D-09; 02.08 D-05 |
+| CX-21 | [02.06 Taxonomy](./02.06-credit-role-instrument-taxonomy.md) + [02.01 Graph](./02.01-credit-graph-discography/02.01.06-credit-correction-amendment.md) (Amendment) | [02.04 Attestation & Confidence](./02.04-attestation-credit-confidence/02.04-attestation-credit-confidence-index.md) | Materiality is **one flat identity test** (party, role, work) owned by `02.04.01` D-10; instrument changes never invalidate, and **no taxonomy operation ever invalidates** — including the one retroactive pending-alias mapping | Musician, Producer | High | DQ-05.1/05.2; 02.04.01 D-10; 02.04.02 D-17/D-18; 02.06 D-23/D-24 |
 
 > **Confidence levels:** High (confirmed with evidence), Medium (strong signal, needs validation), Low (hypothesis)
 
@@ -124,7 +128,7 @@
 1. **Shared-state owner + merge**: Attestations are the attesters'; the tier derives; the graph consumes. Derivation must be reproducible or two reads disagree. The tier is never stamped onto the record (domain D-09).
 2. **Trigger chain + rollback + sync/async**: Evidence change → re-derive → discography label + traversal weight → any cached projection invalidates. Derived-on-read means there is nothing to roll back — the next read is correct by construction.
 3. **Permission intersection**: Who may attest bounds the reachable tier for a given credit; the viewer's relationship bounds which rows and counts they see.
-4. **Notification fan-out**: Tier *rises* notify (good news, page got stronger). Tier *drops* notify **only when caused by retraction**, never when caused by ring demotion (`02.04` CX-03 Q4) — a deliberate, sharp-edged inconsistency to avoid tipping off a collusion ring.
+4. **Notification fan-out**: Rung *rises* notify (good news, page got stronger). Rung *drops* notify — and the only causes of a rung drop are retraction (`02.04.03`) and amendment invalidation (`02.04.01` D-10). **Ring demotion notifies nothing because it changes nothing visible**: it is score-only and the rung is invariant to detection (`02.04.02` D-19). What was a deliberate, sharp-edged notification inconsistency is now silence by construction — there is no user-visible value a demotion could be described as having changed.
 5. **State-transition race**: Concurrent attestation/retraction on one credit both trigger re-derivation; on-read derivation makes the settled value order-independent, but a maintained-on-write cache would risk staleness — `/create-prd-architecture`'s call.
 
 ---
@@ -157,7 +161,7 @@
 2. **Trigger chain + rollback + sync/async**: Resolve identifiers → map roles to codes → order → emit. A missing code or unresolved ID *blocks* emission rather than emitting an invalid message — the RIN spec is unforgiving.
 3. **Permission intersection**: Export scope (participant vs catalog) determines which credits are eligible; embargo intersects here (CX-10).
 4. **Notification fan-out**: None to third parties; delivery status logs to the integrations surface.
-5. **State-transition race**: Post-export mutation (amendment, retraction, demotion, D-09 comped-out qualifier) leaves consumers holding stale RINs — the unresolved re-emission problem (domain Q-08).
+5. **State-transition race**: Post-export mutation (amendment, retraction, `02.01.01` D-09's comped-out qualifier) leaves consumers holding stale RINs — the unresolved re-emission problem (domain Q-08). **Ring demotion has dropped off that list**: it is score-only and moves no rung (`02.04.02` D-19/D-20), so it changes nothing an emitted package carries and stales nothing (`02.08` D-05).
 
 ---
 
@@ -288,7 +292,7 @@
 **Role scoping**: Musician/Producer see the contested marker on the record-view; Fan sees the unchanged public page (no contest state leaks); Operator corroborates only.
 
 **Synthesis questions answered**:
-1. **Shared-state owner + merge**: The credit is `02.01`'s; `02.05` sets a contested flag that is a participant-view affordance, never a public page mutation. Dispute outputs (amendment, removal) change the page; pendency does not.
+1. **Shared-state owner + merge**: The credit is `02.01`'s; `02.05` sets a contested flag that is a participant-view affordance, never a public page mutation. Dispute outputs (amendment, removal) change the page; pendency does not. **The same rule now governs a claim contest** (`02.03.03` D-03 corrected to match): no public marker, no public suppression — and there the credit additionally **stays attached to the first claimant** until the contest closes, detaching only on `Unresolvable`, when it returns to the unclaimed shell it came from (`02.03.03` D-05/D-06).
 2. **Trigger chain + rollback + sync/async**: File dispute → mark record contested (participant view) + zero-weight in traversal → adjudicate → amendment/removal or dismissal. Dismissal clears the flag with no public trace.
 3. **Permission intersection**: Anyone with standing may file; only participants see the contested marker; the adjudicator gets a logged, non-publishing scoped read (D-18) even of embargoed records.
 4. **Notification fan-out**: Parties are notified on file and on outcome; the public is never notified of a mere filing.
@@ -311,6 +315,21 @@
 
 ---
 
+### CX-18: Ring Detection ↔ Dispute Resolution
+
+**Relationship**: `02.04.04` and `02.05` join at a narrow, versioned internal boundary: `CollusionEvidenceConstraintV1`. Detection supplies an opaque attestation-edge identifier, its negative multiplier, and literal `requiresNonTopologicalCorroboration: true`; it never transfers a raw score, a cluster or witness identity, a ring flag, a trust score, a hard-exclusion instruction, or an enforcement recommendation. `02.05` applies the multiplier only to that edge's attested-evidence contribution. The constraint does not block ordinary filing, direct resolution, or witness resolution on other evidence. It instead prohibits the detection signal from independently opening or advancing a Domain 24 factual-dispute case: that transition requires separately captured non-topological corroboration.
+
+**Role scoping**: None. Both sides are internal-only. Participants see the ordinary dispute state; they never see a detector payload, a topology rationale, or an inferred collusion label.
+
+**Synthesis questions answered**:
+1. **Shared-state owner + merge**: `02.04.04` owns derivation of the multiplier and immutable edge reference; `02.05` owns its use in credit-specific evidence weighting. Domain 24 owns case workflow and due process. No system writes another's state.
+2. **Trigger chain + rollback + sync/async**: A v1 payload adjusts a referenced evidence-edge contribution during dispute confidence derivation. It does not start a case. Separately captured non-topological corroboration may route a factual dispute into Domain 24; a later payload update re-derives the edge weight without retroactively creating an accusation.
+3. **Permission intersection**: No persona receives read or write access. Domain 24 reviewers receive the case evidence necessary for due process, not raw topology. Unknown payload versions are excluded rather than guessed over.
+4. **Notification fan-out**: None from detection or the v1 payload. Normal dispute and Domain 24 case notices fire only when an independently valid case transition occurs.
+5. **State-transition race**: A v1 payload may arrive while an ordinary dispute is open; it re-derives the one edge contribution but cannot independently advance the case. A corroborating non-topological evidence event and the payload may arrive in either order; the case transition occurs only after both requirements are present.
+
+---
+
 ## Cross-Cuts Routed to the Global CX
 
 > Mechanisms that are **not** nodes in this domain. Recorded here so `ideation-cx.md` can absorb
@@ -318,7 +337,7 @@
 
 | Mechanism | Serves | Domain 02's relationship |
 |---|---|---|
-| **DAW / Plugin Host Integration Channel** | 02, 05, 07, 09, 12 | The channel carries stems (07), split capture (09) and service delivery (05) as well as credits. `02.02` owns the *payload* (roll, log, prompt); the channel is platform-wide. Sub-domain `02.02` D-01. **Q-02 makes the wedge depend on this cross-cut's answer.** |
+| **DAW / Plugin Host Integration Channel** | 02, 05, 07, 09, 12 | The channel carries stems (07), split capture (09) and service delivery (05) as well as credits. `02.02` owns the *payload* (roll, log, prompt); the channel is platform-wide. Sub-domain `02.02` D-01. **Q-02 makes the wedge depend on this cross-cut's answer.** **NO v1 CHANNEL (owner decision 2026-07-22, D-70 / DQ-08.2)**: no non-web client on the producer's machine is authorised, so this mechanism has **no v1 implementation** and every consumer above must degrade to its no-channel branch for the whole v1 window. Retained as a mechanism, not deleted — it reactivates only if the Desktop row reopens on its enumerated evidence. |
 | **Dispute Case Engine** | 02, 05, 09, 13, 14, 17, 19, 24 | `02.05` rides it; only credit-specific evidence semantics and contested-credit behavior (CX-16) are domain-owned. Must carry a general privileged-read grant (D-18). `02.05` D-01, DT-01. |
 | **Reputation, Endorsement & Vouching** | 01, 02, 03, 04, 05 | Credit-derived *weight* lands in `02.04.02`; the endorsement *surface* is a platform reputation mechanism. The pull toward a party-level "verified %" badge (strongest on a 05 marketplace profile) is exactly the reputation score routed OUT of domain 02 (D-07). |
 | **Music Role & Instrument Taxonomy** _(owner: 02)_ | 02, 03, 04, 05, 06, 08, 13, 15, 16 | Shared vocabulary with a domain owner. Consumers (03, 04, 05, 06, 08) *map* rather than extend (`02.06` D-14); rights outcomes (featured-performer pay) belong to 10 not the vocabulary (D-15); gear objects belong to 13/15 (D-08). |
@@ -339,3 +358,32 @@
 | R-05 | 02.06 Taxonomy | 02.05 Dispute Resolution | A dispute about which role someone held is about the *fact*, not the vocabulary. The taxonomy supplies the words both parties argue in; it has no stake in the argument. |
 | R-06 | 02.08 Export | 02.05 Dispute Resolution | Contested credits are marked and zero-weighted but export reads a frozen projection; the genuine problem is post-emission change (CX-07, domain Q-08), not a standing interaction. |
 | R-07 | 02.09 Gear Linkage | 02.06 Taxonomy | Instrument (a functional axis in `02.06`) and gear object (`02.09`, backed by domains 13/15) look like one taxonomy problem and are two things (`02.06` D-08, DT-06). Absorbing make/model into the instrument axis would turn the vocabulary into a product catalogue and duplicate 13/15. A boundary, not an interaction. |
+
+
+<!-- spec-graph: auto-generated -->
+## Related Specs
+
+### Constrained by
+- [[decisions.md#d-12|D-12]]
+- [[decisions.md#d-11|D-11]]
+- [[decisions.md#d-03|D-03]]
+- [[decisions.md#d-17|D-17]]
+- [[decisions.md#d-01|D-01]]
+- [[decisions.md#d-08|D-08]]
+- [[decisions.md#d-07|D-07]]
+- [[decisions.md#d-02|D-02]]
+- [[decisions.md#d-04|D-04]]
+- [[decisions.md#d-06|D-06]]
+- [[decisions.md#d-05|D-05]]
+- [[decisions.md#d-14|D-14]]
+- [[decisions.md#d-19|D-19]]
+- [[decisions.md#d-22|D-22]]
+- [[decisions.md#d-20|D-20]]
+- [[decisions.md#d-09|D-09]]
+- [[decisions.md#d-10|D-10]]
+- [[decisions.md#d-18|D-18]]
+- [[decisions.md#d-23|D-23]]
+- [[decisions.md#d-24|D-24]]
+- [[decisions.md#d-13|D-13]]
+- [[decisions.md#d-15|D-15]]
+- [[decisions.md#d-70|D-70]]

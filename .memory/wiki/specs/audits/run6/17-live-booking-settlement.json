@@ -1,0 +1,202 @@
+{
+  "domain": "17-live-booking-settlement",
+  "unitsAudited": 9,
+  "filesRead": 55,
+  "coverageNote": "Enumerated 9 units / 55 files from disk — exactly matches the expected 9/55. Units are the domain root (index + cx + 6 flat feature files) plus the 8 sub-domain directories 17.01, 17.02, 17.03, 17.05, 17.08, 17.09, 17.10, 17.11. All 9 index files and all 9 cx files were read in full. All 25 shallower feature files (10-25 KB) were read in full apart from Role Lens / Related Specs boilerplate. For the 12 deep-dived feature files (48-64 KB) I read Behavior, Edge Cases, States, Decisions and Open Questions in full for 17.01.01, and Decisions + Open Questions in full for the other eleven, supplemented by a programmatic cross-reference validation pass over all 55 files (every 17.x D-NN / Q-NN / DT-NN citation checked against the target file's actual tables) and targeted section reads of 17.09.02's count model. Rubric dimensions 1 (Problem Clarity), 2 (Persona Specificity), 4 (Constraint Explicitness), 5 (Success Measurability) and 6 (Competitive Positioning) are scored N/A for every unit: they are owned by meta/problem-statement.md, meta/personas.md, meta/constraints.md and meta/competitive-landscape.md, which are outside this domain and which these units correctly reference rather than restate. Dimensions 3, 7 and 8 are applicable to all 9 units, giving 27 applicable checkpoints. Overall quality is unusually high: every Open Questions row in all 9 units carries both an Owner and a Deferred To target, so no unit fails dimension 7's stated criteria on tracking form. The recurring defect class is different and narrower — in-body [PENDING] markers left behind in Edge Cases and States tables that assert a behaviour is 'undecided' while the same file's Open Questions table records that exact question as resolved with a concrete rule.",
+  "units": [
+    {
+      "unit": "17-live-booking-settlement (domain root)",
+      "applicableCheckpoints": 3,
+      "naDimensions": [1, 2, 4, 5, 6],
+      "points": 1.5
+    },
+    {
+      "unit": "17.01-availability-holds-confirmation",
+      "applicableCheckpoints": 3,
+      "naDimensions": [1, 2, 4, 5, 6],
+      "points": 0.5
+    },
+    {
+      "unit": "17.02-offers-negotiation",
+      "applicableCheckpoints": 3,
+      "naDimensions": [1, 2, 4, 5, 6],
+      "points": 0.5
+    },
+    {
+      "unit": "17.03-deal-structures-economics",
+      "applicableCheckpoints": 3,
+      "naDimensions": [1, 2, 4, 5, 6],
+      "points": 0.5
+    },
+    {
+      "unit": "17.05-deposits-balances-cancellation",
+      "applicableCheckpoints": 3,
+      "naDimensions": [1, 2, 4, 5, 6],
+      "points": 0
+    },
+    {
+      "unit": "17.08-agency-representation-commission",
+      "applicableCheckpoints": 3,
+      "naDimensions": [1, 2, 4, 5, 6],
+      "points": 0.5
+    },
+    {
+      "unit": "17.09-settlement-reconciliation",
+      "applicableCheckpoints": 3,
+      "naDimensions": [1, 2, 4, 5, 6],
+      "points": 0
+    },
+    {
+      "unit": "17.10-live-income-payout-tax",
+      "applicableCheckpoints": 3,
+      "naDimensions": [1, 2, 4, 5, 6],
+      "points": 0.5
+    },
+    {
+      "unit": "17.11-draw-history-market-intelligence",
+      "applicableCheckpoints": 3,
+      "naDimensions": [1, 2, 4, 5, 6],
+      "points": 0.5
+    }
+  ],
+  "findings": [
+    {
+      "findingId": "17-live-booking-settlement#001",
+      "unit": "17-live-booking-settlement (domain root)",
+      "severity": "blocking",
+      "dimension": 7,
+      "claim": "17.04's Edge Cases table permits blocking a prose edit that changes an economic term, while the same file's Q-02 records the ratified answer as 'never block'. The two statements cannot both hold, and the Edge Cases row carries a [PENDING] marker pointing at the question that already answered it.",
+      "evidence": ".memory/wiki/specs/ideation/17-live-booking-settlement/17.04-performance-contracts-deal-memos.md:60 — \"Economic fields are locked in the generated document; a prose edit that touches them is either blocked or flagged as an off-formula override. Exact detect/block/accept policy is `[PENDING — Step 5 Must-depth / /write-be-spec]` (Q-02)\" CONTRADICTS 17.04-performance-contracts-deal-memos.md:114 — \"Q-02 | ~~If an Operator edits generated prose to change an economic term...Detect, block, or accept?~~ **RESOLVED — detect and require acknowledgement; never block, never silently accept.**\" (citing 17.03.01 D-09: \"Free text is **not banned; economic content in it is detected and must be acknowledged**...Banning drives users to email and loses the deal\")",
+      "failure_scenario": "An implementer building the contract-generation surface reads the Edge Cases table — the canonical place this tree puts behavioural rules — and implements a hard block on a prose edit that touches an economic field, because the row says \"either blocked or flagged\" and marks the policy unresolved. A second implementer reads the Open Questions table and implements detect-and-acknowledge with no block at all. The two builds differ on whether an Operator can save an edited contract, which is the difference between the deal proceeding on-platform and the deal moving to email — the explicit failure 17.03.01 D-09 exists to prevent."
+    },
+    {
+      "findingId": "17-live-booking-settlement#002",
+      "unit": "17-live-booking-settlement (domain root)",
+      "severity": "warning",
+      "dimension": 7,
+      "claim": "17.07's Edge Cases and States tables declare the enquiry-lapse behaviour and the bulk-enquiry cap 'undecided', while the same file's Q-01 and Q-03 record both as resolved with concrete rules including a numeric default.",
+      "evidence": ".memory/wiki/specs/ideation/17-live-booking-settlement/17.07-booking-enquiry-inbox-rfq.md:70 — \"`[PENDING — Step 5 Must-depth / User Q-01]` — whether enquiries expire or auto-decline is a product decision, undecided\"; :101 — \"| Stale | No action after a period | `[PENDING — User Q-01]` — expiry-vs-auto-decline is an undecided product choice |\"; :72 — \"| Bulk enquiries from one sender across every room in a city | ... | `[PENDING — User Q-03]` |\" CONTRADICT :138 — \"Q-01 | ~~Do unanswered enquiries expire or auto-decline?~~ **RESOLVED — they lapse as `no-response`; they never auto-decline.** ... Default 7 days, Operator-configurable 1–30, warned at day 5.\" and :140 — \"Q-03 | ~~Is there a cap on bulk enquiries from one sender?~~ **RESOLVED — no cap; disclose multiplicity and conversion instead.**\"",
+      "failure_scenario": "An implementer specifying the enquiry lifecycle reads the States table, finds `Stale` triggered by \"No action after a period\" with the period marked undecided, and either invents a period or leaves the state unreachable. Meanwhile the resolved Q-01 fixes 7 days default, 1–30 configurable, warned at day 5, and forbids the `Declined` transition the word 'auto-decline' invites. Two implementers produce different lifecycle machines for the same enquiry, one of which records a decline the Operator never made — the exact fabrication 17.01.02 D-14 forbids."
+    },
+    {
+      "findingId": "17-live-booking-settlement#003",
+      "unit": "17-live-booking-settlement (domain root)",
+      "severity": "warning",
+      "dimension": 7,
+      "claim": "17.14's Edge Cases table marks the minimal field set for the lightweight support-booking flow as pending, while the same file's Q-01 records it as resolved to an exact six-field enumeration.",
+      "evidence": ".memory/wiki/specs/ideation/17-live-booking-settlement/17.14-bill-construction-support-slots.md:64 — \"A one-screen \\\"add opener\\\" flow (name, fee, slot) — full deal ceremony is not invoked; exact minimal field set `[PENDING — Step 5 Must-depth]`\" CONTRADICTS :116 — \"Q-01 | ~~**What is the lighter support-booking path?**~~ **RESOLVED — a six-field short form, authored in 17.02, everything else inherited from the room template.** `17.02.01` **D-20**: \\\"**Slot offers (slot ≠ headline) default to a six-field short form: deal type = flat, fee, date, slot, set length, expiry**\\\"\"",
+      "failure_scenario": "An implementer builds the add-opener screen from the Edge Cases row's three named fields (name, fee, slot) because the row says the exact field set is still pending. The ratified form has six (deal type = flat, fee, date, slot, set length, expiry). The resulting slot offer carries no date, no set length and no expiry, so it cannot expire under 17.02.04's clock and cannot be settled against 17.09.01's deduction of support fees off the top."
+    },
+    {
+      "findingId": "17-live-booking-settlement#004",
+      "unit": "17-live-booking-settlement (domain root)",
+      "severity": "warning",
+      "dimension": 7,
+      "claim": "17.14 specifies headline-cancellation cascade as settled behaviour in its Behavior/Edge Cases/States, and simultaneously re-opens the same question in its Open Questions table.",
+      "evidence": ".memory/wiki/specs/ideation/17-live-booking-settlement/17.14-bill-construction-support-slots.md:65 — \"| Headline show cancels | Every support's booking cascades to cancelled with it; the cancellation ladder (17.05.03) does not yet model this |\" and :79 — \"| Cascaded | Headline show cancelled | All supports' bookings die |\" CONTRADICT :118 — \"Q-03 | **Does** a headline cancellation automatically cascade to supports' bookings, and do supports get forfeit against the headliner or the promoter? ... | User | `/create-prd-architecture` |\"",
+      "failure_scenario": "An implementer reads the States table, treats `Cascaded` as a specified terminal state, and wires an automatic cascade from the headline booking's cancellation to every support booking. A second implementer reads Q-03, sees the cascade itself listed as an owner decision routed to /create-prd-architecture, and builds a prompt instead. The first build silently kills a support act's confirmed booking on a decision the owner has not made; 17.05.03 Q-03 mirrors the same compound question, so nothing downstream disambiguates before implementation."
+    },
+    {
+      "findingId": "17-live-booking-settlement#005",
+      "unit": "17-live-booking-settlement (domain root)",
+      "severity": "warning",
+      "dimension": 0,
+      "forcedInvention": "Whether a radius clause survives the cancellation of the show whose contract created it — and therefore whether a cancelled date's exclusion zone still blocks confirmation of a nearby date under 17.01.04 C-06.",
+      "claim": "17.06 raises the clause-survives-cancellation question, answers it 'usually yes; not always', defers it to a stage the tree records as completed, and carries no Open Questions row covering it. Its States table has no cancelled state, and its Cross-Cut Notes give a different answer.",
+      "evidence": ".memory/wiki/specs/ideation/17-live-booking-settlement/17.06-radius-clause-exclusivity.md:102 — \"| Clause on a show that is later cancelled | Does the clause die with the show? Usually yes; not always | `[PENDING — Step 5]` |\" — no owner, and the target stage is recorded as complete throughout the tree (e.g. live-booking-settlement-index.md:135 \"Re-pointed from the completed `/ideate-discover` Step 5\"). 17.06's Open Questions rows Q-01–Q-05 (:157–:160) cover carve-out shape, entity-vs-human binding, distance measurement, waiver default clock and standing pre-authorisation — none covers cancellation. The States table (:111–:120) has None / Live / Warned / Blocked / Waiver requested / Waiver refused / Breaching (break-glass) / Breaching (third-party) / Waived / Expired, with no cancelled state. Cross-Cut Notes :139 asserts a different rule — \"the clause becomes live on execution and **dies with the contract**\" — while 17.05.03 never terminates the contract on cancellation, only allocates forfeit against it.",
+      "failure_scenario": "An artist's Manchester show on 14 March is cancelled in January under 17.05.03. In February their agent tries to confirm a Sheffield date 38 miles away, inside the cancelled show's 60mi/30d radius window. One implementer reads Cross-Cut Notes :139, treats the clause as dead, and lets the confirm through. Another reads the States table, finds no state that retires a clause other than `Expired` (time window passed), leaves the clause `Live`, and 17.01.04 C-06 hard-blocks the confirm with no waiver obtainable — the constraining Operator no longer has a show to protect and has no reason to answer the waiver request, so the request lapses and the artist loses a second date to a show that no longer exists."
+    },
+    {
+      "findingId": "17-live-booking-settlement#006",
+      "unit": "17-live-booking-settlement (domain root)",
+      "severity": "warning",
+      "dimension": 0,
+      "forcedInvention": "The threshold at which an accumulated set of fan demand signals in a market becomes 'Meaningful' and is rendered as an aggregate count with confidence rather than as low-confidence accumulation.",
+      "claim": "17.13's States table gates a state transition on an unspecified 'threshold' with no number, no derivation rule, and no tracked open question covering it.",
+      "evidence": ".memory/wiki/specs/ideation/17-live-booking-settlement/17.13-fan-demand-signals.md:66 — \"| Meaningful | Signals above a threshold in a market | Aggregate count with its confidence |\" (compare :65 \"| Accumulating | Signals arriving | Demand map with low confidence |\"). 17.13's Open Questions (:102–:104) are Q-01 (is a Fan touchpoint wanted at all), Q-02 (brigading), Q-03 (request-to-attendance conversion) — none addresses the threshold. Contrast the sibling treatment in 17.01.02 D-16/D-18, which name their platform-default constants explicitly (\"Stale threshold: 30 days since placement or last counterparty contact\"; \"3 place-and-releases of the same slot by the same party in 30 days\") and escalate them for ratification at 17.01.02 Q-07.",
+      "failure_scenario": "Two implementers build the demand map. One sets `Meaningful` at 50 signals in a market, the other at 500. On the same corpus, one artist's Cardiff demand renders as a shareable aggregate a promoter can act on and the other's renders as low-confidence noise — and because D-05 makes exposure to promoters the artist's choice, the threshold decides whether the artist even has something to expose. The domain's own precedent (17.01.02 Q-07) is to name the constant and escalate it; here no constant exists and nothing escalates it."
+    },
+    {
+      "findingId": "17-live-booking-settlement#007",
+      "unit": "17-live-booking-settlement (domain root)",
+      "severity": "warning",
+      "dimension": 7,
+      "claim": "The domain cross-cut file cites 'index Q-02' twice as the question that bounds the settlement amendment window. The domain index's Q-02 is the settlement-finality-grain question and contains no amendment window; the same file also uses 'index Q-02' correctly for the grain question, so one identifier carries two incompatible meanings.",
+      "evidence": ".memory/wiki/specs/ideation/17-live-booking-settlement/live-booking-settlement-cx.md:202 — \"An amendment after disbursement is a clawback compounded across recipients (17.10.02) — the bound on the amendment window (index Q-02) is what makes it tractable.\" and :220 — \"**Amendment after disbursement has no clean chain** — index Q-02's amendment window bounds the liability.\" But live-booking-settlement-index.md:134 reads \"Q-02 | **[OWNER]** **Is a settlement final per show, or provisional until its run closes?** ... This **decides the settlement entity's grain**\". The amendment window is 17.09-settlement-reconciliation-index.md:79 — \"Q-03 | `[OWNER]` **How long may a finalised settlement be amended?**\". The same cx file uses the identifier correctly at :74 (\"index Q-02 — the settlement entity's grain\") and :307 (\"forcing the run to be the settlement grain (index Q-02)\").",
+      "failure_scenario": "A downstream author working the CX-06/CX-07 clawback chain follows 'index Q-02' to bound the amendment liability, lands on the finality-grain question, finds no window and no duration, and concludes the clawback bound is undecided at domain level. The actual bounding question — 17.09 index Q-03, which carries an unratified 14-day recommendation from 17.09.06 Q-01 — is never consulted, so the commission-clawback and multi-recipient-clawback designs (17.08.02 Q-01, 17.10.02 Q-02) are cut against a question that cannot answer them."
+    },
+    {
+      "findingId": "17-live-booking-settlement#008",
+      "unit": "17-live-booking-settlement (domain root)",
+      "severity": "warning",
+      "dimension": 7,
+      "claim": "The domain cross-cut file cites 17.01.01 Q-02 as the invite-only avail visibility question in two places; 17.01.01 Q-02 is the fill-boundary ratification. The visibility question is that file's Q-01, and 17.07's own Open Questions row cites it correctly — so the same reference is right in one place and wrong in three.",
+      "evidence": ".memory/wiki/specs/ideation/17-live-booking-settlement/live-booking-settlement-cx.md:32 — \"Invite-only avail scoping complicates the read (17.01.01 Q-02); link-recipient reply [4]\" and :418 — \"Invite-only avail scoping complicates the read (17.01.01 Q-02): a qualifier must respect who may see which window.\"; 17.07-booking-enquiry-inbox-rfq.md:71 — \"`[PENDING — User Q-02]` — interacts with 17.01.01 Q-02\". But 17.01.01-availability-calendar-avails.md:300 reads \"Q-02 | **Ratify the fill boundary.** D-08 sets it at 16.06.01 D-07's 42-day on-sale lead\", and the visibility question is :299 — \"Q-01 | **[OWNER]** **What is the default visibility tier for a room-date avail — invited or discoverable?**\". 17.07's own Open Questions row :139 cites it correctly: \"(Interacts with 17.01.01 Q-01, the avail default-visibility tier.)\"",
+      "failure_scenario": "A downstream author specifying enquiry auto-qualification against invite-only avails follows the CX-15 pointer to 17.01.01 Q-02, finds a 42-day on-sale-lead ratification with nothing about visibility, and either concludes the visibility scoping is unowned or invents a rule for who may address an enquiry to a room whose windows they cannot see. The actual owner question (17.01.01 Q-01, [OWNER] → /create-prd, plus 17.01.01 D-09's three tiers) is never reached from the cross-cut that flags the dependency."
+    },
+    {
+      "findingId": "17-live-booking-settlement#009",
+      "unit": "17-live-booking-settlement (domain root)",
+      "severity": "warning",
+      "dimension": 8,
+      "claim": "The domain index's Children table marks all 14 children `[SURFACE]`, contradicting the depth status recorded in each sub-domain's own index header and in those indexes' Children tables. A reader cannot tell which record is authoritative for pipeline depth gating.",
+      "evidence": ".memory/wiki/specs/ideation/17-live-booking-settlement/live-booking-settlement-index.md:52 — \"| 17.01 | Availability, Holds & Confirmation | sub-domain | [17.01-availability-holds-confirmation/](./17.01-availability-holds-confirmation/) | `[SURFACE]` | 12 hypotheses |\" and :60 — \"| 17.09 | Settlement & Reconciliation | sub-domain | ... | `[SURFACE]` | 20 hypotheses |\" CONTRADICT 17.01-availability-holds-confirmation-index.md:5 — \"> **Status**: [DEEP]\" with all four children marked `[DEEP]` at :25–:28, and 17.09-settlement-reconciliation-index.md:33–:39, which marks 17.09.01, .02, .05 and .06 `[DEEP]`. The domain index is dated \"2026-07-16\" (:6) while 17.02, 17.03 and 17.11 indexes are dated 2026-07-23 and the domain cx file 2026-07-30.",
+      "failure_scenario": "A workflow that selects the next node to deepen (or an auditor scoping which nodes still need a Step-5 pass) reads the domain index's Children table, sees 14 `[SURFACE]` nodes, and schedules deepening work for 17.01 and 17.09 — 10 leaf files that are already `[DEEP]` and carry ratified owner decisions. Conversely a reader trusting the domain index would not know that 17.05.04, 17.08.03, 17.10.03, 17.11.02, 17.11.03, 17.13 and 17.03.03 are the nodes genuinely still at `[SURFACE]` by design under ideation-index.md D-24."
+    },
+    {
+      "findingId": "17-live-booking-settlement#010",
+      "unit": "17.01-availability-holds-confirmation",
+      "severity": "warning",
+      "dimension": 7,
+      "claim": "Four cross-file references cite 17.01.02 Q-01 and Q-03 as live open questions. 17.01.02's Open Questions table carries neither id — both were retired into decisions and the rows deleted, leaving the citations dangling.",
+      "evidence": "17.01.02-hold-ladder-priority.md's Open Questions table (:271–:278) contains only Q-02, Q-04, Q-05, Q-06, Q-07, Q-08; its D-13 (:260) reads \"**No cap on concurrent holds.** ... Resolves old Q-01\" and D-14 (:261) reads \"**Requests lapse; holds expire.** ... Resolves old Q-3\". Dangling citations: 17.01.01-availability-calendar-avails.md:199 — \"the request lifecycle is 17.01.02's (its Q-03)\"; 17.01.03-challenge-release-expiry.md:132 — \"(Consistent with 17.01.02 Q-03's shape — an ignored request is the cheapest 'no')\"; 17.07-booking-enquiry-inbox-rfq.md:70 — \"The industry's cheapest way to say no without saying no (17.01.02 Q-03)\"; :72 — \"same shape as the hold-count question (17.01.02 Q-01)\". By contrast 17.01.02 D-20 (:266) documents its own renumbering explicitly and checks every corpus citation, showing the tree's own standard for this.",
+      "failure_scenario": "A downstream author resolving 17.07's enquiry-lapse behaviour follows the Edge Cases pointer to 17.01.02 Q-03, opens that file's Open Questions table, and finds no Q-03 at all. They either treat the reference as broken and invent a lapse rule, or conclude the question was silently dropped — when in fact D-14 fixes it precisely (lapse as `no-response`, never `declined`, default 7 days, Operator-configurable 1–30, warned at day 5). The same happens for the hold-count cap via the Q-01 citations, where D-13 fixes no-cap-plus-disclosure."
+    },
+    {
+      "findingId": "17-live-booking-settlement#011",
+      "unit": "17.02-offers-negotiation",
+      "severity": "warning",
+      "dimension": 8,
+      "claim": "17.02.03's D-07 and D-08 are cited as this file's own ratified decisions in four places, including by a sibling file three times, but neither appears in the file's Decisions table, which stops at D-06. The two decisions exist only as inline labels inside Edge Cases rows.",
+      "evidence": "17.02.03-offer-approval-chain.md Decisions table (:110–:117) lists D-01 through D-06 only. D-07 and D-08 appear only inline in Edge Cases: :71 — \"| Band has never configured a rule | **DQ-04.02 (D-07):** this feature does not invent one...\" and :70 — \"| Offer expires mid-approval | **DQ-04.03 (D-08):** the offer expires. There is **no implicit grace window**...\". They are then cited as ratified decisions at :123 — \"Source: this file's **D-07** (Edge Cases → \\\"Band has never configured a rule\\\")\", :124 — \"Source: this file's **D-08**\", and from the sibling 17.02.04-offer-expiry-withdrawal.md:50 (\"resolved by 17.02.03 D-08 / DEC-046\"), :98 and :99 (\"`17.02.03-offer-approval-chain.md` **D-08**\"). This is the only file in the domain where the programmatic check found inline-labelled decisions absent from the Decisions table.",
+      "failure_scenario": "A downstream author or propagation pass that harvests ratified decisions from Decisions tables — the tree's uniform convention across all 55 files — collects D-01…D-06 from 17.02.03 and misses the two decisions that actually carry the owner ratification DEC-046: the fail-closed no-default-governance-rule posture and the no-implicit-grace-window expiry rule. Both are load-bearing for 17.02.04's entire Edge Cases table and for 17.04's amendment path, so the harvested decision set silently omits the rules three sibling rows depend on."
+    },
+    {
+      "findingId": "17-live-booking-settlement#012",
+      "unit": "17.03-deal-structures-economics",
+      "severity": "warning",
+      "dimension": 3,
+      "claim": "17.03.03's Happy Path and States table specify one branch of the settlement-grain choice as settled behaviour — per-date numbers stay provisional and disbursement is blocked until the run closes — while the same file's Q-01 records that choice as an unmade owner decision between two live industry practices.",
+      "evidence": ".memory/wiki/specs/ideation/17-live-booking-settlement/17.03-deal-structures-economics/17.03.03-multishow-cross-collateralization.md:51 — \"When the final date settles, the run settles. Only then do per-date numbers become final and disbursement (17.10.02) can complete.\"; :69 — \"| Open | Run created, dates outstanding | Run-level projection; all per-date numbers provisional |\"; :71 — \"| Closed | Final date settled | Run settles; per-date numbers become final; disbursement unblocks |\" CONTRADICT :105 — \"Q-01 | **[OWNER]** Provisional-until-run-closes (correct, cashflow pain) or per-show-final-with-true-up (cashflow relief, clawback risk)? Both exist in the industry; this sets the settlement entity's grain. D-04 records it as escalated by design.\"",
+      "failure_scenario": "An implementer building the run state machine takes the States table at face value and blocks all disbursement on any date inside an open run until the final date settles. That is one of the two branches Q-01 leaves to the owner, and it is the branch 17.10.01 Q-05 and 17.10.02's `Provisional` state warn creates the cashflow problem 17.03.03's own Edge Cases call out (\"Run open for months; artist needs money now ... the artist has played 8 shows and cannot be paid\"). A second implementer reading Q-01 builds neither branch and blocks on the owner. The domain-level and 17.09-level twins of this question (live-booking-settlement-index.md Q-02, 17.09 index Q-01) both note that 17.09 assumes the opposite default throughout, so nothing in the tree arbitrates which assertion an implementer should follow."
+    },
+    {
+      "findingId": "17-live-booking-settlement#013",
+      "unit": "17.08-agency-representation-commission",
+      "severity": "warning",
+      "dimension": 7,
+      "claim": "Two Edge Cases rows in 17.08 mark the manager-versus-agent commission stacking question as pending against question ids that the corresponding Open Questions tables record as resolved.",
+      "evidence": "17.08.01-representation-commission-terms.md:86 — \"| Manager commission (percentage of everything) alongside agent commission (live only) | Two different instruments stacked on the same money | `[PENDING — Step 5]` (index Q-03) |\" CONTRADICTS 17.08-agency-representation-commission-index.md:64 — \"Q-03 | ~~Does the platform model **manager** commission...?~~ **RESOLVED — yes, manager commission is modelled, and it is modelled in domain 23, not here; 17.08 stays live-specific.**\". And 17.08.02-commission-accrual-deduction.md:57 — \"| Agent and manager both commission the same gross | Order of operations decides the artist's take | Must be explicit; `[PENDING — Step 5]` (17.08.01 Q-03) |\" CONTRADICTS 17.08.01-representation-commission-terms.md:135 — \"Q-03 | ~~When agent and manager commission stack on the same gross, what is the order of operations?~~ **RESOLVED — the platform never picks an order; the sequence is a contract term, pinned like the rate and the basis.**\"",
+      "failure_scenario": "An implementer building commission accrual reads 17.08.02's Edge Cases row, sees the stacking order marked pending, and either hard-codes an order (agent first, then manager, or the reverse) or refuses to compute when both instruments are present. The ratified rule is that the sequence is a pinned contract term read from the deal vault (23.06.02 D-04, 23.06.03's netting ledger) and the platform never chooses. Hard-coding an order produces materially different artist take-home on identical settlements — the exact failure 23.06 D-02 names (\"Recoup-then-commission and commission-then-recoup produce materially different numbers on the same income\")."
+    },
+    {
+      "findingId": "17-live-booking-settlement#014",
+      "unit": "17.10-live-income-payout-tax",
+      "severity": "warning",
+      "dimension": 7,
+      "claim": "17.10.03's Edge Cases table marks the reduced-rate prompt and the VAT boundary as pending, while the same file's Q-01 and Q-03 record both as resolved — one of them by a decision written in that same file.",
+      "evidence": "17.10.03-withholding-tax-vat.md:59 — \"| Artist qualifies for a reduced rate but never applied | Applications must precede the show; at settlement it is too late | `[PENDING — /ideate-discover Step 5 deepening]` — **the platform knows the date months ahead and could prompt** (Q-01) |\" CONTRADICTS :110 — \"Q-01 | ~~Should the platform prompt reduced-rate applications ahead of the show?~~ **RESOLVED — yes, and it fires at offer time.** This file's **D-02** decides it\" (and the States table already carries it at :73 — \"| Reducible | A reduced-rate mechanism is available | Prompt with the deadline, before the show |\"). Likewise :63 — \"| VAT on the fee alongside withholding | Two different taxes, two different mechanics, routinely conflated | `[PENDING — Step 5]` — see DT-03 |\" CONTRADICTS :112 — \"Q-03 | ~~Does VAT on live income belong in domain 23 rather than here?~~ **RESOLVED — yes. 23 owns VAT; this feature owns none of it.**\"",
+      "failure_scenario": "An implementer scoping 17.10.03 reads the Edge Cases table and concludes two things are still undecided: whether the platform prompts reduced-rate applications, and whether VAT belongs here. They either omit the reduced-rate prompt entirely — losing the whole pre-show window the feature's D-02 and D-04 exist to protect, after which \"the money is gone\" — or they build a VAT surface in domain 17 that duplicates 23.02.02's tax profile, which is exactly the two-records-of-one-fact fragmentation 17.08 D-01 and 17.11.02 D-04 are written to prevent."
+    },
+    {
+      "findingId": "17-live-booking-settlement#015",
+      "unit": "17.11-draw-history-market-intelligence",
+      "severity": "warning",
+      "dimension": 0,
+      "forcedInvention": "How a festival appearance is represented in the verified draw record — which value the mandatory three-value slot enum takes for a festival slot, and whether a festival show emits a draw record at all given the artist did not draw the field.",
+      "claim": "17.11.01 raises festival draw as an unresolved problem with no owner and a completed-stage deferral target, and no Open Questions row covers it — while the same file makes a three-value slot enum mandatory and never inferred, so a festival appearance has no expressible slot.",
+      "evidence": ".memory/wiki/specs/ideation/17-live-booking-settlement/17.11-draw-history-market-intelligence/17.11.01-verified-draw-record.md:58 — \"| Festival slot with 8,000 in the field | The artist did not draw 8,000; the festival did | `[PENDING — /ideate-discover Step 5 deepening]` — festival draw is not draw |\" (no owner; the target stage is recorded as complete throughout the tree). The file's own rule at :98 — \"| D-02 | Slot (headliner / support / opener) is mandatory and never inferred | Without it the record is false in the direction that flatters the artist, automating the abuse it should prevent (DT-01). |\" — and :30 — \"**Slot** — **headliner, direct support, or opener.**\". 17.11.01's Open Questions (:109–:111) are Q-01 (entity vs human — resolved), Q-02 (Operator read permission), Q-03 (adoption cost of append-only); none covers festivals. Festival dates are first-class elsewhere in the domain: 17.07-booking-enquiry-inbox-rfq.md:38 lists \"festival slot\" as an event type, 17.06:28 carves festivals out of radius clauses, and 17.08.01:37 uses \"a US agent does not commission a UK festival\" as its scope example.",
+      "failure_scenario": "A band plays a 14:00 slot at an 8,000-capacity festival; the settlement signs off and 17.11.01 D-01 requires a record to be emitted. The implementer must pick a slot value from a closed, mandatory enum that has no festival member. Choosing `headliner` records an 8,000 draw for an act that drew none of it — the precise falsification D-02 and CX-13 exist to prevent, and it then feeds 17.03.02's attendance seeding and 17.11.03's guarantee guidance. Choosing `opener` understates a genuine main-stage booking. Suppressing the record contradicts D-01. A second implementer picks differently, and the two corpora disagree on the most consequential field in the record."
+    }
+  ]
+}

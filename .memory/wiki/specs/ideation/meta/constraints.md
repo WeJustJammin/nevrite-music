@@ -117,11 +117,12 @@ interim user unit file deleted, `systemctl --user daemon-reload` confirms no res
 single live runner. Toolchain reachable, Cloudflare API egress confirmed **from the runner**,
 checkout succeeded, **0 minutes billable**.
 
-**Operator commands**:
+**Operator commands** (system-level `svc.sh` units — the fleet was migrated off the interim
+`systemd --user` units, see the runner-fleet section above):
 ```bash
-systemctl --user status  'github-runner@wejammin-*'   # health
-systemctl --user restart 'github-runner@wejammin-1'   # bounce one
-journalctl --user -u 'github-runner@*' -f             # live logs
+systemctl status  'actions.runner.WeJustJammin-nevrite-music.wejammin-*'   # health
+sudo systemctl restart actions.runner.WeJustJammin-nevrite-music.wejammin-1  # bounce one (scoped NOPASSWD)
+sudo journalctl -u 'actions.runner.*' -f                                    # live logs
 gh api repos/WeJustJammin/nevrite-music/actions/runners --jq '.runners[].status'
 ```
 
@@ -131,12 +132,14 @@ time. If builds start thrashing, reduce to 2 runners rather than adding memory p
 
 ### Open Infrastructure Actions
 
+> Updated 2026-07-18 (audit remediation). Completed items retained with ✅ for traceability.
+
 | Item | Status | Owner | Blocks |
 |---|---|---|---|
+| `gh auth login` as `WeJustJammin` | ✅ **DONE** — active account, `admin:true` on the repo | — | (was: push + runner registration) |
+| Install 3 self-hosted runners as systemd services | ✅ **DONE** — `actions.runner.*` system units, autostart, verified by smoke test | — | — |
 | Point `wejamm.in` DNS at Cloudflare | **NOT DONE** — domain not yet forwarding to Cloudflare | User | `/setup-workspace-hosting` |
-| `gh auth login` as `WeJustJammin` | **NOT DONE** — currently authed as personal account `NEVRITERob` | User (interactive; agent cannot handle credentials) | Initial `git push`; self-hosted runner registration |
-| Install 2–3 self-hosted runners as systemd services | **NOT DONE** — blocked on gh reauth | User + Agent | `/setup-workspace-cicd` |
-| Convert `WeJustJammin` from User account → Organization | **OPEN QUESTION** — currently `type: User` (id 305953066). Orgs give teams, scoped repo roles, and runner groups. Cheapest to do now while the repo is empty. | User | — |
+| Convert `WeJustJammin` from User account → Organization | **OPEN — decide before `/setup-workspace-cicd`** — currently `type: User` (id 305953066). Orgs give teams, scoped repo roles, and runner groups; cheapest while the repo is small. **Deadline: before CI/CD is wired, since runner groups depend on it.** | User | `/setup-workspace-cicd` |
 
 ## Architecture Concerns Reclassified Out of the Product
 
@@ -162,7 +165,9 @@ time. If builds start thrashing, reduce to 2 runners rather than adding memory p
   where a usage-based equivalent exists. Any capability that would add a fixed monthly floor
   (e.g. a hosted search cluster, a media-transcode pipeline) must be justified against a
   cheaper edge/managed alternative.
-- **Not a hard ceiling number** — "keep it cheap" is the rule, no fixed $/month cap set.
+- **Hard pre-revenue infrastructure cap**: **$0/month** — confirmed by User on 2026-08-02.
+  No paid fixed service or chargeable usage may be enabled before revenue. Free tiers, grants, and
+  credits are permitted only when billing cannot begin automatically without renewed approval.
 
 ## Timeline
 
@@ -170,7 +175,7 @@ time. If builds start thrashing, reduce to 2 runners rather than adding memory p
 
 - **Target**: **Wedge-first, fast — 3–6 months to a first shippable v1.**
 - **Strategy**: ship the provenance wedge + consolidation core; defer the rest to later phases.
-- **Implication**: `/plan-phase` must sequence aggressively. The 195 Musts (D-20) are NOT all v1 —
+- **Implication**: `/plan-phase` must sequence aggressively. The 230 Musts (D-20 + D-85) are NOT all v1 —
   see **V1 Scope** below. Phasing is now a hard planning input, not a deferred question.
 
 ## Team
@@ -181,17 +186,17 @@ time. If builds start thrashing, reduce to 2 runners rather than adding memory p
 - **Implication**: no parallel human workstreams. Everything is sequential build by one person
   with AI leverage. This makes ruthless phasing essential and strongly favors managed services
   (Supabase/Cloudflare do the operational heavy lifting) over anything requiring ops attention.
-  A 24-domain platform is a multi-year road solo; v1 must be a tight, buildable slice.
+  A 25-domain platform is a multi-year road solo; v1 must be a tight, dependency-ordered slice.
 
 ## Release Plan (planning constraint — derived, owner-confirmed)
 
-> Confirmed 2026-07-18, **revised same day** to split the release. This is the single most
+> Confirmed 2026-07-18, revised 2026-08-02 by D-85 to add the CMS/settings foundation. This is the single most
 > important input to `/plan-phase`. Derived from Team=solo + Timeline=3–6mo wedge-first + owner's
 > explicit two-release decision (D-31).
 
 **The v1 marketplace risk was accepted then mitigated by splitting the release into two.**
 
-### v1 — the session spine (first release, ~45 Musts, 5 domains)
+### v1 — session spine + CMS/settings foundation (first release, ~80 Musts, 6 domains)
 
 The irreducible wedge: hire → do the work → capture credit + split at source → on one identity.
 This is what's genuinely buildable solo in 3–6mo AND delivers the unrepeatable provenance wedge.
@@ -199,11 +204,12 @@ This is what's genuinely buildable solo in 3–6mo AND delivers the unrepeatable
 | # | Domain | Role in v1 | Musts |
 |---|---|---|---|
 | 01 | Identity, Profiles & Organizations | the account everything hangs off | 10 |
-| 02 | Credits & Attribution | the wedge — capture at source | 9 |
+| 02 | Credits & Attribution | the wedge — capture at the **first sharing moment** (D-70, 2026-07-22; capture-at-source is the *direction*, not the v1 claim — see § Project Surfaces, Desktop row) | 9 |
 | 05 | Services Marketplace | hiring = the funnel into the room | 10 |
 | 07 | Music Projects & Collaboration | where the work happens | 9 |
 | 09 | Rights & Ownership | **split CAPTURE only** (not collection) | 7 |
-| | **v1 total** | | **~45 Musts** |
+| 25 | Content Management & Platform Configuration | first-party CMS, admin, publishing, navigation, media governance, and settings control plane | 35 |
+| | **v1 total** | | **~80 Musts** |
 
 ### v1.5 — the marketplaces (soon after v1, ~26 Musts, 3 domains)
 
@@ -224,6 +230,12 @@ Royalties/Collection (10), Licensing (11), Release/Distribution (12), Live/Event
 Fanbase (20), Promotion (21), Analytics (22), Career/Finance (23), Community (03), Opportunities
 (04), Education (06), Real-Time Jamming (08). Trust & Safety (24) product surface phases in, but a
 **baseline moderation capability is needed from v1** (UGC exists the moment Projects ships).
+
+**"Baseline moderation" (v1) is defined as**: (1) a **report/flag** control on user content and
+profiles; (2) an **admin takedown** action (remove content, suspend account); (3) **DMCA §512**
+notice-and-takedown intake + repeat-infringer tracking; (4) a minimal **audit log** of moderation
+actions. NOT in v1 baseline: automated content classification, dispute-resolution workflows, trust
+scoring, appeals — those arrive with the full domain-24 surface in phase 2.
 
 **Why the split resolves the risk** (D-31): the original single-v1 (~71 Musts, 8 domains, all
 marketplace physics at once, solo, 3–6mo) was flagged as over-aggressive. Splitting lets the
@@ -266,12 +278,17 @@ international expansion is additive (field-level data-residency awareness) but n
 - **Scale expectation (v1)**: professional users, not consumer scale — thousands, not millions.
   Fan/consumer scale (D-13) arrives in phase 2 with domain 20, and *that* is when the budget
   must account for orders-of-magnitude more traffic.
-- **Latency**: real numbers set at `/create-prd-compile`. Note the one hard physical constraint
-  already surfaced: Real-Time Jamming (08, phase 2) has a ~25–30ms desync ceiling — but that's
-  out of v1 scope.
-- **Availability**: the predecessor's "99.9% uptime" claim is aspiration, not a locked budget.
-  The Cloudflare edge already provides strong baseline availability. Real target at
-  `/create-prd-compile`.
+- **Latency**: **normal-web p95 must be <2 seconds** for first-party interactive web requests at
+  expected v1 load — confirmed by User on 2026-08-02. This is a web-response target, not the
+  phase-2 real-time-jamming constraint: upload transfer, asynchronous/background work, and waiting
+  for a third party to complete are measured and surfaced separately rather than being represented
+  as a fast first-party response. Real-Time Jamming (08, phase 2) has its own ~25–30ms desync
+  ceiling and remains out of v1 scope.
+- **Availability**: **99.9% monthly availability, excluding scheduled outages** — confirmed by User on
+  2026-08-02. There is no permitted unplanned-downtime budget. The predecessor's "99.9% uptime"
+  claim is superseded; the Cloudflare edge provides a baseline, not a substitute for this requirement.
+  `/create-prd-compile` must define a scheduled outage's notice, finite start/end window, and
+  emergency-maintenance treatment; it cannot be used to relabel an incident as maintenance.
 - **Lean implication**: performance work should ride the edge platform's built-in capabilities
   (Cloudflare caching, Workers) before adding paid performance infrastructure.
 
@@ -280,8 +297,8 @@ international expansion is additive (field-level data-residency awareness) but n
 | Surface | Type | Cross-Platform? | Notes |
 |---------|------|----------------|-------|
 | Web app | Astro islands — static + SSR via Workers | N/A | **Primary and only declared surface.** Responsive; must serve on-the-go use (gig/venue/studio contexts). |
-| Desktop | — | — | Not in scope. No directive. |
-| Mobile (PWA) | PWA over the Astro web app | N/A | **v1**: web is installable as a PWA (home-screen, web push for gig alerts). Serves the phone-shaped workflows without a separate surface. |
+| Desktop | — | — | **NOT AUTHORISED** (owner decision 2026-07-22, D-70). No WeJammin-installed client software runs on a user's own machine — no watch-folder agent, no DAW plugin, no other locally-installed binary. This is a rule, not an absence: it replaces the previous "Not in scope. No directive.", which a future reader could re-read as permission. **Reopens only on the four evidence items enumerated below** — see § Desktop Surface — Reopen Evidence. |
+| Mobile (PWA) | PWA over the Astro web app | N/A | **v1**: web is installable as a PWA (home-screen, web push for gig alerts **and — assigned 2026-07-22, D-70 — the 07.06.02 session-close capture prompt**: the Tier 1 contributor card and the Tier 2 Producer card are delivered in v1 by PWA web push plus the in-app surface). Serves the phone-shaped workflows without a separate surface. |
 | Mobile (native) | Native app | Yes | **Phase 2** (owner-confirmed 2026-07-18). Web-first now; a native surface is planned for phase 2, primarily serving Live/Events (16–19) and Fanbase (20) — the phone-context domains. Tracked as a **future surface**, so v1 classification stays `single-surface`; the native port is a separate future project. Per `vertical-slices.md` surface-first strategy. |
 | API | `[PENDING — /create-prd]` | N/A | Marketplace + integrations + a future native mobile client all imply a public/internal API. `/create-prd` should design the data layer API-first so the phase-2 native app consumes the same contracts. |
 | CLI | No | No | Not applicable. |
@@ -297,3 +314,92 @@ international expansion is additive (field-level data-residency awareness) but n
 >
 > Surface classification drives tech stack in `/create-prd`, folder structure in
 > `/decompose-architecture`, and spec shapes downstream.
+
+> **⚠️ VERIFY BEFORE RELYING ON IT** (D-70): web push on **iOS Safari requires the PWA to be
+> installed to the home screen**. No source in the ideation tree states this platform fact, and the
+> v1 capture-prompt assignment above depends on it. Verify at `/create-prd-stack` before treating
+> PWA push delivery as guaranteed for iOS contributors.
+>
+> **Payload caveat, ratified with the assignment** (D-70): deciding the pipe does not fill it. With
+> no DAW parse in v1, the capture card's pre-fill sources are the session roll (`07.06.01`) and the
+> roster (`07.03.01`) only, and `07.06.02` D-11 suppresses a card with neither. "Push is decided"
+> must not be read downstream as "the card is full". The close **signal** is likewise limited in v1
+> — producer tap, booked end and the 72 h backstop apply; DAW close is unavailable as a trigger.
+
+### Desktop Surface — Reopen Evidence
+
+> Owner decision 2026-07-22 (D-70, from queue entry DQ-08.2). The Desktop row above is a
+> **prohibition with a named exit**, not a deferral to a stage. Nothing reopens it except the
+> four evidence items below, each of which is an **owner-decision input**.
+
+| # | Evidence required before the Desktop row may be reopened | Source question |
+|---|---|---|
+| (a) | Can producers on locked-down commercial studio machines install anything at all, or are the highest-value users permanently unreachable by a client? | `07.09.01` Q-02 / DT-03(b) |
+| (b) | Does real-session evidence show DAW track names carrying person signal often enough to be worth a client? (The track-name premise is currently "asserted from reasoning, not verified" and is the strongest single assumption in domain 07.) | domain 07 Q-08 / `07.09.02` Q-03 |
+| (c) | A **costed** statement of a local agent's builds, updates, code signing, notarisation and support load, weighed against Team = Solo and Budget = Lean. | `07.09.01` DT-03(a) |
+| (d) | A read-scope model that is **verifiable, not asserted**, for studios holding confidential client material. | `07.09.01` D-06 / DT-03(c) |
+
+**The parser gate is separate and additional.** `07.09` D-04 / D-37 (representative real-session
+validation + DAW-specific legal review) applies *after* the surface question, never instead of it.
+Satisfying (a)–(d) reopens the surface; it does not authorise a parser.
+
+**Consequence for `/create-prd-stack`**: no agent distribution, code signing, notarisation or
+auto-update design is required for v1. The domain-07 CX "Local Agent Distribution, Signing,
+Auto-Update & Security Model" not-product row has no v1 brief.
+
+**Follow-on, unassigned**: nobody is currently tasked with gathering (a)–(d). They are owner-decision
+inputs, not tracked work. Recorded as `vision.md` Q-07.
+
+**Open-decision governance.** The **Owner** is User; the hard decision deadline is immediately before
+`/create-prd-stack` begins; and the decision blocks whether the v1 local-agent surface may reopen.
+The required evidence is (a)–(d) above; until the owner records a superseding decision, no v1 agent
+distribution, signing, notarisation, or auto-update work may begin.
+
+### Jurisdiction Parameterization — launch profile
+
+> Owner decision 2026-07-22 (D-72, from queue entry DQ-14). Applies D-32's second half
+> ("keeps the data model jurisdiction-parameterized so later international expansion is additive,
+> not a rewrite") to the statutory-record vocabulary that domain 16 and its consumers depend on.
+
+- **The regime axis exists and is retained.** Statutory facts are held against a named
+  **jurisdiction profile**, never against a hard-coded national vocabulary.
+- **Exactly one profile is authored at launch: `US`.** Every other territory — including the UK,
+  whose vocabulary the specs were originally drafted in — is an **UNAUTHORED profile**. Its
+  statutory fields resolve to an explicit `unknown`, never to a silent UK default. This follows
+  the precedent D-46 set for term and moral-right status: author the determinate jurisdictions,
+  make every other territory an explicit unknown rather than a guess.
+- **Profiles declare capabilities, not instruments.** A place, room or record names a statutory
+  **capability** the profile declares; it does not name a national instrument as *the* instrument.
+  The capability vocabulary is deliberately small — it must not grow into a rules engine.
+- **The US profile's five statutory slots are locked** (occupancy ceiling, liability cover,
+  electrical/fire safety record, performing-rights licence status, hirer requirements), each with an
+  **issuer** and an **expiry**, and each a *declaration* — never a platform-verified certificate.
+- **The US instrument NAMES are deferred to `/create-prd-security`**, which owns the empirical
+  legal work under D-32. No ideation source contains them, and this pipeline will not assert them.
+  The `[PENDING]` marker in `16.01.06` stays **live** and is re-pointed at that stage.
+- **Register availability is per licensing authority, not per profile.** The profile names the
+  register *class* that applies; actual availability resolves per licensing authority for the
+  record's address, and renders `unknown` where unresolved.
+- **No statutory temporary permission exists where there is no statutory condition.** Where a
+  profile declares no per-venue licence capability, there is no temporary-permission analogue to
+  map; date-ranged conditions survive as Operator claims labelled as claims.
+
+
+<!-- spec-graph: auto-generated -->
+## Related Specs
+
+### Constrained by
+- [[decisions.md#d-20|D-20]]
+- [[decisions.md#d-85|D-85]]
+- [[decisions.md#d-31|D-31]]
+- [[decisions.md#d-70|D-70]]
+- [[decisions.md#d-10|D-10]]
+- [[decisions.md#d-13|D-13]]
+- [[decisions.md#d-28|D-28]]
+- [[decisions.md#d-11|D-11]]
+- [[decisions.md#d-06|D-06]]
+- [[decisions.md#d-04|D-04]]
+- [[decisions.md#d-37|D-37]]
+- [[decisions.md#d-72|D-72]]
+- [[decisions.md#d-32|D-32]]
+- [[decisions.md#d-46|D-46]]

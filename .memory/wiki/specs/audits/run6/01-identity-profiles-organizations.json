@@ -1,0 +1,137 @@
+{
+  "domain": "01-identity-profiles-organizations",
+  "treeRoot": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/01-identity-profiles-organizations",
+  "unitsAudited": 7,
+  "filesRead": 38,
+  "charsRead": 940580,
+  "coverageNote": "Enumerated from disk: 7 units (domain root + 6 sub-domain directories, each containing an *-index.md), 38 .md files, 940,580 chars — exactly the expected 7 units / 38 files. Every file was read in full. Rubric dimensions 2 (Persona Specificity), 5 (Success Measurability) and 6 (Competitive Positioning) are marked N/A for all seven units: personas are defined in meta/personas.md and explicitly may not be redefined here ('NEVER redefine a persona here — reference only'), success metrics and competitive landscape live in meta/. Dimensions 1, 3, 4, 7 and 8 were scored on every unit. Blocking implementer-simulation forced inventions are added as extra ❌ punch checkpoints per scoring.md, which is why units 01.01 and 01.03 carry 6 applicable checkpoints rather than 5. Notable systemic pattern: five of the seven units carry at least one `[PENDING — Step 5]` / 'flagged for Step 5' marker whose question has since been answered elsewhere in the tree (Step 5 has demonstrably run — 01.04.03 says so in as many words: 'the old Step 5 deferral has expired, that stage having run'). A re-targeting sweep on 2026-07-23 fixed these in the Open Questions tables of 01.02.01, 01.02.02, 01.04 index, 01.04.01, 01.04.02 and 01.04.04 but did not reach the CX files or the Edge Case cells; findings #004, #006, #008 and #009 are the residue.",
+  "units": [
+    { "unit": "01-identity-profiles-organizations (domain root)", "applicableCheckpoints": 5, "naDimensions": [2, 5, 6], "points": 0.5,
+      "dimensionScores": { "1": "✅", "3": "✅", "4": "✅", "7": "✅", "8": "⚠️" } },
+    { "unit": "01.01-person-identity-roles", "applicableCheckpoints": 6, "naDimensions": [2, 5, 6], "points": 1.5,
+      "dimensionScores": { "1": "✅", "3": "⚠️", "4": "✅", "7": "✅", "8": "✅", "punch-❌": "forced invention #001" } },
+    { "unit": "01.02-organizations-entity-model", "applicableCheckpoints": 5, "naDimensions": [2, 5, 6], "points": 1.0,
+      "dimensionScores": { "1": "✅", "3": "⚠️", "4": "✅", "7": "⚠️", "8": "✅" } },
+    { "unit": "01.03-membership-representation-mandate", "applicableCheckpoints": 6, "naDimensions": [2, 5, 6], "points": 1.5,
+      "dimensionScores": { "1": "✅", "3": "⚠️", "4": "✅", "7": "✅", "8": "✅", "punch-❌": "forced invention #002" } },
+    { "unit": "01.04-band-ensemble-governance", "applicableCheckpoints": 5, "naDimensions": [2, 5, 6], "points": 1.0,
+      "dimensionScores": { "1": "✅", "3": "⚠️", "4": "✅", "7": "⚠️", "8": "✅" } },
+    { "unit": "01.05-profile-claiming-verification", "applicableCheckpoints": 5, "naDimensions": [2, 5, 6], "points": 0.5,
+      "dimensionScores": { "1": "✅", "3": "✅", "4": "✅", "7": "⚠️", "8": "✅" } },
+    { "unit": "01.06-portfolio-media-epk", "applicableCheckpoints": 5, "naDimensions": [2, 5, 6], "points": 1.0,
+      "dimensionScores": { "1": "✅", "3": "⚠️", "4": "✅", "7": "⚠️", "8": "✅" } }
+  ],
+  "totals": { "points": 7.0, "applicableCheckpoints": 37, "ambiguityPercent": 18.92 },
+  "findings": [
+    {
+      "findingId": "01-identity-profiles-organizations#001",
+      "unit": "01.01-person-identity-roles",
+      "severity": "blocking",
+      "dimension": 3,
+      "claim": "01.01.03 specifies per-type mandate scoping on a multi-type org as settled, live behaviour, while the two files that own the mandate model state that per-type scoping does not exist and that a mandate covers the org uniformly. Neither statement carries a pending marker on the 01.01.03 side.",
+      "evidence": "01.01.03-acting-context-switcher.md:129 — Edge Case row: \"Mandate is per-capability on a multi-type org (mandated for the shop, not the venue — D-06 global, 01.02.03) | The switcher lists **parties, not capabilities**. One org = one context; capability narrowing is within-context surface filtering, identical to the narrow-mandate row above | One `Metropolis` context; shop surfaces present, venue surfaces absent\". Reinforced at 01.01.03-acting-context-switcher.md:151 — States/Partial: \"Mandate exists but is scoped narrowly ... **or a multi-type org grants capability on one type only** | Context available; unavailable actions **absent** rather than shown-and-denied\". CONTRADICTED BY 01.02-organizations-entity-model/01.02.01-organization-types-attributes.md:87 — \"Member holds a mandate for one type but not another (mandated for the shop, not the venue) | `[Not modelled]` — mandate (01.03.03) covers the org uniformly. Attribute-level mandate scoping would need per-type mandates, which 01.03.03 does not define. Recorded as Q-04 rather than invented here | **Full edit access to all types they can administer**\"; by 01.02.01 Q-04 (line 164) — \"**Until it does, the answer is no** and it is recorded as a known gap, not invented\"; by 01.02.01:128 — \"Mandate covers the org uniformly, so a member mandated for the shop can also edit the venue\"; and by identity-profiles-organizations-cx.md:297 (CX-15 §3) — \"A mandate covers the org UNIFORMLY today — a member mandated for the shop can also edit the venue. Per-type mandates are not defined, left as an open question (01.03 index Q-02 / 01.03.03 Q-02) rather than invented.\" 01.03.03 Q-02 (line 125) confirms it is still open.",
+      "forcedInvention": "An implementer building the acting-context switcher's surface-filtering must invent whether a member of a multi-type org can hold authority over one type and not another. 01.01.03 says yes and specifies the rendering; 01.02.01/01.03.03/domain CX-15 say no and record it as a tracked open question. Two competent implementers reading independently build opposite systems: one filters org surfaces by per-type grant, the other renders all types' surfaces to any administer-holder.",
+      "twoImplementerTest": "FAILS. The 01.01.03 citation of \"D-06 global, 01.02.03\" does not rescue it — that decision establishes that org *type* is a set, not that a *mandate* can be scoped to a subset of that set."
+    },
+    {
+      "findingId": "01-identity-profiles-organizations#002",
+      "unit": "01.03-membership-representation-mandate",
+      "severity": "blocking",
+      "dimension": 0,
+      "claim": "The ratified default band mandate caps 'all seven activities' at 'USD 1,000 per act', but the tree never states how a monetary per-act ceiling applies to the activities that carry no monetary amount — `administer`, `list`, `release`. The two ratified pieces of user-facing copy for the same moment disagree about which verbs the ceiling binds.",
+      "evidence": "01.03.03-mandate-scope-delegated-authority.md:40-41 — \"**Peer seed** (D-07) | Every **`confirmed`** membership edge whose current capacity period is `permanent` carries the **full seven-activity set**\" / \"**Value ceiling** (D-08) | Seeded authority is capped at **USD 1,000 per act**, configurable per band. Acts above the ceiling escalate to the owning-mandate holder, who is uncapped\". The seven verbs are fixed at D-01 (line 108): \"book / sign / spend / list / release / settle / administer\". Line 48 then states the `administer` consequence with no ceiling qualification at all: \"**The seed includes `administer`.** Any confirmed permanent member can therefore alter another member's mandate, invite, and remove.\" Domain index identity-profiles-organizations-index.md:110 (D-09) states the ceiling over the whole set: \"every `confirmed` `permanent` band membership edge carries all seven activities (book/sign/spend/list/release/settle/administer) **up to USD 1,000 per act**\". The two ratified capture-screen copies for the identical moment disagree: 01.01-person-identity-roles/01.01.02-artist-names-aliases-projects.md:92 (E-28) — \"Everyone here will also be able to act for the band — **book, sign, spend, settle — up to $1,000 each, and change each other's permissions**\" (places `administer` outside the ceiling clause and omits `list` and `release` entirely), versus 01.03.03-mandate-scope-delegated-authority.md:71 for the same shared-alias capture — \"Everyone here will be able to act for the band **up to $1,000 each**. You can change that later.\" No open question covers this: Q-03 (line 126) asks only whether the ceiling should later become the band's own agreed threshold, and Q-04 (line 127) asks only what a *representation* edge's ceiling is when unset.",
+      "forcedInvention": "An implementer must invent the ceiling's semantics for valueless acts. Reading A: acts with no monetary value are unconstrained, so any confirmed permanent member may unilaterally remove another member, add an org type (01.02.03 D-05), or publish a release. Reading B: acts with no resolvable value cannot be evaluated against the ceiling and therefore escalate to the uncapped owning-mandate holder, making member removal an owner-only act. The product consequence is the largest in the sub-domain — whether peer members can eject each other without escalation — and 01.04.01 D-05 makes the disclosure copy for exactly this a hard requirement on two surfaces that currently say different things.",
+      "twoImplementerTest": "FAILS on both the rule and its copy."
+    },
+    {
+      "findingId": "01-identity-profiles-organizations#003",
+      "unit": "01.02-organizations-entity-model",
+      "severity": "warning",
+      "dimension": 3,
+      "claim": "01.02.03 specifies type removal with live data as a plain block 'same rule as closure', but 01.02.02 replaced closure's plain block with the `closing` intent state precisely because a plain block is a hostage surface — and 01.02.02 names 01.02.03's rule as still carrying that bug, with no open question tracking it.",
+      "evidence": "01.02.03-organization-type-transitions.md:45 — \"Type removed while its data is live (removing `venue` with shows booked) | **Blocked, same rule as closure (01.02.02)** | 'You have upcoming shows as a venue. Resolve them before removing this capability.'\" But 01.02.02-organization-creation-lifecycle.md:250 (D-09) — \"A `closing` intent state exists, entered unilaterally, completing automatically when the last obligation clears | DT-07 — otherwise a counterparty who won't settle holds the org open forever\", and 01.02.02:207 (DT-07) — \"**Closure blocked must not mean closure denied.**\" 01.02.02 explicitly flags the sibling: 01.02.02-organization-creation-lifecycle.md:225 — \"Touches **01.02.03 Type Transitions** ... **Two escalations**: ... (b) **that file's 'type removed while its data is live ⇒ blocked' carries DT-07's hostage bug and wants the same `closing`-shaped intent state.**\" 01.02.03's Open Questions (lines 101-102) carry only Q-01 (legally-two-entities) and Q-02 (reputation fairness); neither covers this.",
+      "forcedInvention": "An implementer building type removal must invent whether a counterparty who refuses to settle can hold a capability open indefinitely, or whether type removal gets a `closing`-shaped intent state. 'Same rule as closure' now denotes two mutually exclusive behaviours depending on whether the reader follows the reference to 01.02.02's current D-09."
+    },
+    {
+      "findingId": "01-identity-profiles-organizations#004",
+      "unit": "01.02-organizations-entity-model",
+      "severity": "warning",
+      "dimension": 7,
+      "claim": "The sub-domain CX file records the divergent-terminal-state question as unmodelled and pending an already-completed stage, while 01.02.02 D-17 and the domain CX record it as RESOLVED with the answer.",
+      "evidence": "01.02-organizations-entity-model-cx.md:66 (CX-03 §1) — \"Lifecycle state is on the party; type is a set on the party. A multi-type entity with divergent terminal states per type is **unmodelled** — `[PENDING — Step 5]`, and it is the sharpest open question in the sub-domain.\" CONTRADICTED BY 01.02.02-organization-creation-lifecycle.md:112 — \"**A multi-type entity has one lifecycle state, on the party** (D-17, DT-15) — **resolving the sub-domain CX file's sharpest open question.** Ending one capability of a band+label is a **type removal** (01.02.03), not a lifecycle transition\"; by 01.02.02 D-17 (line 258); and by identity-profiles-organizations-cx.md:164 (CX-07 §1) — \"The divergent-terminal-state gap is **RESOLVED** (01.02.02 → 01.02.03, D-17/DT-15): ending one capability on a multi-type entity is a **type removal**, not a per-type terminal state.\" The deferral target `Step 5` has itself expired: 01.04.03-treasury-mandate.md:54 states \"the old `Step 5` deferral has expired, that stage having run\". The marker therefore has no valid owner and no live deferral target.",
+      "forcedInvention": "None required if the reader happens to open 01.02.02; but a reader working from the sub-domain CX — the file whose stated job is 'Connections between children' — is told the sharpest question in the sub-domain is unanswered, and the tracking points at a stage that has already run and did not take it."
+    },
+    {
+      "findingId": "01-identity-profiles-organizations#005",
+      "unit": "01.04-band-ensemble-governance",
+      "severity": "warning",
+      "dimension": 3,
+      "claim": "01.04.02's Cross-Cut Notes assert that the shared-alias case has no governance home and cite the file's own Edge Cases as the source — while that very Edge Case row states the opposite in emphatic terms.",
+      "evidence": "01.04.02-name-trademark-ownership.md:73 — \"Touches **01.01.02 Artist Names, Aliases & Projects** ... — a band releases under an alias; **the shared-alias case has no governance home (Edge Cases)**.\" CONTRADICTED BY 01.04.02-name-trademark-ownership.md:48, the cited Edge Cases row — \"Band is a shared alias rather than an org | **Unreachable — the state does not exist.** 01.01.02 **D-04** (closing their Q-01) makes a co-owned name a `band` org by construction: 'aliases are single-owner'. The feared outcome — **name ownership with no governance home** — was the argument *for* that routing ... | Nothing. **Every shared name has a governance home because every shared name is an org**.\" Confirmed upstream at 01.01-person-identity-roles/01.01.02-artist-names-aliases-projects.md:152 (D-04) and at identity-profiles-organizations-cx.md:23 (CX-12).",
+      "forcedInvention": "An implementer reading the cross-cut inventory (the surface downstream stages consume for dependency mapping) is told a governance-less shared-name state exists and must be handled. It does not exist, and building for it would reintroduce the co-owned alias that D-04 abolished."
+    },
+    {
+      "findingId": "01-identity-profiles-organizations#006",
+      "unit": "01.04-band-ensemble-governance",
+      "severity": "warning",
+      "dimension": 7,
+      "claim": "01.04.04's Edge Cases carry a `[PENDING — Step 5]` marker for a question the same file's own Q-02 records as fully RESOLVED, with the answer quoted.",
+      "evidence": "01.04.04-dissolution-succession.md:46 — \"Name transfers to one faction | Followers transfer with the name (01.04.02 DT-03) — an audience built by four people goes to one. The platform can see this and should not do it silently | Fans see the band's page change hands `[PENDING — Step 5: what exactly are they told?]`\". CONTRADICTED BY the same file's Q-02 (line 95) — \"~~If the name transfers, what exactly are the followers told — and can they opt out of following the successor?~~ **RESOLVED — they are told who it moved from and to, at the moment it moves, and yes: the same one-click exit they always had.** ... 20.01.05 **D-04** — 'Fans are notified on transfer' ... Happy Path §6: '**Fans receive a notice naming the successor entities and offering one-click exit**'.\" The deferral target is also expired (Step 5 has run — 01.04.03:54).",
+      "forcedInvention": "The FE/notification behaviour for a name transfer is fully specified at 20.01.05 D-04 and reproduced in this file's own Q-02; the Edge Case cell, which is the row an implementer builds from, says it is undecided."
+    },
+    {
+      "findingId": "01-identity-profiles-organizations#007",
+      "unit": "01.03-membership-representation-mandate",
+      "severity": "warning",
+      "dimension": 3,
+      "claim": "01.03.01's worked example of a versioned capacity history uses the value `crew`, which is not in the file's own explicitly-closed capacity enum.",
+      "evidence": "01.03.01-membership-records-lifecycle.md:162 (D-03) — \"Capacity is on the edge (**permanent / touring / staff / honorary**), not on the person | `session` **removed** from the enum per D-05\". Same enum at line 34 (\"**Capacity periods** | permanent / touring / staff / honorary, each with its own date range\") and line 81. But the Edge Case at line 82 — \"**A member's capacity changes over time (roadie → sound engineer → member)** | **RESOLVED — one continuous tenure, versioned capacity periods** (D-10). Behaviorally: tenure is unbroken (one row, '2015–present'), capacity is a list ('**crew** 2015–2017, staff 2017–2020, permanent 2020–')\". Relatedly, States/Populated (line 111) groups the current lineup by \"Permanent / Touring / Staff\", omitting `honorary` with no statement of where honorary members render.",
+      "forcedInvention": "An implementer defining the capacity enum must decide whether `crew` is a fifth value (the file's own scenario title 'roadie → sound engineer → member' implies it is meant literally) or a slip for `staff`. The choice is not cosmetic: 01.03.03 D-09 keys the entire peer-seeded default mandate to capacity, so an undeclared capacity value has no defined seeding behaviour."
+    },
+    {
+      "findingId": "01-identity-profiles-organizations#008",
+      "unit": "01.05-profile-claiming-verification",
+      "severity": "warning",
+      "dimension": 7,
+      "claim": "The sub-domain CX file leaves attester-notification-on-claim as an unanswered `[PENDING — Step 5]` question, after 01.05.02 D-11 decided it and explicitly stated that it answers this exact note.",
+      "evidence": "01.05-profile-claiming-verification-cx.md:35 (CX-01 §4) — \"**Notification fan-out**: Invitation to the subject. Should the *attesters* be told when their subject claims? Probably — it closes their loop and confirms their capture worked. `[PENDING — Step 5]`\". CONTRADICTED BY 01.05.02-claim-initiation-proof-methods.md:99-101 — \"### 6. Notification fan-out\\n> **Answers sub-domain CX-01 note 4.**\\nOn a granted claim, the party's **attesters are notified**: 'Big Mike claimed the profile you credited on 3 tracks.'\"; by 01.05.02 D-11 (line 234) — \"**Attesters are notified on every grant** against a party they attested to ... Answers sub-domain CX-01 note 4\"; and by identity-profiles-organizations-cx.md:116 (CX-04 §4) — \"on a successful claim the attesters **are** notified (01.05.02 D-11) ... **(Resolves the former Step-5 pending.)**\" The deferral target `Step 5` has already run.",
+      "forcedInvention": "None if 01.05.02 is opened; but the sub-domain CX is the file that inventories notification fan-out across the three children, and it reports an answered question as open with a target that has expired."
+    },
+    {
+      "findingId": "01-identity-profiles-organizations#009",
+      "unit": "01.06-portfolio-media-epk",
+      "severity": "warning",
+      "dimension": 7,
+      "claim": "The sub-domain CX file carries two questions as open that the child features resolved — the alias-aggregation disclosure leak (resolved at 01.06.01 D-13 / 01.06.02 D-07) and the disputed-credit-between-send-and-open hazard (resolved at 01.06.03 Q-01/D-05).",
+      "evidence": "01.06-portfolio-media-epk-cx.md:86 (CX-04) — \"**Open**: whether the human's page publicly reveals which aliases are theirs. It is exactly the link 01.01.04 exists to control, and this is the surface most likely to leak it by accident ... **Flagged as a real risk for Step 5.**\" CONTRADICTED BY 01.06.01-profile-page-composition.md:215 (D-13) — \"**The public page aggregates only the aliases whose public linkage is on. Fail closed** | **Resolves domain CX-04's flagged leak from this side**\" and 01.06.02-credit-backed-portfolio.md:216 (D-07) — \"**The human-level portfolio aggregates only publicly-linked aliases, and every derived fact — scalars and collaborator edges — is computed over the visible set, never filtered from the complete one** | DT-10, **resolving domain CX-04**\". Second instance: 01.06-portfolio-media-epk-cx.md:55 (CX-02 §5) — \"A credit disputed between send and open. **Unresolved — 01.06.03 Q-01.**\" CONTRADICTED BY 01.06.03-epk-generation-sharing.md:105 (Q-01) — \"✅ **RESOLVED** (Step 5, D-05/DT-04): stay **live**, never snapshot; a send watches the foregrounded facts and notifies the sender on material change\" and its D-05 (line 98).",
+      "forcedInvention": "None if the child files are opened; but the sub-domain CX presents the domain's sharpest privacy risk (alias linkage disclosure) as an unmitigated open risk after it was closed by a testable invariant, which invites a downstream stage to re-open and re-decide it differently."
+    },
+    {
+      "findingId": "01-identity-profiles-organizations#010",
+      "unit": "01.06-portfolio-media-epk",
+      "severity": "warning",
+      "dimension": 3,
+      "claim": "01.06.03 D-06 decides that an EPK share link is 'a tracking wrapper over public content, not an access gate', while an Edge Case in the same file treats EPK content as material 'not meant for the world' requiring expiry and revocation — and points the reader at the wrong open question.",
+      "evidence": "01.06.03-epk-generation-sharing.md:99 (D-06) — \"Per-recipient link is a tracking wrapper over **public content**, not an access gate | Forwarding to a decision-making room must work for strangers with no account (D-03)\", reinforced at line 51 — \"The per-recipient link is a *tracking wrapper over public content*, not an access gate, so **a forward opens fine for a stranger with no account**\" and at D-03 (line 96) — \"Must work for a recipient with no account, on a phone\". CONTRADICTED BY the same file's Edge Case at line 52 — \"Link is shared publicly | **An EPK may contain rates and contact routes not meant for the world** | **Needs expiry/revocation.** See Q-02\". The citation is also wrong: Q-02 (line 106) is the PDF-export adoption question; expiry/revocation is Q-03 (line 107, \"Do share links expire or get revoked, given an EPK may carry rates and contact routes?\").",
+      "forcedInvention": "An implementer must invent whether EPK URLs are public artifacts (indexable, cacheable, permanently resolvable — the reading D-06 and D-03 force) or secret-bearing capability URLs with revocation and expiry (the reading the Edge Case forces). The two produce different products: one is a shareable page, the other is a controlled disclosure. Q-03 tracks only the expiry policy, not the underlying public/private classification that D-06 asserts as already decided."
+    },
+    {
+      "findingId": "01-identity-profiles-organizations#011",
+      "unit": "01-identity-profiles-organizations (domain root)",
+      "severity": "warning",
+      "dimension": 8,
+      "claim": "The domain index's Children table — the pipeline key surface downstream stages read to determine depth — records three of the four flat feature files at `[SURFACE]` while the files themselves declare `[PARTIAL]`.",
+      "evidence": "identity-profiles-organizations-index.md:38-40 — \"| 01.07 | Professional, Union & Credential Verification | feature | [01.07-professional-credential-verification.md] | `[SURFACE]` | 3 hypotheses |\", \"| 01.08 | Trader vs Private Seller Classification | feature | ... | `[SURFACE]` | 3 hypotheses |\", \"| 01.09 | Party Identifier Resolution | feature | ... | `[SURFACE]` | 3 hypotheses |\". CONTRADICTED BY the files' own headers: 01.07-professional-credential-verification.md:5 — \"> **Status**: [PARTIAL]\"; 01.08-trader-status-classification.md:5 — \"> **Status**: [PARTIAL]\"; 01.09-party-identifier-resolution.md:5 — \"> **Status**: [PARTIAL]\". (01.10 is consistent — index and file both read `[SURFACE]`.) The index's Last updated is 2026-07-23 while 01.08 was revised 2026-07-30, so at least one row is demonstrably stale.",
+      "forcedInvention": "A downstream stage selecting nodes for deepening reads the index and sees three features needing a full breadth-to-partial pass that has already been done; or reads the files and concludes the index's depth accounting is unreliable. It changes which nodes get re-worked."
+    },
+    {
+      "findingId": "01-identity-profiles-organizations#012",
+      "unit": "01.01-person-identity-roles",
+      "severity": "warning",
+      "dimension": 3,
+      "claim": "01.01.02 delegates the death-of-an-alias-owner authorisation path to 01.10, and frames death as an alias transfer; 01.10 contains no alias content at all and its D-02 forbids the identity handover that framing implies. Neither file carries an open question for it.",
+      "evidence": "01.01-person-identity-roles/01.01.02-artist-names-aliases-projects.md:141 — \"Touches **01.10 Estates & Legacy Accounts** — **NEW**. **Death is an alias transfer (E-09/E-10) with no living transferor to confirm it, so 01.10 owns the authorisation path that E-09's two-sided confirm cannot supply.** The ownership-period model (D-03) is what lets an estate take a name without falsifying who made the records.\" Following the reference: 01.10-estates-legacy-accounts.md:27-29 enumerates the feature's entire scope as \"1. **Successor nomination** ... 2. **Memorialisation** ... 3. **Estate access** — a verified successor gains a scoped ability to administer what continues: royalties, licensing requests, rights decisions\" — no alias, no name, no transfer. Its D-02 (line 90) — \"Estate acts as itself on behalf of the party; **never logs in as the deceased** ... impersonation would let an estate forge attestations\" — and Behavior line 29 — \"which is a **representation edge** (01.03.02), **not an identity handover**\". Its Open Questions (lines 99-101: unadministered catalogue, death-report evidence, profile removal) contain nothing about alias disposition. Meanwhile 01.01.02 E-09 requires \"Both parties confirm. Receiving party has **7 days** to accept or the transfer lapses\" and E-12 blocks transfer on a retired alias; E-19 (account erasure, not death) resolves to \"Alias is **not** deleted. Ownership link severs; alias retires\".",
+      "forcedInvention": "An implementer must invent what happens to a deceased person's alias: (a) it transfers to the nominated successor as 01.01.02 asserts, requiring a one-sided confirm nobody has specified; (b) it retires unowned by analogy with E-19; or (c) it is administered but never re-owned, per 01.10 D-02's no-identity-handover rule. The choice determines who future credits under that name resolve to and where its royalties route (01.01.02's own 10 Royalties cross-cut note makes payee resolution run credit → alias → ownership period → person)."
+    }
+  ]
+}
