@@ -1,11 +1,29 @@
 # Codex CLI — project-level config
 # See: https://developers.openai.com/codex/config-reference
 
-model = "gpt-5.1"
+model = "gpt-5.6-sol"
+model_reasoning_effort = "high"
 
 [mcp_servers.context-mode]
 command = "context-mode"
 
+[mcp_servers.context-mode.tools.ctx_execute_file]
+approval_mode = "approve"
+
+[mcp_servers.context-mode.tools.ctx_execute]
+approval_mode = "approve"
+
+[mcp_servers.context-mode.tools.ctx_batch_execute]
+approval_mode = "approve"
+
 [features]
 codex_git_commit = false
 multi_agent = true
+plugin_hooks = true
+hooks = true
+
+[agents]
+enabled = true
+default_subagent_model = "gpt-5.6-luna"
+default_subagent_reasoning_effort = "max"
+max_concurrent_threads_per_session = 4

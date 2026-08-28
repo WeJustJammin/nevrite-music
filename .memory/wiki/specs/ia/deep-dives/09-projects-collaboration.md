@@ -6,7 +6,7 @@
 
 ## Scope
 
-This deep dive owns song/project container invariants, roster-derived access, immutable media lineage, canonical resolution, review/share/approval, sessions/capture arbitration, delivery/readiness and the future DAW-bridge gate. It does not own credit evidence, rights, splits, payments or distribution.
+This deep dive owns song/project container invariants, roster-derived access, immutable media lineage, exact-version descriptor correction/proposals, canonical resolution, review/share/approval, sessions/capture arbitration, delivery/readiness and the future DAW-bridge gate. It does not own credit evidence, rights, splits, payments or release-local distribution enrichment.
 
 ## Deepening Record
 
@@ -36,8 +36,10 @@ This deep dive owns song/project container invariants, roster-derived access, im
 
 | Model | Fields and constraints |
 |---|---|
-| `audio_version` | `id, song_id, sequence, author_person/party, author_confirmed, producer_label, type_suggestion?, authored_at?, ingested_at, checksum, metadata, residency, integrity, version`. |
+| `audio_version` | `id, owner_id, song_id, sequence, author_person/party, author_confirmed, producer_label, type_suggestion?, authored_at?, ingested_at, checksum, metadata, descriptor_projection, descriptor_revision, residency, integrity, version`; descriptors belong to this exact version, never Song. |
 | `lineage_edge` | `child_version_id, parent_version_id, character, source, confidence, corrected_by?, created_at`; acyclic; child may be root. |
+| `version_descriptor_correction` | `id, audio_version_id, field, prior_value_hash, corrected_value, reason, submitted_by, authority_decision_ref/version, shared_correction_id, origin_release_version_id, created_at`; immutable, attributed and unique by shared correction ID. |
+| `version_descriptor_correction_proposal` | `id, audio_version_id, field, expected_descriptor_revision, prior_value_hash, proposed_value, reason, submitted_by, origin_release_version_id, shared_correction_id, state, reviewed_by?, review_reason?, created_at, decided_at?, version`; one terminal decision, no access-grant side effect. |
 | `canonical_slot` | `song_id, stage, variant, format, target_version_id?, reserved_by?, proxy, version`; unique slot. |
 | `canonical_movement` | `slot, from/to, actor/context, reason, target_integrity, created_at, idempotency`; immutable. |
 | `review_comment` | `id, version_id, author/ref, audience, body/history, state, created_at, resolved_reason/version?, reopen_count`. |
@@ -93,6 +95,16 @@ This deep dive owns song/project container invariants, roster-derived access, im
 7. Commit pointer movement/outbox. Re-nomination of same target is idempotent; clearing is allowed.
 8. Compromised canonical raises blocking alarm and preserves pointer until explicit clear/replace; no fallback to latest.
 9. Canonical, approval, release pin and dispute make bytes retention-hot; erasure redacts author identity, never version.
+
+## Version Descriptor Correction Algorithm
+
+1. Receive an exact audio-version, closed tempo/key field, prior-value hash, expected descriptor revision, corrected value/reason, Shard 22 release origin and shared correction ID.
+2. Resolve current exact-version authority. The version owner or a Producer role with explicit `version:edit_descriptors` may append; release Config, vault read, authorship and Song membership alone never qualify.
+3. When authorized, append the version correction and release correction under the shared ID in one serializable idempotent boundary; update only the derived version projection and emit a value-free event.
+4. When unauthorized, create one pending proposal addressed to the version owner/current authorized Producers. Return only safe status to the release actor and grant no project read.
+5. Review pins proposal and descriptor revisions. Accept appends and attributes; reject records reviewer/reason and changes no version fact. One terminal transition wins every race.
+6. Stale target or revoked authority leaves the proposal pending and writes no partial correction. Acceptance updates linked release projections; rejection leaves the initiating release-local correction intact.
+7. Never write a Song musical attribute, overwrite prior metadata or infer authority from the release relationship.
 
 ## Review, Link and Approval Algorithm
 
@@ -164,7 +176,8 @@ Activation is a new architecture decision propagated downstream; a feature flag 
 | Shard 01 | Party/shell/membership/authority/block and succession; workspace access never creates identity truth. |
 | Shard 07 | Role taxonomy, roster-generated claims, session/credit capture and provenance; Shard 09 never edits credit records. |
 | Shard 10 | Receives song/session/source/credit pointers for rights/splits; rights outcome never changes project facts. |
-| Shards 14/17/19/22/32 | Consume exact project/session/version/package projections for services, royalties, distribution and operations. |
+| Shards 14/17/19/32 | Consume exact project/session/version/package projections for services, royalties and operations. |
+| Shard 22 | Supplies the release-origin/shared correction ID and owns immediate release-local enrichment; consumes exact-version authority, append/proposal contracts and value-free `project.version-descriptor-correction.changed.v1` outcomes. Shard 09 alone owns version facts/proposal decisions; neither shard writes Song musical attributes. |
 
 All dependent IA skeletons name Shard 09 reciprocally. Consumers use typed commands/events and opaque versioned projections, never direct asset/project tables.
 
@@ -182,6 +195,7 @@ All dependent IA skeletons name Shard 09 reciprocally. Consumers use typed comma
 |---|---|---|---|
 | 2026-08-02 | Initial deep-dive skeleton | /decompose-architecture-validate | All |
 | 2026-08-03 | Locked project, access, version, review, session, delivery and future-bridge algorithms | /write-architecture-spec-deepen | All |
+| 2026-08-27 | F08c resolved: added exact-version descriptor correction/proposal fields, authority-aware append/review algorithm and reciprocal Shard 22 ownership boundary | /resolve-ambiguity | Canonical Field Contracts, Version Descriptor Correction Algorithm, Cross-Shard Contracts |
 
 ## Dependency References
 

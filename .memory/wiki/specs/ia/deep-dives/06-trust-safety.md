@@ -130,7 +130,7 @@ Hold: `proposed -> active -> released`. Active hold contributes an unbounded ret
 
 ### DMCA
 
-1. Validate US `512 notice completeness and claimant identity/attestations before removal or strike.
+1. Validate US `512` notice completeness and claimant identity/attestations before removal or strike.
 2. Deduplicate strike by claimant/asset/infringement event; distinct claimants remain distinct.
 3. Apply expeditious availability action, delivery evidence and rigid repeat-infringer policy; a notice demonstrably undelivered cannot finalize termination.
 4. Counter-notice requires explicit address/jurisdiction disclosure and signed statements. Complete counter starts restoration clock and claimant delivery.

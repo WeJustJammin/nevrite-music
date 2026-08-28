@@ -5,7 +5,7 @@
 
 ## Overview
 
-This deep dive closes inventory accounting, payment-hold races, accessible parity, neutral queues, reserve-backed door issuance, component-package atomicity and live-pass correctness.
+This deep dive closes inventory accounting, payment-hold races, accessible parity, neutral queues, reserve-backed door issuance, component-package atomicity and live-pass correctness. For announcement, Shard 30 is the sole owner of AcceptedDeal lifecycle, AnnounceAuthorization and the canonical `confirmed_unannounced` → exactly-once `announced` transition; Shard 35 owns only the versioned venue-local `OnSaleSchedule`, timer orchestration and a fan-invisible derived `Embargoed` projection.
 
 ## Interactions
 
@@ -21,13 +21,15 @@ This deep dive closes inventory accounting, payment-hold races, accessible parit
 
 ### On-Sale, Presale and Cart
 
-1. Consume announce authorization and save venue-local times plus UTC with explicit DST semantics.
-2. Schedule durable announce/presale/public jobs; schedule change blocks until window/code-holder impacts confirmed.
-3. Presale window reserves exclusive source-pool allocation and issues unique/shared eligibility policy.
-4. Optional waiting room randomizes active participants at on-sale; no earlier-arrival/role priority.
-5. Cart serializably reserves units and sold-tier counters, freezes exact price and expires to source pool.
-6. Payment authorization enters bounded reconciliation extension; inventory remains reserved until definitive commit/compensation.
-7. Commit order/payment/tickets atomically or through durable saga with no oversell/double charge.
+1. Validate the locked manifest, accepted-deal reference, venue-local wall time, timezone and explicit DST semantics; persist the versioned `OnSaleSchedule` before any authorization or timer exists.
+2. Call Shard-30 `RecordOnSaleSchedule` with the exact schedule ID/version, accepted-deal reference and resolved local/UTC instants. The returned `AnnounceAuthorization` must bind that exact schedule; missing, stale, revoked, superseded or unknown results leave the schedule in fan-invisible derived `Embargoed` and arm no timer.
+3. Only after the binding is current, create durable venue-local announce/presale/public jobs. A schedule edit increments `schedule_version`, invalidates prior callbacks and requires a new Shard-30 binding; tour-wide templates expand to independent per-show schedules.
+4. At due time, the worker invokes `ExecuteScheduledAnnouncement` with exact current schedule, authorization and AcceptedDeal lifecycle versions. Shard 35 never mutates lifecycle; it calls Shard-30 `CommitScheduledAnnouncement`, and Shard 30 performs the canonical exactly-once transition. Shard 35 records only the resulting operational projection.
+5. Presale window reserves exclusive source-pool allocation and issues unique/shared eligibility policy; publication never follows time alone and waits for the canonical Shard-30 result.
+6. Optional waiting room randomizes active participants at on-sale; no earlier-arrival/role priority.
+7. Cart serializably reserves units and sold-tier counters, freezes exact price and expires to source pool.
+8. Payment authorization enters bounded reconciliation extension; inventory remains reserved until definitive commit/compensation.
+9. Commit order/payment/tickets atomically or through durable saga with no oversell/double charge.
 
 ### Waitlist
 
@@ -110,6 +112,14 @@ Projection contains correctness/logistics only. Any ticket/show state change inv
 - Contract-derived hold edit creates Shard-30 amendment request; local override cannot contradict contract silently.
 - Manifest owner is authorized box-office party for show, independent of venue/promoter label.
 
+### On-Sale Schedule and Canonical Announce Boundary
+
+- `OnSaleSchedule` is Shard-35 canonical operational state: `id`, `accepted_deal_id`, `schedule_version`, venue timezone, local/UTC instants, public/presale windows, job id/version, lifecycle source version, authorization reference/version, state and derived projection freshness.
+- Schedule registration persists first, then invokes Shard-30 `RecordOnSaleSchedule`. Authorization is valid only when it names the exact `schedule_id` and `schedule_version`; an authorization for an older schedule cannot arm a timer.
+- `Embargoed` is a derived, fan-invisible Shard-35 projection. It represents missing, unknown, stale, revoked or superseded upstream authorization/lifecycle, but is never a second AcceptedDeal state and cannot mutate Shard-30 records.
+- The venue-local timer is a Shard-35 job. It calls Shard-30 `CommitScheduledAnnouncement` with exact current `schedule_version`, `authorization_version` and AcceptedDeal lifecycle version. Shard 30 alone commits `confirmed_unannounced` → `announced` exactly once; Shard 35 projects the returned result.
+- Operators may revise schedule timing and job state only. Authorization issuance/revocation and AcceptedDeal lifecycle transitions remain Shard-30 capability/evidence-gated operations.
+
 ### Package and Admission
 
 - Package state is conjunction of components; fan sees unified view plus component remedies.
@@ -123,7 +133,8 @@ Every order stores exact first-impression all-in total and fee allocation. Per-o
 
 ## Access Control
 
-- Box-office Config manages scaling/manifest/schedule; settlement-side authority manages fees/payee.
+- Box-office Config manages scaling/manifest and the venue-local schedule; it cannot mint/revoke Shard-30 authorization or mutate AcceptedDeal lifecycle.
+- Schedule workers register schedules before authorization and execute timers only through Shard-30 version-pinned commands; they cannot announce on time alone or write canonical deal state.
 - Artist guest allocator spends own held units but cannot configure global inventory.
 - Door role scans and spends signed reserve only; Operator role authorizes over-allocation.
 - Fan can access only eligible windows, own cart/order/tickets/waitlist/RSVP.
@@ -143,7 +154,7 @@ Every order stores exact first-impression all-in total and fee allocation. Per-o
 
 ### Ordering and Idempotency
 
-All inventory, schedule, code, queue, cart, order, comp, RSVP, package and delivery commands require stable idempotency keys.
+All inventory, schedule, code, queue, cart, order, comp, RSVP, package and delivery commands require stable idempotency keys. `ScheduleOnSale` and `ExecuteScheduledAnnouncement` additionally pin schedule, authorization and AcceptedDeal lifecycle versions; Shard 30 is the only commit authority for the canonical announce transition.
 
 | Race | Resolution |
 |---|---|
@@ -154,10 +165,14 @@ All inventory, schedule, code, queue, cart, order, comp, RSVP, package and deliv
 | Door reserve add offline vs online sale | reserve is pre-partitioned, so pools cannot collide |
 | Transfer vs wallet update | ticket epoch serializes; old holder artifact voids |
 | RSVP release vs conversion to paid | manifest lock preserves admission or returns unit once |
+| Schedule registration vs authorization | `OnSaleSchedule` is persisted first; Shard-30 `RecordOnSaleSchedule` must bind the returned authorization to the exact schedule version before a timer is armed |
+| Schedule edit vs an already armed timer | schedule version increments and prior job/callback becomes stale; the worker preserves `Embargoed` until a new exact binding exists |
+| Lifecycle revocation/supersession vs timer callback | Shard-30 version check rejects the callback; Shard-35 cancels/pauses the job and keeps only its derived `Embargoed` projection |
+| Duplicate/out-of-order lifecycle, authorization or timer event | event ID/idempotency dedupe and aggregate-version ordering make repeats no-ops and lower versions unable to clear `Embargoed` |
 
 ### Inventory Event Privacy
 
-Public events expose availability posture/product only. Fan events expose own cart/order/pass. Operator events expose block counts but not accessible medical identity. Code/barcode/claim secrets never enter events.
+`ticketing.schedule.changed.v1` carries schedule ID/version, local/UTC instants, accepted-deal reference, authorization ID/version when bound, source lifecycle version, job state and derived `Embargoed` state. Shard-30 inputs arrive as versioned `booking.deal.lifecycle_changed.v1` and `booking.announce.authorization_changed.v1` events. Public events expose availability posture/product only; `Embargoed` and upstream authority details remain fan-invisible. Fan events expose own cart/order/pass. Operator events expose block counts but not accessible medical identity. Code/barcode/claim secrets never enter events. Consumers dedupe by event ID and reject out-of-order aggregate versions; consumers never create a duplicate canonical deal or authorization state.
 
 ## Edge Cases
 
@@ -173,10 +188,14 @@ Public events expose availability posture/product only. Fan events expose own ca
 | Package component cancels | Recompute package state and component remedy; unaffected ticket remains unless package policy says all-cancel |
 | RSVP holder forwards link | Recipient must become distinct verified fan; original cannot create party-size unit |
 | Delivery email bounces | Retry under settings, alert Operator and keep wallet/print recovery |
+| Schedule saved before Shard-30 authorization | Keep `Embargoed` and timer unarmed; retry only the protected `RecordOnSaleSchedule` boundary with the current schedule version |
+| Timer has missing/stale/unknown authorization or lifecycle | Fail closed with typed error, pause/cancel the job and preserve the fan-invisible projection; no public announce |
+| Authorization revoked or deal superseded after schedule binding | Apply the versioned Shard-30 event, invalidate the pending job and retain immutable schedule history; never rewrite lifecycle locally |
+| Operator attempts to change authorization or AcceptedDeal lifecycle | Deny at the Shard-30 boundary and preserve canonical state; schedule edits cannot bypass capability/evidence checks |
 
 ### Two-Implementer Check
 
-Implementations must converge on exact unit conservation, show-owned scaling, all-in price immutability, protected accessible inventory, durable neutral queue, source-pool returns, payment ambiguity reservation, hold-backed comps, reserve-backed offline adds, atomic ticket-only VIP, payment-free RSVP and live ticket projection. Capacity oversell, queue priority, disability proof, hidden repricing, duplicate package stock or stale wallet snapshots are non-conformant.
+Implementations must converge on exact unit conservation, show-owned scaling, all-in price immutability, protected accessible inventory, durable neutral queue, source-pool returns, payment ambiguity reservation, hold-backed comps, reserve-backed offline adds, atomic ticket-only VIP, payment-free RSVP and live ticket projection. Announcement implementations must also converge on schedule-first registration, Shard-30 canonical lifecycle/authorization ownership, exact-version timer callbacks, exactly-once commit and fan-invisible fail-closed `Embargoed` projection. Capacity oversell, queue priority, disability proof, hidden repricing, duplicate package stock, stale wallet snapshots, time-only publication, duplicate canonical announce state or local lifecycle mutation are non-conformant.
 
 ## Implementation Envelope
 
@@ -184,7 +203,7 @@ Implementations must converge on exact unit conservation, show-owned scaling, al
 - **Rationale:** one PostgreSQL authority plus additive events prevents split truth, RLS enforces tenant/party scope near data, and queued adapters isolate provider latency without weakening canonical-state or p95 web-read guarantees.
 - **Phasing:** (1) schema/RLS/settings and capability gates, (2) commands/events/idempotency, (3) projections and accessible surface, (4) provider or counsel-gated effects only after their evidence gate; disabled capability schemas/commands remain unreachable.
 - **Failure modes:** validation/authority/version failures stop before mutation; ambiguous provider outcomes remain typed pending/unknown; retries reuse idempotency keys; projection lag exposes freshness; deletion/revocation preserves required evidence and invalidates derived access.
-- **Integration contracts:** the parent [35-ticket-products-sales § Contracts](../35-ticket-products-sales.md#contracts) defines commands/queries and [35-ticket-products-sales § Event Schemas](../35-ticket-products-sales.md#event-schemas) defines asynchronous handoff. Producers retain canonical ownership; consumers never strengthen provenance, permission, confidence or terminal state.
+- **Integration contracts:** the parent [35-ticket-products-sales § Contracts](../35-ticket-products-sales.md#contracts) defines commands/queries and [35-ticket-products-sales § Event Schemas](../35-ticket-products-sales.md#event-schemas) defines asynchronous handoff. For announce, Shard 35 persists `OnSaleSchedule`, calls Shard-30 `RecordOnSaleSchedule`, and its timer calls `CommitScheduledAnnouncement` with exact versions; Shard 30 retains canonical AcceptedDeal/authorization/lifecycle ownership. Producers retain canonical ownership; consumers never strengthen provenance, permission, confidence or terminal state.
 
 ## Changelog
 
@@ -192,6 +211,7 @@ Implementations must converge on exact unit conservation, show-owned scaling, al
 |---|---|---|---|
 | 2026-08-02 | Initial deep-dive skeleton | `/decompose-architecture-validate` | All |
 | 2026-08-03 | Completed deepening and adversarial convergence | `/write-architecture-spec-deepen` | All |
+| 2026-08-28 | F10 Q05 — documented schedule-first registration, exact-version Shard-30 announce boundary, fan-invisible `Embargoed` projection, versioned event dedupe and fail-closed timer races | `/resolve-ambiguity` | Overview, On-Sale, Data Models, Access Control, Event Schemas, Edge Cases, Two-Implementer Check, Implementation Envelope |
 
 
 <!-- spec-graph: auto-generated -->

@@ -1,0 +1,1008 @@
+{
+  "writableRefs": 94,
+  "uniqueWritablePaths": 55,
+  "citations": 296,
+  "errors": [
+    {
+      "kind": "quoteMismatch",
+      "group": "G00",
+      "item": "G00-W04",
+      "path": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ia/01-identity-authority.md",
+      "citation": {
+        "path": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ia/01-identity-authority.md",
+        "lineStart": 91,
+        "lineEnd": 95,
+        "quote": "| Canonical party | `person|alias|organization`, PostgreSQL UUID, immutable kind, explicit lifecycle/version. An alias is a party but never signs; a person/legal entity signs. |\n| Facet vocabulary | Versioned platform registry initially containing `performer, writer, producer, engineer, teacher, seller, tech`; no primary facet; petitions enter a curation queue and never create live values directly. |\n| Alias ownership | Exactly one owner at a time through non-overlapping dated periods. Display names are non-unique; public handles are globally unique after Unicode/confusable normalization and never reissued. |\n| Legal identity | Protected fields are stored/read separately from public projections, never browser-cached, and disclosed only by purpose/audience allowlist. |\n| Acting context | Derived, not configured. Stable order: up to five pins → self → aliases by creation → organizations/represented parties alphabetically; frozen while open; filter at eight contexts. |"
+      },
+      "actual": "| Canonical party | `person\\|alias\\|organization`, PostgreSQL UUID, immutable kind, explicit lifecycle/version. An alias is a party but never signs; a person/legal entity signs. |\n| Facet vocabulary | Versioned platform registry initially containing `performer, writer, producer, engineer, teacher, seller, tech`; no primary facet; petitions enter a curation queue and never create live values directly. |\n| Alias ownership | Exactly one owner at a time through non-overlapping dated periods. Display names are non-unique; public handles are globally unique after Unicode/confusable normalization and never reissued. |\n| Legal identity | Protected fields are stored/read separately from public projections, never browser-cached, and disclosed only by purpose/audience allowlist. |\n| Acting context | Derived, not configured. Stable order: up to five pins → self → aliases by creation → organizations/represented parties alphabetically; frozen while open; filter at eight contexts. |"
+    },
+    {
+      "kind": "quoteMismatch",
+      "group": "G01",
+      "item": "G01-CON-001-TARGET-LINKS",
+      "path": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ia/06-trust-safety.md",
+      "citation": {
+        "path": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ia/06-trust-safety.md",
+        "lineStart": 1054,
+        "lineEnd": 1054,
+        "quote": "- **Shard 02 — Profiles, claiming and qualifications:** command edge only, per DEC-098 — this shard declares no dependency on Shard 02, consumes no Shard 02 contract and reads no Shard 02 store. This shard consumes Shard 02's `profile.contest.changed.v1` only through TSE-01's protected system-signal intake to open or update the `CaseKind = ownership` case, and on TSE-13 final resolution this shard calls Shard 02's protected `RecordOwnershipCaseOutcome` command with this shard's own `case_id`, the contested profile/claim reference, the outcome, the expected Shard 02 aggregate version and an idempotency key. This shard owns case intake, evidence, adjudication and appeal state; Shard 02 alone applies the profile-control consequence and emits its completion event, and typed failure/unknown states cross the same boundary."
+      },
+      "actual": "- **Shard 02 — Profiles, claiming and qualifications:** command edge only, per DEC-098 — this shard declares no dependency on Shard 02 and reads no Shard 02 store. It consumes `profile.contest.changed.v1` from [Shard 02 — Profiles, claiming and qualifications Event Schemas](02-profiles-verification.md#event-schemas) as TSE-01 intake, opening or updating the `CaseKind = ownership` case that this shard `§ Contracts` — Intake, Case and Evidence owns, and on TSE-13 resolution it calls the protected inbound command `RecordOwnershipCaseOutcome` in [Shard 02 — Profiles, claiming and qualifications Contracts](02-profiles-verification.md#contracts), carrying this shard's own `case_id`, the `OwnershipContest` reference, the TSE-13 outcome, an expected version and an idempotency key. Shard 02 applies the profile-control consequence — uphold, transfer or unfreeze — and never adjudicates; canonical case ownership stays with this shard, which per TSE-13 still cannot write ownership records, confirmed credits or splits, and typed refusal/unknown states cross the same boundary."
+    },
+    {
+      "kind": "quoteMismatch",
+      "group": "G01",
+      "item": "G01-CON-001-TARGET-LINKS",
+      "path": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ia/06-trust-safety.md",
+      "citation": {
+        "path": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ia/06-trust-safety.md",
+        "lineStart": 1056,
+        "lineEnd": 1056,
+        "quote": "- **Shard 04 — CMS navigation, media and delivery:** protected command edge only, per DEC-098 — this shard declares no dependency on Shard 04, consumes no Shard 04 contract and reads no Shard 04 store. On a TSE-13 adjudication or TSE-14 incident transition this shard calls Shard 04's `ApplyDeliveryHold`, `ReleaseDeliveryHold` or `RevokeDeliveryEligibility` contract, carrying this shard's case/incident reference, the target delivery record, the asserted hold/eligibility state, an idempotency key and the expected Shard 04 version; Shard 04 validates and executes that consequence, then returns the typed refusal/unknown outcome and emits its completion evidence. Canonical case/incident ownership stays here; delivery state stays canonical in Shard 04, and typed failure/unknown states cross the same boundary."
+      },
+      "actual": "- **Shard 04 — CMS navigation, media and delivery:** consume [Shard 04 — CMS navigation, media and delivery Contracts](04-cms-delivery-media.md#contracts) — the protected inbound delivery commands `ApplyDeliveryHold` / `ReleaseDeliveryHold` / `RevokeDeliveryEligibility` (DLV-13/DLV-14, § Delivery and Cache) — into this shard `§ Contracts`, and read [Shard 04 — CMS navigation, media and delivery Event Schemas](04-cms-delivery-media.md#event-schemas) (`delivery.asset.revoked.v1`, `delivery.purge.completed.v1`) as completion evidence. This shard calls those commands from TSE-05 sanction/takedown, TSE-12 counter-notice restoration and TSE-26 TVEC removal, carrying its own `case_id`, an explicit subject scope, a reason code and an effective time. Per DEC-098 the edge is 06 → 04 and Shard 04 consumes nothing from this shard and cites no section of it: canonical adjudication ownership stays with this shard, Shard 04 owns only the delivery consequence, and typed refusal/unknown states cross the same boundary."
+    },
+    {
+      "kind": "quoteMismatch",
+      "group": "G01",
+      "item": "G01-CON-001-TARGET-LINKS",
+      "path": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ia/10-rights-ownership.md",
+      "citation": {
+        "path": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ia/10-rights-ownership.md",
+        "lineStart": 693,
+        "lineEnd": 693,
+        "quote": "- **Shard 04 — CMS navigation, media and delivery:** outbound-only protected-command edge, per DEC-098 — this shard declares no dependency on Shard 04 and reads no Shard 04 store. When a rights conflict or freeze changes delivery eligibility, this shard calls Shard 04's `ApplyDeliveryHold`, `ReleaseDeliveryHold` or `RevokeDeliveryEligibility` contract with this shard's rights-case reference, target delivery record, asserted `AssetRight.state`, idempotency key and expected Shard 04 version; Shard 04 validates and executes the consequence and emits completion evidence. Canonical rights determination and `AssetRight.state` stay here; delivery state stays canonical in Shard 04, and typed refusal/unknown states cross the same boundary."
+      },
+      "actual": "- **Shard 04 — CMS navigation, media and delivery:** consume [Shard 04 — CMS navigation, media and delivery Contracts](04-cms-delivery-media.md#contracts) — the protected inbound delivery commands `ApplyDeliveryHold` / `ReleaseDeliveryHold` / `RevokeDeliveryEligibility` (DLV-13/DLV-14, § Contracts — Media and Rights) — into this shard `§ Contracts`, and read [Shard 04 — CMS navigation, media and delivery Event Schemas](04-cms-delivery-media.md#event-schemas) (`delivery.asset.revoked.v1`, `delivery.purge.completed.v1`) as completion evidence. This shard calls those commands from RGT-11 conflict detection, RGT-12 dispute opening and RGT-13 share freeze, carrying its own rights-conflict or freeze case reference and a target `AssetRight` state of `restricted`, `disputed` or `revoked`. Per DEC-098 the edge is 10 → 04 and Shard 04 consumes nothing from this shard and cites no section of it: the canonical rights determination stays with this shard, Shard 04 records the asserted `AssetRight.state` and executes delivery, and typed failure/unknown states cross the same boundary."
+    },
+    {
+      "kind": "quoteMismatch",
+      "group": "G01",
+      "item": "G01-CON-001-TARGET-LINKS",
+      "path": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ia/20-licensing-core.md",
+      "citation": {
+        "path": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ia/20-licensing-core.md",
+        "lineStart": 588,
+        "lineEnd": 588,
+        "quote": "- **Shard 04 — CMS navigation, media and delivery:** outbound-only protected-command edge, per DEC-098 — this shard declares no dependency on Shard 04 and reads no Shard 04 store. When the LIC-03 licence lifecycle makes a governed object ineligible or eligible for delivery, this shard calls Shard 04's `ApplyDeliveryHold`, `ReleaseDeliveryHold` or `RevokeDeliveryEligibility` contract with this shard's licence/instrument case reference, target delivery record, asserted licence state, idempotency key and expected Shard 04 version; Shard 04 validates and executes the consequence and emits completion evidence. Canonical licence validity stays here; delivery state stays canonical in Shard 04, and typed refusal/unknown states cross the same boundary."
+      },
+      "actual": "- **Shard 04:** consume [Shard 04 Contracts](04-cms-delivery-media.md#contracts) — the protected inbound delivery commands `ApplyDeliveryHold` / `ReleaseDeliveryHold` / `RevokeDeliveryEligibility` (DLV-13/DLV-14, § Delivery and Cache) — into this shard `§ Contracts`, and read [Shard 04 Event Schemas](04-cms-delivery-media.md#event-schemas) (`delivery.asset.revoked.v1`, `delivery.purge.completed.v1`) as completion evidence. This shard calls those commands from LIC-15 issuance, LIC-18 amendment and LIC-19 term/termination, carrying its own licence or instrument-lifecycle case reference. Per DEC-098 the edge is 20 → 04 and Shard 04 consumes nothing from this shard and cites no section of it: canonical licence validity stays with this shard, Shard 04 records the assertion and executes delivery, and typed failure/unknown states cross the same boundary."
+    },
+    {
+      "kind": "quoteMismatch",
+      "group": "G01",
+      "item": "G01-CON-001-TARGET-LINKS",
+      "path": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ia/25-gear-market-catalog.md",
+      "citation": {
+        "path": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ia/25-gear-market-catalog.md",
+        "lineStart": 570,
+        "lineEnd": 570,
+        "quote": "- **Shard 04 — CMS navigation, media and delivery:** consume [Shard 04 — CMS navigation, media and delivery Contracts](04-cms-delivery-media.md#contracts) and [Shard 04 — CMS navigation, media and delivery Data Models](04-cms-delivery-media.md#data-models) for the `AssetRecord` identifiers and media rights-holder/delivery guarantees embedded in every `EvidenceFrame`; publish the canonical withdrawn-or-restricted-listing notice from this shard `§ Event Schemas` to [Shard 04 — CMS navigation, media and delivery Event Schemas](04-cms-delivery-media.md#event-schemas), which invalidates media projections derived from that listing. Catalog, listing and disclosure truth stays canonical here; asset and delivery truth stays canonical in Shard 04, and typed failure/unknown states cross the same boundary."
+      },
+      "actual": "- **Shard 04:** consume [Shard 04 Contracts](04-cms-delivery-media.md#contracts) and [Shard 04 Data Models](04-cms-delivery-media.md#data-models) into this shard `§ Contracts` and `§ Data Models` — the `AssetRecord` entity every `EvidenceFrame` keys its image on, and the media rights-holder and delivery guarantees that govern whether a frame is renderable; publish this shard `§ Event Schemas` to [Shard 04 Event Schemas](04-cms-delivery-media.md#event-schemas) so a withdrawn or restricted listing invalidates its derived media projections. Asset and delivery truth stays canonical in Shard 04; evidence-pack composition and disclosure truth stay canonical here. Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary."
+    },
+    {
+      "kind": "quoteMismatch",
+      "group": "G01",
+      "item": "G01-CON-001-TARGET-LINKS",
+      "path": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ia/29-venues-spaces.md",
+      "citation": {
+        "path": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ia/29-venues-spaces.md",
+        "lineStart": 698,
+        "lineEnd": 698,
+        "quote": "- **Shard 04 — CMS navigation, media and delivery:** consume [Shard 04 — CMS navigation, media and delivery Contracts](04-cms-delivery-media.md#contracts) and [Shard 04 — CMS navigation, media and delivery Data Models](04-cms-delivery-media.md#data-models) for the `AssetRecord` identifiers and media rights-holder/delivery guarantees embedded in every `MediaEvidence`; publish this shard's canonical superseded-room, spec-revision or contested-field notice from `§ Event Schemas` to [Shard 04 — CMS navigation, media and delivery Event Schemas](04-cms-delivery-media.md#event-schemas), which invalidates media projections derived from that place record. Place, room and spec truth stays canonical here; asset and delivery truth stays canonical in Shard 04, and typed failure/unknown states cross the same boundary."
+      },
+      "actual": "- **Shard 04:** consume [Shard 04 Contracts](04-cms-delivery-media.md#contracts) and [Shard 04 Data Models](04-cms-delivery-media.md#data-models) into this shard `§ Contracts` and `§ Data Models` — the `AssetRecord` entity every `MediaEvidence` row keys its photograph or floor plan on, and the media rights-holder and delivery guarantees that govern whether that evidence is renderable to a requester; publish this shard `§ Event Schemas` to [Shard 04 Event Schemas](04-cms-delivery-media.md#event-schemas) so a superseded room, spec revision or contested field invalidates its derived media projections. Asset and delivery truth stays canonical in Shard 04; place, room and spec truth stay canonical here. Canonical ownership stays with the producer; typed failure/unknown states cross the same boundary."
+    },
+    {
+      "kind": "quoteMismatch",
+      "group": "G01",
+      "item": "G01-FLOW-001-PRINCIPAL-SEQUENCES",
+      "path": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ia/00-infrastructure.md",
+      "citation": {
+        "path": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ia/00-infrastructure.md",
+        "lineStart": 276,
+        "lineEnd": 276,
+        "quote": "- **Queue/schedule principal:** no human escalation route exists. A refused message is not executed: the consumer retries only the same idempotent message under the same registered machine authority, then dead-letters it at the declared exhaustion boundary."
+      },
+      "actual": "- **Queue/schedule principal:** no human escalation route exists. A refused message is not executed: the consumer re-reads canonical state and version rather than trusting the Queue envelope, a stale or out-of-order version is ignored or reconciled and never regresses canonical state, and an unknown `schemaVersion` dead-letters to manual review without execution. Recovery is replay, which creates new attempt evidence while preserving original event identity and business idempotency."
+    },
+    {
+      "kind": "quoteMismatch",
+      "group": "G01",
+      "item": "G01-FLOW-001-PRINCIPAL-SEQUENCES",
+      "path": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ia/deep-dives/01-identity-authority.md",
+      "citation": {
+        "path": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ia/deep-dives/01-identity-authority.md",
+        "lineStart": 205,
+        "lineEnd": 205,
+        "quote": "- **Hardest mechanism and the approach chosen:** **deciding, at the instant a command commits, which party an authenticated human is acting as**"
+      },
+      "actual": "- **Hardest mechanism and the approach chosen:** **deciding, at the instant a command commits, which party an authenticated human is acting as and whether a relationship that is live right now authorizes this exact act — for every protected command in the forty-one shards that key on this one — when the answer can change between the moment the screen opened and the moment submit landed.** The chosen approach is *server-derived authority, bound at open, re-decided inside the committing transaction, with the reason stored onto the fact*: the ten ordered steps in [§ Authority Resolution](#authority-resolution) run in migration-owned PostgreSQL RPC, the acting context binds when an interaction opens but carries only the `AuthorityProjection.projection_version` it read, and submit re-reads that projection and refuses with a typed conflict if the version advanced — so a revoked context may still be on screen and still cannot commit. The two authority axes are **conjoined at the call site and never materialised**: the action's verb must be in `activities` AND its domain in `domains`, so the seven verbs and five domains stay two arrays rather than a thirty-five-cell grid, and a membership edge carries the verb axis alone and resolves to all five domains. Revocation is one commit of exactly four effects — the grant `revoked`, every transitively dependent sub-grant `revoked`, the derived projection rows removed, and one `identity.acting-context.revoked.v1` outbox row — with no partial combination observable at any isolation level. The counterweight that makes all of this survivable is that every downstream command stores the acting party, the human actor, the source relationship or mandate id and its version alongside the fact, so the explanation of why an act was allowed outlives the authority that allowed it, and retracting a wrong-context fact never means reattributing one."
+    },
+    {
+      "kind": "quoteMismatch",
+      "group": "G01",
+      "item": "G01-FLOW-001-PRINCIPAL-SEQUENCES",
+      "path": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/01-identity-profiles-organizations/01.01-person-identity-roles/01.01.03-acting-context-switcher.md",
+      "citation": {
+        "path": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/01-identity-profiles-organizations/01.01-person-identity-roles/01.01.03-acting-context-switcher.md",
+        "lineStart": 203,
+        "lineEnd": 203,
+        "quote": "The acting context is UI view state. It follows the tab."
+      },
+      "actual": "| D-08 | Acting context is **view state**, not account state: per-tab, per-device, bound at composer open, revalidated at submit | DT-05 — account-level context silently rebinds other tabs, which misattributes binding communications for the platform's highest-volume switcher user |"
+    },
+    {
+      "kind": "quoteMismatch",
+      "group": "G04",
+      "item": "G04-W03",
+      "path": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ia/16-education-credentials-institutions.md",
+      "citation": {
+        "path": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ia/16-education-credentials-institutions.md",
+        "lineStart": 185,
+        "lineEnd": 202,
+        "quote": "`course` owns `authoring_policy_version`, `state`, and `version`; `course_revision` owns `course_id`, `revision_no`, `declared_completeness`, `metadata`, `rights_summary`, `moderation_state`, and `published_at`."
+      },
+      "actual": "| `owner_party_id` | `uuid` | FK → Shard 01 `party`. NOT NULL. **At launch this must be an authorised adult individual** — `ADULT_REQUIRED`; organization ownership requires an explicit signed mandate and contributor rights, and that path is future-gated. |\n| `authoring_policy_version` | `bigint` | NOT NULL and active. |\n| `state` | `CourseState` | NOT NULL. |\n| `version` | `bigint` | NOT NULL, > 0. |\n\n**Relationships.** N:1 to the owner; 1:N to `course_revision`, `course_contributor` and `course_offer`. **Holds no published content inline** — content lives in immutable revisions, which is what makes a purchase's material stable.\n\n#### `course_revision`\n\n| Field | Type | Constraint |\n|---|---|---|\n| `course_id` | `uuid` | FK → `course`. NOT NULL. |\n| `revision_no` | `integer` | NOT NULL, ≥ 1. |\n| `declared_completeness` | `jsonb` | NOT NULL. The **disclosed outline** — publication requires it complete (`PUBLISH_GATE_FAILED`). |\n| `metadata` | `jsonb` | NOT NULL. |\n| `rights_summary` | `jsonb` | NOT NULL. `RIGHTS_REQUIRED` blocks publication without attestations. |\n| `moderation_state` | `enum(eligible, pending, blocked)` | NOT NULL. |\n| `published_at` | `timestamptz` | NULL until published. |"
+    },
+    {
+      "kind": "quoteMismatch",
+      "group": "G04",
+      "item": "G04-W03",
+      "path": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ia/16-education-credentials-institutions.md",
+      "citation": {
+        "path": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ia/16-education-credentials-institutions.md",
+        "lineStart": 210,
+        "lineEnd": 228,
+        "quote": "`course_section` owns revision-scoped title/order; `course_lesson` owns `revision_id`, `section_id`, `order`, `is_preview`, `duration_ms`, and `practice_task_ref`."
+      },
+      "actual": "| `revision_id` | `uuid` | FK → `course_revision`. NOT NULL. **Revision-scoped** — a section belongs to one revision, never to the course. |\n| `parent_section_id` | `uuid` | FK → `course_section` within the same revision. NULL at root. |\n| `order` | `integer` | NOT NULL, ≥ 1. |\n| `title` | `text` | NOT NULL. |\n\n**Relationships.** N:1 to `course_revision`; self-referencing tree within one revision, validated acyclic. Unique on (`revision_id`, `parent_section_id`, `order`).\n\n#### `course_lesson`\n\n| Field | Type | Constraint |\n|---|---|---|\n| `revision_id` | `uuid` | FK → `course_revision`. NOT NULL. |\n| `section_id` | `uuid` | FK → `course_section`. NOT NULL. |\n| `order` | `integer` | NOT NULL, ≥ 1. |\n| `is_preview` | `boolean` | NOT NULL. **Publication requires exactly one preview and at least one paid lesson.** |\n| `duration_ms` | `bigint` | NOT NULL, > 0. |\n| `practice_task_ref` | `uuid` | FK → `course_practice_task` **in this shard**, whose `revision_id` must equal this lesson's. UNIQUE where NOT NULL. NULL when the lesson sets no practice. **Not a Shard 15 row** — Shard 15 declares no practice task: its [Shard 15 Contracts](15-education-delivery.md#contracts) `AssignPractice` writes an `assignment`, whose `relationship_ref` is NOT NULL and so requires the teacher-student relationship a course purchase never creates, and its `RecordPractice` writes the student-private `practice_event` that exists only once a learner has practised. An authored task is course content, so it is revision-scoped here and reaches Shard 15 only as the `task` element of the `course/revision/lesson/task` provenance `OpenCoursePractice` sends. |\n\n**Relationships.** N:1 to `course_revision` and `course_section`; 1:N to `course_media` and `course_progress`; at most one `course_practice_task` through `practice_task_ref`. Unique on (`section_id`, `order`)."
+    },
+    {
+      "kind": "quoteMismatch",
+      "group": "G04",
+      "item": "G04-W03",
+      "path": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ia/16-education-credentials-institutions.md",
+      "citation": {
+        "path": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ia/16-education-credentials-institutions.md",
+        "lineStart": 269,
+        "lineEnd": 274,
+        "quote": "`course_offer` uses `course_id` / `revision_id`, `amount_minor` / `currency`, `territory`, `tax_class`, `refund_policy_version`, and `lifecycle`."
+      },
+      "actual": "| `course_id` / `revision_id` | `uuid` | NOT NULL. |\n| `amount_minor` / `currency` | `bigint` / `char(3)` | NOT NULL. **One-off price at launch** — there is no subscription or instalment field. |\n| `territory` | `char(2)` | NOT NULL. |\n| `tax_class` | `text` | NOT NULL. **Deliberately open vocabulary, not an unfinished enum** — a tax class is defined by the taxing jurisdiction, so no fixed member list could stay correct across territories. **Source of truth:** the tax classification set the payment and tax adapter boundary of [Shard 00 Contracts](00-infrastructure.md#contracts) exposes for this row's `territory`; WeJammin declares no tax vocabulary of its own and **never normalises a class across territories**, exactly as one board's grade is never equated with another's. **Validation:** the value must be one that source currently recognises for that `territory`; an unrecognised or territory-mismatched class is an unmet publication gate, so `PublishCourseRevision` returns `PUBLISH_GATE_FAILED` naming `tax_class` and the offer never reaches `lifecycle = live`. **After freeze:** `course_purchase.frozen_offer` carries the class as bought; if the jurisdiction later retires it, the frozen value stands unchanged as the record of what was charged and only new offers must name a currently recognised class. |\n| `refund_policy_version` | `bigint` | NOT NULL. |\n| `lifecycle` | `enum(draft, live, withdrawn)` | NOT NULL. |"
+    },
+    {
+      "kind": "quoteMismatch",
+      "group": "G04",
+      "item": "G04-W06",
+      "path": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ia/18-royalty-accounting.md",
+      "citation": {
+        "path": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ia/18-royalty-accounting.md",
+        "lineStart": 519,
+        "lineEnd": 528,
+        "quote": "`performer_registration` has mandatory party and membership references, an undeclared-target `submission_ref`/embedded `receipt`/`expected_by`, and only compound uniqueness is stated."
+      },
+      "actual": "| `performer_party_id` | `uuid` | FK → Shard 01 `party`. NOT NULL. |\n| `recording_isrc` | `text` | **NOT NULL. An eligible credit with no ISRC blocks with `ISRC_ABSENT` named against Shard 22** — never a silent dead end. |\n| `body` / `territory` | `text` | NOT NULL. |\n| `role` | `PerformerRole` | **NOT NULL. Asserted and attributed, never computed or derived by the platform.** |\n| `role_confirmation` | `RoleConfirmation` | **NOT NULL. `unconfirmed` is permanent until the performer responds** — non-response never auto-confirms, never blocks the filing and never makes the platform compute its own answer. |\n| `membership_ref` | `uuid` | **FK → `society_affiliation`. NOT NULL — the performer's own membership. `MEMBERSHIP_ABSENT` otherwise.** Platform accreditation is **not** required and has no column. |\n| `submission_ref` / `receipt` / `expected_by` | `uuid` / `jsonb` / `timestamptz` | `expected_by` NOT NULL. |\n| `state` | `PerformerRegistrationState` | NOT NULL. |\n\n**Relationships.** **Unique on (`performer_party_id`, `recording_isrc`, `body`, `territory`).** Two parties claiming the same slot is a society-side conflict: **money held, routed to Shard 10** — `PERFORMER_SLOT_CONFLICT`. **An unclaimed shell party still gets a row** — money visible for a person the platform cannot contact is recorded, not suppressed."
+    },
+    {
+      "kind": "quoteMismatch",
+      "group": "G04",
+      "item": "G04-W06",
+      "path": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ia/18-royalty-accounting.md",
+      "citation": {
+        "path": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ia/18-royalty-accounting.md",
+        "lineStart": 67,
+        "lineEnd": 67,
+        "quote": "return Submitted state with immutable payload/receipt, or handoff pack ... a repeat filing on the same (performer_party, recording_isrc, body, territory) key returns the existing record rather than a duplicate."
+      },
+      "actual": "- **AC-ROY-21 — Administrator files performer registration:** Given Rights administrator with a mandate over the performer; an eligibility row carrying an ISRC; the performer's OWN `society_affiliation` membership for that body and territory; a versioned society profile with channel and expected-by; platform accreditation is explicitly NOT a precondition, when the administrator submits `FilePerformerRegistration` under the `(recording ISRC, society, performer)` key — and an `unconfirmed` role must be filed **as unconfirmed** rather than upgraded at filing time, while filing without a resolved ISRC is refused with the gap named against Shard 22, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) Bind to the performer's OWN society membership, platform accreditation not being a precondition unlike the work-registration path, and deliver via the same versioned society profile/channel/expected-by machinery as `DeliverRegistration`, including the manual-task channel, and (6) return Submitted state with immutable payload/receipt, or handoff pack; if the flow cannot complete, `MEMBERSHIP_ABSENT` blocks and surfaces as a leakage finding; `ISRC_ABSENT` names the Shard 22 gap; `PERFORMER_SLOT_CONFLICT` where two parties claim the same performer slot holds money at source and routes to Shard 10; where no API channel exists the filing becomes an explicit manual task and handoff pack with an expected-by; a repeat filing on the same (performer_party, recording_isrc, body, territory) key returns the existing record rather than a duplicate."
+    },
+    {
+      "kind": "quoteMismatch",
+      "group": "G04",
+      "item": "G04-W07",
+      "path": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ia/19-royalty-reporting-forecasting.md",
+      "citation": {
+        "path": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ia/19-royalty-reporting-forecasting.md",
+        "lineStart": 33,
+        "lineEnd": 34,
+        "quote": "AC-RRF-04 — Rights holder tracks cue sheet; AC-RRF-05 — User chases missing cue sheet"
+      },
+      "actual": "- **AC-RRF-04 — Rights holder tracks cue sheet:** Given Rights holder or mandated administrator with a licensed placement, plus the production, territory and cue-sheet obligation evidence that gives rise to the expectation, when that rights holder or mandated administrator submits `CreateCueSheetExpectation` naming the licensed `placement_id`, the `production_ref` and `territory` it covers and, where the obligation can be evidenced for that territory, the `obligation_evidence_id`, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) Create expectation from licensed placement, production/territory and obligation evidence, and (6) return Expected, confirmed, missing or unverifiable; if the flow cannot complete, `NOT_AUTHORIZED` where the actor holds no mandate over the placement; where the obligation cannot be evidenced for a territory the expectation is `unverifiable` — never assumed filed and never assumed missing, and per-territory unverifiability is never collapsed into `confirmed` or `missing`.\n- **AC-RRF-05 — User chases missing cue sheet:** Given A `missing` or `unverifiable` `cue_sheet_expectation` within the actor's mandate, with a contact route or a recorded absence of one, when a holder of that mandate submits `RecordCueSheetChase` against that expectation, naming the `contact_route` used or the recorded absence of one, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) Create off-platform task/contact evidence; platform never files for production, and (6) return Follow-up history and honest dead end; if the flow cannot complete, the platform never files a cue sheet for the production, so an unreachable or defunct production returns an honest dead end with the expectation retained and the follow-up history preserved, never a fabricated escalation or an implied filing."
+    },
+    {
+      "kind": "quoteMismatch",
+      "group": "G04",
+      "item": "G04-W08",
+      "path": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ia/20-licensing-core.md",
+      "citation": {
+        "path": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ia/20-licensing-core.md",
+        "lineStart": 60,
+        "lineEnd": 60,
+        "quote": "AC-LIC-17 — Third party verifies ... an unguessable live verification reference ... authenticate and resolve acting context ... return an identical response shape for an unknown, malformed and unmatched reference"
+      },
+      "actual": "- **AC-LIC-17 — Third party verifies:** Given An unguessable live verification reference, with the pinned grammar version, instrument and lifecycle state resolvable at check time, when the third party submits `VerifyLicence` carrying that unguessable verification reference, then the system MUST (1) validate inputs, (2) authenticate and resolve acting context, (3) authorize, (4) enforce revision and idempotency, (5) Live lookup pinned grammar/instrument/lifecycle and timestamped validity window, and (6) return Valid/superseded/terminated/expired/cannot-verify, and (7) resolve the unguessable verification reference against permission, instrument and lifecycle state at check time and return an identical response shape for an unknown, malformed and unmatched reference, so the endpoint discloses no instrument's existence; an outage returns `cannot verify` and never `invalid`, and a superseded reference keeps resolving as `superseded` rather than disappearing; if the flow cannot complete, `CANNOT_VERIFY` on outage — an outage is reported as cannot-verify and never as invalid; a superseded or terminated instrument returns the safe current status without exposing private terms; the response carries checked-at and the validity window, so an unresolved term trigger reads as `expiry_indeterminate` rather than as an absent or fabricated date."
+    },
+    {
+      "kind": "quoteMismatch",
+      "group": "G04",
+      "item": "G04-C01",
+      "path": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ia/07-credits-core.md",
+      "citation": {
+        "path": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ia/07-credits-core.md",
+        "lineStart": 706,
+        "lineEnd": 706,
+        "quote": "Shard 16 ... cites no Shard 16 section"
+      },
+      "actual": "- **Shard 16 — Education credentials and institutions:** Shard 16 consumes this shard's [§ Contracts](#contracts) — credit truth, attestations and the role/instrument vocabulary its course-completion and external-exam records must draw from — and publishes that completion and exam evidence to this shard's [§ Event Schemas](#event-schemas) as evidence only. Per DEC-098 the edge is inbound-only from this shard's side: it consumes nothing from Shard 16, cites no Shard 16 section and reads no Shard 16 store. This shard alone evaluates and issues a credit; nothing in Shard 16 does. Canonical credit ownership stays here and typed failure/unknown states cross the same boundary."
+    },
+    {
+      "kind": "quoteMismatch",
+      "group": "G04",
+      "item": "G04-C01",
+      "path": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ia/07-credits-core.md",
+      "citation": {
+        "path": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ia/07-credits-core.md",
+        "lineStart": 707,
+        "lineEnd": 707,
+        "quote": "Shard 17 ... cites no Shard 17 section"
+      },
+      "actual": "- **Shard 17 — Real-time sessions:** Shard 17 consumes this shard's [§ Contracts](#contracts) — the role and instrument vocabulary a sealed observation must draw from — and publishes its sealed `attendance_observation` to this shard's [§ Event Schemas](#event-schemas) so it is available here as evidence. Per DEC-098 the edge is inbound-only from this shard's side: it consumes nothing from Shard 17, cites no Shard 17 section and reads no Shard 17 store. This shard alone evaluates credit meaning; nothing in Shard 17 converts an observation into a credit. Canonical credit ownership stays here and typed failure/unknown states cross the same boundary."
+    },
+    {
+      "kind": "quoteMismatch",
+      "group": "G04",
+      "item": "G04-C01",
+      "path": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ia/16-education-credentials-institutions.md",
+      "citation": {
+        "path": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ia/16-education-credentials-institutions.md",
+        "lineStart": 579,
+        "lineEnd": 579,
+        "quote": "consume [Shard 07 Contracts] ... publish this shard `§ Event Schemas` to [Shard 07 Event Schemas]"
+      },
+      "actual": "- **Shard 07:** consume [Shard 07 Contracts](07-credits-core.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 07 Event Schemas](07-credits-core.md#event-schemas). Shard 07 owns credit truth, attestations and role/instrument vocabulary — this shard records course completion and external exam evidence only, and nothing here evaluates or issues a credit. Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary."
+    },
+    {
+      "kind": "quoteMismatch",
+      "group": "G05",
+      "item": "G05-W01",
+      "path": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/11-music-licensing/11.07-ai-training-licensing/11.07-ai-training-licensing-index.md",
+      "citation": {
+        "path": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/11-music-licensing/11.07-ai-training-licensing/11.07-ai-training-licensing-index.md",
+        "lineStart": 72,
+        "lineEnd": 72,
+        "quote": "moscow-ledger.md carries **11.07.02 and 11.07.03 under `WONT (53)`**"
+      },
+      "actual": "| Q-03 | ~~Does the platform have any counterparty for 11.07.02? AI companies buying licensed corpora is an emerging market with few real deals. This sub-domain may be building a shop for customers who do not exist yet.~~ **RESOLVED by scope — the shop is not being built.** [moscow-ledger.md](../../moscow-ledger.md) carries **11.07.02 and 11.07.03 under `WONT (53)`** — \"the buyer market barely exists (Q-03). Probably stillborn\" and \"Nothing to divide without 11.07.02, which is wont\" — and `ideation-index.md` defines Won't as \"`[SURFACE]` — intentionally minimal … retained for traceability, not built\". 11.07.01 sits in `SHOULD` and its case rests on the record, not the revenue (its DT-02), so nothing that *is* being built waits on a buyer existing. The market question becomes live again only if that Won't is revisited. | User | Resolved — moscow-ledger.md `WONT (53)` |"
+    },
+    {
+      "kind": "quoteMismatch",
+      "group": "G05",
+      "item": "G05-W04",
+      "path": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ia/23-gear-provenance-registry.md",
+      "citation": {
+        "path": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ia/23-gear-provenance-registry.md",
+        "lineStart": 438,
+        "lineEnd": 438,
+        "quote": "Public visitor: the denial is structural rather than a permissions gap — owner identity and contact, exact possession or location, evidence and `appraisal_record` are absent from the public projection by construction (GPR-05)"
+      },
+      "actual": "- **Public visitor:** the denial is structural rather than a permissions gap — owner identity and contact, exact possession or location, evidence and `appraisal_record` are absent from the public projection by construction (GPR-05), so no authority level, mandate or configuration change can produce them and there is nothing to appeal; an unresolvable record returns a typed refusal identical whether or not the record exists. The only forward paths are to acquire standing on the record through `SubmitOwnershipClaim` under GPR-03 — which records a competing claim, leaves `ClaimState = contested` and never converts into title — or, where a published projection is believed wrong or exposing, the Trust & Safety intake in [Shard 06 § Contracts](06-trust-safety.md#contracts), where this shard records the case route and decides nothing and an outcome moves claim or flag state without deleting evidence. Public serial screening stays available throughout: `SCREENING_UNAVAILABLE` is an explicit cannot-check and `IDENTITY_KEY_INCOMPLETE` is not-screenable, and neither is appealable into a clearance."
+    },
+    {
+      "kind": "quoteMismatch",
+      "group": "G05",
+      "item": "G05-W06",
+      "path": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/13-gear-marketplace/13.13-authorized-dealer-map-pricing.md",
+      "citation": {
+        "path": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/13-gear-marketplace/13.13-authorized-dealer-map-pricing.md",
+        "lineStart": 88,
+        "lineEnd": 88,
+        "quote": "RESOLVED — no. MoSCoW ran and placed this feature in **WONT**"
+      },
+      "actual": "| Q-03 | ~~Does the platform carry new gear from major brands at all at launch, given it presupposes dealer relationships nobody has? Per DT-01 — bears on the reading of D-05.~~ **RESOLVED — no.** MoSCoW ran and placed this feature in **WONT** ([`moscow-ledger.md`](../moscow-ledger.md), §WONT (53)). D-05's \"new + used\" therefore reads as DT-01 proposed: used is the wedge, new is an aspiration. | User | ✅ Resolved — `moscow-ledger.md` (13.13 = WONT) |"
+    },
+    {
+      "kind": "quoteMismatch",
+      "group": "G06",
+      "item": "G06-W04",
+      "path": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/14-digital-goods-marketplace/14.02-licensing-activation-entitlement/14.02.01-licence-issuance-entitlement-record.md",
+      "citation": {
+        "path": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/14-digital-goods-marketplace/14.02-licensing-activation-entitlement/14.02.01-licence-issuance-entitlement-record.md",
+        "lineStart": 97,
+        "lineEnd": 97,
+        "quote": "A bundle mints N entitlements — one per product (D-07) — each carrying its apportioned share of the bundle price in the transaction currency."
+      },
+      "actual": "| **Bundle purchase** (14.07.04) | Mints N entitlements — one per product (D-07) — each carrying its **apportioned share** of the bundle price in the transaction currency. Each is independently refundable, transferable (14.06), revocable and terms-bound. | Library shows 5 products, not \"1 bundle\". The bundle exists on the receipt, not in the rights layer |"
+    },
+    {
+      "kind": "quoteMismatch",
+      "group": "G06",
+      "item": "G06-W04",
+      "path": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/14-digital-goods-marketplace/14.02-licensing-activation-entitlement/14.02.01-licence-issuance-entitlement-record.md",
+      "citation": {
+        "path": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ideation/14-digital-goods-marketplace/14.02-licensing-activation-entitlement/14.02.01-licence-issuance-entitlement-record.md",
+        "lineStart": 98,
+        "lineEnd": 98,
+        "quote": "Refunds that entitlement's allocated price, not a list price and not 1/5 of the total."
+      },
+      "actual": "| Partial refund of one bundle item | Refunds that entitlement's **allocated** price, not a list price and not 1/5 of the total. The other four survive untouched. Without a per-entitlement allocated price this arithmetic has no correct answer, and both refunds and payouts (14.10) silently drift. Refund policy remains 14.09.02's. | \"Refunding Analog Drums — £14 of your £70 bundle\" |"
+    },
+    {
+      "kind": "quoteMismatch",
+      "group": "G07",
+      "item": "G07-W01",
+      "path": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ia/deep-dives/19-royalty-reporting-forecasting.md",
+      "citation": {
+        "path": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ia/deep-dives/19-royalty-reporting-forecasting.md",
+        "lineStart": 126,
+        "lineEnd": 126,
+        "quote": "| `show_provenance` | `enum(upstream, manual)` | NOT NULL. `manual` marks a hand-entered show and renders as lower provenance; it never blocks the return. |"
+      },
+      "actual": "- [[specs/ia/18-royalty-accounting|Shard 18]]"
+    },
+    {
+      "kind": "quoteMismatch",
+      "group": "G07",
+      "item": "G07-W01",
+      "path": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ia/deep-dives/19-royalty-reporting-forecasting.md",
+      "citation": {
+        "path": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ia/deep-dives/19-royalty-reporting-forecasting.md",
+        "lineStart": 133,
+        "lineEnd": 133,
+        "quote": "| `setlist_version_id` | `uuid` | FK → Shard 33 `SetlistVersion` — an immutable version on that show's setlist chain. NOT NULL. Immutable after creation. |"
+      },
+      "actual": "### References"
+    },
+    {
+      "kind": "badRange",
+      "group": "G07",
+      "item": "G07-W01",
+      "path": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ia/deep-dives/19-royalty-reporting-forecasting.md",
+      "max": 137,
+      "citation": {
+        "path": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ia/deep-dives/19-royalty-reporting-forecasting.md",
+        "lineStart": 147,
+        "lineEnd": 147,
+        "quote": "| `setlist_item_id` | `uuid` | **Referent not yet declared — no FK target.** NOT NULL. The setlist entry is preserved even when no line is filed."
+      }
+    }
+  ],
+  "overlaps": [
+    {
+      "path": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ia/00-infrastructure.md",
+      "items": [
+        {
+          "group": "G00",
+          "item": "G00-W01",
+          "findings": [
+            "INF-VF1",
+            "EDGE-SEC-002",
+            "FLOW-001"
+          ]
+        },
+        {
+          "group": "G00",
+          "item": "G00-W04",
+          "findings": [
+            "CON-003"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ia/index.md",
+      "items": [
+        {
+          "group": "G00",
+          "item": "G00-W02",
+          "findings": [
+            "IA-IDX-F-001"
+          ]
+        },
+        {
+          "group": "G00",
+          "item": "G00-W03",
+          "findings": [
+            "IA-IDX-F-002"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ia/02-profiles-verification.md",
+      "items": [
+        {
+          "group": "G01",
+          "item": "G01-CON-003-SEMANTIC-CONTRACTS",
+          "findings": [
+            "CON-003"
+          ]
+        },
+        {
+          "group": "G01",
+          "item": "G01-CON-001-TARGET-LINKS",
+          "findings": [
+            "CON-001",
+            "PRF-VF1"
+          ]
+        },
+        {
+          "group": "G01",
+          "item": "G01-FLOW-001-PRINCIPAL-SEQUENCES",
+          "findings": [
+            "FLOW-001"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ia/04-cms-delivery-media.md",
+      "items": [
+        {
+          "group": "G01",
+          "item": "G01-CON-003-SEMANTIC-CONTRACTS",
+          "findings": [
+            "CON-003"
+          ]
+        },
+        {
+          "group": "G01",
+          "item": "G01-CON-001-TARGET-LINKS",
+          "findings": [
+            "CON-001",
+            "PRF-VF1"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ia/05-platform-configuration-admin.md",
+      "items": [
+        {
+          "group": "G01",
+          "item": "G01-CON-003-SEMANTIC-CONTRACTS",
+          "findings": [
+            "CON-003"
+          ]
+        },
+        {
+          "group": "G01",
+          "item": "G01-FLOW-001-PRINCIPAL-SEQUENCES",
+          "findings": [
+            "FLOW-001"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ia/14-services-marketplace.md",
+      "items": [
+        {
+          "group": "G03",
+          "item": "G03-W04",
+          "findings": [
+            "DD-GLOBAL-002",
+            "SRV-DD-F1"
+          ]
+        },
+        {
+          "group": "G03",
+          "item": "G03-W05",
+          "findings": [
+            "SRV-F2"
+          ]
+        },
+        {
+          "group": "G03",
+          "item": "G03-W06",
+          "findings": [
+            "SRV-F1"
+          ]
+        },
+        {
+          "group": "G03",
+          "item": "G03-W07",
+          "findings": [
+            "IA-IDX-F-001",
+            "IA-IDX-F-002"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ia/15-education-delivery.md",
+      "items": [
+        {
+          "group": "G03",
+          "item": "G03-W08",
+          "findings": [
+            "IA-IDX-F-001",
+            "IA-IDX-F-002"
+          ]
+        },
+        {
+          "group": "G03",
+          "item": "G03-C01",
+          "findings": [
+            "CON-002"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ia/18-royalty-accounting.md",
+      "items": [
+        {
+          "group": "G04",
+          "item": "G04-W01",
+          "findings": [
+            "FLOW-001"
+          ]
+        },
+        {
+          "group": "G04",
+          "item": "G04-W06",
+          "findings": [
+            "IA18-DATA-001",
+            "MAT-003"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ia/deep-dives/18-royalty-accounting.md",
+      "items": [
+        {
+          "group": "G04",
+          "item": "G04-W05",
+          "findings": [
+            "DD18-XSHARD-01"
+          ]
+        },
+        {
+          "group": "G04",
+          "item": "G04-W06",
+          "findings": [
+            "IA18-DATA-001",
+            "MAT-003"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ia/22-release-distribution.md",
+      "items": [
+        {
+          "group": "G05",
+          "item": "G05-W02",
+          "findings": [
+            "DST-VF1",
+            "EDGE-SEC-005",
+            "FLOW-001"
+          ]
+        },
+        {
+          "group": "G05",
+          "item": "G05-W03",
+          "findings": [
+            "FE-16-23-04"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ia/25-gear-market-catalog.md",
+      "items": [
+        {
+          "group": "G05",
+          "item": "G05-W05",
+          "findings": [
+            "FLOW-001"
+          ]
+        },
+        {
+          "group": "G05",
+          "item": "G05-W06",
+          "findings": [
+            "FE-24-31-001"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ia/28-digital-licensing-commerce.md",
+      "items": [
+        {
+          "group": "G06",
+          "item": "G06-W02",
+          "findings": [
+            "FE-24-31-004"
+          ]
+        },
+        {
+          "group": "G06",
+          "item": "G06-W04",
+          "findings": [
+            "DLC-VF1"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ia/32-show-production-planning.md",
+      "items": [
+        {
+          "group": "G07",
+          "item": "G07-W01",
+          "findings": [
+            "DD19-F1"
+          ]
+        },
+        {
+          "group": "G07",
+          "item": "G07-W03",
+          "findings": [
+            "SPP-F1"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ia/33-show-day-operations.md",
+      "items": [
+        {
+          "group": "G07",
+          "item": "G07-W01",
+          "findings": [
+            "DD19-F1"
+          ]
+        },
+        {
+          "group": "G07",
+          "item": "G07-W04",
+          "findings": [
+            "SDO-F1"
+          ]
+        },
+        {
+          "group": "G07",
+          "item": "G07-W07",
+          "findings": [
+            "FEAT-32-38-001"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ia/deep-dives/33-show-day-operations.md",
+      "items": [
+        {
+          "group": "G07",
+          "item": "G07-W01",
+          "findings": [
+            "DD19-F1"
+          ]
+        },
+        {
+          "group": "G07",
+          "item": "G07-W07",
+          "findings": [
+            "FEAT-32-38-001"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ia/34-touring-operations.md",
+      "items": [
+        {
+          "group": "G07",
+          "item": "G07-W02",
+          "findings": [
+            "FLOW-001"
+          ]
+        },
+        {
+          "group": "G07",
+          "item": "G07-W05",
+          "findings": [
+            "TOU-F1"
+          ]
+        },
+        {
+          "group": "G07",
+          "item": "G07-W07",
+          "findings": [
+            "FEAT-32-38-001"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ia/36-box-office-risk.md",
+      "items": [
+        {
+          "group": "G08",
+          "item": "G08-W01",
+          "findings": [
+            "F-36-01",
+            "F-37-01",
+            "F-38-01",
+            "F-39-01",
+            "MIS-F1",
+            "CFB-F1",
+            "CPR-F1"
+          ]
+        },
+        {
+          "group": "G08",
+          "item": "G08-W03",
+          "findings": [
+            "DD36-F03",
+            "EDGE-SEC-007"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ia/37-fanbase-direct-to-fan.md",
+      "items": [
+        {
+          "group": "G08",
+          "item": "G08-W01",
+          "findings": [
+            "F-36-01",
+            "F-37-01",
+            "F-38-01",
+            "F-39-01",
+            "MIS-F1",
+            "CFB-F1",
+            "CPR-F1"
+          ]
+        },
+        {
+          "group": "G08",
+          "item": "G08-W07",
+          "findings": [
+            "FEAT-32-38-001"
+          ]
+        },
+        {
+          "group": "G08",
+          "item": "G08-W08",
+          "findings": [
+            "FLOW-001",
+            "EDGE-SEC-017"
+          ]
+        },
+        {
+          "group": "G08",
+          "item": "G08-W11",
+          "findings": [
+            "DD37-F05",
+            "EDGE-SEC-016"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ia/38-promotion-marketing.md",
+      "items": [
+        {
+          "group": "G08",
+          "item": "G08-W01",
+          "findings": [
+            "F-36-01",
+            "F-37-01",
+            "F-38-01",
+            "F-39-01",
+            "MIS-F1",
+            "CFB-F1",
+            "CPR-F1"
+          ]
+        },
+        {
+          "group": "G08",
+          "item": "G08-W07",
+          "findings": [
+            "FEAT-32-38-001"
+          ]
+        },
+        {
+          "group": "G08",
+          "item": "G08-W08",
+          "findings": [
+            "FLOW-001",
+            "EDGE-SEC-017"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ia/39-analytics-ingestion-reporting.md",
+      "items": [
+        {
+          "group": "G08",
+          "item": "G08-W01",
+          "findings": [
+            "F-36-01",
+            "F-37-01",
+            "F-38-01",
+            "F-39-01",
+            "MIS-F1",
+            "CFB-F1",
+            "CPR-F1"
+          ]
+        },
+        {
+          "group": "G08",
+          "item": "G08-W13",
+          "findings": [
+            "DD39-V-002"
+          ]
+        },
+        {
+          "group": "G08",
+          "item": "G08-W14",
+          "findings": [
+            "DD39-V-003"
+          ]
+        },
+        {
+          "group": "G08",
+          "item": "G08-W15",
+          "findings": [
+            "DD39-V-004"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ia/40-market-intelligence-signals.md",
+      "items": [
+        {
+          "group": "G08",
+          "item": "G08-W01",
+          "findings": [
+            "F-36-01",
+            "F-37-01",
+            "F-38-01",
+            "F-39-01",
+            "MIS-F1",
+            "CFB-F1",
+            "CPR-F1"
+          ]
+        },
+        {
+          "group": "G08",
+          "item": "G08-W05",
+          "findings": [
+            "FE-39-42-001"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ia/42-career-planning-risk.md",
+      "items": [
+        {
+          "group": "G08",
+          "item": "G08-W01",
+          "findings": [
+            "F-36-01",
+            "F-37-01",
+            "F-38-01",
+            "F-39-01",
+            "MIS-F1",
+            "CFB-F1",
+            "CPR-F1"
+          ]
+        },
+        {
+          "group": "G08",
+          "item": "G08-W06",
+          "findings": [
+            "FE-39-42-002"
+          ]
+        },
+        {
+          "group": "G08",
+          "item": "G08-W08",
+          "findings": [
+            "FLOW-001",
+            "EDGE-SEC-017"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ia/deep-dives/36-box-office-risk.md",
+      "items": [
+        {
+          "group": "G08",
+          "item": "G08-W02",
+          "findings": [
+            "DD36-F01",
+            "EDGE-SEC-010"
+          ]
+        },
+        {
+          "group": "G08",
+          "item": "G08-W03",
+          "findings": [
+            "DD36-F03",
+            "EDGE-SEC-007"
+          ]
+        },
+        {
+          "group": "G08",
+          "item": "G08-W04",
+          "findings": [
+            "DD36-F04",
+            "EDGE-SEC-011"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ia/deep-dives/37-fanbase-direct-to-fan.md",
+      "items": [
+        {
+          "group": "G08",
+          "item": "G08-W09",
+          "findings": [
+            "DD37-F01",
+            "EDGE-SEC-008",
+            "DD37-F02",
+            "EDGE-SEC-013"
+          ]
+        },
+        {
+          "group": "G08",
+          "item": "G08-W10",
+          "findings": [
+            "DD37-F03",
+            "EDGE-SEC-014",
+            "DD37-F04",
+            "EDGE-SEC-015"
+          ]
+        },
+        {
+          "group": "G08",
+          "item": "G08-W11",
+          "findings": [
+            "DD37-F05",
+            "EDGE-SEC-016"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "/home/rob/Projects/WeJammin/.memory/wiki/specs/ia/deep-dives/39-analytics-ingestion-reporting.md",
+      "items": [
+        {
+          "group": "G08",
+          "item": "G08-W12",
+          "findings": [
+            "DD39-V-001"
+          ]
+        },
+        {
+          "group": "G08",
+          "item": "G08-W13",
+          "findings": [
+            "DD39-V-002"
+          ]
+        },
+        {
+          "group": "G08",
+          "item": "G08-W15",
+          "findings": [
+            "DD39-V-004"
+          ]
+        }
+      ]
+    }
+  ]
+}

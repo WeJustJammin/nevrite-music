@@ -1,7 +1,7 @@
 # Spec Graph
 
-- **Nodes**: 1480
-- **Edges**: 9892
+- **Nodes**: 1400
+- **Edges**: 9583
 
 ## Relationship Chains
 
@@ -23,27 +23,6 @@
 - [[specs/architecture/prd-working/design-system-synthesis|Design System Synthesis]]
 - [[specs/architecture/prd-working/ideation-relevance-index|Ideation Relevance Index]]
 - [[specs/architecture/prd-working/persistence-map-interview|Persistence Map Interview]]
-- [[specs/audits/2026-08-02-create-prd-quality-gate|Create PRD Quality Gate — 2026-08-02]]
-- [[specs/audits/2026-08-03-be-ambiguity-report|BE Ambiguity Audit — Initial Fresh Run]]
-- [[specs/audits/audit-scope|Ambiguity Audit Scope — IA]]
-- [[specs/audits/owner-autonomy-delegation-2026-08-02|Owner Autonomy Delegation — 2026-08-02]]
-- [[specs/audits/p01-production-stage-vocabulary-validation|P-01 Production-Stage Vocabulary Validation]]
-- [[specs/audits/propagation-availability-slo-2026-08-02|Decision Propagation Record — Availability SLO]]
-- [[specs/audits/propagation-batch2-2026-08-02|Batch 2 Propagation Record — 2026-08-02]]
-- [[specs/audits/propagation-batch3-2026-08-02|Batch 3 Propagation Record — 2026-08-02]]
-- [[specs/audits/propagation-batch4-2026-08-02|Batch 4 Propagation Record — 2026-08-02]]
-- [[specs/audits/propagation-batch5-2026-08-02|Batch 5 Propagation Record — 2026-08-02]]
-- [[specs/audits/propagation-scan-availability-slo-2026-08-02|Decision Propagation Scan — Availability SLO]]
-- [[specs/audits/run3/CONFIRMED-root-001-truncated-synthesis|CONFIRMED — `root#001`: 11 truncated cross-domain syntheses in `ideation-cx.md`]]
-- [[specs/audits/run6/VOID-run-did-not-complete|Run 6 — VOID. This run did not complete and its verdict is meaningless.]]
-- [[specs/audits/run7/VOID-pilot-inherited-context|Void Run 7 Pilot Shards]]
-- [[specs/audits/run7/evidence-path-reconciliation|Run 7 Evidence Path Reconciliation]]
-- [[specs/audits/run7/ideation-ambiguity-report|Run 7 Ideation Ambiguity Audit]]
-- [[specs/audits/run7/manifest|Run 7 Audit Manifest]]
-- [[specs/audits/run7/verified-blocker-remediation-matrix|Run 7 Verified Blocker Remediation Matrix]]
-- [[specs/audits/run7-owner-decision-agenda|Run 7 — Owner Decision Agenda]]
-- [[specs/audits/run8-preflight-candidate-verification|Run 8 Preflight — Candidate Source Fix Review]]
-- [[specs/audits/run8-preflight-governance-verification|Run 8 Preflight — Dimension 7 Governance Verification]]
 - [[specs/be|BE Specs Hub]]
 - [[specs/fe|FE Specs Hub]]
 - [[specs/ideation/09-rights-ownership/09.03-chain-of-title-lifecycle/09.03-chain-of-title-lifecycle-cx|Chain of Title & Rights Lifecycle — Cross-Cuts]]

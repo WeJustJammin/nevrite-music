@@ -1,10 +1,10 @@
 # Spec Pipeline Progress
 
 **Project**: WeJammin
-**Last updated**: 2026-08-05
-**Overall**: IA 43/43 authored (**audit FAIL — 19.48% ambiguity, 2026-08-05**); BE 0 — deleted; FE 0 — deleted
+**Last updated**: 2026-08-28
+**Overall**: IA 43/43 authored and independently ambiguity-passed (**fresh rerun PASS — 0/344 = 0.00%, 2026-08-28**); BE 0 — deleted; FE 0 — deleted
 
-> `.memory/wiki/specs/be/` and `.memory/wiki/specs/fe/` were emptied by commit `5c4e712` "Deleted premature fe/be specs" on 2026-08-05. The per-shard BE/FE columns below are historical and no longer reflect disk. IA must pass its audit before either layer is re-authored.
+> `.memory/wiki/specs/be/` and `.memory/wiki/specs/fe/` were emptied by commit `5c4e712` "Deleted premature fe/be specs" on 2026-08-05. The per-shard BE/FE columns below are historical and no longer reflect disk. Fresh IA rerun 1 passed at 0/344; `/write-be-spec` is the next valid stage.
 
 ## Legend
 
@@ -84,7 +84,7 @@ Shards with all three specifications complete:
 
 ## Next Target
 
-- **BLOCKED.** `/write-fe-spec` for Shard 15 is held pending IA remediation.
-- The fresh IA ambiguity audit on 2026-08-05 scored 67/344 = 19.48% (FAIL); only 2 of 43 shards are clean. See `.memory/wiki/specs/audits/2026-08-05-ia-ambiguity-report.md` and BLOCKER-010.
-- The 2026-08-03 IA PASS (0/344) that cleared this layer is recommended void, not superseded. BE was authored against these shards after it, so a `be`-scoped audit should follow IA remediation.
-- Next: remediate IA (mechanical + structural classes are determined; 14 items need owner decisions), then rerun `/audit-ambiguity ia` as a fresh invocation.
+- **NEXT:** run `/write-be-spec`.
+- Fresh IA ambiguity rerun 1 on 2026-08-28 scored 0/344 = 0.00% (PASS), covering all 83 IA documents and all 43 shards. See `.memory/wiki/specs/audits/2026-08-28-ia-ambiguity-rerun-1.md`.
+- BE and FE documents are absent on disk. Re-author BE first, then FE, then run `/plan-phase` to produce the approved implementation phase plan required by `/setup-workspace`.
+- `/setup-workspace` preflight stopped on 2026-08-28 because no approved phase plan exists; no scaffold or provider state was changed.

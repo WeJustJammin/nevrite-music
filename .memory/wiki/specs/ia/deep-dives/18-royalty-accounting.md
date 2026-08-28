@@ -52,7 +52,7 @@ This deep dive owns custody-safe ingestion, deterministic adapters, identity map
 7. Refuse entity cycles, self-referential arithmetic, rates outside bounds and parts above whole.
 8. Compute exact decimal at ≥9 dp with pinned engine version. Itemize deductions; never net or round in engine.
 9. Parts below whole create visible residual routed to exceptions/rights. Nothing redistributes it.
-10. Future payable aggregate rounds once by largest remainder and stable tie key only after B3 enables provider payout.
+10. Future payable aggregate rounds once by largest remainder and the Shard-10 ledger tuple only after B3 enables provider payout. The parent `RoundPayableAggregate` is a generic conservation primitive: Shard 28 also invokes it once at promotion admission with immutable `bundle_member_id` rows, a separate aggregate boundary that never enters royalty calculation.
 
 ## Recoupment, Restatement and Statement Algorithm
 
@@ -110,6 +110,7 @@ This deep dive owns custody-safe ingestion, deterministic adapters, identity map
 | Shard 06 | Dispute workflow, protected evidence and access review. |
 | Shard 10 | Works, recordings, rights, splits, exact multi-work allocation and title conflicts. |
 | Shard 19 | Read-only accounting versions, coverage and residuals for reporting/forecasting. |
+| Shard 28 | Consumes generic `RoundPayableAggregate` twice at distinct boundaries: member-keyed promotion allocation and ledger-keyed contributor period close. Both conserve totals; neither changes royalty calculation truth. |
 
 ## Implementation Envelope
 
@@ -124,6 +125,7 @@ This deep dive owns custody-safe ingestion, deterministic adapters, identity map
 | Date | Change | Source |
 |---|---|---|
 | 2026-08-03 | Deepened ingest, mapping, exact calculation, restatement, statements, recovery and B3 payout boundary | `/write-architecture-spec` |
+| 2026-08-27 | F09 cascade: documented generic largest-remainder conservation and Shard 28's distinct member-allocation versus payee-close boundaries | `/resolve-ambiguity` |
 
 ## Dependency References
 

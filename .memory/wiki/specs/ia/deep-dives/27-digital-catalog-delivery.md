@@ -5,7 +5,7 @@
 
 ## Overview
 
-This deep dive closes content/executable admission, artifact truth, entitlement identity, transfer authorization, terms composition and vendor-exit failure modes.
+This deep dive closes content/executable admission, artifact truth, entitlement identity and immutable acquisition-allocation evidence, transfer authorization, terms composition and vendor-exit failure modes.
 
 ## Interactions
 
@@ -22,8 +22,8 @@ This deep dive closes content/executable admission, artifact truth, entitlement 
 ### Entitlement and Library Algorithm
 
 1. Confirm synchronous paid order or authorized grant; `pending_payment` may exist but grants nothing.
-2. Lock `(product, holder)` and append acquisition epoch instead of creating duplicates.
-3. Freeze purchaser, holder, origin, vendor, terms version and entitled version range.
+2. Lock `(product, holder)` and append acquisition epoch instead of creating duplicates; an already-owned Shard 28 bundle member mints nothing.
+3. Freeze purchaser, holder, origin, vendor, terms version, entitled version range and allocated consideration/currency. Bundle epochs additionally pin promotion/member allocation, `standalone_selling_price` basis, standalone-price version and ownership quote; validate captured line equals the member share and never re-apportion.
 4. Project one library row per entitlement, scoped to one selected holder; never blend person/org.
 5. Render entitlement, vendor, management authority and holder as independent axes.
 6. As-of view reconstructs history but disables download; current view performs live delivery authorization.
@@ -55,6 +55,7 @@ Permissions intersect; obligations union; numeric/territory/time bounds intersec
 
 - Purchaser and holder are separate principals; holder may be person/org.
 - Issuance fact is indelible; state/holder/management authority may change through explicit commands owned with Shard 28.
+- Every purchase epoch retains its consideration evidence. Shard 28 owns bundle apportionment/ownership adjustment; this shard validates and preserves the acquired member share for refund/revenue consumers.
 - Licence key, activation seat and transfer grant are artifacts/authorizations of entitlement, never entitlement itself.
 - Terms text/version remains resolvable after product/vendor retirement.
 
@@ -131,7 +132,7 @@ All events follow platform idempotency and canonical-refetch rules.
 
 ## Dependency References
 
-- [[specs/ia/28-digital-licensing-commerce|Shard 28]] owns commerce, refund, revocation and revenue state.
+- [[specs/ia/28-digital-licensing-commerce|Shard 28]] owns commerce, bundle allocation/ownership quotes, refund, revocation and revenue state; this shard consumes but never recomputes its immutable allocation evidence.
 - [[specs/ia/10-rights-ownership|Shard 10]] consumes structured rights/obligation composition.
 - [[specs/ia/07-credits-core|Shard 07]] supplies public vendor credibility and receives credit obligations.
 
@@ -146,6 +147,7 @@ All events follow platform idempotency and canonical-refetch rules.
 ## Changelog
 
 - 2026-08-03: Deepened content admission, QA authority, entitlement identity, transfer grants, withdrawal scope and vendor continuity.
+- 2026-08-27: F09 cascade — deepened acquisition-epoch allocation pins and Shard 28 ownership boundary for bundle entitlement/refund/revenue evidence.
 
 
 <!-- spec-graph: auto-generated -->

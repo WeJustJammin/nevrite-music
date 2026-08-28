@@ -383,7 +383,6 @@ type QueueEnvelope = {
 
 ### Cross-Shard Section Contract Map
 
-- **WeJammin — IA Decomposition Plan:** consume [WeJammin — IA Decomposition Plan Contracts](decomposition-plan.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [WeJammin — IA Decomposition Plan Event Schemas](decomposition-plan.md#event-schemas). Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
 - **Shard 01 — Identity authority and party governance:** consume [Shard 01 — Identity authority and party governance Contracts](01-identity-authority.md#contracts) into this shard `§ Contracts`; publish this shard `§ Event Schemas` to [Shard 01 — Identity authority and party governance Event Schemas](01-identity-authority.md#event-schemas). Canonical ownership stays with the producer and typed failure/unknown states cross the same boundary.
 
 ## Changelog

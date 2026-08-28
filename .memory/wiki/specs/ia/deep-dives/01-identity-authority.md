@@ -124,7 +124,7 @@ For every protected command, evaluate in this order:
 4. Resolve current mandate source: active governance projection, explicit grant, or exact band default. Never union expired/revoked sources.
 5. Require action activity; representation additionally requires action domain. Membership domains resolve to all.
 6. Require `communicate` for send/reply regardless of commercial grants.
-7. Require territory/term/resource relationship and exact field/action capability.
+7. Require territory/term/resource relationship and exact field/action capability. A consumer-owned purpose capability is an additional conjunctive check owned by that consumer, never inferred from this shard's generic activity/domain, bind/book, ceiling or membership seed; Shard 30's exact-booking/precondition (`P-06|P-07`) `announce_waive` is the launch instance.
 8. For a declared monetary amount, compare integer minor units and ISO currency against explicit/default ceiling; currency mismatch cannot be converted implicitly.
 9. Recheck resource lifecycle, NDA/visibility/domain invariant, expected version, and RLS/RPC predicate in the committing transaction.
 10. Commit mutation, authority-source snapshot, audit, idempotency, and outbox atomically.
@@ -171,7 +171,8 @@ For every protected command, evaluate in this order:
 | Shard 37 fanbase | Alias/band lifecycle, name disposition, successor/fork lineage, memorialised projection. |
 | Shard 41 finance | Party/payee identity and treasury authorization; no pooled/multi-party entitlement. |
 | Shard 06 moderation | Disputed membership, identifier collision, false death, succession, merge/claim case references; moderation does not rewrite evidence. |
-| Shards 25/27/29/30/37/39 | Viewer-relative party projection and consented relationship identifiers; no inferred authority. |
+| Shards 25/27/29/37/39 | Viewer-relative party projection and consented relationship identifiers; no inferred authority. |
+| Shard 30 booking/contracts | Canonical principal/delegate IDs plus current accepted relationship and authority-source version. Shard 30 owns exact deal/booking/`P-06|P-07` `announce_waive` capability versions and P-07 eligibility; generic authority never implies them. Revocation/staleness fails future use closed; a validly pinned historical waiver remains attributable. |
 
 Every downstream command stores the `actingPartyId`, human actor, authority source relationship/mandate ID, and source version needed to explain why the act was allowed.
 
@@ -194,7 +195,7 @@ Every downstream command stores the `actingPartyId`, human actor, authority sour
 ## Verification Questions
 
 - Two implementers derive the same party kinds, relationship fields, states, transitions, default authority, overlap behavior, and terminal lifecycle.
-- Every authority decision identifies authenticated human, acting party, relationship, mandate source/version, activity/domain, term, ceiling, and resource predicate.
+- Every authority decision identifies authenticated human, acting party, relationship, mandate source/version, activity/domain, term, ceiling, resource predicate and any consumer-owned purpose-capability ID/version. Two implementations must both reject inferred Shard-30 `announce_waive` when only generic authority exists and defer P-07 eligibility to Shard 30's pinned deposit policy.
 - Every disclosure distinguishes public identity, protected legal identity, private linkage, assertion, verification, dispute, and counsel-gated evidence.
 - Every partial failure preserves canonical state and offers a retry/review path without duplicate party, authority escalation, or lost provenance.
 - Keyboard, screen-reader, responsive, zoom, focus, confirmation, and degraded-state behavior is inherited from the parent accessibility contract.
@@ -214,6 +215,7 @@ Every downstream command stores the `actingPartyId`, human actor, authority sour
 | 2026-08-02 | Initial deep-dive skeleton | /decompose-architecture-validate | All |
 | 2026-08-02 | Authored field, state, authority, concurrency, disclosure, dependency, and abuse contracts | /write-architecture-spec-deepen | All |
 | 2026-08-05 | A-24: retargeted three Cross-Shard Contracts consumer rows from ideation-domain numbers to IA shard numbers (20→37 fanbase, 23→41 finance, 24→06 moderation) | /resolve-ambiguity | Cross-Shard Contracts |
+| 2026-08-28 | F10 P-06/P-07 — made consumer-owned purpose capability conjunctive and documented the reciprocal Shard-30 exact-booking/precondition `announce_waive` boundary with P-07 policy owned by Shard 30. | /resolve-ambiguity | Authority Resolution, Cross-Shard Contracts, Verification Questions |
 
 ## Dependency References
 

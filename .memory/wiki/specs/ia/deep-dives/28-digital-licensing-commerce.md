@@ -5,7 +5,7 @@
 
 ## Overview
 
-This deep dive closes exclusive-rights atomicity, withdrawal causality, refund policy, transfer deferral and contributor-money integrity.
+This deep dive closes bundle-allocation/ownership arithmetic, exclusive-rights atomicity, withdrawal causality, refund policy, transfer deferral and contributor-money integrity.
 
 ## Interactions
 
@@ -17,6 +17,15 @@ This deep dive closes exclusive-rights atomicity, withdrawal causality, refund p
 4. Waiver row commits before transfer grant; absent row means no grant/bytes.
 5. Decline is supported and states the date ordinary delivery becomes available without repeated waiver.
 6. Exempt origins/sellers/windows skip only under counsel-authored policy; ambiguity receives protective EU/UK wording.
+
+### Bundle Allocation and Ownership Adjustment
+
+1. On promotion-version admission, resolve every exact member listing/model and a positive independently executable standalone-price version in one settlement currency. Missing, zero, negative, cross-currency or bundle-only price fails closed; no list/equal/vendor weight or runtime FX fallback exists.
+2. Freeze `basis_kind=standalone_selling_price`, listing/price versions and full-bundle consideration. Compute each raw share as `B × s_i / Σs`.
+3. Invoke Shard 18 `RoundPayableAggregate` once with immutable `bundle_member_id` row/tie keys. Persist a vector whose minor-unit shares sum exactly to full consideration; multi-vendor participants accept that exact version before sale.
+4. At cart time, resolve a versioned holder-ownership snapshot. Deduct frozen shares for owned members; payable equals the sum of unowned shares. Ownership uncertainty holds the cart.
+5. Recheck ownership before capture. A change produces a visible successor quote; no capture uses a stale quote. All-owned returns zero and mints nothing.
+6. Each acquired entitlement pins its member allocation, promotion version, basis kind and standalone-price version. Refunds, vendor payout and contributor accrual consume that evidence without re-apportionment; later price/promotion changes never rewrite it.
 
 ### Refund and Revocation Flow
 
@@ -39,7 +48,7 @@ This deep dive closes exclusive-rights atomicity, withdrawal causality, refund p
 ### Contributor Accrual
 
 1. Product submission references Shard-10 contributor use consents and split version.
-2. Acquisition allocates consideration to product/assets; eligible download/acquisition event creates per-asset accrual.
+2. Acquisition allocates consideration to product/assets. For bundle lines it consumes the entitlement's frozen standalone-price-proportional member share without re-apportioning; an eligible download/acquisition event creates per-asset accrual.
 3. Re-download by same buyer/asset dedupes; refund/chargeback appends reversal.
 4. Period close freezes rate/split versions and emits per-payee statement.
 5. Confirmed payable shares proceed only through admitted payout gate; unresolved share becomes held funds after configured deadline (source default 30 days).
@@ -77,6 +86,7 @@ Entitlement state remains authoritative in Shard 27. This commerce projection re
 
 - Shard 10 authors parties, percentages, consent and effective versions.
 - This shard authors acquisition consideration allocation, asset attribution, period rate, accrual/reversal and held-funds records.
+- Promotion admission authors the full member vector; holder ownership removes already-owned shares before capture. Entitlement/refund/accrual consumers may cite but never recompute that vector.
 - Split amendments apply forward from period boundary; closed period statements never recompute silently.
 - Single contributor must explicitly confirm 100%; no default assignment.
 
@@ -143,6 +153,7 @@ All money and rights events use server time, idempotency and reconciliation.
 ## Changelog
 
 - 2026-08-03: Deepened consent-before-delivery, evidence-first refunds, exclusive rights, future-use revocation and contributor accrual boundaries.
+- 2026-08-27: F09 resolved — deepened immutable standalone-selling-price proportional bundle allocation, Shard 18 residue handling, ownership-adjusted quotes and downstream allocation evidence.
 
 
 <!-- spec-graph: auto-generated -->

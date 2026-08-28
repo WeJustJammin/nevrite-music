@@ -2,7 +2,7 @@
 
 ## Summary
 
-- **Total patterns**: 15
+- **Total patterns**: 18
 - **Unique pattern titles**: 15
 
 ## PAT-001: Verify a generated claim against the kit's own reference before propagating it (2026-07-16)
@@ -212,17 +212,17 @@
 
 ## PAT-014: Calibrate a deterministic screen against real doc conventions before trusting its flags (2026-08-05)
 
-- **Occurrences**: 1
-- **Latest timestamp**: 2026-08-05T06:09:09.158Z
-- **Agents**: claude
-- **Sources**: /audit-ambiguity ia
+- **Occurrences**: 4
+- **Latest timestamp**: 2026-08-28T01:00:00-04:00
+- **Agents**: claude, codex
+- **Sources**: /audit-ambiguity ia, /audit-ambiguity ia fresh rerun, /audit-ambiguity ia fresh rerun 1
 - **Index**: [[index]]
 
 - **Type**: best-practice
-- **Confidence**: 0.6
-- **Context**: Running any regex or structural sweep across a spec layer.
-- **Pattern**: The first screen of the IA layer flagged all 43 shards, and nearly every flag was false: it searched for a `User Interactions` heading (the real one is `Interactions`), matched `Then` case-sensitively when the ACs use lowercase `then`, and treated `skeleton`/`placeholder` as lazy markers when they are Changelog rows and a real rig-member domain concept. A separate regex missed 54 genuinely broken links because it only matched paths prefixed `./` or `../`, skipping same-directory links. Before reporting screen output as findings, open two or three sample documents, confirm the actual conventions, and re-run. A screen that flags 100% of inputs is measuring itself, not the corpus — and one that flags 0% may simply be looking in the wrong place.
-- **Source**: IA audit 2026-08-05, both failure directions hit in the same session.
+- **Confidence**: 0.8 (applied 3 times)
+- **Context**: Running regex and structural sweeps across a specification layer.
+- **Pattern**: Calibrate deterministic checks against actual document conventions before scoring. This independent rerun treated pipes inside inline code as content rather than Markdown delimiters, allowed both locked interaction-table shapes, and evaluated deep-dive decisions with their owning shard. Those calibrations eliminated screen-generated false positives while preserving exact coverage, flow, contract, edge-case, and acceptance checks.
+- **Source**: IA fresh rerun 1 on 2026-08-28; 83 documents and 344 score cells.
 
 ## PAT-015: compile.mjs rewrites every file under .memory/wiki/specs/ — never park a working document there (2026-08-05)
 
@@ -461,3 +461,42 @@
 - **Rule**: working documents, worklists and generated reports intended to survive go outside `.memory/wiki/specs/` — `.memory/pipeline/progress/` is safe and is where the IA remediation worklist now lives. If a document must sit under `specs/`, re-verify it after every compile by checking a structural invariant (section count, heading count, byte size), not by eyeballing it.
 - **Corollary**: a spec whose `## Related Specs` block is marked `<!-- spec-graph: auto-generated -->` must never be hand-edited there; edit the source relationships and re-run compile instead.
 - **Source**: IA remediation 2026-08-05 — compile run to land DEC-098/099 silently truncated the worklist that the apply pass then consumed.
+
+### PAT-014: Calibrate a deterministic screen against real doc conventions before trusting its flags (2026-08-05)
+
+- **Timestamp**: 2026-08-28T00:00:00-04:00
+- **Agent**: codex
+- **Source**: /audit-ambiguity ia fresh rerun
+- **Tags**: pattern, best-practice, tooling, audit
+
+- **Type**: best-practice
+- **Confidence**: 0.7 (applied 2 times)
+- **Context**: Running regex and structural sweeps across a specification layer.
+- **Pattern**: Calibrate each deterministic check against actual document conventions before scoring. This rerun initially over-reported missing acceptance criteria because interaction IDs differ from acceptance IDs by design, and over-reported cross-shard reciprocity because DEC-098 inbound-command acknowledgements intentionally cite the local protected surface rather than a caller-owned contract. Comparing ordered flow/criterion pairs and reading the locked caller/callback boundary refuted those flags, while balanced-backtick, Markdown-column, and resolved-anchor checks exposed three real score cells.
+- **Source**: IA fresh audit 2026-08-28; 83 documents and 344 score cells.
+
+### PAT-014: Calibrate a deterministic screen against real doc conventions before trusting its flags (2026-08-05)
+
+- **Timestamp**: 2026-08-28T00:00:00-04:00
+- **Agent**: codex
+- **Source**: /audit-ambiguity ia fresh rerun
+- **Tags**: pattern, best-practice, tooling, audit
+
+- **Type**: best-practice
+- **Confidence**: 0.7 (applied 2 times)
+- **Context**: Running regex and structural sweeps across a specification layer.
+- **Pattern**: Calibrate each deterministic check against actual document conventions before scoring. This rerun initially over-reported missing acceptance criteria because interaction IDs differ from acceptance IDs by design, and over-reported cross-shard reciprocity because DEC-098 inbound-command acknowledgements intentionally cite the local protected surface rather than a caller-owned contract. Comparing ordered flow/criterion pairs and reading the locked caller/callback boundary refuted those flags, while balanced-backtick, Markdown-column, and resolved-anchor checks exposed three real score cells.
+- **Source**: IA fresh audit 2026-08-28; 83 documents and 344 score cells.
+
+### PAT-014: Calibrate a deterministic screen against real doc conventions before trusting its flags (2026-08-05)
+
+- **Timestamp**: 2026-08-28T01:00:00-04:00
+- **Agent**: codex
+- **Source**: /audit-ambiguity ia fresh rerun 1
+- **Tags**: pattern, best-practice, tooling, audit
+
+- **Type**: best-practice
+- **Confidence**: 0.8 (applied 3 times)
+- **Context**: Running regex and structural sweeps across a specification layer.
+- **Pattern**: Calibrate deterministic checks against actual document conventions before scoring. This independent rerun treated pipes inside inline code as content rather than Markdown delimiters, allowed both locked interaction-table shapes, and evaluated deep-dive decisions with their owning shard. Those calibrations eliminated screen-generated false positives while preserving exact coverage, flow, contract, edge-case, and acceptance checks.
+- **Source**: IA fresh rerun 1 on 2026-08-28; 83 documents and 344 score cells.

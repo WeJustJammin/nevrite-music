@@ -5,7 +5,7 @@
 
 ## Scope
 
-This deep dive owns snapshot gating, partner-knowledge certification, delivery choreography, store-local reconciliation, lifecycle recovery, identifiers and export continuity.
+This deep dive owns snapshot gating, label/distributor declaration, partner-knowledge and MEAD certification, release-local enrichment/correction, delivery choreography, store-local reconciliation, lifecycle recovery, identifiers and export continuity.
 
 ## Deepening Record
 
@@ -13,7 +13,7 @@ This deep dive owns snapshot gating, partner-knowledge certification, delivery c
 |---|---|
 | Consistency | Composition, readiness, delivery snapshot/message, store state and lifecycle command pin distinct versions. |
 | What-if | Rights drift, profile gaps, out-of-order acks, partial acceptance, early/late live, destructive updates and exit have terminal recovery. |
-| Adversarial | Canonical mutation, false live, blind resend, ID duplication, silent claim response and export lock-in fail closed. |
+| Adversarial | Canonical mutation, unverified distributor authority, bare-boolean MEAD enablement, release-to-project privilege escalation, false live, blind resend, ID duplication, silent claim response and export lock-in fail closed. |
 
 ## Readiness and Snapshot Algorithm
 
@@ -35,6 +35,16 @@ This deep dive owns snapshot gating, partner-knowledge certification, delivery c
 6. Dispatch is idempotent by message+step. Retry is sequence-aware; unrecognized/out-of-order acks quarantine.
 7. Response windows use evidenced partner-business-day statistics/SLA/seeded internal clocks without unsupported artist-facing promises.
 8. Overdue triggers human chase, never blind redelivery.
+
+## Label, MEAD and Descriptor-Correction Algorithm
+
+1. Derive label copy from Shard 10. Distributor of record is only WeJammin's configured delivery entity or an owner-controlled Shard 01 `label` organization with a current verified mandate covering every destination; pin authority and recheck at dispatch with no silent fallback.
+2. Retain one `release_enrichment` record for MEAD and editorial projection. MEAD ships at launch but remains independently sequenced and can never block or fail ERN.
+3. Every partner defaults MEAD-unsupported. Generate/send only against an immutable current partner-knowledge version certified with destination-specific adapter/profile test evidence; no boolean, claim or aggregator inheritance enables it.
+4. Unsupported, unverified or revoked partners skip before generation/send with no failure event. Certification unlocks idempotent retained backlog; revocation stops new work and preserves prior history.
+5. Correct an inferred tempo/key by appending the release-local value immediately. Resolve only the exact Shard 09 audio version; Song has no musical attributes.
+6. Exact-version owner/authorized-Producer authority permits one shared-ID dual append. Otherwise create a pending Shard 09 proposal without granting project read or write.
+7. Accepted proposals make linked releases project the version-backed witnessed fact. Rejected proposals leave the initiating release's asserted local correction intact. History is never overwritten.
 
 ## Store, Date and Notification Algorithm
 
@@ -77,9 +87,9 @@ This deep dive owns snapshot gating, partner-knowledge certification, delivery c
 | Shard | Contract |
 |---|---|
 | Shard 00 | Partner admission, Storage/media jobs, schedules/settings, audit/outbox and secrets. |
-| Shard 01 | Artist/label/distributor identity and store profile links. |
+| Shard 01 | Artist/label identity, owner/admin control, verified destination-scoped distribution mandate and store profile links. |
 | Shard 06 | Suspensions, claim disputes and protected evidence. |
-| Shard 09 | Release/recording/project assets and contributor workflow. |
+| Shard 09 | Exact audio-version assets and descriptor authority; consumes shared-ID correction/proposal commands and returns value-free append/review outcomes. Shard 22 owns release enrichment, Shard 09 owns version facts, and neither writes Song musical attributes. |
 | Shard 10 | Rights/consent/territory/identifier registry effects. |
 | Shard 20 | Licensed inclusion and clearance instrument. |
 
@@ -96,6 +106,7 @@ This deep dive owns snapshot gating, partner-knowledge certification, delivery c
 | Date | Change | Source |
 |---|---|---|
 | 2026-08-03 | Deepened readiness, partner, choreography, store, lifecycle, identifier and exit algorithms | `/write-architecture-spec` |
+| 2026-08-27 | F08 resolved: deepened conduit-only distributor authority, evidence-certified launch MEAD and authority-aware exact-version descriptor correction/proposals | `/resolve-ambiguity` |
 
 ## Dependency References
 

@@ -34,10 +34,15 @@ This deep dive closes the split between physical and commercial holds, immutable
 
 1. Accepted offer plus artist approval is sufficient for confirmation; executed paper is not a prerequisite.
 2. Confirmation resolves both commercial ladders, confirms Shard-29 resource hold and records displaced position notices.
-3. Announcement gate evaluates non-waivable identity/date/room/lineup honesty and accepted-deal prerequisites.
-4. Deposit gate follows accepted schedule: `deposit_due_before_announce=true` requires confirmed receipt; explicit zero deposit passes without waiver.
-5. Waivable operational prerequisites require both principals or separately scoped binding delegates and permanent reason.
-6. Gate emits authorization only; downstream ticketing/publishing owns announcement artifact and timing.
+3. P-02 reads immutable exact-deal-version evidence: both direct-principal consent records, a still-effective executed accepted-deal term that pre-authorises one side, or one `single_party_self_promoted` record when both principals resolve to the same identity. Missing, revoked, superseded or unreadable evidence fails closed.
+4. P-05 reads the booking's first-class Musician-owned announce group. Every active member must be ready in one versioned manifest, or the booking must have a committed Musician-authorized ejection; one regression or unknown member blocks the atomic group.
+5. An Operator sees group existence, its own booking and aggregate blocker count only. It may append an ejection request; the request does not change membership and only the Musician owner may decide it.
+6. P-06 and eligible P-07 waiver use two independently authorized side actions: that side's direct principal or an explicitly named delegate holding a current, versioned Shard-30 `announce_waive` capability scoped to the exact booking and precondition. Generic negotiate/bind/book authority is insufficient; commit pins and rechecks capability version. Self-promotion is the sole one-action collapse.
+7. P-07 freezes from the accepted deal: `explicit_zero` passes; `due_before_announce` is hard/non-waivable until full settled or receiving-side-confirmed receipt; only `not_due_before_announce` may be waived. Missing/contradictory term evidence is Unknown and blocks. Waiver leaves instalment zero, debt, reminders and cancellation rights intact.
+8. Before authorization, Shard 35 records the accepted on-sale schedule through the protected `RecordOnSaleSchedule` callback. The snapshot binds the exact deal version, timing term and venue-local/UTC instants (or free/RSVP marker); a schedule change supersedes any pre-announce authorization bound to the prior version.
+9. `AuthorizeAnnouncement` binds the current recorded schedule snapshot and emits a versioned `AnnounceAuthorization`; schedule readiness is a P-03 input, but Shard 35 remains the owner of the operational schedule and venue-local timer.
+10. At the resolved instant, the Shard-35 timer calls `CommitScheduledAnnouncement` with exact deal, authorization, schedule and lifecycle versions. Shard 30 revalidates all versions and atomically appends the one `AnnounceRecord` while transitioning canonical `confirmed_unannounced → announced`; replay returns that record and emits no duplicate fan-out.
+11. Shard 35 projects operational `Embargoed` from the versioned lifecycle event until the canonical announce transition is observed. `Embargoed` is never a second lifecycle fact and neither timer nor projection can mutate `AcceptedDeal`.
 
 ### Deal Document and Amendment
 
@@ -49,7 +54,7 @@ This deep dive closes the split between physical and commercial holds, immutable
 
 ### Payment Schedule and Nonpayment
 
-1. Compile deposit as row zero and remaining fixed, date/condition-based or settlement-deferred rows.
+1. Compile deposit as row zero and remaining fixed, date/condition-based or settlement-deferred rows. The accepted deposit amount/due condition also produces immutable `DepositAnnouncePolicy`; the announce gate never derives policy from current payment status or mutates this schedule.
 2. Every row states payer, payee, direction, amount/formula, currency, due rule and provider/external posture.
 3. Platform may record bilateral cash/bank assertions; one-side assertion remains pending until counterparty or provider confirms.
 4. Stripe single-payee collection can activate only after provider/counsel enablement. Webhook and poll reconcile PaymentIntent; ambiguous state blocks finality.
@@ -119,6 +124,25 @@ accept(version_hash) iff
 
 Negotiate, bind, waive, announce and cancel are separate capabilities. Same-human-on-both-sides is disclosed; related-party actor cannot satisfy both sides.
 
+### Announcement Authorization
+
+- `RecordAnnounceConsent` appends immutable P-02 evidence scoped to one accepted deal/version. Direct consent requires the named principal; executed-term evidence pins the exact accepted term/version; self-promotion collapses to one attributed action and never fabricates a second actor.
+- `ChangeAnnounceGroup` is compare-and-swap over a Musician-owned group version. Create/add/eject/dissolve actions append membership events and atomically recompute the active-member readiness projection.
+- `RequestAnnounceGroupEjection` lets an Operator controlling an active member booking append a request without mutating membership or reading foreign member identities. The Musician owner decides through `ChangeAnnounceGroup`.
+- `EvaluateAnnounceGroupReadiness` returns `ready|blocked|unknown`, active-member count, aggregate blocker count and the evaluated version manifest; Operator projections omit member identifiers and member-level readiness.
+- `ClassifyDepositAnnouncePolicy` pins accepted deal/version, amount/currency, due condition/date and term evidence into `explicit_zero|due_before_announce|not_due_before_announce`; missing/contradictory evidence cannot become a permissive class.
+- `GrantAnnounceWaiveCapability` and `RevokeAnnounceWaiveCapability` append immutable Shard-30 capability versions naming one delegate, principal side, exact deal/booking and `P-06|P-07`. A P-07 grant requires pinned `not_due_before_announce`. Shard 01 supplies canonical parties/current relationship authority; generic activity/domain never implies this purpose capability.
+- `WaiveAnnouncePrecondition` appends one permanent side action with reason and direct-principal or pinned capability authority/policy versions. Two independent sides converge `one_key_recorded → waived`; one grant cannot satisfy both, and self-promotion records one honest action. P-07 waiver changes only announce authorization.
+- `AuthorizeAnnouncement` consumes an exact prerequisite manifest. `ANNOUNCE_CONSENT_INCOMPLETE|ANNOUNCE_CONSENT_STALE`, `GROUP_MEMBER_NOT_READY|ANNOUNCE_GROUP_UNKNOWN` and any unreadable prerequisite fail closed before authorization.
+
+### Canonical Announcement and Schedule Boundary
+
+- Shard 30 owns `AcceptedDeal`, its versioned lifecycle, `AnnounceAuthorization` and the exactly-once `AnnounceRecord`. Only this shard may commit `confirmed_unannounced → announced`.
+- Shard 35 owns `OnSaleSchedule`, venue-local timer jobs and the derived operational `Embargoed` projection. It records schedule snapshots before authorization and invokes Shard-30 callbacks; it cannot write deal lifecycle or authorization.
+- `RecordOnSaleSchedule` accepts an exact schedule/deal version and appends an immutable P-03 snapshot. Missing or contradictory local/UTC timing, accepted-term mismatch, stale versions and changed idempotency payloads fail closed. A pre-announce replacement supersedes the authorization that named the prior schedule version.
+- `CommitScheduledAnnouncement` accepts only an authenticated Shard-35 timer occurrence with the active authorization and matching schedule/deal/lifecycle versions at or after the resolved instant. Unknown, stale, revoked, superseded, early or non-confirmed inputs fail closed before fan-visible mutation.
+- The lifecycle event is the sole cross-shard canonical fact. Shard 35 applies lifecycle versions monotonically and deduplicates event/worker retries; no reconciliation loop or duplicate canonical state exists.
+
 ### B3 Payment Gate
 
 | Capability | Consumer-launch posture |
@@ -148,6 +172,25 @@ All platform timing, escalation, visibility, reminder, lapse and anti-abuse numb
 
 Every structured term declares evaluation semantics and approval polarity per side. Monetary terms have directional benefit; configuration, set length, time and named support may be `contextual`, forcing renewed approval on change. Free text and attachments are always material.
 
+### Announcement Evidence and Groups
+
+- `AnnounceConsent` is append-only and pins `deal_id`, `deal_version`, principal side, source, actor and accepted-term ref/version when applicable. Effective-status changes preserve original evidence. Direct evidence is unique per deal/version/side; one self-promoter record is unique per deal/version and satisfies both resolved sides exactly once.
+- `AnnounceGroup` pins a Musician owner, lifecycle, membership version, active-member count, aggregate blocker count and readiness manifest hash. Its state is `assembling → blocked|ready → announced|dissolved`; an active member regression returns readiness to `blocked`, and unreadable evidence projects `unknown`.
+- `AnnounceGroupMembershipEvent` is the immutable add/eject/dissolve fact. Membership is `active → ejected`; a stale group version cannot append an event.
+- `AnnounceGroupEjectionRequest` is `pending → accepted|refused|superseded`; only an accepted Musician decision points to a membership event and changes the fan-in set.
+- `AnnounceGroupReadinessProjection` is unique per group/version/manifest. Member versions remain restricted; Operator views carry only their booking state and aggregate counts.
+- `DepositAnnouncePolicy` is immutable per accepted deal version and pins amount/currency, due condition/date, term evidence ref/version and `explicit_zero|due_before_announce|not_due_before_announce`. Zero has no invoice; positive classes retain instalment zero. Unknown evidence blocks.
+- `AnnounceWaiveCapability` is immutable/versioned and pins delegate, principal side, exact deal/booking, `P-06|P-07`, validity interval, grantor, source relationship/version and P-07 policy ref/version where applicable. State is `draft → active → revoked|expired`; only `active` at commit authorizes.
+- `AnnouncePreconditionWaiver` is append-only per deal/version/eligible-precondition/side and pins actor, authority ref/version, P-07 policy ref/version, reason and gate version. Later revocation ends future use without rewriting valid history; P-07 payment obligations survive.
+
+### Canonical Announcement and Schedule Models
+
+- `OnSaleSchedule` is Shard-35-owned operational data: schedule ID/version, accepted deal ID/version, venue timezone, local announce/on-sale instants and resolved UTC instants (or the explicit free/RSVP marker), accepted timing-term ref/version, timer-job occurrence and operational freshness. Its `Embargoed`/`Announced` values are projections, not a second `AcceptedDeal` lifecycle.
+- `OnSaleScheduleSnapshot` is the immutable Shard-30 P-03 evidence recorded through `RecordOnSaleSchedule`; it pins the exact schedule/deal/timing-term versions used by authorization. A successor schedule appends a new snapshot and never edits prior evidence.
+- `AnnounceAuthorization` is the Shard-30 versioned active/superseded/revoked/consumed authorization bound to one accepted deal, one immutable schedule snapshot and the exact prerequisite/group/policy manifest. At most one active version exists per deal.
+- `AnnounceRecord` is the single Shard-30 append-only fact for a deal's `confirmed_unannounced → announced` transition. It pins lifecycle-before/after, authorization, schedule, timer occurrence and idempotency versions; its append and lifecycle outbox event commit atomically.
+- Ownership is strict: Shard 35 may create/update `OnSaleSchedule` and run the venue-local timer; Shard 30 may create/update `OnSaleScheduleSnapshot`, `AnnounceAuthorization`, `AcceptedDeal` lifecycle and `AnnounceRecord`. Neither writes the other shard's aggregate, and no reconciliation loop repairs competing lifecycle facts.
+
 ### Payment and Amendment Ledger
 
 - Schedule is versioned under accepted deal/amendment.
@@ -172,8 +215,16 @@ Original deal/show remains immutable and transitions to `postponed` with success
 | draft/counter | `negotiate` + side/entity scope |
 | approve/accept/amend | `bind` + side/entity + value/territory bounds |
 | cancel/agreed cancel | `cancel` or explicit `bind_termination` |
-| waive announce/exclusivity | explicit `waive` for clause/gate class |
+| waive eligible P-06/P-07 as principal | direct principal for that side and exact deal/version; P-07 requires `not_due_before_announce` |
+| waive eligible P-06/P-07 as delegate | current versioned `announce_waive` capability for exact delegate, side, deal/booking and precondition; P-07 pins eligible policy; generic negotiate/bind/book is insufficient |
+| grant/revoke announce-waive delegate capability | direct principal for that side; exact deal/booking/precondition and expected version |
+| waive exclusivity | explicit `waive` for clause class |
 | authorize announcement | `announce` + accepted deal scope |
+| record direct announce consent | named principal for exact deal/version; self-promoter action collapses only after both sides resolve to the same identity |
+| create/change announce group | Musician artist-owner authority + expected group version |
+| request announce-group ejection | Operator control of its own active member booking; request only, no membership decision |
+| record on-sale schedule | authenticated Shard-35 service callback; exact schedule/deal/timing-term versions |
+| commit scheduled announcement | authenticated Shard-35 timer occurrence; exact active authorization, schedule and lifecycle versions |
 | assert payment | payer/payee finance capability for own side |
 
 - Full thread visibility is limited to approvers/negotiators for a side; ordinary entity members see accepted logistics only.
@@ -205,6 +256,16 @@ Every send, approval, acceptance, challenge, schedule outcome, cancellation and 
 | Authority revoke vs approval | commit-time authority check rejects pending action |
 | Approval vs version withdrawal | one terminal transition wins; approval cannot revive version |
 | Deposit webhook vs announce gate | gate reads reconciled row version; ambiguous/unilateral state fails closed |
+| Consent revocation or accepted-term supersession vs announce gate | gate pins the current evidence/deal versions; ineffective or stale P-02 evidence fails closed |
+| Member readiness regression vs group authorization | group manifest/version lock makes the group `blocked|unknown`; no partial member announcement |
+| Membership change vs ejection/readiness evaluation | group compare-and-swap commits one order; stale operation returns `MEMBERSHIP_VERSION_CONFLICT` and retries against the new manifest |
+| Deposit policy classify vs deal amendment | accepted deal version decides; amendment creates a new policy version, invalidates stale P-07 grants/actions and never rewrites the old schedule/history |
+| Capability grant/revoke vs Tier-2 waiver | commit-time capability/policy version, status and exact scope decide; stale/revoked/expired/ineligible capability appends no side action |
+| Two Tier-2 side actions race | gate-version compare-and-swap appends each unique side once and yields one terminal waiver; one capability cannot cross sides |
+| Schedule record vs announcement authorization | schedule snapshot commits first; authorization binds its immutable ID/version; a changed pre-announce snapshot supersedes the prior authorization and requires reauthorization |
+| Timer callback vs schedule/deal/authorization change | Shard-30 compares all pinned versions in one transaction; stale/mismatched callback fails closed and cannot publish or reopen lifecycle |
+| Duplicate timer callback vs canonical announce | unique worker occurrence/idempotency/deal constraints return the existing `AnnounceRecord`; lifecycle/outbox append occurs once |
+| Lifecycle event delay/replay to Shard 35 | projection applies lifecycle versions monotonically; lag exposes freshness/keeps `Embargoed`, never grants local authority to announce |
 | Cancellation vs due row | serializable server timestamp and snapshot hash determine order |
 | Amendment vs payment callback | callback appends to original row/provider ref, then amendment mapping projects effect |
 | Postponement vs room reallocation | successor remains pending until Shard-29 version/hold confirms |
@@ -215,8 +276,18 @@ Every send, approval, acceptance, challenge, schedule outcome, cancellation and 
 - Avail discovery carries commercial summary only; no fan projection exists.
 - Position events expose identity only to ladder owner and named act side.
 - Offer/deal events outside participants carry opaque refs and minimum operational state.
+- Consent events carry source/status and evidence refs, never private accepted-term content. Group events expose member identities only to the Musician owner and the affected booking; Operators receive group existence, own booking state and aggregate blocker count.
+- Deposit-policy events carry classification/evidence refs, never private contract text. Announce-waiver capability events carry exact resource/precondition/state but omit private relationship content. Waiver events expose attributed reason only to principals/audit; operational consumers receive eligible precondition key state and evidence refs. No event represents P-07 debt as waived or settled.
 - Payment events never include bank/card data; provider IDs remain restricted.
 - Evidence, declarations and unconfirmed verbal transcription use restricted retention and legal-hold policy.
+
+### Versioned Announcement Events
+
+| Event | Producer | Required payload | Consumer rule |
+|---|---|---|---|
+| `ticketing.schedule.changed.v1` | Shard 35 | schedule ID/version, exact deal ID/version, local+UTC instants or free/RSVP marker, timing-term ref/version, source idempotency | Shard 30 records the immutable P-03 snapshot before authorization; stale/contradictory payloads fail closed |
+| `booking.announce.authorization_changed.v1` | Shard 30 | deal/version, authorization ID/version/state, schedule ID/version, prerequisite manifest hash and typed blockers | Shard 35 updates operational readiness/timer linkage monotonically; it cannot mutate deal lifecycle |
+| `booking.deal.lifecycle_changed.v1` | Shard 30 | deal ID/version, `confirmed_unannounced|announced|cancelled|postponed`, announce record/auth/schedule refs where present | Shard 35 derives `Embargoed` and fan visibility monotonically; duplicate/delayed delivery cannot create a second canonical state |
 
 ## Edge Cases
 
@@ -233,6 +304,23 @@ Every send, approval, acceptance, challenge, schedule outcome, cancellation and 
 | Raw draw consent revoked | Existing model snapshot remains auditable; future render omits raw source and recalculates permitted outputs |
 | Cross-currency reference unavailable | Evaluation becomes incomplete/unknown; no silent fallback rate |
 | Payment asserted by payer, denied by payee | Row becomes contested; announce/finality fail closed and case may route Shard 06 |
+| Executed announce-preauthorisation term revoked or superseded | Preserve evidence history, mark it ineffective and block P-02 until current evidence satisfies the exact deal version |
+| Same identity controls both principals | Append one `single_party_self_promoted` consent action and count it once as the source for both resolved sides |
+| One active announce-group member regresses or becomes unreadable | Recompute whole group `blocked|unknown`; authorize none until all active members are ready or the affected booking is ejected |
+| Operator ejection request races Musician membership change | Membership version determines order; request never mutates membership and a stale action returns conflict without identity leakage |
+| Delegate has negotiate or generic bind/book but no exact `announce_waive` capability | Refuse with `ANNOUNCE_WAIVE_CAPABILITY_REQUIRED`; no waiver action or unrelated authority detail is exposed |
+| Capability expires/revokes while waiver UI is open | Commit returns `ANNOUNCE_WAIVE_CAPABILITY_STALE`; refresh authority and preserve no server-side partial action |
+| One delegate grant is presented for both sides | Reject cross-side reuse; require independently authorized side actions except the explicit self-promoter identity collapse |
+| Capability revokes after valid waiver action | Preserve the pinned permanent action; revoke future use immediately and never rewrite prior provenance |
+| Explicit zero deposit | Classify `explicit_zero`, satisfy P-07 without invoice/payment receipt and reject waiver as unnecessary |
+| Positive deposit explicitly due before announce | Keep P-07 hard until full settled or receiving-side-confirmed receipt; reject every capability grant/waiver with `P07_WAIVER_FORBIDDEN` |
+| Positive deposit not due before announce is waived | Authorize only the gate after two keys and all other prerequisites; retain full schedule, debt, reminders and cancellation rights |
+| Deposit amount/due condition missing or contradictory | Project Unknown and fail closed; never infer zero or waiver eligibility |
+| Schedule is recorded before authorization | Preserve the immutable P-03 snapshot; `AuthorizeAnnouncement` must bind its exact schedule/version before producing active authorization |
+| On-sale schedule changes after authorization | Append the successor snapshot, supersede the prior authorization, keep canonical deal `confirmed_unannounced` and require fresh authorization |
+| Timer arrives early or with stale versions | Return typed failure with no lifecycle/fan mutation; Shard 35 retries only after obtaining current versions and instant |
+| Timer callback is replayed after announce | Return the existing `AnnounceRecord`; emit no duplicate lifecycle, announce or fan-out event |
+| Shard-35 lifecycle projection is delayed or replayed | Keep operational `Embargoed` until the versioned canonical event is applied; dedupe and never create a second deal state |
 | Connected account restricted | Collection remains pending/blocked; no alternate payee or pooled holding |
 | Nonpayment auto-void clause fires | Verify accepted clause, notice/grace and authority; emit revert, never restore destroyed holds |
 | Force-majeure clause absent | Record declaration and disagreement; platform supplies no default |
@@ -246,7 +334,7 @@ Every send, approval, acceptance, challenge, schedule outcome, cancellation and 
 
 ### Two-Implementer Check
 
-Independent implementations must converge on: distinct physical/commercial holds; named-act positions; private ladder identities; immutable branching versions; same-hash dual approval; closed-plus-instrumented economics; non-waivable accepted-deal deposit semantics; record-first payments under B3; previewed cancellation; non-adjudicated force majeure; successor-based postponement; entity-default exclusivity; and per-slot support dependencies. Any implementation that mutates sent versions, equates negotiation with binding, invents escrow, auto-voids by default, applies legal defaults or cascades support cancellations is non-conformant.
+Independent implementations must converge on: distinct physical/commercial holds; named-act positions; private ladder identities; immutable branching versions; same-hash dual approval; closed-plus-instrumented economics; immutable P-02 evidence and P-05 groups; Tier-2 waiver by direct principal or exact-booking/precondition versioned `announce_waive` delegate with two independent side actions and pinned authority; P-07 `explicit_zero|due_before_announce|not_due_before_announce` from the accepted deal, with zero pass, due-before hard/non-waivable, not-due-before conditionally waivable and every payment obligation preserved; fail-closed unknown evidence; one canonical Shard-30 deal lifecycle/authorization/announce record; Shard-35-owned schedule/timer with derived `Embargoed`; record-first schedule binding; exact version checks and exactly-once timer commit; record-first payments under B3; previewed cancellation; non-adjudicated force majeure; successor-based postponement; entity-default exclusivity; and per-slot support dependencies. Implementations that infer waiver authority, bypass due-before P-07, erase debt, reuse one capability across sides, fabricate self-promoter consent, enumerate group members, invent escrow, maintain duplicate lifecycle facts/reconciliation loops, let Shard 35 mutate deal state, auto-void by default or apply legal defaults are non-conformant.
 
 ## Implementation Envelope
 
@@ -262,6 +350,8 @@ Independent implementations must converge on: distinct physical/commercial holds
 |---|---|---|---|
 | 2026-08-02 | Initial deep-dive skeleton | `/decompose-architecture-validate` | All |
 | 2026-08-03 | Completed deepening and adversarial convergence | `/write-architecture-spec-deepen` | All |
+| 2026-08-28 | F10 partial — deepened P-02/P-05, exact-booking/precondition Tier-2 waiver authority and P-07 accepted-deal classification: zero passes, due-before is hard/non-waivable, not-due-before may be waived without changing debt/schedule/cancellation. Only Shard-30/35 state ownership remains open. | `/resolve-ambiguity` | Interactions, Contracts, Data Models, Access Control, Event Schemas, Edge Cases |
+| 2026-08-28 | F10 complete — locked one canonical Shard-30 lifecycle fact with versioned authorization and exactly-once announce record; Shard 35 owns schedule/timer and derives operational `Embargoed`. Added record-first schedule binding, versioned timer callback, fail-closed stale/replay handling and no-duplicate-state boundary. | `/resolve-ambiguity` | Interactions, Contracts, Data Models, Access Control, Event Schemas, Edge Cases |
 
 
 <!-- spec-graph: auto-generated -->

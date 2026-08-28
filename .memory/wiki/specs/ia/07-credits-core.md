@@ -92,7 +92,7 @@ Shard 07 owns contribution truth: immutable credit records, session-time capture
 | Contract | Definition |
 |---|---|
 | `CreditScope` | `recording \| composition \| both`; required |
-| `CreditState` | `asserted \| acknowledged \| contested \| superseded \| withdrawn` |
+| `CreditState` | `asserted \| contested \| superseded \| withdrawn` |
 | `Confidentiality` | `public \| embargoed \| confidential`; record-wide |
 | `PageCuration` | `listed \| unlisted`; party-page only |
 | `ProvenanceRung` | `imported \| asserted \| witnessed \| attested \| captured_verified`; exact labels/version owned here |
@@ -293,14 +293,6 @@ Responsive web/PWA. Server-rendered discography/provenance remains understandabl
 | CRD-18 Resolve pending taxonomy alias | Same idempotency key returns the same result; competing expected revisions serialize one winner and return typed conflict to the loser without duplicate effect. | Schema, authority and policy validation fail before mutation/provider effect and return a typed refusal without existence leakage. | Owner/source deletion or revocation preserves required immutable evidence/tombstone, removes derived access/projection, and queues idempotent dependent invalidation so no orphan remains. |
 | CRD-19 Curate discography page | Same idempotency key returns the same result; competing curation edits resolve last-write-wins scoped per role family, so edits to different families both survive. | Schema, authority and policy validation fail before mutation/provider effect and return a typed refusal without existence leakage. | Owner/source deletion or revocation preserves required immutable evidence/tombstone, removes derived access/projection, and queues idempotent dependent invalidation so no orphan remains. |
 
-## Blocked on Upstream Decisions
-
-This item is named by the spec and deliberately not authored. It is blocked on a decision no source in any tier answers; it may not be invented downstream.
-
-| Item | Blocked on | Status |
-|---|---|---|
-| `CreditState.acknowledged` — who acknowledges a credit, and what acknowledgement means for provenance | An owner product decision (audit A-31, 2026-08-05). No interaction, contract, algorithm or event produces the transition, and the two candidates are ruled out by their own contracts: `ClaimCredit` "does not confirm credit", and `RequestAttestation` requires an attester independent of the credited party, so an attestation is not the credited party acknowledging. | OPEN — not authored. The enum member is retained and currently unreachable. No flow may set it, and until the decision lands acknowledgement has no defined effect on the provenance rung; `DeriveProvenance`'s rule that self-assertion never promotes a rung is unchanged. |
-
 ## Cross-Shard Dependencies
 
 - **Depends on:** [Shard 00](00-infrastructure.md) for contracts/events/offline/idempotency/projections; [Shard 01](01-identity-authority.md) for parties, aliases, acting context, memberships, mandates and non-automatic identity merges.
@@ -334,6 +326,7 @@ This item is named by the spec and deliberately not authored. It is blocked on a
 | 2026-08-05 | A-31 — specified the CRD-19 discography curation write path (pin cap, pin-rank uniqueness, authority, merge and concurrency) and recorded `CreditState.acknowledged` as blocked on an owner decision; A-32 — added the missing Shard 00/01 upstream entries and the Shard 19 consumer entry to the Cross-Shard Section Contract Map; A-10 (reciprocal) — added the `vault_role_class` attribute to `RoleVersion` per DEC-099 | /resolve-ambiguity | Acceptance Criteria, Interactions, Contracts, Data Models, Access Control, Event Schemas, Edge Cases, Edge-Case Coverage Matrix, Blocked on Upstream Decisions, Cross-Shard Section Contract Map, Dependency References |
 | 2026-08-05 | F1 — added per-flow Preconditions and Failure / recovery; regenerated acceptance criteria | /resolve-ambiguity | Interactions, Acceptance Criteria |
 | 2026-08-05 | F2 — cross-shard contract reciprocity: mirrored the Shard 27 edge (platform-composed vendor credits out, `credit_required` obligation back) into the Cross-Shard Section Contract Map | /resolve-ambiguity | Cross-Shard Section Contract Map |
+| 2026-08-27 | F03 resolved: removed unreachable `CreditState.acknowledged`; independent attestation remains the only path that can strengthen provenance and self-assertion still never promotes a rung | /resolve-ambiguity | Contracts, Blocked on Upstream Decisions |
 
 ## Dependency References
 

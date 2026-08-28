@@ -1,7 +1,7 @@
 {
-  "builtAt": "2026-08-05T08:53:58.633Z",
-  "nodeCount": 1480,
-  "edgeCount": 9892,
+  "builtAt": "2026-08-28T07:08:05.216Z",
+  "nodeCount": 1400,
+  "edgeCount": 9583,
   "nodes": [
     {
       "id": "plan:2026-08-02-architecture-design",
@@ -144,542 +144,24 @@
       "shardId": null
     },
     {
-      "id": "audit:audits/2026-08-02-architecture-ambiguity-report",
+      "id": "audit:audits/2026-08-28-ia-ambiguity-report",
       "type": "audit",
-      "label": "Architecture Ambiguity Audit — 2026-08-02",
-      "path": ".memory/wiki/specs/audits/2026-08-02-architecture-ambiguity-report.md",
+      "label": "IA Ambiguity Audit — Fresh Run (2026-08-28)",
+      "path": ".memory/wiki/specs/audits/2026-08-28-ia-ambiguity-report.md",
       "shardId": "2026"
     },
     {
-      "id": "audit:audits/2026-08-02-architecture-ambiguity-rerun-1",
+      "id": "audit:audits/2026-08-28-ia-ambiguity-rerun-1",
       "type": "audit",
-      "label": "Architecture Ambiguity Audit — Fresh Rerun 1",
-      "path": ".memory/wiki/specs/audits/2026-08-02-architecture-ambiguity-rerun-1.md",
+      "label": "IA Ambiguity Audit — Fresh Rerun 1 (2026-08-28)",
+      "path": ".memory/wiki/specs/audits/2026-08-28-ia-ambiguity-rerun-1.md",
       "shardId": "2026"
-    },
-    {
-      "id": "audit:audits/2026-08-02-architecture-ambiguity-rerun-2",
-      "type": "audit",
-      "label": "Architecture Ambiguity Audit — Fresh Rerun 2",
-      "path": ".memory/wiki/specs/audits/2026-08-02-architecture-ambiguity-rerun-2.md",
-      "shardId": "2026"
-    },
-    {
-      "id": "audit:audits/2026-08-02-architecture-ambiguity-rerun-3",
-      "type": "audit",
-      "label": "Architecture Ambiguity Audit — Fresh Rerun 3",
-      "path": ".memory/wiki/specs/audits/2026-08-02-architecture-ambiguity-rerun-3.md",
-      "shardId": "2026"
-    },
-    {
-      "id": "audit:audits/2026-08-02-architecture-ambiguity-rerun-4",
-      "type": "audit",
-      "label": "Architecture Ambiguity Audit — Fresh Rerun 4",
-      "path": ".memory/wiki/specs/audits/2026-08-02-architecture-ambiguity-rerun-4.md",
-      "shardId": "2026"
-    },
-    {
-      "id": "audit:audits/2026-08-02-architecture-ambiguity-rerun-5",
-      "type": "audit",
-      "label": "Architecture Ambiguity Audit — Fresh Rerun 5",
-      "path": ".memory/wiki/specs/audits/2026-08-02-architecture-ambiguity-rerun-5.md",
-      "shardId": "2026"
-    },
-    {
-      "id": "audit:audits/2026-08-02-architecture-ambiguity-rerun-6",
-      "type": "audit",
-      "label": "Architecture Ambiguity Audit — Fresh Rerun 6",
-      "path": ".memory/wiki/specs/audits/2026-08-02-architecture-ambiguity-rerun-6.md",
-      "shardId": "2026"
-    },
-    {
-      "id": "audit:audits/2026-08-02-cms-evolution-initial",
-      "type": "audit",
-      "label": "CMS Evolution Ambiguity Audit — Initial Run",
-      "path": ".memory/wiki/specs/audits/2026-08-02-cms-evolution-initial.md",
-      "shardId": "2026"
-    },
-    {
-      "id": "audit:audits/2026-08-02-cms-evolution-rerun",
-      "type": "audit",
-      "label": "CMS Evolution Ambiguity Audit — Fresh Rerun",
-      "path": ".memory/wiki/specs/audits/2026-08-02-cms-evolution-rerun.md",
-      "shardId": "2026"
-    },
-    {
-      "id": "audit:audits/2026-08-02-create-prd-quality-gate",
-      "type": "audit",
-      "label": "Create PRD Quality Gate — 2026-08-02",
-      "path": ".memory/wiki/specs/audits/2026-08-02-create-prd-quality-gate.md",
-      "shardId": "2026"
-    },
-    {
-      "id": "audit:audits/2026-08-03-be-ambiguity-report",
-      "type": "audit",
-      "label": "BE Ambiguity Audit — Initial Fresh Run",
-      "path": ".memory/wiki/specs/audits/2026-08-03-be-ambiguity-report.md",
-      "shardId": "2026"
-    },
-    {
-      "id": "audit:audits/2026-08-03-be-ambiguity-rerun-1-report",
-      "type": "audit",
-      "label": "BE Ambiguity Audit — Fresh Rerun 1",
-      "path": ".memory/wiki/specs/audits/2026-08-03-be-ambiguity-rerun-1-report.md",
-      "shardId": "2026"
-    },
-    {
-      "id": "audit:audits/2026-08-03-ia-ambiguity-report",
-      "type": "audit",
-      "label": "IA Ambiguity Audit — Initial Fresh Run",
-      "path": ".memory/wiki/specs/audits/2026-08-03-ia-ambiguity-report.md",
-      "shardId": "2026"
-    },
-    {
-      "id": "audit:audits/2026-08-03-ia-ambiguity-rerun-1",
-      "type": "audit",
-      "label": "IA Ambiguity Audit — Fresh Rerun 1",
-      "path": ".memory/wiki/specs/audits/2026-08-03-ia-ambiguity-rerun-1.md",
-      "shardId": "2026"
-    },
-    {
-      "id": "audit:audits/2026-08-05-ia-ambiguity-report",
-      "type": "audit",
-      "label": "IA Ambiguity Audit — Fresh Run (2026-08-05)",
-      "path": ".memory/wiki/specs/audits/2026-08-05-ia-ambiguity-report.md",
-      "shardId": "2026"
-    },
-    {
-      "id": "audit:audits/architecture/2026-08-02-architecture-design-ambiguity-rerun-1",
-      "type": "audit",
-      "label": "Architecture Ambiguity Audit — Architecture Design Fresh Rerun 1",
-      "path": ".memory/wiki/specs/audits/architecture/2026-08-02-architecture-design-ambiguity-rerun-1.md",
-      "shardId": "2026"
-    },
-    {
-      "id": "audit:audits/architecture/2026-08-02-architecture-design-ambiguity-rerun-2",
-      "type": "audit",
-      "label": "Architecture Ambiguity Audit — Architecture Design Fresh Rerun 2",
-      "path": ".memory/wiki/specs/audits/architecture/2026-08-02-architecture-design-ambiguity-rerun-2.md",
-      "shardId": "2026"
-    },
-    {
-      "id": "audit:audits/architecture/2026-08-02-architecture-design-ambiguity-rerun-3",
-      "type": "audit",
-      "label": "Architecture Ambiguity Audit — Architecture Design Fresh Rerun 3",
-      "path": ".memory/wiki/specs/audits/architecture/2026-08-02-architecture-design-ambiguity-rerun-3.md",
-      "shardId": "2026"
-    },
-    {
-      "id": "audit:audits/architecture/2026-08-02-architecture-design-ambiguity-rerun-4",
-      "type": "audit",
-      "label": "Architecture Ambiguity Audit — Architecture Design Fresh Rerun 4",
-      "path": ".memory/wiki/specs/audits/architecture/2026-08-02-architecture-design-ambiguity-rerun-4.md",
-      "shardId": "2026"
-    },
-    {
-      "id": "audit:audits/architecture/2026-08-02-architecture-design-ambiguity-rerun-5",
-      "type": "audit",
-      "label": "Architecture Ambiguity Audit — Architecture Design Fresh Rerun 5",
-      "path": ".memory/wiki/specs/audits/architecture/2026-08-02-architecture-design-ambiguity-rerun-5.md",
-      "shardId": "2026"
-    },
-    {
-      "id": "audit:audits/architecture/2026-08-02-architecture-design-ambiguity-rerun-6",
-      "type": "audit",
-      "label": "Architecture Ambiguity Audit — Architecture Design Fresh Rerun 6",
-      "path": ".memory/wiki/specs/audits/architecture/2026-08-02-architecture-design-ambiguity-rerun-6.md",
-      "shardId": "2026"
-    },
-    {
-      "id": "audit:audits/architecture/2026-08-02-architecture-design-ambiguity",
-      "type": "audit",
-      "label": "Architecture Ambiguity Audit — Architecture Design",
-      "path": ".memory/wiki/specs/audits/architecture/2026-08-02-architecture-design-ambiguity.md",
-      "shardId": "2026"
-    },
-    {
-      "id": "audit:audits/architecture/2026-08-02-engineering-standards-ambiguity-rerun-1",
-      "type": "audit",
-      "label": "Architecture Ambiguity Audit — Engineering Standards Fresh Rerun 1",
-      "path": ".memory/wiki/specs/audits/architecture/2026-08-02-engineering-standards-ambiguity-rerun-1.md",
-      "shardId": "2026"
-    },
-    {
-      "id": "audit:audits/architecture/2026-08-02-engineering-standards-ambiguity-rerun-2",
-      "type": "audit",
-      "label": "Architecture Ambiguity Audit — Engineering Standards Fresh Rerun 2",
-      "path": ".memory/wiki/specs/audits/architecture/2026-08-02-engineering-standards-ambiguity-rerun-2.md",
-      "shardId": "2026"
-    },
-    {
-      "id": "audit:audits/architecture/2026-08-02-engineering-standards-ambiguity-rerun-3",
-      "type": "audit",
-      "label": "Architecture Ambiguity Audit — Engineering Standards Fresh Rerun 3",
-      "path": ".memory/wiki/specs/audits/architecture/2026-08-02-engineering-standards-ambiguity-rerun-3.md",
-      "shardId": "2026"
-    },
-    {
-      "id": "audit:audits/architecture/2026-08-02-engineering-standards-ambiguity-rerun-4",
-      "type": "audit",
-      "label": "Architecture Ambiguity Audit — Engineering Standards Fresh Rerun 4",
-      "path": ".memory/wiki/specs/audits/architecture/2026-08-02-engineering-standards-ambiguity-rerun-4.md",
-      "shardId": "2026"
-    },
-    {
-      "id": "audit:audits/architecture/2026-08-02-engineering-standards-ambiguity-rerun-5",
-      "type": "audit",
-      "label": "Architecture Ambiguity Audit — Engineering Standards Fresh Rerun 5",
-      "path": ".memory/wiki/specs/audits/architecture/2026-08-02-engineering-standards-ambiguity-rerun-5.md",
-      "shardId": "2026"
-    },
-    {
-      "id": "audit:audits/architecture/2026-08-02-engineering-standards-ambiguity-rerun-6",
-      "type": "audit",
-      "label": "Architecture Ambiguity Audit — Engineering Standards Fresh Rerun 6",
-      "path": ".memory/wiki/specs/audits/architecture/2026-08-02-engineering-standards-ambiguity-rerun-6.md",
-      "shardId": "2026"
-    },
-    {
-      "id": "audit:audits/architecture/2026-08-02-engineering-standards-ambiguity",
-      "type": "audit",
-      "label": "Architecture Ambiguity Audit — Engineering Standards",
-      "path": ".memory/wiki/specs/audits/architecture/2026-08-02-engineering-standards-ambiguity.md",
-      "shardId": "2026"
-    },
-    {
-      "id": "audit:audits/audit-scope-be-2026-08-03",
-      "type": "audit",
-      "label": "Ambiguity Audit Scope — BE",
-      "path": ".memory/wiki/specs/audits/audit-scope-be-2026-08-03.md",
-      "shardId": null
     },
     {
       "id": "audit:audits/audit-scope",
       "type": "audit",
       "label": "Ambiguity Audit Scope — IA",
       "path": ".memory/wiki/specs/audits/audit-scope.md",
-      "shardId": null
-    },
-    {
-      "id": "audit:audits/blocking-decision-queue",
-      "type": "audit",
-      "label": "Blocking Ambiguity — Owner Decision Queue",
-      "path": ".memory/wiki/specs/audits/blocking-decision-queue.md",
-      "shardId": null
-    },
-    {
-      "id": "audit:audits/check-phase-reconstruction",
-      "type": "audit",
-      "label": "Check-Phase Reconstruction — done in the main loop",
-      "path": ".memory/wiki/specs/audits/check-phase-reconstruction.md",
-      "shardId": null
-    },
-    {
-      "id": "audit:audits/decision-queue-drafts/01-credits-rights",
-      "type": "audit",
-      "label": "Credits & Rights Decision Queue",
-      "path": ".memory/wiki/specs/audits/decision-queue-drafts/01-credits-rights.md",
-      "shardId": "01"
-    },
-    {
-      "id": "audit:audits/decision-queue-drafts/02-projects-delivery",
-      "type": "audit",
-      "label": "Projects, Delivery, Marketplace, and Distribution — Unratified Decision Queue",
-      "path": ".memory/wiki/specs/audits/decision-queue-drafts/02-projects-delivery.md",
-      "shardId": "02"
-    },
-    {
-      "id": "audit:audits/decision-queue-drafts/03-marketplace-gear",
-      "type": "audit",
-      "label": "Marketplace, Gear & Registry Decision Queue — Draft",
-      "path": ".memory/wiki/specs/audits/decision-queue-drafts/03-marketplace-gear.md",
-      "shardId": "03"
-    },
-    {
-      "id": "audit:audits/decision-queue-drafts/04-live-fan",
-      "type": "audit",
-      "label": "Decision Queue Draft 04 — Live Booking and Fan Alerts",
-      "path": ".memory/wiki/specs/audits/decision-queue-drafts/04-live-fan.md",
-      "shardId": "04"
-    },
-    {
-      "id": "audit:audits/decision-ratification-log",
-      "type": "audit",
-      "label": "Blocking Decision Queue — Ratification Log",
-      "path": ".memory/wiki/specs/audits/decision-ratification-log.md",
-      "shardId": null
-    },
-    {
-      "id": "audit:audits/dq-r2-01-decision-brief",
-      "type": "audit",
-      "label": "DQ-R2-01 — Owner Decision Brief",
-      "path": ".memory/wiki/specs/audits/dq-r2-01-decision-brief.md",
-      "shardId": null
-    },
-    {
-      "id": "audit:audits/ideation-ambiguity-report-run2-interim",
-      "type": "audit",
-      "label": "Ideation Ambiguity Audit — Run 2 (post-remediation), INTERIM",
-      "path": ".memory/wiki/specs/audits/ideation-ambiguity-report-run2-interim.md",
-      "shardId": null
-    },
-    {
-      "id": "audit:audits/ideation-ambiguity-report-run3",
-      "type": "audit",
-      "label": "Ideation Ambiguity Audit — Run 3",
-      "path": ".memory/wiki/specs/audits/ideation-ambiguity-report-run3.md",
-      "shardId": null
-    },
-    {
-      "id": "audit:audits/ideation-ambiguity-report",
-      "type": "audit",
-      "label": "Ideation Ambiguity Audit — Report",
-      "path": ".memory/wiki/specs/audits/ideation-ambiguity-report.md",
-      "shardId": null
-    },
-    {
-      "id": "audit:audits/ideation-remediation-decision-queue",
-      "type": "audit",
-      "label": "Ideation Remediation — Canonical Decision Queue",
-      "path": ".memory/wiki/specs/audits/ideation-remediation-decision-queue.md",
-      "shardId": null
-    },
-    {
-      "id": "audit:audits/owner-autonomy-delegation-2026-08-02",
-      "type": "audit",
-      "label": "Owner Autonomy Delegation — 2026-08-02",
-      "path": ".memory/wiki/specs/audits/owner-autonomy-delegation-2026-08-02.md",
-      "shardId": null
-    },
-    {
-      "id": "audit:audits/owner-decision-queue",
-      "type": "audit",
-      "label": "Owner Decision Queue — expired-deferral triage, bucket C",
-      "path": ".memory/wiki/specs/audits/owner-decision-queue.md",
-      "shardId": null
-    },
-    {
-      "id": "audit:audits/p01-production-stage-vocabulary-validation",
-      "type": "audit",
-      "label": "P-01 Production-Stage Vocabulary Validation",
-      "path": ".memory/wiki/specs/audits/p01-production-stage-vocabulary-validation.md",
-      "shardId": null
-    },
-    {
-      "id": "audit:audits/propagation-availability-slo-2026-08-02",
-      "type": "audit",
-      "label": "Decision Propagation Record — Availability SLO",
-      "path": ".memory/wiki/specs/audits/propagation-availability-slo-2026-08-02.md",
-      "shardId": null
-    },
-    {
-      "id": "audit:audits/propagation-batch1-2026-08-02",
-      "type": "audit",
-      "label": "Batch 1 Propagation Record — 2026-08-02",
-      "path": ".memory/wiki/specs/audits/propagation-batch1-2026-08-02.md",
-      "shardId": null
-    },
-    {
-      "id": "audit:audits/propagation-batch2-2026-08-02",
-      "type": "audit",
-      "label": "Batch 2 Propagation Record — 2026-08-02",
-      "path": ".memory/wiki/specs/audits/propagation-batch2-2026-08-02.md",
-      "shardId": null
-    },
-    {
-      "id": "audit:audits/propagation-batch3-2026-08-02",
-      "type": "audit",
-      "label": "Batch 3 Propagation Record — 2026-08-02",
-      "path": ".memory/wiki/specs/audits/propagation-batch3-2026-08-02.md",
-      "shardId": null
-    },
-    {
-      "id": "audit:audits/propagation-batch4-2026-08-02",
-      "type": "audit",
-      "label": "Batch 4 Propagation Record — 2026-08-02",
-      "path": ".memory/wiki/specs/audits/propagation-batch4-2026-08-02.md",
-      "shardId": null
-    },
-    {
-      "id": "audit:audits/propagation-batch5-2026-08-02",
-      "type": "audit",
-      "label": "Batch 5 Propagation Record — 2026-08-02",
-      "path": ".memory/wiki/specs/audits/propagation-batch5-2026-08-02.md",
-      "shardId": null
-    },
-    {
-      "id": "audit:audits/propagation-batch6-2026-08-02",
-      "type": "audit",
-      "label": "Propagation Batch 6 — Scene Feed Boundary",
-      "path": ".memory/wiki/specs/audits/propagation-batch6-2026-08-02.md",
-      "shardId": null
-    },
-    {
-      "id": "audit:audits/propagation-batch7-2026-08-02",
-      "type": "audit",
-      "label": "Propagation Batch 7 — Entitlement Payment-Failure Recovery",
-      "path": ".memory/wiki/specs/audits/propagation-batch7-2026-08-02.md",
-      "shardId": null
-    },
-    {
-      "id": "audit:audits/propagation-batch8-2026-08-02",
-      "type": "audit",
-      "label": "Propagation Batch 8 — Transaction Dispute Limits",
-      "path": ".memory/wiki/specs/audits/propagation-batch8-2026-08-02.md",
-      "shardId": null
-    },
-    {
-      "id": "audit:audits/propagation-batch9-2026-08-02",
-      "type": "audit",
-      "label": "Propagation Batch 9 — Ledger Authority and Structural Links",
-      "path": ".memory/wiki/specs/audits/propagation-batch9-2026-08-02.md",
-      "shardId": null
-    },
-    {
-      "id": "audit:audits/propagation-dq-r2-01-2026-07-29",
-      "type": "audit",
-      "label": "Propagation Record — DQ-R2-01 (Option A′)",
-      "path": ".memory/wiki/specs/audits/propagation-dq-r2-01-2026-07-29.md",
-      "shardId": null
-    },
-    {
-      "id": "audit:audits/propagation-scan-availability-slo-2026-08-02",
-      "type": "audit",
-      "label": "Decision Propagation Scan — Availability SLO",
-      "path": ".memory/wiki/specs/audits/propagation-scan-availability-slo-2026-08-02.md",
-      "shardId": null
-    },
-    {
-      "id": "audit:audits/propagation-scan-batch1-2026-08-02",
-      "type": "audit",
-      "label": "Batch 1 Propagation Scan — 2026-08-02",
-      "path": ".memory/wiki/specs/audits/propagation-scan-batch1-2026-08-02.md",
-      "shardId": null
-    },
-    {
-      "id": "audit:audits/remediation-state",
-      "type": "audit",
-      "label": "Remediation State",
-      "path": ".memory/wiki/specs/audits/remediation-state.md",
-      "shardId": null
-    },
-    {
-      "id": "audit:audits/run2-blocking-decision-queue",
-      "type": "audit",
-      "label": "Run-2 Blocking Decision Queue",
-      "path": ".memory/wiki/specs/audits/run2-blocking-decision-queue.md",
-      "shardId": null
-    },
-    {
-      "id": "audit:audits/run3/CONFIRMED-root-001-truncated-synthesis",
-      "type": "audit",
-      "label": "CONFIRMED — `root#001`: 11 truncated cross-domain syntheses in `ideation-cx.md`",
-      "path": ".memory/wiki/specs/audits/run3/CONFIRMED-root-001-truncated-synthesis.md",
-      "shardId": null
-    },
-    {
-      "id": "audit:audits/run3/MECHANICAL-REMEDIATION-QUEUE",
-      "type": "audit",
-      "label": "Run-3 Mechanical Remediation Queue",
-      "path": ".memory/wiki/specs/audits/run3/MECHANICAL-REMEDIATION-QUEUE.md",
-      "shardId": null
-    },
-    {
-      "id": "audit:audits/run3-owner-decision-queue",
-      "type": "audit",
-      "label": "Run-3 Owner Decision Queue — Ideation Layer",
-      "path": ".memory/wiki/specs/audits/run3-owner-decision-queue.md",
-      "shardId": null
-    },
-    {
-      "id": "audit:audits/run6/VOID-run-did-not-complete",
-      "type": "audit",
-      "label": "Run 6 — VOID. This run did not complete and its verdict is meaningless.",
-      "path": ".memory/wiki/specs/audits/run6/VOID-run-did-not-complete.md",
-      "shardId": null
-    },
-    {
-      "id": "audit:audits/run6/remediation-log",
-      "type": "audit",
-      "label": "Run 6 Remediation Log",
-      "path": ".memory/wiki/specs/audits/run6/remediation-log.md",
-      "shardId": null
-    },
-    {
-      "id": "audit:audits/run7/VOID-pilot-inherited-context",
-      "type": "audit",
-      "label": "Void Run 7 Pilot Shards",
-      "path": ".memory/wiki/specs/audits/run7/VOID-pilot-inherited-context.md",
-      "shardId": null
-    },
-    {
-      "id": "audit:audits/run7/evidence-path-reconciliation",
-      "type": "audit",
-      "label": "Run 7 Evidence Path Reconciliation",
-      "path": ".memory/wiki/specs/audits/run7/evidence-path-reconciliation.md",
-      "shardId": null
-    },
-    {
-      "id": "audit:audits/run7/ideation-ambiguity-report",
-      "type": "audit",
-      "label": "Run 7 Ideation Ambiguity Audit",
-      "path": ".memory/wiki/specs/audits/run7/ideation-ambiguity-report.md",
-      "shardId": null
-    },
-    {
-      "id": "audit:audits/run7/manifest",
-      "type": "audit",
-      "label": "Run 7 Audit Manifest",
-      "path": ".memory/wiki/specs/audits/run7/manifest.md",
-      "shardId": null
-    },
-    {
-      "id": "audit:audits/run7/verified-blocker-remediation-matrix",
-      "type": "audit",
-      "label": "Run 7 Verified Blocker Remediation Matrix",
-      "path": ".memory/wiki/specs/audits/run7/verified-blocker-remediation-matrix.md",
-      "shardId": null
-    },
-    {
-      "id": "audit:audits/run7-owner-decision-agenda",
-      "type": "audit",
-      "label": "Run 7 — Owner Decision Agenda",
-      "path": ".memory/wiki/specs/audits/run7-owner-decision-agenda.md",
-      "shardId": null
-    },
-    {
-      "id": "audit:audits/run7-owner-decision-packet",
-      "type": "audit",
-      "label": "Run 7 — Owner Decision Packet",
-      "path": ".memory/wiki/specs/audits/run7-owner-decision-packet.md",
-      "shardId": null
-    },
-    {
-      "id": "audit:audits/run8-fresh-ideation-audit-2026-08-02",
-      "type": "audit",
-      "label": "Run 8 — Fresh Ideation Ambiguity Audit",
-      "path": ".memory/wiki/specs/audits/run8-fresh-ideation-audit-2026-08-02.md",
-      "shardId": null
-    },
-    {
-      "id": "audit:audits/run8-preflight-candidate-verification",
-      "type": "audit",
-      "label": "Run 8 Preflight — Candidate Source Fix Review",
-      "path": ".memory/wiki/specs/audits/run8-preflight-candidate-verification.md",
-      "shardId": null
-    },
-    {
-      "id": "audit:audits/run8-preflight-governance-verification",
-      "type": "audit",
-      "label": "Run 8 Preflight — Dimension 7 Governance Verification",
-      "path": ".memory/wiki/specs/audits/run8-preflight-governance-verification.md",
-      "shardId": null
-    },
-    {
-      "id": "audit:audits/tracked-phase2-warnings",
-      "type": "audit",
-      "label": "Tracked Phase-2 Ambiguity Warnings",
-      "path": ".memory/wiki/specs/audits/tracked-phase2-warnings.md",
       "shardId": null
     },
     {
@@ -9685,115 +9167,10 @@
       "shardId": null
     },
     {
-      "id": "decision:d-01",
-      "type": "decision",
-      "label": "D-01",
-      "path": ".memory/wiki/decisions.md#d-01",
-      "shardId": null
-    },
-    {
       "id": "decision:d-06",
       "type": "decision",
       "label": "D-06",
       "path": ".memory/wiki/decisions.md#d-06",
-      "shardId": null
-    },
-    {
-      "id": "decision:d-02",
-      "type": "decision",
-      "label": "D-02",
-      "path": ".memory/wiki/decisions.md#d-02",
-      "shardId": null
-    },
-    {
-      "id": "decision:d-03",
-      "type": "decision",
-      "label": "D-03",
-      "path": ".memory/wiki/decisions.md#d-03",
-      "shardId": null
-    },
-    {
-      "id": "decision:d-11",
-      "type": "decision",
-      "label": "D-11",
-      "path": ".memory/wiki/decisions.md#d-11",
-      "shardId": null
-    },
-    {
-      "id": "decision:d-05",
-      "type": "decision",
-      "label": "D-05",
-      "path": ".memory/wiki/decisions.md#d-05",
-      "shardId": null
-    },
-    {
-      "id": "decision:d-08",
-      "type": "decision",
-      "label": "D-08",
-      "path": ".memory/wiki/decisions.md#d-08",
-      "shardId": null
-    },
-    {
-      "id": "decision:d-12",
-      "type": "decision",
-      "label": "D-12",
-      "path": ".memory/wiki/decisions.md#d-12",
-      "shardId": null
-    },
-    {
-      "id": "decision:d-entry",
-      "type": "decision",
-      "label": "D-entry",
-      "path": ".memory/wiki/decisions.md#d-entry",
-      "shardId": null
-    },
-    {
-      "id": "decision:d-09",
-      "type": "decision",
-      "label": "D-09",
-      "path": ".memory/wiki/decisions.md#d-09",
-      "shardId": null
-    },
-    {
-      "id": "decision:d-18",
-      "type": "decision",
-      "label": "D-18",
-      "path": ".memory/wiki/decisions.md#d-18",
-      "shardId": null
-    },
-    {
-      "id": "decision:d-13",
-      "type": "decision",
-      "label": "D-13",
-      "path": ".memory/wiki/decisions.md#d-13",
-      "shardId": null
-    },
-    {
-      "id": "decision:d-16",
-      "type": "decision",
-      "label": "D-16",
-      "path": ".memory/wiki/decisions.md#d-16",
-      "shardId": null
-    },
-    {
-      "id": "decision:d-21",
-      "type": "decision",
-      "label": "D-21",
-      "path": ".memory/wiki/decisions.md#d-21",
-      "shardId": null
-    },
-    {
-      "id": "decision:d-19",
-      "type": "decision",
-      "label": "D-19",
-      "path": ".memory/wiki/decisions.md#d-19",
-      "shardId": null
-    },
-    {
-      "id": "decision:d-42",
-      "type": "decision",
-      "label": "D-42",
-      "path": ".memory/wiki/decisions.md#d-42",
       "shardId": null
     },
     {
@@ -9804,24 +9181,10 @@
       "shardId": null
     },
     {
-      "id": "decision:d-28",
+      "id": "decision:d-29",
       "type": "decision",
-      "label": "D-28",
-      "path": ".memory/wiki/decisions.md#d-28",
-      "shardId": null
-    },
-    {
-      "id": "decision:d-37",
-      "type": "decision",
-      "label": "D-37",
-      "path": ".memory/wiki/decisions.md#d-37",
-      "shardId": null
-    },
-    {
-      "id": "decision:d-17",
-      "type": "decision",
-      "label": "D-17",
-      "path": ".memory/wiki/decisions.md#d-17",
+      "label": "D-29",
+      "path": ".memory/wiki/decisions.md#d-29",
       "shardId": null
     },
     {
@@ -9832,164 +9195,87 @@
       "shardId": null
     },
     {
-      "id": "decision:d-50",
+      "id": "decision:d-03",
       "type": "decision",
-      "label": "D-50",
-      "path": ".memory/wiki/decisions.md#d-50",
+      "label": "D-03",
+      "path": ".memory/wiki/decisions.md#d-03",
       "shardId": null
     },
     {
-      "id": "decision:d-61",
+      "id": "decision:d-02",
       "type": "decision",
-      "label": "D-61",
-      "path": ".memory/wiki/decisions.md#d-61",
+      "label": "D-02",
+      "path": ".memory/wiki/decisions.md#d-02",
       "shardId": null
     },
     {
-      "id": "decision:d-32",
+      "id": "decision:d-19",
       "type": "decision",
-      "label": "D-32",
-      "path": ".memory/wiki/decisions.md#d-32",
+      "label": "D-19",
+      "path": ".memory/wiki/decisions.md#d-19",
       "shardId": null
     },
     {
-      "id": "decision:d-30",
+      "id": "decision:d-18",
       "type": "decision",
-      "label": "D-30",
-      "path": ".memory/wiki/decisions.md#d-30",
+      "label": "D-18",
+      "path": ".memory/wiki/decisions.md#d-18",
       "shardId": null
     },
     {
-      "id": "decision:d-46",
+      "id": "decision:d-16",
       "type": "decision",
-      "label": "D-46",
-      "path": ".memory/wiki/decisions.md#d-46",
+      "label": "D-16",
+      "path": ".memory/wiki/decisions.md#d-16",
       "shardId": null
     },
     {
-      "id": "decision:d-51",
+      "id": "decision:d-11",
       "type": "decision",
-      "label": "D-51",
-      "path": ".memory/wiki/decisions.md#d-51",
+      "label": "D-11",
+      "path": ".memory/wiki/decisions.md#d-11",
       "shardId": null
     },
     {
-      "id": "decision:d-22",
+      "id": "decision:d-01",
       "type": "decision",
-      "label": "D-22",
-      "path": ".memory/wiki/decisions.md#d-22",
+      "label": "D-01",
+      "path": ".memory/wiki/decisions.md#d-01",
       "shardId": null
     },
     {
-      "id": "decision:d-nn",
+      "id": "decision:d-12",
       "type": "decision",
-      "label": "D-NN",
-      "path": ".memory/wiki/decisions.md#d-nn",
+      "label": "D-12",
+      "path": ".memory/wiki/decisions.md#d-12",
       "shardId": null
     },
     {
-      "id": "decision:d-07s",
+      "id": "decision:d-08",
       "type": "decision",
-      "label": "D-07s",
-      "path": ".memory/wiki/decisions.md#d-07s",
+      "label": "D-08",
+      "path": ".memory/wiki/decisions.md#d-08",
       "shardId": null
     },
     {
-      "id": "decision:d-72",
+      "id": "decision:d-05",
       "type": "decision",
-      "label": "D-72",
-      "path": ".memory/wiki/decisions.md#d-72",
+      "label": "D-05",
+      "path": ".memory/wiki/decisions.md#d-05",
       "shardId": null
     },
     {
-      "id": "decision:d-69",
+      "id": "decision:d-09",
       "type": "decision",
-      "label": "D-69",
-      "path": ".memory/wiki/decisions.md#d-69",
+      "label": "D-09",
+      "path": ".memory/wiki/decisions.md#d-09",
       "shardId": null
     },
     {
-      "id": "decision:d-75",
+      "id": "decision:d-13",
       "type": "decision",
-      "label": "D-75",
-      "path": ".memory/wiki/decisions.md#d-75",
-      "shardId": null
-    },
-    {
-      "id": "decision:d-27",
-      "type": "decision",
-      "label": "D-27",
-      "path": ".memory/wiki/decisions.md#d-27",
-      "shardId": null
-    },
-    {
-      "id": "decision:d-70",
-      "type": "decision",
-      "label": "D-70",
-      "path": ".memory/wiki/decisions.md#d-70",
-      "shardId": null
-    },
-    {
-      "id": "decision:d-71",
-      "type": "decision",
-      "label": "D-71",
-      "path": ".memory/wiki/decisions.md#d-71",
-      "shardId": null
-    },
-    {
-      "id": "decision:d-73",
-      "type": "decision",
-      "label": "D-73",
-      "path": ".memory/wiki/decisions.md#d-73",
-      "shardId": null
-    },
-    {
-      "id": "decision:d-74",
-      "type": "decision",
-      "label": "D-74",
-      "path": ".memory/wiki/decisions.md#d-74",
-      "shardId": null
-    },
-    {
-      "id": "decision:d-number",
-      "type": "decision",
-      "label": "D-number",
-      "path": ".memory/wiki/decisions.md#d-number",
-      "shardId": null
-    },
-    {
-      "id": "decision:d-0",
-      "type": "decision",
-      "label": "D-0",
-      "path": ".memory/wiki/decisions.md#d-0",
-      "shardId": null
-    },
-    {
-      "id": "decision:d-13b",
-      "type": "decision",
-      "label": "D-13b",
-      "path": ".memory/wiki/decisions.md#d-13b",
-      "shardId": null
-    },
-    {
-      "id": "decision:d-13a",
-      "type": "decision",
-      "label": "D-13a",
-      "path": ".memory/wiki/decisions.md#d-13a",
-      "shardId": null
-    },
-    {
-      "id": "decision:d-1",
-      "type": "decision",
-      "label": "D-1",
-      "path": ".memory/wiki/decisions.md#d-1",
-      "shardId": null
-    },
-    {
-      "id": "decision:d-26",
-      "type": "decision",
-      "label": "D-26",
-      "path": ".memory/wiki/decisions.md#d-26",
+      "label": "D-13",
+      "path": ".memory/wiki/decisions.md#d-13",
       "shardId": null
     },
     {
@@ -10000,52 +9286,52 @@
       "shardId": null
     },
     {
-      "id": "decision:d-81",
+      "id": "decision:d-71",
       "type": "decision",
-      "label": "D-81",
-      "path": ".memory/wiki/decisions.md#d-81",
+      "label": "D-71",
+      "path": ".memory/wiki/decisions.md#d-71",
       "shardId": null
     },
     {
-      "id": "decision:d-82",
+      "id": "decision:d-25",
       "type": "decision",
-      "label": "D-82",
-      "path": ".memory/wiki/decisions.md#d-82",
+      "label": "D-25",
+      "path": ".memory/wiki/decisions.md#d-25",
       "shardId": null
     },
     {
-      "id": "decision:d-83",
+      "id": "decision:d-22",
       "type": "decision",
-      "label": "D-83",
-      "path": ".memory/wiki/decisions.md#d-83",
+      "label": "D-22",
+      "path": ".memory/wiki/decisions.md#d-22",
       "shardId": null
     },
     {
-      "id": "decision:d-84",
+      "id": "decision:d-72",
       "type": "decision",
-      "label": "D-84",
-      "path": ".memory/wiki/decisions.md#d-84",
+      "label": "D-72",
+      "path": ".memory/wiki/decisions.md#d-72",
       "shardId": null
     },
     {
-      "id": "decision:d-67",
+      "id": "decision:d-17",
       "type": "decision",
-      "label": "D-67",
-      "path": ".memory/wiki/decisions.md#d-67",
+      "label": "D-17",
+      "path": ".memory/wiki/decisions.md#d-17",
       "shardId": null
     },
     {
-      "id": "decision:d-numbered",
+      "id": "decision:d-75",
       "type": "decision",
-      "label": "D-numbered",
-      "path": ".memory/wiki/decisions.md#d-numbered",
+      "label": "D-75",
+      "path": ".memory/wiki/decisions.md#d-75",
       "shardId": null
     },
     {
-      "id": "decision:d-row",
+      "id": "decision:d-69",
       "type": "decision",
-      "label": "D-row",
-      "path": ".memory/wiki/decisions.md#d-row",
+      "label": "D-69",
+      "path": ".memory/wiki/decisions.md#d-69",
       "shardId": null
     },
     {
@@ -10063,17 +9349,31 @@
       "shardId": null
     },
     {
-      "id": "decision:d-29",
+      "id": "decision:d-21",
       "type": "decision",
-      "label": "D-29",
-      "path": ".memory/wiki/decisions.md#d-29",
+      "label": "D-21",
+      "path": ".memory/wiki/decisions.md#d-21",
       "shardId": null
     },
     {
-      "id": "decision:d-25",
+      "id": "decision:d-70",
       "type": "decision",
-      "label": "D-25",
-      "path": ".memory/wiki/decisions.md#d-25",
+      "label": "D-70",
+      "path": ".memory/wiki/decisions.md#d-70",
+      "shardId": null
+    },
+    {
+      "id": "decision:d-13a",
+      "type": "decision",
+      "label": "D-13a",
+      "path": ".memory/wiki/decisions.md#d-13a",
+      "shardId": null
+    },
+    {
+      "id": "decision:d-13b",
+      "type": "decision",
+      "label": "D-13b",
+      "path": ".memory/wiki/decisions.md#d-13b",
       "shardId": null
     },
     {
@@ -10084,10 +9384,38 @@
       "shardId": null
     },
     {
+      "id": "decision:d-28",
+      "type": "decision",
+      "label": "D-28",
+      "path": ".memory/wiki/decisions.md#d-28",
+      "shardId": null
+    },
+    {
       "id": "decision:d-03-original",
       "type": "decision",
       "label": "D-03-original",
       "path": ".memory/wiki/decisions.md#d-03-original",
+      "shardId": null
+    },
+    {
+      "id": "decision:d-32",
+      "type": "decision",
+      "label": "D-32",
+      "path": ".memory/wiki/decisions.md#d-32",
+      "shardId": null
+    },
+    {
+      "id": "decision:d-30",
+      "type": "decision",
+      "label": "D-30",
+      "path": ".memory/wiki/decisions.md#d-30",
+      "shardId": null
+    },
+    {
+      "id": "decision:d-26",
+      "type": "decision",
+      "label": "D-26",
+      "path": ".memory/wiki/decisions.md#d-26",
       "shardId": null
     },
     {
@@ -10105,6 +9433,27 @@
       "shardId": null
     },
     {
+      "id": "decision:d-46",
+      "type": "decision",
+      "label": "D-46",
+      "path": ".memory/wiki/decisions.md#d-46",
+      "shardId": null
+    },
+    {
+      "id": "decision:d-50",
+      "type": "decision",
+      "label": "D-50",
+      "path": ".memory/wiki/decisions.md#d-50",
+      "shardId": null
+    },
+    {
+      "id": "decision:d-51",
+      "type": "decision",
+      "label": "D-51",
+      "path": ".memory/wiki/decisions.md#d-51",
+      "shardId": null
+    },
+    {
       "id": "decision:d-01s",
       "type": "decision",
       "label": "D-01s",
@@ -10116,6 +9465,13 @@
       "type": "decision",
       "label": "D-62",
       "path": ".memory/wiki/decisions.md#d-62",
+      "shardId": null
+    },
+    {
+      "id": "decision:d-42",
+      "type": "decision",
+      "label": "D-42",
+      "path": ".memory/wiki/decisions.md#d-42",
       "shardId": null
     },
     {
@@ -10133,10 +9489,24 @@
       "shardId": null
     },
     {
+      "id": "decision:d-1",
+      "type": "decision",
+      "label": "D-1",
+      "path": ".memory/wiki/decisions.md#d-1",
+      "shardId": null
+    },
+    {
       "id": "decision:d-3",
       "type": "decision",
       "label": "D-3",
       "path": ".memory/wiki/decisions.md#d-3",
+      "shardId": null
+    },
+    {
+      "id": "decision:d-nn",
+      "type": "decision",
+      "label": "D-NN",
+      "path": ".memory/wiki/decisions.md#d-nn",
       "shardId": null
     },
     {
@@ -10175,10 +9545,24 @@
       "shardId": null
     },
     {
+      "id": "decision:d-27",
+      "type": "decision",
+      "label": "D-27",
+      "path": ".memory/wiki/decisions.md#d-27",
+      "shardId": null
+    },
+    {
       "id": "decision:d-44",
       "type": "decision",
       "label": "D-44",
       "path": ".memory/wiki/decisions.md#d-44",
+      "shardId": null
+    },
+    {
+      "id": "decision:d-67",
+      "type": "decision",
+      "label": "D-67",
+      "path": ".memory/wiki/decisions.md#d-67",
       "shardId": null
     },
     {
@@ -10200,6 +9584,13 @@
       "type": "decision",
       "label": "D-36",
       "path": ".memory/wiki/decisions.md#d-36",
+      "shardId": null
+    },
+    {
+      "id": "decision:d-37",
+      "type": "decision",
+      "label": "D-37",
+      "path": ".memory/wiki/decisions.md#d-37",
       "shardId": null
     },
     {
@@ -10308,6 +9699,13 @@
       "shardId": null
     },
     {
+      "id": "decision:d-61",
+      "type": "decision",
+      "label": "D-61",
+      "path": ".memory/wiki/decisions.md#d-61",
+      "shardId": null
+    },
+    {
       "id": "decision:d-63",
       "type": "decision",
       "label": "D-63",
@@ -10336,6 +9734,20 @@
       "shardId": null
     },
     {
+      "id": "decision:d-73",
+      "type": "decision",
+      "label": "D-73",
+      "path": ".memory/wiki/decisions.md#d-73",
+      "shardId": null
+    },
+    {
+      "id": "decision:d-74",
+      "type": "decision",
+      "label": "D-74",
+      "path": ".memory/wiki/decisions.md#d-74",
+      "shardId": null
+    },
+    {
       "id": "decision:d-77",
       "type": "decision",
       "label": "D-77",
@@ -10361,6 +9773,34 @@
       "type": "decision",
       "label": "D-80",
       "path": ".memory/wiki/decisions.md#d-80",
+      "shardId": null
+    },
+    {
+      "id": "decision:d-81",
+      "type": "decision",
+      "label": "D-81",
+      "path": ".memory/wiki/decisions.md#d-81",
+      "shardId": null
+    },
+    {
+      "id": "decision:d-82",
+      "type": "decision",
+      "label": "D-82",
+      "path": ".memory/wiki/decisions.md#d-82",
+      "shardId": null
+    },
+    {
+      "id": "decision:d-83",
+      "type": "decision",
+      "label": "D-83",
+      "path": ".memory/wiki/decisions.md#d-83",
+      "shardId": null
+    },
+    {
+      "id": "decision:d-84",
+      "type": "decision",
+      "label": "D-84",
+      "path": ".memory/wiki/decisions.md#d-84",
       "shardId": null
     }
   ],
@@ -10426,2122 +9866,64 @@
       "source": "decision-ref"
     },
     {
-      "from": "audit:audits/2026-08-02-architecture-ambiguity-report",
-      "to": "plan:2026-08-02-architecture-design",
-      "type": "references",
-      "source": "wikilink"
-    },
-    {
-      "from": "audit:audits/2026-08-02-architecture-ambiguity-report",
-      "to": "plan:ENGINEERING-STANDARDS",
-      "type": "references",
-      "source": "wikilink"
-    },
-    {
-      "from": "audit:audits/2026-08-02-architecture-ambiguity-rerun-1",
-      "to": "plan:2026-08-02-architecture-design",
-      "type": "references",
-      "source": "wikilink"
-    },
-    {
-      "from": "audit:audits/2026-08-02-architecture-ambiguity-rerun-1",
-      "to": "plan:ENGINEERING-STANDARDS",
-      "type": "references",
-      "source": "wikilink"
-    },
-    {
-      "from": "audit:audits/2026-08-02-architecture-ambiguity-rerun-2",
-      "to": "plan:2026-08-02-architecture-design",
-      "type": "references",
-      "source": "wikilink"
-    },
-    {
-      "from": "audit:audits/2026-08-02-architecture-ambiguity-rerun-2",
-      "to": "plan:ENGINEERING-STANDARDS",
-      "type": "references",
-      "source": "wikilink"
-    },
-    {
-      "from": "audit:audits/2026-08-02-architecture-ambiguity-rerun-3",
-      "to": "plan:2026-08-02-architecture-design",
-      "type": "references",
-      "source": "wikilink"
-    },
-    {
-      "from": "audit:audits/2026-08-02-architecture-ambiguity-rerun-3",
-      "to": "plan:ENGINEERING-STANDARDS",
-      "type": "references",
-      "source": "wikilink"
-    },
-    {
-      "from": "audit:audits/2026-08-02-architecture-ambiguity-rerun-4",
-      "to": "plan:2026-08-02-architecture-design",
-      "type": "references",
-      "source": "wikilink"
-    },
-    {
-      "from": "audit:audits/2026-08-02-architecture-ambiguity-rerun-4",
-      "to": "plan:ENGINEERING-STANDARDS",
-      "type": "references",
-      "source": "wikilink"
-    },
-    {
-      "from": "audit:audits/2026-08-02-architecture-ambiguity-rerun-5",
-      "to": "plan:2026-08-02-architecture-design",
-      "type": "references",
-      "source": "wikilink"
-    },
-    {
-      "from": "audit:audits/2026-08-02-architecture-ambiguity-rerun-5",
-      "to": "plan:ENGINEERING-STANDARDS",
-      "type": "references",
-      "source": "wikilink"
-    },
-    {
-      "from": "audit:audits/2026-08-02-architecture-ambiguity-rerun-6",
-      "to": "plan:2026-08-02-architecture-design",
-      "type": "references",
-      "source": "wikilink"
-    },
-    {
-      "from": "audit:audits/2026-08-02-architecture-ambiguity-rerun-6",
-      "to": "plan:ENGINEERING-STANDARDS",
-      "type": "references",
-      "source": "wikilink"
-    },
-    {
-      "from": "audit:audits/2026-08-02-cms-evolution-initial",
-      "to": "decision:d-85",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/2026-08-02-cms-evolution-rerun",
-      "to": "decision:d-85",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/2026-08-03-ia-ambiguity-report",
+      "from": "audit:audits/2026-08-28-ia-ambiguity-report",
       "to": "ia-spec:ia/index",
       "type": "references",
       "source": "wikilink"
     },
     {
-      "from": "audit:audits/2026-08-03-ia-ambiguity-rerun-1",
+      "from": "audit:audits/2026-08-28-ia-ambiguity-report",
+      "to": "audit:audits/audit-scope",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "audit:audits/2026-08-28-ia-ambiguity-report",
+      "to": "ideation:ideation/ideation-index",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "audit:audits/2026-08-28-ia-ambiguity-report",
+      "to": "ideation:ideation/moscow-ledger",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "audit:audits/2026-08-28-ia-ambiguity-report",
+      "to": "ia-spec:ia/06-trust-safety",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "audit:audits/2026-08-28-ia-ambiguity-rerun-1",
       "to": "ia-spec:ia/index",
       "type": "references",
       "source": "wikilink"
     },
     {
-      "from": "audit:audits/2026-08-05-ia-ambiguity-report",
-      "to": "decision:d-01",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/2026-08-05-ia-ambiguity-report",
-      "to": "decision:d-06",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/2026-08-05-ia-ambiguity-report",
-      "to": "decision:d-02",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/2026-08-05-ia-ambiguity-report",
-      "to": "decision:d-03",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/2026-08-05-ia-ambiguity-report",
-      "to": "decision:d-04",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/2026-08-05-ia-ambiguity-report",
-      "to": "decision:d-11",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/2026-08-05-ia-ambiguity-report",
-      "to": "ia-spec:ia/36-box-office-risk",
+      "from": "audit:audits/2026-08-28-ia-ambiguity-rerun-1",
+      "to": "audit:audits/audit-scope",
       "type": "references",
       "source": "wikilink"
     },
     {
-      "from": "audit:audits/2026-08-05-ia-ambiguity-report",
-      "to": "ia-spec:ia/35-ticket-products-sales",
+      "from": "audit:audits/2026-08-28-ia-ambiguity-rerun-1",
+      "to": "audit:audits/2026-08-28-ia-ambiguity-report",
       "type": "references",
       "source": "wikilink"
     },
     {
-      "from": "audit:audits/architecture/2026-08-02-architecture-design-ambiguity-rerun-1",
-      "to": "plan:2026-08-02-architecture-design",
+      "from": "audit:audits/audit-scope",
+      "to": "ia-spec:ia/index",
       "type": "references",
       "source": "wikilink"
     },
     {
-      "from": "audit:audits/architecture/2026-08-02-architecture-design-ambiguity-rerun-2",
-      "to": "plan:2026-08-02-architecture-design",
+      "from": "audit:audits/audit-scope",
+      "to": "audit:audits/2026-08-28-ia-ambiguity-report",
       "type": "references",
       "source": "wikilink"
-    },
-    {
-      "from": "audit:audits/architecture/2026-08-02-architecture-design-ambiguity-rerun-3",
-      "to": "plan:2026-08-02-architecture-design",
-      "type": "references",
-      "source": "wikilink"
-    },
-    {
-      "from": "audit:audits/architecture/2026-08-02-architecture-design-ambiguity-rerun-4",
-      "to": "plan:2026-08-02-architecture-design",
-      "type": "references",
-      "source": "wikilink"
-    },
-    {
-      "from": "audit:audits/architecture/2026-08-02-architecture-design-ambiguity-rerun-5",
-      "to": "plan:2026-08-02-architecture-design",
-      "type": "references",
-      "source": "wikilink"
-    },
-    {
-      "from": "audit:audits/architecture/2026-08-02-architecture-design-ambiguity-rerun-6",
-      "to": "plan:2026-08-02-architecture-design",
-      "type": "references",
-      "source": "wikilink"
-    },
-    {
-      "from": "audit:audits/architecture/2026-08-02-architecture-design-ambiguity",
-      "to": "plan:2026-08-02-architecture-design",
-      "type": "references",
-      "source": "wikilink"
-    },
-    {
-      "from": "audit:audits/architecture/2026-08-02-engineering-standards-ambiguity-rerun-1",
-      "to": "plan:ENGINEERING-STANDARDS",
-      "type": "references",
-      "source": "wikilink"
-    },
-    {
-      "from": "audit:audits/architecture/2026-08-02-engineering-standards-ambiguity-rerun-2",
-      "to": "plan:ENGINEERING-STANDARDS",
-      "type": "references",
-      "source": "wikilink"
-    },
-    {
-      "from": "audit:audits/architecture/2026-08-02-engineering-standards-ambiguity-rerun-3",
-      "to": "plan:ENGINEERING-STANDARDS",
-      "type": "references",
-      "source": "wikilink"
-    },
-    {
-      "from": "audit:audits/architecture/2026-08-02-engineering-standards-ambiguity-rerun-4",
-      "to": "plan:ENGINEERING-STANDARDS",
-      "type": "references",
-      "source": "wikilink"
-    },
-    {
-      "from": "audit:audits/architecture/2026-08-02-engineering-standards-ambiguity-rerun-5",
-      "to": "plan:ENGINEERING-STANDARDS",
-      "type": "references",
-      "source": "wikilink"
-    },
-    {
-      "from": "audit:audits/architecture/2026-08-02-engineering-standards-ambiguity-rerun-6",
-      "to": "plan:ENGINEERING-STANDARDS",
-      "type": "references",
-      "source": "wikilink"
-    },
-    {
-      "from": "audit:audits/architecture/2026-08-02-engineering-standards-ambiguity",
-      "to": "plan:ENGINEERING-STANDARDS",
-      "type": "references",
-      "source": "wikilink"
-    },
-    {
-      "from": "audit:audits/audit-scope-be-2026-08-03",
-      "to": "audit:audits/2026-08-03-be-ambiguity-rerun-1-report",
-      "type": "references",
-      "source": "wikilink"
-    },
-    {
-      "from": "audit:audits/blocking-decision-queue",
-      "to": "decision:d-11",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/blocking-decision-queue",
-      "to": "decision:d-01",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/blocking-decision-queue",
-      "to": "decision:d-05",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/blocking-decision-queue",
-      "to": "decision:d-06",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/blocking-decision-queue",
-      "to": "decision:d-03",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/blocking-decision-queue",
-      "to": "decision:d-08",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/blocking-decision-queue",
-      "to": "decision:d-12",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/blocking-decision-queue",
-      "to": "decision:d-10",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/blocking-decision-queue",
-      "to": "decision:d-entry",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/blocking-decision-queue",
-      "to": "decision:d-07",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/blocking-decision-queue",
-      "to": "decision:d-02",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/blocking-decision-queue",
-      "to": "decision:d-14",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/blocking-decision-queue",
-      "to": "decision:d-04",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/blocking-decision-queue",
-      "to": "decision:d-09",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/blocking-decision-queue",
-      "to": "decision:d-18",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/blocking-decision-queue",
-      "to": "decision:d-13",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/blocking-decision-queue",
-      "to": "decision:d-16",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/blocking-decision-queue",
-      "to": "decision:d-21",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/blocking-decision-queue",
-      "to": "decision:d-19",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/blocking-decision-queue",
-      "to": "decision:d-42",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/blocking-decision-queue",
-      "to": "decision:d-31",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/blocking-decision-queue",
-      "to": "decision:d-28",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/blocking-decision-queue",
-      "to": "decision:d-37",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/blocking-decision-queue",
-      "to": "decision:d-17",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/blocking-decision-queue",
-      "to": "decision:d-15",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/blocking-decision-queue",
-      "to": "decision:d-20",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/blocking-decision-queue",
-      "to": "decision:d-50",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/blocking-decision-queue",
-      "to": "decision:d-61",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/blocking-decision-queue",
-      "to": "decision:d-32",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/blocking-decision-queue",
-      "to": "decision:d-30",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/blocking-decision-queue",
-      "to": "decision:d-46",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/blocking-decision-queue",
-      "to": "decision:d-51",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/blocking-decision-queue",
-      "to": "decision:d-22",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/blocking-decision-queue",
-      "to": "decision:d-nn",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/blocking-decision-queue",
-      "to": "decision:d-07s",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/check-phase-reconstruction",
-      "to": "decision:d-28",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/check-phase-reconstruction",
-      "to": "decision:d-32",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/check-phase-reconstruction",
-      "to": "decision:d-72",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/check-phase-reconstruction",
-      "to": "decision:d-06",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/decision-queue-drafts/01-credits-rights",
-      "to": "decision:d-15",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/decision-queue-drafts/01-credits-rights",
-      "to": "decision:d-09",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/decision-queue-drafts/02-projects-delivery",
-      "to": "decision:d-05",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/decision-queue-drafts/02-projects-delivery",
-      "to": "decision:d-01",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/decision-queue-drafts/02-projects-delivery",
-      "to": "decision:d-07",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/decision-queue-drafts/02-projects-delivery",
-      "to": "decision:d-09",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/decision-queue-drafts/02-projects-delivery",
-      "to": "decision:d-13",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/decision-queue-drafts/02-projects-delivery",
-      "to": "decision:d-14",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/decision-queue-drafts/02-projects-delivery",
-      "to": "decision:d-10",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/decision-queue-drafts/02-projects-delivery",
-      "to": "decision:d-08",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/decision-queue-drafts/03-marketplace-gear",
-      "to": "decision:d-05",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/decision-queue-drafts/03-marketplace-gear",
-      "to": "decision:d-01",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/decision-queue-drafts/03-marketplace-gear",
-      "to": "decision:d-08",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/decision-queue-drafts/03-marketplace-gear",
-      "to": "decision:d-11",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/decision-queue-drafts/03-marketplace-gear",
-      "to": "decision:d-03",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/decision-queue-drafts/03-marketplace-gear",
-      "to": "decision:d-04",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/decision-queue-drafts/03-marketplace-gear",
-      "to": "decision:d-02",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/decision-queue-drafts/04-live-fan",
-      "to": "decision:d-13",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/decision-queue-drafts/04-live-fan",
-      "to": "decision:d-06",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/decision-queue-drafts/04-live-fan",
-      "to": "decision:d-01",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/decision-queue-drafts/04-live-fan",
-      "to": "decision:d-15",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/decision-queue-drafts/04-live-fan",
-      "to": "decision:d-08",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/decision-queue-drafts/04-live-fan",
-      "to": "decision:d-02",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/decision-queue-drafts/04-live-fan",
-      "to": "decision:d-03",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/decision-ratification-log",
-      "to": "decision:d-11",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/decision-ratification-log",
-      "to": "decision:d-02",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/decision-ratification-log",
-      "to": "decision:d-01",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/decision-ratification-log",
-      "to": "decision:d-18",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/decision-ratification-log",
-      "to": "decision:d-10",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/decision-ratification-log",
-      "to": "decision:d-03",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/decision-ratification-log",
-      "to": "decision:d-06",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/decision-ratification-log",
-      "to": "decision:d-13",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/decision-ratification-log",
-      "to": "decision:d-16",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/decision-ratification-log",
-      "to": "decision:d-05",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/decision-ratification-log",
-      "to": "decision:d-09",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/decision-ratification-log",
-      "to": "decision:d-21",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/decision-ratification-log",
-      "to": "decision:d-04",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/decision-ratification-log",
-      "to": "decision:d-12",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/decision-ratification-log",
-      "to": "decision:d-07",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/decision-ratification-log",
-      "to": "decision:d-14",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/decision-ratification-log",
-      "to": "decision:d-37",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/decision-ratification-log",
-      "to": "decision:d-28",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/decision-ratification-log",
-      "to": "decision:d-17",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/decision-ratification-log",
-      "to": "decision:d-15",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/decision-ratification-log",
-      "to": "decision:d-19",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/decision-ratification-log",
-      "to": "decision:d-20",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/decision-ratification-log",
-      "to": "decision:d-50",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/decision-ratification-log",
-      "to": "decision:d-32",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/decision-ratification-log",
-      "to": "decision:d-46",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/decision-ratification-log",
-      "to": "decision:d-08",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/decision-ratification-log",
-      "to": "decision:d-22",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/decision-ratification-log",
-      "to": "decision:d-69",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/decision-ratification-log",
-      "to": "decision:d-75",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/dq-r2-01-decision-brief",
-      "to": "decision:d-01",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/dq-r2-01-decision-brief",
-      "to": "decision:d-75",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/dq-r2-01-decision-brief",
-      "to": "decision:d-02",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/dq-r2-01-decision-brief",
-      "to": "decision:d-69",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/dq-r2-01-decision-brief",
-      "to": "decision:d-11",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/dq-r2-01-decision-brief",
-      "to": "decision:d-06",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/dq-r2-01-decision-brief",
-      "to": "decision:d-07",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/dq-r2-01-decision-brief",
-      "to": "decision:d-10",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/dq-r2-01-decision-brief",
-      "to": "decision:d-09",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/dq-r2-01-decision-brief",
-      "to": "decision:d-03",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/dq-r2-01-decision-brief",
-      "to": "decision:d-04",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/dq-r2-01-decision-brief",
-      "to": "decision:d-14",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/ideation-ambiguity-report-run2-interim",
-      "to": "decision:d-01",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/ideation-ambiguity-report-run2-interim",
-      "to": "decision:d-03",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/ideation-ambiguity-report-run3",
-      "to": "decision:d-75",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/ideation-ambiguity-report-run3",
-      "to": "decision:d-13",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/ideation-ambiguity-report-run3",
-      "to": "decision:d-12",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/ideation-ambiguity-report-run3",
-      "to": "decision:d-06",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/ideation-ambiguity-report-run3",
-      "to": "decision:d-17",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/ideation-ambiguity-report-run3",
-      "to": "decision:d-10",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/ideation-ambiguity-report-run3",
-      "to": "decision:d-02",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/ideation-ambiguity-report-run3",
-      "to": "decision:d-05",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/ideation-ambiguity-report-run3",
-      "to": "decision:d-09",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/ideation-ambiguity-report-run3",
-      "to": "decision:d-11",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/ideation-ambiguity-report-run3",
-      "to": "decision:d-15",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/ideation-ambiguity-report-run3",
-      "to": "decision:d-01",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/ideation-ambiguity-report-run3",
-      "to": "decision:d-07",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/ideation-ambiguity-report-run3",
-      "to": "decision:d-21",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/ideation-ambiguity-report-run3",
-      "to": "decision:d-08",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/ideation-ambiguity-report-run3",
-      "to": "decision:d-04",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/ideation-ambiguity-report-run3",
-      "to": "decision:d-14",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/ideation-ambiguity-report-run3",
-      "to": "decision:d-27",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/ideation-ambiguity-report-run3",
-      "to": "decision:d-70",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/ideation-ambiguity-report",
-      "to": "decision:d-10",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/ideation-ambiguity-report",
-      "to": "decision:d-12",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/ideation-ambiguity-report",
-      "to": "decision:d-01",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/ideation-ambiguity-report",
-      "to": "decision:d-69",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/ideation-ambiguity-report",
-      "to": "decision:d-11",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/ideation-ambiguity-report",
-      "to": "decision:d-09",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/ideation-ambiguity-report",
-      "to": "decision:d-03",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/ideation-ambiguity-report",
-      "to": "decision:d-06",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/ideation-ambiguity-report",
-      "to": "decision:d-02",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/ideation-ambiguity-report",
-      "to": "decision:d-13",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/ideation-ambiguity-report",
-      "to": "decision:d-07",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/ideation-ambiguity-report",
-      "to": "decision:d-37",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/ideation-ambiguity-report",
-      "to": "decision:d-28",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/ideation-ambiguity-report",
-      "to": "decision:d-04",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/ideation-ambiguity-report",
-      "to": "decision:d-70",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/ideation-ambiguity-report",
-      "to": "decision:d-17",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/ideation-ambiguity-report",
-      "to": "decision:d-19",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/ideation-ambiguity-report",
-      "to": "decision:d-05",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/ideation-ambiguity-report",
-      "to": "decision:d-71",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/ideation-ambiguity-report",
-      "to": "decision:d-32",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/ideation-ambiguity-report",
-      "to": "decision:d-14",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/ideation-ambiguity-report",
-      "to": "decision:d-72",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/ideation-ambiguity-report",
-      "to": "decision:d-46",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/ideation-ambiguity-report",
-      "to": "decision:d-22",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/ideation-ambiguity-report",
-      "to": "decision:d-73",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/ideation-ambiguity-report",
-      "to": "decision:d-08",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/ideation-ambiguity-report",
-      "to": "decision:d-74",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/ideation-ambiguity-report",
-      "to": "decision:d-number",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/ideation-remediation-decision-queue",
-      "to": "decision:d-06",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/ideation-remediation-decision-queue",
-      "to": "decision:d-13",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/ideation-remediation-decision-queue",
-      "to": "decision:d-14",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/ideation-remediation-decision-queue",
-      "to": "decision:d-10",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/ideation-remediation-decision-queue",
-      "to": "decision:d-70",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/ideation-remediation-decision-queue",
-      "to": "decision:d-04",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/ideation-remediation-decision-queue",
-      "to": "decision:d-05",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/ideation-remediation-decision-queue",
-      "to": "decision:d-17",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/ideation-remediation-decision-queue",
-      "to": "decision:d-15",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/ideation-remediation-decision-queue",
-      "to": "decision:d-09",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/ideation-remediation-decision-queue",
-      "to": "decision:d-01",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/ideation-remediation-decision-queue",
-      "to": "decision:d-08",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/ideation-remediation-decision-queue",
-      "to": "decision:d-12",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/ideation-remediation-decision-queue",
-      "to": "decision:d-07",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/ideation-remediation-decision-queue",
-      "to": "decision:d-03",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/ideation-remediation-decision-queue",
-      "to": "decision:d-02",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/ideation-remediation-decision-queue",
-      "to": "decision:d-18",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/ideation-remediation-decision-queue",
-      "to": "decision:d-16",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/ideation-remediation-decision-queue",
-      "to": "decision:d-11",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/ideation-remediation-decision-queue",
-      "to": "decision:d-entry",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/owner-decision-queue",
-      "to": "decision:d-11",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/owner-decision-queue",
-      "to": "decision:d-04",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/owner-decision-queue",
-      "to": "decision:d-05",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/owner-decision-queue",
-      "to": "decision:d-09",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/owner-decision-queue",
-      "to": "decision:d-08",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/owner-decision-queue",
-      "to": "decision:d-06",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/owner-decision-queue",
-      "to": "decision:d-03",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/owner-decision-queue",
-      "to": "decision:d-14",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/owner-decision-queue",
-      "to": "decision:d-02",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/owner-decision-queue",
-      "to": "decision:d-07",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/owner-decision-queue",
-      "to": "decision:d-01",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/owner-decision-queue",
-      "to": "decision:d-10",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/owner-decision-queue",
-      "to": "decision:d-0",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/owner-decision-queue",
-      "to": "decision:d-20",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/owner-decision-queue",
-      "to": "decision:d-16",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/owner-decision-queue",
-      "to": "decision:d-22",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/owner-decision-queue",
-      "to": "decision:d-13b",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/owner-decision-queue",
-      "to": "decision:d-13a",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/owner-decision-queue",
-      "to": "decision:d-17",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/owner-decision-queue",
-      "to": "decision:d-71",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/owner-decision-queue",
-      "to": "decision:d-18",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/owner-decision-queue",
-      "to": "decision:d-15",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/owner-decision-queue",
-      "to": "decision:d-1",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/owner-decision-queue",
-      "to": "decision:d-12",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/owner-decision-queue",
-      "to": "decision:d-13",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/owner-decision-queue",
-      "to": "decision:d-26",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/owner-decision-queue",
-      "to": "decision:d-19",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/owner-decision-queue",
-      "to": "decision:d-72",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/owner-decision-queue",
-      "to": "decision:d-32",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/propagation-batch1-2026-08-02",
-      "to": "decision:d-76",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/propagation-batch1-2026-08-02",
-      "to": "decision:d-13",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/propagation-batch1-2026-08-02",
-      "to": "decision:d-19",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/propagation-batch6-2026-08-02",
-      "to": "decision:d-81",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/propagation-batch6-2026-08-02",
-      "to": "decision:d-06",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/propagation-batch6-2026-08-02",
-      "to": "decision:d-08",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/propagation-batch7-2026-08-02",
-      "to": "decision:d-82",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/propagation-batch7-2026-08-02",
-      "to": "decision:d-14",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/propagation-batch8-2026-08-02",
-      "to": "decision:d-83",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/propagation-batch8-2026-08-02",
-      "to": "decision:d-04",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/propagation-batch8-2026-08-02",
-      "to": "decision:d-06",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/propagation-batch9-2026-08-02",
-      "to": "decision:d-84",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/propagation-dq-r2-01-2026-07-29",
-      "to": "decision:d-75",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/propagation-dq-r2-01-2026-07-29",
-      "to": "decision:d-06",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/propagation-dq-r2-01-2026-07-29",
-      "to": "decision:d-02",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/propagation-dq-r2-01-2026-07-29",
-      "to": "decision:d-05",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/propagation-dq-r2-01-2026-07-29",
-      "to": "decision:d-11",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/propagation-dq-r2-01-2026-07-29",
-      "to": "decision:d-19",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/propagation-dq-r2-01-2026-07-29",
-      "to": "decision:d-03",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/propagation-dq-r2-01-2026-07-29",
-      "to": "decision:d-69",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/propagation-dq-r2-01-2026-07-29",
-      "to": "decision:d-17",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/propagation-dq-r2-01-2026-07-29",
-      "to": "decision:d-67",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/propagation-dq-r2-01-2026-07-29",
-      "to": "decision:d-01",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/propagation-dq-r2-01-2026-07-29",
-      "to": "decision:d-04",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/propagation-scan-batch1-2026-08-02",
-      "to": "decision:d-01",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/propagation-scan-batch1-2026-08-02",
-      "to": "decision:d-03",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/remediation-state",
-      "to": "decision:d-05",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/remediation-state",
-      "to": "decision:d-16",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/remediation-state",
-      "to": "decision:d-09",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/remediation-state",
-      "to": "decision:d-06",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/remediation-state",
-      "to": "decision:d-11",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/remediation-state",
-      "to": "decision:d-02",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/remediation-state",
-      "to": "decision:d-03",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/remediation-state",
-      "to": "decision:d-01",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/remediation-state",
-      "to": "decision:d-08",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/remediation-state",
-      "to": "decision:d-04",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/remediation-state",
-      "to": "decision:d-07",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/remediation-state",
-      "to": "decision:d-18",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/remediation-state",
-      "to": "decision:d-13",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/remediation-state",
-      "to": "decision:d-14",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/remediation-state",
-      "to": "decision:d-10",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/remediation-state",
-      "to": "decision:d-15",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/run2-blocking-decision-queue",
-      "to": "decision:d-75",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/run2-blocking-decision-queue",
-      "to": "decision:d-01",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/run2-blocking-decision-queue",
-      "to": "decision:d-02",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/run3/MECHANICAL-REMEDIATION-QUEUE",
-      "to": "decision:d-10",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/run3/MECHANICAL-REMEDIATION-QUEUE",
-      "to": "decision:d-12",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/run3-owner-decision-queue",
-      "to": "decision:d-05",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/run3-owner-decision-queue",
-      "to": "decision:d-06",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/run3-owner-decision-queue",
-      "to": "decision:d-12",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/run3-owner-decision-queue",
-      "to": "decision:d-10",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/run3-owner-decision-queue",
-      "to": "decision:d-09",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/run3-owner-decision-queue",
-      "to": "decision:d-13",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/run3-owner-decision-queue",
-      "to": "decision:d-15",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/run3-owner-decision-queue",
-      "to": "decision:d-01",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/run3-owner-decision-queue",
-      "to": "decision:d-07",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/run3-owner-decision-queue",
-      "to": "decision:d-11",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/run3-owner-decision-queue",
-      "to": "decision:d-08",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/run3-owner-decision-queue",
-      "to": "decision:d-03",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/run3-owner-decision-queue",
-      "to": "decision:d-04",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/run3-owner-decision-queue",
-      "to": "decision:d-nn",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/run3-owner-decision-queue",
-      "to": "decision:d-02",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/run3-owner-decision-queue",
-      "to": "decision:d-numbered",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/run3-owner-decision-queue",
-      "to": "decision:d-row",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/run6/remediation-log",
-      "to": "decision:d-06",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/run6/remediation-log",
-      "to": "decision:d-05",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/run6/remediation-log",
-      "to": "decision:d-07",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/run6/remediation-log",
-      "to": "decision:d-02",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/run6/remediation-log",
-      "to": "decision:d-15",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/run6/remediation-log",
-      "to": "decision:d-18",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/run6/remediation-log",
-      "to": "decision:d-10",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/run6/remediation-log",
-      "to": "decision:d-16",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/run6/remediation-log",
-      "to": "decision:d-12",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/run6/remediation-log",
-      "to": "decision:d-04",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/run6/remediation-log",
-      "to": "decision:d-13",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/run6/remediation-log",
-      "to": "decision:d-03",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/run6/remediation-log",
-      "to": "decision:d-09",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/run6/remediation-log",
-      "to": "decision:d-08",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/run7-owner-decision-packet",
-      "to": "decision:d-13",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/run7-owner-decision-packet",
-      "to": "decision:d-76",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/run7-owner-decision-packet",
-      "to": "decision:d-09",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/run7-owner-decision-packet",
-      "to": "decision:d-07",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/run7-owner-decision-packet",
-      "to": "decision:d-06",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/run7-owner-decision-packet",
-      "to": "decision:d-12",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/run7-owner-decision-packet",
-      "to": "decision:d-08",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/run7-owner-decision-packet",
-      "to": "decision:d-05",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/run7-owner-decision-packet",
-      "to": "decision:d-04",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/run7-owner-decision-packet",
-      "to": "decision:d-16",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/run7-owner-decision-packet",
-      "to": "decision:d-23",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/run7-owner-decision-packet",
-      "to": "decision:d-19",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/run7-owner-decision-packet",
-      "to": "decision:d-15",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/run7-owner-decision-packet",
-      "to": "decision:d-24",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/run8-fresh-ideation-audit-2026-08-02",
-      "to": "decision:d-81",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/run8-fresh-ideation-audit-2026-08-02",
-      "to": "decision:d-82",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/run8-fresh-ideation-audit-2026-08-02",
-      "to": "decision:d-83",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/run8-fresh-ideation-audit-2026-08-02",
-      "to": "decision:d-84",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/tracked-phase2-warnings",
-      "to": "decision:d-03",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/tracked-phase2-warnings",
-      "to": "decision:d-12",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/tracked-phase2-warnings",
-      "to": "decision:d-05",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/tracked-phase2-warnings",
-      "to": "decision:d-06",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/tracked-phase2-warnings",
-      "to": "decision:d-11",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/tracked-phase2-warnings",
-      "to": "decision:d-15",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/tracked-phase2-warnings",
-      "to": "decision:d-07",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/tracked-phase2-warnings",
-      "to": "decision:d-16",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/tracked-phase2-warnings",
-      "to": "decision:d-02",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/tracked-phase2-warnings",
-      "to": "decision:d-04",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/tracked-phase2-warnings",
-      "to": "decision:d-14",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/tracked-phase2-warnings",
-      "to": "decision:d-09",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/tracked-phase2-warnings",
-      "to": "decision:d-01",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "audit:audits/tracked-phase2-warnings",
-      "to": "decision:d-nn",
-      "type": "constrained_by",
-      "source": "decision-ref"
     },
     {
       "from": "plan:evolutions/2026-08-02-content-management-platform",
@@ -12848,6 +10230,12 @@
       "to": "ia-spec:ia/06-trust-safety",
       "type": "references",
       "source": "wikilink"
+    },
+    {
+      "from": "ia-spec:ia/06-trust-safety",
+      "to": "decision:d-03",
+      "type": "constrained_by",
+      "source": "decision-ref"
     },
     {
       "from": "ia-spec:ia/06-trust-safety",
@@ -13781,6 +11169,18 @@
     },
     {
       "from": "ia-spec:ia/28-digital-licensing-commerce",
+      "to": "decision:d-04",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ia-spec:ia/28-digital-licensing-commerce",
+      "to": "decision:d-07",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ia-spec:ia/28-digital-licensing-commerce",
       "to": "decision:d-03",
       "type": "constrained_by",
       "source": "decision-ref"
@@ -13844,6 +11244,42 @@
       "to": "ia-spec:ia/35-ticket-products-sales",
       "type": "references",
       "source": "wikilink"
+    },
+    {
+      "from": "ia-spec:ia/30-booking-contracts",
+      "to": "decision:d-19",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ia-spec:ia/30-booking-contracts",
+      "to": "decision:d-04",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ia-spec:ia/30-booking-contracts",
+      "to": "decision:d-18",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ia-spec:ia/30-booking-contracts",
+      "to": "decision:d-16",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ia-spec:ia/30-booking-contracts",
+      "to": "decision:d-20",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ia-spec:ia/30-booking-contracts",
+      "to": "decision:d-10",
+      "type": "constrained_by",
+      "source": "decision-ref"
     },
     {
       "from": "ia-spec:ia/30-booking-contracts",
@@ -23441,6 +20877,12 @@
     },
     {
       "from": "ideation:ideation/04-opportunities-casting/04.03-submission-audition/04.03-submission-audition-index",
+      "to": "decision:d-05",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/04-opportunities-casting/04.03-submission-audition/04.03-submission-audition-index",
       "to": "decision:d-09",
       "type": "constrained_by",
       "source": "decision-ref"
@@ -23663,6 +21105,18 @@
     },
     {
       "from": "ideation:ideation/04-opportunities-casting/04.03-submission-audition/04.03.05-outbound-pitch-unsolicited",
+      "to": "decision:d-05",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/04-opportunities-casting/04.03-submission-audition/04.03.05-outbound-pitch-unsolicited",
+      "to": "decision:d-06",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/04-opportunities-casting/04.03-submission-audition/04.03.05-outbound-pitch-unsolicited",
       "to": "decision:d-07",
       "type": "constrained_by",
       "source": "decision-ref"
@@ -24005,6 +21459,18 @@
     },
     {
       "from": "ideation:ideation/04-opportunities-casting/04.05-outcome-response-handoff/04.05-outcome-response-handoff-index",
+      "to": "decision:d-06",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/04-opportunities-casting/04.05-outcome-response-handoff/04.05-outcome-response-handoff-index",
+      "to": "decision:d-14",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/04-opportunities-casting/04.05-outcome-response-handoff/04.05-outcome-response-handoff-index",
       "to": "decision:d-07",
       "type": "constrained_by",
       "source": "decision-ref"
@@ -24083,6 +21549,12 @@
     },
     {
       "from": "ideation:ideation/04-opportunities-casting/04.05-outcome-response-handoff/04.05.01-disposition-close-out-obligation",
+      "to": "decision:d-14",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/04-opportunities-casting/04.05-outcome-response-handoff/04.05.01-disposition-close-out-obligation",
       "to": "decision:d-16",
       "type": "constrained_by",
       "source": "decision-ref"
@@ -24126,6 +21598,18 @@
     {
       "from": "ideation:ideation/04-opportunities-casting/04.05-outcome-response-handoff/04.05.02-response-reputation-signals",
       "to": "decision:d-05",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/04-opportunities-casting/04.05-outcome-response-handoff/04.05.02-response-reputation-signals",
+      "to": "decision:d-06",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/04-opportunities-casting/04.05-outcome-response-handoff/04.05.02-response-reputation-signals",
+      "to": "decision:d-14",
       "type": "constrained_by",
       "source": "decision-ref"
     },
@@ -24886,6 +22370,12 @@
       "source": "decision-ref"
     },
     {
+      "from": "ideation:ideation/05-services-marketplace/05.01-service-listings-pricing/05.01.02-service-category-taxonomy-attributes",
+      "to": "decision:d-15",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
       "from": "ideation:ideation/05-services-marketplace/05.01-service-listings-pricing/05.01.03-music-pricing-model-library",
       "to": "decision:d-18",
       "type": "constrained_by",
@@ -25181,12 +22671,6 @@
     },
     {
       "from": "ideation:ideation/05-services-marketplace/05.02-quotes-scope-contracting/05.02.01-custom-quotes-proposals-scope",
-      "to": "decision:d-03",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "ideation:ideation/05-services-marketplace/05.02-quotes-scope-contracting/05.02.01-custom-quotes-proposals-scope",
       "to": "decision:d-06",
       "type": "constrained_by",
       "source": "decision-ref"
@@ -25218,6 +22702,12 @@
     {
       "from": "ideation:ideation/05-services-marketplace/05.02-quotes-scope-contracting/05.02.01-custom-quotes-proposals-scope",
       "to": "decision:d-14",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/05-services-marketplace/05.02-quotes-scope-contracting/05.02.01-custom-quotes-proposals-scope",
+      "to": "decision:d-03",
       "type": "constrained_by",
       "source": "decision-ref"
     },
@@ -25842,6 +23332,12 @@
     {
       "from": "ideation:ideation/05-services-marketplace/05.03-engagement-lifecycle/05.03.06-post-delivery-support-recall",
       "to": "decision:d-04",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/05-services-marketplace/05.03-engagement-lifecycle/05.03.06-post-delivery-support-recall",
+      "to": "decision:d-05",
       "type": "constrained_by",
       "source": "decision-ref"
     },
@@ -29651,6 +27147,12 @@
     },
     {
       "from": "ideation:ideation/07-music-projects-collaboration/07.04-audio-version-control-lineage/07.04.01-audio-version-control-lineage-timeline",
+      "to": "decision:d-14",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/07-music-projects-collaboration/07.04-audio-version-control-lineage/07.04.01-audio-version-control-lineage-timeline",
       "to": "decision:d-07",
       "type": "constrained_by",
       "source": "decision-ref"
@@ -29706,12 +27208,6 @@
     {
       "from": "ideation:ideation/07-music-projects-collaboration/07.04-audio-version-control-lineage/07.04.01-audio-version-control-lineage-timeline",
       "to": "decision:d-13",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "ideation:ideation/07-music-projects-collaboration/07.04-audio-version-control-lineage/07.04.01-audio-version-control-lineage-timeline",
-      "to": "decision:d-14",
       "type": "constrained_by",
       "source": "decision-ref"
     },
@@ -30918,6 +28414,18 @@
     {
       "from": "ideation:ideation/07-music-projects-collaboration/07.06-sessions-documentation-recall/07.06.04-track-sheet-channel-map-recall",
       "to": "decision:d-05",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/07-music-projects-collaboration/07.06-sessions-documentation-recall/07.06.04-track-sheet-channel-map-recall",
+      "to": "decision:d-07",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/07-music-projects-collaboration/07.06-sessions-documentation-recall/07.06.04-track-sheet-channel-map-recall",
+      "to": "decision:d-08",
       "type": "constrained_by",
       "source": "decision-ref"
     },
@@ -40355,19 +37863,25 @@
     },
     {
       "from": "ideation:ideation/12-release-distribution/12.01-release-builder/12.01.05-label-copy-distributor-of-record",
-      "to": "decision:d-18",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "ideation:ideation/12-release-distribution/12.01-release-builder/12.01.05-label-copy-distributor-of-record",
       "to": "decision:d-02",
       "type": "constrained_by",
       "source": "decision-ref"
     },
     {
       "from": "ideation:ideation/12-release-distribution/12.01-release-builder/12.01.05-label-copy-distributor-of-record",
+      "to": "decision:d-03",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/12-release-distribution/12.01-release-builder/12.01.05-label-copy-distributor-of-record",
       "to": "decision:d-10",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/12-release-distribution/12.01-release-builder/12.01.05-label-copy-distributor-of-record",
+      "to": "decision:d-18",
       "type": "constrained_by",
       "source": "decision-ref"
     },
@@ -40745,6 +38259,18 @@
     },
     {
       "from": "ideation:ideation/12-release-distribution/12.02-ddex-delivery-messaging/12.02.04-mead-enrichment-delivery",
+      "to": "decision:d-05",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/12-release-distribution/12.02-ddex-delivery-messaging/12.02.04-mead-enrichment-delivery",
+      "to": "decision:d-06",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/12-release-distribution/12.02-ddex-delivery-messaging/12.02.04-mead-enrichment-delivery",
       "to": "decision:d-nn",
       "type": "constrained_by",
       "source": "decision-ref"
@@ -40752,12 +38278,6 @@
     {
       "from": "ideation:ideation/12-release-distribution/12.02-ddex-delivery-messaging/12.02.04-mead-enrichment-delivery",
       "to": "decision:d-10",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "ideation:ideation/12-release-distribution/12.02-ddex-delivery-messaging/12.02.04-mead-enrichment-delivery",
-      "to": "decision:d-06",
       "type": "constrained_by",
       "source": "decision-ref"
     },
@@ -46733,6 +44253,12 @@
     },
     {
       "from": "ideation:ideation/14-digital-goods-marketplace/14.07-monetisation-models-pricing/14.07.04-bundles-promotional-sales",
+      "to": "decision:d-04",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/14-digital-goods-marketplace/14.07-monetisation-models-pricing/14.07.04-bundles-promotional-sales",
       "to": "decision:d-07",
       "type": "constrained_by",
       "source": "decision-ref"
@@ -52343,7 +49869,37 @@
     },
     {
       "from": "ideation:ideation/17-live-booking-settlement/17.01-availability-holds-confirmation/17.01.04-confirmation-announce-gate",
+      "to": "decision:d-19",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/17-live-booking-settlement/17.01-availability-holds-confirmation/17.01.04-confirmation-announce-gate",
+      "to": "decision:d-16",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/17-live-booking-settlement/17.01-availability-holds-confirmation/17.01.04-confirmation-announce-gate",
+      "to": "decision:d-18",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/17-live-booking-settlement/17.01-availability-holds-confirmation/17.01.04-confirmation-announce-gate",
+      "to": "decision:d-20",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/17-live-booking-settlement/17.01-availability-holds-confirmation/17.01.04-confirmation-announce-gate",
       "to": "decision:d-03",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/17-live-booking-settlement/17.01-availability-holds-confirmation/17.01.04-confirmation-announce-gate",
+      "to": "decision:d-10",
       "type": "constrained_by",
       "source": "decision-ref"
     },
@@ -52397,19 +49953,7 @@
     },
     {
       "from": "ideation:ideation/17-live-booking-settlement/17.01-availability-holds-confirmation/17.01.04-confirmation-announce-gate",
-      "to": "decision:d-10",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "ideation:ideation/17-live-booking-settlement/17.01-availability-holds-confirmation/17.01.04-confirmation-announce-gate",
       "to": "decision:d-14",
-      "type": "constrained_by",
-      "source": "decision-ref"
-    },
-    {
-      "from": "ideation:ideation/17-live-booking-settlement/17.01-availability-holds-confirmation/17.01.04-confirmation-announce-gate",
-      "to": "decision:d-16",
       "type": "constrained_by",
       "source": "decision-ref"
     },
@@ -52698,6 +50242,18 @@
     {
       "from": "ideation:ideation/17-live-booking-settlement/17.02-offers-negotiation/17.02.03-offer-approval-chain",
       "to": "decision:d-06",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/17-live-booking-settlement/17.02-offers-negotiation/17.02.03-offer-approval-chain",
+      "to": "decision:d-09",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/17-live-booking-settlement/17.02-offers-negotiation/17.02.03-offer-approval-chain",
+      "to": "decision:d-18",
       "type": "constrained_by",
       "source": "decision-ref"
     },
@@ -52991,6 +50547,12 @@
     },
     {
       "from": "ideation:ideation/17-live-booking-settlement/17.05-deposits-balances-cancellation/17.05.01-deposit-invoice-collection",
+      "to": "decision:d-19",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/17-live-booking-settlement/17.05-deposits-balances-cancellation/17.05.01-deposit-invoice-collection",
       "to": "decision:d-01",
       "type": "constrained_by",
       "source": "decision-ref"
@@ -52998,6 +50560,12 @@
     {
       "from": "ideation:ideation/17-live-booking-settlement/17.05-deposits-balances-cancellation/17.05.01-deposit-invoice-collection",
       "to": "decision:d-03",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/17-live-booking-settlement/17.05-deposits-balances-cancellation/17.05.01-deposit-invoice-collection",
+      "to": "decision:d-04",
       "type": "constrained_by",
       "source": "decision-ref"
     },
@@ -57527,6 +55095,12 @@
     },
     {
       "from": "ideation:ideation/19-ticketing-box-office/19.02-on-sale-announce-presale/19.02.01-announce-on-sale-scheduling",
+      "to": "decision:d-10",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/19-ticketing-box-office/19.02-on-sale-announce-presale/19.02.01-announce-on-sale-scheduling",
       "to": "decision:d-04",
       "type": "constrained_by",
       "source": "decision-ref"
@@ -57576,6 +55150,12 @@
     {
       "from": "ideation:ideation/19-ticketing-box-office/19.02-on-sale-announce-presale/19.02.01-announce-on-sale-scheduling",
       "to": "decision:d-09",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/19-ticketing-box-office/19.02-on-sale-announce-presale/19.02.01-announce-on-sale-scheduling",
+      "to": "decision:d-20",
       "type": "constrained_by",
       "source": "decision-ref"
     },
@@ -65416,6 +62996,12 @@
       "source": "decision-ref"
     },
     {
+      "from": "ideation:ideation/24-trust-safety-disputes/24.01-reporting-moderation/24.01.04-trusted-flagger-priority-channel",
+      "to": "decision:d-03",
+      "type": "constrained_by",
+      "source": "decision-ref"
+    },
+    {
       "from": "ideation:ideation/24-trust-safety-disputes/24.01-reporting-moderation/24.01.05-messaging-safety-scam-filtering",
       "to": "decision:d-02",
       "type": "constrained_by",
@@ -69722,14 +67308,14 @@
     "byNodeType": {
       "plan": 12,
       "architecture": 17,
-      "audit": 77,
+      "audit": 3,
       "ia-spec": 85,
       "ideation": 1186,
-      "decision": 103
+      "decision": 97
     },
     "byEdgeType": {
-      "constrained_by": 9327,
-      "references": 562,
+      "constrained_by": 9041,
+      "references": 539,
       "split_from": 3
     }
   }

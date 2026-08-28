@@ -35,7 +35,7 @@ This deep dive owns credit identity/versioning, viewer-safe graph projection, se
 
 ## State Machines
 
-- Credit: `asserted -> acknowledged | contested -> superseded | withdrawn`. Contest is orthogonal participant state and never public suppression.
+- Credit: `asserted -> contested | superseded | withdrawn`. `acknowledged` is intentionally absent because no independent interaction produces it; provenance strengthening occurs through the attestation state machine below, never through self-assertion. Contest is orthogonal participant state and never public suppression.
 - Visibility: `confidential | embargoed -> lift_pending -> public`; `lift_pending -> embargoed` on timely objection; public may revert only within seven days when triggering release retracts.
 - Roll: `provisional -> present -> departed -> closed`; conflict flag resolves without deleting prior versions.
 - Claim: `suggested -> pending -> attached -> contested -> resolved | unresolvable`; unresolvable returns credit to original shell.

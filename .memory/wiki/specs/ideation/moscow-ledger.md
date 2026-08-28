@@ -28,7 +28,7 @@
 ---
 
 
-## MUST (230)
+## MUST (231)
 
 | # | Feature | Path | Rationale |
 |---|---------|------|-----------|
@@ -125,6 +125,7 @@
 | 12.02.01 | ERN Message Generation | [12.02.01](./12-release-distribution/12.02-ddex-delivery-messaging/12.02.01-ern-message-generation.md) | No delivery without it. The no-defaults rule is where the thesis meets the machinery: a defaulted ERN field is a fabricated fact delivered under the artist's name — a machine-generated version of the reconstruction failu… |
 | 12.02.02 | Per-Partner Profile Conformance | [12.02.02](./12-release-distribution/12.02-ddex-delivery-messaging/12.02.02-per-partner-profile-conformance.md) | No real partner accepts a spec-pure ERN. Sizing is dominated by Q-03 (direct vs aggregator). Note DT-02: accumulated partner knowledge is the incumbents' actual moat and WeJammin's real cold-start gap — provenance differ… |
 | 12.02.03 | Delivery Choreography & Acknowledgement | [12.02.03](./12-release-distribution/12.02-ddex-delivery-messaging/12.02.03-delivery-choreography-acknowledgement.md) | Nothing reaches a partner without it. The `overdue` state is the domain's highest-leverage cheap win: naming the silence costs a timeout and a copy string, and converts the worst distribution experience into the product'… |
+| 12.02.04 | MEAD Enrichment Delivery | [12.02.04](./12-release-distribution/12.02-ddex-delivery-messaging/12.02.04-mead-enrichment-delivery.md) | Owner decision 2026-08-27: launch-included but independently sequenced and partner-gated. Capability defaults unsupported and requires versioned adapter/profile certification; unsupported partners are skipped silently, so MEAD cannot block or widen ERN delivery failure. |
 | 12.03.01 | Store Selection & Territory Scoping | [12.03.01](./12-release-distribution/12.03-dsp-store-territory-management/12.03.01-store-selection-territory-scoping.md) | Delivery needs a destination. The territory half is a Deep Think addition with legal weight: a self-declared 'worldwide' over someone else's exclusive is a breach, and WeJammin is the only platform that CAN derive it (D-… |
 | 12.03.02 | Per-Store Delivery Status | [12.03.02](./12-release-distribution/12.03-dsp-store-territory-management/12.03.02-per-store-delivery-status.md) | The domain's destination screen — the one artists open in release week and judge the product by. D-02 (per-store status is first-class, never a flag) is the domain's founding observation made concrete. |
 | 12.04.01 | Release Date & DSP Lead Time | [12.04.01](./12-release-distribution/12.04-release-scheduling-windows/12.04.01-release-date-lead-time.md) | A release needs a date and lead times are partner rules, not advice. DT-03: missing a lead time is SILENT — the release comes out with none of the benefits and the artist concludes it flopped. That is the domain's foundi… |
@@ -562,7 +563,7 @@
 | 25.10.01 | Import Mapping, Validation & Dry Run | [25.10.01](./25-content-management-platform-configuration/25.10-portability-governance-quality/25.10.01-import-mapping-validation-dry-run.md) | Import content/media with explicit mapping, provenance, duplicate strategy, quarantine, and dry runs. |
 | 25.10.02 | Export, Backup, Restore & Portability | [25.10.02](./25-content-management-platform-configuration/25.10-portability-governance-quality/25.10.02-export-backup-restore-portability.md) | Export content/schemas/navigation/settings/media manifests and verify isolated restore. |
 
-## COULD (201)
+## COULD (200)
 
 | # | Feature | Path | Rationale |
 |---|---------|------|-----------|
@@ -642,7 +643,6 @@
 | 11.05.04 | Interpolation & Replay Clearance | [11.05.04](./11-music-licensing/11.05-sample-derivative-clearance/11.05.04-interpolation-replay-clearance.md) | Distinct legal object worth modelling (folding it into sampling would route requests to a party with no standing). Could rather than should because volume is low — but DT-03's replay-strategy recommendation ('you can't c… |
 | 11.05.05 | Remix, Stem & Bootleg Licensing | [11.05.05](./11-music-licensing/11.05-sample-derivative-clearance/11.05.05-remix-stem-bootleg-licensing.md) | The bootleg path is genuinely under-served — no incumbent routes 'popular unauthorised remix' to 'released, paid, legitimate' — and the registry helps most where the remixer doesn't know who to ask. But it is a niche flo… |
 | 11.09 | Cover Songs & Compulsory Mechanical Licensing | [11.09](./11-music-licensing/11.09-cover-song-compulsory-mechanical.md) | DT-03: works on day one with an EMPTY registry (the compulsory regime means the licence doesn't depend on the counterparty being present) — rare in this domain, and it is a frequent low-stakes need for the core persona w… |
-| 12.02.04 | MEAD Enrichment Delivery | [12.02.04](./12-release-distribution/12.02-ddex-delivery-messaging/12.02.04-mead-enrichment-delivery.md) | Optional, partner-dependent, and its real value is unverified (Q-01). Kept because it is structurally cheap HERE — the facts are byproducts of the session record (07/02) — the same being-in-the-room asymmetry as the spli… |
 | 12.04.03 | Pre-Save & Pre-Add Links | [12.04.03](./12-release-distribution/12.04-release-scheduling-windows/12.04.03-pre-save-pre-add-links.md) | Not required to release. Carries real cost: OAuth custody, consent burden, minor-safeguarding exposure (D-13c), and DT-03 says pre-saves fail silently in ways we may not be able to detect (Q-02) — meaning every count we…  |
 | 12.04.04 | Rollout Plan & Deadline Timeline | [12.04.04](./12-release-distribution/12.04-release-scheduling-windows/12.04.04-rollout-plan-deadline-timeline.md) | Merged from sweep candidate 08. The derivation is a genuine consolidation payoff (only a platform holding delivery reality and the calendar at once can compute it), but the release ships without it. Blocked on Q-01 (12 c… |
 | 12.06.01 | Fingerprint Registration | [12.06.01](./12-release-distribution/12.06-content-id-ugc-claiming/12.06.01-fingerprint-registration.md) | Distinct partner surface; YouTube Content ID access may not even be available to us (Q-01) — a commercial question that decides whether the feature exists. Counterweight: Content ID revenue is a real income line for exac… |
