@@ -1,0 +1,51 @@
+{
+  "name": "wejammin",
+  "version": "0.0.0",
+  "private": true,
+  "engines": {
+    "node": "22.23.1"
+  },
+  "scripts": {
+    "dev": "pnpm --parallel --filter @wejammin/web --filter @wejammin/worker dev",
+    "dev:web": "pnpm --filter @wejammin/web dev",
+    "dev:worker": "pnpm --filter @wejammin/worker dev",
+    "dev:docs": "pnpm --filter @wejammin/docs dev",
+    "build": "pnpm -r --if-present build",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "test:e2e": "playwright test",
+    "lint": "eslint apps packages tests --max-warnings=0",
+    "lint:fix": "pnpm lint --fix",
+    "format": "prettier --write package.json pnpm-workspace.yaml tsconfig.base.json eslint.config.js vitest.config.ts playwright.config.ts 'apps/**/*.{astro,ts,tsx,js,mjs,json,jsonc,css,md}' 'packages/**/*.{ts,tsx,json,css,md}' 'tests/**/*.{ts,tsx,json,md}' 'infra/**/*.{ts,js,mjs,json,yaml,yml,md}'",
+    "format:check": "prettier --check package.json pnpm-workspace.yaml tsconfig.base.json eslint.config.js vitest.config.ts playwright.config.ts 'apps/**/*.{astro,ts,tsx,js,mjs,json,jsonc,css,md}' 'packages/**/*.{ts,tsx,json,css,md}' 'tests/**/*.{ts,tsx,json,md}' 'infra/**/*.{ts,js,mjs,json,yaml,yml,md}'",
+    "type-check": "pnpm -r --if-present type-check",
+    "validate": "pnpm format:check && pnpm lint && pnpm type-check && pnpm test:coverage && pnpm test:e2e && pnpm build"
+  },
+  "devEngines": {
+    "packageManager": {
+      "name": "pnpm",
+      "version": "11.24.0",
+      "onFail": "download"
+    }
+  },
+  "packageManager": "pnpm@11.24.0",
+  "type": "module",
+  "devDependencies": {
+    "@axe-core/playwright": "4.13.0",
+    "@emnapi/core": "1.11.3",
+    "@emnapi/runtime": "1.11.3",
+    "@eslint/js": "10.0.1",
+    "@playwright/test": "1.62.1",
+    "@vitest/coverage-v8": "4.1.11",
+    "eslint": "10.9.1",
+    "eslint-plugin-astro": "3.1.0",
+    "eslint-plugin-react-hooks": "7.1.1",
+    "globals": "17.11.0",
+    "prettier": "3.9.6",
+    "prettier-plugin-astro": "0.14.1",
+    "typescript": "5.9.3",
+    "typescript-eslint": "8.68.0",
+    "vitest": "4.1.11"
+  }
+}

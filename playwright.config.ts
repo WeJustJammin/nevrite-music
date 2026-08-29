@@ -1,0 +1,33 @@
+import { defineConfig, devices } from '@playwright/test';
+
+export default defineConfig({
+  forbidOnly: Boolean(process.env.CI),
+  fullyParallel: true,
+  projects: [
+    {
+      name: 'chromium',
+      use: devices['Desktop Chrome'],
+    },
+  ],
+  reporter: process.env.CI ? 'github' : 'list',
+  retries: process.env.CI ? 2 : 0,
+  testDir: './tests/e2e',
+  use: {
+    baseURL: 'http://127.0.0.1:4321',
+    trace: 'retain-on-failure',
+  },
+  webServer: [
+    {
+      command: 'pnpm --filter @wejammin/web dev --host 127.0.0.1 --port 4321',
+      reuseExistingServer: false,
+      timeout: 120_000,
+      url: 'http://127.0.0.1:4321',
+    },
+    {
+      command: 'pnpm --filter @wejammin/docs dev --host 127.0.0.1 --port 4322',
+      reuseExistingServer: false,
+      timeout: 120_000,
+      url: 'http://127.0.0.1:4322',
+    },
+  ],
+});

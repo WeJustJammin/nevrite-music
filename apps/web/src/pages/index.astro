@@ -1,0 +1,50 @@
+---
+import '@wejammin/ui/styles.css';
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <meta
+      name="description"
+      content="WeJammin local operational foundation readiness shell."
+    />
+    <title>WeJammin | Operational foundation</title>
+  </head>
+  <body>
+    <main class="shell">
+      <p class="eyebrow">Phase 1 · Operational foundation</p>
+      <h1>WeJammin operational foundation</h1>
+      <p class="lede">
+        Workspace status: ready for local development. Feature behavior remains
+        locked behind contract-first implementation slices.
+      </p>
+      <dl class="status-list" aria-label="Scaffold boundaries">
+        <div class="status-row">
+          <dt>Server-first web</dt>
+          <dd>
+            Astro renders useful semantic HTML before any optional React island
+            hydrates.
+          </dd>
+        </div>
+        <div class="status-row">
+          <dt>Versioned API</dt>
+          <dd>
+            Hono owns the Cloudflare Worker transport under the versioned API
+            boundary.
+          </dd>
+        </div>
+        <div class="status-row">
+          <dt>Shared contracts</dt>
+          <dd>
+            Zod schemas remain the runtime authority for web, Worker, tests, and
+            generators.
+          </dd>
+        </div>
+      </dl>
+    </main>
+  </body>
+</html>
