@@ -1,0 +1,120 @@
+name: CI
+
+on:
+  push:
+    paths:
+      - '.github/actions/**'
+      - '.github/workflows/ci.yml'
+      - '.node-version'
+      - '.npmrc'
+      - 'apps/**'
+      - 'eslint.config.js'
+      - 'infra/**'
+      - 'package.json'
+      - 'packages/**'
+      - 'playwright.config.ts'
+      - 'pnpm-lock.yaml'
+      - 'pnpm-workspace.yaml'
+      - 'supabase/**'
+      - 'tests/**'
+      - 'tsconfig.base.json'
+      - 'vitest.config.ts'
+  pull_request:
+    branches:
+      - main
+    types: [opened, synchronize, reopened, ready_for_review]
+    paths:
+      - '.github/actions/**'
+      - '.github/workflows/ci.yml'
+      - '.node-version'
+      - '.npmrc'
+      - 'apps/**'
+      - 'eslint.config.js'
+      - 'infra/**'
+      - 'package.json'
+      - 'packages/**'
+      - 'playwright.config.ts'
+      - 'pnpm-lock.yaml'
+      - 'pnpm-workspace.yaml'
+      - 'supabase/**'
+      - 'tests/**'
+      - 'tsconfig.base.json'
+      - 'vitest.config.ts'
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  quality:
+    name: Format, lint, type, and test
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: [self-hosted, wejammin]
+    timeout-minutes: 30
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+
+      - name: Set up workspace
+        uses: ./.github/actions/setup
+
+      - name: Check formatting
+        run: pnpm format:check
+
+      - name: Lint
+        run: pnpm lint
+
+      - name: Type-check
+        run: pnpm type-check
+
+      - name: Run unit and contract coverage gate
+        run: pnpm test:coverage
+
+      - name: Install pinned Chromium runtime
+        run: pnpm exec playwright install chromium
+
+      - name: Run browser and accessibility gates
+        run: pnpm test:e2e
+
+      - name: Upload test evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: test-evidence-${{ github.run_attempt }}
+          path: |
+            coverage/
+            playwright-report/
+            test-results/
+          if-no-files-found: warn
+          retention-days: 14
+
+  build:
+    name: Build immutable workspace artifacts
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
+    needs: quality
+    runs-on: [self-hosted, wejammin]
+    timeout-minutes: 20
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+
+      - name: Set up workspace
+        uses: ./.github/actions/setup
+
+      - name: Build all workspace surfaces
+        run: pnpm build
+
+      - name: Upload immutable build artifacts
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: workspace-build-${{ github.sha }}
+          path: |
+            apps/docs/dist/
+            apps/web/dist/
+            apps/worker/dist/
+          if-no-files-found: error
+          retention-days: 7

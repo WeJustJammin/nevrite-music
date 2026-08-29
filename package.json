@@ -17,8 +17,8 @@
     "test:e2e": "playwright test",
     "lint": "eslint apps packages tests --max-warnings=0",
     "lint:fix": "pnpm lint --fix",
-    "format": "prettier --write package.json pnpm-workspace.yaml tsconfig.base.json eslint.config.js vitest.config.ts playwright.config.ts 'apps/**/*.{astro,ts,tsx,js,mjs,json,jsonc,css,md}' 'packages/**/*.{ts,tsx,json,css,md}' 'tests/**/*.{ts,tsx,json,md}' 'infra/**/*.{ts,js,mjs,json,yaml,yml,md}'",
-    "format:check": "prettier --check package.json pnpm-workspace.yaml tsconfig.base.json eslint.config.js vitest.config.ts playwright.config.ts 'apps/**/*.{astro,ts,tsx,js,mjs,json,jsonc,css,md}' 'packages/**/*.{ts,tsx,json,css,md}' 'tests/**/*.{ts,tsx,json,md}' 'infra/**/*.{ts,js,mjs,json,yaml,yml,md}'",
+    "format": "prettier --write package.json pnpm-workspace.yaml tsconfig.base.json eslint.config.js vitest.config.ts playwright.config.ts '.github/**/*.{yml,yaml,md}' 'apps/**/*.{astro,ts,tsx,js,mjs,json,jsonc,css,md}' 'packages/**/*.{ts,tsx,json,css,md}' 'tests/**/*.{ts,tsx,json,md}' 'infra/**/*.{ts,js,mjs,json,yaml,yml,md}'",
+    "format:check": "prettier --check package.json pnpm-workspace.yaml tsconfig.base.json eslint.config.js vitest.config.ts playwright.config.ts '.github/**/*.{yml,yaml,md}' 'apps/**/*.{astro,ts,tsx,js,mjs,json,jsonc,css,md}' 'packages/**/*.{ts,tsx,json,css,md}' 'tests/**/*.{ts,tsx,json,md}' 'infra/**/*.{ts,js,mjs,json,yaml,yml,md}'",
     "type-check": "pnpm -r --if-present type-check",
     "validate": "pnpm format:check && pnpm lint && pnpm type-check && pnpm test:coverage && pnpm test:e2e && pnpm build"
   },
