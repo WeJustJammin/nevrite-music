@@ -1,7 +1,7 @@
 {
-  "builtAt": "2026-08-28T07:08:05.216Z",
-  "nodeCount": 1400,
-  "edgeCount": 9583,
+  "builtAt": "2026-08-29T05:47:56.841Z",
+  "nodeCount": 1558,
+  "edgeCount": 9800,
   "nodes": [
     {
       "id": "plan:2026-08-02-architecture-design",
@@ -144,6 +144,13 @@
       "shardId": null
     },
     {
+      "id": "audit:audits/2026-08-28-be-ambiguity-report",
+      "type": "audit",
+      "label": "BE Ambiguity Audit — Fresh Run (2026-08-28)",
+      "path": ".memory/wiki/specs/audits/2026-08-28-be-ambiguity-report.md",
+      "shardId": "2026"
+    },
+    {
       "id": "audit:audits/2026-08-28-ia-ambiguity-report",
       "type": "audit",
       "label": "IA Ambiguity Audit — Fresh Run (2026-08-28)",
@@ -160,8 +167,1107 @@
     {
       "id": "audit:audits/audit-scope",
       "type": "audit",
-      "label": "Ambiguity Audit Scope — IA",
+      "label": "Ambiguity Audit Scope — BE",
       "path": ".memory/wiki/specs/audits/audit-scope.md",
+      "shardId": null
+    },
+    {
+      "id": "be-spec:be/00-infrastructure",
+      "type": "be-spec",
+      "label": "Cross-cutting Platform Foundation — Backend Specification",
+      "path": ".memory/wiki/specs/be/00-infrastructure.md",
+      "shardId": "00"
+    },
+    {
+      "id": "be-spec:be/01a-auth-account-linking",
+      "type": "be-spec",
+      "label": "Authentication & Account Linking — Backend Specification",
+      "path": ".memory/wiki/specs/be/01a-auth-account-linking.md",
+      "shardId": "01a"
+    },
+    {
+      "id": "be-spec:be/01b-party-identity-aliases",
+      "type": "be-spec",
+      "label": "Shard 01b — Party Identity & Aliases — Backend Specification",
+      "path": ".memory/wiki/specs/be/01b-party-identity-aliases.md",
+      "shardId": "01b"
+    },
+    {
+      "id": "be-spec:be/01c-relationships-authority-governance",
+      "type": "be-spec",
+      "label": "Relationships, Authority & Governance — Backend Specification",
+      "path": ".memory/wiki/specs/be/01c-relationships-authority-governance.md",
+      "shardId": "01c"
+    },
+    {
+      "id": "be-spec:be/01d-identifiers-legacy",
+      "type": "be-spec",
+      "label": "Identifiers & Legacy — Backend Specification",
+      "path": ".memory/wiki/specs/be/01d-identifiers-legacy.md",
+      "shardId": "01d"
+    },
+    {
+      "id": "be-spec:be/02a-shadow-claim-ownership",
+      "type": "be-spec",
+      "label": "Shadow Claims & Ownership — Backend Specification",
+      "path": ".memory/wiki/specs/be/02a-shadow-claim-ownership.md",
+      "shardId": "02a"
+    },
+    {
+      "id": "be-spec:be/02b-profile-portfolio-epk",
+      "type": "be-spec",
+      "label": "Profile, Portfolio & EPK — Backend Specification",
+      "path": ".memory/wiki/specs/be/02b-profile-portfolio-epk.md",
+      "shardId": "02b"
+    },
+    {
+      "id": "be-spec:be/02c-credentials-trader",
+      "type": "be-spec",
+      "label": "Credentials & Trader Classification — Backend Specification",
+      "path": ".memory/wiki/specs/be/02c-credentials-trader.md",
+      "shardId": "02c"
+    },
+    {
+      "id": "be-spec:be/03a-content-schema-registry",
+      "type": "be-spec",
+      "label": "Content Schema Registry — Backend Specification",
+      "path": ".memory/wiki/specs/be/03a-content-schema-registry.md",
+      "shardId": "03a"
+    },
+    {
+      "id": "be-spec:be/03b-editorial-workflow-publication",
+      "type": "be-spec",
+      "label": "Editorial Workflow and Publication — Backend Specification",
+      "path": ".memory/wiki/specs/be/03b-editorial-workflow-publication.md",
+      "shardId": "03b"
+    },
+    {
+      "id": "be-spec:be/03c-composition-taxonomy-localization",
+      "type": "be-spec",
+      "label": "Composition, Taxonomy, and Localization — Backend Specification",
+      "path": ".memory/wiki/specs/be/03c-composition-taxonomy-localization.md",
+      "shardId": "03c"
+    },
+    {
+      "id": "be-spec:be/04a-navigation-routes-discovery",
+      "type": "be-spec",
+      "label": "CMS Navigation, Routes & Discovery — Backend Specification",
+      "path": ".memory/wiki/specs/be/04a-navigation-routes-discovery.md",
+      "shardId": "04a"
+    },
+    {
+      "id": "be-spec:be/04b-governed-media-renditions",
+      "type": "be-spec",
+      "label": "Governed Media and Renditions — Backend Specification",
+      "path": ".memory/wiki/specs/be/04b-governed-media-renditions.md",
+      "shardId": "04b"
+    },
+    {
+      "id": "be-spec:be/04c-public-delivery-cache",
+      "type": "be-spec",
+      "label": "Public Delivery & Cache — Backend Specification",
+      "path": ".memory/wiki/specs/be/04c-public-delivery-cache.md",
+      "shardId": "04c"
+    },
+    {
+      "id": "be-spec:be/05a-settings-flags-runtime",
+      "type": "be-spec",
+      "label": "BE 05a — Settings, flags and runtime governance",
+      "path": ".memory/wiki/specs/be/05a-settings-flags-runtime.md",
+      "shardId": "05a"
+    },
+    {
+      "id": "be-spec:be/05b-admin-workspace-operations",
+      "type": "be-spec",
+      "label": "BE 05b — Admin workspace and operations",
+      "path": ".memory/wiki/specs/be/05b-admin-workspace-operations.md",
+      "shardId": "05b"
+    },
+    {
+      "id": "be-spec:be/05c-portability-quality-lifecycle",
+      "type": "be-spec",
+      "label": "BE 05c — Portability, quality and lifecycle",
+      "path": ".memory/wiki/specs/be/05c-portability-quality-lifecycle.md",
+      "shardId": "05c"
+    },
+    {
+      "id": "be-spec:be/06a-case-intake-evidence",
+      "type": "be-spec",
+      "label": "BE 06a — Case intake and evidence",
+      "path": ".memory/wiki/specs/be/06a-case-intake-evidence.md",
+      "shardId": "06a"
+    },
+    {
+      "id": "be-spec:be/06b-policy-enforcement-appeals",
+      "type": "be-spec",
+      "label": "BE 06b — Policy, enforcement and appeals",
+      "path": ".memory/wiki/specs/be/06b-policy-enforcement-appeals.md",
+      "shardId": "06b"
+    },
+    {
+      "id": "be-spec:be/06c-disputes-dmca-legal-risk",
+      "type": "be-spec",
+      "label": "BE 06c — Disputes, DMCA, legal process and specialized safety risk",
+      "path": ".memory/wiki/specs/be/06c-disputes-dmca-legal-risk.md",
+      "shardId": "06c"
+    },
+    {
+      "id": "be-spec:be/07a-credit-assertions-visibility",
+      "type": "be-spec",
+      "label": "BE 07a — Credit assertions, visibility and graph projections",
+      "path": ".memory/wiki/specs/be/07a-credit-assertions-visibility.md",
+      "shardId": "07a"
+    },
+    {
+      "id": "be-spec:be/07b-session-capture-offline",
+      "type": "be-spec",
+      "label": "BE 07b — Session capture, contribution logging and offline convergence",
+      "path": ".memory/wiki/specs/be/07b-session-capture-offline.md",
+      "shardId": "07b"
+    },
+    {
+      "id": "be-spec:be/07c-claims-attestations-confidence-taxonomy",
+      "type": "be-spec",
+      "label": "BE 07c — Claims, attestations, provenance confidence and taxonomy",
+      "path": ".memory/wiki/specs/be/07c-claims-attestations-confidence-taxonomy.md",
+      "shardId": "07c"
+    },
+    {
+      "id": "be-spec:be/08a-portability-ddex-emission",
+      "type": "be-spec",
+      "label": "BE 08a — Portability, DDEX/RIN emission and artifact lifecycle",
+      "path": ".memory/wiki/specs/be/08a-portability-ddex-emission.md",
+      "shardId": "08a"
+    },
+    {
+      "id": "be-spec:be/08b-union-session-reporting",
+      "type": "be-spec",
+      "label": "BE 08b — Union and performer session reporting",
+      "path": ".memory/wiki/specs/be/08b-union-session-reporting.md",
+      "shardId": "08b"
+    },
+    {
+      "id": "be-spec:be/08c-gear-credit-linkage",
+      "type": "be-spec",
+      "label": "BE 08c — Gear-to-credit linkage and item discography",
+      "path": ".memory/wiki/specs/be/08c-gear-credit-linkage.md",
+      "shardId": "08c"
+    },
+    {
+      "id": "be-spec:be/08d-ai-contribution-disclosure",
+      "type": "be-spec",
+      "label": "BE 08d — AI contribution disclosure",
+      "path": ".memory/wiki/specs/be/08d-ai-contribution-disclosure.md",
+      "shardId": "08d"
+    },
+    {
+      "id": "be-spec:be/09a-project-containers-creative-docs",
+      "type": "be-spec",
+      "label": "BE-09a — Project containers and creative documents",
+      "path": ".memory/wiki/specs/be/09a-project-containers-creative-docs.md",
+      "shardId": "09a"
+    },
+    {
+      "id": "be-spec:be/09b-roster-invitations-vault-access",
+      "type": "be-spec",
+      "label": "BE-09b — Roster, invitations and vault access",
+      "path": ".memory/wiki/specs/be/09b-roster-invitations-vault-access.md",
+      "shardId": "09b"
+    },
+    {
+      "id": "be-spec:be/09c-audio-version-review-approval",
+      "type": "be-spec",
+      "label": "BE-09c — Audio versions, lineage, review and approval",
+      "path": ".memory/wiki/specs/be/09c-audio-version-review-approval.md",
+      "shardId": "09c"
+    },
+    {
+      "id": "be-spec:be/09d-sessions-delivery-readiness",
+      "type": "be-spec",
+      "label": "BE-09d — Sessions, recall, delivery and readiness",
+      "path": ".memory/wiki/specs/be/09d-sessions-delivery-readiness.md",
+      "shardId": "09d"
+    },
+    {
+      "id": "be-spec:be/09e-daw-bridge-evidence-gate",
+      "type": "be-spec",
+      "label": "BE-09e — DAW bridge evidence gate",
+      "path": ".memory/wiki/specs/be/09e-daw-bridge-evidence-gate.md",
+      "shardId": "09e"
+    },
+    {
+      "id": "be-spec:be/10a-rights-objects-ledgers",
+      "type": "be-spec",
+      "label": "Rights Objects and Consent Ledgers — Backend Specification",
+      "path": ".memory/wiki/specs/be/10a-rights-objects-ledgers.md",
+      "shardId": "10a"
+    },
+    {
+      "id": "be-spec:be/10b-splits-points-buyouts-amendments",
+      "type": "be-spec",
+      "label": "Splits, Points, Buyouts and Ledger Amendments — Backend Specification",
+      "path": ".memory/wiki/specs/be/10b-splits-points-buyouts-amendments.md",
+      "shardId": "10b"
+    },
+    {
+      "id": "be-spec:be/10c-title-control-conflicts-freezes",
+      "type": "be-spec",
+      "label": "Title, Control, Conflicts and Freezes — Backend Specification",
+      "path": ".memory/wiki/specs/be/10c-title-control-conflicts-freezes.md",
+      "shardId": "10c"
+    },
+    {
+      "id": "be-spec:be/10d-ai-training-nil-consent",
+      "type": "be-spec",
+      "label": "AI-Training, NIL and AI-Content Consent — Backend Specification",
+      "path": ".memory/wiki/specs/be/10d-ai-training-nil-consent.md",
+      "shardId": "10d"
+    },
+    {
+      "id": "be-spec:be/10e-identifiers-registration-evidence",
+      "type": "be-spec",
+      "label": "Identifiers, Registration and Rights Evidence — Backend Specification",
+      "path": ".memory/wiki/specs/be/10e-identifiers-registration-evidence.md",
+      "shardId": "10e"
+    },
+    {
+      "id": "be-spec:be/11a-follows-connections-endorsements",
+      "type": "be-spec",
+      "label": "Follows, Connections & Endorsements — Backend Specification",
+      "path": ".memory/wiki/specs/be/11a-follows-connections-endorsements.md",
+      "shardId": "11a"
+    },
+    {
+      "id": "be-spec:be/11b-activity-feed-native-posts",
+      "type": "be-spec",
+      "label": "Activity Feed & Native Posts — Backend Specification",
+      "path": ".memory/wiki/specs/be/11b-activity-feed-native-posts.md",
+      "shardId": "11b"
+    },
+    {
+      "id": "be-spec:be/11c-collaborator-discovery-calls",
+      "type": "be-spec",
+      "label": "Collaborator Discovery & Calls — Backend Specification",
+      "path": ".memory/wiki/specs/be/11c-collaborator-discovery-calls.md",
+      "shardId": "11c"
+    },
+    {
+      "id": "be-spec:be/11d-collaboration-paths-warm-intros",
+      "type": "be-spec",
+      "label": "Collaboration Paths & Warm Introductions — Backend Specification",
+      "path": ".memory/wiki/specs/be/11d-collaboration-paths-warm-intros.md",
+      "shardId": "11d"
+    },
+    {
+      "id": "be-spec:be/11e-private-rolodex-crm",
+      "type": "be-spec",
+      "label": "Private Rolodex & CRM — Backend Specification",
+      "path": ".memory/wiki/specs/be/11e-private-rolodex-crm.md",
+      "shardId": "11e"
+    },
+    {
+      "id": "be-spec:be/12a-scenes-stewardship-seeding",
+      "type": "be-spec",
+      "label": "BE Spec 12a — Scenes, Stewardship, Density, and Seeding",
+      "path": ".memory/wiki/specs/be/12a-scenes-stewardship-seeding.md",
+      "shardId": "12a"
+    },
+    {
+      "id": "be-spec:be/12b-craft-forums-qa",
+      "type": "be-spec",
+      "label": "BE Spec 12b — Craft Forums and Q&A",
+      "path": ".memory/wiki/specs/be/12b-craft-forums-qa.md",
+      "shardId": "12b"
+    },
+    {
+      "id": "be-spec:be/12c-contests-submissions-judging",
+      "type": "be-spec",
+      "label": "BE Spec 12c — Contests, Submissions, Judging, and Awards",
+      "path": ".memory/wiki/specs/be/12c-contests-submissions-judging.md",
+      "shardId": "12c"
+    },
+    {
+      "id": "be-spec:be/12d-informal-listening-conference-events",
+      "type": "be-spec",
+      "label": "BE Spec 12d — Informal Events, Listening Rooms, Conference Mode, and Event Relationships",
+      "path": ".memory/wiki/specs/be/12d-informal-listening-conference-events.md",
+      "shardId": "12d"
+    },
+    {
+      "id": "be-spec:be/13a-opportunity-publication-discovery-alerts",
+      "type": "be-spec",
+      "label": "Opportunity Publication, Discovery & Alerts — Backend Specification",
+      "path": ".memory/wiki/specs/be/13a-opportunity-publication-discovery-alerts.md",
+      "shardId": "13a"
+    },
+    {
+      "id": "be-spec:be/13b-submissions-auditions-pitches",
+      "type": "be-spec",
+      "label": "Opportunity Submissions, Auditions & Pitches — Backend Specification",
+      "path": ".memory/wiki/specs/be/13b-submissions-auditions-pitches.md",
+      "shardId": "13b"
+    },
+    {
+      "id": "be-spec:be/13c-triage-offers-dispositions",
+      "type": "be-spec",
+      "label": "Opportunity Triage, Offers & Dispositions — Backend Specification",
+      "path": ".memory/wiki/specs/be/13c-triage-offers-dispositions.md",
+      "shardId": "13c"
+    },
+    {
+      "id": "be-spec:be/13d-handoff-history-specialized-calls",
+      "type": "be-spec",
+      "label": "Opportunity Handoff, History & Specialized Calls — Backend Specification",
+      "path": ".memory/wiki/specs/be/13d-handoff-history-specialized-calls.md",
+      "shardId": "13d"
+    },
+    {
+      "id": "be-spec:be/14a-service-listings-quotes-engagements",
+      "type": "be-spec",
+      "label": "Service Listings, Quotes & Engagements — Backend Specification",
+      "path": ".memory/wiki/specs/be/14a-service-listings-quotes-engagements.md",
+      "shardId": "14a"
+    },
+    {
+      "id": "be-spec:be/14b-requirements-sla-milestones-revisions",
+      "type": "be-spec",
+      "label": "Requirements, SLA, Milestones & Revisions — Backend Specification",
+      "path": ".memory/wiki/specs/be/14b-requirements-sla-milestones-revisions.md",
+      "shardId": "14b"
+    },
+    {
+      "id": "be-spec:be/14c-delivery-acceptance-exit-rights",
+      "type": "be-spec",
+      "label": "Delivery, Acceptance, Exit & Recall — Backend Specification",
+      "path": ".memory/wiki/specs/be/14c-delivery-acceptance-exit-rights.md",
+      "shardId": "14c"
+    },
+    {
+      "id": "be-spec:be/14d-substitution-multiparty-supply",
+      "type": "be-spec",
+      "label": "Substitution & Multi-Party Supply — Backend Specification",
+      "path": ".memory/wiki/specs/be/14d-substitution-multiparty-supply.md",
+      "shardId": "14d"
+    },
+    {
+      "id": "be-spec:be/14e-repair-inspection-custody",
+      "type": "be-spec",
+      "label": "Repair, Inspection & Custody — Backend Specification",
+      "path": ".memory/wiki/specs/be/14e-repair-inspection-custody.md",
+      "shardId": "14e"
+    },
+    {
+      "id": "be-spec:be/15a-teacher-facets-discovery-trials",
+      "type": "be-spec",
+      "label": "Teacher Facets, Discovery & Trial Conversion — Backend Specification",
+      "path": ".memory/wiki/specs/be/15a-teacher-facets-discovery-trials.md",
+      "shardId": "15a"
+    },
+    {
+      "id": "be-spec:be/15b-lesson-booking-credits-delivery",
+      "type": "be-spec",
+      "label": "Lesson Booking, Credits & Delivery — Backend Specification",
+      "path": ".memory/wiki/specs/be/15b-lesson-booking-credits-delivery.md",
+      "shardId": "15b"
+    },
+    {
+      "id": "be-spec:be/15c-curriculum-feedback-practice",
+      "type": "be-spec",
+      "label": "Curriculum, Feedback, Practice & Progress — Backend Specification",
+      "path": ".memory/wiki/specs/be/15c-curriculum-feedback-practice.md",
+      "shardId": "15c"
+    },
+    {
+      "id": "be-spec:be/15d-group-mentorship-learning-paths",
+      "type": "be-spec",
+      "label": "Group Classes, Mentorship & Learning Paths — Backend Specification",
+      "path": ".memory/wiki/specs/be/15d-group-mentorship-learning-paths.md",
+      "shardId": "15d"
+    },
+    {
+      "id": "be-spec:be/16a-course-authoring-publication-catalog",
+      "type": "be-spec",
+      "label": "Course Authoring, Publication & Catalog — Backend Specification",
+      "path": ".memory/wiki/specs/be/16a-course-authoring-publication-catalog.md",
+      "shardId": "16a"
+    },
+    {
+      "id": "be-spec:be/16b-course-commerce-consumption-refunds",
+      "type": "be-spec",
+      "label": "Course Commerce, Consumption & Refunds — Backend Specification",
+      "path": ".memory/wiki/specs/be/16b-course-commerce-consumption-refunds.md",
+      "shardId": "16b"
+    },
+    {
+      "id": "be-spec:be/16c-exam-evidence-credential-exclusion",
+      "type": "be-spec",
+      "label": "Exam Evidence, Goals & Credential Boundary — Backend Specification",
+      "path": ".memory/wiki/specs/be/16c-exam-evidence-credential-exclusion.md",
+      "shardId": "16c"
+    },
+    {
+      "id": "be-spec:be/16d-institution-gate-clinical-exclusion",
+      "type": "be-spec",
+      "label": "Institution Gate, Academy Operations & Clinical Exclusion — Backend Specification",
+      "path": ".memory/wiki/specs/be/16d-institution-gate-clinical-exclusion.md",
+      "shardId": "16d"
+    },
+    {
+      "id": "be-spec:be/17a-runtime-admission-latency-discovery",
+      "type": "be-spec",
+      "label": "Runtime Admission, Preflight, Path Measurement & Discovery — Backend Specification",
+      "path": ".memory/wiki/specs/be/17a-runtime-admission-latency-discovery.md",
+      "shardId": "17a"
+    },
+    {
+      "id": "be-spec:be/17b-live-room-monitoring-controls",
+      "type": "be-spec",
+      "label": "Live Room, Cue, Talkback & Monitoring Controls — Backend Specification",
+      "path": ".memory/wiki/specs/be/17b-live-room-monitoring-controls.md",
+      "shardId": "17b"
+    },
+    {
+      "id": "be-spec:be/17c-continuity-capture-alignment-attendance",
+      "type": "be-spec",
+      "label": "Continuity, Capture, Alignment & Attendance — Backend Specification",
+      "path": ".memory/wiki/specs/be/17c-continuity-capture-alignment-attendance.md",
+      "shardId": "17c"
+    },
+    {
+      "id": "be-spec:be/17d-overdub-requests-delivery",
+      "type": "be-spec",
+      "label": "Overdub Requests & Delivery — Backend Specification",
+      "path": ".memory/wiki/specs/be/17d-overdub-requests-delivery.md",
+      "shardId": "17d"
+    },
+    {
+      "id": "be-spec:be/18a-society-affiliation-registration",
+      "type": "be-spec",
+      "label": "Society Affiliation & Registration — Backend Specification",
+      "path": ".memory/wiki/specs/be/18a-society-affiliation-registration.md",
+      "shardId": "18a"
+    },
+    {
+      "id": "be-spec:be/18b-statement-ingestion-matching-normalization",
+      "type": "be-spec",
+      "label": "Statement Ingestion, Matching & Normalization — Backend Specification",
+      "path": ".memory/wiki/specs/be/18b-statement-ingestion-matching-normalization.md",
+      "shardId": "18b"
+    },
+    {
+      "id": "be-spec:be/18c-royalty-calculation-restatement-statements",
+      "type": "be-spec",
+      "label": "Royalty Calculation, Restatement & Statements — Backend Specification",
+      "path": ".memory/wiki/specs/be/18c-royalty-calculation-restatement-statements.md",
+      "shardId": "18c"
+    },
+    {
+      "id": "be-spec:be/18d-royalty-payout-b3-gate",
+      "type": "be-spec",
+      "label": "Royalty Payout & B3 Gate — Backend Specification",
+      "path": ".memory/wiki/specs/be/18d-royalty-payout-b3-gate.md",
+      "shardId": "18d"
+    },
+    {
+      "id": "be-spec:be/18e-royalty-recovery-statement-disputes",
+      "type": "be-spec",
+      "label": "Royalty Recovery & Statement Disputes — Backend Specification",
+      "path": ".memory/wiki/specs/be/18e-royalty-recovery-statement-disputes.md",
+      "shardId": "18e"
+    },
+    {
+      "id": "be-spec:be/19a-live-returns-cue-sheet-expectations",
+      "type": "be-spec",
+      "label": "Live Returns & Cue-Sheet Expectations — Backend Specification",
+      "path": ".memory/wiki/specs/be/19a-live-returns-cue-sheet-expectations.md",
+      "shardId": "19a"
+    },
+    {
+      "id": "be-spec:be/19b-distribution-calendar-money-in-flight",
+      "type": "be-spec",
+      "label": "Distribution Calendars & Money-in-Flight — Backend Specification",
+      "path": ".memory/wiki/specs/be/19b-distribution-calendar-money-in-flight.md",
+      "shardId": "19b"
+    },
+    {
+      "id": "be-spec:be/19c-royalty-forecast-calibration",
+      "type": "be-spec",
+      "label": "Royalty Forecast & Calibration — Backend Specification",
+      "path": ".memory/wiki/specs/be/19c-royalty-forecast-calibration.md",
+      "shardId": "19c"
+    },
+    {
+      "id": "be-spec:be/20a-sync-catalogue-briefs-holds",
+      "type": "be-spec",
+      "label": "Sync Catalogue, Briefs and Holds — Backend Specification",
+      "path": ".memory/wiki/specs/be/20a-sync-catalogue-briefs-holds.md",
+      "shardId": "20a"
+    },
+    {
+      "id": "be-spec:be/20b-clearance-evidence-consent",
+      "type": "be-spec",
+      "label": "Clearance Evidence and Consent — Backend Specification",
+      "path": ".memory/wiki/specs/be/20b-clearance-evidence-consent.md",
+      "shardId": "20b"
+    },
+    {
+      "id": "be-spec:be/20c-owner-policy-quotes-mfn",
+      "type": "be-spec",
+      "label": "Owner Policy, Quotes and MFN — Backend Specification",
+      "path": ".memory/wiki/specs/be/20c-owner-policy-quotes-mfn.md",
+      "shardId": "20c"
+    },
+    {
+      "id": "be-spec:be/20d-licence-issuance-verification-lifecycle",
+      "type": "be-spec",
+      "label": "Licence Issuance, Verification and Lifecycle — Backend Specification",
+      "path": ".memory/wiki/specs/be/20d-licence-issuance-verification-lifecycle.md",
+      "shardId": "20d"
+    },
+    {
+      "id": "be-spec:be/21a-sample-interpolation-remix-clearance",
+      "type": "be-spec",
+      "label": "Sample, Interpolation & Remix Clearance — Backend Specification",
+      "path": ".memory/wiki/specs/be/21a-sample-interpolation-remix-clearance.md",
+      "shardId": "21a"
+    },
+    {
+      "id": "be-spec:be/21b-creator-microlicensing-content-id",
+      "type": "be-spec",
+      "label": "Creator Micro-Licensing & Content ID — Backend Specification",
+      "path": ".memory/wiki/specs/be/21b-creator-microlicensing-content-id.md",
+      "shardId": "21b"
+    },
+    {
+      "id": "be-spec:be/21c-ai-training-corpus-compensation",
+      "type": "be-spec",
+      "label": "AI Training Consent, Corpus & Compensation — Backend Specification",
+      "path": ".memory/wiki/specs/be/21c-ai-training-corpus-compensation.md",
+      "shardId": "21c"
+    },
+    {
+      "id": "be-spec:be/21d-cover-print-grand-right-routing",
+      "type": "be-spec",
+      "label": "Cover, Print & Grand-Right Routing — Backend Specification",
+      "path": ".memory/wiki/specs/be/21d-cover-print-grand-right-routing.md",
+      "shardId": "21d"
+    },
+    {
+      "id": "be-spec:be/22a-release-build-readiness-footprint",
+      "type": "be-spec",
+      "label": "BE-22a — Release Build, Readiness and Distribution Footprint",
+      "path": ".memory/wiki/specs/be/22a-release-build-readiness-footprint.md",
+      "shardId": "22a"
+    },
+    {
+      "id": "be-spec:be/22b-partner-message-delivery-status",
+      "type": "be-spec",
+      "label": "BE-22b — Partner Message, Delivery and Status",
+      "path": ".memory/wiki/specs/be/22b-partner-message-delivery-status.md",
+      "shardId": "22b"
+    },
+    {
+      "id": "be-spec:be/22c-release-promotion-updates-takedowns",
+      "type": "be-spec",
+      "label": "BE-22c — Release Promotion, Updates and Takedowns",
+      "path": ".memory/wiki/specs/be/22c-release-promotion-updates-takedowns.md",
+      "shardId": "22c"
+    },
+    {
+      "id": "be-spec:be/22d-ugc-claims-catalogue-migration",
+      "type": "be-spec",
+      "label": "BE-22d — UGC Claims, Catalogue Migration and Release Enrichment",
+      "path": ".memory/wiki/specs/be/22d-ugc-claims-catalogue-migration.md",
+      "shardId": "22d"
+    },
+    {
+      "id": "be-spec:be/23a-gear-identity-claims-transfers",
+      "type": "be-spec",
+      "label": "BE-23a — Gear Identity, Claims and Transfers",
+      "path": ".memory/wiki/specs/be/23a-gear-identity-claims-transfers.md",
+      "shardId": "23a"
+    },
+    {
+      "id": "be-spec:be/23b-theft-screening-recovery",
+      "type": "be-spec",
+      "label": "BE-23b — Theft Screening and Recovery",
+      "path": ".memory/wiki/specs/be/23b-theft-screening-recovery.md",
+      "shardId": "23b"
+    },
+    {
+      "id": "be-spec:be/23c-service-component-history",
+      "type": "be-spec",
+      "label": "BE-23c — Gear Service and Component History",
+      "path": ".memory/wiki/specs/be/23c-service-component-history.md",
+      "shardId": "23c"
+    },
+    {
+      "id": "be-spec:be/23d-valuation-insurance-discography",
+      "type": "be-spec",
+      "label": "BE-23d — Gear Valuation, Insurance Packs and Discography Links",
+      "path": ".memory/wiki/specs/be/23d-valuation-insurance-discography.md",
+      "shardId": "23d"
+    },
+    {
+      "id": "be-spec:be/24a-gear-collections-publication",
+      "type": "be-spec",
+      "label": "BE-24a — Gear Collections and Safe Publication",
+      "path": ".memory/wiki/specs/be/24a-gear-collections-publication.md",
+      "shardId": "24a"
+    },
+    {
+      "id": "be-spec:be/24b-rigs-compatibility-exports",
+      "type": "be-spec",
+      "label": "BE-24b — Rigs, Compatibility and Source Exports",
+      "path": ".memory/wiki/specs/be/24b-rigs-compatibility-exports.md",
+      "shardId": "24b"
+    },
+    {
+      "id": "be-spec:be/24c-organization-register-backline",
+      "type": "be-spec",
+      "label": "BE-24c — Organisation Registers, Condition and Public Backline",
+      "path": ".memory/wiki/specs/be/24c-organization-register-backline.md",
+      "shardId": "24c"
+    },
+    {
+      "id": "be-spec:be/24d-custody-cases-manifests",
+      "type": "be-spec",
+      "label": "BE-24d — Custody, Cases, Manifests and Readiness",
+      "path": ".memory/wiki/specs/be/24d-custody-cases-manifests.md",
+      "shardId": "24d"
+    },
+    {
+      "id": "be-spec:be/25a-gear-catalog-authority-matching",
+      "type": "be-spec",
+      "label": "BE-25a — Gear Catalog Authority and Listing Matching",
+      "path": ".memory/wiki/specs/be/25a-gear-catalog-authority-matching.md",
+      "shardId": "25a"
+    },
+    {
+      "id": "be-spec:be/25b-gear-listing-disclosure-lifecycle",
+      "type": "be-spec",
+      "label": "BE-25b — Gear Listing Disclosure and Lifecycle",
+      "path": ".memory/wiki/specs/be/25b-gear-listing-disclosure-lifecycle.md",
+      "shardId": "25b"
+    },
+    {
+      "id": "be-spec:be/25c-gear-inventory-bulk-channels",
+      "type": "be-spec",
+      "label": "BE-25c — Gear Inventory, Bulk Listing, and Channel Availability",
+      "path": ".memory/wiki/specs/be/25c-gear-inventory-bulk-channels.md",
+      "shardId": "25c"
+    },
+    {
+      "id": "be-spec:be/25d-gear-market-guides-storefront-policies",
+      "type": "be-spec",
+      "label": "BE-25d — Gear Market Guides, Provenance, and Storefront Policies",
+      "path": ".memory/wiki/specs/be/25d-gear-market-guides-storefront-policies.md",
+      "shardId": "25d"
+    },
+    {
+      "id": "be-spec:be/26a-gear-offers-cart-checkout",
+      "type": "be-spec",
+      "label": "BE-26a — Gear Offers, Mixed Cart, and Checkout Groups",
+      "path": ".memory/wiki/specs/be/26a-gear-offers-cart-checkout.md",
+      "shardId": "26a"
+    },
+    {
+      "id": "be-spec:be/26b-gear-logistics-order-lifecycle",
+      "type": "be-spec",
+      "label": "BE-26b — Gear Freight, Shipment, and Order Lifecycle",
+      "path": ".memory/wiki/specs/be/26b-gear-logistics-order-lifecycle.md",
+      "shardId": "26b"
+    },
+    {
+      "id": "be-spec:be/26c-gear-remedies-settlement-transfers",
+      "type": "be-spec",
+      "label": "BE-26c — Gear Remedies, Settlement, and Ownership Transfers",
+      "path": ".memory/wiki/specs/be/26c-gear-remedies-settlement-transfers.md",
+      "shardId": "26c"
+    },
+    {
+      "id": "be-spec:be/26d-gear-pickup-service-warranty",
+      "type": "be-spec",
+      "label": "BE-26d — Gear Pickup, Pre-Dispatch Service, and Warranty Routing",
+      "path": ".memory/wiki/specs/be/26d-gear-pickup-service-warranty.md",
+      "shardId": "26d"
+    },
+    {
+      "id": "be-spec:be/26e-gear-future-commerce-gates",
+      "type": "be-spec",
+      "label": "BE-26e — Gear International and Future Commerce Gates",
+      "path": ".memory/wiki/specs/be/26e-gear-future-commerce-gates.md",
+      "shardId": "26e"
+    },
+    {
+      "id": "be-spec:be/27a-digital-product-catalog-compatibility",
+      "type": "be-spec",
+      "label": "BE-27a — Digital Product Catalog and Compatibility",
+      "path": ".memory/wiki/specs/be/27a-digital-product-catalog-compatibility.md",
+      "shardId": "27a"
+    },
+    {
+      "id": "be-spec:be/27b-digital-submission-qa-publication",
+      "type": "be-spec",
+      "label": "BE-27b — Digital Submission, QA, Review, and Publication",
+      "path": ".memory/wiki/specs/be/27b-digital-submission-qa-publication.md",
+      "shardId": "27b"
+    },
+    {
+      "id": "be-spec:be/27c-digital-entitlements-library-delivery",
+      "type": "be-spec",
+      "label": "BE-27c — Digital Entitlements, Holder Library, and Delivery",
+      "path": ".memory/wiki/specs/be/27c-digital-entitlements-library-delivery.md",
+      "shardId": "27c"
+    },
+    {
+      "id": "be-spec:be/27d-digital-updates-assets-trials",
+      "type": "be-spec",
+      "label": "BE-27d — Digital Updates, Assets, Release Channels, and Trials",
+      "path": ".memory/wiki/specs/be/27d-digital-updates-assets-trials.md",
+      "shardId": "27d"
+    },
+    {
+      "id": "be-spec:be/27e-digital-enforcement-retirement-portability",
+      "type": "be-spec",
+      "label": "BE-27e — Digital Enforcement, Retirement, and Portability",
+      "path": ".memory/wiki/specs/be/27e-digital-enforcement-retirement-portability.md",
+      "shardId": "27e"
+    },
+    {
+      "id": "be-spec:be/28a-digital-purchases-beat-licensing",
+      "type": "be-spec",
+      "label": "Digital Purchases and Beat Licensing — Backend Specification",
+      "path": ".memory/wiki/specs/be/28a-digital-purchases-beat-licensing.md",
+      "shardId": "28a"
+    },
+    {
+      "id": "be-spec:be/28b-digital-refunds-revocation-clearance",
+      "type": "be-spec",
+      "label": "Digital Refunds, Revocation and Clearance — Backend Specification",
+      "path": ".memory/wiki/specs/be/28b-digital-refunds-revocation-clearance.md",
+      "shardId": "28b"
+    },
+    {
+      "id": "be-spec:be/28c-digital-transfers-promotions-upgrades",
+      "type": "be-spec",
+      "label": "Digital Transfers, Promotions and Upgrades — Backend Specification",
+      "path": ".memory/wiki/specs/be/28c-digital-transfers-promotions-upgrades.md",
+      "shardId": "28c"
+    },
+    {
+      "id": "be-spec:be/28d-digital-contributor-revenue",
+      "type": "be-spec",
+      "label": "Digital Contributor Revenue — Backend Specification",
+      "path": ".memory/wiki/specs/be/28d-digital-contributor-revenue.md",
+      "shardId": "28d"
+    },
+    {
+      "id": "be-spec:be/29a-place-room-authority-status",
+      "type": "be-spec",
+      "label": "Place & Room Authority and Status — Backend Specification",
+      "path": ".memory/wiki/specs/be/29a-place-room-authority-status.md",
+      "shardId": "29a"
+    },
+    {
+      "id": "be-spec:be/29b-room-specs-accessibility-conformance",
+      "type": "be-spec",
+      "label": "Room Specifications, Accessibility & Conformance — Backend Specification",
+      "path": ".memory/wiki/specs/be/29b-room-specs-accessibility-conformance.md",
+      "shardId": "29b"
+    },
+    {
+      "id": "be-spec:be/29c-room-calendars-holds-enquiries",
+      "type": "be-spec",
+      "label": "Room Calendars, Holds & Enquiries — Backend Specification",
+      "path": ".memory/wiki/specs/be/29c-room-calendars-holds-enquiries.md",
+      "shardId": "29c"
+    },
+    {
+      "id": "be-spec:be/29d-room-reservations-series-handoff",
+      "type": "be-spec",
+      "label": "Room Reservations, Series & Performance Handoff — Backend Specification",
+      "path": ".memory/wiki/specs/be/29d-room-reservations-series-handoff.md",
+      "shardId": "29d"
+    },
+    {
+      "id": "be-spec:be/30a-booking-avails-commercial-positions",
+      "type": "be-spec",
+      "label": "BE Spec 30a — Booking Avails and Commercial Positions",
+      "path": ".memory/wiki/specs/be/30a-booking-avails-commercial-positions.md",
+      "shardId": "30a"
+    },
+    {
+      "id": "be-spec:be/30b-booking-offers-approval-acceptance",
+      "type": "be-spec",
+      "label": "BE Spec 30b — Booking Offers, Approvals, and Acceptance",
+      "path": ".memory/wiki/specs/be/30b-booking-offers-approval-acceptance.md",
+      "shardId": "30b"
+    },
+    {
+      "id": "be-spec:be/30c-booking-documents-payments-announcement",
+      "type": "be-spec",
+      "label": "BE Spec 30c — Deal Documents, Payments, and Announcement Governance",
+      "path": ".memory/wiki/specs/be/30c-booking-documents-payments-announcement.md",
+      "shardId": "30c"
+    },
+    {
+      "id": "be-spec:be/30d-booking-cancellation-postponement-exclusivity",
+      "type": "be-spec",
+      "label": "BE Spec 30d — Booking Cancellation, Force Majeure, Postponement, and Exclusivity",
+      "path": ".memory/wiki/specs/be/30d-booking-cancellation-postponement-exclusivity.md",
+      "shardId": "30d"
+    },
+    {
+      "id": "be-spec:be/30e-booking-rfq-bill-construction",
+      "type": "be-spec",
+      "label": "BE Spec 30e — Booking RFQ and Bill Construction",
+      "path": ".memory/wiki/specs/be/30e-booking-rfq-bill-construction.md",
+      "shardId": "30e"
+    },
+    {
+      "id": "be-spec:be/31a-agency-terms-pipeline-commission",
+      "type": "be-spec",
+      "label": "Agency Terms, Pipeline and Commission — Backend Specification",
+      "path": ".memory/wiki/specs/be/31a-agency-terms-pipeline-commission.md",
+      "shardId": "31a"
+    },
+    {
+      "id": "be-spec:be/31b-settlement-inputs-reconciliation-disputes",
+      "type": "be-spec",
+      "label": "Settlement Inputs, Reconciliation and Disputes — Backend Specification",
+      "path": ".memory/wiki/specs/be/31b-settlement-inputs-reconciliation-disputes.md",
+      "shardId": "31b"
+    },
+    {
+      "id": "be-spec:be/31c-settlement-finality-restatement-export",
+      "type": "be-spec",
+      "label": "Settlement Finality, Restatement and Export — Backend Specification",
+      "path": ".memory/wiki/specs/be/31c-settlement-finality-restatement-export.md",
+      "shardId": "31c"
+    },
+    {
+      "id": "be-spec:be/31d-live-splits-disbursement-tax",
+      "type": "be-spec",
+      "label": "Live Splits, Disbursement and Tax Evidence — Backend Specification",
+      "path": ".memory/wiki/specs/be/31d-live-splits-disbursement-tax.md",
+      "shardId": "31d"
+    },
+    {
+      "id": "be-spec:be/31e-live-draw-guidance-reliability-demand",
+      "type": "be-spec",
+      "label": "Live Draw, Guidance, Reliability and Demand — Backend Specification",
+      "path": ".memory/wiki/specs/be/31e-live-draw-guidance-reliability-demand.md",
+      "shardId": "31e"
+    },
+    {
+      "id": "be-spec:be/32a-production-events-bill-rehearsal",
+      "type": "be-spec",
+      "label": "Production Events, Bill and Rehearsal — Backend Specification",
+      "path": ".memory/wiki/specs/be/32a-production-events-bill-rehearsal.md",
+      "shardId": "32a"
+    },
+    {
+      "id": "be-spec:be/32b-rider-sensitive-disclosure-redlines",
+      "type": "be-spec",
+      "label": "Rider, Sensitive Disclosure and Redlines — Backend Specification",
+      "path": ".memory/wiki/specs/be/32b-rider-sensitive-disclosure-redlines.md",
+      "shardId": "32b"
+    },
+    {
+      "id": "be-spec:be/32c-stage-plan-capability-allocation",
+      "type": "be-spec",
+      "label": "Stage Plan, Capability Diff and Allocation — Backend Specification",
+      "path": ".memory/wiki/specs/be/32c-stage-plan-capability-allocation.md",
+      "shardId": "32c"
+    },
+    {
+      "id": "be-spec:be/32d-advance-checklist-freeze",
+      "type": "be-spec",
+      "label": "Advance Checklist, Freeze and Change Control — Backend Specification",
+      "path": ".memory/wiki/specs/be/32d-advance-checklist-freeze.md",
+      "shardId": "32d"
+    },
+    {
+      "id": "be-spec:be/33a-show-setlists-files-performance",
+      "type": "be-spec",
+      "label": "Show Setlists, Files and Performed Capture — Backend Specification",
+      "path": ".memory/wiki/specs/be/33a-show-setlists-files-performance.md",
+      "shardId": "33a"
+    },
+    {
+      "id": "be-spec:be/33b-run-of-show-crew-credentials",
+      "type": "be-spec",
+      "label": "Run of Show, Crew and Credentials — Backend Specification",
+      "path": ".memory/wiki/specs/be/33b-run-of-show-crew-credentials.md",
+      "shardId": "33b"
+    },
+    {
+      "id": "be-spec:be/33c-gear-manifest-loadout-daysheet",
+      "type": "be-spec",
+      "label": "Gear Manifest, Load-Out and Day Sheet — Backend Specification",
+      "path": ".memory/wiki/specs/be/33c-gear-manifest-loadout-daysheet.md",
+      "shardId": "33c"
+    },
+    {
+      "id": "be-spec:be/33d-safety-weather-postshow-corrections",
+      "type": "be-spec",
+      "label": "BE Spec 33d — Safety, Weather, Post-Show Reporting, and Corrections",
+      "path": ".memory/wiki/specs/be/33d-safety-weather-postshow-corrections.md",
+      "shardId": "33d"
+    },
+    {
+      "id": "be-spec:be/34a-tour-container-routing-book",
+      "type": "be-spec",
+      "label": "BE Spec 34a — Tour Container, Routing, and Tour Book",
+      "path": ".memory/wiki/specs/be/34a-tour-container-routing-book.md",
+      "shardId": "34a"
+    },
+    {
+      "id": "be-spec:be/34b-tour-travel-rooming-ground-perdiem",
+      "type": "be-spec",
+      "label": "BE Spec 34b — Tour Travel, Rooming, Ground Transport, and Per Diem",
+      "path": ".memory/wiki/specs/be/34b-tour-travel-rooming-ground-perdiem.md",
+      "shardId": "34b"
+    },
+    {
+      "id": "be-spec:be/34c-tour-budgets-actuals-expenses",
+      "type": "be-spec",
+      "label": "BE Spec 34c — Tour Budgets, Actuals, and Expenses",
+      "path": ".memory/wiki/specs/be/34c-tour-budgets-actuals-expenses.md",
+      "shardId": "34c"
+    },
+    {
+      "id": "be-spec:be/34d-tour-border-merch-carbon",
+      "type": "be-spec",
+      "label": "BE Spec 34d — Tour Border Readiness, Carnets, Merch, and Carbon",
+      "path": ".memory/wiki/specs/be/34d-tour-border-merch-carbon.md",
+      "shardId": "34d"
+    },
+    {
+      "id": "be-spec:be/35a-ticket-inventory-onsale-presale",
+      "type": "be-spec",
+      "label": "BE Spec 35a — Ticket Inventory, On-Sale, Presale, and Access Codes",
+      "path": ".memory/wiki/specs/be/35a-ticket-inventory-onsale-presale.md",
+      "shardId": "35a"
+    },
+    {
+      "id": "be-spec:be/35b-ticket-carts-orders-waitlists",
+      "type": "be-spec",
+      "label": "BE Spec 35b — Ticket Queues, Carts, Orders, and Waitlists",
+      "path": ".memory/wiki/specs/be/35b-ticket-carts-orders-waitlists.md",
+      "shardId": "35b"
+    },
+    {
+      "id": "be-spec:be/35c-ticket-guest-allocations-door",
+      "type": "be-spec",
+      "label": "BE Spec 35c — Guest Allocations and Door Changes",
+      "path": ".memory/wiki/specs/be/35c-ticket-guest-allocations-door.md",
+      "shardId": "35c"
+    },
+    {
+      "id": "be-spec:be/35d-ticket-vip-rsvp-conversion",
+      "type": "be-spec",
+      "label": "BE Spec 35d — VIP Packages, RSVP Admission, and Free-to-Paid Conversion",
+      "path": ".memory/wiki/specs/be/35d-ticket-vip-rsvp-conversion.md",
+      "shardId": "35d"
+    },
+    {
+      "id": "be-spec:be/35e-ticket-delivery-transfer-claim",
+      "type": "be-spec",
+      "label": "BE Spec 35e — Ticket Delivery, Pass Projection, and Transfer Claim",
+      "path": ".memory/wiki/specs/be/35e-ticket-delivery-transfer-claim.md",
+      "shardId": "35e"
+    },
+    {
+      "id": "be-spec:be/36a-door-replicas-scans-age",
+      "type": "be-spec",
+      "label": "Door Replicas, Scans & Age Verification — Backend Specification",
+      "path": ".memory/wiki/specs/be/36a-door-replicas-scans-age.md",
+      "shardId": "36a"
+    },
+    {
+      "id": "be-spec:be/36b-boxoffice-counts-drops-walkup-close",
+      "type": "be-spec",
+      "label": "Box-office Counts, Drops, Walk-up & Close — Backend Specification",
+      "path": ".memory/wiki/specs/be/36b-boxoffice-counts-drops-walkup-close.md",
+      "shardId": "36b"
+    },
+    {
+      "id": "be-spec:be/36c-ticket-refunds-event-changes",
+      "type": "be-spec",
+      "label": "Ticket Refunds & Event Changes — Backend Specification",
+      "path": ".memory/wiki/specs/be/36c-ticket-refunds-event-changes.md",
+      "shardId": "36c"
+    },
+    {
+      "id": "be-spec:be/36d-external-counts-attestation-reconciliation",
+      "type": "be-spec",
+      "label": "External Counts, Attestation & Reconciliation — Backend Specification",
+      "path": ".memory/wiki/specs/be/36d-external-counts-attestation-reconciliation.md",
+      "shardId": "36d"
+    },
+    {
+      "id": "be-spec:be/36e-ticket-limits-transfer-exchange-consent",
+      "type": "be-spec",
+      "label": "Ticket Limits, Transfer, Exchange & Consent — Backend Specification",
+      "path": ".memory/wiki/specs/be/36e-ticket-limits-transfer-exchange-consent.md",
+      "shardId": "36e"
+    },
+    {
+      "id": "be-spec:be/37-fanbase-direct-to-fan",
+      "type": "be-spec",
+      "label": "Fanbase and Direct-to-Fan — Backend Specification",
+      "path": ".memory/wiki/specs/be/37-fanbase-direct-to-fan.md",
+      "shardId": "37"
+    },
+    {
+      "id": "be-spec:be/38-promotion-marketing",
+      "type": "be-spec",
+      "label": "Promotion and Marketing — Backend Specification",
+      "path": ".memory/wiki/specs/be/38-promotion-marketing.md",
+      "shardId": "38"
+    },
+    {
+      "id": "be-spec:be/39-analytics-ingestion-reporting",
+      "type": "be-spec",
+      "label": "Analytics Ingestion, Matching and Reporting — Backend Specification",
+      "path": ".memory/wiki/specs/be/39-analytics-ingestion-reporting.md",
+      "shardId": "39"
+    },
+    {
+      "id": "be-spec:be/40-market-intelligence-signals",
+      "type": "be-spec",
+      "label": "Market Intelligence, Fraud & Scouting Signals — Backend Specification",
+      "path": ".memory/wiki/specs/be/40-market-intelligence-signals.md",
+      "shardId": "40"
+    },
+    {
+      "id": "be-spec:be/41a-income-tax-receivables",
+      "type": "be-spec",
+      "label": "Income, Tax Readiness & Receivables — Backend Specification",
+      "path": ".memory/wiki/specs/be/41a-income-tax-receivables.md",
+      "shardId": "41a"
+    },
+    {
+      "id": "be-spec:be/41b-deals-recoupment-pl",
+      "type": "be-spec",
+      "label": "Deals, Recoupment & P&L — Backend Specification",
+      "path": ".memory/wiki/specs/be/41b-deals-recoupment-pl.md",
+      "shardId": "41b"
+    },
+    {
+      "id": "be-spec:be/42-career-planning-risk",
+      "type": "be-spec",
+      "label": "Career Planning, Insurance & Sustainability Boundary — Backend Specification",
+      "path": ".memory/wiki/specs/be/42-career-planning-risk.md",
+      "shardId": "42"
+    },
+    {
+      "id": "be-spec:be/index",
+      "type": "be-spec",
+      "label": "BE Layer — Backend Specifications",
+      "path": ".memory/wiki/specs/be/index.md",
       "shardId": null
     },
     {
@@ -9914,14 +11020,1316 @@
       "source": "wikilink"
     },
     {
-      "from": "audit:audits/audit-scope",
+      "from": "be-spec:be/00-infrastructure",
+      "to": "ia-spec:ia/00-infrastructure",
+      "type": "derives_from",
+      "source": "ia-source"
+    },
+    {
+      "from": "be-spec:be/00-infrastructure",
+      "to": "ia-spec:ia/00-infrastructure",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "be-spec:be/01a-auth-account-linking",
+      "to": "ia-spec:ia/01-identity-authority",
+      "type": "derives_from",
+      "source": "ia-source"
+    },
+    {
+      "from": "be-spec:be/01a-auth-account-linking",
+      "to": "ia-spec:ia/01-identity-authority",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "be-spec:be/01b-party-identity-aliases",
+      "to": "ia-spec:ia/01-identity-authority",
+      "type": "derives_from",
+      "source": "ia-source"
+    },
+    {
+      "from": "be-spec:be/01b-party-identity-aliases",
+      "to": "ia-spec:ia/01-identity-authority",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "be-spec:be/01c-relationships-authority-governance",
+      "to": "ia-spec:ia/01-identity-authority",
+      "type": "derives_from",
+      "source": "ia-source"
+    },
+    {
+      "from": "be-spec:be/01c-relationships-authority-governance",
+      "to": "ia-spec:ia/01-identity-authority",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "be-spec:be/01c-relationships-authority-governance",
+      "to": "ia-spec:ia/deep-dives/01-identity-authority",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "be-spec:be/01c-relationships-authority-governance",
+      "to": "be-spec:be/00-infrastructure",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "be-spec:be/01c-relationships-authority-governance",
+      "to": "be-spec:be/01a-auth-account-linking",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "be-spec:be/01c-relationships-authority-governance",
+      "to": "be-spec:be/01b-party-identity-aliases",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "be-spec:be/01c-relationships-authority-governance",
+      "to": "be-spec:be/01d-identifiers-legacy",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "be-spec:be/01c-relationships-authority-governance",
+      "to": "ia-spec:ia/22-release-distribution",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "be-spec:be/01c-relationships-authority-governance",
+      "to": "ia-spec:ia/30-booking-contracts",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "be-spec:be/01c-relationships-authority-governance",
+      "to": "ia-spec:ia/39-analytics-ingestion-reporting",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "be-spec:be/01d-identifiers-legacy",
+      "to": "ia-spec:ia/01-identity-authority",
+      "type": "derives_from",
+      "source": "ia-source"
+    },
+    {
+      "from": "be-spec:be/01d-identifiers-legacy",
+      "to": "ia-spec:ia/01-identity-authority",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "be-spec:be/02a-shadow-claim-ownership",
+      "to": "ia-spec:ia/deep-dives/02-profiles-verification",
+      "type": "derives_from",
+      "source": "ia-source"
+    },
+    {
+      "from": "be-spec:be/02a-shadow-claim-ownership",
+      "to": "ia-spec:ia/02-profiles-verification",
+      "type": "derives_from",
+      "source": "ia-source"
+    },
+    {
+      "from": "be-spec:be/02a-shadow-claim-ownership",
+      "to": "ia-spec:ia/deep-dives/02-profiles-verification",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "be-spec:be/02a-shadow-claim-ownership",
+      "to": "ia-spec:ia/02-profiles-verification",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "be-spec:be/02a-shadow-claim-ownership",
+      "to": "ia-spec:ia/00-infrastructure",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "be-spec:be/02a-shadow-claim-ownership",
+      "to": "ia-spec:ia/01-identity-authority",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "be-spec:be/02a-shadow-claim-ownership",
+      "to": "ia-spec:ia/06-trust-safety",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "be-spec:be/02a-shadow-claim-ownership",
+      "to": "be-spec:be/00-infrastructure",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "be-spec:be/02b-profile-portfolio-epk",
+      "to": "ia-spec:ia/deep-dives/02-profiles-verification",
+      "type": "derives_from",
+      "source": "ia-source"
+    },
+    {
+      "from": "be-spec:be/02b-profile-portfolio-epk",
+      "to": "ia-spec:ia/02-profiles-verification",
+      "type": "derives_from",
+      "source": "ia-source"
+    },
+    {
+      "from": "be-spec:be/02b-profile-portfolio-epk",
+      "to": "ia-spec:ia/deep-dives/02-profiles-verification",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "be-spec:be/02b-profile-portfolio-epk",
+      "to": "ia-spec:ia/02-profiles-verification",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "be-spec:be/02c-credentials-trader",
+      "to": "ia-spec:ia/deep-dives/02-profiles-verification",
+      "type": "derives_from",
+      "source": "ia-source"
+    },
+    {
+      "from": "be-spec:be/02c-credentials-trader",
+      "to": "ia-spec:ia/02-profiles-verification",
+      "type": "derives_from",
+      "source": "ia-source"
+    },
+    {
+      "from": "be-spec:be/02c-credentials-trader",
+      "to": "ia-spec:ia/deep-dives/02-profiles-verification",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "be-spec:be/02c-credentials-trader",
+      "to": "ia-spec:ia/02-profiles-verification",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "be-spec:be/02c-credentials-trader",
+      "to": "be-spec:be/00-infrastructure",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "be-spec:be/02c-credentials-trader",
+      "to": "be-spec:be/01a-auth-account-linking",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "be-spec:be/02c-credentials-trader",
+      "to": "be-spec:be/01c-relationships-authority-governance",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "be-spec:be/02c-credentials-trader",
+      "to": "ia-spec:ia/05-platform-configuration-admin",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "be-spec:be/02c-credentials-trader",
+      "to": "ia-spec:ia/06-trust-safety",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "be-spec:be/02c-credentials-trader",
+      "to": "ia-spec:ia/15-education-delivery",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "be-spec:be/02c-credentials-trader",
+      "to": "ia-spec:ia/16-education-credentials-institutions",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "be-spec:be/02c-credentials-trader",
+      "to": "ia-spec:ia/20-licensing-core",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "be-spec:be/02c-credentials-trader",
+      "to": "be-spec:be/02a-shadow-claim-ownership",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "be-spec:be/02c-credentials-trader",
+      "to": "be-spec:be/02b-profile-portfolio-epk",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "be-spec:be/08d-ai-contribution-disclosure",
+      "to": "ia-spec:ia/08-credit-reporting-disclosure",
+      "type": "derives_from",
+      "source": "ia-source"
+    },
+    {
+      "from": "be-spec:be/08d-ai-contribution-disclosure",
+      "to": "ia-spec:ia/08-credit-reporting-disclosure",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "be-spec:be/13a-opportunity-publication-discovery-alerts",
+      "to": "ia-spec:ia/13-opportunities-casting",
+      "type": "derives_from",
+      "source": "ia-source"
+    },
+    {
+      "from": "be-spec:be/13a-opportunity-publication-discovery-alerts",
+      "to": "ia-spec:ia/13-opportunities-casting",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "be-spec:be/13b-submissions-auditions-pitches",
+      "to": "ia-spec:ia/13-opportunities-casting",
+      "type": "derives_from",
+      "source": "ia-source"
+    },
+    {
+      "from": "be-spec:be/13b-submissions-auditions-pitches",
+      "to": "ia-spec:ia/13-opportunities-casting",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "be-spec:be/13c-triage-offers-dispositions",
+      "to": "ia-spec:ia/13-opportunities-casting",
+      "type": "derives_from",
+      "source": "ia-source"
+    },
+    {
+      "from": "be-spec:be/13c-triage-offers-dispositions",
+      "to": "ia-spec:ia/13-opportunities-casting",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "be-spec:be/13d-handoff-history-specialized-calls",
+      "to": "ia-spec:ia/13-opportunities-casting",
+      "type": "derives_from",
+      "source": "ia-source"
+    },
+    {
+      "from": "be-spec:be/13d-handoff-history-specialized-calls",
+      "to": "ia-spec:ia/13-opportunities-casting",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "be-spec:be/40-market-intelligence-signals",
+      "to": "ia-spec:ia/deep-dives/40-market-intelligence-signals",
+      "type": "derives_from",
+      "source": "ia-source"
+    },
+    {
+      "from": "be-spec:be/40-market-intelligence-signals",
+      "to": "ia-spec:ia/40-market-intelligence-signals",
+      "type": "derives_from",
+      "source": "ia-source"
+    },
+    {
+      "from": "be-spec:be/40-market-intelligence-signals",
+      "to": "ia-spec:ia/deep-dives/40-market-intelligence-signals",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "be-spec:be/40-market-intelligence-signals",
+      "to": "ia-spec:ia/40-market-intelligence-signals",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "be-spec:be/42-career-planning-risk",
+      "to": "ia-spec:ia/42-career-planning-risk",
+      "type": "derives_from",
+      "source": "ia-source"
+    },
+    {
+      "from": "be-spec:be/42-career-planning-risk",
+      "to": "ia-spec:ia/42-career-planning-risk",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "be-spec:be/index",
+      "to": "ia-spec:ia/index",
+      "type": "derives_from",
+      "source": "ia-source"
+    },
+    {
+      "from": "be-spec:be/index",
       "to": "ia-spec:ia/index",
       "type": "references",
       "source": "wikilink"
     },
     {
-      "from": "audit:audits/audit-scope",
-      "to": "audit:audits/2026-08-28-ia-ambiguity-report",
+      "from": "plan:be",
+      "to": "be-spec:be/00-infrastructure",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/01a-auth-account-linking",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/01b-party-identity-aliases",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/01c-relationships-authority-governance",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/01d-identifiers-legacy",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/02a-shadow-claim-ownership",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/02b-profile-portfolio-epk",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/02c-credentials-trader",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/03a-content-schema-registry",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/03b-editorial-workflow-publication",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/03c-composition-taxonomy-localization",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/04a-navigation-routes-discovery",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/04b-governed-media-renditions",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/04c-public-delivery-cache",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/05a-settings-flags-runtime",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/05b-admin-workspace-operations",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/05c-portability-quality-lifecycle",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/06a-case-intake-evidence",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/06b-policy-enforcement-appeals",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/06c-disputes-dmca-legal-risk",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/07a-credit-assertions-visibility",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/07b-session-capture-offline",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/07c-claims-attestations-confidence-taxonomy",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/08a-portability-ddex-emission",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/08b-union-session-reporting",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/08c-gear-credit-linkage",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/08d-ai-contribution-disclosure",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/09a-project-containers-creative-docs",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/09b-roster-invitations-vault-access",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/09c-audio-version-review-approval",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/09d-sessions-delivery-readiness",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/09e-daw-bridge-evidence-gate",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/10a-rights-objects-ledgers",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/10b-splits-points-buyouts-amendments",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/10c-title-control-conflicts-freezes",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/10d-ai-training-nil-consent",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/10e-identifiers-registration-evidence",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/11a-follows-connections-endorsements",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/11b-activity-feed-native-posts",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/11c-collaborator-discovery-calls",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/11d-collaboration-paths-warm-intros",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/11e-private-rolodex-crm",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/12a-scenes-stewardship-seeding",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/12b-craft-forums-qa",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/12c-contests-submissions-judging",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/12d-informal-listening-conference-events",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/13a-opportunity-publication-discovery-alerts",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/13b-submissions-auditions-pitches",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/13c-triage-offers-dispositions",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/13d-handoff-history-specialized-calls",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/14a-service-listings-quotes-engagements",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/14b-requirements-sla-milestones-revisions",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/14c-delivery-acceptance-exit-rights",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/14d-substitution-multiparty-supply",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/14e-repair-inspection-custody",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/15a-teacher-facets-discovery-trials",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/15b-lesson-booking-credits-delivery",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/15c-curriculum-feedback-practice",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/15d-group-mentorship-learning-paths",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/16a-course-authoring-publication-catalog",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/16b-course-commerce-consumption-refunds",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/16c-exam-evidence-credential-exclusion",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/16d-institution-gate-clinical-exclusion",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/17a-runtime-admission-latency-discovery",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/17b-live-room-monitoring-controls",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/17c-continuity-capture-alignment-attendance",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/17d-overdub-requests-delivery",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/18a-society-affiliation-registration",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/18b-statement-ingestion-matching-normalization",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/18c-royalty-calculation-restatement-statements",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/18d-royalty-payout-b3-gate",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/18e-royalty-recovery-statement-disputes",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/19a-live-returns-cue-sheet-expectations",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/19b-distribution-calendar-money-in-flight",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/19c-royalty-forecast-calibration",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/20a-sync-catalogue-briefs-holds",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/20b-clearance-evidence-consent",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/20c-owner-policy-quotes-mfn",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/20d-licence-issuance-verification-lifecycle",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/21a-sample-interpolation-remix-clearance",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/21b-creator-microlicensing-content-id",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/21c-ai-training-corpus-compensation",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/21d-cover-print-grand-right-routing",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/22a-release-build-readiness-footprint",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/22b-partner-message-delivery-status",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/22c-release-promotion-updates-takedowns",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/22d-ugc-claims-catalogue-migration",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/23a-gear-identity-claims-transfers",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/23b-theft-screening-recovery",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/23c-service-component-history",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/23d-valuation-insurance-discography",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/24a-gear-collections-publication",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/24b-rigs-compatibility-exports",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/24c-organization-register-backline",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/24d-custody-cases-manifests",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/25a-gear-catalog-authority-matching",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/25b-gear-listing-disclosure-lifecycle",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/25c-gear-inventory-bulk-channels",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/25d-gear-market-guides-storefront-policies",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/26a-gear-offers-cart-checkout",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/26b-gear-logistics-order-lifecycle",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/26c-gear-remedies-settlement-transfers",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/26d-gear-pickup-service-warranty",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/26e-gear-future-commerce-gates",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/27a-digital-product-catalog-compatibility",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/27b-digital-submission-qa-publication",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/27c-digital-entitlements-library-delivery",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/27d-digital-updates-assets-trials",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/27e-digital-enforcement-retirement-portability",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/28a-digital-purchases-beat-licensing",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/28b-digital-refunds-revocation-clearance",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/28c-digital-transfers-promotions-upgrades",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/28d-digital-contributor-revenue",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/29a-place-room-authority-status",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/29b-room-specs-accessibility-conformance",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/29c-room-calendars-holds-enquiries",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/29d-room-reservations-series-handoff",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/30a-booking-avails-commercial-positions",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/30b-booking-offers-approval-acceptance",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/30c-booking-documents-payments-announcement",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/30d-booking-cancellation-postponement-exclusivity",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/30e-booking-rfq-bill-construction",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/31a-agency-terms-pipeline-commission",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/31b-settlement-inputs-reconciliation-disputes",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/31c-settlement-finality-restatement-export",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/31d-live-splits-disbursement-tax",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/31e-live-draw-guidance-reliability-demand",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/32a-production-events-bill-rehearsal",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/32b-rider-sensitive-disclosure-redlines",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/32c-stage-plan-capability-allocation",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/32d-advance-checklist-freeze",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/33a-show-setlists-files-performance",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/33b-run-of-show-crew-credentials",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/33c-gear-manifest-loadout-daysheet",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/33d-safety-weather-postshow-corrections",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/34a-tour-container-routing-book",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/34b-tour-travel-rooming-ground-perdiem",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/34c-tour-budgets-actuals-expenses",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/34d-tour-border-merch-carbon",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/35a-ticket-inventory-onsale-presale",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/35b-ticket-carts-orders-waitlists",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/35c-ticket-guest-allocations-door",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/35d-ticket-vip-rsvp-conversion",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/35e-ticket-delivery-transfer-claim",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/36a-door-replicas-scans-age",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/36b-boxoffice-counts-drops-walkup-close",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/36c-ticket-refunds-event-changes",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/36d-external-counts-attestation-reconciliation",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/36e-ticket-limits-transfer-exchange-consent",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/37-fanbase-direct-to-fan",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/38-promotion-marketing",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/39-analytics-ingestion-reporting",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/40-market-intelligence-signals",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/41a-income-tax-receivables",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/41b-deals-recoupment-pl",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/42-career-planning-risk",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:be",
+      "to": "be-spec:be/index",
       "type": "references",
       "source": "wikilink"
     },
@@ -67308,14 +69716,16 @@
     "byNodeType": {
       "plan": 12,
       "architecture": 17,
-      "audit": 3,
+      "audit": 4,
+      "be-spec": 157,
       "ia-spec": 85,
       "ideation": 1186,
       "decision": 97
     },
     "byEdgeType": {
       "constrained_by": 9041,
-      "references": 539,
+      "references": 736,
+      "derives_from": 20,
       "split_from": 3
     }
   }

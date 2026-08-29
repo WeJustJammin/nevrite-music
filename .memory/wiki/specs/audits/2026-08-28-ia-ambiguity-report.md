@@ -216,7 +216,7 @@ Not applicable. The scoring reference mandates IA→BE, BE→FE, IA→FE, and er
 
 ### References
 - [[specs/ia/index|IA Layer — Information Architecture]]
-- [[specs/audits/audit-scope|Ambiguity Audit Scope — IA]]
+- [[specs/audits/audit-scope|Ambiguity Audit Scope — BE]]
 - [[specs/ideation/ideation-index|Ideation Index — WeJammin]]
 - [[specs/ideation/moscow-ledger|WeJammin — MoSCoW Ledger]]
 - [[specs/ia/06-trust-safety|Shard 06 — Trust, safety, disputes and evidence]]

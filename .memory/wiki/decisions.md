@@ -2,8 +2,8 @@
 
 ## Summary
 
-- **Total decisions**: 99
-- **Unique decision titles**: 99
+- **Total decisions**: 100
+- **Unique decision titles**: 100
 
 ## DEC-001: The rights stack is the thesis, not an adjacency (2026-07-16)
 
@@ -1460,6 +1460,20 @@ Owner approved the recommended architecture decomposition: 43 total IA shards co
 - **Downstream**: Shard 07 takes a reciprocal taxonomy-model edit and changelog entry for `vault_role_class`; shard 09 keys `ResolveVaultAccess` on it. Classifying newly admitted DDEX roles becomes ongoing taxonomy-admin work, harmless by default because unclassified floors to `review`. DEC-016's boundaries hold: no per-asset ACLs, no project-wide grants, no owner-configured-only model. `/create-prd-security` still owes the profile-versioning and enforcement-rollout design.
 - **Reversibility**: High while `profile_version` is 0 — nothing is enforceable until an approved version lands.
 
+## DEC-100: Shard 02 accepts bounded inbound evidence and policy commands without upward store reads (2026-08-28)
+
+- **Occurrences**: 1
+- **Latest timestamp**: 2026-08-28T19:00:00-04:00
+- **Agents**: codex
+- **Sources**: /write-be-spec Shard 02
+- **Index**: [[index]]
+
+- **Problem**: Shard 02 profile, credential and trader projections consume media, credit, attendance, consent, policy and marketplace evidence canonically owned by later-numbered shards. Direct reads into those stores would reverse dependency direction, couple availability and let this shard reinterpret producer truth.
+- **Options considered**: (A) direct request-time reads from higher-numbered stores; (B) duplicate canonical truth in Shard 02; (C) accept bounded, versioned producer observations and protected commands through transactional outbox, signed ingress and idempotent inbox contracts.
+- **Decision**: Option C. Later shards retain canonical ownership and deliver only allowlisted, versioned observations or policy commands. Shard 02 authenticates the producer, validates the exact schema and monotonic source version, stores the bounded local projection, and never reads a higher-numbered store. Critical consequences use protected commands rather than advisory events. Shard 05 may operate generic governed publication, while 02c owns qualification and trader policy semantics, rule versions and evaluation behavior.
+- **Downstream**: 02a consumes party, proof and Shard 06 outcome inputs; 02b consumes Shard 04 media, Shard 07 credit, Shard 17 attendance and Shard 20 consent observations; 02c consumes governed Shard 05 policy publication and bounded marketplace signals. Producers use at-least-once delivery, idempotent inboxes, version fencing, retry and DLQ recovery.
+- **Reversibility**: Medium. Producer schemas and adapters can evolve version by version, but changing canonical ownership or permitting request-time upward reads requires rerunning the originating architecture stage and cascading downstream.
+
 ## Full Log
 
 ### DEC-001: The rights stack is the thesis, not an adjacency (2026-07-16)
@@ -2817,3 +2831,16 @@ Owner approved the recommended architecture decomposition: 43 total IA shards co
 - **Precedent**: follows DEC-047 (P-01 stage vocabulary) — candidate values are evidence, not contract; the gate is in force, so no draft label becomes a downstream contract. Same disposition as the DAW-parsing and vault-profile calls.
 - **Downstream**: Shard 07 takes a reciprocal taxonomy-model edit and changelog entry for `vault_role_class`; shard 09 keys `ResolveVaultAccess` on it. Classifying newly admitted DDEX roles becomes ongoing taxonomy-admin work, harmless by default because unclassified floors to `review`. DEC-016's boundaries hold: no per-asset ACLs, no project-wide grants, no owner-configured-only model. `/create-prd-security` still owes the profile-versioning and enforcement-rollout design.
 - **Reversibility**: High while `profile_version` is 0 — nothing is enforceable until an approved version lands.
+
+### DEC-100: Shard 02 accepts bounded inbound evidence and policy commands without upward store reads (2026-08-28)
+
+- **Timestamp**: 2026-08-28T19:00:00-04:00
+- **Agent**: codex
+- **Source**: /write-be-spec Shard 02
+- **Tags**: decision, backend, shard-02, dependency-direction, events
+
+- **Problem**: Shard 02 profile, credential and trader projections consume media, credit, attendance, consent, policy and marketplace evidence canonically owned by later-numbered shards. Direct reads into those stores would reverse dependency direction, couple availability and let this shard reinterpret producer truth.
+- **Options considered**: (A) direct request-time reads from higher-numbered stores; (B) duplicate canonical truth in Shard 02; (C) accept bounded, versioned producer observations and protected commands through transactional outbox, signed ingress and idempotent inbox contracts.
+- **Decision**: Option C. Later shards retain canonical ownership and deliver only allowlisted, versioned observations or policy commands. Shard 02 authenticates the producer, validates the exact schema and monotonic source version, stores the bounded local projection, and never reads a higher-numbered store. Critical consequences use protected commands rather than advisory events. Shard 05 may operate generic governed publication, while 02c owns qualification and trader policy semantics, rule versions and evaluation behavior.
+- **Downstream**: 02a consumes party, proof and Shard 06 outcome inputs; 02b consumes Shard 04 media, Shard 07 credit, Shard 17 attendance and Shard 20 consent observations; 02c consumes governed Shard 05 policy publication and bounded marketplace signals. Producers use at-least-once delivery, idempotent inboxes, version fencing, retry and DLQ recovery.
+- **Reversibility**: Medium. Producer schemas and adapters can evolve version by version, but changing canonical ownership or permitting request-time upward reads requires rerunning the originating architecture stage and cascading downstream.

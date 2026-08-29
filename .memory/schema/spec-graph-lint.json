@@ -1,5 +1,5 @@
 {
-  "builtAt": "2026-08-28T07:08:05.216Z",
+  "builtAt": "2026-08-29T05:47:56.841Z",
   "issues": [
     {
       "severity": "warning",
@@ -100,8 +100,8 @@
     {
       "severity": "warning",
       "code": "ORPHAN_SPEC",
-      "message": ".memory/wiki/specs/be.md has no graph relationships",
-      "path": ".memory/wiki/specs/be.md"
+      "message": ".memory/wiki/specs/audits/2026-08-28-be-ambiguity-report.md has no graph relationships",
+      "path": ".memory/wiki/specs/audits/2026-08-28-be-ambiguity-report.md"
     },
     {
       "severity": "warning",

@@ -131,5 +131,5 @@ Not applicable to this IA-only invocation. No BE or FE specifications exist on d
 
 ### References
 - [[specs/ia/index|IA Layer — Information Architecture]]
-- [[specs/audits/audit-scope|Ambiguity Audit Scope — IA]]
+- [[specs/audits/audit-scope|Ambiguity Audit Scope — BE]]
 - [[specs/audits/2026-08-28-ia-ambiguity-report|IA Ambiguity Audit — Fresh Run (2026-08-28)]]

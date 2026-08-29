@@ -1,10 +1,10 @@
 # Spec Pipeline Progress
 
 **Project**: WeJammin
-**Last updated**: 2026-08-28
-**Overall**: IA 43/43 authored and independently ambiguity-passed (**fresh rerun PASS — 0/344 = 0.00%, 2026-08-28**); BE 0 — deleted; FE 0 — deleted
+**Last updated**: 2026-08-29
+**Overall**: IA 43/43 authored and independently ambiguity-passed (**fresh rerun PASS — 0/344 = 0.00%, 2026-08-28**); BE 156/156 authored and independently ambiguity-passed (**fresh run PASS — 0/1716 = 0.00%, 2026-08-29**); FE 0/43 authored
 
-> `.memory/wiki/specs/be/` and `.memory/wiki/specs/fe/` were emptied by commit `5c4e712` "Deleted premature fe/be specs" on 2026-08-05. The per-shard BE/FE columns below are historical and no longer reflect disk. Fresh IA rerun 1 passed at 0/344; `/write-be-spec` is the next valid stage.
+> `.memory/wiki/specs/be/` and `.memory/wiki/specs/fe/` were emptied by commit `5c4e712` "Deleted premature fe/be specs" on 2026-08-05. The BE/FE columns below have been normalized to current disk truth; historical completion claims were removed. Fresh IA rerun 1 passed at 0/344 and the fresh BE run passed at 0/1716; `/write-fe-spec` is now the valid stage.
 
 ## Legend
 
@@ -18,21 +18,21 @@
 
 | # | Shard | File | IA Spec | BE Spec | FE Spec |
 |---|---|---|---|---|---|
-| 00 | Cross-cutting platform foundation | .memory/wiki/specs/ia/00-infrastructure.md | complete | complete | complete |
-| 01 | Identity authority and party governance | .memory/wiki/specs/ia/01-identity-authority.md | complete | complete | complete |
-| 02 | Profiles, claiming and qualifications | .memory/wiki/specs/ia/02-profiles-verification.md | complete | complete | complete |
-| 03 | CMS content modeling and authoring | .memory/wiki/specs/ia/03-cms-content-modeling.md | complete | complete | complete |
-| 04 | CMS navigation, media and delivery | .memory/wiki/specs/ia/04-cms-delivery-media.md | complete | complete | complete |
-| 05 | Platform configuration, admin and quality | .memory/wiki/specs/ia/05-platform-configuration-admin.md | complete | complete | complete |
-| 06 | Trust, safety, disputes and evidence | .memory/wiki/specs/ia/06-trust-safety.md | complete | complete | complete |
-| 07 | Credit graph, capture and confidence | .memory/wiki/specs/ia/07-credits-core.md | complete | complete | complete |
-| 08 | Credit reporting, exchange and disclosure | .memory/wiki/specs/ia/08-credit-reporting-disclosure.md | complete | complete | complete |
-| 09 | Music projects and collaboration | .memory/wiki/specs/ia/09-projects-collaboration.md | complete | complete | complete |
-| 10 | Rights and ownership | .memory/wiki/specs/ia/10-rights-ownership.md | complete | complete | complete |
-| 11 | Social graph and collaborator network | .memory/wiki/specs/ia/11-community-graph.md | complete | complete | complete |
-| 12 | Communities, participatory spaces and events | .memory/wiki/specs/ia/12-community-spaces-events.md | complete | complete | complete |
-| 13 | Opportunities and casting lifecycle | .memory/wiki/specs/ia/13-opportunities-casting.md | complete | complete | complete |
-| 14 | Services marketplace lifecycle | .memory/wiki/specs/ia/14-services-marketplace.md | complete | complete | complete |
+| 00 | Cross-cutting platform foundation | .memory/wiki/specs/ia/00-infrastructure.md | complete | complete | not-started |
+| 01 | Identity authority and party governance | .memory/wiki/specs/ia/01-identity-authority.md | complete | complete | not-started |
+| 02 | Profiles, claiming and qualifications | .memory/wiki/specs/ia/02-profiles-verification.md | complete | complete | not-started |
+| 03 | CMS content modeling and authoring | .memory/wiki/specs/ia/03-cms-content-modeling.md | complete | complete | not-started |
+| 04 | CMS navigation, media and delivery | .memory/wiki/specs/ia/04-cms-delivery-media.md | complete | complete | not-started |
+| 05 | Platform configuration, admin and quality | .memory/wiki/specs/ia/05-platform-configuration-admin.md | complete | complete | not-started |
+| 06 | Trust, safety, disputes and evidence | .memory/wiki/specs/ia/06-trust-safety.md | complete | complete | not-started |
+| 07 | Credit graph, capture and confidence | .memory/wiki/specs/ia/07-credits-core.md | complete | complete | not-started |
+| 08 | Credit reporting, exchange and disclosure | .memory/wiki/specs/ia/08-credit-reporting-disclosure.md | complete | complete | not-started |
+| 09 | Music projects and collaboration | .memory/wiki/specs/ia/09-projects-collaboration.md | complete | complete | not-started |
+| 10 | Rights and ownership | .memory/wiki/specs/ia/10-rights-ownership.md | complete | complete | not-started |
+| 11 | Social graph and collaborator network | .memory/wiki/specs/ia/11-community-graph.md | complete | complete | not-started |
+| 12 | Communities, participatory spaces and events | .memory/wiki/specs/ia/12-community-spaces-events.md | complete | complete | not-started |
+| 13 | Opportunities and casting lifecycle | .memory/wiki/specs/ia/13-opportunities-casting.md | complete | complete | not-started |
+| 14 | Services marketplace lifecycle | .memory/wiki/specs/ia/14-services-marketplace.md | complete | complete | not-started |
 | 15 | Lessons, practice and mentorship delivery | .memory/wiki/specs/ia/15-education-delivery.md | complete | complete | not-started |
 | 16 | Courses, credentials, institutions and special practice | .memory/wiki/specs/ia/16-education-credentials-institutions.md | complete | complete | not-started |
 | 17 | Real-time jamming and remote sessions | .memory/wiki/specs/ia/17-realtime-sessions.md | complete | complete | not-started |
@@ -64,27 +64,12 @@
 
 ## Spec Completion Tracking
 
-Shards with all three specifications complete:
-
-- Shard 00 — Cross-cutting platform foundation.
-- Shard 01 — Identity authority and party governance.
-- Shard 02 — Profiles, claiming and qualifications.
-- Shard 03 — CMS content modeling and authoring.
-- Shard 04 — CMS navigation, media and delivery.
-- Shard 05 — Platform configuration, admin and quality.
-- Shard 06 — Trust, safety, disputes and evidence.
-- Shard 07 — Credit graph, capture and confidence.
-- Shard 08 — Credit reporting, exchange and disclosure.
-- Shard 09 — Music projects and collaboration.
-- Shard 10 — Rights and ownership.
-- Shard 11 — Social graph and collaborator network.
-- Shard 12 — Communities, participatory spaces and events.
-- Shard 13 — Opportunities and casting lifecycle.
-- Shard 14 — Services marketplace lifecycle.
+Shards with all three specifications complete: none. Shards 00–42 now have IA and BE complete; their FE specifications remain not started.
 
 ## Next Target
 
-- **NEXT:** run `/write-be-spec`.
+- **NEXT:** begin `/write-fe-spec` with Shard 00, then continue in dependency order.
 - Fresh IA ambiguity rerun 1 on 2026-08-28 scored 0/344 = 0.00% (PASS), covering all 83 IA documents and all 43 shards. See `.memory/wiki/specs/audits/2026-08-28-ia-ambiguity-rerun-1.md`.
-- BE and FE documents are absent on disk. Re-author BE first, then FE, then run `/plan-phase` to produce the approved implementation phase plan required by `/setup-workspace`.
+- Fresh BE ambiguity run completed on 2026-08-29 at 0/1716 = 0.00% (PASS), covering all 156 backend specifications. See `.memory/wiki/specs/audits/2026-08-28-be-ambiguity-report.md`.
+- BE authoring and ambiguity gating are complete for Shards 00–42. Author FE in shard order, run the FE ambiguity gate, and then run `/plan-phase` to produce the approved implementation phase plan required by `/setup-workspace`.
 - `/setup-workspace` preflight stopped on 2026-08-28 because no approved phase plan exists; no scaffold or provider state was changed.

@@ -1,9 +1,49 @@
 # Spec Graph
 
-- **Nodes**: 1400
-- **Edges**: 9583
+- **Nodes**: 1558
+- **Edges**: 9800
 
 ## Relationship Chains
+
+### [[specs/ia/00-infrastructure|Shard 00 — Cross-cutting platform foundation]]
+- derives_from: [[specs/be/00-infrastructure|Cross-cutting Platform Foundation — Backend Specification]]
+
+### [[specs/ia/01-identity-authority|Shard 01 — Identity authority and party governance]]
+- derives_from: [[specs/be/01a-auth-account-linking|Authentication & Account Linking — Backend Specification]]
+- derives_from: [[specs/be/01b-party-identity-aliases|Shard 01b — Party Identity & Aliases — Backend Specification]]
+- derives_from: [[specs/be/01c-relationships-authority-governance|Relationships, Authority & Governance — Backend Specification]]
+- derives_from: [[specs/be/01d-identifiers-legacy|Identifiers & Legacy — Backend Specification]]
+
+### [[specs/ia/02-profiles-verification|Shard 02 — Profiles, claiming and qualifications]]
+- derives_from: [[specs/be/02a-shadow-claim-ownership|Shadow Claims & Ownership — Backend Specification]]
+- derives_from: [[specs/be/02b-profile-portfolio-epk|Profile, Portfolio & EPK — Backend Specification]]
+- derives_from: [[specs/be/02c-credentials-trader|Credentials & Trader Classification — Backend Specification]]
+
+### [[specs/ia/08-credit-reporting-disclosure|Shard 08 — Credit reporting, exchange and disclosure]]
+- derives_from: [[specs/be/08d-ai-contribution-disclosure|BE 08d — AI contribution disclosure]]
+
+### [[specs/ia/13-opportunities-casting|Shard 13 — Opportunities and casting lifecycle]]
+- derives_from: [[specs/be/13a-opportunity-publication-discovery-alerts|Opportunity Publication, Discovery & Alerts — Backend Specification]]
+- derives_from: [[specs/be/13b-submissions-auditions-pitches|Opportunity Submissions, Auditions & Pitches — Backend Specification]]
+- derives_from: [[specs/be/13c-triage-offers-dispositions|Opportunity Triage, Offers & Dispositions — Backend Specification]]
+- derives_from: [[specs/be/13d-handoff-history-specialized-calls|Opportunity Handoff, History & Specialized Calls — Backend Specification]]
+
+### [[specs/ia/40-market-intelligence-signals|Shard 40 — Market intelligence, fraud and scouting signals]]
+- derives_from: [[specs/be/40-market-intelligence-signals|Market Intelligence, Fraud & Scouting Signals — Backend Specification]]
+
+### [[specs/ia/42-career-planning-risk|Shard 42 — Career planning, insurance and sustainability]]
+- derives_from: [[specs/be/42-career-planning-risk|Career Planning, Insurance & Sustainability Boundary — Backend Specification]]
+
+### [[specs/ia/deep-dives/02-profiles-verification|Deep Dive 02 — Profiles, claiming and qualifications]]
+- derives_from: [[specs/be/02a-shadow-claim-ownership|Shadow Claims & Ownership — Backend Specification]]
+- derives_from: [[specs/be/02b-profile-portfolio-epk|Profile, Portfolio & EPK — Backend Specification]]
+- derives_from: [[specs/be/02c-credentials-trader|Credentials & Trader Classification — Backend Specification]]
+
+### [[specs/ia/deep-dives/40-market-intelligence-signals|Deep Dive 40 — Market intelligence, fraud and scouting signals]]
+- derives_from: [[specs/be/40-market-intelligence-signals|Market Intelligence, Fraud & Scouting Signals — Backend Specification]]
+
+### [[specs/ia/index|IA Layer — Information Architecture]]
+- derives_from: [[specs/be/index|BE Layer — Backend Specifications]]
 
 ## Orphans
 
@@ -23,7 +63,7 @@
 - [[specs/architecture/prd-working/design-system-synthesis|Design System Synthesis]]
 - [[specs/architecture/prd-working/ideation-relevance-index|Ideation Relevance Index]]
 - [[specs/architecture/prd-working/persistence-map-interview|Persistence Map Interview]]
-- [[specs/be|BE Specs Hub]]
+- [[specs/audits/2026-08-28-be-ambiguity-report|BE Ambiguity Audit — Fresh Run (2026-08-28)]]
 - [[specs/fe|FE Specs Hub]]
 - [[specs/ideation/09-rights-ownership/09.03-chain-of-title-lifecycle/09.03-chain-of-title-lifecycle-cx|Chain of Title & Rights Lifecycle — Cross-Cuts]]
 - [[specs/ideation/09-rights-ownership/09.05-ai-voice-likeness-consent/09.05-ai-voice-likeness-consent-cx|AI, Voice & Likeness Consent — Cross-Cuts]]
