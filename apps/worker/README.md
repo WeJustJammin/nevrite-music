@@ -1,21 +1,22 @@
-```txt
-npm install
-npm run dev
+# WeJammin API Worker
+
+Run locally from the repository root:
+
+```sh
+pnpm dev:worker
 ```
 
-```txt
-npm run deploy
+Deploy only through an explicit environment command:
+
+```sh
+pnpm --filter @wejammin/worker deploy:staging
+pnpm --filter @wejammin/worker deploy:production
 ```
 
-[For generating/synchronizing types based on your Worker configuration run](https://developers.cloudflare.com/workers/wrangler/commands/#types):
+Production deployment requires the protected GitHub `production` environment. Never use a generic deploy command because Wrangler environments map to separate Cloudflare services.
 
-```txt
-npm run cf-typegen
-```
+Generate Cloudflare binding types after changing `wrangler.jsonc`:
 
-Pass the `CloudflareBindings` as generics when instantiating `Hono`:
-
-```ts
-// src/index.ts
-const app = new Hono<{ Bindings: CloudflareBindings }>();
+```sh
+pnpm --filter @wejammin/worker cf-typegen
 ```
