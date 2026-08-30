@@ -7,6 +7,7 @@ runs:
     - name: Set up pnpm 11.24.0
       uses: pnpm/action-setup@0977fd99725f1db4007ccb2928dbb4e90d06cc86 # v6
       with:
+        dest: ${{ runner.temp }}/setup-pnpm
         version: 11.24.0
 
     - name: Set up Node.js from .node-version
