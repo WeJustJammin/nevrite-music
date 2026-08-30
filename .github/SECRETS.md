@@ -8,7 +8,6 @@ Provider credentials belong in protected GitHub environments, never repository-l
 
 | Name                        | Owner   | Purpose                                                                    |
 | --------------------------- | ------- | -------------------------------------------------------------------------- |
-| `CLOUDFLARE_ACCOUNT_ID`     | Hosting | Select the WeJammin Cloudflare account.                                    |
 | `CLOUDFLARE_API_TOKEN`      | Hosting | Deploy Workers/assets with least-privilege edit permissions.               |
 | `SUPABASE_ACCESS_TOKEN`     | Data    | Manage the staging Supabase project through the CLI.                       |
 | `SUPABASE_DB_PASSWORD`      | Data    | Apply and verify staging database migrations.                              |
@@ -23,6 +22,12 @@ Provider credentials belong in protected GitHub environments, never repository-l
 
 Production uses the same names in the protected `production` environment with distinct values, required reviewers, main-branch restrictions, and serialized deployment concurrency. Staging values must never be copied into production or vice versa.
 
+The Cloudflare token is restricted to the WeJammin account with only Workers Scripts Edit and Cloudflare Pages Edit permissions. Create separate staging and production tokens; never reuse the interactive Wrangler OAuth credential in CI.
+
 ## Environment variables
 
-Browser-safe values are environment variables rather than secrets: `PUBLIC_APP_ORIGIN`, `PUBLIC_SUPABASE_URL`, `PUBLIC_SUPABASE_PUBLISHABLE_KEY`, and `PUBLIC_SENTRY_DSN`. Server-only values remain secrets even when an upstream provider describes them as identifiers.
+Non-secret GitHub environment variables include `CLOUDFLARE_ACCOUNT_ID`, `STAGING_WEB_ORIGIN`, and `STAGING_API_ORIGIN`. Browser-safe application values are also variables rather than secrets: `PUBLIC_APP_ORIGIN`, `PUBLIC_SUPABASE_URL`, `PUBLIC_SUPABASE_PUBLISHABLE_KEY`, and `PUBLIC_SENTRY_DSN`. Server-only values remain secrets even when an upstream provider describes them as identifiers.
+
+## Cost control
+
+Workers Paid runs under DEC-103's soft $10/month operational budget. Cloudflare's enabled account-level `Billing Budget Alert` is set to exactly `$10` and delivers to the owner email. Both Worker environments retain a 50 ms per-invocation CPU cap; any expected increase above the budget requires a new owner decision before configuration changes.

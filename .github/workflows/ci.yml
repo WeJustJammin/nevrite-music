@@ -4,7 +4,7 @@ on:
   push:
     paths:
       - '.github/actions/**'
-      - '.github/workflows/ci.yml'
+      - '.github/workflows/**'
       - '.node-version'
       - '.npmrc'
       - 'apps/**'
@@ -25,7 +25,7 @@ on:
     types: [opened, synchronize, reopened, ready_for_review]
     paths:
       - '.github/actions/**'
-      - '.github/workflows/ci.yml'
+      - '.github/workflows/**'
       - '.node-version'
       - '.npmrc'
       - 'apps/**'
