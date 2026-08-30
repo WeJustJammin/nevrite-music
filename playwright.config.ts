@@ -1,5 +1,8 @@
 import { defineConfig, devices } from '@playwright/test';
 
+// Playwright must own the server lifetime even when Astro detects an agent host.
+process.env.ASTRO_DEV_BACKGROUND = '0';
+
 export default defineConfig({
   forbidOnly: Boolean(process.env.CI),
   fullyParallel: true,
