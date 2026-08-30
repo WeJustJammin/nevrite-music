@@ -1,0 +1,2 @@
+# Supabase CLI output is committed byte-for-byte so CI can detect schema drift.
+packages/data-access/src/database.types.ts

@@ -11,7 +11,6 @@ Provider credentials belong in protected GitHub environments, never repository-l
 | `CLOUDFLARE_API_TOKEN`      | Hosting | Deploy Workers/assets with least-privilege edit permissions.               |
 | `SUPABASE_ACCESS_TOKEN`     | Data    | Manage the staging Supabase project through the CLI.                       |
 | `SUPABASE_DB_PASSWORD`      | Data    | Apply and verify staging database migrations.                              |
-| `SUPABASE_PROJECT_ID`       | Data    | Bind commands to the approved staging project.                             |
 | `SUPABASE_SERVICE_ROLE_KEY` | Data    | Server-only administrative operations; never exposed to Astro client code. |
 | `SENTRY_AUTH_TOKEN`         | Hosting | Upload release and source-map metadata.                                    |
 | `RESEND_API_KEY`            | Hosting | Send staging transactional email.                                          |
@@ -26,7 +25,7 @@ The Cloudflare token is restricted to the WeJammin account with only Workers Scr
 
 ## Environment variables
 
-Non-secret GitHub environment variables include `CLOUDFLARE_ACCOUNT_ID`, `STAGING_WEB_ORIGIN`, and `STAGING_API_ORIGIN`. Browser-safe application values are also variables rather than secrets: `PUBLIC_APP_ORIGIN`, `PUBLIC_SUPABASE_URL`, `PUBLIC_SUPABASE_PUBLISHABLE_KEY`, and `PUBLIC_SENTRY_DSN`. Server-only values remain secrets even when an upstream provider describes them as identifiers.
+Non-secret GitHub environment variables include `CLOUDFLARE_ACCOUNT_ID`, `STAGING_WEB_ORIGIN`, `STAGING_API_ORIGIN`, `SUPABASE_PROJECT_REF`, and `SUPABASE_URL`. Browser-safe application values are also variables rather than secrets: `PUBLIC_APP_ORIGIN`, `PUBLIC_SUPABASE_URL`, `PUBLIC_SUPABASE_PUBLISHABLE_KEY`, and `PUBLIC_SENTRY_DSN`. Administrative keys, database passwords, and provider access tokens remain secrets.
 
 ## Cost control
 

@@ -1,0 +1,2 @@
+-- Domain fixtures are added by their owning vertical slices.
+-- Keep the operational-foundation seed deterministic and free of production data.
