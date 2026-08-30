@@ -63,8 +63,18 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
+          if [[ ! "$DEPLOY_SHA" =~ ^[0-9a-f]{40}$ ]]; then
+            echo "::error::DEPLOY_SHA must be a full lowercase commit SHA"
+            exit 1
+          fi
+          test "$(git rev-parse HEAD)" = "$DEPLOY_SHA"
           test -f .artifacts/web/dist/client/index.html
           test -f .artifacts/worker/dist/index.js
+
+      - name: Record promoted artifact digests
+        shell: bash
+        run: |
+          set -euo pipefail
           find .artifacts -type f -print0 \
             | sort -z \
             | xargs -0 sha256sum > deployment-manifest.sha256
@@ -85,6 +95,8 @@ jobs:
           "$GITHUB_WORKSPACE/.artifacts/worker/dist/index.js"
           --config wrangler.jsonc
           --env staging
+          --var APP_ENVIRONMENT:staging
+          --var APP_RELEASE:"$DEPLOY_SHA"
 
       - name: Verify public staging contracts
         run: pnpm verify:staging

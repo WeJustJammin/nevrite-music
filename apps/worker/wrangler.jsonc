@@ -12,6 +12,10 @@
     "enabled": true,
     "head_sampling_rate": 0.1,
   },
+  "vars": {
+    "APP_ENVIRONMENT": "production",
+    "APP_RELEASE": "local",
+  },
   "env": {
     "staging": {
       "name": "wejammin-api-staging",
@@ -22,6 +26,10 @@
       "observability": {
         "enabled": true,
         "head_sampling_rate": 0.1,
+      },
+      "vars": {
+        "APP_ENVIRONMENT": "staging",
+        "APP_RELEASE": "local",
       },
     },
   },

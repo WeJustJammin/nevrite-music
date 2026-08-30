@@ -5,7 +5,11 @@ export default defineConfig({
     coverage: {
       all: true,
       exclude: ['**/*.test.ts'],
-      include: ['apps/worker/src/**/*.ts', 'packages/contracts/src/**/*.ts'],
+      include: [
+        'apps/worker/src/**/*.ts',
+        'packages/contracts/src/**/*.ts',
+        'packages/observability/src/**/*.ts',
+      ],
       provider: 'v8',
       reporter: ['text', 'json-summary'],
       thresholds: {
