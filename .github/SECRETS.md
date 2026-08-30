@@ -6,16 +6,16 @@ Provider credentials belong in protected GitHub environments, never repository-l
 
 ## Staging environment secrets
 
-| Name                        | Owner   | Purpose                                                                    |
-| --------------------------- | ------- | -------------------------------------------------------------------------- |
-| `CLOUDFLARE_API_TOKEN`      | Hosting | Deploy Workers/assets with least-privilege edit permissions.               |
-| `SUPABASE_ACCESS_TOKEN`     | Data    | Manage the staging Supabase project through the CLI.                       |
-| `SUPABASE_DB_PASSWORD`      | Data    | Apply and verify staging database migrations.                              |
-| `SUPABASE_SERVICE_ROLE_KEY` | Data    | Server-only administrative operations; never exposed to Astro client code. |
-| `SENTRY_AUTH_TOKEN`         | Hosting | Upload release and source-map metadata.                                    |
-| `RESEND_API_KEY`            | Hosting | Send staging transactional email.                                          |
-| `STRIPE_SECRET_KEY`         | Hosting | Exercise counsel-approved Stripe-hosted staging flows.                     |
-| `STRIPE_WEBHOOK_SECRET`     | Hosting | Verify staging Stripe webhook signatures.                                  |
+| Name                    | Owner   | Purpose                                                               |
+| ----------------------- | ------- | --------------------------------------------------------------------- |
+| `CLOUDFLARE_API_TOKEN`  | Hosting | Deploy Workers/assets with least-privilege edit permissions.          |
+| `SUPABASE_ACCESS_TOKEN` | Data    | Manage the staging Supabase project through the CLI.                  |
+| `SUPABASE_DB_PASSWORD`  | Data    | Apply and verify staging database migrations.                         |
+| `SUPABASE_SECRET_KEY`   | Data    | Rotatable server-only API access; never exposed to Astro client code. |
+| `SENTRY_AUTH_TOKEN`     | Hosting | Upload release and source-map metadata.                               |
+| `RESEND_API_KEY`        | Hosting | Send staging transactional email.                                     |
+| `STRIPE_SECRET_KEY`     | Hosting | Exercise counsel-approved Stripe-hosted staging flows.                |
+| `STRIPE_WEBHOOK_SECRET` | Hosting | Verify staging Stripe webhook signatures.                             |
 
 ## Production environment secrets
 

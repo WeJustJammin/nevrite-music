@@ -2,7 +2,7 @@ begin;
 
 create extension if not exists pgtap with schema extensions;
 
-select plan(14);
+select plan(16);
 
 select has_schema(
   'platform_private',
@@ -62,6 +62,33 @@ select ok(
 select ok(
   not has_schema_privilege('authenticated', 'public', 'create'),
   'authenticated cannot create objects in public'
+);
+
+select is(
+  (
+    select setting
+    from (
+      select unnest(rolconfig) as setting
+      from pg_roles
+      where rolname = 'authenticator'
+    ) as authenticator_settings
+    where setting like 'pgrst.db_schemas=%'
+  ),
+  'pgrst.db_schemas=platform_api, public_api',
+  'PostgREST exposes only the two allowlisted API schemas'
+);
+select is(
+  (
+    select setting
+    from (
+      select unnest(rolconfig) as setting
+      from pg_roles
+      where rolname = 'authenticator'
+    ) as authenticator_settings
+    where setting like 'pgrst.db_extra_search_path=%'
+  ),
+  'pgrst.db_extra_search_path=extensions',
+  'PostgREST resolves extension helpers without searching public'
 );
 
 select * from finish();
