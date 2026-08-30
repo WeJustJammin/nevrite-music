@@ -726,7 +726,7 @@ Every operation emits a structured event with requestId, traceId, operationId, o
 | TSE-06C-10 | safety.leak.finding; match, watermark, trace gap, attribution and non-event counters | finding hash, asset hash, release state, match state, attribution, gap code |
 | TSE-06C-11 | safety.meetup.record.changed; restriction denial, controls offered/selected, check-out and incident referral counters | record hash, arrangement hash, control codes, timer bucket, state |
 
-Sentry receives sampled exception fingerprints and provider circuit state without request bodies. Alert thresholds are: legal release pending over 15 minutes, restoration deadline within 2 hours without delivery, dispute outbox lag over 60 seconds, forensic trace reconciliation over 5 minutes, flagger duplicate ratio over policy threshold, and meetup restriction-adapter unknown over 1 minute.
+provider-native diagnostic sinks receive sampled exception fingerprints and provider circuit state without request bodies. Alert thresholds are: legal release pending over 15 minutes, restoration deadline within 2 hours without delivery, dispute outbox lag over 60 seconds, forensic trace reconciliation over 5 minutes, flagger duplicate ratio over policy threshold, and meetup restriction-adapter unknown over 1 minute.
 
 ## Testing Strategy
 

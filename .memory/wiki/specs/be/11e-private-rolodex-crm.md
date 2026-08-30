@@ -100,7 +100,7 @@ export const FollowUpReminderActionRequest=z.discriminatedUnion("kind",[Schedule
 export const FollowUpReminderActionResult=z.object({reminderId:Uuid,state:z.enum(["scheduled","due","delivered","delivery_failed_retryable","snoozed","cancelled"]),dueAt:Iso,recurrence:Recurrence,version:Version,contactNotified:z.literal(false),replayed:z.boolean()}).strict();
 ```
 
-For source-contract traceability, `NoteAction`'s create/update branch is the executable expansion of `WritePrivateNote`; both literal identifiers are present. Dates must be at least one minute and at most ten years in the future for schedule/snooze. B5 content validation runs before encryption/persistence and returns only an allowlisted category code; raw rejected content is never stored, indexed, logged, traced, or sent to Sentry.
+For source-contract traceability, `NoteAction`'s create/update branch is the executable expansion of `WritePrivateNote`; both literal identifiers are present. Dates must be at least one minute and at most ten years in the future for schedule/snooze. B5 content validation runs before encryption/persistence and returns only an allowlisted category code; raw rejected content is never stored, indexed, logged, traced, or sent to provider-native diagnostics.
 
 ## Authorization and Disclosure
 
@@ -258,7 +258,7 @@ Every non-2xx body is exactly BE00 `ApiError { code, message, requestId, details
 | `COM17_PRIVATE_CONTEXT_ACTION` | owner/contact/context opaque hashes, type/action, policy version/result code, ciphertext byte bucket, versions/replay; plaintext absent | writes/rejections by safe category, CAS/replay/KMS failure; page any raw-content scrub detector hit |
 | `COM18_FOLLOW_UP_REMINDER_ACTION` | owner/reminder/contact hashes, action/state, due-time bucket, attempts, version/replay; no content | active/due/delivered/retry backlog, delivery latency, scheduler lag; page overdue p95 >10 min or contact-target violation >0 |
 
-`community_audit_event` carries exact actor/context/action/target and hashes but never plaintext. Sentry before-send drops request bodies for all `/crm/` routes and removes SQL bind values. KMS access, break-glass attempts, exports, and policy rejections are separately auditable.
+`community_audit_event` carries exact actor/context/action/target and hashes but never plaintext. provider-native diagnostics before-send drops request bodies for all `/crm/` routes and removes SQL bind values. KMS access, break-glass attempts, exports, and policy rejections are separately auditable.
 
 ## Verification and Test Strategy
 
@@ -267,12 +267,12 @@ Every non-2xx body is exactly BE00 `ApiError { code, message, requestId, details
 | Operation ID | Contract/auth/privacy tests | Idempotency/concurrency/failure/telemetry tests |
 |---|---|---|
 | `COM16_SHADOW_CONTACT_ACTION` | strict contact/owner schema; owner tuple; foreign 404; no subject signal; no auto email/name/cross-owner merge; reconcile requires literal confirmation/target | replay no duplicate; two reconciles one winner; child refs all-or-none; KMS/identity failure rollback; audit/log contains hashes only; CORS/rate/ApiError |
-| `COM17_PRIVATE_CONTEXT_ACTION` | bounds; same-owner composite relation; B5 special-category and unverified-allegation fixtures reject; schema proves no shared field/export | replay/mismatch; concurrent CAS; rejected input absent from DB/outbox/log/Sentry; KMS failure rollback; deletion key revocation; RLS/search/feed denial |
+| `COM17_PRIVATE_CONTEXT_ACTION` | bounds; same-owner composite relation; B5 special-category and unverified-allegation fixtures reject; schema proves no shared field/export | replay/mismatch; concurrent CAS; rejected input absent from DB/outbox/log/provider-native diagnostics; KMS failure rollback; deletion key revocation; RLS/search/feed denial |
 | `COM18_FOLLOW_UP_REMINDER_ACTION` | due/recurrence branches; owner/contact; active cap; only author notification; no contact reachability call | schedule/snooze/cancel CAS/replay; lease race one delivery; provider failure retryable not delivered; reconciliation moves ref; stale event no-op; telemetry redacted |
 
 Additional suites: Zod/OpenAPI/event snapshots; SQL checks/composite FKs/index plans; RLS/grant matrix for owner/foreign/admin/search/feed/scheduler/notifier; KMS purpose/key-rotation/deletion tests; B5 policy golden corpus and exception fail-closed test; transaction fault injection at every reconciliation statement; scheduler clock/DST/property tests; outbox dedup/order; ciphertext entropy/no-plaintext scans; backup/restore deletion-key proof; load tests at 2,000 active reminders.
 
-Release gates: backward-compatible OpenAPI diff, migration/rollback rehearsal, RLS/grant proof, encrypted backup restore test, cross-owner correlation negative test, B5 corpus approval, reconciliation invariant query, scheduler/notifier circuit drill, Sentry/log scrub scan, dashboards/alerts. Rollback freezes writes, drains private outbox, retains encrypted/audit truth, and never decrypts or exports data for migration convenience.
+Release gates: backward-compatible OpenAPI diff, migration/rollback rehearsal, RLS/grant proof, encrypted backup restore test, cross-owner correlation negative test, B5 corpus approval, reconciliation invariant query, scheduler/notifier circuit drill, provider-native diagnostics/log scrub scan, dashboards/alerts. Rollback freezes writes, drains private outbox, retains encrypted/audit truth, and never decrypts or exports data for migration convenience.
 
 ## Deepening Passes
 

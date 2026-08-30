@@ -666,7 +666,7 @@ export const ConfigKillSwitchChangedV1 = z.strictObject({
 | CFG-05A-06 | cfg.experiment.changed with experimentId/version, state, dimension count, consent status and outcome; protected-dimension rejects and assignment determinism failures | Trace consent registry; no traits, private content or individual assignment in logs |
 | CFG-05A-07 | cfg.kill_switch.changed with switchId/version, activationId, scope type, runtime hash, state and outcome; activation latency, fallback and reconciliation lag | Trace step-up, RPC and runtime verification; reason text, token and snapshot bytes are scrubbed |
 
-Sentry captures exception type, release and scrubbed IDs. Structured logs use
+diagnostic captures exception type, release and scrubbed IDs. Structured logs use
 the BE00 severity, environment, release, service, operation, outcome,
 latency, request and correlation fields. Metrics distinguish active,
 fallback, stale, pending, unknown and failed; no absence is interpreted as

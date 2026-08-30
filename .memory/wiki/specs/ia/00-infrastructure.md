@@ -36,7 +36,7 @@ Shard 00 defines the mandatory platform contracts every product shard inherits. 
 - **API and error contracts** — REST under `/api/v1`, Zod 4 validation, OpenAPI contracts, cursor pagination, idempotency, optimistic concurrency, rate metadata, and one global error shape.
 - **Data, storage and migration foundation** — Supabase PostgreSQL is canonical; RLS and reviewed RPCs enforce invariants; Storage bytes are governed by database metadata; Realtime is a refetch hint; migrations are forward-only.
 - **Async and provider effects** — Transactions atomically commit state, audit, idempotency, and outbox records; Queues are disposable at-least-once delivery; provider effects use local intent and reconciliation.
-- **Observability and release assurance** — Structured logs, traces, Sentry, SLO registration, CI gates, protected releases, runbooks, PITR, restore drills, and infrastructure verification make operations measurable.
+- **Observability and release assurance** — Structured logs, traces, provider-native diagnostics, SLO registration, CI gates, protected releases, runbooks, PITR, restore drills, and infrastructure verification make operations measurable.
 
 ## Acceptance Criteria
 
@@ -343,8 +343,8 @@ type QueueEnvelope = {
 ## Observability and Assurance
 
 - `@wejammin/observability` emits one newline-delimited JSON object per event with timestamp, severity, service, environment, event name, request/correlation/causation/trace IDs, job/attempt IDs when present, entity type/ID/version when safe, duration, outcome, and sanitized error code.
-- Logs never contain secrets, credentials, session tokens, raw request/response bodies, direct PII, payment data, evidence, or private content. Sentry uses `sendDefaultPii: false`; Session Replay is off.
-- Sampling retains 100% of errors and high-risk operations, 10% of ordinary authentication success, and 1% of public/cache success. Sentry receives exceptions and sampled spans, not the full log stream.
+- Logs never contain secrets, credentials, session tokens, raw request/response bodies, direct PII, payment data, evidence, or private content. Third-party PII collection and session replay are absent; structured diagnostics use allowlisted fields only.
+- Sampling retains 100% of errors and high-risk operations, 10% of ordinary authentication success, and 1% of public/cache success. provider-native diagnostic sinks receive exceptions and sampled spans, not the full log stream.
 - Seven SLO tiers are registered in code/config. Dashboards cover public delivery, authenticated API, async/outbox, provider/webhook, and database/recovery health.
 - Severity 1 alerts email immediately, target detection is 5 minutes, and owner acknowledgment target is 30 minutes during declared owner coverage; no 24/7 human-response promise is made.
 - Protected PostgreSQL transactions/RPCs target p95 ≤300ms. Undispatched outbox age, Queue first-attempt age, dead letters, webhook latency, normal-web latency, availability, and restore readiness are release/operations signals.

@@ -635,7 +635,7 @@ Each route registers service tier, criticality, owner `profiles-claims`, measure
 | Contest | Three attempts/target/rolling 90 days; no fee; one open target/person | 100% contest/transfer audit and trace, response deadline, freeze/case handoff |
 | Transfer/reversal | 10/min user; recipient step-up; reversal window and capability | owner/recipient classes, decision, version/reversal outcome; no private evidence |
 
-Required telemetry fields and forbidden fields inherit BE00. Forbidden: auth/cookie headers, tokens/codes, contact addresses, raw request/response, names/search text, provider payload, evidence, legal identity, media URLs/content, payment data, unrestricted IP/user agent. Sentry captures unexpected errors and all high-risk failures with `sendDefaultPii:false`; audit remains PostgreSQL truth.
+Required telemetry fields and forbidden fields inherit BE00. Forbidden: auth/cookie headers, tokens/codes, contact addresses, raw request/response, names/search text, provider payload, evidence, legal identity, media URLs/content, payment data, unrestricted IP/user agent. Structured diagnostics record unexpected errors and all high-risk failures with allowlisted fields only; audit remains PostgreSQL truth.
 
 ## Contract, Security and Recovery Tests
 

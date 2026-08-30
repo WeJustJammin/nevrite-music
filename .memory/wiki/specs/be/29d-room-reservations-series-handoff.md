@@ -316,7 +316,7 @@ BE00 transport/media/size, authentication, CSRF, CORS, deadline, dependency and 
 | `V29_20_CREATE_SERIES` | actor/holder/room/series IDs, rule hash, instance/exception counts, review date, conflict date, saga/replay | create/conflict/instance/compensation/review lag; p95 <8 s; page partial instance set or horizon auto-extension |
 | `V29_22_HANDOFF_BILL_SLOT` | actor/room/handoff/snapshot hashes, slot bucket, route state/receipt/replay; no deal or payout fields | queued/accepted/rejected/delivery age; p95 accept <1 s; page duplicate Shard 30 aggregate or queued >2 min |
 
-Audit rows contain actor/context/action/scope, before/after hashes, authority/calendar/hold/rate/policy/spec/accessibility/statutory/resource/payment-safe versions, idempotency/request hash and result. Sentry receives opaque IDs and codes only. Payment method/payout, holder contact, exact private occupancy/resources, evidence, policy text and Shard 30 terms are scrubbed from logs, traces, errors and events.
+Audit rows contain actor/context/action/scope, before/after hashes, authority/calendar/hold/rate/policy/spec/accessibility/statutory/resource/payment-safe versions, idempotency/request hash and result. provider-native diagnostic sinks receive opaque IDs and codes only. Payment method/payout, holder contact, exact private occupancy/resources, evidence, policy text and Shard 30 terms are scrubbed from logs, traces, errors and events.
 
 ## Release and Testing
 

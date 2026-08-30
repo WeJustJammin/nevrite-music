@@ -530,7 +530,7 @@ Failure cascade rules: a PostgreSQL disconnect before commit leaves no revision/
 
 ## Observability
 
-Each operation emits structured scrubbed logs keyed by operation ID, requestId, traceId, correlationId, actor class, acting-context class, safe aggregate ID/hash, revision/version, outcome, error code, duration, dependency class, and retryability. No content values, review comments, token, email, party name, capability graph, raw target projection, or request body enters logs/Sentry.
+Each operation emits structured scrubbed logs keyed by operation ID, requestId, traceId, correlationId, actor class, acting-context class, safe aggregate ID/hash, revision/version, outcome, error code, duration, dependency class, and retryability. No content values, review comments, token, email, party name, capability graph, raw target projection, or request body enters logs/provider-native diagnostics.
 
 Per-operation metrics:
 

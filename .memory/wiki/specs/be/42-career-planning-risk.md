@@ -720,7 +720,7 @@ Events exclude progress source rows, finance amounts, declared policy values, di
 | 42.08 | operation, referral/receipt/event IDs, provider code, mapped status; no provider payload | count, duration, duplicate/digest conflict, reconcile age; p95 <1.2s | 100% provider-status audit; digest conflict severity one |
 | 42.09 | operation, context, outcome; no request body capture | count and p95 <250ms | ordinary access sample; any sensitive-key attempt security counter |
 
-Logs and Sentry breadcrumbs exclude authentication headers, IP/user agent outside BE00 bounded abuse hashes, target values, progress values, finance amounts, cohort dimensions capable of membership inference, provider fields/payloads, policy attributes, free text, and wellbeing/health content. Metrics use bounded labels only. Rate-limit keys are HMAC digests of actor/owner/query family/provider; raw identities are not metric labels.
+Logs and structured diagnostic events exclude authentication headers, IP/user agent outside BE00 bounded abuse hashes, target values, progress values, finance amounts, cohort dimensions capable of membership inference, provider fields/payloads, policy attributes, free text, and wellbeing/health content. Metrics use bounded labels only. Rate-limit keys are HMAC digests of actor/owner/query family/provider; raw identities are not metric labels.
 
 ## Release, Migration, and Recovery
 

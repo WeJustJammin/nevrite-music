@@ -52,7 +52,7 @@ All six interactions require server authorization, versioned persistence, audit,
 
 ## Shared Contract Inheritance
 
-- API base `/api/v1`, JSON UTF-8, request IDs, authentication, CSRF, CORS, body limits, rate response headers, `If-Match`, idempotency canonicalization, transaction/outbox, and Sentry/log redaction inherit BE00.
+- API base `/api/v1`, JSON UTF-8, request IDs, authentication, CSRF, CORS, body limits, rate response headers, `If-Match`, idempotency canonicalization, transaction/outbox, and provider-native diagnostics/log redaction inherit BE00.
 - Every non-2xx response is BE00 `ApiError { code, message, requestId, details }`; details are code-specific, Zod-validated, and contain no source description, fingerprint, media, owner refusal reason, or provider credential.
 - Mutation replay uses the original status/body/request ID semantics. Same key with a different canonical hash returns `409 IDEMPOTENCY_KEY_REUSED`.
 - Events inherit the BE00 lossless envelope and are inserted in the same transaction as aggregate/audit/idempotency rows.
@@ -340,7 +340,7 @@ Per-operation observability matrix:
 | SPL-05 | opId,compositionState,masterWarning,state; `interpolation_declaration_total` | p95 500 ms; original-audio routing tests |
 | SPL-06 | opId,route,assetCount,derivativeScope,state; `derivative_grant_total` | p95 4 s; authority failures and scope races |
 
-Logs omit all prohibited fields and use IDs only where access-controlled. Sentry receives error code/operation/request ID and safe dimensions, never declaration text, media, fingerprints, terms, decisions, tokens, or evidence.
+Logs omit all prohibited fields and use IDs only where access-controlled. provider-native diagnostic sinks receive error code/operation/request ID and safe dimensions, never declaration text, media, fingerprints, terms, decisions, tokens, or evidence.
 
 ## Release and Testing
 

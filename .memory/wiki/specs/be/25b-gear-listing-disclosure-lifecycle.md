@@ -366,7 +366,7 @@ Rate-limit keys are actor plus seller account plus route. BE-00 idempotency reco
 | BE25B-GMC12 | listing_amend_total by materiality; auto_pause_total; version_conflict_total | requestId, operationId, listingId hash, changed field classes, previous/new version, result | audit action listing.amended; disclosure/state event when applicable |
 | BE25B-GMC13 | listing_transition_total by transition/result; invalid_transition_total; latency | requestId, operationId, listingId hash, old/new state, reason code, result | audit action listing.state_changed; gear_listing.state_changed.v1 |
 
-Trace spans use requestId and operationId. Sampling may reduce payload detail but never removes audit records, outbox records, or security failures. Sentry receives stable error code and requestId only.
+Trace spans use requestId and operationId. Sampling may reduce payload detail but never removes audit records, outbox records, or security failures. provider-native diagnostic sinks receive stable error code and requestId only.
 
 ## Persistence and RLS
 

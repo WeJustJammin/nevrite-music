@@ -11,7 +11,7 @@ This companion is the backend contract for the two deliberately gated IA interac
 | Future-capability authority | Capability-specific admission for auction, ISO, dealer, rental, consignment, trade-in, layaway, protection, and related expansions | Live marketplace listing, checkout, custody, rental contract, dealer contract, or substitute persona |
 | Security boundary | Compliance/support/seller/buyer projections with fail-closed defaults, provider signatures, immutable decisions, and 403 versus 404 | No public compliance secrets, provider credentials, exact address, payment data, or direct table grant |
 
-The implementation target is TypeScript on Hono/Cloudflare Workers with Supabase PostgreSQL, strict Zod 4 contracts, transactional outbox, forced RLS, structured audit, and Sentry-compatible telemetry. A PASS result here means only that an admission gate is satisfied for a specific version; it does not enable a route. A current launch policy explicitly returns disabled for international and future capabilities even when an external provider responds positively.
+The implementation target is TypeScript on Hono/Cloudflare Workers with Supabase PostgreSQL, strict Zod 4 contracts, transactional outbox, forced RLS, structured audit, and provider-native diagnostics-compatible telemetry. A PASS result here means only that an admission gate is satisfied for a specific version; it does not enable a route. A current launch policy explicitly returns disabled for international and future capabilities even when an external provider responds positively.
 
 ## Referenced Material Inventory
 
@@ -233,7 +233,7 @@ BE-00 idempotency receipts retain at least 24 hours with request hash, status, r
 | BE26E-GCF21 | international_gate_total by state/reason; provider_pending_total; domestic_policy_block_total; stale_evaluation_total; latency | requestId, operationId, target hash, origin/destination country class, item category, CITES class, policy/rules revision, result; no address/provider secret | compliance.determination.changed; gear_compliance.determination_changed.v1; evidence hashes and provider correlation hash |
 | BE26E-GCF22 | future_gate_total by capability/state; public_route_enable_attempt_total; policy_conflict_total; stale_evaluation_total | requestId, operationId, target hash, capability, policy version, requester role, result; no private item/provider data | future.capability.evaluated; gate policy audit; no enable event |
 
-Trace spans include compliance.determination, customs.rules, counsel.attestation, capability.gate, and provider.callback, preserving all denials, stale versions, missing evidence, provider retries, and route-enable attempts. Sentry events scrub addresses, legal notes, provider credentials, evidence URLs, and party identifiers. Alerts fire on any non-domestic result marked admitted, any public route enable attempt, missing rules/counsel evidence, and any positive provider response overridden incorrectly by launch policy.
+Trace spans include compliance.determination, customs.rules, counsel.attestation, capability.gate, and provider.callback, preserving all denials, stale versions, missing evidence, provider retries, and route-enable attempts. structured diagnostic events scrub addresses, legal notes, provider credentials, evidence URLs, and party identifiers. Alerts fire on any non-domestic result marked admitted, any public route enable attempt, missing rules/counsel evidence, and any positive provider response overridden incorrectly by launch policy.
 
 ## Persistence and RLS
 

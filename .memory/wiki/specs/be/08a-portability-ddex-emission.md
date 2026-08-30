@@ -453,7 +453,7 @@ Outbox publication is after commit and uses eventId plus aggregate version for d
 | CXR-08A-04 | output.emission.stale, stale_emission_total, reemit_total, delivery_unknown_total | requestId, emissionId, changed version count and reason codes; alert on stale backlog and adapter circuit open. |
 | CXR-08A-05 | portability.receipt.issued, receipt_total, url_renewal_total, storage_error_total | requestId, receiptId, artifactId, expiry class and checksum prefix; alert on receipt over incomplete manifest or URL failures. |
 
-Logs are structured JSON. Raw artifact bytes, private notes, embargoed titles, union identifiers and recipient secrets are never logged. Sentry events carry only opaque IDs and a redacted error code.
+Logs are structured JSON. Raw artifact bytes, private notes, embargoed titles, union identifiers and recipient secrets are never logged. structured diagnostic events carry only opaque IDs and a redacted error code.
 
 ## Testing Strategy
 

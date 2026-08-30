@@ -47,7 +47,7 @@ SPL-15 is one server-side classification and persistence operation. It does not 
 
 ## Shared Contract Inheritance
 
-BE00 supplies `/api/v1`, request IDs, auth, CSRF/CORS, body limit, rate headers, canonical idempotency, transaction/outbox, event envelope, validation, logging and Sentry redaction. Every non-2xx uses `ApiError { code, message, requestId, details }`. Special-route details may contain `caseId`, route class, missing fact keys, settings version and safe next action; they never contain lyric text, score/artifact contents, rights-holder contact, legal evidence, or owner policy. Replay semantics and `IDEMPOTENCY_KEY_REUSED` inherit BE00.
+BE00 supplies `/api/v1`, request IDs, auth, CSRF/CORS, body limit, rate headers, canonical idempotency, transaction/outbox, event envelope, validation, logging and provider-native diagnostics redaction. Every non-2xx uses `ApiError { code, message, requestId, details }`. Special-route details may contain `caseId`, route class, missing fact keys, settings version and safe next action; they never contain lyric text, score/artifact contents, rights-holder contact, legal evidence, or owner policy. Replay semantics and `IDEMPOTENCY_KEY_REUSED` inherit BE00.
 
 ## API Endpoints
 
@@ -230,7 +230,7 @@ Per-operation observability matrix:
 |---|---|---|
 | SPL-15 | opId,useKind,route,state,territoryCount,settingsVersion; `special_route_classification_total` | p95 3 s; statutory/material/print/grand/gap/auth/version/circuit tests; any grand auto-route pages |
 
-Logs/Sentry omit text/artifact content, work descriptions, rights-holder identity/policy, legal evidence, quantities, rate values and instrument contents. Alerts cover settings failures, blocked-gap rate, Shard20 preflight lag, outbox lag, and any ordinary-scope substitution or owner veto on a valid statutory result.
+Logs/provider-native diagnostics omit text/artifact content, work descriptions, rights-holder identity/policy, legal evidence, quantities, rate values and instrument contents. Alerts cover settings failures, blocked-gap rate, Shard20 preflight lag, outbox lag, and any ordinary-scope substitution or owner veto on a valid statutory result.
 
 ## Release and Testing
 

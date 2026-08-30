@@ -157,7 +157,7 @@ This matrix is exhaustive for launch technology axes. A downstream team may not 
 | Data access | generated `supabase-js` Data API plus migration-owned PostgreSQL RPC | preserves explicit SQL/RLS/function authority, edge compatibility, generated drift checks, and narrow repository ports | Prisma/Drizzle/general ORM create competing schema abstractions and may obscure RLS/functions; unrestricted direct SQL increases connection/authority risk; sequential calls cannot emulate atomicity |
 | CMS/configuration | first-party typed/versioned PostgreSQL control plane with platform-owned Astro/React blocks | content, settings, menus, schemas, preview, publication, and audit share canonical authorization/domain references without code execution | WordPress/plugins/themes permit executable extension and split authority; external CMS adds a second identity/version/publication store; EAV-only models weaken types, migrations, and query guarantees |
 | Package/build/test | pnpm/Corepack, strict TypeScript, ESLint, Prettier, Vitest, Playwright, GitHub Actions on verified self-hosted runners | aligns with Astro/Vite/Workers, frozen installs, deterministic tests, cross-browser evidence, and existing GitHub infrastructure | npm lacks the selected strict workspace model; Yarn/PnP adds compatibility variance; Bun is not the runtime; Jest/Cypress duplicate selected coverage; GitLab/custom CI adds a second source/control plane |
-| Application observability | `@wejammin/observability`, Cloudflare/Supabase telemetry, Sentry Developer | typed scrubbed JSON, native platform evidence, release-aware exceptions/traces, and PostgreSQL audit remain separate within budget | direct console bypasses schemas; Pino/Winston add Node-oriented surface; Datadog exceeds budget/breadth; self-hosted collectors create another service; Sentry is not business audit |
+| Application observability | `@wejammin/observability`, Cloudflare/Supabase telemetry, provider-native diagnostics | typed scrubbed JSON, native platform evidence, release-aware exceptions/traces, and PostgreSQL audit remain separate within budget | direct console bypasses schemas; Pino/Winston add Node-oriented surface; Datadog exceeds budget/breadth; self-hosted collectors create another service; provider-native diagnostics is not business audit |
 | Transactional email | Resend behind the notification adapter | bounded launch pricing, domain verification, API delivery, bounce/suppression signals, and Queue replay fit auth/transactional notices | direct SMTP expands credential/deliverability operations; multiple providers create inconsistent suppression/reconciliation; marketing automation is outside launch scope |
 | Payments/onboarding | Stripe-hosted Checkout Sessions plus hosted Connect; server-reconciled PaymentIntent | keeps card/bank/KYC UI at Stripe, supports signed reconciliation, and preserves the counsel-gated single-payee model | custom card fields/embedded Checkout expand PCI/CSP/client complexity; custom bank rails expand regulation; multi-party routing/escrow remains disabled |
 | Social identity | Supabase built-ins for Google/Apple/Meta plus admitted custom OAuth adapters; TikTok/BandLab conditional | additive credentials retain one canonical user and provider-by-provider admission, outage fallback, unlinking, and recovery | email-based silent merge enables takeover; provider IDs as canonical identity fragment users; enterprise SSO/SCIM is deferred; unsupported providers remain disabled |
@@ -304,18 +304,18 @@ All durable domain entities use a PostgreSQL-generated UUID as their canonical i
 
 ### Monitoring and Observability (Confirmed)
 
-- **Application monitoring:** Sentry Developer is the v1 application-error and sampled-tracing service for browser, Astro, and Cloudflare Worker releases. It is selected at `$0/month`, with provisioning deferred to `/setup-workspace`.
+- **Application monitoring:** schema-validated structured logs plus Cloudflare and Supabase native telemetry are the v1 diagnostic boundary. No third-party monitoring account, browser telemetry SDK, trial, subscription, payment method, or usage-based monitoring plan is permitted.
 - **Native telemetry:** Cloudflare Workers Observability supplies invocation logs, errors, request/CPU/duration metrics, and traces. Supabase Logs/Reports supply API, Auth, PostgreSQL, Storage, Realtime, and database-performance evidence. Native provider telemetry remains the first diagnostic stop for provider-owned failures.
 - **Structured logging:** production application logs are JSON with severity, timestamp, environment, release, service, operation, outcome, latency, request/correlation ID, and safe entity/version identifiers. Correlation propagates across Worker, Supabase transaction, outbox/Queue, and external-provider calls.
-- **Privacy:** `sendDefaultPii` is disabled. Logs and events exclude names, emails, IP addresses where avoidable, tokens, secrets, payment data, evidence, private content, request/response bodies, and unrestricted URLs. Allowlisted metadata and server-side scrubbing run before export. Session Replay is disabled at launch.
-- **Sampling and quota safety:** unexpected errors are retained; traces are sampled and high-volume expected failures are filtered. Quota and spend alarms are configured before production, and no pay-as-you-go overage is enabled without owner approval.
-- **Release evidence:** every event carries environment and immutable release ID; CI uploads private source maps and associates deploys. Production regressions can therefore be attributed to a release and rolled back without exposing source maps publicly.
-- **Alerting:** the solo owner receives immediate email alerts for full outage, security/auth compromise indicators, money or ledger integrity failures, migration failure, audit-write failure, legal/takedown failure, and CMS publication divergence. Lower-severity and transient issues aggregate into the admin task inbox and scheduled review.
-- **SLO measurement:** one external public uptime check plus Cloudflare request/error metrics measure the 99.9% monthly availability SLO. Sentry and provider latency distributions track the normal-web p95 `<2s` budget by route class; scheduled maintenance is separately tagged and cannot relabel an incident retroactively.
-- **Audit boundary:** Sentry and provider telemetry are diagnostic, sampled, and retention-bounded. Immutable security, financial, authority, moderation, publication, consent, and legal-hold events remain canonical PostgreSQL audit/provenance records and are never delegated to an observability vendor.
-- **Rejected alternatives:** Datadog exceeds the zero-dollar constraint and adds unnecessary breadth for a solo launch. Self-hosted Prometheus/Grafana/OpenTelemetry collectors create another production system whose availability, patching, storage, and alerting would need monitoring. Provider-native logs alone lack unified release-aware browser/Worker error grouping and source-map-backed debugging.
-- **Admission gate:** revisit the stack when the Sentry one-user/quota/retention boundary, native provider retention, multi-person incident response, regulatory export, or service count no longer meets measured needs. OpenTelemetry-compatible export remains the preferred future portability path, not a launch dependency.
-- **Provider evidence:** [Sentry pricing](https://sentry.io/pricing/) currently lists a `$0` one-user Developer plan with error monitoring, tracing, email alerts, one uptime monitor, and bounded quotas. [Cloudflare Workers Observability](https://developers.cloudflare.com/workers/observability/) documents built-in logs, metrics, traces, and OpenTelemetry export. [Supabase Logs](https://supabase.com/docs/guides/telemetry/logs) documents product-specific logs and cross-source correlation anchors.
+- **Privacy:** logs and diagnostic events exclude names, emails, IP addresses where avoidable, tokens, secrets, payment data, evidence, private content, request/response bodies, and unrestricted URLs. Allowlisted metadata and server-side scrubbing run before any provider-native sink. Third-party PII collection and session replay are absent.
+- **Sampling and quota safety:** unexpected errors are retained; native traces are sampled and high-volume expected successes are filtered. Native-provider quota notifications are configured where the selected free or explicitly approved plan includes them; monitoring pay-as-you-go is prohibited.
+- **Release evidence:** every structured event carries environment and immutable release ID. CI records artifact digests, source maps remain private build artifacts when generated, and no vendor release or source-map upload occurs.
+- **Alerting:** GitHub workflow failures and provider-native notifications included in the selected infrastructure cover deployment and provider failures. Application severity signals remain structured operational records reviewed through bounded operator workflows; no paid alerting service or staffed 24/7 response is claimed.
+- **SLO measurement:** a scheduled GitHub health check plus Cloudflare request/error metrics measure the 99.9% monthly availability SLO. Provider-native latency distributions track the normal-web p95 `<2s` budget by route class; scheduled maintenance is separately tagged and cannot relabel an incident retroactively.
+- **Audit boundary:** provider-native telemetry is diagnostic, sampled, and retention-bounded. Immutable security, financial, authority, moderation, publication, consent, and legal-hold events remain canonical PostgreSQL audit/provenance records and are never delegated to an observability vendor.
+- **Rejected alternatives:** third-party monitoring vendors are rejected because nominal free signup can activate trials or paid-capable controls. Self-hosted Prometheus/Grafana/OpenTelemetry collectors create another production system whose availability, patching, storage, and alerting would need monitoring. The launch explicitly accepts reduced browser error grouping in exchange for zero unapproved service cost.
+- **Admission gate:** revisit diagnostics only when measured operational evidence proves native-provider retention or debugging inadequate. A future service requires a new owner decision naming its recurring price, usage price, and hard or soft ceiling before any account is created.
+- **Provider evidence:** [Cloudflare Workers Observability](https://developers.cloudflare.com/workers/observability/) documents built-in logs, metrics, and traces. [Supabase Logs](https://supabase.com/docs/guides/telemetry/logs) documents product-specific logs and cross-source correlation anchors.
 
 ### Frontend Framework and Rendering Model (Confirmed)
 
@@ -457,7 +457,7 @@ flowchart LR
     Storage["Supabase Storage + governed renditions"]
     Realtime["Supabase Realtime hints"]
     Providers["Approved payment, identity, delivery, email, and registry providers"]
-    Sentry["Sentry + structured provider telemetry"]
+    NativeTelemetry["Structured logs plus provider-native telemetry"]
 
     Browser --> CDN
     CDN --> Web
@@ -473,9 +473,9 @@ flowchart LR
     Queue --> Domain
     Queue --> Providers
     Providers --> API
-    Web --> Sentry
-    API --> Sentry
-    Queue --> Sentry
+    Web --> NativeTelemetry
+    API --> NativeTelemetry
+    Queue --> NativeTelemetry
 ```
 
 ### Communication Protocol Matrix
@@ -496,9 +496,9 @@ flowchart LR
 | Cloudflare Queue → domain services | consumer validates versioned event, reloads canonical state, then invokes direct typed TypeScript command port | current authority/state/version checked before action; domain result controls acknowledgment, retry, or terminal state |
 | Cloudflare Queue → approved providers | typed adapter sends provider HTTPS API request with provider idempotency | provider-specific timeout/backoff/circuit; ambiguous outcomes reconcile before retry |
 | Approved providers → Hono API | HTTPS raw-body webhook plus provider signature and replay timestamp | persist receipt/idempotency before acknowledgment; process asynchronously; invalid signature/replay fails closed |
-| Astro web surface → Sentry | Sentry browser/Astro SDK sends scrubbed HTTPS envelope through `@wejammin/observability` boundary | non-blocking, sampled, release-tagged; telemetry failure never changes render/business outcome |
-| Hono API → Sentry | Sentry Worker SDK sends scrubbed exception/span HTTPS envelope through `@wejammin/observability` | non-blocking, sampled, request-correlated; business audit remains PostgreSQL |
-| Cloudflare Queue → Sentry | consumer boundary sends scrubbed exception/span HTTPS envelope through `@wejammin/observability` | non-blocking, attempt/job-correlated; telemetry failure raises independent blind-spot signal where available |
+| Astro web surface → diagnostics | safe user-facing error boundaries expose request IDs; server-rendered failures use the shared structured logger | no browser telemetry SDK; diagnostic failure never changes render/business outcome |
+| Hono API → Cloudflare diagnostics | `@wejammin/observability` emits scrubbed, release-tagged JSON to the Worker console sink | non-blocking and request-correlated; business audit remains PostgreSQL |
+| Cloudflare Queue → Cloudflare diagnostics | consumer boundary emits scrubbed, attempt/job-correlated structured events | non-blocking; telemetry failure never changes acknowledgment or canonical business state |
 
 ### Component Failure and Fallback Matrix
 
@@ -513,7 +513,7 @@ flowchart LR
 | Realtime | UI marks stale/offline where relevant and polls/refetches canonical state; no committed action depends on message receipt |
 | Outbox/Queue | durable outbox retains intent; dispatcher/consumer retries; exhausted attempts become visible dead-letter work with current-state replay |
 | External provider | local state remains pending/degraded; circuit opens; signed webhook or explicit reconciliation establishes finality |
-| Sentry/native telemetry | product continues; provider-native logs/domain audit remain; telemetry blind-spot alert is raised through an independent channel where available |
+| provider-native telemetry | product continues; provider-native logs/domain audit remain; telemetry blind-spot alert is raised through an independent channel where available |
 
 ### Runtime and Deployment Topology
 
@@ -535,7 +535,7 @@ flowchart LR
 6. The response returns the committed representation or a job/status resource. Private responses default to `no-store`; safe public reads use publication-version cache keys and ETags.
 7. Outbox dispatch and Queue consumers converge notifications, cache/search/sitemap projections, external delivery, and other side effects. Consumers re-read canonical state, reject stale versions, and are safe to replay.
 8. Realtime sends minimal authorized entity/version hints. Clients refetch the canonical projection and never treat a realtime payload as an authority grant or mutation receipt.
-9. Structured logs and Sentry correlate browser, Worker, database/RPC, queue, and provider activity through request, correlation, causation, job, and safe entity-version identifiers.
+9. structured logs correlate browser, Worker, database/RPC, queue, and provider activity through request, correlation, causation, job, and safe entity-version identifiers.
 
 ### API Surface
 
@@ -555,7 +555,7 @@ flowchart LR
 - **Projects and collaboration** owns sessions, memberships, artifacts, contribution records, reviews, and collaboration state; governed media bytes remain in Storage under database-owned object records.
 - **Rights, provenance, commerce, services, education, venues, and operations** each own their state machines and invariants. Shared workflows coordinate through typed commands/events and canonical IDs rather than table-level coupling.
 - **Notifications and integrations** own delivery attempts, subscriptions, templates, and provider adapters but not the business fact being announced. They re-check current consent, eligibility, and disclosure at send time.
-- **Audit and evidence** is append-only domain evidence written with protected transitions. Sentry and provider logs are operational diagnostics, not substitutes for business audit, consent, money, rights, or legal records.
+- **Audit and evidence** is append-only domain evidence written with protected transitions. provider-native logs are operational diagnostics, not substitutes for business audit, consent, money, rights, or legal records.
 
 ### Deployment Strategy
 
@@ -605,7 +605,7 @@ Validation is `400`/`422` by contract; unauthenticated is `401`; authenticated-b
 - Hono's top-level error handler, Astro route/render boundaries, and every Queue/scheduled consumer entrypoint catch otherwise unhandled failures. The Workers runtime has no assumed Node process-level handler.
 - Unknown failures return `INTERNAL_ERROR`, a generic safe message, the original request ID, and `{}`. The response is never a stack trace or provider message.
 - Server telemetry records environment, release, route template, operation, request/correlation/causation IDs, job/attempt, safe entity version, error class, retryability, and stack. PII, secrets, auth tokens, request bodies, media, legal evidence, and provider credentials are scrubbed before export.
-- Sentry receives sampled, deduplicated operational exceptions. Severity-1 security, money, data-integrity, publication, or full-outage signals send immediate email under the launch staffing model; runbooks explicitly avoid claiming staffed 24/7 response.
+- provider-native diagnostic sinks receive sampled, deduplicated operational exceptions. Severity-1 security, money, data-integrity, publication, or full-outage signals send immediate email under the launch staffing model; runbooks explicitly avoid claiming staffed 24/7 response.
 - Queue failures retry only under the consumer's bounded policy, then enter a visible terminal/dead-letter state with replay controls, current-state revalidation, and immutable attempt history.
 
 ### Client Fallback Contract
@@ -633,7 +633,7 @@ Validation is `400`/`422` by contract; unauthenticated is `401`; authenticated-b
 - Supabase Storage is the source of truth for governed object bytes. PostgreSQL owns object identity, purpose, owner, policy class, checksum, version, rights, consent, retention, legal hold, publication eligibility, and rendition lineage.
 - Cloudflare stores deploy artifacts, edge cache entries, Queue messages, and short-lived execution state only. No D1, KV, R2, Durable Object, or edge cache is canonical at launch.
 - Browser storage contains only bounded cache, preferences, and approved offline drafts/intents. Secrets, durable authority, final transaction status, protected PII, and canonical records never live only on the client.
-- Sentry, structured logs, email/delivery providers, and future analytics/search projections are noncanonical processors. They receive the minimum allowlisted data and can be rebuilt or deleted without changing domain truth.
+- Provider-native telemetry, structured logs, email/delivery providers, and future analytics/search projections are noncanonical processors. They receive the minimum allowlisted data and can be rebuilt or deleted without changing domain truth.
 
 ### Schema and Contract Approach
 
@@ -677,7 +677,7 @@ The canonical semantic PII registry seed is normative even when physical column 
 Domain schemas may extend this registry only through a reviewed data-placement change that names the semantic identifier, purpose, lawful basis/consent, access class, retention, deletion propagation, and telemetry/search/export treatment.
 
 - Direct identifiers, private contact data, government/tax/payment references, precise location, private messages, credentials, recovery evidence, moderation/safety evidence, and legal documents remain in protected database/storage classes and never enter public projections.
-- Analytics, Sentry, logs, search, email, and integration payloads use allowlisted event/field schemas, pseudonymous IDs where possible, retention limits, and deletion propagation. Session replay and default PII capture are disabled.
+- Analytics, provider-native diagnostics, logs, search, email, and integration payloads use allowlisted event/field schemas, pseudonymous IDs where possible, retention limits, and deletion propagation. Session replay and default PII capture are disabled.
 - Sparse analytics clusters remain hidden and low-count export is blocked until counsel approves the numeric privacy floor (B2). CRM notes prohibit special-category data and unverified allegations until counsel approves a narrower policy (B5).
 - Consumer launch permits only single-payee, compliance-cleared sales; multi-party payout behavior remains counsel-gated (B3). High-risk safety automation, automatic CSAM action, emergency escalation guarantees, and 24/7 police-response promises remain disabled pending counsel (B6).
 - Confirmed shares may be paid while only unconfirmed funds are held; the response window is 30 days (B1). Browser-local follows remain local; durable alerts require verified email and explicit consent (B4).
@@ -693,7 +693,7 @@ Domain schemas may extend this registry only through a reviewed data-placement c
 | Search/sitemap/cache projection | source entity UUID/version; PostgreSQL remains canonical | outbox consumer builds idempotent projection; read may fall back to canonical safe query | replay from checkpoint; stale versions ignored | tombstone/purge event plus verification; projection cannot resurrect deleted/private content |
 | External provider operation | PostgreSQL operation/transaction UUID; provider ID is an external reference only | commit local pending intent, idempotency result, audit, and outbox before provider call; normal reads use the local canonical projection and query the provider only for reconciliation | timeout/unknown outcome remains `pending`; signed webhook receipt or bounded provider poll reconciles idempotently; never retry a potentially committed effect blindly | revoke local eligibility/access first, then enqueue provider cancel/delete/suppress where supported; retain the minimum local receipt/tombstone required by financial/legal/audit policy and track provider inability as an exception |
 | Offline intent | server job/command UUID after acceptance; browser temporary ID before | client queues approved validated intent; server reconciles auth/version/idempotency | conflict becomes explicit user decision; no silent overwrite | local copy purges on completion, expiry, logout, or policy change |
-| Operational telemetry | domain audit ID for business evidence; Sentry/provider event IDs diagnostic only | minimum safe fields emitted after/beside operation | telemetry loss never changes business commit; quota alerts expose blind spots | TTL/delete by processor policy; legal/domain records follow canonical lifecycle |
+| Operational telemetry | domain audit ID for business evidence; provider-native event IDs diagnostic only | minimum safe fields emitted after/beside operation | telemetry loss never changes business commit; quota alerts expose blind spots | TTL/delete by processor policy; legal/domain records follow canonical lifecycle |
 
 The detailed tier map, field boundaries, lifecycle controls, and sync rules are normative in `.memory/wiki/specs/data-placement-strategy.md`.
 
@@ -744,7 +744,7 @@ Permissions are additive, scoped, time-aware, and relationship-aware; no role in
 
 ### Data Protection and Key Management
 
-- TLS 1.2+ is required in transit; provider-managed encryption protects PostgreSQL, Auth, Storage, Cloudflare, GitHub, Resend, Stripe, and Sentry at rest. Application-level encryption is added only for a named field threat model with managed rotation and search limitations.
+- TLS 1.2+ is required in transit; provider-managed encryption protects PostgreSQL, Auth, Storage, Cloudflare, GitHub, Resend, Stripe, and provider-native diagnostics at rest. Application-level encryption is added only for a named field threat model with managed rotation and search limitations.
 - Private Storage is default. Signed URLs are short-lived and audience-specific; urgent revocation removes/quarantines bytes or rotates immutable paths because token expiry alone does not invalidate every cached copy.
 - Secrets live in Cloudflare encrypted secrets, Supabase project secrets/vault where applicable, GitHub protected environment secrets, or the owning provider. They never live in Git, CMS/settings, browser bundles, logs, test fixtures, or shared plaintext files.
 - Provider keys are environment-scoped. Production access is limited to deployment/service identities and the owner/security maintainer; humans use provider dashboards with MFA. GitHub Actions deploys through short-lived/OIDC mechanisms where the provider supports them.
@@ -870,14 +870,14 @@ Limit values are configuration records with protected defaults and audited chang
 | A06 Vulnerable Components | pnpm lockfile, OSV/pnpm audits, Dependabot, severity SLAs, action SHA pinning, SBOM/provenance |
 | A07 Identification/Auth Failures | Supabase OAuth with PKCE/state/nonce, secure cookies, bounded attempts, TOTP step-up, session revocation, additive-link proof, no email auto-merge |
 | A08 Software/Data Integrity Failures | protected branches/environments, immutable artifact digest, same-artifact promotion, signed webhooks, checksummed uploads, typed/versioned Queue events |
-| A09 Logging/Monitoring Failures | structured JSON, request/correlation IDs, Sentry release mapping, security/money alerts, domain audit, quota/blind-spot alerts, tested runbooks |
+| A09 Logging/Monitoring Failures | structured JSON, request/correlation IDs, release-tagged diagnostic mapping, security/money alerts, domain audit, quota/blind-spot alerts, tested runbooks |
 | A10 SSRF | provider endpoint allowlist, parsed HTTPS URLs, DNS/IP private-range rejection at dispatch and redirect hops, no user-controlled arbitrary fetch, response size/time limits |
 
 ### Web — Security Headers
 
 | Header | Production value / rule |
 |---|---|
-| `Content-Security-Policy` | `default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; form-action 'self'; script-src 'self' 'nonce-{request-nonce}' 'strict-dynamic'; style-src 'self' 'nonce-{request-nonce}'; img-src 'self' data: blob: https://*.supabase.co; media-src 'self' blob: https://*.supabase.co; connect-src 'self' https://*.supabase.co wss://*.supabase.co https://*.ingest.sentry.io; frame-src 'none'; worker-src 'self' blob:; manifest-src 'self'; upgrade-insecure-requests; report-to csp-endpoint` |
+| `Content-Security-Policy` | `default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; form-action 'self'; script-src 'self' 'nonce-{request-nonce}' 'strict-dynamic'; style-src 'self' 'nonce-{request-nonce}'; img-src 'self' data: blob: https://*.supabase.co; media-src 'self' blob: https://*.supabase.co; connect-src 'self' https://*.supabase.co wss://*.supabase.co https://*.ingest.provider-native diagnostics.io; frame-src 'none'; worker-src 'self' blob:; manifest-src 'self'; upgrade-insecure-requests; report-to csp-endpoint` |
 | `Strict-Transport-Security` | `max-age=63072000; includeSubDomains; preload` only after every production subdomain is HTTPS-ready; before preload, omit `preload` but keep the same max age |
 | `X-Content-Type-Options` | `nosniff` |
 | `X-Frame-Options` | `DENY` (CSP `frame-ancestors 'none'` is authoritative) |
@@ -915,7 +915,7 @@ Every integration is behind a typed adapter and registry entry naming owner, sco
 | Cloudflare Pages/Workers/CDN/Queues/Turnstile | launch web, API, delivery, async, abuse controls | edge/runtime/queue outage, quota or delayed consumer | public status/maintenance response where reachable; last-known-good public cache; protected writes fail closed; replay outbox after recovery | `$0` pre-setup local/disposable evaluation; Workers Paid required from shared staging setup, currently `$5/month` minimum; usage alerts at 80/90% |
 | Supabase Pro | launch PostgreSQL, Auth, Storage, Realtime | database/auth/storage outage, pool/quota/backup issue | reads show explicit degraded/stale only when safe; writes/auth fail closed; Queue pauses/replays; restore runbook | purchase deferred to `/setup-workspace`; current floor $25/month, spend caps/usage alerts required |
 | GitHub + self-hosted Actions | source, CI, protected promotion | runner/control-plane outage or compromised workflow | no production deploy; repair runner then rerun immutable SHA; manual unreviewed deploy prohibited | no incremental hosted-runner baseline; electricity/maintenance owned; two heavy jobs concurrently |
-| Sentry Developer + provider-native logs | errors, sampled traces, release/source-map correlation, one public uptime monitor | SDK/provider outage, quota exhaustion, telemetry rejection | application continues; Cloudflare/Supabase logs and domain audit remain; quota blind spot alerts | $0 launch tier; upgrade requires budget approval; diagnostic retention max 30 days or shorter plan limit |
+| Structured logs + provider-native telemetry | errors, native traces, release correlation, scheduled GitHub health check | provider log outage, retention exhaustion, telemetry rejection | application continues; Cloudflare/Supabase logs and domain audit remain; blind spots become operator work | included with explicitly approved platform plans; no additional monitoring spend; diagnostic retention uses the provider's included limit |
 | Resend transactional email | auth/recovery mail, verified durable alerts, receipts, operational notices | API outage, bounce/suppression, domain reputation, quota | Queue retry; in-app task/status; security recovery exposes safe alternate path; no silent success | Free 3,000/month and 100/day; Pro currently $20/month for 50,000; upgrade before projected 80% |
 | Stripe-hosted Checkout Sessions + hosted Connect | compliance-cleared single-payee sales, onboarding, refunds/reconciliation; PaymentIntent is server-reconciled only | API/webhook outage, ambiguous outcome, account restriction, dispute | local pending state; idempotent reconcile via webhook/poll; block fulfillment/payout finality; manual finance queue | no monthly standard fee; domestic cards currently 2.9% + $0.30; Stripe-handled Connect pricing selected; counsel/provider gate before live money |
 | Google OAuth | launch login credential | provider outage/review/revocation/email omission | any other linked provider or verified recovery; no loss of canonical account | provider developer configuration; no platform fee assumed, re-verify at setup |
@@ -932,7 +932,7 @@ There is no third-party advertising, behavioral analytics, CRM, AI/model, custom
 
 ### Logging and Correlation
 
-- The runtime logging library is the repository-owned `@wejammin/observability` package at `packages/observability`. Its typed event schemas emit exactly one newline-delimited JSON object per event to the Cloudflare Workers console sink and correlate with Supabase logs; domain/application modules depend on its logger port and never call ambient `console.*` directly. Sentry receives exceptions and sampled spans, not the full log stream.
+- The runtime logging library is the repository-owned `@wejammin/observability` package at `packages/observability`. Its typed event schemas emit exactly one newline-delimited JSON object per event to the Cloudflare Workers console sink and correlate with Supabase logs; domain/application modules depend on its logger port and never call ambient `console.*` directly. No third-party telemetry SDK or full-log export is installed.
 - Direct `console.*` logging is rejected because it bypasses schemas and scrubbing. Pino and Winston are rejected at launch because their Node-oriented transports/ecosystem add runtime and compatibility surface not required by the Workers JSON sink. A third-party logger may replace the package internals only if it preserves the exact typed port, field allowlist/denylist, sink format, and tests through `/evolve-feature`.
 - Required fields are `timestamp`, `severity`, `environment`, `release`, `service`, `routeTemplate`/`consumer`, `operation`, `requestId`, `correlationId`, `causationId`, `traceId`, `jobId`, `attempt`, `actorClass`, `actingContextClass`, `entityType`, `entityVersion`, `outcome`, `errorCode`, `durationMs`, `dependency`, and `retryable`. Direct actor/entity IDs are hashed or omitted unless an approved operational need exists.
 - Forbidden fields include auth/cookie headers, tokens, secrets, request/response bodies, email/phone/address, IP beyond bounded security telemetry, messages, search text, media/document content or URLs, payment/KYC data, legal/safety evidence, and provider raw payloads.
@@ -940,7 +940,7 @@ There is no third-party advertising, behavioral analytics, CRM, AI/model, custom
 
 ### Tracing and Metrics
 
-- Trace boundaries are browser navigation/hydration → Astro route → Hono middleware/use case → Supabase Data API/RPC/Storage → outbox dispatch → Queue consumer → external adapter. Trace context is propagated through request, event, job, and provider idempotency metadata where safe.
+- Trace boundaries are Astro server route → Hono middleware/use case → Supabase Data API/RPC/Storage → outbox dispatch → Queue consumer → external adapter. Correlation context is propagated through request, event, job, and provider idempotency metadata where safe; no browser tracing SDK is assumed.
 - Capture 100% of errors, 100% of high-risk command/job traces with field scrubbing, 10% of ordinary authenticated successes, and 1% of public/cache successes. Dynamic sampling protects quota but may not drop Severity-1 errors or failed money/rights/publication/migration operations.
 - Metrics include request count/error/duration by route tier; cache hit; DB/RPC duration/rows/conflict; connection saturation; Queue depth/oldest/attempt/dead letter; outbox lag; auth/link/recovery result; upload bytes/scan state; provider latency/failure/circuit; CMS publish/projection lag; notification bounce/suppression; quota/cost; and monthly SLO windows.
 
@@ -964,7 +964,6 @@ Every dynamic Astro route and `/api/v1` endpoint must register exactly one `serv
 |---|---|---|
 | WeJammin Edge | Cloudflare dashboard | traffic, status/error, latency, CPU, cache, rate limit, Queue depth/age, usage/cost |
 | WeJammin Data | Supabase Reports/Logs | database/RPC latency, connections, storage/egress, Auth, Realtime, backup/migration health |
-| WeJammin Application | Sentry project dashboard | releases, exceptions, affected routes/users classes, traces, regressions, uptime monitor |
 | WeJammin Delivery | PostgreSQL operational projections plus admin dashboard | outbox lag, jobs, dead letters, integrations, notifications, publication convergence, reconciliations |
 | WeJammin CI/CD | GitHub Actions and protected environments | required checks, runner health, artifact SHA/provenance, deploy/migration outcome |
 
@@ -975,12 +974,12 @@ Alerts use these numeric triggers:
 - normal-web p95 is at least 2,000ms for 15 minutes; Tier 1 DB p95 at least 200ms or Tier 2 RPC p95 at least 300ms for 15 minutes;
 - Queue oldest age exceeds 5 minutes, outbox undispatched age exceeds 2 minutes, or any Severity-1 consumer enters dead letter;
 - auth/link/recovery failure volume is at least 5× the same-window seven-day baseline and at least 50 events in 10 minutes;
-- Sentry, email, database, storage, egress, Worker, or Queue quota reaches 80% warning and 90% critical of the configured monthly/daily ceiling;
+- provider-native diagnostics, email, database, storage, egress, Worker, or Queue quota reaches 80% warning and 90% critical of the configured monthly/daily ceiling;
 - any verified secret, Critical dependency finding, backup failure, migration integrity failure, unexpected public-data exposure, or audit-write failure alerts immediately.
 
 ### Severity, Escalation, and Runbooks
 
-- **Severity 1:** active security/privacy exposure, money/data-integrity loss, broken auth for all users, unintended publication, failed protected migration, or full public outage. Sentry/provider/GitHub sends immediate email; target detection is 5 minutes and owner acknowledgment is 30 minutes during declared owner coverage. Disable the affected flow, preserve evidence, and prefer fail-closed state.
+- **Severity 1:** active security/privacy exposure, money/data-integrity loss, broken auth for all users, unintended publication, failed protected migration, or full public outage. provider-native/GitHub sends immediate email; target detection is 5 minutes and owner acknowledgment is 30 minutes during declared owner coverage. Disable the affected flow, preserve evidence, and prefer fail-closed state.
 - **Severity 2:** major route/dependency degradation, Queue lag, elevated failures, or quota risk without confirmed integrity loss. Alert within 15 minutes and review within 2 hours during owner coverage.
 - **Severity 3:** isolated/recoverable defect or trend. Aggregate into a daily triage; no paging/email storm.
 - Launch has one owner/maintainer and no staffed 24/7 rotation. Documentation must not promise continuous human response, police/emergency response, or contractual provider SLA. A second responder/on-call service is a staffing gate before such commitments.
@@ -1014,7 +1013,7 @@ Alerts use these numeric triggers:
 
 ### Testability Architecture
 
-- Domain/application packages use manual constructor or function-parameter injection through TypeScript interfaces; no module imports global live clients. Explicit composition-root factories create Supabase, Queue, Storage, Resend, Stripe, Sentry, clock, UUID, and configuration implementations. Reflection/decorator DI containers, service locators, ambient mutable registries, and hidden singleton resolution are prohibited.
+- Domain/application packages use manual constructor or function-parameter injection through TypeScript interfaces; no module imports global live clients. Explicit composition-root factories create Supabase, Queue, Storage, Resend, Stripe, provider-native diagnostics, clock, UUID, and configuration implementations. Reflection/decorator DI containers, service locators, ambient mutable registries, and hidden singleton resolution are prohibited.
 - Unit and contract suites deny live network access. Hono handlers use `app.request`; provider interactions use deterministic fake adapters and Mock Service Worker fixtures generated from contracts. Provider sandbox suites are separate and never required for local unit determinism.
 - PostgreSQL integration tests start from committed migrations in Supabase CLI's local container, seed through factories/builders, isolate with transaction/schema reset appropriate to RLS behavior, and test anonymous/authenticated/service-role abuse cases.
 - Worker/Queue behavior runs in the Cloudflare-compatible Vitest pool/Miniflare environment. Browser components use Vitest browser mode where needed; Playwright owns real navigation, hydration, service-worker, responsive, accessibility-smoke, and critical workflow behavior.
@@ -1037,7 +1036,7 @@ Alerts use these numeric triggers:
 | Operating point | Workload assumption | Expected monthly infrastructure envelope | Primary cost driver / response |
 |---|---|---:|---|
 | Design/specification | no hosted application traffic | `$0` | use repository/local tooling only |
-| Setup/staging | one Supabase Pro project, Workers Paid, synthetic traffic, free Sentry/Resend | `$30–$50` | Supabase floor; no production data or money until gates pass |
+| Setup/staging | one Supabase Pro project, Workers Paid, synthetic traffic, free provider-native diagnostics/Resend | `$30–$50` | Supabase floor; no production data or money until gates pass |
 | Consumer launch / ~1,000 MAU | ≤50k requests/day, ≤100GB governed objects, ≤100GB monthly egress, ≤3k emails | `$148–$175` plus domain and Stripe variable fees | seven-day PITR is the fixed production protection cost; remain in included usage elsewhere |
 | Growth / ~10,000 MAU | ≤500k requests/day, ~500GB governed objects, ~1TB monthly egress, ≤50k emails | `$245–$300` plus Stripe variable fees | PITR plus media/email dominate; throttle admissions or require a budget architecture change before the ceiling is exceeded |
 
@@ -1047,7 +1046,7 @@ These are planning envelopes, not provider quotes. `/setup-workspace` records da
 
 - The highest-cost user action is governed media upload followed by rendition generation and repeated streaming/download egress. Original/rendition duplication, range behavior, cache hit, transform count, storage growth, and per-party quotas are measured and limited.
 - The highest-cost asynchronous operations are bulk distribution/import/export, large reports, projection rebuilds, and mass email. They require job quotas, previewed impact, batch limits, backpressure, and owner/admin confirmation where cost can exceed the operation's configured ceiling.
-- Cloudflare, Supabase, Resend, Sentry, Stripe, and Apple usage/billing dashboards feed the `WeJammin Cost & Quota` admin projection and `.memory/wiki/operations/runbooks/quota-cost.md`. Each provider has owner, billing period, included quota, current usage, forecast, alert thresholds, and feature attribution.
+- Cloudflare, Supabase, Resend, Stripe, and Apple usage/billing dashboards feed the `WeJammin Cost & Quota` admin projection and `.memory/wiki/operations/runbooks/quota-cost.md`. Each approved provider has owner, billing period, included quota, current usage, forecast, alert thresholds, and feature attribution.
 - Feature attribution uses route/operation, storage policy class, Queue consumer, email template, and provider operation tags. Monthly review ranks egress, storage, database, requests/CPU, email, and payment fees by feature/domain.
 - New specialist compute, search, analytics, AI, media transform, or object store is rejected until measurements identify the current bottleneck, expected unit cost, migration/rebuild path, and effect under both 1,000- and 10,000-MAU points.
 
@@ -1058,7 +1057,7 @@ The owner-confirmed release plan remains authoritative: v1 session spine plus CM
 | Phase | Estimate | Dependencies | Entry criteria | Scope | Exit criteria / infrastructure gate |
 |---|---:|---|---|---|---|
 | 0. Architecture assurance | 1–2 weeks | this approved PRD | create PRD quality gate passes | independent architecture ambiguity audit, decomposition, architecture/BE/FE specs for foundation, phase plan | ambiguity audit scores pass; no unresolved implementation-blocking product/architecture decisions; phase plan approved |
-| 1. Operational foundation | 1–2 weeks | Phase 0 foundation specs | `/setup-workspace` inputs complete; owner begins approved paid setup | pnpm monorepo, Astro/Hono, Zod contracts, local Supabase, migrations, RLS baseline, CI/CD, staging, logging/Sentry, runbook skeletons | canonical `pnpm validate` green; staging artifact and database reachable; backup/restore, deploy rollback, migration, secrets, alerts, p95 smoke, and infrastructure report pass |
+| 1. Operational foundation | 1–2 weeks | Phase 0 foundation specs | `/setup-workspace` inputs complete; owner begins approved paid setup | pnpm monorepo, Astro/Hono, Zod contracts, local Supabase, migrations, RLS baseline, CI/CD, staging, logging/provider-native diagnostics, runbook skeletons | canonical `pnpm validate` green; staging artifact and database reachable; backup/restore, deploy rollback, migration, secrets, alerts, p95 smoke, and infrastructure report pass |
 | 2. Identity, admin, CMS/settings | 4–5 weeks | Phase 1 | auth/CMS/authorization specs approved | domain 01; additive social auth/recovery/MFA; party/acting context; admin shell; typed registries/settings; post types, templates, blocks, menus, media, revision/preview/publication; privacy request foundation | auth/provider-link abuse tests green; CMS last-known-good/rollback and inaccessible-content gates pass; RLS/capability matrix verified; no hard-coded variable settings outside protected invariants |
 | 3. Projects, collaboration, media, baseline safety | 4–5 weeks | Phase 2 identity/CMS/media registry | domain 07 and baseline domain-24 specs approved | projects/sessions, membership, artifact/version review, governed upload/renditions, comments/tasks/notifications, reports, takedown/suspension, DMCA intake/repeat-infringer audit | storage quarantine/revocation/erasure tests; Queue/outbox replay; offline conflict handling; collaboration authority matrix; moderation/DMCA counsel checklist and infrastructure verification pass |
 | 4. Credits and split capture | 3–4 weeks | Phase 3 project/version/provenance | domains 02 and v1 portion of 09 approved | attribution at sharing moments, contributor assertions/confirmation/dispute states, signed split capture, immutable versions/audit, exports/receipts | state-machine and adversarial authorization tests green; document hash/signature evidence; no collection/royalty implication; legal/counsel gates satisfied for enabled signature flow |
@@ -1193,7 +1192,7 @@ Dependency direction is contracts → domain → application ports/use cases →
 | API/contracts/errors | `api-design-principles`, `api-error-handling`, `api-versioning`, `error-handling-patterns`, Zod official contract guidance |
 | Testing/tooling | `pnpm`, `vitest`, `playwright`, `tdd-workflow`, `testing-strategist` |
 | Security/accessibility | `security-scanning-security-hardening`, `accessibility` |
-| Operations | `github-actions`, `sentry`, `logging-best-practices`, `deployment-procedures`, `performance-budgeting` |
+| Operations | `github-actions`, `provider-native diagnostics`, `logging-best-practices`, `deployment-procedures`, `performance-budgeting` |
 | Architecture/quality | `clean-code`, `cross-layer-consistency`, `verification-before-completion`, CFSA PRD/rubric skills |
 
 Skill copies are synchronized across Codex, Claude, Pi, and shared agent roots where the bootstrap workflow requires them. Exact package/skill versions are pinned at `/setup-workspace`; this PRD does not install application dependencies.
@@ -1231,6 +1230,12 @@ Pricing and capability assumptions were verified from official sources on 2026-0
 <!-- spec-graph: auto-generated -->
 ## Related Specs
 
+### Phases into
+- [[specs/phases/phase-1|Phase 1 — Operational foundation]]
+
 ### Constrained by
 - [[decisions.md#d-15|D-15]]
 - [[decisions.md#d-14|D-14]]
+
+### References
+- [[specs/phases/phase-1|Phase 1 — Operational foundation]]

@@ -493,7 +493,7 @@ type DistributionEvent = {
 | Business gate failure | HTTP 422 exact code such as RECORDING_INELIGIBLE, RIGHTS_UNRESOLVED, PARTNER_RULE_BLOCKED, TERRITORY_UNKNOWN, or IDENTIFIER_CONFLICT. |
 | Rate limit | HTTP 429 RATE_LIMITED with bounded Retry-After. |
 | Dependency timeout/malformed response | HTTP 503 DEPENDENCY_UNAVAILABLE; prior truth unchanged. |
-| Unhandled error | HTTP 500 INTERNAL; cause only in Sentry/structured logs keyed by request ID. |
+| Unhandled error | HTTP 500 INTERNAL; cause only in provider-native structured logs keyed by request ID. |
 
 ### Error invariants
 
@@ -553,7 +553,7 @@ None.
 
 ## Dependency References
 
-- BE00: inherit command admission, idempotency, audit, private schema boundary, RPC-only grants, forced RLS, outbox envelope, leases, Sentry correlation, and ApiError { code, message, requestId, details }. 22a does not duplicate platform endpoints.
+- BE00: inherit command admission, idempotency, audit, private schema boundary, RPC-only grants, forced RLS, outbox envelope, leases, provider-native diagnostics correlation, and ApiError { code, message, requestId, details }. 22a does not duplicate platform endpoints.
 - Shard 01: consume identity/acting-party resolution, owner mandates, artist link projections, and verified party IDs; 22a never authors identity truth.
 - Shard 06: consume trust/safety suspension and collision review paths; identifier conflicts route without merge.
 - Shard 07: consume witnessed project/credit provenance; 22a never rewrites credits.

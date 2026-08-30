@@ -150,8 +150,8 @@
 
 - **Error-critical paths:** authentication/linking, authorization, payments/payouts, rights and ledger mutations, migrations, CMS activation, outbox consumers, external webhooks/sync, moderation/legal actions, erasure/hold, and public delivery convergence require explicit error and health signals.
 - **Tracing need:** the Cloudflare Worker → Supabase → outbox/Queue → external-provider paths require propagated release, environment, request/correlation, actor-context class, and entity/version identifiers; raw PII, secrets, evidence, payment data, and content bodies are excluded.
-- **Audit boundary:** durable domain audit remains first-party PostgreSQL data with policy-specific retention and legal hold. Sentry and provider logs are operational diagnostics with minimized metadata and bounded retention, never the system of record.
-- **Selected shape:** Sentry Developer for release-aware application errors, sampled traces, email alerts, one public uptime monitor, and source-map-backed debugging; structured JSON logs plus Cloudflare Workers Observability and Supabase Logs/Reports provide provider-native request, dependency, and database evidence.
+- **Audit boundary:** durable domain audit remains first-party PostgreSQL data with policy-specific retention and legal hold. provider-native logs are operational diagnostics with minimized metadata and bounded retention, never the system of record.
+- **Selected shape:** schema-validated structured JSON logs plus Cloudflare Workers Observability and Supabase Logs/Reports provide release-tagged request, dependency, trace, and database evidence. A scheduled GitHub health check covers public uptime. No third-party monitoring account, SDK, alerting plan, or source-map upload is selected.
 - **Operations posture:** no existing monitoring stack and no staffed 24/7 rotation exist. The solo owner receives immediate severity-1 security, money, data-integrity, publication, and full-outage alerts; lower severities aggregate into the admin task inbox and scheduled review to avoid alert fatigue.
 
 ## Frontend Framework

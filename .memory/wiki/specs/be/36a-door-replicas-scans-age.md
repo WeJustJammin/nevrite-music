@@ -623,7 +623,7 @@ Per-operation observability matrix:
 | 36.04 | opId,action,reasonCode,conflictState; door_scan_correction_total | p95 500 ms; invariant/double-delta page |
 | 36.05 | opId,restrictionClass,outcome,refusalClass; door_age_outcome_total | p95 250 ms; any retained-data invariant page |
 
-Logs exclude raw tokens, names, ticket-holder identity, ID data, and lookup contents. Metrics are bounded enums; Sentry strips bodies.
+Logs exclude raw tokens, names, ticket-holder identity, ID data, and lookup contents. Metrics are bounded enums; provider-native diagnostics strips bodies.
 
 ## Release, Recovery, and Testing
 

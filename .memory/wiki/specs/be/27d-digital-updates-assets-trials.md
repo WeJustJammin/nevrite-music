@@ -11,7 +11,7 @@ This companion is the backend contract for 27.14–27.19: publish an ordinary pr
 | Asset/library authority | File/asset search and audition projections with music facets, confidence, holder tags, and separate owned/store bands | Pack billing, individual file purchase, holder identity blending, original artifact delivery |
 | Trial authority | Vendor-policy and origin-admitted grant through the same Entitlement model with bounded expiry and appealable abuse checks | Separate trial product, unbounded free access, payment capture, activation, or rights decision |
 
-The implementation target is TypeScript on Hono/Cloudflare Workers with Supabase PostgreSQL, strict Zod 4 contracts, protected Supabase Storage, transactional audit/outbox, forced RLS, structured logs, and Sentry-compatible telemetry. Ordinary updates remain optional for holders; every previously entitled version stays fetchable unless a smallest-scope malicious or rights withdrawal applies.
+The implementation target is TypeScript on Hono/Cloudflare Workers with Supabase PostgreSQL, strict Zod 4 contracts, protected Supabase Storage, transactional audit/outbox, forced RLS, structured logs, and provider-native diagnostics-compatible telemetry. Ordinary updates remain optional for holders; every previously entitled version stays fetchable unless a smallest-scope malicious or rights withdrawal applies.
 
 ## Referenced Material Inventory
 
@@ -334,7 +334,7 @@ BE-00 idempotency receipts retain at least 24 hours with request hash, status, r
 | BE27D-DCD18 | asset_organization_total; tag_reject_total; tombstone_relight_total; version_conflict_total | requestId, operationId, asset/holder hash, tag/collection counts, state, result; no private tag text | digital_asset.metadata_changed.v1; organization audit |
 | BE27D-DCD19 | trial_grant_total by origin/state; abuse_review_total; trial_expiry_total; duplicate_epoch_total; latency | requestId, operationId, entitlement/holder hash, origin, duration bucket, policy ID hash, result | digital_entitlement.issued.v1; epoch/expiry audit; 27c handoff |
 
-Trace spans include product.update, release.channel, asset.search, audition.rendition, organization.write, and trial.entitlement, preserving failures, stale versions, withdrawal kills, URL attempts, abuse appeals, and retries. Sentry scrubs holder identity, tags, notes, signed URLs, source metadata, and provider secrets. Alerts fire on forced migration, executable enable attempt, original URL generation, cross-holder tag write, and trial duration beyond policy.
+Trace spans include product.update, release.channel, asset.search, audition.rendition, organization.write, and trial.entitlement, preserving failures, stale versions, withdrawal kills, URL attempts, abuse appeals, and retries. the structured diagnostic boundary scrubs holder identity, tags, notes, signed URLs, source metadata, and provider secrets. Alerts fire on forced migration, executable enable attempt, original URL generation, cross-holder tag write, and trial duration beyond policy.
 
 ## Persistence and RLS
 

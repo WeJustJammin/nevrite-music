@@ -11,7 +11,7 @@ This companion is the backend contract for 27.10–27.13: issue an entitlement, 
 | Library authority | Holder-scoped derived projection with independent entitlement, vendor, management, current/as-of, and store bands | Vendor buyer identity, blended store/owned results, destructive history deletion |
 | Delivery authority | Live entitlement/version/artifact/withdrawal checks, bounded buyer/artifact grant, range reauthorization, queue capacity, size/hash/expiry disclosure | Static public link, external activation service, DRM bridge, buyer-identifying watermark, or artifact master mutation |
 
-The implementation target is TypeScript on Hono/Cloudflare Workers with Supabase PostgreSQL, strict Zod 4 contracts, protected Supabase Storage, transactional audit/outbox, forced RLS, structured logs, and Sentry-compatible telemetry. Entitlement is the primary durable fact; licence keys, activation seats, and transfer grants are authorizations derived from it and never replace it.
+The implementation target is TypeScript on Hono/Cloudflare Workers with Supabase PostgreSQL, strict Zod 4 contracts, protected Supabase Storage, transactional audit/outbox, forced RLS, structured logs, and provider-native diagnostics-compatible telemetry. Entitlement is the primary durable fact; licence keys, activation seats, and transfer grants are authorizations derived from it and never replace it.
 
 ## Referenced Material Inventory
 
@@ -312,7 +312,7 @@ BE-00 idempotency receipts retain at least 24 hours with request hash, status, r
 | BE27C-DCD12 | transfer_grant_total by state; withdrawal_denied_total; queue_depth; grant_expiry_total; latency | requestId, operationId, entitlement/artifact hash, requested concurrency, withdrawal class, result; no signed URL | digital_transfer.grant_created.v1; grant/lease audit |
 | BE27C-DCD13 | transfer_range_total; bytes_served; hash_mismatch_total; unsafe_kill_total; queue_wait; latency | requestId, operationId, grant hash, range size, completion flag, state, result; no bytes/content | digital_transfer.completed.v1 on completion; range audit; withdrawal evidence |
 
-Trace spans include entitlement.issue, library.project, transfer.grant, transfer.range, and object.sign, preserving failures, payment/allocation conflicts, withdrawal kills, queue saturation, hash mismatch, and retries. Sentry scrubs purchaser/holder identity, keys, signed URLs, object IDs, and content metadata. Alerts fire on entitlement without proof, duplicate epoch, range accepted after malicious withdrawal, static URL generation, or buyer identity in a vendor-facing event.
+Trace spans include entitlement.issue, library.project, transfer.grant, transfer.range, and object.sign, preserving failures, payment/allocation conflicts, withdrawal kills, queue saturation, hash mismatch, and retries. the structured diagnostic boundary scrubs purchaser/holder identity, keys, signed URLs, object IDs, and content metadata. Alerts fire on entitlement without proof, duplicate epoch, range accepted after malicious withdrawal, static URL generation, or buyer identity in a vendor-facing event.
 
 ## Persistence and RLS
 

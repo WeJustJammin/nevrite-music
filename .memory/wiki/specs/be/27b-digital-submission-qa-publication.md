@@ -11,7 +11,7 @@ This companion is the backend contract for the content admission and publication
 | QA authority | Deterministic archive/build/audio contradictions block the specific scope; uncertain extraction is a signal; exact match/named third-party recording enters human review | QA never asserts safe, rights verified, legal clearance, or universal compatibility |
 | Publication authority | Atomic product/version, artifact, terms, attestation, QA/review, vendor snapshot, payout-ready, and outbox handoff | Executable plugins remain launch-disabled until separate sandbox/liability/staged-rollout/vendor gates pass |
 
-The implementation target is TypeScript on Hono/Cloudflare Workers with Supabase PostgreSQL, strict Zod 4 contracts, immutable object storage, transactional audit/outbox, forced RLS, structured logs, and Sentry-compatible telemetry. A correction creates a new immutable submission/version; no prior artifact master, QA decision, review decision, or terms version is edited in place.
+The implementation target is TypeScript on Hono/Cloudflare Workers with Supabase PostgreSQL, strict Zod 4 contracts, immutable object storage, transactional audit/outbox, forced RLS, structured logs, and provider-native diagnostics-compatible telemetry. A correction creates a new immutable submission/version; no prior artifact master, QA decision, review decision, or terms version is edited in place.
 
 ## Referenced Material Inventory
 
@@ -346,7 +346,7 @@ BE-00 idempotency receipts retain at least 24 hours with request hash, status, r
 | BE27B-DCD08 | review_decision_total by action; recusal_denied_total; appeal_open_total; latency | requestId, operationId, submission/reviewer hash, action, finding count, appeal hours, result | review.decision.recorded; review evidence audit; no reviewer note |
 | BE27B-DCD09 | publication_total by type/state; gate_block_total; executable_disabled_total; outbox_age; latency | requestId, operationId, product/version hash, gate states, payout flag, executable policy, result | digital_product.published.v1; publication and listing handoff IDs |
 
-Trace spans include submission.bind, artifact.qa, content.qc, review.decision, and publication.commit, preserving failures, contradictions, recusal, gate mismatch, provider retries, and plugin-disable enforcement. Sentry scrubs artifact URLs, source/AI declarations, reviewer notes, legal identity, and payout data. Alerts fire on publication without all gate IDs, any QA result labelled safe/rights verified, plugin executable enable attempt, and any digest mismatch after binding.
+Trace spans include submission.bind, artifact.qa, content.qc, review.decision, and publication.commit, preserving failures, contradictions, recusal, gate mismatch, provider retries, and plugin-disable enforcement. the structured diagnostic boundary scrubs artifact URLs, source/AI declarations, reviewer notes, legal identity, and payout data. Alerts fire on publication without all gate IDs, any QA result labelled safe/rights verified, plugin executable enable attempt, and any digest mismatch after binding.
 
 ## Persistence and RLS
 

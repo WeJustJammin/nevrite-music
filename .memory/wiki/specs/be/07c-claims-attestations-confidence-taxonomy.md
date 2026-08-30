@@ -546,7 +546,7 @@ Every operation emits requestId, traceId, operationId, outcome, latencyMs, actor
 | CRD-07C-06 | credit.contest.changed.v1; participant role, case handoff, discovery-weight and convergence metrics | contest hash, credit hash, case hash, state, outcome code |
 | CRD-07C-07 | credit.taxonomy.changed.v1; alias mapping, rejection, deprecation, pending and vault-class metrics | alias hash, taxonomy kind, target version, change, pending flag |
 
-Sentry receives exception fingerprints and circuit state without request bodies. Alerts fire for candidate queue age over 10 minutes, duplicate claim conflicts, attestation delivery retry exhaustion, stale-hash spikes, derivation unavailable rate, unresolved contest age over policy window and pending aliases older than 14 days.
+provider-native diagnostic sinks receive exception fingerprints and circuit state without request bodies. Alerts fire for candidate queue age over 10 minutes, duplicate claim conflicts, attestation delivery retry exhaustion, stale-hash spikes, derivation unavailable rate, unresolved contest age over policy window and pending aliases older than 14 days.
 
 ## Testing Strategy
 

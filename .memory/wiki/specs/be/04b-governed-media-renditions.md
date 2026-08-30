@@ -420,7 +420,7 @@ All four HTTP operations use the BE00 order: request ID, raw body and content-ty
 - Signed URLs are minted only by BE00 after PostgreSQL authorization and bind object or rendition ID, checksum, version, audience, use, disposition, range, and expiry. 04b never emits a public URL for pending, quarantined, revoked, or held bytes.
 - Scanner and transform adapters receive private object IDs and checksums, not broad bucket listing permission. Queue payloads contain identifiers and versions only; raw media and protected rights evidence stay out of queues and logs.
 - CSRF requires same-origin and session-bound token for browser mutations. CORS allows configured CMS-console origins only. Rate limits are actor and acting-party keyed, with separate ingest, rights, rendition, and lifecycle buckets.
-- Sentry and structured logs scrub signed URLs, object keys, filename, claimant, consent evidence, case, token, body, and raw provider payload. Request ID, operation ID, safe error code, correlation ID, and hashed subject ID are retained.
+- structured logs scrub signed URLs, object keys, filename, claimant, consent evidence, case, token, body, and raw provider payload. Request ID, operation ID, safe error code, correlation ID, and hashed subject ID are retained.
 
 ## Data Flow
 
@@ -497,7 +497,7 @@ Events are written only after the matching transaction commits its canonical row
 - 422 VALIDATION_FAILED: strict field, code registry, territory, time, MIME, profile, rights, accessibility, or action rule failure.
 - 429 RATE_LIMITED: operation actor or acting-party bucket exceeded; Retry-After and RateLimit headers are returned.
 - 502, 503, or 504 DEPENDENCY_UNAVAILABLE: scanner, Storage, RPC, queue, or purge provider cannot satisfy its typed contract within the deadline; no unsafe success is fabricated.
-- 500 INTERNAL_ERROR: scrubbed unexpected failure with request ID only; Sentry receives the protected diagnostic out of band.
+- 500 INTERNAL_ERROR: scrubbed unexpected failure with request ID only; provider-native diagnostic sinks receive the protected diagnostic out of band.
 
 ### Operation error coverage
 
@@ -519,7 +519,7 @@ No provider response is copied into an ApiError message. details contains only b
 - DLV-04B-03 metrics include queue age, lease age, profile rejection, transform duration, output bytes, source and output checksum mismatch, retryable and terminal failure, DLQ depth, and ready event lag.
 - DLV-04B-04 metrics include reverse-reference count, switched and blocked references, hold count, purge scope count, urgent purge age, provider response, partial scope count, and reconciliation age.
 - SLOs inherit BE00: Tier 2 mutation p95 under 1,200 ms, protected RPC p95 under 300 ms where synchronous, acceptance p95 under 500 ms where queued, and DLQ under 0.1 percent. Scanner and transform long work are measured by queue and job lag, not hidden inside a request.
-- Alerts fire for quarantined assets beyond policy, scan outage, repeated profile failures, DLQ growth, stale rendition leases, urgent purge partial or overdue evidence, unexpected public-object state, event lag, and any RLS or grant violation. Sentry captures unexpected errors with sendDefaultPii false and protected source maps.
+- Alerts fire for quarantined assets beyond policy, scan outage, repeated profile failures, DLQ growth, stale rendition leases, urgent purge partial or overdue evidence, unexpected public-object state, event lag, and any RLS or grant violation. Structured diagnostics record unexpected errors with allowlisted fields only; source maps remain private build artifacts.
 
 ## Testing Strategy
 

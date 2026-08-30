@@ -947,7 +947,7 @@ Shared events exclude exact fan/location data, private watch membership, subject
 | 40.13 | scout org, query digest/class, result band, budget; no raw query/result | p95 <750ms, empty/cap/rate | 100% discovery audit; traversal pattern alert |
 | 40.14 | subject, purpose, instruction version; no watch count/scout IDs | p95 <1.2s, invalidation/purge lag | 100% revoke audit; any stale access severity one |
 
-Logs/Sentry exclude auth headers, unrestricted IP/user agent, raw query, results, provider payload, exact geography, metric values, anomaly facts, dossier bytes/links, watch membership, subject opaque identifiers on denied branches, consent reason, hidden-result cause, and private curator/person data. Rate keys are HMAC digests; labels are bounded.
+Logs/provider-native diagnostics exclude auth headers, unrestricted IP/user agent, raw query, results, provider payload, exact geography, metric values, anomaly facts, dossier bytes/links, watch membership, subject opaque identifiers on denied branches, consent reason, hidden-result cause, and private curator/person data. Rate keys are HMAC digests; labels are bounded.
 
 ## Release, Migration, and Recovery
 

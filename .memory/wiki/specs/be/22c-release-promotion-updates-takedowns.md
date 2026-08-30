@@ -437,7 +437,7 @@ Consumers dedupe by eventId and aggregate identity/version. Outbox insert is ato
 | Removal/fingerprint/UGC gate failure | HTTP 422 EVIDENCE_SCOPE_INSUFFICIENT, CLAIM_REGISTRATION_BLOCKED, RIGHTS_UNRESOLVED, OWNERSHIP_RECORD_ABSENT, or CLAIM_CASE_UNRESOLVED. |
 | Rate limit | HTTP 429 RATE_LIMITED with bounded Retry-After. |
 | 22a/22b/Shard 06/09/provider timeout or malformed response | HTTP 503 DEPENDENCY_UNAVAILABLE; prior truth remains. |
-| Unhandled error | HTTP 500 INTERNAL; cause remains in Sentry/structured logs keyed by requestId. |
+| Unhandled error | HTTP 500 INTERNAL; cause remains in provider-native structured logs keyed by requestId. |
 
 ### Error invariants
 
@@ -497,7 +497,7 @@ None.
 
 ## Dependency References
 
-- BE00: inherit command admission, idempotency, audit, private schema boundary, RPC-only grants, forced RLS, provider-operation evidence, outbox leases, Sentry correlation, CORS baseline, and ApiError { code, message, requestId, details }. No BE00 route is duplicated.
+- BE00: inherit command admission, idempotency, audit, private schema boundary, RPC-only grants, forced RLS, provider-operation evidence, outbox leases, provider-native diagnostics correlation, CORS baseline, and ApiError { code, message, requestId, details }. No BE00 route is duplicated.
 - 22a: consume date-plan, release/version, rights/footprint, identifier and canonical revision facts. Date changes and change plans fail closed on stale revisions.
 - 22b: consume delivery snapshot/message/step/ack/store status and use its scoped update/takedown command seam; provider acceptance is never store-live proof.
 - Shard 01: consume owner/artist authority and party standing; no identity or artist merge truth is authored here.

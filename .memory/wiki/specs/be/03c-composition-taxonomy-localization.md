@@ -395,7 +395,7 @@ Known readable resources with insufficient capability return 403. Resources outs
 - Locale IDs are BCP 47. Fallback is explicit ordered per type/field and records the selected source. no_fallback is the default for legal, safety, and jurisdiction fields.
 - Related content uses manual pins first, exclusions always, bounded deterministic derived rules with reason/version. Eligibility and target authorization are rechecked at read, preview, and publication.
 - Idempotency is bound to operation, actor, acting party, path, body, target, and expected version. Concurrent commands cap at three per actor; duplicate exact commands replay.
-- Logs/Sentry contain only operation, safe IDs/hashes, version, actor class, outcome, duration, and error. No content, private locale text, labels, target names, or capability graph.
+- Logs/provider-native diagnostics contain only operation, safe IDs/hashes, version, actor class, outcome, duration, and error. No content, private locale text, labels, target names, or capability graph.
 
 ## Data Flow
 
@@ -465,7 +465,7 @@ Structured scrubbed logs are keyed by operation ID, requestId, traceId, correlat
 
 Metrics: cms_composition_request_total{operation,outcome}, cms_composition_latency_ms, cms_composition_error_total{operation,code}, cms_composition_conflict_total, cms_template_activation_age, cms_pattern_cycle_reject_total, cms_taxonomy_merge_total, cms_taxonomy_overlap_reject_total, cms_locale_stale_total, cms_no_fallback_block_total, cms_related_target_filtered_total, cms_outbox_age, cms_queue_retry_total, cms_queue_dlq_total. Alert on DLQ >0, outbox age >2m, activation blocked >15m, stale locale legal-field count >0, or target-filter anomaly.
 
-Traces cover validation → principal/assignment → registry/projection refetch → idempotency → RPC/SQL → audit/outbox → consumer refetch. Sentry sendDefaultPii=false; audit is PostgreSQL authority. SLOs: Tier 2 p95 <1,200ms, protected RPC <300ms, queue first attempt p95 ≤60s, DLQ <0.1% daily.
+Traces cover validation → principal/assignment → registry/projection refetch → idempotency → RPC/SQL → audit/outbox → consumer refetch. Structured diagnostics use allowlisted fields only; audit is PostgreSQL authority. SLOs: Tier 2 p95 <1,200ms, protected RPC <300ms, queue first attempt p95 ≤60s, DLQ <0.1% daily.
 
 ## Testing Strategy
 

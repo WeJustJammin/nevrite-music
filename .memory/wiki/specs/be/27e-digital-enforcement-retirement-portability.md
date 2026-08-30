@@ -12,7 +12,7 @@ This companion is the backend contract for 27.20–27.24: request serial blackli
 | Retirement authority | New sales stop, continuity manifest and artifact obligations, passive owner library state, and committed-order handoff | Deleting perpetual artifacts, cancelling settled title, or erasing acquisition epochs |
 | Portability authority | Portable entitlement/library/history export and eligible erasure/anonymization workflow | Deleting lawful contractual records, raw provider secrets, or unscoped account data |
 
-The implementation target is TypeScript on Hono/Cloudflare Workers with Supabase PostgreSQL, strict Zod 4 contracts, protected Supabase Storage, transactional audit/outbox, forced RLS, structured logs, and Sentry-compatible telemetry. Enforcement is platform-adjudicated, reasoned, appealable, and smallest-scope. Malicious withdrawal can stop an in-flight transfer immediately; rights withdrawal preserves unaffected assets and acquisition evidence.
+The implementation target is TypeScript on Hono/Cloudflare Workers with Supabase PostgreSQL, strict Zod 4 contracts, protected Supabase Storage, transactional audit/outbox, forced RLS, structured logs, and provider-native diagnostics-compatible telemetry. Enforcement is platform-adjudicated, reasoned, appealable, and smallest-scope. Malicious withdrawal can stop an in-flight transfer immediately; rights withdrawal preserves unaffected assets and acquisition evidence.
 
 ## Referenced Material Inventory
 
@@ -309,7 +309,7 @@ BE-00 idempotency receipts retain at least 24 hours with request hash, status, r
 | BE27E-DCD23 | rights_withdrawal_total by scope; legal_record_reject_total; appeal_open_total; unaffected_retained_total | requestId, operationId, artifact/scope hash, legal record hash, affected count, result | digital_artifact.withdrawn.v1; scope/legal/notice audit |
 | BE27E-DCD24 | portability_job_total by action/state; export_ready_total; legal_hold_block_total; anonymization_total; latency | requestId, operationId, account/holder hash, action, format, destination class, result; no exported content | export/erase audit; protected manifest and retention decision |
 
-Trace spans include enforcement.case, retirement.continuity, malicious.kill, rights.scope, portability.export, and erasure.anonymize, preserving denials, legal holds, in-flight kills, appeal, provider retries, and data deletion safeguards. Sentry scrubs legal records, account IDs, evidence URLs, provider secrets, and exported content. Alerts fire on vendor direct execution, whole-catalog rights removal, artifact deletion attempt, erasure before export, or acquisition evidence deletion.
+Trace spans include enforcement.case, retirement.continuity, malicious.kill, rights.scope, portability.export, and erasure.anonymize, preserving denials, legal holds, in-flight kills, appeal, provider retries, and data deletion safeguards. the structured diagnostic boundary scrubs legal records, account IDs, evidence URLs, provider secrets, and exported content. Alerts fire on vendor direct execution, whole-catalog rights removal, artifact deletion attempt, erasure before export, or acquisition evidence deletion.
 
 ## Persistence and RLS
 

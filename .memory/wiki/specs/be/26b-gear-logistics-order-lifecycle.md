@@ -357,7 +357,7 @@ BE-00 idempotency results retain at least 24 hours. Lost responses recover by ke
 | BE26B-GCF09 | amendment_total by choice; dispatch_hold_total; deadline_void_total | requestId, operationId, order/line hash, change class, deadline, choice/result | amendment.opened/elected audit; gear_order.amendment_opened.v1 |
 | BE26B-GCF10 | delivery_event_total by action; verified_delivery_total; carrier_duplicate_total; latency | requestId, operationId, shipment/order hash, evidence count, verification method, result | delivery/evidence audit; gear_shipment.state_changed.v1 and order state event |
 
-Carrier payloads, exact addresses, payment data, evidence bytes and buyer notes never enter logs/Sentry. Alert on carrier duplicate storms, booking ambiguity, coverage blocks, clock skew, unverified delivered state, and misdelivery events.
+Carrier payloads, exact addresses, payment data, evidence bytes and buyer notes never enter logs/provider-native diagnostics. Alert on carrier duplicate storms, booking ambiguity, coverage blocks, clock skew, unverified delivered state, and misdelivery events.
 
 ## Persistence and RLS
 

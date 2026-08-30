@@ -1,14 +1,16 @@
-# Ambiguity Audit Scope
+# Ambiguity Audit Scope — BE + FE
 
-- **Invocation:** Fresh run
-- **Selected scope:** BE
-- **Layer count:** 1
-- **BE document count:** 157 total (156 scored specifications + 1 supporting index)
-- **Enumeration result:** PASS — index links and filesystem inventory match; 0 missing, 0 unlisted
-- **Scoring checkpoints:** 1,716 applicable checkpoints (156 specifications × 11 BE rubric dimensions); supporting index audited for scope integrity but not rubric-scored
-- **Status:** complete — PASS, 1,716/1,716 checkpoints, 0.00% ambiguity
+- **Invocation:** `/audit-ambiguity fe and be` — fresh combined run
 - **Run date:** 2026-08-29
-- **Report:** `.memory/wiki/specs/audits/2026-08-29-be-ambiguity-report.md`
+- **Selected layers:** BE, FE
+- **BE document count:** 157 (156 scored specs + index)
+- **FE document count:** 44 (43 scored specs + index)
+- **Combined document count:** 201
+- **Applicable checkpoints:** 2189
+- **Enumeration result:** PASS — both indexes match their filesystem inventories; 0 missing, 0 unlisted
+- **Status:** complete — PASS (1716/1716 BE; 473/473 FE; 0.00% ambiguity)
+- **BE report:** `.memory/wiki/specs/audits/2026-08-29-be-ambiguity-report.md`
+- **FE report:** `.memory/wiki/specs/audits/2026-08-29-fe-ambiguity-report.md`
 
 ## Documents
 
@@ -169,19 +171,64 @@
 155. `.memory/wiki/specs/be/41a-income-tax-receivables.md`
 156. `.memory/wiki/specs/be/41b-deals-recoupment-pl.md`
 157. `.memory/wiki/specs/be/42-career-planning-risk.md`
+158. `.memory/wiki/specs/fe/index.md`
+159. `.memory/wiki/specs/fe/00-infrastructure.md`
+160. `.memory/wiki/specs/fe/01-identity-authority.md`
+161. `.memory/wiki/specs/fe/02-profiles-verification.md`
+162. `.memory/wiki/specs/fe/03-cms-content-modeling.md`
+163. `.memory/wiki/specs/fe/04-cms-delivery-media.md`
+164. `.memory/wiki/specs/fe/05-platform-configuration-admin.md`
+165. `.memory/wiki/specs/fe/06-trust-safety.md`
+166. `.memory/wiki/specs/fe/07-credits-core.md`
+167. `.memory/wiki/specs/fe/08-credit-reporting-disclosure.md`
+168. `.memory/wiki/specs/fe/09-projects-collaboration.md`
+169. `.memory/wiki/specs/fe/10-rights-ownership.md`
+170. `.memory/wiki/specs/fe/11-community-graph.md`
+171. `.memory/wiki/specs/fe/12-community-spaces-events.md`
+172. `.memory/wiki/specs/fe/13-opportunities-casting.md`
+173. `.memory/wiki/specs/fe/14-services-marketplace.md`
+174. `.memory/wiki/specs/fe/15-education-delivery.md`
+175. `.memory/wiki/specs/fe/16-education-credentials-institutions.md`
+176. `.memory/wiki/specs/fe/17-realtime-sessions.md`
+177. `.memory/wiki/specs/fe/18-royalty-accounting.md`
+178. `.memory/wiki/specs/fe/19-royalty-reporting-forecasting.md`
+179. `.memory/wiki/specs/fe/20-licensing-core.md`
+180. `.memory/wiki/specs/fe/21-specialized-licensing.md`
+181. `.memory/wiki/specs/fe/22-release-distribution.md`
+182. `.memory/wiki/specs/fe/23-gear-provenance-registry.md`
+183. `.memory/wiki/specs/fe/24-gear-holdings-operations.md`
+184. `.memory/wiki/specs/fe/25-gear-market-catalog.md`
+185. `.memory/wiki/specs/fe/26-gear-commerce-fulfilment.md`
+186. `.memory/wiki/specs/fe/27-digital-catalog-delivery.md`
+187. `.memory/wiki/specs/fe/28-digital-licensing-commerce.md`
+188. `.memory/wiki/specs/fe/29-venues-spaces.md`
+189. `.memory/wiki/specs/fe/30-booking-contracts.md`
+190. `.memory/wiki/specs/fe/31-live-settlement-intelligence.md`
+191. `.memory/wiki/specs/fe/32-show-production-planning.md`
+192. `.memory/wiki/specs/fe/33-show-day-operations.md`
+193. `.memory/wiki/specs/fe/34-touring-operations.md`
+194. `.memory/wiki/specs/fe/35-ticket-products-sales.md`
+195. `.memory/wiki/specs/fe/36-box-office-risk.md`
+196. `.memory/wiki/specs/fe/37-fanbase-direct-to-fan.md`
+197. `.memory/wiki/specs/fe/38-promotion-marketing.md`
+198. `.memory/wiki/specs/fe/39-analytics-ingestion-reporting.md`
+199. `.memory/wiki/specs/fe/40-market-intelligence-signals.md`
+200. `.memory/wiki/specs/fe/41-career-finance.md`
+201. `.memory/wiki/specs/fe/42-career-planning-risk.md`
 
 ## Rubric Files
 
-1. `.agents/skills/pipeline-rubrics/references/be-rubric.md`
-2. `.agents/skills/pipeline-rubrics/references/scoring.md`
+- `.agents/skills/pipeline-rubrics/references/scoring.md`
+- `.agents/skills/pipeline-rubrics/references/be-rubric.md`
+- `.agents/skills/pipeline-rubrics/references/fe-rubric.md`
 
 ## Gaps Fixed
 
-- None — the fresh execution found 0 gaps and changed no scoped BE specification content.
+- None — the fresh run found no ambiguity gaps and changed no scoped spec.
 
 ## Execution Handoff
 
-- Processed counter: 157/157 documents.
-- Freshness gate: rescore current file bytes independently; prior audit verdicts and checkpoint results are not evidence for this run.
-- Mandatory loop: full-document implementer simulation → rubric scoring with citations → devil’s-advocate downgrade pass.
-- Mandatory BE cross-layer checks: IA→BE coverage, BE→FE field mapping, IA→FE access control, and BE error-code→FE-state mapping.
+- Processed counter: 201/201 documents.
+- Freshness gate: current file bytes were independently re-enumerated and rescored; no historical checkpoint or verdict was imported.
+- Mandatory loop: full-document implementer simulation → rubric scoring with evidence → devil's-advocate downgrade pass.
+- Cross-layer checks: IA→BE flow coverage, BE→FE field mapping, IA→FE access control, BE error-code→FE-state mapping.

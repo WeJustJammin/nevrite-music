@@ -244,7 +244,7 @@ Every error is the BE00 `ApiError { code, message, requestId, details }`; valida
 | `COM05_SET_FEED_PREFERENCE` | `operationId, requestId, viewerHash, preferenceId, fromVersion, toVersion, replayed`; never preference content | writes, conflicts, replay/mismatch, rate rejects; alert conflict >10% for 15 min |
 | `COM06_NATIVE_POST_ACTION` | `operationId, requestId, actorHash, action, postId, state, moderationCaseId, replayed`; body excluded | publish/reaction latency, moderation backlog, removal/tombstone lag; page pending p95 age >5 min |
 
-Audit records contain actor/context, action, target IDs, policy versions, before/after hashes, request/body hash, decision code, and timestamp. Sentry receives opaque IDs and stack traces only; PII/private preference content is scrubbed.
+Audit records contain actor/context, action, target IDs, policy versions, before/after hashes, request/body hash, decision code, and timestamp. provider-native diagnostic sinks receive opaque IDs and stack traces only; PII/private preference content is scrubbed.
 
 ## Verification and Test Strategy
 
@@ -258,7 +258,7 @@ Audit records contain actor/context, action, target IDs, policy versions, before
 
 Additional suites: Zod request/response/event snapshots; OpenAPI generation drift; SQL migration/constraint/index tests; RLS owner/foreign/service-role matrix; event consumer version/dedup tests; property tests for stable cursor ordering; fuzz tests for body and cursor limits; load tests at 50-item pages; privacy tests proving preferences never influence shared projections or surface to muted subjects.
 
-Release requires backward-compatible OpenAPI diff, migration rollback rehearsal, projector shadow comparison, moderation circuit chaos test, RLS verification, Sentry scrubbing test, and dashboards/alerts deployed before traffic ramp. Rollback disables writes, drains outbox, restores prior route version, and retains newly written rows for forward-compatible readers.
+Release requires backward-compatible OpenAPI diff, migration rollback rehearsal, projector shadow comparison, moderation circuit chaos test, RLS verification, provider-native diagnostics scrubbing test, and dashboards/alerts deployed before traffic ramp. Rollback disables writes, drains outbox, restores prior route version, and retains newly written rows for forward-compatible readers.
 
 ## Deepening Passes
 

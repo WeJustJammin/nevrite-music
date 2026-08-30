@@ -9,7 +9,7 @@
 - **Backend-bearing:** yes. COM-07–COM-10 require private-safe search projections, explicit expiring appetite state, moderated call publication, single-response acceptance, and downstream project/split command coordination.
 - **Boundary:** owns discovery documents, open-to signals, collaboration calls/responses, fit explanations, and acceptance orchestration. Identity/roles, evidence, moderation/restrictions, Shard 09 projects, and Shard 10 splits are versioned external seams.
 - **Split validation:** the approved `11c` companion exactly covers the contiguous IA discovery/calls cluster. No UI-only or BE00 platform endpoint is introduced.
-- **Inherited from BE00:** HTTPS/JSON, request IDs, auth/session/acting context, CORS allowlist, idempotency ledger, audit/outbox, standard rate headers, pagination, logging/Sentry redaction, and `ApiError { code, message, requestId, details }`.
+- **Inherited from BE00:** HTTPS/JSON, request IDs, auth/session/acting context, CORS allowlist, idempotency ledger, audit/outbox, standard rate headers, pagination, logging/provider-native diagnostics redaction, and `ApiError { code, message, requestId, details }`.
 
 ## Referenced Material Inventory
 
@@ -251,7 +251,7 @@ Every non-2xx body is exactly BE00 `ApiError { code, message, requestId, details
 | `COM09_PUBLISH_COLLABORATION_CALL` | owner hash, call/case IDs, terms kind/hash/version, state, replay; no scope/title text | publish/hold/reject, moderation latency/backlog, expiry lag; page pending p95 >5 min |
 | `COM10_ACCEPT_CALL_RESPONSE` | owner hash, call/response/acceptance/command IDs, setup state, versions, replay | acceptance conflicts, setup latency/retries, command seam breaker; page failed_retryable age p95 >15 min |
 
-Immutable audits record actor/context/action/target, before/after hashes, policy/evidence versions, idempotency/request hash and outcome. Sentry scrubs titles, scope, submission data, precise geography, and all private fields.
+Immutable audits record actor/context/action/target, before/after hashes, policy/evidence versions, idempotency/request hash and outcome. the structured diagnostic boundary scrubs titles, scope, submission data, precise geography, and all private fields.
 
 ## Verification and Test Strategy
 
@@ -266,7 +266,7 @@ Immutable audits record actor/context/action/target, before/after hashes, policy
 
 Also required: Zod/OpenAPI snapshots; migration constraints and deferred invariant; RLS matrix for owner/responder/foreign/projector/moderator; event consumer dedup/order; property tests for basis-point totals and stable reason ordering; search privacy differential tests; expiry clock-skew tests; circuit/chaos tests; load tests for 50-result queries and acceptance serialization.
 
-Release gates: compatible OpenAPI diff, migration/rollback rehearsal, private-input static allowlist proof, projector shadow comparison, RLS verification, expiry sweep dry run, moderation and downstream circuit exercises, Sentry scrubbing, dashboards/alerts. Rollback stops mutation traffic, drains outbox, preserves new rows/command IDs, and serves prior readers without reversing accepted truth.
+Release gates: compatible OpenAPI diff, migration/rollback rehearsal, private-input static allowlist proof, projector shadow comparison, RLS verification, expiry sweep dry run, moderation and downstream circuit exercises, provider-native diagnostics scrubbing, dashboards/alerts. Rollback stops mutation traffic, drains outbox, preserves new rows/command IDs, and serves prior readers without reversing accepted truth.
 
 ## Deepening Passes
 

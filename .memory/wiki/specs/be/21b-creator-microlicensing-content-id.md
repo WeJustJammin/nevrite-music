@@ -294,7 +294,7 @@ Per-operation observability matrix:
 | SPL-09 | opId,state,attempt,reasonClass; `content_claim_release_total` | p95 15 s; binding/reland/provider circuit tests |
 | SPL-10 | opId,priorCapability,newCapability,preservedCounts; `subscription_cancel_total` | p95 2 s; any rights-revocation invariant pages |
 
-Structured logs/Sentry omit channel, claim, token, evidence, price, payment, licence and owner-policy data. Alerts cover pending whitelist age, unfulfilled recovery, provider circuits, reland rate, outbox lag, and any cancellation-linked rights mutation.
+Structured logs/provider-native diagnostics omit channel, claim, token, evidence, price, payment, licence and owner-policy data. Alerts cover pending whitelist age, unfulfilled recovery, provider circuits, reland rate, outbox lag, and any cancellation-linked rights mutation.
 
 ## Release and Testing
 

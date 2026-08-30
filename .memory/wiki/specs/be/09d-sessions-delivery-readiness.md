@@ -565,7 +565,7 @@ Every branch serializes `ApiError { code, message, requestId, details }`; errors
 | `PRJ-23` | sheets/rows, paper-only ratio, template failures, row discriminator failures | session/sheet IDs, row kind, source kind, result | `prj.recall.sheet`; alert unsupported row payload attempts |
 | `PRJ-24` | grants/revokes/expiry, epoch mismatches, projection reads | grant/sheet IDs, recipient hash, policy hash, state | `prj.recall.grant`; alert token replay and projection-policy drift |
 
-Logs and Sentry contain request ID, operation ID, opaque IDs, hashes and safe codes only. They never contain answers, attendance names, paper bytes, derived rows, channel names, source paths, artifact locators or hidden gap fields.
+Logs and provider-native diagnostics contain request ID, operation ID, opaque IDs, hashes and safe codes only. They never contain answers, attendance names, paper bytes, derived rows, channel names, source paths, artifact locators or hidden gap fields.
 
 ## Testing Strategy
 

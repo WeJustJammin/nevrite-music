@@ -4,7 +4,7 @@
 
 ## Reading Order
 
-All 156 backend companions are complete and independently ambiguity-passed. The BE contract lock scored **1716/1716 (PASS, 2026-08-29)**; the next valid pipeline stage is `/write-fe-spec`, beginning with Shard 00.
+All 156 backend companions are complete and independently ambiguity-passed. The BE contract lock scored **1716/1716 (PASS, 2026-08-29)**. The downstream FE layer is also complete at **473/473 (PASS, 2026-08-29)**; the next valid pipeline stage is `/plan-phase`.
 
 ## Quality Gate
 

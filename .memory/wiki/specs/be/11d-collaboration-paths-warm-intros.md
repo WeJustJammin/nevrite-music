@@ -274,7 +274,7 @@ All non-2xx responses use BE00 `ApiError { code, message, requestId, details }`.
 | `COM14_BROKER_INTRO_DECISION` | broker/request/invitation/channel hashes, decision state, versions, delivery state; note excluded | accept/decline/expiry, invitation/channel latency, retry backlog; page channel opened without target consent >0 |
 | `COM15_RESOLVE_REACHABILITY` | sender/target hashes, sender class, verdict, policy/input versions, degraded; decision reason restricted audit only | verdict/degraded ratios, policy lookup failures, latency; alert degraded >5%/10 min |
 
-Audit evidence includes actor/context/action/target hashes, cited evidence and policy versions, before/after hashes, idempotency/request hashes and internal decision code. Access to internal reason audit is restricted and itself audited. Sentry scrubs asks, notes, paths, party names and raw policy content.
+Audit evidence includes actor/context/action/target hashes, cited evidence and policy versions, before/after hashes, idempotency/request hashes and internal decision code. Access to internal reason audit is restricted and itself audited. the structured diagnostic boundary scrubs asks, notes, paths, party names and raw policy content.
 
 ## Verification and Test Strategy
 
@@ -290,7 +290,7 @@ Audit evidence includes actor/context/action/target hashes, cited evidence and p
 
 Additional suites: Zod/OpenAPI/event snapshots; SQL checks/FKs/deferred participant triggers/index plans; RLS matrix for endpoint/requester/broker/target/foreign/admin/services; property tests for path continuity/depth/ego root; temporal policy overlap tests; KMS failure and ciphertext redaction; circuit chaos; outbox consumer dedup/order; load tests for two-hop bounded traversal and serial quota locks.
 
-Release gates: compatible API diff, migration rollback, full RLS/grant audit, shadow graph comparison with suppressed edges, path privacy differential tests, target-consent invariant query showing zero violations, resilience drills, Sentry scrubbing, alerts/dashboards. Rollback disables mutations/traversal version, drains outbox, preserves consent/evidence/audit rows, and never re-enables suppressed edges through stale cache.
+Release gates: compatible API diff, migration rollback, full RLS/grant audit, shadow graph comparison with suppressed edges, path privacy differential tests, target-consent invariant query showing zero violations, resilience drills, provider-native diagnostics scrubbing, alerts/dashboards. Rollback disables mutations/traversal version, drains outbox, preserves consent/evidence/audit rows, and never re-enables suppressed edges through stale cache.
 
 ## Deepening Passes
 

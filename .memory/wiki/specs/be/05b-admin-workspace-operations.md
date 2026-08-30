@@ -564,7 +564,7 @@ export const QualityDiagnosticChangedV1 = z.strictObject({
 | CFG-05B-05 | quality.diagnostic.changed with run ID, definition key/version, target type, state, freshness and result-code count; unknown/stale/healthy and timeout metrics | Trace definition lookup and provider; evidence bytes, target payload and private audit fields are excluded |
 
 Logs use BE00 severity, environment, release, service, operation, outcome,
-latency, requestId and correlationId. Sentry receives scrubbed exception
+latency, requestId and correlationId. provider-native diagnostic sinks receive scrubbed exception
 metadata. Health metrics distinguish healthy, stale, partial, unknown, failed
 and empty; no absent card or missing provider is silently counted as healthy.
 

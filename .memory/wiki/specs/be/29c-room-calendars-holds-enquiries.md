@@ -257,7 +257,7 @@ BE00 transport/media/size, authentication, CSRF, CORS, deadline, dependency and 
 | `V29_14_REQUEST_ENQUIRY` | actor/requester/room/enquiry refs, use, route state, assignee presence, lapse bucket, replay; message/profile refs scrubbed | queued/fallback/delivery/lapse and latency; p95 accept <700 ms; alert queue age >2 min or fallback >20%/15 min |
 | `V29_19_WAITLIST_ACTION` | actor/entry/offer/hold IDs, action/state/rank bucket, remaining budget, version/replay; token and other members scrubbed | join/offer/accept/expire/loss/notification suppression; p95 <800 ms; page double offer or accepted-without-hold |
 
-Audit rows record actor/context/action/scope, before/after hashes, authority/policy/calendar/resource versions, idempotency/request hash and safe result. Sentry receives opaque IDs and codes only. Raw provider data/signatures, enquiry message, contact/profile details, exact occupancy, offer tokens and private resource facts are scrubbed from logs, traces, errors and event payloads.
+Audit rows record actor/context/action/scope, before/after hashes, authority/policy/calendar/resource versions, idempotency/request hash and safe result. provider-native diagnostic sinks receive opaque IDs and codes only. Raw provider data/signatures, enquiry message, contact/profile details, exact occupancy, offer tokens and private resource facts are scrubbed from logs, traces, errors and event payloads.
 
 ## Release and Testing
 

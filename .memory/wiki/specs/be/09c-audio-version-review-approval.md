@@ -460,7 +460,7 @@ Grant invariant applies row-for-row: client API roles receive no direct table `G
 
 ### Hono middleware order
 
-1. `requestId` validates UUID and propagates it to response, audit, trace and Sentry.
+1. `requestId` validates UUID and propagates it to response, audit, trace and provider-native diagnostics.
 2. `cors(consumer-web-pwa)` applies web/PWA allowlist; PRJ-25 additionally requires `internal-release-web`; wildcard credentials are forbidden.
 3. `authContext` resolves BE00 session, acting party and context version.
 4. `rateLimit` applies party/identity/IP bucket, then strict Zod path/header/body validation.
@@ -592,7 +592,7 @@ Every branch serializes `ApiError { code, message, requestId, details }`; error 
 | `PRJ-14` | approvals by decision/proxy, stale hashes, gate conflicts | gate/version IDs, approver hash, proxy strength, result | `prj.review.approval`; alert signer-set anomalies |
 | `PRJ-25` | append/proposal/review outcomes, stale target, terminal conflicts | version ID, field, shared ID, action, authority result | `prj.version.descriptor_correction`; alert repeated prior-hash mismatch |
 
-No logs or Sentry events contain audio bytes, body text, link token, recipient identity, storage locator or descriptor value. Trace baggage uses opaque aggregate IDs and request IDs.
+No logs or structured diagnostic events contain audio bytes, body text, link token, recipient identity, storage locator or descriptor value. Trace baggage uses opaque aggregate IDs and request IDs.
 
 ## Testing Strategy
 
