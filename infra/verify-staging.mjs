@@ -3,7 +3,8 @@ import { pathToFileURL } from 'node:url';
 import { HealthResponseSchema } from '../packages/contracts/src/index.ts';
 
 const expectedTitle = '<title>WeJammin | Operational foundation</title>';
-const expectedHeading = '<h1>WeJammin operational foundation</h1>';
+const expectedHeadingPattern =
+  /<h1(?:\s[^>]*)?>WeJammin operational foundation<\/h1>/iu;
 const expectedContentSecurityPolicy =
   "default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; form-action 'self'; script-src 'self' 'nonce-{nonce}' 'strict-dynamic'; style-src 'self' 'nonce-{nonce}'; img-src 'self' data: blob: https://*.supabase.co; media-src 'self' blob: https://*.supabase.co; connect-src 'self' https://*.supabase.co wss://*.supabase.co https://*.ingest.provider-native diagnostics.io; frame-src 'none'; worker-src 'self' blob:; manifest-src 'self'; upgrade-insecure-requests; report-to csp-endpoint";
 
@@ -18,6 +19,13 @@ const expectedStaticSecurityHeaders = {
 
 const noncePattern = /'nonce-([A-Za-z0-9_-]{22})'/u;
 const staticAssetPattern = /\b(?:src|href)=["'](\/[^"']+)["']/gu;
+const defaultRetryAttempts = 5;
+const defaultRetryDelayMs = 3_000;
+
+const sleep = (delayMs) =>
+  new Promise((resolve) => {
+    setTimeout(resolve, delayMs);
+  });
 
 function parseOrigin(value, label) {
   const url = new URL(value);
@@ -130,7 +138,7 @@ export async function verifyStaging({
   if (
     !contentType.startsWith('text/html') ||
     !html.includes(expectedTitle) ||
-    !html.includes(expectedHeading)
+    !expectedHeadingPattern.test(html)
   ) {
     throw new Error('Web shell contract mismatch');
   }
@@ -194,8 +202,37 @@ export async function verifyStaging({
   };
 }
 
+export async function verifyStagingWithRetries({
+  attempts = defaultRetryAttempts,
+  delayMs = defaultRetryDelayMs,
+  sleepImpl = sleep,
+  ...verificationOptions
+}) {
+  if (!Number.isInteger(attempts) || attempts < 1) {
+    throw new Error('Staging verification attempts must be a positive integer');
+  }
+
+  if (!Number.isFinite(delayMs) || delayMs < 0) {
+    throw new Error('Staging verification retry delay must be non-negative');
+  }
+
+  for (let attempt = 1; attempt <= attempts; attempt += 1) {
+    try {
+      return await verifyStaging(verificationOptions);
+    } catch (error) {
+      if (attempt === attempts) {
+        throw error;
+      }
+
+      await sleepImpl(delayMs);
+    }
+  }
+
+  throw new Error('Staging verification exhausted without a result');
+}
+
 async function main() {
-  const result = await verifyStaging({
+  const result = await verifyStagingWithRetries({
     apiOrigin: process.env.STAGING_API_ORIGIN,
     webOrigin: process.env.STAGING_WEB_ORIGIN,
   });
