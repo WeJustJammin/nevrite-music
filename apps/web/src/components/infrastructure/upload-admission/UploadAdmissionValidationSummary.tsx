@@ -1,10 +1,15 @@
 import type { UploadAdmissionViolation } from './upload-admission-state';
 
+export const uploadAdmissionFieldId = (field: string): string =>
+  `upload-${field
+    .replaceAll('.', '-')
+    .replace(/[A-Z]/gu, (character) => `-${character.toLowerCase()}`)}`;
+
 export const firstInvalidId = (
   violations: readonly UploadAdmissionViolation[],
 ): string | null => {
   const first = violations[0];
-  return first === undefined ? null : `upload-${first.field.replace('.', '-')}`;
+  return first === undefined ? null : uploadAdmissionFieldId(first.field);
 };
 
 export interface UploadAdmissionValidationSummaryProps {
@@ -25,7 +30,7 @@ export function UploadAdmissionValidationSummary({
       <ul>
         {violations.map((item) => (
           <li key={`${item.field}-${item.code}`}>
-            <a href={`#upload-${item.field.replace('.', '-')}`}>
+            <a href={`#${uploadAdmissionFieldId(item.field)}`}>
               {item.message}
             </a>
           </li>

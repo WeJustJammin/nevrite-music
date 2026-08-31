@@ -94,6 +94,13 @@ describe('immutable release identity contract', () => {
       ),
       'utf8',
     );
+    const performanceVerifier = readFileSync(
+      new URL(
+        '../infra/workflows/verify-performance-evidence.ts',
+        import.meta.url,
+      ),
+      'utf8',
+    );
 
     expect(workflow).not.toContain('workflow_dispatch:');
     expect(lineCount(workflow)).toBeLessThanOrEqual(100);
@@ -115,6 +122,11 @@ describe('immutable release identity contract', () => {
     expect(workflow).toMatch(
       /bash infra\/workflows\/record-staging-artifacts\.sh/u,
     );
+    expect(workflow).toMatch(/verify-staging-run\.mjs/u);
+    expect(verificationScript).toMatch(/verify-performance-evidence\.ts/u);
+    expect(evidenceScript).toMatch(/performance-evidence/u);
+    expect(evidenceScript).toMatch(/api-p95-smoke\.json/u);
+    expect(performanceVerifier).toMatch(/source revision/u);
     expect(workflow).toMatch(
       /bash infra\/workflows\/finalize-staging-candidate\.sh/u,
     );
@@ -151,6 +163,13 @@ describe('immutable release identity contract', () => {
       ),
       'utf8',
     );
+    const performanceVerifier = readFileSync(
+      new URL(
+        '../infra/workflows/verify-performance-evidence.ts',
+        import.meta.url,
+      ),
+      'utf8',
+    );
     const identityScript = readFileSync(
       new URL(
         '../infra/workflows/read-production-candidate.sh',
@@ -159,18 +178,24 @@ describe('immutable release identity contract', () => {
       'utf8',
     );
 
-    expect(workflow).toMatch(/workflows: \[Deploy staging\]/u);
     expect(lineCount(workflow)).toBeLessThanOrEqual(100);
     expect(workflow).not.toMatch(/workflows: \[CI\]/u);
-    expect(workflow).not.toContain('workflow_dispatch:');
-    expect(workflow).toMatch(/branches: \[main\]/u);
+    expect(workflow).toMatch(/workflow_dispatch:/u);
+    expect(workflow).not.toMatch(/workflow_run:/u);
+    expect(workflow).toMatch(
+      /if: inputs\.confirm_production == true && github\.ref == 'refs\/heads\/main'/u,
+    );
     expect(workflow).toMatch(/name: production/u);
-    expect(workflow).toMatch(/STAGING_RUN_ID:.*workflow_run\.id/u);
+    expect(workflow).toMatch(/STAGING_RUN_ID:.*inputs\.staging_run_id/u);
+    expect(workflow).toMatch(/DEPLOY_SHA:.*inputs\.source_sha/u);
+    expect(workflow).toMatch(/verify-production-promotion\.ts/u);
     expect(workflow).toMatch(/name: staging-verified-candidate/u);
     expect(workflow).toMatch(/run-id: \$\{\{ env\.STAGING_RUN_ID \}\}/u);
     expect(workflow).toMatch(/promotion-metadata\.json/u);
     expect(verificationScript).toMatch(/artifactDigest/u);
     expect(verificationScript).toMatch(/sha256sum --check/u);
+    expect(verificationScript).toMatch(/verify-performance-evidence\.ts/u);
+    expect(performanceVerifier).toMatch(/ReleasePerformanceEvidenceSchema/u);
     expect(workflow).toMatch(/verify-release-promotion\.ts/u);
     expect(identityScript).toMatch(/DEPLOY_SHA" =~ \^\[0-9a-f\]\{40\}\$/u);
     expect(workflow).toMatch(/ref: \$\{\{ env\.DEPLOY_SHA \}\}/u);

@@ -68,17 +68,18 @@
   dependency-ordered slices and 390 cited acceptance criteria passed their slice
   checks. Independent `/validate-phase` remains failed as recorded below.
 - Fresh IA ambiguity rerun 1 on 2026-08-28 scored 0/344 = 0.00% (PASS), covering all 83 IA documents and all 43 shards. See `.memory/wiki/specs/audits/2026-08-28-ia-ambiguity-rerun-1.md`.
-- **CURRENT VALIDATION:** Phase 1 `/validate-phase` is **FAIL** as finalized on
-  2026-08-31. Quality is green: 148 Vitest files/877 tests, 100% coverage, 21
-  Playwright tests, database verification, main CI run `33425577715`, and exact
-  staging run `33425837272` attempt 2 all pass for merge
-  `c2880f34a3127235b859d69e89dc8129d0746d6d`. The approved staging-only
-  Pages/DNS cleanup and PR #4 merge are complete. Readiness fails on TLS/header
-  enforcement, protected-production approval, two P1 accessibility contracts,
-  hard JavaScript bundle budgets, and absent Phase 1 p95-smoke evidence. API
-  docs, dependency audits, feature-ledger reconciliation, and boundary-stub
-  audits pass. Full representative-data load is bounded by `PERF-DEFER-01`. See
+- **CURRENT VALIDATION:** Phase 1 `/validate-phase` is **FAIL-CLOSED** after the
+  2026-08-31 local remediation. The aggregate gate passes 158 Vitest files/939
+  tests, 100% coverage, 26 Playwright tests, all builds, complete Workbench
+  hydration closure 14,913 gzip bytes, honest initial-route closure 72,576
+  bytes, deterministic API p95 1.584 ms with zero errors, and zero known
+  high/critical dependency vulnerabilities.
+  All seven findings are resolved in code or safely contained. Live staging
+  redirect/header proof remains pending, and the disabled production workflow
+  has exact-main policy and disabled administrator bypass but cannot satisfy its
+  required-reviewer guard because GitHub rejects that rule under the current
+  private-repository plan. See
   `.memory/wiki/specs/audits/phase-1-validation.md`.
-- **NEXT:** remediate the current readiness findings, enforce production
-  environment protection without deploying production, and rerun
-  `/validate-phase`. Do not advance to Phase 2 planning or implementation.
+- **NEXT:** pass exact-SHA CI and live staging recertification, then configure
+  the required GitHub reviewer when the repository plan supports it. Do not
+  advance to Phase 2 or activate production meanwhile.

@@ -61,7 +61,9 @@ describe('Slice 05 upload-completion Workbench seam', () => {
 
     expect(markup).toContain('Upload completion');
     expect(markup).toContain('Production upload completion is disabled');
-    expect(markup).toContain('data-access-variant="disabled"');
+    expect(markup).toContain('id="upload-completion-deferred"');
+    expect(markup).toContain('Load upload completion');
+    expect(markup).not.toContain('data-access-variant="disabled"');
     expect(markup).not.toContain('signedUrl');
     expect(markup).not.toContain('providerSecret');
   });

@@ -39,6 +39,38 @@ const migration = {
   destructiveRollbackAttempted: false,
 };
 
+const performance = {
+  bundleBudget: {
+    sourceRevision: SOURCE_REVISION,
+    thresholds: {
+      workbenchGzipBytes: 35 * 1024,
+      initialRouteGzipBytes: 90 * 1024,
+      lazyChunkGzipBytes: 80 * 1024,
+    },
+    passed: true,
+    workbenchGzipBytes: 1,
+    initialRouteGzipBytes: 1,
+    lazyChunkGzipBytes: [],
+  },
+  apiP95: {
+    sourceRevision: SOURCE_REVISION,
+    thresholds: { p95Ms: 500 },
+    passed: true,
+    errors: 0,
+    p50Ms: 1,
+    p95Ms: 1,
+    p99Ms: 1,
+    samples: 20,
+    thresholdFailures: [],
+    iterations: 20,
+    retries: 0,
+    virtualUsers: 1,
+    profile: 'phase-1-api-p95-smoke',
+    fixtureVersion: 'phase-1-2026-08-31',
+    mode: 'local' as const,
+  },
+} as const;
+
 const checks = {
   integrity: true,
   rls: true,
@@ -59,6 +91,7 @@ describe('release and recovery contracts', () => {
       environment: 'staging' as const,
       gates,
       migration,
+      performance,
       verifiedAt: CAPTURED_AT,
     };
     expect(ReleasePromotionEvidenceSchema.parse(evidence)).toEqual(evidence);

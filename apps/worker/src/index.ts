@@ -34,6 +34,12 @@ import {
   registerWorkerRoutes,
   routeTemplateFor,
 } from './worker-route-composition';
+import {
+  applySecurityHeaders,
+  createHttpsRedirectResponse,
+  generateRequestNonce,
+  shouldRedirectToHttps,
+} from './security-headers';
 
 export { routeTemplateFor } from './worker-route-composition';
 export {
@@ -130,6 +136,7 @@ export const createWorkerApp = (dependencies: WorkerDependencies) => {
   const app: WorkerApp = new Hono();
 
   app.use('*', async (context, next) => {
+    const requestNonce = generateRequestNonce();
     const requestId = createRequestId(context.req.header('x-request-id'));
     const correlationId = createCorrelationId(
       context.req.header('x-correlation-id') ?? requestId,
@@ -143,8 +150,20 @@ export const createWorkerApp = (dependencies: WorkerDependencies) => {
     context.set('requestId', requestId);
     context.set('startedAt', dependencies.now());
 
+    if (shouldRedirectToHttps(context.req.raw)) {
+      const response = applySecurityHeaders(
+        createHttpsRedirectResponse(context.req.raw),
+        requestNonce,
+      );
+      response.headers.set('x-correlation-id', correlationId);
+      response.headers.set('x-request-id', requestId);
+      context.res = response;
+      return response;
+    }
+
     await next();
 
+    context.res = applySecurityHeaders(context.res, requestNonce);
     context.header('x-correlation-id', correlationId);
     context.header('x-request-id', requestId);
     if (!context.get('errorHandled')) {

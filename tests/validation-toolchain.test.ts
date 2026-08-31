@@ -129,6 +129,10 @@ describe('validation toolchain contracts', () => {
     );
     const packageJson = readRepositoryJson('package.json');
     const scripts = packageJson.scripts as Record<string, string>;
+    const ciWorkflow = readRepositoryFile('.github/workflows/ci.yml');
+    const stagingWorkflow = readRepositoryFile(
+      '.github/workflows/deploy-staging.yml',
+    );
     const sliceProgress = readRepositoryFile(
       '.memory/pipeline/progress/slices/phase-01-slice-01.md',
     );
@@ -148,10 +152,21 @@ describe('validation toolchain contracts', () => {
     expect(scripts).toMatchObject({
       'contracts:check': 'node infra/generate-openapi.mjs --check',
       'db:types:check': 'node infra/sync-database-types.mjs --check',
+      'bundle:check': 'node scripts/verify-bundle-budget.mjs',
+      'performance:smoke':
+        'node infra/performance/api-p95-smoke.mjs --mode local',
     });
     expect(typeof scripts.validate).toBe('string');
     expect(scripts.validate).toContain('contracts:check');
     expect(scripts.validate).toContain('db:types:check');
+    expect(scripts.validate).toContain('pnpm bundle:check');
+    expect(scripts.validate).toContain('pnpm performance:smoke');
+    expect(scripts.validate.indexOf('pnpm build')).toBeLessThan(
+      scripts.validate.indexOf('pnpm bundle:check'),
+    );
+    expect(ciWorkflow).toContain('pnpm bundle:check');
+    expect(ciWorkflow).toContain('pnpm performance:smoke');
+    expect(stagingWorkflow).toContain('pnpm performance:smoke:staging');
 
     const acceptanceIds = [...sliceProgress.matchAll(/P1-S01-AC-\d{3}/g)].map(
       (match) => match[0],

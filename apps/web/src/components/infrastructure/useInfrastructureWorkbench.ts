@@ -1,16 +1,14 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import {
-  parseInfrastructureQuery,
-  serializeInfrastructureQuery,
-} from '@wejammin/ui/infrastructure/navigation';
 import type { InfrastructureNavigationQuery } from '@wejammin/ui/infrastructure/navigation';
 import type { InfrastructureRecord } from '@wejammin/ui/infrastructure/presentation';
 import {
   CHANNEL_NAME,
   isInvalidationMessage,
   parseContractState,
+  parseWorkbenchQuery,
   queryFromRecord,
   recordsForState,
+  serializeWorkbenchQuery,
   toQueryRecord,
   type RefetchReason,
 } from './infrastructure-workbench-state';
@@ -86,10 +84,8 @@ export function useInfrastructureWorkbench({
     ): void => {
       if (typeof window === 'undefined') return;
       const url = new URL(window.location.href);
-      const serialized = serializeInfrastructureQuery(
-        parseInfrastructureQuery(
-          new URLSearchParams(Object.entries(nextQuery)),
-        ),
+      const serialized = serializeWorkbenchQuery(
+        parseWorkbenchQuery(new URLSearchParams(Object.entries(nextQuery))),
       );
       url.search = serialized;
       if (mode === 'replace') {
@@ -104,7 +100,7 @@ export function useInfrastructureWorkbench({
   useEffect(() => {
     if (typeof window === 'undefined') return undefined;
     const sync = (): void => {
-      const nextQuery = parseInfrastructureQuery(window.location.href);
+      const nextQuery = parseWorkbenchQuery(window.location.href);
       setQueryState(nextQuery);
       setSelectedId(nextQuery.selected ?? null);
     };
@@ -227,8 +223,8 @@ export function useInfrastructureWorkbench({
     const url = new URL(canonicalUrl, 'https://wejamm.in');
     const nextQuery = toQueryRecord(queryState);
     nextQuery.selected = recordId;
-    const serialized = serializeInfrastructureQuery(
-      parseInfrastructureQuery(new URLSearchParams(Object.entries(nextQuery))),
+    const serialized = serializeWorkbenchQuery(
+      parseWorkbenchQuery(new URLSearchParams(Object.entries(nextQuery))),
     );
     return `${url.pathname}${serialized.length > 0 ? `?${serialized}` : ''}`;
   };

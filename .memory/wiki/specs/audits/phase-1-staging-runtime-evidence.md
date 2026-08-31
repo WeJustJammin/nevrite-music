@@ -128,6 +128,26 @@ HSTS, MIME-sniffing, frame, referrer, and permissions headers. Those observation
 are recorded as current readiness findings in `phase-1-validation.md`; they do
 not reopen the deployment/smoke gate.
 
+## Security remediation candidate
+
+The branch `codex/fix-phase-1-readiness-blockers` implements HTTP 308 enforcement
+and the exact locked six-header set at the web and API edge boundaries. The web
+build wraps the generated Cloudflare entry and retains `run_worker_first: true`
+for production and staging assets; a development-only Wrangler config leaves
+Astro/Vite module handling outside that deployment boundary.
+
+Local evidence is green: focused security, staging-verifier, generated-config,
+and hydration suites pass; the canonical aggregate reports 158 Vitest files/939
+tests, 100% coverage, 26/26 browser tests, successful builds, and p95 1.584 ms
+with zero errors. Live staging evidence is intentionally not claimed yet. After
+the exact remediation SHA passes CI and promotion, this report must capture:
+
+- HTTP web and API 301/308 responses with exact HTTPS `Location` values;
+- the six exact headers on web 200, protected-route 303, API 200, and a
+  discovered static asset;
+- immutable artifact and deployed SHA identity; and
+- the staging 20-sample p95 result with zero errors.
+
 
 <!-- spec-graph: auto-generated -->
 ## Related Specs

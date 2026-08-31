@@ -14,7 +14,9 @@ describe('accessibility test project', () => {
 
     expect(shellSource).toContain(`<html lang="${fixture.language}">`);
     expect(shellSource).toContain('<main id="main-content"');
-    expect(shellSource).toContain(`<h1>${fixture.heading}</h1>`);
+    expect(shellSource).toContain(
+      `<h1 id="page-title" tabindex="-1">${fixture.heading}</h1>`,
+    );
     expect(shellSource).toContain('<dl ');
     expect(shellSource).toContain(fixture.statusText);
     expect(shellSource).toContain(`<title>${fixture.title}</title>`);

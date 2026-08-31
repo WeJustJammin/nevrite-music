@@ -1,16 +1,47 @@
+import { useEffect, useRef } from 'react';
+
 import type { UploadCompletionProjection } from './upload-completion-state';
+
+export const focusUploadCompletionResultHeading = (
+  heading: Pick<HTMLHeadingElement, 'focus'> | null,
+): void => {
+  heading?.focus({ preventScroll: true });
+};
 
 export function UploadCompletionResult({
   completion,
+  announce = false,
 }: {
   readonly completion: UploadCompletionProjection;
+  readonly announce?: boolean;
 }) {
+  const headingRef = useRef<HTMLHeadingElement>(null);
+  const resultIdentity = announce
+    ? `${completion.job.id}:${completion.etag}`
+    : null;
+  useEffect(() => {
+    if (announce) focusUploadCompletionResultHeading(headingRef.current);
+  }, [announce, resultIdentity]);
+
   return (
     <section
       className="upload-completion-result"
       aria-labelledby="upload-completion-result-heading"
+      {...(announce
+        ? {
+            role: 'status' as const,
+            'aria-live': 'polite' as const,
+            'aria-atomic': true,
+          }
+        : {})}
     >
-      <h3 id="upload-completion-result-heading">Verification job</h3>
+      <h3
+        id="upload-completion-result-heading"
+        ref={announce ? headingRef : undefined}
+        {...(announce ? { tabIndex: -1 } : {})}
+      >
+        Verification job
+      </h3>
       <dl>
         <dt>Job ID</dt>
         <dd>

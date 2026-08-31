@@ -45,12 +45,36 @@ evidence.gates.infrastructure = true;
 process.stdout.write(JSON.stringify(evidence.gates));
 NODE
 )"
+performance_evidence="$(
+  node --experimental-strip-types - "$DEPLOY_SHA" <<'NODE'
+import { readFileSync } from 'node:fs';
+import { verifyPerformanceEvidence } from './infra/workflows/verify-performance-evidence.ts';
+
+const expectedRevision = process.argv[2];
+const performance = verifyPerformanceEvidence(
+  {
+    bundleBudget: JSON.parse(
+      readFileSync(
+        'promotion-candidate/artifacts/performance-evidence/bundle-budget.json',
+        'utf8',
+      ),
+    ),
+    apiP95: JSON.parse(
+      readFileSync('promotion-candidate/api-p95-smoke.json', 'utf8'),
+    ),
+  },
+  expectedRevision,
+);
+process.stdout.write(JSON.stringify(performance));
+NODE
+)"
 verified_at="$(date -u +%Y-%m-%dT%H:%M:%S.000Z)"
-printf '{"artifact":{"artifactDigest":"%s","sourceRevision":"%s","buildId":"ci-%s","migrationVersion":"%s"},"environment":"production","gates":%s,"migration":{"state":"not_started","forwardFixOnly":true,"destructiveRollbackAttempted":false},"verifiedAt":"%s"}\n' \
+printf '{"artifact":{"artifactDigest":"%s","sourceRevision":"%s","buildId":"ci-%s","migrationVersion":"%s"},"environment":"production","gates":%s,"performance":%s,"migration":{"state":"not_started","forwardFixOnly":true,"destructiveRollbackAttempted":false},"verifiedAt":"%s"}\n' \
   "$artifact_digest" \
   "$DEPLOY_SHA" \
   "$CI_RUN_ID" \
   "$migration_version" \
   "$gate_set" \
+  "$performance_evidence" \
   "$verified_at" \
   > promotion-candidate/promotion-metadata.json

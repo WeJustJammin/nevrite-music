@@ -36,10 +36,15 @@ filesystem and validation operations.
 ## Conventions
 
 Scripts accept identity only through environment values derived by the calling
-workflow from GitHub `workflow_run` context. Only the production migration
-entrypoint contacts Supabase; its access token and database password remain
-scoped to that protected-environment step. Cloudflare credentials remain
-scoped to the individual deploy steps in the workflows.
+workflow. Staging derives identity from its successful upstream CI run;
+production derives the staging run ID and source SHA from an explicit
+`workflow_dispatch` and verifies both against the GitHub Actions API before the
+protected production job starts. The preflight also requires the immutable
+staging workflow ID/path, required reviewers, disabled administrator bypass,
+and either protected branches or one exact custom `main` branch policy. Only
+the production migration entrypoint contacts Supabase; its access token and
+database password remain scoped to that protected-environment step. Cloudflare
+credentials remain scoped to the individual deploy steps in the workflows.
 
 ### Verification
 
@@ -53,13 +58,15 @@ with a local fake and never contact Supabase. Contract coverage lives in
 
 Add one focused script per repeatable workflow concern. Keep provider calls in
 the workflow deploy steps, pass identity through explicit environment values,
-and preserve `set -euo pipefail` in every shell entrypoint.
+and preserve `set -euo pipefail` in every shell entrypoint. Production promotion
+must retain its manual trigger, preflight identity/protection checks, and
+protected environment gate.
 
 ## Ownership
 
 The deployment workflow owner maintains these scripts with the corresponding
-`.github/workflows/*.yml` files. Changes must preserve workflow-run-only
-promotion, full release evidence, and fail-closed artifact checks.
+`.github/workflows/*.yml` files. Changes must preserve explicit production
+dispatch, full release evidence, and fail-closed artifact checks.
 
 ## Related links
 

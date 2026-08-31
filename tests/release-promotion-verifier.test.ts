@@ -30,6 +30,37 @@ const evidence = {
     forwardFixOnly: true,
     destructiveRollbackAttempted: false,
   },
+  performance: {
+    bundleBudget: {
+      sourceRevision: 'b'.repeat(40),
+      thresholds: {
+        workbenchGzipBytes: 35 * 1024,
+        initialRouteGzipBytes: 90 * 1024,
+        lazyChunkGzipBytes: 80 * 1024,
+      },
+      passed: true,
+      workbenchGzipBytes: 1,
+      initialRouteGzipBytes: 1,
+      lazyChunkGzipBytes: [],
+    },
+    apiP95: {
+      sourceRevision: 'b'.repeat(40),
+      thresholds: { p95Ms: 500 },
+      passed: true,
+      errors: 0,
+      p50Ms: 1,
+      p95Ms: 1,
+      p99Ms: 1,
+      samples: 20,
+      thresholdFailures: [],
+      iterations: 20,
+      retries: 0,
+      virtualUsers: 1,
+      profile: 'phase-1-api-p95-smoke',
+      fixtureVersion: 'phase-1-2026-08-31',
+      mode: 'staging' as const,
+    },
+  },
   verifiedAt: '2026-08-30T17:00:00.000Z',
 };
 

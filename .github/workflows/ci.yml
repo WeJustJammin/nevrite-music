@@ -80,6 +80,11 @@ jobs:
           bash infra/workflows/build-immutable-artifacts.sh &&
           bash infra/workflows/verify-ci-release-gates.sh &&
           bash infra/workflows/write-ci-gate-evidence.sh
+      - name: Enforce bundle and API p95 budgets
+        run: |
+          mkdir -p performance-evidence
+          pnpm bundle:check | tee performance-evidence/bundle-budget.json
+          pnpm performance:smoke | tee performance-evidence/api-p95-smoke.json
       - name: Upload immutable build artifacts
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
         with:
@@ -89,5 +94,6 @@ jobs:
             apps/web/dist/
             apps/worker/dist/
             ci-gate-evidence.json
+            performance-evidence/
           if-no-files-found: error
           retention-days: 7

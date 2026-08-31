@@ -3,24 +3,24 @@
 **Status**: complete
 **Progress**: 7/7 slices
 **Plan**: [Phase 1 specification](../../../wiki/specs/phases/phase-1.md)
-**Independent phase validation**: FAIL, finalized 2026-08-31. Implementation
-tracking remains complete at 7/7 slices and 390/390 criteria. Canonical local
-validation passes 148 Vitest files/877 tests, 100% coverage, 21 Playwright tests,
-all static/build gates, database verification, and spec coverage. PR #4 merged
-as `c2880f34a3127235b859d69e89dc8129d0746d6d`; main CI run `33425577715`
-passed quality, database, and immutable build. After explicitly authorized
-staging-only Pages/DNS cleanup, staging run `33425837272` attempt 2 passed for
-that exact merge with API 200, web 200, and protected-route 303.
+**Independent phase validation**: FAIL-CLOSED, remediated locally 2026-08-31.
+Implementation tracking remains complete at 7/7 slices and 390/390 criteria.
+Canonical local validation now passes 158 Vitest files/939 tests, 100% coverage,
+26 Playwright tests, all static/build gates, database verification, bundle
+budgets, and the deterministic API p95 smoke. Accessibility findings are fixed;
+the complete Workbench hydration closure is 14,913 gzip bytes, the honest
+initial route closure is 72,576 bytes, and the 20-sample API smoke reports p95
+1.584 ms with zero errors.
 
-The readiness shard fails despite the healthy deployment: staging permits
-cleartext HTTP and omits the locked security headers; the GitHub `production`
-environment has no reviewer or branch protections; two P1 accessibility
-contracts fail manual review; the hydrated workbench and route exceed hard gzip
-budgets; and the required Phase 1 deterministic p95 smoke has no configured
-evidence. Full representative-data k6/pgbench load is deferred once under
-`PERF-DEFER-01`, no later than production candidacy or the first data-bearing
-release. Production run `33426269934` failed before migrations/deploy because
-`PRODUCTION_WEB_ORIGIN` was unset, so no production mutation occurred. See
+HTTPS redirects and the exact response-security headers are implemented and
+regression-covered for web, API, generated Worker, errors, redirects, and static
+assets; the remediated artifact still requires live staging recertification.
+Automatic production promotion is removed, an exact-main branch policy is live,
+administrator bypass is disabled, and the production workflow is disabled.
+GitHub rejected the required reviewer rule with HTTP 422 because the current
+private-repository plan does not support it, so the production guard
+intentionally remains fail-closed. No production deployment or production
+DNS/runtime mutation occurred. See
 [`phase-1-validation.md`](../../../wiki/specs/audits/phase-1-validation.md).
 
 **Setup checkpoint**: workspace scaffold, CI/CD, Cloudflare hosting, managed Supabase staging provisioning, immutable artifact promotion, public health verification, live structured-log verification, and exact local surface-map skill resolution are complete at commit `aa1039b`. The billing audit confirms Supabase organization `wejamm.in` is on Free with a `$0.00` invoice. The owner explicitly reconfirmed Cloudflare Workers Paid as the sole paid-service exception under DEC-103's soft `$10/month` ceiling; it has a `$5/month` minimum plus usage overage, with an exact `$10` notification rather than a hard ceiling. DEC-104 removes third-party monitoring and requires every other service to remain genuinely free unless a new exact-price approval is recorded. Infrastructure verification passes and the setup-to-implementation handoff is unblocked. See `verification/2026-08-30-workspace-infrastructure.md`.

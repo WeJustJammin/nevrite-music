@@ -9,6 +9,38 @@ const ARTIFACT = {
   migrationVersion: '20260830090000',
 } as const;
 
+const PERFORMANCE = {
+  bundleBudget: {
+    sourceRevision: ARTIFACT.sourceRevision,
+    thresholds: {
+      workbenchGzipBytes: 35 * 1024,
+      initialRouteGzipBytes: 90 * 1024,
+      lazyChunkGzipBytes: 80 * 1024,
+    },
+    passed: true,
+    workbenchGzipBytes: 1,
+    initialRouteGzipBytes: 1,
+    lazyChunkGzipBytes: [],
+  },
+  apiP95: {
+    sourceRevision: ARTIFACT.sourceRevision,
+    thresholds: { p95Ms: 500 },
+    passed: true,
+    errors: 0,
+    p50Ms: 1,
+    p95Ms: 1,
+    p99Ms: 1,
+    samples: 20,
+    thresholdFailures: [],
+    iterations: 20,
+    retries: 0,
+    virtualUsers: 1,
+    profile: 'phase-1-api-p95-smoke',
+    fixtureVersion: 'phase-1-2026-08-31',
+    mode: 'local' as const,
+  },
+} as const;
+
 const EVIDENCE = {
   artifact: ARTIFACT,
   environment: 'staging' as const,
@@ -29,6 +61,7 @@ const EVIDENCE = {
     forwardFixOnly: true,
     destructiveRollbackAttempted: false,
   },
+  performance: PERFORMANCE,
   verifiedAt: '2026-08-30T00:00:00.000Z',
 } as const;
 

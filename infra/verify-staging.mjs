@@ -4,6 +4,20 @@ import { HealthResponseSchema } from '../packages/contracts/src/index.ts';
 
 const expectedTitle = '<title>WeJammin | Operational foundation</title>';
 const expectedHeading = '<h1>WeJammin operational foundation</h1>';
+const expectedContentSecurityPolicy =
+  "default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; form-action 'self'; script-src 'self' 'nonce-{nonce}' 'strict-dynamic'; style-src 'self' 'nonce-{nonce}'; img-src 'self' data: blob: https://*.supabase.co; media-src 'self' blob: https://*.supabase.co; connect-src 'self' https://*.supabase.co wss://*.supabase.co https://*.ingest.provider-native diagnostics.io; frame-src 'none'; worker-src 'self' blob:; manifest-src 'self'; upgrade-insecure-requests; report-to csp-endpoint";
+
+const expectedStaticSecurityHeaders = {
+  'strict-transport-security': 'max-age=63072000; includeSubDomains',
+  'x-content-type-options': 'nosniff',
+  'x-frame-options': 'DENY',
+  'referrer-policy': 'strict-origin-when-cross-origin',
+  'permissions-policy':
+    'camera=(), microphone=(), geolocation=(), payment=(), usb=(), bluetooth=(), serial=(), hid=(), publickey-credentials-get=(self)',
+};
+
+const noncePattern = /'nonce-([A-Za-z0-9_-]{22})'/u;
+const staticAssetPattern = /\b(?:src|href)=["'](\/[^"']+)["']/gu;
 
 function parseOrigin(value, label) {
   const url = new URL(value);
@@ -27,6 +41,73 @@ function assertOk(response, label) {
   }
 }
 
+function assertSecurityHeaders(response, label) {
+  const contentSecurityPolicy = response.headers.get('content-security-policy');
+  const nonce = contentSecurityPolicy?.match(noncePattern)?.[1];
+  const expectedPolicy = nonce
+    ? expectedContentSecurityPolicy.replaceAll('{nonce}', nonce)
+    : undefined;
+
+  if (
+    !contentSecurityPolicy ||
+    !nonce ||
+    contentSecurityPolicy !== expectedPolicy
+  ) {
+    throw new Error(
+      `${label} security header content-security-policy mismatch`,
+    );
+  }
+
+  for (const [name, expected] of Object.entries(
+    expectedStaticSecurityHeaders,
+  )) {
+    if (response.headers.get(name) !== expected) {
+      throw new Error(`${label} security header ${name} mismatch`);
+    }
+  }
+}
+
+function discoverStaticAssetPath(html) {
+  for (const match of html.matchAll(staticAssetPattern)) {
+    const candidate = match[1];
+    if (!candidate) continue;
+
+    const url = new URL(candidate, 'https://staging.invalid');
+    if (
+      url.pathname.startsWith('/_astro/') ||
+      url.pathname === '/favicon.svg'
+    ) {
+      return `${url.pathname}${url.search}`;
+    }
+  }
+
+  return undefined;
+}
+
+function toHttpOrigin(origin) {
+  const url = new URL(origin);
+  url.protocol = 'http:';
+  return url.origin;
+}
+
+async function assertHttpsRedirect(fetchImpl, url, expectedLocation, label) {
+  const response = await fetchImpl(url, {
+    headers: { accept: 'application/json, text/html;q=0.9' },
+    redirect: 'manual',
+    signal: AbortSignal.timeout(10_000),
+  });
+
+  if (response.status !== 301 && response.status !== 308) {
+    throw new Error(`${label} HTTP redirect must be permanent`);
+  }
+
+  if (response.headers.get('location') !== expectedLocation) {
+    throw new Error(`${label} HTTP redirect location mismatch`);
+  }
+
+  assertSecurityHeaders(response, `${label} HTTP redirect`);
+}
+
 export async function verifyStaging({
   apiOrigin,
   fetchImpl = fetch,
@@ -42,6 +123,7 @@ export async function verifyStaging({
 
   const webResponse = await fetchImpl(`${webUrl}/`, requestOptions);
   assertOk(webResponse, 'Staging web');
+  assertSecurityHeaders(webResponse, 'Staging web');
 
   const contentType = webResponse.headers.get('content-type') ?? '';
   const html = await webResponse.text();
@@ -65,17 +147,45 @@ export async function verifyStaging({
   ) {
     throw new Error('Web SSR boundary mismatch');
   }
+  assertSecurityHeaders(webRuntimeResponse, 'Staging web runtime');
 
   const apiResponse = await fetchImpl(
     `${apiUrl}/api/v1/health`,
     requestOptions,
   );
   assertOk(apiResponse, 'Staging API');
+  assertSecurityHeaders(apiResponse, 'Staging API');
 
   const health = HealthResponseSchema.safeParse(await apiResponse.json());
   if (!health.success) {
     throw new Error('API health contract mismatch');
   }
+
+  const staticAssetPath = discoverStaticAssetPath(html);
+  if (!staticAssetPath) {
+    throw new Error('Staging web static asset discovery mismatch');
+  }
+
+  const staticAssetResponse = await fetchImpl(`${webUrl}${staticAssetPath}`, {
+    headers: { accept: '*/*' },
+    redirect: 'error',
+    signal: AbortSignal.timeout(10_000),
+  });
+  assertOk(staticAssetResponse, 'Staging static web asset');
+  assertSecurityHeaders(staticAssetResponse, 'Staging static web asset');
+
+  await assertHttpsRedirect(
+    fetchImpl,
+    `${toHttpOrigin(webUrl)}/`,
+    `${webUrl}/`,
+    'Staging web',
+  );
+  await assertHttpsRedirect(
+    fetchImpl,
+    `${toHttpOrigin(apiUrl)}/api/v1/health`,
+    `${apiUrl}/api/v1/health`,
+    'Staging API',
+  );
 
   return {
     apiStatus: apiResponse.status,
