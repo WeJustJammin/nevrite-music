@@ -5,13 +5,14 @@
 **Remediation verification**: 2026-08-30T23:36:08-04:00
 **Clean-build remediation verification**: 2026-08-30T23:53:24-04:00
 **Exact-SHA CI verification**: 2026-08-31T00:02:22-04:00
+**Main promotion attempt**: 2026-08-31T00:46:45-04:00
 **Workflow**: `/validate-phase`
 **Verdict**: **FAIL**
 
 Phase implementation tracking is complete at 7/7 slices, but the independent
-production-readiness gate cannot pass until the green immutable artifact is
-published through the main-branch promotion path, deployed to staging, and
-verified against the current health contract.
+production-readiness gate cannot pass until the staging artifact-layout fix is
+merged, its immutable artifact is deployed, and the candidate is verified
+against the current health contract.
 
 ## Quality Shard
 
@@ -27,15 +28,15 @@ verified against the current health contract.
 | Aggregate local validation | PASS | `pnpm validate` exited 0 after 871 Vitest tests, 21 Playwright tests, and all build gates; no Node warnings were emitted |
 | Database migrations | PASS | Local reset applied all 14 migrations; schema lint passed; 11 pgTAP files/392 tests passed; generated types matched |
 | Deployment strategy | PASS (static) | Release-promotion, immutable-artifact, forward-only migration, and recovery contracts are present and covered by the passing local suite |
-| CI for implemented Phase 1 state | PASS | Exact run `33355571907` succeeded for revision `ccce4018aa00003c9b78e09e8545829eb9c331ed`: quality, database, clean immutable build, and `workspace-build-ccce4018aa00003c9b78e09e8545829eb9c331ed` artifact upload all passed |
-| Staging deployment and smoke | FAIL | Existing staging deployment returns `API health contract mismatch` under `pnpm verify:staging`; the green branch artifact cannot enter the automatic staging workflow until the change is published to `main` |
+| CI for implemented Phase 1 state | PASS | Main run `33357532073` succeeded for merge revision `be36d68c495b9a244dac4fd29c24a83e0c68ce7a`: quality, database, clean immutable build, and exact artifact upload all passed |
+| Staging deployment and smoke | FAIL | Run `33357943998` downloaded the exact main artifact, then stopped before deployment because the workflow expected `.artifacts/web` and `.artifacts/worker` while the archive contains `.artifacts/apps/web` and `.artifacts/apps/worker`; the prior public health mismatch therefore remains untested against the new candidate |
 
 ### Blocking Findings
 
 1. **VAL-P1-001 — RESOLVED — Green immutable Phase 1 CI evidence.** Exact run
-   `33355571907` passed all three jobs for
-   `ccce4018aa00003c9b78e09e8545829eb9c331ed`, including clean build and
-   immutable artifact upload.
+   `33357532073` passed all three jobs for main merge
+   `be36d68c495b9a244dac4fd29c24a83e0c68ce7a`, including clean build and
+   exact immutable artifact upload.
 2. **VAL-P1-002 — Staging does not satisfy the implemented health contract.**
    `STAGING_WEB_ORIGIN=https://staging.wejamm.in` and
    `STAGING_API_ORIGIN=https://wejammin-api-staging.wejammin.workers.dev`
@@ -53,6 +54,20 @@ verified against the current health contract.
    red-to-green workspace contract, a clean `tsc --build --clean` reconstruction,
    the exact three-script local artifact chain, and exact-SHA CI run
    `33355571907` verify the resolution.
+5. **VAL-P1-005 — REMEDIATED LOCALLY — Staging consumed the wrong archive
+   paths.** Run `33357943998` proved the downloaded artifact retains its
+   `apps/` prefix, while staging and downstream production verification and
+   deploy commands omitted that segment. Both promotion verifiers and all four
+   deploy inputs now preserve the prefix; red-to-green staging and production
+   contracts, the actual main-run artifact, and the full 871-test validation
+   suite pass locally. Exact CI and staging confirmation remain required.
+6. **VAL-P1-006 — REMEDIATED LOCALLY — Production candidate handling assumed
+   a dirty runner.** The production workflow downloaded and read the candidate
+   before checkout, so a clean runner lacked the identity script and a later
+   checkout could delete the candidate. It now checks out `DEPLOY_SHA` first,
+   then downloads and validates the candidate before workspace setup. A
+   red-to-green ordering contract and both promotion contract suites verify the
+   fix locally; exact CI remains required.
 
 ## Spec Coverage
 
@@ -79,8 +94,8 @@ current evidence by this run.
 
 ## Constrained Next Step
 
-1. Publish the reviewed Phase 1 change to `main` so its exact successful CI
-   artifact can enter the automatic staging workflow.
-2. Verify the staging workflow deploys the exact main-branch artifact and rerun
+1. Commit, review, and merge the staging artifact-layout fix.
+2. Require green exact-SHA CI and verify the resulting staging workflow deploys
+   that exact artifact, then rerun
    `pnpm verify:staging` successfully.
 3. Rerun `/validate-phase`; only then may the readiness shard execute.

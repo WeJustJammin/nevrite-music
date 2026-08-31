@@ -73,10 +73,14 @@
   functional, coverage, static, build, migration, and spec-coverage checks
   passed. Exact run `33354478865` then exposed a clean-runner composite
   declaration-output defect; its red-to-green fix passed exact run `33355571907`
-  for `ccce4018aa00003c9b78e09e8545829eb9c331ed`, including immutable artifact
-  upload. The existing staging API fails the current health contract, while the
-  Playwright warning finding is resolved with a clean 871-test validation run. See
+  and main run `33357532073`, including immutable artifact upload. Staging run
+  `33357943998` stopped before deployment because workflow inputs omitted the
+  archive's retained `apps/` prefix; the staging and downstream production
+  verifiers/deploy inputs are now regression-covered, and the fix passes the
+  actual artifact verifier plus the full 871-test suite locally. Production now
+  also checks out before candidate download, preventing clean-runner script
+  absence and candidate deletion. See
   `.memory/wiki/specs/audits/phase-1-validation.md`.
-- **NEXT:** publish the reviewed change to `main`, verify exact-artifact staging
-  promotion, clear the staging finding, then rerun
+- **NEXT:** review and merge the artifact-layout fix, require green exact-SHA CI,
+  verify staging promotion and health, then rerun
   `/validate-phase`. Do not advance to Phase 2 planning or implementation.

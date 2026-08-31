@@ -154,17 +154,21 @@ describe('Astro Cloudflare Worker SSR deployment contract', () => {
     );
     expect(verificationScript).toMatch(/\$\{STAGING_WEB_ORIGIN#https:\/\/\}/u);
     expect(verificationScript).toMatch(
-      /test -f \.artifacts\/web\/dist\/server\/entry\.mjs/u,
+      /test -f \.artifacts\/apps\/web\/dist\/server\/entry\.mjs/u,
     );
     expect(verificationScript).toMatch(
-      /test -f \.artifacts\/web\/dist\/server\/wrangler\.staging\.json/u,
+      /test -f \.artifacts\/apps\/web\/dist\/server\/wrangler\.staging\.json/u,
     );
     expect(verificationScript).toMatch(
-      /test -d \.artifacts\/web\/dist\/client/u,
+      /test -d \.artifacts\/apps\/web\/dist\/client/u,
     );
+    expect(verificationScript).toMatch(
+      /test -f \.artifacts\/apps\/worker\/dist\/index\.js/u,
+    );
+    expect(workflow).toMatch(/\.artifacts\/apps\/worker\/dist\/index\.js/u);
     expect(deployStep).toMatch(/wrangler deploy/u);
     expect(deployStep).toMatch(
-      /\.artifacts\/web\/dist\/server\/wrangler\.staging\.json/u,
+      /\.artifacts\/apps\/web\/dist\/server\/wrangler\.staging\.json/u,
     );
     expect(deployStep).toMatch(/--domain "\$WEB_CUSTOM_DOMAIN"/u);
     expect(deployStep).not.toMatch(/--env|API_ORIGIN|PUBLIC_API|--var/u);
@@ -199,17 +203,23 @@ describe('Astro Cloudflare Worker SSR deployment contract', () => {
       /\$\{PRODUCTION_WEB_ORIGIN#https:\/\/\}/u,
     );
     expect(verificationScript).toMatch(
-      /test -f \.promotion\/artifacts\/web\/dist\/server\/entry\.mjs/u,
+      /test -f \.promotion\/artifacts\/apps\/web\/dist\/server\/entry\.mjs/u,
     );
     expect(verificationScript).toMatch(
-      /test -f \.promotion\/artifacts\/web\/dist\/server\/wrangler\.production\.json/u,
+      /test -f \.promotion\/artifacts\/apps\/web\/dist\/server\/wrangler\.production\.json/u,
     );
     expect(verificationScript).toMatch(
-      /test -d \.promotion\/artifacts\/web\/dist\/client/u,
+      /test -d \.promotion\/artifacts\/apps\/web\/dist\/client/u,
+    );
+    expect(verificationScript).toMatch(
+      /test -f \.promotion\/artifacts\/apps\/worker\/dist\/index\.js/u,
+    );
+    expect(workflow).toMatch(
+      /\.promotion\/artifacts\/apps\/worker\/dist\/index\.js/u,
     );
     expect(deployStep).toMatch(/wrangler deploy/u);
     expect(deployStep).toMatch(
-      /\.promotion\/artifacts\/web\/dist\/server\/wrangler\.production\.json/u,
+      /\.promotion\/artifacts\/apps\/web\/dist\/server\/wrangler\.production\.json/u,
     );
     expect(deployStep).toMatch(/--domain "\$WEB_CUSTOM_DOMAIN"/u);
     expect(deployStep).not.toMatch(
