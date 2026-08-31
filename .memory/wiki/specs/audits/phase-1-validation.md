@@ -34,8 +34,8 @@ health contract.
 | Database migrations                   | PASS           | Local reset applied all 14 migrations; schema lint passed; 11 pgTAP files/392 tests passed; generated types matched                                                                                                                                                                                                                                                                                                                                                                                   |
 | Deployment strategy                   | PASS (static)  | Release-promotion, immutable-artifact, forward-only migration, and recovery contracts are present and covered by the passing local suite                                                                                                                                                                                                                                                                                                                                                              |
 | CI for implemented Phase 1 state      | PASS           | Main run `33359583799` succeeded for merge revision `1bb432358cc44f992ce3d15597d298cce86d0a72`: quality, database, clean immutable build, and exact artifact upload all passed                                                                                                                                                                                                                                                                                                                        |
-| Runtime remediation exact-SHA CI      | PARTIAL        | Push run `33363038760` passed all jobs for `b6999ea58d17321117f555bd49ccb1b839d7704c`; concurrent PR run `33363059831` exposed fixed Playwright ports. At `b1000143852dd8e97c2fd2fb69136e313f747ec6`, runs `33365214572` and `33365216682` both passed database and avoided server collisions, but their overlapping coverage suites starved unrelated repository scans/builds into timeouts. Single-run CI scheduling remains local                                                                  |
-| Staging deployment and smoke          | FAIL           | Run `33359752069` verified the corrected artifact boundary and deployed the API and web scripts, but the web custom-domain trigger failed because `staging.wejamm.in` remains attached to the legacy Pages project. Live tracing also proved the API Worker lacked the required Supabase bindings and rejected the Queue binding as an unknown server key. The current local remediation is regression-covered; exact CI and staging proof remain required. See `phase-1-staging-runtime-evidence.md` |
+| Runtime remediation exact-SHA CI      | PASS           | PR run `33420700305` passed quality, database, and immutable-artifact jobs for exact revision `dd6692b718a83ac1b64fad915b5eb6b0aca2c5e2`. No feature-branch push run was created, proving the duplicate-trigger remediation; the repository concurrency group also prevented overlapping active CI workloads                                                                                                                                                                                  |
+| Staging deployment and smoke          | FAIL           | Run `33359752069` verified the corrected artifact boundary and deployed the API and web scripts, but the web custom-domain trigger failed because `staging.wejamm.in` remains attached to the legacy Pages project. Live tracing also proved the API Worker lacked the required Supabase bindings and rejected the Queue binding as an unknown server key. The remediation passed exact-SHA CI; exact staging proof remains required. See `phase-1-staging-runtime-evidence.md`               |
 
 ### Blocking Findings
 
@@ -104,7 +104,7 @@ health contract.
     environment regressions, the independent Wrangler contract, and dry-runs
     pass. The isolated resources are not present in the pre-remediation account
     inventory; exact staging must verify Wrangler provisioning and binding.
-12. **VAL-P1-012 — REMEDIATED LOCALLY — Duplicate exact-SHA CI runs competed
+12. **VAL-P1-012 — RESOLVED — Duplicate exact-SHA CI runs competed
     for the managed Playwright server.** Push run `33363038760` passed every job,
     while simultaneous PR run `33363059831` failed before browser assertions
     because the fixed port 4321 was already owned. Playwright now validates
@@ -120,7 +120,9 @@ health contract.
     repository-wide concurrency group prevents overlapping active CI jobs. The
     group preserves the running job and GitHub's latest pending job; it does not
     guarantee every queued SHA executes. Red-to-green workflow-text contracts
-    pass; exact managed-runner proof remains required.
+    pass. Exact revision `dd6692b718a83ac1b64fad915b5eb6b0aca2c5e2` produced
+    only PR run `33420700305`; quality, database, and immutable-artifact jobs all
+    passed, and no feature-branch push run was created.
 
 ## Spec Coverage
 

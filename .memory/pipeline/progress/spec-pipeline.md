@@ -84,9 +84,11 @@
   synthetic-CI runs at 42/42 browser tests locally. Exact `b1000143` runs avoided
   server collisions but exposed whole-suite resource starvation, so feature
   branches now use only PR CI and a repository-wide concurrency group prevents
-  overlapping active runs while retaining GitHub's latest pending run. See
+  overlapping active runs while retaining GitHub's latest pending run. Exact
+  `dd6692b7` PR run `33420700305` passed quality, database, and immutable build;
+  no duplicate feature-branch push run was created. See
   `.memory/wiki/specs/audits/phase-1-validation.md`.
-- **NEXT:** push the single-run CI scheduling fix and require green exact-SHA CI. Obtain
-  explicit approval to merge PR #4 and to perform staging-only Pages/DNS cleanup;
-  clean up before merge, verify staging promotion and health, then rerun
-  `/validate-phase`. Do not advance to Phase 2 planning or implementation.
+- **NEXT:** obtain explicit approval to merge PR #4 and to perform staging-only
+  Pages/DNS cleanup; clean up before merge, verify staging promotion and health,
+  then rerun `/validate-phase`. Do not advance to Phase 2 planning or
+  implementation.

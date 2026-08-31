@@ -26,8 +26,10 @@ inspector/persistence disabled and concurrent reproduction passing 42/42. Exact
 `b1000143` runs avoided server collisions but overlapping coverage workloads
 timed out unrelated scans/builds, so feature pushes now rely on one PR workflow.
 A repository-wide concurrency group prevents overlapping active CI runs; GitHub
-preserves the running job and the latest pending job. The previously blocking
-Playwright warning conflict remains resolved. See
+preserves the running job and the latest pending job. Exact revision `dd6692b7`
+produced only PR run `33420700305`, whose quality, database, and immutable-build
+jobs all passed. The previously blocking Playwright warning conflict remains
+resolved. See
 [`phase-1-validation.md`](../../../wiki/specs/audits/phase-1-validation.md).
 
 **Setup checkpoint**: workspace scaffold, CI/CD, Cloudflare hosting, managed Supabase staging provisioning, immutable artifact promotion, public health verification, live structured-log verification, and exact local surface-map skill resolution are complete at commit `aa1039b`. The billing audit confirms Supabase organization `wejamm.in` is on Free with a `$0.00` invoice. The owner explicitly reconfirmed Cloudflare Workers Paid as the sole paid-service exception under DEC-103's soft `$10/month` ceiling; it has a `$5/month` minimum plus usage overage, with an exact `$10` notification rather than a hard ceiling. DEC-104 removes third-party monitoring and requires every other service to remain genuinely free unless a new exact-price approval is recorded. Infrastructure verification passes and the setup-to-implementation handoff is unblocked. See `verification/2026-08-30-workspace-infrastructure.md`.
