@@ -72,11 +72,11 @@
 - **CURRENT VALIDATION:** Phase 1 `/validate-phase` failed on 2026-08-30. Local
   functional, coverage, static, build, migration, and spec-coverage checks
   passed. Exact run `33354478865` then exposed a clean-runner composite
-  declaration-output defect; its red-to-green fix and exact artifact chain pass
-  locally, but the fix still needs green exact-SHA CI. The existing staging API
-  fails the current health contract, while the Playwright warning finding is
-  resolved with a clean 871-test validation run. See
+  declaration-output defect; its red-to-green fix passed exact run `33355571907`
+  for `ccce4018aa00003c9b78e09e8545829eb9c331ed`, including immutable artifact
+  upload. The existing staging API fails the current health contract, while the
+  Playwright warning finding is resolved with a clean 871-test validation run. See
   `.memory/wiki/specs/audits/phase-1-validation.md`.
-- **NEXT:** commit and CI-validate the clean-build fix, promote that exact
-  immutable artifact to staging, clear the staging finding, then rerun
+- **NEXT:** publish the reviewed change to `main`, verify exact-artifact staging
+  promotion, clear the staging finding, then rerun
   `/validate-phase`. Do not advance to Phase 2 planning or implementation.

@@ -4,13 +4,14 @@
 **Run**: 2026-08-30T23:15:19-04:00
 **Remediation verification**: 2026-08-30T23:36:08-04:00
 **Clean-build remediation verification**: 2026-08-30T23:53:24-04:00
+**Exact-SHA CI verification**: 2026-08-31T00:02:22-04:00
 **Workflow**: `/validate-phase`
 **Verdict**: **FAIL**
 
 Phase implementation tracking is complete at 7/7 slices, but the independent
-production-readiness gate cannot pass until the clean-build fix has a green
-exact-SHA CI run, that immutable artifact is deployed to staging, and the
-candidate passes the current health contract.
+production-readiness gate cannot pass until the green immutable artifact is
+published through the main-branch promotion path, deployed to staging, and
+verified against the current health contract.
 
 ## Quality Shard
 
@@ -26,15 +27,15 @@ candidate passes the current health contract.
 | Aggregate local validation | PASS | `pnpm validate` exited 0 after 871 Vitest tests, 21 Playwright tests, and all build gates; no Node warnings were emitted |
 | Database migrations | PASS | Local reset applied all 14 migrations; schema lint passed; 11 pgTAP files/392 tests passed; generated types matched |
 | Deployment strategy | PASS (static) | Release-promotion, immutable-artifact, forward-only migration, and recovery contracts are present and covered by the passing local suite |
-| CI for implemented Phase 1 state | FAIL | Run `33354478865` for revision `d88df9c91d19aae16e7cfb560fbf422f3b389a47` passed quality and database jobs but failed the immutable-artifact build because clean runners lacked composite-package declaration outputs; a red-to-green fix and the exact local artifact chain now pass, but the fix does not yet have exact-SHA CI evidence |
-| Staging deployment and smoke | FAIL | Existing staging deployment returns `API health contract mismatch` under `pnpm verify:staging`; no immutable Phase 1 candidate exists to promote |
+| CI for implemented Phase 1 state | PASS | Exact run `33355571907` succeeded for revision `ccce4018aa00003c9b78e09e8545829eb9c331ed`: quality, database, clean immutable build, and `workspace-build-ccce4018aa00003c9b78e09e8545829eb9c331ed` artifact upload all passed |
+| Staging deployment and smoke | FAIL | Existing staging deployment returns `API health contract mismatch` under `pnpm verify:staging`; the green branch artifact cannot enter the automatic staging workflow until the change is published to `main` |
 
 ### Blocking Findings
 
-1. **VAL-P1-001 — No green immutable Phase 1 CI evidence.** Revision
-   `d88df9c91d19aae16e7cfb560fbf422f3b389a47` is committed and pushed, but exact
-   run `33354478865` failed its immutable-artifact job. The declaration-output
-   fix must be committed, pushed, and pass CI at its own exact SHA.
+1. **VAL-P1-001 — RESOLVED — Green immutable Phase 1 CI evidence.** Exact run
+   `33355571907` passed all three jobs for
+   `ccce4018aa00003c9b78e09e8545829eb9c331ed`, including clean build and
+   immutable artifact upload.
 2. **VAL-P1-002 — Staging does not satisfy the implemented health contract.**
    `STAGING_WEB_ORIGIN=https://staging.wejamm.in` and
    `STAGING_API_ORIGIN=https://wejammin-api-staging.wejammin.workers.dev`
@@ -45,13 +46,13 @@ candidate passes the current health contract.
    inherited variable before child launch. A red-to-green regression contract,
    a clean 21/21 Playwright run, and the clean 871-test `pnpm validate` run
    verify the resolution.
-4. **VAL-P1-004 — REMEDIATED LOCALLY — Clean checkout build lacked composite
+4. **VAL-P1-004 — RESOLVED — Clean checkout build lacked composite
    declarations.** Package `build` scripts used `tsc --noEmit`, so a clean CI
    runner could not satisfy project-reference outputs and failed with TS6305.
    The seven composite library packages now build with `tsc --build`; a
    red-to-green workspace contract, a clean `tsc --build --clean` reconstruction,
-   and the exact three-script CI artifact chain pass locally. Exact-SHA CI
-   confirmation remains part of `VAL-P1-001`.
+   the exact three-script local artifact chain, and exact-SHA CI run
+   `33355571907` verify the resolution.
 
 ## Spec Coverage
 
@@ -71,15 +72,15 @@ The Phase 1 coverage sweep passed:
 **Status**: **NOT RUN — quality prerequisite failed**
 
 `validate-phase-readiness` requires the quality shard to complete successfully.
-Because CI and staging quality gates failed, no readiness
+Because the staging quality gate failed, no readiness
 applicability matrix or API-documentation, accessibility, performance,
 security/dependency, feature-ledger, or boundary-stub verdict is represented as
 current evidence by this run.
 
 ## Constrained Next Step
 
-1. Commit and push the clean-build regression fix.
-2. Obtain a green CI run for that exact SHA, including artifact upload.
-3. Promote that exact immutable artifact to staging and rerun
+1. Publish the reviewed Phase 1 change to `main` so its exact successful CI
+   artifact can enter the automatic staging workflow.
+2. Verify the staging workflow deploys the exact main-branch artifact and rerun
    `pnpm verify:staging` successfully.
-4. Rerun `/validate-phase`; only then may the readiness shard execute.
+3. Rerun `/validate-phase`; only then may the readiness shard execute.
