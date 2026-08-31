@@ -9,6 +9,7 @@
 **Artifact-path main verification**: 2026-08-31T01:13:23-04:00
 **Staging runtime attempt**: 2026-08-31T01:13:49-04:00
 **Runtime remediation verification**: 2026-08-31T01:57:37-04:00
+**Runtime remediation CI attempt**: 2026-08-31T02:09:00-04:00
 **Workflow**: `/validate-phase`
 **Verdict**: **FAIL**
 
@@ -33,6 +34,7 @@ health contract.
 | Database migrations                   | PASS           | Local reset applied all 14 migrations; schema lint passed; 11 pgTAP files/392 tests passed; generated types matched                                                                                                                                                                                                                                                                                                                                                                                   |
 | Deployment strategy                   | PASS (static)  | Release-promotion, immutable-artifact, forward-only migration, and recovery contracts are present and covered by the passing local suite                                                                                                                                                                                                                                                                                                                                                              |
 | CI for implemented Phase 1 state      | PASS           | Main run `33359583799` succeeded for merge revision `1bb432358cc44f992ce3d15597d298cce86d0a72`: quality, database, clean immutable build, and exact artifact upload all passed                                                                                                                                                                                                                                                                                                                        |
+| Runtime remediation exact-SHA CI      | PARTIAL        | Push run `33363038760` passed quality, database, clean immutable build, and artifact upload for `b6999ea58d17321117f555bd49ccb1b839d7704c`. Concurrent PR run `33363059831` passed database but its quality job stopped before browser tests because another exact-SHA job already owned port 4321; the per-run Playwright port-isolation remediation remains local                                                                                                                                   |
 | Staging deployment and smoke          | FAIL           | Run `33359752069` verified the corrected artifact boundary and deployed the API and web scripts, but the web custom-domain trigger failed because `staging.wejamm.in` remains attached to the legacy Pages project. Live tracing also proved the API Worker lacked the required Supabase bindings and rejected the Queue binding as an unknown server key. The current local remediation is regression-covered; exact CI and staging proof remain required. See `phase-1-staging-runtime-evidence.md` |
 
 ### Blocking Findings
@@ -102,6 +104,16 @@ health contract.
     environment regressions, the independent Wrangler contract, and dry-runs
     pass. The isolated resources are not present in the pre-remediation account
     inventory; exact staging must verify Wrangler provisioning and binding.
+12. **VAL-P1-012 — REMEDIATED LOCALLY — Duplicate exact-SHA CI runs competed
+    for the managed Playwright server.** Push run `33363038760` passed every job,
+    while simultaneous PR run `33363059831` failed before browser assertions
+    because the fixed port 4321 was already owned. Playwright now validates
+    `GITHUB_RUN_ID`, derives a disjoint adjacent web/docs port pair for CI,
+    disables the Cloudflare inspector and persistence state for CI dev servers,
+    and passes the dynamic docs origin through run metadata. Red-to-green
+    toolchain contracts and concurrent synthetic-CI runs using both original run
+    IDs pass 42/42 browser tests. New exact-SHA CI must prove it on the managed
+    runner.
 
 ## Spec Coverage
 
@@ -128,11 +140,13 @@ current evidence by this run.
 
 ## Constrained Next Step
 
-1. Commit, review, and merge the staging runtime remediation with green
-   exact-SHA CI.
-2. With explicit owner authorization, detach only `staging.wejamm.in` from the
+1. Commit and push the per-run Playwright port-isolation fix, then require green
+   exact-SHA CI and explicit approval to merge PR #4.
+2. Before merging, and only with explicit owner authorization, detach only
+   `staging.wejamm.in` from the
    legacy Pages project and remove its conflicting staging DNS record.
-3. Verify the resulting staging workflow deploys the exact artifact and passes
+3. Merge the approved PR and verify the resulting staging workflow deploys the
+   exact artifact and passes
    `pnpm verify:staging` successfully.
 4. Rerun `/validate-phase`; only then may the readiness shard execute.
 

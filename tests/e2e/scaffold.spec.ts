@@ -23,8 +23,12 @@ test('web scaffold renders useful server HTML without accessibility violations',
 
 test('component catalog remains local and identifies its purpose', async ({
   request,
-}) => {
-  const response = await request.get('http://127.0.0.1:4322/');
+}, testInfo) => {
+  const docsOrigin = testInfo.config.metadata['docsOrigin'];
+  if (typeof docsOrigin !== 'string') {
+    throw new TypeError('Playwright docs origin metadata is required');
+  }
+  const response = await request.get(docsOrigin);
   const body = await response.text();
 
   expect(response.ok()).toBe(true);

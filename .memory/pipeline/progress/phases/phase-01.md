@@ -18,7 +18,11 @@ projects approved server settings away from Queue bindings, isolates staging
 Queue names, and requires a dynamic SSR smoke contract. `pnpm validate` passes
 148 files/877 tests, 100% coverage, 21 Playwright tests, and all builds. Exact CI,
 owner-authorized staging Pages/DNS cleanup, and live staging confirmation remain
-required. The previously blocking Playwright warning conflict remains resolved. See
+required. Runtime-remediation push run `33363038760` passed all jobs at
+`b6999ea58d17321117f555bd49ccb1b839d7704c`; simultaneous PR run `33363059831`
+exposed duplicate-SHA Playwright port contention, now regression-covered by a
+validated per-run web/docs port pair derived from `GITHUB_RUN_ID`, with CI
+inspector/persistence disabled and concurrent reproduction passing 42/42. The previously blocking Playwright warning conflict remains resolved. See
 [`phase-1-validation.md`](../../../wiki/specs/audits/phase-1-validation.md).
 
 **Setup checkpoint**: workspace scaffold, CI/CD, Cloudflare hosting, managed Supabase staging provisioning, immutable artifact promotion, public health verification, live structured-log verification, and exact local surface-map skill resolution are complete at commit `aa1039b`. The billing audit confirms Supabase organization `wejamm.in` is on Free with a `$0.00` invoice. The owner explicitly reconfirmed Cloudflare Workers Paid as the sole paid-service exception under DEC-103's soft `$10/month` ceiling; it has a `$5/month` minimum plus usage overage, with an exact `$10` notification rather than a hard ceiling. DEC-104 removes third-party monitoring and requires every other service to remain genuinely free unless a new exact-price approval is recorded. Infrastructure verification passes and the setup-to-implementation handoff is unblocked. See `verification/2026-08-30-workspace-infrastructure.md`.

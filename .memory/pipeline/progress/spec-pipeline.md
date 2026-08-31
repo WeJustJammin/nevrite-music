@@ -77,9 +77,13 @@
   `33359752069` verified that boundary before exposing legacy Pages ownership
   of `staging.wejamm.in` plus missing/projected API runtime configuration. The
   new runtime, Queue-isolation, secret-injection, and dynamic SSR-smoke
-  regressions pass the full 877-test suite locally. See
+  regressions pass the full 877-test suite locally. Runtime-remediation push run
+  `33363038760` passed every job at `b6999ea58d17321117f555bd49ccb1b839d7704c`,
+  while duplicate PR run `33363059831` exposed Playwright port contention. Its
+  per-run web/docs and Cloudflare-dev isolation fix passes concurrent
+  synthetic-CI runs at 42/42 browser tests locally. See
   `.memory/wiki/specs/audits/phase-1-validation.md`.
-- **NEXT:** review and merge the runtime remediation, require green exact-SHA
-  CI, obtain explicit approval for staging-only Pages/DNS cleanup, verify
-  staging promotion and health, then rerun
+- **NEXT:** push the Playwright port-isolation fix and require green exact-SHA CI. Obtain
+  explicit approval to merge PR #4 and to perform staging-only Pages/DNS cleanup;
+  clean up before merge, verify staging promotion and health, then rerun
   `/validate-phase`. Do not advance to Phase 2 planning or implementation.
