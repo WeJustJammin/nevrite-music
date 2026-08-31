@@ -25,6 +25,11 @@ jobs:
       RELEASE_PROTECTED_ENVIRONMENT: production
       STAGING_RUN_ID: ${{ github.event.workflow_run.id }}
     steps:
+      - name: Check out the promoted revision
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          ref: ${{ env.DEPLOY_SHA }}
+
       - name: Download staging-verified promotion candidate
         uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
         with:
@@ -36,11 +41,6 @@ jobs:
       - name: Read and validate promotion identity
         id: candidate
         run: bash infra/workflows/read-production-candidate.sh
-
-      - name: Check out the promoted revision
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
-        with:
-          ref: ${{ steps.candidate.outputs.deploy_sha }}
 
       - name: Set up workspace
         uses: ./.github/actions/setup
@@ -64,7 +64,7 @@ jobs:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
         run: >-
           pnpm --filter @wejammin/worker exec wrangler deploy
-          "$GITHUB_WORKSPACE/.promotion/artifacts/worker/dist/index.js"
+          "$GITHUB_WORKSPACE/.promotion/artifacts/apps/worker/dist/index.js"
           --config wrangler.jsonc
           --var APP_ENVIRONMENT:production
           --var APP_RELEASE:"$DEPLOY_SHA"
@@ -75,7 +75,7 @@ jobs:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
         run: >-
           pnpm --filter @wejammin/web exec wrangler deploy
-          --config "$GITHUB_WORKSPACE/.promotion/artifacts/web/dist/server/wrangler.production.json"
+          --config "$GITHUB_WORKSPACE/.promotion/artifacts/apps/web/dist/server/wrangler.production.json"
           --domain "$WEB_CUSTOM_DOMAIN"
 
       - name: Upload deployment evidence

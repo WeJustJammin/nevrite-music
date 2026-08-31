@@ -18,11 +18,26 @@ fi
 require_https_origin PRODUCTION_WEB_ORIGIN "$PRODUCTION_WEB_ORIGIN"
 printf 'WEB_CUSTOM_DOMAIN=%s\n' "${PRODUCTION_WEB_ORIGIN#https://}" >> "$GITHUB_ENV"
 test "$(git rev-parse HEAD)" = "$DEPLOY_SHA"
-test -f .promotion/artifacts/web/dist/server/entry.mjs
-test -f .promotion/artifacts/web/dist/server/wrangler.production.json
-test -d .promotion/artifacts/web/dist/client
-test -n "$(find .promotion/artifacts/web/dist/client -type f -print -quit)"
-test -f .promotion/artifacts/worker/dist/index.js
+test -f .promotion/artifacts/apps/web/dist/server/entry.mjs || {
+  echo "::error::Promoted web server entry is missing"
+  exit 1
+}
+test -f .promotion/artifacts/apps/web/dist/server/wrangler.production.json || {
+  echo "::error::Promoted production web configuration is missing"
+  exit 1
+}
+test -d .promotion/artifacts/apps/web/dist/client || {
+  echo "::error::Promoted web client directory is missing"
+  exit 1
+}
+test -n "$(find .promotion/artifacts/apps/web/dist/client -type f -print -quit)" || {
+  echo "::error::Promoted web client directory is empty"
+  exit 1
+}
+test -f .promotion/artifacts/apps/worker/dist/index.js || {
+  echo "::error::Promoted API Worker entry is missing"
+  exit 1
+}
 expected_digest="$(
   sed -n 's/.*"artifactDigest":"\([0-9a-f]\{64\}\)".*/\1/p' \
     .promotion/promotion-metadata.json

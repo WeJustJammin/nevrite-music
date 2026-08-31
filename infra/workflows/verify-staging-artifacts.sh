@@ -23,9 +23,27 @@ require_https_origin STAGING_WEB_ORIGIN "$STAGING_WEB_ORIGIN"
 require_https_origin STAGING_API_ORIGIN "$STAGING_API_ORIGIN"
 printf 'WEB_CUSTOM_DOMAIN=%s\n' "${STAGING_WEB_ORIGIN#https://}" >> "$GITHUB_ENV"
 test "$(git rev-parse HEAD)" = "$DEPLOY_SHA"
-test -f .artifacts/web/dist/server/entry.mjs
-test -f .artifacts/web/dist/server/wrangler.staging.json
-test -d .artifacts/web/dist/client
-test -n "$(find .artifacts/web/dist/client -type f -print -quit)"
-test -f .artifacts/worker/dist/index.js
-test -f .artifacts/ci-gate-evidence.json
+test -f .artifacts/apps/web/dist/server/entry.mjs || {
+  echo "::error::Immutable web server entry is missing"
+  exit 1
+}
+test -f .artifacts/apps/web/dist/server/wrangler.staging.json || {
+  echo "::error::Immutable staging web configuration is missing"
+  exit 1
+}
+test -d .artifacts/apps/web/dist/client || {
+  echo "::error::Immutable web client directory is missing"
+  exit 1
+}
+test -n "$(find .artifacts/apps/web/dist/client -type f -print -quit)" || {
+  echo "::error::Immutable web client directory is empty"
+  exit 1
+}
+test -f .artifacts/apps/worker/dist/index.js || {
+  echo "::error::Immutable API Worker entry is missing"
+  exit 1
+}
+test -f .artifacts/ci-gate-evidence.json || {
+  echo "::error::Immutable CI gate evidence is missing"
+  exit 1
+}

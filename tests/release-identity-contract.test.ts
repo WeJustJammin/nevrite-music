@@ -163,8 +163,21 @@ describe('immutable release identity contract', () => {
     expect(verificationScript).toMatch(/sha256sum --check/u);
     expect(workflow).toMatch(/verify-release-promotion\.ts/u);
     expect(identityScript).toMatch(/DEPLOY_SHA" =~ \^\[0-9a-f\]\{40\}\$/u);
-    expect(workflow).toMatch(
-      /ref: \$\{\{ steps\.candidate\.outputs\.deploy_sha \}\}/u,
+    expect(workflow).toMatch(/ref: \$\{\{ env\.DEPLOY_SHA \}\}/u);
+    const checkoutIndex = workflow.indexOf(
+      '- name: Check out the promoted revision',
+    );
+    const downloadIndex = workflow.indexOf(
+      '- name: Download staging-verified promotion candidate',
+    );
+    const identityIndex = workflow.indexOf(
+      '- name: Read and validate promotion identity',
+    );
+    expect(checkoutIndex).toBeGreaterThan(-1);
+    expect(checkoutIndex).toBeLessThan(downloadIndex);
+    expect(downloadIndex).toBeLessThan(identityIndex);
+    expect(identityIndex).toBeLessThan(
+      workflow.indexOf('- name: Set up workspace'),
     );
     expect(workflow).not.toMatch(/name: workspace-build-/u);
     expect(workflow).toMatch(/--var APP_ENVIRONMENT:production/u);

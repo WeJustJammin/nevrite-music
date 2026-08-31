@@ -55,7 +55,7 @@ jobs:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
         run: >-
           pnpm --filter @wejammin/worker exec wrangler deploy
-          "$GITHUB_WORKSPACE/.artifacts/worker/dist/index.js"
+          "$GITHUB_WORKSPACE/.artifacts/apps/worker/dist/index.js"
           --config wrangler.jsonc
           --env staging
           --var APP_ENVIRONMENT:staging
@@ -67,7 +67,7 @@ jobs:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
         run: >-
           pnpm --filter @wejammin/web exec wrangler deploy
-          --config "$GITHUB_WORKSPACE/.artifacts/web/dist/server/wrangler.staging.json"
+          --config "$GITHUB_WORKSPACE/.artifacts/apps/web/dist/server/wrangler.staging.json"
           --domain "$WEB_CUSTOM_DOMAIN"
 
       - name: Verify public staging contracts
