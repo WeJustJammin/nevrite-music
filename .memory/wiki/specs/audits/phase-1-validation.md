@@ -5,14 +5,17 @@
 **Remediation verification**: 2026-08-31T17:51:00-04:00
 **Workflow**: /validate-phase
 **Validation branch**: codex/fix-phase-1-readiness-blockers
-**Verdict**: **FAIL-CLOSED — local remediation passes; live staging recertification and one external production-protection prerequisite remain**
+**Final remediation merge**: `cc5d7058f5ade9435bf9e61753bdbe403b0258cf`
+**Final main CI**: run `33447715327` (success)
+**Final staging workflow**: run `33447957866` (success; exact merge SHA)
+**Verdict**: **FAIL-CLOSED — local, CI, and staging gates pass; one external production-protection prerequisite remains**
 
 Implementation tracking remains complete at 7/7 slices and 390/390 acceptance
 criteria. All seven readiness findings have been addressed in source, tests, or
 fail-closed operational controls. The aggregate local validation command passes.
-Phase advancement remains blocked until the remediated artifact passes CI and
-live staging verification and GitHub can enforce the locked production reviewer
-rule.
+The remediated artifact passed exact-SHA CI and live staging verification.
+Phase advancement remains blocked solely because GitHub cannot enforce the
+locked production reviewer rule under the current private-repository plan.
 
 ## Remediation Summary
 
@@ -21,9 +24,9 @@ rule.
 | VAL-P1-013 — upload-admission summary/focus IDs          | RESOLVED                                | Error links and first-invalid focus normalize contract keys to the real kebab-case field IDs; focused accessibility regressions pass                                                                                                                                                                                                                                                                  |
 | VAL-P1-014 — upload-completion result announcement/focus | RESOLVED                                | Success is a polite atomic status with a programmatically focused result heading; error/status politeness, table sorting, and route-heading focus debt were also corrected                                                                                                                                                                                                                            |
 | VAL-P1-015 — hard JavaScript budgets                     | RESOLVED                                | Complete Workbench hydration closure is 14,913 gzip bytes against 35,840; honest initial static closure is 72,576 against 92,160; largest lazy/shared chunk is 27,884 against 81,920                                                                                                                                                                                                                  |
-| VAL-P1-016 — deterministic Phase 1 p95 smoke absent      | RESOLVED                                | Validation and CI run one virtual user, 20 sequential requests, zero retries, strict p95 under 500 ms, immutable artifact identity, and fail-closed error accounting; fresh p95 is 1.584 ms with 0/20 errors                                                                                                                                                                                          |
-| VAL-P1-017 — cleartext staging transport                 | IMPLEMENTED; LIVE PROOF PENDING         | Web and API edge boundaries return 308 to the exact HTTPS URL outside loopback; staging verifier rejects missing or wrong redirects and probes web, API, protected runtime, and a discovered static asset                                                                                                                                                                                             |
-| VAL-P1-018 — locked response headers absent              | IMPLEMENTED; LIVE PROOF PENDING         | Web, API, generated Worker wrapper, static asset, redirects, 404s, and protected 500s carry the exact locked policy in focused tests; production and staging static assets retain run_worker_first true                                                                                                                                                                                               |
+| VAL-P1-016 — deterministic Phase 1 p95 smoke absent      | RESOLVED                                | Local p95 is 2.676152 ms; staging workflow p95 is 38.615692 ms and independent exact-SHA p95 is 43.175515 ms. Each run uses 20 sequential samples, 1 virtual user, 0 retries, 0 errors, and a strict 500 ms limit                                                                                                                                                                                     |
+| VAL-P1-017 — cleartext staging transport                 | RESOLVED                                | Exact-SHA staging run `33447957866` recertified web and API HTTPS redirects to the exact HTTPS locations, alongside web 200, protected SSR 303, API 200, and static-asset probing                                                                                                                                                                                                                     |
+| VAL-P1-018 — locked response headers absent              | RESOLVED                                | Exact-SHA staging run `33447957866` recertified the six locked headers on web 200, protected SSR 303, API 200, and a discovered static asset; generated Worker and run_worker_first boundaries remain covered by focused tests                                                                                                                                                                        |
 | VAL-P1-019 — unprotected automatic production promotion  | SAFELY CONTAINED; EXTERNAL PREREQUISITE | Automatic staging-to-production triggering is removed; production is manual-only with immutable staging run and SHA verification, exact-main policy, reviewer and admin-bypass checks, and the live workflow disabled. The live environment now has `can_admins_bypass: false`; GitHub rejected only the required reviewer rule with HTTP 422 because the private-repository plan does not support it |
 
 No production deployment, production DNS mutation, provider activation, billing
@@ -33,8 +36,8 @@ change, repository visibility change, or secret write was performed.
 
 | Gate                                            | Result         | Fresh evidence                                                                                                                                    |
 | ----------------------------------------------- | -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Canonical aggregate validation                  | PASS           | pnpm validate exited 0 in 66.6 seconds                                                                                                            |
-| Unit, contract, integration, and coverage tests | PASS           | 158 Vitest files and 939 tests; 100% statements, branches, functions, and lines                                                                   |
+| Canonical aggregate validation                  | PASS           | Final `pnpm validate` exited 0                                                                                                                    |
+| Unit, contract, integration, and coverage tests | PASS           | 158 Vitest files and 945 tests; 100% statements, branches, functions, and lines                                                                   |
 | Browser E2E                                     | PASS           | 26/26 Playwright tests, including axe, focus, responsive layout, real upload forms, dev-module loading, island hydration, and gated chunk loading |
 | Format, lint, and type check                    | PASS           | Canonical format check, zero-warning ESLint, and TypeScript project build passed                                                                  |
 | Build                                           | PASS           | All packages, Astro apps, and Hono Worker build; Worker is 446.09 KiB upload and 101.72 KiB gzip                                                  |
@@ -52,9 +55,9 @@ change, repository visibility change, or secret write was performed.
 | API documentation synchronization          | Required                 | PASS             | Runtime contracts and generated OpenAPI remain synchronized                                                                                                                      |
 | Accessibility                              | Required                 | PASS             | Automated coverage, axe, keyboard and focus, semantic-state, and route-focus regressions pass                                                                                    |
 | Static bundle budgets                      | Required hard criteria   | PASS             | Built emitted-graph verifier measures recursive initial closure and explicit-action lazy chunks without manifest or no-manifest undercounting                                    |
-| Phase 1 deterministic p95 smoke            | Required exit criterion  | PASS             | 20/20 samples, zero errors, p50 0.670 ms, p95 1.584 ms, p99 20.209 ms, strict p95 below 500 ms                                                                                   |
+| Phase 1 deterministic p95 smoke            | Required exit criterion  | PASS             | Exact-SHA staging: 20/20 samples, zero errors, p50 29.234177 ms, p95 38.615692 ms, p99 289.953006 ms, strict p95 below 500 ms                                                    |
 | Representative-data k6 and pgbench profile | Deferred once            | DEFERRED         | PERF-DEFER-01 remains bounded to the first data-bearing candidate                                                                                                                |
-| Security hardening and non-invasive DAST   | Always on                | PENDING LIVE     | Local runtime and contract evidence pass; the remediated artifact must prove exact redirects and headers on staging                                                              |
+| Security hardening and non-invasive DAST   | Always on                | PASS             | Exact-SHA staging run `33447957866` recertified redirects and all six locked headers on web, protected SSR, API, and static-asset boundaries                                     |
 | Dependency audit                           | Always on                | PASS             | No known vulnerabilities at the high-or-critical gate                                                                                                                            |
 | Production environment approval            | Required guard           | BLOCKED EXTERNAL | Workflow is disabled and fails closed; exact-main policy and disabled administrator bypass are live, but the private-repository plan cannot configure the required reviewer rule |
 | Live production deployment                 | Not required for Phase 1 | NOT APPLICABLE   | Production activation remains out of scope and disabled                                                                                                                          |
@@ -124,18 +127,31 @@ environment now reports `can_admins_bypass: false`. The workflow remains
 disabled because GitHub returned HTTP 422 when the reviewer rule was requested
 under the current private-repository plan.
 
+## Final Immutable Promotion Evidence
+
+Main CI run `33447715327` passed for merge SHA
+`cc5d7058f5ade9435bf9e61753bdbe403b0258cf`; staging run `33447957866` passed
+after deploying that exact SHA. The immutable CI artifact digest is
+`f4c18d60fa0e7e8081795a07a247a823dc851e2592e27b9b78e880d6e6183173`. The
+staging candidate artifact is ID `9778720478` with digest
+`4d1b74b4aa8654029a473df933cfeb69e073135b80ec775e6b2e357bfb52660`.
+
+Public staging contracts returned web 200, protected SSR 303, and API 200.
+The staging p95 smoke measured 38.615692 ms across 20 samples with 1 virtual
+user, 0 retries, 0 errors, and a 500 ms limit. An independent exact-SHA smoke
+measured 43.175515 ms with the same settings. Final local validation measured
+2.676152 ms against the same limit. Bundle gates remained green: Workbench
+14,913/35,840 gzip bytes, initial route 72,576/92,160, and largest lazy/shared
+chunk 27,884/81,920.
+
 ## Remaining Gates
 
-1. Push this branch and require exact-SHA CI plus immutable artifact generation
-   to pass.
-2. Promote that artifact to staging and run the strengthened pnpm verify:staging
-   and staging p95 smoke against the HTTPS origins.
-3. Upgrade the GitHub plan or otherwise move to a repository visibility and plan
+1. Upgrade the GitHub plan or otherwise move to a repository visibility and plan
    combination that supports required reviewers for this private repository;
    then configure the reviewer, re-enable the manual workflow, and rerun
    /validate-phase.
-4. Do not advance to Phase 2 or activate production while either remaining gate
-   is incomplete.
+2. Do not advance to Phase 2 or activate production while the reviewer gate is
+   incomplete. Production readiness is not fully passed.
 
 
 <!-- spec-graph: auto-generated -->

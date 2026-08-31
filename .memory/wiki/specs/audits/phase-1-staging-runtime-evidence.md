@@ -8,9 +8,17 @@
 
 **Remediation closure**: 2026-08-31T14:58:46-04:00
 
-**Current candidate**: `c2880f34a3127235b859d69e89dc8129d0746d6d`
+**Prior candidate**: `c2880f34a3127235b859d69e89dc8129d0746d6d`
 
-**Current staging workflow**: GitHub Actions run `33425837272`, attempt 2
+**Prior staging workflow**: GitHub Actions run `33425837272`, attempt 2
+
+**Final remediation merge**: PR #6 merged to `main` as
+`cc5d7058f5ade9435bf9e61753bdbe403b0258cf`
+
+**Final main CI**: GitHub Actions run `33447715327` (success)
+
+**Final staging workflow**: GitHub Actions run `33447957866` (success; exact
+merge SHA deployed)
 
 This capture preserves the external evidence that opened validation findings
 VAL-P1-002 and VAL-P1-007 through VAL-P1-011. It contains no credentials or
@@ -121,12 +129,12 @@ revision:
   `apiStatus: 200`, `webStatus: 200`, and the expected protected-route
   `webRuntimeStatus: 303`.
 
-The staging deployment blocker is closed. Readiness probing after closure found
-two separate security failures: cleartext HTTP returns 200 rather than an HTTPS
-redirect, and the HTTPS web/API responses omit the architecture-required CSP,
-HSTS, MIME-sniffing, frame, referrer, and permissions headers. Those observations
-are recorded as current readiness findings in `phase-1-validation.md`; they do
-not reopen the deployment/smoke gate.
+The staging deployment blocker is closed. The prior readiness probing after
+that closure found two separate security failures: cleartext HTTP returned 200
+rather than an HTTPS redirect, and the HTTPS web/API responses omitted the
+architecture-required CSP, HSTS, MIME-sniffing, frame, referrer, and permissions
+headers. Those historical observations motivated the remediation recorded below;
+the final immutable closure supersedes them.
 
 ## Security remediation candidate
 
@@ -137,16 +145,36 @@ for production and staging assets; a development-only Wrangler config leaves
 Astro/Vite module handling outside that deployment boundary.
 
 Local evidence is green: focused security, staging-verifier, generated-config,
-and hydration suites pass; the canonical aggregate reports 158 Vitest files/939
-tests, 100% coverage, 26/26 browser tests, successful builds, and p95 1.584 ms
-with zero errors. Live staging evidence is intentionally not claimed yet. After
-the exact remediation SHA passes CI and promotion, this report must capture:
+and hydration suites pass; the canonical aggregate reports 158 Vitest files/945
+tests, 100% coverage, 26/26 browser tests, successful builds, and p95 2.676152 ms
+with zero errors. The final immutable closure below supersedes the earlier
+pending-live-proof note.
 
-- HTTP web and API 301/308 responses with exact HTTPS `Location` values;
-- the six exact headers on web 200, protected-route 303, API 200, and a
-  discovered static asset;
-- immutable artifact and deployed SHA identity; and
-- the staging 20-sample p95 result with zero errors.
+## Final immutable closure
+
+PR #6 merged the remediation to `main` at
+`cc5d7058f5ade9435bf9e61753bdbe403b0258cf`. Main CI run `33447715327` passed,
+and staging run `33447957866` passed after deploying that exact merge SHA.
+The public contracts returned web 200, protected SSR 303, and API 200. The
+staging verifier also recertified HTTPS redirects, the exact locked response
+headers on the web/API/protected/static boundaries, and static-asset discovery.
+
+The immutable CI artifact digest is
+`f4c18d60fa0e7e8081795a07a247a823dc851e2592e27b9b78e880d6e6183173`. The
+staging candidate artifact is ID `9778720478` with digest
+`4d1b74b4aa8654029a473df933cfeb69e073135b80ec775e6b2e357bfb52660`.
+
+The staging workflow p95 smoke measured 38.615692 ms across 20 sequential
+samples with 1 virtual user, 0 retries, 0 errors, and a strict 500 ms limit.
+An independent exact-SHA run measured 43.175515 ms with the same settings.
+The final local validation measured p95 2.676152 ms against the same 500 ms
+limit. Bundle gates remained green: Workbench 14,913/35,840 gzip bytes,
+initial route 72,576/92,160, and largest lazy/shared chunk 27,884/81,920.
+
+The required production reviewer protection remains unavailable because GitHub
+rejects that rule under the current private-repository plan. Production stays
+disabled and the overall Phase 1 validation verdict remains fail-closed; these
+staging results do not constitute production-readiness approval.
 
 
 <!-- spec-graph: auto-generated -->
