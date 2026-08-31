@@ -1,6 +1,7 @@
 name: CI
 on:
   push:
+    branches: [main]
     paths: ['**']
   pull_request:
     branches:
@@ -9,8 +10,8 @@ on:
     paths: ['**']
   workflow_dispatch:
 concurrency:
-  group: ci-${{ github.event.pull_request.number || github.ref }}
-  cancel-in-progress: true
+  group: ci-${{ github.repository }}
+  cancel-in-progress: false
 permissions:
   contents: read
 jobs:

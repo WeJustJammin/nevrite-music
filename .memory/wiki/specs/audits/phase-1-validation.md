@@ -34,7 +34,7 @@ health contract.
 | Database migrations                   | PASS           | Local reset applied all 14 migrations; schema lint passed; 11 pgTAP files/392 tests passed; generated types matched                                                                                                                                                                                                                                                                                                                                                                                   |
 | Deployment strategy                   | PASS (static)  | Release-promotion, immutable-artifact, forward-only migration, and recovery contracts are present and covered by the passing local suite                                                                                                                                                                                                                                                                                                                                                              |
 | CI for implemented Phase 1 state      | PASS           | Main run `33359583799` succeeded for merge revision `1bb432358cc44f992ce3d15597d298cce86d0a72`: quality, database, clean immutable build, and exact artifact upload all passed                                                                                                                                                                                                                                                                                                                        |
-| Runtime remediation exact-SHA CI      | PARTIAL        | Push run `33363038760` passed quality, database, clean immutable build, and artifact upload for `b6999ea58d17321117f555bd49ccb1b839d7704c`. Concurrent PR run `33363059831` passed database but its quality job stopped before browser tests because another exact-SHA job already owned port 4321; the per-run Playwright port-isolation remediation remains local                                                                                                                                   |
+| Runtime remediation exact-SHA CI      | PARTIAL        | Push run `33363038760` passed all jobs for `b6999ea58d17321117f555bd49ccb1b839d7704c`; concurrent PR run `33363059831` exposed fixed Playwright ports. At `b1000143852dd8e97c2fd2fb69136e313f747ec6`, runs `33365214572` and `33365216682` both passed database and avoided server collisions, but their overlapping coverage suites starved unrelated repository scans/builds into timeouts. Single-run CI scheduling remains local                                                                  |
 | Staging deployment and smoke          | FAIL           | Run `33359752069` verified the corrected artifact boundary and deployed the API and web scripts, but the web custom-domain trigger failed because `staging.wejamm.in` remains attached to the legacy Pages project. Live tracing also proved the API Worker lacked the required Supabase bindings and rejected the Queue binding as an unknown server key. The current local remediation is regression-covered; exact CI and staging proof remain required. See `phase-1-staging-runtime-evidence.md` |
 
 ### Blocking Findings
@@ -113,7 +113,14 @@ health contract.
     and passes the dynamic docs origin through run metadata. Red-to-green
     toolchain contracts and concurrent synthetic-CI runs using both original run
     IDs pass 42/42 browser tests. New exact-SHA CI must prove it on the managed
-    runner.
+    runner. Exact runs `33365214572` and `33365216682` then avoided all server
+    collisions and passed database, but simultaneous coverage workloads timed
+    out an architecture scan and environment-build contract. Feature branches
+    now run only the PR workflow, main retains push validation, and a
+    repository-wide concurrency group prevents overlapping active CI jobs. The
+    group preserves the running job and GitHub's latest pending job; it does not
+    guarantee every queued SHA executes. Red-to-green workflow-text contracts
+    pass; exact managed-runner proof remains required.
 
 ## Spec Coverage
 
@@ -140,8 +147,8 @@ current evidence by this run.
 
 ## Constrained Next Step
 
-1. Commit and push the per-run Playwright port-isolation fix, then require green
-   exact-SHA CI and explicit approval to merge PR #4.
+1. Push the single-run CI scheduling remediation, then require green exact-SHA
+   CI and explicit approval to merge PR #4.
 2. Before merging, and only with explicit owner authorization, detach only
    `staging.wejamm.in` from the
    legacy Pages project and remove its conflicting staging DNS record.

@@ -63,6 +63,10 @@ describe('immutable release identity contract', () => {
     const workflow = readWorkflow('ci.yml');
 
     expect(lineCount(workflow)).toBeLessThanOrEqual(100);
+    expect(workflow).toMatch(/push:\n {4}branches: \[main\]/u);
+    expect(workflow).toMatch(/pull_request:\n {4}branches:\n {6}- main/u);
+    expect(workflow).toContain('group: ci-${{ github.repository }}');
+    expect(workflow).toContain('cancel-in-progress: false');
     expect(workflow).toMatch(/name: workspace-build-\$\{\{ github\.sha \}\}/u);
     expect(workflow).toMatch(/apps\/worker\/dist\//u);
   });

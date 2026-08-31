@@ -81,9 +81,12 @@
   `33363038760` passed every job at `b6999ea58d17321117f555bd49ccb1b839d7704c`,
   while duplicate PR run `33363059831` exposed Playwright port contention. Its
   per-run web/docs and Cloudflare-dev isolation fix passes concurrent
-  synthetic-CI runs at 42/42 browser tests locally. See
+  synthetic-CI runs at 42/42 browser tests locally. Exact `b1000143` runs avoided
+  server collisions but exposed whole-suite resource starvation, so feature
+  branches now use only PR CI and a repository-wide concurrency group prevents
+  overlapping active runs while retaining GitHub's latest pending run. See
   `.memory/wiki/specs/audits/phase-1-validation.md`.
-- **NEXT:** push the Playwright port-isolation fix and require green exact-SHA CI. Obtain
+- **NEXT:** push the single-run CI scheduling fix and require green exact-SHA CI. Obtain
   explicit approval to merge PR #4 and to perform staging-only Pages/DNS cleanup;
   clean up before merge, verify staging promotion and health, then rerun
   `/validate-phase`. Do not advance to Phase 2 planning or implementation.
