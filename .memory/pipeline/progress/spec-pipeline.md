@@ -71,10 +71,12 @@
 - Fresh IA ambiguity rerun 1 on 2026-08-28 scored 0/344 = 0.00% (PASS), covering all 83 IA documents and all 43 shards. See `.memory/wiki/specs/audits/2026-08-28-ia-ambiguity-rerun-1.md`.
 - **CURRENT VALIDATION:** Phase 1 `/validate-phase` failed on 2026-08-30. Local
   functional, coverage, static, build, migration, and spec-coverage checks
-  passed; exact-SHA CI/staging evidence is absent, the existing staging API
-  fails the current health contract, and the Playwright warning finding is
-  resolved with a clean 870-test validation run. See
+  passed. Exact run `33354478865` then exposed a clean-runner composite
+  declaration-output defect; its red-to-green fix and exact artifact chain pass
+  locally, but the fix still needs green exact-SHA CI. The existing staging API
+  fails the current health contract, while the Playwright warning finding is
+  resolved with a clean 871-test validation run. See
   `.memory/wiki/specs/audits/phase-1-validation.md`.
-- **NEXT:** commit and CI-validate the exact Phase 1 revision, promote that
+- **NEXT:** commit and CI-validate the clean-build fix, promote that exact
   immutable artifact to staging, clear the staging finding, then rerun
   `/validate-phase`. Do not advance to Phase 2 planning or implementation.

@@ -5,9 +5,11 @@
 **Plan**: [Phase 1 specification](../../../wiki/specs/phases/phase-1.md)
 **Independent phase validation**: FAIL on 2026-08-30 — local functional,
 coverage, static, build, migration, and spec-coverage checks passed, but the
-implementation has no exact-SHA CI/staging evidence, the existing
-staging API fails the current health contract, and the previously blocking
-Playwright warning conflict is now resolved and regression-covered. See
+first implementation CI run (`33354478865`) failed its clean immutable build.
+The composite declaration-output defect is now regression-covered and passes
+the exact artifact chain locally, but the fix still needs green exact-SHA CI;
+the existing staging API also fails the current health contract. The previously
+blocking Playwright warning conflict remains resolved. See
 [`phase-1-validation.md`](../../../wiki/specs/audits/phase-1-validation.md).
 
 **Setup checkpoint**: workspace scaffold, CI/CD, Cloudflare hosting, managed Supabase staging provisioning, immutable artifact promotion, public health verification, live structured-log verification, and exact local surface-map skill resolution are complete at commit `aa1039b`. The billing audit confirms Supabase organization `wejamm.in` is on Free with a `$0.00` invoice. The owner explicitly reconfirmed Cloudflare Workers Paid as the sole paid-service exception under DEC-103's soft `$10/month` ceiling; it has a `$5/month` minimum plus usage overage, with an exact `$10` notification rather than a hard ceiling. DEC-104 removes third-party monitoring and requires every other service to remain genuinely free unless a new exact-price approval is recorded. Infrastructure verification passes and the setup-to-implementation handoff is unblocked. See `verification/2026-08-30-workspace-infrastructure.md`.

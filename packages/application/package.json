@@ -8,7 +8,7 @@
     "./infrastructure/*": "./src/infrastructure/*.ts"
   },
   "scripts": {
-    "build": "tsc --noEmit",
+    "build": "tsc --build",
     "type-check": "tsc --noEmit"
   },
   "dependencies": {

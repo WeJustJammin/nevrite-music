@@ -9,7 +9,7 @@
     "./types": "./src/types.ts"
   },
   "scripts": {
-    "build": "tsc --noEmit",
+    "build": "tsc --build",
     "type-check": "tsc --noEmit"
   }
 }

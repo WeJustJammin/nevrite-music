@@ -9,7 +9,7 @@
     "./styles.css": "./src/styles.css"
   },
   "scripts": {
-    "build": "tsc --noEmit",
+    "build": "tsc --build",
     "type-check": "tsc --noEmit"
   },
   "dependencies": {

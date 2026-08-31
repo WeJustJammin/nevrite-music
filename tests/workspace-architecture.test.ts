@@ -279,6 +279,41 @@ describe('workspace architecture contracts', () => {
     expect(rootReferences).toHaveLength(packageConfigPaths.length);
   });
 
+  it('emits declaration outputs when composite library packages build', () => {
+    const libraryRoot = join(repositoryRoot, 'packages');
+    const libraryManifests = workspacePackages.filter(
+      (path) => dirname(dirname(path)) === libraryRoot,
+    );
+
+    expect(libraryManifests.length).toBeGreaterThan(0);
+
+    for (const manifestPath of libraryManifests) {
+      const configPath = join(dirname(manifestPath), 'tsconfig.json');
+      expect(
+        existsSync(configPath),
+        `${relative(repositoryRoot, manifestPath)} must have a TypeScript project config`,
+      ).toBe(true);
+
+      const manifest = readJson(manifestPath);
+      const config = readJson(configPath);
+      const compilerOptions = config.compilerOptions;
+      const scripts = manifest.scripts;
+
+      expect(compilerOptions).toMatchObject({
+        composite: true,
+        declaration: true,
+        emitDeclarationOnly: true,
+        noEmit: false,
+        outDir: 'dist/types',
+      });
+
+      expect(
+        scripts,
+        `${relative(repositoryRoot, manifestPath)} must emit its composite outputs during build`,
+      ).toMatchObject({ build: 'tsc --build' });
+    }
+  });
+
   it('wires workspace package dependencies to their TypeScript project references', () => {
     const packages = loadWorkspacePackages();
 
