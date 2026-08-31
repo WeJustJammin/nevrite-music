@@ -343,7 +343,7 @@ Grant invariant applies row-for-row: client API roles receive no direct table `G
 - T1/T2 invitations use one-time recipient binding, short expiry, replay detection and no privilege from forwarded bearer material. T2 acceptance requires verified identity and exact current NDA terms version.
 - Signed grants carry asset ID hash, identity hash, grant version, revocation epoch and expiry. Edge and origin check epoch on every new range request; cache keys include grant version.
 - Role, block, NDA, asset or source policy changes purge active grants and signed-URL cache. Already downloaded bytes cannot be recalled and are never represented as protected.
-- Source details are encrypted at rest and absent from events, logs and downstream projections unless the authorized project role requests them. Sentry gets operation ID and safe code only.
+- Source details are encrypted at rest and absent from events, logs and downstream projections unless the authorized project role requests them. provider-native diagnostics gets operation ID and safe code only.
 - Abuse buckets: 10 failed access decisions per identity/asset/10 minutes, 10 invitations per party/10 minutes, 5 MB declaration details per minute and 20 roster conflict responses per minute.
 
 ## Data Flow
@@ -433,7 +433,7 @@ Every failure serializes exactly as `ApiError { code, message, requestId, detail
 | `PRJ-07` | access decisions, grant issuance, revocation hits, epoch mismatch | asset ID, identity hash, sensitivity, mode, decision code | `prj.vault.grant`; alert repeated denials and token replay |
 | `PRJ-19` | declaration state/kind, validation failures, supersession count | target ID, actor hash, state, detail hash, result | `prj.source_declaration.write`; alert attempted detection-like bulk writes |
 
-No log contains invitation address, asset name, body, source details, NDA text, signed URL, storage locator or hidden personnel. Sentry receives request ID, operation ID and error code only.
+No log contains invitation address, asset name, body, source details, NDA text, signed URL, storage locator or hidden personnel. provider-native diagnostic sinks receive request ID, operation ID and error code only.
 
 ## Testing Strategy
 

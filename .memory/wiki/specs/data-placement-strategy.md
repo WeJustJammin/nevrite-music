@@ -14,7 +14,7 @@ Status: confirmed architecture input for `/write-architecture-spec` and `/write-
 | Credential/session authority | own credentials, provider handshakes, verified login identities, and sessions | Supabase Auth |
 | Object storage | own immutable governed bytes and renditions under database-owned metadata | Supabase Storage and Smart CDN |
 | Realtime transport | send minimal authorized invalidation/version hints | Supabase Realtime |
-| External processors | provide approved payment, identity, delivery, email, registry, and diagnostics functions | typed provider adapters, Sentry |
+| External processors | provide approved payment, identity, delivery, email, registry, and diagnostics functions | typed provider adapters, provider-native diagnostics |
 
 ## Complete Data Placement Map
 
@@ -35,7 +35,7 @@ Status: confirmed architecture input for `/write-architecture-spec` and `/write-
 | Public projections | PostgreSQL projection; Cloudflare cache copy | publication-approved fields and immutable version keys | at rest/TLS; public after approval | safe caching without exposing draft/private rows |
 | Search and sitemap projection | PostgreSQL at launch | allowlisted published/searchable text, IDs, versions, visibility | at rest and TLS | avoids a second store until measured need; outbox-ready for future extraction |
 | Notifications and subscriptions | PostgreSQL; delivery provider transient | verified channel, consent, preference, template/version, send state, provider reference | at rest and TLS | current consent and delivery history remain locally governed |
-| Operational telemetry | Sentry/provider logs, noncanonical | scrubbed request/correlation IDs, route, release, timing, error class, safe versions | provider-managed and TLS | diagnostics can expire without altering business truth |
+| Operational telemetry | provider-native logs, noncanonical | scrubbed request/correlation IDs, route, release, timing, error class, safe versions | provider-managed and TLS | diagnostics can expire without altering business truth |
 | Browser state | memory/Cache API/IndexedDB by allowlist | UI state, public cache, non-secret preferences, encrypted/bounded drafts and intent envelopes | platform transport; local encryption only where threat model supports it | resilience without granting local state authority |
 | Secrets and keys | deployment/provider secret stores | API keys, webhook secrets, signing/encryption material | provider secret encryption and TLS when delivered to runtime | never committed, logged, sent to browser, or stored as settings content |
 
@@ -52,7 +52,7 @@ Status: confirmed architecture input for `/write-architecture-spec` and `/write-
 | Supabase Storage | immutable object bytes and controlled renditions | authoritative metadata without a PostgreSQL record, credentials, executable plugins/themes/scripts |
 | Realtime | short-lived authorized ID/version hints | durable events, full confidential records, authority grants, final mutation results |
 | External processors | minimum contract-specific payload and provider reference | unrelated profiles, unrestricted domain records, secrets for other providers, canonical audit |
-| Sentry/logs | scrubbed operational metadata and sampled stack traces | request bodies, auth headers, cookies, direct PII, messages/media, legal evidence, payment details, secrets |
+| structured logs | scrubbed operational metadata and sampled stack traces | request bodies, auth headers, cookies, direct PII, messages/media, legal evidence, payment details, secrets |
 
 ## PII Boundaries
 
@@ -87,8 +87,8 @@ These are stable semantic identifiers, not required physical column names. A dom
 
 - Private PII is stored only in protected PostgreSQL schemas and private Storage classes. Public profile/publication projections contain only fields explicitly approved by the subject and publication policy.
 - Workers may process the minimum PII needed for one request but do not persist it outside canonical stores. Queue payloads use IDs instead of copied fields; consumers re-read under current policy.
-- Analytics, model/AI inputs, Sentry, logs, search, and marketing/export pipelines deny PII by default. Each admitted field requires purpose, lawful basis/consent, minimization, retention, deletion propagation, and low-count controls.
-- `sendDefaultPii` and session replay are disabled for Sentry. Auth headers, cookies, request bodies, query secrets, media URLs/tokens, and direct identifiers are scrubbed before telemetry export.
+- Analytics, model/AI inputs, provider-native diagnostics, logs, search, and marketing/export pipelines deny PII by default. Each admitted field requires purpose, lawful basis/consent, minimization, retention, deletion propagation, and low-count controls.
+- Third-party PII collection and session replay are absent. Auth headers, cookies, request bodies, query secrets, media URLs/tokens, and direct identifiers are rejected before structured events reach provider-native logs.
 - PII reads by administrators, support, moderation, legal, or safety roles require a named capability, reason where appropriate, current authorization, and audit record. Bulk export is separate from ordinary read permission.
 - Sparse analytics clusters and low-count exports remain unavailable until counsel approves a numeric privacy floor. CRM notes cannot contain special-category data or unverified allegations pending counsel approval.
 
@@ -101,7 +101,7 @@ Numeric legal retention is not inferred by engineering. Counsel-gated categories
 | Incomplete uploads | 24 hours unless an active upload/job references them | expiry or cancelled intent | scheduled storage reconciler | zero eligible object paths plus reconciliation record |
 | Idempotency outcomes | 30 days for ordinary commands; longer only in a domain contract | TTL after terminal result | database scheduled job | expired-key query plus deletion metrics |
 | Queue payloads/attempt detail | provider retry window; terminal attempt detail 30 days | success, dead-letter resolution, or TTL | queue consumer/operations job | no live message; canonical job retains safe terminal summary |
-| Operational logs and Sentry events | 30 days or shorter provider-plan limit | TTL, account deletion propagation where applicable, or incident scrub | telemetry owner/provider | retention configuration and sampled deletion check |
+| Operational logs and structured diagnostic events | 30 days or shorter provider-plan limit | TTL, account deletion propagation where applicable, or incident scrub | telemetry owner/provider | retention configuration and sampled deletion check |
 | Browser cache/offline drafts | route policy; local intents max 30 days unless user keeps an active draft | logout, completion, expiry, policy/version change, user clear | client storage controller | cache version and local purge test |
 | Account/profile data | account lifetime; purge timing defined by approved erasure workflow, not assumed here | verified erasure request or account closure | identity/privacy workflow | per-store deletion manifest and unresolved-exception report |
 | Public/CMS content | until unpublish/archive/erase under content policy | owner/editor action, policy action, takedown, erasure | CMS publication workflow | canonical state, cache/search/sitemap tombstone, URL checks |

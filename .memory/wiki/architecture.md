@@ -13,6 +13,7 @@
 - [[specs/architecture/prd-working/bootstrap-p2-social-report|Bootstrap Report — P2 Additive Social Identity Policy]]
 - [[specs/architecture/prd-working/bootstrap-primary-language-report|Bootstrap Report — Primary Language]]
 - [[specs/architecture/prd-working/bootstrap-security-report|Security Bootstrap Verification]]
+- [[specs/architecture/prd-working/bootstrap-surface-map-reconciliation-2026-08-30|Surface Stack Map Reconciliation]]
 - [[specs/architecture/prd-working/design-system-synthesis|Design System Synthesis]]
 - [[specs/architecture/prd-working/ideation-relevance-index|Ideation Relevance Index]]
 - [[specs/architecture/prd-working/persistence-map-interview|Persistence Map Interview]]

@@ -383,7 +383,7 @@ RateLimit-* and Retry-After headers.
 | BE23C-GPR12 | Trace span names operation ID, requestId, correlationId, gear aggregate hash, component operation, serialBearing boolean and dependency class. Metrics count accepted, replayed, identity_conflict, valuation_review_queued, denied, conflict, latency and outbox lag. | Audit records actor/acting party, target UUID hash, component-key hash, operation, authorization outcome, identity continuity outcome and reason code. Never log component label, manufacturer/model/serial, provenance statement, evidence content or owner identity. |
 
 Request IDs are returned as X-Request-Id and are validated as UUIDs. Structured
-logs carry stable operation IDs and safe enumerations only. Sentry events
+logs carry stable operation IDs and safe enumerations only. structured diagnostic events
 receive the correlation ID, operation ID and sanitized code; breadcrumbs and
 request bodies are disabled for evidence-bearing fields.
 

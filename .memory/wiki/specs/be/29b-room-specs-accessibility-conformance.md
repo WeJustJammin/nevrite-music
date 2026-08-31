@@ -309,7 +309,7 @@ Every response uses BE00 `ApiError { code, message, requestId, details }`; detai
 | `V29_09_CONTEST_FIELD` | contest/room/field/case IDs, reason/source/state/version; suggested value/evidence excluded | contests/auto-apply/escalation age; p95 <1.2 s; page forbidden-class auto-apply |
 | `V29_21_EVALUATE_CONFORMANCE` | run/snapshot IDs, schema/config versions, summary counts, latency/replay; no field values | run p95 <2 s, unknown/schema ratios; alert bookingBlocked truthy or mutation attempt |
 
-Audit stores actor/context/action/target, before/after hashes, source/policy/snapshot versions, idempotency/request hashes and outcome. Sentry scrubs request bodies, typed values, notes, evidence/media, accessibility private segments, assets and rider fields.
+Audit stores actor/context/action/target, before/after hashes, source/policy/snapshot versions, idempotency/request hashes and outcome. the structured diagnostic boundary scrubs request bodies, typed values, notes, evidence/media, accessibility private segments, assets and rider fields.
 
 ## Release and Testing
 

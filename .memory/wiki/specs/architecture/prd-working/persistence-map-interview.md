@@ -6,6 +6,7 @@
 
 - Source coverage: all 25 top-level domain indexes, the global cross-cut registry, 230 Must features, and the 42-feature CMS/settings deep dive.
 - Feature-to-Query Table approved by the owner on 2026-08-02.
+- **DEC-104 operating constraint:** Supabase Free provides no uptime SLA and no PITR; recovery evidence is synthetic/local only until production-verified, protected writes remain closed without it, and Cloudflare Workers Paid is the sole paid-service exception under a soft `$10/month` ceiling. No paid upgrade, overage, or add-on is authorized.
 - Next: registry-first skill search, followed by store-selection options only for the query categories in this table.
 
 ## Feature-to-Query Table
@@ -72,14 +73,14 @@ The query categories were searched with the Skills CLI. No skill was installed.
 | Queues | zllovesuki/cloudflare-agent-skills@queues | Consider only after an async transport is approved. |
 | Durable Objects | cloudflare/skills@durable-objects | Consider only if room coordination is approved. |
 
-## Store-Selection Package — Awaiting Owner Decision
+## Store-Selection Package — Confirmed (DEC-104 reconciled)
 
-### P1 — Recommended Coherent v1 Package
+### P1 — Confirmed Coherent v1 Package
 
 | Query category | Proposed selection | Why | Boundary / trigger to revisit |
 |---|---|---|---|
-| Transactional system of record | Supabase Pro PostgreSQL | Already approved; relational transactions, row-level security, and canonical data fit the identity, rights, finance, booking, ticketing, and case workflows. | Remains canonical for all durable business records. |
-| Restricted and ordinary objects | Supabase Storage | Keeps object authorization in the same RLS policy model as PostgreSQL. Pro includes 100 GB of storage before overage; object metadata remains canonical in PostgreSQL. | Add R2 only after a measured media-volume, egress, or delivery-cost trigger is approved. |
+| Transactional system of record | Supabase Free PostgreSQL | DEC-104 preserves the selected provider; relational transactions, row-level security, and canonical data fit the identity, rights, finance, booking, ticketing, and case workflows within Free-tier limits. | Remains canonical for all durable business records; protected writes remain closed without production-verified recovery evidence. |
+| Restricted and ordinary objects | Supabase Storage | Keeps object authorization in the same RLS policy model as PostgreSQL. Free includes 1 GB of file storage; object metadata remains canonical in PostgreSQL and admissions stay within the included allowance. | Add R2 only after a measured media-volume, egress, or delivery-cost trigger and a new owner decision; no paid overage/add-on is authorized. |
 | Realtime user state and fanout | Supabase Realtime | Covers broadcast, presence, and database-change delivery alongside the approved Postgres platform; it holds no canonical business state. | Introduce Durable Objects only for a proven, high-concurrency room-coordination need. Do not use it for canonical data. |
 | Search and discovery | PostgreSQL full-text search plus indexed normalized/filter fields | Avoids a second search system while the initial catalog, people, credit, opportunity, venue, and marketplace search needs are still maturing. | Introduce a dedicated search projection only after an explicit relevance, latency, or scale threshold is approved. |
 | Async work | Cloudflare Queues with a PostgreSQL transactional outbox and dead-letter handling | A durable database outbox preserves critical intent; the queue handles asynchronous delivery, retries, notifications, exports, and provider webhooks. | Queue messages are transport, not record of truth. A scheduled outbox sweeper recovers missed/expired delivery. |
@@ -97,11 +98,11 @@ The query categories were searched with the Skills CLI. No skill was installed.
 ### Provider Evidence
 
 - [Supabase Storage access control](https://supabase.com/docs/guides/storage/security/access-control): Storage uses PostgreSQL RLS policies and blocks uploads by default without a policy.
-- [Supabase pricing](https://supabase.com/pricing): Pro includes 100 GB storage, 500 peak realtime connections, and 5 million realtime messages before overages.
+- [Supabase pricing](https://supabase.com/pricing): Free includes 500 MB database and 1 GB file storage, may pause after inactivity, and has no uptime SLA and no PITR; no paid overage/add-on is authorized.
 - [Supabase Realtime](https://supabase.com/docs/guides/realtime): supports broadcast, presence, and PostgreSQL change delivery.
 - [Cloudflare Queues pricing](https://developers.cloudflare.com/queues/platform/pricing/): the Free plan includes 10,000 operations/day with 24-hour retention; queue records therefore cannot be the canonical source of truth.
 - [Cloudflare Durable Objects pricing](https://developers.cloudflare.com/durable-objects/platform/pricing/): Free-tier operations fail when a free limit is exceeded.
 
 ### Required Confirmation
 
-P1 approved by the owner on 2026-08-02. The confirmed-store boundaries and cross-store consistency protocol are recorded in architecture-draft.md under Persistence Map.
+P1 store boundaries and the cross-store consistency protocol were approved on 2026-08-02 and reconciled to DEC-104 on 2026-08-30. Supabase Free remains canonical; production protected writes stay closed until recovery evidence is verified.

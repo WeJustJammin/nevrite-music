@@ -11,6 +11,7 @@
 - **BE Spec(s) to produce**: `00-infrastructure.md`
 - **Split boundary**: none — runtime, request, persistence, async-effect, provider, observability, release, and recovery rules form one mandatory platform chain
 - **Classification approval**: accepted by the user on 2026-08-28
+- **DEC-104 free-tier binding**: Supabase Free remains the PostgreSQL/Auth/Storage/Realtime provider. It provides no PITR and no uptime SLA; no paid upgrade, overage, or add-on is authorized. Recovery evidence is synthetic/local only until production-verified recovery evidence is separately demonstrated, and protected money, rights, and publication writes remain closed without it. Cloudflare Workers Paid is the sole paid-service exception under a soft `$10/month` ceiling.
 
 ## IA Feature Coverage
 
@@ -18,12 +19,12 @@ The six bullets in IA Shard 00 `§ Features` (lines 32–39) are each reconciled
 
 | IA feature (exact source title) | Backend coverage | Evidence / disposition |
 |---|---|---|
-| **Runtime and immutable deployment** | Promotion, migration, and recovery gates | `## Release, Migration, and Recovery` defines immutable preview → staging → production promotion, rollback fencing, PITR, and restore verification; complete, no endpoint required. |
+| **Runtime and immutable deployment** | Promotion, migration, and recovery gates | `## Release, Migration, and Recovery` defines immutable preview → staging → production promotion, rollback fencing, recovery verification, and the protected-write fence; complete, no endpoint required. |
 | **Identity and security boundaries** | Request middleware and authorization | `## Middleware & Policies` defines Supabase verification, server-derived acting context, capability/mandate checks, step-up, CSRF, and disclosure-safe denials; complete. |
 | **API and error contracts** | INF-API-01–04 and inherited route archetypes | `## API Endpoints` and `## Request/Response Contracts` define `/api/v1`, strict Zod 4, OpenAPI-compatible schemas, cursor/idempotency/CAS/rate metadata, and the global error contract; complete. |
 | **Data, storage and migration foundation** | Platform tables, Storage intents, RLS, and migration fence | `## Database Schema`, `### Upload Lifecycle`, and `### Recovery Fence` define PostgreSQL authority, governed bytes, Realtime refetch hints, RLS/grants, and forward-only migration checks; complete. |
 | **Async and provider effects** | INF-API-02–04, jobs, queues, webhooks, and outbox consumers | `### Protected Command Transaction`, `### Webhook and Provider Effect`, and `## Event and Consumer Contracts` define atomic intent/outbox, at-least-once jobs, provider reconciliation, and recovery; complete. |
-| **Observability and release assurance** | Request telemetry, SLOs, CI/release gates, and runbooks | `## Observability` plus `## Release, Migration, and Recovery` define structured traces/Sentry, SLO registration, protected releases, runbooks, PITR, and restore drills; complete. |
+| **Observability and release assurance** | Request telemetry, SLOs, CI/release gates, and runbooks | `## Observability` plus `## Release, Migration, and Recovery` define structured traces/provider-native diagnostics, SLO registration, protected releases, runbooks, synthetic/local recovery evidence, and restore drills; complete. |
 
 ## Referenced Material Inventory
 
@@ -516,7 +517,7 @@ The Shard 00 IA enum `queued|running|succeeded|failed|cancelled` is authoritativ
 | Storage | 503/504 before accepted completion; after job acceptance, terminal/retryable safe Job error | Object remains non-ready; quarantine/remove mismatch; no signed read |
 | Queue/outbox | HTTP success remains committed; async status shows queued/running/failed | Durable outbox/job retains intent; bounded retry/DLQ; never roll back committed business state |
 | Provider adapter | 502 invalid upstream response; 503 circuit/unavailable; 504 deadline | Pre-send safe retry only; ambiguous post-send remains pending and reconciles; never blind resend |
-| Sentry/log sink | No user-visible failure when domain audit is intact | Drop/redact forbidden field; emit independent blind-spot signal where available; business truth remains canonical |
+| provider-native diagnostics/log sink | No user-visible failure when domain audit is intact | Drop/redact forbidden field; emit independent blind-spot signal where available; business truth remains canonical |
 | Audit write | Owning command transaction fails and returns typed 500/503 | Audit-required command cannot commit canonical mutation without its append-only audit row |
 | Unknown exception | 500 `INTERNAL_ERROR` and `{}` details | One scrubbed owning-boundary error event; no stack/SQL/provider/policy disclosure |
 
@@ -535,7 +536,7 @@ The Shard 00 IA enum `queued|running|succeeded|failed|cancelled` is authoritativ
 | Realtime | No canonical impact | Hint lost/duplicated/out of order | Authorized refetch; never compensate from hint |
 | Cache/public projection | Canonical state still controls | Stale projection after change | Versioned outbox convergence; last-known-good unless security/rights/privacy/takedown requires fail-closed purge |
 | Migration/deploy | Gate stops before promotion | Expansion applied but artifact promotion fails | Old-compatible code remains; forward fix/compensating migration; artifact/config rollback never erases business effects |
-| Restore/PITR | Writes fenced before unsafe restore | Restored DB may precede provider/Queue effects | New restore epoch fences consumers/provider sends; reconcile outbox/jobs/providers before reopening protected writes |
+| Recovery evidence | Writes fenced before unsafe restore | Restored DB may precede provider/Queue effects | Synthetic/local evidence is insufficient for protected production writes; production verification and a new restore epoch fence consumers/provider sends before reopening writes |
 
 ## Observability
 
@@ -543,7 +544,7 @@ The Shard 00 IA enum `queued|running|succeeded|failed|cancelled` is authoritativ
 
 Forbidden fields are auth/cookie headers, tokens/secrets, raw request/response bodies, emails/phones/addresses, unrestricted IP/user agent, messages/search text, object/media URLs or content, payment/KYC data, legal/safety evidence, private content, and raw provider payload. Structured encoding defeats newline/log-field injection. Redaction tests fail CI when a forbidden sentinel survives.
 
-Sentry captures 100% of unexpected errors and scrubbed high-risk command/job failures; traces retain 100% high-risk, 10% ordinary authenticated success, and 1% public/cache success. `sendDefaultPii: false`; Session Replay disabled; release/environment immutable; private source maps uploaded from protected CI. Sentry is diagnostic only and never substitutes for PostgreSQL audit. A telemetry export failure cannot roll back committed business truth, but an audit append failure must roll back the command.
+Structured diagnostics record 100% of unexpected errors and scrubbed high-risk command/job failures; native traces retain 100% high-risk, 10% ordinary authenticated success, and 1% public/cache success. Third-party PII collection and session replay are absent; release/environment fields are immutable; source maps remain private build artifacts and are never uploaded to a monitoring vendor. Provider-native telemetry is diagnostic only and never substitutes for PostgreSQL audit. A telemetry sink failure cannot roll back committed business truth, but an audit append failure must roll back the command.
 
 Per endpoint/consumer, registry-generated metrics cover request/attempt count, duration, outcome/error, rate rejection, DB/RPC timing/conflict, outbox age, Queue depth/age/retry/DLQ, job state/lease, upload bytes/verification, webhook acknowledgement, provider latency/circuit/reconciliation, restore fence, and cost/quota. Critical route SLOs remain visible individually, not only in aggregates.
 
@@ -557,9 +558,9 @@ Migrations follow `expand -> backfill -> switch -> contract`, are forward-only, 
 
 ### Recovery Fence
 
-Supabase Pro seven-day PITR must be enabled and restore-tested before money, rights, or publication writes. Required measured RPO is <=2m and full restore RTO <=4h. A missing/out-of-window/expired verification sets the protected-write safety gate closed. Restore creates a new environment `restoreEpoch`; Queue consumers, outbox dispatcher, scheduled tasks, and provider adapters refuse external effects until integrity, migration version, RLS policies, RPC grants/functions, idempotency/outbox/job invariants, object metadata, and provider reconciliation checks pass for that epoch.
+Supabase Free provides no PITR and no uptime SLA. Synthetic/local recovery evidence is the only available evidence until production-verified recovery evidence is separately demonstrated. A missing or unverified production recovery record sets the protected-write safety gate closed for money, rights, and publication writes. Restore creates a new environment `restoreEpoch`; Queue consumers, outbox dispatcher, scheduled tasks, and provider adapters refuse external effects until integrity, migration version, RLS policies, RPC grants/functions, idempotency/outbox/job invariants, object metadata, and provider reconciliation checks pass for that epoch.
 
-Reopening order is database integrity -> RLS/RPC negative tests -> idempotency/outbox/job consistency -> object reconciliation -> provider/webhook reconciliation -> cache/public projection checks -> protected writes -> async/provider effects. Replay uses current authority/state/version and original event identity. Scheduled maintenance is announced >=48h with truthful scope/status; unplanned downtime always counts against 99.9%. Required environment-specific runbooks remain a setup/verification gate; absence disables the dependent production capability and does not create an implementation contract in this shard.
+Reopening order is database integrity -> RLS/RPC negative tests -> idempotency/outbox/job consistency -> object reconciliation -> provider/webhook reconciliation -> cache/public projection checks -> production recovery verification -> protected writes -> async/provider effects. Replay uses current authority/state/version and original event identity. Scheduled maintenance is announced >=48h with truthful scope/status; unplanned downtime counts against the internal 99.9% objective, and no provider uptime SLA is assumed. Required environment-specific runbooks remain a setup/verification gate; absence disables the dependent production capability and does not create an implementation contract in this shard.
 
 ## Testing Strategy
 
@@ -584,7 +585,7 @@ Reopening order is database integrity -> RLS/RPC negative tests -> idempotency/o
 - Upload tests cover target authority, quotas/concurrency, exact signed expiry, generated normalized key, traversal/control filename resistance, no-byte timeout, mid-transfer expiry, size/MIME/magic/checksum mismatch, duplicate completion, verifier replay, quarantine/orphan/24h sweep, ready-only reads, and hold-aware removal.
 - Webhook/provider tests use raw fixtures for valid/bad/unknown/rotating keys, replay boundary/clock skew, content limits, constant-time verification wrapper, duplicate identical digest, duplicate conflicting digest, fast acknowledgement, normalized-record persistence, consumer retry, ambiguous send, circuit 5/60s, poll/webhook reconcile, and manual review.
 - Performance gates use representative deterministic data: Tier 1 API p95 <750ms and DB point query p95 <50ms; Tier 2/API p95 <1,200ms and protected RPC p95 <300ms; job acceptance p95 <=500ms/p99 <=1,000ms; webhook ack p95 <=1,000ms/p99 <2,000ms; outbox p95 <=2s; Queue first attempt p95 <=60s; dead letters <0.1% daily.
-- Recovery drills prove seven-day PITR, RPO/RTO, restore epoch fencing, RLS/RPC/integrity checks, outbox/job/provider reconciliation, same-artifact rollback, and no external-effect replay before fence release.
+- Recovery drills use synthetic/local fixtures until production verification is available; the production gate then proves restore integrity, RLS/RPC checks, restore-epoch fencing, outbox/job/provider reconciliation, same-artifact rollback, and no external-effect replay before protected-write or fence release. No PITR, provider uptime SLA, or paid recovery add-on is assumed.
 
 ### Accessibility Contract Tests
 
@@ -600,7 +601,7 @@ Backend validation issues retain stable JSON Pointer paths and safe messages so 
 | 2 | Concurrency and sequencing | Protected commands reserve idempotency before mutation, use exact strong ETags and transactional CAS, commit audit/idempotency/outbox atomically, and make async consumers re-read canonical state/version under a lease. | PASS |
 | 3 | Failure cascades | Disconnects, duplicate dispatch, stale events, worker death, ambiguous provider sends, invalid uploads, failed promotion, failed restore, and telemetry loss each have a deterministic no-partial-truth outcome. | PASS |
 | 4 | Authorization | Human, anonymous, webhook, queue/schedule, deployment, internal-operator, and service-role principals use separate pipelines; every record and operation has least-privilege predicates plus wrong-user, wrong-party, wrong-resource, stale-authority, and over-disclosure tests. | PASS |
-| 5 | Observability | Safe identifiers, outcome, duration, sampling, alert thresholds, redaction, Sentry grouping, and audit boundaries are explicit for HTTP, SQL/RPC, Queue, Storage, provider, migration, and recovery paths. | PASS |
+| 5 | Observability | Safe identifiers, outcome, duration, sampling, alert thresholds, redaction, diagnostic grouping, and audit boundaries are explicit for HTTP, SQL/RPC, Queue, Storage, provider, migration, and recovery paths. | PASS |
 | 6 | Rate and abuse resistance | Body/collection limits, signature replay windows, route-specific rate classes, concurrency caps, provider circuit breaking, polling discipline, and retry ceilings are deterministic. | PASS |
 | 7 | Partial-state hygiene | Canonical state remains authoritative; every asynchronous or external effect has idempotency, reconciliation, retention, and terminal/manual-review behavior without exposing unverified bytes or raw provider payloads. | PASS |
 | 8 | Source-contradiction resolution | The IA remains limited to eight records; attempt evidence is embedded, transport leases stay on `OutboxEvent`, `aggregateVersion` is lossless on the Queue envelope, accepted webhook data is normalized before acknowledgement, and `blocked` is not added to the locked Job wire enum. | PASS |

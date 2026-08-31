@@ -507,7 +507,7 @@ types or duplicate the parent event registry.
 | CFG-05C-02 lifecycle | quality.lifecycle.changed with request ID, action, state, manifest hash, store count, residual count and outcome; hold, partial, conflict, deletion and reconciliation metrics | Trace planner and each store lease; subject identity, legal rationale, evidence and store payload are excluded |
 
 Logs use BE00 severity, environment, release, service, operation, outcome,
-latency, requestId and correlationId. Sentry receives only scrubbed exception
+latency, requestId and correlationId. provider-native diagnostic sinks receive only scrubbed exception
 metadata. Metrics distinguish requested, running, ready, healthy, stale,
 unknown, blocked, partial, failed, expired and revoked; no absent evidence
 implies success.

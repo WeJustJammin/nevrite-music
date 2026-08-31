@@ -1,7 +1,7 @@
 {
-  "builtAt": "2026-08-29T05:47:56.841Z",
-  "nodeCount": 1558,
-  "edgeCount": 9800,
+  "builtAt": "2026-08-31T02:50:30.575Z",
+  "nodeCount": 1606,
+  "edgeCount": 9942,
   "nodes": [
     {
       "id": "plan:2026-08-02-architecture-design",
@@ -109,6 +109,13 @@
       "shardId": null
     },
     {
+      "id": "architecture:architecture/prd-working/bootstrap-surface-map-reconciliation-2026-08-30",
+      "type": "architecture",
+      "label": "Surface Stack Map Reconciliation",
+      "path": ".memory/wiki/specs/architecture/prd-working/bootstrap-surface-map-reconciliation-2026-08-30.md",
+      "shardId": null
+    },
+    {
       "id": "architecture:architecture/prd-working/design-system-synthesis",
       "type": "architecture",
       "label": "Design System Synthesis",
@@ -144,31 +151,38 @@
       "shardId": null
     },
     {
-      "id": "audit:audits/2026-08-28-be-ambiguity-report",
+      "id": "audit:audits/2026-08-29-be-ambiguity-report",
       "type": "audit",
-      "label": "BE Ambiguity Audit — Fresh Run (2026-08-28)",
-      "path": ".memory/wiki/specs/audits/2026-08-28-be-ambiguity-report.md",
+      "label": "BE Ambiguity Audit — Fresh Combined Run (2026-08-29)",
+      "path": ".memory/wiki/specs/audits/2026-08-29-be-ambiguity-report.md",
       "shardId": "2026"
     },
     {
-      "id": "audit:audits/2026-08-28-ia-ambiguity-report",
+      "id": "audit:audits/2026-08-29-fe-ambiguity-report",
       "type": "audit",
-      "label": "IA Ambiguity Audit — Fresh Run (2026-08-28)",
-      "path": ".memory/wiki/specs/audits/2026-08-28-ia-ambiguity-report.md",
-      "shardId": "2026"
-    },
-    {
-      "id": "audit:audits/2026-08-28-ia-ambiguity-rerun-1",
-      "type": "audit",
-      "label": "IA Ambiguity Audit — Fresh Rerun 1 (2026-08-28)",
-      "path": ".memory/wiki/specs/audits/2026-08-28-ia-ambiguity-rerun-1.md",
+      "label": "Fresh FE Ambiguity Audit",
+      "path": ".memory/wiki/specs/audits/2026-08-29-fe-ambiguity-report.md",
       "shardId": "2026"
     },
     {
       "id": "audit:audits/audit-scope",
       "type": "audit",
-      "label": "Ambiguity Audit Scope — BE",
+      "label": "Ambiguity Audit Scope — BE + FE",
       "path": ".memory/wiki/specs/audits/audit-scope.md",
+      "shardId": null
+    },
+    {
+      "id": "audit:audits/propagation-observability-cost-2026-08-30",
+      "type": "audit",
+      "label": "Sentry Removal and Free-Only Operations Propagation Record",
+      "path": ".memory/wiki/specs/audits/propagation-observability-cost-2026-08-30.md",
+      "shardId": null
+    },
+    {
+      "id": "audit:audits/propagation-scan-2026-08-30",
+      "type": "audit",
+      "label": "Sentry Removal and Free-Only Operations Propagation Scan",
+      "path": ".memory/wiki/specs/audits/propagation-scan-2026-08-30.md",
       "shardId": null
     },
     {
@@ -1297,6 +1311,314 @@
       "label": "Evolution — Content Management & Settings-First Platform",
       "path": ".memory/wiki/specs/evolutions/2026-08-02-content-management-platform.md",
       "shardId": "2026"
+    },
+    {
+      "id": "fe-spec:fe/00-infrastructure",
+      "type": "fe-spec",
+      "label": "Cross-cutting platform foundation: Frontend Specification",
+      "path": ".memory/wiki/specs/fe/00-infrastructure.md",
+      "shardId": "00"
+    },
+    {
+      "id": "fe-spec:fe/01-identity-authority",
+      "type": "fe-spec",
+      "label": "Identity authority and party governance: Frontend Specification",
+      "path": ".memory/wiki/specs/fe/01-identity-authority.md",
+      "shardId": "01"
+    },
+    {
+      "id": "fe-spec:fe/02-profiles-verification",
+      "type": "fe-spec",
+      "label": "Profiles, claiming and qualifications: Frontend Specification",
+      "path": ".memory/wiki/specs/fe/02-profiles-verification.md",
+      "shardId": "02"
+    },
+    {
+      "id": "fe-spec:fe/03-cms-content-modeling",
+      "type": "fe-spec",
+      "label": "CMS content modeling and authoring: Frontend Specification",
+      "path": ".memory/wiki/specs/fe/03-cms-content-modeling.md",
+      "shardId": "03"
+    },
+    {
+      "id": "fe-spec:fe/04-cms-delivery-media",
+      "type": "fe-spec",
+      "label": "CMS navigation, media and delivery: Frontend Specification",
+      "path": ".memory/wiki/specs/fe/04-cms-delivery-media.md",
+      "shardId": "04"
+    },
+    {
+      "id": "fe-spec:fe/05-platform-configuration-admin",
+      "type": "fe-spec",
+      "label": "Platform configuration, admin and quality: Frontend Specification",
+      "path": ".memory/wiki/specs/fe/05-platform-configuration-admin.md",
+      "shardId": "05"
+    },
+    {
+      "id": "fe-spec:fe/06-trust-safety",
+      "type": "fe-spec",
+      "label": "Trust, safety, disputes and evidence: Frontend Specification",
+      "path": ".memory/wiki/specs/fe/06-trust-safety.md",
+      "shardId": "06"
+    },
+    {
+      "id": "fe-spec:fe/07-credits-core",
+      "type": "fe-spec",
+      "label": "Credit graph, capture and confidence: Frontend Specification",
+      "path": ".memory/wiki/specs/fe/07-credits-core.md",
+      "shardId": "07"
+    },
+    {
+      "id": "fe-spec:fe/08-credit-reporting-disclosure",
+      "type": "fe-spec",
+      "label": "Credit reporting, exchange and disclosure: Frontend Specification",
+      "path": ".memory/wiki/specs/fe/08-credit-reporting-disclosure.md",
+      "shardId": "08"
+    },
+    {
+      "id": "fe-spec:fe/09-projects-collaboration",
+      "type": "fe-spec",
+      "label": "Music projects and collaboration: Frontend Specification",
+      "path": ".memory/wiki/specs/fe/09-projects-collaboration.md",
+      "shardId": "09"
+    },
+    {
+      "id": "fe-spec:fe/10-rights-ownership",
+      "type": "fe-spec",
+      "label": "Rights and ownership: Frontend Specification",
+      "path": ".memory/wiki/specs/fe/10-rights-ownership.md",
+      "shardId": "10"
+    },
+    {
+      "id": "fe-spec:fe/11-community-graph",
+      "type": "fe-spec",
+      "label": "Social graph and collaborator network: Frontend Specification",
+      "path": ".memory/wiki/specs/fe/11-community-graph.md",
+      "shardId": "11"
+    },
+    {
+      "id": "fe-spec:fe/12-community-spaces-events",
+      "type": "fe-spec",
+      "label": "Communities, participatory spaces and events: Frontend Specification",
+      "path": ".memory/wiki/specs/fe/12-community-spaces-events.md",
+      "shardId": "12"
+    },
+    {
+      "id": "fe-spec:fe/13-opportunities-casting",
+      "type": "fe-spec",
+      "label": "Opportunities and casting lifecycle: Frontend Specification",
+      "path": ".memory/wiki/specs/fe/13-opportunities-casting.md",
+      "shardId": "13"
+    },
+    {
+      "id": "fe-spec:fe/14-services-marketplace",
+      "type": "fe-spec",
+      "label": "Services marketplace lifecycle: Frontend Specification",
+      "path": ".memory/wiki/specs/fe/14-services-marketplace.md",
+      "shardId": "14"
+    },
+    {
+      "id": "fe-spec:fe/15-education-delivery",
+      "type": "fe-spec",
+      "label": "Lessons, practice and mentorship delivery: Frontend Specification",
+      "path": ".memory/wiki/specs/fe/15-education-delivery.md",
+      "shardId": "15"
+    },
+    {
+      "id": "fe-spec:fe/16-education-credentials-institutions",
+      "type": "fe-spec",
+      "label": "Courses, credentials, institutions and special practice: Frontend Specification",
+      "path": ".memory/wiki/specs/fe/16-education-credentials-institutions.md",
+      "shardId": "16"
+    },
+    {
+      "id": "fe-spec:fe/17-realtime-sessions",
+      "type": "fe-spec",
+      "label": "Real-time jamming and remote sessions: Frontend Specification",
+      "path": ".memory/wiki/specs/fe/17-realtime-sessions.md",
+      "shardId": "17"
+    },
+    {
+      "id": "fe-spec:fe/18-royalty-accounting",
+      "type": "fe-spec",
+      "label": "Royalty registration, ingestion, calculation and payout: Frontend Specification",
+      "path": ".memory/wiki/specs/fe/18-royalty-accounting.md",
+      "shardId": "18"
+    },
+    {
+      "id": "fe-spec:fe/19-royalty-reporting-forecasting",
+      "type": "fe-spec",
+      "label": "Performance reporting, money-in-flight and forecasting: Frontend Specification",
+      "path": ".memory/wiki/specs/fe/19-royalty-reporting-forecasting.md",
+      "shardId": "19"
+    },
+    {
+      "id": "fe-spec:fe/20-licensing-core",
+      "type": "fe-spec",
+      "label": "Licensing core and instrument lifecycle: Frontend Specification",
+      "path": ".memory/wiki/specs/fe/20-licensing-core.md",
+      "shardId": "20"
+    },
+    {
+      "id": "fe-spec:fe/21-specialized-licensing",
+      "type": "fe-spec",
+      "label": "Specialized clearances and licensing: Frontend Specification",
+      "path": ".memory/wiki/specs/fe/21-specialized-licensing.md",
+      "shardId": "21"
+    },
+    {
+      "id": "fe-spec:fe/22-release-distribution",
+      "type": "fe-spec",
+      "label": "Release and distribution lifecycle: Frontend Specification",
+      "path": ".memory/wiki/specs/fe/22-release-distribution.md",
+      "shardId": "22"
+    },
+    {
+      "id": "fe-spec:fe/23-gear-provenance-registry",
+      "type": "fe-spec",
+      "label": "Gear identity, provenance and recovery: Frontend Specification",
+      "path": ".memory/wiki/specs/fe/23-gear-provenance-registry.md",
+      "shardId": "23"
+    },
+    {
+      "id": "fe-spec:fe/24-gear-holdings-operations",
+      "type": "fe-spec",
+      "label": "Gear collections, rigs, custody and manifests: Frontend Specification",
+      "path": ".memory/wiki/specs/fe/24-gear-holdings-operations.md",
+      "shardId": "24"
+    },
+    {
+      "id": "fe-spec:fe/25-gear-market-catalog",
+      "type": "fe-spec",
+      "label": "Gear catalog, listings and market data: Frontend Specification",
+      "path": ".memory/wiki/specs/fe/25-gear-market-catalog.md",
+      "shardId": "25"
+    },
+    {
+      "id": "fe-spec:fe/26-gear-commerce-fulfilment",
+      "type": "fe-spec",
+      "label": "Gear transactions, fulfilment and possession models: Frontend Specification",
+      "path": ".memory/wiki/specs/fe/26-gear-commerce-fulfilment.md",
+      "shardId": "26"
+    },
+    {
+      "id": "fe-spec:fe/27-digital-catalog-delivery",
+      "type": "fe-spec",
+      "label": "Digital catalog, entitlement, delivery and vendor QA: Frontend Specification",
+      "path": ".memory/wiki/specs/fe/27-digital-catalog-delivery.md",
+      "shardId": "27"
+    },
+    {
+      "id": "fe-spec:fe/28-digital-licensing-commerce",
+      "type": "fe-spec",
+      "label": "Digital licensing, commerce, revocation and revenue: Frontend Specification",
+      "path": ".memory/wiki/specs/fe/28-digital-licensing-commerce.md",
+      "shardId": "28"
+    },
+    {
+      "id": "fe-spec:fe/29-venues-spaces",
+      "type": "fe-spec",
+      "label": "Venues, studios and spaces: Frontend Specification",
+      "path": ".memory/wiki/specs/fe/29-venues-spaces.md",
+      "shardId": "29"
+    },
+    {
+      "id": "fe-spec:fe/30-booking-contracts",
+      "type": "fe-spec",
+      "label": "Booking, negotiation and contracts: Frontend Specification",
+      "path": ".memory/wiki/specs/fe/30-booking-contracts.md",
+      "shardId": "30"
+    },
+    {
+      "id": "fe-spec:fe/31-live-settlement-intelligence",
+      "type": "fe-spec",
+      "label": "Agency, settlement and live-market intelligence: Frontend Specification",
+      "path": ".memory/wiki/specs/fe/31-live-settlement-intelligence.md",
+      "shardId": "31"
+    },
+    {
+      "id": "fe-spec:fe/32-show-production-planning",
+      "type": "fe-spec",
+      "label": "Event production planning and advancing: Frontend Specification",
+      "path": ".memory/wiki/specs/fe/32-show-production-planning.md",
+      "shardId": "32"
+    },
+    {
+      "id": "fe-spec:fe/33-show-day-operations",
+      "type": "fe-spec",
+      "label": "Show-day execution and recovery: Frontend Specification",
+      "path": ".memory/wiki/specs/fe/33-show-day-operations.md",
+      "shardId": "33"
+    },
+    {
+      "id": "fe-spec:fe/34-touring-operations",
+      "type": "fe-spec",
+      "label": "Tour routing, logistics, finance and reporting: Frontend Specification",
+      "path": ".memory/wiki/specs/fe/34-touring-operations.md",
+      "shardId": "34"
+    },
+    {
+      "id": "fe-spec:fe/35-ticket-products-sales",
+      "type": "fe-spec",
+      "label": "Ticket products, sales, access packages and delivery: Frontend Specification",
+      "path": ".memory/wiki/specs/fe/35-ticket-products-sales.md",
+      "shardId": "35"
+    },
+    {
+      "id": "fe-spec:fe/36-box-office-risk",
+      "type": "fe-spec",
+      "label": "Door access, box office, reconciliation and ticketing risk: Frontend Specification",
+      "path": ".memory/wiki/specs/fe/36-box-office-risk.md",
+      "shardId": "36"
+    },
+    {
+      "id": "fe-spec:fe/37-fanbase-direct-to-fan",
+      "type": "fe-spec",
+      "label": "Fanbase and direct-to-fan: Frontend Specification",
+      "path": ".memory/wiki/specs/fe/37-fanbase-direct-to-fan.md",
+      "shardId": "37"
+    },
+    {
+      "id": "fe-spec:fe/38-promotion-marketing",
+      "type": "fe-spec",
+      "label": "Promotion and marketing: Frontend Specification",
+      "path": ".memory/wiki/specs/fe/38-promotion-marketing.md",
+      "shardId": "38"
+    },
+    {
+      "id": "fe-spec:fe/39-analytics-ingestion-reporting",
+      "type": "fe-spec",
+      "label": "Analytics ingestion, matching and reporting: Frontend Specification",
+      "path": ".memory/wiki/specs/fe/39-analytics-ingestion-reporting.md",
+      "shardId": "39"
+    },
+    {
+      "id": "fe-spec:fe/40-market-intelligence-signals",
+      "type": "fe-spec",
+      "label": "Market intelligence, fraud and scouting signals: Frontend Specification",
+      "path": ".memory/wiki/specs/fe/40-market-intelligence-signals.md",
+      "shardId": "40"
+    },
+    {
+      "id": "fe-spec:fe/41-career-finance",
+      "type": "fe-spec",
+      "label": "Career finance and business operations: Frontend Specification",
+      "path": ".memory/wiki/specs/fe/41-career-finance.md",
+      "shardId": "41"
+    },
+    {
+      "id": "fe-spec:fe/42-career-planning-risk",
+      "type": "fe-spec",
+      "label": "Career planning, insurance and sustainability: Frontend Specification",
+      "path": ".memory/wiki/specs/fe/42-career-planning-risk.md",
+      "shardId": "42"
+    },
+    {
+      "id": "fe-spec:fe/index",
+      "type": "fe-spec",
+      "label": "FE Layer: Frontend Specifications",
+      "path": ".memory/wiki/specs/fe/index.md",
+      "shardId": null
     },
     {
       "id": "plan:fe",
@@ -10224,6 +10546,20 @@
       "shardId": null
     },
     {
+      "id": "phase-plan:phases/phase-1-draft",
+      "type": "phase-plan",
+      "label": "Phase 1 — Operational foundation (Draft)",
+      "path": ".memory/wiki/specs/phases/phase-1-draft.md",
+      "shardId": null
+    },
+    {
+      "id": "phase-plan:phases/phase-1",
+      "type": "phase-plan",
+      "label": "Phase 1 — Operational foundation",
+      "path": ".memory/wiki/specs/phases/phase-1.md",
+      "shardId": null
+    },
+    {
       "id": "plan:vision",
       "type": "plan",
       "label": "WeJammin — Vision",
@@ -10913,6 +11249,12 @@
   "edges": [
     {
       "from": "plan:2026-08-02-architecture-design",
+      "to": "phase-plan:phases/phase-1",
+      "type": "phases_into",
+      "source": "phase-ref"
+    },
+    {
+      "from": "plan:2026-08-02-architecture-design",
       "to": "decision:d-15",
       "type": "constrained_by",
       "source": "decision-ref"
@@ -10926,6 +11268,12 @@
     {
       "from": "plan:2026-08-02-architecture-design",
       "to": "plan:ENGINEERING-STANDARDS",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:2026-08-02-architecture-design",
+      "to": "phase-plan:phases/phase-1",
       "type": "references",
       "source": "wikilink"
     },
@@ -10961,6 +11309,12 @@
     },
     {
       "from": "plan:architecture-draft",
+      "to": "phase-plan:phases/phase-1",
+      "type": "phases_into",
+      "source": "phase-ref"
+    },
+    {
+      "from": "plan:architecture-draft",
       "to": "decision:d-15",
       "type": "constrained_by",
       "source": "decision-ref"
@@ -10972,50 +11326,20 @@
       "source": "decision-ref"
     },
     {
-      "from": "audit:audits/2026-08-28-ia-ambiguity-report",
-      "to": "ia-spec:ia/index",
+      "from": "plan:architecture-draft",
+      "to": "phase-plan:phases/phase-1",
       "type": "references",
       "source": "wikilink"
     },
     {
-      "from": "audit:audits/2026-08-28-ia-ambiguity-report",
-      "to": "audit:audits/audit-scope",
-      "type": "references",
-      "source": "wikilink"
+      "from": "audit:audits/propagation-scan-2026-08-30",
+      "to": "phase-plan:phases/phase-1",
+      "type": "phases_into",
+      "source": "phase-ref"
     },
     {
-      "from": "audit:audits/2026-08-28-ia-ambiguity-report",
-      "to": "ideation:ideation/ideation-index",
-      "type": "references",
-      "source": "wikilink"
-    },
-    {
-      "from": "audit:audits/2026-08-28-ia-ambiguity-report",
-      "to": "ideation:ideation/moscow-ledger",
-      "type": "references",
-      "source": "wikilink"
-    },
-    {
-      "from": "audit:audits/2026-08-28-ia-ambiguity-report",
-      "to": "ia-spec:ia/06-trust-safety",
-      "type": "references",
-      "source": "wikilink"
-    },
-    {
-      "from": "audit:audits/2026-08-28-ia-ambiguity-rerun-1",
-      "to": "ia-spec:ia/index",
-      "type": "references",
-      "source": "wikilink"
-    },
-    {
-      "from": "audit:audits/2026-08-28-ia-ambiguity-rerun-1",
-      "to": "audit:audits/audit-scope",
-      "type": "references",
-      "source": "wikilink"
-    },
-    {
-      "from": "audit:audits/2026-08-28-ia-ambiguity-rerun-1",
-      "to": "audit:audits/2026-08-28-ia-ambiguity-report",
+      "from": "audit:audits/propagation-scan-2026-08-30",
+      "to": "phase-plan:phases/phase-1",
       "type": "references",
       "source": "wikilink"
     },
@@ -12350,6 +12674,858 @@
       "to": "decision:d-31",
       "type": "constrained_by",
       "source": "decision-ref"
+    },
+    {
+      "from": "fe-spec:fe/00-infrastructure",
+      "to": "be-spec:be/00-infrastructure",
+      "type": "implemented_by",
+      "source": "shard-match"
+    },
+    {
+      "from": "fe-spec:fe/00-infrastructure",
+      "to": "be-spec:be/00-infrastructure",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "fe-spec:fe/01-identity-authority",
+      "to": "ia-spec:ia/01-identity-authority",
+      "type": "derives_from",
+      "source": "ia-source"
+    },
+    {
+      "from": "fe-spec:fe/01-identity-authority",
+      "to": "ia-spec:ia/01-identity-authority",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "fe-spec:fe/02-profiles-verification",
+      "to": "ia-spec:ia/02-profiles-verification",
+      "type": "derives_from",
+      "source": "ia-source"
+    },
+    {
+      "from": "fe-spec:fe/02-profiles-verification",
+      "to": "ia-spec:ia/02-profiles-verification",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "fe-spec:fe/03-cms-content-modeling",
+      "to": "ia-spec:ia/03-cms-content-modeling",
+      "type": "derives_from",
+      "source": "ia-source"
+    },
+    {
+      "from": "fe-spec:fe/03-cms-content-modeling",
+      "to": "ia-spec:ia/03-cms-content-modeling",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "fe-spec:fe/04-cms-delivery-media",
+      "to": "ia-spec:ia/04-cms-delivery-media",
+      "type": "derives_from",
+      "source": "ia-source"
+    },
+    {
+      "from": "fe-spec:fe/04-cms-delivery-media",
+      "to": "ia-spec:ia/04-cms-delivery-media",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "fe-spec:fe/05-platform-configuration-admin",
+      "to": "ia-spec:ia/05-platform-configuration-admin",
+      "type": "derives_from",
+      "source": "ia-source"
+    },
+    {
+      "from": "fe-spec:fe/05-platform-configuration-admin",
+      "to": "ia-spec:ia/05-platform-configuration-admin",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "fe-spec:fe/06-trust-safety",
+      "to": "ia-spec:ia/06-trust-safety",
+      "type": "derives_from",
+      "source": "ia-source"
+    },
+    {
+      "from": "fe-spec:fe/06-trust-safety",
+      "to": "ia-spec:ia/06-trust-safety",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "fe-spec:fe/07-credits-core",
+      "to": "ia-spec:ia/07-credits-core",
+      "type": "derives_from",
+      "source": "ia-source"
+    },
+    {
+      "from": "fe-spec:fe/07-credits-core",
+      "to": "ia-spec:ia/07-credits-core",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "fe-spec:fe/08-credit-reporting-disclosure",
+      "to": "ia-spec:ia/08-credit-reporting-disclosure",
+      "type": "derives_from",
+      "source": "ia-source"
+    },
+    {
+      "from": "fe-spec:fe/08-credit-reporting-disclosure",
+      "to": "ia-spec:ia/08-credit-reporting-disclosure",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "fe-spec:fe/09-projects-collaboration",
+      "to": "ia-spec:ia/09-projects-collaboration",
+      "type": "derives_from",
+      "source": "ia-source"
+    },
+    {
+      "from": "fe-spec:fe/09-projects-collaboration",
+      "to": "ia-spec:ia/09-projects-collaboration",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "fe-spec:fe/10-rights-ownership",
+      "to": "ia-spec:ia/10-rights-ownership",
+      "type": "derives_from",
+      "source": "ia-source"
+    },
+    {
+      "from": "fe-spec:fe/10-rights-ownership",
+      "to": "ia-spec:ia/10-rights-ownership",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "fe-spec:fe/11-community-graph",
+      "to": "ia-spec:ia/11-community-graph",
+      "type": "derives_from",
+      "source": "ia-source"
+    },
+    {
+      "from": "fe-spec:fe/11-community-graph",
+      "to": "ia-spec:ia/11-community-graph",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "fe-spec:fe/12-community-spaces-events",
+      "to": "ia-spec:ia/12-community-spaces-events",
+      "type": "derives_from",
+      "source": "ia-source"
+    },
+    {
+      "from": "fe-spec:fe/12-community-spaces-events",
+      "to": "ia-spec:ia/12-community-spaces-events",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "fe-spec:fe/13-opportunities-casting",
+      "to": "ia-spec:ia/13-opportunities-casting",
+      "type": "derives_from",
+      "source": "ia-source"
+    },
+    {
+      "from": "fe-spec:fe/13-opportunities-casting",
+      "to": "ia-spec:ia/13-opportunities-casting",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "fe-spec:fe/14-services-marketplace",
+      "to": "ia-spec:ia/14-services-marketplace",
+      "type": "derives_from",
+      "source": "ia-source"
+    },
+    {
+      "from": "fe-spec:fe/14-services-marketplace",
+      "to": "ia-spec:ia/14-services-marketplace",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "fe-spec:fe/15-education-delivery",
+      "to": "ia-spec:ia/15-education-delivery",
+      "type": "derives_from",
+      "source": "ia-source"
+    },
+    {
+      "from": "fe-spec:fe/15-education-delivery",
+      "to": "ia-spec:ia/15-education-delivery",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "fe-spec:fe/16-education-credentials-institutions",
+      "to": "ia-spec:ia/16-education-credentials-institutions",
+      "type": "derives_from",
+      "source": "ia-source"
+    },
+    {
+      "from": "fe-spec:fe/16-education-credentials-institutions",
+      "to": "ia-spec:ia/16-education-credentials-institutions",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "fe-spec:fe/17-realtime-sessions",
+      "to": "ia-spec:ia/17-realtime-sessions",
+      "type": "derives_from",
+      "source": "ia-source"
+    },
+    {
+      "from": "fe-spec:fe/17-realtime-sessions",
+      "to": "ia-spec:ia/17-realtime-sessions",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "fe-spec:fe/18-royalty-accounting",
+      "to": "ia-spec:ia/18-royalty-accounting",
+      "type": "derives_from",
+      "source": "ia-source"
+    },
+    {
+      "from": "fe-spec:fe/18-royalty-accounting",
+      "to": "ia-spec:ia/18-royalty-accounting",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "fe-spec:fe/19-royalty-reporting-forecasting",
+      "to": "ia-spec:ia/19-royalty-reporting-forecasting",
+      "type": "derives_from",
+      "source": "ia-source"
+    },
+    {
+      "from": "fe-spec:fe/19-royalty-reporting-forecasting",
+      "to": "ia-spec:ia/19-royalty-reporting-forecasting",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "fe-spec:fe/20-licensing-core",
+      "to": "ia-spec:ia/20-licensing-core",
+      "type": "derives_from",
+      "source": "ia-source"
+    },
+    {
+      "from": "fe-spec:fe/20-licensing-core",
+      "to": "ia-spec:ia/20-licensing-core",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "fe-spec:fe/21-specialized-licensing",
+      "to": "ia-spec:ia/21-specialized-licensing",
+      "type": "derives_from",
+      "source": "ia-source"
+    },
+    {
+      "from": "fe-spec:fe/21-specialized-licensing",
+      "to": "ia-spec:ia/21-specialized-licensing",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "fe-spec:fe/22-release-distribution",
+      "to": "ia-spec:ia/22-release-distribution",
+      "type": "derives_from",
+      "source": "ia-source"
+    },
+    {
+      "from": "fe-spec:fe/22-release-distribution",
+      "to": "ia-spec:ia/22-release-distribution",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "fe-spec:fe/23-gear-provenance-registry",
+      "to": "ia-spec:ia/23-gear-provenance-registry",
+      "type": "derives_from",
+      "source": "ia-source"
+    },
+    {
+      "from": "fe-spec:fe/23-gear-provenance-registry",
+      "to": "ia-spec:ia/23-gear-provenance-registry",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "fe-spec:fe/24-gear-holdings-operations",
+      "to": "ia-spec:ia/24-gear-holdings-operations",
+      "type": "derives_from",
+      "source": "ia-source"
+    },
+    {
+      "from": "fe-spec:fe/24-gear-holdings-operations",
+      "to": "ia-spec:ia/24-gear-holdings-operations",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "fe-spec:fe/25-gear-market-catalog",
+      "to": "ia-spec:ia/25-gear-market-catalog",
+      "type": "derives_from",
+      "source": "ia-source"
+    },
+    {
+      "from": "fe-spec:fe/25-gear-market-catalog",
+      "to": "ia-spec:ia/25-gear-market-catalog",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "fe-spec:fe/26-gear-commerce-fulfilment",
+      "to": "ia-spec:ia/26-gear-commerce-fulfilment",
+      "type": "derives_from",
+      "source": "ia-source"
+    },
+    {
+      "from": "fe-spec:fe/26-gear-commerce-fulfilment",
+      "to": "ia-spec:ia/26-gear-commerce-fulfilment",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "fe-spec:fe/27-digital-catalog-delivery",
+      "to": "ia-spec:ia/27-digital-catalog-delivery",
+      "type": "derives_from",
+      "source": "ia-source"
+    },
+    {
+      "from": "fe-spec:fe/27-digital-catalog-delivery",
+      "to": "ia-spec:ia/27-digital-catalog-delivery",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "fe-spec:fe/28-digital-licensing-commerce",
+      "to": "ia-spec:ia/28-digital-licensing-commerce",
+      "type": "derives_from",
+      "source": "ia-source"
+    },
+    {
+      "from": "fe-spec:fe/28-digital-licensing-commerce",
+      "to": "ia-spec:ia/28-digital-licensing-commerce",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "fe-spec:fe/29-venues-spaces",
+      "to": "ia-spec:ia/29-venues-spaces",
+      "type": "derives_from",
+      "source": "ia-source"
+    },
+    {
+      "from": "fe-spec:fe/29-venues-spaces",
+      "to": "ia-spec:ia/29-venues-spaces",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "fe-spec:fe/30-booking-contracts",
+      "to": "ia-spec:ia/30-booking-contracts",
+      "type": "derives_from",
+      "source": "ia-source"
+    },
+    {
+      "from": "fe-spec:fe/30-booking-contracts",
+      "to": "ia-spec:ia/30-booking-contracts",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "fe-spec:fe/31-live-settlement-intelligence",
+      "to": "ia-spec:ia/31-live-settlement-intelligence",
+      "type": "derives_from",
+      "source": "ia-source"
+    },
+    {
+      "from": "fe-spec:fe/31-live-settlement-intelligence",
+      "to": "ia-spec:ia/31-live-settlement-intelligence",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "fe-spec:fe/32-show-production-planning",
+      "to": "ia-spec:ia/32-show-production-planning",
+      "type": "derives_from",
+      "source": "ia-source"
+    },
+    {
+      "from": "fe-spec:fe/32-show-production-planning",
+      "to": "ia-spec:ia/32-show-production-planning",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "fe-spec:fe/33-show-day-operations",
+      "to": "ia-spec:ia/33-show-day-operations",
+      "type": "derives_from",
+      "source": "ia-source"
+    },
+    {
+      "from": "fe-spec:fe/33-show-day-operations",
+      "to": "ia-spec:ia/33-show-day-operations",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "fe-spec:fe/34-touring-operations",
+      "to": "ia-spec:ia/34-touring-operations",
+      "type": "derives_from",
+      "source": "ia-source"
+    },
+    {
+      "from": "fe-spec:fe/34-touring-operations",
+      "to": "ia-spec:ia/34-touring-operations",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "fe-spec:fe/35-ticket-products-sales",
+      "to": "ia-spec:ia/35-ticket-products-sales",
+      "type": "derives_from",
+      "source": "ia-source"
+    },
+    {
+      "from": "fe-spec:fe/35-ticket-products-sales",
+      "to": "ia-spec:ia/35-ticket-products-sales",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "fe-spec:fe/36-box-office-risk",
+      "to": "ia-spec:ia/36-box-office-risk",
+      "type": "derives_from",
+      "source": "ia-source"
+    },
+    {
+      "from": "fe-spec:fe/36-box-office-risk",
+      "to": "ia-spec:ia/36-box-office-risk",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "fe-spec:fe/37-fanbase-direct-to-fan",
+      "to": "ia-spec:ia/37-fanbase-direct-to-fan",
+      "type": "derives_from",
+      "source": "ia-source"
+    },
+    {
+      "from": "fe-spec:fe/37-fanbase-direct-to-fan",
+      "to": "be-spec:be/37-fanbase-direct-to-fan",
+      "type": "implemented_by",
+      "source": "shard-match"
+    },
+    {
+      "from": "fe-spec:fe/37-fanbase-direct-to-fan",
+      "to": "ia-spec:ia/37-fanbase-direct-to-fan",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "fe-spec:fe/37-fanbase-direct-to-fan",
+      "to": "be-spec:be/37-fanbase-direct-to-fan",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "fe-spec:fe/38-promotion-marketing",
+      "to": "ia-spec:ia/38-promotion-marketing",
+      "type": "derives_from",
+      "source": "ia-source"
+    },
+    {
+      "from": "fe-spec:fe/38-promotion-marketing",
+      "to": "be-spec:be/38-promotion-marketing",
+      "type": "implemented_by",
+      "source": "shard-match"
+    },
+    {
+      "from": "fe-spec:fe/38-promotion-marketing",
+      "to": "ia-spec:ia/38-promotion-marketing",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "fe-spec:fe/38-promotion-marketing",
+      "to": "be-spec:be/38-promotion-marketing",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "fe-spec:fe/39-analytics-ingestion-reporting",
+      "to": "ia-spec:ia/39-analytics-ingestion-reporting",
+      "type": "derives_from",
+      "source": "ia-source"
+    },
+    {
+      "from": "fe-spec:fe/39-analytics-ingestion-reporting",
+      "to": "be-spec:be/39-analytics-ingestion-reporting",
+      "type": "implemented_by",
+      "source": "shard-match"
+    },
+    {
+      "from": "fe-spec:fe/39-analytics-ingestion-reporting",
+      "to": "ia-spec:ia/39-analytics-ingestion-reporting",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "fe-spec:fe/39-analytics-ingestion-reporting",
+      "to": "be-spec:be/39-analytics-ingestion-reporting",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "fe-spec:fe/40-market-intelligence-signals",
+      "to": "ia-spec:ia/40-market-intelligence-signals",
+      "type": "derives_from",
+      "source": "ia-source"
+    },
+    {
+      "from": "fe-spec:fe/40-market-intelligence-signals",
+      "to": "be-spec:be/40-market-intelligence-signals",
+      "type": "implemented_by",
+      "source": "shard-match"
+    },
+    {
+      "from": "fe-spec:fe/40-market-intelligence-signals",
+      "to": "ia-spec:ia/40-market-intelligence-signals",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "fe-spec:fe/40-market-intelligence-signals",
+      "to": "be-spec:be/40-market-intelligence-signals",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "fe-spec:fe/41-career-finance",
+      "to": "ia-spec:ia/41-career-finance",
+      "type": "derives_from",
+      "source": "ia-source"
+    },
+    {
+      "from": "fe-spec:fe/41-career-finance",
+      "to": "ia-spec:ia/41-career-finance",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "fe-spec:fe/42-career-planning-risk",
+      "to": "ia-spec:ia/42-career-planning-risk",
+      "type": "derives_from",
+      "source": "ia-source"
+    },
+    {
+      "from": "fe-spec:fe/42-career-planning-risk",
+      "to": "be-spec:be/42-career-planning-risk",
+      "type": "implemented_by",
+      "source": "shard-match"
+    },
+    {
+      "from": "fe-spec:fe/42-career-planning-risk",
+      "to": "ia-spec:ia/42-career-planning-risk",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "fe-spec:fe/42-career-planning-risk",
+      "to": "be-spec:be/42-career-planning-risk",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "fe-spec:fe/index",
+      "to": "ia-spec:ia/index",
+      "type": "derives_from",
+      "source": "ia-source"
+    },
+    {
+      "from": "fe-spec:fe/index",
+      "to": "ia-spec:ia/index",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:fe",
+      "to": "fe-spec:fe/00-infrastructure",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:fe",
+      "to": "fe-spec:fe/01-identity-authority",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:fe",
+      "to": "fe-spec:fe/02-profiles-verification",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:fe",
+      "to": "fe-spec:fe/03-cms-content-modeling",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:fe",
+      "to": "fe-spec:fe/04-cms-delivery-media",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:fe",
+      "to": "fe-spec:fe/05-platform-configuration-admin",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:fe",
+      "to": "fe-spec:fe/06-trust-safety",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:fe",
+      "to": "fe-spec:fe/07-credits-core",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:fe",
+      "to": "fe-spec:fe/08-credit-reporting-disclosure",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:fe",
+      "to": "fe-spec:fe/09-projects-collaboration",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:fe",
+      "to": "fe-spec:fe/10-rights-ownership",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:fe",
+      "to": "fe-spec:fe/11-community-graph",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:fe",
+      "to": "fe-spec:fe/12-community-spaces-events",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:fe",
+      "to": "fe-spec:fe/13-opportunities-casting",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:fe",
+      "to": "fe-spec:fe/14-services-marketplace",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:fe",
+      "to": "fe-spec:fe/15-education-delivery",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:fe",
+      "to": "fe-spec:fe/16-education-credentials-institutions",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:fe",
+      "to": "fe-spec:fe/17-realtime-sessions",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:fe",
+      "to": "fe-spec:fe/18-royalty-accounting",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:fe",
+      "to": "fe-spec:fe/19-royalty-reporting-forecasting",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:fe",
+      "to": "fe-spec:fe/20-licensing-core",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:fe",
+      "to": "fe-spec:fe/21-specialized-licensing",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:fe",
+      "to": "fe-spec:fe/22-release-distribution",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:fe",
+      "to": "fe-spec:fe/23-gear-provenance-registry",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:fe",
+      "to": "fe-spec:fe/24-gear-holdings-operations",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:fe",
+      "to": "fe-spec:fe/25-gear-market-catalog",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:fe",
+      "to": "fe-spec:fe/26-gear-commerce-fulfilment",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:fe",
+      "to": "fe-spec:fe/27-digital-catalog-delivery",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:fe",
+      "to": "fe-spec:fe/28-digital-licensing-commerce",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:fe",
+      "to": "fe-spec:fe/29-venues-spaces",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:fe",
+      "to": "fe-spec:fe/30-booking-contracts",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:fe",
+      "to": "fe-spec:fe/31-live-settlement-intelligence",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:fe",
+      "to": "fe-spec:fe/32-show-production-planning",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:fe",
+      "to": "fe-spec:fe/33-show-day-operations",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:fe",
+      "to": "fe-spec:fe/34-touring-operations",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:fe",
+      "to": "fe-spec:fe/35-ticket-products-sales",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:fe",
+      "to": "fe-spec:fe/36-box-office-risk",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:fe",
+      "to": "fe-spec:fe/37-fanbase-direct-to-fan",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:fe",
+      "to": "fe-spec:fe/38-promotion-marketing",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:fe",
+      "to": "fe-spec:fe/39-analytics-ingestion-reporting",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:fe",
+      "to": "fe-spec:fe/40-market-intelligence-signals",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:fe",
+      "to": "fe-spec:fe/41-career-finance",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:fe",
+      "to": "fe-spec:fe/42-career-planning-risk",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:fe",
+      "to": "fe-spec:fe/index",
+      "type": "references",
+      "source": "wikilink"
     },
     {
       "from": "plan:feature-ledger",
@@ -69616,6 +70792,18 @@
       "source": "decision-ref"
     },
     {
+      "from": "phase-plan:phases/phase-1-draft",
+      "to": "phase-plan:phases/phase-1",
+      "type": "phases_into",
+      "source": "phase-ref"
+    },
+    {
+      "from": "phase-plan:phases/phase-1-draft",
+      "to": "phase-plan:phases/phase-1",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
       "from": "plan:vision",
       "to": "decision:d-71",
       "type": "constrained_by",
@@ -69715,17 +70903,21 @@
   "stats": {
     "byNodeType": {
       "plan": 12,
-      "architecture": 17,
-      "audit": 4,
+      "architecture": 18,
+      "audit": 5,
       "be-spec": 157,
+      "fe-spec": 44,
       "ia-spec": 85,
       "ideation": 1186,
+      "phase-plan": 2,
       "decision": 97
     },
     "byEdgeType": {
+      "phases_into": 4,
       "constrained_by": 9041,
-      "references": 736,
-      "derives_from": 20,
+      "references": 825,
+      "derives_from": 63,
+      "implemented_by": 6,
       "split_from": 3
     }
   }

@@ -11,7 +11,7 @@ packages/
   domain/              pure domain modules and state machines
   application/         use cases, policy and injected ports
   data-access/         Supabase repositories, generated types and RPC adapters
-  integrations/        Cloudflare/Supabase/Resend/Stripe/social adapters
+  integrations/        Approved Cloudflare/Supabase and local-fake adapters
   ui/                  design tokens and global accessible components
   config/              typed environment and settings contracts
   observability/       structured logging, tracing, metrics and scrubbing

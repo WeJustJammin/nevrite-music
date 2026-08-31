@@ -118,7 +118,7 @@ This deep dive owns definition/value resolution, controlled activation/runtime d
 - Export compiler uses exact allowlisted scope/fields, canonical versions and referenced-object manifest; excludes secrets and unrelated protected evidence.
 - Artifact is encrypted where required, checksummed, short-lived, download-limited and audited; link/token possession does not replace authorization.
 - Restore runs only in isolated non-production target first, applies supported migrations, restores objects/metadata, then verifies schema, counts, hashes, references, RLS, representative rendering, accessibility and absence of secrets.
-- Production restore follows Shard 00 runbook/PITR controls; CMS export is portability evidence, not a substitute for database recovery.
+- Supabase Free has no production PITR or RPO/RTO guarantee. Shard 00 therefore keeps protected writes closed; synthetic/local restore and CMS export are diagnostic portability evidence only and cannot open the recovery gate.
 
 ## Quality and Lifecycle Algorithms
 

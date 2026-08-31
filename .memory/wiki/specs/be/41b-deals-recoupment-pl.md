@@ -1225,7 +1225,7 @@ All rows use the exact four-field ApiError. Details expose only already-visible 
 | 41.18 | opId, action, scopeKind, rowCount, blockerCode; finance_pl_projection_total | view p95 3 s; close p95 8 s; conflict/error >2% alerts |
 | 41.19 | opId, memberCount, debtCount, result; finance_allocation_total | p95 2 s; any transfer/royalty invariant breach pages |
 
-Logs omit document text, term values, member/provider identities, amounts tied to parties, referral URLs, runway results, and source payloads. Bounded enum metrics prevent cardinality leaks. Traces propagate requestId/correlationId; Sentry receives scrubbed exception classes and stable IDs only. Abuse detection watches document churn, confirmation bursts, referral scraping, repeated concealed misses, calculation amplification, and allocation races without inferring financial health.
+Logs omit document text, term values, member/provider identities, amounts tied to parties, referral URLs, runway results, and source payloads. Bounded enum metrics prevent cardinality leaks. Traces propagate requestId/correlationId; provider-native diagnostic sinks receive scrubbed exception classes and stable IDs only. Abuse detection watches document churn, confirmation bursts, referral scraping, repeated concealed misses, calculation amplification, and allocation races without inferring financial health.
 
 ## Release, Migration, and Recovery
 

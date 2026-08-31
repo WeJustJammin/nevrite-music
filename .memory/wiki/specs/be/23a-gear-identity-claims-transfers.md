@@ -451,7 +451,7 @@ Consumers dedupe by eventId and aggregate identity/version. Outbox insert is ato
 | Projection/duplicate gate | HTTP 422 PROJECTION_UNAVAILABLE or MERGE_CONSENT_REQUIRED. |
 | Rate limit | HTTP 429 RATE_LIMITED with bounded Retry-After. |
 | Cross-shard/notification timeout | HTTP 503 DEPENDENCY_UNAVAILABLE; committed source state remains honest and recoverable. |
-| Unhandled error | HTTP 500 INTERNAL; cause remains in Sentry/structured logs keyed by requestId. |
+| Unhandled error | HTTP 500 INTERNAL; cause remains in provider-native structured logs keyed by requestId. |
 
 ### Error invariants
 
@@ -510,7 +510,7 @@ None.
 
 ## Dependency References
 
-- BE00: inherit command admission, idempotency, audit, private schema boundary, RPC-only grants, forced RLS, jobs, outbox leases, CORS baseline, Sentry correlation, and ApiError { code, message, requestId, details }. No BE00 route is duplicated.
+- BE00: inherit command admission, idempotency, audit, private schema boundary, RPC-only grants, forced RLS, jobs, outbox leases, CORS baseline, provider-native diagnostics correlation, and ApiError { code, message, requestId, details }. No BE00 route is duplicated.
 - Shard 01: consume party/entity resolution and controlled-entity authority; no identity account truth is authored here.
 - Shard 06: consume claim/reviewer/case and dispute routes; 23a computes claim state but never adjudicates title or safety.
 - Shard 07: consume credit status only in downstream 23d; 23a does not widen credit visibility.

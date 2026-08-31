@@ -12,7 +12,7 @@ This companion is the backend contract for pickup arrangements, pre-dispatch ser
 | Warranty authority | Manufacturer/seller warranty eligibility and RMA routing receipt | Manufacturer or seller adjudicates warranty; platform brokers evidence and routing only |
 | Security boundary | Party-scoped projections, purpose-bound location/evidence, callback signatures, and 403 versus 404 | No direct client table grant, exact location in public events, payment instrument, or provider secret |
 
-The implementation target is TypeScript on Hono/Cloudflare Workers with Supabase PostgreSQL, strict Zod 4 contracts, transactional outbox, forced RLS, structured audit, and Sentry-compatible telemetry. A platform pickup can influence fulfillment and settlement eligibility only through explicit state and evidence; an off-platform pickup records an arrangement and confirmation but provides no escrow, settlement, or automatic ownership-transfer guarantee.
+The implementation target is TypeScript on Hono/Cloudflare Workers with Supabase PostgreSQL, strict Zod 4 contracts, transactional outbox, forced RLS, structured audit, and provider-native diagnostics-compatible telemetry. A platform pickup can influence fulfillment and settlement eligibility only through explicit state and evidence; an off-platform pickup records an arrangement and confirmation but provides no escrow, settlement, or automatic ownership-transfer guarantee.
 
 ## Referenced Material Inventory
 
@@ -299,7 +299,7 @@ BE-00 idempotency receipts retain at least 24 hours with request hash, status, r
 | BE26D-GCF19 | service_request_total by code/state; dispatch_hold_total; buyer_election_total; provider_timeout_total | requestId, operationId, order/line hash, service code, provider hash, dispatch impact, election, result; no private notes | service.requested/elected; order hold audit; BE-14 handoff outbox |
 | BE26D-GCF20 | warranty_route_total by basis/state; provider_rejection_total; rma_pending_age; evidence_hash_mismatch_total | requestId, operationId, order/line hash, basis, issue code, provider hash, state, result; no issue description/originals | warranty.rma.routed; provider receipt audit; scoped evidence and outbox IDs |
 
-Trace spans include pickup.arrangement, pickup.confirmation, service.dispatch, warranty.rma, and provider.callback, preserving failures, denials, location release, disagreement, and retries. Sentry events scrub exact venue, descriptions, evidence URLs, party identifiers, payment data, and provider credentials. Alerts fire on any off-platform completion marked escrow/transfer, any minor pickup attempt, any exact-location event payload, and any dispatch hold cleared without provider/election evidence.
+Trace spans include pickup.arrangement, pickup.confirmation, service.dispatch, warranty.rma, and provider.callback, preserving failures, denials, location release, disagreement, and retries. structured diagnostic events scrub exact venue, descriptions, evidence URLs, party identifiers, payment data, and provider credentials. Alerts fire on any off-platform completion marked escrow/transfer, any minor pickup attempt, any exact-location event payload, and any dispatch hold cleared without provider/election evidence.
 
 ## Persistence and RLS
 

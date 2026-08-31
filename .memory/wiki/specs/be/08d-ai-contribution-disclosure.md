@@ -487,7 +487,7 @@ Every error row serializes the BE00/global ApiError { code, message, requestId, 
 
 ## Observability
 
-Every operation creates one structured span and one sanitized completion or failure record with requestId, traceId, stable operation ID, outcome, HTTP status, latencyMs, actor type, purpose class, source version, policy version where applicable and hashed opaque aggregate refs. Logs use the typed @wejammin/observability logger; no ambient console calls, request bodies or disclosure text are emitted. Sentry receives sampled exception fingerprints and circuit state only.
+Every operation creates one structured span and one sanitized completion or failure record with requestId, traceId, stable operation ID, outcome, HTTP status, latencyMs, actor type, purpose class, source version, policy version where applicable and hashed opaque aggregate refs. Logs use the typed @wejammin/observability logger; no ambient console calls, request bodies or disclosure text are emitted. provider-native diagnostic sinks receive sampled exception fingerprints and circuit state only.
 
 | Operation ID | Audit event and metrics | Safe trace fields and alerts |
 |---|---|---|

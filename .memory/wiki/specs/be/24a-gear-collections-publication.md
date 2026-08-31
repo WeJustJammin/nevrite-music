@@ -339,7 +339,7 @@ headers.
 | BE24A-GHO01 | Span includes operation ID, requestId, correlationId, party/entity hashes, filter enum, source versions and projection state. Metrics cover available, unavailable, replayed, forbidden, not_found, conflict, latency, stale projection and cache age. | Audit records actor/party/entity hashes, purpose, filters, source version, outcome and reason. Never log item IDs, labels, aggregate values, serials, exact locations, media URLs or private history. |
 | BE24A-GHO02 | Span includes operation ID, requestId, correlationId, gear hash, audience, rendition digest hash, evaluator version, outcome and dependency class. Metrics cover active, blocked, revoked, safe_rendition_denied, exposure_denied, replayed, conflict, dependency failure and latency. | Audit records actor/item hashes, audience, evaluator version, acknowledgement decision, safe-rendition digest hash and reason. Never log serial, location, private value, original media URL, warning private inputs or owner contact. |
 
-Sentry receives correlation ID, operation ID and sanitized code only. Structured
+provider-native diagnostic sinks receive correlation ID, operation ID and sanitized code only. Structured
 logs use stable enums/digests; request bodies and private projection values are
 excluded.
 

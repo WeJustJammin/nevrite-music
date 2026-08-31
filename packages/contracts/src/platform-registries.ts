@@ -1,0 +1,123 @@
+import { createRegistrySet } from './registries.ts';
+
+const routeDefaults = {
+  authClass: 'public',
+  cacheClass: 'no_store',
+  timeoutMs: 8_000,
+  rateClass: 'public_read',
+  sloTier: 'tier_1',
+  criticality: 'high',
+  owner: 'Infrastructure',
+  requestSchema: 'EmptyRequestSchema',
+  errorSchemas: ['ApiErrorSchema'],
+  bolaTest: 'no object selector is accepted',
+  runbook: 'docs/runbooks/platform/operational-endpoints.md',
+  deprecated: false,
+} as const;
+
+export const platformRegistrySet = createRegistrySet({
+  routes: [
+    {
+      ...routeDefaults,
+      method: 'GET',
+      path: '/api/v1/health',
+      operationId: 'healthRead',
+      successSchema: 'HealthResponseSchema',
+    },
+    {
+      ...routeDefaults,
+      method: 'GET',
+      path: '/api/v1/ready',
+      operationId: 'readinessRead',
+      successSchema: 'ReadinessResponseSchema',
+    },
+    {
+      ...routeDefaults,
+      method: 'GET',
+      path: '/api/v1/internal/diagnostics',
+      authClass: 'operator_step_up',
+      operationId: 'diagnosticsRead',
+      successSchema: 'DiagnosticResponseSchema',
+    },
+    {
+      ...routeDefaults,
+      method: 'GET',
+      path: '/api/v1/jobs/{jobId}',
+      authClass: 'authenticated',
+      rateClass: 'authenticated_read',
+      operationId: 'jobStatusRead',
+      requestSchema: 'JobIdPathSchema',
+      successSchema: 'JobStatusSchema',
+      bolaTest:
+        'owner, acting-party jobs.read, or operator jobs.read:any with step-up and reason',
+      runbook: 'docs/runbooks/platform/jobs-outbox-reconciliation.md',
+    },
+    {
+      ...routeDefaults,
+      method: 'POST',
+      path: '/api/v1/upload-intents',
+      authClass: 'authenticated',
+      rateClass: 'upload_admission',
+      timeoutMs: 15_000,
+      operationId: 'uploadIntentCreate',
+      requestSchema: 'UploadAdmissionRequestSchema',
+      successSchema: 'UploadIntentResourceSchema',
+      bolaTest:
+        'server-resolved actor and acting party must retain target upload authority',
+      runbook: 'docs/runbooks/platform/upload-admission-reconciliation.md',
+    },
+    {
+      ...routeDefaults,
+      method: 'POST',
+      path: '/api/v1/upload-intents/{uploadIntentId}/complete',
+      authClass: 'authenticated',
+      rateClass: 'upload_admission',
+      timeoutMs: 15_000,
+      operationId: 'uploadIntentComplete',
+      requestSchema: 'UploadCompletionRequestSchema',
+      successSchema: 'JobStatusSchema',
+      bolaTest:
+        'same actor and acting party must own the live intent and retain current target authority',
+      runbook: 'docs/runbooks/platform/upload-admission-reconciliation.md',
+    },
+  ],
+  consumers: [
+    {
+      consumerId: 'platform.job.execute',
+      owner: 'Infrastructure',
+      messageSchema: 'QueueEnvelopeSchema',
+      queueName: 'platform-jobs',
+      leaseSeconds: 300,
+      heartbeatSeconds: 60,
+      maxLeaseSeconds: 840,
+      maxDeliveries: 4,
+      retryClass: 'bounded_exponential',
+      retryDelaysSeconds: [15, 60, 300],
+      deadLetterClass: 'platform-jobs-dlq',
+      acceptedEvents: [{ eventType: 'job.requested', schemaVersion: 1 }],
+      sloTier: 'tier_1',
+      runbook: 'docs/runbooks/platform/jobs-outbox-reconciliation.md',
+    },
+  ],
+  providers: [],
+  retention: [
+    {
+      dataClass: 'operational.events',
+      owner: 'Infrastructure',
+      retentionDays: 30,
+      deletionMode: 'hard_delete',
+      legalHoldSupported: false,
+      runbook: 'docs/runbooks/platform/retention.md',
+    },
+  ],
+  slos: [
+    {
+      tier: 'tier_1',
+      owner: 'Infrastructure',
+      targetBasisPoints: 9_990,
+      measurementLabel: 'api.availability',
+      alertRoute: 'platform.on_call',
+      runbook: 'docs/runbooks/platform/slo.md',
+    },
+  ],
+});

@@ -1,274 +1,39 @@
-# CFSA Antigravity
-### Constraint-First Specification Architecture — production-grade from line one
+# WeJammin project documentation
 
-> Designed for Antigravity — adaptable to other agents
+This directory contains durable project records and generated API-documentation
+output. Source specifications and pipeline state remain under `.memory/wiki/`.
 
----
+## Contents
 
-## What This Is
+- `local-bootstrap.md` is the exact, local-only setup and troubleshooting guide.
+- `kit-architecture.md` documents the CFSA runtime and artifact architecture.
+- `progress-state-catalog.md` defines canonical pipeline-progress locations.
+- `wejammin-domain-map-proposal.md` is retained historical domain-map evidence.
+- `adr/` and `openapi/` are reserved for architecture decisions and generated
+  API documentation.
 
-This is a **Constraint-First Specification Architecture (CFSA)** pipeline — a reusable workflow toolkit that builds production-grade software from line one. It turns a raw idea into exhaustively specified, test-driven, production-quality code through a series of progressive gates.
+## Ownership
 
-Five principles define the architecture:
+The documentation owner maintains runbooks, architecture records, and links to
+authoritative specifications. Generated API output is derived from contracts;
+do not edit generated files by hand. Provider accounts, secrets, and production
+mutations are outside this directory.
 
-1. **Constraints before decisions.** Every tech stack choice, every design direction, every architecture decision begins by mapping the constraints that already exist — compliance requirements, team expertise, budget, surfaces, existing infrastructure. Constraints narrow the option space before options are even presented. Some decisions become obvious. Others get a filtered set of viable choices scored against the constraints. No open-ended debates. No decision without context.
+## Extension
 
-2. **Exhaustive iteration over shallow speed.** The pipeline refuses to move forward with ambiguity. Each stage has quality gates that measure specification depth — not just "is something written" but "does it answer every question an implementer would ask." Ambiguity audits score documents on a rubric. If gaps exist, they're filled before the next stage begins. The output quality bar is constant regardless of input quality — a one-liner idea gets an exhaustive interview; a 50KB spec gets proportional extraction. Both produce the same depth.
+Add a focused Markdown record with a descriptive kebab-case name. Put durable
+specification changes in `.memory/wiki/` first, link the authority here, and
+add generated OpenAPI output only through the contract generation command.
 
-3. **Work shifted left, not deferred right.** Decisions that would normally be made during implementation — data placement, access control, error handling, edge cases — are made during specification. By the time code is written, the spec has already answered every question the developer would ask. Implementation becomes mechanical: translate the spec into code, write the failing test, make it pass. No design decisions remain.
+## Conventions
 
-4. **Progressive decision locking.** Each pipeline stage locks decisions. Downstream stages build on locked decisions and may not contradict them. Vision locks the problem and personas. Architecture locks the tech stack and system design. Specifications lock the contracts and data models. Implementation locks the code. To change a locked decision, re-run the originating stage and cascade changes downstream. This prevents the "refactor everything" problem.
+Use clear headings, dated status where history matters, relative links, exact
+commands, and explicit scope. Do not use unresolved template markers,
+credential examples, or instructions that silently create paid services.
 
-5. **TDD as the implementation contract.** Tests are not an afterthought — they are the implementation specification. The contract (Zod schema) defines the shape. The test asserts the behavior. The implementation satisfies both. Red → Green → Refactor, never reversed. Every vertical slice touches all four surfaces: contract, test, backend, frontend. Nothing ships partially.
+## Related links
 
-**The core guarantee**: regardless of how you start — a 50KB detailed spec, a thin bullet list, a chat transcript, or a one-liner in the terminal — the pipeline produces the same output quality. Only the interview work differs. The output depth is constant.
-
-This is not an MVP toolkit. There is no "fix it later" because there is nothing to fix.
-
----
-
-## How to Use It (Pipeline Walkthrough)
-
-The pipeline is a linear sequence of commands. Each step tells you what to run next.
-
-    Step 1: /ideate
-      You describe your idea (or point to a document with @file).
-      The pipeline explores your idea using recursive breadth-before-depth:
-        - Level 0: Maps all domains in your product
-        - Level 1: Sweeps each domain for sub-areas (Classification Gate: sub-domain folder or feature file?)
-        - Level 2+: Drills vertically until each domain is exhausted
-      At every level, a Deep Think protocol generates hypotheses based on
-      domain knowledge — "Based on this industry, I'd expect X. Is that relevant?"
-      Cross-cutting concerns are tracked at the level where they occur (CX files).
-      Each domain gets its own folder the moment it's discovered (fractal-as-you-go).
-
-      Output: .memory/wiki/specs/ideation/ folder (fractal tree):
-                ideation-index.md      ← pipeline key file (structure map, MoSCoW, coverage)
-                ideation-cx.md         ← global cross-cuts
-                domains/*/             ← domain folders (index + CX + feature files)
-                meta/*.md              ← problem, personas, constraints, competitive landscape
-              .memory/wiki/specs/vision.md     ← human-readable executive summary (not a pipeline input)
-
-    Step 2: /audit-ambiguity ideation  ── MANDATORY ──
-      Scores the ideation folder against a 12-dimension rubric.
-      Agent auto-remediates any gaps found, then requires a fresh re-run.
-      Not optional — /ideate will not propose /create-prd until this passes.
-      Output: .memory/wiki/specs/audits/ideation-audit.md
-
-> [!IMPORTANT]
-> **Fresh-run rule:** The session that fixed gaps cannot be the session that passes.
-> Re-run `/audit-ambiguity [layer]` as a new invocation so the agent re-reads the
-> updated source document from disk. The audit only passes when a clean session scores 0%.
-
-      /resolve-ambiguity [layer or @file]  ── UTILITY — callable at any stage ──
-        Targeted ambiguity resolution for any pipeline document or layer.
-        Use when a specific section needs clarification without a full audit cycle.
-        After resolving, re-run the relevant audit as a fresh invocation to confirm the fix.
-
-        Examples:
-          /resolve-ambiguity vision
-          /resolve-ambiguity architecture
-          /resolve-ambiguity @.memory/wiki/specs/ia/auth.md
-
-    Step 3: /create-prd
-      Reads ideation-index.md. Walks you through tech stack decisions one at a time.
-      Each confirmed decision fires bootstrap to fill templates and install skills.
-      Output: .memory/wiki/specs/architecture-design.md
-              .memory/wiki/specs/ENGINEERING-STANDARDS.md
-              .memory/wiki/specs/data-placement-strategy.md
-
-    Step 4: /audit-ambiguity architecture (recommended)
-      Scores the architecture document on a rubric. Fills gaps before decomposition.
-      Output: .memory/wiki/specs/audits/architecture-audit.md
-      If gaps are found: agent auto-remediates, then re-run as a fresh invocation (see fresh-run rule above).
-
-    Step 5: /decompose-architecture
-      Breaks architecture into numbered domain shards.
-      Output: .memory/wiki/specs/ia/ (shard index + skeleton shards)
-
-    Step 6: /write-architecture-spec       ← repeat for EVERY shard
-      Takes one skeleton shard. Writes full interaction spec — contracts, data models, RBAC, events.
-      Output: .memory/wiki/specs/ia/[shard-name].md (filled)
-
-    ► /audit-ambiguity ia                  [MANDATORY — 0% before Step 7]
-      Runs after ALL IA shards are complete. Hard gate — no BE specs until this passes.
-      Output: .memory/wiki/specs/audits/ia-audit.md
-      If gaps are found: agent auto-remediates, then re-run as a fresh invocation (see fresh-run rule above).
-
-    Step 7: /write-be-spec                 ← repeat for EVERY shard
-      Reads IA shard. Writes backend spec — endpoints, schemas, middleware, DAL.
-      Output: .memory/wiki/specs/be/[shard-name].md
-
-    ► /audit-ambiguity be                  [MANDATORY — 0% before Step 8]
-      Runs after ALL BE specs are complete. Hard gate — no FE specs until this passes.
-      Output: .memory/wiki/specs/audits/be-audit.md
-      If gaps are found: agent auto-remediates, then re-run as a fresh invocation (see fresh-run rule above).
-
-    Step 8: /write-fe-spec                 ← repeat for EVERY shard
-      Reads BE spec + IA shard. Writes frontend spec — components, state, interactions.
-      Output: .memory/wiki/specs/fe/[shard-name].md
-
-    ► /audit-ambiguity fe                  [MANDATORY — 0% before Step 9]
-      Runs after ALL FE specs are complete. Hard gate — no planning until this passes.
-      Output: .memory/wiki/specs/audits/fe-audit.md
-      If gaps are found: agent auto-remediates, then re-run as a fresh invocation (see fresh-run rule above).
-
-    ─── ALL specs (IA + BE + FE) must be complete before Step 9 ───
-
-    Step 9: /plan-phase
-      Reads architecture + specs. Creates dependency-ordered TDD vertical slices.
-      Only runs after Phase N-1 is complete (skipped for Phase 1).
-      Output: .memory/wiki/specs/phases/phase-[n].md
-
-    Step 10: /implement-slice (infrastructure slice)
-      First slice — CI/CD, environment, deployment, scaffolding, database.
-      Output: Working infrastructure + passing tests
-
-    Step 10.5: /verify-infrastructure      ── HARD GATE ──
-      Verifies CI/CD green, staging live, migrations clean. Must pass before feature slices.
-      Output: .memory/wiki/specs/audits/verify-infrastructure-[date].md
-
-    Step 11: /implement-slice (auth slice)
-      Auth middleware, registration, login, token management.
-      Output: Working auth + passing tests
-
-    Step 11.5: /verify-infrastructure      ── HARD GATE (auth pass) ──
-      Re-runs with auth smoke test enabled. Must pass before auth-dependent feature slices.
-      Output: .memory/wiki/specs/audits/verify-infrastructure-[date].md
-
-    Step 12: /implement-slice (remaining feature slices)
-      Takes one slice at a time. Red → Green → Refactor across all four surfaces.
-      Output: Working code + passing tests per slice
-
-    Step 13: /validate-phase
-      Full validation gate — tests, coverage, lint, type-check, build,
-      CI/CD verification, staging deployment, migration check.
-      Output: Pass/fail with details
-
-    ─── Repeat Steps 9–13 for each phase ───
-
----
-
-## Getting Started
-
-### Prerequisites
-
-- Node.js 18+ (for the installer)
-- Antigravity IDE (or any compatible agent that can read files, write files, and execute commands)
-
-### Installation
-
-**Recommended:**
-```bash
-npx cfsa-antigravity init
-```
-
-### Unified memory scaffold
-
-`init` now installs a shared `.memory/` directory. The `.memory/` directory is designed to function as an Obsidian vault inside the project.
-
-- `.memory/raw/` stores append-only session and event captures
-- `.memory/wiki/` stores compiled patterns, decisions, blockers, and knowledge pages
-- `.memory/schema/` stores machine-readable retrieval artifacts, including semantic index/manifests
-- `.memory/mcp-server/client.mjs` is the MCP bridge entrypoint for the shared daemon
-- `.memory/mcp-server/daemon.mjs` is the shared project-local MCP daemon
-- `.memory/hooks/` contains Claude-oriented hook entrypoints
-
-The kit installs the memory **server/runtime** only. `.mcp.json` and other tool-specific MCP client settings are user-managed.
-
-The MCP routing contract is workspace-local: the daemon writes `.memory/runtime/cfsa-memory-daemon.json`, the client reads that file for the current workspace, then validates the daemon's `projectRoot` from `/health` before proxying requests. This prevents cross-workspace collisions when multiple projects have daemons running.
-
-### Initial graph compile for existing projects
-
-After installing or updating the `.memory` runtime in an existing project:
-1. Configure your tool's MCP client manually.
-2. Trigger the first memory compile (`memory_compile` via MCP, or the direct compile script fallback).
-3. Verify graph/index artifacts exist under `.memory/schema/` and `.memory/wiki/`.
-4. Open Obsidian at `.memory/`.
-
-### Semantic backend
-
-The shared memory system now supports a stronger local semantic mode:
-- semantic configuration is stored in `.memory/config.json`
-- semantic artifacts are stored in `.memory/schema/semantic-index.json` and `.memory/schema/semantic-manifest.json`
-- MCP exposes semantic status, enable, query, and reindex controls
-
-The current implementation uses a local semantic backend designed to be upgraded later to a heavier vector backend without changing the MCP contract.
-
-**Manual (without npm):**
-```bash
-git clone https://github.com/RepairYourTech/cfsa-antigravity.git
-cp -r cfsa-antigravity/.agent /path/to/your-project/
-cp -r cfsa-antigravity/.codex /path/to/your-project/
-cp -r cfsa-antigravity/docs /path/to/your-project/
-cp cfsa-antigravity/GEMINI.md /path/to/your-project/
-cp cfsa-antigravity/AGENTS.md /path/to/your-project/
-cp cfsa-antigravity/CODEX.md /path/to/your-project/
-```
-
-### Agent Setup
-
-| Agent | What to Do |
-|-------|------------|
-| **Antigravity** | Both `AGENTS.md` and `GEMINI.md` are present — bootstrap fills both during `/create-prd`. |
-| **Codex** | Use `CODEX.md` for repo guidance and the standalone `.codex/` runtime installed via `cfsa-antigravity init --agent codex`. |
-| **Gemini CLI** | `GEMINI.md` is your agent config. Bootstrap fills it during `/create-prd`. |
-| **Claude Code** | Use the standalone `.claude/` runtime installed via `cfsa-antigravity init --agent claude` |
-| **Factory Droid** | Use the standalone `.factory/` runtime installed via `cfsa-antigravity init --agent factory` |
-| **Freebuff** | Use the standalone `.freebuff/` runtime installed via `cfsa-antigravity init --agent freebuff` |
-| **ZCode** | Use the standalone `.zcode/` runtime installed via `cfsa-antigravity init --agent zcode` |
-| **Cursor** | Reference from `.cursorrules` or your Cursor config |
-| **Windsurf** | Reference from `.windsurfrules` or equivalent |
-| **Other** | Follow your agent's convention for loading system instructions |
-
-> [!WARNING]
-> **Important Note on agent runtime directories**
->
-> Do not hide the runtime directory your agent/editor needs to index.
->
-> - Antigravity-style installs use `.agents/`
-> - Codex installs use `.codex/`
-> - Claude Code installs use `.claude/`
-> - Factory Droid installs use `.factory/`
-> - Freebuff installs use `.freebuff/`
-> - ZCode installs use `.zcode/`
->
-> **Recommended Solution:** Keep the installed runtime directory out of shared `.gitignore` rules and use `.git/info/exclude` for local-only exclusions.
-
-### Start
-
-```
-/ideate
-```
-
-The pipeline tells you what to run next at every step. You never have to guess.
-
----
-
-## The Skill System
-
-**Bundled skills** ship with the active runtime's `skills/` directory. These are universal capabilities every project needs regardless of tech stack — things like TDD workflow, clean code principles, accessibility auditing, brainstorming, and systematic debugging. They're always present, always loaded.
-
-**Skill library** lives in the active runtime's `skill-library/`. These are stack-specific and surface-specific skills that get provisioned by bootstrap as tech decisions are confirmed during `/create-prd`. They're never loaded directly — bootstrap copies the relevant ones into the runtime's `skills/` directory and fills any placeholders with your project's confirmed values.
-
-Bootstrap fires once per confirmed decision — it fills only what was just decided and leaves everything else untouched.
-
-### Bootstrap & Template System
-
-Instruction files in the active runtime's `instructions/` directory are **templates**, not static files — they ship with `{{PLACEHOLDER}}` markers that bootstrap fills as tech decisions are confirmed during `/create-prd`.
-
-| File | Filled by | When |
-|------|-----------|------|
-| `AGENTS.md` + `GEMINI.md` | `bootstrap-agents-fill` | After each confirmed tech decision |
-| `commands.md` | `bootstrap-agents-fill` | After dev tooling decisions |
-| `workflow.md` | `bootstrap-agents-fill` | After dev tooling decisions |
-| `tech-stack.md` | `bootstrap-agents-fill` + `bootstrap-agents-provision` | After each decision + after skill provisioning |
-| `structure.md` | `bootstrap-agents-fill` | After Step 9.5 of `/create-prd-compile` |
-| `patterns.md` | `bootstrap-agents-provision` | After a frontend-capable framework skill is provisioned (`FRONTEND_FRAMEWORK`, `MOBILE_FRAMEWORK`, etc.) |
-
-**The placeholder verification gate**: Before any implementation begins, `/implement-slice` scans all seven instruction files for unfilled `{{` patterns. If any are found, it stops and tells you exactly which file, which placeholder, and which command to run. This gate prevents implementation from proceeding with broken agent context.
-
-**Diagnosing unfilled placeholders**: For existing projects with unfilled placeholders, run:
-- `/create-prd-compile` — fills `structure.md` (Step 9.5 generates and locks the directory structure)
-- `/bootstrap-agents-provision` — fills `patterns.md` (composes framework patterns from the provisioned frontend-capable skill — `FRONTEND_FRAMEWORK`, `MOBILE_FRAMEWORK`, etc.)
-- `/bootstrap-agents-fill` with confirmed stack values — fills `AGENTS.md` and `GEMINI.md`
+- [Local bootstrap](local-bootstrap.md)
+- [Architecture design](../.memory/wiki/specs/2026-08-02-architecture-design.md)
+- [Pipeline progress](progress-state-catalog.md)
+- [Infrastructure scripts](../infra/README.md)

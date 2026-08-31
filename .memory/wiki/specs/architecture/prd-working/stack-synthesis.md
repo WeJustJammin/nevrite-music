@@ -60,19 +60,20 @@
 
 - Cloudflare Workers Free allows 100,000 requests/day with 10 ms CPU per invocation; the paid plan has a $5/month minimum. Source: https://developers.cloudflare.com/workers/platform/pricing/
 - Cloudflare R2 has free monthly allowances of 10 GB-month storage, 1 million Class A operations, and 10 million Class B operations; use beyond those allowances is chargeable. Source: https://developers.cloudflare.com/r2/pricing/
-- Supabase Free includes a 500 MB database, 1 GB file storage, and pauses a project after one week of inactivity. It also has no uptime SLA. Source: https://supabase.com/pricing
+- Supabase Free includes a 500 MB database and 1 GB file storage, may pause a project after one week of inactivity, and has no uptime SLA and no PITR. No paid add-on or overage is authorized. Source: https://supabase.com/pricing
 
 ## Confirmed Database Tier
 
-- Supabase Pro is approved as the managed PostgreSQL service tier. Procurement and project provisioning are deferred to `/setup-workspace`; there is no current subscription or live dependency during PRD work.
-- This removes the Free-tier inactivity-pause conflict for the public service while preserving the pre-setup $0/month posture.
+- Supabase Free is the selected managed PostgreSQL service tier under DEC-104. Procurement and project provisioning are deferred to `/setup-workspace`; there is no current paid subscription or live dependency during PRD work.
+- The Free-tier inactivity pause, quotas, lack of PITR, and lack of uptime SLA are accepted constraints. No paid upgrade, overage, or add-on is authorized.
+- Recovery evidence is synthetic/local only until production-verified recovery evidence is separately demonstrated; protected money, rights, and publication writes remain closed without that evidence.
 
 ## Availability Objective (Confirmed)
 
-- **Decision:** 99.9% monthly availability, excluding scheduled outages.
+- **Decision:** 99.9% internal monthly availability objective, excluding announced scheduled outages; no provider uptime SLA is assumed.
 - **Status:** Confirmed by the owner on 2026-08-02.
 - **Meaning:** At most 0.1% unplanned downtime per reporting month; this is approximately 43 minutes and 50 seconds in a 30-day month. The exact allowance varies with calendar-month length.
-- **Operational consequence:** Supabase Pro removes expected inactivity suspension. Hosting, monitoring, incident response, and planned-maintenance procedures must be specified before PRD compilation.
+- **Operational consequence:** Supabase Free may pause after inactivity and provides no uptime SLA. Hosting, monitoring, incident response, and planned-maintenance procedures must account for that best-effort posture without a paid add-on.
 
 ## Hosting Platform (STK-01)
 
@@ -84,7 +85,7 @@
 
 - **Decision:** Cloudflare Pages plus Workers is pre-locked from ideation for the single responsive Astro-islands web surface.
 - **Boundary:** Static assets use edge delivery; SSR and dynamic first-party API paths use Workers. A future native client consumes the same server-side contracts rather than introducing a separate backend.
-- **Plan tier:** Deferred to `/setup-workspace`. The later procurement decision must honor the 99.9% SLO and funding gate; no paid Cloudflare service is assumed during PRD work.
+- **Plan tier:** Cloudflare Workers Paid is the sole paid-service exception beginning at shared staging, under a soft `$10/month` ceiling. The later `/setup-workspace` procurement decision must honor this ceiling and the internal availability objective; no other paid Cloudflare or provider service is assumed.
 - **Provider evidence:** [Cloudflare Workers pricing](https://developers.cloudflare.com/workers/platform/pricing/) documents the current Free-plan limits and the paid-plan minimum.
 ## Authentication and Authorization
 
@@ -150,8 +151,8 @@
 
 - **Error-critical paths:** authentication/linking, authorization, payments/payouts, rights and ledger mutations, migrations, CMS activation, outbox consumers, external webhooks/sync, moderation/legal actions, erasure/hold, and public delivery convergence require explicit error and health signals.
 - **Tracing need:** the Cloudflare Worker → Supabase → outbox/Queue → external-provider paths require propagated release, environment, request/correlation, actor-context class, and entity/version identifiers; raw PII, secrets, evidence, payment data, and content bodies are excluded.
-- **Audit boundary:** durable domain audit remains first-party PostgreSQL data with policy-specific retention and legal hold. Sentry and provider logs are operational diagnostics with minimized metadata and bounded retention, never the system of record.
-- **Selected shape:** Sentry Developer for release-aware application errors, sampled traces, email alerts, one public uptime monitor, and source-map-backed debugging; structured JSON logs plus Cloudflare Workers Observability and Supabase Logs/Reports provide provider-native request, dependency, and database evidence.
+- **Audit boundary:** durable domain audit remains first-party PostgreSQL data with policy-specific retention and legal hold. provider-native logs are operational diagnostics with minimized metadata and bounded retention, never the system of record.
+- **Selected shape:** schema-validated structured JSON logs plus Cloudflare Workers Observability and Supabase Logs/Reports provide release-tagged request, dependency, trace, and database evidence. A scheduled GitHub health check covers public uptime. No third-party monitoring account, SDK, alerting plan, or source-map upload is selected.
 - **Operations posture:** no existing monitoring stack and no staffed 24/7 rotation exist. The solo owner receives immediate severity-1 security, money, data-integrity, publication, and full-outage alerts; lower severities aggregate into the admin task inbox and scheduled review to avoid alert fatigue.
 
 ## Frontend Framework

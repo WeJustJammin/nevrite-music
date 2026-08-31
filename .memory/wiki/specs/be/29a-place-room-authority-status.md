@@ -251,7 +251,7 @@ BE00 transport failures (`INVALID_REQUEST`, media/size errors), authentication a
 | `V29_04_TRANSITION_ROOM` | actor/room IDs, operation/states, opaque affected count, preview/version, replay | transitions/conflicts/migration lag; p95 <2 s; page terminal room accepting new reservation |
 | `V29_10_DECLARE_STATUS` | actor/scope IDs, reason/status/state, affected counts, case/version, replay; no evidence/client data | status/pending/cascade lag; p95 <2 s; page public risk without moderation/corroboration |
 
-Audit rows contain actor/context/action/scope, before/after hashes, reason/evidence/policy versions, preview/idempotency/request hashes and result. Sentry receives opaque IDs and safe codes only; request bodies, exact location, proof tokens, evidence and affected reservation identities are scrubbed.
+Audit rows contain actor/context/action/scope, before/after hashes, reason/evidence/policy versions, preview/idempotency/request hashes and result. provider-native diagnostic sinks receive opaque IDs and safe codes only; request bodies, exact location, proof tokens, evidence and affected reservation identities are scrubbed.
 
 ## Release and Testing
 
@@ -263,7 +263,7 @@ Audit rows contain actor/context/action/scope, before/after hashes, reason/evide
 | `V29_02_CLAIM_SCOPE` | scope/room membership; route eligibility; owner context; provisional/full capabilities; foreign 404; anchor nondisclosure | competing claims serialize; proof ambiguity review-only; provider timeout no authority; terminal replay; case/outbox/audit/metrics |
 | `V29_03_UPSERT_ROOM` | create/update version; place type auto-extension; authored `excludes` rejected; cycle/foreign scope; capability matrix | CAS and volume-key race one winner; relationship failure rolls all back; event order/dedup; CORS/rate/error/trace |
 | `V29_04_TRANSITION_ROOM` | legal state transitions; successors/lineage; confirmed reservation migration; delegate scope; history retained | stale preview/version; all-or-none migration; conflict seam outage; replay; calendar-close event; no client identity logs |
-| `V29_10_DECLARE_STATUS` | reason authority; intervals; risk evidence/moderation; place/room cascade preview; public safe projection | competing status CAS; pending moderation recovery; cascade retry; no partial status/calendar; rate/alert/audit/Sentry scrub |
+| `V29_10_DECLARE_STATUS` | reason authority; intervals; risk evidence/moderation; place/room cascade preview; public safe projection | competing status CAS; pending moderation recovery; cascade retry; no partial status/calendar; rate/alert/audit/provider-native diagnostics scrub |
 
 Additional suites: Zod/OpenAPI/event snapshots; SQL checks/FKs/cycle trigger/index plans; RLS matrix for public/contributor/provisional/full/delegate/moderator/worker/foreign; location privacy differential tests; property tests for place-type superset and graph acyclicity; effective-time/DST tests; outbox version/dedup; circuit chaos; migration rollback and no-hard-delete checks.
 

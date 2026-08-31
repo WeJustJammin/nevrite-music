@@ -1,0 +1,77 @@
+---
+import { RequestIdSchema } from '@wejammin/contracts';
+import '@wejammin/ui/styles.css';
+import SystemStatus from '../components/SystemStatus.astro';
+
+export const prerender = false;
+
+// Status stays server-owned until the health/readiness boundary supplies a
+// trusted result. Degraded is the fail-closed scaffold state.
+const state = 'degraded' as const;
+const affectedScope = 'Workspace status and dependent reads';
+const lastKnownGoodAt = null;
+const retryHref = '/';
+
+const requestIdCandidate = Astro.request.headers.get('x-request-id');
+const parsedRequestId = RequestIdSchema.safeParse(requestIdCandidate);
+const requestId = parsedRequestId.success
+  ? parsedRequestId.data
+  : RequestIdSchema.parse(crypto.randomUUID());
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <meta
+      name="description"
+      content="WeJammin local operational foundation readiness shell."
+    />
+    <title>WeJammin | Operational foundation</title>
+  </head>
+  <body>
+    <nav aria-label="Skip navigation">
+      <a class="skip-link" href="#main-content">Skip to main content</a>
+    </nav>
+    <main id="main-content" class="shell" tabindex="-1">
+      <p class="eyebrow">Phase 1 · Operational foundation</p>
+      <h1>WeJammin operational foundation</h1>
+      <p class="lede">
+        Workspace status: ready for local development. Feature behavior remains
+        locked behind contract-first implementation slices.
+      </p>
+      <dl class="status-list" aria-label="Scaffold boundaries">
+        <div class="status-row">
+          <dt>Server-first web</dt>
+          <dd>
+            Astro renders useful semantic HTML before any optional React island
+            hydrates.
+          </dd>
+        </div>
+        <div class="status-row">
+          <dt>Versioned API</dt>
+          <dd>
+            Hono owns the Cloudflare Worker transport under the versioned API
+            boundary.
+          </dd>
+        </div>
+        <div class="status-row">
+          <dt>Shared contracts</dt>
+          <dd>
+            Zod schemas remain the runtime authority for web, Worker, tests, and
+            generators.
+          </dd>
+        </div>
+      </dl>
+      <SystemStatus
+        state={state}
+        affectedScope={affectedScope}
+        lastKnownGoodAt={lastKnownGoodAt}
+        requestId={requestId}
+        retryHref={retryHref}
+      />
+    </main>
+  </body>
+</html>

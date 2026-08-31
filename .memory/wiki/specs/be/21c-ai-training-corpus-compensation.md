@@ -50,7 +50,7 @@ Four source interactions map one-to-one to four command operations. Corpus/item 
 
 ## Shared Contract Inheritance
 
-BE00 supplies base path, request ID, auth, CORS/CSRF, strict body limits, `If-Match`, rate headers, canonical idempotency, transactions/outbox, event envelope, error validation, logging and Sentry redaction. Every failure uses `ApiError { code, message, requestId, details }`; details exclude raw refusals, buyer dataset contents, media, owner contact data, exact compensation, model-influence claims, tokens, and delivery evidence. Same key/hash replays; a changed hash returns `409 IDEMPOTENCY_KEY_REUSED`.
+BE00 supplies base path, request ID, auth, CORS/CSRF, strict body limits, `If-Match`, rate headers, canonical idempotency, transactions/outbox, event envelope, error validation, logging and provider-native diagnostics redaction. Every failure uses `ApiError { code, message, requestId, details }`; details exclude raw refusals, buyer dataset contents, media, owner contact data, exact compensation, model-influence claims, tokens, and delivery evidence. Same key/hash replays; a changed hash returns `409 IDEMPOTENCY_KEY_REUSED`.
 
 ## API Endpoints
 
@@ -272,7 +272,7 @@ Per-operation observability matrix:
 | SPL-13 | opId,state,excludedCount,preservedUseCount; `ai_withdrawal_total` | p95 2 s; freeze/ship ordering tests |
 | SPL-14 | opId,allocationCount,payoutState,ruleVersion; `training_allocation_total` | p95 15 s/100k; sum/precision/B3 tests |
 
-Logs/Sentry contain no owner decision, dataset object, media, exact amount, buyer identity, evidence, token, or influence field. Alerts cover consent-transfer lag, blocked corpus age, delivery uncertainty, manifest immutability violations, allocation imbalance, B3 payout attempts, and outbox lag.
+Logs/provider-native diagnostics contain no owner decision, dataset object, media, exact amount, buyer identity, evidence, token, or influence field. Alerts cover consent-transfer lag, blocked corpus age, delivery uncertainty, manifest immutability violations, allocation imbalance, B3 payout attempts, and outbox lag.
 
 ## Release and Testing
 

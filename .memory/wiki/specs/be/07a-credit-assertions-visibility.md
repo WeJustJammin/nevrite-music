@@ -543,7 +543,7 @@ Every operation emits a structured audit/log record with requestId, traceId, ope
 | CRD-07A-07 | credit.amendment.changed; proposal, reminder, applied, disputed and blocked counters | credit hash, change kind, state, approver count bucket |
 | CRD-07A-08 | credit.discography-curation.changed; family CAS, pin cap, merge union and cache refresh counters | party hash, role family, pin count bucket, version |
 
-Sentry receives exception fingerprints and circuit state without request bodies. Alerts fire for public purge age over 60 seconds, projection mismatch between count and rows, repeated 403/404 timing divergence, graph budget abuse, stale-context spikes and amendment reminders past day 14.
+provider-native diagnostic sinks receive exception fingerprints and circuit state without request bodies. Alerts fire for public purge age over 60 seconds, projection mismatch between count and rows, repeated 403/404 timing divergence, graph budget abuse, stale-context spikes and amendment reminders past day 14.
 
 ## Testing Strategy
 

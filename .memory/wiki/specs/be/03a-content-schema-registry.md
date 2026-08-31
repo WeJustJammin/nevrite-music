@@ -395,7 +395,7 @@ A known resource is not disguised as 404 when policy permits existence disclosur
 - CSRF is required for browser cookie/session mutations after origin check. Release-worker requests use a non-browser principal and signed body; they do not receive browser authority from CORS.
 - Step-up MFA is recent and bound to acting context for activation. Approval IDs cannot identify the acting submitter, cannot repeat a human, and are invalidated if the candidate hash, compiler version, dependency set, or authority changes.
 - Rate limits use BE00 token buckets keyed by actor, acting party, and release principal. Concurrent definition commands are capped at 3 per actor; activation and registration are separately capped.
-- Definitions and manifests are safe to log only as IDs, hashes, operation, outcome, and size. No field labels, help text, renderer source, schema values, capability graph, or private projection is sent to logs or Sentry.
+- Definitions and manifests are safe to log only as IDs, hashes, operation, outcome, and size. No field labels, help text, renderer source, schema values, capability graph, or private projection is sent to logs or provider-native diagnostics.
 
 ## Data Flow
 
@@ -458,7 +458,7 @@ Each route emits structured, scrubbed logs keyed by operation ID, requestId, tra
 
 Metrics are emitted per operation: cms_definition_request_total{operation,outcome}, cms_definition_latency_ms, cms_definition_error_total{operation,code}, cms_definition_rate_limited_total, cms_definition_conflict_total{operation,reason}, cms_registry_allowlist_reject_total, cms_migration_progress, cms_migration_blocked_total, cms_activation_age, cms_block_registration_total, cms_outbox_lag, cms_queue_retry_total, and cms_queue_dlq_total. Alert thresholds: activation blocked >15m, migration retry >3, DLQ >0, outbox age >2m, conflict spike >5%/5m, or unknown event version.
 
-Traces cover validation → session/acting-context → capability → idempotency → RPC/SQL → audit/outbox → worker/refetch. Sentry captures unexpected errors and high-risk command failures with sendDefaultPii false; audit remains PostgreSQL authority. Telemetry loss does not roll back a committed definition, but audit failure does.
+Traces cover validation → session/acting-context → capability → idempotency → RPC/SQL → audit/outbox → worker/refetch. Structured diagnostics record unexpected errors and high-risk command failures with allowlisted fields only; audit remains PostgreSQL authority. Telemetry loss does not roll back a committed definition, but audit failure does.
 
 SLOs: Tier 2 command p95 <1,200ms, protected RPC p95 <300ms, acceptance p99 <1,000ms, queue first attempt p95 <60s, DLQ <0.1% daily. All dashboards split human console and release-worker traffic.
 

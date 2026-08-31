@@ -571,7 +571,7 @@ export const SafetyEvidenceSealedV1 = z.strictObject({
 | TSE-06A-07 | safety.hold.changed with hold ID, state, manifest hash and clock count; gate denial, active-hold and reconciliation metrics | Trace counsel capability and Shard 05 adapter; basis, object list, legal document and subject identity excluded |
 
 Structured logs follow BE00 severity, environment, release, service,
-operation, outcome, latency, requestId and correlationId. Sentry receives
+operation, outcome, latency, requestId and correlationId. provider-native diagnostic sinks receive
 scrubbed exception metadata. Metrics distinguish empty, partial, unknown,
 degraded and failed; no absent card or missing evidence means no work or
 healthy evidence.

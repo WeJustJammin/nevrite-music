@@ -1,5 +1,5 @@
 {
-  "builtAt": "2026-08-29T05:47:56.841Z",
+  "builtAt": "2026-08-31T02:50:30.575Z",
   "issues": [
     {
       "severity": "warning",
@@ -82,6 +82,12 @@
     {
       "severity": "warning",
       "code": "ORPHAN_SPEC",
+      "message": ".memory/wiki/specs/architecture/prd-working/bootstrap-surface-map-reconciliation-2026-08-30.md has no graph relationships",
+      "path": ".memory/wiki/specs/architecture/prd-working/bootstrap-surface-map-reconciliation-2026-08-30.md"
+    },
+    {
+      "severity": "warning",
+      "code": "ORPHAN_SPEC",
       "message": ".memory/wiki/specs/architecture/prd-working/design-system-synthesis.md has no graph relationships",
       "path": ".memory/wiki/specs/architecture/prd-working/design-system-synthesis.md"
     },
@@ -100,14 +106,26 @@
     {
       "severity": "warning",
       "code": "ORPHAN_SPEC",
-      "message": ".memory/wiki/specs/audits/2026-08-28-be-ambiguity-report.md has no graph relationships",
-      "path": ".memory/wiki/specs/audits/2026-08-28-be-ambiguity-report.md"
+      "message": ".memory/wiki/specs/audits/2026-08-29-be-ambiguity-report.md has no graph relationships",
+      "path": ".memory/wiki/specs/audits/2026-08-29-be-ambiguity-report.md"
     },
     {
       "severity": "warning",
       "code": "ORPHAN_SPEC",
-      "message": ".memory/wiki/specs/fe.md has no graph relationships",
-      "path": ".memory/wiki/specs/fe.md"
+      "message": ".memory/wiki/specs/audits/2026-08-29-fe-ambiguity-report.md has no graph relationships",
+      "path": ".memory/wiki/specs/audits/2026-08-29-fe-ambiguity-report.md"
+    },
+    {
+      "severity": "warning",
+      "code": "ORPHAN_SPEC",
+      "message": ".memory/wiki/specs/audits/audit-scope.md has no graph relationships",
+      "path": ".memory/wiki/specs/audits/audit-scope.md"
+    },
+    {
+      "severity": "warning",
+      "code": "ORPHAN_SPEC",
+      "message": ".memory/wiki/specs/audits/propagation-observability-cost-2026-08-30.md has no graph relationships",
+      "path": ".memory/wiki/specs/audits/propagation-observability-cost-2026-08-30.md"
     },
     {
       "severity": "warning",

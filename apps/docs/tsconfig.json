@@ -1,0 +1,12 @@
+{
+  "extends": "astro/tsconfigs/strict",
+  "references": [{ "path": "../../packages/ui" }],
+  "include": [".astro/types.d.ts", "**/*"],
+  "exclude": ["dist"],
+  "compilerOptions": {
+    "exactOptionalPropertyTypes": true,
+    "jsx": "react-jsx",
+    "jsxImportSource": "react",
+    "noUncheckedIndexedAccess": true
+  }
+}

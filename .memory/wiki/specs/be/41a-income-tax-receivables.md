@@ -1237,7 +1237,7 @@ Domain failure details contain only stable IDs already visible, reasonCode, curr
 | 41.10 | opId, instrumentKind, lineCount, policyVersion; finance_invoice_issue_total | p95 2 s before render; numbering conflict/error immediate alert |
 | 41.11 | opId, decision, reasonCode, ladderStep; finance_dunning_decision_total | p95 500 ms; wrongful-send invariant breach pages immediately |
 
-Logs never contain amounts tied to identities, payer/supplier/customer labels, fiscal refs, terms, document content, delivery targets, URLs/tokens, or checklist evidence. Metrics use bounded enums. Traces propagate requestId/correlationId across providers and jobs; Sentry strips request bodies and financial tags.
+Logs never contain amounts tied to identities, payer/supplier/customer labels, fiscal refs, terms, document content, delivery targets, URLs/tokens, or checklist evidence. Metrics use bounded enums. Traces propagate requestId/correlationId across providers and jobs; provider-native diagnostics strips request bodies and financial tags.
 
 ## Release, Migration, and Recovery
 

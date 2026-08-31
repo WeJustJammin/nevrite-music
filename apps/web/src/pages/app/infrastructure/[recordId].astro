@@ -1,0 +1,144 @@
+---
+import { createRequestId } from '@wejammin/contracts';
+import InfrastructureWorkbench from '../../../components/infrastructure/InfrastructureWorkbench.tsx';
+import {
+  normalizeSafeReturnPath,
+  parseInfrastructureQuery,
+} from '@wejammin/ui/infrastructure/navigation';
+import {
+  isVerifiedInfrastructureContext,
+  readInfrastructureContextPorts,
+  resolveInfrastructureContext,
+} from '../../../server/infrastructure-context.ts';
+import { createInfrastructureSurfaceProjection } from '../../../server/infrastructure-surface-projection.ts';
+import { readServerInfrastructureJobStatus } from '../../../lib/infrastructure-jobs.ts';
+import '@wejammin/ui/styles.css';
+import '../../../styles/infrastructure.css';
+
+export const prerender = false;
+
+const safeReturnPath = normalizeSafeReturnPath(
+  `${Astro.url.pathname}${Astro.url.search}`,
+);
+const recordId = Astro.params.recordId;
+const parsedQuery = parseInfrastructureQuery(Astro.url);
+const contextPorts = readInfrastructureContextPorts(Astro.locals);
+const initialQuery: Record<string, string> = {};
+if (parsedQuery.q !== undefined) initialQuery.q = parsedQuery.q;
+if (parsedQuery.sort !== undefined) initialQuery.sort = parsedQuery.sort;
+if (parsedQuery.filter !== undefined) initialQuery.filter = parsedQuery.filter;
+if (parsedQuery.cursor !== undefined) initialQuery.cursor = parsedQuery.cursor;
+if (parsedQuery.selected !== undefined)
+  initialQuery.selected = parsedQuery.selected;
+if (parsedQuery.tab !== undefined) initialQuery.tab = parsedQuery.tab;
+
+const contextResult = await resolveInfrastructureContext({
+  request: Astro.request,
+  route: 'record',
+  recordId: recordId ?? null,
+  ports: contextPorts,
+});
+if (contextResult.kind === 'unauthenticated') {
+  return Astro.redirect(
+    `/auth/sign-in?returnTo=${encodeURIComponent(safeReturnPath)}`,
+    303,
+  );
+}
+if (contextResult.kind === 'invalid_record') {
+  return new Response('Bad request', { status: 400 });
+}
+if (contextResult.kind !== 'authorized') {
+  return new Response('Not found', { status: 404 });
+}
+if (!isVerifiedInfrastructureContext(contextResult.context)) {
+  return new Response('Not found', { status: 404 });
+}
+
+const context = contextResult.context;
+const loadSurfaceProjection = contextPorts?.loadSurfaceProjection;
+const surfaceSeeds =
+  loadSurfaceProjection === undefined
+    ? null
+    : await Promise.resolve(
+        loadSurfaceProjection({
+          request: Astro.request,
+          session: context.session,
+          authority: context.authority,
+          route: context.route,
+          recordId: context.recordId,
+          version: context.version,
+        }),
+      ).catch(() => null);
+const surface = createInfrastructureSurfaceProjection({
+  capabilities: context.authority.capabilities,
+  seeds: surfaceSeeds,
+});
+const requestId = createRequestId(
+  Astro.request.headers.get('x-request-id') ?? undefined,
+);
+const initial = context.projection;
+const serverJobStatus = readServerInfrastructureJobStatus(Astro.locals) ?? {
+  status: 'empty' as const,
+  reason: 'not-disclosed' as const,
+};
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta
+      name="description"
+      content="Review the current infrastructure record, provenance, history, and permitted actions."
+    />
+    <title>Record | Infrastructure | WeJammin</title>
+  </head>
+  <body class="infra-page">
+    <nav aria-label="Skip navigation">
+      <a class="infra-skip-link" href="#main-content">Skip to main content</a>
+    </nav>
+    <header class="infra-shell-header" aria-label="Application navigation">
+      <a href="/">WeJammin</a>
+      <nav aria-label="Primary navigation">
+        <a href="/app/infrastructure">Infrastructure records</a>
+        <a href="/system/degraded">System status</a>
+      </nav>
+    </header>
+    <main id="main-content" class="infra-main" tabindex="-1">
+      <a href="/app/infrastructure">Back to infrastructure records</a>
+      <div class="infra-shell-header">
+        <p class="infra-eyebrow">Authenticated workspace · Record detail</p>
+        <h1 id="page-title" tabindex="-1">Infrastructure record</h1>
+        <p>
+          The server rechecks the current session, acting context, capability,
+          visibility, and resource version for every deep link.
+        </p>
+      </div>
+      <InfrastructureWorkbench
+        initial={initial}
+        variant="appPage"
+        access={surface.access}
+        actorId={context.session.userId}
+        actingPartyId={context.authority.actingPartyId}
+        query={initialQuery}
+        selectedId={recordId ?? null}
+        expectedVersion={context.version}
+        requestId={requestId}
+        jobRequestId={requestId}
+        realtimeRequestId={requestId}
+        jobStatus={serverJobStatus}
+        canonicalUrl={Astro.url.pathname}
+        {...surface.uploadAdmission === undefined
+          ? {}
+          : { uploadAdmission: surface.uploadAdmission }}
+        {...surface.uploadCompletion === undefined
+          ? {}
+          : { uploadCompletion: surface.uploadCompletion }}
+        {...surface.providerEvidence === undefined
+          ? {}
+          : { providerEvidence: surface.providerEvidence }}
+        client:visible
+      />
+    </main>
+  </body>
+</html>

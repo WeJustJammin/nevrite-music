@@ -11,7 +11,7 @@ This companion is the backend contract for the digital catalog foundation in IA 
 | Compatibility authority | Per-product-version axis combination with supported, known-issue, unsupported, or untested level; dependency verdict remains separate | Machine authorization, activation, seat allocation, purchase eligibility, and executable admission |
 | Security boundary | Vendor party authority, buyer-controlled rig selection, organization grants, exact 403 versus 404, and redacted projections | No legal identity leak, private artifact bytes, buyer identity to vendors, payment instrument, or direct table grant |
 
-The implementation target is TypeScript on Hono/Cloudflare Workers with Supabase PostgreSQL, strict Zod 4 contracts, transactional audit/outbox, forced RLS, structured logs, and Sentry-compatible telemetry. Product type is immutable after first publish; drafts may be corrected before binding by appending a revision. Self-declared rig checks are advisory and cannot create a compatibility badge or machine authorization.
+The implementation target is TypeScript on Hono/Cloudflare Workers with Supabase PostgreSQL, strict Zod 4 contracts, transactional audit/outbox, forced RLS, structured logs, and provider-native diagnostics-compatible telemetry. Product type is immutable after first publish; drafts may be corrected before binding by appending a revision. Self-declared rig checks are advisory and cannot create a compatibility badge or machine authorization.
 
 ## Referenced Material Inventory
 
@@ -275,7 +275,7 @@ BE-00 idempotency receipts retain at least 24 hours with request hash, status, r
 | BE27A-DCD03 | dependency_edge_total by required/evaluation; cycle_reject_total; duplicate_edge_total | requestId, operationId, product/version hash, dependency code hash, required, evaluation, result | dependency.edge.appended; version/audit IDs |
 | BE27A-DCD04 | rig_check_total by verdict; unknown_coverage_total; advisory_only_violation_total; latency | requestId, operationId, rig hash, product version hash, verdicts, result; no machine fingerprint | rig.check.completed; input/version audit; no authorization event |
 
-Trace spans include catalog.draft, compatibility.append, dependency.evaluate, and rig.advisory. Sentry events scrub vendor titles, buyer rig details, fingerprints, legal identity, and private source text. Alerts fire on type mutation attempts, any advisoryOnly false response, unauthorized version write, or repeated unknown-to-supported coercion.
+Trace spans include catalog.draft, compatibility.append, dependency.evaluate, and rig.advisory. structured diagnostic events scrub vendor titles, buyer rig details, fingerprints, legal identity, and private source text. Alerts fire on type mutation attempts, any advisoryOnly false response, unauthorized version write, or repeated unknown-to-supported coercion.
 
 ## Persistence and RLS
 

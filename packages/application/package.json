@@ -1,0 +1,17 @@
+{
+  "name": "@wejammin/application",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./infrastructure/*": "./src/infrastructure/*.ts"
+  },
+  "scripts": {
+    "build": "tsc --build",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@wejammin/contracts": "workspace:*"
+  }
+}

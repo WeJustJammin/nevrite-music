@@ -613,7 +613,7 @@ mutation, audit append, and outbox append.
 Evidence policy is purpose-bound. Reporters see only accepted/status
 projections. Reviewers see evidence refs, not bytes, unless governed Storage
 policy grants a separate signed read. Logs, events, queue envelopes,
-analytics, Sentry, and public projections contain no evidence refs, raw
+analytics, provider-native diagnostics, and public projections contain no evidence refs, raw
 identifier values, provider payloads, legal narrative, or private successor.
 The minimum safe event payload contains only the IDs named by the IA event
 contract.
@@ -770,7 +770,7 @@ Metrics:
 
 Trace spans include only opaque IDs/hashes and contract versions. Alerts fire
 on collision growth, false-report bursts, review-age breach, revocation lag,
-DLQ entries, outbox lag, repeated RLS denial, and provider outage. Sentry
+DLQ entries, outbox lag, repeated RLS denial, and provider outage. provider-native diagnostics
 events use the same redaction policy.
 
 Tier 1 reads target p95 <750 ms; Tier 2 commands p95 <1200 ms; asynchronous
@@ -797,7 +797,7 @@ relationship, stale version, and overdisclosure.
 | Protocol | Idempotent replay, mismatched key, concurrent ETag, missing/malformed ETag, bounded errors, no-store, Location, safe headers, and request hash canonicalization. |
 | RLS/grants | Direct anonymous/authenticated/service reads and writes denied; named RPC checks actor/party/capability; operator assignment/MFA/reason; worker lease token. |
 | Jobs/events | Retry/backoff/DLQ, unknown schema, duplicate event, outbox failure rollback, restore epoch, consumer stale-version fail closed, no PII payload. |
-| Abuse/privacy | Rate bucket boundaries, confusable values, report burst, provider digest conflict, no case/collision/evidence enumeration, log/Sentry/trace redaction, legal hold. |
+| Abuse/privacy | Rate bucket boundaries, confusable values, report burst, provider digest conflict, no case/collision/evidence enumeration, log/provider-native diagnostics/trace redaction, legal hold. |
 | Performance/recovery | Tier 1/Tier 2/asynchronous budgets under load; provider outage; database failover; queue drain; projection rebuild; migration rollback/forward compatibility. |
 
 Unit tests use no live network. Adapter, Storage, 01c, and downstream
@@ -826,7 +826,7 @@ and malformed responses. Synthetic identifiers and evidence objects only.
 | 2 Concurrency | PASS — every mutable command has ETag/CAS; claim/collision/person/case/representation locks; idempotency replay and one-winner rules are explicit. |
 | 3 Failure cascade | PASS — provider, Storage, RPC, audit/outbox, queue, restore, stale consumer, false-report, and evidence-hold cascades preserve canonical state and provenance. |
 | 4 Authorization | PASS — role × operation matrix covers anonymous, self, org mandate, estate, operator, support, and service principal; exact source/version/scope checks are required. |
-| 5 Observability | PASS — redacted log fields, metric names, traces, alerts, Sentry, request/correlation/job identifiers, and no-PII rules are stated. |
+| 5 Observability | PASS — redacted log fields, metric names, traces, alerts, provider-native diagnostics, request/correlation/job identifiers, and no-PII rules are stated. |
 | 6 Rate/abuse | PASS — per-operation actor/party/target/IP buckets, bounded headers, confusable checks, no enumeration, no auto-merge, and operator controls are stated. |
 | 7 Partial state | PASS — each cross-system handoff has atomic RPC or pending/retry state; no silent compensation or false success. |
 | 8 Schema evolution | PASS — versioned PlatformEvent, contract version in hashes, append-only support records, migration/RLS gate, and unknown-schema DLQ inherit BE00. |

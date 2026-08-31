@@ -334,7 +334,7 @@ The transactional outbox publishes only after the report/signature commit. Consu
 | CXR-08B-01 | union.report.draft, union_draft_total, profile_gate_block_total, source_projection_latency_ms | requestId, reportId, sessionRef hash, profileVersion, gateState, missingCount; alert on profile outage and inferred-declaration invariant breach. |
 | CXR-08B-02 | union.report.certified, union_certification_total, signature_pending_total, source_stale_total | requestId, reportId, artifactId, signerRef hash, state and evidence presence; alert on any submission attempt or signature without pinned hash. |
 
-Structured logs exclude union identifiers, rates, membership, declarations, signature bytes and provider secrets. Sentry receives only opaque refs and redacted error codes.
+Structured logs exclude union identifiers, rates, membership, declarations, signature bytes and provider secrets. provider-native diagnostic sinks receive only opaque refs and redacted error codes.
 
 ## Testing Strategy
 

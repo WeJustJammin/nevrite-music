@@ -1,0 +1,22 @@
+# Platform runbooks
+
+## Contents
+
+Safe operational endpoint, job/outbox reconciliation, retention, and SLO procedures for the foundation platform.
+
+- [Jobs and outbox reconciliation](./jobs-outbox-reconciliation.md) — recover undispatched work and expired leases with canonical-state checks.
+- [Upload admission reconciliation](./upload-admission-reconciliation.md) — reconcile upload intents without persisting signed URLs or bypassing canonical object state.
+- [Provider and webhook reconciliation](./provider-webhook-reconciliation.md) — resolve duplicate deliveries and unknown provider outcomes while production providers remain disabled.
+- [Release and recovery gates](./release-recovery-gates.md) — promote immutable artifacts and keep protected writes closed while hosted PITR evidence is unavailable.
+
+## Ownership
+
+The Infrastructure owner maintains these runbooks and their registry references.
+
+## Extension rules
+
+New entries require a matching closed-registry owner and must use sanitized labels instead of private dependency names.
+
+## Conventions and related material
+
+Use provider-neutral symptoms, bounded checks, and named escalation routes. Related contracts live in `packages/contracts/src/platform-registries.ts`.

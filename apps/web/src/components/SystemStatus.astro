@@ -1,0 +1,122 @@
+---
+import ReleaseRecoveryStatus from './release-recovery/ReleaseRecoveryStatus.astro';
+import {
+  DEFAULT_MAINTENANCE_PROJECTION,
+  DEFAULT_RECOVERY_PROJECTION,
+  DEFAULT_RELEASE_PROJECTION,
+  type MaintenanceProjection,
+  type RecoveryReadinessProjection,
+  type ReleasePromotionProjection,
+} from './release-recovery/status-projection.ts';
+import { resolveLastKnownGood } from './release-recovery/status-view.ts';
+
+type SystemState = 'system' | 'degraded';
+
+interface Props {
+  state: SystemState;
+  affectedScope: string;
+  lastKnownGoodAt: string | null;
+  requestId: string;
+  retryHref: string;
+  backHref?: string;
+  release?: ReleasePromotionProjection;
+  recovery?: RecoveryReadinessProjection;
+  maintenance?: MaintenanceProjection;
+}
+
+const {
+  state,
+  affectedScope,
+  lastKnownGoodAt,
+  requestId,
+  retryHref,
+  backHref = '/',
+  release = DEFAULT_RELEASE_PROJECTION,
+  recovery = DEFAULT_RECOVERY_PROJECTION,
+  maintenance = DEFAULT_MAINTENANCE_PROJECTION,
+} = Astro.props;
+
+const lastKnownGood = resolveLastKnownGood(lastKnownGoodAt);
+
+const statusCopy =
+  state === 'degraded'
+    ? {
+        label: 'Degraded',
+        heading: 'Some services are temporarily unavailable.',
+        description:
+          'This server-rendered shell remains available while the affected services recover.',
+      }
+    : {
+        label: 'Operational',
+        heading: 'System is operational.',
+        description:
+          'The server-rendered shell is available for local workspace status and recovery.',
+      };
+---
+
+<section
+  id="system-status"
+  class="system-status"
+  data-system-status
+  data-state={state}
+  aria-labelledby="system-status-heading"
+  aria-describedby="system-status-description"
+>
+  <div class="system-status__header">
+    <p class="eyebrow">System / Degraded</p>
+    <p
+      class="system-status__state"
+      data-status-state
+      role="status"
+      aria-live="polite"
+    >
+      {statusCopy.label}
+    </p>
+    <h2 id="system-status-heading">{statusCopy.heading}</h2>
+    <p id="system-status-description">{statusCopy.description}</p>
+  </div>
+
+  <dl class="system-status__facts" aria-label="System status details">
+    <div class="system-status__fact" data-status-fact="state">
+      <dt>Exact state</dt>
+      <dd>{statusCopy.label}</dd>
+    </div>
+    <div class="system-status__fact" data-status-fact="affected-scope">
+      <dt>Affected scope</dt>
+      <dd data-affected-scope>{affectedScope}</dd>
+    </div>
+    <div class="system-status__fact" data-status-fact="last-known-good">
+      <dt>Last known good</dt>
+      <dd data-last-known-good>
+        {
+          lastKnownGood.status === 'available' ? (
+            <time datetime={lastKnownGood.verifiedAt}>
+              {lastKnownGood.verifiedAt}
+            </time>
+          ) : (
+            <span>
+              Unavailable; no safe last-known-good response is recorded.
+            </span>
+          )
+        }
+      </dd>
+    </div>
+    <div class="system-status__fact" data-status-fact="request-id">
+      <dt>Request ID</dt>
+      <dd><code data-request-id>{requestId}</code></dd>
+    </div>
+  </dl>
+
+  <nav class="system-status__actions" aria-label="System recovery">
+    <a class="action-link" href={retryHref}>Retry safe read</a>
+  </nav>
+</section>
+
+<ReleaseRecoveryStatus
+  release={release}
+  recovery={recovery}
+  maintenance={maintenance}
+  requestId={requestId}
+  retryHref={retryHref}
+  backHref={backHref}
+/>

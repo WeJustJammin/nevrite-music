@@ -149,7 +149,7 @@ score, unrestricted policy query, or direct database mutation.
 
 BE00 supplies request ID, transport and CORS, body/content limits, session and
 acting-party resolution, CSRF, strict Zod 4, capability/RLS, idempotency,
-outbox, queue retry, Sentry/logging and exact ApiError
+outbox, queue retry, provider-native diagnostics/logging and exact ApiError
 { code, message, requestId, details }. details is bounded to 16 keys, four
 levels and 8 KiB.
 
@@ -664,7 +664,7 @@ export const SafetyTvecDecidedV1 = z.strictObject({
 | TSE-06B-08 | safety.tvec.decided with evaluation/object hash/mechanism/version/outcome; provider availability and mechanism mismatch metrics | Object hash and decision metadata only; no extremist profile, raw hash set or policy text |
 
 Logs use BE00 severity, environment, release, service, operation, outcome,
-latency, requestId and correlationId. Sentry receives scrubbed errors.
+latency, requestId and correlationId. provider-native diagnostic sinks receive scrubbed errors.
 Telemetry never implies an absent signal is safe or an advisory signal is a
 finding.
 

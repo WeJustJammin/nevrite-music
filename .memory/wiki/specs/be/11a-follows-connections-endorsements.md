@@ -250,7 +250,7 @@ Observability matrix:
 | COM-02 | opId,action,state,senderClass; `connection_action_total` | p95 750 ms; Fan/rate/expiry/no-follow tests |
 | COM-03 | opId,action,claimKind,evidenceDomain,state; `endorsement_action_total` | p95 750 ms; evidence/Operator/hide tests |
 
-Logs/Sentry omit protected content. Alerts cover conflict/rate anomalies, outbox lag, invalid path-eligibility/auto-follow, and evidence dependency circuits.
+Logs/provider-native diagnostics omit protected content. Alerts cover conflict/rate anomalies, outbox lag, invalid path-eligibility/auto-follow, and evidence dependency circuits.
 
 ## Verification and Test Strategy
 

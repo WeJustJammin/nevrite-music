@@ -31,15 +31,17 @@
 - [[specs/architecture/prd-working/bootstrap-p2-social-report|Bootstrap Report — P2 Additive Social Identity Policy]] — architecture — spec-vault
 - [[specs/architecture/prd-working/bootstrap-primary-language-report|Bootstrap Report — Primary Language]] — architecture — spec-vault
 - [[specs/architecture/prd-working/bootstrap-security-report|Security Bootstrap Verification]] — architecture — spec-vault
+- [[specs/architecture/prd-working/bootstrap-surface-map-reconciliation-2026-08-30|Surface Stack Map Reconciliation]] — architecture — spec-vault
 - [[specs/architecture/prd-working/design-system-synthesis|Design System Synthesis]] — architecture — spec-vault
 - [[specs/architecture/prd-working/ideation-relevance-index|Ideation Relevance Index]] — architecture — spec-vault
 - [[specs/architecture/prd-working/persistence-map-interview|Persistence Map Interview]] — architecture — spec-vault
 - [[specs/architecture/prd-working/stack-synthesis|Stack Synthesis]] — architecture — spec-vault
 - [[specs/architecture-draft|Architecture Design Draft]] — spec — spec-vault
-- [[specs/audits/2026-08-28-be-ambiguity-report|BE Ambiguity Audit — Fresh Run (2026-08-28)]] — audit — spec-vault
-- [[specs/audits/2026-08-28-ia-ambiguity-report|IA Ambiguity Audit — Fresh Run (2026-08-28)]] — audit — spec-vault
-- [[specs/audits/2026-08-28-ia-ambiguity-rerun-1|IA Ambiguity Audit — Fresh Rerun 1 (2026-08-28)]] — audit — spec-vault
-- [[specs/audits/audit-scope|Ambiguity Audit Scope — BE]] — audit — spec-vault
+- [[specs/audits/2026-08-29-be-ambiguity-report|BE Ambiguity Audit — Fresh Combined Run (2026-08-29)]] — audit — spec-vault
+- [[specs/audits/2026-08-29-fe-ambiguity-report|Fresh FE Ambiguity Audit]] — audit — spec-vault
+- [[specs/audits/audit-scope|Ambiguity Audit Scope — BE + FE]] — audit — spec-vault
+- [[specs/audits/propagation-observability-cost-2026-08-30|Sentry Removal and Free-Only Operations Propagation Record]] — audit — spec-vault
+- [[specs/audits/propagation-scan-2026-08-30|Sentry Removal and Free-Only Operations Propagation Scan]] — audit — spec-vault
 - [[specs/be/00-infrastructure|Cross-cutting Platform Foundation — Backend Specification]] — be-spec — spec-vault
 - [[specs/be/01a-auth-account-linking|Authentication & Account Linking — Backend Specification]] — be-spec — spec-vault
 - [[specs/be/01b-party-identity-aliases|Shard 01b — Party Identity & Aliases — Backend Specification]] — be-spec — spec-vault
@@ -201,6 +203,50 @@
 - [[specs/data-placement-strategy|Data Placement Strategy]] — spec — spec-vault
 - [[specs/design-system|Design System]] — spec — spec-vault
 - [[specs/evolutions/2026-08-02-content-management-platform|Evolution — Content Management & Settings-First Platform]] — spec — spec-vault
+- [[specs/fe/00-infrastructure|Cross-cutting platform foundation: Frontend Specification]] — fe-spec — spec-vault
+- [[specs/fe/01-identity-authority|Identity authority and party governance: Frontend Specification]] — fe-spec — spec-vault
+- [[specs/fe/02-profiles-verification|Profiles, claiming and qualifications: Frontend Specification]] — fe-spec — spec-vault
+- [[specs/fe/03-cms-content-modeling|CMS content modeling and authoring: Frontend Specification]] — fe-spec — spec-vault
+- [[specs/fe/04-cms-delivery-media|CMS navigation, media and delivery: Frontend Specification]] — fe-spec — spec-vault
+- [[specs/fe/05-platform-configuration-admin|Platform configuration, admin and quality: Frontend Specification]] — fe-spec — spec-vault
+- [[specs/fe/06-trust-safety|Trust, safety, disputes and evidence: Frontend Specification]] — fe-spec — spec-vault
+- [[specs/fe/07-credits-core|Credit graph, capture and confidence: Frontend Specification]] — fe-spec — spec-vault
+- [[specs/fe/08-credit-reporting-disclosure|Credit reporting, exchange and disclosure: Frontend Specification]] — fe-spec — spec-vault
+- [[specs/fe/09-projects-collaboration|Music projects and collaboration: Frontend Specification]] — fe-spec — spec-vault
+- [[specs/fe/10-rights-ownership|Rights and ownership: Frontend Specification]] — fe-spec — spec-vault
+- [[specs/fe/11-community-graph|Social graph and collaborator network: Frontend Specification]] — fe-spec — spec-vault
+- [[specs/fe/12-community-spaces-events|Communities, participatory spaces and events: Frontend Specification]] — fe-spec — spec-vault
+- [[specs/fe/13-opportunities-casting|Opportunities and casting lifecycle: Frontend Specification]] — fe-spec — spec-vault
+- [[specs/fe/14-services-marketplace|Services marketplace lifecycle: Frontend Specification]] — fe-spec — spec-vault
+- [[specs/fe/15-education-delivery|Lessons, practice and mentorship delivery: Frontend Specification]] — fe-spec — spec-vault
+- [[specs/fe/16-education-credentials-institutions|Courses, credentials, institutions and special practice: Frontend Specification]] — fe-spec — spec-vault
+- [[specs/fe/17-realtime-sessions|Real-time jamming and remote sessions: Frontend Specification]] — fe-spec — spec-vault
+- [[specs/fe/18-royalty-accounting|Royalty registration, ingestion, calculation and payout: Frontend Specification]] — fe-spec — spec-vault
+- [[specs/fe/19-royalty-reporting-forecasting|Performance reporting, money-in-flight and forecasting: Frontend Specification]] — fe-spec — spec-vault
+- [[specs/fe/20-licensing-core|Licensing core and instrument lifecycle: Frontend Specification]] — fe-spec — spec-vault
+- [[specs/fe/21-specialized-licensing|Specialized clearances and licensing: Frontend Specification]] — fe-spec — spec-vault
+- [[specs/fe/22-release-distribution|Release and distribution lifecycle: Frontend Specification]] — fe-spec — spec-vault
+- [[specs/fe/23-gear-provenance-registry|Gear identity, provenance and recovery: Frontend Specification]] — fe-spec — spec-vault
+- [[specs/fe/24-gear-holdings-operations|Gear collections, rigs, custody and manifests: Frontend Specification]] — fe-spec — spec-vault
+- [[specs/fe/25-gear-market-catalog|Gear catalog, listings and market data: Frontend Specification]] — fe-spec — spec-vault
+- [[specs/fe/26-gear-commerce-fulfilment|Gear transactions, fulfilment and possession models: Frontend Specification]] — fe-spec — spec-vault
+- [[specs/fe/27-digital-catalog-delivery|Digital catalog, entitlement, delivery and vendor QA: Frontend Specification]] — fe-spec — spec-vault
+- [[specs/fe/28-digital-licensing-commerce|Digital licensing, commerce, revocation and revenue: Frontend Specification]] — fe-spec — spec-vault
+- [[specs/fe/29-venues-spaces|Venues, studios and spaces: Frontend Specification]] — fe-spec — spec-vault
+- [[specs/fe/30-booking-contracts|Booking, negotiation and contracts: Frontend Specification]] — fe-spec — spec-vault
+- [[specs/fe/31-live-settlement-intelligence|Agency, settlement and live-market intelligence: Frontend Specification]] — fe-spec — spec-vault
+- [[specs/fe/32-show-production-planning|Event production planning and advancing: Frontend Specification]] — fe-spec — spec-vault
+- [[specs/fe/33-show-day-operations|Show-day execution and recovery: Frontend Specification]] — fe-spec — spec-vault
+- [[specs/fe/34-touring-operations|Tour routing, logistics, finance and reporting: Frontend Specification]] — fe-spec — spec-vault
+- [[specs/fe/35-ticket-products-sales|Ticket products, sales, access packages and delivery: Frontend Specification]] — fe-spec — spec-vault
+- [[specs/fe/36-box-office-risk|Door access, box office, reconciliation and ticketing risk: Frontend Specification]] — fe-spec — spec-vault
+- [[specs/fe/37-fanbase-direct-to-fan|Fanbase and direct-to-fan: Frontend Specification]] — fe-spec — spec-vault
+- [[specs/fe/38-promotion-marketing|Promotion and marketing: Frontend Specification]] — fe-spec — spec-vault
+- [[specs/fe/39-analytics-ingestion-reporting|Analytics ingestion, matching and reporting: Frontend Specification]] — fe-spec — spec-vault
+- [[specs/fe/40-market-intelligence-signals|Market intelligence, fraud and scouting signals: Frontend Specification]] — fe-spec — spec-vault
+- [[specs/fe/41-career-finance|Career finance and business operations: Frontend Specification]] — fe-spec — spec-vault
+- [[specs/fe/42-career-planning-risk|Career planning, insurance and sustainability: Frontend Specification]] — fe-spec — spec-vault
+- [[specs/fe/index|FE Layer: Frontend Specifications]] — fe-spec — spec-vault
 - [[specs/fe|FE Specs Hub]] — spec — spec-vault
 - [[specs/feature-ledger|Feature Tracking Ledger — WeJammin]] — spec — spec-vault
 - [[specs/ia/00-infrastructure|Shard 00 — Cross-cutting platform foundation]] — ia-spec — spec-vault
@@ -1476,10 +1522,14 @@
 - [[specs/ideation/meta/problem-statement|Problem Statement — WeJammin]] — ideation — spec-vault
 - [[specs/ideation/moscow-ledger|WeJammin — MoSCoW Ledger]] — ideation — spec-vault
 - [[specs/index|Specs Hub]] — spec — spec-vault
+- [[specs/phases/phase-1-draft|Phase 1 — Operational foundation (Draft)]] — phase-plan — spec-vault
+- [[specs/phases/phase-1|Phase 1 — Operational foundation]] — phase-plan — spec-vault
 - [[specs/vision|WeJammin — Vision]] — spec — spec-vault
 
 ## Structured Memory
 
+- pattern: PAT-016: Operational truth must be server-owned and fail closed (2026-08-30) — 2026-08-30T06:08:13-04:00
+- pattern: PAT-017: Generated artifacts need check-only validation outside broad format globs (2026-08-30) — 2026-08-30T06:08:13-04:00
 - decision: DEC-100: Shard 02 accepts bounded inbound evidence and policy commands without upward store reads (2026-08-28) — 2026-08-28T19:00:00-04:00
 - pattern: PAT-014: Calibrate a deterministic screen against real doc conventions before trusting its flags (2026-08-05) — 2026-08-28T01:00:00-04:00
 - pattern: PAT-014: Calibrate a deterministic screen against real doc conventions before trusting its flags (2026-08-05) — 2026-08-28T00:00:00-04:00

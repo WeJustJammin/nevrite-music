@@ -11,7 +11,7 @@ This companion is the backend contract for the post-purchase remedy, financial-c
 | Money and title boundary | Close each eligible order line once, record refund/fee/hold facts, then request one ownership transfer intent; reversals are compensating records | Payment authorization, capture, refund execution, payout accounts, identity registry, and title/custody history are external seams owned by BE-00, payment, BE-23, or BE-24 |
 | Security boundary | Buyer, seller, support, inspection, payment, and registry actors receive least-privilege projections with 403 versus 404 concealment | No direct client table grant, no raw payment instrument, exact address, evidence original, or provider secret |
 
-The implementation target is TypeScript on Hono/Cloudflare Workers with Supabase PostgreSQL, strict Zod 4 contracts, transactional outbox, forced RLS, structured audit, and Sentry-compatible telemetry. Every mutation is idempotent and records the request, actor, policy revision, and aggregate version that made the decision.
+The implementation target is TypeScript on Hono/Cloudflare Workers with Supabase PostgreSQL, strict Zod 4 contracts, transactional outbox, forced RLS, structured audit, and provider-native diagnostics-compatible telemetry. Every mutation is idempotent and records the request, actor, policy revision, and aggregate version that made the decision.
 
 ## Referenced Material Inventory
 
@@ -338,7 +338,7 @@ BE-00 idempotency receipts retain at least 24 hours and store request hash, stat
 | BE26C-GCF15 | transfer_intent_total by state/direction; registry_rejection_total; age of pending intents | requestId, operationId, settlement/intent hash, direction, registry correlation hash, result | ownership.transfer.requested; gear_order.transfer_requested.v1; settlement basis |
 | BE26C-GCF16 | transfer_reversal_total by reason; registry_reversal_pending_total; contested age; duplicate append count | requestId, operationId, intent/basis hash, reason, legal/fraud case hash, result | ownership.transfer.reversal_requested; compensating gear_order.transfer_requested.v1; original event link |
 
-Trace spans include remedy.case, settlement.close, payment.dispatch, and registry.transfer, with sampling that preserves all failures, authorization denials, money/title races, and provider retries. Sentry events use a scrubber for addresses, descriptions, evidence URLs, payment data, and provider secrets. Alert thresholds: any duplicate settlement attempt, any title request without a settled basis, any outbox age over 60 seconds, and any protected filing that loses its hold.
+Trace spans include remedy.case, settlement.close, payment.dispatch, and registry.transfer, with sampling that preserves all failures, authorization denials, money/title races, and provider retries. structured diagnostic events use a scrubber for addresses, descriptions, evidence URLs, payment data, and provider secrets. Alert thresholds: any duplicate settlement attempt, any title request without a settled basis, any outbox age over 60 seconds, and any protected filing that loses its hold.
 
 ## Persistence and RLS
 

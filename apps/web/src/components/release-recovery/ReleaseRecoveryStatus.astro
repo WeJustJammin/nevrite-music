@@ -1,0 +1,193 @@
+---
+import type {
+  MaintenanceProjection,
+  RecoveryReadinessProjection,
+  ReleasePromotionProjection,
+  StatusViewState,
+} from './status-projection.ts';
+import {
+  deriveReleaseRecoveryState,
+  recoveryArtifactMatchesRelease,
+  recoveryEvidenceComplete,
+  releaseEvidenceComplete,
+} from './status-view.ts';
+import '../../styles/release-recovery.css';
+interface Props {
+  release: ReleasePromotionProjection;
+  recovery: RecoveryReadinessProjection;
+  maintenance: MaintenanceProjection;
+  requestId: string;
+  retryHref: string;
+  backHref: string;
+}
+
+const { release, recovery, maintenance, requestId, retryHref, backHref } =
+  Astro.props;
+
+const releaseReady = releaseEvidenceComplete(release);
+const recoveryReady = recoveryEvidenceComplete(recovery);
+const artifactBound = recoveryArtifactMatchesRelease(release, recovery);
+const state: StatusViewState = deriveReleaseRecoveryState({
+  releaseStatus: release.status,
+  recoveryStatus: recovery.status,
+  releaseEvidenceComplete: releaseReady,
+  recoveryEvidenceComplete: recoveryReady,
+  protectedWritesEnabled: recovery.protectedWrites === 'enabled',
+  checksVerified: recovery.checksVerified,
+  artifactBound,
+});
+
+const stateCopy: Record<
+  StatusViewState,
+  { label: string; heading: string; description: string }
+> = {
+  loading: {
+    label: 'Loading',
+    heading: 'Loading release and recovery evidence.',
+    description:
+      'The safe status read is in progress. No deployment or provider action starts here.',
+  },
+  error: {
+    label: 'Error',
+    heading: 'Release and recovery evidence is unavailable.',
+    description:
+      'The canonical status read failed. Protected operations remain closed until evidence is verified.',
+  },
+  success: {
+    label: 'Verified',
+    heading: 'Release and recovery evidence is verified.',
+    description:
+      'The displayed release identity and recovery checks come from an accepted server projection.',
+  },
+  blocked: {
+    label: 'Blocked',
+    heading: 'Protected operations remain blocked.',
+    description:
+      'Required release or recovery evidence is missing, unavailable, stale, or failed.',
+  },
+};
+
+const copy = stateCopy[state];
+const pitrCopy =
+  recovery.pitrAvailable === true &&
+  recovery.pitrRetentionDays !== null &&
+  recovery.pitrRetentionDays >= 7
+    ? `Available; ${recovery.pitrRetentionDays}-day retention evidence verified.`
+    : 'PITR unavailable; protected writes remain disabled.';
+const rpoCopy = !recoveryReady
+  ? 'Unavailable; no verified RPO measurement.'
+  : `${recovery.measuredRpoSeconds} seconds (target <= 120 seconds).`;
+const rtoCopy = !recoveryReady
+  ? 'Unavailable; no verified RTO measurement.'
+  : `${recovery.measuredRtoSeconds} seconds (target <= 14,400 seconds).`;
+const artifactCopy = releaseReady
+  ? 'Verified immutable artifact identity.'
+  : 'Unavailable; promotion is blocked.';
+const maintenanceCopy =
+  maintenance.status !== 'unavailable' &&
+  maintenance.announcedAtLeast48HoursAhead
+    ? `Scheduled ${maintenance.scope ?? 'service'} maintenance is announced at least 48 hours ahead.`
+    : 'Maintenance evidence unavailable; no scheduled exclusion is claimed.';
+const availabilityCopy =
+  maintenance.availabilityBasisPoints === null
+    ? 'Availability evidence unavailable; unplanned downtime always counts.'
+    : `Measured ${(maintenance.availabilityBasisPoints / 100).toFixed(2)}% against the 99.9% monthly availability objective. Unplanned downtime always counts.`;
+const freshnessCopy = recovery.verifiedAt
+  ? `Last verified: ${recovery.verifiedAt}.`
+  : 'Freshness: no verified recovery timestamp is available.';
+const announcement =
+  state === 'success'
+    ? `Status verified. ${freshnessCopy} Request ID: ${requestId}. No protected write is initiated by this view.`
+    : `${copy.label}: ${copy.description} Request ID: ${requestId}. Retry the safe status read.`;
+---
+
+<section
+  id="release-recovery-status"
+  class="release-recovery-status"
+  data-release-recovery-status
+  data-status-state={state}
+  aria-labelledby="release-recovery-status-heading"
+  aria-describedby="release-recovery-status-description"
+>
+  <p class="eyebrow">Release / Recovery</p>
+  <p
+    class="release-recovery-status__state"
+    data-status-state-label
+    role="status"
+    aria-live="polite"
+    aria-atomic="true"
+  >
+    {copy.label}
+  </p>
+  <h2 id="release-recovery-status-heading" data-status-heading tabindex="-1">
+    {copy.heading}
+  </h2>
+  <p id="release-recovery-status-description">{copy.description}</p>
+  <p
+    class="release-recovery-status__announcement"
+    data-status-announcement
+    role="status"
+    aria-live="polite"
+    aria-atomic="true"
+  >
+    {announcement}
+  </p>
+  <dl
+    class="release-recovery-status__facts"
+    aria-label="Release and recovery evidence"
+  >
+    <div>
+      <dt>Release artifact</dt>
+      <dd data-release-artifact>
+        {artifactCopy}
+        {releaseReady ? <code>{release.artifactDigest}</code> : null}
+      </dd>
+    </div>
+    <div>
+      <dt>PITR coverage</dt>
+      <dd data-pitr-status>{pitrCopy}</dd>
+    </div>
+    <div>
+      <dt>Measured RPO</dt>
+      <dd data-rpo-status>{rpoCopy}</dd>
+    </div>
+    <div>
+      <dt>Measured RTO</dt>
+      <dd data-rto-status>{rtoCopy}</dd>
+    </div>
+    <div>
+      <dt>Protected writes</dt>
+      <dd data-protected-writes>
+        {
+          recoveryReady && artifactBound
+            ? 'Enabled after verified recovery checks.'
+            : 'Disabled until verified recovery checks pass.'
+        }
+      </dd>
+    </div>
+    <div>
+      <dt>Maintenance</dt>
+      <dd data-maintenance-status>{maintenanceCopy}</dd>
+    </div>
+    <div>
+      <dt>Availability objective</dt>
+      <dd data-availability-status>{availabilityCopy}</dd>
+    </div>
+    <div>
+      <dt>Request ID</dt>
+      <dd><code data-request-id>{requestId}</code></dd>
+    </div>
+  </dl>
+  <nav aria-label="Release and recovery actions">
+    <a class="action-link" href={retryHref} data-recovery-retry>
+      Retry safe status read
+    </a>
+    <a class="action-link" href={backHref} data-recovery-back>
+      Back to safe route
+    </a>
+  </nav>
+  <p class="release-recovery-status__boundary">
+    No provider activation is performed by this status view.
+  </p>
+</section>
+<script src="../../lib/release-recovery-status-focus.ts"></script>

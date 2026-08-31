@@ -1,0 +1,4 @@
+APP_ENVIRONMENT=development
+APP_RELEASE=local
+SUPABASE_URL=https://example.supabase.co
+SUPABASE_SECRET_KEY=replace_locally_only

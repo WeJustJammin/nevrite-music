@@ -1,0 +1,26 @@
+{
+  "name": "@wejammin/worker",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev",
+    "build": "wrangler deploy --dry-run --outdir dist --env=\"\"",
+    "deploy:staging": "wrangler deploy --env staging --minify",
+    "deploy:production": "wrangler deploy --env=\"\" --minify",
+    "cf-typegen": "wrangler types --env-interface CloudflareBindings",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@wejammin/application": "workspace:*",
+    "@wejammin/config": "workspace:*",
+    "@wejammin/contracts": "workspace:*",
+    "@wejammin/observability": "workspace:*",
+    "hono": "4.13.5"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "5.20260829.1",
+    "typescript": "5.9.3",
+    "wrangler": "4.127.1"
+  }
+}

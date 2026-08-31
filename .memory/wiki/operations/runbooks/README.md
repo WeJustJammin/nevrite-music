@@ -6,7 +6,7 @@ This directory is the canonical operational-response index. `/setup-workspace` m
 |---|---|---|
 | `public-outage.md` | CDN, Astro, Hono, DNS/TLS, maintenance and rollback | synthetic failure and artifact rollback drill |
 | `auth-provider.md` | Supabase Auth and additive OAuth provider outage/recovery | login/link/recovery fail-closed verification |
-| `database-recovery.md` | seven-day PITR, restore, integrity checks, RLS/RPC validation | full restore proving `≤2 minute` RPO capability and measured `≤4 hour` RTO |
+| `database-recovery.md` | Free-tier synthetic/local restore, integrity checks, RLS/RPC validation | diagnostic restore evidence only; no production PITR/RPO/RTO claim and protected writes remain closed |
 | `queue-outbox.md` | dispatcher lag, Queue outage, dead letter, replay | idempotent replay and current-state revalidation drill |
 | `payment-reconciliation.md` | Stripe Checkout/webhook ambiguity, refunds, disputes | sandbox reconciliation and no-double-effect proof |
 | `cms-publication.md` | publish convergence, cache purge, rollback, takedown | last-known-good and fail-closed removal drill |

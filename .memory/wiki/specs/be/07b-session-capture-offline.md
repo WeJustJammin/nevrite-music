@@ -432,7 +432,7 @@ Every operation emits requestId, traceId, operationId, outcome, latencyMs, actor
 | CRD-07B-03 | credit.session.closed.v1; close reason, reopen, prompt enqueue/failure and close latency metrics | session hash, close reason, closed version, issue count, prompt state |
 | CRD-07B-04 | credit.attendance.changed; consent, record, queue, withdrawal and provider latency metrics | session hash, participant hash, signal kind, consent version, state |
 
-Sentry receives exception fingerprints and provider circuit state without request bodies. Alerts fire for roll conflict growth, close outbox lag over 60 seconds, prompt retry exhaustion, evidence queue age over 5 minutes, consent mismatch and a projection attempting to treat roll presence as credit.
+provider-native diagnostic sinks receive exception fingerprints and provider circuit state without request bodies. Alerts fire for roll conflict growth, close outbox lag over 60 seconds, prompt retry exhaustion, evidence queue age over 5 minutes, consent mismatch and a projection attempting to treat roll presence as credit.
 
 ## Testing Strategy
 

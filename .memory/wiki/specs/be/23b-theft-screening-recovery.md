@@ -371,7 +371,7 @@ Consumers dedupe by eventId and aggregate identity/version. Outbox insert is ato
 | Dependency/moderation gate | HTTP 422 SCREENING_UNAVAILABLE, MODERATION_REQUIRED, or SIGHTING_SCOPE_INVALID. |
 | Rate limit | HTTP 429 RATE_LIMITED with bounded Retry-After. |
 | Matcher/Shard 06/notification/broker timeout | HTTP 503 DEPENDENCY_UNAVAILABLE; cannot-check/pending private state retained. |
-| Unhandled error | HTTP 500 INTERNAL; cause remains in Sentry/structured logs keyed by requestId. |
+| Unhandled error | HTTP 500 INTERNAL; cause remains in provider-native structured logs keyed by requestId. |
 
 ### Error invariants
 
@@ -428,7 +428,7 @@ None.
 
 ## Dependency References
 
-- BE00: inherit command admission, idempotency, audit, private schema boundary, RPC-only grants, forced RLS, jobs, outbox leases, CORS baseline, Sentry correlation, and ApiError { code, message, requestId, details }. No BE00 route is duplicated.
+- BE00: inherit command admission, idempotency, audit, private schema boundary, RPC-only grants, forced RLS, jobs, outbox leases, CORS baseline, provider-native diagnostics correlation, and ApiError { code, message, requestId, details }. No BE00 route is duplicated.
 - 23a: consume gear identity/key, claim, custody and transfer facts; return screening admission through a protected seam. 23b never rewrites identity or title.
 - Shard 01: consume party/entity and protected-contact authority; no owner/contact identity is exposed here.
 - Shard 06: open assigned theft/false-flag/sighting dispute case and consume reviewer scope; 23b records evidence and state but never adjudicates.

@@ -378,7 +378,7 @@ The transactional outbox publishes after link/event commit. Shard 23 consumes a 
 | CXR-08C-02 | gear.discography.projected, gear_projection_total, purge_total, purge_pending_total | requestId, projectionId, itemRef hash, itemVersion, purgeEpoch, state; alert on public line after restrictive source or purge SLA breach. |
 | CXR-08C-03 | gear.ownership.event.accepted, ownership_event_total, rebuild_pending_total, source_event_duplicate_total | requestId, sourceEventId hash, itemRef hash, version and rebuild state; alert on unsigned events, replay spikes or local owner-write attempt. |
 
-Structured logs exclude serial numbers, holder identity, private session facts, mandate evidence and hidden credit titles. Sentry receives only opaque refs and redacted codes.
+Structured logs exclude serial numbers, holder identity, private session facts, mandate evidence and hidden credit titles. provider-native diagnostic sinks receive only opaque refs and redacted codes.
 
 ## Testing Strategy
 

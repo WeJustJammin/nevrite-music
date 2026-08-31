@@ -2,7 +2,7 @@
 
 - **IA specs**: 85
 - **BE specs**: 157
-- **FE specs**: 0
+- **FE specs**: 44
 
 ## IA
 - [[specs/ia/00-infrastructure|Shard 00 — Cross-cutting platform foundation]]
@@ -251,3 +251,47 @@
 - [[specs/be/index|BE Layer — Backend Specifications]]
 
 ## FE
+- [[specs/fe/00-infrastructure|Cross-cutting platform foundation: Frontend Specification]]
+- [[specs/fe/01-identity-authority|Identity authority and party governance: Frontend Specification]]
+- [[specs/fe/02-profiles-verification|Profiles, claiming and qualifications: Frontend Specification]]
+- [[specs/fe/03-cms-content-modeling|CMS content modeling and authoring: Frontend Specification]]
+- [[specs/fe/04-cms-delivery-media|CMS navigation, media and delivery: Frontend Specification]]
+- [[specs/fe/05-platform-configuration-admin|Platform configuration, admin and quality: Frontend Specification]]
+- [[specs/fe/06-trust-safety|Trust, safety, disputes and evidence: Frontend Specification]]
+- [[specs/fe/07-credits-core|Credit graph, capture and confidence: Frontend Specification]]
+- [[specs/fe/08-credit-reporting-disclosure|Credit reporting, exchange and disclosure: Frontend Specification]]
+- [[specs/fe/09-projects-collaboration|Music projects and collaboration: Frontend Specification]]
+- [[specs/fe/10-rights-ownership|Rights and ownership: Frontend Specification]]
+- [[specs/fe/11-community-graph|Social graph and collaborator network: Frontend Specification]]
+- [[specs/fe/12-community-spaces-events|Communities, participatory spaces and events: Frontend Specification]]
+- [[specs/fe/13-opportunities-casting|Opportunities and casting lifecycle: Frontend Specification]]
+- [[specs/fe/14-services-marketplace|Services marketplace lifecycle: Frontend Specification]]
+- [[specs/fe/15-education-delivery|Lessons, practice and mentorship delivery: Frontend Specification]]
+- [[specs/fe/16-education-credentials-institutions|Courses, credentials, institutions and special practice: Frontend Specification]]
+- [[specs/fe/17-realtime-sessions|Real-time jamming and remote sessions: Frontend Specification]]
+- [[specs/fe/18-royalty-accounting|Royalty registration, ingestion, calculation and payout: Frontend Specification]]
+- [[specs/fe/19-royalty-reporting-forecasting|Performance reporting, money-in-flight and forecasting: Frontend Specification]]
+- [[specs/fe/20-licensing-core|Licensing core and instrument lifecycle: Frontend Specification]]
+- [[specs/fe/21-specialized-licensing|Specialized clearances and licensing: Frontend Specification]]
+- [[specs/fe/22-release-distribution|Release and distribution lifecycle: Frontend Specification]]
+- [[specs/fe/23-gear-provenance-registry|Gear identity, provenance and recovery: Frontend Specification]]
+- [[specs/fe/24-gear-holdings-operations|Gear collections, rigs, custody and manifests: Frontend Specification]]
+- [[specs/fe/25-gear-market-catalog|Gear catalog, listings and market data: Frontend Specification]]
+- [[specs/fe/26-gear-commerce-fulfilment|Gear transactions, fulfilment and possession models: Frontend Specification]]
+- [[specs/fe/27-digital-catalog-delivery|Digital catalog, entitlement, delivery and vendor QA: Frontend Specification]]
+- [[specs/fe/28-digital-licensing-commerce|Digital licensing, commerce, revocation and revenue: Frontend Specification]]
+- [[specs/fe/29-venues-spaces|Venues, studios and spaces: Frontend Specification]]
+- [[specs/fe/30-booking-contracts|Booking, negotiation and contracts: Frontend Specification]]
+- [[specs/fe/31-live-settlement-intelligence|Agency, settlement and live-market intelligence: Frontend Specification]]
+- [[specs/fe/32-show-production-planning|Event production planning and advancing: Frontend Specification]]
+- [[specs/fe/33-show-day-operations|Show-day execution and recovery: Frontend Specification]]
+- [[specs/fe/34-touring-operations|Tour routing, logistics, finance and reporting: Frontend Specification]]
+- [[specs/fe/35-ticket-products-sales|Ticket products, sales, access packages and delivery: Frontend Specification]]
+- [[specs/fe/36-box-office-risk|Door access, box office, reconciliation and ticketing risk: Frontend Specification]]
+- [[specs/fe/37-fanbase-direct-to-fan|Fanbase and direct-to-fan: Frontend Specification]]
+- [[specs/fe/38-promotion-marketing|Promotion and marketing: Frontend Specification]]
+- [[specs/fe/39-analytics-ingestion-reporting|Analytics ingestion, matching and reporting: Frontend Specification]]
+- [[specs/fe/40-market-intelligence-signals|Market intelligence, fraud and scouting signals: Frontend Specification]]
+- [[specs/fe/41-career-finance|Career finance and business operations: Frontend Specification]]
+- [[specs/fe/42-career-planning-risk|Career planning, insurance and sustainability: Frontend Specification]]
+- [[specs/fe/index|FE Layer: Frontend Specifications]]

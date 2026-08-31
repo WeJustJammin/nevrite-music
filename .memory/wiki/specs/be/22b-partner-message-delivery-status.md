@@ -429,7 +429,7 @@ Consumers dedupe by eventId and aggregate identity/version. Outbox insert is ato
 | Domain gate | HTTP 422 exact code: DELIVERY_SNAPSHOT_STALE, MESSAGE_SEQUENCE_CONFLICT, PROFILE_UNCERTIFIED, ACK_QUARANTINED, PARTNER_RULE_BLOCKED, ARTIST_LINK_REQUIRED, OAUTH_GRANT_REQUIRED, or EDITORIAL_DEADLINE_EXPIRED. |
 | Rate limit | HTTP 429 RATE_LIMITED and bounded Retry-After. |
 | Provider/store/OAuth timeout or malformed response | HTTP 503 DEPENDENCY_UNAVAILABLE; pending/unknown state retained. |
-| Unhandled error | HTTP 500 INTERNAL; cause remains in Sentry/structured logs keyed by requestId. |
+| Unhandled error | HTTP 500 INTERNAL; cause remains in provider-native structured logs keyed by requestId. |
 
 ### Error invariants
 
@@ -488,7 +488,7 @@ None.
 
 ## Dependency References
 
-- BE00: inherit command admission, idempotency, audit, private schema boundary, RPC-only grants, forced RLS, provider-operation evidence, outbox leases, Sentry correlation, CORS baseline, and ApiError { code, message, requestId, details }. No BE00 route is duplicated.
+- BE00: inherit command admission, idempotency, audit, private schema boundary, RPC-only grants, forced RLS, provider-operation evidence, outbox leases, provider-native diagnostics correlation, CORS baseline, and ApiError { code, message, requestId, details }. No BE00 route is duplicated.
 - 22a: consume release/readiness/validation/footprint/date/identifier revisions and release findings. DST-08 rereads all required facts at handoff; 22b never changes them.
 - Shard 01: consume acting-party authority, label/owner mandate, artist party and store artist-link verification; no identity or artist merge truth is authored here.
 - Shard 06: consume trust/safety assignment and claim/review paths for blocked or disputed delivery.

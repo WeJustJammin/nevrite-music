@@ -513,7 +513,7 @@ Every error serializes as `ApiError { code, message, requestId, details }` and i
 | `PRJ-04` | record kind, payload bytes, anchor rejection, storage latency | song ID, record ID, origin mode, body hash, result | `prj.creative.capture`; alert storage failures and body quota abuse |
 | `PRJ-22` | brief append, reference kind, conflict count, URI validation failures | song ID, brief version, reference count, source hash | `prj.mix_brief.write`; alert third-party-byte attempts and p95 > 800 ms |
 
-Logs never contain title, lyric, chart, prose, collaborator identity, external URI, signed URL or storage locator. Sentry receives request ID, operation ID and safe error code only.
+Logs never contain title, lyric, chart, prose, collaborator identity, external URI, signed URL or storage locator. provider-native diagnostic sinks receive request ID, operation ID and safe error code only.
 
 ## Testing Strategy
 

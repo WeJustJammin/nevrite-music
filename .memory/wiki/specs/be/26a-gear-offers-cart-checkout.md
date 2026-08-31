@@ -366,7 +366,7 @@ BE-00 idempotency records retain command results at least 24 hours. A lost respo
 | BE26A-GCF04 | checkout_prepare_total by eligible/ineligible; dependency_failure_total; latency | requestId, operationId, preparation ID, group count, ineligible reason histogram | preparation.created audit; no claim/payment event |
 | BE26A-GCF05 | checkout_commit_total; claim_loser_total; payment_ambiguity_total; latency | requestId, operationId, prep/group hashes, line counts, order count, result | checkout.committed audit; gear_checkout.group_committed.v1 |
 
-Sentry receives stable error code and requestId only. Metrics never contain buyer/seller identity, payment token, address, private offer note or raw provider payload.
+provider-native diagnostic sinks receive stable error code and requestId only. Metrics never contain buyer/seller identity, payment token, address, private offer note or raw provider payload.
 
 ## Persistence and RLS
 

@@ -390,7 +390,7 @@ Consumers dedupe by eventId and aggregate identity/version. Outbox insertion is 
 | Label/distributor gate failure | HTTP 422 LABEL_COPY_JUSTIFICATION_REQUIRED, RELEASE_YEAR_UNSET, DISTRIBUTOR_NOT_ELIGIBLE, DISTRIBUTION_MANDATE_REQUIRED, or DISTRIBUTOR_AUTHORITY_STALE. |
 | Rate limit | HTTP 429 RATE_LIMITED with bounded Retry-After. |
 | Cross-shard/worker timeout or malformed response | HTTP 503 DEPENDENCY_UNAVAILABLE; prior truth and retry state retained. |
-| Unhandled error | HTTP 500 INTERNAL; cause remains in Sentry/structured logs keyed by requestId. |
+| Unhandled error | HTTP 500 INTERNAL; cause remains in provider-native structured logs keyed by requestId. |
 
 ### Error invariants
 
@@ -447,7 +447,7 @@ None.
 
 ## Dependency References
 
-- BE00: inherit command admission, idempotency, audit, private schema boundary, RPC-only grants, forced RLS, jobs, provider operations, outbox leases, Sentry correlation, CORS baseline, and ApiError { code, message, requestId, details }. No BE00 route is duplicated.
+- BE00: inherit command admission, idempotency, audit, private schema boundary, RPC-only grants, forced RLS, jobs, provider operations, outbox leases, provider-native diagnostics correlation, CORS baseline, and ApiError { code, message, requestId, details }. No BE00 route is duplicated.
 - 22a: consume release/version/readiness/identifier and canonical descriptor inputs; enrichment and label writes fail closed on stale version.
 - 22b: consume message/status history and certified MEAD dispatch seam; emitted delivered event requires confirmed 22b response.
 - 22c: consume lifecycle, takedown, fingerprint and claim history for complete export and provenance; 22d never rewrites it.

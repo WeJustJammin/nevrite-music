@@ -461,7 +461,7 @@ X-Request-Id, matching RateLimit headers and Retry-After where applicable.
 | BE23D-GPR15 | Span includes operation ID, requestId, correlationId, pack/job IDs, selection count, gap count, worker state and dependency class. Metrics cover accepted, running, succeeded, retryable_failed, replayed, private_denied, gaps, queue lag and duration. | Audit records actor hash, selected item count, selection digest, gap count, policy version, job state and reason. Never log item IDs, evidence/appraisal IDs, manifest contents, document URL or private values. |
 | BE23D-GPR16 | Span includes operation ID, requestId, correlationId, gear hash, source kind/hash, source status, inherited visibility and dependency class. Metrics cover active, suppressed, disputed, ineligible, hidden, replayed, forbidden, conflict and latency. | Audit records actor/producer hash, gear/source hash, eligibility decision, inherited state/visibility and reason. Never log credit/session identity, hidden use, owner identity or source payload. |
 
-Sentry receives only correlation ID, operation ID and sanitized code. Structured
+provider-native diagnostic sinks receive only correlation ID, operation ID and sanitized code. Structured
 logs use stable enums and digests; request bodies, signed URLs, evidence, values,
 credit identifiers and private text are excluded.
 

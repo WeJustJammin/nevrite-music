@@ -235,7 +235,7 @@ Grant invariant applies row-for-row: client API roles receive no direct table `G
 - The queue is encrypted and scoped to one owner/device/song. Revocation stops dequeue and invalidates grant epoch; failed or unknown formats remain quarantined and labelled unavailable.
 - Evidence references are capability-scoped and expire. A stale legal/DAW validation or changed root set returns `BRIDGE_DISABLED` or `VALIDATION_FAILED`; it never silently degrades to broader access.
 - Rate limits: 10 activation attempts/hour/owner, 5 invalid attestation attempts/10 minutes/device hash and 100 queue items/hour/device after a future gate. No v1 queue endpoint is reachable.
-- Audit/log fields are hashes, evidence keys, state and request IDs. Sentry never receives keys, local roots, paths, file names, credentials or parser content.
+- Audit/log fields are hashes, evidence keys, state and request IDs. provider-native diagnostics never receives keys, local roots, paths, file names, credentials or parser content.
 
 ## Data Flow
 
@@ -312,7 +312,7 @@ Every failure serializes `ApiError { code, message, requestId, details }`; logs 
 |---|---|---|---|
 | `PRJ-20` | activation attempts, gate completeness, disabled reasons, signature failures, revocation hits, queue state | song/device IDs, public-key hash, agent version, evidence keys, gate state, result | `prj.bridge.activation`; alert invalid-root attempts, repeated signature failures and any active v1 state |
 
-Sentry receives request ID, operation ID, gate state and safe error code only. A production alert fires if any v1 device reaches `active`, if an outbox event contains a path-like value, or if a queue item bypasses an active grant epoch.
+provider-native diagnostic sinks receive request ID, operation ID, gate state and safe error code only. A production alert fires if any v1 device reaches `active`, if an outbox event contains a path-like value, or if a queue item bypasses an active grant epoch.
 
 ## Testing Strategy
 
