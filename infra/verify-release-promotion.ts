@@ -9,6 +9,7 @@ import {
   ReleasePromotionEvidenceSchema,
   type ReleasePromotionEvidence,
 } from '../packages/contracts/src/release-artifact.ts';
+import { verifyPerformanceEvidence } from './workflows/verify-performance-evidence.ts';
 
 export const verifyStagingCandidateMetadata = (
   metadata: unknown,
@@ -27,6 +28,10 @@ export const verifyStagingCandidateMetadata = (
   ) {
     throw new Error('Staging candidate evidence is incomplete.');
   }
+  verifyPerformanceEvidence(
+    evidence.performance,
+    evidence.artifact.sourceRevision,
+  );
   return evidence;
 };
 
@@ -38,6 +43,14 @@ export const verifyReleasePromotionMetadata = (
   if (!protectedApproval) {
     throw new Error('A protected production environment is required.');
   }
+  const parsedEvidence = ReleasePromotionEvidenceSchema.safeParse(metadata);
+  if (!parsedEvidence.success) {
+    throw new Error('Production promotion evidence is invalid.');
+  }
+  verifyPerformanceEvidence(
+    parsedEvidence.data.performance,
+    parsedEvidence.data.artifact.sourceRevision,
+  );
   const decision = evaluateReleasePromotion({
     evidence: metadata,
     previousArtifact:

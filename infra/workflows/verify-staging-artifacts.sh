@@ -47,3 +47,7 @@ test -f .artifacts/ci-gate-evidence.json || {
   echo "::error::Immutable CI gate evidence is missing"
   exit 1
 }
+node --experimental-strip-types infra/workflows/verify-performance-evidence.ts \
+  .artifacts/performance-evidence/bundle-budget.json \
+  .artifacts/performance-evidence/api-p95-smoke.json \
+  "$DEPLOY_SHA"

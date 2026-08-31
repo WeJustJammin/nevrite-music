@@ -1,63 +1,76 @@
 name: Deploy production
 on:
-  workflow_run:
-    workflows: [Deploy staging]
-    branches: [main]
-    types: [completed]
+  workflow_dispatch:
+    inputs:
+      staging_run_id:
+        description: Completed Deploy staging run ID to promote
+        required: true
+        type: string
+      source_sha:
+        description: Full lowercase source SHA verified by that staging run
+        required: true
+        type: string
+      confirm_production:
+        description: Confirm this explicit production promotion
+        required: true
+        type: boolean
+        default: false
 concurrency:
   group: deploy-production
   cancel-in-progress: false
-permissions:
-  actions: read
-  contents: read
+permissions: { actions: read, contents: read }
 jobs:
+  preflight:
+    if: inputs.confirm_production == true && github.ref == 'refs/heads/main'
+    runs-on: [self-hosted, wejammin]
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      - name: Verify staging identity and production protection
+        env:
+          CONFIRM_PRODUCTION: ${{ inputs.confirm_production }}
+          DEPLOY_SHA: ${{ inputs.source_sha }}
+          GITHUB_TOKEN: ${{ github.token }}
+          STAGING_RUN_ID: ${{ inputs.staging_run_id }}
+        run: node --experimental-strip-types infra/workflows/verify-production-promotion.ts
   deploy:
-    name: Promote immutable artifacts to production
-    if: github.event.workflow_run.conclusion == 'success'
+    needs: preflight
+    if: inputs.confirm_production == true && github.ref == 'refs/heads/main' && needs.preflight.result == 'success'
     runs-on: [self-hosted, wejammin]
     timeout-minutes: 20
     environment:
       name: production
       url: ${{ vars.PRODUCTION_WEB_ORIGIN }}
     env:
-      DEPLOY_SHA: ${{ github.event.workflow_run.head_sha }}
+      DEPLOY_SHA: ${{ inputs.source_sha }}
       PRODUCTION_WEB_ORIGIN: ${{ vars.PRODUCTION_WEB_ORIGIN }}
       RELEASE_PROTECTED_ENVIRONMENT: production
-      STAGING_RUN_ID: ${{ github.event.workflow_run.id }}
+      STAGING_RUN_ID: ${{ inputs.staging_run_id }}
     steps:
       - name: Check out the promoted revision
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           ref: ${{ env.DEPLOY_SHA }}
-
       - name: Download staging-verified promotion candidate
         uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          github-token: ${{ github.token }}
           name: staging-verified-candidate
           path: .promotion
           run-id: ${{ env.STAGING_RUN_ID }}
-
       - name: Read and validate promotion identity
-        id: candidate
         run: bash infra/workflows/read-production-candidate.sh
-
       - name: Set up workspace
         uses: ./.github/actions/setup
-
       - name: Verify artifact boundaries and deployment inputs
         run: bash infra/workflows/verify-production-candidate.sh
-
       - name: Apply and verify forward-only production migrations
         env:
           SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
           SUPABASE_DB_PASSWORD: ${{ secrets.SUPABASE_DB_PASSWORD }}
           SUPABASE_PROJECT_REF: ${{ vars.SUPABASE_PROJECT_REF }}
         run: bash infra/workflows/apply-production-migrations.sh
-
       - name: Verify release promotion evidence
         run: node --experimental-strip-types infra/verify-release-promotion.ts .promotion/promotion-metadata.json production
-
       - name: Deploy API Worker production artifact
         env:
           CLOUDFLARE_ACCOUNT_ID: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
@@ -67,7 +80,6 @@ jobs:
         run: >-
           bash infra/workflows/deploy-api-worker.sh production
           "$GITHUB_WORKSPACE/.promotion/artifacts/apps/worker/dist/index.js"
-
       - name: Deploy web SSR Worker production artifact
         env:
           CLOUDFLARE_ACCOUNT_ID: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
@@ -76,9 +88,7 @@ jobs:
           pnpm --filter @wejammin/web exec wrangler deploy
           --config "$GITHUB_WORKSPACE/.promotion/artifacts/apps/web/dist/server/wrangler.production.json"
           --domain "$WEB_CUSTOM_DOMAIN"
-
-      - name: Upload deployment evidence
-        if: always()
+      - if: always()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
         with:
           name: production-deployment-${{ env.DEPLOY_SHA }}

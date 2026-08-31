@@ -68,27 +68,18 @@
   dependency-ordered slices and 390 cited acceptance criteria passed their slice
   checks. Independent `/validate-phase` remains failed as recorded below.
 - Fresh IA ambiguity rerun 1 on 2026-08-28 scored 0/344 = 0.00% (PASS), covering all 83 IA documents and all 43 shards. See `.memory/wiki/specs/audits/2026-08-28-ia-ambiguity-rerun-1.md`.
-- **CURRENT VALIDATION:** Phase 1 `/validate-phase` failed on 2026-08-30. Local
-  functional, coverage, static, build, migration, and spec-coverage checks
-  passed. Exact run `33354478865` then exposed a clean-runner composite
-  declaration-output defect; its red-to-green fix passed exact run `33355571907`
-  and main run `33357532073`, including immutable artifact upload. The artifact
-  path/order remediation then passed main run `33359583799`; staging run
-  `33359752069` verified that boundary before exposing legacy Pages ownership
-  of `staging.wejamm.in` plus missing/projected API runtime configuration. The
-  new runtime, Queue-isolation, secret-injection, and dynamic SSR-smoke
-  regressions pass the full 877-test suite locally. Runtime-remediation push run
-  `33363038760` passed every job at `b6999ea58d17321117f555bd49ccb1b839d7704c`,
-  while duplicate PR run `33363059831` exposed Playwright port contention. Its
-  per-run web/docs and Cloudflare-dev isolation fix passes concurrent
-  synthetic-CI runs at 42/42 browser tests locally. Exact `b1000143` runs avoided
-  server collisions but exposed whole-suite resource starvation, so feature
-  branches now use only PR CI and a repository-wide concurrency group prevents
-  overlapping active runs while retaining GitHub's latest pending run. Exact
-  `dd6692b7` PR run `33420700305` passed quality, database, and immutable build;
-  no duplicate feature-branch push run was created. See
+- **CURRENT VALIDATION:** Phase 1 `/validate-phase` is **FAIL-CLOSED** after the
+  2026-08-31 local remediation. The aggregate gate passes 158 Vitest files/939
+  tests, 100% coverage, 26 Playwright tests, all builds, complete Workbench
+  hydration closure 14,913 gzip bytes, honest initial-route closure 72,576
+  bytes, deterministic API p95 1.584 ms with zero errors, and zero known
+  high/critical dependency vulnerabilities.
+  All seven findings are resolved in code or safely contained. Live staging
+  redirect/header proof remains pending, and the disabled production workflow
+  has exact-main policy and disabled administrator bypass but cannot satisfy its
+  required-reviewer guard because GitHub rejects that rule under the current
+  private-repository plan. See
   `.memory/wiki/specs/audits/phase-1-validation.md`.
-- **NEXT:** obtain explicit approval to merge PR #4 and to perform staging-only
-  Pages/DNS cleanup; clean up before merge, verify staging promotion and health,
-  then rerun `/validate-phase`. Do not advance to Phase 2 planning or
-  implementation.
+- **NEXT:** pass exact-SHA CI and live staging recertification, then configure
+  the required GitHub reviewer when the repository plan supports it. Do not
+  advance to Phase 2 or activate production meanwhile.

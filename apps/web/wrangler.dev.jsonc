@@ -1,0 +1,19 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "wejammin-web",
+  "main": "@astrojs/cloudflare/entrypoints/server",
+  "compatibility_date": "2026-08-26",
+  "compatibility_flags": ["global_fetch_strictly_public"],
+  "workers_dev": false,
+  "assets": {
+    "directory": "./dist",
+    "binding": "ASSETS",
+    "run_worker_first": false,
+  },
+  "services": [
+    {
+      "binding": "PLATFORM_API",
+      "service": "wejammin-api",
+    },
+  ],
+}

@@ -42,7 +42,18 @@ export function DataTable({
             </th>
             <th scope="col">Summary</th>
             <th scope="col">Version</th>
-            <th scope="col">Last modified</th>
+            <th
+              scope="col"
+              aria-sort={
+                sort === 'modified_asc'
+                  ? 'ascending'
+                  : sort === 'modified_desc'
+                    ? 'descending'
+                    : 'none'
+              }
+            >
+              Last modified
+            </th>
           </tr>
         </thead>
         <tbody>

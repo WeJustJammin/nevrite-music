@@ -4,26 +4,171 @@ import type {
   InfrastructureContractField,
 } from '@wejammin/ui/infrastructure/presentation';
 import type { InfrastructureViewState } from '@wejammin/contracts';
+import { lazy, Suspense, useState, type ReactNode } from 'react';
 import ConfirmationStep from './ConfirmationStep';
 import InfrastructureRecordDetail from './InfrastructureRecordDetail';
 import InfrastructureRecordList from './InfrastructureRecordList';
 import InfrastructureWorkbenchMeta from './InfrastructureWorkbenchMeta';
 import InfrastructureWorkbenchStatus from './InfrastructureWorkbenchStatus';
-import InfrastructureJobRegions, {
-  type InfrastructureJobIntegrationProps,
-} from './jobs/InfrastructureJobRegions';
-import ProviderEvidencePanel, {
-  type ProviderEvidencePanelProps,
-} from './provider-evidence/ProviderEvidencePanel';
+import type { InfrastructureJobIntegrationProps } from './jobs/InfrastructureJobRegions';
+import type { ProviderEvidencePanelProps } from './provider-evidence/ProviderEvidencePanel';
 import SyncConflict from './SyncConflict';
-import UploadAdmissionForm, {
-  type UploadAdmissionFormProps,
-} from './upload-admission/UploadAdmissionForm';
-import UploadCompletionForm, {
-  type UploadCompletionFormProps,
-} from './upload-completion/UploadCompletionForm';
+import type { UploadAdmissionFormProps } from './upload-admission/UploadAdmissionForm';
+import type { UploadCompletionFormProps } from './upload-completion/UploadCompletionForm';
 import type { InfrastructureWorkbenchController } from './useInfrastructureWorkbench';
 import type { ServerInitialState } from './infrastructure-workbench-state';
+
+const ProviderEvidencePanel = lazy(
+  () => import('./provider-evidence/ProviderEvidencePanel'),
+);
+const InfrastructureJobRegions = lazy(
+  () => import('./jobs/InfrastructureJobRegions'),
+);
+const UploadAdmissionForm = lazy(
+  () => import('./upload-admission/UploadAdmissionForm'),
+);
+const UploadCompletionForm = lazy(
+  () => import('./upload-completion/UploadCompletionForm'),
+);
+
+interface DeferredFeatureProps {
+  readonly id: string;
+  readonly title: string;
+  readonly description: ReactNode;
+  readonly buttonLabel: string;
+  readonly render: () => ReactNode;
+}
+
+function DeferredFeature({
+  id,
+  title,
+  description,
+  buttonLabel,
+  render,
+}: DeferredFeatureProps) {
+  const [activated, setActivated] = useState(false);
+  if (!activated) {
+    return (
+      <section
+        id={`${id}-deferred`}
+        className="infra-deferred-feature"
+        aria-labelledby={`${id}-deferred-heading`}
+      >
+        <h2 id={`${id}-deferred-heading`}>{title}</h2>
+        <div id={`${id}-region`} className="infra-deferred-feature__summary">
+          {description}
+        </div>
+        <button
+          type="button"
+          aria-controls={`${id}-region`}
+          onClick={() => setActivated(true)}
+        >
+          {buttonLabel}
+        </button>
+      </section>
+    );
+  }
+
+  return (
+    <section id={`${id}-deferred`} aria-label={title}>
+      <div id={`${id}-region`}>
+        <Suspense
+          fallback={
+            <p role="status" aria-live="polite">
+              Loading {title.toLocaleLowerCase()} controls.
+            </p>
+          }
+        >
+          {render()}
+        </Suspense>
+      </div>
+    </section>
+  );
+}
+
+const realtimeSummary = (
+  state: NonNullable<InfrastructureJobIntegrationProps['realtimeState']>,
+): string => {
+  switch (state) {
+    case 'idle':
+      return 'Canonical job status is current.';
+    case 'stale':
+      return 'A change hint arrived. Canonical job status will be refreshed.';
+    case 'loading':
+      return 'Refreshing canonical job status.';
+    case 'success':
+      return 'Canonical job status refreshed.';
+    case 'error':
+      return 'Canonical job status could not be refreshed.';
+  }
+};
+
+function JobActivitySummary({
+  integration,
+}: {
+  readonly integration: InfrastructureJobIntegrationProps;
+}) {
+  const {
+    jobStatus,
+    jobRetryAfterSeconds,
+    offlineConnectivity,
+    offlineIntents,
+    realtimeMessage,
+    realtimeState,
+  } = integration;
+  const hasOfflineState =
+    offlineIntents !== undefined || offlineConnectivity !== undefined;
+
+  return (
+    <>
+      <p>
+        The current server projection remains visible. Load live controls to
+        start polling, reconciliation, retry, and realtime subscriptions.
+      </p>
+      {jobStatus !== undefined && (
+        <section aria-labelledby="deferred-job-status-heading">
+          <p className="infra-eyebrow">Infrastructure job</p>
+          <h3 id="deferred-job-status-heading">Job status</h3>
+          {'etag' in jobStatus ? (
+            <p>
+              Job ID: <code>{jobStatus.data.id}</code>. Status:{' '}
+              {jobStatus.data.state}.
+            </p>
+          ) : jobStatus.status === 'error' ? (
+            <p role="alert">
+              {jobStatus.error.message} Error code:{' '}
+              <code>{jobStatus.error.code}</code>.
+            </p>
+          ) : (
+            <p>Status: {jobStatus.status}.</p>
+          )}
+          {jobRetryAfterSeconds !== undefined &&
+            jobRetryAfterSeconds !== null && (
+              <p>Retry available in {jobRetryAfterSeconds} seconds.</p>
+            )}
+        </section>
+      )}
+      {hasOfflineState && (
+        <section aria-labelledby="deferred-offline-intents-heading">
+          <h3 id="deferred-offline-intents-heading">Offline intents</h3>
+          <p role="status">Connectivity: {offlineConnectivity ?? 'offline'}.</p>
+          {(offlineIntents ?? []).map((intent) =>
+            intent.state === 'refused' && intent.refusal !== null ? (
+              <p key={intent.intentId}>
+                Refused: <code>{intent.refusal.code}</code>
+              </p>
+            ) : null,
+          )}
+        </section>
+      )}
+      {realtimeState !== undefined && (
+        <p role="status" aria-live="polite" aria-atomic="true">
+          {realtimeMessage ?? realtimeSummary(realtimeState)}
+        </p>
+      )}
+    </>
+  );
+}
 
 type ConflictState = Extract<InfrastructureViewState, { status: 'conflict' }>;
 
@@ -88,19 +233,72 @@ export function InfrastructureWorkbenchContent({
         onRetry={onRetry}
       />
 
-      <InfrastructureJobRegions {...jobIntegration} />
-
-      {uploadAdmission !== undefined && (
-        <UploadAdmissionForm {...uploadAdmission} />
+      {(jobIntegration.jobStatus !== undefined ||
+        jobIntegration.offlineIntents !== undefined ||
+        jobIntegration.offlineConnectivity !== undefined ||
+        jobIntegration.realtimeState !== undefined) && (
+        <DeferredFeature
+          id="infrastructure-job-activity"
+          title="Infrastructure job activity"
+          description={<JobActivitySummary integration={jobIntegration} />}
+          buttonLabel="Load live job controls"
+          render={() => <InfrastructureJobRegions {...jobIntegration} />}
+        />
       )}
 
-      {uploadCompletion !== undefined && (
-        <UploadCompletionForm {...uploadCompletion} />
-      )}
+      {uploadAdmission !== undefined &&
+        uploadAdmission.access !== 'not-rendered' && (
+          <DeferredFeature
+            id="upload-admission"
+            title="Upload admission"
+            description={
+              uploadAdmission.access === 'disabled'
+                ? (uploadAdmission.capabilityReason ??
+                  'A server capability is required before upload admission.')
+                : 'Load the server-authorized upload admission fields when you are ready to attach an object.'
+            }
+            buttonLabel="Load upload admission"
+            render={() => <UploadAdmissionForm {...uploadAdmission} />}
+          />
+        )}
 
-      {providerEvidence !== undefined && (
-        <ProviderEvidencePanel {...providerEvidence} />
-      )}
+      {uploadCompletion !== undefined &&
+        uploadCompletion.access !== 'not-rendered' && (
+          <DeferredFeature
+            id="upload-completion"
+            title="Upload completion"
+            description={
+              uploadCompletion.access === 'disabled'
+                ? uploadCompletion.initialState?.status === 'disabled'
+                  ? uploadCompletion.initialState.reason
+                  : (uploadCompletion.capabilityReason ??
+                    'A server completion capability is required.')
+                : 'Load verification controls when the object transfer is complete.'
+            }
+            buttonLabel="Load upload completion"
+            render={() => <UploadCompletionForm {...uploadCompletion} />}
+          />
+        )}
+
+      {providerEvidence !== undefined &&
+        providerEvidence.access !== 'not-rendered' && (
+          <DeferredFeature
+            id="provider-evidence"
+            title={
+              providerEvidence.access === 'disabled' ||
+              providerEvidence.state.status === 'disabled'
+                ? 'Provider evidence'
+                : 'Provider operation evidence'
+            }
+            description={
+              providerEvidence.state.status === 'disabled'
+                ? providerEvidence.state.reason
+                : 'Load the current server-authorized provider evidence projection.'
+            }
+            buttonLabel="Load provider evidence"
+            render={() => <ProviderEvidencePanel {...providerEvidence} />}
+          />
+        )}
 
       {conflict !== null && (
         <SyncConflict

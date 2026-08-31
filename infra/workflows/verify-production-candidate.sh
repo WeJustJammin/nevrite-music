@@ -51,3 +51,7 @@ test "$actual_digest" = "$expected_digest"
   cd .promotion/artifacts
   sha256sum --check ../deployment-manifest.sha256
 )
+node --experimental-strip-types infra/workflows/verify-performance-evidence.ts \
+  .promotion/artifacts/performance-evidence/bundle-budget.json \
+  .promotion/api-p95-smoke.json \
+  "$DEPLOY_SHA"

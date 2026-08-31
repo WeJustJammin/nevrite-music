@@ -66,6 +66,22 @@ describe('Astro Cloudflare Worker SSR deployment contract', () => {
     );
   });
 
+  it('keeps Vite development modules outside the Worker-first asset boundary', () => {
+    const astroConfig = readRepoFile('apps/web/astro.config.mjs');
+    const developmentConfig = parseJsonc(
+      readRepoFile('apps/web/wrangler.dev.jsonc'),
+    );
+    const developmentAssets = asObject(
+      developmentConfig.assets,
+      'development assets',
+    );
+
+    expect(astroConfig).toMatch(
+      /isAstroDevCommand[\s\S]*?configPath:\s*'\.\/wrangler\.dev\.jsonc'/u,
+    );
+    expect(developmentAssets.run_worker_first).toBe(false);
+  });
+
   it('binds production and staging SSR Workers to their matching platform APIs', () => {
     const config = parseJsonc(readRepoFile('apps/web/wrangler.jsonc'));
     const environments = asObject(config.env, 'env');
@@ -73,7 +89,11 @@ describe('Astro Cloudflare Worker SSR deployment contract', () => {
 
     expect(config.name).toBe('wejammin-web');
     expect(config.main).toBe('@astrojs/cloudflare/entrypoints/server');
-    expect(config.assets).toEqual({ directory: './dist', binding: 'ASSETS' });
+    expect(config.assets).toEqual({
+      directory: './dist',
+      binding: 'ASSETS',
+      run_worker_first: true,
+    });
     expect(config.services).toEqual([
       { binding: 'PLATFORM_API', service: 'wejammin-api' },
     ]);
@@ -105,6 +125,7 @@ describe('Astro Cloudflare Worker SSR deployment contract', () => {
       expect(config.assets).toEqual({
         directory: '../client',
         binding: 'ASSETS',
+        run_worker_first: true,
       });
       expect(config.kv_namespaces).toEqual([]);
       expect(config.images).toBeUndefined();

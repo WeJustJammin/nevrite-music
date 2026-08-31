@@ -154,7 +154,7 @@ export function UploadCompletionStatus({
       );
     }
     case 'success':
-      return <UploadCompletionResult completion={state.completion} />;
+      return <UploadCompletionResult completion={state.completion} announce />;
     case 'disabled':
       return (
         <p className="upload-completion-disabled" role="status">

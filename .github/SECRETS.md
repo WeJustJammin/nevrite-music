@@ -17,6 +17,8 @@ Only the credentials listed below are authorized. They belong in protected GitHu
 
 Production uses the same names in the protected `production` environment with distinct values, required reviewers, main-branch restrictions, and serialized deployment concurrency. Staging values must never be copied into production or vice versa.
 
+The production workflow must remain disabled until the environment reports a required-reviewer rule and `can_admins_bypass: false`. The environment now has administrator bypass disabled and the sole custom deployment branch policy `{ name: "main", type: "branch" }`. The current private-repository plan still rejects required reviewers with HTTP 422, so the checked-in manual promotion guard fails closed until that final plan prerequisite is resolved.
+
 The Cloudflare token is restricted to the WeJammin account with only Workers Scripts Edit and Cloudflare Pages Edit permissions. Create separate staging and production tokens; never reuse the interactive Wrangler OAuth credential in CI.
 
 ## Environment variables

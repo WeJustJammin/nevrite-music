@@ -42,7 +42,7 @@ export function UploadCompletionError({
     <div
       className={`upload-completion-error upload-completion-error--${presentation.owner}`}
       role={presentation.owner === 'rate-wait' ? 'status' : 'alert'}
-      aria-live="polite"
+      aria-live={presentation.owner === 'rate-wait' ? 'polite' : 'assertive'}
       aria-atomic="true"
     >
       <strong>{code}</strong>

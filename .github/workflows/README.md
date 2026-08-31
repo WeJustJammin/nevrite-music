@@ -5,7 +5,8 @@
 - `ci.yml` — immutable validation and build-artifact production.
 - `deploy-staging.yml` — successful-main-CI promotion to staging and public
   verification.
-- `deploy-production.yml` — protected promotion of the staging-verified artifact.
+- `deploy-production.yml` — manually initiated, protected promotion of the
+  staging-verified artifact.
 
 ## Ownership
 
@@ -16,7 +17,9 @@ under `infra` when it would make a workflow exceed the config limit.
 ## Extension
 
 Extend the existing CI-to-staging-to-production chain. New deployment paths must
-consume the same immutable artifacts and must not add a manual bypass.
+consume the same immutable artifacts. Production is never chained automatically
+from staging: an operator must dispatch `deploy-production.yml` on `main` with
+the completed staging run ID, its full source SHA, and an explicit confirmation.
 
 ## Conventions
 
@@ -24,6 +27,15 @@ consume the same immutable artifacts and must not add a manual bypass.
 - Grant minimum workflow permissions.
 - Scope deployment secrets to the final deploy steps.
 - Make promotion evidence before production deployment and after its source gate.
+- Run the identity and protected-environment preflight before the production job
+  references the `production` environment.
+- Keep the `production` environment configured with required reviewers and
+  administrator bypass disabled. Its deployment policy must use protected
+  branches or exactly one custom branch policy named `main`; tags, wildcards,
+  and additional policies fail closed.
+- Keep the staging workflow ID `346315228` and path
+  `.github/workflows/deploy-staging.yml` synchronized with the preflight if that
+  workflow is ever deleted and recreated.
 - Keep every workflow configuration at or below 100 lines.
 
 ## Related links

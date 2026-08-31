@@ -29,10 +29,8 @@ jobs:
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           ref: ${{ env.DEPLOY_SHA }}
-
       - name: Set up workspace
         uses: ./.github/actions/setup
-
       - name: Download immutable CI artifacts
         uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
         with:
@@ -40,15 +38,16 @@ jobs:
           name: workspace-build-${{ env.DEPLOY_SHA }}
           path: .artifacts
           run-id: ${{ env.CI_RUN_ID }}
-
       - name: Verify artifact boundaries and deployment inputs
-        run: bash infra/workflows/verify-staging-artifacts.sh
-
+        run: >-
+          GITHUB_TOKEN="${{ github.token }}"
+          CI_WORKFLOW_ID="${{ github.event.workflow_run.workflow_id }}"
+          node infra/workflows/verify-staging-run.mjs &&
+          bash infra/workflows/verify-staging-artifacts.sh
       - name: Record promoted artifact digests
         run: >-
           bash infra/workflows/record-staging-artifacts.sh &&
           bash infra/workflows/prepare-staging-candidate.sh
-
       - name: Deploy API Worker staging artifact
         env:
           CLOUDFLARE_ACCOUNT_ID: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
@@ -67,9 +66,12 @@ jobs:
           pnpm --filter @wejammin/web exec wrangler deploy
           --config "$GITHUB_WORKSPACE/.artifacts/apps/web/dist/server/wrangler.staging.json"
           --domain "$WEB_CUSTOM_DOMAIN"
-
       - name: Verify public staging contracts
         run: pnpm verify:staging && touch promotion-candidate/staging-verification.passed
+      - name: Enforce staging API p95 budget
+        env:
+          SOURCE_REVISION: ${{ env.DEPLOY_SHA }}
+        run: pnpm performance:smoke:staging | tee promotion-candidate/api-p95-smoke.json
 
       - name: Finalize staging promotion evidence
         run: bash infra/workflows/finalize-staging-candidate.sh

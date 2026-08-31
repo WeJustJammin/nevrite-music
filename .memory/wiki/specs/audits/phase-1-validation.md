@@ -1,163 +1,141 @@
 # Phase 1 Validation
 
 **Phase**: Phase 1 — Operational foundation
-**Run**: 2026-08-30T23:15:19-04:00
-**Remediation verification**: 2026-08-30T23:36:08-04:00
-**Clean-build remediation verification**: 2026-08-30T23:53:24-04:00
-**Exact-SHA CI verification**: 2026-08-31T00:02:22-04:00
-**Main promotion attempt**: 2026-08-31T00:46:45-04:00
-**Artifact-path main verification**: 2026-08-31T01:13:23-04:00
-**Staging runtime attempt**: 2026-08-31T01:13:49-04:00
-**Runtime remediation verification**: 2026-08-31T01:57:37-04:00
-**Runtime remediation CI attempt**: 2026-08-31T02:09:00-04:00
-**Workflow**: `/validate-phase`
-**Verdict**: **FAIL**
+**Initial run**: 2026-08-30T23:15:19-04:00
+**Remediation verification**: 2026-08-31T17:51:00-04:00
+**Workflow**: /validate-phase
+**Validation branch**: codex/fix-phase-1-readiness-blockers
+**Verdict**: **FAIL-CLOSED — local remediation passes; live staging recertification and one external production-protection prerequisite remain**
 
-Phase implementation tracking is complete at 7/7 slices, but the independent
-production-readiness gate cannot pass until the staging runtime remediation is
-merged, the legacy Pages ownership of `staging.wejamm.in` is removed with owner
-authorization, and the exact immutable candidate passes the strengthened live
-health contract.
+Implementation tracking remains complete at 7/7 slices and 390/390 acceptance
+criteria. All seven readiness findings have been addressed in source, tests, or
+fail-closed operational controls. The aggregate local validation command passes.
+Phase advancement remains blocked until the remediated artifact passes CI and
+live staging verification and GitHub can enforce the locked production reviewer
+rule.
+
+## Remediation Summary
+
+| Finding                                                  | Current status                          | Fresh closure evidence                                                                                                                                                                                                                                                                                                                                                                                |
+| -------------------------------------------------------- | --------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| VAL-P1-013 — upload-admission summary/focus IDs          | RESOLVED                                | Error links and first-invalid focus normalize contract keys to the real kebab-case field IDs; focused accessibility regressions pass                                                                                                                                                                                                                                                                  |
+| VAL-P1-014 — upload-completion result announcement/focus | RESOLVED                                | Success is a polite atomic status with a programmatically focused result heading; error/status politeness, table sorting, and route-heading focus debt were also corrected                                                                                                                                                                                                                            |
+| VAL-P1-015 — hard JavaScript budgets                     | RESOLVED                                | Complete Workbench hydration closure is 14,913 gzip bytes against 35,840; honest initial static closure is 72,576 against 92,160; largest lazy/shared chunk is 27,884 against 81,920                                                                                                                                                                                                                  |
+| VAL-P1-016 — deterministic Phase 1 p95 smoke absent      | RESOLVED                                | Validation and CI run one virtual user, 20 sequential requests, zero retries, strict p95 under 500 ms, immutable artifact identity, and fail-closed error accounting; fresh p95 is 1.584 ms with 0/20 errors                                                                                                                                                                                          |
+| VAL-P1-017 — cleartext staging transport                 | IMPLEMENTED; LIVE PROOF PENDING         | Web and API edge boundaries return 308 to the exact HTTPS URL outside loopback; staging verifier rejects missing or wrong redirects and probes web, API, protected runtime, and a discovered static asset                                                                                                                                                                                             |
+| VAL-P1-018 — locked response headers absent              | IMPLEMENTED; LIVE PROOF PENDING         | Web, API, generated Worker wrapper, static asset, redirects, 404s, and protected 500s carry the exact locked policy in focused tests; production and staging static assets retain run_worker_first true                                                                                                                                                                                               |
+| VAL-P1-019 — unprotected automatic production promotion  | SAFELY CONTAINED; EXTERNAL PREREQUISITE | Automatic staging-to-production triggering is removed; production is manual-only with immutable staging run and SHA verification, exact-main policy, reviewer and admin-bypass checks, and the live workflow disabled. The live environment now has `can_admins_bypass: false`; GitHub rejected only the required reviewer rule with HTTP 422 because the private-repository plan does not support it |
+
+No production deployment, production DNS mutation, provider activation, billing
+change, repository visibility change, or secret write was performed.
 
 ## Quality Shard
 
-| Gate                                  | Result         | Fresh evidence                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
-| ------------------------------------- | -------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Unit, contract, and integration tests | PASS           | `pnpm validate`: 148 files, 877 tests, zero failures                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
-| Coverage                              | PASS           | 100% statements (4541/4541), branches (3920/3920), functions (719/719), and lines (4225/4225)                                                                                                                                                                                                                                                                                                                                                                                                         |
-| Mutation testing                      | NOT APPLICABLE | No mutation-test runner or configuration is installed; the workflow requires this gate only when supported                                                                                                                                                                                                                                                                                                                                                                                            |
-| Format                                | PASS           | `pnpm format:check` exited 0                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
-| Lint                                  | PASS           | `pnpm lint` exited 0 with zero reported warnings/errors                                                                                                                                                                                                                                                                                                                                                                                                                                               |
-| Type check                            | PASS           | `pnpm type-check` exited 0                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
-| Build                                 | PASS           | All applicable packages, Astro apps, and the Worker dry-run build completed                                                                                                                                                                                                                                                                                                                                                                                                                           |
-| Aggregate local validation            | PASS           | `pnpm validate` exited 0 after 877 Vitest tests, 21 Playwright tests, and all build gates; no Node warnings were emitted                                                                                                                                                                                                                                                                                                                                                                              |
-| Database migrations                   | PASS           | Local reset applied all 14 migrations; schema lint passed; 11 pgTAP files/392 tests passed; generated types matched                                                                                                                                                                                                                                                                                                                                                                                   |
-| Deployment strategy                   | PASS (static)  | Release-promotion, immutable-artifact, forward-only migration, and recovery contracts are present and covered by the passing local suite                                                                                                                                                                                                                                                                                                                                                              |
-| CI for implemented Phase 1 state      | PASS           | Main run `33359583799` succeeded for merge revision `1bb432358cc44f992ce3d15597d298cce86d0a72`: quality, database, clean immutable build, and exact artifact upload all passed                                                                                                                                                                                                                                                                                                                        |
-| Runtime remediation exact-SHA CI      | PASS           | PR run `33420700305` passed quality, database, and immutable-artifact jobs for exact revision `dd6692b718a83ac1b64fad915b5eb6b0aca2c5e2`. No feature-branch push run was created, proving the duplicate-trigger remediation; the repository concurrency group also prevented overlapping active CI workloads                                                                                                                                                                                  |
-| Staging deployment and smoke          | FAIL           | Run `33359752069` verified the corrected artifact boundary and deployed the API and web scripts, but the web custom-domain trigger failed because `staging.wejamm.in` remains attached to the legacy Pages project. Live tracing also proved the API Worker lacked the required Supabase bindings and rejected the Queue binding as an unknown server key. The remediation passed exact-SHA CI; exact staging proof remains required. See `phase-1-staging-runtime-evidence.md`               |
-
-### Blocking Findings
-
-1. **VAL-P1-001 — RESOLVED — Green immutable Phase 1 CI evidence.** Exact run
-   `33357532073` passed all three jobs for main merge
-   `be36d68c495b9a244dac4fd29c24a83e0c68ce7a`, including clean build and
-   exact immutable artifact upload.
-2. **VAL-P1-002 — Staging does not satisfy the implemented health contract.**
-   `STAGING_WEB_ORIGIN=https://staging.wejamm.in` and
-   `STAGING_API_ORIGIN=https://wejammin-api-staging.wejammin.workers.dev`
-   produced `API health contract mismatch`.
-3. **VAL-P1-003 — RESOLVED — Aggregate validation permitted warning output.**
-   Playwright forces `FORCE_COLOR` in worker and web-server children while the
-   agent shell exports `NO_COLOR`; the config now removes the conflicting
-   inherited variable before child launch. A red-to-green regression contract,
-   a clean 21/21 Playwright run, and the clean 871-test `pnpm validate` run
-   verify the resolution.
-4. **VAL-P1-004 — RESOLVED — Clean checkout build lacked composite
-   declarations.** Package `build` scripts used `tsc --noEmit`, so a clean CI
-   runner could not satisfy project-reference outputs and failed with TS6305.
-   The seven composite library packages now build with `tsc --build`; a
-   red-to-green workspace contract, a clean `tsc --build --clean` reconstruction,
-   the exact three-script local artifact chain, and exact-SHA CI run
-   `33355571907` verify the resolution.
-5. **VAL-P1-005 — RESOLVED — Staging consumed the wrong archive paths.** Run
-   `33357943998` proved the downloaded artifact retains its `apps/` prefix,
-   while staging and downstream production verification and deploy commands
-   omitted that segment. Main run `33359583799` and staging run `33359752069`
-   verify the corrected immutable boundary and both deployment inputs.
-6. **VAL-P1-006 — RESOLVED — Production candidate handling assumed
-   a dirty runner.** The production workflow downloaded and read the candidate
-   before checkout, so a clean runner lacked the identity script and a later
-   checkout could delete the candidate. It now checks out `DEPLOY_SHA` first,
-   then downloads and validates the candidate before workspace setup. A
-   red-to-green ordering contract, both promotion contract suites, and exact
-   main CI run `33359583799` verify the fix.
-7. **VAL-P1-007 — Legacy Pages ownership blocks the Worker custom domain.**
-   Staging run `33359752069` uploaded `wejammin-web-staging`, then Cloudflare
-   rejected the trigger with code `100117` because the active Pages project
-   `wejammin-web-staging` still owns `staging.wejamm.in` and its DNS record. The
-   read-only API result and exact run excerpt are preserved in
-   `phase-1-staging-runtime-evidence.md`.
-   Detaching that staging-only Pages domain is an external destructive action
-   and remains pending explicit owner authorization.
-8. **VAL-P1-008 — REMEDIATED LOCALLY — API deployment omitted required server
-   configuration.** Live tail evidence showed `SUPABASE_SECRET_KEY` and
-   `SUPABASE_URL` missing. The shared deployment script now supplies the URL as
-   a Worker variable and the key through a mode-600 temporary Wrangler secrets
-   file, then removes the file. It rejects non-canonical, credential-bearing,
-   or whitespace-bearing origins before invoking Wrangler. A fake-provider
-   security regression and both environment dry-runs pass.
-9. **VAL-P1-009 — REMEDIATED LOCALLY — Strict configuration parsing rejected
-   Cloudflare resource bindings.** The deployed Queue binding reached the
-   closed Zod server schema and produced an unknown-key startup exception.
-   Runtime entrypoints now project only approved server keys before strict
-   validation; direct parsing remains strict. Red-to-green config and Worker
-   boundary tests pass.
-10. **VAL-P1-010 — REMEDIATED LOCALLY — Staging smoke could accept the stale
-    Pages shell.** The old static homepage satisfied the title/heading check.
-    Verification now requires the protected dynamic route to return the exact
-    303 SSR redirect contract; a regression proves the stale 200 shell fails.
-11. **VAL-P1-011 — REMEDIATED LOCALLY — Staging shared production Queue names.**
-    Staging now uses `platform-jobs-staging` and
-    `platform-jobs-staging-dlq`, while production retains its reserved names.
-    Queue admission selects the expected name from `APP_ENVIRONMENT`; hosted
-    environment regressions, the independent Wrangler contract, and dry-runs
-    pass. The isolated resources are not present in the pre-remediation account
-    inventory; exact staging must verify Wrangler provisioning and binding.
-12. **VAL-P1-012 — RESOLVED — Duplicate exact-SHA CI runs competed
-    for the managed Playwright server.** Push run `33363038760` passed every job,
-    while simultaneous PR run `33363059831` failed before browser assertions
-    because the fixed port 4321 was already owned. Playwright now validates
-    `GITHUB_RUN_ID`, derives a disjoint adjacent web/docs port pair for CI,
-    disables the Cloudflare inspector and persistence state for CI dev servers,
-    and passes the dynamic docs origin through run metadata. Red-to-green
-    toolchain contracts and concurrent synthetic-CI runs using both original run
-    IDs pass 42/42 browser tests. New exact-SHA CI must prove it on the managed
-    runner. Exact runs `33365214572` and `33365216682` then avoided all server
-    collisions and passed database, but simultaneous coverage workloads timed
-    out an architecture scan and environment-build contract. Feature branches
-    now run only the PR workflow, main retains push validation, and a
-    repository-wide concurrency group prevents overlapping active CI jobs. The
-    group preserves the running job and GitHub's latest pending job; it does not
-    guarantee every queued SHA executes. Red-to-green workflow-text contracts
-    pass. Exact revision `dd6692b718a83ac1b64fad915b5eb6b0aca2c5e2` produced
-    only PR run `33420700305`; quality, database, and immutable-artifact jobs all
-    passed, and no feature-branch push run was created.
-
-## Spec Coverage
-
-The Phase 1 coverage sweep passed:
-
-- seven slice trackers are present;
-- all 390 unique phase-plan acceptance criteria have matching checked tracker
-  entries;
-- zero criteria are unchecked, missing, or extra;
-- all 488 tracker source links resolve;
-- IA, BE, and FE inventories contain 43 IA shards, 156 BE specifications, and
-  43 FE specifications, with their layer indexes complete; and
-- `pnpm progress:check` exited 0.
+| Gate                                            | Result         | Fresh evidence                                                                                                                                    |
+| ----------------------------------------------- | -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Canonical aggregate validation                  | PASS           | pnpm validate exited 0 in 66.6 seconds                                                                                                            |
+| Unit, contract, integration, and coverage tests | PASS           | 158 Vitest files and 939 tests; 100% statements, branches, functions, and lines                                                                   |
+| Browser E2E                                     | PASS           | 26/26 Playwright tests, including axe, focus, responsive layout, real upload forms, dev-module loading, island hydration, and gated chunk loading |
+| Format, lint, and type check                    | PASS           | Canonical format check, zero-warning ESLint, and TypeScript project build passed                                                                  |
+| Build                                           | PASS           | All packages, Astro apps, and Hono Worker build; Worker is 446.09 KiB upload and 101.72 KiB gzip                                                  |
+| Database migrations                             | PASS           | Local Supabase validation completed against the backed-up development database; shutdown preserved a backup                                       |
+| OpenAPI and spec coverage                       | PASS           | Contract generation, schema types, progress consistency, 7/7 slices, 390/390 criteria, and 488/488 source links pass                              |
+| Dependency audit                                | PASS           | pnpm audit --audit-level=high reports no known vulnerabilities                                                                                    |
+| Mutation testing                                | NOT APPLICABLE | No mutation runner or configuration is installed; this gate remains conditional on supported tooling                                              |
 
 ## Readiness Shard
 
-**Status**: **NOT RUN — quality prerequisite failed**
+**Status**: **FAIL-CLOSED**
 
-`validate-phase-readiness` requires the quality shard to complete successfully.
-Because the staging quality gate failed, no readiness
-applicability matrix or API-documentation, accessibility, performance,
-security/dependency, feature-ledger, or boundary-stub verdict is represented as
-current evidence by this run.
+| Gate                                       | Classification           | Result           | Basis                                                                                                                                                                            |
+| ------------------------------------------ | ------------------------ | ---------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| API documentation synchronization          | Required                 | PASS             | Runtime contracts and generated OpenAPI remain synchronized                                                                                                                      |
+| Accessibility                              | Required                 | PASS             | Automated coverage, axe, keyboard and focus, semantic-state, and route-focus regressions pass                                                                                    |
+| Static bundle budgets                      | Required hard criteria   | PASS             | Built emitted-graph verifier measures recursive initial closure and explicit-action lazy chunks without manifest or no-manifest undercounting                                    |
+| Phase 1 deterministic p95 smoke            | Required exit criterion  | PASS             | 20/20 samples, zero errors, p50 0.670 ms, p95 1.584 ms, p99 20.209 ms, strict p95 below 500 ms                                                                                   |
+| Representative-data k6 and pgbench profile | Deferred once            | DEFERRED         | PERF-DEFER-01 remains bounded to the first data-bearing candidate                                                                                                                |
+| Security hardening and non-invasive DAST   | Always on                | PENDING LIVE     | Local runtime and contract evidence pass; the remediated artifact must prove exact redirects and headers on staging                                                              |
+| Dependency audit                           | Always on                | PASS             | No known vulnerabilities at the high-or-critical gate                                                                                                                            |
+| Production environment approval            | Required guard           | BLOCKED EXTERNAL | Workflow is disabled and fails closed; exact-main policy and disabled administrator bypass are live, but the private-repository plan cannot configure the required reviewer rule |
+| Live production deployment                 | Not required for Phase 1 | NOT APPLICABLE   | Production activation remains out of scope and disabled                                                                                                                          |
 
-## Constrained Next Step
+## Accessibility Closure
 
-1. Push the single-run CI scheduling remediation, then require green exact-SHA
-   CI and explicit approval to merge PR #4.
-2. Before merging, and only with explicit owner authorization, detach only
-   `staging.wejamm.in` from the
-   legacy Pages project and remove its conflicting staging DNS record.
-3. Merge the approved PR and verify the resulting staging workflow deploys the
-   exact artifact and passes
-   `pnpm verify:staging` successfully.
-4. Rerun `/validate-phase`; only then may the readiness shard execute.
+Upload-admission violations now map camel-case and dotted contract paths to the
+real kebab-case control IDs before generating summary anchors or the first focus
+target. Upload-completion success uses a polite atomic live region and focuses a
+stable result heading after the success transition. Non-rate errors use assertive
+alert semantics, active modified-date columns expose aria-sort, and route
+navigation moves focus to the primary heading without disrupting initial page
+load.
+
+Deferred Workbench controls retain meaningful server-rendered summaries. Their
+aria-controls targets exist before and after activation. The hydration E2E proves
+Vite and Astro modules load, the island removes its SSR marker, query state is
+interactive, heavy job controls are absent initially, and their chunk appears
+only after explicit activation.
+
+## Performance Closure
+
+The bundle verifier discovers exact built entry roots, recursively walks static
+imports, promotes immediate runtime dependencies into the initial route, fails
+on unresolved local imports, and applies identical emitted-graph logic with or
+without a manifest. Optional job, upload, completion, and evidence panels load
+only after an explicit user action while their safe server summaries remain in
+the initial document.
+
+| Asset or scope                        |   Fresh gzip | Locked limit | Result |
+| ------------------------------------- | -----------: | -----------: | ------ |
+| Workbench immediate hydration closure | 14,913 bytes | 35,840 bytes | PASS   |
+| Initial infrastructure route closure  | 72,576 bytes | 92,160 bytes | PASS   |
+| Largest lazy or shared chunk          | 27,884 bytes | 81,920 bytes | PASS   |
+
+The deterministic API smoke is wired into local validation, pull-request CI,
+and staging promotion. Bundle and p95 evidence carry the exact source revision,
+locked thresholds, and `passed: true`; staging finalization embeds and validates
+that evidence before candidate publication, and production revalidates it.
+Exact-threshold p95, malformed evidence, non-2xx responses, sample-count drift,
+hidden retries, and superseded staging runs fail closed.
+
+**PERF-DEFER-01 — Representative-data performance profile.** Phase 1 contains no
+data-bearing domain feature. Execute the locked representative seed, k6, and
+pgbench profile on the first candidate carrying data-bearing user or domain
+functionality and no later than production-candidacy approval or the first
+data-bearing production release, whichever occurs first. No data-bearing
+promotion is permitted without seed checksum, request mix, p95 and p99, error
+rate, fresh-restore and warm results, database timing, and query-plan identity
+evidence.
+
+## Security and Release Protection Closure
+
+The API and web apply the locked six-header set to ordinary responses, errors,
+redirects, and static assets. HTML CSP nonces are request-unique, stale nonce
+attributes are replaced, and rewrite or adapter failures return protected generic
+500 responses. Development uses a separate Wrangler config so Vite owns its
+module URLs; production and staging continue to route static assets through the
+security wrapper.
+
+The production workflow accepts only an explicit manual dispatch on main with
+confirmed production intent, an immutable successful staging run, and the exact
+source SHA. Its preflight verifies the pinned staging workflow identity, exact
+sole-main deployment branch policy, a required reviewer, and disabled
+administrator bypass before entering the production environment. The live
+environment now reports `can_admins_bypass: false`. The workflow remains
+disabled because GitHub returned HTTP 422 when the reviewer rule was requested
+under the current private-repository plan.
+
+## Remaining Gates
+
+1. Push this branch and require exact-SHA CI plus immutable artifact generation
+   to pass.
+2. Promote that artifact to staging and run the strengthened pnpm verify:staging
+   and staging p95 smoke against the HTTPS origins.
+3. Upgrade the GitHub plan or otherwise move to a repository visibility and plan
+   combination that supports required reviewers for this private repository;
+   then configure the reviewer, re-enable the manual workflow, and rerun
+   /validate-phase.
+4. Do not advance to Phase 2 or activate production while either remaining gate
+   is incomplete.
 
 
 <!-- spec-graph: auto-generated -->

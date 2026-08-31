@@ -37,7 +37,7 @@ const requestId = parsedRequestId.success
     </nav>
     <main id="main-content" class="shell" tabindex="-1">
       <p class="eyebrow">Phase 1 · Operational foundation</p>
-      <h1>WeJammin operational foundation</h1>
+      <h1 id="page-title" tabindex="-1">WeJammin operational foundation</h1>
       <p class="lede">
         Workspace status: ready for local development. Feature behavior remains
         locked behind contract-first implementation slices.
@@ -73,5 +73,6 @@ const requestId = parsedRequestId.success
         retryHref={retryHref}
       />
     </main>
+    <script src="../lib/route-heading-focus.ts"></script>
   </body>
 </html>
