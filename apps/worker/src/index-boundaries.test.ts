@@ -23,4 +23,24 @@ describe('Worker entrypoint boundaries', () => {
       ),
     ).toThrowError(EnvironmentConfigurationError);
   });
+
+  it('accepts approved server keys alongside Cloudflare runtime bindings', async () => {
+    const response = await handler.fetch(
+      new Request('https://api.example.test/api/v1/health'),
+      {
+        APP_ENVIRONMENT: 'staging',
+        APP_RELEASE: 'a2ec4803',
+        PLATFORM_JOBS: {
+          send: async () => ({
+            metadata: { metrics: { backlogBytes: 0, backlogCount: 0 } },
+          }),
+        },
+        SUPABASE_SECRET_KEY: 'sb_secret_staging',
+        SUPABASE_URL: 'https://staging.example.supabase.co',
+      },
+      {} as ExecutionContext,
+    );
+
+    expect(response.status).toBe(200);
+  });
 });

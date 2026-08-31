@@ -8,6 +8,7 @@ import {
 } from '@wejammin/contracts';
 import {
   parseServerEnvironment,
+  projectServerEnvironment,
   type ServerEnvironment,
 } from '@wejammin/config/environment';
 import { createLogger, type Logger } from '@wejammin/observability/logging';
@@ -230,7 +231,7 @@ export const createProductionAsyncEntrypoint = (
 
 const handler = {
   fetch: (request, env, executionContext) => {
-    const validatedEnvironment = parseServerEnvironment(env);
+    const validatedEnvironment = projectServerEnvironment(env);
     return createProductionWorkerApp(validatedEnvironment).fetch(
       request,
       validatedEnvironment,

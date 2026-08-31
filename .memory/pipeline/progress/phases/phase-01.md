@@ -10,11 +10,14 @@ The composite declaration-output defect is regression-covered, and exact run
 `33357532073` passes quality, database, clean immutable build, and exact artifact
 upload for main merge `be36d68c495b9a244dac4fd29c24a83e0c68ce7a`.
 Staging run `33357943998` then stopped before deployment because verifier and
-deploy commands omitted the archive's retained `apps/` prefix. The same defect
-also affected the downstream production candidate path. Both promotion stages
-are now regression-covered and locally remediated. Production candidate
-handling also checks out before artifact download so it works on a clean runner
-without deleting the candidate. Exact CI and staging confirmation remain
+deploy commands omitted the archive's retained `apps/` prefix. Main run
+`33359583799` and staging run `33359752069` verify that boundary fix, but the
+second run exposed a legacy Pages-domain collision plus missing/projected API
+runtime bindings. Local remediation now injects the Supabase URL/key safely,
+projects approved server settings away from Queue bindings, isolates staging
+Queue names, and requires a dynamic SSR smoke contract. `pnpm validate` passes
+148 files/877 tests, 100% coverage, 21 Playwright tests, and all builds. Exact CI,
+owner-authorized staging Pages/DNS cleanup, and live staging confirmation remain
 required. The previously blocking Playwright warning conflict remains resolved. See
 [`phase-1-validation.md`](../../../wiki/specs/audits/phase-1-validation.md).
 
@@ -29,7 +32,7 @@ required. The previously blocking Playwright warning conflict remains resolved. 
   - [x] `FE`: implement server-first user/admin/system behavior to satisfy the locked tests
   - [x] `QA` GREEN: run adversarial verification, coverage, accessibility, and regression checks
   - [x] Documentation/runbooks/progress update
-  → [log](../slices/phase-01-slice-01.md)
+        → [log](../slices/phase-01-slice-01.md)
 
 - [x] **Slice 02**: System shell, request security, and canonical interaction UX (L) — ✅ 2026-08-30
   - [x] Contract: lock Zod/config/registry contracts for this slice
@@ -38,7 +41,7 @@ required. The previously blocking Playwright warning conflict remains resolved. 
   - [x] `FE`: implement server-first user/admin/system behavior to satisfy the locked tests
   - [x] `QA` GREEN: run adversarial verification, coverage, accessibility, and regression checks
   - [x] Documentation/runbooks/progress update
-  → [log](../slices/phase-01-slice-02.md)
+        → [log](../slices/phase-01-slice-02.md)
 
 - [x] **Slice 03**: Data authority, jobs, offline intent, and realtime refetch spine (L) — ✅ 2026-08-30
   - [x] Contract: lock Zod/config/registry contracts for this slice
@@ -47,7 +50,7 @@ required. The previously blocking Playwright warning conflict remains resolved. 
   - [x] `FE`: implement server-first user/admin/system behavior to satisfy the locked tests
   - [x] `QA` GREEN: run adversarial verification, coverage, accessibility, and regression checks
   - [x] Documentation/runbooks/progress update
-  → [log](../slices/phase-01-slice-03.md)
+        → [log](../slices/phase-01-slice-03.md)
 
 - [x] **Slice 04**: Object upload admission and signed-intent integrity (L) — ✅ 2026-08-30
   - [x] Contract: lock Zod/config/registry contracts for this slice
@@ -56,7 +59,7 @@ required. The previously blocking Playwright warning conflict remains resolved. 
   - [x] `FE`: implement server-first user/admin/system behavior to satisfy the locked tests
   - [x] `QA` GREEN: run adversarial verification, coverage, accessibility, and regression checks
   - [x] Documentation/runbooks/progress update
-  → [log](../slices/phase-01-slice-04.md)
+        → [log](../slices/phase-01-slice-04.md)
 
 - [x] **Slice 05**: Upload completion, verification job, and quarantine lifecycle (L) — ✅ 2026-08-30
   - [x] Contract: lock Zod/config/registry contracts for this slice
@@ -65,7 +68,7 @@ required. The previously blocking Playwright warning conflict remains resolved. 
   - [x] `FE`: implement server-first user/admin/system behavior to satisfy the locked tests
   - [x] `QA` GREEN: run adversarial verification, coverage, accessibility, and regression checks
   - [x] Documentation/runbooks/progress update
-  → [log](../slices/phase-01-slice-05.md)
+        → [log](../slices/phase-01-slice-05.md)
 
 - [x] **Slice 06**: Webhook admission and provider-effect reconciliation (L) — ✅ 2026-08-30
   - [x] Contract: lock Zod/config/registry contracts for this slice
@@ -74,7 +77,7 @@ required. The previously blocking Playwright warning conflict remains resolved. 
   - [x] `FE`: implement server-first user/admin/system behavior to satisfy the locked tests
   - [x] `QA` GREEN: run adversarial verification, coverage, accessibility, and regression checks
   - [x] Documentation/runbooks/progress update
-  → [log](../slices/phase-01-slice-06.md)
+        → [log](../slices/phase-01-slice-06.md)
 
 - [x] **Slice 07**: CI/CD, staging, observability, and recovery gates (L) — ✅ 2026-08-30
   - [x] Contract: lock Zod/config/registry contracts for this slice
@@ -83,4 +86,4 @@ required. The previously blocking Playwright warning conflict remains resolved. 
   - [x] `FE`: implement server-first user/admin/system behavior to satisfy the locked tests
   - [x] `QA` GREEN: run adversarial verification, coverage, accessibility, and regression checks
   - [x] Documentation/runbooks/progress update
-  → [log](../slices/phase-01-slice-07.md)
+        → [log](../slices/phase-01-slice-07.md)

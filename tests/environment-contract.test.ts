@@ -22,6 +22,10 @@ const stagingDeploymentWorkflow = readFileSync(
   new URL('../.github/workflows/deploy-staging.yml', import.meta.url),
   'utf8',
 );
+const apiDeploymentScript = readFileSync(
+  new URL('../infra/workflows/deploy-api-worker.sh', import.meta.url),
+  'utf8',
+);
 const ciWorkflow = readFileSync(
   new URL('../.github/workflows/ci.yml', import.meta.url),
   'utf8',
@@ -71,11 +75,17 @@ describe('Worker runtime environment contract', () => {
       '--domain "$WEB_CUSTOM_DOMAIN"',
     );
     expect(stagingDeploymentWorkflow).toContain(
-      '--var APP_ENVIRONMENT:staging',
+      'bash infra/workflows/deploy-api-worker.sh staging',
     );
-    expect(stagingDeploymentWorkflow).toContain(
-      '--var APP_RELEASE:"$DEPLOY_SHA"',
+    expect(apiDeploymentScript).toContain(
+      '--var APP_ENVIRONMENT:"$task_environment"',
     );
+    expect(apiDeploymentScript).toContain('--var APP_RELEASE:"$DEPLOY_SHA"');
+    expect(apiDeploymentScript).toContain('--var SUPABASE_URL:"$SUPABASE_URL"');
+    expect(apiDeploymentScript).toContain(
+      '--secrets-file "$task_secrets_file"',
+    );
+    expect(apiDeploymentScript).not.toContain('--var SUPABASE_SECRET_KEY:');
     expect(ciWorkflow).toContain('Upload immutable build artifacts');
   });
 });

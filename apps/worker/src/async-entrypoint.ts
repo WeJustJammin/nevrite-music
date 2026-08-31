@@ -1,7 +1,11 @@
 import { QueueEnvelopeSchema, type QueueEnvelope } from '@wejammin/contracts';
 import type { ServerEnvironment } from '@wejammin/config/environment';
 
-const PLATFORM_QUEUE_NAME = 'platform-jobs' as const;
+const PLATFORM_QUEUE_NAMES = {
+  development: 'platform-jobs',
+  production: 'platform-jobs',
+  staging: 'platform-jobs-staging',
+} as const satisfies Record<ServerEnvironment['APP_ENVIRONMENT'], string>;
 const OUTBOX_SWEEP_CRON = '* * * * *' as const;
 
 type MaybePromise<T> = T | Promise<T>;
@@ -83,7 +87,7 @@ export const createAsyncEntrypoint = (
   queue: async (batch, env, executionContext): Promise<void> => {
     for (const message of batch.messages) {
       if (
-        batch.queue !== PLATFORM_QUEUE_NAME ||
+        batch.queue !== PLATFORM_QUEUE_NAMES[env.APP_ENVIRONMENT] ||
         dependencies.orchestrateQueueMessage === undefined
       ) {
         retryMessage(message);

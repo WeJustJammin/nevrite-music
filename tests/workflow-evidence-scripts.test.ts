@@ -19,6 +19,9 @@ const gateWriter = fileURLToPath(
 const migrationRunner = fileURLToPath(
   new URL('../infra/workflows/apply-production-migrations.sh', import.meta.url),
 );
+const apiWorkerDeployer = fileURLToPath(
+  new URL('../infra/workflows/deploy-api-worker.sh', import.meta.url),
+);
 const temporaryRoots: string[] = [];
 
 const temporaryRoot = (): string => {
@@ -31,8 +34,9 @@ const execute = (
   script: string,
   cwd: string,
   env: Record<string, string>,
+  args: readonly string[] = [],
 ): void => {
-  execFileSync('bash', [script], {
+  execFileSync('bash', [script, ...args], {
     cwd,
     env: { ...process.env, ...env },
     stdio: 'pipe',
@@ -46,6 +50,110 @@ afterEach(() => {
 });
 
 describe('release workflow evidence scripts', () => {
+  it('deploys API artifacts with a temporary permission-bounded secret file', () => {
+    const root = temporaryRoot();
+    const bin = join(root, 'bin');
+    const runnerTemp = join(root, 'runner-temp');
+    const artifact = join(root, 'worker.js');
+    const calls = join(root, 'calls.log');
+    mkdirSync(bin);
+    mkdirSync(runnerTemp);
+    writeFileSync(artifact, 'worker');
+    const fakePnpm = join(bin, 'pnpm');
+    writeFileSync(
+      fakePnpm,
+      `#!/usr/bin/env bash
+set -euo pipefail
+test -z "\${SUPABASE_SECRET_KEY:-}"
+task_secrets_file=""
+task_previous=""
+for task_argument in "$@"; do
+  if [[ "$task_previous" == "--secrets-file" ]]; then
+    task_secrets_file="$task_argument"
+    break
+  fi
+  task_previous="$task_argument"
+done
+[[ "$task_secrets_file" == "$RUNNER_TEMP"/wejammin-api-staging-secrets.*.env ]]
+test -f "$task_secrets_file"
+test "$(stat -c '%a' "$task_secrets_file")" = "600"
+grep -Fx 'SUPABASE_SECRET_KEY=synthetic-staging-secret' "$task_secrets_file" >/dev/null
+printf '%s\n' "$*" > "$CALL_LOG"
+`,
+    );
+    chmodSync(fakePnpm, 0o700);
+
+    execute(
+      apiWorkerDeployer,
+      root,
+      {
+        CALL_LOG: calls,
+        DEPLOY_SHA: 'a'.repeat(40),
+        PATH: `${bin}:${process.env.PATH ?? ''}`,
+        RUNNER_TEMP: runnerTemp,
+        SUPABASE_SECRET_KEY: 'synthetic-staging-secret',
+        SUPABASE_URL: 'https://staging.example.supabase.co',
+      },
+      ['staging', artifact],
+    );
+
+    const command = readFileSync(calls, 'utf8');
+    expect(command).toContain(`wrangler deploy ${artifact}`);
+    expect(command).toContain('--env staging');
+    expect(command).toContain('--var APP_ENVIRONMENT:staging');
+    const secretsFile = command.match(/--secrets-file (\S+)/u)?.[1];
+    expect(secretsFile).toMatch(
+      new RegExp(
+        `^${runnerTemp}/wejammin-api-staging-secrets\\.[A-Za-z0-9]+\\.env$`,
+        'u',
+      ),
+    );
+    expect(command).not.toContain('synthetic-staging-secret');
+    expect(() => readFileSync(secretsFile ?? '', 'utf8')).toThrow();
+  });
+
+  it('rejects non-canonical Supabase origins before invoking Wrangler', () => {
+    const root = temporaryRoot();
+    const bin = join(root, 'bin');
+    const runnerTemp = join(root, 'runner-temp');
+    const artifact = join(root, 'worker.js');
+    const calls = join(root, 'calls.log');
+    mkdirSync(bin);
+    mkdirSync(runnerTemp);
+    writeFileSync(artifact, 'worker');
+    const fakePnpm = join(bin, 'pnpm');
+    writeFileSync(
+      fakePnpm,
+      `#!/usr/bin/env bash
+set -euo pipefail
+printf 'called\n' > "$CALL_LOG"
+`,
+    );
+    chmodSync(fakePnpm, 0o700);
+
+    for (const SUPABASE_URL of [
+      'https://user:password@staging.example.supabase.co',
+      'https://staging.example.supabase.co ',
+    ]) {
+      expect(() =>
+        execute(
+          apiWorkerDeployer,
+          root,
+          {
+            CALL_LOG: calls,
+            DEPLOY_SHA: 'a'.repeat(40),
+            PATH: `${bin}:${process.env.PATH ?? ''}`,
+            RUNNER_TEMP: runnerTemp,
+            SUPABASE_SECRET_KEY: 'synthetic-staging-secret',
+            SUPABASE_URL,
+          },
+          ['staging', artifact],
+        ),
+      ).toThrow();
+    }
+    expect(() => readFileSync(calls, 'utf8')).toThrow();
+  });
+
   it('derives every CI gate from successful upstream results and built files', () => {
     const root = temporaryRoot();
     mkdirSync(join(root, 'apps/worker/dist'), { recursive: true });

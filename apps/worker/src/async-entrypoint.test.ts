@@ -49,7 +49,7 @@ const createMessage = (body: unknown): PlatformJobsMessage => ({
 
 const createBatch = (
   messages: readonly PlatformJobsMessage[],
-  queue = 'platform-jobs',
+  queue = 'platform-jobs-staging',
 ): PlatformJobsBatch => ({ messages, queue });
 
 describe('Worker asynchronous entrypoint', () => {
@@ -79,6 +79,30 @@ describe('Worker asynchronous entrypoint', () => {
     });
     expect(message.ack).toHaveBeenCalledOnce();
     expect(message.retry).not.toHaveBeenCalled();
+  });
+
+  it('admits the platform queue name assigned to each hosted environment', async () => {
+    const stagingMessage = createMessage(envelope);
+    const productionMessage = createMessage(envelope);
+    const orchestrateQueueMessage = vi.fn(async () => 'ack' as const);
+    const entrypoint = createAsyncEntrypoint({ orchestrateQueueMessage });
+
+    await entrypoint.queue(
+      createBatch([stagingMessage], 'platform-jobs-staging'),
+      bindings,
+      executionContext,
+    );
+    await entrypoint.queue(
+      createBatch([productionMessage], 'platform-jobs'),
+      { ...bindings, APP_ENVIRONMENT: 'production' },
+      executionContext,
+    );
+
+    expect(orchestrateQueueMessage).toHaveBeenCalledTimes(2);
+    expect(stagingMessage.ack).toHaveBeenCalledOnce();
+    expect(productionMessage.ack).toHaveBeenCalledOnce();
+    expect(stagingMessage.retry).not.toHaveBeenCalled();
+    expect(productionMessage.retry).not.toHaveBeenCalled();
   });
 
   it('retries a message when application orchestration returns retry', async () => {

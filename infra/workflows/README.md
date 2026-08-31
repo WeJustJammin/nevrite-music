@@ -19,6 +19,9 @@ filesystem and validation operations.
   identity, origins, and downloaded artifact boundary.
 - `record-staging-artifacts.sh` records deterministic SHA-256 entries for the
   downloaded staging artifact.
+- `deploy-api-worker.sh` injects the approved server configuration and a
+  permission-bounded temporary Wrangler secrets file for either hosted
+  environment.
 - `prepare-staging-candidate.sh` copies the verified artifact and manifest into
   the promotion candidate directory.
 - `finalize-staging-candidate.sh` writes the complete release-promotion

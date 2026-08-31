@@ -53,13 +53,11 @@ jobs:
         env:
           CLOUDFLARE_ACCOUNT_ID: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
+          SUPABASE_URL: ${{ vars.SUPABASE_URL }}
         run: >-
-          pnpm --filter @wejammin/worker exec wrangler deploy
+          bash infra/workflows/deploy-api-worker.sh staging
           "$GITHUB_WORKSPACE/.artifacts/apps/worker/dist/index.js"
-          --config wrangler.jsonc
-          --env staging
-          --var APP_ENVIRONMENT:staging
-          --var APP_RELEASE:"$DEPLOY_SHA"
 
       - name: Deploy web SSR Worker staging artifact
         env:

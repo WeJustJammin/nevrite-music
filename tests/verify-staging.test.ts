@@ -3,6 +3,12 @@ import { describe, expect, it, vi } from 'vitest';
 import { verifyStaging } from '../infra/verify-staging.mjs';
 
 const webHtml = `<!doctype html><html><head><title>WeJammin | Operational foundation</title></head><body><h1>WeJammin operational foundation</h1></body></html>`;
+const webRuntimeRedirect = new Response(null, {
+  headers: {
+    location: '/auth/sign-in?returnTo=%2Fapp%2Finfrastructure',
+  },
+  status: 303,
+});
 
 describe('verifyStaging', () => {
   it('accepts the locked web and API health contracts', async () => {
@@ -14,6 +20,7 @@ describe('verifyStaging', () => {
           status: 200,
         }),
       )
+      .mockResolvedValueOnce(webRuntimeRedirect)
       .mockResolvedValueOnce(
         Response.json({
           requestId: '11111111-1111-4111-8111-111111111111',
@@ -31,8 +38,34 @@ describe('verifyStaging', () => {
       }),
     ).resolves.toEqual({
       apiStatus: 200,
+      webRuntimeStatus: 303,
       webStatus: 200,
     });
+  });
+
+  it('rejects a stale static shell that does not prove the SSR boundary', async () => {
+    const fetchImpl = vi
+      .fn<typeof fetch>()
+      .mockResolvedValueOnce(
+        new Response(webHtml, {
+          headers: { 'content-type': 'text/html; charset=utf-8' },
+          status: 200,
+        }),
+      )
+      .mockResolvedValueOnce(
+        new Response(webHtml, {
+          headers: { 'content-type': 'text/html; charset=utf-8' },
+          status: 200,
+        }),
+      );
+
+    await expect(
+      verifyStaging({
+        apiOrigin: 'https://api-staging.example.com',
+        fetchImpl,
+        webOrigin: 'https://staging.example.com',
+      }),
+    ).rejects.toThrow('Web SSR boundary mismatch');
   });
 
   it('rejects an unexpected API health contract', async () => {
@@ -44,6 +77,7 @@ describe('verifyStaging', () => {
           status: 200,
         }),
       )
+      .mockResolvedValueOnce(webRuntimeRedirect)
       .mockResolvedValueOnce(
         Response.json({ service: 'wrong-service', status: 'ok' }),
       );
@@ -66,6 +100,7 @@ describe('verifyStaging', () => {
           status: 200,
         }),
       )
+      .mockResolvedValueOnce(webRuntimeRedirect)
       .mockResolvedValueOnce(
         Response.json({
           requestId: 'req_12345678',

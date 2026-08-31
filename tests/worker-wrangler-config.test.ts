@@ -33,27 +33,36 @@ const environment = (config: JsonObject, name: string): JsonObject =>
 describe('Worker Wrangler queue and schedule contract', () => {
   it('declares production, local, and staging queue bindings independently', () => {
     const config = readConfig();
-    const expectedConsumer = {
-      queue: 'platform-jobs',
-      max_retries: 3,
-      dead_letter_queue: 'platform-jobs-dlq',
-    };
 
     const environments = [
-      { label: 'production', value: config },
-      { label: 'local', value: environment(config, 'local') },
-      { label: 'staging', value: environment(config, 'staging') },
+      { label: 'production', queue: 'platform-jobs', value: config },
+      {
+        label: 'local',
+        queue: 'platform-jobs',
+        value: environment(config, 'local'),
+      },
+      {
+        label: 'staging',
+        queue: 'platform-jobs-staging',
+        value: environment(config, 'staging'),
+      },
     ];
 
-    for (const { label, value } of environments) {
+    for (const { label, queue, value } of environments) {
       const queues = asObject(value.queues, `${label}.queues`);
       expect(queues.producers).toEqual([
         expect.objectContaining({
           binding: 'PLATFORM_JOBS',
-          queue: 'platform-jobs',
+          queue,
         }),
       ]);
-      expect(queues.consumers).toEqual([expectedConsumer]);
+      expect(queues.consumers).toEqual([
+        {
+          queue,
+          max_retries: 3,
+          dead_letter_queue: `${queue}-dlq`,
+        },
+      ]);
     }
   });
 
