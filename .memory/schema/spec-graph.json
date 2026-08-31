@@ -1,7 +1,7 @@
 {
-  "builtAt": "2026-08-31T02:50:30.575Z",
-  "nodeCount": 1606,
-  "edgeCount": 9942,
+  "builtAt": "2026-08-31T17:44:01.400Z",
+  "nodeCount": 1608,
+  "edgeCount": 9946,
   "nodes": [
     {
       "id": "plan:2026-08-02-architecture-design",
@@ -169,6 +169,20 @@
       "type": "audit",
       "label": "Ambiguity Audit Scope — BE + FE",
       "path": ".memory/wiki/specs/audits/audit-scope.md",
+      "shardId": null
+    },
+    {
+      "id": "audit:audits/phase-1-staging-runtime-evidence",
+      "type": "audit",
+      "label": "Phase 1 Staging Runtime Evidence",
+      "path": ".memory/wiki/specs/audits/phase-1-staging-runtime-evidence.md",
+      "shardId": null
+    },
+    {
+      "id": "audit:audits/phase-1-validation",
+      "type": "audit",
+      "label": "Phase 1 Validation",
+      "path": ".memory/wiki/specs/audits/phase-1-validation.md",
       "shardId": null
     },
     {
@@ -11327,6 +11341,30 @@
     },
     {
       "from": "plan:architecture-draft",
+      "to": "phase-plan:phases/phase-1",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "audit:audits/phase-1-staging-runtime-evidence",
+      "to": "phase-plan:phases/phase-1",
+      "type": "phases_into",
+      "source": "phase-ref"
+    },
+    {
+      "from": "audit:audits/phase-1-staging-runtime-evidence",
+      "to": "phase-plan:phases/phase-1",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "audit:audits/phase-1-validation",
+      "to": "phase-plan:phases/phase-1",
+      "type": "phases_into",
+      "source": "phase-ref"
+    },
+    {
+      "from": "audit:audits/phase-1-validation",
       "to": "phase-plan:phases/phase-1",
       "type": "references",
       "source": "wikilink"
@@ -70904,7 +70942,7 @@
     "byNodeType": {
       "plan": 12,
       "architecture": 18,
-      "audit": 5,
+      "audit": 7,
       "be-spec": 157,
       "fe-spec": 44,
       "ia-spec": 85,
@@ -70913,9 +70951,9 @@
       "decision": 97
     },
     "byEdgeType": {
-      "phases_into": 4,
+      "phases_into": 6,
       "constrained_by": 9041,
-      "references": 825,
+      "references": 827,
       "derives_from": 63,
       "implemented_by": 6,
       "split_from": 3

@@ -40,6 +40,8 @@
 - [[specs/audits/2026-08-29-be-ambiguity-report|BE Ambiguity Audit — Fresh Combined Run (2026-08-29)]] — audit — spec-vault
 - [[specs/audits/2026-08-29-fe-ambiguity-report|Fresh FE Ambiguity Audit]] — audit — spec-vault
 - [[specs/audits/audit-scope|Ambiguity Audit Scope — BE + FE]] — audit — spec-vault
+- [[specs/audits/phase-1-staging-runtime-evidence|Phase 1 Staging Runtime Evidence]] — audit — spec-vault
+- [[specs/audits/phase-1-validation|Phase 1 Validation]] — audit — spec-vault
 - [[specs/audits/propagation-observability-cost-2026-08-30|Sentry Removal and Free-Only Operations Propagation Record]] — audit — spec-vault
 - [[specs/audits/propagation-scan-2026-08-30|Sentry Removal and Free-Only Operations Propagation Scan]] — audit — spec-vault
 - [[specs/be/00-infrastructure|Cross-cutting Platform Foundation — Backend Specification]] — be-spec — spec-vault

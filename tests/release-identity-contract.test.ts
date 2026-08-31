@@ -26,6 +26,11 @@ const readWorkflow = (name: string): string =>
     'utf8',
   );
 
+const apiDeploymentScript = readFileSync(
+  new URL('../infra/workflows/deploy-api-worker.sh', import.meta.url),
+  'utf8',
+);
+
 const lineCount = (contents: string): number => contents.split(/\r?\n/u).length;
 
 const asObject = (value: unknown, label: string): JsonObject => {
@@ -58,6 +63,10 @@ describe('immutable release identity contract', () => {
     const workflow = readWorkflow('ci.yml');
 
     expect(lineCount(workflow)).toBeLessThanOrEqual(100);
+    expect(workflow).toMatch(/push:\n {4}branches: \[main\]/u);
+    expect(workflow).toMatch(/pull_request:\n {4}branches:\n {6}- main/u);
+    expect(workflow).toContain('group: ci-${{ github.repository }}');
+    expect(workflow).toContain('cancel-in-progress: false');
     expect(workflow).toMatch(/name: workspace-build-\$\{\{ github\.sha \}\}/u);
     expect(workflow).toMatch(/apps\/worker\/dist\//u);
   });
@@ -96,7 +105,8 @@ describe('immutable release identity contract', () => {
     expect(workflow).toMatch(
       /name: workspace-build-\$\{\{ env\.DEPLOY_SHA \}\}/u,
     );
-    expect(workflow).toMatch(/--var APP_RELEASE:"\$DEPLOY_SHA"/u);
+    expect(workflow).toMatch(/deploy-api-worker\.sh staging/u);
+    expect(apiDeploymentScript).toMatch(/--var APP_RELEASE:"\$DEPLOY_SHA"/u);
     expect(workflow).toMatch(/pnpm verify:staging/u);
     expect(workflow).toMatch(/name: staging-verified-candidate/u);
     expect(candidateScript).toMatch(/promotion-candidate\/artifacts/u);
@@ -180,8 +190,11 @@ describe('immutable release identity contract', () => {
       workflow.indexOf('- name: Set up workspace'),
     );
     expect(workflow).not.toMatch(/name: workspace-build-/u);
-    expect(workflow).toMatch(/--var APP_ENVIRONMENT:production/u);
-    expect(workflow).toMatch(/--var APP_RELEASE:"\$DEPLOY_SHA"/u);
+    expect(workflow).toMatch(/deploy-api-worker\.sh production/u);
+    expect(apiDeploymentScript).toMatch(
+      /--var APP_ENVIRONMENT:"\$task_environment"/u,
+    );
+    expect(apiDeploymentScript).toMatch(/--var APP_RELEASE:"\$DEPLOY_SHA"/u);
     expect(workflow.indexOf('CLOUDFLARE_API_TOKEN')).toBeGreaterThan(
       workflow.indexOf('name: Set up workspace'),
     );

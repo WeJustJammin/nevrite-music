@@ -41,7 +41,7 @@ const batch = (
   messages: readonly PlatformJobsMessage[],
 ): PlatformJobsBatch => ({
   messages,
-  queue: 'platform-jobs',
+  queue: 'platform-jobs-staging',
 });
 
 describe('async queue admission', () => {

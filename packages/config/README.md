@@ -1,13 +1,15 @@
 # Typed configuration
 
-`src/environment.schema.ts` owns the closed Zod contracts for server bindings
+`src/environment.schema.ts` owns the closed Zod contracts for server settings
 and browser-safe public values. `src/environment.ts` exposes the parsing
-boundary and the explicit browser projection.
+boundaries and explicit server/browser projections.
 
-Server entrypoints call `parseServerEnvironment` before serving requests; a
-missing required binding throws `EnvironmentConfigurationError`. Browser
-entrypoints call `projectBrowserEnvironment` when sourcing a combined
-deployment environment. It retains only `PUBLIC_APP_ORIGIN`,
+Server runtime entrypoints call `projectServerEnvironment` when Cloudflare
+passes configuration alongside Queue or other platform bindings. It retains
+only the approved server keys before strict parsing; a missing required key
+throws `EnvironmentConfigurationError`. Browser entrypoints call
+`projectBrowserEnvironment` when sourcing a combined deployment environment.
+It retains only `PUBLIC_APP_ORIGIN`,
 `PUBLIC_SUPABASE_URL`, and `PUBLIC_SUPABASE_PUBLISHABLE_KEY`; provider,
 database, deployment, and other unknown values cannot be serialized.
 

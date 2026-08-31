@@ -86,7 +86,7 @@ describe('Worker readiness boundary', () => {
         messages: [
           { ack: vi.fn(), attempts: 1, body: {}, id: 'message-1', retry },
         ],
-        queue: 'platform-jobs',
+        queue: 'platform-jobs-staging',
       } as never,
       asyncBindings,
       executionContext,
@@ -156,6 +156,7 @@ describe('Worker readiness boundary', () => {
     const retry = vi.fn();
     const asyncBindings = {
       ...bindings,
+      APP_ENVIRONMENT: 'production',
       PLATFORM_JOBS: { send: vi.fn() },
     } as never;
 

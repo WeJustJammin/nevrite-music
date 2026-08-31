@@ -53,6 +53,19 @@ export async function verifyStaging({
     throw new Error('Web shell contract mismatch');
   }
 
+  const webRuntimeResponse = await fetchImpl(`${webUrl}/app/infrastructure`, {
+    ...requestOptions,
+    headers: { accept: 'text/html' },
+    redirect: 'manual',
+  });
+  if (
+    webRuntimeResponse.status !== 303 ||
+    webRuntimeResponse.headers.get('location') !==
+      '/auth/sign-in?returnTo=%2Fapp%2Finfrastructure'
+  ) {
+    throw new Error('Web SSR boundary mismatch');
+  }
+
   const apiResponse = await fetchImpl(
     `${apiUrl}/api/v1/health`,
     requestOptions,
@@ -66,6 +79,7 @@ export async function verifyStaging({
 
   return {
     apiStatus: apiResponse.status,
+    webRuntimeStatus: webRuntimeResponse.status,
     webStatus: webResponse.status,
   };
 }

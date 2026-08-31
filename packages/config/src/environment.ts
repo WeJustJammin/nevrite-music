@@ -95,6 +95,19 @@ export function parseServerEnvironment(input: unknown): ServerEnvironment {
   return result.data;
 }
 
+/**
+ * Builds the server configuration projection from combined runtime bindings.
+ * Platform resources remain available to the runtime but never widen the
+ * closed server configuration contract.
+ */
+export function projectServerEnvironment(input: unknown): ServerEnvironment {
+  if (!isRecord(input)) {
+    return parseServerEnvironment(input);
+  }
+
+  return parseServerEnvironment(pickOwnKeys(input, SERVER_ENVIRONMENT_KEYS));
+}
+
 /** Parses exactly the browser-safe public environment contract. */
 export function parseBrowserEnvironment(input: unknown): BrowserEnvironment {
   const result = BrowserEnvironmentSchema.safeParse(input);

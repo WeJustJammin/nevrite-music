@@ -49,6 +49,7 @@ describe('validation toolchain contracts', () => {
   it('declares each local test project and the managed E2E server boundary', () => {
     const vitest = readRepositoryFile('vitest.config.ts');
     const playwright = readRepositoryFile('playwright.config.ts');
+    const webAstro = readRepositoryFile('apps/web/astro.config.mjs');
     const e2e = readRepositoryFile('tests/e2e/scaffold.spec.ts');
     const fixture = createE2EFixture();
 
@@ -75,7 +76,21 @@ describe('validation toolchain contracts', () => {
     expect(vitest).toContain("'tests/security/**/*.test.ts'");
     expect(playwright).toContain("testDir: './tests/e2e'");
     expect(playwright).toContain("name: 'chromium'");
-    expect(playwright).toContain(`baseURL: '${fixture.baseUrl}'`);
+    expect(playwright).toContain('const ciRunId = process.env.GITHUB_RUN_ID;');
+    expect(playwright).toContain('BigInt(ciRunId) % 10_000n');
+    expect(playwright).toContain('30_000 + ciPortSlot * 2');
+    expect(playwright).toContain('--port ${webPort}');
+    expect(playwright).toContain('--port ${docsPort}');
+    expect(playwright).toContain('metadata: { docsOrigin }');
+    expect(playwright).toContain('baseURL: webOrigin');
+    expect(playwright).toContain(
+      `const webPort = ciPortSlot === undefined ? ${new URL(fixture.baseUrl).port}`,
+    );
+    expect(e2e).toContain("metadata['docsOrigin']");
+    expect(e2e).not.toContain('http://127.0.0.1:4322');
+    expect(webAstro).toContain("'GITHUB_RUN_ID' in runtimeProcess.env");
+    expect(webAstro).toContain('inspectorPort: false');
+    expect(webAstro).toContain('persistState: false');
     expect(e2e).toContain(fixture.title);
     expect(e2e).toContain(fixture.heading);
     expect(e2e).toContain(fixture.statusText);

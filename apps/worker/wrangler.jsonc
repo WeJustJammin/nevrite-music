@@ -78,14 +78,14 @@
         "producers": [
           {
             "binding": "PLATFORM_JOBS",
-            "queue": "platform-jobs",
+            "queue": "platform-jobs-staging",
           },
         ],
         "consumers": [
           {
-            "queue": "platform-jobs",
+            "queue": "platform-jobs-staging",
             "max_retries": 3,
-            "dead_letter_queue": "platform-jobs-dlq",
+            "dead_letter_queue": "platform-jobs-staging-dlq",
           },
         ],
       },

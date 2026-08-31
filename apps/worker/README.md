@@ -31,7 +31,9 @@ contains non-secret deployment configuration; local secret examples remain in
 
 Queue bindings and the one-minute outbox sweep are declared independently in
 the production, `local`, and `staging` Wrangler environments because Queue
-bindings are not inherited. `src/async-entrypoint.ts` is the injectable
+bindings are not inherited. Hosted staging uses `platform-jobs-staging` and
+`platform-jobs-staging-dlq`; production reserves `platform-jobs` and
+`platform-jobs-dlq`, preventing cross-environment delivery. `src/async-entrypoint.ts` is the injectable
 transport seam: it validates producer envelopes, delegates queue messages to
 application orchestration, acknowledges only successful work, and retries when
 orchestration is missing, fails, or requests a retry. The scheduled handler

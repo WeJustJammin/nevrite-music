@@ -9,6 +9,7 @@ import {
   parseBrowserEnvironment,
   parseServerEnvironment,
   projectBrowserEnvironment,
+  projectServerEnvironment,
 } from './environment';
 
 const validServerEnvironment = {
@@ -66,6 +67,23 @@ describe('environment contracts', () => {
         expect(error.message).not.toContain('sentinel-db-password');
       }
     }
+  });
+
+  it('projects only approved server keys from combined runtime bindings', () => {
+    const projected = projectServerEnvironment({
+      ...validServerEnvironment,
+      PLATFORM_JOBS: { send: () => undefined },
+      UNAPPROVED_PROVIDER_SECRET: 'sentinel-provider-secret',
+    });
+
+    expect(projected).toEqual(validServerEnvironment);
+    expect(Object.keys(projected).sort()).toEqual([
+      'APP_ENVIRONMENT',
+      'APP_RELEASE',
+      'SUPABASE_SECRET_KEY',
+      'SUPABASE_URL',
+    ]);
+    expect(JSON.stringify(projected)).not.toContain('sentinel');
   });
 
   it('fails startup parsing when required server bindings are missing', () => {
