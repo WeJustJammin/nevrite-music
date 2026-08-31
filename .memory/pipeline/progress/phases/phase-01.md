@@ -3,33 +3,24 @@
 **Status**: complete
 **Progress**: 7/7 slices
 **Plan**: [Phase 1 specification](../../../wiki/specs/phases/phase-1.md)
-**Independent phase validation**: FAIL on 2026-08-30 — local functional,
-coverage, static, build, migration, and spec-coverage checks passed, but the
-first implementation CI run (`33354478865`) failed its clean immutable build.
-The composite declaration-output defect is regression-covered, and exact run
-`33357532073` passes quality, database, clean immutable build, and exact artifact
-upload for main merge `be36d68c495b9a244dac4fd29c24a83e0c68ce7a`.
-Staging run `33357943998` then stopped before deployment because verifier and
-deploy commands omitted the archive's retained `apps/` prefix. Main run
-`33359583799` and staging run `33359752069` verify that boundary fix, but the
-second run exposed a legacy Pages-domain collision plus missing/projected API
-runtime bindings. Local remediation now injects the Supabase URL/key safely,
-projects approved server settings away from Queue bindings, isolates staging
-Queue names, and requires a dynamic SSR smoke contract. `pnpm validate` passes
-148 files/877 tests, 100% coverage, 21 Playwright tests, and all builds. Exact CI,
-owner-authorized staging Pages/DNS cleanup, and live staging confirmation remain
-required. Runtime-remediation push run `33363038760` passed all jobs at
-`b6999ea58d17321117f555bd49ccb1b839d7704c`; simultaneous PR run `33363059831`
-exposed duplicate-SHA Playwright port contention, now regression-covered by a
-validated per-run web/docs port pair derived from `GITHUB_RUN_ID`, with CI
-inspector/persistence disabled and concurrent reproduction passing 42/42. Exact
-`b1000143` runs avoided server collisions but overlapping coverage workloads
-timed out unrelated scans/builds, so feature pushes now rely on one PR workflow.
-A repository-wide concurrency group prevents overlapping active CI runs; GitHub
-preserves the running job and the latest pending job. Exact revision `dd6692b7`
-produced only PR run `33420700305`, whose quality, database, and immutable-build
-jobs all passed. The previously blocking Playwright warning conflict remains
-resolved. See
+**Independent phase validation**: FAIL, finalized 2026-08-31. Implementation
+tracking remains complete at 7/7 slices and 390/390 criteria. Canonical local
+validation passes 148 Vitest files/877 tests, 100% coverage, 21 Playwright tests,
+all static/build gates, database verification, and spec coverage. PR #4 merged
+as `c2880f34a3127235b859d69e89dc8129d0746d6d`; main CI run `33425577715`
+passed quality, database, and immutable build. After explicitly authorized
+staging-only Pages/DNS cleanup, staging run `33425837272` attempt 2 passed for
+that exact merge with API 200, web 200, and protected-route 303.
+
+The readiness shard fails despite the healthy deployment: staging permits
+cleartext HTTP and omits the locked security headers; the GitHub `production`
+environment has no reviewer or branch protections; two P1 accessibility
+contracts fail manual review; the hydrated workbench and route exceed hard gzip
+budgets; and the required Phase 1 deterministic p95 smoke has no configured
+evidence. Full representative-data k6/pgbench load is deferred once under
+`PERF-DEFER-01`, no later than production candidacy or the first data-bearing
+release. Production run `33426269934` failed before migrations/deploy because
+`PRODUCTION_WEB_ORIGIN` was unset, so no production mutation occurred. See
 [`phase-1-validation.md`](../../../wiki/specs/audits/phase-1-validation.md).
 
 **Setup checkpoint**: workspace scaffold, CI/CD, Cloudflare hosting, managed Supabase staging provisioning, immutable artifact promotion, public health verification, live structured-log verification, and exact local surface-map skill resolution are complete at commit `aa1039b`. The billing audit confirms Supabase organization `wejamm.in` is on Free with a `$0.00` invoice. The owner explicitly reconfirmed Cloudflare Workers Paid as the sole paid-service exception under DEC-103's soft `$10/month` ceiling; it has a `$5/month` minimum plus usage overage, with an exact `$10` notification rather than a hard ceiling. DEC-104 removes third-party monitoring and requires every other service to remain genuinely free unless a new exact-price approval is recorded. Infrastructure verification passes and the setup-to-implementation handoff is unblocked. See `verification/2026-08-30-workspace-infrastructure.md`.

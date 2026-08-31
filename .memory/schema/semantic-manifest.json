@@ -1,8 +1,8 @@
 {
-  "builtAt": "2026-08-31T17:44:05.585Z",
+  "builtAt": "2026-08-31T19:23:04.599Z",
   "backend": "local-cosine",
   "embeddingModel": null,
-  "entryCount": 76339,
+  "entryCount": 76347,
   "pythonBackend": {
     "available": true,
     "path": "/home/rob/Projects/WeJammin/.memory/pipeline/semantic_backend.py"

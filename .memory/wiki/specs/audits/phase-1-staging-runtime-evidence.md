@@ -6,10 +6,17 @@
 
 **Staging workflow**: GitHub Actions run `33359752069`, job `99388688223`
 
+**Remediation closure**: 2026-08-31T14:58:46-04:00
+
+**Current candidate**: `c2880f34a3127235b859d69e89dc8129d0746d6d`
+
+**Current staging workflow**: GitHub Actions run `33425837272`, attempt 2
+
 This capture preserves the external evidence that opened validation findings
 VAL-P1-002 and VAL-P1-007 through VAL-P1-011. It contains no credentials or
-secret values. All observations precede deployment of the local remediation and
-therefore prove the failure state, not the fix.
+secret values. The initial observations precede deployment of the remediation
+and prove the failure state; the appended closure section records the later
+successful deployment and current readiness probes.
 
 ## Immutable staging run
 
@@ -83,6 +90,43 @@ default, so the next approved staging deploy is expected to create the isolated
 pair. The exact run must still verify creation and binding before VAL-P1-011 can
 be closed. See
 <https://developers.cloudflare.com/workers/wrangler/configuration/#automatic-provisioning>.
+
+## Remediation closure
+
+The owner approved both staging-only cleanup and PR #4 merge. The Pages custom
+domain attachment `9a518c78-50fe-4a86-913d-363c7fb6a47e` was deleted from
+project `wejammin-web-staging`; its follow-up API lookup returned HTTP 404. The
+single proxied CNAME `staging.wejamm.in -> wejammin-web-staging.pages.dev` was
+then deleted, and the dashboard reported zero remaining exact-name records.
+No production domain, Pages project, Worker, or DNS record was changed.
+
+PR #4 merged as `c2880f34a3127235b859d69e89dc8129d0746d6d` after exact PR CI
+run `33421209928` passed. Main CI run `33425577715` then passed quality,
+database, clean immutable build, and artifact upload for that merge revision.
+
+Staging run `33425837272` attempt 2 completed successfully for the same
+revision:
+
+- `wejammin-web-staging` deployed and attached custom domain
+  `staging.wejamm.in` through Worker custom-domain record
+  `e8b962dd57634f7060ec1b03dff03accd785c07f`;
+- `wejammin-api-staging` deployed with the required Supabase configuration and
+  the `PLATFORM_JOBS` Queue binding;
+- Queue `platform-jobs-staging`
+  (`3ee669d551df4b43a94b46a32b09ff8f`) has one producer and one consumer;
+- DLQ `platform-jobs-staging-dlq`
+  (`582acab261fc4db2b59e11fbbedb346f`) exists as the consumer's failure-routing
+  target; and
+- workflow and independent local smoke verification both returned
+  `apiStatus: 200`, `webStatus: 200`, and the expected protected-route
+  `webRuntimeStatus: 303`.
+
+The staging deployment blocker is closed. Readiness probing after closure found
+two separate security failures: cleartext HTTP returns 200 rather than an HTTPS
+redirect, and the HTTPS web/API responses omit the architecture-required CSP,
+HSTS, MIME-sniffing, frame, referrer, and permissions headers. Those observations
+are recorded as current readiness findings in `phase-1-validation.md`; they do
+not reopen the deployment/smoke gate.
 
 
 <!-- spec-graph: auto-generated -->
