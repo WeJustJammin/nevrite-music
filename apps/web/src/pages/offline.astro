@@ -1,0 +1,96 @@
+---
+import {
+  InfrastructureViewStateSchema,
+  RequestIdSchema,
+} from '@wejammin/contracts';
+import InfrastructureWorkbench from '../components/infrastructure/InfrastructureWorkbench.tsx';
+import '@wejammin/ui/styles.css';
+import '../styles/infrastructure.css';
+
+export const prerender = false;
+
+const requestIdCandidate =
+  Astro.request.headers.get('x-request-id') ?? undefined;
+const requestId = RequestIdSchema.safeParse(requestIdCandidate).success
+  ? RequestIdSchema.parse(requestIdCandidate)
+  : RequestIdSchema.parse(crypto.randomUUID());
+
+const affectedScope = 'Infrastructure reads and dependent workspace actions';
+const lastKnownGoodAt = null;
+const initial = InfrastructureViewStateSchema.parse({
+  status: 'degraded',
+  requestId,
+  scope: affectedScope,
+  lastKnownGood: lastKnownGoodAt,
+});
+const jobStatus = {
+  status: 'degraded' as const,
+  data: null,
+  requestId,
+  lastVerifiedAt: null,
+};
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta
+      name="description"
+      content="Review affected scope, last verified time, request ID, and recovery action."
+    />
+    <title>Service status | WeJammin</title>
+  </head>
+  <body class="infra-page">
+    <nav aria-label="Skip navigation">
+      <a class="infra-skip-link" href="#main-content">Skip to main content</a>
+    </nav>
+    <main id="main-content" class="infra-main" tabindex="-1">
+      <div class="infra-shell-header">
+        <p class="infra-eyebrow">System / Degraded</p>
+        <h1 id="page-title" tabindex="-1">Service status</h1>
+        <p>
+          The canonical read is unavailable. This page preserves only a safe
+          operational shell and makes no claim about private cached data.
+        </p>
+      </div>
+      <section
+        class="infra-workbench-header"
+        aria-labelledby="degraded-summary-heading"
+      >
+        <h2 id="degraded-summary-heading">Current state: Degraded</h2>
+        <dl class="status-list">
+          <div>
+            <dt>Affected scope</dt>
+            <dd>{affectedScope}</dd>
+          </div>
+          <div>
+            <dt>Last known good</dt>
+            <dd>
+              {lastKnownGoodAt ?? 'No verified private snapshot available'}
+            </dd>
+          </div>
+          <div>
+            <dt>Request ID</dt>
+            <dd><code>{requestId}</code></dd>
+          </div>
+        </dl>
+        <a href={Astro.url.pathname}>Retry canonical read</a>
+      </section>
+      <InfrastructureWorkbench
+        initial={initial}
+        variant="degradedPage"
+        access="read-only"
+        query={{}}
+        selectedId={null}
+        expectedVersion={null}
+        requestId={requestId}
+        jobRequestId={requestId}
+        realtimeRequestId={requestId}
+        jobStatus={jobStatus}
+        canonicalUrl={Astro.url.pathname}
+        client:visible
+      />
+    </main>
+  </body>
+</html>

@@ -383,6 +383,12 @@ importers:
 
   apps/worker:
     dependencies:
+      '@wejammin/application':
+        specifier: workspace:*
+        version: link:../../packages/application
+      '@wejammin/config':
+        specifier: workspace:*
+        version: link:../../packages/config
       '@wejammin/contracts':
         specifier: workspace:*
         version: link:../../packages/contracts
@@ -403,7 +409,21 @@ importers:
         specifier: 4.127.1
         version: 4.127.1(@cloudflare/workers-types@5.20260829.1)
 
-  packages/config: {}
+  packages/application:
+    dependencies:
+      '@wejammin/contracts':
+        specifier: workspace:*
+        version: link:../contracts
+
+  packages/config:
+    dependencies:
+      zod:
+        specifier: 4.4.3
+        version: 4.4.3
+    devDependencies:
+      typescript:
+        specifier: 5.9.3
+        version: 5.9.3
 
   packages/contracts:
     dependencies:
@@ -425,7 +445,11 @@ importers:
 
   packages/test-support: {}
 
-  packages/ui: {}
+  packages/ui:
+    dependencies:
+      '@wejammin/contracts':
+        specifier: workspace:*
+        version: link:../contracts
 
 packages:
 

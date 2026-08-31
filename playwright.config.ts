@@ -1,5 +1,9 @@
 import { defineConfig, devices } from '@playwright/test';
 
+// Playwright forces color in worker and web-server children. Remove NO_COLOR
+// before those processes inherit both variables and make Node emit warnings.
+delete process.env.NO_COLOR;
+
 // Playwright must own the server lifetime even when Astro detects an agent host.
 process.env.ASTRO_DEV_BACKGROUND = '0';
 

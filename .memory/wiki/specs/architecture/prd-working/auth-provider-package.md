@@ -11,7 +11,8 @@
 - Claiming a pre-existing party proves a relationship, not legal identity. KYC/KYB remains a payout gate.
 - Roster role, mandate activity/domain/term, NDA, and resource visibility are all live access inputs; revocation must fail closed and invalidate active asset access.
 - OAuth is required for bounded third-party claim proofs, but consumer login OAuth must not become the source of authority for a party or resource.
-- Pre-revenue operating posture remains $0/month. Supabase Pro is selected but purchase and provisioning are deferred to `/setup-workspace`.
+- Pre-revenue operating posture remains $0/month. Supabase Free is selected under DEC-104; purchase and provisioning are deferred to `/setup-workspace`, with no paid upgrade or add-on authorized.
+- Supabase Free provides no PITR and no uptime SLA; recovery evidence is synthetic/local only until production-verified, and protected writes remain closed without it. Cloudflare Workers Paid is the sole paid-service exception under a soft `$10/month` ceiling.
 
 ## Confirmed Scope
 
@@ -41,7 +42,7 @@
 - Enable Google, Apple, Meta/Facebook, and SoundCloud as additive consumer login identities.
 - Add TikTok after launch unless consumer evidence raises its priority.
 - Keep BandLab disabled behind a provider-capability gate.
-- Defer enterprise SAML SSO until a paying customer requires it; Supabase Pro includes a bounded SSO allowance, while a second auth vendor would be unjustified before that signal.
+- Defer enterprise SAML SSO until a paying customer requires it; no paid SSO capability or add-on is included in the Free posture, and a second auth vendor would be unjustified before that signal.
 - Use the Supabase user UUID as the immutable human identity key. Never authorize from user-editable metadata; compute acting-party and resource authority on the server and enforce the resulting policy through PostgreSQL RLS.
 
 ## Additive Identity Contract
@@ -70,7 +71,7 @@
 
 - [Supabase Auth](https://supabase.com/docs/guides/auth) supports password, magic link, OTP, social login, custom OAuth/OIDC providers, SSO, JWT sessions, and RLS integration.
 - [Supabase social login](https://supabase.com/docs/guides/auth/social-login) supports the relevant social providers, but does not refresh third-party provider tokens on the app's behalf; external claim-proof tokens therefore belong in a trusted server integration.
-- [Supabase pricing](https://supabase.com/pricing) currently includes social OAuth and 100,000 MAUs on Pro, with SAML usage separately metered after its included allowance.
+- [Supabase pricing](https://supabase.com/pricing) documents the Free baseline and its included limits; social login uses the selected Supabase provider, while no higher-tier allowance, paid SSO capability, or paid add-on is assumed.
 - [Supabase identity linking](https://supabase.com/docs/guides/auth/auth-identity-linking) requires UUID-based identity references; SAML identities do not link to existing accounts automatically.
 - [Supabase custom OAuth/OIDC providers](https://supabase.com/docs/guides/auth/custom-oauth-providers) support standards-compliant OAuth2 providers, PKCE by default, and email-optional identities.
 - [TikTok Login Kit](https://developers.tiktok.com/doc/login-kit-overview) provides OAuth 2.0 login for web and native clients.

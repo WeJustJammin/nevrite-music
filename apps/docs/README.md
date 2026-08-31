@@ -1,43 +1,39 @@
-# Astro Starter Kit: Minimal
+# WeJammin documentation surface
 
-```sh
-pnpm create astro@latest -- --template minimal
-```
+This is the project-owned documentation surface. It is an Astro site used to
+publish operational and developer guidance; product behavior remains in the web
+and Worker applications.
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## Contents
 
-## 🚀 Project Structure
+- `src/pages/` contains server-rendered documentation routes.
+- `public/` contains documentation-only static assets.
+- `astro.config.mjs` and `tsconfig.json` define the docs build.
+- The [local bootstrap guide](../../docs/local-bootstrap.md) is the required
+  starting point for a new checkout.
 
-Inside of your Astro project, you'll see the following folders and files:
+## Ownership
 
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
+The docs surface owns rendered documentation pages and their navigation. The
+root `docs/` directory owns source runbooks and architecture records. It does
+not own API handlers, domain rules, secrets, or deployment credentials.
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+## Extension
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+Add a route as a focused `.astro` file under `src/pages/`. Keep generated
+output in `dist/`; never edit generated files. Add shared interactive behavior
+only as a bounded React island at a documented interaction seam.
 
-Any static assets, like images, can be placed in the `public/` directory.
+## Conventions
 
-## 🧞 Commands
+Use server-rendered semantic HTML first, project UI tokens from
+`@wejammin/ui`, accessible headings and links, and strict TypeScript. Run
+`pnpm --filter @wejammin/docs type-check` and `pnpm --filter @wejammin/docs build`
+after changing this surface. Cloudflare Workers Paid is the sole paid
+exception; hosted actions remain outside local docs bootstrap.
 
-All commands are run from the root of the project, from a terminal:
+## Related links
 
-| Command                | Action                                           |
-| :--------------------- | :----------------------------------------------- |
-| `pnpm install`         | Installs dependencies                            |
-| `pnpm dev`             | Starts local dev server at `localhost:4321`      |
-| `pnpm build`           | Build your production site to `./dist/`          |
-| `pnpm preview`         | Preview your build locally, before deploying     |
-| `pnpm astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `pnpm astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+- [Local bootstrap](../../docs/local-bootstrap.md)
+- [Web surface](../web/README.md)
+- [Shared UI](../../packages/ui/README.md)

@@ -6,6 +6,7 @@ node_modules/
 # === Build output ===
 dist/
 build/
+*.tsbuildinfo
 .astro/
 .output/
 .vercel/

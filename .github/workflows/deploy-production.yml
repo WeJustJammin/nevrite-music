@@ -1,0 +1,90 @@
+name: Deploy production
+on:
+  workflow_run:
+    workflows: [Deploy staging]
+    branches: [main]
+    types: [completed]
+concurrency:
+  group: deploy-production
+  cancel-in-progress: false
+permissions:
+  actions: read
+  contents: read
+jobs:
+  deploy:
+    name: Promote immutable artifacts to production
+    if: github.event.workflow_run.conclusion == 'success'
+    runs-on: [self-hosted, wejammin]
+    timeout-minutes: 20
+    environment:
+      name: production
+      url: ${{ vars.PRODUCTION_WEB_ORIGIN }}
+    env:
+      DEPLOY_SHA: ${{ github.event.workflow_run.head_sha }}
+      PRODUCTION_WEB_ORIGIN: ${{ vars.PRODUCTION_WEB_ORIGIN }}
+      RELEASE_PROTECTED_ENVIRONMENT: production
+      STAGING_RUN_ID: ${{ github.event.workflow_run.id }}
+    steps:
+      - name: Download staging-verified promotion candidate
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          name: staging-verified-candidate
+          path: .promotion
+          run-id: ${{ env.STAGING_RUN_ID }}
+
+      - name: Read and validate promotion identity
+        id: candidate
+        run: bash infra/workflows/read-production-candidate.sh
+
+      - name: Check out the promoted revision
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          ref: ${{ steps.candidate.outputs.deploy_sha }}
+
+      - name: Set up workspace
+        uses: ./.github/actions/setup
+
+      - name: Verify artifact boundaries and deployment inputs
+        run: bash infra/workflows/verify-production-candidate.sh
+
+      - name: Apply and verify forward-only production migrations
+        env:
+          SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+          SUPABASE_DB_PASSWORD: ${{ secrets.SUPABASE_DB_PASSWORD }}
+          SUPABASE_PROJECT_REF: ${{ vars.SUPABASE_PROJECT_REF }}
+        run: bash infra/workflows/apply-production-migrations.sh
+
+      - name: Verify release promotion evidence
+        run: node --experimental-strip-types infra/verify-release-promotion.ts .promotion/promotion-metadata.json production
+
+      - name: Deploy API Worker production artifact
+        env:
+          CLOUDFLARE_ACCOUNT_ID: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        run: >-
+          pnpm --filter @wejammin/worker exec wrangler deploy
+          "$GITHUB_WORKSPACE/.promotion/artifacts/worker/dist/index.js"
+          --config wrangler.jsonc
+          --var APP_ENVIRONMENT:production
+          --var APP_RELEASE:"$DEPLOY_SHA"
+
+      - name: Deploy web SSR Worker production artifact
+        env:
+          CLOUDFLARE_ACCOUNT_ID: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        run: >-
+          pnpm --filter @wejammin/web exec wrangler deploy
+          --config "$GITHUB_WORKSPACE/.promotion/artifacts/web/dist/server/wrangler.production.json"
+          --domain "$WEB_CUSTOM_DOMAIN"
+
+      - name: Upload deployment evidence
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+        with:
+          name: production-deployment-${{ env.DEPLOY_SHA }}
+          path: |
+            .promotion/deployment-manifest.sha256
+            .promotion/promotion-metadata.json
+          if-no-files-found: error
+          retention-days: 30

@@ -78,7 +78,7 @@ Verification gates in `workflow-plan-phase` and `workflow-implement-slice` check
 |---------|-------|
 | Project Name | WeJammin |
 | Description | Consumer-first music collaboration and provenance platform with services, rights capture, governed CMS/settings, marketplaces, and future ecosystem domains. |
-| Stack Summary | TypeScript; Astro hybrid web with React islands; Hono on Cloudflare Workers; Supabase Pro PostgreSQL/Auth/Storage/Realtime; Zod 4 REST/OpenAPI contracts; pnpm, Vitest, Playwright; GitHub Actions; structured logs. |
+| Stack Summary | TypeScript; Astro hybrid web with React islands; Hono on Cloudflare Workers; Supabase Free PostgreSQL/Auth/Storage/Realtime without PITR or paid add-ons; Zod 4 REST/OpenAPI contracts; pnpm, Vitest, Playwright; GitHub Actions; structured logs. |
 | Surfaces | Responsive web/PWA with public, authenticated, admin, auth/recovery and system route families; versioned REST API. |
 | Architecture Doc | .memory/wiki/specs/2026-08-02-architecture-design.md |
 

@@ -1,56 +1,18 @@
 name: CI
-
 on:
   push:
-    paths:
-      - '.github/actions/**'
-      - '.github/workflows/**'
-      - '.node-version'
-      - '.npmrc'
-      - '.prettierignore'
-      - 'apps/**'
-      - 'eslint.config.js'
-      - 'infra/**'
-      - 'package.json'
-      - 'packages/**'
-      - 'playwright.config.ts'
-      - 'pnpm-lock.yaml'
-      - 'pnpm-workspace.yaml'
-      - 'supabase/**'
-      - 'tests/**'
-      - 'tsconfig.base.json'
-      - 'vitest.config.ts'
+    paths: ['**']
   pull_request:
     branches:
       - main
     types: [opened, synchronize, reopened, ready_for_review]
-    paths:
-      - '.github/actions/**'
-      - '.github/workflows/**'
-      - '.node-version'
-      - '.npmrc'
-      - '.prettierignore'
-      - 'apps/**'
-      - 'eslint.config.js'
-      - 'infra/**'
-      - 'package.json'
-      - 'packages/**'
-      - 'playwright.config.ts'
-      - 'pnpm-lock.yaml'
-      - 'pnpm-workspace.yaml'
-      - 'supabase/**'
-      - 'tests/**'
-      - 'tsconfig.base.json'
-      - 'vitest.config.ts'
+    paths: ['**']
   workflow_dispatch:
-
 concurrency:
   group: ci-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
-
 permissions:
   contents: read
-
 jobs:
   quality:
     name: Format, lint, type, and test
@@ -60,28 +22,20 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
-
       - name: Set up workspace
         uses: ./.github/actions/setup
-
       - name: Check formatting
         run: pnpm format:check
-
       - name: Lint
         run: pnpm lint
-
       - name: Type-check
         run: pnpm type-check
-
       - name: Run unit and contract coverage gate
         run: pnpm test:coverage
-
       - name: Install pinned Chromium runtime
         run: pnpm exec playwright install chromium
-
       - name: Run browser and accessibility gates
         run: pnpm test:e2e
-
       - name: Upload test evidence
         if: always()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
@@ -93,7 +47,6 @@ jobs:
             test-results/
           if-no-files-found: warn
           retention-days: 14
-
   database:
     name: Database migrations, lint, and pgTAP
     if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
@@ -102,29 +55,30 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
-
       - name: Set up workspace
         uses: ./.github/actions/setup
-
       - name: Verify database foundation
         run: pnpm db:ci
-
   build:
     name: Build immutable workspace artifacts
     if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
     needs: [quality, database]
     runs-on: [self-hosted, wejammin]
     timeout-minutes: 20
+    env:
+      DATABASE_RESULT: ${{ needs.database.result }}
+      QUALITY_RESULT: ${{ needs.quality.result }}
+      SOURCE_REVISION: ${{ github.sha }}
     steps:
       - name: Check out repository
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
-
       - name: Set up workspace
         uses: ./.github/actions/setup
-
-      - name: Build all workspace surfaces
-        run: pnpm build
-
+      - name: Build immutable workspace artifacts
+        run: >-
+          bash infra/workflows/build-immutable-artifacts.sh &&
+          bash infra/workflows/verify-ci-release-gates.sh &&
+          bash infra/workflows/write-ci-gate-evidence.sh
       - name: Upload immutable build artifacts
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
         with:
@@ -133,5 +87,6 @@ jobs:
             apps/docs/dist/
             apps/web/dist/
             apps/worker/dist/
+            ci-gate-evidence.json
           if-no-files-found: error
           retention-days: 7

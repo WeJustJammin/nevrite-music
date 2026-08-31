@@ -12,6 +12,8 @@
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
+    "@wejammin/application": "workspace:*",
+    "@wejammin/config": "workspace:*",
     "@wejammin/contracts": "workspace:*",
     "@wejammin/observability": "workspace:*",
     "hono": "4.13.5"

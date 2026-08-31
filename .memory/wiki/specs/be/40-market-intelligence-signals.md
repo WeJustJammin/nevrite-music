@@ -926,7 +926,7 @@ Shared events exclude exact fan/location data, private watch membership, subject
 | Consent revoked while signal queued | Visibility/watch/signal/index update commits atomically; consumer recheck suppresses | No notification; tombstone generic |
 | Duplicate source/event/command | Unique/idempotency returns original | No duplicate timeline/signal |
 | Queue send fails after commit | Durable outbox authoritative | Dispatcher lease/sweep/DLQ |
-| Restore/PITR | BE00 restore epoch fences workers/exports | Reconcile DB/outbox/object/cache/consent before reopen |
+| Restore/recovery import | BE00 restore epoch fences workers/exports | Reconcile DB/outbox/object/cache/consent before any approved reopen |
 
 ## Observability, Rate, and Abuse Controls
 
@@ -957,7 +957,7 @@ Logs/provider-native diagnostics exclude auth headers, unrestricted IP/user agen
 4. Enable private placement/chart/geo/routing/show/anomaly paths, then export, then each scouting purpose after consent/minors policy verification.
 5. B2 requires counsel-approved floor at least 20, anti-differencing/query-family evidence, lawful basis, retention, cache purge, no-export, and no-admin-bypass proof.
 6. Rollback disables route/config/worker entries and keeps committed rows/outbox; no destructive down migration.
-7. Recovery inherits BE00 seven-day PITR, RPO <=2m, RTO <=4h, restore-epoch fencing, and reopening order. Consent projections, B2 caches, export objects, and pending signals must reconcile before protected effects resume.
+7. Recovery inherits BE00's Free-tier fail-closed posture: no PITR or production RPO/RTO is claimed, synthetic/local evidence cannot open protected writes, and restore-epoch fencing remains mandatory. Consent projections, B2 caches, export objects, and pending signals must reconcile if a separately approved production recovery capability ever permits protected effects to resume.
 
 ## Testing Strategy
 

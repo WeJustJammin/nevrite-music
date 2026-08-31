@@ -2,7 +2,7 @@
 
 The CI workflow requires no application or provider secrets. It runs only trusted repository code on the `wejammin` self-hosted runner label with read-only repository permissions.
 
-Provider credentials belong in protected GitHub environments, never repository-level plaintext, workflow arguments, artifacts, or logs. Configure the following names when their owning setup shard reaches the provider gate.
+Only the credentials listed below are authorized. They belong in protected GitHub environments, never repository-level plaintext, workflow arguments, artifacts, or logs. Adding any provider secret requires a new owner approval that names the service and exact cost.
 
 ## Staging environment secrets
 
@@ -12,9 +12,6 @@ Provider credentials belong in protected GitHub environments, never repository-l
 | `SUPABASE_ACCESS_TOKEN` | Data    | Manage the staging Supabase project through the CLI.                  |
 | `SUPABASE_DB_PASSWORD`  | Data    | Apply and verify staging database migrations.                         |
 | `SUPABASE_SECRET_KEY`   | Data    | Rotatable server-only API access; never exposed to Astro client code. |
-| `RESEND_API_KEY`        | Hosting | Send staging transactional email.                                     |
-| `STRIPE_SECRET_KEY`     | Hosting | Exercise counsel-approved Stripe-hosted staging flows.                |
-| `STRIPE_WEBHOOK_SECRET` | Hosting | Verify staging Stripe webhook signatures.                             |
 
 ## Production environment secrets
 
@@ -24,7 +21,7 @@ The Cloudflare token is restricted to the WeJammin account with only Workers Scr
 
 ## Environment variables
 
-Non-secret GitHub environment variables include `CLOUDFLARE_ACCOUNT_ID`, `STAGING_WEB_ORIGIN`, `STAGING_API_ORIGIN`, `SUPABASE_PROJECT_REF`, and `SUPABASE_URL`. Browser-safe application values are also variables rather than secrets: `PUBLIC_APP_ORIGIN`, `PUBLIC_SUPABASE_URL`, and `PUBLIC_SUPABASE_PUBLISHABLE_KEY`. Administrative keys, database passwords, and provider access tokens remain secrets.
+Non-secret GitHub environment variables include `CLOUDFLARE_ACCOUNT_ID`, `STAGING_WEB_ORIGIN`, `STAGING_API_ORIGIN`, `SUPABASE_PROJECT_REF`, and `SUPABASE_URL`. Browser-safe application values are also variables rather than secrets: `PUBLIC_APP_ORIGIN`, `PUBLIC_SUPABASE_URL`, and `PUBLIC_SUPABASE_PUBLISHABLE_KEY`. Administrative keys and database passwords remain secrets. No third-party application-provider credential is authorized.
 
 ## Cost control
 

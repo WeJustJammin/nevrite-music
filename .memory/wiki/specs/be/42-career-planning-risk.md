@@ -703,7 +703,7 @@ Events exclude progress source rows, finance amounts, declared policy values, di
 | Provider call times out after possible send | Referral remains `unknown_reconciling` | Webhook/idempotency/poll reconciliation; no blind resend or rejected-coverage claim |
 | Provider sends duplicate event | Same digest replays; different digest enters manual review | One status transition; safe acknowledgement managed by BE00 |
 | Referral worker dies after provider acceptance | ProviderOperation/referral remain pending | Lease expiry and reconciliation; no second external effect |
-| Restore/PITR occurs | BE00 restore epoch fences producers, workers, and provider sends | Reconcile DB/outbox/provider before reopening |
+| Restore/recovery import occurs | BE00 restore epoch fences producers, workers, and provider sends | Reconcile DB/outbox/provider before any approved reopening |
 | 42.09 receives sensitive field | Request rejected before body logging/storage | No domain row, event, audit-sensitive payload, or support ticket created |
 
 ## Observability, Rate, and Abuse Controls
@@ -730,7 +730,7 @@ Logs and structured diagnostic events exclude authentication headers, IP/user ag
 4. Enable goal/milestone private paths, then insurance observation, then each provider after its BE00 adapter/webhook/retention/runbook gate.
 5. B2 requires counsel-approved policy, privacy floor at least 20, anti-differencing test evidence, ephemeral membership proof, and no-export verification before activation.
 6. Rollback disables registry/config entries and workers while retaining committed canonical rows/outbox. No destructive down migration runs.
-7. Recovery inherits BE00 seven-day PITR, RPO <=2m, RTO <=4h, restore-epoch fencing, and reopening order. Provider reconciliation and public milestone-cache purge must pass before protected writes/effects resume.
+7. Recovery inherits BE00's Free-tier fail-closed posture: no PITR or production RPO/RTO is claimed, synthetic/local evidence cannot open protected writes, and restore-epoch fencing remains mandatory. Provider reconciliation and public milestone-cache purge must pass if a separately approved production recovery capability ever permits protected writes or effects to resume.
 
 ## Testing Strategy
 

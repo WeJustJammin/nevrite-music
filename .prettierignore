@@ -1,2 +1,4 @@
 # Supabase CLI output is committed byte-for-byte so CI can detect schema drift.
 packages/data-access/src/database.types.ts
+# Wrangler runtime declarations are committed byte-for-byte for binding drift checks.
+apps/web/worker-configuration.d.ts

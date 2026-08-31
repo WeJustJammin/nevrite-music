@@ -1,31 +1,77 @@
 import {
-  ApiErrorSchema,
+  createCorrelationId,
   createRequestId,
-  HealthResponseSchema,
+  type CorrelationId,
+  type DiagnosticResponse,
+  type RequestContext,
   type RequestId,
 } from '@wejammin/contracts';
 import {
-  createLogger,
-  type Logger,
-  type LogEventDetails,
-} from '@wejammin/observability/logging';
-import { Hono } from 'hono';
+  parseServerEnvironment,
+  type ServerEnvironment,
+} from '@wejammin/config/environment';
+import { createLogger, type Logger } from '@wejammin/observability/logging';
+import { Hono, type Context } from 'hono';
 
-export type WorkerBindings = {
-  APP_ENVIRONMENT: string;
-  APP_RELEASE: string;
-};
+import {
+  createAsyncEntrypoint,
+  type AsyncWorkerBindings,
+} from './async-entrypoint';
+import { createAsyncJobDependencies } from './async-runtime';
+import type { JobStatusDependencies } from './jobs/job-status';
+import {
+  createProductionJobStatusDependencies,
+  type JobStatusProductionFetch,
+} from './jobs/job-status-production';
+import {
+  createProductionJobEffectDispatcher,
+  type ProductionVerificationDependencies,
+} from './production-job-effect-dispatcher';
+import type { UploadCompletionRouteDependencies } from './upload-completion/upload-intent-completion';
+import {
+  logRequest,
+  registerWorkerRoutes,
+  routeTemplateFor,
+} from './worker-route-composition';
+
+export { routeTemplateFor } from './worker-route-composition';
+export {
+  createProductionJobEffectDispatcher,
+  createProductionVerificationDispatcher,
+} from './production-job-effect-dispatcher';
+export type {
+  PlatformVerificationDependencies,
+  ProductionVerificationDependencies,
+} from './production-job-effect-dispatcher';
+
+export type WorkerBindings = ServerEnvironment;
 
 export type ErrorCaptureContext = {
-  correlationId: string;
+  correlationId: CorrelationId;
   operation: string;
-  requestId: string;
+  requestId: RequestId;
   routeTemplate: string;
 };
 
+export const DIAGNOSTICS_CAPABILITY = 'diagnostics.read' as const;
+
+type MaybePromise<T> = T | Promise<T>;
+export type DiagnosticCheck = DiagnosticResponse['checks'][number];
+
+export type DiagnosticAuditEvent = Readonly<{
+  action: typeof DIAGNOSTICS_CAPABILITY;
+  actorId: string | null;
+  actingPartyId: string | null;
+  correlationId: CorrelationId;
+  decision: 'allow' | 'deny';
+  reason: string | null;
+  requestId: RequestId;
+  target: 'worker-diagnostics';
+}>;
+
 type Variables = {
   captureAttempted: boolean;
-  correlationId: RequestId;
+  correlationId: CorrelationId;
   errorCode?: string;
   errorHandled: boolean;
   logger: Logger;
@@ -34,39 +80,59 @@ type Variables = {
   startedAt: number;
 };
 
-type WorkerDependencies = {
+export type WorkerContext = Context<{
+  Bindings: WorkerBindings;
+  Variables: Variables;
+}>;
+
+export type WorkerApp = Hono<{
+  Bindings: WorkerBindings;
+  Variables: Variables;
+}>;
+
+export type WebhookRouteRegistration = Readonly<{
+  path: `/api/v1/webhooks/${string}`;
+  handler: (request: Request) => MaybePromise<Response>;
+}>;
+
+export type WorkerDependencies = {
+  auditDiagnosticAccess?: (event: DiagnosticAuditEvent) => MaybePromise<void>;
+  checkReadiness?: (
+    request: Request,
+    env: WorkerBindings,
+  ) => MaybePromise<boolean | Readonly<{ ready: boolean }>>;
   captureException: (error: unknown, context: ErrorCaptureContext) => void;
+  composeDiagnostics?: (
+    requestContext: RequestContext,
+    request: Request,
+    env: WorkerBindings,
+  ) => MaybePromise<readonly DiagnosticCheck[]>;
   createLogger: (bindings: WorkerBindings) => Logger;
+  isStepUpFresh?: (
+    requestContext: RequestContext,
+    request: Request,
+    env: WorkerBindings,
+  ) => MaybePromise<boolean>;
   now: () => number;
-};
-
-export const routeTemplateFor = (routePath: string): string =>
-  routePath.startsWith('/') ? routePath : '/_unmatched';
-
-const logRequest = (
-  logger: Logger,
-  details: LogEventDetails,
-  status: number,
-): void => {
-  if (status >= 500) {
-    logger.error(details);
-  } else if (status >= 400) {
-    logger.warn(details);
-  } else {
-    logger.info(details, { samplingClass: 'public_success' });
-  }
+  nowDate?: () => Date;
+  jobs?: JobStatusDependencies;
+  uploadCompletion?: UploadCompletionRouteDependencies;
+  uploadIntent?: (request: Request) => MaybePromise<Response>;
+  webhookRoutes?: readonly WebhookRouteRegistration[];
+  resolveRequestContext?: (
+    request: Request,
+    env: WorkerBindings,
+  ) => MaybePromise<unknown>;
 };
 
 export const createWorkerApp = (dependencies: WorkerDependencies) => {
-  const app = new Hono<{
-    Bindings: WorkerBindings;
-    Variables: Variables;
-  }>();
+  const app: WorkerApp = new Hono();
 
   app.use('*', async (context, next) => {
     const requestId = createRequestId(context.req.header('x-request-id'));
-    const correlationId = createRequestId(
+    const correlationId = createCorrelationId(
       context.req.header('x-correlation-id') ?? requestId,
+      requestId,
     );
     context.set('correlationId', correlationId);
     context.set('captureAttempted', false);
@@ -83,6 +149,8 @@ export const createWorkerApp = (dependencies: WorkerDependencies) => {
     if (!context.get('errorHandled')) {
       const status = context.res.status;
       const errorCode = context.get('errorCode');
+      const retryableDependency =
+        status === 503 && errorCode === 'DEPENDENCY_UNAVAILABLE';
       logRequest(
         context.get('logger'),
         {
@@ -91,9 +159,13 @@ export const createWorkerApp = (dependencies: WorkerDependencies) => {
           ...(errorCode === undefined ? {} : { errorCode }),
           eventName: 'http.request.completed',
           operation: context.get('operation'),
-          outcome: status >= 400 ? 'rejected' : 'success',
+          outcome: retryableDependency
+            ? 'failure'
+            : status >= 400
+              ? 'rejected'
+              : 'success',
           requestId,
-          retryable: false,
+          retryable: retryableDependency,
           routeTemplate: routeTemplateFor(context.req.routePath),
         },
         status,
@@ -101,81 +173,16 @@ export const createWorkerApp = (dependencies: WorkerDependencies) => {
     }
   });
 
-  app.get('/api/v1/health', (context) => {
-    context.set('operation', 'health.read');
-    const payload = HealthResponseSchema.parse({
-      requestId: context.get('requestId'),
-      service: 'wejammin-api',
-      status: 'ok',
-      version: 'v1',
-    });
-
-    return context.json(payload);
-  });
-
-  app.notFound((context) => {
-    context.set('errorCode', 'route_not_found');
-    context.set('operation', 'route.lookup');
-    const payload = ApiErrorSchema.parse({
-      code: 'route_not_found',
-      details: {},
-      message: 'The requested API route does not exist.',
-      requestId: context.get('requestId'),
-    });
-
-    return context.json(payload, 404);
-  });
-
-  app.onError((error, context) => {
-    context.set('errorHandled', true);
-    const requestId = context.get('requestId');
-    const correlationId = context.get('correlationId');
-    const operation = context.get('operation');
-    const routeTemplate = routeTemplateFor(context.req.routePath);
-    if (!context.get('captureAttempted')) {
-      context.set('captureAttempted', true);
-      try {
-        dependencies.captureException(error, {
-          correlationId,
-          operation,
-          requestId,
-          routeTemplate,
-        });
-      } catch {
-        // Telemetry transport failure must not replace the canonical response.
-      }
-    }
-    context.header('x-correlation-id', correlationId);
-    context.header('x-request-id', requestId);
-    logRequest(
-      context.get('logger'),
-      {
-        correlationId,
-        durationMs: dependencies.now() - context.get('startedAt'),
-        errorCode: 'internal_error',
-        eventName: 'http.request.completed',
-        operation,
-        outcome: 'failure',
-        requestId,
-        retryable: false,
-        routeTemplate,
-      },
-      500,
-    );
-
-    const payload = ApiErrorSchema.parse({
-      code: 'internal_error',
-      details: {},
-      message: 'An unexpected error occurred.',
-      requestId,
-    });
-    return context.json(payload, 500);
-  });
+  registerWorkerRoutes(app, dependencies);
 
   return app;
 };
 
-export const app = createWorkerApp({
+const createRuntimeDependencies = (
+  jobs?: JobStatusDependencies,
+  uploadCompletion?: UploadCompletionRouteDependencies,
+  checkReadiness?: WorkerDependencies['checkReadiness'],
+): WorkerDependencies => ({
   captureException: () => {},
   createLogger: (bindings) =>
     createLogger({
@@ -183,9 +190,61 @@ export const app = createWorkerApp({
       release: bindings.APP_RELEASE,
       service: 'wejammin-api',
     }),
+  ...(checkReadiness === undefined ? {} : { checkReadiness }),
+  ...(jobs === undefined ? {} : { jobs }),
+  ...(uploadCompletion === undefined ? {} : { uploadCompletion }),
   now: Date.now,
 });
 
-const handler = { fetch: app.fetch } satisfies ExportedHandler<WorkerBindings>;
+export const app = createWorkerApp(createRuntimeDependencies());
+
+export const createProductionWorkerApp = (
+  environment: WorkerBindings,
+  fetchImpl: JobStatusProductionFetch = globalThis.fetch,
+  uploadCompletion?: UploadCompletionRouteDependencies,
+  checkReadiness?: WorkerDependencies['checkReadiness'],
+): WorkerApp => {
+  const validatedEnvironment = parseServerEnvironment(environment);
+  return createWorkerApp(
+    createRuntimeDependencies(
+      createProductionJobStatusDependencies({
+        environment: validatedEnvironment,
+        fetchImpl,
+      }),
+      uploadCompletion,
+      checkReadiness,
+    ),
+  );
+};
+
+export const createProductionAsyncEntrypoint = (
+  fetchImpl: typeof fetch = globalThis.fetch,
+  verification?: ProductionVerificationDependencies,
+) =>
+  createAsyncEntrypoint(
+    createAsyncJobDependencies({
+      effect: createProductionJobEffectDispatcher(verification),
+      fetch: fetchImpl,
+    }),
+  );
+
+const handler = {
+  fetch: (request, env, executionContext) => {
+    const validatedEnvironment = parseServerEnvironment(env);
+    return createProductionWorkerApp(validatedEnvironment).fetch(
+      request,
+      validatedEnvironment,
+      executionContext,
+    );
+  },
+  queue: (batch, env, executionContext) =>
+    createProductionAsyncEntrypoint().queue(batch, env, executionContext),
+  scheduled: (controller, env, executionContext) =>
+    createProductionAsyncEntrypoint().scheduled(
+      controller,
+      env,
+      executionContext,
+    ),
+} satisfies ExportedHandler<AsyncWorkerBindings>;
 
 export default handler;

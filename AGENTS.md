@@ -116,7 +116,7 @@ Consumer-first music collaboration and provenance platform with services, rights
 
 ### Tech Stack
 
-**TypeScript; Astro hybrid web with React islands; Hono on Cloudflare Workers; Supabase Pro PostgreSQL/Auth/Storage/Realtime; Zod 4 REST/OpenAPI contracts; pnpm, Vitest, Playwright; GitHub Actions; structured logs.**
+**TypeScript; Astro hybrid web with React islands; Hono on Cloudflare Workers; Supabase Free PostgreSQL/Auth/Storage/Realtime without PITR or paid add-ons; Zod 4 REST/OpenAPI contracts; pnpm, Vitest, Playwright; GitHub Actions; structured logs.**
 
 ### Architecture
 

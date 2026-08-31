@@ -1,5 +1,7 @@
 import { pathToFileURL } from 'node:url';
 
+import { HealthResponseSchema } from '../packages/contracts/src/index.ts';
+
 const expectedTitle = '<title>WeJammin | Operational foundation</title>';
 const expectedHeading = '<h1>WeJammin operational foundation</h1>';
 
@@ -57,16 +59,8 @@ export async function verifyStaging({
   );
   assertOk(apiResponse, 'Staging API');
 
-  const health = await apiResponse.json();
-  if (
-    typeof health !== 'object' ||
-    health === null ||
-    health.service !== 'wejammin-api' ||
-    health.status !== 'ok' ||
-    health.version !== 'v1' ||
-    typeof health.requestId !== 'string' ||
-    !health.requestId.startsWith('req_')
-  ) {
+  const health = HealthResponseSchema.safeParse(await apiResponse.json());
+  if (!health.success) {
     throw new Error('API health contract mismatch');
   }
 

@@ -1,45 +1,27 @@
 name: Deploy staging
-
 on:
   workflow_run:
     workflows: [CI]
     branches: [main]
     types: [completed]
-  workflow_dispatch:
-    inputs:
-      ci_run_id:
-        description: Successful CI run containing the immutable build artifact
-        required: true
-        type: string
-      deploy_sha:
-        description: Full commit SHA associated with the CI artifact
-        required: true
-        type: string
-
 concurrency:
   group: deploy-staging
   cancel-in-progress: false
-
 permissions:
   actions: read
   contents: read
-
 jobs:
   deploy:
     name: Promote immutable artifacts to staging
-    if: >-
-      github.event_name == 'workflow_dispatch' ||
-      github.event.workflow_run.conclusion == 'success'
+    if: github.event.workflow_run.conclusion == 'success'
     runs-on: [self-hosted, wejammin]
     timeout-minutes: 20
     environment:
       name: staging
       url: ${{ vars.STAGING_WEB_ORIGIN }}
     env:
-      CI_RUN_ID: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.id || inputs.ci_run_id }}
-      CLOUDFLARE_ACCOUNT_ID: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
-      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-      DEPLOY_SHA: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.head_sha || inputs.deploy_sha }}
+      CI_RUN_ID: ${{ github.event.workflow_run.id }}
+      DEPLOY_SHA: ${{ github.event.workflow_run.head_sha }}
       STAGING_API_ORIGIN: ${{ vars.STAGING_API_ORIGIN }}
       STAGING_WEB_ORIGIN: ${{ vars.STAGING_WEB_ORIGIN }}
     steps:
@@ -59,37 +41,18 @@ jobs:
           path: .artifacts
           run-id: ${{ env.CI_RUN_ID }}
 
-      - name: Verify artifact boundaries and record digests
-        shell: bash
-        run: |
-          set -euo pipefail
-          if [[ ! "$DEPLOY_SHA" =~ ^[0-9a-f]{40}$ ]]; then
-            echo "::error::DEPLOY_SHA must be a full lowercase commit SHA"
-            exit 1
-          fi
-          test "$(git rev-parse HEAD)" = "$DEPLOY_SHA"
-          test -f .artifacts/web/dist/client/index.html
-          test -f .artifacts/worker/dist/index.js
+      - name: Verify artifact boundaries and deployment inputs
+        run: bash infra/workflows/verify-staging-artifacts.sh
 
       - name: Record promoted artifact digests
-        shell: bash
-        run: |
-          set -euo pipefail
-          find .artifacts -type f -print0 \
-            | sort -z \
-            | xargs -0 sha256sum > deployment-manifest.sha256
-
-      - name: Deploy Pages staging artifact
         run: >-
-          pnpm --filter @wejammin/web exec wrangler pages deploy
-          "$GITHUB_WORKSPACE/.artifacts/web/dist/client"
-          --project-name wejammin-web-staging
-          --branch main
-          --commit-hash "$DEPLOY_SHA"
-          --commit-message "Staging $DEPLOY_SHA"
-          --commit-dirty=true
+          bash infra/workflows/record-staging-artifacts.sh &&
+          bash infra/workflows/prepare-staging-candidate.sh
 
-      - name: Deploy Worker staging artifact
+      - name: Deploy API Worker staging artifact
+        env:
+          CLOUDFLARE_ACCOUNT_ID: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
         run: >-
           pnpm --filter @wejammin/worker exec wrangler deploy
           "$GITHUB_WORKSPACE/.artifacts/worker/dist/index.js"
@@ -98,8 +61,33 @@ jobs:
           --var APP_ENVIRONMENT:staging
           --var APP_RELEASE:"$DEPLOY_SHA"
 
+      - name: Deploy web SSR Worker staging artifact
+        env:
+          CLOUDFLARE_ACCOUNT_ID: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        run: >-
+          pnpm --filter @wejammin/web exec wrangler deploy
+          --config "$GITHUB_WORKSPACE/.artifacts/web/dist/server/wrangler.staging.json"
+          --domain "$WEB_CUSTOM_DOMAIN"
+
       - name: Verify public staging contracts
-        run: pnpm verify:staging
+        run: pnpm verify:staging && touch promotion-candidate/staging-verification.passed
+
+      - name: Finalize staging promotion evidence
+        run: bash infra/workflows/finalize-staging-candidate.sh
+
+      - name: Verify release promotion evidence
+        run: >-
+          node --experimental-strip-types infra/verify-release-promotion.ts
+          promotion-candidate/promotion-metadata.json candidate
+
+      - name: Publish staging-verified promotion candidate
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+        with:
+          name: staging-verified-candidate
+          path: promotion-candidate
+          if-no-files-found: error
+          retention-days: 30
 
       - name: Upload deployment evidence
         if: always()

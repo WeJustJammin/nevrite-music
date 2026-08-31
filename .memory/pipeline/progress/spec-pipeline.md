@@ -67,6 +67,14 @@
 
 ## Next Target
 
-- **CURRENT:** Phase 1 operational-foundation plan generated at `.memory/wiki/specs/phases/phase-1.md`; 7 dependency-ordered slices and 390 cited acceptance criteria are awaiting explicit owner approval.
+- **CURRENT:** Phase 1 operational foundation is complete: all 7 dependency-ordered slices and 390 cited acceptance criteria are implemented and validated.
 - Fresh IA ambiguity rerun 1 on 2026-08-28 scored 0/344 = 0.00% (PASS), covering all 83 IA documents and all 43 shards. See `.memory/wiki/specs/audits/2026-08-28-ia-ambiguity-rerun-1.md`.
-- **NEXT AFTER APPROVAL:** run `/setup-workspace`; the repository still has no scaffold manifest, so `/implement-slice` and `pnpm validate` remain gated until setup creates their operational prerequisites.
+- **CURRENT VALIDATION:** Phase 1 `/validate-phase` failed on 2026-08-30. Local
+  functional, coverage, static, build, migration, and spec-coverage checks
+  passed; exact-SHA CI/staging evidence is absent, the existing staging API
+  fails the current health contract, and the Playwright warning finding is
+  resolved with a clean 870-test validation run. See
+  `.memory/wiki/specs/audits/phase-1-validation.md`.
+- **NEXT:** commit and CI-validate the exact Phase 1 revision, promote that
+  immutable artifact to staging, clear the staging finding, then rerun
+  `/validate-phase`. Do not advance to Phase 2 planning or implementation.

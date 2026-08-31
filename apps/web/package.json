@@ -11,8 +11,9 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "generate-types": "wrangler types",
-    "type-check": "astro check"
+    "generate-types": "wrangler types worker-configuration.d.ts --env-interface CloudflareEnv --config wrangler.jsonc",
+    "types:check": "wrangler types worker-configuration.d.ts --env-interface CloudflareEnv --config wrangler.jsonc --check",
+    "type-check": "pnpm types:check && astro check"
   },
   "dependencies": {
     "@astrojs/cloudflare": "14.2.5",

@@ -1,0 +1,462 @@
+@layer components {
+  .infra-page {
+    --infra-paper: var(--color-paper, #f6f4ef);
+    --infra-surface: var(--color-surface, #fffdfa);
+    --infra-ink: var(--color-graphite, #202124);
+    --infra-muted: var(--color-muted, #5e6268);
+    --infra-border: var(--color-border, #c8c7c1);
+    --infra-accent: var(--color-jam-magenta, #a12662);
+    min-block-size: 100vh;
+    background: var(--infra-paper);
+    color: var(--infra-ink);
+  }
+
+  .infra-page a {
+    color: var(--infra-accent);
+    text-decoration-thickness: 0.12em;
+    text-underline-offset: 0.15em;
+  }
+
+  .infra-page a:focus-visible,
+  .infra-page button:focus-visible,
+  .infra-page input:focus-visible,
+  .infra-page select:focus-visible {
+    outline: 3px solid currentColor;
+    outline-offset: 3px;
+  }
+
+  .infra-page button,
+  .infra-page select,
+  .infra-page input {
+    font: inherit;
+  }
+
+  .infra-page button,
+  .infra-page a {
+    min-block-size: 44px;
+  }
+
+  .infra-page button {
+    border: 1px solid var(--infra-ink);
+    border-radius: 0.35rem;
+    background: var(--infra-ink);
+    color: var(--infra-surface);
+    cursor: pointer;
+    padding: 0.55rem 0.85rem;
+  }
+
+  .infra-page button:hover:not(:disabled) {
+    background: var(--infra-accent);
+    border-color: var(--infra-accent);
+  }
+
+  .infra-page button:disabled {
+    cursor: not-allowed;
+    opacity: 0.58;
+  }
+
+  .infra-page .infra-secondary-action {
+    background: transparent;
+    color: var(--infra-ink);
+  }
+
+  .infra-skip-link {
+    position: absolute;
+    inset-block-start: 0.75rem;
+    inset-inline-start: 0.75rem;
+    transform: translateY(-200%);
+    z-index: 2;
+  }
+
+  .infra-skip-link:focus {
+    transform: translateY(0);
+  }
+
+  .infra-main {
+    column-gap: 1.5rem;
+    display: grid;
+    inline-size: min(100% - 2rem, 90rem);
+    margin-inline: auto;
+    padding-block: 2rem 4rem;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+  }
+
+  .infra-main > * {
+    grid-column: 1 / -1;
+  }
+
+  .infra-shell-header {
+    border-block-end: 1px solid var(--infra-border);
+    margin-block-end: 1.5rem;
+    padding-block-end: 1rem;
+  }
+
+  .infra-eyebrow {
+    color: var(--infra-muted);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    margin-block: 0 0.35rem;
+    text-transform: uppercase;
+  }
+
+  .infra-main h1,
+  .infra-main h2,
+  .infra-main h3,
+  .infra-main h4 {
+    line-height: 1.2;
+    margin-block: 0 0.65rem;
+  }
+
+  .infra-main h1 {
+    font-size: clamp(1.75rem, 4vw, 2.6rem);
+  }
+
+  .infra-main h2 {
+    font-size: clamp(1.25rem, 3vw, 1.7rem);
+  }
+
+  .infra-main h3 {
+    font-size: 1.1rem;
+  }
+
+  .infra-main h4 {
+    font-size: 1rem;
+  }
+
+  .infra-main p {
+    max-inline-size: 72ch;
+  }
+
+  .infra-workbench {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .infra-workbench-header,
+  .infra-record-list,
+  .infra-record-detail,
+  .infra-capability-gate,
+  .infra-offline-status,
+  .infra-sync-conflict,
+  .infra-error-boundary,
+  .infra-validation-summary,
+  .infra-confirmation-step {
+    background: var(--infra-surface);
+    border: 1px solid var(--infra-border);
+    border-radius: 0.5rem;
+    padding: 1rem;
+  }
+
+  .infra-workbench-grid {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+  }
+
+  .infra-record-list,
+  .infra-record-detail {
+    min-inline-size: 0;
+  }
+
+  .infra-region-heading {
+    border-block-end: 1px solid var(--infra-border);
+    margin-block-end: 1rem;
+    padding-block-end: 0.75rem;
+  }
+
+  .infra-region-heading p,
+  .infra-help,
+  .infra-request-id {
+    color: var(--infra-muted);
+    font-size: 0.88rem;
+  }
+
+  .infra-filter-bar {
+    display: grid;
+    gap: 0.75rem;
+    margin-block-end: 1rem;
+  }
+
+  .infra-filter-bar h2 {
+    font-size: 1rem;
+    margin: 0;
+  }
+
+  .infra-filter-controls {
+    display: grid;
+    gap: 0.75rem;
+    grid-template-columns: minmax(0, 1fr) minmax(10rem, 0.65fr);
+  }
+
+  .infra-field {
+    display: grid;
+    gap: 0.35rem;
+  }
+
+  .infra-field label,
+  .infra-checkbox-label {
+    font-weight: 650;
+  }
+
+  .infra-field input,
+  .infra-field select {
+    background: var(--infra-surface);
+    border: 1px solid var(--infra-border);
+    border-radius: 0.3rem;
+    color: var(--infra-ink);
+    min-block-size: 44px;
+    padding-inline: 0.65rem;
+  }
+
+  .infra-filter-actions,
+  .infra-actions,
+  .infra-action-bar {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+  }
+
+  .infra-result-count {
+    font-weight: 650;
+    margin-block: 0;
+  }
+
+  .infra-active-filters {
+    align-items: baseline;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+  }
+
+  .infra-active-filters ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .infra-active-filters li {
+    border: 1px solid var(--infra-border);
+    border-radius: 999px;
+    padding: 0.25rem 0.55rem;
+  }
+
+  .infra-table-wrap {
+    max-inline-size: 100%;
+    overflow-x: auto;
+  }
+
+  .infra-data-table {
+    border-collapse: collapse;
+    inline-size: 100%;
+    min-inline-size: 34rem;
+  }
+
+  .infra-data-table caption {
+    font-weight: 700;
+    padding-block-end: 0.6rem;
+    text-align: start;
+  }
+
+  .infra-data-table th,
+  .infra-data-table td {
+    border-block-end: 1px solid var(--infra-border);
+    padding: 0.65rem 0.5rem;
+    text-align: start;
+    vertical-align: top;
+  }
+
+  .infra-data-table thead th {
+    font-size: 0.84rem;
+    white-space: nowrap;
+  }
+
+  .infra-data-table thead button {
+    background: transparent;
+    border: 0;
+    color: inherit;
+    min-block-size: 36px;
+    padding: 0;
+    text-decoration: underline;
+  }
+
+  .infra-data-table tbody tr[aria-selected='true'] {
+    background: color-mix(
+      in srgb,
+      var(--infra-accent) 10%,
+      var(--infra-surface)
+    );
+  }
+
+  .infra-record-meta,
+  .infra-record-detail dl {
+    display: grid;
+    gap: 0.65rem;
+    margin: 1rem 0;
+  }
+
+  .infra-record-meta > div,
+  .infra-record-detail dl > div {
+    display: grid;
+    gap: 0.15rem;
+    grid-template-columns: minmax(8rem, 0.4fr) minmax(0, 1fr);
+  }
+
+  .infra-record-detail dt {
+    color: var(--infra-muted);
+    font-weight: 650;
+  }
+
+  .infra-record-detail dd {
+    margin: 0;
+    overflow-wrap: anywhere;
+  }
+
+  .infra-facts,
+  .infra-provenance,
+  .infra-command-form,
+  .infra-action-bar {
+    border-block-start: 1px solid var(--infra-border);
+    margin-block-start: 1rem;
+    padding-block-start: 1rem;
+  }
+
+  .infra-provenance ol {
+    margin-block: 0;
+    padding-inline-start: 1.25rem;
+  }
+
+  .infra-provenance li {
+    margin-block-end: 0.6rem;
+    overflow-wrap: anywhere;
+  }
+
+  .infra-live-region {
+    border-inline-start: 0.3rem solid var(--infra-accent);
+    background: var(--infra-surface);
+    padding: 0.7rem 0.9rem;
+  }
+
+  .infra-validation-summary,
+  .infra-sync-conflict,
+  .infra-error-boundary,
+  .infra-offline-status {
+    border-inline-start: 0.3rem solid var(--infra-accent);
+  }
+
+  .infra-confirmation-region {
+    max-inline-size: 60rem;
+  }
+
+  .infra-confirmation-step {
+    display: grid;
+    gap: 0.75rem;
+  }
+
+  .infra-checkbox-label {
+    align-items: start;
+    display: flex;
+    gap: 0.55rem;
+  }
+
+  .infra-checkbox-label input {
+    block-size: 1.25rem;
+    inline-size: 1.25rem;
+    margin: 0;
+  }
+
+  .infra-request-id {
+    margin-block: 0;
+  }
+
+  .infra-contract-field-names,
+  .infra-invalidation-contract {
+    block-size: 1px;
+    inline-size: 1px;
+    overflow: hidden;
+    position: absolute;
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  .infra-visually-hidden {
+    block-size: 1px;
+    border: 0;
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    inline-size: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    white-space: nowrap;
+  }
+
+  @media (max-width: 1024px) {
+    .infra-main {
+      column-gap: 1.25rem;
+      grid-template-columns: repeat(8, minmax(0, 1fr));
+      inline-size: min(100% - 3rem, 90rem);
+    }
+
+    .infra-workbench-grid {
+      grid-template-columns: minmax(12rem, 0.36fr) minmax(0, 1fr);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .infra-main {
+      column-gap: 1rem;
+      inline-size: min(100% - 2rem, 42rem);
+      padding-block-start: 1.25rem;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .infra-workbench-grid,
+    .infra-filter-controls {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .infra-record-detail {
+      order: 2;
+    }
+
+    .infra-record-list {
+      order: 1;
+    }
+
+    .infra-filter-actions,
+    .infra-actions,
+    .infra-action-bar {
+      align-items: stretch;
+      flex-direction: column;
+    }
+
+    .infra-filter-actions > *,
+    .infra-actions > *,
+    .infra-action-bar > * {
+      inline-size: 100%;
+    }
+
+    .infra-record-meta > div,
+    .infra-record-detail dl > div {
+      grid-template-columns: minmax(7rem, 0.5fr) minmax(0, 1fr);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .infra-page *,
+    .infra-page *::before,
+    .infra-page *::after {
+      animation-duration: 0.01ms;
+      animation-iteration-count: 1;
+      scroll-behavior: auto;
+      transition-duration: 0.01ms;
+    }
+  }
+}

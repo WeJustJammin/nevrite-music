@@ -2,8 +2,8 @@
 
 ## Summary
 
-- **Total patterns**: 18
-- **Unique pattern titles**: 15
+- **Total patterns**: 20
+- **Unique pattern titles**: 17
 
 ## PAT-001: Verify a generated claim against the kit's own reference before propagating it (2026-07-16)
 
@@ -239,6 +239,34 @@
 - **Rule**: working documents, worklists and generated reports intended to survive go outside `.memory/wiki/specs/` — `.memory/pipeline/progress/` is safe and is where the IA remediation worklist now lives. If a document must sit under `specs/`, re-verify it after every compile by checking a structural invariant (section count, heading count, byte size), not by eyeballing it.
 - **Corollary**: a spec whose `## Related Specs` block is marked `<!-- spec-graph: auto-generated -->` must never be hand-edited there; edit the source relationships and re-run compile instead.
 - **Source**: IA remediation 2026-08-05 — compile run to land DEC-098/099 silently truncated the worklist that the apply pass then consumed.
+
+## PAT-016: Operational truth must be server-owned and fail closed (2026-08-30)
+
+- **Occurrences**: 1
+- **Latest timestamp**: 2026-08-30T06:08:13-04:00
+- **Agents**: codex
+- **Sources**: /implement-slice Phase 1 Slice 01
+- **Index**: [[index]]
+
+- **Type**: best-practice
+- **Confidence**: 0.6 (applied 1 time)
+- **Context**: Server-rendered health, readiness, degraded-state, and operator diagnostic surfaces.
+- **Pattern**: Never render query parameters or ordinary request headers as authoritative system state or last-known-good freshness. Derive operational truth from a server-owned boundary; until that boundary is composed, render the explicit degraded/unknown state and omit unverifiable freshness. Keep public responses provider-neutral and require named capability, fresh step-up, reason, and successful audit persistence before private diagnostics.
+- **Source**: Phase 1, Slice 01 implementation and adversarial review.
+
+## PAT-017: Generated artifacts need check-only validation outside broad format globs (2026-08-30)
+
+- **Occurrences**: 1
+- **Latest timestamp**: 2026-08-30T06:08:13-04:00
+- **Agents**: codex
+- **Sources**: /implement-slice Phase 1 Slice 01
+- **Index**: [[index]]
+
+- **Type**: anti-pattern
+- **Confidence**: 0.6 (applied 1 time)
+- **Context**: Deterministic OpenAPI/database artifacts and repositories containing protected or historical Markdown.
+- **Pattern**: Avoid broad formatter globs that rewrite unrelated protected documents or generator-owned JSON. Give each generated artifact a deterministic `--check` command that compares source-derived bytes without writing, exclude that artifact from generic formatters, and format only the new documentation scope. If a broad formatter is run accidentally, reverse only its explicit unrelated file set before continuing.
+- **Source**: Phase 1, Slice 01 validation gate.
 
 ## Full Log
 
@@ -500,3 +528,29 @@
 - **Context**: Running regex and structural sweeps across a specification layer.
 - **Pattern**: Calibrate deterministic checks against actual document conventions before scoring. This independent rerun treated pipes inside inline code as content rather than Markdown delimiters, allowed both locked interaction-table shapes, and evaluated deep-dive decisions with their owning shard. Those calibrations eliminated screen-generated false positives while preserving exact coverage, flow, contract, edge-case, and acceptance checks.
 - **Source**: IA fresh rerun 1 on 2026-08-28; 83 documents and 344 score cells.
+
+### PAT-016: Operational truth must be server-owned and fail closed (2026-08-30)
+
+- **Timestamp**: 2026-08-30T06:08:13-04:00
+- **Agent**: codex
+- **Source**: /implement-slice Phase 1 Slice 01
+- **Tags**: pattern, best-practice, security, operations
+
+- **Type**: best-practice
+- **Confidence**: 0.6 (applied 1 time)
+- **Context**: Server-rendered health, readiness, degraded-state, and operator diagnostic surfaces.
+- **Pattern**: Never render query parameters or ordinary request headers as authoritative system state or last-known-good freshness. Derive operational truth from a server-owned boundary; until that boundary is composed, render the explicit degraded/unknown state and omit unverifiable freshness. Keep public responses provider-neutral and require named capability, fresh step-up, reason, and successful audit persistence before private diagnostics.
+- **Source**: Phase 1, Slice 01 implementation and adversarial review.
+
+### PAT-017: Generated artifacts need check-only validation outside broad format globs (2026-08-30)
+
+- **Timestamp**: 2026-08-30T06:08:13-04:00
+- **Agent**: codex
+- **Source**: /implement-slice Phase 1 Slice 01
+- **Tags**: pattern, anti-pattern, tooling, generated-artifacts
+
+- **Type**: anti-pattern
+- **Confidence**: 0.6 (applied 1 time)
+- **Context**: Deterministic OpenAPI/database artifacts and repositories containing protected or historical Markdown.
+- **Pattern**: Avoid broad formatter globs that rewrite unrelated protected documents or generator-owned JSON. Give each generated artifact a deterministic `--check` command that compares source-derived bytes without writing, exclude that artifact from generic formatters, and format only the new documentation scope. If a broad formatter is run accidentally, reverse only its explicit unrelated file set before continuing.
+- **Source**: Phase 1, Slice 01 validation gate.

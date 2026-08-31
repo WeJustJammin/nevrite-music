@@ -683,7 +683,7 @@ Inherited BE00 ApiError is exactly: code string, message string, requestId UUID 
 | Outbox/Queue | Business commit stands | Lease/sweep retries; duplicate delivery safe | Canonical state remains authoritative; DLQ/manual review visible |
 | Consumer crash | No external effect before lease/current-state check | CAS and event identity prevent regression | Retry bounded; stale terminal event is no-op |
 | Realtime/cache | No canonical effect | Hint loss/staleness | Authorized refetch; no compensation from hint |
-| Restore/PITR | Protected writes fenced | Restore may precede events/projections | BE00 restoreEpoch blocks consumers/effects until identity reconciliation |
+| Restore/recovery import | Protected writes fenced | Restore may precede events/projections | BE00 restoreEpoch blocks consumers/effects until identity reconciliation |
 
 Retry is automatic only for idempotent reads and registered retryable background work. An ambiguous mutation reconciles by idempotency key, resource ETag or job/operation status before retry. No provider integration is owned here; any downstream provider effect remains outside this shard.
 
@@ -740,7 +740,7 @@ Protected RPC p95 is <=300ms, Tier 2 response p95 <1,200ms/p99 <2s, authenticate
 
 Migrations use BE00 expand, backfill, switch, contract ordering. Add registry/enums/tables/indexes and dual-write/backfill before switching readers; never destructively rewrite historical memberships, statements, terms, lineage or audit. Backfills are resumable/idempotent, bounded, observable and hold-aware. Grants/RLS/RPC negative tests are promotion gates.
 
-Before protected authority, rights or publication writes, PITR/RPO/RTO and restoreEpoch verification must pass. Recovery order is database integrity, RLS/RPC negative tests, idempotency/outbox/projection consistency, relationship/terms/member-set reconciliation, public projection checks, protected writes, then async effects. Replayed events re-read current authority and retain original event identity. Missing runbook/config/registry evidence disables the dependent capability; it does not create a fallback authority.
+Supabase Free provides no PITR or production RPO/RTO guarantee, so protected authority, rights, and publication writes remain disabled. Synthetic/local recovery evidence cannot open the gate. If a separately owner-approved recovery capability is later introduced, production-verified artifact/environment provenance and restoreEpoch verification must pass before the established recovery order: database integrity, RLS/RPC negative tests, idempotency/outbox/projection consistency, relationship/terms/member-set reconciliation, public projection checks, protected writes, then async effects. Replayed events re-read current authority and retain original event identity. Missing runbook/config/registry evidence disables the dependent capability; it does not create a fallback authority.
 
 ## Deepening and Ambiguity Gate
 

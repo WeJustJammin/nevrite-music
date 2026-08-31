@@ -2,13 +2,32 @@
   "$schema": "./node_modules/wrangler/config-schema.json",
   "compatibility_date": "2026-08-26",
   "compatibility_flags": ["global_fetch_strictly_public"],
-  "name": "apps-web",
+  "name": "wejammin-web",
   "main": "@astrojs/cloudflare/entrypoints/server",
+  "workers_dev": false,
   "assets": {
     "directory": "./dist",
     "binding": "ASSETS",
   },
+  "services": [
+    {
+      "binding": "PLATFORM_API",
+      "service": "wejammin-api",
+    },
+  ],
   "observability": {
     "enabled": true,
+  },
+  "env": {
+    "staging": {
+      "name": "wejammin-web-staging",
+      "workers_dev": true,
+      "services": [
+        {
+          "binding": "PLATFORM_API",
+          "service": "wejammin-api-staging",
+        },
+      ],
+    },
   },
 }

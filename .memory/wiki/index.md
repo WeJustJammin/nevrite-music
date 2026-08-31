@@ -1528,6 +1528,8 @@
 
 ## Structured Memory
 
+- pattern: PAT-016: Operational truth must be server-owned and fail closed (2026-08-30) — 2026-08-30T06:08:13-04:00
+- pattern: PAT-017: Generated artifacts need check-only validation outside broad format globs (2026-08-30) — 2026-08-30T06:08:13-04:00
 - decision: DEC-100: Shard 02 accepts bounded inbound evidence and policy commands without upward store reads (2026-08-28) — 2026-08-28T19:00:00-04:00
 - pattern: PAT-014: Calibrate a deterministic screen against real doc conventions before trusting its flags (2026-08-05) — 2026-08-28T01:00:00-04:00
 - pattern: PAT-014: Calibrate a deterministic screen against real doc conventions before trusting its flags (2026-08-05) — 2026-08-28T00:00:00-04:00

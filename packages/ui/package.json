@@ -4,6 +4,15 @@
   "private": true,
   "type": "module",
   "exports": {
+    "./infrastructure/navigation": "./src/infrastructure/navigation.ts",
+    "./infrastructure/presentation": "./src/infrastructure/presentation.ts",
     "./styles.css": "./src/styles.css"
+  },
+  "scripts": {
+    "build": "tsc --noEmit",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@wejammin/contracts": "workspace:*"
   }
 }

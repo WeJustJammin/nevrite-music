@@ -134,8 +134,8 @@ CI fails when any lab metric exceeds its row by more than 5% on two clean repeti
 
 - Monthly availability target is 99.9%, excluding scheduled maintenance announced at least 48 hours in advance. Every unplanned invalid response/dependency outage remains an incident; the percentage is not permission to spend downtime.
 - Synthetic public checks run every 60 seconds from at least two locations before production launch. Two consecutive failures within 5 minutes alert.
-- Before production money, rights, or publication records are admitted, Supabase seven-day PITR must be enabled and restore-tested; the measured worst-case recovery point objective is `≤2 minutes`. If PITR is unavailable or its verification expires, those protected production writes remain disabled. Immutable audit/outbox records, Stripe reconciliation, and domain repair procedures are defense-in-depth but do not claim zero data loss because PostgreSQL-resident evidence shares the database recovery domain.
-- Recovery time objective is ≤4 hours for full database restore and ≤30 minutes for application artifact rollback, measured by quarterly drills. Production launch requires one successful full restore and one artifact rollback drill.
+- Supabase Free has no PITR or uptime SLA. Protected production money, rights, and publication writes therefore remain disabled. Synthetic/local restore drills are diagnostic only and cannot open that gate. Enabling protected writes requires a separate owner-approved recovery capability plus immutable production-verified artifact, environment, restore-epoch, RLS/RPC, and reconciliation evidence.
+- No production database RPO or RTO is claimed on the Free tier. Application artifact rollback retains a measured ≤30-minute objective, while local restore drills record observations without promoting them to hosted recovery guarantees.
 
 ## Accessibility
 

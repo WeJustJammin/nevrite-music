@@ -7,6 +7,14 @@ import cloudflare from '@astrojs/cloudflare';
 // https://astro.build/config
 export default defineConfig({
   output: 'server',
+  session: false,
   integrations: [react()],
-  adapter: cloudflare(),
+  vite: {
+    optimizeDeps: {
+      include: ['astro/assets/services/noop'],
+    },
+  },
+  adapter: cloudflare({
+    imageService: 'passthrough',
+  }),
 });

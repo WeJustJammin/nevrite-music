@@ -61,10 +61,14 @@ describe('Worker runtime environment contract', () => {
       'name: Record promoted artifact digests',
     );
     expect(stagingDeploymentWorkflow).toContain(
-      'Deploy Pages staging artifact',
+      'Deploy web SSR Worker staging artifact',
     );
     expect(stagingDeploymentWorkflow).toContain(
-      'Deploy Worker staging artifact',
+      'Deploy API Worker staging artifact',
+    );
+    expect(stagingDeploymentWorkflow).toContain('wrangler.staging.json');
+    expect(stagingDeploymentWorkflow).toContain(
+      '--domain "$WEB_CUSTOM_DOMAIN"',
     );
     expect(stagingDeploymentWorkflow).toContain(
       '--var APP_ENVIRONMENT:staging',

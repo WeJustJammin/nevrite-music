@@ -26,3 +26,9 @@
 ## Cost boundary
 
 No monitoring replacement is authorized. New services default to genuinely free operation. A trial, payment method, subscription, usage billing, or paid add-on requires a separate owner approval naming the service, recurring price, usage price, and ceiling. The owner reconfirmed DEC-103 Workers Paid as the sole paid-service exception after the setup billing audit.
+
+## Infrastructure-tier reconciliation
+
+DEC-104 also reconciles the selected Supabase architecture to the owner's free-tier posture. Supabase Free remains the PostgreSQL/Auth/Storage/Realtime provider, but no PITR, uptime SLA, paid upgrade, overage, or paid add-on is assumed. Recovery evidence is synthetic/local only until production-verified recovery evidence is separately demonstrated; protected money, rights, and publication writes remain closed without it. Cloudflare Workers Paid remains the sole paid-service exception under a soft `$10/month` ceiling.
+
+The implementation pass propagated that boundary through every runtime instruction surface, the engineering standards, inherited IA/BE recovery clauses, and the operations runbook index. It also removed unused Resend and Stripe setup bindings from `.env.example`, `.github/SECRETS.md`, and the strict server-environment schema. Those providers remain unconfigured and absent from the production registry; introducing either now fails strict environment parsing and requires a new owner cost decision.

@@ -5,31 +5,92 @@
   "compatibility_date": "2026-08-29",
   "minify": true,
   "workers_dev": false,
-  "limits": {
-    "cpu_ms": 50,
-  },
+  "limits": { "cpu_ms": 50 },
   "observability": {
     "enabled": true,
     "head_sampling_rate": 0.1,
   },
   "vars": {
     "APP_ENVIRONMENT": "production",
-    "APP_RELEASE": "local",
+  },
+  "queues": {
+    "producers": [
+      {
+        "binding": "PLATFORM_JOBS",
+        "queue": "platform-jobs",
+      },
+    ],
+    "consumers": [
+      {
+        "queue": "platform-jobs",
+        "max_retries": 3,
+        "dead_letter_queue": "platform-jobs-dlq",
+      },
+    ],
+  },
+  "triggers": {
+    "crons": ["* * * * *"],
   },
   "env": {
+    "local": {
+      "name": "wejammin-api-local",
+      "workers_dev": true,
+      "observability": {
+        "enabled": true,
+        "head_sampling_rate": 0.1,
+      },
+      "vars": {
+        "APP_ENVIRONMENT": "development",
+        "APP_RELEASE": "local",
+      },
+      "queues": {
+        "producers": [
+          {
+            "binding": "PLATFORM_JOBS",
+            "queue": "platform-jobs",
+            "remote": false,
+          },
+        ],
+        "consumers": [
+          {
+            "queue": "platform-jobs",
+            "max_retries": 3,
+            "dead_letter_queue": "platform-jobs-dlq",
+          },
+        ],
+      },
+      "triggers": {
+        "crons": ["* * * * *"],
+      },
+    },
     "staging": {
       "name": "wejammin-api-staging",
       "workers_dev": true,
-      "limits": {
-        "cpu_ms": 50,
-      },
+      "limits": { "cpu_ms": 50 },
       "observability": {
         "enabled": true,
         "head_sampling_rate": 0.1,
       },
       "vars": {
         "APP_ENVIRONMENT": "staging",
-        "APP_RELEASE": "local",
+      },
+      "queues": {
+        "producers": [
+          {
+            "binding": "PLATFORM_JOBS",
+            "queue": "platform-jobs",
+          },
+        ],
+        "consumers": [
+          {
+            "queue": "platform-jobs",
+            "max_retries": 3,
+            "dead_letter_queue": "platform-jobs-dlq",
+          },
+        ],
+      },
+      "triggers": {
+        "crons": ["* * * * *"],
       },
     },
   },

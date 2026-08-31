@@ -1,11 +1,14 @@
 # Phase 1 — Operational foundation (Draft)
 
-**Status**: review-candidate; implementation has not started  
+**Status**: historical draft; superseded by `phase-1.md`
 **Generated**: 2026-08-29  
-**Approval gate**: explicit owner approval required  
+**Approval gate**: superseded by owner approval recorded on 2026-08-29
 **Architecture source**: [Architecture §Phasing](../2026-08-02-architecture-design.md#phasing)
 
 Phase 1 establishes the production operational substrate: deterministic workspace, Astro/Hono/Zod contracts, Supabase data and RLS, system UX, async/storage/provider seams, CI/CD, staging, observability, and recovery. Quality is production-grade; slice size controls sequencing only.
+
+> Historical snapshot only. Current implementation status and acceptance
+> evidence live in [phase-1.md](phase-1.md) and `.memory/pipeline/progress/`.
 
 
 ## Preflight result

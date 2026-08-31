@@ -1,5 +1,9 @@
 {
   "extends": "astro/tsconfigs/strict",
+  "references": [
+    { "path": "../../packages/contracts" },
+    { "path": "../../packages/ui" }
+  ],
   "include": [".astro/types.d.ts", "**/*", "./worker-configuration.d.ts"],
   "exclude": ["dist"],
   "compilerOptions": {
