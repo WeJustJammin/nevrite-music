@@ -66,25 +66,31 @@
 
 - **CURRENT:** Phase 1 implementation tracking is complete: all 7
   dependency-ordered slices and 390 cited acceptance criteria passed their slice
-  checks. Independent `/validate-phase` is fail-closed solely on the external
-  production reviewer prerequisite described below.
+  checks. Independent `/validate-phase` passes after final production-approval
+  verification; live production deployment was not required or performed.
 - Fresh IA ambiguity rerun 1 on 2026-08-28 scored 0/344 = 0.00% (PASS), covering all 83 IA documents and all 43 shards. See `.memory/wiki/specs/audits/2026-08-28-ia-ambiguity-rerun-1.md`.
-- **CURRENT VALIDATION:** Phase 1 `/validate-phase` is **FAIL-CLOSED** after
-  final exact-SHA closure on 2026-08-31. Local validation passes 158 Vitest
+- **CURRENT VALIDATION:** Phase 1 `/validate-phase` is **PASS** after final
+  exact-SHA and production-approval closure on 2026-08-31. Local validation
+  passes 158 Vitest
   files/945 tests with 100% coverage, 26 Playwright tests, all builds, complete
   Workbench hydration closure 14,913 gzip bytes, honest initial-route closure
-  72,576 bytes, and local deterministic API p95 2.676152 ms with zero errors.
-  All seven findings are resolved in code or safely contained. PR #6 merged as
+  72,576 bytes, and local deterministic API p95 1.689102 ms with zero errors.
+  All seven findings are resolved. PR #6 merged as
   `cc5d7058f5ade9435bf9e61753bdbe403b0258cf`; main CI run `33447715327` and
   exact-SHA staging run `33447957866` passed. Staging public contracts are web
   200, protected SSR 303, and API 200; staging p95 is 38.615692 ms and the
   independent exact-SHA p95 is 43.175515 ms, each with 20 samples, 1 virtual
   user, 0 retries, 0 errors, and a 500 ms limit. See
   `.memory/wiki/specs/audits/phase-1-validation.md`.
-- **NEXT:** configure the required GitHub reviewer when the repository plan
-  supports it, then rerun `/validate-phase`. The immutable CI artifact digest is
+- Production approval now passes for staging run `33449203645` and source
+  `fd65360f509e268c7cbae2e52cc7fcbbd7eeec8f`; required reviewer rule `64231612`
+  names `NEVRITERob` (ID `214191222`), with `prevent_self_review: true`,
+  `can_admins_bypass: false`, and exact `main` policy. Repository security
+  scanning and push protection are enabled after the PRIVATE-to-PUBLIC change.
+- **NEXT:** follow the normal post-validation `/update-architecture-map` step.
+  The immutable CI artifact digest is
   `f4c18d60fa0e7e8081795a07a247a823dc851e2592e27b9b78e880d6e6183173`; the
   staging candidate artifact is ID `9778720478` with digest
-  `4d1b74b4aa8654029a473df933cfeb69e073135b80ec775e6b2e357bfb52660`. Do not
-  advance to Phase 2 or activate production while reviewer protection remains
-  unavailable.
+  `4d1b74b4aa8654029a473df933cfeb69e073135b80ec775e6b2e357bfb52660`.
+  Production workflow `346315225` is active but manual-only; no production
+  deployment was triggered or performed.
