@@ -20,6 +20,9 @@
 **Final staging workflow**: GitHub Actions run `33447957866` (success; exact
 merge SHA deployed)
 
+**Final production preflight**: staging run `33449203645`, source
+`fd65360f509e268c7cbae2e52cc7fcbbd7eeec8f` (success)
+
 This capture preserves the external evidence that opened validation findings
 VAL-P1-002 and VAL-P1-007 through VAL-P1-011. It contains no credentials or
 secret values. The initial observations precede deployment of the remediation
@@ -146,7 +149,7 @@ Astro/Vite module handling outside that deployment boundary.
 
 Local evidence is green: focused security, staging-verifier, generated-config,
 and hydration suites pass; the canonical aggregate reports 158 Vitest files/945
-tests, 100% coverage, 26/26 browser tests, successful builds, and p95 2.676152 ms
+tests, 100% coverage, 26/26 browser tests, successful builds, and p95 1.689102 ms
 with zero errors. The final immutable closure below supersedes the earlier
 pending-live-proof note.
 
@@ -167,14 +170,30 @@ staging candidate artifact is ID `9778720478` with digest
 The staging workflow p95 smoke measured 38.615692 ms across 20 sequential
 samples with 1 virtual user, 0 retries, 0 errors, and a strict 500 ms limit.
 An independent exact-SHA run measured 43.175515 ms with the same settings.
-The final local validation measured p95 2.676152 ms against the same 500 ms
+The final local validation measured p95 1.689102 ms against the same 500 ms
 limit. Bundle gates remained green: Workbench 14,913/35,840 gzip bytes,
 initial route 72,576/92,160, and largest lazy/shared chunk 27,884/81,920.
 
-The required production reviewer protection remains unavailable because GitHub
-rejects that rule under the current private-repository plan. Production stays
-disabled and the overall Phase 1 validation verdict remains fail-closed; these
-staging results do not constitute production-readiness approval.
+The earlier required-reviewer limitation was resolved after the repository
+visibility change. Production approval now passes its reviewer, exact-main, and
+administrator-bypass preflight, but production remains manual-only and was not
+deployed.
+
+## Final production approval closure
+
+A full-history safety audit scanned 309 commits, 17,443 objects, and 12,175 text
+blobs and found no committed production credentials, private keys, or provider
+tokens. The repository changed from PRIVATE to PUBLIC only after that audit;
+secret scanning, push protection, vulnerability alerts, and automated security
+fixes are enabled.
+
+Production environment rule `64231612` requires reviewer `NEVRITERob` (ID
+`214191222`) with `prevent_self_review: true`; `can_admins_bypass: false` and
+the sole exact `main` branch policy remain in force. Production preflight passes
+for staging run `33449203645` and source
+`fd65360f509e268c7cbae2e52cc7fcbbd7eeec8f`. Workflow `346315225` is active but
+`workflow_dispatch`/manual-only, and no production deployment was triggered or
+performed.
 
 
 <!-- spec-graph: auto-generated -->

@@ -17,7 +17,24 @@ Only the credentials listed below are authorized. They belong in protected GitHu
 
 Production uses the same names in the protected `production` environment with distinct values, required reviewers, main-branch restrictions, and serialized deployment concurrency. Staging values must never be copied into production or vice versa.
 
-The production workflow must remain disabled until the environment reports a required-reviewer rule and `can_admins_bypass: false`. The environment now has administrator bypass disabled and the sole custom deployment branch policy `{ name: "main", type: "branch" }`. The current private-repository plan still rejects required reviewers with HTTP 422, so the checked-in manual promotion guard fails closed until that final plan prerequisite is resolved.
+The production environment reports required-reviewer rule `64231612` for
+`NEVRITERob` (reviewer ID `214191222`), `prevent_self_review: true`,
+`can_admins_bypass: false`, and the sole custom deployment branch policy
+`{ name: "main", type: "branch" }`. The prior private-repository-plan HTTP 422
+was resolved after the repository changed from PRIVATE to PUBLIC. Workflow
+`346315225` is active but remains `workflow_dispatch`/manual-only; its immutable
+preflight passes for staging run `33449203645` and source
+`fd65360f509e268c7cbae2e52cc7fcbbd7eeec8f`. No production deployment was
+triggered or performed.
+
+## Repository security controls
+
+Before changing `WeJustJammin/nevrite-music` from PRIVATE to PUBLIC, a
+full-history safety audit scanned 309 commits, 17,443 objects, and 12,175 text
+blobs and found no committed production credentials, private keys, or provider
+tokens. Secret scanning, push protection, vulnerability alerts, and automated
+security fixes are enabled. Environment secrets remain protected and must never
+be placed in repository contents, workflow arguments, artifacts, or logs.
 
 The Cloudflare token is restricted to the WeJammin account with only Workers Scripts Edit and Cloudflare Pages Edit permissions. Create separate staging and production tokens; never reuse the interactive Wrangler OAuth credential in CI.
 
