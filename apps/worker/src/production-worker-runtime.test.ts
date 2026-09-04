@@ -188,10 +188,15 @@ describe('production Worker runtime', () => {
       expect.objectContaining({
         headers: expect.objectContaining({
           apikey: environment.SUPABASE_SECRET_KEY,
-          authorization: `Bearer ${environment.SUPABASE_SECRET_KEY}`,
         }),
         body: expect.stringContaining('p_request'),
       }),
+    );
+    const claimCall = fetchImpl.mock.calls.find(([input]) =>
+      String(input).includes('/rpc/cms_claim_schema_migration_event'),
+    );
+    expect(new Headers(claimCall?.[1]?.headers).has('authorization')).toBe(
+      false,
     );
     expect(telemetry).toHaveBeenCalledWith(
       expect.objectContaining({

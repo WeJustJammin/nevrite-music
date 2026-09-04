@@ -16,6 +16,7 @@ import type {
 } from './async-entrypoint';
 import { parseRestoreFence } from './async-runtime-fence';
 import type { SchemaMigrationRpcName } from './content-schema-registry/migration-worker';
+import { supabaseRpcHeaders } from './supabase-rpc-headers';
 
 export { parseRestoreFence } from './async-runtime-fence';
 export type AsyncRpcOperation =
@@ -525,8 +526,7 @@ const fetchClient = (
               headers: {
                 Accept: 'application/json',
                 'Accept-Profile': PLATFORM_API_PROFILE,
-                apikey: env.SUPABASE_SECRET_KEY,
-                authorization: `Bearer ${env.SUPABASE_SECRET_KEY}`,
+                ...supabaseRpcHeaders(env.SUPABASE_SECRET_KEY),
                 'Content-Profile': PLATFORM_API_PROFILE,
                 'content-type': 'application/json',
               },

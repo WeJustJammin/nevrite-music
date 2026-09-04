@@ -180,7 +180,6 @@ describe('profile ownership production adapter', () => {
       Accept: 'application/json',
       'Accept-Profile': 'platform_api',
       apikey: environment.SUPABASE_SECRET_KEY,
-      authorization: `Bearer ${environment.SUPABASE_SECRET_KEY}`,
       'Content-Profile': 'platform_api',
       'Content-Type': 'application/json',
       'X-Operation-Id': 'PRF-API-01',
@@ -188,6 +187,7 @@ describe('profile ownership production adapter', () => {
       'X-Correlation-Id': CORRELATION_ID,
       'X-Idempotency-Key': command.idempotencyKey,
     });
+    expect(new Headers(firstInit?.headers).has('authorization')).toBe(false);
     expect(JSON.parse(String(firstInit?.body))).toMatchObject({
       p_request: {
         partyId: PARTY_ID,

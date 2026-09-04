@@ -86,16 +86,23 @@
   remains unmerged and no Slice 09 candidate has been deployed.
   Staging continues to serve Phase 1 baseline
   `9b2cff7849b25dd12ffae6287b1024e50654bc14`.
-- **INFRASTRUCTURE VERDICT:** post-remediation `/verify-infrastructure` verifies
+- **PRIOR INFRASTRUCTURE VERDICT (historical):** post-remediation
+  `/verify-infrastructure` verified
   live `main` review/check protection, staging custom branch policy, and the
   fail-closed hosted-migration contract. Required staging credentials remain
   unavailable, so no migration or Slice 09 candidate deployment exists and the
   overall gate remains blocked. See
   `.memory/wiki/specs/audits/verify-infrastructure-2026-09-04-1353.md`; the
   12:55 failure record remains preserved.
-- **NEXT:** provision staging migration credentials, then require exact-main-SHA
-  CI, hosted migrations, staging deployment, and another
-  `/verify-infrastructure` against one revision/digest. AC209 live alert
-  delivery, AC211 production telemetry/DLQ evidence, AC265 deployed
-  Auth/RLS/Google IdP E2E, and AC266 VoiceOver/Safari plus NVDA/Firefox manual
-  smoke remain mandatory. Do not start Slice 10 until all four pass.
+- **CURRENT INFRASTRUCTURE VERDICT:** exact merged/deployed `main` SHA
+  `5d6e49f34b678c59da2ac4f7059f08e6dc3b4790` is backed by CI run
+  `33917604565` with all three required jobs successful, immutable artifact
+  `9953929511` (`sha256:2a89077d...`), staging run `33918141133`, deployment
+  `6272586576`, hosted migration `20260902080000` in `expanded` state, and
+  candidate artifact `9953965534`. See
+  `.memory/wiki/specs/audits/verify-infrastructure-2026-09-04-1703.md`.
+- **NEXT:** retain Slice 09 blocked at 279/283 and Phase 2 at 8/17 until the
+  remaining external/live evidence passes: AC209 live alert delivery, AC211
+  production telemetry/DLQ evidence, AC265 deployed Auth/RLS/Google IdP E2E,
+  and AC266 VoiceOver/Safari plus NVDA/Firefox manual smoke. Do not start
+  Slice 10 until all four pass.

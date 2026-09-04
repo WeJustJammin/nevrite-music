@@ -22,6 +22,7 @@ import {
 import { createSessionResolver } from './production-auth';
 import { createRateLimiter } from './production-rate';
 import { createReleaseVerification } from './production-release';
+import { supabaseRpcHeaders } from '../supabase-rpc-headers';
 import {
   ContentSchemaRegistryProductionConfigurationError,
   DEFAULT_DEADLINE_MS,
@@ -117,8 +118,7 @@ export const createProductionContentSchemaRegistryDependencies = (
     const headers: Record<string, string> = {
       Accept: 'application/json',
       'Accept-Profile': 'platform_api',
-      apikey: configuration.auth.secret,
-      Authorization: `Bearer ${configuration.auth.secret}`,
+      ...supabaseRpcHeaders(configuration.auth.secret),
       'Content-Profile': 'platform_api',
       'Content-Type': 'application/json',
       'X-Operation-Id': input.operationId,

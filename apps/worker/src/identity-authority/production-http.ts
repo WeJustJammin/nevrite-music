@@ -5,6 +5,7 @@ import type {
   AuthenticationError,
   AuthenticationResult,
 } from '../authentication/types';
+import { supabaseRpcHeaders } from '../supabase-rpc-headers';
 
 const boundedJson = async (response: Response): Promise<unknown> => {
   const text = await response.text();
@@ -151,8 +152,7 @@ export const callIdentityRpc = async (
       headers: {
         Accept: 'application/json',
         'Accept-Profile': 'platform_api',
-        apikey: config.secret,
-        authorization: `Bearer ${config.secret}`,
+        ...supabaseRpcHeaders(config.secret),
         'Content-Profile': 'platform_api',
         'Content-Type': 'application/json',
       },

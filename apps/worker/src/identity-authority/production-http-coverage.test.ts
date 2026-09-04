@@ -40,7 +40,6 @@ describe('identity production HTTP adapter', () => {
           Accept: 'application/json',
           'Accept-Profile': 'platform_api',
           apikey: environment.SUPABASE_SECRET_KEY,
-          authorization: `Bearer ${environment.SUPABASE_SECRET_KEY}`,
           'Content-Profile': 'platform_api',
           'Content-Type': 'application/json',
         });

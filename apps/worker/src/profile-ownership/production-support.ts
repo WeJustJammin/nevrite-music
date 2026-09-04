@@ -8,6 +8,7 @@ import type {
   AuthenticationError,
   AuthenticationResult,
 } from '../authentication/types';
+import { supabaseRpcHeaders } from '../supabase-rpc-headers';
 import { profileRpcConflictFailure } from './profile-conflicts';
 
 export type ProfileSchema<T> = Readonly<{
@@ -213,8 +214,7 @@ export const profileHeaders = (
 ): Readonly<Record<string, string>> => ({
   Accept: 'application/json',
   'Accept-Profile': 'platform_api',
-  apikey: config.secret,
-  authorization: `Bearer ${config.secret}`,
+  ...supabaseRpcHeaders(config.secret),
   'Content-Profile': 'platform_api',
   'Content-Type': 'application/json',
   ...extraHeaders,
