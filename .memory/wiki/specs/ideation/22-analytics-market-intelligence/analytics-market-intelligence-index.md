@@ -145,6 +145,9 @@ uncopyable half is the wedge, and **neither works alone**. 22.05's dashboard has
 <!-- spec-graph: auto-generated -->
 ## Related Specs
 
+### Phases into
+- [[specs/phases/phase-2|Phase 2 — Identity, admin, CMS/settings]]
+
 ### Constrained by
 - [[decisions.md#d-18|D-18]]
 - [[decisions.md#d-19|D-19]]
@@ -159,3 +162,6 @@ uncopyable half is the wedge, and **neither works alone**. 22.05's dashboard has
 - [[decisions.md#d-71|D-71]]
 - [[decisions.md#d-31|D-31]]
 - [[decisions.md#d-20|D-20]]
+
+### References
+- [[specs/phases/phase-2|Phase 2 — Identity, admin, CMS/settings]]

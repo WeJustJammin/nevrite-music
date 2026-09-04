@@ -1,0 +1,210 @@
+import { CmsStrongEtagSchema, createRequestId } from '@wejammin/contracts';
+import {
+  CONTENT_SCHEMA_REGISTRY_MUTATION_OPERATIONS,
+  isBinding,
+  PLATFORM_API_ORIGIN,
+} from './content-schema-registry-platform-shared';
+import type {
+  ContentSchemaRegistryMutationOperationId,
+  ContentSchemaRegistryMutationTarget,
+} from './content-schema-registry-platform-shared';
+import {
+  MutationInputError,
+  parseFormDataInput,
+  parseJsonInput,
+} from './content-schema-registry-platform-input';
+import type { ParsedMutationInput } from './content-schema-registry-platform-input';
+import {
+  copyMutationResponseHeaders,
+  csrfCookie,
+  forwardedMutationCookies,
+  forwardedMutationError,
+  localMutationError,
+  mutationPath,
+  printableToken,
+  sameOriginMutationRequest,
+  schemaParseMutation,
+  schemaParseSuccess,
+} from './content-schema-registry-platform-mutation-support';
+
+export const forwardContentSchemaRegistryMutation = async (
+  request: Request,
+  binding: unknown,
+  target: ContentSchemaRegistryMutationTarget,
+): Promise<Response> => {
+  if (!isBinding(binding) || request.method !== 'POST')
+    return localMutationError(request, 503);
+  if (!sameOriginMutationRequest(request))
+    return localMutationError(request, 403);
+  const path = mutationPath(target);
+  if (path === null) return localMutationError(request, 400);
+
+  const contentType = request.headers.get('content-type') ?? '';
+  let parsed: ParsedMutationInput;
+  try {
+    parsed = /^application\/json(?:\s*;|$)/iu.test(contentType)
+      ? await parseJsonInput(request, target)
+      : await parseFormDataInput(request, target);
+  } catch (error) {
+    if (error instanceof MutationInputError)
+      return localMutationError(request, 400);
+    return localMutationError(request, 400);
+  }
+  if (
+    parsed.transport.operationId !== null &&
+    parsed.transport.operationId !== target.operationId
+  ) {
+    return localMutationError(request, 400);
+  }
+
+  const headerCsrf = request.headers.get('x-csrf-token');
+  const csrfToken = parsed.transport.csrfToken ?? headerCsrf;
+  if (
+    headerCsrf !== null &&
+    parsed.transport.csrfToken !== null &&
+    headerCsrf !== parsed.transport.csrfToken
+  ) {
+    return localMutationError(request, 403);
+  }
+  if (!printableToken(csrfToken, 512) || csrfCookie(request) !== csrfToken)
+    return localMutationError(request, 403);
+
+  const headerIdempotency = request.headers.get('idempotency-key');
+  const idempotencyKey = parsed.transport.idempotencyKey ?? headerIdempotency;
+  if (
+    headerIdempotency !== null &&
+    parsed.transport.idempotencyKey !== null &&
+    headerIdempotency !== parsed.transport.idempotencyKey
+  ) {
+    return localMutationError(request, 400);
+  }
+  if (!printableToken(idempotencyKey, 128) || (idempotencyKey?.length ?? 0) < 8)
+    return localMutationError(request, 400);
+
+  const headerIfMatch = request.headers.get('if-match');
+  const ifMatch = parsed.transport.ifMatch ?? headerIfMatch;
+  if (
+    headerIfMatch !== null &&
+    parsed.transport.ifMatch !== null &&
+    headerIfMatch !== parsed.transport.ifMatch
+  ) {
+    return localMutationError(request, 400);
+  }
+  if (
+    CONTENT_SCHEMA_REGISTRY_MUTATION_OPERATIONS[target.operationId]
+      .requiresIfMatch &&
+    !CmsStrongEtagSchema.safeParse(ifMatch).success
+  ) {
+    return localMutationError(request, 400);
+  }
+
+  const stepUpHeader = request.headers.get('x-step-up-token');
+  const stepUpToken = parsed.transport.stepUpToken ?? stepUpHeader;
+  if (
+    stepUpHeader !== null &&
+    parsed.transport.stepUpToken !== null &&
+    stepUpHeader !== parsed.transport.stepUpToken
+  ) {
+    return localMutationError(request, 400);
+  }
+  if (
+    target.operationId === 'CMS-03A-04' &&
+    (!printableToken(stepUpToken, 512) ||
+      (parsed.transport.source === 'form' &&
+        parsed.transport.confirmed !== true))
+  ) {
+    return localMutationError(request, 403);
+  }
+
+  const validated = schemaParseMutation(target.operationId, parsed.payload);
+  if (!validated.success) return localMutationError(request, 422);
+
+  const headers = new Headers({
+    accept: 'application/json',
+    'cache-control': 'no-store',
+    'content-type': 'application/json',
+    origin: PLATFORM_API_ORIGIN,
+    'idempotency-key': idempotencyKey as string,
+    'x-csrf-token': csrfToken as string,
+  });
+  if (ifMatch !== null) headers.set('if-match', ifMatch);
+  if (stepUpToken !== null) headers.set('x-step-up-token', stepUpToken);
+  const cookie = forwardedMutationCookies(request);
+  if (cookie !== null) headers.set('cookie', cookie);
+  const requestId = createRequestId(
+    request.headers.get('x-request-id') ?? undefined,
+  );
+  headers.set('x-request-id', requestId);
+  const correlationId = request.headers.get('x-correlation-id');
+  if (correlationId !== null && printableToken(correlationId, 128))
+    headers.set('x-correlation-id', correlationId);
+
+  let upstream: Response;
+  try {
+    upstream = await binding.fetch(
+      new Request(`${PLATFORM_API_ORIGIN}${path}`, {
+        method: 'POST',
+        headers,
+        body: JSON.stringify(validated.data),
+      }),
+    );
+  } catch {
+    return localMutationError(request, 503);
+  }
+  if (!(upstream instanceof Response)) return localMutationError(request, 503);
+
+  const responseContentType = upstream.headers.get('content-type') ?? '';
+  if (!/^application\/json(?:\s*;|$)/iu.test(responseContentType))
+    return localMutationError(request, 502);
+  if (
+    !CONTENT_SCHEMA_REGISTRY_MUTATION_OPERATIONS[
+      target.operationId
+    ].successStatuses.some((status) => status === upstream.status)
+  )
+    return forwardedMutationError(request, upstream);
+  let responseBody: unknown;
+  try {
+    responseBody = await upstream.json();
+  } catch {
+    return localMutationError(request, 502);
+  }
+  const parsedResponse = schemaParseSuccess(target.operationId, responseBody);
+  if (!parsedResponse.success) return localMutationError(request, 502);
+  const responseHeaders = copyMutationResponseHeaders(upstream);
+  if (!responseHeaders.has('x-request-id'))
+    responseHeaders.set('x-request-id', requestId);
+  return new Response(JSON.stringify(parsedResponse.data), {
+    status: upstream.status,
+    statusText: upstream.statusText,
+    headers: responseHeaders,
+  });
+};
+
+/** Stable name used by route adapters and tests for the mutation facade. */
+export const forwardContentSchemaRegistryRequest =
+  forwardContentSchemaRegistryMutation;
+
+/** Read only the operation discriminator so Astro can keep native POST flows. */
+export const contentSchemaRegistryMutationOperationFromRequest = async (
+  request: Request,
+): Promise<ContentSchemaRegistryMutationOperationId | null> => {
+  try {
+    const contentType = request.headers.get('content-type') ?? '';
+    let value: unknown;
+    if (/^application\/json(?:\s*;|$)/iu.test(contentType)) {
+      value = await request.clone().json();
+    } else {
+      value = (await request.clone().formData()).get('operationId');
+    }
+    const operationId =
+      typeof value === 'object' && value !== null
+        ? (value as { readonly operationId?: unknown }).operationId
+        : value;
+    return typeof operationId === 'string' &&
+      Object.hasOwn(CONTENT_SCHEMA_REGISTRY_MUTATION_OPERATIONS, operationId)
+      ? (operationId as ContentSchemaRegistryMutationOperationId)
+      : null;
+  } catch {
+    return null;
+  }
+};

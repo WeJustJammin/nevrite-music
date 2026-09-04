@@ -1,0 +1,170 @@
+---
+import {
+  AuthMergePathSchema,
+  AuthReturnTargetSchema,
+  LoginMethodsResourceSchema,
+  MergeCaseResourceSchema,
+  createRequestId,
+} from '@wejammin/contracts';
+import { normalizeSafeReturnPath } from '@wejammin/ui/infrastructure/navigation';
+import { env } from 'cloudflare:workers';
+
+import LoginMethodManager from '../../components/authentication/LoginMethodManager.tsx';
+import { forwardAuthRequest } from '../../server/auth-platform-api.ts';
+import '@wejammin/ui/styles.css';
+import '../../styles/infrastructure.css';
+
+export const prerender = false;
+
+const requestId = createRequestId(
+  Astro.request.headers.get('x-request-id') ?? undefined,
+);
+const normalizedReturnTo = normalizeSafeReturnPath(
+  `${Astro.url.pathname}${Astro.url.search}`,
+);
+const returnTo = AuthReturnTargetSchema.safeParse(normalizedReturnTo).success
+  ? normalizedReturnTo
+  : '/settings/security';
+
+const upstreamRequest = (url: URL): Request => {
+  const headers = new Headers();
+  const cookie = Astro.request.headers.get('cookie');
+  if (cookie !== null) headers.set('cookie', cookie);
+  return new Request(url, { method: 'GET', headers });
+};
+
+let loginMethods: ReturnType<typeof LoginMethodsResourceSchema.parse> | null =
+  null;
+let loginMethodsEtag: string | null = null;
+let accountUnavailable = false;
+
+try {
+  const response = await forwardAuthRequest(
+    upstreamRequest(new URL('/api/v1/account/login-methods', Astro.url)),
+    env.PLATFORM_API,
+    '/api/v1/account/login-methods',
+    'GET',
+  );
+  if (response.status === 401) {
+    return Astro.redirect(
+      `/auth/sign-in?returnTo=${encodeURIComponent(returnTo)}`,
+      303,
+    );
+  }
+  if (response.ok) {
+    const parsed = LoginMethodsResourceSchema.safeParse(await response.json());
+    if (parsed.success) {
+      loginMethods = parsed.data;
+      loginMethodsEtag = response.headers.get('etag');
+    } else {
+      accountUnavailable = true;
+    }
+  } else {
+    accountUnavailable = true;
+  }
+} catch {
+  accountUnavailable = true;
+}
+
+let mergeCase: ReturnType<typeof MergeCaseResourceSchema.parse> | null = null;
+let mergeCaseEtag: string | null = null;
+const requestedMergeId = Astro.url.searchParams.get('mergeId');
+const parsedMergePath = AuthMergePathSchema.safeParse({
+  mergeId: requestedMergeId,
+});
+if (loginMethods !== null && parsedMergePath.success) {
+  try {
+    const response = await forwardAuthRequest(
+      upstreamRequest(
+        new URL(
+          `/api/v1/account-merges/${encodeURIComponent(parsedMergePath.data.mergeId)}`,
+          Astro.url,
+        ),
+      ),
+      env.PLATFORM_API,
+      `/api/v1/account-merges/${encodeURIComponent(parsedMergePath.data.mergeId)}`,
+      'GET',
+    );
+    if (response.status === 401) {
+      return Astro.redirect(
+        `/auth/sign-in?returnTo=${encodeURIComponent(returnTo)}`,
+        303,
+      );
+    }
+    if (response.ok) {
+      const parsed = MergeCaseResourceSchema.safeParse(await response.json());
+      if (parsed.success) {
+        mergeCase = parsed.data;
+        mergeCaseEtag = response.headers.get('etag');
+      }
+    }
+  } catch {
+    // A concealed or unavailable merge case must not disclose account state.
+  }
+}
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta
+      name="description"
+      content="Review and protect the login methods connected to your WeJammin account."
+    />
+    <title>Security settings | WeJammin</title>
+  </head>
+  <body class="infra-page">
+    <nav aria-label="Skip navigation">
+      <a class="infra-skip-link" href="#main-content">Skip to main content</a>
+    </nav>
+    <header class="infra-shell-header" aria-label="Application navigation">
+      <a href="/">WeJammin</a>
+      <nav aria-label="Primary navigation">
+        <a href="/settings/security" aria-current="page">Security settings</a>
+        <a href="/app">Workspace</a>
+      </nav>
+    </header>
+    <main id="main-content" class="infra-main" tabindex="-1">
+      <div class="infra-shell-header">
+        <p class="infra-eyebrow">Account security</p>
+        <h1 id="page-title" tabindex="-1">Security settings</h1>
+        <p>
+          Review the sign-in methods on this account. Changes require a recent
+          verification and are committed by the server with the current account
+          version.
+        </p>
+      </div>
+      {
+        accountUnavailable || loginMethods === null ? (
+          <section
+            class="infra-capability-gate"
+            role="status"
+            aria-live="polite"
+          >
+            <h2>Security settings are temporarily unavailable</h2>
+            <p>
+              We could not verify the current login methods. No account or
+              provider details are shown until the server responds.
+            </p>
+            <a href={returnTo}>Try again</a>
+            <p class="infra-request-id">
+              Request ID: <code>{requestId}</code>
+            </p>
+          </section>
+        ) : (
+          <LoginMethodManager
+            initial={loginMethods}
+            initialEtag={loginMethodsEtag}
+            initialMerge={mergeCase}
+            initialMergeEtag={mergeCaseEtag}
+            requestId={requestId}
+            returnTo={returnTo}
+            client:visible
+          />
+        )
+      }
+    </main>
+    <script src="../../lib/route-heading-focus.ts"></script>
+  </body>
+</html>

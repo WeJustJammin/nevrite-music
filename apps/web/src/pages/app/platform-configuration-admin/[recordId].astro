@@ -1,0 +1,75 @@
+---
+import { ConfigurationUuidSchema, createRequestId } from '@wejammin/contracts';
+import { env } from 'cloudflare:workers';
+import { normalizeSafeReturnPath } from '@wejammin/ui/infrastructure/navigation';
+
+import PlatformConfigurationAdminRoute from '../../../components/platform-configuration/PlatformConfigurationAdminRoute.astro';
+import {
+  PLATFORM_CONFIGURATION_CONTRACT_FIELDS,
+  platformConfigurationInitial,
+  platformConfigurationVariant,
+} from '../../../server/platform-configuration-app-state';
+import { resolvePlatformConfigurationPage } from '../../../server/platform-configuration-context';
+
+export const prerender = false;
+
+const recordId = Astro.params.recordId ?? '';
+if (!ConfigurationUuidSchema.safeParse(recordId).success) {
+  return new Response('Not found', { status: 404 });
+}
+const requestId = createRequestId(
+  Astro.request.headers.get('x-request-id') ?? undefined,
+);
+const returnTo = normalizeSafeReturnPath(
+  `${Astro.url.pathname}${Astro.url.search}`,
+);
+const versionFromEtag = (etag: string | null): string | null => {
+  if (etag === null) return null;
+  const value = etag.trim().replace(/^W\//u, '').replace(/^"|"$/gu, '');
+  return /^[1-9][0-9]{0,17}$/u.test(value) ? value : null;
+};
+const localApiOrigin = (
+  env as unknown as { PLATFORM_CONFIGURATION_LOCAL_API_ORIGIN?: string }
+).PLATFORM_CONFIGURATION_LOCAL_API_ORIGIN;
+const resolved = await resolvePlatformConfigurationPage({
+  request: Astro.request,
+  binding: env.PLATFORM_API,
+  ...(localApiOrigin === undefined ? {} : { localApiOrigin }),
+  recordId,
+  requestId,
+  surface: 'detail',
+});
+if (resolved.kind === 'unauthenticated') {
+  return Astro.redirect(
+    `/auth/sign-in?returnTo=${encodeURIComponent(returnTo)}`,
+    303,
+  );
+}
+if (resolved.kind === 'invalid_record' || resolved.kind === 'invalid_key') {
+  return new Response('Not found', { status: 404 });
+}
+if (resolved.kind === 'not_found')
+  return new Response('Not found', { status: 404 });
+const page = resolved.page;
+const initial = platformConfigurationInitial(resolved, page, null);
+---
+
+<PlatformConfigurationAdminRoute
+  state={page.state}
+  variant={platformConfigurationVariant(resolved)}
+  access={page.access}
+  actorId={page.actorId}
+  actingPartyId={page.actingPartyId}
+  capabilitySnapshot={page.capabilitySnapshot}
+  canonicalUrl="/app/platform-configuration-admin"
+  initialQuery={{ selected: recordId, tab: 'settings' }}
+  requestId={requestId}
+  initial={initial}
+  contractFields={PLATFORM_CONFIGURATION_CONTRACT_FIELDS}
+  selectedId={recordId}
+  expectedVersion={versionFromEtag(page.etag)}
+  csrfToken={page.csrfToken}
+  key={null}
+  returnTo={returnTo}
+  detail
+/>

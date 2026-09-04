@@ -1,0 +1,400 @@
+
+-- Slice 09 QA-RED.  The assertions mirror BE03a's eleven canonical private
+-- tables and eight named RPCs.  This file is deliberately written before the
+-- authority migration so an absent migration produces an evidence-backed RED.
+
+select ok(
+  to_regtype('platform_private.cms_definition_state') is not null
+    and (
+      select array_agg(e.enumlabel order by e.enumsortorder)::text[]
+      from pg_enum e
+      join pg_type t on t.oid = e.enumtypid
+      join pg_namespace n on n.oid = t.typnamespace
+      where n.nspname = 'platform_private'
+        and t.typname = 'cms_definition_state'
+    ) = array[
+      'draft', 'review', 'approved', 'scheduled', 'active', 'superseded',
+      'retired', 'blocked'
+    ]::text[],
+  'P2-S09-AC-001 closed cms_definition_state enum is versioned'
+);
+
+select ok(
+  coalesce((
+    select bool_and(to_regclass(table_name) is not null)
+    from (values
+      ('platform_private.cms_content_types'),
+      ('platform_private.cms_content_type_versions'),
+      ('platform_private.cms_content_type_template_bindings'),
+      ('platform_private.cms_content_type_capability_bindings'),
+      ('platform_private.cms_field_definition_versions'),
+      ('platform_private.cms_relation_definitions'),
+      ('platform_private.cms_schema_migration_plans'),
+      ('platform_private.cms_schema_artifacts'),
+      ('platform_private.cms_block_definition_versions'),
+      ('platform_private.cms_release_nonce_receipts'),
+      ('platform_private.cms_block_definition_lifecycle_events')
+    ) as tables(table_name)
+  ), false),
+  'P2-S09-AC-001 all eleven canonical CMS tables exist'
+);
+
+select ok(
+  coalesce((
+    select bool_and(
+      to_regclass(table_name) is not null
+      and (
+        select count(*)
+        from pg_attribute a
+        where a.attrelid = to_regclass(table_name)
+          and a.attnum > 0
+          and not a.attisdropped
+          and a.attname = any(expected_columns)
+      ) = cardinality(expected_columns)
+      and (
+        select count(*)
+        from pg_attribute a
+        where a.attrelid = to_regclass(table_name)
+          and a.attnum > 0
+          and not a.attisdropped
+      ) = cardinality(expected_columns)
+    )
+    from (values
+      ('platform_private.cms_content_types', array[
+        'id','owner_id','state','version','created_at','updated_at','type_key',
+        'owner_capability','built_in','created_by']::name[]),
+      ('platform_private.cms_content_type_versions', array[
+        'id','owner_id','state','version','created_at','updated_at',
+        'content_type_id','version_no','labels','workflow_key','workflow_version',
+        'source_locale','default_locale','default_template_version_id',
+        'schema_artifact_id','definition_hash','compatibility','supersedes_id',
+        'dry_run_id','created_by','approved_at','activation_workflow_policy_key',
+        'activation_workflow_policy_version','activation_workflow_policy_hash',
+        'activation_required_decision_count','activation_required_capabilities',
+        'activation_approval_evidence_hash']::name[]),
+      ('platform_private.cms_content_type_template_bindings', array[
+        'id','owner_id','state','version','created_at','updated_at',
+        'content_type_version_id','template_version_id','position']::name[]),
+      ('platform_private.cms_content_type_capability_bindings', array[
+        'id','owner_id','state','version','created_at','updated_at',
+        'content_type_version_id','capability_key','capability_version']::name[]),
+      ('platform_private.cms_field_definition_versions', array[
+        'id','owner_id','state','version','created_at','updated_at',
+        'content_type_version_id','stable_field_id','field_key','kind','constraints',
+        'validator_key','validator_version','required','default_mode','default_value',
+        'localization_mode','editor_config','created_by']::name[]),
+      ('platform_private.cms_relation_definitions', array[
+        'id','owner_id','state','version','created_at','updated_at',
+        'field_definition_id','target_kind','target_type','projection_key',
+        'cardinality','min_count','max_count','ordered','on_unavailable',
+        'created_by']::name[]),
+      ('platform_private.cms_schema_migration_plans', array[
+        'id','owner_id','state','version','created_at','updated_at','content_type_id',
+        'from_version_id','to_version_id','classification','transform_key',
+        'transform_version','dry_run_report','cursor','progress','source_count',
+        'target_count','row_error_count','migrated_count','failed_count','created_by',
+        'started_at','completed_at']::name[]),
+      ('platform_private.cms_schema_artifacts', array[
+        'id','owner_id','state','version','created_at','updated_at',
+        'content_type_version_id','compiler_version','zod_contract_ref',
+        'editor_manifest','renderer_manifest','artifact_hash','compiled_at']::name[]),
+      ('platform_private.cms_block_definition_versions', array[
+        'id','owner_id','state','version','created_at','updated_at','block_key',
+        'block_version','props_schema_ref','props_schema_hash','props_schema_snapshot',
+        'props_snapshot_hash','props_snapshot_attestation','props_attestation_key_id',
+        'props_attestation_signature_hash','props_attestation_verified_at','renderer_ref',
+        'allowed_children','slot_rules','data_source_permissions',
+        'accessibility_contract','compatibility_range','release_digest',
+        'release_principal_id','release_key_id','release_raw_body_hash',
+        'release_signature_hash','release_nonce_hash','release_verified_at']::name[]),
+      ('platform_private.cms_release_nonce_receipts', array[
+        'id','release_key_id','nonce_hash','operation_id','issued_at','expires_at',
+        'consumed_at','raw_body_hash','signature_hash','verified_at','outcome',
+        'created_at','updated_at']::name[]),
+      ('platform_private.cms_block_definition_lifecycle_events', array[
+        'id','owner_id','state','version','created_at','updated_at',
+        'block_definition_version_id','block_key','block_version','from_lifecycle',
+        'to_lifecycle','release_digest','release_principal_id','release_key_id',
+        'release_raw_body_hash','release_signature_hash','release_nonce_hash',
+        'release_verified_at']::name[])
+    ) as expected(table_name, expected_columns)
+  ), false),
+  'P2-S09-AC-002 all eleven tables have exact locked columns and no EAV extras'
+);
+
+select ok(
+  coalesce((
+    select bool_and(relrowsecurity and relforcerowsecurity)
+    from pg_class c
+    join pg_namespace n on n.oid = c.relnamespace
+    where n.nspname = 'platform_private'
+      and c.relname = any(array[
+        'cms_content_types','cms_content_type_versions',
+        'cms_content_type_template_bindings','cms_content_type_capability_bindings',
+        'cms_field_definition_versions','cms_relation_definitions',
+        'cms_schema_migration_plans','cms_schema_artifacts',
+        'cms_block_definition_versions','cms_release_nonce_receipts',
+        'cms_block_definition_lifecycle_events']::name[])
+  ), false),
+  'P2-S09-AC-002 every CMS table enables and forces RLS'
+);
+
+select ok(
+  coalesce((
+    select bool_and(case when to_regclass(table_name) is null then false else
+      not has_table_privilege(role_name, table_name, 'select')
+      and not has_table_privilege(role_name, table_name, 'insert')
+      and not has_table_privilege(role_name, table_name, 'update')
+      and not has_table_privilege(role_name, table_name, 'delete')
+    end)
+    from (values ('anon'), ('authenticated')) as roles(role_name)
+    cross join (values
+      ('platform_private.cms_content_types'),
+      ('platform_private.cms_content_type_versions'),
+      ('platform_private.cms_content_type_template_bindings'),
+      ('platform_private.cms_content_type_capability_bindings'),
+      ('platform_private.cms_field_definition_versions'),
+      ('platform_private.cms_relation_definitions'),
+      ('platform_private.cms_schema_migration_plans'),
+      ('platform_private.cms_schema_artifacts'),
+      ('platform_private.cms_block_definition_versions'),
+      ('platform_private.cms_release_nonce_receipts'),
+      ('platform_private.cms_block_definition_lifecycle_events')
+    ) as tables(table_name)
+  ), false),
+  'P2-S09-AC-013 anon and authenticated receive no direct CMS table grants'
+);
+
+select ok(
+  exists (select 1 from pg_constraint where conname = 'cms_content_types_type_key_key')
+    and exists (select 1 from pg_constraint where conname = 'cms_content_type_versions_type_version_unique')
+    and exists (select 1
+      from pg_class c
+      join pg_index i on i.indexrelid = c.oid
+      where c.relname = 'cms_content_type_versions_one_active_unique'
+        and i.indisunique
+        and pg_get_expr(i.indpred, i.indrelid) like '%active%')
+    and exists (select 1 from pg_constraint where conname = 'cms_field_definition_versions_type_key_unique')
+    and exists (select 1 from pg_constraint where conname = 'cms_relation_definitions_field_unique'),
+  'P2-S09-AC-001 immutable identities and one-active/one-field relation uniqueness exist'
+);
+
+select ok(
+  (with recursive nested(depth, value) as (
+    values (0, '"safe"'::jsonb)
+    union all
+    select depth + 1, jsonb_build_object('child', value)
+    from nested
+    where depth < 8
+  )
+  select platform_private.cms_json_bounded(value, 262144, 8, 128, 128)
+  from nested
+  where depth = 8),
+  'P2-S09-AC-021 SQL accepts a bounded default JSON value at depth eight'
+);
+
+select ok(
+  not (with recursive nested(depth, value) as (
+    values (0, '"safe"'::jsonb)
+    union all
+    select depth + 1, jsonb_build_object('child', value)
+    from nested
+    where depth < 9
+  )
+  select platform_private.cms_json_bounded(value, 262144, 8, 128, 128)
+  from nested
+  where depth = 9),
+  'P2-S09-AC-021 SQL rejects recursive default JSON beyond depth eight'
+);
+
+select ok(
+  platform_private.cms_json_bounded(
+    (select jsonb_object_agg('key' || key_number, to_jsonb(key_number))
+     from generate_series(1, 128) as keys(key_number)),
+    262144, 8, 128, 128
+  )
+  and not platform_private.cms_json_bounded(
+    (select jsonb_object_agg('key' || key_number, to_jsonb(key_number))
+     from generate_series(1, 129) as keys(key_number)),
+    262144, 8, 128, 128
+  ),
+  'P2-S09-AC-021 SQL enforces the 128-key object cap'
+);
+
+select ok(
+  platform_private.cms_json_bounded(
+    (select jsonb_agg('null'::jsonb) from generate_series(1, 128)),
+    262144, 8, 128, 128
+  )
+  and not platform_private.cms_json_bounded(
+    (select jsonb_agg('null'::jsonb) from generate_series(1, 129)),
+    262144, 8, 128, 128
+  )
+  and platform_private.cms_json_bounded(
+    to_jsonb(repeat('x', 262142)), 262144, 8, 128, 128
+  )
+  and not platform_private.cms_json_bounded(
+    to_jsonb(repeat('x', 262143)), 262144, 8, 128, 128
+  ),
+  'P2-S09-AC-021 SQL enforces the 128-item array and 256 KiB byte caps'
+);
+
+select ok(
+  exists (select 1 from pg_constraint c
+    where c.conname = 'cms_content_type_versions_artifact_pair_fkey'
+      and c.condeferrable and c.condeferred)
+    and exists (select 1 from pg_constraint c
+      where c.conname = 'cms_content_type_versions_activation_evidence_complete_check')
+    and exists (select 1 from pg_constraint c
+      where c.conname = 'cms_schema_migration_plans_classification_check'),
+  'P2-S09-AC-003 deferred artifact ownership and activation/migration checks exist'
+);
+
+select ok(
+  exists (select 1 from pg_constraint c
+    where c.conname = 'cms_relation_definitions_bounds_check')
+    and exists (select 1 from pg_constraint c
+      where c.conname = 'cms_relation_definitions_cardinality_bounds_check')
+    and exists (select 1 from pg_constraint c
+      where c.conname = 'cms_release_nonce_receipts_ttl_check')
+    and exists (select 1 from pg_constraint c
+      where c.conname = 'cms_block_definition_lifecycle_events_transition_check'),
+  'P2-S09-AC-011 finite relation bounds and durable release lifecycle checks exist'
+);
+
+select ok(
+  coalesce((
+    select bool_and(c.oid is not null)
+    from (values
+      ('cms_content_types_owner_state_idx'),
+      ('cms_content_types_owner_updated_idx'),
+      ('cms_content_type_versions_content_state_version_idx'),
+      ('cms_content_type_template_bindings_parent_position_idx'),
+      ('cms_content_type_capability_bindings_key_idx'),
+      ('cms_field_definition_versions_parent_state_idx'),
+      ('cms_field_definition_versions_stable_id_idx'),
+      ('cms_relation_definitions_target_projection_idx'),
+      ('cms_schema_migration_plans_worker_lease_idx'),
+      ('cms_schema_artifacts_owner_created_idx'),
+      ('cms_block_definition_versions_key_state_version_idx'),
+      ('cms_block_definition_versions_release_digest_idx'),
+      ('cms_release_nonce_receipts_expiry_idx'),
+      ('cms_block_definition_lifecycle_events_parent_created_idx')
+    ) as names(index_name)
+    left join pg_class c on c.relname = names.index_name
+      and c.relkind = 'i'
+  ), false),
+  'P2-S09-AC-001 all locked query indexes exist'
+);
+
+select ok(
+  coalesce((
+    select count(*) = 8
+      and bool_and(to_regprocedure(procedure_name) is not null)
+    from (values
+      ('platform_api.cms_create_type_draft(jsonb)'),
+      ('platform_api.cms_add_field_definition(jsonb)'),
+      ('platform_api.cms_bind_relation(jsonb)'),
+      ('platform_api.cms_activate_schema(jsonb)'),
+      ('platform_api.cms_register_block(jsonb)'),
+      ('platform_api.cms_advance_block_lifecycle(jsonb)'),
+      ('platform_api.cms_list_content_types(jsonb)'),
+      ('platform_api.cms_get_content_type_version(jsonb)')
+    ) as names(procedure_name)
+  ), false),
+  'P2-S09-AC-018 exactly eight schema-qualified CMS RPCs are exposed'
+);
+
+-- Worker RPC RED: the migration worker calls these named server-only seams
+-- through the platform_api profile.  Keep them separate from the eight
+-- client-facing A01-A08 wrappers above and require service_role-only execute.
+select ok(
+  coalesce((
+    select bool_and(
+      to_regprocedure(procedure_name) is not null
+      and has_function_privilege('service_role', to_regprocedure(procedure_name), 'execute')
+      and not has_function_privilege('anon', to_regprocedure(procedure_name), 'execute')
+      and not has_function_privilege('authenticated', to_regprocedure(procedure_name), 'execute')
+    )
+    from (values
+      ('platform_api.cms_get_schema_migration_plan(jsonb)'),
+      ('platform_api.cms_claim_schema_migration_lease(jsonb)'),
+      ('platform_api.cms_heartbeat_schema_migration_lease(jsonb)'),
+      ('platform_api.cms_process_schema_migration_dry_run_batch(jsonb)'),
+      ('platform_api.cms_finalize_schema_migration_dry_run(jsonb)'),
+      ('platform_api.cms_process_schema_migration_batch(jsonb)'),
+      ('platform_api.cms_begin_schema_migration_verification(jsonb)'),
+      ('platform_api.cms_verify_schema_migration(jsonb)'),
+      ('platform_api.cms_complete_schema_migration(jsonb)'),
+      ('platform_api.cms_activate_schema_migration(jsonb)'),
+      ('platform_api.cms_reconcile_schema_activation(jsonb)'),
+      ('platform_api.cms_rollback_schema_migration(jsonb)'),
+      ('platform_api.cms_claim_schema_migration_event(jsonb)'),
+      ('platform_api.cms_release_schema_migration_event(jsonb)'),
+      ('platform_api.cms_acknowledge_schema_migration_event(jsonb)'),
+      ('platform_api.cms_dead_letter_schema_migration_event(jsonb)')
+    ) as names(procedure_name)
+  ), false),
+  'P2-S09-WORKER-001 all sixteen schema migration worker RPCs exist and are service-role only'
+);
+
+select ok(
+  coalesce((
+    select bool_and(
+      not has_function_privilege(role_name, p.oid, 'execute')
+    )
+    from (values ('public'::name), ('anon'::name), ('authenticated'::name), ('service_role'::name)) roles(role_name)
+    cross join pg_proc p
+    join pg_namespace n on n.oid = p.pronamespace
+    where n.nspname = 'platform_private'
+      and p.proname like 'cms_%'
+  ), false),
+  'P2-S09-AC-018 private CMS helpers and commands are not directly callable'
+);
+
+select ok(
+  coalesce((
+    select bool_and(p.prosecdef and p.proconfig @> array['search_path=""']::text[])
+    from pg_proc p
+    join pg_namespace n on n.oid = p.pronamespace
+    where n.nspname = 'platform_api'
+      and p.proname = any(array[
+        'cms_create_type_draft','cms_add_field_definition','cms_bind_relation',
+        'cms_activate_schema','cms_register_block','cms_advance_block_lifecycle',
+        'cms_list_content_types','cms_get_content_type_version']::name[])
+      and p.pronargs = 1
+  ), false),
+  'P2-S09-AC-037 exposed CMS RPCs are SECURITY DEFINER with empty search_path'
+);
+
+select ok(
+  coalesce((
+    select bool_and(
+      p.proconfig @> array['search_path=""']::text[]
+      and pg_get_functiondef(p.oid) ilike '%idempot%'
+    )
+    from pg_proc p
+    join pg_namespace n on n.oid = p.pronamespace
+    where n.nspname = 'platform_private'
+      and p.proname = any(array[
+        'cms_create_type_draft','cms_add_field_definition','cms_bind_relation',
+        'cms_activate_schema','cms_register_block','cms_advance_block_lifecycle']::name[])
+  ), false),
+  'P2-S09-AC-022 mutation RPCs reserve and recheck idempotency under a fixed path'
+);
+
+select ok(
+  exists (select 1 from pg_trigger t
+    join pg_class c on c.oid = t.tgrelid
+    where c.relname = 'cms_schema_artifacts'
+      and not t.tgisinternal)
+    and exists (select 1 from pg_trigger t
+      join pg_class c on c.oid = t.tgrelid
+      where c.relname = 'cms_block_definition_versions'
+        and not t.tgisinternal)
+    and exists (select 1 from pg_trigger t
+      join pg_class c on c.oid = t.tgrelid
+      where c.relname = 'cms_block_definition_lifecycle_events'
+        and not t.tgisinternal),
+  'P2-S09-AC-008 immutable artifacts, blocks, and lifecycle evidence have guards'
+);

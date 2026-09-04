@@ -50,11 +50,20 @@ export const applySecurityHeaders = (
     headers.set(name, value);
   }
 
-  return new Response(response.body, {
+  const secured = new Response(response.body, {
     headers,
     status: response.status,
     statusText: response.statusText,
   });
+  /* Preserve a boundary response's replay-safe JSON reader across the
+   * security-header clone. The stream itself remains untouched. */
+  if (Object.prototype.hasOwnProperty.call(response, 'json')) {
+    Object.defineProperty(secured, 'json', {
+      configurable: true,
+      value: (response as Response & { json: () => Promise<unknown> }).json,
+    });
+  }
+  return secured;
 };
 
 const isLoopbackHostname = (hostname: string): boolean =>

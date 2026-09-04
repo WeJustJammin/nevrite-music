@@ -38,6 +38,16 @@ const secretSchema = z
   .max(512)
   .refine((value) => !hasControlCharacter(value));
 
+const serverListSchema = z
+  .string()
+  .max(8192)
+  .refine((value) => !hasControlCharacter(value));
+
+const releaseKeyRegistrySchema = z
+  .string()
+  .max(64 * 1024)
+  .refine((value) => !hasControlCharacter(value));
+
 const publishableKeySchema = z
   .string()
   .min(1)
@@ -60,6 +70,9 @@ export const ServerEnvironmentSchema = z
     APP_RELEASE: releaseSchema,
     SUPABASE_SECRET_KEY: secretSchema,
     SUPABASE_URL: originSchema,
+    CMS_HUMAN_ORIGINS: serverListSchema.optional(),
+    CMS_RELEASE_ORIGINS: serverListSchema.optional(),
+    CMS_RELEASE_KEY_REGISTRY: releaseKeyRegistrySchema.optional(),
   })
   .strict()
   .superRefine((environment, context) => {
@@ -88,6 +101,9 @@ export const SERVER_ENVIRONMENT_KEYS = [
   'APP_RELEASE',
   'SUPABASE_SECRET_KEY',
   'SUPABASE_URL',
+  'CMS_HUMAN_ORIGINS',
+  'CMS_RELEASE_ORIGINS',
+  'CMS_RELEASE_KEY_REGISTRY',
 ] as const;
 
 export const BROWSER_ENVIRONMENT_KEYS = [

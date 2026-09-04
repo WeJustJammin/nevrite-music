@@ -472,6 +472,9 @@ A 25-domain graph has 300 possible unordered domain pairs. This map records **23
 <!-- spec-graph: auto-generated -->
 ## Related Specs
 
+### Phases into
+- [[specs/phases/phase-2|Phase 2 — Identity, admin, CMS/settings]]
+
 ### Constrained by
 - [[decisions.md#d-16|D-16]]
 - [[decisions.md#d-28|D-28]]
@@ -496,3 +499,6 @@ A 25-domain graph has 300 possible unordered domain pairs. This map records **23
 - [[decisions.md#d-18|D-18]]
 - [[decisions.md#d-19|D-19]]
 - [[decisions.md#d-17|D-17]]
+
+### References
+- [[specs/phases/phase-2|Phase 2 — Identity, admin, CMS/settings]]

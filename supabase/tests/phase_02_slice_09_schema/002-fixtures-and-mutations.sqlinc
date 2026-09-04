@@ -1,0 +1,247 @@
+select platform_api.auth_bootstrap(
+  'a9090000-0000-4000-8000-000000000002', decode(repeat('12', 32), 'hex'),
+  decode(repeat('22', 32), 'hex'), 'a9090000-0000-4000-8000-000000000021',
+  'a9090000-0000-4000-8000-000000000022'
+);
+select platform_api.auth_bootstrap(
+  'a9090000-0000-4000-8000-000000000003', decode(repeat('13', 32), 'hex'),
+  decode(repeat('23', 32), 'hex'), 'a9090000-0000-4000-8000-000000000031',
+  'a9090000-0000-4000-8000-000000000032'
+);
+select set_config('request.jwt.claim.role', 'authenticated', true);
+select set_config('request.jwt.claim.sub', 'a9090000-0000-4000-8000-000000000001', true);
+select set_config('app.auth_user_id', 'a9090000-0000-4000-8000-000000000001', true);
+select set_config('app.actor_auth_user_id', 'a9090000-0000-4000-8000-000000000001', true);
+select set_config('app.actor_person_id', (
+  select person_id::text from identity.auth_user_bindings
+  where auth_user_id = 'a9090000-0000-4000-8000-000000000001'
+), true);
+select set_config('app.correlation_id', 'a9090000-0000-4000-8000-000000000091', true);
+select set_config('app.idempotency_key_hash', 's09-org-create', true);
+select set_config('app.request_hash', 's09-org-create-request', true);
+create temp table s09_fixture_org on commit drop as
+select (result->>'organizationId')::uuid as organization_id
+from lateral (select platform_api.rpc_create_organization('self_member', '{}'::text[]) as result) created;
+select set_config('app.acting_party_id', (select organization_id::text from s09_fixture_org), true);
+insert into identity_private.organization_actor_grant(
+  organization_id, person_id, capability_code, valid_from, valid_through, active
+)
+select organization_id,
+       (select person_id from identity.auth_user_bindings
+        where auth_user_id = 'a9090000-0000-4000-8000-000000000001'),
+       capability_code, current_date, current_date + 1, true
+from s09_fixture_org
+cross join (values ('cms.schema_designer'), ('cms.schema_registry.read')) capabilities(capability_code)
+on conflict (organization_id, person_id, capability_code) do update
+set active = excluded.active, valid_through = excluded.valid_through;
+insert into identity_private.membership_tenure(
+  id, organization_id, person_id, state, provenance, governance_mode,
+  starts_on, accepted_at, actor_id, version
+)
+select 'a9090000-0000-4000-8000-000000000201', organization_id,
+       (select person_id from identity.auth_user_bindings
+        where auth_user_id = 'a9090000-0000-4000-8000-000000000002'),
+       'confirmed', 'invitation', 'ungoverned', current_date, clock_timestamp(),
+       (select person_id from identity.auth_user_bindings
+        where auth_user_id = 'a9090000-0000-4000-8000-000000000001'), 1
+from s09_fixture_org;
+insert into identity_private.membership_tenure(
+  id, organization_id, person_id, state, provenance, governance_mode,
+  starts_on, accepted_at, actor_id, version
+)
+select 'a9090000-0000-4000-8000-000000000202', organization_id,
+       (select person_id from identity.auth_user_bindings
+        where auth_user_id = 'a9090000-0000-4000-8000-000000000003'),
+       'confirmed', 'invitation', 'ungoverned', current_date, clock_timestamp(),
+       (select person_id from identity.auth_user_bindings
+        where auth_user_id = 'a9090000-0000-4000-8000-000000000001'), 1
+from s09_fixture_org;
+insert into identity_private.organization_actor_grant(
+  organization_id, person_id, capability_code, valid_from, valid_through, active
+)
+select organization_id, binding.person_id, capability_code, current_date, current_date + 1, true
+from s09_fixture_org
+cross join lateral (
+  select person_id from identity.auth_user_bindings
+  where auth_user_id in (
+    'a9090000-0000-4000-8000-000000000002',
+    'a9090000-0000-4000-8000-000000000003'
+  )
+) binding
+cross join (values ('cms.schema_designer')) capabilities(capability_code)
+on conflict (organization_id, person_id, capability_code) do update
+set active = excluded.active, valid_through = excluded.valid_through;
+
+create temp table s09_type_request on commit drop as
+select jsonb_build_object(
+  'typeKey', 'articlex', 'label', 'Article X', 'ownerCapability', 'cms.schema_designer',
+  'sourceLocale', 'en-US', 'defaultLocale', 'en-US', 'workflowKey', 'editorial',
+  'workflowVersion', '1', 'defaultTemplateVersionId', null,
+  'fields', jsonb_build_array(jsonb_build_object(
+    'stableFieldId', 'a9090000-0000-4000-8000-000000000101',
+    'key', 'title', 'kind', 'short_text', 'constraints', '{}'::jsonb,
+    'required', true, 'validatorKey', null, 'validatorVersion', null,
+    'defaultMode', 'none', 'localizationMode', 'none',
+    'editorConfig', jsonb_build_object('label', 'Title', 'order', 0),
+    'lifecycle', 'active'
+  )), 'relations', '[]'::jsonb, 'templateBindings', '[]'::jsonb,
+  'capabilityBindings', '[]'::jsonb, 'idempotencyKey', 's09-type-create-0001'
+) as request;
+create temp table s09_type_created on commit drop as
+select platform_api.cms_create_type_draft(request) as response
+from s09_type_request;
+select ok(
+  (select response ?& array['resourceKind','id','version','contentTypeId','typeKey','fieldCount']
+   and response->>'resourceKind' = 'content_type_version'
+   and response->>'typeKey' = 'articlex'
+   and response->>'version' = '1'
+   and response->>'dryRunId' is not null
+   and (response->>'fieldCount')::integer = 1 from s09_type_created),
+  'CMS-03A-01 executes the atomic draft aggregate and returns the full resource'
+);
+select is(
+  (select platform_api.cms_create_type_draft(request) from s09_type_request),
+  (select response from s09_type_created),
+  'CMS-03A-01 replay returns the exact original resource payload'
+);
+
+create temp table s09_type_ids on commit drop as
+select (response->>'id')::uuid as version_id,
+       (response->>'contentTypeId')::uuid as content_type_id
+from s09_type_created;
+create temp table s09_field_request on commit drop as
+select jsonb_build_object(
+  'contentTypeId', content_type_id, 'versionId', version_id,
+  'field', jsonb_build_object(
+    'key', 'related', 'kind', 'relation', 'constraints', '{}'::jsonb,
+    'required', false, 'validatorKey', null, 'validatorVersion', null,
+    'defaultMode', 'none', 'localizationMode', 'none',
+    'editorConfig', jsonb_build_object('label', 'Related', 'order', 1),
+    'lifecycle', 'active'
+  ), 'migrationPlanId', null, 'expectedVersion', '1',
+  'idempotencyKey', 's09-field-add-0001'
+) as request
+from s09_type_ids;
+create temp table s09_field_created on commit drop as
+select platform_api.cms_add_field_definition(request) as response
+from s09_field_request;
+select ok(
+  (select response ?& array['resourceKind','id','version','contentTypeVersionId','key','kind']
+   and response->>'resourceKind' = 'field_definition_version'
+   and response->>'key' = 'related'
+   and response->>'kind' = 'relation'
+   and response->>'version' = '1' from s09_field_created),
+  'CMS-03A-02 executes a tenant-scoped draft field mutation'
+);
+select is(
+  (select platform_api.cms_add_field_definition(request) from s09_field_request),
+  (select response from s09_field_created),
+  'CMS-03A-02 replay returns the exact original field resource'
+);
+
+create temp table s09_relation_request on commit drop as
+select jsonb_build_object(
+  'contentTypeId', ids.content_type_id, 'versionId', ids.version_id,
+  'fieldId', (field.response->>'id')::uuid, 'targetKind', 'domain',
+  'targetType', 'profile', 'projectionKey', 'profile.summary',
+  'cardinality', 'many', 'min', 0, 'max', 3, 'ordered', false,
+  'onUnavailable', 'placeholder', 'expectedVersion', '2',
+  'idempotencyKey', 's09-relation-bind-0001'
+) as request
+from s09_type_ids ids cross join s09_field_created field;
+create temp table s09_relation_created on commit drop as
+select platform_api.cms_bind_relation(request) as response
+from s09_relation_request;
+select ok(
+  (select response ?& array['resourceKind','id','version','contentTypeVersionId','fieldId','targetKind','cardinality']
+   and response->>'resourceKind' = 'relation_definition'
+   and response->>'targetKind' = 'domain'
+   and response->>'cardinality' = 'many'
+   and response->>'version' = '1' from s09_relation_created),
+  'CMS-03A-03 executes a bounded relation binding for a relation field'
+);
+select is(
+  (select platform_api.cms_bind_relation(request) from s09_relation_request),
+  (select response from s09_relation_created),
+  'CMS-03A-03 replay returns the exact original relation resource'
+);
+
+select ok(
+  (select response ?& array['items','nextCursor']
+   and jsonb_typeof(response->'items') = 'array'
+   and exists (select 1 from jsonb_array_elements(response->'items') item where item->>'typeKey' = 'articlex')
+   from (select platform_api.cms_list_content_types(
+     jsonb_build_object('limit', 25)
+   ) as response) listed),
+  'CMS-03A-06 executes a scoped registry list without reserving idempotency'
+);
+select ok(
+  (select response->>'resourceKind' = 'content_type_version'
+   and response ?& array['resource','fields','relations','schemaArtifact','templateBindings','capabilityBindings','blockDefinitions']
+   and jsonb_array_length(response->'fields') = 2
+   and jsonb_array_length(response->'relations') = 1
+   from (select platform_api.cms_get_content_type_version(
+     jsonb_build_object(
+       'contentTypeId', content_type_id,
+       'versionId', version_id
+     )
+   ) as response from s09_type_ids) detail),
+  'CMS-03A-07 executes a tenant-scoped detail projection with child definitions'
+);
+
+select throws_ok(
+  $$select platform_api.cms_add_field_definition(
+    (select request || jsonb_build_object('expectedVersion', '1', 'idempotencyKey', 's09-field-stale-0001') from s09_field_request)
+  )$$,
+  'P0001', 'CONFLICT',
+  'CMS-03A-02 rejects a stale CAS version without inserting a second field'
+);
+select is(
+  (select count(*)::integer from platform_private.cms_field_definition_versions
+   where content_type_version_id = (select version_id from s09_type_ids)),
+  2,
+  'CMS-03A-02 stale CAS leaves the draft aggregate unchanged'
+);
+
+-- A second tenant proves the target locks are owner-scoped for every
+-- mutation.  The acting user retains a valid capability in tenant one, but
+-- cannot discover or mutate tenant-two targets.
+select set_config('request.jwt.claim.role', 'authenticated', true);
+select set_config('request.jwt.claim.sub', 'a9090000-0000-4000-8000-000000000002', true);
+select set_config('app.auth_user_id', 'a9090000-0000-4000-8000-000000000002', true);
+select set_config('app.actor_auth_user_id', 'a9090000-0000-4000-8000-000000000002', true);
+select set_config('app.actor_person_id', (
+  select person_id::text from identity.auth_user_bindings
+  where auth_user_id = 'a9090000-0000-4000-8000-000000000002'
+), true);
+select set_config('app.acting_party_id', '', true);
+select set_config('app.acting_context_id', '', true);
+select set_config('app.idempotency_key_hash', 's09-org-two-create', true);
+select set_config('app.request_hash', 's09-org-two-create-request', true);
+create temp table s09_fixture_org_two on commit drop as
+select (result->>'organizationId')::uuid as organization_id
+from lateral (select platform_api.rpc_create_organization('self_member', '{}'::text[]) as result) created;
+select set_config('app.acting_party_id', (select organization_id::text from s09_fixture_org_two), true);
+insert into identity_private.organization_actor_grant(
+  organization_id, person_id, capability_code, valid_from, valid_through, active
+)
+select organization_id,
+       (select person_id from identity.auth_user_bindings
+        where auth_user_id = 'a9090000-0000-4000-8000-000000000002'),
+       'cms.schema_designer', current_date, current_date + 1, true
+from s09_fixture_org_two
+on conflict (organization_id, person_id, capability_code) do update
+set active = excluded.active, valid_through = excluded.valid_through;
+create temp table s09_second_type_request on commit drop as
+select request || jsonb_build_object(
+  'typeKey', 'articley', 'idempotencyKey', 's09-type-two-create-0001',
+  'fields', jsonb_build_array(
+    (request->'fields'->0) || jsonb_build_object(
+      'stableFieldId', 'a9090000-0000-4000-8000-000000000102'
+    )
+  )
+) as request
+from s09_type_request;
+create temp table s09_second_type_created on commit drop as
+select platform_api.cms_create_type_draft(request) as response
+from s09_second_type_request;

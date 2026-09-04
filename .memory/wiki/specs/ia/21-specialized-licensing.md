@@ -274,6 +274,9 @@ Events exclude sample/source descriptions, media, provider tokens, channel ident
 <!-- spec-graph: auto-generated -->
 ## Related Specs
 
+### Phases into
+- [[specs/phases/phase-2|Phase 2 — Identity, admin, CMS/settings]]
+
 ### References
 - [[specs/ia/00-infrastructure|Shard 00 — Cross-cutting platform foundation]]
 - [[specs/ia/06-trust-safety|Shard 06 — Trust, safety, disputes and evidence]]
@@ -281,3 +284,4 @@ Events exclude sample/source descriptions, media, provider tokens, channel ident
 - [[specs/ia/10-rights-ownership|Shard 10 — Rights and ownership]]
 - [[specs/ia/20-licensing-core|Shard 20 — Licensing core and instrument lifecycle]]
 - [[specs/ia/deep-dives/21-specialized-licensing|Deep Dive 21 — Specialized clearances and licensing]]
+- [[specs/phases/phase-2|Phase 2 — Identity, admin, CMS/settings]]

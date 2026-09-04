@@ -24,6 +24,19 @@ const RouteTemplateSchema = z
   .max(240)
   .regex(/^\/[A-Za-z0-9_./:{}*-]*$/);
 
+const LogAttributeValueSchema = z.union([
+  SafeIdentifierSchema,
+  z.number().finite(),
+  z.boolean(),
+  z.null(),
+]);
+
+const LogAttributesSchema = z.record(SafeCodeSchema, LogAttributeValueSchema);
+const LogMetricsSchema = z.record(
+  SafeCodeSchema,
+  z.number().finite().nonnegative(),
+);
+
 export const LogSeveritySchema = z.enum([
   'DEBUG',
   'INFO',
@@ -41,6 +54,7 @@ export const LogOutcomeSchema = z.enum([
 ]);
 
 export const LogEventDetailsSchema = z.strictObject({
+  attributes: LogAttributesSchema.optional(),
   actingContextClass: SafeCodeSchema.optional(),
   actorClass: SafeCodeSchema.optional(),
   attempt: z.number().int().positive().optional(),
@@ -61,6 +75,8 @@ export const LogEventDetailsSchema = z.strictObject({
   retryable: z.boolean().optional(),
   routeTemplate: RouteTemplateSchema.optional(),
   traceId: SafeIdentifierSchema.optional(),
+  traceSteps: z.array(SafeCodeSchema).max(16).optional(),
+  metrics: LogMetricsSchema.optional(),
 });
 
 const LoggerConfigSchema = z.strictObject({

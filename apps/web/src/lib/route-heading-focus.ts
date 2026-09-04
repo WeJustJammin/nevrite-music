@@ -29,6 +29,19 @@ export const installRouteHeadingFocus = (
   });
 };
 
+const focusInitialNavigationHeading = (): void => {
+  if (typeof document === 'undefined' || typeof window === 'undefined') return;
+  const search = new URL(window.location.href).searchParams;
+  if (!search.has('tab') && !search.has('selected')) return;
+  if (window.location.hash !== '') return;
+  const focus = (): void =>
+    document.getElementById(PAGE_HEADING_ID)?.focus({ preventScroll: true });
+  if (document.readyState === 'loading')
+    document.addEventListener('DOMContentLoaded', focus, { once: true });
+  else focus();
+};
+
 if (typeof document !== 'undefined' && typeof window !== 'undefined') {
   installRouteHeadingFocus(document, window.location);
+  focusInitialNavigationHeading();
 }

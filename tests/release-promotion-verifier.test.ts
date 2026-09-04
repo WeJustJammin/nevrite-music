@@ -1,3 +1,9 @@
+import { spawnSync } from 'node:child_process';
+import { mkdtempSync, rmSync, symlinkSync, writeFileSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
+import { fileURLToPath } from 'node:url';
+
 import { describe, expect, it } from 'vitest';
 
 import {
@@ -66,24 +72,85 @@ const evidence = {
 
 describe('release promotion workflow verifier', () => {
   it('accepts complete staging evidence before production migration begins', () => {
+    const candidate = {
+      ...evidence,
+      migration: { ...evidence.migration, state: 'not_started' as const },
+    };
     expect(
-      verifyStagingCandidateMetadata({
-        ...evidence,
-        migration: { ...evidence.migration, state: 'not_started' },
-      }),
+      verifyStagingCandidateMetadata(candidate, candidate.artifact),
     ).toMatchObject({ environment: 'production' });
+  });
+
+  it('binds staging candidate metadata to the independent artifact identity', () => {
+    const candidate = {
+      ...evidence,
+      migration: { ...evidence.migration, state: 'not_started' as const },
+      performance: {
+        ...evidence.performance,
+        apiP95: {
+          ...evidence.performance.apiP95,
+          decoy: {
+            artifactDigest: 'c'.repeat(64),
+            buildId: 'ci-456',
+            migrationVersion: '20260903090000',
+            sourceRevision: 'd'.repeat(40),
+          },
+        },
+      },
+    };
+
+    expect(() =>
+      verifyStagingCandidateMetadata(candidate, {
+        artifactDigest: 'c'.repeat(64),
+        buildId: 'ci-456',
+        migrationVersion: '20260903090000',
+        sourceRevision: 'd'.repeat(40),
+      }),
+    ).toThrow('artifact identity does not match');
+  });
+
+  it('requires an independently derived candidate artifact identity', () => {
+    const candidate = {
+      ...evidence,
+      migration: { ...evidence.migration, state: 'not_started' as const },
+    };
+
+    expect(() => verifyStagingCandidateMetadata(candidate, undefined)).toThrow(
+      'independent candidate artifact identity is required',
+    );
   });
 
   it('accepts one complete same-artifact staging-to-production gate set', () => {
     expect(
       verifyReleasePromotionMetadata(evidence, {
         protectedEnvironment: 'production',
+        previousArtifact: { ...evidence.artifact },
       }),
     ).toMatchObject({
       status: 'approved',
       sameArtifact: true,
       targetEnvironment: 'production',
     });
+  });
+
+  it('rejects a production candidate when its independent prior artifact differs', () => {
+    expect(() =>
+      verifyReleasePromotionMetadata(evidence, {
+        protectedEnvironment: 'production',
+        previousArtifact: {
+          ...evidence.artifact,
+          sourceRevision: 'c'.repeat(40),
+        },
+      }),
+    ).toThrow('artifact_identity_mismatch');
+  });
+
+  it('requires an independently supplied prior artifact identity', () => {
+    expect(() =>
+      verifyReleasePromotionMetadata(evidence, {
+        protectedEnvironment: 'production',
+      }),
+    ).toThrow('independent prior artifact');
   });
 
   it('requires explicit protected production environment input', () => {
@@ -104,7 +171,10 @@ describe('release promotion workflow verifier', () => {
           ...evidence,
           migration: { ...evidence.migration, state: 'not_started' },
         },
-        { protectedEnvironment: 'production' },
+        {
+          protectedEnvironment: 'production',
+          previousArtifact: { ...evidence.artifact },
+        },
       ),
     ).toThrow('Verified production migration evidence is required');
   });
@@ -116,7 +186,10 @@ describe('release promotion workflow verifier', () => {
           ...evidence,
           gates: { ...evidence.gates, accessibility: false },
         },
-        { protectedEnvironment: 'production' },
+        {
+          protectedEnvironment: 'production',
+          previousArtifact: { ...evidence.artifact },
+        },
       ),
     ).toThrow('release_gate_failed');
     expect(() =>
@@ -128,8 +201,69 @@ describe('release promotion workflow verifier', () => {
             destructiveRollbackAttempted: true,
           },
         },
-        { protectedEnvironment: 'production' },
+        {
+          protectedEnvironment: 'production',
+          previousArtifact: { ...evidence.artifact },
+        },
       ),
     ).toThrow('destructive_rollback_forbidden');
+  });
+
+  it('executes the CLI when invoked through a symlink', () => {
+    const sandbox = mkdtempSync(join(tmpdir(), 'wejammin-release-verifier-'));
+    const symlinkedVerifierPath = join(sandbox, 'verify-release-promotion.ts');
+    symlinkSync(
+      fileURLToPath(
+        new URL('../infra/verify-release-promotion.ts', import.meta.url),
+      ),
+      symlinkedVerifierPath,
+    );
+
+    try {
+      const result = spawnSync(
+        process.execPath,
+        ['--experimental-strip-types', symlinkedVerifierPath],
+        { encoding: 'utf8' },
+      );
+
+      expect(result.status).not.toBe(0);
+      expect(result.stderr).toContain('Promotion metadata path is required.');
+    } finally {
+      rmSync(sandbox, { force: true, recursive: true });
+    }
+  });
+
+  it('requires an independent artifact identity path in production CLI mode', () => {
+    const sandbox = mkdtempSync(join(tmpdir(), 'wejammin-release-verifier-'));
+    const metadataPath = join(sandbox, 'promotion-metadata.json');
+    const verifierPath = fileURLToPath(
+      new URL('../infra/verify-release-promotion.ts', import.meta.url),
+    );
+    writeFileSync(metadataPath, '{}\n');
+    try {
+      const result = spawnSync(
+        process.execPath,
+        [
+          '--experimental-strip-types',
+          verifierPath,
+          metadataPath,
+          'production',
+        ],
+        {
+          encoding: 'utf8',
+          env: {
+            ...process.env,
+            RELEASE_PROTECTED_ENVIRONMENT: 'production',
+          },
+        },
+      );
+
+      expect(result.status).not.toBe(0);
+      expect(result.stderr).toContain(
+        'Production artifact identity path is required.',
+      );
+    } finally {
+      rmSync(sandbox, { force: true, recursive: true });
+    }
   });
 });

@@ -1,6 +1,11 @@
 import { QueueEnvelopeSchema, type QueueEnvelope } from '@wejammin/contracts';
 import type { ServerEnvironment } from '@wejammin/config/environment';
 
+import {
+  SchemaMigrationQueueEnvelopeSchema,
+  type SchemaMigrationQueueEnvelope,
+} from './content-schema-registry/migration-worker';
+
 const PLATFORM_QUEUE_NAMES = {
   development: 'platform-jobs',
   production: 'platform-jobs',
@@ -43,6 +48,14 @@ export type QueueOrchestrationInput = Readonly<{
   message: PlatformJobsMessage;
 }>;
 
+export type SchemaMigrationOrchestrationInput = Readonly<{
+  env: AsyncWorkerBindings;
+  executionContext: AsyncExecutionContext;
+  message: PlatformJobsMessage;
+  /** The raw queue body is retained so malformed events can be DLQ'd. */
+  event: SchemaMigrationQueueEnvelope | unknown;
+}>;
+
 export type OutboxSweepInput = Readonly<{
   controller: AsyncScheduledController;
   env: AsyncWorkerBindings;
@@ -52,6 +65,9 @@ export type OutboxSweepInput = Readonly<{
 export type AsyncEntrypointDependencies = Readonly<{
   orchestrateQueueMessage?: (
     input: QueueOrchestrationInput,
+  ) => MaybePromise<QueueMessageOutcome>;
+  processSchemaMigration?: (
+    input: SchemaMigrationOrchestrationInput,
   ) => MaybePromise<QueueMessageOutcome>;
   sweepOutbox?: (input: OutboxSweepInput) => MaybePromise<OutboxSweepOutcome>;
 }>;
@@ -73,6 +89,13 @@ const retryMessage = (message: PlatformJobsMessage): void => {
   message.retry();
 };
 
+const isSchemaMigrationCandidate = (body: unknown): boolean =>
+  typeof body === 'object' &&
+  body !== null &&
+  !Array.isArray(body) &&
+  typeof (body as { eventType?: unknown }).eventType === 'string' &&
+  (body as { eventType: string }).eventType.startsWith('cms.schema.');
+
 export const enqueuePlatformJob = async (
   queue: PlatformJobsQueue,
   envelope: unknown,
@@ -86,10 +109,35 @@ export const createAsyncEntrypoint = (
 ): AsyncEntrypoint => ({
   queue: async (batch, env, executionContext): Promise<void> => {
     for (const message of batch.messages) {
-      if (
-        batch.queue !== PLATFORM_QUEUE_NAMES[env.APP_ENVIRONMENT] ||
-        dependencies.orchestrateQueueMessage === undefined
-      ) {
+      if (batch.queue !== PLATFORM_QUEUE_NAMES[env.APP_ENVIRONMENT]) {
+        retryMessage(message);
+        continue;
+      }
+
+      if (isSchemaMigrationCandidate(message.body)) {
+        if (dependencies.processSchemaMigration === undefined) {
+          retryMessage(message);
+          continue;
+        }
+        const event = SchemaMigrationQueueEnvelopeSchema.safeParse(
+          message.body,
+        );
+        try {
+          const outcome = await dependencies.processSchemaMigration({
+            env,
+            executionContext,
+            message,
+            event: event.success ? event.data : message.body,
+          });
+          if (outcome === 'ack') message.ack();
+          else retryMessage(message);
+        } catch {
+          retryMessage(message);
+        }
+        continue;
+      }
+
+      if (dependencies.orchestrateQueueMessage === undefined) {
         retryMessage(message);
         continue;
       }

@@ -130,6 +130,9 @@ Teaching and learning — lesson booking and packages, curriculum and practice t
 <!-- spec-graph: auto-generated -->
 ## Related Specs
 
+### Phases into
+- [[specs/phases/phase-2|Phase 2 — Identity, admin, CMS/settings]]
+
 ### Constrained by
 - [[decisions.md#d-02|D-02]]
 - [[decisions.md#d-05|D-05]]
@@ -146,3 +149,6 @@ Teaching and learning — lesson booking and packages, curriculum and practice t
 - [[decisions.md#d-20|D-20]]
 - [[decisions.md#d-14|D-14]]
 - [[decisions.md#d-31|D-31]]
+
+### References
+- [[specs/phases/phase-2|Phase 2 — Identity, admin, CMS/settings]]

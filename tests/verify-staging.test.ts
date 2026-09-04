@@ -1,3 +1,8 @@
+import { spawnSync } from 'node:child_process';
+import { mkdtempSync, rmSync, symlinkSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { describe, expect, it, vi } from 'vitest';
 
 import {
@@ -60,6 +65,31 @@ const apiHealthResponse = (
   });
 
 describe('verifyStaging', () => {
+  it('executes the staging verifier when invoked through a symlink', () => {
+    const sandbox = mkdtempSync(join(tmpdir(), 'wejammin-verify-staging-'));
+    const verifierPath = fileURLToPath(
+      new URL('../infra/verify-staging.mjs', import.meta.url),
+    );
+    const symlinkedVerifierPath = join(sandbox, 'verify-staging.mjs');
+    const environment = { ...process.env };
+    delete environment.STAGING_API_ORIGIN;
+    delete environment.STAGING_WEB_ORIGIN;
+
+    try {
+      symlinkSync(verifierPath, symlinkedVerifierPath);
+      const result = spawnSync(process.execPath, [symlinkedVerifierPath], {
+        encoding: 'utf8',
+        env: environment,
+        timeout: 20_000,
+      });
+
+      expect(result.status).toBe(1);
+      expect(result.stderr).toContain('Invalid URL');
+    } finally {
+      rmSync(sandbox, { force: true, recursive: true });
+    }
+  }, 20_000);
+
   it('accepts the locked web and API health contracts', async () => {
     const fetchImpl = vi
       .fn<typeof fetch>()

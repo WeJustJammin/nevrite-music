@@ -215,6 +215,53 @@ describe('built bundle budget measurement', () => {
     ]);
   });
 
+  it('[P2-S07-AC-174] measures the platform-configuration island and its route independently', () => {
+    const root = createFixture('', {
+      'SettingsFlagsRuntimeWorkbench.entry.js': [
+        'import("./SettingsFlagsRuntimeWorkbenchRuntime.runtime.js");',
+      ].join(''),
+      'SettingsFlagsRuntimeWorkbenchRuntime.runtime.js': [
+        'import "./react.runtime.js";',
+        'import "./settings-core.js";',
+        'const label = `${true ? `nested` : `fallback`}`;',
+        'const normalized = (value) => value.trim().replace(/^W\\//u, ``).replace(/^"|"$/gu, ``);',
+        'const loadValidation = async () => await import(`./settings-validation.deferred.js`);',
+      ].join(''),
+      'PlatformConfigurationAdminRoute.astro_astro_type_script_index_0_lang.route.js':
+        'import "./route-heading-focus.js";',
+      'client.runtime.js': 'import "./react.runtime.js";',
+      'react.runtime.js': 'export const react = true;',
+      'route-heading-focus.js': 'export const heading = true;',
+      'settings-core.js': 'export const settings = true;',
+      'settings-validation.deferred.js': 'export const validate = () => true;',
+    });
+
+    const report = measureBundleBudget({
+      distDirectory: root,
+      entryName: 'SettingsFlagsRuntimeWorkbench.tsx',
+    });
+
+    expect(report.workbench.path).toBe(
+      'client/_astro/SettingsFlagsRuntimeWorkbench.entry.js',
+    );
+    expect(report.workbenchAssets).toContain(
+      'client/_astro/SettingsFlagsRuntimeWorkbenchRuntime.runtime.js',
+    );
+    expect(report.initialAssets).toContain(
+      'client/_astro/PlatformConfigurationAdminRoute.astro_astro_type_script_index_0_lang.route.js',
+    );
+    expect(report.workbenchGzipBytes).toBeLessThanOrEqual(
+      report.budgets.workbenchGzipBytes,
+    );
+    expect(report.initialRouteGzipBytes).toBeLessThanOrEqual(
+      report.budgets.initialRouteGzipBytes,
+    );
+    expect(report.lazyAssets).toEqual([
+      'client/_astro/settings-validation.deferred.js',
+    ]);
+    expect(report.lazyChunkGzipBytes).toHaveLength(1);
+  });
+
   it('charges the Workbench budget for the complete immediate hydration closure', () => {
     const root = createFixture(
       JSON.stringify({

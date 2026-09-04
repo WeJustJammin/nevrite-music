@@ -1,0 +1,178 @@
+---
+import IdentityAuthorityShellReady from '../../../components/identity-authority/IdentityAuthorityShellReady.astro';
+import RelationshipsAuthorityGovernanceIsland, {
+  type RelationshipsAuthorityGovernanceIslandProps,
+} from '../../../components/identity-authority/RelationshipsAuthorityGovernanceIsland';
+
+interface Props {
+  readonly state: 'ready' | 'degraded' | 'forbidden';
+  readonly routeKind: 'index' | 'detail' | 'degraded';
+  readonly requestId: string;
+  readonly recordId?: string | null;
+  readonly displayName?: string | null;
+  readonly handle?: string | null;
+  readonly lifecycle?: string | null;
+  readonly version?: string | null;
+  readonly publicOnly?: boolean;
+  readonly retryHref?: string;
+  readonly backHref?: string;
+  readonly relationshipWorkbench?: RelationshipsAuthorityGovernanceIslandProps;
+}
+
+const {
+  state,
+  routeKind,
+  requestId,
+  recordId = null,
+  displayName = null,
+  handle = null,
+  lifecycle = null,
+  version = null,
+  publicOnly = false,
+  retryHref = '/app/identity-authority',
+  backHref = '/app/identity-authority',
+  relationshipWorkbench,
+} = Astro.props;
+
+const isDegraded = state === 'degraded';
+const isForbidden = state === 'forbidden';
+const detailHref =
+  recordId === null
+    ? '/app/identity-authority'
+    : `/app/identity-authority/${encodeURIComponent(recordId)}`;
+const pageDescription = isDegraded
+  ? 'Identity authority is temporarily unavailable. Only a safe operational shell is shown.'
+  : isForbidden
+    ? 'The requested identity authority capability is not available in this context.'
+    : 'Review server-authorized person records, role facets, aliases, and acting context.';
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content={pageDescription} />
+    <title>Identity authority | WeJammin</title>
+    <link rel="stylesheet" href="/styles/identity-authority-shell.css" />
+  </head>
+  <body class="identity-page infra-page">
+    <nav aria-label="Skip navigation">
+      <a class="skip-link" href="#identity-authority-main"
+        >Skip to main content</a
+      >
+    </nav>
+    <header class="shell-header" aria-label="Application navigation">
+      <a class="brand" href="/">WeJammin</a>
+      <nav class="primary-nav" aria-label="Primary navigation">
+        <a href="/app/identity-authority" aria-current="page"
+          >Identity authority</a
+        >
+        <a href="/settings/security">Account security</a>
+        <a href="/system/degraded">System status</a>
+      </nav>
+    </header>
+
+    <main
+      id="identity-authority-main"
+      class="main"
+      tabindex="-1"
+      data-testid="identity-authority-main"
+    >
+      <header class="page-heading">
+        <p class="eyebrow">Person and party governance</p>
+        <h1 id="page-title" tabindex="-1">Identity authority</h1>
+        <p>{pageDescription}</p>
+        <nav aria-label="Identity authority sections">
+          <a
+            href="/app/identity-authority?tab=people"
+            aria-current={Astro.url.searchParams.get('tab') === 'people'
+              ? 'page'
+              : undefined}>People</a
+          >
+          <a
+            href="/app/identity-authority?tab=relationships"
+            aria-current={Astro.url.searchParams.get('tab') === 'relationships'
+              ? 'page'
+              : undefined}>Relationships</a
+          >
+        </nav>
+      </header>
+
+      {
+        isDegraded && (
+          <section
+            class="status-panel"
+            role="status"
+            aria-live="polite"
+            data-testid="identity-authority-degraded"
+            aria-labelledby="degraded-heading"
+          >
+            <h2 id="degraded-heading">
+              Identity authority is temporarily unavailable
+            </h2>
+            <p>
+              The canonical read could not be verified. Private identity
+              details, cached records, and pending commands are not shown.
+            </p>
+            <dl class="status-list">
+              <div>
+                <dt>Affected scope</dt>
+                <dd>Identity authority reads</dd>
+              </div>
+              <div>
+                <dt>Request ID</dt>
+                <dd>
+                  <code>{requestId}</code>
+                </dd>
+              </div>
+            </dl>
+            <a href={retryHref}>Retry canonical read</a>
+          </section>
+        )
+      }
+
+      {
+        isForbidden && (
+          <section
+            class="capability-gate"
+            role="status"
+            aria-live="polite"
+            data-testid="identity-authority-capability-gate"
+            aria-labelledby="capability-heading"
+          >
+            <h2 id="capability-heading">Access is limited</h2>
+            <p>
+              This identity authority action is unavailable in the current
+              server-verified context.
+            </p>
+            <a href={backHref}>Review identity records</a>
+          </section>
+        )
+      }
+
+      <IdentityAuthorityShellReady
+        {routeKind}
+        query={Astro.url.searchParams.get('q') ?? ''}
+        {detailHref}
+        {backHref}
+        {displayName}
+        {handle}
+        {lifecycle}
+        {version}
+        {isDegraded}
+        {isForbidden}
+        {publicOnly}
+      />
+      {
+        relationshipWorkbench !== undefined && (
+          <RelationshipsAuthorityGovernanceIsland
+            {...relationshipWorkbench}
+            client:load
+          />
+        )
+      }
+    </main>
+
+    <script src="../../../lib/identity-authority-breakpoint.ts"></script>
+  </body>
+</html>

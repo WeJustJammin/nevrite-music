@@ -1,7 +1,7 @@
 # Ambiguity Audit Scope — BE + FE
 
 - **Invocation:** `/audit-ambiguity fe and be` — fresh combined run
-- **Run date:** 2026-08-29
+- **Run date:** 2026-09-02
 - **Selected layers:** BE, FE
 - **BE document count:** 157 (156 scored specs + index)
 - **FE document count:** 44 (43 scored specs + index)
@@ -9,8 +9,8 @@
 - **Applicable checkpoints:** 2189
 - **Enumeration result:** PASS — both indexes match their filesystem inventories; 0 missing, 0 unlisted
 - **Status:** complete — PASS (1716/1716 BE; 473/473 FE; 0.00% ambiguity)
-- **BE report:** `.memory/wiki/specs/audits/2026-08-29-be-ambiguity-report.md`
-- **FE report:** `.memory/wiki/specs/audits/2026-08-29-fe-ambiguity-report.md`
+- **BE report:** `.memory/wiki/specs/audits/2026-09-02-be-ambiguity-report.md`
+- **FE report:** `.memory/wiki/specs/audits/2026-09-02-fe-ambiguity-report.md`
 
 ## Documents
 

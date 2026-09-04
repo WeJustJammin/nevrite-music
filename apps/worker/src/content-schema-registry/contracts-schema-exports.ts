@@ -1,0 +1,60 @@
+/**
+ * Runtime schema exports for the content schema registry worker seam.
+ *
+ * These are re-exports only; `@wejammin/contracts` remains the single runtime
+ * schema source.
+ */
+export {
+  BlockAccessibilitySchema,
+  BlockCompatibilitySchema,
+  BlockDefinitionRegistryRecordSchema,
+  BlockDefinitionVersionResourceSchema,
+  BlockLifecycleAdvanceRequestSchema,
+  BlockLifecycleEventReceiptSchema,
+  BlockLifecycleEventResourceSchema,
+  BlockRegistrationRequestSchema,
+  BlockSlotRulesSchema,
+  CapabilityBindingInputSchema,
+  CapabilityBindingResourceSchema,
+  CmsInstantSchema,
+  CmsStrongEtagSchema,
+  CmsBlockLifecycleSchema,
+  CmsCompatibilitySchema,
+  CmsDefinitionStateSchema,
+  CmsDefaultModeSchema,
+  CmsFieldKindSchema,
+  CmsFieldLifecycleSchema,
+  CmsLocalizationModeSchema,
+  ContentSchemaRegistryDetailParamsSchema,
+  ContentSchemaRegistryDetailSchema,
+  ContentSchemaRegistryListPageSchema,
+  ContentSchemaRegistryListQuerySchema,
+  ContentSchemaRegistryRecordSchema,
+  ContentSchemaRegistryResourceKindSchema,
+  ContentTypeDraftRequestSchema,
+  ContentTypeResourceSchema,
+  ContentTypeVersionResourceSchema,
+  ContentTypeVersionStateSchema,
+  FieldConstraintsSchema,
+  FieldDefinitionInputSchema,
+  FieldDefinitionVersionResourceSchema,
+  FieldEditorConfigSchema,
+  FieldSchemaChangeRequestSchema,
+  OpaqueRelationPlaceholderSchema,
+  PropsSchemaFieldSchema,
+  PropsSchemaSnapshotSchema,
+  PropsSnapshotAttestationSchema,
+  RelationBindingInputSchema,
+  RelationBindingRequestSchema,
+  RelationDefinitionResourceSchema,
+  ReleaseEnvelopeHeadersSchema,
+  SchemaActivationRequestSchema,
+  SchemaActivationResourceSchema,
+  SchemaArtifactResourceSchema,
+  TemplateBindingInputSchema,
+  TemplateBindingResourceSchema,
+  WorkflowPolicyEvidenceSchema,
+} from '@wejammin/contracts';
+
+// Compatibility alias retained for feature-local callers.
+export { CmsFieldKindSchema as FieldKindSchema } from '@wejammin/contracts';

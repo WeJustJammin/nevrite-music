@@ -1,6 +1,6 @@
 import { createHash } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
-import { existsSync, readFileSync } from 'node:fs';
+import { existsSync, readFileSync, realpathSync } from 'node:fs';
 import { resolve, relative, dirname } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 
@@ -360,7 +360,7 @@ const runCli = async () => {
 };
 
 const entrypoint = process.argv[1]
-  ? pathToFileURL(process.argv[1]).href
+  ? pathToFileURL(realpathSync(process.argv[1])).href
   : undefined;
 if (entrypoint === import.meta.url) {
   runCli().catch((error) => {

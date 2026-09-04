@@ -13,4 +13,22 @@ describe('CI workspace setup', () => {
       /dest:\s*\$\{\{\s*runner\.temp\s*\}\}\/setup-pnpm/u,
     );
   });
+
+  it('installs Node before pnpm so the runner embedded npm is never used', () => {
+    const lines = setupAction.split('\n');
+    const pnpmActionLine = lines.findIndex((line) =>
+      line.includes('uses: pnpm/action-setup@'),
+    );
+    const nodeActionLine = lines.findIndex((line) =>
+      line.includes('uses: actions/setup-node@'),
+    );
+
+    expect(nodeActionLine).toBeGreaterThan(-1);
+    expect(pnpmActionLine).toBeGreaterThan(nodeActionLine);
+    expect(
+      lines
+        .slice(pnpmActionLine + 1, pnpmActionLine + 6)
+        .some((line) => /^\s+standalone:\s*true$/u.test(line)),
+    ).toBe(true);
+  });
 });

@@ -46,7 +46,15 @@ const jobConsumer = {
   retryClass: 'bounded_exponential',
   retryDelaysSeconds: [15, 60, 300],
   deadLetterClass: 'platform-jobs-dlq',
-  acceptedEvents: [{ eventType: 'job.requested', schemaVersion: 1 }],
+  acceptedEvents: [
+    { eventType: 'job.requested', schemaVersion: 1 },
+    { eventType: 'identity.facet.changed.v1', schemaVersion: 1 },
+    { eventType: 'identity.alias.changed.v1', schemaVersion: 1 },
+    { eventType: 'identity.acting-context.revoked.v1', schemaVersion: 1 },
+    { eventType: 'identity.organization.changed.v1', schemaVersion: 1 },
+    { eventType: 'identity.relationship.changed.v1', schemaVersion: 1 },
+    { eventType: 'identity.governance.activated.v1', schemaVersion: 1 },
+  ],
   sloTier: 'tier_1',
   runbook: 'docs/runbooks/platform/jobs-outbox-reconciliation.md',
 } as const;
@@ -97,12 +105,83 @@ describe('closed platform registries', () => {
       'diagnosticsRead',
       'jobStatusRead',
       'uploadIntentCreate',
+      'authProviderCatalogRead',
+      'authEmailStart',
+      'authOAuthStart',
+      'authCallbackComplete',
+      'authLoginMethodsRead',
+      'authLoginMethodLinkIntentCreate',
+      'authLoginMethodUnlink',
+      'authAccountMergeCreate',
+      'authAccountMergeRead',
+      'authAccountMergeProofCreate',
+      'authAccountMergeConfirm',
+      'authSessionRead',
+      'authSessionRefresh',
+      'authPersonBootstrap',
+      'authLogout',
       'uploadIntentComplete',
+      'identityCreate',
+      'identityReadSelf',
+      'identityFacetAdd',
+      'identityFacetRemove',
+      'identityAliasCreate',
+      'identityAliasPatch',
+      'identityHandleChange',
+      'identityAliasRetire',
+      'identityTransferOfferCreate',
+      'identityTransferAccept',
+      'identityTransferDecline',
+      'identityContextsRead',
+      'identityContextBind',
+      'identityLegalRead',
+      'identityLegalUpsert',
+      'identityLegalDisclose',
+      'identityDisclosureRead',
+      'identityPublicProjection',
+      'organizationCreate',
+      'organizationRead',
+      'organizationTypeAdd',
+      'organizationTypeRemove',
+      'membershipInvite',
+      'membershipAssert',
+      'membershipAccept',
+      'membershipEnd',
+      'membershipCapacityAdd',
+      'membershipsRead',
+      'profileMatchCreate',
+      'profileInvitationCreate',
+      'profileRemedyCreate',
+      'profileClaimCreate',
+      'profileClaimRead',
+      'profileChallengeCreate',
+      'profileProofCreate',
+      'profileConversionCreate',
+      'CMS-03A-01',
+      'CMS-03A-02',
+      'CMS-03A-03',
+      'CMS-03A-04',
+      'CMS-03A-05',
+      'CMS-03A-06',
+      'CMS-03A-07',
+      'CMS-03A-08',
     ]);
-    expect(platformRegistrySet.consumers).toEqual([jobConsumer]);
+    expect(
+      platformRegistrySet.consumers.map(({ consumerId }) => consumerId),
+    ).toEqual([
+      'platform.job.execute',
+      'profile.match',
+      'profile.invitation',
+      'profile.claim-deadline',
+      'profile.proof-reconcile',
+    ]);
     expect(platformRegistrySet.providers).toEqual([]);
     expect(platformRegistrySet.retention).toHaveLength(1);
-    expect(platformRegistrySet.slos).toHaveLength(1);
+    expect(platformRegistrySet.slos).toHaveLength(2);
+    expect(platformRegistrySet.slos.map(({ tier }) => tier)).toEqual([
+      'tier_1',
+      'tier_2',
+    ]);
   });
 
   it('registers upload admission and completion while provider registries remain closed', () => {
@@ -137,6 +216,12 @@ describe('closed platform registries', () => {
     expect(platformRegistrySet.consumers).toContainEqual(jobConsumer);
     expect(jobConsumer.acceptedEvents).toEqual([
       { eventType: 'job.requested', schemaVersion: 1 },
+      { eventType: 'identity.facet.changed.v1', schemaVersion: 1 },
+      { eventType: 'identity.alias.changed.v1', schemaVersion: 1 },
+      { eventType: 'identity.acting-context.revoked.v1', schemaVersion: 1 },
+      { eventType: 'identity.organization.changed.v1', schemaVersion: 1 },
+      { eventType: 'identity.relationship.changed.v1', schemaVersion: 1 },
+      { eventType: 'identity.governance.activated.v1', schemaVersion: 1 },
     ]);
     expect(jobConsumer.maxDeliveries).toBe(4);
     expect(jobConsumer).toMatchObject({

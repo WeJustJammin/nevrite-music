@@ -1,7 +1,7 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "wejammin-api",
-  "main": "src/index.ts",
+  "main": "src/runtime-entry.ts",
   "compatibility_date": "2026-08-29",
   "minify": true,
   "workers_dev": false,

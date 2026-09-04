@@ -2,6 +2,8 @@
 
 set -euo pipefail
 
+workflow_dir="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+
 require_https_origin() {
   local name="$1"
   local value="$2"
@@ -13,6 +15,10 @@ require_https_origin() {
 
 if [[ ! "$DEPLOY_SHA" =~ ^[0-9a-f]{40}$ ]]; then
   echo "::error::DEPLOY_SHA must be a full lowercase commit SHA"
+  exit 1
+fi
+if [[ ! "${CI_RUN_ID:-}" =~ ^[0-9]+$ ]]; then
+  echo "::error::CI_RUN_ID must identify one completed CI run"
   exit 1
 fi
 require_https_origin PRODUCTION_WEB_ORIGIN "$PRODUCTION_WEB_ORIGIN"
@@ -38,19 +44,36 @@ test -f .promotion/artifacts/apps/worker/dist/index.js || {
   echo "::error::Promoted API Worker entry is missing"
   exit 1
 }
-expected_digest="$(
-  sed -n 's/.*"artifactDigest":"\([0-9a-f]\{64\}\)".*/\1/p' \
-    .promotion/promotion-metadata.json
-)"
 actual_digest="$(
   sha256sum .promotion/deployment-manifest.sha256 \
     | cut -d ' ' -f 1
 )"
-test "$actual_digest" = "$expected_digest"
 (
   cd .promotion/artifacts
   sha256sum --check ../deployment-manifest.sha256
 )
+migration_version="$(
+  find supabase/migrations -maxdepth 1 -type f -name '*.sql' \
+    -printf '%f\n' \
+    | sed -n 's/^\([0-9]\{14,20\}\)_.*/\1/p' \
+    | sort \
+    | tail -n 1
+)"
+if [[ -z "$migration_version" ]]; then
+  echo "::error::A checked-out migration version is required"
+  exit 1
+fi
+node "$workflow_dir/verify-staging-migration-evidence.mjs" \
+  .promotion/staging-migration-evidence.json \
+  "$DEPLOY_SHA" \
+  "$CI_RUN_ID" \
+  "$EXPECTED_STAGING_SUPABASE_PROJECT_REF"
+printf '{"artifactDigest":"%s","sourceRevision":"%s","buildId":"ci-%s","migrationVersion":"%s"}\n' \
+  "$actual_digest" \
+  "$DEPLOY_SHA" \
+  "$CI_RUN_ID" \
+  "$migration_version" \
+  > .promotion/staging-artifact-identity.json
 node --experimental-strip-types infra/workflows/verify-performance-evidence.ts \
   .promotion/artifacts/performance-evidence/bundle-budget.json \
   .promotion/api-p95-smoke.json \

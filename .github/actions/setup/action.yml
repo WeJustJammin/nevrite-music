@@ -4,17 +4,17 @@ description: Install the pinned Node.js and pnpm toolchain with the frozen works
 runs:
   using: composite
   steps:
+    - name: Set up Node.js from .node-version
+      uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
+      with:
+        node-version-file: .node-version
+
     - name: Set up pnpm 11.24.0
       uses: pnpm/action-setup@0977fd99725f1db4007ccb2928dbb4e90d06cc86 # v6
       with:
         dest: ${{ runner.temp }}/setup-pnpm
+        standalone: true
         version: 11.24.0
-
-    - name: Set up Node.js from .node-version
-      uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
-      with:
-        cache: pnpm
-        node-version-file: .node-version
 
     - name: Install frozen workspace dependencies
       shell: bash

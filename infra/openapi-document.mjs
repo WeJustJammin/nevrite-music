@@ -1,4 +1,6 @@
 import {
+  contentSchemaRegistryOpenApiPaths,
+  getContentSchemaRegistryOpenApiComponentSchemas,
   getOpenApiComponentSchemas,
   getOpenApiSchemaJson,
   getOpenApiSchemaReference,
@@ -21,6 +23,35 @@ const pathParameterNames = (path) =>
 const wireHeaderNames = {
   idempotencyKey: 'Idempotency-Key',
   ifMatch: 'If-Match',
+  xCsrfToken: 'X-CSRF-Token',
+};
+
+const contentSchemaRegistryOperationIds = new Set([
+  'CMS-03A-01',
+  'CMS-03A-02',
+  'CMS-03A-03',
+  'CMS-03A-04',
+  'CMS-03A-05',
+  'CMS-03A-06',
+  'CMS-03A-07',
+  'CMS-03A-08',
+]);
+
+const contentSchemaRegistryComponentSchemas =
+  getContentSchemaRegistryOpenApiComponentSchemas();
+const componentName = (schemaName) =>
+  schemaName.endsWith('Schema')
+    ? schemaName.slice(0, -'Schema'.length)
+    : schemaName;
+const schemaReference = (schemaName) => {
+  if (
+    Object.hasOwn(
+      contentSchemaRegistryComponentSchemas,
+      componentName(schemaName),
+    )
+  )
+    return { $ref: `#/components/schemas/${componentName(schemaName)}` };
+  return getOpenApiSchemaReference(schemaName);
 };
 
 const requiredPropertyNames = (schema) =>
@@ -58,7 +89,30 @@ const headerParameters = (headers, schemaName) => {
   });
 };
 
+const contentSchemaRegistryRequestShape = (registry) => {
+  if (!contentSchemaRegistryOperationIds.has(registry.operationId))
+    return undefined;
+  const pathItem = contentSchemaRegistryOpenApiPaths[registry.path];
+  const contentOperation = pathItem?.[registry.method.toLowerCase()];
+  if (!isRecord(contentOperation)) {
+    throw new Error(
+      `Content schema registry OpenAPI operation ${registry.operationId} has no matching path declaration.`,
+    );
+  }
+  return {
+    ...(Array.isArray(contentOperation.parameters)
+      ? { parameters: contentOperation.parameters }
+      : {}),
+    ...(isRecord(contentOperation.requestBody)
+      ? { requestBody: contentOperation.requestBody }
+      : {}),
+  };
+};
+
 const requestShape = (registry) => {
+  const contentRequest = contentSchemaRegistryRequestShape(registry);
+  if (contentRequest) return contentRequest;
+
   const names = pathParameterNames(registry.path);
   if (registry.requestSchema === EMPTY_REQUEST_SCHEMA) {
     if (names.length === 0) return {};
@@ -77,7 +131,7 @@ const requestShape = (registry) => {
   const required = requiredPropertyNames(requestSchema);
   const declaredProperties = Object.keys(requestSchema.properties);
   const isStructuredRequest = declaredProperties.some((name) =>
-    ['body', 'headers'].includes(name),
+    ['body', 'headers', 'query'].includes(name),
   );
   if (!isStructuredRequest && names.length === 0) {
     return {
@@ -94,7 +148,8 @@ const requestShape = (registry) => {
 
   if (
     declaredProperties.some(
-      (name) => !names.includes(name) && !['body', 'headers'].includes(name),
+      (name) =>
+        !names.includes(name) && !['body', 'headers', 'query'].includes(name),
     )
   ) {
     throw new Error(
@@ -128,6 +183,27 @@ const requestShape = (registry) => {
       ),
     );
   }
+  if (declaredProperties.includes('query')) {
+    const query = requiredObjectProperty(
+      requestSchema,
+      'query',
+      registry.requestSchema,
+    );
+    const queryRequired = requiredPropertyNames(query);
+    if (!isRecord(query.properties)) {
+      throw new Error(
+        `Request schema ${registry.requestSchema} query must expose an object property map.`,
+      );
+    }
+    parameters.push(
+      ...Object.entries(query.properties).map(([name, schema]) => ({
+        name,
+        in: 'query',
+        required: queryRequired.includes(name),
+        schema,
+      })),
+    );
+  }
 
   const body = declaredProperties.includes('body')
     ? requiredObjectProperty(requestSchema, 'body', registry.requestSchema)
@@ -153,7 +229,7 @@ const responseHeaders = (kind) => {
 };
 
 const errorSchema = (registry) => {
-  const references = registry.errorSchemas.map(getOpenApiSchemaReference);
+  const references = registry.errorSchemas.map(schemaReference);
   return references.length === 1 ? references[0] : { oneOf: references };
 };
 
@@ -163,7 +239,8 @@ const responseContent = (schema) => ({
 
 const operation = (registry, definition) => {
   const request = requestShape(registry);
-  const successReference = getOpenApiSchemaReference(registry.successSchema);
+  const successSchema = registry.openApiSuccessSchema ?? registry.successSchema;
+  const successReference = schemaReference(successSchema);
   const errorReference = errorSchema(registry);
   const responses = Object.fromEntries(
     definition.responses.map((response) => {
@@ -189,15 +266,46 @@ const operation = (registry, definition) => {
     operationId: registry.operationId,
     deprecated: registry.deprecated,
     'x-auth-class': registry.authClass,
+    ...(registry.capability ? { 'x-capability': registry.capability } : {}),
+    ...(registry.capabilities
+      ? { 'x-capabilities': registry.capabilities }
+      : {}),
+    ...(registry.corsClass ? { 'x-cors': registry.corsClass } : {}),
+    ...(registry.audience ? { 'x-audience': registry.audience } : {}),
     'x-cache-class': registry.cacheClass,
+    ...(registry.cacheControl
+      ? { 'x-cache-control': registry.cacheControl }
+      : {}),
     'x-timeout-ms': registry.timeoutMs,
     'x-rate-class': registry.rateClass,
+    ...(registry.rateLimit !== undefined
+      ? {
+          'x-rate-limit': {
+            class: registry.rateClass,
+            limit: registry.rateLimit,
+            ...(registry.partyRateLimit !== undefined
+              ? { partyLimit: registry.partyRateLimit }
+              : {}),
+            ...(registry.rateWindowSeconds !== undefined
+              ? { windowSeconds: registry.rateWindowSeconds }
+              : {}),
+            ...(registry.rateScope ? { scope: registry.rateScope } : {}),
+          },
+        }
+      : {}),
     'x-slo-tier': registry.sloTier,
+    ...(registry.slo ? { 'x-slo': registry.slo } : {}),
+    ...(registry.csrf ? { 'x-csrf': registry.csrf } : {}),
+    ...(registry.idempotency ? { 'x-idempotency': registry.idempotency } : {}),
+    ...(registry.ifMatch ? { 'x-if-match': registry.ifMatch } : {}),
+    ...(registry.rawBodySignature
+      ? { 'x-raw-body-signature': registry.rawBodySignature }
+      : {}),
     'x-criticality': registry.criticality,
     'x-owner': registry.owner,
     'x-runbook': registry.runbook,
     'x-request-schema': registry.requestSchema,
-    'x-success-schema': registry.successSchema,
+    'x-success-schema': successSchema,
     'x-error-schemas': registry.errorSchemas,
     'x-bola-test': registry.bolaTest,
     ...(request.parameters ? { parameters: request.parameters } : {}),
@@ -263,6 +371,11 @@ export const buildOpenApiDocument = (registrySet = platformRegistrySet) => {
     openapi: '3.1.0',
     info: { title: 'WeJammin API', version: 'v1' },
     paths,
-    components: { schemas: getOpenApiComponentSchemas() },
+    components: {
+      schemas: {
+        ...getOpenApiComponentSchemas(),
+        ...contentSchemaRegistryComponentSchemas,
+      },
+    },
   };
 };

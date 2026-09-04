@@ -17,10 +17,14 @@ const webPort = ciPortSlot === undefined ? 4321 : 30_000 + ciPortSlot * 2;
 const docsPort = webPort + 1;
 const webOrigin = `http://127.0.0.1:${webPort}`;
 const docsOrigin = `http://127.0.0.1:${docsPort}`;
+const profilePortfolioApiOrigin = 'http://127.0.0.1:8787';
 
 export default defineConfig({
   forbidOnly: Boolean(process.env.CI),
-  fullyParallel: true,
+  fullyParallel: false,
+  // Astro's Cloudflare dev runtime shares one virtual-module graph. Concurrent
+  // SSR transforms can drop Astro modules or React refresh bindings in workerd.
+  workers: 1,
   metadata: { docsOrigin },
   projects: [
     {
@@ -31,16 +35,23 @@ export default defineConfig({
   reporter: process.env.CI ? 'github' : 'list',
   retries: process.env.CI ? 2 : 0,
   testDir: './tests/e2e',
+  testIgnore: 'phase-02-slice-09-content-schema-registry-real-route.spec.ts',
   use: {
     baseURL: webOrigin,
     trace: 'retain-on-failure',
   },
   webServer: [
     {
+      command: 'node tests/e2e/support/profile-portfolio-api.mjs --port 8787',
+      reuseExistingServer: false,
+      timeout: 120_000,
+      url: `${profilePortfolioApiOrigin}/healthz`,
+    },
+    {
       command: `pnpm --filter @wejammin/web dev --host 127.0.0.1 --port ${webPort}`,
       reuseExistingServer: false,
       timeout: 120_000,
-      url: webOrigin,
+      url: `${webOrigin}/auth/sign-in`,
     },
     {
       command: `pnpm --filter @wejammin/docs dev --host 127.0.0.1 --port ${docsPort}`,

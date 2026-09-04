@@ -1,3 +1,6 @@
+import { realpathSync } from 'node:fs';
+import { pathToFileURL } from 'node:url';
+
 const FULL_SHA = /^[a-f0-9]{40}$/;
 const NUMERIC_ID = /^\d+$/;
 
@@ -93,9 +96,10 @@ export const verifyStagingRun = async ({
   return Object.freeze({ ciRunId: runId, sourceRevision: sourceSha });
 };
 
+const entrypoint = process.argv[1];
 if (
-  process.argv[1] &&
-  import.meta.url === new URL(process.argv[1], 'file:').href
+  entrypoint !== undefined &&
+  import.meta.url === pathToFileURL(realpathSync(entrypoint)).href
 ) {
   verifyStagingRun().then(
     () => console.log('staging_ci_run=latest_success'),

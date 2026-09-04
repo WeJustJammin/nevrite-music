@@ -1,13 +1,63 @@
 ---
 import { normalizeSafeReturnPath } from '@wejammin/ui/infrastructure/navigation';
+import {
+  AuthReturnTargetSchema,
+  ProviderCatalogSchema,
+  type ProviderCatalog,
+} from '@wejammin/contracts';
+import { env } from 'cloudflare:workers';
 import '@wejammin/ui/styles.css';
 import '../../styles/infrastructure.css';
+import { forwardAuthRequest } from '../../server/auth-platform-api.ts';
 
 export const prerender = false;
 
-const returnTo = normalizeSafeReturnPath(
+const normalized = normalizeSafeReturnPath(
   Astro.url.searchParams.get('returnTo'),
 );
+const returnTo = AuthReturnTargetSchema.safeParse(normalized).success
+  ? normalized
+  : '/app';
+const outcome = Astro.url.searchParams.get('outcome');
+const outcomeMessage =
+  {
+    email_sent:
+      'If the address can receive recovery mail, a secure sign-in link is on its way.',
+    invalid: 'Check the form and try again.',
+    unavailable:
+      'Authentication is temporarily unavailable. Your return target is preserved.',
+  }[outcome ?? ''] ?? null;
+
+let catalog: ProviderCatalog | null = null;
+try {
+  const response = await forwardAuthRequest(
+    new Request(new URL('/api/v1/auth/providers', Astro.url), {
+      headers: { cookie: Astro.request.headers.get('cookie') ?? '' },
+    }),
+    env.PLATFORM_API,
+    '/api/v1/auth/providers',
+    'GET',
+  );
+  if (response.ok) {
+    const parsed = ProviderCatalogSchema.safeParse(await response.json());
+    if (parsed.success) catalog = parsed.data;
+  }
+} catch {
+  catalog = null;
+}
+
+const providers =
+  catalog?.providers ??
+  ([
+    { code: 'google', label: 'Google', state: 'temporarily_unavailable' },
+    { code: 'apple', label: 'Apple', state: 'temporarily_unavailable' },
+    { code: 'facebook', label: 'Facebook', state: 'temporarily_unavailable' },
+    {
+      code: 'soundcloud',
+      label: 'SoundCloud',
+      state: 'temporarily_unavailable',
+    },
+  ] as const);
 ---
 
 <html lang="en">
@@ -35,12 +85,60 @@ const returnTo = normalizeSafeReturnPath(
       </div>
       <section class="infra-workbench-header" aria-labelledby="sign-in-heading">
         <h2 id="sign-in-heading">Continue to your workspace</h2>
-        <form method="post" action="/auth/sign-in">
+        {
+          outcomeMessage !== null && (
+            <p role="status" aria-live="polite">
+              {outcomeMessage}
+            </p>
+          )
+        }
+        <form method="post" action="/auth/start" class="infra-stack">
           <input type="hidden" name="returnTo" value={returnTo} />
-          <button type="submit" name="provider" value="github">
-            Continue with GitHub
+          <label for="email">Email address</label>
+          <input
+            id="email"
+            name="email"
+            type="email"
+            autocomplete="email"
+            required
+            maxlength="254"
+          />
+          <button type="submit" name="intent" value="sign_in">
+            Email me a sign-in link
+          </button>
+          <button type="submit" name="intent" value="recovery">
+            Recover my account
           </button>
         </form>
+        <div class="infra-stack" aria-labelledby="social-sign-in-heading">
+          <h3 id="social-sign-in-heading">Social sign-in</h3>
+          {
+            providers.map((provider) => (
+              <form method="post" action="/auth/start">
+                <input type="hidden" name="returnTo" value={returnTo} />
+                <input type="hidden" name="intent" value="sign_in" />
+                <button
+                  type="submit"
+                  name="provider"
+                  value={provider.code}
+                  disabled={provider.state !== 'enabled'}
+                  aria-describedby={
+                    provider.state !== 'enabled'
+                      ? `${provider.code}-status`
+                      : undefined
+                  }
+                >
+                  Continue with {provider.label}
+                </button>
+                {provider.state !== 'enabled' && (
+                  <span id={`${provider.code}-status`} class="infra-help">
+                    Temporarily unavailable
+                  </span>
+                )}
+              </form>
+            ))
+          }
+        </div>
         <p class="infra-help">
           Return target: <code>{returnTo}</code>. If authentication expires,
           your unsent local input remains in the current form and is never

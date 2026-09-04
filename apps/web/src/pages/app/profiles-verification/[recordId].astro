@@ -1,0 +1,26 @@
+---
+import { ProfileUuidSchema } from '@wejammin/contracts';
+import { normalizeSafeReturnPath } from '@wejammin/ui/infrastructure/navigation';
+
+import { hasProfileOwnershipSession } from '../../../server/profile-ownership-platform-api';
+
+export const prerender = false;
+
+const recordId = Astro.params.recordId ?? '';
+if (!ProfileUuidSchema.safeParse(recordId).success) {
+  return new Response('Not found', { status: 404 });
+}
+const returnTo = normalizeSafeReturnPath(
+  `${Astro.url.pathname}${Astro.url.search}`,
+);
+if (!hasProfileOwnershipSession(Astro.request)) {
+  return Astro.redirect(
+    `/auth/sign-in?returnTo=${encodeURIComponent(returnTo)}`,
+    303,
+  );
+}
+return Astro.redirect(
+  `/app/profiles-verification?selected=${encodeURIComponent(recordId)}`,
+  303,
+);
+---

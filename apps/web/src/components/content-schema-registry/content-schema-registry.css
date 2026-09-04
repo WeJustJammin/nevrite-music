@@ -1,0 +1,453 @@
+.content-schema-registry {
+  --registry-ink: #15202b;
+  --registry-muted: #526170;
+  --registry-border: #c8d1db;
+  --registry-surface: #f7f9fb;
+  --registry-accent: #0b5cad;
+  color: var(--registry-ink);
+  max-width: 82rem;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.content-schema-registry a,
+.content-schema-registry button,
+.content-schema-registry input,
+.content-schema-registry select {
+  display: inline-flex;
+  align-items: center;
+  min-inline-size: 2.75rem;
+  min-block-size: 2.75rem;
+}
+
+.content-schema-registry textarea {
+  min-inline-size: 2.75rem;
+}
+
+.content-schema-registry a {
+  color: var(--registry-accent);
+  font-weight: 650;
+}
+
+.content-schema-registry a:focus-visible,
+.content-schema-registry button:focus-visible,
+.content-schema-registry input:focus-visible,
+.content-schema-registry select:focus-visible,
+.content-schema-registry textarea:focus-visible {
+  outline: 3px solid #f2a900;
+  outline-offset: 3px;
+}
+
+.content-schema-registry-header {
+  border-block-end: 1px solid var(--registry-border);
+  margin-block-end: 1.25rem;
+  padding-block-end: 1rem;
+}
+
+.content-schema-registry-header h2,
+.content-schema-registry-detail h3,
+.content-schema-registry-list h3 {
+  margin-block: 0.25rem 0.5rem;
+}
+
+.content-schema-registry-eyebrow {
+  color: var(--registry-muted);
+  font-size: 0.8rem;
+  font-weight: 750;
+  letter-spacing: 0.08em;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.content-schema-registry-filters {
+  background: var(--registry-surface);
+  border: 1px solid var(--registry-border);
+  border-radius: 0.5rem;
+  margin-block-end: 1.25rem;
+  padding: 1rem;
+}
+
+.content-schema-registry-filters > p {
+  color: var(--registry-muted);
+  margin-block-start: 0;
+}
+
+.content-schema-registry-filter-grid {
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+}
+
+.content-schema-registry-filter-grid label {
+  display: grid;
+  font-weight: 650;
+  gap: 0.35rem;
+}
+
+.content-schema-registry-filter-grid input,
+.content-schema-registry-filter-grid select,
+.content-schema-registry-command-form input,
+.content-schema-registry-command-form select,
+.content-schema-registry-command-form textarea {
+  background: #fff;
+  border: 1px solid #7d8b99;
+  border-radius: 0.25rem;
+  color: inherit;
+  font: inherit;
+  padding-inline: 0.6rem;
+}
+
+.content-schema-registry-command-stack {
+  display: grid;
+  gap: 1rem;
+  margin-block-start: 1.25rem;
+}
+
+.content-schema-registry-command-form {
+  background: var(--registry-surface);
+  border: 1px solid var(--registry-border);
+  border-radius: 0.5rem;
+  padding: 1rem;
+}
+
+.content-schema-registry-command-form fieldset {
+  border: 0;
+  margin: 0;
+  min-inline-size: 0;
+  padding: 0;
+}
+
+.content-schema-registry-command-form legend {
+  font-size: 1.1rem;
+  font-weight: 750;
+  margin-block-end: 0.75rem;
+}
+
+.content-schema-registry-field {
+  display: grid;
+  gap: 0.35rem;
+  margin-block: 0.8rem;
+}
+
+.content-schema-registry-field > label {
+  font-weight: 650;
+}
+
+.content-schema-registry-command-form input,
+.content-schema-registry-command-form select,
+.content-schema-registry-command-form textarea {
+  background: #fff;
+  border: 1px solid #7d8b99;
+  border-radius: 0.25rem;
+  color: inherit;
+  font: inherit;
+  padding: 0.55rem 0.6rem;
+}
+
+.content-schema-registry-command-form textarea {
+  font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+  min-block-size: 5rem;
+}
+
+.content-schema-registry-checkbox-field > label {
+  align-items: center;
+  display: flex;
+  gap: 0.35rem;
+}
+
+.content-schema-registry-checkbox-field input {
+  inline-size: 1.2rem;
+  min-block-size: 1.2rem;
+}
+
+.content-schema-registry-help {
+  color: var(--registry-muted);
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+.content-schema-registry-actions {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-block-start: 0.75rem;
+}
+
+.content-schema-registry-actions button {
+  background: var(--registry-accent);
+  border: 0;
+  border-radius: 0.25rem;
+  color: #fff;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 700;
+  padding-inline: 1rem;
+}
+
+.content-schema-registry-actions .secondary-action {
+  background: transparent;
+  border: 1px solid var(--registry-border);
+  color: inherit;
+}
+
+.content-schema-registry-command-error {
+  border-inline-start: 0.3rem solid #b42318;
+  margin-block-end: 1rem;
+  padding-inline-start: 0.75rem;
+}
+
+.content-schema-registry-capability-gate,
+.content-schema-registry-offline-status,
+.content-schema-registry-sync-conflict,
+.content-schema-registry-confirmation {
+  background: var(--registry-surface);
+  border: 1px solid var(--registry-border);
+  border-inline-start: 0.3rem solid var(--registry-accent);
+  margin-block: 0.75rem;
+  padding: 0.75rem 1rem;
+}
+
+.content-schema-registry-capability-gate h3,
+.content-schema-registry-offline-status h3,
+.content-schema-registry-sync-conflict h3,
+.content-schema-registry-confirmation h3 {
+  margin-block: 0 0.5rem;
+}
+
+.content-schema-registry-capability-gate p,
+.content-schema-registry-offline-status p,
+.content-schema-registry-sync-conflict p,
+.content-schema-registry-confirmation p {
+  margin-block: 0.35rem;
+}
+
+.content-schema-registry-offline-status dl,
+.content-schema-registry-sync-conflict dl,
+.content-schema-registry-confirmation dl {
+  display: grid;
+  gap: 0.35rem 1rem;
+  grid-template-columns: minmax(8rem, 0.35fr) 1fr;
+}
+
+.content-schema-registry-offline-status dt,
+.content-schema-registry-sync-conflict dt,
+.content-schema-registry-confirmation dt {
+  color: var(--registry-muted);
+  font-weight: 700;
+}
+
+.content-schema-registry-offline-status dd,
+.content-schema-registry-sync-conflict dd,
+.content-schema-registry-confirmation dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.content-schema-registry-filter-actions {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-block-start: 1rem;
+}
+
+.content-schema-registry-filter-actions button {
+  background: var(--registry-accent);
+  border: 0;
+  border-radius: 0.25rem;
+  color: #fff;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 700;
+  padding-inline: 1rem;
+}
+
+.content-schema-registry-grid {
+  display: grid;
+  gap: 1.25rem;
+}
+
+.content-schema-registry-list,
+.content-schema-registry-detail {
+  border: 1px solid var(--registry-border);
+  border-radius: 0.5rem;
+  min-inline-size: 0;
+  padding: 1rem;
+}
+
+.content-schema-registry-table-wrap {
+  overflow-x: auto;
+}
+
+.content-schema-registry table {
+  border-collapse: collapse;
+  min-inline-size: 42rem;
+  width: 100%;
+}
+
+.content-schema-registry-priority-list {
+  display: none;
+  list-style: decimal;
+  margin: 0;
+  padding-inline-start: 1.5rem;
+}
+
+.content-schema-registry-priority-list > li {
+  border-block-end: 1px solid var(--registry-border);
+  padding-block: 0.75rem;
+}
+
+.content-schema-registry-priority-list dl {
+  display: grid;
+  gap: 0.25rem 1rem;
+  grid-template-columns: minmax(8rem, 0.35fr) 1fr;
+}
+
+.content-schema-registry-priority-list dt {
+  color: var(--registry-muted);
+  font-weight: 700;
+}
+
+.content-schema-registry-priority-list dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.content-schema-registry caption {
+  font-weight: 650;
+  padding-block: 0.5rem;
+  text-align: start;
+}
+
+.content-schema-registry th,
+.content-schema-registry td {
+  border-block-end: 1px solid var(--registry-border);
+  padding: 0.7rem 0.5rem;
+  text-align: start;
+  vertical-align: top;
+}
+
+.content-schema-registry th {
+  background: var(--registry-surface);
+}
+
+.content-schema-registry td small {
+  display: block;
+  margin-block-start: 0.35rem;
+}
+
+.content-schema-registry-next {
+  display: inline-block;
+  margin-block-start: 1rem;
+}
+
+.content-schema-registry-status {
+  background: var(--registry-surface);
+  border-inline-start: 0.3rem solid var(--registry-accent);
+  margin-block: 0.75rem;
+  padding: 0.75rem 1rem;
+}
+
+.content-schema-registry-status-loading {
+  min-block-size: 5rem;
+}
+
+.content-schema-registry-loading-skeleton {
+  background: var(--registry-border);
+  block-size: 1.25rem;
+  inline-size: min(100%, 28rem);
+  margin-block-end: 0.75rem;
+}
+
+.content-schema-registry-status p {
+  margin-block: 0.25rem;
+}
+
+.content-schema-registry-status-error {
+  border-inline-start-color: #b42318;
+}
+
+.content-schema-registry-status-degraded {
+  border-inline-start-color: #a15c00;
+}
+
+.content-schema-registry-detail-heading {
+  align-items: start;
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+}
+
+.content-schema-registry-summary,
+.content-schema-registry-block-meta {
+  display: grid;
+  gap: 0.4rem 1rem;
+  grid-template-columns: minmax(8rem, 0.35fr) 1fr;
+  margin-block: 1rem;
+}
+
+.content-schema-registry-summary dt,
+.content-schema-registry-block-meta dt {
+  color: var(--registry-muted);
+  font-weight: 700;
+}
+
+.content-schema-registry-summary dd,
+.content-schema-registry-block-meta dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.content-schema-registry-detail section {
+  border-block-start: 1px solid var(--registry-border);
+  margin-block-start: 1rem;
+  padding-block-start: 0.75rem;
+}
+
+.content-schema-registry-detail li + li {
+  margin-block-start: 0.7rem;
+}
+
+.visually-hidden {
+  block-size: 1px;
+  clip-path: inset(50%);
+  inline-size: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+}
+
+/* Keep the two-column layout off at the 768px stacked-layout boundary. */
+@media (min-width: 48.0625rem) {
+  .content-schema-registry {
+    padding: 1.5rem;
+  }
+
+  .content-schema-registry-grid {
+    grid-template-columns: minmax(0, 1.1fr) minmax(18rem, 0.9fr);
+  }
+}
+
+@media (max-width: 48rem) {
+  .content-schema-registry-table-wrap {
+    display: none;
+  }
+
+  .content-schema-registry-priority-list {
+    display: block;
+  }
+}
+
+@media (min-width: 64rem) {
+  .content-schema-registry-grid {
+    grid-template-columns: minmax(0, 1.25fr) minmax(24rem, 0.75fr);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .content-schema-registry * {
+    scroll-behavior: auto;
+    transition-duration: 0.01ms;
+  }
+}

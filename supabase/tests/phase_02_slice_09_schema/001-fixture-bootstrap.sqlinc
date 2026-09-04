@@ -1,0 +1,19 @@
+
+-- Executable contract coverage starts with one authenticated actor.  The
+-- remaining fixture users and tenant setup continue in fragment 002.
+insert into auth.users(id) values
+  ('a9090000-0000-4000-8000-000000000001'),
+  ('a9090000-0000-4000-8000-000000000002'),
+  ('a9090000-0000-4000-8000-000000000003');
+select platform_api.auth_bootstrap(
+  'a9090000-0000-4000-8000-000000000001', decode(repeat('11', 32), 'hex'),
+  decode(repeat('21', 32), 'hex'), 'a9090000-0000-4000-8000-000000000011',
+  'a9090000-0000-4000-8000-000000000012'
+);
+
+select ok(
+  exists (select 1 from pg_policy where polrelid = to_regclass('platform_private.cms_content_types'))
+    and exists (select 1 from pg_policy where polrelid = to_regclass('platform_private.cms_release_nonce_receipts'))
+    and exists (select 1 from pg_policy where polrelid = to_regclass('platform_private.cms_block_definition_lifecycle_events')),
+  'P2-S09-AC-013 private CMS RLS policies are present'
+);

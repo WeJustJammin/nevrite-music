@@ -1,7 +1,7 @@
 {
-  "builtAt": "2026-09-01T00:04:23.810Z",
-  "nodeCount": 1608,
-  "edgeCount": 9946,
+  "builtAt": "2026-09-04T18:20:53.058Z",
+  "nodeCount": 1622,
+  "edgeCount": 10099,
   "nodes": [
     {
       "id": "plan:2026-08-02-architecture-design",
@@ -165,10 +165,66 @@
       "shardId": "2026"
     },
     {
+      "id": "audit:audits/2026-09-02-be-ambiguity-report",
+      "type": "audit",
+      "label": "BE Ambiguity Audit — Fresh Combined Run (2026-09-02)",
+      "path": ".memory/wiki/specs/audits/2026-09-02-be-ambiguity-report.md",
+      "shardId": "2026"
+    },
+    {
+      "id": "audit:audits/2026-09-02-fe-ambiguity-report",
+      "type": "audit",
+      "label": "Fresh FE Ambiguity Audit",
+      "path": ".memory/wiki/specs/audits/2026-09-02-fe-ambiguity-report.md",
+      "shardId": "2026"
+    },
+    {
+      "id": "audit:audits/2026-09-02-ia-ambiguity-report",
+      "type": "audit",
+      "label": "IA Ambiguity Audit — Fresh Combined Final Report (2026-09-02)",
+      "path": ".memory/wiki/specs/audits/2026-09-02-ia-ambiguity-report.md",
+      "shardId": "2026"
+    },
+    {
       "id": "audit:audits/audit-scope",
       "type": "audit",
       "label": "Ambiguity Audit Scope — BE + FE",
       "path": ".memory/wiki/specs/audits/audit-scope.md",
+      "shardId": null
+    },
+    {
+      "id": "audit:audits/phase-02-slice-07-impeccable",
+      "type": "audit",
+      "label": "Phase 2 Slice 07 Impeccable technical audit",
+      "path": ".memory/wiki/specs/audits/phase-02-slice-07-impeccable.md",
+      "shardId": null
+    },
+    {
+      "id": "audit:audits/phase-02-slice-08-impeccable",
+      "type": "audit",
+      "label": "Phase 2 Slice 08 Impeccable technical audit",
+      "path": ".memory/wiki/specs/audits/phase-02-slice-08-impeccable.md",
+      "shardId": null
+    },
+    {
+      "id": "audit:audits/phase-02-slice-09-fe-qa",
+      "type": "audit",
+      "label": "Phase 2 Slice 09 frontend QA evidence",
+      "path": ".memory/wiki/specs/audits/phase-02-slice-09-fe-qa.md",
+      "shardId": null
+    },
+    {
+      "id": "audit:audits/phase-02-slice-09-qa-green",
+      "type": "audit",
+      "label": "Phase 2 Slice 09 local QA-GREEN and release-gate disposition",
+      "path": ".memory/wiki/specs/audits/phase-02-slice-09-qa-green.md",
+      "shardId": null
+    },
+    {
+      "id": "audit:audits/phase-02-slice-09-verification-remediation",
+      "type": "audit",
+      "label": "Phase 2 Slice 09 verification remediation evidence",
+      "path": ".memory/wiki/specs/audits/phase-02-slice-09-verification-remediation.md",
       "shardId": null
     },
     {
@@ -193,10 +249,38 @@
       "shardId": null
     },
     {
+      "id": "audit:audits/propagation-option-a-2026-09-02",
+      "type": "audit",
+      "label": "Slice 09 Option A propagation record",
+      "path": ".memory/wiki/specs/audits/propagation-option-a-2026-09-02.md",
+      "shardId": null
+    },
+    {
       "id": "audit:audits/propagation-scan-2026-08-30",
       "type": "audit",
       "label": "Sentry Removal and Free-Only Operations Propagation Scan",
       "path": ".memory/wiki/specs/audits/propagation-scan-2026-08-30.md",
+      "shardId": null
+    },
+    {
+      "id": "audit:audits/propagation-scan-2026-09-02",
+      "type": "audit",
+      "label": "Option A downstream propagation scan",
+      "path": ".memory/wiki/specs/audits/propagation-scan-2026-09-02.md",
+      "shardId": null
+    },
+    {
+      "id": "audit:audits/verify-infrastructure-2026-09-04-1255",
+      "type": "audit",
+      "label": "Infrastructure Verification Report",
+      "path": ".memory/wiki/specs/audits/verify-infrastructure-2026-09-04-1255.md",
+      "shardId": null
+    },
+    {
+      "id": "audit:audits/verify-infrastructure-2026-09-04-1353",
+      "type": "audit",
+      "label": "Infrastructure Verification Report",
+      "path": ".memory/wiki/specs/audits/verify-infrastructure-2026-09-04-1353.md",
       "shardId": null
     },
     {
@@ -10574,6 +10658,20 @@
       "shardId": null
     },
     {
+      "id": "phase-plan:phases/phase-2-draft",
+      "type": "phase-plan",
+      "label": "Phase 2 planning draft — generation record",
+      "path": ".memory/wiki/specs/phases/phase-2-draft.md",
+      "shardId": null
+    },
+    {
+      "id": "phase-plan:phases/phase-2",
+      "type": "phase-plan",
+      "label": "Phase 2 — Identity, admin, CMS/settings",
+      "path": ".memory/wiki/specs/phases/phase-2.md",
+      "shardId": null
+    },
+    {
       "id": "plan:vision",
       "type": "plan",
       "label": "WeJammin — Vision",
@@ -11263,6 +11361,12 @@
   "edges": [
     {
       "from": "plan:2026-08-02-architecture-design",
+      "to": "phase-plan:phases/phase-2",
+      "type": "phases_into",
+      "source": "phase-ref"
+    },
+    {
+      "from": "plan:2026-08-02-architecture-design",
       "to": "phase-plan:phases/phase-1",
       "type": "phases_into",
       "source": "phase-ref"
@@ -11287,9 +11391,21 @@
     },
     {
       "from": "plan:2026-08-02-architecture-design",
+      "to": "phase-plan:phases/phase-2",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:2026-08-02-architecture-design",
       "to": "phase-plan:phases/phase-1",
       "type": "references",
       "source": "wikilink"
+    },
+    {
+      "from": "architecture:architecture/prd-working/stack-synthesis",
+      "to": "phase-plan:phases/phase-2",
+      "type": "phases_into",
+      "source": "phase-ref"
     },
     {
       "from": "architecture:architecture/prd-working/stack-synthesis",
@@ -11322,6 +11438,18 @@
       "source": "decision-ref"
     },
     {
+      "from": "architecture:architecture/prd-working/stack-synthesis",
+      "to": "phase-plan:phases/phase-2",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:architecture-draft",
+      "to": "phase-plan:phases/phase-2",
+      "type": "phases_into",
+      "source": "phase-ref"
+    },
+    {
       "from": "plan:architecture-draft",
       "to": "phase-plan:phases/phase-1",
       "type": "phases_into",
@@ -11341,7 +11469,73 @@
     },
     {
       "from": "plan:architecture-draft",
+      "to": "phase-plan:phases/phase-2",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:architecture-draft",
       "to": "phase-plan:phases/phase-1",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "audit:audits/phase-02-slice-07-impeccable",
+      "to": "phase-plan:phases/phase-2",
+      "type": "phases_into",
+      "source": "phase-ref"
+    },
+    {
+      "from": "audit:audits/phase-02-slice-07-impeccable",
+      "to": "phase-plan:phases/phase-2",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "audit:audits/phase-02-slice-08-impeccable",
+      "to": "phase-plan:phases/phase-2",
+      "type": "phases_into",
+      "source": "phase-ref"
+    },
+    {
+      "from": "audit:audits/phase-02-slice-08-impeccable",
+      "to": "phase-plan:phases/phase-2",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "audit:audits/phase-02-slice-09-fe-qa",
+      "to": "phase-plan:phases/phase-2",
+      "type": "phases_into",
+      "source": "phase-ref"
+    },
+    {
+      "from": "audit:audits/phase-02-slice-09-fe-qa",
+      "to": "phase-plan:phases/phase-2",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "audit:audits/phase-02-slice-09-qa-green",
+      "to": "phase-plan:phases/phase-2",
+      "type": "phases_into",
+      "source": "phase-ref"
+    },
+    {
+      "from": "audit:audits/phase-02-slice-09-qa-green",
+      "to": "phase-plan:phases/phase-2",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "audit:audits/phase-02-slice-09-verification-remediation",
+      "to": "phase-plan:phases/phase-2",
+      "type": "phases_into",
+      "source": "phase-ref"
+    },
+    {
+      "from": "audit:audits/phase-02-slice-09-verification-remediation",
+      "to": "phase-plan:phases/phase-2",
       "type": "references",
       "source": "wikilink"
     },
@@ -11370,6 +11564,18 @@
       "source": "wikilink"
     },
     {
+      "from": "audit:audits/propagation-option-a-2026-09-02",
+      "to": "phase-plan:phases/phase-2",
+      "type": "phases_into",
+      "source": "phase-ref"
+    },
+    {
+      "from": "audit:audits/propagation-option-a-2026-09-02",
+      "to": "phase-plan:phases/phase-2",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
       "from": "audit:audits/propagation-scan-2026-08-30",
       "to": "phase-plan:phases/phase-1",
       "type": "phases_into",
@@ -11377,6 +11583,66 @@
     },
     {
       "from": "audit:audits/propagation-scan-2026-08-30",
+      "to": "phase-plan:phases/phase-1",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "audit:audits/propagation-scan-2026-09-02",
+      "to": "phase-plan:phases/phase-2",
+      "type": "phases_into",
+      "source": "phase-ref"
+    },
+    {
+      "from": "audit:audits/propagation-scan-2026-09-02",
+      "to": "phase-plan:phases/phase-2",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "audit:audits/verify-infrastructure-2026-09-04-1255",
+      "to": "phase-plan:phases/phase-2",
+      "type": "phases_into",
+      "source": "phase-ref"
+    },
+    {
+      "from": "audit:audits/verify-infrastructure-2026-09-04-1255",
+      "to": "phase-plan:phases/phase-1",
+      "type": "phases_into",
+      "source": "phase-ref"
+    },
+    {
+      "from": "audit:audits/verify-infrastructure-2026-09-04-1255",
+      "to": "phase-plan:phases/phase-2",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "audit:audits/verify-infrastructure-2026-09-04-1255",
+      "to": "phase-plan:phases/phase-1",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "audit:audits/verify-infrastructure-2026-09-04-1353",
+      "to": "phase-plan:phases/phase-2",
+      "type": "phases_into",
+      "source": "phase-ref"
+    },
+    {
+      "from": "audit:audits/verify-infrastructure-2026-09-04-1353",
+      "to": "phase-plan:phases/phase-1",
+      "type": "phases_into",
+      "source": "phase-ref"
+    },
+    {
+      "from": "audit:audits/verify-infrastructure-2026-09-04-1353",
+      "to": "phase-plan:phases/phase-2",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "audit:audits/verify-infrastructure-2026-09-04-1353",
       "to": "phase-plan:phases/phase-1",
       "type": "references",
       "source": "wikilink"
@@ -11702,6 +11968,42 @@
     {
       "from": "be-spec:be/13d-handoff-history-specialized-calls",
       "to": "ia-spec:ia/13-opportunities-casting",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "be-spec:be/21a-sample-interpolation-remix-clearance",
+      "to": "phase-plan:phases/phase-2",
+      "type": "phases_into",
+      "source": "phase-ref"
+    },
+    {
+      "from": "be-spec:be/21a-sample-interpolation-remix-clearance",
+      "to": "phase-plan:phases/phase-2",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "be-spec:be/21b-creator-microlicensing-content-id",
+      "to": "phase-plan:phases/phase-2",
+      "type": "phases_into",
+      "source": "phase-ref"
+    },
+    {
+      "from": "be-spec:be/21b-creator-microlicensing-content-id",
+      "to": "phase-plan:phases/phase-2",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "be-spec:be/21c-ai-training-corpus-compensation",
+      "to": "phase-plan:phases/phase-2",
+      "type": "phases_into",
+      "source": "phase-ref"
+    },
+    {
+      "from": "be-spec:be/21c-ai-training-corpus-compensation",
+      "to": "phase-plan:phases/phase-2",
       "type": "references",
       "source": "wikilink"
     },
@@ -12757,7 +13059,31 @@
     },
     {
       "from": "fe-spec:fe/03-cms-content-modeling",
+      "to": "ia-spec:ia/deep-dives/03-cms-content-modeling",
+      "type": "derives_from",
+      "source": "ia-source"
+    },
+    {
+      "from": "fe-spec:fe/03-cms-content-modeling",
+      "to": "phase-plan:phases/phase-2",
+      "type": "phases_into",
+      "source": "phase-ref"
+    },
+    {
+      "from": "fe-spec:fe/03-cms-content-modeling",
       "to": "ia-spec:ia/03-cms-content-modeling",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "fe-spec:fe/03-cms-content-modeling",
+      "to": "ia-spec:ia/deep-dives/03-cms-content-modeling",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "fe-spec:fe/03-cms-content-modeling",
+      "to": "phase-plan:phases/phase-2",
       "type": "references",
       "source": "wikilink"
     },
@@ -13567,6 +13893,12 @@
     },
     {
       "from": "plan:feature-ledger",
+      "to": "phase-plan:phases/phase-2",
+      "type": "phases_into",
+      "source": "phase-ref"
+    },
+    {
+      "from": "plan:feature-ledger",
       "to": "decision:d-31",
       "type": "constrained_by",
       "source": "decision-ref"
@@ -13588,6 +13920,30 @@
       "to": "decision:d-20",
       "type": "constrained_by",
       "source": "decision-ref"
+    },
+    {
+      "from": "plan:feature-ledger",
+      "to": "ia-spec:ia/05-platform-configuration-admin",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:feature-ledger",
+      "to": "be-spec:be/05a-settings-flags-runtime",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:feature-ledger",
+      "to": "fe-spec:fe/05-platform-configuration-admin",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:feature-ledger",
+      "to": "phase-plan:phases/phase-2",
+      "type": "references",
+      "source": "wikilink"
     },
     {
       "from": "ia-spec:ia/00-infrastructure",
@@ -13855,6 +14211,12 @@
     },
     {
       "from": "ia-spec:ia/06-trust-safety",
+      "to": "phase-plan:phases/phase-2",
+      "type": "phases_into",
+      "source": "phase-ref"
+    },
+    {
+      "from": "ia-spec:ia/06-trust-safety",
       "to": "decision:d-03",
       "type": "constrained_by",
       "source": "decision-ref"
@@ -14018,6 +14380,12 @@
     {
       "from": "ia-spec:ia/06-trust-safety",
       "to": "ia-spec:ia/40-market-intelligence-signals",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "ia-spec:ia/06-trust-safety",
+      "to": "phase-plan:phases/phase-2",
       "type": "references",
       "source": "wikilink"
     },
@@ -14377,6 +14745,12 @@
     },
     {
       "from": "ia-spec:ia/17-realtime-sessions",
+      "to": "phase-plan:phases/phase-2",
+      "type": "phases_into",
+      "source": "phase-ref"
+    },
+    {
+      "from": "ia-spec:ia/17-realtime-sessions",
       "to": "ia-spec:ia/00-infrastructure",
       "type": "references",
       "source": "wikilink"
@@ -14416,6 +14790,18 @@
       "to": "ia-spec:ia/deep-dives/17-realtime-sessions",
       "type": "references",
       "source": "wikilink"
+    },
+    {
+      "from": "ia-spec:ia/17-realtime-sessions",
+      "to": "phase-plan:phases/phase-2",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "ia-spec:ia/18-royalty-accounting",
+      "to": "phase-plan:phases/phase-2",
+      "type": "phases_into",
+      "source": "phase-ref"
     },
     {
       "from": "ia-spec:ia/18-royalty-accounting",
@@ -14467,6 +14853,12 @@
     },
     {
       "from": "ia-spec:ia/18-royalty-accounting",
+      "to": "phase-plan:phases/phase-2",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "ia-spec:ia/18-royalty-accounting",
       "to": "ia-spec:ia/02-profiles-verification",
       "type": "references",
       "source": "wikilink"
@@ -14500,6 +14892,12 @@
       "to": "ia-spec:ia/deep-dives/19-royalty-reporting-forecasting",
       "type": "references",
       "source": "wikilink"
+    },
+    {
+      "from": "ia-spec:ia/20-licensing-core",
+      "to": "phase-plan:phases/phase-2",
+      "type": "phases_into",
+      "source": "phase-ref"
     },
     {
       "from": "ia-spec:ia/20-licensing-core",
@@ -14556,6 +14954,18 @@
       "source": "wikilink"
     },
     {
+      "from": "ia-spec:ia/20-licensing-core",
+      "to": "phase-plan:phases/phase-2",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "ia-spec:ia/21-specialized-licensing",
+      "to": "phase-plan:phases/phase-2",
+      "type": "phases_into",
+      "source": "phase-ref"
+    },
+    {
       "from": "ia-spec:ia/21-specialized-licensing",
       "to": "ia-spec:ia/00-infrastructure",
       "type": "references",
@@ -14590,6 +15000,18 @@
       "to": "ia-spec:ia/deep-dives/21-specialized-licensing",
       "type": "references",
       "source": "wikilink"
+    },
+    {
+      "from": "ia-spec:ia/21-specialized-licensing",
+      "to": "phase-plan:phases/phase-2",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "ia-spec:ia/22-release-distribution",
+      "to": "phase-plan:phases/phase-2",
+      "type": "phases_into",
+      "source": "phase-ref"
     },
     {
       "from": "ia-spec:ia/22-release-distribution",
@@ -14642,6 +15064,12 @@
     {
       "from": "ia-spec:ia/22-release-distribution",
       "to": "ia-spec:ia/deep-dives/22-release-distribution",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "ia-spec:ia/22-release-distribution",
+      "to": "phase-plan:phases/phase-2",
       "type": "references",
       "source": "wikilink"
     },
@@ -15841,6 +16269,12 @@
     },
     {
       "from": "ia-spec:ia/deep-dives/17-realtime-sessions",
+      "to": "phase-plan:phases/phase-2",
+      "type": "phases_into",
+      "source": "phase-ref"
+    },
+    {
+      "from": "ia-spec:ia/deep-dives/17-realtime-sessions",
       "to": "ia-spec:ia/17-realtime-sessions",
       "type": "references",
       "source": "wikilink"
@@ -15866,6 +16300,12 @@
     {
       "from": "ia-spec:ia/deep-dives/17-realtime-sessions",
       "to": "ia-spec:ia/14-services-marketplace",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "ia-spec:ia/deep-dives/17-realtime-sessions",
+      "to": "phase-plan:phases/phase-2",
       "type": "references",
       "source": "wikilink"
     },
@@ -24277,6 +24717,12 @@
     },
     {
       "from": "ideation:ideation/04-opportunities-casting/04.02-discovery-matching-alerts/04.02.03-material-aware-dep-matching",
+      "to": "phase-plan:phases/phase-2",
+      "type": "phases_into",
+      "source": "phase-ref"
+    },
+    {
+      "from": "ideation:ideation/04-opportunities-casting/04.02-discovery-matching-alerts/04.02.03-material-aware-dep-matching",
       "to": "decision:d-02",
       "type": "constrained_by",
       "source": "decision-ref"
@@ -24316,6 +24762,18 @@
       "to": "decision:d-31",
       "type": "constrained_by",
       "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/04-opportunities-casting/04.02-discovery-matching-alerts/04.02.03-material-aware-dep-matching",
+      "to": "phase-plan:phases/phase-2",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "ideation:ideation/04-opportunities-casting/04.02-discovery-matching-alerts/04.02.04-alert-subscriptions-delivery",
+      "to": "phase-plan:phases/phase-2",
+      "type": "phases_into",
+      "source": "phase-ref"
     },
     {
       "from": "ideation:ideation/04-opportunities-casting/04.02-discovery-matching-alerts/04.02.04-alert-subscriptions-delivery",
@@ -24444,6 +24902,12 @@
       "source": "decision-ref"
     },
     {
+      "from": "ideation:ideation/04-opportunities-casting/04.02-discovery-matching-alerts/04.02.04-alert-subscriptions-delivery",
+      "to": "phase-plan:phases/phase-2",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
       "from": "ideation:ideation/04-opportunities-casting/04.03-submission-audition/04.03-submission-audition-cx",
       "to": "decision:d-03",
       "type": "constrained_by",
@@ -25252,6 +25716,12 @@
       "to": "decision:d-09",
       "type": "constrained_by",
       "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/04-opportunities-casting/04.05-outcome-response-handoff/04.05.03-won-opportunity-handoff",
+      "to": "phase-plan:phases/phase-2",
+      "type": "phases_into",
+      "source": "phase-ref"
     },
     {
       "from": "ideation:ideation/04-opportunities-casting/04.05-outcome-response-handoff/04.05.03-won-opportunity-handoff",
@@ -25372,6 +25842,12 @@
       "to": "decision:d-31",
       "type": "constrained_by",
       "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/04-opportunities-casting/04.05-outcome-response-handoff/04.05.03-won-opportunity-handoff",
+      "to": "phase-plan:phases/phase-2",
+      "type": "references",
+      "source": "wikilink"
     },
     {
       "from": "ideation:ideation/04-opportunities-casting/04.05-outcome-response-handoff/04.05.04-applicant-pipeline-history",
@@ -27787,6 +28263,12 @@
     },
     {
       "from": "ideation:ideation/05-services-marketplace/05.07-custodial-physical-services/05.07-custodial-physical-services-index",
+      "to": "phase-plan:phases/phase-2",
+      "type": "phases_into",
+      "source": "phase-ref"
+    },
+    {
+      "from": "ideation:ideation/05-services-marketplace/05.07-custodial-physical-services/05.07-custodial-physical-services-index",
       "to": "decision:d-01",
       "type": "constrained_by",
       "source": "decision-ref"
@@ -27826,6 +28308,12 @@
       "to": "decision:d-05",
       "type": "constrained_by",
       "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/05-services-marketplace/05.07-custodial-physical-services/05.07-custodial-physical-services-index",
+      "to": "phase-plan:phases/phase-2",
+      "type": "references",
+      "source": "wikilink"
     },
     {
       "from": "ideation:ideation/05-services-marketplace/05.07-custodial-physical-services/05.07.01-repair-tech-luthier-job-flow",
@@ -28009,6 +28497,12 @@
     },
     {
       "from": "ideation:ideation/05-services-marketplace/services-marketplace-index",
+      "to": "phase-plan:phases/phase-2",
+      "type": "phases_into",
+      "source": "phase-ref"
+    },
+    {
+      "from": "ideation:ideation/05-services-marketplace/services-marketplace-index",
       "to": "decision:d-07",
       "type": "constrained_by",
       "source": "decision-ref"
@@ -28084,6 +28578,12 @@
       "to": "decision:d-28",
       "type": "constrained_by",
       "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/05-services-marketplace/services-marketplace-index",
+      "to": "phase-plan:phases/phase-2",
+      "type": "references",
+      "source": "wikilink"
     },
     {
       "from": "ideation:ideation/06-education-lessons-mentorship/06.01-lesson-booking-packages-delivery/06.01-lesson-booking-packages-delivery-cx",
@@ -29101,6 +29601,12 @@
     },
     {
       "from": "ideation:ideation/06-education-lessons-mentorship/06.03-curriculum-assignments-practice/06.03.02-assignments-submissions-timestamped-feedback",
+      "to": "phase-plan:phases/phase-2",
+      "type": "phases_into",
+      "source": "phase-ref"
+    },
+    {
+      "from": "ideation:ideation/06-education-lessons-mentorship/06.03-curriculum-assignments-practice/06.03.02-assignments-submissions-timestamped-feedback",
       "to": "decision:d-18",
       "type": "constrained_by",
       "source": "decision-ref"
@@ -29230,6 +29736,12 @@
       "to": "decision:d-70",
       "type": "constrained_by",
       "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/06-education-lessons-mentorship/06.03-curriculum-assignments-practice/06.03.02-assignments-submissions-timestamped-feedback",
+      "to": "phase-plan:phases/phase-2",
+      "type": "references",
+      "source": "wikilink"
     },
     {
       "from": "ideation:ideation/06-education-lessons-mentorship/06.03-curriculum-assignments-practice/06.03.03-practice-logging-streaks-goals",
@@ -29569,6 +30081,12 @@
     },
     {
       "from": "ideation:ideation/06-education-lessons-mentorship/06.05-group-lessons-workshops-masterclasses",
+      "to": "phase-plan:phases/phase-2",
+      "type": "phases_into",
+      "source": "phase-ref"
+    },
+    {
+      "from": "ideation:ideation/06-education-lessons-mentorship/06.05-group-lessons-workshops-masterclasses",
       "to": "decision:d-01",
       "type": "constrained_by",
       "source": "decision-ref"
@@ -29602,6 +30120,12 @@
       "to": "decision:d-31",
       "type": "constrained_by",
       "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/06-education-lessons-mentorship/06.05-group-lessons-workshops-masterclasses",
+      "to": "phase-plan:phases/phase-2",
+      "type": "references",
+      "source": "wikilink"
     },
     {
       "from": "ideation:ideation/06-education-lessons-mentorship/06.06-mentorship-programmes",
@@ -29851,6 +30375,12 @@
     },
     {
       "from": "ideation:ideation/06-education-lessons-mentorship/education-lessons-mentorship-index",
+      "to": "phase-plan:phases/phase-2",
+      "type": "phases_into",
+      "source": "phase-ref"
+    },
+    {
+      "from": "ideation:ideation/06-education-lessons-mentorship/education-lessons-mentorship-index",
       "to": "decision:d-02",
       "type": "constrained_by",
       "source": "decision-ref"
@@ -29938,6 +30468,12 @@
       "to": "decision:d-31",
       "type": "constrained_by",
       "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/06-education-lessons-mentorship/education-lessons-mentorship-index",
+      "to": "phase-plan:phases/phase-2",
+      "type": "references",
+      "source": "wikilink"
     },
     {
       "from": "ideation:ideation/07-music-projects-collaboration/07.01-song-release-production-board/07.01-song-release-production-board-cx",
@@ -30193,6 +30729,12 @@
     },
     {
       "from": "ideation:ideation/07-music-projects-collaboration/07.02-songwriting-composition-workspace/07.02.01-idea-capture-inbox",
+      "to": "phase-plan:phases/phase-2",
+      "type": "phases_into",
+      "source": "phase-ref"
+    },
+    {
+      "from": "ideation:ideation/07-music-projects-collaboration/07.02-songwriting-composition-workspace/07.02.01-idea-capture-inbox",
       "to": "decision:d-11",
       "type": "constrained_by",
       "source": "decision-ref"
@@ -30240,6 +30782,12 @@
       "source": "decision-ref"
     },
     {
+      "from": "ideation:ideation/07-music-projects-collaboration/07.02-songwriting-composition-workspace/07.02.01-idea-capture-inbox",
+      "to": "phase-plan:phases/phase-2",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
       "from": "ideation:ideation/07-music-projects-collaboration/07.02-songwriting-composition-workspace/07.02.02-lyric-workspace-per-line-attribution",
       "to": "decision:d-02",
       "type": "constrained_by",
@@ -30268,6 +30816,12 @@
       "to": "decision:d-24",
       "type": "constrained_by",
       "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/07-music-projects-collaboration/07.02-songwriting-composition-workspace/07.02.03-chord-arrangement-chart-workspace",
+      "to": "phase-plan:phases/phase-2",
+      "type": "phases_into",
+      "source": "phase-ref"
     },
     {
       "from": "ideation:ideation/07-music-projects-collaboration/07.02-songwriting-composition-workspace/07.02.03-chord-arrangement-chart-workspace",
@@ -30316,6 +30870,12 @@
       "to": "decision:d-08",
       "type": "constrained_by",
       "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/07-music-projects-collaboration/07.02-songwriting-composition-workspace/07.02.03-chord-arrangement-chart-workspace",
+      "to": "phase-plan:phases/phase-2",
+      "type": "references",
+      "source": "wikilink"
     },
     {
       "from": "ideation:ideation/07-music-projects-collaboration/07.03-contributors-access-confidentiality/07.03-contributors-access-confidentiality-cx",
@@ -32917,6 +33477,12 @@
     },
     {
       "from": "ideation:ideation/07-music-projects-collaboration/music-projects-collaboration-index",
+      "to": "phase-plan:phases/phase-2",
+      "type": "phases_into",
+      "source": "phase-ref"
+    },
+    {
+      "from": "ideation:ideation/07-music-projects-collaboration/music-projects-collaboration-index",
       "to": "decision:d-04",
       "type": "constrained_by",
       "source": "decision-ref"
@@ -33028,6 +33594,12 @@
       "to": "decision:d-13",
       "type": "constrained_by",
       "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/07-music-projects-collaboration/music-projects-collaboration-index",
+      "to": "phase-plan:phases/phase-2",
+      "type": "references",
+      "source": "wikilink"
     },
     {
       "from": "ideation:ideation/08-realtime-jamming-remote-sessions/08.01-latency-budget-playability/08.01-latency-budget-playability-cx",
@@ -33835,6 +34407,12 @@
     },
     {
       "from": "ideation:ideation/08-realtime-jamming-remote-sessions/08.05-session-capture-recall/08.05.02-take-alignment-drift-correction",
+      "to": "phase-plan:phases/phase-2",
+      "type": "phases_into",
+      "source": "phase-ref"
+    },
+    {
+      "from": "ideation:ideation/08-realtime-jamming-remote-sessions/08.05-session-capture-recall/08.05.02-take-alignment-drift-correction",
       "to": "decision:d-01",
       "type": "constrained_by",
       "source": "decision-ref"
@@ -33940,6 +34518,12 @@
       "to": "decision:d-18",
       "type": "constrained_by",
       "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/08-realtime-jamming-remote-sessions/08.05-session-capture-recall/08.05.02-take-alignment-drift-correction",
+      "to": "phase-plan:phases/phase-2",
+      "type": "references",
+      "source": "wikilink"
     },
     {
       "from": "ideation:ideation/08-realtime-jamming-remote-sessions/08.05-session-capture-recall/08.05.03-auto-highlights-moment-flagging",
@@ -38449,6 +39033,12 @@
     },
     {
       "from": "ideation:ideation/10-royalties-collections/royalties-collections-index",
+      "to": "phase-plan:phases/phase-2",
+      "type": "phases_into",
+      "source": "phase-ref"
+    },
+    {
+      "from": "ideation:ideation/10-royalties-collections/royalties-collections-index",
       "to": "decision:d-10",
       "type": "constrained_by",
       "source": "decision-ref"
@@ -38560,6 +39150,12 @@
       "to": "decision:d-31",
       "type": "constrained_by",
       "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/10-royalties-collections/royalties-collections-index",
+      "to": "phase-plan:phases/phase-2",
+      "type": "references",
+      "source": "wikilink"
     },
     {
       "from": "ideation:ideation/11-music-licensing/11.01-sync-licensing/11.01-sync-licensing-index",
@@ -40117,6 +40713,12 @@
     },
     {
       "from": "ideation:ideation/11-music-licensing/11.06-creator-micro-licensing/11.06.01-creator-licence-catalogue",
+      "to": "phase-plan:phases/phase-2",
+      "type": "phases_into",
+      "source": "phase-ref"
+    },
+    {
+      "from": "ideation:ideation/11-music-licensing/11.06-creator-micro-licensing/11.06.01-creator-licence-catalogue",
       "to": "decision:d-05",
       "type": "constrained_by",
       "source": "decision-ref"
@@ -40162,6 +40764,12 @@
       "to": "decision:d-31",
       "type": "constrained_by",
       "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/11-music-licensing/11.06-creator-micro-licensing/11.06.01-creator-licence-catalogue",
+      "to": "phase-plan:phases/phase-2",
+      "type": "references",
+      "source": "wikilink"
     },
     {
       "from": "ideation:ideation/11-music-licensing/11.06-creator-micro-licensing/11.06.02-content-id-whitelisting",
@@ -40807,6 +41415,12 @@
     },
     {
       "from": "ideation:ideation/11-music-licensing/11.09-cover-song-compulsory-mechanical",
+      "to": "phase-plan:phases/phase-2",
+      "type": "phases_into",
+      "source": "phase-ref"
+    },
+    {
+      "from": "ideation:ideation/11-music-licensing/11.09-cover-song-compulsory-mechanical",
       "to": "decision:d-01",
       "type": "constrained_by",
       "source": "decision-ref"
@@ -40840,6 +41454,12 @@
       "to": "decision:d-31",
       "type": "constrained_by",
       "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/11-music-licensing/11.09-cover-song-compulsory-mechanical",
+      "to": "phase-plan:phases/phase-2",
+      "type": "references",
+      "source": "wikilink"
     },
     {
       "from": "ideation:ideation/11-music-licensing/11.10-print-lyric-rights",
@@ -40969,6 +41589,12 @@
     },
     {
       "from": "ideation:ideation/11-music-licensing/music-licensing-index",
+      "to": "phase-plan:phases/phase-2",
+      "type": "phases_into",
+      "source": "phase-ref"
+    },
+    {
+      "from": "ideation:ideation/11-music-licensing/music-licensing-index",
       "to": "decision:d-10",
       "type": "constrained_by",
       "source": "decision-ref"
@@ -41050,6 +41676,12 @@
       "to": "decision:d-31",
       "type": "constrained_by",
       "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/11-music-licensing/music-licensing-index",
+      "to": "phase-plan:phases/phase-2",
+      "type": "references",
+      "source": "wikilink"
     },
     {
       "from": "ideation:ideation/12-release-distribution/12.01-release-builder/12.01-release-builder-cx",
@@ -54559,6 +55191,12 @@
     },
     {
       "from": "ideation:ideation/17-live-booking-settlement/17.09-settlement-reconciliation/17.09-settlement-reconciliation-index",
+      "to": "phase-plan:phases/phase-2",
+      "type": "phases_into",
+      "source": "phase-ref"
+    },
+    {
+      "from": "ideation:ideation/17-live-booking-settlement/17.09-settlement-reconciliation/17.09-settlement-reconciliation-index",
       "to": "decision:d-01",
       "type": "constrained_by",
       "source": "decision-ref"
@@ -54592,6 +55230,18 @@
       "to": "decision:d-12",
       "type": "constrained_by",
       "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/17-live-booking-settlement/17.09-settlement-reconciliation/17.09-settlement-reconciliation-index",
+      "to": "phase-plan:phases/phase-2",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "ideation:ideation/17-live-booking-settlement/17.09-settlement-reconciliation/17.09.01-settlement-sheet-computation",
+      "to": "phase-plan:phases/phase-2",
+      "type": "phases_into",
+      "source": "phase-ref"
     },
     {
       "from": "ideation:ideation/17-live-booking-settlement/17.09-settlement-reconciliation/17.09.01-settlement-sheet-computation",
@@ -54700,6 +55350,18 @@
       "to": "decision:d-16",
       "type": "constrained_by",
       "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/17-live-booking-settlement/17.09-settlement-reconciliation/17.09.01-settlement-sheet-computation",
+      "to": "phase-plan:phases/phase-2",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "ideation:ideation/17-live-booking-settlement/17.09-settlement-reconciliation/17.09.02-box-office-count-reconciliation",
+      "to": "phase-plan:phases/phase-2",
+      "type": "phases_into",
+      "source": "phase-ref"
     },
     {
       "from": "ideation:ideation/17-live-booking-settlement/17.09-settlement-reconciliation/17.09.02-box-office-count-reconciliation",
@@ -54814,6 +55476,12 @@
       "to": "decision:d-04",
       "type": "constrained_by",
       "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/17-live-booking-settlement/17.09-settlement-reconciliation/17.09.02-box-office-count-reconciliation",
+      "to": "phase-plan:phases/phase-2",
+      "type": "references",
+      "source": "wikilink"
     },
     {
       "from": "ideation:ideation/17-live-booking-settlement/17.09-settlement-reconciliation/17.09.03-show-expense-receipt-capture",
@@ -55705,6 +56373,12 @@
     },
     {
       "from": "ideation:ideation/17-live-booking-settlement/live-booking-settlement-index",
+      "to": "phase-plan:phases/phase-2",
+      "type": "phases_into",
+      "source": "phase-ref"
+    },
+    {
+      "from": "ideation:ideation/17-live-booking-settlement/live-booking-settlement-index",
       "to": "decision:d-18",
       "type": "constrained_by",
       "source": "decision-ref"
@@ -55818,6 +56492,12 @@
       "source": "decision-ref"
     },
     {
+      "from": "ideation:ideation/17-live-booking-settlement/live-booking-settlement-index",
+      "to": "phase-plan:phases/phase-2",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
       "from": "ideation:ideation/18-show-production-touring/18.01-event-record-lifecycle",
       "to": "decision:d-20",
       "type": "constrained_by",
@@ -56737,6 +57417,12 @@
     },
     {
       "from": "ideation:ideation/18-show-production-touring/18.06-setlist-show-files/18.06.02-stage-ready-output",
+      "to": "phase-plan:phases/phase-2",
+      "type": "phases_into",
+      "source": "phase-ref"
+    },
+    {
+      "from": "ideation:ideation/18-show-production-touring/18.06-setlist-show-files/18.06.02-stage-ready-output",
       "to": "decision:d-03",
       "type": "constrained_by",
       "source": "decision-ref"
@@ -56752,6 +57438,12 @@
       "to": "decision:d-02",
       "type": "constrained_by",
       "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/18-show-production-touring/18.06-setlist-show-files/18.06.02-stage-ready-output",
+      "to": "phase-plan:phases/phase-2",
+      "type": "references",
+      "source": "wikilink"
     },
     {
       "from": "ideation:ideation/18-show-production-touring/18.06-setlist-show-files/18.06.03-show-file-custody",
@@ -57037,6 +57729,12 @@
     },
     {
       "from": "ideation:ideation/18-show-production-touring/18.07-show-day-schedule/18.07.03-live-slippage",
+      "to": "phase-plan:phases/phase-2",
+      "type": "phases_into",
+      "source": "phase-ref"
+    },
+    {
+      "from": "ideation:ideation/18-show-production-touring/18.07-show-day-schedule/18.07.03-live-slippage",
       "to": "decision:d-28",
       "type": "constrained_by",
       "source": "decision-ref"
@@ -57076,6 +57774,12 @@
       "to": "decision:d-04",
       "type": "constrained_by",
       "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/18-show-production-touring/18.07-show-day-schedule/18.07.03-live-slippage",
+      "to": "phase-plan:phases/phase-2",
+      "type": "references",
+      "source": "wikilink"
     },
     {
       "from": "ideation:ideation/18-show-production-touring/18.08-crew-credentials/18.08-crew-credentials-cx",
@@ -57427,6 +58131,12 @@
     },
     {
       "from": "ideation:ideation/18-show-production-touring/18.10-day-sheet",
+      "to": "phase-plan:phases/phase-2",
+      "type": "phases_into",
+      "source": "phase-ref"
+    },
+    {
+      "from": "ideation:ideation/18-show-production-touring/18.10-day-sheet",
       "to": "decision:d-01",
       "type": "constrained_by",
       "source": "decision-ref"
@@ -57454,6 +58164,12 @@
       "to": "decision:d-70",
       "type": "constrained_by",
       "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/18-show-production-touring/18.10-day-sheet",
+      "to": "phase-plan:phases/phase-2",
+      "type": "references",
+      "source": "wikilink"
     },
     {
       "from": "ideation:ideation/18-show-production-touring/18.11-tour-container-routing/18.11-tour-container-routing-cx",
@@ -58255,6 +58971,12 @@
     },
     {
       "from": "ideation:ideation/18-show-production-touring/show-production-touring-index",
+      "to": "phase-plan:phases/phase-2",
+      "type": "phases_into",
+      "source": "phase-ref"
+    },
+    {
+      "from": "ideation:ideation/18-show-production-touring/show-production-touring-index",
       "to": "decision:d-08",
       "type": "constrained_by",
       "source": "decision-ref"
@@ -58348,6 +59070,12 @@
       "to": "decision:d-70",
       "type": "constrained_by",
       "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/18-show-production-touring/show-production-touring-index",
+      "to": "phase-plan:phases/phase-2",
+      "type": "references",
+      "source": "wikilink"
     },
     {
       "from": "ideation:ideation/19-ticketing-box-office/19.01-ticket-config-scaling-allocations/19.01-ticket-config-scaling-allocations-index",
@@ -60649,6 +61377,12 @@
     },
     {
       "from": "ideation:ideation/19-ticketing-box-office/19.12-ticket-delivery-fan-wallet",
+      "to": "phase-plan:phases/phase-2",
+      "type": "phases_into",
+      "source": "phase-ref"
+    },
+    {
+      "from": "ideation:ideation/19-ticketing-box-office/19.12-ticket-delivery-fan-wallet",
       "to": "decision:d-04",
       "type": "constrained_by",
       "source": "decision-ref"
@@ -60718,6 +61452,12 @@
       "to": "decision:d-13",
       "type": "constrained_by",
       "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/19-ticketing-box-office/19.12-ticket-delivery-fan-wallet",
+      "to": "phase-plan:phases/phase-2",
+      "type": "references",
+      "source": "wikilink"
     },
     {
       "from": "ideation:ideation/19-ticketing-box-office/ticketing-box-office-cx",
@@ -60790,6 +61530,12 @@
       "to": "decision:d-18",
       "type": "constrained_by",
       "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/19-ticketing-box-office/ticketing-box-office-index",
+      "to": "phase-plan:phases/phase-2",
+      "type": "phases_into",
+      "source": "phase-ref"
     },
     {
       "from": "ideation:ideation/19-ticketing-box-office/ticketing-box-office-index",
@@ -60888,6 +61634,12 @@
       "source": "decision-ref"
     },
     {
+      "from": "ideation:ideation/19-ticketing-box-office/ticketing-box-office-index",
+      "to": "phase-plan:phases/phase-2",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
       "from": "ideation:ideation/20-fanbase-direct-to-fan/20.01-fan-graph-owned-audience/20.01-fan-graph-owned-audience-cx",
       "to": "decision:d-01",
       "type": "constrained_by",
@@ -61243,6 +61995,12 @@
     },
     {
       "from": "ideation:ideation/20-fanbase-direct-to-fan/20.02-segmentation-superfan-intelligence/20.02.02-superfan-score",
+      "to": "phase-plan:phases/phase-2",
+      "type": "phases_into",
+      "source": "phase-ref"
+    },
+    {
+      "from": "ideation:ideation/20-fanbase-direct-to-fan/20.02-segmentation-superfan-intelligence/20.02.02-superfan-score",
       "to": "decision:d-02",
       "type": "constrained_by",
       "source": "decision-ref"
@@ -61270,6 +62028,12 @@
       "to": "decision:d-31",
       "type": "constrained_by",
       "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/20-fanbase-direct-to-fan/20.02-segmentation-superfan-intelligence/20.02.02-superfan-score",
+      "to": "phase-plan:phases/phase-2",
+      "type": "references",
+      "source": "wikilink"
     },
     {
       "from": "ideation:ideation/20-fanbase-direct-to-fan/20.02-segmentation-superfan-intelligence/20.02.03-perk-entitlements-presale-eligibility",
@@ -61375,6 +62139,12 @@
     },
     {
       "from": "ideation:ideation/20-fanbase-direct-to-fan/20.03-broadcast-fan-messaging/20.03.02-channel-routing-bulk-delivery",
+      "to": "phase-plan:phases/phase-2",
+      "type": "phases_into",
+      "source": "phase-ref"
+    },
+    {
+      "from": "ideation:ideation/20-fanbase-direct-to-fan/20.03-broadcast-fan-messaging/20.03.02-channel-routing-bulk-delivery",
       "to": "decision:d-13",
       "type": "constrained_by",
       "source": "decision-ref"
@@ -61432,6 +62202,12 @@
       "to": "decision:d-11",
       "type": "constrained_by",
       "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/20-fanbase-direct-to-fan/20.03-broadcast-fan-messaging/20.03.02-channel-routing-bulk-delivery",
+      "to": "phase-plan:phases/phase-2",
+      "type": "references",
+      "source": "wikilink"
     },
     {
       "from": "ideation:ideation/20-fanbase-direct-to-fan/20.03-broadcast-fan-messaging/20.03.03-send-scheduling-throttling",
@@ -62113,6 +62889,12 @@
     },
     {
       "from": "ideation:ideation/20-fanbase-direct-to-fan/20.06-fan-experience-discovery/20.06-fan-experience-discovery-index",
+      "to": "phase-plan:phases/phase-2",
+      "type": "phases_into",
+      "source": "phase-ref"
+    },
+    {
+      "from": "ideation:ideation/20-fanbase-direct-to-fan/20.06-fan-experience-discovery/20.06-fan-experience-discovery-index",
       "to": "decision:d-11",
       "type": "constrained_by",
       "source": "decision-ref"
@@ -62166,6 +62948,12 @@
       "source": "decision-ref"
     },
     {
+      "from": "ideation:ideation/20-fanbase-direct-to-fan/20.06-fan-experience-discovery/20.06-fan-experience-discovery-index",
+      "to": "phase-plan:phases/phase-2",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
       "from": "ideation:ideation/20-fanbase-direct-to-fan/20.06-fan-experience-discovery/20.06.01-artist-tracking-follow",
       "to": "decision:d-03",
       "type": "constrained_by",
@@ -62212,6 +63000,12 @@
       "to": "decision:d-08",
       "type": "constrained_by",
       "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/20-fanbase-direct-to-fan/20.06-fan-experience-discovery/20.06.02-gig-alerts-near-me",
+      "to": "phase-plan:phases/phase-2",
+      "type": "phases_into",
+      "source": "phase-ref"
     },
     {
       "from": "ideation:ideation/20-fanbase-direct-to-fan/20.06-fan-experience-discovery/20.06.02-gig-alerts-near-me",
@@ -62284,6 +63078,12 @@
       "to": "decision:d-70",
       "type": "constrained_by",
       "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/20-fanbase-direct-to-fan/20.06-fan-experience-discovery/20.06.02-gig-alerts-near-me",
+      "to": "phase-plan:phases/phase-2",
+      "type": "references",
+      "source": "wikilink"
     },
     {
       "from": "ideation:ideation/20-fanbase-direct-to-fan/20.06-fan-experience-discovery/20.06.03-fan-library-collection",
@@ -62479,6 +63279,12 @@
     },
     {
       "from": "ideation:ideation/20-fanbase-direct-to-fan/fanbase-direct-to-fan-index",
+      "to": "phase-plan:phases/phase-2",
+      "type": "phases_into",
+      "source": "phase-ref"
+    },
+    {
+      "from": "ideation:ideation/20-fanbase-direct-to-fan/fanbase-direct-to-fan-index",
       "to": "decision:d-11",
       "type": "constrained_by",
       "source": "decision-ref"
@@ -62560,6 +63366,12 @@
       "to": "decision:d-13",
       "type": "constrained_by",
       "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/20-fanbase-direct-to-fan/fanbase-direct-to-fan-index",
+      "to": "phase-plan:phases/phase-2",
+      "type": "references",
+      "source": "wikilink"
     },
     {
       "from": "ideation:ideation/21-promotion-marketing/21.01-release-campaign-planner/21.01-release-campaign-planner-index",
@@ -63685,6 +64497,12 @@
     },
     {
       "from": "ideation:ideation/21-promotion-marketing/promotion-marketing-index",
+      "to": "phase-plan:phases/phase-2",
+      "type": "phases_into",
+      "source": "phase-ref"
+    },
+    {
+      "from": "ideation:ideation/21-promotion-marketing/promotion-marketing-index",
       "to": "decision:d-02",
       "type": "constrained_by",
       "source": "decision-ref"
@@ -63784,6 +64602,12 @@
       "to": "decision:d-31",
       "type": "constrained_by",
       "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/21-promotion-marketing/promotion-marketing-index",
+      "to": "phase-plan:phases/phase-2",
+      "type": "references",
+      "source": "wikilink"
     },
     {
       "from": "ideation:ideation/22-analytics-market-intelligence/22.01-source-connections-ingestion/22.01-source-connections-ingestion-cx",
@@ -64405,6 +65229,12 @@
     },
     {
       "from": "ideation:ideation/22-analytics-market-intelligence/22.05-cross-source-dashboard-reporting/22.05.01-unified-performance-dashboard",
+      "to": "phase-plan:phases/phase-2",
+      "type": "phases_into",
+      "source": "phase-ref"
+    },
+    {
+      "from": "ideation:ideation/22-analytics-market-intelligence/22.05-cross-source-dashboard-reporting/22.05.01-unified-performance-dashboard",
       "to": "decision:d-01",
       "type": "constrained_by",
       "source": "decision-ref"
@@ -64468,6 +65298,12 @@
       "to": "decision:d-31",
       "type": "constrained_by",
       "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/22-analytics-market-intelligence/22.05-cross-source-dashboard-reporting/22.05.01-unified-performance-dashboard",
+      "to": "phase-plan:phases/phase-2",
+      "type": "references",
+      "source": "wikilink"
     },
     {
       "from": "ideation:ideation/22-analytics-market-intelligence/22.05-cross-source-dashboard-reporting/22.05.02-alert-rules-scheduled-digests",
@@ -64915,6 +65751,12 @@
     },
     {
       "from": "ideation:ideation/22-analytics-market-intelligence/22.08-credit-linked-performance/22.08-credit-linked-performance-index",
+      "to": "phase-plan:phases/phase-2",
+      "type": "phases_into",
+      "source": "phase-ref"
+    },
+    {
+      "from": "ideation:ideation/22-analytics-market-intelligence/22.08-credit-linked-performance/22.08-credit-linked-performance-index",
       "to": "decision:d-18",
       "type": "constrained_by",
       "source": "decision-ref"
@@ -64960,6 +65802,18 @@
       "to": "decision:d-20",
       "type": "constrained_by",
       "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/22-analytics-market-intelligence/22.08-credit-linked-performance/22.08-credit-linked-performance-index",
+      "to": "phase-plan:phases/phase-2",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "ideation:ideation/22-analytics-market-intelligence/22.08-credit-linked-performance/22.08.01-contribution-catalog-performance",
+      "to": "phase-plan:phases/phase-2",
+      "type": "phases_into",
+      "source": "phase-ref"
     },
     {
       "from": "ideation:ideation/22-analytics-market-intelligence/22.08-credit-linked-performance/22.08.01-contribution-catalog-performance",
@@ -65014,6 +65868,12 @@
       "to": "decision:d-70",
       "type": "constrained_by",
       "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/22-analytics-market-intelligence/22.08-credit-linked-performance/22.08.01-contribution-catalog-performance",
+      "to": "phase-plan:phases/phase-2",
+      "type": "references",
+      "source": "wikilink"
     },
     {
       "from": "ideation:ideation/22-analytics-market-intelligence/22.08-credit-linked-performance/22.08.02-role-sliced-performance-attribution",
@@ -65149,6 +66009,12 @@
     },
     {
       "from": "ideation:ideation/22-analytics-market-intelligence/analytics-market-intelligence-index",
+      "to": "phase-plan:phases/phase-2",
+      "type": "phases_into",
+      "source": "phase-ref"
+    },
+    {
+      "from": "ideation:ideation/22-analytics-market-intelligence/analytics-market-intelligence-index",
       "to": "decision:d-18",
       "type": "constrained_by",
       "source": "decision-ref"
@@ -65224,6 +66090,12 @@
       "to": "decision:d-20",
       "type": "constrained_by",
       "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/22-analytics-market-intelligence/analytics-market-intelligence-index",
+      "to": "phase-plan:phases/phase-2",
+      "type": "references",
+      "source": "wikilink"
     },
     {
       "from": "ideation:ideation/23-career-finance-business/23.01-income-aggregation-financial-identity/23.01-income-aggregation-financial-identity-cx",
@@ -65443,6 +66315,12 @@
     },
     {
       "from": "ideation:ideation/23-career-finance-business/23.02-expenses-tax-readiness/23.02.01-expense-receipt-capture",
+      "to": "phase-plan:phases/phase-2",
+      "type": "phases_into",
+      "source": "phase-ref"
+    },
+    {
+      "from": "ideation:ideation/23-career-finance-business/23.02-expenses-tax-readiness/23.02.01-expense-receipt-capture",
       "to": "decision:d-02",
       "type": "constrained_by",
       "source": "decision-ref"
@@ -65470,6 +66348,12 @@
       "to": "decision:d-28",
       "type": "constrained_by",
       "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/23-career-finance-business/23.02-expenses-tax-readiness/23.02.01-expense-receipt-capture",
+      "to": "phase-plan:phases/phase-2",
+      "type": "references",
+      "source": "wikilink"
     },
     {
       "from": "ideation:ideation/23-career-finance-business/23.02-expenses-tax-readiness/23.02.02-deduction-categorization-jurisdiction-rules",
@@ -66505,6 +67389,12 @@
     },
     {
       "from": "ideation:ideation/24-trust-safety-disputes/24.01-reporting-moderation/24.01.02-automated-content-classification",
+      "to": "phase-plan:phases/phase-2",
+      "type": "phases_into",
+      "source": "phase-ref"
+    },
+    {
+      "from": "ideation:ideation/24-trust-safety-disputes/24.01-reporting-moderation/24.01.02-automated-content-classification",
       "to": "decision:d-13",
       "type": "constrained_by",
       "source": "decision-ref"
@@ -66526,6 +67416,12 @@
       "to": "decision:d-31",
       "type": "constrained_by",
       "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/24-trust-safety-disputes/24.01-reporting-moderation/24.01.02-automated-content-classification",
+      "to": "phase-plan:phases/phase-2",
+      "type": "references",
+      "source": "wikilink"
     },
     {
       "from": "ideation:ideation/24-trust-safety-disputes/24.01-reporting-moderation/24.01.03-moderation-queue-reviewer-ops",
@@ -66685,6 +67581,12 @@
     },
     {
       "from": "ideation:ideation/24-trust-safety-disputes/24.02-enforcement-appeals-policy/24.02.01-enforcement-ladder-sanctions",
+      "to": "phase-plan:phases/phase-2",
+      "type": "phases_into",
+      "source": "phase-ref"
+    },
+    {
+      "from": "ideation:ideation/24-trust-safety-disputes/24.02-enforcement-appeals-policy/24.02.01-enforcement-ladder-sanctions",
       "to": "decision:d-10",
       "type": "constrained_by",
       "source": "decision-ref"
@@ -66766,6 +67668,12 @@
       "to": "decision:d-67",
       "type": "constrained_by",
       "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/24-trust-safety-disputes/24.02-enforcement-appeals-policy/24.02.01-enforcement-ladder-sanctions",
+      "to": "phase-plan:phases/phase-2",
+      "type": "references",
+      "source": "wikilink"
     },
     {
       "from": "ideation:ideation/24-trust-safety-disputes/24.02-enforcement-appeals-policy/24.02.02-appeals-internal-complaints",
@@ -68293,6 +69201,12 @@
     },
     {
       "from": "ideation:ideation/24-trust-safety-disputes/trust-safety-disputes-index",
+      "to": "phase-plan:phases/phase-2",
+      "type": "phases_into",
+      "source": "phase-ref"
+    },
+    {
+      "from": "ideation:ideation/24-trust-safety-disputes/trust-safety-disputes-index",
       "to": "decision:d-10",
       "type": "constrained_by",
       "source": "decision-ref"
@@ -68386,6 +69300,12 @@
       "to": "decision:d-28",
       "type": "constrained_by",
       "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/24-trust-safety-disputes/trust-safety-disputes-index",
+      "to": "phase-plan:phases/phase-2",
+      "type": "references",
+      "source": "wikilink"
     },
     {
       "from": "ideation:ideation/25-content-management-platform-configuration/25.01-content-types-schema-registry/25.01-content-types-schema-registry-index",
@@ -69748,6 +70668,12 @@
       "to": "decision:d-15",
       "type": "constrained_by",
       "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/ideation-cx",
+      "to": "phase-plan:phases/phase-2",
+      "type": "phases_into",
+      "source": "phase-ref"
     },
     {
       "from": "ideation:ideation/ideation-cx",
@@ -69886,6 +70812,18 @@
       "to": "decision:d-17",
       "type": "constrained_by",
       "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/ideation-cx",
+      "to": "phase-plan:phases/phase-2",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "ideation:ideation/ideation-index",
+      "to": "phase-plan:phases/phase-2",
+      "type": "phases_into",
+      "source": "phase-ref"
     },
     {
       "from": "ideation:ideation/ideation-index",
@@ -70398,6 +71336,18 @@
       "source": "decision-ref"
     },
     {
+      "from": "ideation:ideation/ideation-index",
+      "to": "phase-plan:phases/phase-2",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "ideation:ideation/meta/competitive-landscape",
+      "to": "phase-plan:phases/phase-2",
+      "type": "phases_into",
+      "source": "phase-ref"
+    },
+    {
       "from": "ideation:ideation/meta/competitive-landscape",
       "to": "decision:d-70",
       "type": "constrained_by",
@@ -70414,6 +71364,18 @@
       "to": "decision:d-18",
       "type": "constrained_by",
       "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/meta/competitive-landscape",
+      "to": "phase-plan:phases/phase-2",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "ideation:ideation/meta/constraints",
+      "to": "phase-plan:phases/phase-2",
+      "type": "phases_into",
+      "source": "phase-ref"
     },
     {
       "from": "ideation:ideation/meta/constraints",
@@ -70498,6 +71460,12 @@
       "to": "decision:d-46",
       "type": "constrained_by",
       "source": "decision-ref"
+    },
+    {
+      "from": "ideation:ideation/meta/constraints",
+      "to": "phase-plan:phases/phase-2",
+      "type": "references",
+      "source": "wikilink"
     },
     {
       "from": "ideation:ideation/meta/counterparties",
@@ -70705,6 +71673,12 @@
     },
     {
       "from": "ideation:ideation/moscow-ledger",
+      "to": "phase-plan:phases/phase-2",
+      "type": "phases_into",
+      "source": "phase-ref"
+    },
+    {
+      "from": "ideation:ideation/moscow-ledger",
       "to": "decision:d-20",
       "type": "constrained_by",
       "source": "decision-ref"
@@ -70830,6 +71804,12 @@
       "source": "decision-ref"
     },
     {
+      "from": "ideation:ideation/moscow-ledger",
+      "to": "phase-plan:phases/phase-2",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
       "from": "phase-plan:phases/phase-1-draft",
       "to": "phase-plan:phases/phase-1",
       "type": "phases_into",
@@ -70840,6 +71820,36 @@
       "to": "phase-plan:phases/phase-1",
       "type": "references",
       "source": "wikilink"
+    },
+    {
+      "from": "phase-plan:phases/phase-2-draft",
+      "to": "phase-plan:phases/phase-2",
+      "type": "phases_into",
+      "source": "phase-ref"
+    },
+    {
+      "from": "phase-plan:phases/phase-2-draft",
+      "to": "phase-plan:phases/phase-2",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "phase-plan:phases/phase-2",
+      "to": "phase-plan:phases/phase-1",
+      "type": "phases_into",
+      "source": "phase-ref"
+    },
+    {
+      "from": "phase-plan:phases/phase-2",
+      "to": "phase-plan:phases/phase-1",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "plan:vision",
+      "to": "phase-plan:phases/phase-2",
+      "type": "phases_into",
+      "source": "phase-ref"
     },
     {
       "from": "plan:vision",
@@ -70936,25 +71946,31 @@
       "to": "decision:d-03",
       "type": "constrained_by",
       "source": "decision-ref"
+    },
+    {
+      "from": "plan:vision",
+      "to": "phase-plan:phases/phase-2",
+      "type": "references",
+      "source": "wikilink"
     }
   ],
   "stats": {
     "byNodeType": {
       "plan": 12,
       "architecture": 18,
-      "audit": 7,
+      "audit": 19,
       "be-spec": 157,
       "fe-spec": 44,
       "ia-spec": 85,
       "ideation": 1186,
-      "phase-plan": 2,
+      "phase-plan": 4,
       "decision": 97
     },
     "byEdgeType": {
-      "phases_into": 6,
+      "phases_into": 80,
       "constrained_by": 9041,
-      "references": 827,
-      "derives_from": 63,
+      "references": 905,
+      "derives_from": 64,
       "implemented_by": 6,
       "split_from": 3
     }

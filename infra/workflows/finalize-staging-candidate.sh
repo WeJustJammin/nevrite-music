@@ -2,6 +2,8 @@
 
 set -euo pipefail
 
+workflow_dir="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+
 artifact_digest="$(
   sha256sum promotion-candidate/deployment-manifest.sha256 \
     | cut -d ' ' -f 1
@@ -9,13 +11,18 @@ artifact_digest="$(
 migration_version="$(
   find supabase/migrations -maxdepth 1 -type f -name '*.sql' \
     -printf '%f\n' \
-    | sed -n 's/^\([0-9]\{14\}\)_.*/\1/p' \
+    | sed -n 's/^\([0-9]\{14,20\}\)_.*/\1/p' \
     | sort \
     | tail -n 1
 )"
 test "$artifact_digest" != ""
 test "$migration_version" != ""
 test -f promotion-candidate/staging-verification.passed
+node "$workflow_dir/verify-staging-migration-evidence.mjs" \
+  promotion-candidate/staging-migration-evidence.json \
+  "$DEPLOY_SHA" \
+  "$CI_RUN_ID" \
+  "$SUPABASE_PROJECT_REF"
 gate_set="$(
   node --input-type=module - "$DEPLOY_SHA" <<'NODE'
 import { readFileSync } from 'node:fs';

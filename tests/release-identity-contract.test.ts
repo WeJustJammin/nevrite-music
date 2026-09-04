@@ -230,10 +230,7 @@ describe('immutable release identity contract', () => {
   it('applies forward-only migrations and verifies explicit protected approval', () => {
     const workflow = readWorkflow('deploy-production.yml');
     const migrationScript = readFileSync(
-      new URL(
-        '../infra/workflows/apply-production-migrations.sh',
-        import.meta.url,
-      ),
+      new URL('../infra/workflows/apply-hosted-migrations.sh', import.meta.url),
       'utf8',
     );
     const verifier = readFileSync(
@@ -242,7 +239,7 @@ describe('immutable release identity contract', () => {
     );
 
     expect(workflow).toMatch(
-      /bash infra\/workflows\/apply-production-migrations\.sh/u,
+      /bash infra\/workflows\/apply-hosted-migrations\.sh/u,
     );
     expect(migrationScript).toMatch(/export SUPABASE_DB_PASSWORD/u);
     expect(migrationScript).toMatch(

@@ -258,9 +258,15 @@
 <!-- spec-graph: auto-generated -->
 ## Related Specs
 
+### Phases into
+- [[specs/phases/phase-2|Phase 2 — Identity, admin, CMS/settings]]
+
 ### Constrained by
 - [[decisions.md#d-85|D-85]]
 - [[decisions.md#d-04|D-04]]
 - [[decisions.md#d-14|D-14]]
 - [[decisions.md#d-07|D-07]]
 - [[decisions.md#d-10|D-10]]
+
+### References
+- [[specs/phases/phase-2|Phase 2 — Identity, admin, CMS/settings]]

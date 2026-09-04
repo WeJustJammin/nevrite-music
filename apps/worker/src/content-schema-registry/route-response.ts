@@ -1,0 +1,224 @@
+import {
+  CONTENT_SCHEMA_REGISTRY_ACTING_PARTY_ID_HEADER,
+  CONTENT_SCHEMA_REGISTRY_ACTOR_ID_HEADER,
+  CONTENT_SCHEMA_REGISTRY_CAPABILITY_HEADER,
+  CONTENT_SCHEMA_REGISTRY_HUMAN_CAPABILITIES,
+  CONTENT_SCHEMA_REGISTRY_PRESENTATION_VARIANT_HEADER,
+  CONTENT_SCHEMA_REGISTRY_PRESENTATION_VARIANTS,
+  CONTENT_SCHEMA_REGISTRY_PRIVATE_SERVICE_HOST,
+  CONTENT_SCHEMA_REGISTRY_RETRYABLE_HEADER,
+  contentSchemaRegistryRoutePolicies,
+} from '@wejammin/contracts';
+
+import type { ContentSchemaRegistryDependencies } from './types';
+import type {
+  ContentSchemaRegistryError,
+  ContentSchemaRegistryOperationId,
+  ContentSchemaRegistryPortInput,
+} from './types';
+import { CONTENT_SCHEMA_REGISTRY_RUNBOOK } from './types';
+import type { FeatureContext } from './route-types';
+import { statusFor } from './route-types';
+export { safeDetails } from './route-response-details';
+import { safeDetails } from './route-response-details';
+
+export const successStatusFor = (
+  operationId: ContentSchemaRegistryOperationId,
+  value: unknown,
+): 200 | 201 | 202 => {
+  if (
+    operationId === 'CMS-03A-04' &&
+    typeof value === 'object' &&
+    value !== null
+  )
+    return (value as { jobId?: unknown }).jobId === null ? 200 : 202;
+  return statusFor[operationId] as 200 | 201 | 202;
+};
+
+export const policyFor = (operationId: ContentSchemaRegistryOperationId) => {
+  const policy = contentSchemaRegistryRoutePolicies.find(
+    (candidate) => candidate.operationId === operationId,
+  );
+  if (policy === undefined)
+    throw new Error('Content registry route policy missing.');
+  return policy;
+};
+
+export const isReleasePath = (path: string): boolean =>
+  path === '/api/v1/cms/blocks/versions' ||
+  path.startsWith('/api/v1/cms/blocks/versions/');
+
+export const corsOriginsFor = (
+  path: string,
+  dependencies: ContentSchemaRegistryDependencies,
+): readonly string[] =>
+  isReleasePath(path) ? dependencies.releaseOrigins : dependencies.humanOrigins;
+
+export const setRateHeaders = (
+  context: FeatureContext,
+  decision: Readonly<{
+    limit: number;
+    remaining: number;
+    resetAt: number;
+  }>,
+): void => {
+  context.header('ratelimit-limit', String(decision.limit));
+  context.header('ratelimit-remaining', String(decision.remaining));
+  context.header('ratelimit-reset', String(decision.resetAt));
+};
+
+const humanCapabilities = new Set<string>(
+  CONTENT_SCHEMA_REGISTRY_HUMAN_CAPABILITIES,
+);
+const presentationVariants = new Set<string>(
+  CONTENT_SCHEMA_REGISTRY_PRESENTATION_VARIANTS,
+);
+
+/** Only the private web service-binding host may receive capability proof. */
+export const isContentSchemaRegistryPrivateServiceRequest = (
+  request: Request,
+): boolean => {
+  try {
+    const url = new URL(request.url);
+    return (
+      url.protocol === 'https:' &&
+      url.hostname === CONTENT_SCHEMA_REGISTRY_PRIVATE_SERVICE_HOST
+    );
+  } catch {
+    return false;
+  }
+};
+
+/** Emit only trusted read capabilities for the private Astro projection. */
+export const setContentSchemaRegistryCapabilityHeader = (
+  context: FeatureContext,
+  capabilities: readonly string[],
+  presentationVariant?: string,
+  actorId?: string,
+  actingPartyId?: string | null,
+): void => {
+  const safeCapabilities = capabilities.filter((capability) =>
+    humanCapabilities.has(capability),
+  );
+  if (safeCapabilities.length > 0)
+    context.header(
+      CONTENT_SCHEMA_REGISTRY_CAPABILITY_HEADER,
+      [...new Set(safeCapabilities)].join(','),
+    );
+  if (
+    presentationVariant !== undefined &&
+    presentationVariants.has(presentationVariant)
+  )
+    context.header(
+      CONTENT_SCHEMA_REGISTRY_PRESENTATION_VARIANT_HEADER,
+      presentationVariant,
+    );
+  if (actorId !== undefined && isCmsContextUuid(actorId))
+    context.header(CONTENT_SCHEMA_REGISTRY_ACTOR_ID_HEADER, actorId);
+  if (
+    actingPartyId !== undefined &&
+    actingPartyId !== null &&
+    isCmsContextUuid(actingPartyId)
+  )
+    context.header(
+      CONTENT_SCHEMA_REGISTRY_ACTING_PARTY_ID_HEADER,
+      actingPartyId,
+    );
+};
+
+const isCmsContextUuid = (value: string): boolean =>
+  /^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/iu.test(
+    value,
+  );
+
+/** Select the least-privileged presentation from authenticated server data. */
+export const presentationVariantForSession = (
+  session: Readonly<{
+    capabilities: readonly string[];
+    presentationVariant?: string;
+  }>,
+): string | undefined => {
+  if (
+    session.presentationVariant !== undefined &&
+    presentationVariants.has(session.presentationVariant)
+  )
+    return session.presentationVariant;
+  if (session.capabilities.includes('cms.schema_designer')) return 'ownerFull';
+  if (session.capabilities.includes('cms.schema_registry.read'))
+    return 'entitledRead';
+  return undefined;
+};
+
+export const errorResponse = (
+  context: FeatureContext,
+  result: ContentSchemaRegistryError,
+  requestId: string,
+): Response => {
+  const code = /^[A-Z][A-Z0-9_]{0,63}$/u.test(result.code)
+    ? result.code
+    : 'INTERNAL_ERROR';
+  const safeMessage =
+    result.status >= 500
+      ? code === 'INTERNAL_ERROR'
+        ? 'An unexpected error occurred.'
+        : code === 'DEPENDENCY_DEADLINE_EXCEEDED'
+          ? 'The CMS registry dependency exceeded its deadline.'
+          : code === 'DEPENDENCY_INVALID_RESPONSE'
+            ? 'The CMS registry dependency returned an invalid response.'
+            : 'The CMS registry dependency is temporarily unavailable.'
+      : result.message;
+  const body = {
+    code,
+    message: safeMessage,
+    requestId,
+    details: safeDetails(result),
+  };
+  context.header('cache-control', 'no-store');
+  if (result.status === 502 || result.status === 503 || result.status === 504)
+    context.header(
+      CONTENT_SCHEMA_REGISTRY_RETRYABLE_HEADER,
+      String(result.details?.retryable === true),
+    );
+  if (result.retryAfterSeconds !== undefined)
+    context.header('retry-after', String(result.retryAfterSeconds));
+  return context.json(body, result.status);
+};
+
+export const requestIdFor = (request: Request): string => {
+  const candidate = request.headers.get('x-request-id');
+  return candidate !== null &&
+    /^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/iu.test(
+      candidate,
+    )
+    ? candidate
+    : crypto.randomUUID();
+};
+
+export const etagFor = (value: unknown): string | null => {
+  if (typeof value !== 'object' || value === null) return null;
+  const version = (value as { version?: unknown }).version;
+  return typeof version === 'string' && /^[1-9][0-9]*$/u.test(version)
+    ? `"${version}"`
+    : null;
+};
+
+export const validatePortInput = (
+  operationId: ContentSchemaRegistryOperationId,
+  input: ContentSchemaRegistryPortInput,
+): ContentSchemaRegistryPortInput => ({ ...input, operationId });
+
+export const runTelemetry = async (
+  dependencies: Pick<ContentSchemaRegistryDependencies, 'telemetry'>,
+  event: Parameters<
+    NonNullable<ContentSchemaRegistryDependencies['telemetry']>
+  >[0],
+): Promise<void> => {
+  if (dependencies.telemetry === undefined) return;
+  try {
+    await dependencies.telemetry(event);
+  } catch {
+    // Telemetry loss cannot replace a canonical API response.
+  }
+};
+
+export { CONTENT_SCHEMA_REGISTRY_RUNBOOK };

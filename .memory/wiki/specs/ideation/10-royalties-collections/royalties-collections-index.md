@@ -170,6 +170,9 @@ Registering with the bodies that collect and turning what arrives into correct, 
 <!-- spec-graph: auto-generated -->
 ## Related Specs
 
+### Phases into
+- [[specs/phases/phase-2|Phase 2 — Identity, admin, CMS/settings]]
+
 ### Constrained by
 - [[decisions.md#d-10|D-10]]
 - [[decisions.md#d-07|D-07]]
@@ -190,3 +193,6 @@ Registering with the bodies that collect and turning what arrives into correct, 
 - [[decisions.md#d-09|D-09]]
 - [[decisions.md#d-15|D-15]]
 - [[decisions.md#d-31|D-31]]
+
+### References
+- [[specs/phases/phase-2|Phase 2 — Identity, admin, CMS/settings]]

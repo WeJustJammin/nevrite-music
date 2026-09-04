@@ -1,4 +1,4 @@
-import { readFileSync } from 'node:fs';
+import { readFileSync, realpathSync } from 'node:fs';
 import { pathToFileURL } from 'node:url';
 
 import {
@@ -98,7 +98,7 @@ const run = (): void => {
 const entrypoint = process.argv[1];
 if (
   entrypoint !== undefined &&
-  import.meta.url === pathToFileURL(entrypoint).href
+  import.meta.url === pathToFileURL(realpathSync(entrypoint)).href
 ) {
   run();
 }

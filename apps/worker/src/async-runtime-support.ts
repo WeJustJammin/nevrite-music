@@ -15,6 +15,7 @@ import type {
   PlatformJobsMessage,
 } from './async-entrypoint';
 import { parseRestoreFence } from './async-runtime-fence';
+import type { SchemaMigrationRpcName } from './content-schema-registry/migration-worker';
 
 export { parseRestoreFence } from './async-runtime-fence';
 export type AsyncRpcOperation =
@@ -25,12 +26,18 @@ export type AsyncRpcOperation =
   | 'claim_job'
   | 'heartbeat_job_lease'
   | 'apply_job_outcome'
-  | 'record_processed_event';
+  | 'record_processed_event'
+  | SchemaMigrationRpcName;
 export const PLATFORM_API_PROFILE = 'platform_api' as const;
+export type AsyncRpcEnvironment = Pick<
+  AsyncWorkerBindings,
+  'SUPABASE_URL' | 'SUPABASE_SECRET_KEY'
+>;
 export type AsyncRpcClient = <T>(
-  env: AsyncWorkerBindings,
+  env: AsyncRpcEnvironment,
   operation: AsyncRpcOperation,
   input: Record<string, unknown>,
+  signal?: AbortSignal,
 ) => Promise<T>;
 export type AsyncJobRuntimeDependencies = Readonly<{
   rpc?: AsyncRpcClient;
@@ -467,9 +474,10 @@ const fetchClient = (
 ): AsyncRpcClient => {
   const { deadlineMs, maxResponseBytes } = normalizeRpcOptions(options);
   return async <T>(
-    env: AsyncWorkerBindings,
+    env: AsyncRpcEnvironment,
     operation: AsyncRpcOperation,
     input: Record<string, unknown>,
+    externalSignal?: AbortSignal,
   ): Promise<T> => {
     if (
       env.SUPABASE_URL.trim() === '' ||
@@ -483,6 +491,7 @@ const fetchClient = (
     ).toString();
     const controller = new AbortController();
     let timedOut = false;
+    let externallyAborted = false;
     let rejectDeadline: ((reason?: unknown) => void) | undefined;
     const deadline = new Promise<never>((_, reject) => {
       rejectDeadline = reject;
@@ -493,6 +502,18 @@ const fetchClient = (
       controller.abort();
       rejectDeadline?.(new AsyncRpcDependencyError('timeout'));
     }, deadlineMs);
+    const abortExternal = (): void => {
+      externallyAborted = true;
+      controller.abort();
+      rejectDeadline?.(new AsyncRpcDependencyError('timeout'));
+    };
+    if (externalSignal?.aborted) abortExternal();
+    externalSignal?.addEventListener('abort', abortExternal, { once: true });
+    if (externallyAborted) {
+      clearTimeout(timer);
+      externalSignal?.removeEventListener('abort', abortExternal);
+      throw new AsyncRpcDependencyError('timeout');
+    }
 
     try {
       let response: Response;
@@ -516,7 +537,8 @@ const fetchClient = (
           deadline,
         ]);
       } catch (error) {
-        if (timedOut) throw new AsyncRpcDependencyError('timeout');
+        if (timedOut || externallyAborted)
+          throw new AsyncRpcDependencyError('timeout');
         if (error instanceof AsyncRpcTransportError) throw error;
         throw new AsyncRpcDependencyError('request_failed');
       }
@@ -541,11 +563,13 @@ const fetchClient = (
       );
       return parseResponseBody(body) as T;
     } catch (error) {
-      if (timedOut) throw new AsyncRpcDependencyError('timeout');
+      if (timedOut || externallyAborted)
+        throw new AsyncRpcDependencyError('timeout');
       if (error instanceof AsyncRpcTransportError) throw error;
       throw new AsyncRpcDependencyError('request_failed');
     } finally {
       clearTimeout(timer);
+      externalSignal?.removeEventListener('abort', abortExternal);
     }
   };
 };

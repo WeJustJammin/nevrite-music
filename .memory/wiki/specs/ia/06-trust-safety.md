@@ -491,6 +491,9 @@ Responsive web/PWA only. Consumer launch exposes report/flag and required notice
 <!-- spec-graph: auto-generated -->
 ## Related Specs
 
+### Phases into
+- [[specs/phases/phase-2|Phase 2 — Identity, admin, CMS/settings]]
+
 ### Constrained by
 - [[decisions.md#d-03|D-03]]
 
@@ -522,3 +525,4 @@ Responsive web/PWA only. Consumer launch exposes report/flag and required notice
 - [[specs/ia/36-box-office-risk|Shard 36 — Door access, box office, reconciliation and ticketing risk]]
 - [[specs/ia/37-fanbase-direct-to-fan|Shard 37 — Fanbase and direct-to-fan]]
 - [[specs/ia/40-market-intelligence-signals|Shard 40 — Market intelligence, fraud and scouting signals]]
+- [[specs/phases/phase-2|Phase 2 — Identity, admin, CMS/settings]]

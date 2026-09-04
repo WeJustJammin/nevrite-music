@@ -1,0 +1,30 @@
+---
+import { createRequestId } from '@wejammin/contracts';
+
+import IdentityAuthorityShell from './_shell.astro';
+
+import '@wejammin/ui/styles.css';
+import '../../../styles/infrastructure.css';
+
+export const prerender = false;
+
+const requestId = createRequestId(
+  Astro.request.headers.get('x-request-id') ?? undefined,
+);
+const retryHref = '/app/identity-authority';
+Astro.response.status = 503;
+---
+
+<IdentityAuthorityShell
+  state="degraded"
+  routeKind="degraded"
+  requestId={requestId}
+  recordId={null}
+  displayName={null}
+  handle={null}
+  lifecycle={null}
+  version={null}
+  publicOnly={false}
+  retryHref={retryHref}
+  backHref="/"
+/>

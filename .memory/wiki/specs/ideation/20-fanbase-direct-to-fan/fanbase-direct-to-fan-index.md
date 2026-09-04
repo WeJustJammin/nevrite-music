@@ -136,6 +136,9 @@ The artist's relationship with their audience and its monetization — owned fan
 <!-- spec-graph: auto-generated -->
 ## Related Specs
 
+### Phases into
+- [[specs/phases/phase-2|Phase 2 — Identity, admin, CMS/settings]]
+
 ### Constrained by
 - [[decisions.md#d-11|D-11]]
 - [[decisions.md#d-03|D-03]]
@@ -151,3 +154,6 @@ The artist's relationship with their audience and its monetization — owned fan
 - [[decisions.md#d-31|D-31]]
 - [[decisions.md#d-20|D-20]]
 - [[decisions.md#d-13|D-13]]
+
+### References
+- [[specs/phases/phase-2|Phase 2 — Identity, admin, CMS/settings]]

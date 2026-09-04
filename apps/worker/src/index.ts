@@ -9,9 +9,10 @@ import {
 import {
   parseServerEnvironment,
   projectServerEnvironment,
+  SERVER_ENVIRONMENT_KEYS,
   type ServerEnvironment,
 } from '@wejammin/config/environment';
-import { createLogger, type Logger } from '@wejammin/observability/logging';
+import { type Logger } from '@wejammin/observability/logging';
 import { Hono, type Context } from 'hono';
 
 import {
@@ -20,15 +21,33 @@ import {
 } from './async-entrypoint';
 import { createAsyncJobDependencies } from './async-runtime';
 import type { JobStatusDependencies } from './jobs/job-status';
-import {
-  createProductionJobStatusDependencies,
-  type JobStatusProductionFetch,
-} from './jobs/job-status-production';
+import type { JobStatusProductionFetch } from './jobs/job-status-production';
 import {
   createProductionJobEffectDispatcher,
   type ProductionVerificationDependencies,
 } from './production-job-effect-dispatcher';
 import type { UploadCompletionRouteDependencies } from './upload-completion/upload-intent-completion';
+import type {
+  AuthenticationDependencies,
+  AuthenticationSession,
+} from './authentication/types';
+import type { ContentSchemaRegistryDependencies } from './content-schema-registry/types';
+import type { IdentityAuthorityDependencies } from './identity-authority/types';
+import type { ProfileOwnershipDependencies } from './profile-ownership/types';
+import type { ProfilePortfolioDependencies } from './profile-portfolio/types';
+import { type PlatformConfigurationProductionOptions } from './platform-configuration/production';
+import type {
+  AdminWorkspaceDependencies,
+  PlatformConfigurationDependencies,
+} from './platform-configuration/types';
+import {
+  createProductionWorkerAppRuntime,
+  createProductionSchemaMigrationWorker,
+  migrationQueueOutcome,
+  createRuntimeDependencies,
+  type ProductionSchemaMigrationWorkerOptions,
+  type ProductionContentSchemaRegistryOptions,
+} from './production-worker-runtime';
 import {
   logRequest,
   registerWorkerRoutes,
@@ -40,7 +59,7 @@ import {
   generateRequestNonce,
   shouldRedirectToHttps,
 } from './security-headers';
-
+import type { WorkerBindings } from './worker-bindings';
 export { routeTemplateFor } from './worker-route-composition';
 export {
   createProductionJobEffectDispatcher,
@@ -50,21 +69,29 @@ export type {
   PlatformVerificationDependencies,
   ProductionVerificationDependencies,
 } from './production-job-effect-dispatcher';
-
-export type WorkerBindings = ServerEnvironment;
-
+export type { WorkerBindings };
+export type ProductionPlatformConfigurationOptions = Pick<
+  PlatformConfigurationProductionOptions,
+  | 'resolveReleasePrincipal'
+  | 'resolveServiceConsumer'
+  | 'resolveRequestContext'
+  | 'resolveCapabilities'
+>;
+export type { ProductionContentSchemaRegistryOptions } from './production-worker-runtime';
+export {
+  createProductionSchemaMigrationWorker,
+  migrationQueueOutcome,
+} from './production-worker-runtime';
+export type { ProductionSchemaMigrationWorkerOptions } from './production-worker-runtime';
 export type ErrorCaptureContext = {
   correlationId: CorrelationId;
   operation: string;
   requestId: RequestId;
   routeTemplate: string;
 };
-
 export const DIAGNOSTICS_CAPABILITY = 'diagnostics.read' as const;
-
 type MaybePromise<T> = T | Promise<T>;
 export type DiagnosticCheck = DiagnosticResponse['checks'][number];
-
 export type DiagnosticAuditEvent = Readonly<{
   action: typeof DIAGNOSTICS_CAPABILITY;
   actorId: string | null;
@@ -75,34 +102,37 @@ export type DiagnosticAuditEvent = Readonly<{
   requestId: RequestId;
   target: 'worker-diagnostics';
 }>;
-
 type Variables = {
   captureAttempted: boolean;
   correlationId: CorrelationId;
   errorCode?: string;
   errorHandled: boolean;
+  identityAuth?: AuthenticationDependencies;
   logger: Logger;
   operation: string;
   requestId: RequestId;
   startedAt: number;
 };
-
 export type WorkerContext = Context<{
   Bindings: WorkerBindings;
   Variables: Variables;
 }>;
-
 export type WorkerApp = Hono<{
   Bindings: WorkerBindings;
   Variables: Variables;
 }>;
-
 export type WebhookRouteRegistration = Readonly<{
   path: `/api/v1/webhooks/${string}`;
   handler: (request: Request) => MaybePromise<Response>;
 }>;
-
 export type WorkerDependencies = {
+  auth?: AuthenticationDependencies;
+  contentSchemaRegistry?: ContentSchemaRegistryDependencies;
+  identityAuthority?: IdentityAuthorityDependencies;
+  profileOwnership?: ProfileOwnershipDependencies;
+  profilePortfolio?: ProfilePortfolioDependencies;
+  platformConfiguration?: PlatformConfigurationDependencies;
+  adminWorkspace?: AdminWorkspaceDependencies;
   auditDiagnosticAccess?: (event: DiagnosticAuditEvent) => MaybePromise<void>;
   checkReadiness?: (
     request: Request,
@@ -129,9 +159,10 @@ export type WorkerDependencies = {
   resolveRequestContext?: (
     request: Request,
     env: WorkerBindings,
+    signal?: AbortSignal,
+    session?: AuthenticationSession,
   ) => MaybePromise<unknown>;
 };
-
 export const createWorkerApp = (dependencies: WorkerDependencies) => {
   const app: WorkerApp = new Hono();
 
@@ -163,9 +194,15 @@ export const createWorkerApp = (dependencies: WorkerDependencies) => {
 
     await next();
 
-    context.res = applySecurityHeaders(context.res, requestNonce);
-    context.header('x-correlation-id', correlationId);
-    context.header('x-request-id', requestId);
+    const responseWithSecurityHeaders = applySecurityHeaders(
+      context.res,
+      requestNonce,
+    );
+    for (const [name, value] of responseWithSecurityHeaders.headers) {
+      context.res.headers.set(name, value);
+    }
+    context.res.headers.set('x-correlation-id', correlationId);
+    context.res.headers.set('x-request-id', requestId);
     if (!context.get('errorHandled')) {
       const status = context.res.status;
       const errorCode = context.get('errorCode');
@@ -197,25 +234,6 @@ export const createWorkerApp = (dependencies: WorkerDependencies) => {
 
   return app;
 };
-
-const createRuntimeDependencies = (
-  jobs?: JobStatusDependencies,
-  uploadCompletion?: UploadCompletionRouteDependencies,
-  checkReadiness?: WorkerDependencies['checkReadiness'],
-): WorkerDependencies => ({
-  captureException: () => {},
-  createLogger: (bindings) =>
-    createLogger({
-      environment: bindings.APP_ENVIRONMENT,
-      release: bindings.APP_RELEASE,
-      service: 'wejammin-api',
-    }),
-  ...(checkReadiness === undefined ? {} : { checkReadiness }),
-  ...(jobs === undefined ? {} : { jobs }),
-  ...(uploadCompletion === undefined ? {} : { uploadCompletion }),
-  now: Date.now,
-});
-
 export const app = createWorkerApp(createRuntimeDependencies());
 
 export const createProductionWorkerApp = (
@@ -223,35 +241,76 @@ export const createProductionWorkerApp = (
   fetchImpl: JobStatusProductionFetch = globalThis.fetch,
   uploadCompletion?: UploadCompletionRouteDependencies,
   checkReadiness?: WorkerDependencies['checkReadiness'],
+  platformConfigurationOptions?: ProductionPlatformConfigurationOptions,
+  contentSchemaRegistryOptions?: ProductionContentSchemaRegistryOptions,
 ): WorkerApp => {
   const validatedEnvironment = parseServerEnvironment(environment);
-  return createWorkerApp(
-    createRuntimeDependencies(
-      createProductionJobStatusDependencies({
-        environment: validatedEnvironment,
-        fetchImpl,
-      }),
-      uploadCompletion,
-      checkReadiness,
-    ),
+  return createProductionWorkerAppRuntime(
+    createWorkerApp,
+    validatedEnvironment,
+    fetchImpl,
+    uploadCompletion,
+    checkReadiness,
+    platformConfigurationOptions,
+    contentSchemaRegistryOptions,
   );
 };
-
 export const createProductionAsyncEntrypoint = (
   fetchImpl: typeof fetch = globalThis.fetch,
   verification?: ProductionVerificationDependencies,
+  migrationOptions?: ProductionSchemaMigrationWorkerOptions,
 ) =>
-  createAsyncEntrypoint(
-    createAsyncJobDependencies({
+  (() => {
+    const dependencies = createAsyncJobDependencies({
       effect: createProductionJobEffectDispatcher(verification),
       fetch: fetchImpl,
-    }),
-  );
+    });
+    const workers = new WeakMap<
+      object,
+      ReturnType<typeof createProductionSchemaMigrationWorker>
+    >();
+    return createAsyncEntrypoint({
+      ...dependencies,
+      processSchemaMigration: async ({ env, event, message }) => {
+        let worker = workers.get(env);
+        if (worker === undefined) {
+          worker = createProductionSchemaMigrationWorker(
+            projectServerEnvironment(env),
+            fetchImpl,
+            migrationOptions,
+          );
+          workers.set(env, worker);
+        }
+        const result = await worker.process(event, {
+          attempt: message.attempts,
+        });
+        return migrationQueueOutcome(result);
+      },
+    });
+  })();
+
+let cachedProductionApp: WorkerApp | undefined;
+let cachedProductionEnvironment: ServerEnvironment | undefined;
+
+const sameProductionEnvironment = (
+  left: ServerEnvironment | undefined,
+  right: ServerEnvironment,
+): boolean =>
+  left !== undefined &&
+  SERVER_ENVIRONMENT_KEYS.every((key) => left[key] === right[key]);
+
+const productionAppFor = (environment: ServerEnvironment): WorkerApp => {
+  if (!sameProductionEnvironment(cachedProductionEnvironment, environment)) {
+    cachedProductionEnvironment = environment;
+    cachedProductionApp = createProductionWorkerApp(environment);
+  }
+  return cachedProductionApp as WorkerApp;
+};
 
 const handler = {
   fetch: (request, env, executionContext) => {
     const validatedEnvironment = projectServerEnvironment(env);
-    return createProductionWorkerApp(validatedEnvironment).fetch(
+    return productionAppFor(validatedEnvironment).fetch(
       request,
       validatedEnvironment,
       executionContext,
@@ -266,5 +325,4 @@ const handler = {
       executionContext,
     ),
 } satisfies ExportedHandler<AsyncWorkerBindings>;
-
 export default handler;

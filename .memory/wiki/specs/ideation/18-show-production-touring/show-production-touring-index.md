@@ -167,6 +167,9 @@ narrow and deliberate: a published *performed* setlist (18.06.04), public doors/
 <!-- spec-graph: auto-generated -->
 ## Related Specs
 
+### Phases into
+- [[specs/phases/phase-2|Phase 2 — Identity, admin, CMS/settings]]
+
 ### Constrained by
 - [[decisions.md#d-08|D-08]]
 - [[decisions.md#d-18|D-18]]
@@ -184,3 +187,6 @@ narrow and deliberate: a published *performed* setlist (18.06.04), public doors/
 - [[decisions.md#d-71|D-71]]
 - [[decisions.md#d-28|D-28]]
 - [[decisions.md#d-70|D-70]]
+
+### References
+- [[specs/phases/phase-2|Phase 2 — Identity, admin, CMS/settings]]

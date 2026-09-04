@@ -212,7 +212,7 @@ describe('Astro Cloudflare Worker SSR deployment contract', () => {
 
     expect(workflow).toMatch(/url: \$\{\{ vars\.PRODUCTION_WEB_ORIGIN \}\}/u);
     expect(workflow).toMatch(
-      /PRODUCTION_WEB_ORIGIN: \$\{\{ vars\.PRODUCTION_WEB_ORIGIN \}\}/u,
+      /PRODUCTION_WEB_ORIGIN: '?\$\{\{ vars\.PRODUCTION_WEB_ORIGIN \}\}'?/u,
     );
     expect(workflow).toMatch(
       /bash infra\/workflows\/verify-production-candidate\.sh/u,

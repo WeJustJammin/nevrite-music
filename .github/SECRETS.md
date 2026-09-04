@@ -40,7 +40,7 @@ The Cloudflare token is restricted to the WeJammin account with only Workers Scr
 
 ## Environment variables
 
-Non-secret GitHub environment variables include `CLOUDFLARE_ACCOUNT_ID`, `STAGING_WEB_ORIGIN`, `STAGING_API_ORIGIN`, `SUPABASE_PROJECT_REF`, and `SUPABASE_URL`. Browser-safe application values are also variables rather than secrets: `PUBLIC_APP_ORIGIN`, `PUBLIC_SUPABASE_URL`, and `PUBLIC_SUPABASE_PUBLISHABLE_KEY`. Administrative keys and database passwords remain secrets. No third-party application-provider credential is authorized.
+Non-secret GitHub environment variables include `CLOUDFLARE_ACCOUNT_ID`, `STAGING_WEB_ORIGIN`, `STAGING_API_ORIGIN`, `SUPABASE_PROJECT_REF`, and `SUPABASE_URL`. Production also records `STAGING_SUPABASE_PROJECT_REF` so promotion can independently match staging migration evidence to the configured staging project. Browser-safe application values are variables rather than secrets: `PUBLIC_APP_ORIGIN`, `PUBLIC_SUPABASE_URL`, and `PUBLIC_SUPABASE_PUBLISHABLE_KEY`. Administrative keys and database passwords remain secrets. No third-party application-provider credential is authorized.
 
 ## Cost control
 

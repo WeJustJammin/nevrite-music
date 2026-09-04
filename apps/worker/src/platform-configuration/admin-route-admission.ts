@@ -1,0 +1,221 @@
+import {
+  Cfg05b01InboxQuerySchema,
+  RequestContextSchema,
+  type ApiError,
+  type Cfg05b01InboxQuery,
+  type RequestContext,
+} from '@wejammin/contracts';
+
+import type { WorkerContext, WorkerDependencies } from '../index';
+import { authError, responseForAuthError } from '../authentication/boundary';
+import type {
+  AuthenticationResult,
+  AuthenticationSession,
+} from '../authentication/types';
+import {
+  parseConfigurationBody,
+  requireConfigurationSession,
+  type SchemaLike,
+} from './route-support';
+import type { AdminOperationId } from './types';
+
+const requiredCapability: Readonly<Record<AdminOperationId, string>> = {
+  'CFG-05B-01': 'admin.inbox.read',
+  'CFG-05B-04': 'admin.capability.grant',
+  'CFG-05B-05': 'admin.audit.read',
+};
+
+const deadlines: Readonly<Record<AdminOperationId, number>> = {
+  'CFG-05B-01': 8_000,
+  'CFG-05B-04': 15_000,
+  'CFG-05B-05': 8_000,
+};
+
+type TimedAdminHandler = (signal: AbortSignal) => Promise<Response>;
+
+export const withDeadline = async (
+  context: WorkerContext,
+  operationId: AdminOperationId,
+  handler: TimedAdminHandler,
+): Promise<Response> => {
+  const controller = new AbortController();
+  let timer: ReturnType<typeof setTimeout> | undefined;
+  const timeout = new Promise<Response>((resolve) => {
+    timer = setTimeout(() => {
+      controller.abort();
+      const response = responseForAuthError(
+        context,
+        authError(504, 'UPSTREAM_TIMEOUT', 'Admin workspace timed out.'),
+      );
+      context.res = response;
+      resolve(response);
+    }, deadlines[operationId]);
+  });
+  try {
+    return await Promise.race([handler(controller.signal), timeout]);
+  } catch {
+    const response = responseForAuthError(
+      context,
+      authError(
+        503,
+        'DEPENDENCY_UNAVAILABLE',
+        'Admin workspace is temporarily unavailable.',
+        { dependencyClass: 'admin_workspace', retryable: true },
+      ),
+    );
+    context.res = response;
+    return response;
+  } finally {
+    if (timer !== undefined) clearTimeout(timer);
+  }
+};
+
+const invalid = (
+  message: string,
+  details: ApiError['details'] = {},
+): AuthenticationResult<never> =>
+  authError(400, 'INVALID_REQUEST', message, details);
+
+export const parseQuery = async (
+  request: Request,
+): Promise<AuthenticationResult<Cfg05b01InboxQuery>> => {
+  const params = new URL(request.url).searchParams;
+  const allowed = new Set([
+    'cursor',
+    'limit',
+    'taskClasses',
+    'states',
+    'staleAfter',
+  ]);
+  const value: Record<string, unknown> = {};
+  for (const key of new Set(params.keys())) {
+    if (!allowed.has(key) || params.getAll(key).length !== 1)
+      return invalid('The query parameters are invalid.');
+    const raw = params.get(key);
+    if (raw === null) return invalid('The query parameters are invalid.');
+    if (key === 'limit') {
+      const limit = Number(raw);
+      if (!Number.isInteger(limit))
+        return invalid('The query parameters are invalid.');
+      value.limit = limit;
+    } else if (key === 'taskClasses' || key === 'states') {
+      const entries = raw.split(',').map((entry) => entry.trim());
+      if (entries.some((entry) => entry.length === 0))
+        return invalid('The query parameters are invalid.');
+      value[key] = entries;
+    } else value[key] = raw;
+  }
+  const parsed = Cfg05b01InboxQuerySchema.safeParse(value);
+  return parsed.success
+    ? { ok: true, value: parsed.data }
+    : invalid('The query parameters are invalid.');
+};
+
+export const parseBody = async <T>(
+  request: Request,
+  schema: SchemaLike<T>,
+  signal?: AbortSignal,
+): Promise<AuthenticationResult<T>> => {
+  const parsed = await parseConfigurationBody(request, schema, signal);
+  if (parsed.ok) return parsed;
+  if (parsed.status === 504) return parsed;
+  return authError(
+    parsed.status === 413 || parsed.status === 415 ? parsed.status : 400,
+    parsed.status === 413
+      ? 'PAYLOAD_TOO_LARGE'
+      : parsed.status === 415
+        ? 'UNSUPPORTED_MEDIA_TYPE'
+        : 'INVALID_REQUEST',
+    parsed.message,
+    parsed.details,
+  );
+};
+
+const fallbackContext = (context: WorkerContext): RequestContext =>
+  RequestContextSchema.parse({
+    requestId: context.get('requestId'),
+    correlationId: context.get('correlationId'),
+    causationId: null,
+    traceId: `admin-${context.get('requestId')}`,
+    userId: null,
+    actingPartyId: null,
+    capabilities: [],
+    locale: 'en-US',
+    clientVersion: 'worker',
+  });
+
+const resolveContext = async (
+  context: WorkerContext,
+  dependencies: WorkerDependencies,
+  session: AuthenticationSession,
+  signal: AbortSignal,
+): Promise<AuthenticationResult<RequestContext>> => {
+  let candidate: unknown = fallbackContext(context);
+  if (dependencies.resolveRequestContext !== undefined) {
+    try {
+      candidate = await dependencies.resolveRequestContext(
+        context.req.raw,
+        context.env,
+        signal,
+        session,
+      );
+    } catch {
+      return authError(
+        503,
+        'DEPENDENCY_UNAVAILABLE',
+        'Authorization context is temporarily unavailable.',
+        { dependencyClass: 'request_context', retryable: true },
+      );
+    }
+  }
+  const parsed = RequestContextSchema.safeParse(candidate);
+  if (!parsed.success)
+    return authError(
+      401,
+      'UNAUTHENTICATED',
+      'The authentication context is invalid.',
+      { recoveryAction: 'reauthenticate' },
+    );
+  if (
+    parsed.data.userId !== session.authUserId ||
+    parsed.data.actingPartyId !== session.actingPartyId
+  )
+    return authError(403, 'FORBIDDEN', 'The acting context is not allowed.');
+  return { ok: true, value: parsed.data };
+};
+
+export const admit = async (
+  context: WorkerContext,
+  dependencies: WorkerDependencies,
+  operationId: AdminOperationId,
+  signal: AbortSignal,
+): Promise<
+  | Readonly<{ session: AuthenticationSession; requestContext: RequestContext }>
+  | Readonly<{ response: Response }>
+> => {
+  const session = await requireConfigurationSession(
+    context,
+    dependencies.auth,
+    true,
+    signal,
+  );
+  if (!session.ok) return { response: responseForAuthError(context, session) };
+  const requestContext = await resolveContext(
+    context,
+    dependencies,
+    session.value,
+    signal,
+  );
+  if (!requestContext.ok)
+    return { response: responseForAuthError(context, requestContext) };
+  if (
+    !requestContext.value.capabilities.includes(requiredCapability[operationId])
+  )
+    return {
+      response: responseForAuthError(
+        context,
+        authError(403, 'FORBIDDEN', 'The named admin capability is required.'),
+      ),
+    };
+  return { session: session.value, requestContext: requestContext.value };
+};

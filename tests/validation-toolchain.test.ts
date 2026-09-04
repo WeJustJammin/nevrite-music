@@ -175,4 +175,15 @@ describe('validation toolchain contracts', () => {
     expect(sliceProgress).toContain('**Spec depth floor**: 0');
     expect(sliceProgress).not.toMatch(/\{\{[^}]+\}\}/);
   });
+
+  it('copies the executable Worker module to the immutable release-evidence path', () => {
+    const workerPackageJson = readRepositoryJson('apps/worker/package.json');
+    const workerScripts = workerPackageJson.scripts as Record<string, string>;
+
+    expect(workerScripts.build).toContain('--outdir dist');
+    expect(workerScripts.build).toContain(
+      'cp dist/runtime-entry.js dist/index.js',
+    );
+    expect(workerScripts.build).not.toContain('--outfile');
+  });
 });
