@@ -14,19 +14,27 @@ An uninterrupted `pnpm validate` run exited 0 after all of these gates:
 
 - OpenAPI contracts, generated live database types, progress consistency,
   Prettier, ESLint, and TypeScript passed.
-- Vitest passed 416/416 files and 3,080/3,080 tests at exactly 100% coverage:
+- Vitest passed 416/416 files and 3,082/3,082 tests at exactly 100% coverage:
   11,779/11,779 statements, 8,990/8,990 branches, 1,939/1,939 functions, and
   10,931/10,931 lines.
 - Default Chromium Playwright passed 102/102 tests using one worker. The
   serialized configuration avoids the shared Astro/Cloudflare virtual-module
   transform race; the S07 readiness regression also passed in the ordered run.
 - Every workspace build, Worker dry-run build, bundle budget, and local
-  performance smoke passed. API p95 was 1.497392 ms against the 500 ms limit
-  with zero errors.
+  performance smoke passed. API p95 remained below the 500 ms limit with zero
+  errors.
+- A clean-build regression also verifies that Wrangler's executable
+  `runtime-entry.js` output is copied to the immutable `dist/index.js` release
+  path; syntax validation and the API p95 import both pass against fresh bytes.
 
 The dedicated production-built S09 route command also passed 5/5. It exercised
 100-record performance, server-authorized list/detail/sign-in behavior, and
 forged, expired, and revoked signed-session rejection.
+
+Executable candidate `9e6b3f6a875af9f43851dbc00dc1d2a45aada85b` then passed
+all three exact-head jobs in GitHub CI run `33839386892` on PR #9. This confirms
+the committed code and clean immutable artifact path; it does not claim a
+staging or production deployment.
 
 ## Database and recovery evidence
 

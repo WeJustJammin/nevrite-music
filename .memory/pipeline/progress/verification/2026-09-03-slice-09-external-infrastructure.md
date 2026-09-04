@@ -30,7 +30,7 @@ protected-workflow verifier for the four open criteria. It now:
 - runs correctly through a symlinked CLI entrypoint without silently succeeding.
 
 The final canonical `pnpm validate` run passed: 416/416 Vitest files,
-3,080/3,080 tests, 100% statements/branches/functions/lines, 102/102 Playwright
+3,082/3,082 tests, 100% statements/branches/functions/lines, 102/102 Playwright
 tests, all builds, bundle budget, and local performance smoke. Focused regression
 tests captured each new failure before its fix. Static SLO targets were also
 removed from per-event runtime metrics, leaving only truthful event counters.
@@ -92,12 +92,26 @@ Together with fail-closed symlink guards, the focused operational-evidence and
 promotion suite passes 6/6 files and 74/74 tests. These changes strengthen local
 proof but do not substitute for any of the four external release criteria.
 
+## Candidate CI refresh — 2026-09-04T01:27:12-04:00
+
+PR #9 carries the committed Slice 01–09 candidate on
+`codex/phase-2-slices-01-09`. Executable candidate
+`9e6b3f6a875af9f43851dbc00dc1d2a45aada85b` passed exact-head GitHub CI run
+`33839386892`: database migrations/lint/pgTAP, format/lint/type/coverage/browser,
+and immutable workspace artifact jobs all completed successfully. The final job
+rebuilt the Worker from a clean checkout and verified the executable
+`dist/index.js` release artifact, resolving the prior stale-output blind spot.
+
+This candidate CI result is not deployment evidence. PR #9 remains protected
+and unmerged, no staging or production deployment was triggered, and staging
+continues to serve baseline `9b2cff7849b25dd12ffae6287b1024e50654bc14`.
+
 ## Gate results
 
 | Gate                                     | Result                                    | Current evidence                                                                                                                                                                                                                                                                                                                                                                                                                                   |
 | ---------------------------------------- | ----------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Placeholder and command-map completeness | PASS                                      | The canonical local validation, progress-consistency check, and spec-graph compile pass. No unresolved implementation placeholder or command-map gap is attributed to Slice 09.                                                                                                                                                                                                                                                                    |
-| CI/CD                                    | BASELINE PASS / S09 NOT RUN               | GitHub CI run `33453707003` and Deploy staging run `33453891150` passed for the committed baseline SHA `9b2cff...`. The current Slice 01–09 implementation is uncommitted and therefore absent from both runs.                                                                                                                                                                                                                                     |
+| CI/CD                                    | S09 CANDIDATE PASS / NOT DEPLOYED         | Exact-head GitHub CI run `33839386892` passed all three jobs for executable candidate `9e6b3f6a875af9f43851dbc00dc1d2a45aada85b` on PR #9. This proves the committed candidate, including its clean immutable Worker artifact; it does not prove staging or production. The deployed baseline remains `9b2cff...`.                                                                                                                                 |
 | Environment and secrets                  | PARTIAL                                   | GitHub `staging` has the required Cloudflare and Supabase deployment secret names and public configuration variables. Repository-level secrets/variables are empty, Supabase CLI has no access token, and the protected `production` environment has no deployment secrets or variables. Package-scoped Wrangler OAuth and the connected Supabase management surface are available, but were used read-only. No secret value was read or recorded. |
 | Migrations and rollback readiness        | LOCAL PASS / HOSTED S09 ABSENT            | A clean local reset passed 45 pgTAP files / 1,670 assertions, exact generated types, 247 dedicated S09 assertions, and the independent-session recovery drill. A fresh hosted query found only the two initial foundation migrations; `20260902080000_content_schema_registry_authority` and the rest of the current Slice 01–09 migration set are not applied.                                                                                    |
 | Staging deployment and health            | BASELINE PASS / S09 ABSENT                | Deployment `6191935083` and run `33453891150` succeeded at `9b2cff...`; the current API health endpoint returns HTTP 200. The Slice 09 list endpoint `/api/v1/cms/content-types` returns HTTP 404 `NOT_FOUND`, and `/app/cms-content-modeling` returns the staging 404 page. Current Worker version `c910e748-0950-4149-82ab-2344433ae70d` declares release `9b2cff...`.                                                                           |
@@ -120,8 +134,8 @@ proof but do not substitute for any of the four external release criteria.
 
 The next implementation step remains Slice 09 release verification, not Slice 10. Closing it requires all of the following external capabilities:
 
-1. authorization to create a focused commit for the verified Slice 01–09 work,
-   push it, and let the immutable CI-to-staging workflow deploy that exact SHA;
+1. protected reviewer approval and merge of PR #9, followed by the normal
+   exact-main-SHA CI-to-staging workflow and retained deployment identity;
 2. an approved native, no-new-paid-provider alert query and a real
    `platform.on_call` destination capable of producing a delivery receipt;
 3. an authorized mechanism to configure and prove Google through Supabase Auth

@@ -329,7 +329,7 @@
 
 - Local PostgreSQL, contract, Worker, SSR/island, browser, security, recovery,
   performance, bundle, and adversarial gates pass.
-- Canonical validation passes 416/416 Vitest files and 3,080/3,080 tests at
+- Canonical validation passes 416/416 Vitest files and 3,082/3,082 tests at
   exact 100% coverage, 102/102 default Chromium tests, all builds and bundle
   budgets, and local performance smoke.
 - The dedicated production-built S09 route passes 5/5; the clean database suite
@@ -341,9 +341,19 @@
 
 ## Verification
 
-- `pnpm validate`: PASS — 416/416 Vitest files, 3,080/3,080 tests, 100%
+- `pnpm validate`: PASS — 416/416 Vitest files, 3,082/3,082 tests, 100%
   statements/branches/functions/lines, and 102/102 Playwright tests.
 - `pnpm db:reset && pnpm db:test && pnpm db:types:check`: PASS.
+- `pnpm db:verify`: PASS — 33/33 migrations, 45/45 pgTAP files and 1,670/1,670
+  assertions, with generated database types matching the migrated schema.
+- Exact-head candidate CI: PASS — GitHub run `33839386892` completed all three
+  jobs for executable commit `9e6b3f6a875af9f43851dbc00dc1d2a45aada85b`
+  on PR #9. This is committed candidate evidence, not staging or production
+  evidence.
+- Clean Worker artifact regression: PASS — Wrangler emits the executable
+  `runtime-entry.js` module through `--outdir`, the build copies it to the
+  immutable `dist/index.js` release path, syntax validation passes, and the API
+  p95 smoke imports the freshly built artifact with zero errors.
 - Dedicated S09 pgTAP: PASS — 247 assertions, including fenced event claim,
   release, ACK, dead-letter, expiry takeover, and retry ownership.
 - Independent psql recovery harness: PASS — committed sessions exercised
