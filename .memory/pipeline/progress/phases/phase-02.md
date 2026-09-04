@@ -2,22 +2,25 @@
 
 **Status**: in-progress  
 **Progress**: 8/17 slices (47%)  
-**Current gate**: Slice 09 promotion controls verified; staging execution and external evidence remain blocked at 279/283  
+**Current gate**: Slice 09 exact-SHA CI/staging/deployment execution verified; external acceptance evidence remains blocked at 279/283  
 **Plan**: [Phase 2 plan](../../../wiki/specs/phases/phase-2.md)  
 **Updated**: 2026-09-04  
 **Prior remote evidence**: Before this remediation, PR #9 head `67264c5e9b5196d00ac3f0aa272896a010c872d7` produced synthetic merge `a79dfe30db60e4f54024f064fc2fdf2d01033919` and passing CI run `33841270472`. That run is not evidence for the remediation; no merge or deployment is claimed
 
-Slice 08 is complete (51/51). Slice 09 local QA-GREEN passes, but provider
-delivery, production SLO/DLQ telemetry, deployed Auth/RLS/IdP E2E, and
-VoiceOver/NVDA evidence remain unavailable.
+Slice 08 is complete (51/51). Slice 09 local QA-GREEN passes. Exact-SHA
+infrastructure execution for candidate `5d6e49f34b678c59da2ac4f7059f08e6dc3b4790`
+is resolved: CI run `33917604565` is green, staging run `33918141133` is green,
+deployment `6272586576` succeeded, and hosted migration
+`20260902080000` expanded. GitHub Actions and deployment actor: `WeJustJammin`.
 
-Fresh post-remediation `/verify-infrastructure` evidence confirms live `main`
-review/check protection, staging custom branch policy, and a fail-closed hosted
-migration path with immutable staging-migration evidence before app deployment.
-The required staging database-management secrets remain unavailable, so staging
-still serves only the healthy Phase 1 baseline and no Slice 09 candidate is
-deployed. See the [post-remediation report](../../../wiki/specs/audits/verify-infrastructure-2026-09-04-1353.md)
-and the [prior failed audit](../../../wiki/specs/audits/verify-infrastructure-2026-09-04-1255.md).
+The [fresh verification report](../../../wiki/specs/audits/verify-infrastructure-2026-09-04-1703.md)
+records the exact-SHA execution and retains the existing infrastructure control
+claims. External acceptance remains blocked at 279/283: AC209 production-window
+and provider evidence, AC211 production-window SLO/DLQ telemetry, AC265 Google/test
+identities with the current provider endpoint still returning HTTP 503, and AC266
+manual assistive-technology evidence remain open. The prior audit remains linked
+for history: [2026-09-04-1353](../../../wiki/specs/audits/verify-infrastructure-2026-09-04-1353.md)
+and [2026-09-04-1255](../../../wiki/specs/audits/verify-infrastructure-2026-09-04-1255.md).
 
 |                                                                Slice | Status      | Criteria | Depends on       | Link                                |
 | -------------------------------------------------------------------: | ----------- | -------: | ---------------- | ----------------------------------- |
@@ -63,7 +66,7 @@ and the [prior failed audit](../../../wiki/specs/audits/verify-infrastructure-20
 
 - [x] Owner approves Phase 2 plan — explicitly approved 2026-08-31.
 - [x] Slice 08 `/verify-infrastructure` local auth/admin checkpoint passes; remote activation remains explicitly gated.
-- [x] Slice 09 promotion controls — live `main` protection, staging branch policy, and fail-closed hosted migration contract verified; staging credentials and execution remain gated.
-- [!] Slice 09 `/verify-infrastructure` remains blocked on missing staging credentials, candidate deployment, and four external acceptance checks.
+- [x] Slice 09 promotion controls and exact-SHA execution — live `main` protection, staging branch policy, fail-closed hosted migration contract, CI `33917604565`, staging `33918141133`, deployment `6272586576`, and expanded migration `20260902080000` verified for candidate `5d6e49f34b678c59da2ac4f7059f08e6dc3b4790`; actor `WeJustJammin`.
+- [!] Slice 09 `/verify-infrastructure` remains blocked on four external acceptance checks: AC209 production-window/provider evidence, AC211 production-window SLO/DLQ telemetry, AC265 Google/test identities with the current provider endpoint at HTTP 503, and AC266 manual assistive-technology evidence.
 - [ ] Slice 17 close-gate `/verify-infrastructure` passes.
 - [ ] `/validate-phase` passes after every slice is complete.

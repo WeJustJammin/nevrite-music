@@ -19,3 +19,4 @@
 - [[specs/audits/propagation-scan-2026-09-02|Option A downstream propagation scan]]
 - [[specs/audits/verify-infrastructure-2026-09-04-1255|Infrastructure Verification Report]]
 - [[specs/audits/verify-infrastructure-2026-09-04-1353|Infrastructure Verification Report]]
+- [[specs/audits/verify-infrastructure-2026-09-04-1703|Infrastructure Verification Report: Post-deploy candidate `5d6e49f34b678c59da2ac4f7059f08e6dc3b4790`]]

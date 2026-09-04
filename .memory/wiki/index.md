@@ -56,6 +56,7 @@
 - [[specs/audits/propagation-scan-2026-09-02|Option A downstream propagation scan]] — audit — spec-vault
 - [[specs/audits/verify-infrastructure-2026-09-04-1255|Infrastructure Verification Report]] — audit — spec-vault
 - [[specs/audits/verify-infrastructure-2026-09-04-1353|Infrastructure Verification Report]] — audit — spec-vault
+- [[specs/audits/verify-infrastructure-2026-09-04-1703|Infrastructure Verification Report: Post-deploy candidate `5d6e49f34b678c59da2ac4f7059f08e6dc3b4790`]] — audit — spec-vault
 - [[specs/be/00-infrastructure|Cross-cutting Platform Foundation — Backend Specification]] — be-spec — spec-vault
 - [[specs/be/01a-auth-account-linking|Authentication & Account Linking — Backend Specification]] — be-spec — spec-vault
 - [[specs/be/01b-party-identity-aliases|Shard 01b — Party Identity & Aliases — Backend Specification]] — be-spec — spec-vault

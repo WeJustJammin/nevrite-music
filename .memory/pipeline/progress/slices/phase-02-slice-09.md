@@ -17,7 +17,7 @@
 - [x] `BE` data, API, and policy implementation
 - [x] `FE` Astro SSR and bounded React-island implementation
 - [x] `QA` GREEN, adversarial verification, and canonical validation (local
-      gates complete; promotion controls verified; four environment-owned release checks remain blocked)
+      gates complete; exact-main-SHA CI/staging/deployment verified; four external release checks remain blocked)
 - [x] Documentation, runbooks, graph, feature ledger, and progress tracking
 
 ## Acceptance Criteria
@@ -329,7 +329,7 @@
 
 - Local PostgreSQL, contract, Worker, SSR/island, browser, security, recovery,
   performance, bundle, and adversarial gates pass.
-- Canonical validation passes 418/418 Vitest files and 3,094/3,094 tests at
+- Canonical validation passes 418/418 Vitest files and 3,096/3,096 tests at
   exact 100% coverage, 102/102 default Chromium tests, all builds and bundle
   budgets, and local performance smoke.
 - The dedicated production-built S09 route passes 5/5; the clean database suite
@@ -341,7 +341,7 @@
 
 ## Verification
 
-- `pnpm validate`: PASS — 418/418 Vitest files, 3,094/3,094 tests, 100%
+- `pnpm validate`: PASS — 418/418 Vitest files, 3,096/3,096 tests, 100%
   statements/branches/functions/lines, and 102/102 Playwright tests.
 - `pnpm db:reset && pnpm db:test && pnpm db:types:check`: PASS.
 - `pnpm db:verify`: PASS — 33/33 migrations, 45/45 pgTAP files and 1,670/1,670
@@ -376,12 +376,26 @@
 - Final structural audit, diff check, contiguous-ID/count/mirror checks, and
   progress consistency: PASS.
 - Fresh `/verify-infrastructure`: FAIL / BLOCKED — the
-  [post-remediation report](../../../wiki/specs/audits/verify-infrastructure-2026-09-04-1353.md)
-  confirms live `main` review/check protection, staging custom branch policy,
-  and a fail-closed hosted-migration path before app deployment. Required
-  staging database-management secrets remain unavailable, so staging remains
-  the Phase 1 baseline with no deployed Slice 09 candidate. The prior failure
-  record is preserved in the [12:55 audit](../../../wiki/specs/audits/verify-infrastructure-2026-09-04-1255.md).
+  [post-deploy report](../../../wiki/specs/audits/verify-infrastructure-2026-09-04-1703.md)
+  records exact main SHA `5d6e49f34b678c59da2ac4f7059f08e6dc3b4790`, CI run
+  `33917604565` with all three required jobs green, immutable workspace
+  artifact `9953929511` (`sha256:2a89077d...`), staging run `33918141133`
+  and successful job `101169994068`, deployment `6272586576`, and hosted
+  migration through `20260902080000` in `expanded` state with full history
+  parity. Independent candidate artifact `9953965534` and deployment-evidence
+  artifact `9953965990` are retained; deployed API/web versions are
+  `0f6ef117-c377-4229-ab0b-72c815346414` /
+  `e3b79e94-99d2-4447-ac22-be3c5e485bb1`. Public checks record web `200`,
+  protected routes `303`, API health `200`/`ok`, CMS API `401`, and p95
+  `42.649115ms` over `20/20` with zero errors. `/api/v1/ready` remains
+  `503`/`not_ready` by intentional fail-closed behavior with no readiness
+  checker; `/api/v1/auth/providers` remains `503 DEPENDENCY_UNAVAILABLE` at
+  the hosted-auth boundary, and Google is disabled. No production telemetry or
+  provider receipt, authorized hosted Auth/RLS/IdP matrix, or manual
+  VoiceOver/Safari and NVDA/Firefox accessibility smoke is claimed. Slice 09
+  remains 279/283. The 13:53 and 12:55 audit records remain preserved in the
+  [prior post-remediation report](../../../wiki/specs/audits/verify-infrastructure-2026-09-04-1353.md)
+  and [12:55 audit](../../../wiki/specs/audits/verify-infrastructure-2026-09-04-1255.md).
 
 ## Depth Ratio
 
@@ -395,11 +409,12 @@
 - P2-S09-AC-265: deployed Supabase Auth/RLS/IdP browser-to-backend E2E.
 - P2-S09-AC-266: VoiceOver/Safari and NVDA/Firefox manual smoke.
 
-Operational prerequisites outside the 283-item acceptance count also remain:
-provision the required staging migration credentials, execute the fail-closed
-staging migration and app deployment in order, provision distinct production
-environment metadata only under owner control, and deploy one exact-main-SHA
-candidate before repeating this verification.
+Operational controls outside the 283-item acceptance count are verified for
+this candidate: fail-closed staging migration executed before app deployment,
+immutable migration evidence retained, and exact-main-SHA CI/staging/deployment
+identity recorded. Production environment metadata and deployment remain
+owner-controlled and unverified; the four external acceptance receipts above
+remain required.
 
 Slice 09 remains blocked. Slice 10 depends on Slice 09 and must not start until
 all four release-evidence gates pass.
