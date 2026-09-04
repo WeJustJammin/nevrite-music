@@ -13,4 +13,18 @@ describe('CI workspace setup', () => {
       /dest:\s*\$\{\{\s*runner\.temp\s*\}\}\/setup-pnpm/u,
     );
   });
+
+  it('bootstraps pnpm without the runner embedded npm installation', () => {
+    const lines = setupAction.split('\n');
+    const actionLine = lines.findIndex((line) =>
+      line.includes('uses: pnpm/action-setup@'),
+    );
+
+    expect(actionLine).toBeGreaterThan(-1);
+    expect(
+      lines
+        .slice(actionLine + 1, actionLine + 6)
+        .some((line) => /^\s+standalone:\s*true$/u.test(line)),
+    ).toBe(true);
+  });
 });
