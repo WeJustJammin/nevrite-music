@@ -117,7 +117,11 @@ describe('immutable release identity contract', () => {
     expect(workflow).toMatch(/pnpm verify:staging/u);
     expect(workflow).toMatch(/name: staging-verified-candidate/u);
     expect(candidateScript).toMatch(/promotion-candidate\/artifacts/u);
+    expect(candidateScript).toMatch(/staging-artifact-identity\.json/u);
     expect(workflow).toMatch(/promotion-metadata\.json/u);
+    expect(workflow).toMatch(
+      /promotion-metadata\.json candidate promotion-candidate\/staging-artifact-identity\.json/u,
+    );
     expect(evidenceScript).toMatch(/artifactDigest/u);
     expect(workflow).toMatch(
       /bash infra\/workflows\/record-staging-artifacts\.sh/u,
