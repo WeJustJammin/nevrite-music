@@ -31,10 +31,12 @@ The dedicated production-built S09 route command also passed 5/5. It exercised
 100-record performance, server-authorized list/detail/sign-in behavior, and
 forged, expired, and revoked signed-session rejection.
 
-Executable candidate `9e6b3f6a875af9f43851dbc00dc1d2a45aada85b` then passed
-all three exact-head jobs in GitHub CI run `33839386892` on PR #9. This confirms
-the committed code and clean immutable artifact path; it does not claim a
-staging or production deployment.
+Executable candidate `9e6b3f6a875af9f43851dbc00dc1d2a45aada85b` and baseline
+`9b2cff7849b25dd12ffae6287b1024e50654bc14` are the parents of synthetic PR
+merge `e0096f2a40f09a7374977d5cfa1494ef058ac195`, which passed all three jobs in
+GitHub CI run `33839386892`. This confirms the committed code against its merge
+base and the clean immutable artifact path; it does not claim exact-main-SHA,
+staging, or production deployment evidence.
 
 ## Database and recovery evidence
 

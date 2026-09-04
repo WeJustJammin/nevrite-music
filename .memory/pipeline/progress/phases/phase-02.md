@@ -5,7 +5,7 @@
 **Current gate**: Slice 09 release-evidence reconciliation blocked at 279/283 on four external checks  
 **Plan**: [Phase 2 plan](../../../wiki/specs/phases/phase-2.md)  
 **Updated**: 2026-09-04  
-**Candidate**: PR #9; executable commit `9e6b3f6a875af9f43851dbc00dc1d2a45aada85b` passed exact-head CI run `33839386892`
+**Candidate**: PR #9 head `9e6b3f6a875af9f43851dbc00dc1d2a45aada85b`; merge candidate `e0096f2a40f09a7374977d5cfa1494ef058ac195` passed CI run `33839386892`
 
 Slice 08 is complete (51/51). Slice 09 local QA-GREEN passes, but provider
 delivery, production SLO/DLQ telemetry, deployed Auth/RLS/IdP E2E, and

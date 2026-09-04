@@ -346,10 +346,12 @@
 - `pnpm db:reset && pnpm db:test && pnpm db:types:check`: PASS.
 - `pnpm db:verify`: PASS — 33/33 migrations, 45/45 pgTAP files and 1,670/1,670
   assertions, with generated database types matching the migrated schema.
-- Exact-head candidate CI: PASS — GitHub run `33839386892` completed all three
-  jobs for executable commit `9e6b3f6a875af9f43851dbc00dc1d2a45aada85b`
-  on PR #9. This is committed candidate evidence, not staging or production
-  evidence.
+- PR merge-candidate CI: PASS — GitHub run `33839386892` completed all three
+  jobs for synthetic merge `e0096f2a40f09a7374977d5cfa1494ef058ac195`,
+  whose parents are baseline `9b2cff7849b25dd12ffae6287b1024e50654bc14`
+  and executable head `9e6b3f6a875af9f43851dbc00dc1d2a45aada85b`.
+  This is committed PR candidate evidence, not exact-main-SHA, staging, or
+  production evidence.
 - Clean Worker artifact regression: PASS — Wrangler emits the executable
   `runtime-entry.js` module through `--outdir`, the build copies it to the
   immutable `dist/index.js` release path, syntax validation passes, and the API

@@ -80,7 +80,8 @@
   1,670/1,670 assertions and exact generated types.
 - **COMMITTED CANDIDATE:** PR #9 carries
   `codex/phase-2-slices-01-09`; executable commit
-  `9e6b3f6a875af9f43851dbc00dc1d2a45aada85b` passed all three jobs in exact-head
+  `9e6b3f6a875af9f43851dbc00dc1d2a45aada85b` was a parent of synthetic merge
+  `e0096f2a40f09a7374977d5cfa1494ef058ac195`, which passed all three jobs in
   GitHub CI run `33839386892`. It remains unmerged and not deployed. Staging
   continues to serve Phase 1 baseline
   `9b2cff7849b25dd12ffae6287b1024e50654bc14`.
