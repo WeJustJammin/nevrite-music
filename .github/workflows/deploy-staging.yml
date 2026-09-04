@@ -78,7 +78,7 @@ jobs:
           SUPABASE_PROJECT_REF: ${{ vars.SUPABASE_PROJECT_REF }}
         run: bash infra/workflows/finalize-staging-candidate.sh
       - name: Verify release promotion evidence
-        run: node --experimental-strip-types infra/verify-release-promotion.ts promotion-candidate/promotion-metadata.json candidate
+        run: node --experimental-strip-types infra/verify-release-promotion.ts promotion-candidate/promotion-metadata.json candidate promotion-candidate/staging-artifact-identity.json
       - name: Publish staging-verified promotion candidate
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
         with:

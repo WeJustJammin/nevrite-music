@@ -20,6 +20,9 @@ const gateWriter = fileURLToPath(
 const migrationRunner = fileURLToPath(
   new URL('../infra/workflows/apply-hosted-migrations.sh', import.meta.url),
 );
+const stagingCandidatePreparer = fileURLToPath(
+  new URL('../infra/workflows/prepare-staging-candidate.sh', import.meta.url),
+);
 const productionCandidateVerifier = fileURLToPath(
   new URL('../infra/workflows/verify-production-candidate.sh', import.meta.url),
 );
@@ -54,6 +57,40 @@ afterEach(() => {
 });
 
 describe('release workflow evidence scripts', () => {
+  it('derives an independent staging artifact identity from the immutable manifest', () => {
+    const root = temporaryRoot();
+    const sourceRevision = 'a'.repeat(40);
+    const migrationVersion = '20260902080000';
+    const manifest = `${'b'.repeat(64)}  ./artifact.js\n`;
+    mkdirSync(join(root, '.artifacts'));
+    mkdirSync(join(root, 'supabase/migrations'), { recursive: true });
+    writeFileSync(join(root, '.artifacts/artifact.js'), 'artifact');
+    writeFileSync(join(root, 'deployment-manifest.sha256'), manifest);
+    writeFileSync(
+      join(root, `supabase/migrations/${migrationVersion}_authority.sql`),
+      '-- migration',
+    );
+
+    execute(stagingCandidatePreparer, root, {
+      CI_RUN_ID: '33915048658',
+      DEPLOY_SHA: sourceRevision,
+    });
+
+    expect(
+      JSON.parse(
+        readFileSync(
+          join(root, 'promotion-candidate/staging-artifact-identity.json'),
+          'utf8',
+        ),
+      ),
+    ).toEqual({
+      artifactDigest: createHash('sha256').update(manifest).digest('hex'),
+      sourceRevision,
+      buildId: 'ci-33915048658',
+      migrationVersion,
+    });
+  });
+
   it('deploys API artifacts with a temporary permission-bounded secret file', () => {
     const root = temporaryRoot();
     const bin = join(root, 'bin');
