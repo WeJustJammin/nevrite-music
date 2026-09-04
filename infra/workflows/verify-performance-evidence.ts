@@ -98,6 +98,7 @@ const run = (): void => {
 const entrypoint = process.argv[1];
 if (
   entrypoint !== undefined &&
+  entrypoint !== '-' &&
   import.meta.url === pathToFileURL(realpathSync(entrypoint)).href
 ) {
   run();

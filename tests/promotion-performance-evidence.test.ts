@@ -115,4 +115,23 @@ describe('promotion performance evidence', () => {
       rmSync(sandbox, { recursive: true, force: true });
     }
   });
+
+  it('can be imported when the importing program is read from stdin', () => {
+    const verifierUrl = new URL(
+      '../infra/workflows/verify-performance-evidence.ts',
+      import.meta.url,
+    ).href;
+    const result = spawnSync(
+      process.execPath,
+      ['--experimental-strip-types', '-', sourceRevision],
+      {
+        encoding: 'utf8',
+        input: `import ${JSON.stringify(verifierUrl)};\nif (process.argv[2] !== ${JSON.stringify(sourceRevision)}) process.exit(2);\nconsole.log('stdin_import=passed');\n`,
+      },
+    );
+
+    expect(result.status).toBe(0);
+    expect(result.stdout).toBe('stdin_import=passed\n');
+    expect(result.stderr).toBe('');
+  });
 });
