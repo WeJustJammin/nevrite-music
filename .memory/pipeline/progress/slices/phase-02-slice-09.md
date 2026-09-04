@@ -17,7 +17,7 @@
 - [x] `BE` data, API, and policy implementation
 - [x] `FE` Astro SSR and bounded React-island implementation
 - [x] `QA` GREEN, adversarial verification, and canonical validation (local
-      gates complete; four environment-owned release checks remain blocked)
+      gates complete; promotion controls verified; four environment-owned release checks remain blocked)
 - [x] Documentation, runbooks, graph, feature ledger, and progress tracking
 
 ## Acceptance Criteria
@@ -329,7 +329,7 @@
 
 - Local PostgreSQL, contract, Worker, SSR/island, browser, security, recovery,
   performance, bundle, and adversarial gates pass.
-- Canonical validation passes 416/416 Vitest files and 3,082/3,082 tests at
+- Canonical validation passes 418/418 Vitest files and 3,094/3,094 tests at
   exact 100% coverage, 102/102 default Chromium tests, all builds and bundle
   budgets, and local performance smoke.
 - The dedicated production-built S09 route passes 5/5; the clean database suite
@@ -341,17 +341,22 @@
 
 ## Verification
 
-- `pnpm validate`: PASS — 416/416 Vitest files, 3,082/3,082 tests, 100%
+- `pnpm validate`: PASS — 418/418 Vitest files, 3,094/3,094 tests, 100%
   statements/branches/functions/lines, and 102/102 Playwright tests.
 - `pnpm db:reset && pnpm db:test && pnpm db:types:check`: PASS.
 - `pnpm db:verify`: PASS — 33/33 migrations, 45/45 pgTAP files and 1,670/1,670
   assertions, with generated database types matching the migrated schema.
-- PR merge-candidate CI: PASS — GitHub run `33839386892` completed all three
-  jobs for synthetic merge `e0096f2a40f09a7374977d5cfa1494ef058ac195`,
+- Prior PR merge-candidate CI: PASS — GitHub run `33841270472` completed all three
+  jobs for synthetic merge `a79dfe30db60e4f54024f064fc2fdf2d01033919`,
   whose parents are baseline `9b2cff7849b25dd12ffae6287b1024e50654bc14`
-  and executable head `9e6b3f6a875af9f43851dbc00dc1d2a45aada85b`.
+  and branch head `67264c5e9b5196d00ac3f0aa272896a010c872d7`.
   This is committed PR candidate evidence, not exact-main-SHA, staging, or
   production evidence.
+- Post-remediation focused workflow and migration-contract tests: PASS — 30/30
+  tests cover fail-closed hosted migration ordering, step-scoped credentials,
+  immutable `staging-migration-evidence`, full-history parity behavior,
+  old-candidate rejection, and production's exact staging-project binding. This
+  local verification does not establish GitHub CI or deployment evidence.
 - Clean Worker artifact regression: PASS — Wrangler emits the executable
   `runtime-entry.js` module through `--outdir`, the build copies it to the
   immutable `dist/index.js` release path, syntax validation passes, and the API
@@ -370,6 +375,13 @@
   when invoked through symlinks.
 - Final structural audit, diff check, contiguous-ID/count/mirror checks, and
   progress consistency: PASS.
+- Fresh `/verify-infrastructure`: FAIL / BLOCKED — the
+  [post-remediation report](../../../wiki/specs/audits/verify-infrastructure-2026-09-04-1353.md)
+  confirms live `main` review/check protection, staging custom branch policy,
+  and a fail-closed hosted-migration path before app deployment. Required
+  staging database-management secrets remain unavailable, so staging remains
+  the Phase 1 baseline with no deployed Slice 09 candidate. The prior failure
+  record is preserved in the [12:55 audit](../../../wiki/specs/audits/verify-infrastructure-2026-09-04-1255.md).
 
 ## Depth Ratio
 
@@ -382,6 +394,12 @@
 - P2-S09-AC-211: production telemetry attainment and daily production DLQ query.
 - P2-S09-AC-265: deployed Supabase Auth/RLS/IdP browser-to-backend E2E.
 - P2-S09-AC-266: VoiceOver/Safari and NVDA/Firefox manual smoke.
+
+Operational prerequisites outside the 283-item acceptance count also remain:
+provision the required staging migration credentials, execute the fail-closed
+staging migration and app deployment in order, provision distinct production
+environment metadata only under owner control, and deploy one exact-main-SHA
+candidate before repeating this verification.
 
 Slice 09 remains blocked. Slice 10 depends on Slice 09 and must not start until
 all four release-evidence gates pass.

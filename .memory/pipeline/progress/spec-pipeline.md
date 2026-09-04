@@ -73,20 +73,29 @@
   10 remains dependency-locked. See
   `.memory/pipeline/progress/phases/phase-02.md` and
   `.memory/pipeline/progress/slices/phase-02-slice-09.md`.
-- **CURRENT VALIDATION:** `pnpm validate` passes 416/416 Vitest files and
-  3,082/3,082 tests at 100% coverage, 102/102 Playwright tests, every workspace
+- **CURRENT VALIDATION:** `pnpm validate` passes 418/418 Vitest files and
+  3,094/3,094 tests at 100% coverage, 102/102 Playwright tests, every workspace
   build, bundle budgets, and the fresh immutable-Worker API p95 smoke.
   `pnpm db:verify` passes 33/33 migrations and 45/45 pgTAP files with
   1,670/1,670 assertions and exact generated types.
-- **COMMITTED CANDIDATE:** PR #9 carries
-  `codex/phase-2-slices-01-09`; executable commit
-  `9e6b3f6a875af9f43851dbc00dc1d2a45aada85b` was a parent of synthetic merge
-  `e0096f2a40f09a7374977d5cfa1494ef058ac195`, which passed all three jobs in
-  GitHub CI run `33839386892`. It remains unmerged and not deployed. Staging
-  continues to serve Phase 1 baseline
+- **PRIOR REMOTE CANDIDATE:** Before this remediation, PR #9 branch
+  `codex/phase-2-slices-01-09` was at
+  `67264c5e9b5196d00ac3f0aa272896a010c872d7`; synthetic merge
+  `a79dfe30db60e4f54024f064fc2fdf2d01033919` passed all three jobs in GitHub CI
+  run `33841270472`. That run is not evidence for the remediation. The branch
+  remains unmerged and no Slice 09 candidate has been deployed.
+  Staging continues to serve Phase 1 baseline
   `9b2cff7849b25dd12ffae6287b1024e50654bc14`.
-- **NEXT:** protected review/merge and Slice 09 `/verify-infrastructure` against
-  one exact deployed candidate. AC209 live alert delivery, AC211 production
-  telemetry/DLQ evidence, AC265 deployed Auth/RLS/Google IdP E2E, and AC266
-  VoiceOver/Safari plus NVDA/Firefox manual smoke remain mandatory. Do not start
-  Slice 10 until all four pass.
+- **INFRASTRUCTURE VERDICT:** post-remediation `/verify-infrastructure` verifies
+  live `main` review/check protection, staging custom branch policy, and the
+  fail-closed hosted-migration contract. Required staging credentials remain
+  unavailable, so no migration or Slice 09 candidate deployment exists and the
+  overall gate remains blocked. See
+  `.memory/wiki/specs/audits/verify-infrastructure-2026-09-04-1353.md`; the
+  12:55 failure record remains preserved.
+- **NEXT:** provision staging migration credentials, then require exact-main-SHA
+  CI, hosted migrations, staging deployment, and another
+  `/verify-infrastructure` against one revision/digest. AC209 live alert
+  delivery, AC211 production telemetry/DLQ evidence, AC265 deployed
+  Auth/RLS/Google IdP E2E, and AC266 VoiceOver/Safari plus NVDA/Firefox manual
+  smoke remain mandatory. Do not start Slice 10 until all four pass.

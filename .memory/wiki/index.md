@@ -54,6 +54,8 @@
 - [[specs/audits/propagation-option-a-2026-09-02|Slice 09 Option A propagation record]] — audit — spec-vault
 - [[specs/audits/propagation-scan-2026-08-30|Sentry Removal and Free-Only Operations Propagation Scan]] — audit — spec-vault
 - [[specs/audits/propagation-scan-2026-09-02|Option A downstream propagation scan]] — audit — spec-vault
+- [[specs/audits/verify-infrastructure-2026-09-04-1255|Infrastructure Verification Report]] — audit — spec-vault
+- [[specs/audits/verify-infrastructure-2026-09-04-1353|Infrastructure Verification Report]] — audit — spec-vault
 - [[specs/be/00-infrastructure|Cross-cutting Platform Foundation — Backend Specification]] — be-spec — spec-vault
 - [[specs/be/01a-auth-account-linking|Authentication & Account Linking — Backend Specification]] — be-spec — spec-vault
 - [[specs/be/01b-party-identity-aliases|Shard 01b — Party Identity & Aliases — Backend Specification]] — be-spec — spec-vault

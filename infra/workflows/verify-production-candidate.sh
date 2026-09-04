@@ -2,6 +2,8 @@
 
 set -euo pipefail
 
+workflow_dir="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+
 require_https_origin() {
   local name="$1"
   local value="$2"
@@ -61,6 +63,11 @@ if [[ -z "$migration_version" ]]; then
   echo "::error::A checked-out migration version is required"
   exit 1
 fi
+node "$workflow_dir/verify-staging-migration-evidence.mjs" \
+  .promotion/staging-migration-evidence.json \
+  "$DEPLOY_SHA" \
+  "$CI_RUN_ID" \
+  "$EXPECTED_STAGING_SUPABASE_PROJECT_REF"
 printf '{"artifactDigest":"%s","sourceRevision":"%s","buildId":"ci-%s","migrationVersion":"%s"}\n' \
   "$actual_digest" \
   "$DEPLOY_SHA" \

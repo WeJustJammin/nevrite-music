@@ -696,7 +696,7 @@
 │   ├── scripts
 │   ├── supabase
 │   ├── workflows
-│   │   ├── apply-production-migrations.sh
+│   │   ├── apply-hosted-migrations.sh
 │   │   ├── build-immutable-artifacts.sh
 │   │   ├── deploy-api-worker.sh
 │   │   ├── finalize-staging-candidate.sh
@@ -707,6 +707,7 @@
 │   │   ├── verify-ci-release-gates.sh
 │   │   ├── verify-performance-evidence.ts
 │   │   ├── verify-production-candidate.sh
+│   │   ├── verify-staging-migration-evidence.mjs
 │   │   ├── verify-production-promotion.ts
 │   │   ├── verify-staging-artifacts.sh
 │   │   ├── verify-staging-run.mjs

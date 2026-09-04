@@ -7,6 +7,7 @@ import {
   writeFileSync,
 } from 'node:fs';
 import { execFileSync } from 'node:child_process';
+import { createHash } from 'node:crypto';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -17,7 +18,7 @@ const gateWriter = fileURLToPath(
   new URL('../infra/workflows/write-ci-gate-evidence.sh', import.meta.url),
 );
 const migrationRunner = fileURLToPath(
-  new URL('../infra/workflows/apply-production-migrations.sh', import.meta.url),
+  new URL('../infra/workflows/apply-hosted-migrations.sh', import.meta.url),
 );
 const productionCandidateVerifier = fileURLToPath(
   new URL('../infra/workflows/verify-production-candidate.sh', import.meta.url),
@@ -344,6 +345,25 @@ printf 'called\n' > "$CALL_LOG"
         },
       })}\n`,
     );
+    const migrationVersions = ['20260903120000'];
+    writeFileSync(
+      join(root, '.promotion/staging-migration-evidence.json'),
+      `${JSON.stringify({
+        appliedVersions: migrationVersions,
+        ciRunId: '123',
+        destructiveRollbackAttempted: false,
+        environment: 'staging',
+        forwardFixOnly: true,
+        migrationVersion: migrationVersions[0],
+        projectRef: 'test-project',
+        remoteHistorySha256: createHash('sha256')
+          .update(JSON.stringify(migrationVersions))
+          .digest('hex'),
+        sourceRevision,
+        state: 'expanded',
+        verifiedAt: '2026-09-04T18:00:00.000Z',
+      })}\n`,
+    );
     const fakeGit = join(bin, 'git');
     writeFileSync(
       fakeGit,
@@ -361,7 +381,8 @@ printf 'called\n' > "$CALL_LOG"
       [
         '#!/usr/bin/env bash',
         'set -euo pipefail',
-        '[[ "$*" == *verify-performance-evidence.ts* ]]',
+        'if [[ "$*" == *verify-performance-evidence.ts* ]]; then exit 0; fi',
+        `exec ${JSON.stringify(process.execPath)} "$@"`,
       ].join('\n'),
     );
     chmodSync(fakeNode, 0o700);
@@ -369,6 +390,7 @@ printf 'called\n' > "$CALL_LOG"
     execute(productionCandidateVerifier, root, {
       CI_RUN_ID: '123',
       DEPLOY_SHA: sourceRevision,
+      EXPECTED_STAGING_SUPABASE_PROJECT_REF: 'test-project',
       GITHUB_ENV: githubEnv,
       PATH: `${bin}:${process.env.PATH ?? ''}`,
       PRODUCTION_WEB_ORIGIN: 'https://production.example.com',

@@ -44,7 +44,7 @@ jobs:
       name: production
       url: ${{ vars.PRODUCTION_WEB_ORIGIN }}
     # prettier-ignore
-    env: { DEPLOY_SHA: '${{ inputs.source_sha }}', CI_RUN_ID: '${{ needs.preflight.outputs.ci_run_id }}', PRODUCTION_WEB_ORIGIN: '${{ vars.PRODUCTION_WEB_ORIGIN }}', RELEASE_PROTECTED_ENVIRONMENT: production, STAGING_RUN_ID: '${{ inputs.staging_run_id }}' }
+    env: { DEPLOY_SHA: '${{ inputs.source_sha }}', CI_RUN_ID: '${{ needs.preflight.outputs.ci_run_id }}', EXPECTED_STAGING_SUPABASE_PROJECT_REF: '${{ vars.STAGING_SUPABASE_PROJECT_REF }}', PRODUCTION_WEB_ORIGIN: '${{ vars.PRODUCTION_WEB_ORIGIN }}', RELEASE_PROTECTED_ENVIRONMENT: production, STAGING_RUN_ID: '${{ inputs.staging_run_id }}' }
     steps:
       - name: Check out the promoted revision
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
@@ -68,7 +68,7 @@ jobs:
           SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
           SUPABASE_DB_PASSWORD: ${{ secrets.SUPABASE_DB_PASSWORD }}
           SUPABASE_PROJECT_REF: ${{ vars.SUPABASE_PROJECT_REF }}
-        run: bash infra/workflows/apply-production-migrations.sh
+        run: bash infra/workflows/apply-hosted-migrations.sh
       - name: Verify release promotion evidence
         run: node --experimental-strip-types infra/verify-release-promotion.ts .promotion/promotion-metadata.json production .promotion/staging-artifact-identity.json
       - name: Deploy API Worker production artifact

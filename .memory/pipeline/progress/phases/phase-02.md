@@ -2,14 +2,22 @@
 
 **Status**: in-progress  
 **Progress**: 8/17 slices (47%)  
-**Current gate**: Slice 09 release-evidence reconciliation blocked at 279/283 on four external checks  
+**Current gate**: Slice 09 promotion controls verified; staging execution and external evidence remain blocked at 279/283  
 **Plan**: [Phase 2 plan](../../../wiki/specs/phases/phase-2.md)  
 **Updated**: 2026-09-04  
-**Candidate**: PR #9 head `9e6b3f6a875af9f43851dbc00dc1d2a45aada85b`; merge candidate `e0096f2a40f09a7374977d5cfa1494ef058ac195` passed CI run `33839386892`
+**Prior remote evidence**: Before this remediation, PR #9 head `67264c5e9b5196d00ac3f0aa272896a010c872d7` produced synthetic merge `a79dfe30db60e4f54024f064fc2fdf2d01033919` and passing CI run `33841270472`. That run is not evidence for the remediation; no merge or deployment is claimed
 
 Slice 08 is complete (51/51). Slice 09 local QA-GREEN passes, but provider
 delivery, production SLO/DLQ telemetry, deployed Auth/RLS/IdP E2E, and
 VoiceOver/NVDA evidence remain unavailable.
+
+Fresh post-remediation `/verify-infrastructure` evidence confirms live `main`
+review/check protection, staging custom branch policy, and a fail-closed hosted
+migration path with immutable staging-migration evidence before app deployment.
+The required staging database-management secrets remain unavailable, so staging
+still serves only the healthy Phase 1 baseline and no Slice 09 candidate is
+deployed. See the [post-remediation report](../../../wiki/specs/audits/verify-infrastructure-2026-09-04-1353.md)
+and the [prior failed audit](../../../wiki/specs/audits/verify-infrastructure-2026-09-04-1255.md).
 
 |                                                                Slice | Status      | Criteria | Depends on       | Link                                |
 | -------------------------------------------------------------------: | ----------- | -------: | ---------------- | ----------------------------------- |
@@ -55,5 +63,7 @@ VoiceOver/NVDA evidence remain unavailable.
 
 - [x] Owner approves Phase 2 plan — explicitly approved 2026-08-31.
 - [x] Slice 08 `/verify-infrastructure` local auth/admin checkpoint passes; remote activation remains explicitly gated.
+- [x] Slice 09 promotion controls — live `main` protection, staging branch policy, and fail-closed hosted migration contract verified; staging credentials and execution remain gated.
+- [!] Slice 09 `/verify-infrastructure` remains blocked on missing staging credentials, candidate deployment, and four external acceptance checks.
 - [ ] Slice 17 close-gate `/verify-infrastructure` passes.
 - [ ] `/validate-phase` passes after every slice is complete.

@@ -1,7 +1,7 @@
 {
-  "builtAt": "2026-09-04T05:37:01.114Z",
-  "nodeCount": 1620,
-  "edgeCount": 10091,
+  "builtAt": "2026-09-04T18:20:53.058Z",
+  "nodeCount": 1622,
+  "edgeCount": 10099,
   "nodes": [
     {
       "id": "plan:2026-08-02-architecture-design",
@@ -267,6 +267,20 @@
       "type": "audit",
       "label": "Option A downstream propagation scan",
       "path": ".memory/wiki/specs/audits/propagation-scan-2026-09-02.md",
+      "shardId": null
+    },
+    {
+      "id": "audit:audits/verify-infrastructure-2026-09-04-1255",
+      "type": "audit",
+      "label": "Infrastructure Verification Report",
+      "path": ".memory/wiki/specs/audits/verify-infrastructure-2026-09-04-1255.md",
+      "shardId": null
+    },
+    {
+      "id": "audit:audits/verify-infrastructure-2026-09-04-1353",
+      "type": "audit",
+      "label": "Infrastructure Verification Report",
+      "path": ".memory/wiki/specs/audits/verify-infrastructure-2026-09-04-1353.md",
       "shardId": null
     },
     {
@@ -11582,6 +11596,54 @@
     {
       "from": "audit:audits/propagation-scan-2026-09-02",
       "to": "phase-plan:phases/phase-2",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "audit:audits/verify-infrastructure-2026-09-04-1255",
+      "to": "phase-plan:phases/phase-2",
+      "type": "phases_into",
+      "source": "phase-ref"
+    },
+    {
+      "from": "audit:audits/verify-infrastructure-2026-09-04-1255",
+      "to": "phase-plan:phases/phase-1",
+      "type": "phases_into",
+      "source": "phase-ref"
+    },
+    {
+      "from": "audit:audits/verify-infrastructure-2026-09-04-1255",
+      "to": "phase-plan:phases/phase-2",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "audit:audits/verify-infrastructure-2026-09-04-1255",
+      "to": "phase-plan:phases/phase-1",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "audit:audits/verify-infrastructure-2026-09-04-1353",
+      "to": "phase-plan:phases/phase-2",
+      "type": "phases_into",
+      "source": "phase-ref"
+    },
+    {
+      "from": "audit:audits/verify-infrastructure-2026-09-04-1353",
+      "to": "phase-plan:phases/phase-1",
+      "type": "phases_into",
+      "source": "phase-ref"
+    },
+    {
+      "from": "audit:audits/verify-infrastructure-2026-09-04-1353",
+      "to": "phase-plan:phases/phase-2",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "audit:audits/verify-infrastructure-2026-09-04-1353",
+      "to": "phase-plan:phases/phase-1",
       "type": "references",
       "source": "wikilink"
     },
@@ -71896,7 +71958,7 @@
     "byNodeType": {
       "plan": 12,
       "architecture": 18,
-      "audit": 17,
+      "audit": 19,
       "be-spec": 157,
       "fe-spec": 44,
       "ia-spec": 85,
@@ -71905,9 +71967,9 @@
       "decision": 97
     },
     "byEdgeType": {
-      "phases_into": 76,
+      "phases_into": 80,
       "constrained_by": 9041,
-      "references": 901,
+      "references": 905,
       "derives_from": 64,
       "implemented_by": 6,
       "split_from": 3

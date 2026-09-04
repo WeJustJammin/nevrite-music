@@ -17,3 +17,5 @@
 - [[specs/audits/propagation-option-a-2026-09-02|Slice 09 Option A propagation record]]
 - [[specs/audits/propagation-scan-2026-08-30|Sentry Removal and Free-Only Operations Propagation Scan]]
 - [[specs/audits/propagation-scan-2026-09-02|Option A downstream propagation scan]]
+- [[specs/audits/verify-infrastructure-2026-09-04-1255|Infrastructure Verification Report]]
+- [[specs/audits/verify-infrastructure-2026-09-04-1353|Infrastructure Verification Report]]

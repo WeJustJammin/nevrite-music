@@ -113,6 +113,18 @@ describe('production promotion workflow contract', () => {
     expect(artifactBoundaryIndex).toBeGreaterThan(-1);
     expect(candidateMetadataIndex).toBeGreaterThan(artifactBoundaryIndex);
     expect(candidateMetadataIndex).toBeLessThan(migrationIndex);
+    expect(candidateVerifier).toContain(
+      '.promotion/staging-migration-evidence.json',
+    );
+    expect(candidateVerifier).toContain(
+      'verify-staging-migration-evidence.mjs',
+    );
+    expect(workflow).toContain(
+      "EXPECTED_STAGING_SUPABASE_PROJECT_REF: '${{ vars.STAGING_SUPABASE_PROJECT_REF }}'",
+    );
+    expect(candidateVerifier).toContain(
+      '"$EXPECTED_STAGING_SUPABASE_PROJECT_REF"',
+    );
   });
 
   it('labels retained deployment evidence with the terminal job status', () => {
