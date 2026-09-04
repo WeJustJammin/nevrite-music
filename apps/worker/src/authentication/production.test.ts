@@ -2,6 +2,7 @@ import { describe, expect, it, vi } from 'vitest';
 
 import type { WorkerBindings } from '../index';
 import { createProductionAuthenticationDependencies } from './production';
+import { callRpc } from './production-http';
 import {
   base64UrlEncode,
   normalizeAuthProductionOptions,
@@ -55,9 +56,12 @@ const request = (path: string, init: RequestInit = {}): Request =>
     },
   });
 
-const config = (fetchImpl: typeof fetch = vi.fn()) =>
+const config = (
+  fetchImpl: typeof fetch = vi.fn(),
+  secret = environment.SUPABASE_SECRET_KEY,
+) =>
   normalizeAuthProductionOptions({
-    environment,
+    environment: { ...environment, SUPABASE_SECRET_KEY: secret },
     fetchImpl,
     now: () => NOW,
     randomBytes: (length) => new Uint8Array(length).fill(7),
@@ -171,6 +175,50 @@ describe('production authentication adapter', () => {
     expect(fetchImpl.mock.calls[0]?.[0]).toBe(
       `${environment.SUPABASE_URL}/rest/v1/rpc/auth_provider_catalog`,
     );
+  });
+
+  it('omits Authorization when an opaque Supabase secret key authenticates an RPC', async () => {
+    let capturedHeaders: HeadersInit | undefined;
+    const fetchImpl = vi.fn(
+      async (_input: string | URL | Request, init?: RequestInit) => {
+        capturedHeaders = init?.headers;
+        return json({ ok: true });
+      },
+    );
+
+    await callRpc(
+      config(fetchImpl),
+      'auth_provider_catalog',
+      {},
+      new AbortController().signal,
+    );
+
+    const headers = new Headers(capturedHeaders);
+    expect(headers.get('apikey')).toBe(environment.SUPABASE_SECRET_KEY);
+    expect(headers.has('authorization')).toBe(false);
+  });
+
+  it('retains Bearer Authorization for a legacy JWT service-role key', async () => {
+    let capturedHeaders: HeadersInit | undefined;
+    const legacySecret =
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.legacy-service-role';
+    const fetchImpl = vi.fn(
+      async (_input: string | URL | Request, init?: RequestInit) => {
+        capturedHeaders = init?.headers;
+        return json({ ok: true });
+      },
+    );
+
+    await callRpc(
+      config(fetchImpl, legacySecret),
+      'auth_provider_catalog',
+      {},
+      new AbortController().signal,
+    );
+
+    const headers = new Headers(capturedHeaders);
+    expect(headers.get('apikey')).toBe(legacySecret);
+    expect(headers.get('authorization')).toBe(`Bearer ${legacySecret}`);
   });
 
   it('starts enumeration-safe email auth with digest-only persistence', async () => {

@@ -5,6 +5,7 @@ import {
   type AuthProductionConfiguration,
 } from './production-configuration';
 import type { AuthenticationError } from './types';
+import { supabaseRpcHeaders } from '../supabase-rpc-headers';
 
 const readBoundedJson = async (response: Response): Promise<unknown> => {
   const text = await response.text();
@@ -227,8 +228,7 @@ export const callRpc = async (
       signal,
       headers: {
         accept: 'application/json',
-        apikey: config.secret,
-        authorization: `Bearer ${config.secret}`,
+        ...supabaseRpcHeaders(config.secret),
         'accept-profile': 'platform_api',
         'content-profile': 'platform_api',
         'content-type': 'application/json',

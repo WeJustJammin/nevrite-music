@@ -219,6 +219,9 @@ describe('S09 production content schema registry adapter', () => {
       CMS_SCHEMA_REGISTRY_RPC.getContentTypeVersion,
       CMS_SCHEMA_REGISTRY_RPC.advanceBlockLifecycle,
     ]);
+    const rpcHeaders = new Headers(fetchImpl.mock.calls[0]?.[1]?.headers);
+    expect(rpcHeaders.get('apikey')).toBe(environment.SUPABASE_SECRET_KEY);
+    expect(rpcHeaders.has('authorization')).toBe(false);
     expect(fetchImpl.mock.calls[1]?.[1]?.headers).toMatchObject({
       'X-Idempotency-Key': 'cms-field-001',
       'If-Match': '"7"',

@@ -50,9 +50,9 @@ describe('Phase 2 Slice 06 Worker production adapter RED acceptance', () => {
       Accept: 'application/json',
       'Accept-Profile': 'platform_api',
       apikey: bindings.SUPABASE_SECRET_KEY,
-      authorization: `Bearer ${bindings.SUPABASE_SECRET_KEY}`,
       'X-Operation-Id': 'PRF-PROF-01',
     });
+    expect(new Headers(init?.headers).has('authorization')).toBe(false);
     const body = JSON.parse(String(init?.body)) as Record<string, unknown>;
     expect(body).toHaveProperty('p_request');
     expect(JSON.stringify(body)).not.toContain(PROFILE_PERSON_ID);

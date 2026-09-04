@@ -5,6 +5,7 @@ import {
   JobStatusDependencyError,
   JobStatusInternalError,
 } from './job-status-types';
+import { supabaseRpcHeaders } from '../supabase-rpc-headers';
 
 export const DEFAULT_MAX_RESPONSE_BYTES = 64 * 1024;
 export const MAX_BEARER_BYTES = 4 * 1024;
@@ -239,11 +240,10 @@ export const callRpc = async (
         body: JSON.stringify(input.body),
         headers: {
           Accept: 'application/json',
-          Authorization: `Bearer ${input.secret}`,
           'Accept-Profile': 'platform_api',
           'Content-Profile': 'platform_api',
           'Content-Type': 'application/json',
-          apikey: input.secret,
+          ...supabaseRpcHeaders(input.secret),
         },
         method: 'POST',
         signal: input.signal,

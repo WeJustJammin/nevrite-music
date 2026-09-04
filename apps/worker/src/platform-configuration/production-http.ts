@@ -14,6 +14,7 @@ import type {
 } from '../authentication/types';
 import type { ConfigurationPortInput } from './types';
 import { configurationRpcFailure } from './production-error';
+import { supabaseRpcHeaders } from '../supabase-rpc-headers';
 
 export { configurationRpcFailure } from './production-error';
 
@@ -33,8 +34,7 @@ export const configurationHeaders = (
     'Accept-Profile': 'platform_api',
     'Content-Profile': 'platform_api',
     'Content-Type': 'application/json',
-    apikey: config.secret,
-    authorization: `Bearer ${config.secret}`,
+    ...supabaseRpcHeaders(config.secret),
     'X-Operation-Id': input.operationId,
     'X-Request-Id': trace.requestId,
     'X-Correlation-Id': trace.correlationId,

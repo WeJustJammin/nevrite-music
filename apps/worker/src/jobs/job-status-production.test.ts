@@ -300,13 +300,34 @@ describe('production JobStatus dependency adapter', () => {
         headers: expect.objectContaining({
           'Accept-Profile': 'platform_api',
           'Content-Profile': 'platform_api',
-          Authorization: `Bearer ${SECRET}`,
+          authorization: `Bearer ${SECRET}`,
           apikey: SECRET,
         }),
         method: 'POST',
         signal,
       }),
     ]);
+  });
+
+  it('omits Authorization for an opaque Supabase secret key on the job RPC', async () => {
+    const secret = 'sb_secret_job_status';
+    const fetchImpl = vi.fn<JobStatusProductionFetch>(async (input) =>
+      String(input).endsWith('/auth/v1/user')
+        ? json({ id: USER })
+        : json([row]),
+    );
+    const dependencies = createProductionJobStatusDependencies({
+      environment: { ...environment, SUPABASE_SECRET_KEY: secret },
+      fetchImpl,
+    });
+    const signal = new AbortController().signal;
+
+    await authenticate(dependencies, signal);
+    await dependencies.loadJobStatus({ jobId: JOB, signal });
+
+    const headers = new Headers(fetchImpl.mock.calls[1]?.[1]?.headers);
+    expect(headers.get('apikey')).toBe(secret);
+    expect(headers.has('authorization')).toBe(false);
   });
 
   it('conceals absence and rejects malformed projection authority or payload', async () => {

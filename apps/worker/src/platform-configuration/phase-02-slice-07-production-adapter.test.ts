@@ -153,7 +153,6 @@ describe('Phase 2 Slice 07 production adapter boundaries', () => {
       'Content-Profile': 'platform_api',
       'Content-Type': 'application/json',
       apikey: environment.SUPABASE_SECRET_KEY,
-      authorization: `Bearer ${environment.SUPABASE_SECRET_KEY}`,
       'X-Operation-Id': 'CFG-05A-01',
       'X-Request-Id': REQUEST_ID,
       'X-Correlation-Id': CORRELATION_ID,

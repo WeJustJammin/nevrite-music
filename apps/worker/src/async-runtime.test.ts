@@ -262,6 +262,50 @@ describe('injected async job runtime', () => {
     ).rejects.toThrow();
   });
 
+  it('omits Authorization for opaque Supabase secret keys', async () => {
+    let capturedHeaders: HeadersInit | undefined;
+    const secret = 'sb_secret_async_transport';
+    const fetcher = vi.fn<typeof fetch>(async (_input, init) => {
+      capturedHeaders = init?.headers;
+      return new Response(JSON.stringify({ ok: true }), { status: 200 });
+    });
+    const rpc = createSupabaseRpc(fetcher);
+
+    await expect(
+      rpc(
+        { ...env(createQueue()), SUPABASE_SECRET_KEY: secret },
+        'read_restore_fence',
+        {},
+      ),
+    ).resolves.toEqual({ ok: true });
+
+    const headers = new Headers(capturedHeaders);
+    expect(headers.get('apikey')).toBe(secret);
+    expect(headers.has('authorization')).toBe(false);
+  });
+
+  it('retains Bearer Authorization for a legacy JWT service-role key', async () => {
+    let capturedHeaders: HeadersInit | undefined;
+    const secret = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.legacy-service-role';
+    const fetcher = vi.fn<typeof fetch>(async (_input, init) => {
+      capturedHeaders = init?.headers;
+      return new Response(JSON.stringify({ ok: true }), { status: 200 });
+    });
+    const rpc = createSupabaseRpc(fetcher);
+
+    await expect(
+      rpc(
+        { ...env(createQueue()), SUPABASE_SECRET_KEY: secret },
+        'read_restore_fence',
+        {},
+      ),
+    ).resolves.toEqual({ ok: true });
+
+    const headers = new Headers(capturedHeaders);
+    expect(headers.get('apikey')).toBe(secret);
+    expect(headers.get('authorization')).toBe(`Bearer ${secret}`);
+  });
+
   it('aborts a hung RPC at its explicit deadline', async () => {
     vi.useFakeTimers();
     try {
