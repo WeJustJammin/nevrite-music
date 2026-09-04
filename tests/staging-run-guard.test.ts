@@ -1,3 +1,9 @@
+import { spawnSync } from 'node:child_process';
+import { mkdtempSync, rmSync, symlinkSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
+import { fileURLToPath } from 'node:url';
+
 import { describe, expect, it, vi } from 'vitest';
 
 import { verifyStagingRun } from '../infra/workflows/verify-staging-run.mjs';
@@ -73,5 +79,25 @@ describe('staging CI run freshness guard', () => {
     await expect(verifyStagingRun({ environment, fetchImpl })).rejects.toThrow(
       'identity or conclusion is not promotable',
     );
+  });
+
+  it('executes the staging run guard when invoked through a symlink', () => {
+    const sandbox = mkdtempSync(join(tmpdir(), 'wejammin-staging-run-'));
+    try {
+      const verifierPath = fileURLToPath(
+        new URL('../infra/workflows/verify-staging-run.mjs', import.meta.url),
+      );
+      const symlinkedVerifierPath = join(sandbox, 'verify-staging-run.mjs');
+      symlinkSync(verifierPath, symlinkedVerifierPath);
+      const result = spawnSync(process.execPath, [symlinkedVerifierPath], {
+        encoding: 'utf8',
+        env: {},
+      });
+
+      expect(result.status).not.toBe(0);
+      expect(result.stderr).toContain('CI_RUN_ID is required');
+    } finally {
+      rmSync(sandbox, { recursive: true, force: true });
+    }
   });
 });

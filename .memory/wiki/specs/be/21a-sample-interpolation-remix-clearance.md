@@ -388,3 +388,13 @@ None.
 - [Shard 20 licensing core](../ia/20-licensing-core.md)
 - [Shard 09 contributions](../ia/09-projects-collaboration.md)
 - [Shard 10 registry](../ia/10-rights-ownership.md)
+
+
+<!-- spec-graph: auto-generated -->
+## Related Specs
+
+### Phases into
+- [[specs/phases/phase-2|Phase 2 — Identity, admin, CMS/settings]]
+
+### References
+- [[specs/phases/phase-2|Phase 2 — Identity, admin, CMS/settings]]

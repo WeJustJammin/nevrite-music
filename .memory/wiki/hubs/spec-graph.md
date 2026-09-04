@@ -1,7 +1,7 @@
 # Spec Graph
 
-- **Nodes**: 1608
-- **Edges**: 9946
+- **Nodes**: 1620
+- **Edges**: 10091
 
 ## Relationship Chains
 
@@ -153,6 +153,9 @@
 - derives_from: [[specs/be/02b-profile-portfolio-epk|Profile, Portfolio & EPK — Backend Specification]]
 - derives_from: [[specs/be/02c-credentials-trader|Credentials & Trader Classification — Backend Specification]]
 
+### [[specs/ia/deep-dives/03-cms-content-modeling|Deep Dive 03 — CMS content modeling and authoring]]
+- derives_from: [[specs/fe/03-cms-content-modeling|CMS content modeling and authoring: Frontend Specification]]
+
 ### [[specs/ia/deep-dives/40-market-intelligence-signals|Deep Dive 40 — Market intelligence, fraud and scouting signals]]
 - derives_from: [[specs/be/40-market-intelligence-signals|Market Intelligence, Fraud & Scouting Signals — Backend Specification]]
 
@@ -181,6 +184,9 @@
 - [[specs/architecture/prd-working/persistence-map-interview|Persistence Map Interview]]
 - [[specs/audits/2026-08-29-be-ambiguity-report|BE Ambiguity Audit — Fresh Combined Run (2026-08-29)]]
 - [[specs/audits/2026-08-29-fe-ambiguity-report|Fresh FE Ambiguity Audit]]
+- [[specs/audits/2026-09-02-be-ambiguity-report|BE Ambiguity Audit — Fresh Combined Run (2026-09-02)]]
+- [[specs/audits/2026-09-02-fe-ambiguity-report|Fresh FE Ambiguity Audit]]
+- [[specs/audits/2026-09-02-ia-ambiguity-report|IA Ambiguity Audit — Fresh Combined Final Report (2026-09-02)]]
 - [[specs/audits/audit-scope|Ambiguity Audit Scope — BE + FE]]
 - [[specs/audits/propagation-observability-cost-2026-08-30|Sentry Removal and Free-Only Operations Propagation Record]]
 - [[specs/ideation/09-rights-ownership/09.03-chain-of-title-lifecycle/09.03-chain-of-title-lifecycle-cx|Chain of Title & Rights Lifecycle — Cross-Cuts]]

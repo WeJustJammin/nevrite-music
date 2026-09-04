@@ -1,5 +1,5 @@
 {
-  "builtAt": "2026-09-01T00:04:23.810Z",
+  "builtAt": "2026-09-04T03:32:02.621Z",
   "issues": [
     {
       "severity": "warning",
@@ -114,6 +114,24 @@
       "code": "ORPHAN_SPEC",
       "message": ".memory/wiki/specs/audits/2026-08-29-fe-ambiguity-report.md has no graph relationships",
       "path": ".memory/wiki/specs/audits/2026-08-29-fe-ambiguity-report.md"
+    },
+    {
+      "severity": "warning",
+      "code": "ORPHAN_SPEC",
+      "message": ".memory/wiki/specs/audits/2026-09-02-be-ambiguity-report.md has no graph relationships",
+      "path": ".memory/wiki/specs/audits/2026-09-02-be-ambiguity-report.md"
+    },
+    {
+      "severity": "warning",
+      "code": "ORPHAN_SPEC",
+      "message": ".memory/wiki/specs/audits/2026-09-02-fe-ambiguity-report.md has no graph relationships",
+      "path": ".memory/wiki/specs/audits/2026-09-02-fe-ambiguity-report.md"
+    },
+    {
+      "severity": "warning",
+      "code": "ORPHAN_SPEC",
+      "message": ".memory/wiki/specs/audits/2026-09-02-ia-ambiguity-report.md has no graph relationships",
+      "path": ".memory/wiki/specs/audits/2026-09-02-ia-ambiguity-report.md"
     },
     {
       "severity": "warning",

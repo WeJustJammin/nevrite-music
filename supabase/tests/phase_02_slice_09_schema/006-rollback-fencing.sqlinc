@@ -1,0 +1,157 @@
+select is(
+  (select platform_api.cms_dead_letter_schema_migration_event(jsonb_build_object(
+    'eventId', 'a9090000-0000-4000-8000-000000000107',
+    'eventType', 'cms.schema.activated.v1', 'schemaVersion', '1',
+    'aggregateType', 'cms.schema.migration',
+    'aggregateId', 'a9090000-0000-4000-8000-000000000105',
+    'aggregateVersion', '1',
+    'migrationPlanId', 'a9090000-0000-4000-8000-000000000105',
+    'claimToken', 'a9090000-0000-4000-8000-000000000913',
+    'reasonCode', 'WORKER_FAILURE'
+  ))->>'accepted'),
+  'true',
+  'S09 worker DLQ persists a failed event and acknowledges acceptance'
+);
+select is(
+  (select platform_api.cms_claim_schema_migration_event(jsonb_build_object(
+    'eventId', 'a9090000-0000-4000-8000-000000000107',
+    'eventType', 'cms.schema.activated.v1', 'schemaVersion', '1',
+    'aggregateType', 'cms.schema.migration',
+    'aggregateId', 'a9090000-0000-4000-8000-000000000105',
+    'aggregateVersion', '1',
+    'migrationPlanId', 'a9090000-0000-4000-8000-000000000105',
+    'claimToken', 'a9090000-0000-4000-8000-000000000114', 'replay', true
+  ))->>'status'),
+  'replayable',
+  'S09 worker DLQ claim permits an explicit replay of a dead-lettered event'
+);
+select throws_ok(
+  $$select platform_api.cms_dead_letter_schema_migration_event(jsonb_build_object(
+    'eventId', 'a9090000-0000-4000-8000-000000000107',
+    'eventType', 'cms.schema.activated.v1', 'schemaVersion', '1',
+    'aggregateType', 'cms.schema.migration',
+    'aggregateId', 'a9090000-0000-4000-8000-000000000105',
+    'aggregateVersion', '1',
+    'migrationPlanId', 'a9090000-0000-4000-8000-000000000105',
+    'claimToken', 'a9090000-0000-4000-8000-000000000114',
+    'reasonCode', 'bad'
+  ))$$,
+  'P0001', 'INVALID_REQUEST',
+  'S09 worker DLQ rejects an unbounded/lowercase reason code'
+);
+-- A second plan exercises rollback without disturbing the completed activation
+-- above. It proves the fallback version is tied to the same tenant and source
+-- and target fingerprints, rather than accepted as a UUID-only hint.
+insert into platform_private.cms_content_type_versions(
+  id, owner_id, state, version, content_type_id, version_no, labels,
+  workflow_key, workflow_version, source_locale, default_locale,
+  default_template_version_id, schema_artifact_id, definition_hash,
+  compatibility, dry_run_id, created_by
+) values (
+  'a9090000-0000-4000-8000-000000000108', (select organization_id from s09_fixture_org),
+  'approved', 1, (select content_type_id from s09_type_ids), 3,
+  jsonb_build_object('label', 'Article X v3'), 'editorial', 1, 'en-US', 'en-US',
+  null, 'a9090000-0000-4000-8000-000000000109', repeat('e', 64), 'additive',
+  'a9090000-0000-4000-8000-000000000111',
+  'a9090000-0000-4000-8000-000000000001'
+);
+insert into platform_private.cms_schema_artifacts(
+  id, owner_id, state, version, content_type_version_id, compiler_version,
+  zod_contract_ref, editor_manifest, renderer_manifest, artifact_hash, compiled_at
+) values (
+  'a9090000-0000-4000-8000-000000000109', (select organization_id from s09_fixture_org),
+  'compiled', 1, 'a9090000-0000-4000-8000-000000000108', '1',
+  'cms/content-type/articlex/v3', jsonb_build_object('fields', '[]'::jsonb),
+  jsonb_build_object('relations', '[]'::jsonb), repeat('e', 64), clock_timestamp()
+);
+insert into platform_private.cms_schema_migration_plans(
+  id, owner_id, state, version, content_type_id, from_version_id, to_version_id,
+  classification, transform_key, transform_version, dry_run_report, created_by
+) values (
+  'a9090000-0000-4000-8000-000000000110', (select organization_id from s09_fixture_org),
+  'ready', 1, (select content_type_id from s09_type_ids),
+  'a9090000-0000-4000-8000-000000000103', 'a9090000-0000-4000-8000-000000000108',
+  'additive', null, null,
+  jsonb_build_object(
+    'sourceDefinitionHash', repeat('b', 64), 'targetDefinitionHash', repeat('e', 64),
+    'dryRunId', 'a9090000-0000-4000-8000-000000000111',
+    'transformHash', platform_private.cms_migration_transform_hash(
+      'additive', null, null, repeat('b', 64), repeat('e', 64), repeat('e', 64), '1'
+    ),
+    'compilerHash', repeat('e', 64),
+    'compilerVersion', '1',
+    'result', 'pass',
+    'sourceCount', '0', 'targetCount', '0', 'rowErrorCount', '0',
+    'migratedCount', '0', 'failedCount', '0',
+    'lease', jsonb_build_object('state', 'ready', 'expiresAt', (clock_timestamp() - interval '1 minute')::text)
+  ),
+  'a9090000-0000-4000-8000-000000000001'
+);
+select platform_private.cms_record_dry_run_report(
+  'a9090000-0000-4000-8000-000000000111',
+  (select organization_id from s09_fixture_org),
+  (select content_type_id from s09_type_ids),
+  'a9090000-0000-4000-8000-000000000103',
+  'a9090000-0000-4000-8000-000000000108', 'additive', null, null,
+  repeat('b', 64), repeat('e', 64), repeat('e', 64), '1',
+  jsonb_build_object(
+    'dryRunId', 'a9090000-0000-4000-8000-000000000111', 'result', 'pass',
+    'sourceHash', repeat('b', 64), 'targetHash', repeat('e', 64),
+    'transformHash', platform_private.cms_migration_transform_hash(
+      'additive', null, null, repeat('b', 64), repeat('e', 64), repeat('e', 64), '1'
+    ),
+    'compilerHash', repeat('e', 64), 'compilerVersion', '1',
+    'sourceCount', '0', 'targetCount', '0', 'rowErrorCount', '0',
+    'migratedCount', '0', 'failedCount', '0',
+    'lease', jsonb_build_object(
+      'state', 'completed', 'expiresAt', (clock_timestamp() + interval '15 minutes')::text
+    )
+  ),
+  'a9090000-0000-4000-8000-000000000001'
+);
+create temp table s09_worker_rollback_claim on commit drop as
+select platform_api.cms_claim_schema_migration_lease(jsonb_build_object(
+  'migrationPlanId', 'a9090000-0000-4000-8000-000000000110',
+  'schemaVersionId', 'a9090000-0000-4000-8000-000000000108',
+  'expectedVersion', '1', 'cursor', '0', 'leaseOwner', 's09-worker-rollback',
+  'workerId', 's09-worker-rollback', 'leaseDurationMs', '30000',
+  'now', clock_timestamp()::text, 'transformKey', null, 'transformVersion', null,
+  'compilerHash', repeat('e', 64), 'sourceHash', repeat('b', 64),
+  'targetHash', repeat('e', 64)
+)) as response;
+create temp table s09_worker_rolled_back on commit drop as
+select platform_api.cms_rollback_schema_migration(jsonb_build_object(
+  'migrationPlanId', 'a9090000-0000-4000-8000-000000000110',
+  'schemaVersionId', 'a9090000-0000-4000-8000-000000000108', 'expectedVersion', '2',
+  'cursor', '0',
+  'leaseToken', (select response->>'leaseToken' from s09_worker_rollback_claim),
+  'reasonCode', 'TEST_FAILURE', 'retryable', false,
+  'fallbackVersionId', 'a9090000-0000-4000-8000-000000000103',
+  'preserveOldActive', true, 'deleteRows', false, 'transformKey', null,
+  'transformVersion', null, 'compilerHash', repeat('e', 64),
+  'sourceHash', repeat('b', 64), 'targetHash', repeat('e', 64)
+)) as response;
+select ok(
+  (select response->'plan'->>'state' = 'failed_terminal'
+    and response->'plan'->>'version' = '3'
+    and (select state = 'active' from platform_private.cms_content_type_versions
+         where id = 'a9090000-0000-4000-8000-000000000103')
+    from s09_worker_rolled_back),
+  'S09 worker rollback records terminal failure while preserving the active fallback version'
+);
+
+select throws_ok(
+  $$update platform_private.cms_schema_migration_plans
+    set dry_run_report = dry_run_report || jsonb_build_object('targetDefinitionHash', repeat('d', 64))
+    where id = 'a9090000-0000-4000-8000-000000000105'$$,
+  'P0001', 'IMMUTABLE_RECORD',
+  'S09 completed migration plans reject trusted SQL tampering'
+);
+select ok(
+  platform_private.cms_migration_plan_ready(
+    'a9090000-0000-4000-8000-000000000105',
+    (select content_type_id from s09_type_ids),
+    'a9090000-0000-4000-8000-000000000103'
+  ),
+  'CMS-03A completed migration evidence remains ready after tamper refusal'
+);

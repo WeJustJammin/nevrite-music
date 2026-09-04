@@ -324,6 +324,9 @@ Events exclude IP/location, raw latency samples, device names, media bytes/URLs,
 <!-- spec-graph: auto-generated -->
 ## Related Specs
 
+### Phases into
+- [[specs/phases/phase-2|Phase 2 — Identity, admin, CMS/settings]]
+
 ### References
 - [[specs/ia/00-infrastructure|Shard 00 — Cross-cutting platform foundation]]
 - [[specs/ia/01-identity-authority|Shard 01 — Identity authority and party governance]]
@@ -332,3 +335,4 @@ Events exclude IP/location, raw latency samples, device names, media bytes/URLs,
 - [[specs/ia/09-projects-collaboration|Shard 09 — Music projects and collaboration]]
 - [[specs/ia/33-show-day-operations|Shard 33 — Show-day execution and recovery]]
 - [[specs/ia/deep-dives/17-realtime-sessions|Deep Dive 17 — Real-time jamming and remote sessions]]
+- [[specs/phases/phase-2|Phase 2 — Identity, admin, CMS/settings]]

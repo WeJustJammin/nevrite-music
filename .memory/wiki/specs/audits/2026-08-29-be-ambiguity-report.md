@@ -7,7 +7,7 @@
 ## Scope and Freshness
 
 - Documents processed: 157/157 — 156 scored BE specs plus supporting index.
-- Corpus SHA-256: `f2ac72267341bfb9875bd5fc3f96d4f8d486bd6fc070bf8b89cf38207ad03882`.
+- Corpus SHA-256: `a99a28648ab3e527ad5c047b764db51e674e30fba26dc9f5972280d8b0ed1d45`.
 - Filesystem/index reconciliation: 156 listed, 156 present, 0 missing, 0 unlisted.
 - No prior report score, evidence row, or verdict was used as input.
 
@@ -23,7 +23,7 @@
 | Processed | Document | Routes | Score | Fresh evidence |
 |---:|---|---:|---:|---|
 | 1/157 | [index.md](../be/index.md) | — | supporting gate ✅ | 156 links; 0 missing; 0 unlisted |
-| 2/157 | [00-infrastructure.md](../be/00-infrastructure.md) | 4 | 11/11 ✅ | D1 L3; D2 L23; D3 L135; D4 L24; D5 L22; D6 L531; D7 L67; D8 L375; D9 L84; D10 L36; D11 L51 |
+| 2/157 | [00-infrastructure.md](../be/00-infrastructure.md) | 4 | 11/11 ✅ | D1 L3; D2 L24; D3 L136; D4 L25; D5 L23; D6 L532; D7 L68; D8 L376; D9 L85; D10 L37; D11 L52 |
 | 3/157 | [01a-auth-account-linking.md](../be/01a-auth-account-linking.md) | 15 | 11/11 ✅ | D1 L3; D2 L77; D3 L75; D4 L302; D5 L28; D6 L389; D7 L24; D8 L363; D9 L75; D10 L66; D11 L363 |
 | 4/157 | [01b-party-identity-aliases.md](../be/01b-party-identity-aliases.md) | 18 | 11/11 ✅ | D1 L3; D2 L92; D3 L43; D4 L305; D5 L90; D6 L641; D7 L39; D8 L99; D9 L697; D10 L38; D11 L695 |
 | 5/157 | [01c-relationships-authority-governance.md](../be/01c-relationships-authority-governance.md) | 30 | 11/11 ✅ | D1 L3; D2 L184; D3 L39; D4 L20; D5 L41; D6 L35; D7 L37; D8 L547; D9 L407; D10 L30; D11 L547 |

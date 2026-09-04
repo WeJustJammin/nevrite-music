@@ -113,6 +113,9 @@ Selling and controlling admission — ticket configuration, on-sales and presale
 <!-- spec-graph: auto-generated -->
 ## Related Specs
 
+### Phases into
+- [[specs/phases/phase-2|Phase 2 — Identity, admin, CMS/settings]]
+
 ### Constrained by
 - [[decisions.md#d-01|D-01]]
 - [[decisions.md#d-16|D-16]]
@@ -130,3 +133,6 @@ Selling and controlling admission — ticket configuration, on-sales and presale
 - [[decisions.md#d-32|D-32]]
 - [[decisions.md#d-28|D-28]]
 - [[decisions.md#d-13|D-13]]
+
+### References
+- [[specs/phases/phase-2|Phase 2 — Identity, admin, CMS/settings]]

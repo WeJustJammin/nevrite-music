@@ -31,6 +31,10 @@ const environment = (config: JsonObject, name: string): JsonObject =>
   asObject(asObject(config.env, 'env')[name], `env.${name}`);
 
 describe('Worker Wrangler queue and schedule contract', () => {
+  it('keeps the public module separate from the callable Wrangler entrypoint', () => {
+    expect(readConfig().main).toBe('src/runtime-entry.ts');
+  });
+
   it('declares production, local, and staging queue bindings independently', () => {
     const config = readConfig();
 

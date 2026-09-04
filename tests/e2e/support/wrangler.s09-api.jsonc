@@ -1,0 +1,11 @@
+{
+  "$schema": "../../node_modules/wrangler/config-schema.json",
+  "name": "wejammin-s09-real-api",
+  "main": "./content-schema-registry-api.ts",
+  "compatibility_date": "2026-08-29",
+  "workers_dev": true,
+  "vars": {
+    "APP_ENVIRONMENT": "development",
+    "APP_RELEASE": "s09-real-route",
+  },
+}

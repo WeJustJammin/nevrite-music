@@ -1,0 +1,142 @@
+---
+import { env } from 'cloudflare:workers';
+import { createRequestId } from '@wejammin/contracts';
+
+import ContentSchemaRegistryWorkbenchIsland from '../../../../../components/content-schema-registry/ContentSchemaRegistryWorkbenchIsland';
+import '../../../../../components/content-schema-registry/content-schema-registry.css';
+import {
+  readContentSchemaRegistryPorts,
+  resolveContentSchemaRegistryPage,
+} from '../../../../../server/content-schema-registry-context';
+import { applyContentSchemaRegistryRecoveryHeaders } from '../../../../../server/content-schema-registry-context-presentation';
+import {
+  contentSchemaRegistryMutationOperationFromRequest,
+  forwardContentSchemaRegistryMutation,
+} from '../../../../../server/content-schema-registry-platform-api';
+import { safeContentSchemaRegistryReturnPath } from '../../../../../server/content-schema-registry-contracts';
+
+export const prerender = false;
+
+Astro.response.headers.set('Cache-Control', 'no-store');
+
+const requestId = createRequestId(
+  Astro.request.headers.get('x-request-id') ?? undefined,
+);
+if (Astro.request.method === 'POST') {
+  const operationId = await contentSchemaRegistryMutationOperationFromRequest(
+    Astro.request,
+  );
+  if (
+    operationId !== 'CMS-03A-02' &&
+    operationId !== 'CMS-03A-03' &&
+    operationId !== 'CMS-03A-04'
+  ) {
+    return new Response('Bad request', {
+      status: 400,
+      headers: { 'cache-control': 'no-store' },
+    });
+  }
+  const contentTypeId = Astro.params.contentTypeId ?? '';
+  const versionId = Astro.params.versionId ?? '';
+  const mutation = await forwardContentSchemaRegistryMutation(
+    Astro.request,
+    env.PLATFORM_API,
+    { operationId, contentTypeId, versionId },
+  );
+  if (!mutation.ok) return mutation;
+  return Astro.redirect(
+    `/app/cms-content-modeling/${encodeURIComponent(contentTypeId)}/versions/${encodeURIComponent(versionId)}${new URL(Astro.request.url).search}`,
+    303,
+  );
+}
+const result = await resolveContentSchemaRegistryPage({
+  request: Astro.request,
+  route: 'detail',
+  contentTypeId: Astro.params.contentTypeId,
+  versionId: Astro.params.versionId,
+  ports: readContentSchemaRegistryPorts(Astro.locals, env.PLATFORM_API),
+  requestId,
+});
+if (result.kind === 'unauthenticated') {
+  return Astro.redirect(
+    `/auth/sign-in?returnTo=${encodeURIComponent(safeContentSchemaRegistryReturnPath(Astro.url))}`,
+    303,
+  );
+}
+if (result.kind === 'invalid_query' || result.kind === 'invalid_record') {
+  return new Response('Bad request', {
+    status: 400,
+    headers: { 'cache-control': 'no-store' },
+  });
+}
+if (result.kind === 'not_found') {
+  return new Response('Not found', {
+    status: 404,
+    headers: { 'cache-control': 'no-store' },
+  });
+}
+if (result.kind === 'forbidden') {
+  return new Response('Forbidden', {
+    status: 403,
+    headers: { 'cache-control': 'no-store' },
+  });
+}
+if (result.kind === 'degraded' || result.kind === 'error') {
+  Astro.response.status = result.status;
+}
+const page = result.page;
+applyContentSchemaRegistryRecoveryHeaders(Astro.response.headers, page);
+const detailHeading =
+  page.initialDetail?.status === 'success'
+    ? `${page.initialDetail.data.resource.label} · version ${page.initialDetail.data.resource.version} (${page.initialDetail.data.resource.state})`
+    : 'Content schema registry version';
+const detailTitle = `${detailHeading} | WeJammin`;
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta
+      name="description"
+      content="Review a disclosure-safe content schema registry version."
+    />
+    <title>{detailTitle}</title>
+  </head>
+  <body class="content-schema-registry-page">
+    <nav aria-label="Skip navigation">
+      <a
+        class="content-schema-registry-skip-link"
+        href="#content-schema-registry-main"
+      >
+        Skip to main content
+      </a>
+    </nav>
+    <header
+      class="content-schema-registry-shell-header"
+      aria-label="Application navigation"
+    >
+      <a href="/">WeJammin</a>
+      <nav aria-label="Primary navigation">
+        <a href="/app/cms-content-modeling">Content schema registry</a>
+        <a href="/system/degraded">System status</a>
+      </nav>
+    </header>
+    <main id="content-schema-registry-main" tabindex="-1">
+      <header class="content-schema-registry-page-heading">
+        <p class="content-schema-registry-eyebrow">Authenticated workspace</p>
+        <h1 id="page-title" tabindex="-1">{detailHeading}</h1>
+        <p>
+          Inspect one server-authorized version and its disclosure-safe
+          references.
+        </p>
+      </header>
+      <ContentSchemaRegistryWorkbenchIsland
+        {...page}
+        canonicalRefetchUrl={page.retryUrl}
+        client:load
+      />
+    </main>
+    <script src="../../../../../lib/route-heading-focus.ts"></script>
+  </body>
+</html>

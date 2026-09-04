@@ -264,6 +264,9 @@ lock-in from an accumulating, verified record no point solution can replicate. (
 <!-- spec-graph: auto-generated -->
 ## Related Specs
 
+### Phases into
+- [[specs/phases/phase-2|Phase 2 — Identity, admin, CMS/settings]]
+
 ### Constrained by
 - [[decisions.md#d-71|D-71]]
 - [[decisions.md#d-76|D-76]]
@@ -281,3 +284,6 @@ lock-in from an accumulating, verified record no point solution can replicate. (
 - [[decisions.md#d-26|D-26]]
 - [[decisions.md#d-32|D-32]]
 - [[decisions.md#d-03|D-03]]
+
+### References
+- [[specs/phases/phase-2|Phase 2 — Identity, admin, CMS/settings]]

@@ -350,6 +350,9 @@ See [moscow-ledger.md](./moscow-ledger.md#wont-53).
 <!-- spec-graph: auto-generated -->
 ## Related Specs
 
+### Phases into
+- [[specs/phases/phase-2|Phase 2 — Identity, admin, CMS/settings]]
+
 ### Constrained by
 - [[decisions.md#d-18|D-18]]
 - [[decisions.md#d-71|D-71]]
@@ -436,3 +439,6 @@ See [moscow-ledger.md](./moscow-ledger.md#wont-53).
 - [[decisions.md#d-82|D-82]]
 - [[decisions.md#d-83|D-83]]
 - [[decisions.md#d-84|D-84]]
+
+### References
+- [[specs/phases/phase-2|Phase 2 — Identity, admin, CMS/settings]]

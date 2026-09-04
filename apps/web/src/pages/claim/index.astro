@@ -1,0 +1,21 @@
+---
+import AccountFreeRemedyForm from '../../components/profile-ownership/AccountFreeRemedyForm';
+import '../../styles/profile-ownership.css';
+
+export const prerender = false;
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Invitation remediation | WeJammin</title>
+  </head>
+  <body class="profile-ownership-page">
+    <main id="claim-main" tabindex="-1">
+      <p>Invitation remediation</p>
+      <h1>Review an invitation</h1>
+      <AccountFreeRemedyForm client:load />
+    </main>
+  </body>
+</html>

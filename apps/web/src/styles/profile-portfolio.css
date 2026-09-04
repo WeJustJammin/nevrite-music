@@ -1,0 +1,90 @@
+.profile-portfolio-page {
+  margin: 0;
+  color: var(--color-ink);
+  background: var(--color-panel);
+  font-family: system-ui, sans-serif;
+}
+
+.profile-portfolio-page main {
+  inline-size: min(100% - 2rem, 90rem);
+  margin-inline: auto;
+  padding-block: 1.5rem 3rem;
+}
+
+.profile-portfolio-page a,
+.profile-portfolio-page button,
+.profile-portfolio-page input,
+.profile-portfolio-page select,
+.profile-portfolio-page textarea {
+  min-inline-size: 44px;
+  min-block-size: 44px;
+}
+
+.profile-portfolio-page a:focus-visible,
+.profile-portfolio-page button:focus-visible,
+.profile-portfolio-page input:focus-visible,
+.profile-portfolio-page select:focus-visible,
+.profile-portfolio-page textarea:focus-visible {
+  outline: 3px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+.profile-portfolio-page [data-workbench='profile-portfolio-epk'] {
+  display: grid;
+  gap: 1rem;
+  min-inline-size: 0;
+}
+
+.profile-portfolio-page [data-layer] {
+  min-inline-size: 0;
+  padding: 1rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-panel);
+}
+
+.profile-portfolio-page [data-layer-state='denied'],
+.profile-portfolio-page [data-layer-state='unavailable'] {
+  border-style: dashed;
+}
+
+.profile-portfolio-page [data-layer-items] {
+  display: grid;
+  gap: 0.5rem;
+  margin: 0;
+  padding-inline-start: 1.25rem;
+}
+
+.profile-portfolio-page .profile-portfolio-back {
+  display: inline-flex;
+  align-items: center;
+  margin-block-end: 1rem;
+}
+
+@media (min-width: 769px) {
+  .profile-portfolio-page main {
+    inline-size: min(100% - 3rem, 90rem);
+  }
+
+  .profile-portfolio-page [data-workbench='profile-portfolio-epk'] {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr);
+  }
+}
+
+@media (min-width: 1025px) {
+  .profile-portfolio-page [data-workbench='profile-portfolio-epk'] {
+    grid-template-columns: minmax(12rem, 0.75fr) minmax(0, 1.5fr) minmax(
+        12rem,
+        0.75fr
+      );
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .profile-portfolio-page * {
+    scroll-behavior: auto;
+    transition: none;
+  }
+}
+.profile-portfolio-page[data-offline-ready='false'] [data-state='success'] {
+  visibility: hidden;
+}

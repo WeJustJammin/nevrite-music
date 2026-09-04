@@ -41,6 +41,8 @@ const resolveSourceRevision = () => {
  *   lazyChunkGzipBytes: number[],
  *   allClientGzipBytes: number,
  *   manifestPath: string|null,
+ *   workbenchLabel: string,
+ *   routeLabel: string,
  * }} BundleBudgetReport
  */
 
@@ -231,12 +233,13 @@ function collectDynamicManifestAssets(
 
 /**
  * @param {string[]} clientAssets
+ * @param {string} entryStem
  * @returns {string|undefined}
  */
-function findBrowserEntry(clientAssets) {
-  return clientAssets.find((path) =>
-    /^InfrastructureWorkbench\.[^/]+\.(?:js|mjs)$/.test(basename(path)),
-  );
+function findBrowserEntry(clientAssets, entryStem) {
+  const escapedStem = entryStem.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const pattern = new RegExp(`^${escapedStem}\\.[^/]+\\.(?:js|mjs)$`);
+  return clientAssets.find((path) => pattern.test(basename(path)));
 }
 
 /**
@@ -263,6 +266,25 @@ function findInfrastructureRouteAssets(clientAssets) {
       basename(path),
     ),
   );
+}
+
+/**
+ * @param {string[]} clientAssets
+ * @param {string} entryStem
+ * @returns {string[]}
+ */
+function findRouteAssets(clientAssets, entryStem) {
+  if (entryStem === 'InfrastructureWorkbench') {
+    return findInfrastructureRouteAssets(clientAssets);
+  }
+  if (entryStem === 'SettingsFlagsRuntimeWorkbench') {
+    return clientAssets.filter((path) =>
+      /^PlatformConfigurationAdminRoute\.astro_astro_type_script_index_0_lang\.[^/]+\.(?:js|mjs)$/.test(
+        basename(path),
+      ),
+    );
+  }
+  return [];
 }
 
 /**
@@ -331,6 +353,59 @@ function readJavaScriptLiteral(source, start) {
 }
 
 /**
+ * Skip a JavaScript regular-expression literal so quote characters inside a
+ * pattern cannot desynchronize the import scanner. The preceding-token check
+ * distinguishes literals from division without attempting to parse all JS.
+ *
+ * @param {string} source
+ * @param {number} start
+ * @returns {{ end: number }|null}
+ */
+function readJavaScriptRegexLiteral(source, start) {
+  if (
+    source[start] !== '/' ||
+    source[start + 1] === '/' ||
+    source[start + 1] === '*'
+  ) {
+    return null;
+  }
+
+  let previous = start - 1;
+  while (previous >= 0 && /\s/u.test(source[previous])) previous -= 1;
+  const prefix = source.slice(Math.max(0, previous - 24), previous + 1);
+  const followsRegexPunctuation =
+    previous < 0 || /[([{:;,=!?&|+\-*%^~<>]/u.test(source[previous]);
+  const followsRegexKeyword =
+    /(?:^|[^A-Za-z0-9_$])(?:await|case|delete|in|instanceof|of|return|throw|typeof|void|yield)$/u.test(
+      prefix,
+    );
+  if (!followsRegexPunctuation && !followsRegexKeyword) return null;
+
+  let inCharacterClass = false;
+  for (let index = start + 1; index < source.length; index += 1) {
+    const character = source[index];
+    if (character === '\\') {
+      index += 1;
+      continue;
+    }
+    if (character === '\n' || character === '\r') return null;
+    if (character === '[') {
+      inCharacterClass = true;
+      continue;
+    }
+    if (character === ']') {
+      inCharacterClass = false;
+      continue;
+    }
+    if (character !== '/' || inCharacterClass) continue;
+    let end = index + 1;
+    while (/[A-Za-z]/u.test(source[end] ?? '')) end += 1;
+    return { end };
+  }
+  return null;
+}
+
+/**
  * @param {string} source
  * @param {number} start
  * @returns {{ value: string, end: number }|null}
@@ -343,11 +418,10 @@ function readJavaScriptIdentifier(source, start) {
 }
 
 /**
- * @param {string} path
+ * @param {string} source
  * @returns {{ staticReferences: string[], dynamicReferences: string[] }}
  */
-function readBuiltImports(path) {
-  const source = readFileSync(path, 'utf8');
+export function readBuiltImportReferences(source) {
   const staticReferences = new Set();
   const dynamicReferences = new Set();
 
@@ -359,6 +433,12 @@ function readBuiltImports(path) {
     const literal = readJavaScriptLiteral(source, index);
     if (literal) {
       index = literal.end;
+      continue;
+    }
+
+    const regexLiteral = readJavaScriptRegexLiteral(source, index);
+    if (regexLiteral) {
+      index = regexLiteral.end;
       continue;
     }
 
@@ -422,6 +502,14 @@ function readBuiltImports(path) {
     staticReferences: [...staticReferences],
     dynamicReferences: [...dynamicReferences],
   };
+}
+
+/**
+ * @param {string} path
+ * @returns {{ staticReferences: string[], dynamicReferences: string[] }}
+ */
+export function readBuiltImports(path) {
+  return readBuiltImportReferences(readFileSync(path, 'utf8'));
 }
 
 /**
@@ -490,15 +578,15 @@ function collectBuiltStaticClosure(roots, clientAssetSet, clientDirectory) {
 }
 
 /**
- * InfrastructureWorkbench renders its Runtime lazy component unconditionally,
- * so that dynamic edge is part of initial hydration. Optional feature chunks
- * rendered only after a user action remain deferred.
+ * Server-first workbench entries render their Runtime lazy component
+ * unconditionally, so those dynamic edges are part of initial hydration.
+ * Optional feature chunks rendered only after a user action remain deferred.
  *
  * @param {string} path
  * @returns {boolean}
  */
 function isImmediateHydrationAsset(path) {
-  return /^InfrastructureWorkbenchRuntime\.[^/]+\.(?:js|mjs)$/.test(
+  return /^(?:InfrastructureWorkbenchRuntime|SettingsFlagsRuntimeWorkbenchRuntime)\.[^/]+\.(?:js|mjs)$/.test(
     basename(path),
   );
 }
@@ -622,6 +710,13 @@ export function measureBundleBudget({
   manifestPath,
   entryName = DEFAULT_ENTRY_NAME,
 } = {}) {
+  const entryStem = entryName.replace(/\.[^.]+$/u, '');
+  const routeLabel =
+    entryStem === 'InfrastructureWorkbench'
+      ? 'Infrastructure'
+      : entryStem === 'SettingsFlagsRuntimeWorkbench'
+        ? 'Platform configuration'
+        : entryStem;
   const resolvedDistDirectory = resolve(distDirectory);
   const clientDirectory = join(resolvedDistDirectory, CLIENT_DIRECTORY);
   const absoluteClientAssets = findClientAssets(clientDirectory);
@@ -636,12 +731,10 @@ export function measureBundleBudget({
     const manifestEntryName = manifest.entries[entryName]
       ? entryName
       : Object.keys(manifest.entries).find((name) =>
-          /InfrastructureWorkbench/i.test(name),
+          name.toLowerCase().includes(entryStem.toLowerCase()),
         );
     if (!manifestEntryName) {
-      throw new Error(
-        'InfrastructureWorkbench entry is missing from the manifest',
-      );
+      throw new Error(`${entryStem} entry is missing from the manifest`);
     }
     collectStaticManifestAssets(
       manifest.entries,
@@ -662,21 +755,19 @@ export function measureBundleBudget({
     for (const runtimePath of findAstroRuntimeAssets(clientAssets)) {
       initialAssetSet.add(runtimePath);
     }
-    for (const routePath of findInfrastructureRouteAssets(clientAssets)) {
+    for (const routePath of findRouteAssets(clientAssets, entryStem)) {
       initialAssetSet.add(routePath);
     }
   } else {
-    const browserEntry = findBrowserEntry(clientAssets);
+    const browserEntry = findBrowserEntry(clientAssets, entryStem);
     if (!browserEntry) {
-      throw new Error(
-        'InfrastructureWorkbench browser entry is missing from the build',
-      );
+      throw new Error(`${entryStem} browser entry is missing from the build`);
     }
     initialAssetSet.add(browserEntry);
     for (const runtimePath of findAstroRuntimeAssets(clientAssets)) {
       initialAssetSet.add(runtimePath);
     }
-    for (const routePath of findInfrastructureRouteAssets(clientAssets)) {
+    for (const routePath of findRouteAssets(clientAssets, entryStem)) {
       initialAssetSet.add(routePath);
     }
   }
@@ -722,21 +813,21 @@ export function measureBundleBudget({
   const lazyChunks = normalizedDynamicAssets.map((path) =>
     measureAsset(resolvedDistDirectory, path),
   );
+  const escapedEntryStem = entryStem.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const workbenchPattern = new RegExp(
+    `^${escapedEntryStem}\\.[^/]+\\.(?:js|mjs)$`,
+  );
   const workbenchPath = normalizedInitialAssets.find((path) =>
-    /InfrastructureWorkbench\.[^/]+\.(?:js|mjs)$/.test(basename(path)),
+    workbenchPattern.test(basename(path)),
   );
   if (!workbenchPath) {
-    throw new Error(
-      'InfrastructureWorkbench browser entry is not an initial asset',
-    );
+    throw new Error(`${entryStem} browser entry is not an initial asset`);
   }
   const workbench = measuredInitial.find(
     (asset) => asset.path === workbenchPath,
   );
   if (!workbench) {
-    throw new Error(
-      'InfrastructureWorkbench browser entry could not be measured',
-    );
+    throw new Error(`${entryStem} browser entry could not be measured`);
   }
   const workbenchClosure = promoteImmediateHydrationAssets(
     collectBuiltStaticClosure(
@@ -778,6 +869,8 @@ export function measureBundleBudget({
     lazyChunkGzipBytes: lazyChunks.map((asset) => asset.gzipBytes),
     allClientGzipBytes,
     manifestPath: manifest?.path ?? null,
+    workbenchLabel: entryStem,
+    routeLabel,
   };
 }
 
@@ -787,14 +880,16 @@ export function measureBundleBudget({
  */
 export function bundleBudgetFailures(report) {
   const failures = [];
+  const workbenchLabel = report.workbenchLabel ?? 'InfrastructureWorkbench';
+  const routeLabel = report.routeLabel ?? 'Infrastructure';
   if (report.workbenchGzipBytes > report.budgets.workbenchGzipBytes) {
     failures.push(
-      `InfrastructureWorkbench exceeds ${report.budgets.workbenchGzipBytes} gzip bytes: ${report.workbenchGzipBytes}`,
+      `${workbenchLabel} exceeds ${report.budgets.workbenchGzipBytes} gzip bytes: ${report.workbenchGzipBytes}`,
     );
   }
   if (report.initialRouteGzipBytes > report.budgets.initialRouteGzipBytes) {
     failures.push(
-      `Infrastructure initial route exceeds ${report.budgets.initialRouteGzipBytes} gzip bytes: ${report.initialRouteGzipBytes}`,
+      `${routeLabel} initial route exceeds ${report.budgets.initialRouteGzipBytes} gzip bytes: ${report.initialRouteGzipBytes}`,
     );
   }
   for (const chunk of report.lazyChunks) {
@@ -834,12 +929,31 @@ export const formatBundleBudgetEvidence = (report, sourceRevision) => {
 };
 
 async function main() {
-  const report = measureBundleBudget({
-    distDirectory: process.argv[2] ?? 'apps/web/dist',
-    ...(process.argv[3] === undefined ? {} : { manifestPath: process.argv[3] }),
+  const distDirectory = process.argv[2] ?? 'apps/web/dist';
+  const manifestOption =
+    process.argv[3] === undefined ? {} : { manifestPath: process.argv[3] };
+  const report = measureBundleBudget({ distDirectory, ...manifestOption });
+  const platformConfiguration = measureBundleBudget({
+    distDirectory,
+    ...manifestOption,
+    entryName: 'SettingsFlagsRuntimeWorkbench.tsx',
   });
-  console.log(JSON.stringify(formatBundleBudgetEvidence(report), null, 2));
+  const sourceRevision = resolveSourceRevision();
+  console.log(
+    JSON.stringify(
+      {
+        ...formatBundleBudgetEvidence(report, sourceRevision),
+        platformConfiguration: formatBundleBudgetEvidence(
+          platformConfiguration,
+          sourceRevision,
+        ),
+      },
+      null,
+      2,
+    ),
+  );
   assertBundleBudget(report);
+  assertBundleBudget(platformConfiguration);
 }
 
 if (

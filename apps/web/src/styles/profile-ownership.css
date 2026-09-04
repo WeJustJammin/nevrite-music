@@ -1,0 +1,155 @@
+.profile-ownership-page {
+  margin: 0;
+  color: var(--color-graphite);
+  background: var(--color-paper);
+  overflow-x: hidden;
+}
+
+.profile-ownership-page a,
+.profile-ownership-page button,
+.profile-ownership-page input,
+.profile-ownership-page select,
+.profile-ownership-page textarea {
+  box-sizing: border-box;
+  min-inline-size: 44px;
+  min-block-size: 44px;
+}
+
+.profile-ownership-page a,
+.profile-ownership-page button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 0.75rem;
+}
+
+.profile-ownership-page > div {
+  max-inline-size: 100%;
+}
+
+.profile-ownership-page main {
+  max-inline-size: 78rem;
+  margin-inline: auto;
+  padding: 1rem;
+}
+
+.profile-disclosure-panel {
+  max-inline-size: 48rem;
+  margin: 1rem auto;
+  padding: 1rem;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+}
+
+.profile-ownership-layout {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 1rem;
+  max-inline-size: 100%;
+  min-inline-size: 0;
+  padding: 1rem;
+  overflow-wrap: anywhere;
+}
+
+.profile-ownership-layout > .back-link,
+.profile-ownership-layout > section {
+  min-inline-size: 0;
+  grid-column: span 12;
+}
+
+.profile-ownership-layout > section {
+  padding: 1rem;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+
+.profile-ownership-layout form {
+  display: grid;
+  gap: 0.75rem;
+  margin-block: 0.75rem 1.25rem;
+  padding: 0.75rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+}
+
+.profile-ownership-layout label {
+  display: grid;
+  gap: 0.25rem;
+  min-inline-size: 0;
+}
+
+.profile-ownership-layout input,
+.profile-ownership-layout select,
+.profile-ownership-layout textarea {
+  max-inline-size: 100%;
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-sm);
+  padding: 0.5rem;
+}
+
+.profile-ownership-layout ul {
+  margin: 0;
+  padding-inline-start: 1.25rem;
+}
+
+.profile-ownership-layout li {
+  margin-block: 0.25rem;
+}
+
+.profile-ownership-layout table {
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: collapse;
+}
+
+.profile-ownership-layout th,
+.profile-ownership-layout td {
+  padding: 0.5rem;
+  border: 1px solid var(--color-border);
+  text-align: start;
+  overflow-wrap: anywhere;
+}
+
+.profile-ownership-layout [hidden] {
+  display: none;
+}
+
+.profile-ownership-layout [data-breakpoint] {
+  min-block-size: 0;
+  min-inline-size: 0;
+}
+
+.skip-link {
+  display: inline-flex;
+  margin: 0.5rem;
+  background: var(--color-surface);
+}
+
+@media (max-width: 1099px) {
+  .profile-ownership-layout {
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 639px) {
+  .profile-ownership-layout {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    padding: 0.5rem;
+  }
+
+  .profile-ownership-page main {
+    padding: 0.5rem;
+  }
+
+  .profile-ownership-layout > section {
+    padding: 0.75rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .profile-ownership-page * {
+    scroll-behavior: auto;
+    transition-duration: 0s;
+  }
+}

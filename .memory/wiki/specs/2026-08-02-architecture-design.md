@@ -1238,6 +1238,7 @@ Pricing and capability assumptions for selected services were verified from offi
 ## Related Specs
 
 ### Phases into
+- [[specs/phases/phase-2|Phase 2 — Identity, admin, CMS/settings]]
 - [[specs/phases/phase-1|Phase 1 — Operational foundation]]
 
 ### Constrained by
@@ -1246,4 +1247,5 @@ Pricing and capability assumptions for selected services were verified from offi
 
 ### References
 - [[specs/ENGINEERING-STANDARDS|WeJammin — Engineering Standards]]
+- [[specs/phases/phase-2|Phase 2 — Identity, admin, CMS/settings]]
 - [[specs/phases/phase-1|Phase 1 — Operational foundation]]

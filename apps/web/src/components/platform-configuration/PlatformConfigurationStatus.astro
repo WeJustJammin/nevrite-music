@@ -1,0 +1,52 @@
+---
+interface Props {
+  readonly state: 'ready' | 'forbidden' | 'degraded';
+  readonly requestId: string;
+  readonly returnTo: string;
+}
+
+const { state, requestId, returnTo } = Astro.props;
+---
+
+{
+  state === 'degraded' && (
+    <section
+      class="platform-configuration-status-panel"
+      role="status"
+      aria-live="polite"
+      aria-labelledby="platform-configuration-degraded-heading"
+    >
+      <h2 id="platform-configuration-degraded-heading">
+        Platform configuration is degraded
+      </h2>
+      <p>
+        Only the safe shell and verified public metadata remain visible. Cached
+        private values are removed.
+      </p>
+      <p>
+        A retry is limited to a safe canonical read. Request ID:{' '}
+        <code>{requestId}</code>.
+      </p>
+      <a href={returnTo}>Retry safe read</a>
+    </section>
+  )
+}
+{
+  state === 'forbidden' && (
+    <section
+      class="platform-configuration-status-panel"
+      role="status"
+      aria-live="polite"
+      aria-labelledby="platform-configuration-forbidden-heading"
+    >
+      <h2 id="platform-configuration-forbidden-heading">Access is limited</h2>
+      <p>
+        The server did not disclose this protected configuration in the current
+        acting context.
+      </p>
+      <a href="/app/platform-configuration-admin">
+        Review configuration records
+      </a>
+    </section>
+  )
+}

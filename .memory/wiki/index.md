@@ -39,11 +39,21 @@
 - [[specs/architecture-draft|Architecture Design Draft]] — spec — spec-vault
 - [[specs/audits/2026-08-29-be-ambiguity-report|BE Ambiguity Audit — Fresh Combined Run (2026-08-29)]] — audit — spec-vault
 - [[specs/audits/2026-08-29-fe-ambiguity-report|Fresh FE Ambiguity Audit]] — audit — spec-vault
+- [[specs/audits/2026-09-02-be-ambiguity-report|BE Ambiguity Audit — Fresh Combined Run (2026-09-02)]] — audit — spec-vault
+- [[specs/audits/2026-09-02-fe-ambiguity-report|Fresh FE Ambiguity Audit]] — audit — spec-vault
+- [[specs/audits/2026-09-02-ia-ambiguity-report|IA Ambiguity Audit — Fresh Combined Final Report (2026-09-02)]] — audit — spec-vault
 - [[specs/audits/audit-scope|Ambiguity Audit Scope — BE + FE]] — audit — spec-vault
+- [[specs/audits/phase-02-slice-07-impeccable|Phase 2 Slice 07 Impeccable technical audit]] — audit — spec-vault
+- [[specs/audits/phase-02-slice-08-impeccable|Phase 2 Slice 08 Impeccable technical audit]] — audit — spec-vault
+- [[specs/audits/phase-02-slice-09-fe-qa|Phase 2 Slice 09 frontend QA evidence]] — audit — spec-vault
+- [[specs/audits/phase-02-slice-09-qa-green|Phase 2 Slice 09 local QA-GREEN and release-gate disposition]] — audit — spec-vault
+- [[specs/audits/phase-02-slice-09-verification-remediation|Phase 2 Slice 09 verification remediation evidence]] — audit — spec-vault
 - [[specs/audits/phase-1-staging-runtime-evidence|Phase 1 Staging Runtime Evidence]] — audit — spec-vault
 - [[specs/audits/phase-1-validation|Phase 1 Validation]] — audit — spec-vault
 - [[specs/audits/propagation-observability-cost-2026-08-30|Sentry Removal and Free-Only Operations Propagation Record]] — audit — spec-vault
+- [[specs/audits/propagation-option-a-2026-09-02|Slice 09 Option A propagation record]] — audit — spec-vault
 - [[specs/audits/propagation-scan-2026-08-30|Sentry Removal and Free-Only Operations Propagation Scan]] — audit — spec-vault
+- [[specs/audits/propagation-scan-2026-09-02|Option A downstream propagation scan]] — audit — spec-vault
 - [[specs/be/00-infrastructure|Cross-cutting Platform Foundation — Backend Specification]] — be-spec — spec-vault
 - [[specs/be/01a-auth-account-linking|Authentication & Account Linking — Backend Specification]] — be-spec — spec-vault
 - [[specs/be/01b-party-identity-aliases|Shard 01b — Party Identity & Aliases — Backend Specification]] — be-spec — spec-vault
@@ -1526,6 +1536,8 @@
 - [[specs/index|Specs Hub]] — spec — spec-vault
 - [[specs/phases/phase-1-draft|Phase 1 — Operational foundation (Draft)]] — phase-plan — spec-vault
 - [[specs/phases/phase-1|Phase 1 — Operational foundation]] — phase-plan — spec-vault
+- [[specs/phases/phase-2-draft|Phase 2 planning draft — generation record]] — phase-plan — spec-vault
+- [[specs/phases/phase-2|Phase 2 — Identity, admin, CMS/settings]] — phase-plan — spec-vault
 - [[specs/vision|WeJammin — Vision]] — spec — spec-vault
 
 ## Structured Memory

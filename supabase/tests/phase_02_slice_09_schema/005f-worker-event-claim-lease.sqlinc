@@ -1,0 +1,148 @@
+-- A queue delivery owns an event only for one bounded invocation. Progress or
+-- retry releases that ownership; crashes recover after server-time expiry; a
+-- stale invocation cannot ACK or dead-letter a successor's claim.
+select set_config('app.cms_rpc', 'true', true);
+
+insert into platform_private.outbox_events(
+  id, event_type, schema_version, aggregate_type, aggregate_id,
+  aggregate_version, correlation_id, causation_id, payload, occurred_at
+)
+select 'a9090000-0000-4000-8000-000000000920', event.event_type,
+       event.schema_version, event.aggregate_type, event.aggregate_id,
+       event.aggregate_version, 'a9090000-0000-4000-8000-000000000921',
+       event.causation_id, event.payload, clock_timestamp()
+from platform_private.outbox_events event
+where event.id = (select (response->>'eventId')::uuid from s09_worker_activated);
+
+create temp table s09_event_claim_lease on commit drop as
+select event.id, event.event_type, event.schema_version, event.aggregate_type,
+       event.aggregate_id, event.aggregate_version, event.payload
+from platform_private.outbox_events event
+where event.id = 'a9090000-0000-4000-8000-000000000920';
+
+create temp table s09_event_claim_request on commit drop as
+select jsonb_build_object(
+  'eventId', id, 'eventType', event_type, 'schemaVersion', schema_version,
+  'aggregateType', aggregate_type, 'aggregateId', aggregate_id,
+  'aggregateVersion', aggregate_version::text,
+  'migrationPlanId', payload->'migrationPlanId',
+  'claimToken', 'a9090000-0000-4000-8000-000000000922', 'replay', false
+) request
+from s09_event_claim_lease;
+
+select is(
+  (select platform_api.cms_claim_schema_migration_event(request)->>'status'
+   from s09_event_claim_request),
+  'new',
+  'S09 event lease grants the first bounded claim'
+);
+select ok(
+  (select claim_token_hash = extensions.digest(
+            convert_to('a9090000-0000-4000-8000-000000000922', 'utf8'), 'sha256'
+          )
+          and claim_lease_until > clock_timestamp()
+   from platform_private.idempotency_records
+   where actor_id = 'a9090000-0000-4000-8000-000000000920'
+     and operation = 'cms.schema.event.claim'),
+  'S09 event lease stores only the token hash and a future server deadline'
+);
+select is(
+  (select platform_api.cms_claim_schema_migration_event(
+    jsonb_set(request, '{claimToken}', '"a9090000-0000-4000-8000-000000000923"')
+  )->>'status' from s09_event_claim_request),
+  'in_progress',
+  'S09 event lease rejects another live owner'
+);
+
+select is(
+  (select platform_api.cms_release_schema_migration_event(
+    jsonb_set(request - 'replay', '{claimToken}', '"a9090000-0000-4000-8000-000000000923"')
+  )->>'code' from s09_event_claim_request),
+  'EVENT_CLAIM_LOST',
+  'S09 event release fences the wrong token'
+);
+select is(
+  (select platform_api.cms_release_schema_migration_event(request - 'replay')->>'released'
+   from s09_event_claim_request),
+  'true',
+  'S09 progress release relinquishes the matching claim'
+);
+select ok(
+  (select state = 'failed_retryable'::platform_private.idempotency_state
+          and claim_token_hash is null and claim_lease_until is null
+   from platform_private.idempotency_records
+   where actor_id = 'a9090000-0000-4000-8000-000000000920'
+     and operation = 'cms.schema.event.claim'),
+  'S09 progress release leaves a reclaimable token-free record'
+);
+
+select is(
+  (select platform_api.cms_claim_schema_migration_event(
+    jsonb_set(request, '{claimToken}', '"a9090000-0000-4000-8000-000000000923"')
+  )->>'status' from s09_event_claim_request),
+  'new',
+  'S09 redelivery reclaims a released event with a fresh token'
+);
+update platform_private.idempotency_records
+   set claim_lease_until = clock_timestamp() - interval '1 millisecond'
+ where actor_id = 'a9090000-0000-4000-8000-000000000920'
+   and operation = 'cms.schema.event.claim';
+select is(
+  (select platform_api.cms_claim_schema_migration_event(
+    jsonb_set(request, '{claimToken}', '"a9090000-0000-4000-8000-000000000924"')
+  )->>'status' from s09_event_claim_request),
+  'new',
+  'S09 crash recovery takes over at an expired server lease'
+);
+
+select is(
+  (select platform_api.cms_acknowledge_schema_migration_event(
+    (request - 'replay') || jsonb_build_object(
+      'claimToken', 'a9090000-0000-4000-8000-000000000923', 'outcome', 'success'
+    )
+  )->>'code' from s09_event_claim_request),
+  'EVENT_CLAIM_LOST',
+  'S09 stale ACK cannot complete a successor claim'
+);
+select is(
+  (select platform_api.cms_dead_letter_schema_migration_event(
+    (request - 'replay') || jsonb_build_object(
+      'claimToken', 'a9090000-0000-4000-8000-000000000923',
+      'reasonCode', 'STALE_INVOCATION'
+    )
+  )->>'code' from s09_event_claim_request),
+  'EVENT_CLAIM_LOST',
+  'S09 stale DLQ cannot mutate a successor claim or event'
+);
+select ok(
+  (select dead_lettered_at is null and dispatched_at is null
+   from platform_private.outbox_events
+   where id = 'a9090000-0000-4000-8000-000000000920'),
+  'S09 stale DLQ leaves the live successor event unchanged'
+);
+
+select is(
+  (select platform_api.cms_acknowledge_schema_migration_event(
+    (request - 'replay') || jsonb_build_object(
+      'claimToken', 'a9090000-0000-4000-8000-000000000924', 'outcome', 'success'
+    )
+  )->>'accepted' from s09_event_claim_request),
+  'true',
+  'S09 matching live owner acknowledges once'
+);
+select is(
+  (select platform_api.cms_acknowledge_schema_migration_event(
+    (request - 'replay') || jsonb_build_object(
+      'claimToken', 'a9090000-0000-4000-8000-000000000924', 'outcome', 'success'
+    )
+  )->>'accepted' from s09_event_claim_request),
+  'true',
+  'S09 completed replay ACK is an accepted no-op'
+);
+select is(
+  (select platform_api.cms_claim_schema_migration_event(
+    jsonb_set(request, '{claimToken}', '"a9090000-0000-4000-8000-000000000922"')
+  )->>'status' from s09_event_claim_request),
+  'duplicate',
+  'S09 completed event remains deduplicated after fencing'
+);

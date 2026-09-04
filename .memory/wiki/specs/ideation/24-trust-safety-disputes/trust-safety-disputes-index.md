@@ -145,6 +145,9 @@ Three findings reshaped the domain and belong at the top of it:
 <!-- spec-graph: auto-generated -->
 ## Related Specs
 
+### Phases into
+- [[specs/phases/phase-2|Phase 2 — Identity, admin, CMS/settings]]
+
 ### Constrained by
 - [[decisions.md#d-10|D-10]]
 - [[decisions.md#d-18|D-18]]
@@ -162,3 +165,6 @@ Three findings reshaped the domain and belong at the top of it:
 - [[decisions.md#d-20|D-20]]
 - [[decisions.md#d-21|D-21]]
 - [[decisions.md#d-28|D-28]]
+
+### References
+- [[specs/phases/phase-2|Phase 2 — Identity, admin, CMS/settings]]

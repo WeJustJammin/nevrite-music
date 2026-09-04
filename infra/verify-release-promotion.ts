@@ -1,4 +1,4 @@
-import { readFileSync } from 'node:fs';
+import { readFileSync, realpathSync } from 'node:fs';
 import { pathToFileURL } from 'node:url';
 
 import {
@@ -6,14 +6,25 @@ import {
   type ReleasePromotionDecision,
 } from '../packages/application/src/infrastructure/release-recovery/promotion.ts';
 import {
+  ReleaseArtifactIdentitySchema,
   ReleasePromotionEvidenceSchema,
+  type ReleaseArtifactIdentity,
   type ReleasePromotionEvidence,
 } from '../packages/contracts/src/release-artifact.ts';
 import { verifyPerformanceEvidence } from './workflows/verify-performance-evidence.ts';
 
 export const verifyStagingCandidateMetadata = (
   metadata: unknown,
+  expectedArtifact: unknown,
 ): ReleasePromotionEvidence => {
+  if (expectedArtifact === undefined) {
+    throw new Error('An independent candidate artifact identity is required.');
+  }
+  const parsedExpectedArtifact =
+    ReleaseArtifactIdentitySchema.safeParse(expectedArtifact);
+  if (!parsedExpectedArtifact.success) {
+    throw new Error('Independent candidate artifact identity is invalid.');
+  }
   const parsed = ReleasePromotionEvidenceSchema.safeParse(metadata);
   if (!parsed.success) {
     throw new Error('Staging candidate evidence is invalid.');
@@ -32,16 +43,36 @@ export const verifyStagingCandidateMetadata = (
     evidence.performance,
     evidence.artifact.sourceRevision,
   );
+  if (!sameArtifactIdentity(evidence.artifact, parsedExpectedArtifact.data)) {
+    throw new Error(
+      'Staging candidate artifact identity does not match the independently derived identity.',
+    );
+  }
   return evidence;
 };
 
+const sameArtifactIdentity = (
+  left: ReleaseArtifactIdentity,
+  right: ReleaseArtifactIdentity,
+): boolean =>
+  left.artifactDigest === right.artifactDigest &&
+  left.sourceRevision === right.sourceRevision &&
+  left.buildId === right.buildId &&
+  left.migrationVersion === right.migrationVersion;
+
 export const verifyReleasePromotionMetadata = (
   metadata: unknown,
-  options?: Readonly<{ protectedEnvironment?: unknown }>,
+  options?: Readonly<{
+    previousArtifact?: unknown;
+    protectedEnvironment?: unknown;
+  }>,
 ): ReleasePromotionDecision => {
   const protectedApproval = options?.protectedEnvironment === 'production';
   if (!protectedApproval) {
     throw new Error('A protected production environment is required.');
+  }
+  if (options?.previousArtifact === undefined) {
+    throw new Error('An independent prior artifact identity is required.');
   }
   const parsedEvidence = ReleasePromotionEvidenceSchema.safeParse(metadata);
   if (!parsedEvidence.success) {
@@ -52,13 +83,8 @@ export const verifyReleasePromotionMetadata = (
     parsedEvidence.data.artifact.sourceRevision,
   );
   const decision = evaluateReleasePromotion({
-    evidence: metadata,
-    previousArtifact:
-      typeof metadata === 'object' &&
-      metadata !== null &&
-      'artifact' in metadata
-        ? metadata.artifact
-        : null,
+    evidence: parsedEvidence.data,
+    previousArtifact: options.previousArtifact,
     fromEnvironment: 'staging',
     targetEnvironment: 'production',
     protectedApproval,
@@ -84,19 +110,33 @@ export const verifyReleasePromotionMetadata = (
 const run = (
   metadataPath: string | undefined,
   mode: string | undefined,
+  previousArtifactPath: string | undefined,
 ): void => {
   if (!metadataPath) {
     throw new Error('Promotion metadata path is required.');
   }
   const metadata: unknown = JSON.parse(readFileSync(metadataPath, 'utf8'));
   if (mode === 'candidate') {
-    verifyStagingCandidateMetadata(metadata);
+    if (!previousArtifactPath) {
+      throw new Error('Candidate artifact identity path is required.');
+    }
+    const expectedArtifact: unknown = JSON.parse(
+      readFileSync(previousArtifactPath, 'utf8'),
+    );
+    verifyStagingCandidateMetadata(metadata, expectedArtifact);
     return;
   }
   if (mode !== 'production') {
     throw new Error('Promotion verification mode is required.');
   }
+  if (!previousArtifactPath) {
+    throw new Error('Production artifact identity path is required.');
+  }
+  const previousArtifact: unknown = JSON.parse(
+    readFileSync(previousArtifactPath, 'utf8'),
+  );
   verifyReleasePromotionMetadata(metadata, {
+    previousArtifact,
     protectedEnvironment: process.env.RELEASE_PROTECTED_ENVIRONMENT,
   });
 };
@@ -104,7 +144,7 @@ const run = (
 const entrypoint = process.argv[1];
 if (
   entrypoint !== undefined &&
-  import.meta.url === pathToFileURL(entrypoint).href
+  import.meta.url === pathToFileURL(realpathSync(entrypoint)).href
 ) {
-  run(process.argv[2], process.argv[3]);
+  run(process.argv[2], process.argv[3], process.argv[4]);
 }

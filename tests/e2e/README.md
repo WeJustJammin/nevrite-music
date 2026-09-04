@@ -11,6 +11,15 @@ These tests own browser-observable navigation, responsive behavior, focus, and
 safe asynchronous presentation. They do not provision providers or use paid
 service credentials.
 
+## Content schema registry map
+
+- `phase-02-slice-09-content-schema-registry.fixture.ts` — shared local
+  browser fixture, SSR projection data, and viewport assertions.
+- `phase-02-slice-09-content-schema-registry.spec.ts` — auth, semantic,
+  responsive, and zoom browser checks.
+- `phase-02-slice-09-content-schema-registry-states.spec.ts` — outage,
+  invalidation, reduced-motion, and session-expiry checks.
+
 ## Extension
 
 Add a focused spec for a route or browser-visible state. Use injected local

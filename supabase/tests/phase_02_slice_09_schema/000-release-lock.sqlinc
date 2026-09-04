@@ -1,0 +1,110 @@
+-- Run the two-session row-lock probe before the main pgTAP transaction starts.
+-- The fixture transaction below touches auth.users; doing setup here avoids a
+-- relation-lock wait in dblink while the outer session waits for its result.
+do $probe$
+declare
+  race_principal constant uuid := 'a9090000-0000-0000-0000-000000000091';
+  race_key constant text := 'release-key-race';
+  race_nonce constant text := 'a9090000-0000-4000-8000-000000000592';
+  race_signature constant text := repeat('A', 86) || '==';
+  race_signature_hash text;
+  race_request jsonb;
+  remote_sql text;
+  lock_rows integer;
+  busy boolean;
+begin
+  race_signature_hash := pg_catalog.encode(
+    extensions.digest(pg_catalog.decode(race_signature, 'base64'), 'sha256'),
+    'hex'
+  );
+  race_request := jsonb_build_object(
+    'releaseKeyId', race_key,
+    'releaseNonce', race_nonce,
+    'releaseIssuedAt', '2026-09-02T17:00:00.000Z',
+    'releaseRawBodyHash', repeat('a', 64),
+    'releaseSignatureHash', race_signature_hash,
+    'releaseSignature', race_signature,
+    'releaseVerifiedAt', '2026-09-02T17:00:00.000Z'
+  );
+  perform extensions.dblink_connect(
+    's09_release_lock_a',
+    'host=db port=5432 dbname=postgres user=postgres password=postgres'
+  );
+  perform extensions.dblink_exec(
+    's09_release_lock_a',
+    format('delete from platform_private.cfg_release_principals where key_id = %L', race_key)
+  );
+  perform extensions.dblink_exec(
+    's09_release_lock_a',
+    format('delete from auth.users where id = %L::uuid', race_principal)
+  );
+  perform extensions.dblink_exec(
+    's09_release_lock_a',
+    format(
+      'insert into auth.users(id, is_sso_user, is_anonymous) values (%L::uuid, false, false)',
+      race_principal
+    )
+  );
+  perform extensions.dblink_exec(
+    's09_release_lock_a',
+    format(
+      'insert into platform_private.cfg_release_principals(principal_id, key_id, scope, active, public_key, valid_from, valid_through, revoked_at) values (%L::uuid, %L, ''registry-release'', true, decode(repeat(''00'', 32), ''hex''), ''2026-09-01T00:00:00.000Z''::timestamptz, ''2026-09-04T00:00:00.000Z''::timestamptz, null)',
+      race_principal,
+      race_key
+    )
+  );
+  perform extensions.dblink_exec('s09_release_lock_a', 'begin');
+  -- Use a synchronous command for A.  A prior async SELECT left its result
+  -- active even after dblink_get_result was wrapped in count(*), so the
+  -- subsequent commit failed with "another command is already in progress".
+  remote_sql := format(
+    'do $lock$ declare locked_principal uuid; begin select principal_id into locked_principal from platform_private.cfg_release_principals where key_id = %L for update; if locked_principal is null then raise exception ''lock probe did not find its key row''; end if; end $lock$;',
+    race_key
+  );
+  perform extensions.dblink_exec('s09_release_lock_a', remote_sql);
+
+  perform extensions.dblink_connect(
+    's09_release_lock_b',
+    'host=db port=5432 dbname=postgres user=postgres password=postgres'
+  );
+  remote_sql := format(
+    'do $remote$ begin perform set_config(''app.cms_rpc'', ''true'', true); perform platform_private.cms_release_nonce_claim_at(%L::jsonb, ''CMS-03A-05'', %L::uuid, ''2026-09-02T17:00:00.000Z''::timestamptz); exception when sqlstate ''P0001'' then null; end $remote$;',
+    race_request::text,
+    race_principal
+  );
+  perform extensions.dblink_send_query('s09_release_lock_b', remote_sql);
+  perform pg_catalog.pg_sleep(0.25);
+  busy := extensions.dblink_is_busy('s09_release_lock_b') = 1;
+  insert into s09_release_lock_probe values (busy);
+  perform extensions.dblink_exec('s09_release_lock_a', 'commit');
+  select count(*) into lock_rows
+  from extensions.dblink_get_result('s09_release_lock_b') as result(value text);
+  perform extensions.dblink_exec(
+    's09_release_lock_a',
+    format('delete from platform_private.cfg_release_principals where key_id = %L', race_key)
+  );
+  perform extensions.dblink_exec(
+    's09_release_lock_a',
+    format('delete from auth.users where id = %L::uuid', race_principal)
+  );
+  perform extensions.dblink_disconnect('s09_release_lock_b');
+  perform extensions.dblink_disconnect('s09_release_lock_a');
+exception when others then
+  begin perform extensions.dblink_cancel_query('s09_release_lock_b'); exception when others then null; end;
+  begin perform extensions.dblink_disconnect('s09_release_lock_b'); exception when others then null; end;
+  begin perform extensions.dblink_exec('s09_release_lock_a', 'rollback'); exception when others then null; end;
+  begin
+    perform extensions.dblink_exec(
+      's09_release_lock_a',
+      format('delete from platform_private.cfg_release_principals where key_id = %L', race_key)
+    );
+    perform extensions.dblink_exec(
+      's09_release_lock_a',
+      format('delete from auth.users where id = %L::uuid', race_principal)
+    );
+  exception when others then null;
+  end;
+  begin perform extensions.dblink_disconnect('s09_release_lock_a'); exception when others then null; end;
+  raise;
+end;
+$probe$;

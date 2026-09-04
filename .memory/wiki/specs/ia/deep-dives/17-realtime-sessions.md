@@ -165,9 +165,13 @@ This deep dive owns the specialized-runtime seam, pairwise measurement privacy, 
 <!-- spec-graph: auto-generated -->
 ## Related Specs
 
+### Phases into
+- [[specs/phases/phase-2|Phase 2 — Identity, admin, CMS/settings]]
+
 ### References
 - [[specs/ia/17-realtime-sessions|Shard 17 — Real-time jamming and remote sessions]]
 - [[specs/2026-08-02-architecture-design|WeJammin — Architecture Design]]
 - [[specs/data-placement-strategy|Data Placement Strategy]]
 - [[specs/ia/09-projects-collaboration|Shard 09 — Music projects and collaboration]]
 - [[specs/ia/14-services-marketplace|Shard 14 — Services marketplace lifecycle]]
+- [[specs/phases/phase-2|Phase 2 — Identity, admin, CMS/settings]]

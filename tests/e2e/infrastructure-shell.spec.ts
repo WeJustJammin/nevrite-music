@@ -137,7 +137,7 @@ test('P1-S02-AC-054 protected route redirects with an encoded, safe return targe
 
   await page.goto(returnTarget);
   await expect(page).toHaveURL(/\/auth\/sign-in\?returnTo=/u);
-  await expect(page.locator('input[name="returnTo"]')).toHaveValue(
+  await expect(page.locator('input[name="returnTo"]').first()).toHaveValue(
     returnTarget,
   );
   await expect(
@@ -161,10 +161,12 @@ test('P1-S02-AC-054 hostile return targets normalize to the safe app root', asyn
     await page.goto(
       `/auth/sign-in?${new URLSearchParams({ returnTo: hostileTarget })}`,
     );
-    await expect(page.locator('input[name="returnTo"]')).toHaveValue('/app');
+    await expect(page.locator('input[name="returnTo"]').first()).toHaveValue(
+      '/app',
+    );
     await expect(page.locator('.infra-help code')).toHaveText('/app');
-    expect(await page.locator('form').getAttribute('action')).toBe(
-      '/auth/sign-in',
+    expect(await page.locator('form').first().getAttribute('action')).toBe(
+      '/auth/start',
     );
     expect(await page.locator('body').innerHTML()).not.toContain(
       'evil.example',
@@ -176,7 +178,7 @@ test('P1-S02-AC-054 hostile return targets normalize to the safe app root', asyn
       returnTo: '/app/infrastructure?tab=facts',
     })}`,
   );
-  await expect(page.locator('input[name="returnTo"]')).toHaveValue(
+  await expect(page.locator('input[name="returnTo"]').first()).toHaveValue(
     '/app/infrastructure?tab=facts',
   );
 });
@@ -292,7 +294,7 @@ test('P1-S02-AC-057 malformed record links stay disclosure-safe at the auth boun
 
   const currentUrl = new URL(page.url());
   if (currentUrl.pathname === '/auth/sign-in') {
-    await expect(page.locator('input[name="returnTo"]')).toHaveValue(
+    await expect(page.locator('input[name="returnTo"]').first()).toHaveValue(
       malformedPath,
     );
     await expect(

@@ -309,6 +309,9 @@ Events exclude prices except purpose-authorized finance paths, policy thresholds
 <!-- spec-graph: auto-generated -->
 ## Related Specs
 
+### Phases into
+- [[specs/phases/phase-2|Phase 2 — Identity, admin, CMS/settings]]
+
 ### References
 - [[specs/ia/00-infrastructure|Shard 00 — Cross-cutting platform foundation]]
 - [[specs/ia/01-identity-authority|Shard 01 — Identity authority and party governance]]
@@ -319,3 +322,4 @@ Events exclude prices except purpose-authorized finance paths, policy thresholds
 - [[specs/ia/21-specialized-licensing|Shard 21 — Specialized clearances and licensing]]
 - [[specs/ia/22-release-distribution|Shard 22 — Release and distribution lifecycle]]
 - [[specs/ia/deep-dives/20-licensing-core|Deep Dive 20 — Licensing core and instrument lifecycle]]
+- [[specs/phases/phase-2|Phase 2 — Identity, admin, CMS/settings]]

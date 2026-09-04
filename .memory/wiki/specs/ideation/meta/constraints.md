@@ -388,6 +388,9 @@ distribution, signing, notarisation, or auto-update work may begin.
 <!-- spec-graph: auto-generated -->
 ## Related Specs
 
+### Phases into
+- [[specs/phases/phase-2|Phase 2 — Identity, admin, CMS/settings]]
+
 ### Constrained by
 - [[decisions.md#d-20|D-20]]
 - [[decisions.md#d-85|D-85]]
@@ -403,3 +406,6 @@ distribution, signing, notarisation, or auto-update work may begin.
 - [[decisions.md#d-72|D-72]]
 - [[decisions.md#d-32|D-32]]
 - [[decisions.md#d-46|D-46]]
+
+### References
+- [[specs/phases/phase-2|Phase 2 — Identity, admin, CMS/settings]]

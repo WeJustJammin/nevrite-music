@@ -1,3 +1,9 @@
+import { spawnSync } from 'node:child_process';
+import { mkdtempSync, rmSync, symlinkSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
+import { fileURLToPath } from 'node:url';
+
 import { describe, expect, it } from 'vitest';
 
 import { verifyPerformanceEvidence } from '../infra/workflows/verify-performance-evidence.ts';
@@ -79,5 +85,34 @@ describe('promotion performance evidence', () => {
         sourceRevision,
       ),
     ).toThrow('API p95 evidence exceeds its locked threshold');
+  });
+
+  it('executes the performance evidence CLI when invoked through a symlink', () => {
+    const sandbox = mkdtempSync(
+      join(tmpdir(), 'wejammin-performance-evidence-'),
+    );
+    try {
+      const verifierPath = fileURLToPath(
+        new URL(
+          '../infra/workflows/verify-performance-evidence.ts',
+          import.meta.url,
+        ),
+      );
+      const symlinkedVerifierPath = join(
+        sandbox,
+        'verify-performance-evidence.ts',
+      );
+      symlinkSync(verifierPath, symlinkedVerifierPath);
+      const result = spawnSync(
+        process.execPath,
+        ['--experimental-strip-types', symlinkedVerifierPath],
+        { encoding: 'utf8' },
+      );
+
+      expect(result.status).not.toBe(0);
+      expect(result.stderr).toContain('Usage: verify-performance-evidence.ts');
+    } finally {
+      rmSync(sandbox, { recursive: true, force: true });
+    }
   });
 });

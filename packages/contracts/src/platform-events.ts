@@ -1,5 +1,12 @@
 import { z } from 'zod';
 
+import {
+  ProfileClaimChangedEventSchema,
+  ProfileContestChangedEventSchema,
+  ProfileProjectionInvalidatedEventSchema,
+  ProfileShadowCreatedEventSchema,
+} from './profiles-verification/events.ts';
+
 const CanonicalUuidSchema = z
   .string()
   .regex(
@@ -15,8 +22,18 @@ export const PositiveBigintDecimalSchema = z
   });
 
 export const PlatformEventTypeSchema = z.enum([
+  'identity.acting-context.revoked.v1',
+  'identity.alias.changed.v1',
+  'identity.facet.changed.v1',
+  'identity.governance.activated.v1',
+  'identity.organization.changed.v1',
+  'identity.relationship.changed.v1',
   'job.requested',
   'object.uploaded',
+  'profile.claim.changed.v1',
+  'profile.contest.changed.v1',
+  'profile.projection.invalidated.v1',
+  'profile.shadow.created.v1',
   'provider.operation.requested',
   'webhook.accepted',
 ]);
@@ -37,6 +54,62 @@ const EventBaseSchema = z
   .strict();
 
 export const PlatformEventSchema = z.discriminatedUnion('eventType', [
+  EventBaseSchema.extend({
+    eventType: z.literal('identity.facet.changed.v1'),
+    payload: z
+      .object({
+        personId: CanonicalUuidSchema,
+        facetCode: RegistryKeySchema,
+      })
+      .strict()
+      .readonly(),
+  }).strict(),
+  EventBaseSchema.extend({
+    eventType: z.literal('identity.alias.changed.v1'),
+    payload: z.object({ aliasId: CanonicalUuidSchema }).strict().readonly(),
+  }).strict(),
+  EventBaseSchema.extend({
+    eventType: z.literal('identity.acting-context.revoked.v1'),
+    payload: z
+      .object({
+        personId: CanonicalUuidSchema,
+        partyId: CanonicalUuidSchema,
+        relationshipId: CanonicalUuidSchema.nullable(),
+      })
+      .strict()
+      .readonly(),
+  }).strict(),
+  EventBaseSchema.extend({
+    eventType: z.literal('identity.organization.changed.v1'),
+    payload: z
+      .object({ organizationId: CanonicalUuidSchema })
+      .strict()
+      .readonly(),
+  }).strict(),
+  EventBaseSchema.extend({
+    eventType: z.literal('identity.relationship.changed.v1'),
+    payload: z
+      .object({
+        relationshipType: RegistryKeySchema,
+        relationshipId: CanonicalUuidSchema,
+      })
+      .strict()
+      .readonly(),
+  }).strict(),
+  EventBaseSchema.extend({
+    eventType: z.literal('identity.governance.activated.v1'),
+    payload: z
+      .object({
+        organizationId: CanonicalUuidSchema,
+        termsVersionId: CanonicalUuidSchema,
+      })
+      .strict()
+      .readonly(),
+  }).strict(),
+  ProfileShadowCreatedEventSchema,
+  ProfileClaimChangedEventSchema,
+  ProfileContestChangedEventSchema,
+  ProfileProjectionInvalidatedEventSchema,
   EventBaseSchema.extend({
     eventType: z.literal('job.requested'),
     payload: z

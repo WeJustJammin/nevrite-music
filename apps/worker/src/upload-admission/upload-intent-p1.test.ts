@@ -324,13 +324,19 @@ describe('upload-intent P1 contract boundary', () => {
   });
 
   it('bounds an in-flight repository commit with a cancellation fence', async () => {
+    vi.useFakeTimers();
     let resolveCommit!: () => void;
+    let markCommitStarted!: () => void;
     const commitResult = new Promise<void>((resolve) => {
       resolveCommit = resolve;
+    });
+    const commitStarted = new Promise<void>((resolve) => {
+      markCommitStarted = resolve;
     });
     let committed = false;
     let cancelled = false;
     const createIntent = vi.fn(async () => {
+      markCommitStarted();
       await commitResult;
       if (cancelled) throw new Error('canonical attempt fenced');
       committed = true;
@@ -339,19 +345,24 @@ describe('upload-intent P1 contract boundary', () => {
     const cancelIntent = vi.fn(async () => {
       cancelled = true;
     });
-    const responsePromise = make({
-      deadlineMs: 5,
-      repository: { cancelIntent, createIntent },
-    })(request());
-    await new Promise((resolve) => setTimeout(resolve, 15));
-    expect(committed).toBe(false);
-    await expect(responsePromise).resolves.toMatchObject({ status: 503 });
-    expect(cancelled).toBe(true);
+    try {
+      const responsePromise = make({
+        deadlineMs: 5,
+        repository: { cancelIntent, createIntent },
+      })(request());
+      await commitStarted;
+      await vi.advanceTimersByTimeAsync(5);
+      expect(committed).toBe(false);
+      await expect(responsePromise).resolves.toMatchObject({ status: 503 });
+      expect(cancelled).toBe(true);
 
-    resolveCommit();
-    await new Promise((resolve) => setTimeout(resolve, 0));
-    expect(committed).toBe(false);
-    expect(cancelIntent).toHaveBeenCalledOnce();
+      resolveCommit();
+      await vi.advanceTimersByTimeAsync(0);
+      expect(committed).toBe(false);
+      expect(cancelIntent).toHaveBeenCalledOnce();
+    } finally {
+      vi.useRealTimers();
+    }
   });
 
   it('reconciles a canonical attempt when the commit rejects after the deadline', async () => {
@@ -443,9 +454,14 @@ describe('upload-intent P1 contract boundary', () => {
   });
 
   it('reconciles a late successful repository result after the fence completes', async () => {
+    vi.useFakeTimers();
     let resolveCommit!: () => void;
+    let markCommitStarted!: () => void;
     const commitResult = new Promise<void>((resolve) => {
       resolveCommit = resolve;
+    });
+    const commitStarted = new Promise<void>((resolve) => {
+      markCommitStarted = resolve;
     });
     let lateResultObserved = false;
     const cancelIntent = vi.fn(async () => undefined);
@@ -455,6 +471,7 @@ describe('upload-intent P1 contract boundary', () => {
       repository: {
         cancelIntent,
         createIntent: vi.fn(async () => {
+          markCommitStarted();
           await commitResult;
           lateResultObserved = true;
           return { kind: 'created' as const, resource };
@@ -471,16 +488,21 @@ describe('upload-intent P1 contract boundary', () => {
         })),
       },
     })(request());
-    await new Promise((resolve) => setTimeout(resolve, 15));
-    await expect(response).resolves.toMatchObject({ status: 503 });
-    expect(cancelIntent).toHaveBeenCalledOnce();
-    expect(revoke).toHaveBeenCalledOnce();
+    try {
+      await commitStarted;
+      await vi.advanceTimersByTimeAsync(5);
+      await expect(response).resolves.toMatchObject({ status: 503 });
+      expect(cancelIntent).toHaveBeenCalledOnce();
+      expect(revoke).toHaveBeenCalledOnce();
 
-    resolveCommit();
-    await new Promise((resolve) => setTimeout(resolve, 0));
-    expect(lateResultObserved).toBe(true);
-    expect(cancelIntent).toHaveBeenCalledOnce();
-    expect(revoke).toHaveBeenCalledOnce();
+      resolveCommit();
+      await vi.advanceTimersByTimeAsync(0);
+      expect(lateResultObserved).toBe(true);
+      expect(cancelIntent).toHaveBeenCalledOnce();
+      expect(revoke).toHaveBeenCalledOnce();
+    } finally {
+      vi.useRealTimers();
+    }
   });
 
   it('guards malformed repository results and revokes their credentials', async () => {

@@ -6,8 +6,14 @@ import {
 import type { Logger, LogEventDetails } from '@wejammin/observability/logging';
 
 import { registerDiagnosticsRoute } from './diagnostics';
+import { registerAuthenticationRoutes } from './authentication/routes';
+import { createContentSchemaRegistryApp } from './content-schema-registry/routes';
 import { registerJobStatusRoute } from './jobs/job-status';
 import { registerUploadCompletionRoute } from './upload-completion/upload-intent-completion';
+import { registerIdentityAuthorityRoutes } from './identity-authority/routes';
+import { registerProfileOwnershipRoutes } from './profile-ownership/routes';
+import { registerProfilePortfolioRoutes } from './profile-portfolio/routes';
+import { registerPlatformConfigurationRoutes } from './platform-configuration/routes';
 import type { WorkerApp, WorkerDependencies } from './index';
 
 export const routeTemplateFor = (routePath: string): string =>
@@ -195,6 +201,17 @@ export const registerWorkerRoutes = (
   app: WorkerApp,
   dependencies: WorkerDependencies,
 ): void => {
+  registerAuthenticationRoutes(app, dependencies.auth);
+  if (dependencies.contentSchemaRegistry !== undefined) {
+    app.route(
+      '/',
+      createContentSchemaRegistryApp(dependencies.contentSchemaRegistry),
+    );
+  }
+  registerIdentityAuthorityRoutes(app, dependencies);
+  registerProfileOwnershipRoutes(app, dependencies);
+  registerProfilePortfolioRoutes(app, dependencies);
+  registerPlatformConfigurationRoutes(app, dependencies);
   registerHealthRoutes(app, dependencies);
   registerDiagnosticsRoute(app, dependencies);
   registerUploadRoutes(app, dependencies);

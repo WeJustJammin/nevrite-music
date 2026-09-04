@@ -1,0 +1,288 @@
+-- Seed the same persisted human approval boundary consumed by the worker
+-- activation RPC.  The candidate is moved through review while its final
+-- approval-evidence hash is written, so the invalidation trigger cannot turn
+-- an already-approved review into stale evidence during fixture setup.
+update platform_private.cms_content_type_versions target
+set state = 'review',
+    activation_workflow_policy_key = 'cms.schema.activate',
+    activation_workflow_policy_version = 1,
+    activation_workflow_policy_hash = encode(extensions.digest(convert_to(
+      'cms.schema.activate:1:1:' || jsonb_build_array('cms.schema_designer')::text,
+      'utf8'
+    ), 'sha256'), 'hex'),
+    activation_required_decision_count = 1,
+    activation_required_capabilities = jsonb_build_array('cms.schema_designer'),
+    activation_approval_evidence_hash = repeat('c', 64)
+from s09_ac217_ids ids
+where target.id = ids.target_version_id;
+
+create temp table s09_ac217_review on commit drop as
+select extensions.gen_random_uuid() as review_id,
+       ids.target_version_id,
+       ids.owner_id,
+       (select auth_user_id
+        from identity.auth_user_bindings binding
+        where binding.auth_user_id <> 'a9090000-0000-4000-8000-000000000001'
+          and exists (
+            select 1
+            from identity_private.membership_tenure tenure
+            join identity_private.organization_actor_grant actor_grant
+              on actor_grant.organization_id = tenure.organization_id
+             and actor_grant.person_id = tenure.person_id
+            where tenure.organization_id = ids.owner_id
+              and tenure.person_id = binding.person_id
+              and tenure.state = 'confirmed'
+              and (tenure.ends_on is null or tenure.ends_on >= current_date)
+              and actor_grant.capability_code = 'cms.schema_designer'
+              and actor_grant.active
+              and actor_grant.valid_from <= current_date
+              and (actor_grant.valid_through is null or actor_grant.valid_through >= current_date)
+          )
+        order by binding.auth_user_id
+        limit 1) as reviewer_auth_user_id
+from s09_ac217_ids ids;
+
+insert into platform_private.cfg_config_change_reviews(
+  id, candidate_type, candidate_id, candidate_version, frozen_hash,
+  impact_manifest, impact_manifest_hash, effective_context_hash,
+  risk_class, required_approvals, state, submitted_by, submitted_at, version_no
+)
+select review.review_id, 'setting_value', target.id, target.version,
+       target.definition_hash, '{}'::jsonb, platform_private.cfg_hash_json('{}'::jsonb),
+       platform_private.cfg_hash_json(jsonb_build_object(
+         'actingContextId', (select context_id from s09_activation_context)
+       )), 'high', 1, 'review', target.created_by, clock_timestamp(), 1
+from s09_ac217_review review
+join platform_private.cms_content_type_versions target
+  on target.id = review.target_version_id;
+
+insert into platform_private.cfg_config_approvals(
+  review_id, reviewer_person_id, acting_party_id, capability, decision,
+  reason, reviewed_hash, decided_at, review_version
+)
+select review.review_id, review.reviewer_auth_user_id, review.owner_id,
+       'cms.schema_designer', 'approve', 'AC217 recovery activation',
+       target.definition_hash, clock_timestamp(), 1
+from s09_ac217_review review
+join platform_private.cms_content_type_versions target
+  on target.id = review.target_version_id;
+
+update platform_private.cms_content_type_versions target
+set activation_approval_evidence_hash = (
+  select encode(extensions.digest(convert_to(jsonb_build_object(
+    'key', 'cms.schema.activate', 'version', '1',
+    'policyHash', target.activation_workflow_policy_hash,
+    'riskClass', 'ordinary',
+    'requiredDecisionCount', 1,
+    'requiredCapabilities', jsonb_build_array('cms.schema_designer'),
+    'approvalEvidenceHash', (
+      select encode(extensions.digest(convert_to(
+        coalesce(jsonb_agg(jsonb_build_object(
+          'reviewId', approval.review_id,
+          'reviewerAuthUserId', approval.reviewer_person_id,
+          'capability', approval.capability,
+          'reviewedHash', approval.reviewed_hash,
+          'reviewVersion', approval.review_version,
+          'decidedAt', approval.decided_at
+        ) order by approval.review_id, approval.reviewer_person_id)::text, '[]'),
+        'utf8'
+      ), 'sha256'), 'hex')
+      from platform_private.cfg_config_approvals approval
+      where approval.review_id = review.review_id
+    )
+  )::text, 'utf8'), 'sha256'), 'hex')
+  from s09_ac217_review review
+  where review.target_version_id = target.id
+)
+where target.id = (select target_version_id from s09_ac217_ids);
+
+-- Move the candidate first while its configuration review is still in review;
+-- the invalidation trigger only reopens approved/scheduled reviews.
+update platform_private.cms_content_type_versions target
+set state = 'approved'
+where target.id = (select target_version_id from s09_ac217_ids);
+update platform_private.cfg_config_change_reviews review
+set state = 'approved', updated_at = clock_timestamp()
+where review.id = (select review_id from s09_ac217_review);
+
+select ok(
+  platform_private.cms_activation_references_valid(
+    (select target_version_id from s09_ac217_ids)
+  ) and platform_private.cms_worker_human_approval_valid(
+    (select target_version_id from s09_ac217_ids)
+  ),
+  'AC217 recovery candidate passes the persisted artifact and approval boundary'
+);
+
+create temp table s09_ac217_activation on commit drop as
+select platform_api.cms_activate_schema_migration(jsonb_build_object(
+  'migrationPlanId', ids.plan_id, 'contentTypeId', ids.content_type_id,
+  'schemaVersionId', ids.target_version_id, 'expectedVersion', plan.version::text,
+  'expectedActiveVersionId', ids.source_version_id, 'transformKey', null,
+  'transformVersion', null, 'compilerHash', artifact.artifact_hash,
+  'sourceHash', source.definition_hash, 'targetHash', target.definition_hash,
+  'idempotencyKey', 's09-ac217-worker-activate-0001', 'switchOnlyOnce', true
+)) as response
+from s09_ac217_ids ids
+join platform_private.cms_schema_migration_plans plan on plan.id = ids.plan_id
+join platform_private.cms_content_type_versions source on source.id = ids.source_version_id
+join platform_private.cms_content_type_versions target on target.id = ids.target_version_id
+join s09_ac217_artifact artifact on artifact.target_version_id = target.id;
+
+select ok(
+  (select response->>'activated' = 'true' and response->>'status' = 'activated'
+      and response->>'eventId' is not null
+      and (select state = 'superseded' from platform_private.cms_content_type_versions
+           where id = (select source_version_id from s09_ac217_ids))
+      and (select state = 'active' from platform_private.cms_content_type_versions
+           where id = (select target_version_id from s09_ac217_ids))
+      and (select count(*) from platform_private.cms_content_type_versions
+           where content_type_id = (select content_type_id from s09_ac217_ids)
+             and state = 'active') = 1
+   from s09_ac217_activation),
+  'AC217 switches the recovered schema once through the production worker RPC'
+);
+
+select is(
+  (select platform_api.cms_activate_schema_migration(jsonb_build_object(
+    'migrationPlanId', ids.plan_id, 'contentTypeId', ids.content_type_id,
+    'schemaVersionId', ids.target_version_id, 'expectedVersion', plan.version::text,
+    'expectedActiveVersionId', ids.source_version_id, 'transformKey', null,
+    'transformVersion', null, 'compilerHash', artifact.artifact_hash,
+    'sourceHash', source.definition_hash, 'targetHash', target.definition_hash,
+    'idempotencyKey', 's09-ac217-worker-activate-0001', 'switchOnlyOnce', true
+  ))
+   from s09_ac217_ids ids
+   join platform_private.cms_schema_migration_plans plan on plan.id = ids.plan_id
+   join platform_private.cms_content_type_versions source on source.id = ids.source_version_id
+   join platform_private.cms_content_type_versions target on target.id = ids.target_version_id
+   join s09_ac217_artifact artifact on artifact.target_version_id = target.id),
+  (select response from s09_ac217_activation),
+  'AC217 activation replay returns the exact original response without a second switch'
+);
+
+select is(
+  (select count(*)::integer from platform_private.outbox_events
+   where event_type = 'cms.schema.activated.v1'
+     and payload->>'migrationPlanId' = (select plan_id::text from s09_ac217_ids)),
+  1,
+  'AC217 exactly-once activation persists one durable event for the plan'
+);
+
+create temp table s09_ac217_event on commit drop as
+select event.id, event.event_type, event.schema_version, event.aggregate_type,
+       event.aggregate_id, event.aggregate_version, event.payload
+from platform_private.outbox_events event
+where event.event_type = 'cms.schema.activated.v1'
+  and event.payload->>'migrationPlanId' = (select plan_id::text from s09_ac217_ids);
+
+select is(
+  (select platform_api.cms_claim_schema_migration_event(jsonb_build_object(
+    'eventId', id, 'eventType', event_type, 'schemaVersion', schema_version,
+    'aggregateType', aggregate_type, 'aggregateId', aggregate_id,
+    'aggregateVersion', aggregate_version::text,
+    'migrationPlanId', (select plan_id from s09_ac217_ids),
+    'claimToken', 'a9090000-0000-4000-8000-000000000726', 'replay', false
+  ))->>'status' from s09_ac217_event),
+  'new',
+  'AC217 claims the durable activation event before the simulated DLQ failure'
+);
+
+select is(
+  (select platform_api.cms_dead_letter_schema_migration_event(jsonb_build_object(
+    'eventId', id, 'eventType', event_type, 'schemaVersion', schema_version,
+    'aggregateType', aggregate_type, 'aggregateId', aggregate_id,
+    'aggregateVersion', aggregate_version::text,
+    'migrationPlanId', payload->'migrationPlanId',
+    'claimToken', 'a9090000-0000-4000-8000-000000000726',
+    'reasonCode', 'SIMULATED_WORKER_LOSS'
+  ))->>'accepted' from s09_ac217_event),
+  'true',
+  'AC217 records a real activation event in the durable DLQ'
+);
+
+select ok(
+  (select event_type = 'cms.schema.activated.v1'
+      and schema_version = 1
+      and aggregate_id = (select target_version_id from s09_ac217_ids)
+      and aggregate_version = 2
+      and dispatched_at is not null
+      and dead_lettered_at is not null
+      and dispatch_lease_token is null
+      and dispatch_lease_until is null
+      and dead_letter_reason = 'SIMULATED_WORKER_LOSS'
+      and last_dispatch_error_code = 'SIMULATED_WORKER_LOSS'
+   from platform_private.outbox_events where id = (select id from s09_ac217_event)),
+  'AC217 persists the bound activation event identity, DLQ reason, and terminal lease state'
+);
+
+select is(
+  (select platform_api.cms_claim_schema_migration_event(jsonb_build_object(
+    'eventId', id, 'eventType', event_type, 'schemaVersion', schema_version,
+    'aggregateType', aggregate_type, 'aggregateId', aggregate_id,
+    'aggregateVersion', aggregate_version::text,
+    'migrationPlanId', (select plan_id from s09_ac217_ids),
+    'claimToken', 'a9090000-0000-4000-8000-000000000727', 'replay', true
+  ))->>'status' from s09_ac217_event),
+  'replayable',
+  'AC217 exposes the dead-lettered activation for explicit replay after repair'
+);
+
+select is(
+  (select platform_api.cms_acknowledge_schema_migration_event(jsonb_build_object(
+    'eventId', id, 'eventType', event_type, 'schemaVersion', schema_version,
+    'aggregateType', aggregate_type, 'aggregateId', aggregate_id,
+    'aggregateVersion', aggregate_version::text,
+    'migrationPlanId', payload->'migrationPlanId',
+    'claimToken', 'a9090000-0000-4000-8000-000000000727', 'outcome', 'success'
+  ))->>'accepted' from s09_ac217_event),
+  'true',
+  'AC217 acknowledges the repaired replay through the worker RPC'
+);
+
+select ok(
+  (select state = 'completed'::platform_private.idempotency_state
+      and response_ref->'safeHeaders'->'response'->>'eventId' = (select id::text from s09_ac217_event)
+   from platform_private.idempotency_records
+   where actor_id = (select id from s09_ac217_event)
+     and operation = 'cms.schema.event.claim'
+     and key_hash = platform_private.cms_key_hash((select id::text from s09_ac217_event)))
+  and (select dead_lettered_at is not null
+          and dead_letter_reason = 'SIMULATED_WORKER_LOSS'
+       from platform_private.outbox_events where id = (select id from s09_ac217_event)),
+  'AC217 acknowledgement completes claim idempotency while retaining durable DLQ provenance'
+);
+
+select is(
+  (select platform_api.cms_acknowledge_schema_migration_event(jsonb_build_object(
+    'eventId', id, 'eventType', event_type, 'schemaVersion', schema_version,
+    'aggregateType', aggregate_type, 'aggregateId', aggregate_id,
+    'aggregateVersion', aggregate_version::text,
+    'migrationPlanId', payload->'migrationPlanId',
+    'claimToken', 'a9090000-0000-4000-8000-000000000727', 'outcome', 'success'
+  ))->>'accepted' from s09_ac217_event),
+  'true',
+  'AC217 duplicate acknowledgement is idempotent'
+);
+
+select is(
+  (select platform_api.cms_claim_schema_migration_event(jsonb_build_object(
+    'eventId', id, 'eventType', event_type, 'schemaVersion', schema_version,
+    'aggregateType', aggregate_type, 'aggregateId', aggregate_id,
+    'aggregateVersion', aggregate_version::text,
+    'migrationPlanId', (select plan_id from s09_ac217_ids),
+    'claimToken', 'a9090000-0000-4000-8000-000000000728', 'replay', true
+  ))->>'status' from s09_ac217_event),
+  'duplicate',
+  'AC217 keeps the acknowledged replay terminal after successful repair'
+);
+
+select ok(
+  (select count(*) = 1 from platform_private.cms_content_type_versions
+   where content_type_id = (select content_type_id from s09_ac217_ids)
+     and state = 'active')
+  and (select count(*) = 1 from platform_private.outbox_events
+       where event_type = 'cms.schema.activated.v1'
+         and payload->>'migrationPlanId' = (select plan_id::text from s09_ac217_ids)),
+  'AC217 final recovery state has one active schema and one activation event'
+);

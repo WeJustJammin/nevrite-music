@@ -1,0 +1,128 @@
+---
+import '@wejammin/ui/styles.css';
+import { createRequestId, ProfileUuidSchema } from '@wejammin/contracts';
+import { env } from 'cloudflare:workers';
+
+import ProfilePortfolioEpkWorkbench from '../../components/profile-portfolio/ProfilePortfolioEpkWorkbench';
+import type { ProfilePortfolioAsyncState } from '../../components/profile-portfolio/profile-portfolio-workbench-types';
+import { resolveProfilePortfolioPage } from '../../server/profile-portfolio-context.ts';
+import '../../styles/profile-portfolio.css';
+
+export const prerender = false;
+
+Astro.response.headers.set(
+  'Cache-Control',
+  'public, max-age=60, stale-if-error=300',
+);
+
+const partyId = Astro.params.partyId ?? '';
+if (!ProfileUuidSchema.safeParse(partyId).success) {
+  return new Response('Not found', { status: 404 });
+}
+
+const requestId = createRequestId(
+  Astro.request.headers.get('x-request-id') ?? undefined,
+);
+const localApiOrigin = (
+  env as unknown as { PROFILE_PORTFOLIO_LOCAL_API_ORIGIN?: string }
+).PROFILE_PORTFOLIO_LOCAL_API_ORIGIN;
+const resolved = await resolveProfilePortfolioPage({
+  request: Astro.request,
+  binding: env.PLATFORM_API,
+  ...(localApiOrigin === undefined ? {} : { localApiOrigin }),
+  partyId,
+  requestId,
+  surface: 'public',
+});
+if (resolved.kind !== 'ready') {
+  return new Response('Not found', { status: 404 });
+}
+
+const page = resolved.page;
+const projection = page.projection;
+const version = page.projectionVersion ?? '1';
+const initial: ProfilePortfolioAsyncState =
+  projection === null
+    ? {
+        status: 'degraded',
+        data: [],
+        stale: true,
+        error: {
+          code: 'DEPENDENCY_UNAVAILABLE',
+          message: 'Public profile data is temporarily unavailable.',
+          requestId: page.requestId,
+        },
+        retryable: true,
+      }
+    : {
+        status: 'success',
+        version,
+        data: [
+          {
+            id: partyId,
+            version,
+            state: 'active',
+            provenance: [
+              {
+                source: 'profile-publication',
+                evidence: 'server-authorized-public-projection',
+                at: page.lastVerifiedAt ?? new Date().toISOString(),
+                visibility: 'public',
+              },
+            ],
+            projection,
+          },
+        ],
+        stale: false,
+      };
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta
+      name="description"
+      content="Viewer-safe public profile and portfolio projection."
+    />
+    <title>Public profile | WeJammin</title>
+  </head>
+  <body class="profile-portfolio-page" data-offline-ready="false">
+    <a class="profile-portfolio-skip-link" href="#profile-portfolio-content"
+      >Skip to public profile</a
+    >
+    <main
+      id="profile-portfolio-content"
+      data-profile-page
+      data-state={page.state}
+      data-access={page.access}
+      data-request-id={page.requestId}
+      aria-labelledby="profile-portfolio-heading"
+    >
+      <ProfilePortfolioEpkWorkbench
+        contractFields={{
+          source: '02b-profile-portfolio-epk.md',
+          fields: {
+            PublicProfileResponse: ['partyId', 'projectionVersion', 'layers'],
+            PortfolioListResponse: ['creditRef', 'rightsBasis', 'roleCodes'],
+            ReelListResponse: ['mediaRef', 'rightsState', 'listingState'],
+          },
+        }}
+        variant="publicRead"
+        initial={initial}
+        actorId={null}
+        actingPartyId={null}
+        access="read-only"
+        query={{
+          tab: 'profile',
+          selected: partyId,
+          filter: Astro.url.searchParams.get('filter'),
+        }}
+        selectedId={partyId}
+        expectedVersion={`"${version}"`}
+        client:load
+      />
+    </main>
+    <script is:inline src="/profile-portfolio-offline.js"></script>
+  </body>
+</html>

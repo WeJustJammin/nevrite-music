@@ -1,0 +1,199 @@
+---
+import '@wejammin/ui/styles.css';
+import '../../styles/platform-configuration.css';
+import AdminWorkspaceOperationsWorkbench from './AdminWorkspaceOperationsWorkbench';
+import PlatformConfigurationPageHeader from './PlatformConfigurationPageHeader.astro';
+import PlatformConfigurationStatus from './PlatformConfigurationStatus.astro';
+import SettingsFlagsRuntimeWorkbench from './SettingsFlagsRuntimeWorkbench';
+import type {
+  PlatformConfigurationAccess,
+  PlatformConfigurationAsyncState,
+  PlatformConfigurationContractFields,
+  PlatformConfigurationVariant,
+} from './platform-configuration-workbench-types';
+import type { AdminWorkspaceAsyncState } from './admin-workspace-types';
+
+interface Props {
+  readonly children?: never;
+  readonly state: 'ready' | 'forbidden' | 'degraded';
+  readonly variant: PlatformConfigurationVariant;
+  readonly access: PlatformConfigurationAccess;
+  readonly actorId: string | null;
+  readonly actingPartyId: string | null;
+  readonly capabilitySnapshot: readonly string[];
+  readonly canonicalUrl: string;
+  readonly initialQuery: Readonly<Record<string, string>>;
+  readonly requestId: string;
+  readonly initial: PlatformConfigurationAsyncState;
+  readonly contractFields: PlatformConfigurationContractFields;
+  readonly selectedId: string | null;
+  readonly expectedVersion: string | null;
+  readonly csrfToken: string;
+  readonly key: string | null;
+  readonly returnTo: string;
+  readonly detail?: boolean;
+  readonly adminInitial?: AdminWorkspaceAsyncState;
+  readonly adminAccess?: PlatformConfigurationAccess;
+}
+
+const {
+  state,
+  variant,
+  access,
+  actorId,
+  actingPartyId,
+  capabilitySnapshot,
+  canonicalUrl,
+  initialQuery,
+  requestId,
+  initial,
+  contractFields,
+  selectedId,
+  expectedVersion,
+  csrfToken,
+  key,
+  returnTo,
+  detail = false,
+  adminInitial,
+  adminAccess,
+} = Astro.props;
+
+const pageDescription =
+  state === 'degraded'
+    ? 'Platform configuration is temporarily unavailable. Protected changes remain disabled.'
+    : state === 'forbidden'
+      ? 'The requested configuration capability is not available in this context.'
+      : 'Review effective settings, provenance, versions, and server-authorized change actions.';
+const tab = initialQuery.tab ?? 'settings';
+const showProtected = access !== 'not-rendered';
+const adminTab =
+  tab === 'inbox' || tab === 'capabilities' || tab === 'audit' ? tab : null;
+const showAdminWorkspace = adminTab !== null;
+const resolvedAdminAccess = adminAccess ?? access;
+const resolvedAdminInitial =
+  adminInitial ??
+  ({
+    status: state === 'degraded' ? 'degraded' : 'loading',
+    data: null,
+    requestId,
+    retryable: state === 'degraded',
+  } satisfies AdminWorkspaceAsyncState);
+const titleRecord =
+  detail && selectedId !== null
+    ? `Record ${selectedId}`
+    : 'Platform configuration';
+const pageTitle = `${titleRecord} (${state}) | Platform configuration | WeJammin`;
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content={pageDescription} />
+    <title>{pageTitle}</title>
+  </head>
+  <body class="platform-configuration-page">
+    <nav aria-label="Skip navigation">
+      <a
+        class="platform-configuration-skip-link"
+        href="#platform-configuration-main">Skip to main content</a
+      >
+    </nav>
+    <header
+      class="platform-configuration-shell-header"
+      aria-label="Application navigation"
+    >
+      <a class="platform-configuration-brand" href="/">WeJammin</a>
+      <nav aria-label="Primary navigation">
+        <a href="/app/platform-configuration-admin" aria-current="page"
+          >Platform configuration</a
+        >
+        <a href="/settings/security">Account security</a>
+        <a href="/system/degraded">System status</a>
+      </nav>
+    </header>
+    <main
+      id="platform-configuration-main"
+      class="platform-configuration-main"
+      tabindex="-1"
+      data-configuration-key={key ?? undefined}
+      data-capability-count={capabilitySnapshot.length}
+    >
+      <PlatformConfigurationPageHeader
+        pageDescription={pageDescription}
+        detail={detail}
+        selectedId={selectedId}
+        tab={tab}
+        initialQuery={initialQuery}
+      />
+      <PlatformConfigurationStatus
+        state={state}
+        requestId={requestId}
+        returnTo={returnTo}
+      />
+      {
+        showAdminWorkspace ? (
+          <AdminWorkspaceOperationsWorkbench
+            contractFields={{
+              source: '05b-admin-workspace-operations.md',
+              fields: {},
+            }}
+            variant={variant}
+            initial={resolvedAdminInitial}
+            actorId={actorId}
+            actingPartyId={actingPartyId}
+            access={resolvedAdminAccess}
+            query={initialQuery}
+            selectedId={selectedId}
+            expectedVersion={expectedVersion}
+            csrfToken={csrfToken}
+            requestId={requestId}
+            client:idle
+          />
+        ) : (
+          showProtected && (
+            <SettingsFlagsRuntimeWorkbench
+              contractFields={contractFields}
+              variant={variant}
+              initial={initial}
+              actorId={actorId}
+              actingPartyId={actingPartyId}
+              access={access}
+              query={initialQuery}
+              selectedId={selectedId}
+              expectedVersion={expectedVersion}
+              csrfToken={csrfToken}
+              requestId={requestId}
+              canonicalUrl={canonicalUrl}
+              client:load
+            />
+          )
+        )
+      }
+
+      <p
+        class="platform-configuration-request-id"
+        role="status"
+        aria-live="polite"
+      >
+        Request ID: <code>{requestId}</code>. {
+          detail
+            ? 'Detail route uses a safe no-read boundary until a canonical detail contract exists.'
+            : 'URL state refines the view but never grants authority.'
+        }
+      </p>
+      <p class="platform-configuration-security-note">
+        Supabase session expiry and revocation are checked server-side with the
+        acting context; expired sessions receive a 303 returnTo sign-in flow.
+      </p>
+      <p
+        class="platform-configuration-a11y-note"
+        data-a11y-contract="axe serious critical contrast VoiceOver NVDA target size focus trap"
+      >
+        Accessibility contract: axe serious and critical findings, contrast,
+        VoiceOver, NVDA, target size, and focus trap behavior are tested.
+      </p>
+    </main>
+    <script src="../../lib/route-heading-focus.ts"></script>
+  </body>
+</html>

@@ -1,0 +1,13 @@
+import type { ContentSchemaRegistryOperationId } from './route-policy-base.ts';
+import type { HumanRouteContractByOperation } from './route-policy-human.ts';
+import type { ReadReleaseRouteContractByOperation } from './route-policy-read-release.ts';
+
+export type RouteContractByOperation = {
+  [
+    OperationId in ContentSchemaRegistryOperationId
+  ]: OperationId extends keyof HumanRouteContractByOperation
+    ? HumanRouteContractByOperation[OperationId]
+    : OperationId extends keyof ReadReleaseRouteContractByOperation
+      ? ReadReleaseRouteContractByOperation[OperationId]
+      : never;
+};

@@ -375,6 +375,9 @@ Events exclude message/media bytes, partner secrets, private rights evidence, ex
 <!-- spec-graph: auto-generated -->
 ## Related Specs
 
+### Phases into
+- [[specs/phases/phase-2|Phase 2 — Identity, admin, CMS/settings]]
+
 ### References
 - [[specs/ia/00-infrastructure|Shard 00 — Cross-cutting platform foundation]]
 - [[specs/ia/01-identity-authority|Shard 01 — Identity authority and party governance]]
@@ -385,3 +388,4 @@ Events exclude message/media bytes, partner secrets, private rights evidence, ex
 - [[specs/ia/20-licensing-core|Shard 20 — Licensing core and instrument lifecycle]]
 - [[specs/ia/18-royalty-accounting|Shard 18 — Royalty registration, ingestion, calculation and payout]]
 - [[specs/ia/deep-dives/22-release-distribution|Deep Dive 22 — Release and distribution lifecycle]]
+- [[specs/phases/phase-2|Phase 2 — Identity, admin, CMS/settings]]

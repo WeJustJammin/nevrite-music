@@ -15,6 +15,29 @@ second domain-policy or persistence layer.
 - `job-status-platform-api.ts` — opaque Bearer forwarding through the private
   `PLATFORM_API` Worker binding.
 
+## Content schema registry map
+
+- `content-schema-registry-context.ts` — public read-context resolver and
+  compatibility exports.
+- `content-schema-registry-context-support.ts` — session, authority, port, and
+  request-port construction primitives.
+- `content-schema-registry-context-types.ts` — narrow schemas and port types
+  shared by context composition and platform read adapters.
+- `content-schema-registry-context-presentation.ts` — disclosure-safe page and
+  state projections.
+- `content-schema-registry-context-outcomes.ts` — dependency/error outcome
+  mapping and degraded-page construction.
+- `content-schema-registry-platform-api.ts` — compatibility barrel for the
+  private platform binding and CMS mutation/read ports.
+- `content-schema-registry-platform-shared.ts` — shared binding, path, cookie,
+  and upstream response helpers.
+- `content-schema-registry-platform-reads.ts` — canonical read/refetch ports.
+- `content-schema-registry-platform-input.ts` — bounded JSON/form mutation
+  parsing.
+- `content-schema-registry-platform-mutation-support.ts` — mutation path,
+  contract, security, and response helpers.
+- `content-schema-registry-platform-mutation.ts` — the four mutation forwards.
+
 ## Ownership
 
 This directory owns server request composition only. The API Worker verifies

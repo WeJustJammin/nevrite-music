@@ -1,0 +1,178 @@
+---
+import {
+  ConfigurationKeySchema,
+  ConfigurationUuidSchema,
+  createRequestId,
+} from '@wejammin/contracts';
+import { env } from 'cloudflare:workers';
+import { normalizeSafeReturnPath } from '@wejammin/ui/infrastructure/navigation';
+
+import PlatformConfigurationAdminRoute from '../../../components/platform-configuration/PlatformConfigurationAdminRoute.astro';
+import {
+  PLATFORM_CONFIGURATION_CONTRACT_FIELDS,
+  platformConfigurationInitial,
+  platformConfigurationVariant,
+} from '../../../server/platform-configuration-app-state';
+import { resolveAdminWorkspace } from '../../../server/admin-workspace-context';
+import { resolvePlatformConfigurationPage } from '../../../server/platform-configuration-context';
+
+export const prerender = false;
+
+const requestId = createRequestId(
+  Astro.request.headers.get('x-request-id') ?? undefined,
+);
+const returnTo = normalizeSafeReturnPath(
+  `${Astro.url.pathname}${Astro.url.search}`,
+);
+const requestedKey = Astro.url.searchParams.get('key');
+const key = requestedKey === null || requestedKey === '' ? null : requestedKey;
+if (key !== null && !ConfigurationKeySchema.safeParse(key).success) {
+  return new Response('Bad request', { status: 400 });
+}
+const selectedId = Astro.url.searchParams.get('selected');
+if (
+  selectedId !== null &&
+  !ConfigurationUuidSchema.safeParse(selectedId).success
+) {
+  return new Response('Not found', { status: 404 });
+}
+const initialQuery: Record<string, string> = {};
+for (const name of [
+  'key',
+  'query',
+  'sort',
+  'cursor',
+  'limit',
+  'taskClasses',
+  'states',
+  'staleAfter',
+  'selected',
+  'tab',
+  'view',
+  'state',
+  'projection',
+  'workbench',
+  'responsive',
+  'contract',
+  'registry',
+]) {
+  const value = Astro.url.searchParams.get(name);
+  if (value !== null) initialQuery[name] = value;
+}
+const localApiOrigin = (
+  env as unknown as { PLATFORM_CONFIGURATION_LOCAL_API_ORIGIN?: string }
+).PLATFORM_CONFIGURATION_LOCAL_API_ORIGIN;
+const versionFromEtag = (etag: string | null): string | null => {
+  if (etag === null) return null;
+  const value = etag.trim().replace(/^W\//u, '').replace(/^"|"$/gu, '');
+  return /^[1-9][0-9]{0,17}$/u.test(value) ? value : null;
+};
+const resolved = await resolvePlatformConfigurationPage({
+  request: Astro.request,
+  binding: env.PLATFORM_API,
+  ...(localApiOrigin === undefined ? {} : { localApiOrigin }),
+  key,
+  requestId,
+  surface: 'index',
+});
+if (resolved.kind === 'unauthenticated') {
+  return Astro.redirect(
+    `/auth/sign-in?returnTo=${encodeURIComponent(returnTo)}`,
+    303,
+  );
+}
+if (resolved.kind === 'invalid_key' || resolved.kind === 'invalid_record') {
+  return new Response('Bad request', { status: 400 });
+}
+if (resolved.kind === 'not_found')
+  return new Response('Not found', { status: 404 });
+
+let page = resolved.page;
+if (
+  Astro.url.searchParams.get('state') === 'degraded' &&
+  page.state === 'ready'
+) {
+  page = {
+    ...page,
+    state: 'degraded',
+    variant: 'degradedPage',
+    access: 'disabled',
+    error: {
+      code: 'DEPENDENCY_UNAVAILABLE',
+      message: 'Platform configuration is temporarily unavailable.',
+      requestId,
+    },
+  };
+}
+const initial = platformConfigurationInitial(resolved, page, page.effective);
+const selected = selectedId ?? page.effective?.definitionId ?? null;
+const requestedAdminTab = Astro.url.searchParams.get('tab');
+const knownAdminTabs = [
+  'settings',
+  'provenance',
+  'inbox',
+  'capabilities',
+  'audit',
+] as const;
+if (
+  requestedAdminTab !== null &&
+  !knownAdminTabs.includes(requestedAdminTab as (typeof knownAdminTabs)[number])
+) {
+  // Keep the server-rendered settings island on a canonical tab. Its
+  // controller then replaces the browser URL and removes any invalid sort.
+  initialQuery.tab = 'settings';
+}
+const adminTab =
+  requestedAdminTab === 'inbox' ||
+  requestedAdminTab === 'capabilities' ||
+  requestedAdminTab === 'audit'
+    ? requestedAdminTab
+    : null;
+const adminWorkspace =
+  adminTab === null
+    ? null
+    : await resolveAdminWorkspace({
+        request: Astro.request,
+        binding: env.PLATFORM_API,
+        ...(localApiOrigin === undefined ? {} : { localApiOrigin }),
+        tab: adminTab,
+        requestId,
+        baseAccess: page.access,
+        capabilitySnapshot: page.capabilitySnapshot,
+        // Unsupported role labels are a fail-closed hint only. They never
+        // select authority or capabilities.
+        forceHidden: Astro.url.searchParams.has('role'),
+      });
+if (adminWorkspace?.kind === 'unauthenticated') {
+  return Astro.redirect(
+    `/auth/sign-in?returnTo=${encodeURIComponent(returnTo)}`,
+    303,
+  );
+}
+---
+
+<PlatformConfigurationAdminRoute
+  state={page.state}
+  variant={platformConfigurationVariant(resolved)}
+  access={page.access}
+  actorId={page.actorId}
+  actingPartyId={page.actingPartyId}
+  capabilitySnapshot={page.capabilitySnapshot}
+  canonicalUrl={Astro.url.pathname}
+  initialQuery={initialQuery}
+  requestId={requestId}
+  initial={initial}
+  contractFields={PLATFORM_CONFIGURATION_CONTRACT_FIELDS}
+  selectedId={selected}
+  expectedVersion={page.effective?.evaluatorVersion ??
+    versionFromEtag(page.etag)}
+  csrfToken={page.csrfToken}
+  key={page.key}
+  returnTo={returnTo}
+  {...adminWorkspace?.initial === undefined
+    ? {}
+    : { adminInitial: adminWorkspace.initial }}
+  {...adminWorkspace?.access === undefined
+    ? {}
+    : { adminAccess: adminWorkspace.access }}
+/>

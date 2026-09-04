@@ -147,6 +147,9 @@ in domain 02 evidenced rather than claimed.
 <!-- spec-graph: auto-generated -->
 ## Related Specs
 
+### Phases into
+- [[specs/phases/phase-2|Phase 2 — Identity, admin, CMS/settings]]
+
 ### Constrained by
 - [[decisions.md#d-18|D-18]]
 - [[decisions.md#d-19|D-19]]
@@ -167,3 +170,6 @@ in domain 02 evidenced rather than claimed.
 - [[decisions.md#d-70|D-70]]
 - [[decisions.md#d-17|D-17]]
 - [[decisions.md#d-35|D-35]]
+
+### References
+- [[specs/phases/phase-2|Phase 2 — Identity, admin, CMS/settings]]

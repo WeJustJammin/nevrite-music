@@ -1,3 +1,4 @@
+import { appendFileSync, realpathSync } from 'node:fs';
 import { pathToFileURL } from 'node:url';
 
 const SOURCE_SHA_PATTERN = /^[0-9a-f]{40}$/u;
@@ -5,6 +6,12 @@ const STAGING_RUN_ID_PATTERN = /^[0-9]+$/u;
 const REPOSITORY_PATTERN = /^[A-Za-z0-9_.-]+\/[A-Za-z0-9_.-]+$/u;
 const STAGING_WORKFLOW_ID = 346315228;
 const STAGING_WORKFLOW_PATH = '.github/workflows/deploy-staging.yml';
+const CI_WORKFLOW_PATH = '.github/workflows/ci.yml';
+const CI_WORKFLOW_FILE = 'ci.yml';
+const CI_WORKFLOW_NAME = 'CI';
+const PRODUCTION_REVIEW_RULE_ID = 64231612;
+const PRODUCTION_REVIEWER_ID = 214191222;
+const PRODUCTION_REVIEWER_LOGIN = 'NEVRITERob';
 
 type JsonObject = Record<string, unknown>;
 
@@ -114,10 +121,149 @@ const endpointFor = (
     base,
   );
 
+const runTimestamp = (
+  run: JsonObject,
+  fields: readonly string[],
+  label: string,
+): number | undefined => {
+  for (const field of fields) {
+    if (!(field in run)) continue;
+    const value = run[field];
+    if (value === undefined || value === null) continue;
+    if (typeof value !== 'string') {
+      throw new Error(`${label} timestamp is invalid.`);
+    }
+    const timestamp = Date.parse(value);
+    if (!Number.isFinite(timestamp)) {
+      throw new Error(`${label} timestamp is invalid.`);
+    }
+    return timestamp;
+  }
+  return undefined;
+};
+
+const verifyCiWorkflow = async (
+  base: URL,
+  owner: string,
+  name: string,
+  token: string,
+  fetchImpl: typeof fetch,
+): Promise<JsonObject> => {
+  const workflow = await requestJson(
+    endpointFor(base, owner, name, `actions/workflows/${CI_WORKFLOW_FILE}`),
+    token,
+    fetchImpl,
+  );
+  if (
+    !isJsonObject(workflow) ||
+    typeof workflow.id !== 'number' ||
+    !Number.isSafeInteger(workflow.id) ||
+    workflow.id <= 0 ||
+    workflow.name !== CI_WORKFLOW_NAME ||
+    workflow.path !== CI_WORKFLOW_PATH
+  ) {
+    throw new Error('The CI workflow identity is invalid.');
+  }
+  return workflow;
+};
+
+const verifyCiWorkflowRun = (
+  run: JsonObject,
+  workflow: JsonObject,
+  options: ProductionPromotionGuardOptions,
+): string => {
+  if (
+    typeof run.id !== 'number' ||
+    !Number.isSafeInteger(run.id) ||
+    run.id <= 0 ||
+    run.workflow_id !== workflow.id ||
+    run.name !== CI_WORKFLOW_NAME ||
+    (run.path !== undefined && run.path !== CI_WORKFLOW_PATH) ||
+    (run.event !== 'push' && run.event !== 'workflow_dispatch') ||
+    run.status !== 'completed' ||
+    run.conclusion !== 'success' ||
+    run.head_branch !== 'main' ||
+    run.head_sha !== options.sourceSha
+  ) {
+    throw new Error('The selected CI run has the wrong identity or result.');
+  }
+  return String(run.id);
+};
+
+const resolveCiRunId = async (
+  base: URL,
+  owner: string,
+  name: string,
+  options: ProductionPromotionGuardOptions,
+  stagingRun: JsonObject,
+  fetchImpl: typeof fetch,
+): Promise<string> => {
+  const workflow = await verifyCiWorkflow(
+    base,
+    owner,
+    name,
+    options.token,
+    fetchImpl,
+  );
+  const runsEndpoint = endpointFor(
+    base,
+    owner,
+    name,
+    `actions/workflows/${workflow.id}/runs`,
+  );
+  runsEndpoint.search = new URLSearchParams({
+    branch: 'main',
+    status: 'success',
+    head_sha: options.sourceSha,
+    per_page: '100',
+  }).toString();
+  const runsResponse = await requestJson(
+    runsEndpoint,
+    options.token,
+    fetchImpl,
+  );
+  if (!isJsonObject(runsResponse)) {
+    throw new Error('The CI workflow run response is invalid.');
+  }
+  const workflowRuns = runsResponse.workflow_runs;
+  if (
+    runsResponse.total_count !== 1 ||
+    !Array.isArray(workflowRuns) ||
+    workflowRuns.length !== 1 ||
+    !isJsonObject(workflowRuns[0])
+  ) {
+    throw new Error(
+      'exactly one successful CI run is required for the selected source SHA.',
+    );
+  }
+  const ciRun = workflowRuns[0];
+  const ciRunId = verifyCiWorkflowRun(ciRun, workflow, options);
+  const ciCompletedAt = runTimestamp(
+    ciRun,
+    ['completed_at', 'updated_at'],
+    'CI completion',
+  );
+  const stagingStartedAt = runTimestamp(
+    stagingRun,
+    ['run_started_at', 'created_at'],
+    'Staging start',
+  );
+  if (
+    ciCompletedAt !== undefined &&
+    stagingStartedAt !== undefined &&
+    ciCompletedAt > stagingStartedAt
+  ) {
+    throw new Error(
+      'The verified CI run must complete before the selected staging run starts.',
+    );
+  }
+  return ciRunId;
+};
+
 export const verifyStagingWorkflowRun = async (
   options: ProductionPromotionGuardOptions,
   fetchImpl: typeof fetch = fetch,
-): Promise<void> => {
+): Promise<JsonObject> => {
   const [base, owner, name] = validateInputShape(options);
   const run = await requestJson(
     endpointFor(base, owner, name, `actions/runs/${options.stagingRunId}`),
@@ -149,6 +295,7 @@ export const verifyStagingWorkflowRun = async (
       'Selected staging run source SHA does not match source SHA.',
     );
   }
+  return run;
 };
 
 export const verifyProductionEnvironment = async (
@@ -165,18 +312,34 @@ export const verifyProductionEnvironment = async (
     throw new Error('The production environment is not configured.');
   }
   const protectionRules = environment.protection_rules;
+  const requiredReviewerRules = Array.isArray(protectionRules)
+    ? protectionRules.filter(
+        (rule): rule is JsonObject =>
+          isJsonObject(rule) && rule.type === 'required_reviewers',
+      )
+    : [];
+  const requiredReviewerRule =
+    requiredReviewerRules.length === 1 ? requiredReviewerRules[0] : null;
+  const reviewerEntries = requiredReviewerRule?.reviewers;
+  const soleReviewer =
+    Array.isArray(reviewerEntries) && reviewerEntries.length === 1
+      ? reviewerEntries[0]
+      : null;
+  const reviewerIdentity = isJsonObject(soleReviewer)
+    ? soleReviewer.reviewer
+    : null;
   const hasRequiredReviewers =
-    Array.isArray(protectionRules) &&
-    protectionRules.some(
-      (rule) =>
-        isJsonObject(rule) &&
-        rule.type === 'required_reviewers' &&
-        Array.isArray(rule.reviewers) &&
-        rule.reviewers.length > 0,
-    );
+    requiredReviewerRule !== null &&
+    requiredReviewerRule.id === PRODUCTION_REVIEW_RULE_ID &&
+    requiredReviewerRule.prevent_self_review === true &&
+    isJsonObject(soleReviewer) &&
+    soleReviewer.type === 'User' &&
+    isJsonObject(reviewerIdentity) &&
+    reviewerIdentity.id === PRODUCTION_REVIEWER_ID &&
+    reviewerIdentity.login === PRODUCTION_REVIEWER_LOGIN;
   if (!hasRequiredReviewers) {
     throw new Error(
-      'The production environment requires production reviewers.',
+      'The production environment requires production reviewers with the exact configured production reviewer and self-review prevention.',
     );
   }
   if (environment.can_admins_bypass !== false) {
@@ -238,10 +401,30 @@ export const verifyProductionEnvironment = async (
 export const verifyProductionPromotionInputs = async (
   options: ProductionPromotionGuardOptions,
   fetchImpl: typeof fetch = fetch,
-): Promise<void> => {
-  validateInputShape(options);
-  await verifyStagingWorkflowRun(options, fetchImpl);
+): Promise<Readonly<{ ciRunId: string }>> => {
+  const [base, owner, name] = validateInputShape(options);
+  const stagingRun = await verifyStagingWorkflowRun(options, fetchImpl);
+  const ciRunId = await resolveCiRunId(
+    base,
+    owner,
+    name,
+    options,
+    stagingRun,
+    fetchImpl,
+  );
   await verifyProductionEnvironment(options, fetchImpl);
+  return { ciRunId };
+};
+
+export const writeCiRunOutput = (
+  ciRunId: string,
+  outputPath: string | undefined,
+): void => {
+  if (!/^[0-9]+$/u.test(ciRunId)) {
+    throw new Error('CI run ID must be numeric.');
+  }
+  if (!outputPath) return;
+  appendFileSync(outputPath, `ci_run_id=${ciRunId}\n`, 'utf8');
 };
 
 const runFromEnvironment = async (): Promise<void> => {
@@ -254,14 +437,15 @@ const runFromEnvironment = async (): Promise<void> => {
     stagingRunId: process.env.STAGING_RUN_ID ?? '',
     token: process.env.GITHUB_TOKEN ?? '',
   };
-  await verifyProductionPromotionInputs(options);
+  const { ciRunId } = await verifyProductionPromotionInputs(options);
+  writeCiRunOutput(ciRunId, process.env.GITHUB_OUTPUT);
   console.log('production_promotion_preflight=passed');
 };
 
 const entrypoint = process.argv[1];
 if (
   entrypoint !== undefined &&
-  import.meta.url === pathToFileURL(entrypoint).href
+  import.meta.url === pathToFileURL(realpathSync(entrypoint)).href
 ) {
   try {
     await runFromEnvironment();

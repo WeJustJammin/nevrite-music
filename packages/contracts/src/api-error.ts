@@ -10,15 +10,52 @@ export type JsonValue =
   | readonly JsonValue[]
   | { readonly [key: string]: JsonValue };
 
-export const JsonValueSchema: z.ZodType<JsonValue> = z.lazy(() =>
-  z.union([
-    z.null(),
-    z.boolean(),
-    z.number(),
-    z.string(),
-    z.array(JsonValueSchema).readonly(),
-    z.record(z.string(), JsonValueSchema).readonly(),
-  ]),
+export const JSON_VALUE_MAX_BYTES = 262_144;
+export const JSON_VALUE_MAX_DEPTH = 8;
+export const JSON_VALUE_MAX_KEYS = 128;
+export const JSON_VALUE_MAX_ARRAY_ITEMS = 128;
+
+const isBoundedJsonValue = (value: unknown): value is JsonValue => {
+  const ancestors = new WeakSet<object>();
+  const visit = (candidate: unknown, depth: number): boolean => {
+    if (candidate === null) return true;
+    if (typeof candidate === 'boolean' || typeof candidate === 'string')
+      return true;
+    if (typeof candidate === 'number') return Number.isFinite(candidate);
+    if (typeof candidate !== 'object' || depth >= JSON_VALUE_MAX_DEPTH)
+      return false;
+    if (ancestors.has(candidate)) return false;
+    ancestors.add(candidate);
+    const valid = Array.isArray(candidate)
+      ? candidate.length <= JSON_VALUE_MAX_ARRAY_ITEMS &&
+        candidate.every((child) => visit(child, depth + 1))
+      : Object.getPrototypeOf(candidate) === Object.prototype ||
+          Object.getPrototypeOf(candidate) === null
+        ? Object.keys(candidate).length <= JSON_VALUE_MAX_KEYS &&
+          Reflect.ownKeys(candidate).every(
+            (key) =>
+              typeof key === 'string' &&
+              visit((candidate as Record<string, unknown>)[key], depth + 1),
+          )
+        : false;
+    ancestors.delete(candidate);
+    return valid;
+  };
+  if (!visit(value, 0)) return false;
+  try {
+    const serialized = JSON.stringify(value);
+    return (
+      serialized !== undefined &&
+      new TextEncoder().encode(serialized).byteLength <= JSON_VALUE_MAX_BYTES
+    );
+  } catch {
+    return false;
+  }
+};
+
+export const JsonValueSchema: z.ZodType<JsonValue> = z.preprocess(
+  (value) => (isBoundedJsonValue(value) ? value : undefined),
+  z.json(),
 );
 
 const jsonDepth = (value: JsonValue): number => {

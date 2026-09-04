@@ -317,3 +317,13 @@ None.
 - [Shard 21 IA](../ia/21-specialized-licensing.md)
 - [Shard 20 licensing core](../ia/20-licensing-core.md)
 - [Shard 10 rights ownership](../ia/10-rights-ownership.md)
+
+
+<!-- spec-graph: auto-generated -->
+## Related Specs
+
+### Phases into
+- [[specs/phases/phase-2|Phase 2 — Identity, admin, CMS/settings]]
+
+### References
+- [[specs/phases/phase-2|Phase 2 — Identity, admin, CMS/settings]]

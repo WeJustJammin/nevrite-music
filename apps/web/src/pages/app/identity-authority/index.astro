@@ -1,0 +1,191 @@
+---
+import {
+  ActingContextListResponseSchema,
+  IdentityPartyPathSchema,
+  PersonIdentityResponseSchema,
+  PublicPartyProjectionResponseSchema,
+  createRequestId,
+} from '@wejammin/contracts';
+import type { ActingContextListResource } from '@wejammin/contracts';
+import { env } from 'cloudflare:workers';
+import { normalizeSafeReturnPath } from '@wejammin/ui/infrastructure/navigation';
+
+import {
+  createIdentityAuthorityReadRequest,
+  forwardIdentityAuthorityRequest,
+  hasIdentityAuthoritySession,
+} from '../../../server/identity-authority-platform-api.ts';
+import IdentityAuthorityShell from './_shell.astro';
+import {
+  createIdentityAuthorityRelationshipWorkbench,
+  loadIdentityAuthorityRelationships,
+} from '../../../server/identity-authority-relationships.ts';
+
+import '@wejammin/ui/styles.css';
+import '../../../styles/infrastructure.css';
+
+export const prerender = false;
+
+const requestId = createRequestId(
+  Astro.request.headers.get('x-request-id') ?? undefined,
+);
+const returnTo = normalizeSafeReturnPath(
+  `${Astro.url.pathname}${Astro.url.search}`,
+);
+const requestedSelected = Astro.url.searchParams.get('selected');
+const selectedPath =
+  requestedSelected === null
+    ? null
+    : IdentityPartyPathSchema.safeParse({ partyId: requestedSelected });
+const selectedId = selectedPath?.success ? selectedPath.data.partyId : null;
+const relationshipTab = Astro.url.searchParams.get('tab') === 'relationships';
+const hasSession = hasIdentityAuthoritySession(Astro.request);
+const platformApi = env.PLATFORM_API;
+
+const canonicalRead = (path: string, credentials?: 'include' | 'omit') =>
+  forwardIdentityAuthorityRequest(
+    createIdentityAuthorityReadRequest(Astro.request, path),
+    platformApi,
+    path,
+    'GET',
+    credentials === undefined ? {} : { credentials },
+  );
+
+const readJson = async (response: Response): Promise<unknown | null> => {
+  try {
+    return await response.json();
+  } catch {
+    return null;
+  }
+};
+
+let state: 'ready' | 'degraded' | 'forbidden' = 'ready';
+let publicOnly = !hasSession;
+let displayName: string | null = null;
+let handle: string | null = null;
+let lifecycle: string | null = null;
+let version: string | null = null;
+let personId: string | null = null;
+let actingPartyId: string | null = null;
+let contexts: ActingContextListResource | null = null;
+
+if (hasSession) {
+  const response = await canonicalRead('/api/v1/me/identity');
+  if (response.status === 401) {
+    return Astro.redirect(
+      `/auth/sign-in?returnTo=${encodeURIComponent(returnTo)}`,
+      303,
+    );
+  }
+  if (response.status === 403) {
+    state = 'forbidden';
+    Astro.response.status = 403;
+  } else if (response.status === 503) {
+    state = 'degraded';
+    Astro.response.status = 503;
+  } else if (response.ok) {
+    const parsed = PersonIdentityResponseSchema.safeParse(
+      await readJson(response),
+    );
+    if (!parsed.success) {
+      state = 'degraded';
+      Astro.response.status = 503;
+    } else {
+      personId = parsed.data.personId;
+      actingPartyId = personId;
+      displayName = 'My person record';
+      lifecycle = parsed.data.accountState;
+      version = parsed.data.version;
+
+      const contextsResponse = await canonicalRead(
+        '/api/v1/me/acting-contexts',
+      );
+      const parsedContexts = ActingContextListResponseSchema.safeParse(
+        await readJson(contextsResponse),
+      );
+      if (
+        contextsResponse.status === 401 ||
+        contextsResponse.status === 503 ||
+        !contextsResponse.ok ||
+        !parsedContexts.success
+      ) {
+        state = 'degraded';
+        Astro.response.status = 503;
+      } else {
+        contexts = parsedContexts.data;
+        actingPartyId =
+          contexts.items.find((item) => item.selectable)?.partyId ?? personId;
+      }
+    }
+  } else if (response.status !== 404) {
+    state = 'degraded';
+    Astro.response.status = 503;
+  }
+}
+
+let relationshipResult: Awaited<
+  ReturnType<typeof loadIdentityAuthorityRelationships>
+> = {
+  actingPartyId,
+  organizationId: null,
+  expectedVersion: null,
+  initial: { status: 'empty', reason: 'no-records' },
+};
+if (relationshipTab && state === 'ready') {
+  relationshipResult = await loadIdentityAuthorityRelationships({
+    canonicalRead,
+    readJson,
+    hasSession,
+    requestId,
+    personId,
+    contexts,
+    selectedId,
+  });
+}
+
+if (selectedId !== null && state === 'ready') {
+  const projectionPath = `/api/v1/identity/parties/${encodeURIComponent(selectedId)}/projection`;
+  const projection = await canonicalRead(projectionPath, 'omit');
+  if (projection.status === 503) {
+    state = 'degraded';
+    Astro.response.status = 503;
+  } else if (projection.ok) {
+    const parsed = PublicPartyProjectionResponseSchema.safeParse(
+      await readJson(projection),
+    );
+    if (parsed.success) {
+      displayName = parsed.data.displayName;
+      handle = parsed.data.handle;
+      lifecycle = parsed.data.lifecycle;
+      version = parsed.data.version;
+      publicOnly = true;
+    } else {
+      state = 'degraded';
+      Astro.response.status = 503;
+    }
+  }
+}
+
+const relationshipWorkbench = createIdentityAuthorityRelationshipWorkbench({
+  relationshipTab,
+  hasSession,
+  personId,
+  selectedId,
+  result: relationshipResult,
+});
+---
+
+<IdentityAuthorityShell
+  state={state}
+  routeKind="index"
+  requestId={requestId}
+  recordId={selectedId}
+  displayName={displayName}
+  handle={handle}
+  lifecycle={lifecycle}
+  version={version}
+  publicOnly={publicOnly}
+  retryHref={returnTo}
+  backHref="/app/identity-authority"
+  {...relationshipWorkbench === undefined ? {} : { relationshipWorkbench }}
+/>

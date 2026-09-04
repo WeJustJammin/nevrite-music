@@ -1,0 +1,73 @@
+---
+interface Props {
+  readonly pageDescription: string;
+  readonly detail: boolean;
+  readonly selectedId: string | null;
+  readonly tab: string;
+  readonly initialQuery: Readonly<Record<string, string>>;
+}
+
+const { pageDescription, detail, selectedId, tab, initialQuery } = Astro.props;
+const settingsContextKeys = [
+  'key',
+  'query',
+  'cursor',
+  'state',
+  'projection',
+  'workbench',
+  'responsive',
+  'contract',
+  'registry',
+];
+const sectionHref = (nextTab: string, view?: string): string => {
+  const params = new URLSearchParams();
+  for (const name of settingsContextKeys) {
+    const value = initialQuery[name];
+    if (value !== undefined && value.length > 0) params.set(name, value);
+  }
+  params.set('tab', nextTab);
+  if (view !== undefined) params.set('view', view);
+  return `/app/platform-configuration-admin?${params.toString()}`;
+};
+const settingsHref = sectionHref('settings');
+const provenanceHref = sectionHref('settings', 'provenance');
+const inboxHref = sectionHref('inbox');
+const capabilitiesHref = sectionHref('capabilities');
+const auditHref = sectionHref('audit');
+---
+
+<header class="platform-configuration-page-heading">
+  <p class="platform-configuration-eyebrow">Governed settings and flags</p>
+  <h1 id="page-title" tabindex="-1">
+    {
+      detail
+        ? `Platform configuration record ${selectedId ?? 'detail'}`
+        : 'Platform configuration'
+    }
+  </h1>
+  <p>{pageDescription}</p>
+  <nav aria-label="Platform configuration sections">
+    <a
+      href={settingsHref}
+      aria-current={tab === 'settings' ? 'page' : undefined}
+      >Settings and flags</a
+    >
+    <a
+      href={`${provenanceHref}#settings-flags-runtime-provenance-heading`}
+      aria-current={tab === 'provenance' ||
+      (tab === 'settings' && initialQuery.view === 'provenance')
+        ? 'page'
+        : undefined}>Provenance</a
+    >
+    <a href={inboxHref} aria-current={tab === 'inbox' ? 'page' : undefined}
+      >Task inbox</a
+    >
+    <a
+      href={capabilitiesHref}
+      aria-current={tab === 'capabilities' ? 'page' : undefined}>Capabilities</a
+    >
+    <a href={auditHref} aria-current={tab === 'audit' ? 'page' : undefined}
+      >Audit activity</a
+    >
+  </nav>
+</header>

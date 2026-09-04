@@ -1,18 +1,15 @@
 import { z } from 'zod';
 
-const RegistryKeySchema = z.string().regex(/^[a-z][a-z0-9_.:-]{0,127}$/);
-const OwnerSchema = z.string().regex(/^[A-Z][A-Za-z0-9-]{1,63}$/);
-const CANONICAL_RUNBOOK_PATHS = [
-  'docs/runbooks/platform/jobs-outbox-reconciliation.md',
-  'docs/runbooks/platform/operational-endpoints.md',
-  'docs/runbooks/platform/provider-webhook-reconciliation.md',
-  'docs/runbooks/platform/release-recovery-gates.md',
-  'docs/runbooks/platform/request-security-and-interaction.md',
-  'docs/runbooks/platform/retention.md',
-  'docs/runbooks/platform/slo.md',
-  'docs/runbooks/platform/upload-admission-reconciliation.md',
-] as const;
-const RunbookSchema = z.enum(CANONICAL_RUNBOOK_PATHS);
+import {
+  OwnerSchema,
+  RegistryKeySchema,
+  RunbookSchema,
+} from './registry-primitives.ts';
+
+export {
+  RouteRegistryEntrySchema,
+  type RouteRegistryEntry,
+} from './route-registry-contract.ts';
 
 export const EventTypeVersionPairSchema = z
   .object({
@@ -40,28 +37,6 @@ const AcceptedEventsSchema = z
       seen.add(key);
     }
   })
-  .readonly();
-
-export const RouteRegistryEntrySchema = z
-  .object({
-    method: z.enum(['DELETE', 'GET', 'PATCH', 'POST', 'PUT']),
-    path: z.string().regex(/^\/api\/v1(?:\/[A-Za-z0-9{}_.:-]+)*$/),
-    authClass: RegistryKeySchema,
-    cacheClass: RegistryKeySchema,
-    timeoutMs: z.number().int().positive().max(30_000),
-    rateClass: RegistryKeySchema,
-    sloTier: RegistryKeySchema,
-    criticality: z.enum(['critical', 'high', 'standard']),
-    owner: OwnerSchema,
-    operationId: z.string().regex(/^[a-z][A-Za-z0-9]{2,79}$/),
-    requestSchema: z.string().min(1).max(128),
-    successSchema: z.string().min(1).max(128),
-    errorSchemas: z.array(z.string().min(1).max(128)).min(1).max(16).readonly(),
-    bolaTest: z.string().min(1).max(128),
-    runbook: RunbookSchema,
-    deprecated: z.boolean(),
-  })
-  .strict()
   .readonly();
 
 export const ConsumerRegistryEntrySchema = z
@@ -123,7 +98,6 @@ export const SloRegistryEntrySchema = z
   .strict()
   .readonly();
 
-export type RouteRegistryEntry = z.infer<typeof RouteRegistryEntrySchema>;
 export type EventTypeVersionPair = z.infer<typeof EventTypeVersionPairSchema>;
 export type ConsumerRegistryEntry = z.infer<typeof ConsumerRegistryEntrySchema>;
 export type ProviderRegistryEntry = z.infer<typeof ProviderRegistryEntrySchema>;

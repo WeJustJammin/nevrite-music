@@ -1,0 +1,362 @@
+select ok(
+  (select response ?& array[
+      'resourceKind','id','version','blockDefinitionVersionId','blockKey',
+      'fromLifecycle','toLifecycle','lifecycle','releaseDigest','releaseKeyId',
+      'releaseNonceHash','releaseVerifiedAt','eventType','createdAt'
+    ]
+    and response->>'resourceKind' = 'block_definition_lifecycle_event'
+    and response->>'fromLifecycle' = 'supported'
+    and response->>'toLifecycle' = 'deprecated'
+    and response->>'eventType' = 'cms.block.lifecycle.changed.v1'
+    from s09_lifecycle_created),
+  'CMS-03A-08 records the first append-only lifecycle transition'
+);
+select is(
+  (select platform_api.cms_advance_block_lifecycle(request) from s09_lifecycle_request),
+  (select response from s09_lifecycle_created),
+  'CMS-03A-08 replay returns the exact original lifecycle resource payload'
+);
+select ok(
+  (select count(*) = 1
+   from platform_private.outbox_events
+   where event_type = 'cms.block.lifecycle.changed.v1'
+     and aggregate_id = (select (response->>'blockDefinitionVersionId')::uuid from s09_lifecycle_created))
+   and (select count(*) = 1
+   from platform_private.cms_block_definition_lifecycle_events event
+   where event.block_definition_version_id = (select (response->>'blockDefinitionVersionId')::uuid from s09_lifecycle_created)
+     and event.to_lifecycle = 'deprecated'
+     and event.release_raw_body_hash = (
+       select request->>'releaseRawBodyHash' from s09_lifecycle_request
+     )
+     and event.release_signature_hash = (
+       select request->>'releaseSignatureHash' from s09_lifecycle_request
+     )
+     and event.release_nonce_hash = encode(
+       extensions.digest(convert_to('a9090000-0000-4000-8000-000000000508', 'utf8'), 'sha256'), 'hex'
+     )
+     and event.release_verified_at = (
+       select receipt.verified_at
+       from platform_private.cms_release_nonce_receipts receipt
+       where receipt.operation_id = 'CMS-03A-08'
+         and receipt.release_key_id = 'release.ci'
+         and receipt.nonce_hash = event.release_nonce_hash
+     )
+     and event.release_raw_body_hash <> (
+       select block.release_raw_body_hash
+       from platform_private.cms_block_definition_versions block
+       where block.id = event.block_definition_version_id
+     )),
+  'CMS-03A-08 persists current receipt hashes and atomically appends one lifecycle outbox event'
+);
+select throws_ok(
+  $$select platform_api.cms_advance_block_lifecycle(
+    (select pg_temp.s09_sign_release(
+      request || jsonb_build_object('idempotencyKey', 's09-block-lifecycle-nonce-replay-0001'),
+      'CMS-03A-08'
+    ) from s09_lifecycle_request)
+  )$$,
+  'P0001', 'CONFLICT',
+  'CMS-03A-08 rejects a consumed nonce even under a different idempotency key'
+);
+
+create temp table s09_lifecycle_second_request on commit drop as
+select pg_temp.s09_sign_release(request || jsonb_build_object(
+  'fromLifecycle', 'deprecated', 'toLifecycle', 'withdrawn', 'expectedVersion', '1',
+  'releaseNonce', 'a9090000-0000-4000-8000-000000000509',
+  'releaseIssuedAt', clock_timestamp()::text, 'releaseRawBodyHash', repeat('2', 64),
+  'releaseSignatureHash', repeat('3', 64), 'releaseVerifiedAt', clock_timestamp()::text,
+  'idempotencyKey', 's09-block-lifecycle-0002'
+) , 'CMS-03A-08') as request
+from s09_lifecycle_request;
+select ok(
+  (select (platform_api.cms_advance_block_lifecycle(request)->>'toLifecycle') = 'withdrawn'
+   from s09_lifecycle_second_request),
+  'CMS-03A-08 allows the next valid lifecycle transition with a fresh nonce'
+);
+select is(
+  (select count(*)::integer
+   from platform_private.cms_block_definition_lifecycle_events
+   where block_definition_version_id = (select (response->>'id')::uuid from s09_block_created)),
+  2,
+  'CMS-03A-08 retains exactly two append-only lifecycle evidence rows'
+);
+select ok(
+  (select state = 'registered' and version = 1
+   from platform_private.cms_block_definition_versions
+   where id = (select (response->>'id')::uuid from s09_block_created)),
+  'CMS-03A-08 lifecycle transitions do not mutate the immutable block definition'
+);
+select set_config('app.cms_rpc', 'true', true);
+select throws_ok(
+  $$update platform_private.cms_block_definition_versions
+    set block_key = 'tampered'
+    where id = (select (response->>'id')::uuid from s09_block_created)$$,
+  'P0001', 'IMMUTABLE_RECORD',
+  'CMS block definitions reject direct mutation after registration'
+);
+select throws_ok(
+  $$delete from platform_private.cms_block_definition_lifecycle_events
+    where block_definition_version_id = (select (response->>'id')::uuid from s09_block_created)$$,
+  'P0001', 'IMMUTABLE_RECORD',
+  'CMS lifecycle evidence rejects direct deletion'
+);
+
+-- Follow-up RED coverage for the acceptance audit.  These assertions are
+-- intentionally ahead of the implementation: the existing shape-only block
+-- fixture, list implementation, and detail projection must fail closed.
+select is(
+  (select count(*)::integer
+   from platform_private.outbox_events
+   where event_type = 'cms.schema.draft.created.v1'
+     and aggregate_id = (select version_id from s09_type_ids)),
+  1,
+  'CMS-03A-01 atomically appends the draft-created outbox event'
+);
+select throws_ok(
+  $$select platform_api.cms_register_block(
+    (select pg_temp.s09_sign_release(
+      request || jsonb_build_object(
+        'idempotencyKey', 's09-block-shape-only-0001',
+        'releaseNonce', 'a9090000-0000-4000-8000-000000000512',
+        'propsSnapshotAttestation', jsonb_build_object(
+          'algorithm', 'Ed25519', 'keyId', 'release.ci',
+          'signature', repeat('A', 86) || '=='
+        )
+      ), 'CMS-03A-05'
+    ) from s09_block_request)
+  )$$,
+  'P0001', 'UNAUTHENTICATED',
+  'CMS-03A-05 rejects a shape-only attestation before persistence'
+);
+select throws_ok(
+  $$select platform_api.cms_list_content_types(jsonb_build_object(
+    'resourceKind', 'content_type_version', 'lifecycle', 'active'
+  ))$$,
+  'P0001', 'VALIDATION_FAILED',
+  'CMS-03A-06 rejects a lifecycle filter incompatible with a version resource'
+);
+select ok(
+  platform_api.cms_list_content_types(jsonb_build_object(
+    'limit', 1,
+    'sort', 'key', 'direction', 'asc'
+  ))->>'nextCursor' is not null,
+  'CMS-03A-06 returns a bounded cursor when another scoped resource exists'
+);
+select is(
+  jsonb_array_length(
+    platform_api.cms_get_content_type_version(jsonb_build_object(
+      'contentTypeId', (select content_type_id from s09_type_ids),
+      'versionId', (select version_id from s09_type_ids)
+    ))->'blockDefinitions'
+  ),
+  0,
+  'CMS-03A-07 filters block projections by the acting owner scope'
+);
+
+-- Protected registries are closed authorities.  Grammar-valid unknown values
+-- must remain unusable until their owning registry publishes a version.
+select ok(
+  not platform_private.cms_capability_registry_valid('cms.unknown', 1),
+  'CMS registries reject an unknown capability version'
+);
+select ok(
+  not platform_private.cms_workflow_registry_valid('workflow.unknown', 1),
+  'CMS registries reject an unknown workflow version'
+);
+select ok(
+  not platform_private.cms_validator_registry_valid('cms.unknown', 1),
+  'CMS registries reject an unknown validator version'
+);
+select ok(
+  not platform_private.cms_projection_registry_valid('domain', 'profile', 'projection.unknown'),
+  'CMS registries reject an unknown projection'
+);
+select ok(
+  not platform_private.cms_renderer_registry_valid('cms/renderers/unknown/1'),
+  'CMS registries reject an unknown renderer manifest'
+);
+select ok(
+  not platform_private.cms_schema_ref_registry_valid('cms/blocks/unknown/1'),
+  'CMS registries reject an unknown props schema reference'
+);
+select ok(
+  not platform_private.cms_data_source_registry_valid('cms.datasource.unknown'),
+  'CMS registries reject an unknown data source'
+);
+select ok(
+  not platform_private.cms_compiler_registry_valid('99'),
+  'CMS registries reject an unknown compiler version'
+);
+select ok(
+  not platform_private.cms_template_registry_valid('a9090000-0000-4000-8000-000000000999'::uuid),
+  'CMS registries reject an unknown template version'
+);
+select ok(
+  not platform_private.cms_block_key_registry_valid('unknown-block'),
+  'CMS registries reject an unknown child block key'
+);
+select ok(
+  not platform_private.cms_valid_field_input(
+    (select request->'fields'->0 from s09_type_request)
+      || jsonb_build_object('validatorKey', 'cms.unknown', 'validatorVersion', '1'),
+    true
+  ),
+  'CMS field validation resolves validators through the protected registry'
+);
+select ok(
+  not platform_private.cms_valid_relation_input(jsonb_build_object(
+    'fieldId', 'a9090000-0000-4000-8000-000000000101',
+    'targetKind', 'domain', 'targetType', 'profile',
+    'projectionKey', 'projection.unknown', 'cardinality', 'many',
+    'min', 0, 'max', 1, 'ordered', false, 'onUnavailable', 'placeholder'
+  )),
+  'CMS relation validation resolves projections through the protected registry'
+);
+select ok(
+  not platform_private.cms_valid_block_request(
+    (select request || jsonb_build_object('rendererRef', 'cms/renderers/unknown/1') from s09_block_request)
+  ),
+  'CMS block validation resolves renderers through the protected registry'
+);
+select is(
+  platform_private.cms_jcs(jsonb_build_object('z', jsonb_build_array(2, 1), 'a', 1)),
+  '{"a":1,"z":[2,1]}',
+  'CMS JCS canonicalization sorts object keys and preserves array order'
+);
+create temp table s09_hash_requests on commit drop as
+with field_values as (
+  select
+    jsonb_build_object(
+      'stableFieldId', 'a9090000-0000-4000-8000-000000000111',
+      'key', 'alpha', 'kind', 'short_text', 'constraints', '{}'::jsonb,
+      'required', true, 'validatorKey', null, 'validatorVersion', null,
+      'defaultMode', 'none', 'localizationMode', 'none',
+      'editorConfig', jsonb_build_object('label', 'Alpha', 'order', 0),
+      'lifecycle', 'active'
+    ) as field_a,
+    jsonb_build_object(
+      'stableFieldId', 'a9090000-0000-4000-8000-000000000112',
+      'key', 'beta', 'kind', 'integer', 'constraints', '{}'::jsonb,
+      'required', false, 'validatorKey', null, 'validatorVersion', null,
+      'defaultMode', 'none', 'localizationMode', 'none',
+      'editorConfig', jsonb_build_object('label', 'Beta', 'order', 1),
+      'lifecycle', 'active'
+    ) as field_b
+)
+select
+  jsonb_build_object(
+    'typeKey', 'hashable', 'label', 'Hashable',
+    'ownerCapability', 'cms.schema_designer', 'sourceLocale', 'en-US',
+    'defaultLocale', 'en-US', 'workflowKey', 'editorial', 'workflowVersion', '1',
+    'defaultTemplateVersionId', null, 'fields', jsonb_build_array(field_a, field_b),
+    'relations', '[]'::jsonb, 'templateBindings', '[]'::jsonb,
+    'capabilityBindings', '[]'::jsonb
+  ) as request_a,
+  jsonb_build_object(
+    'typeKey', 'hashable', 'label', 'Hashable',
+    'ownerCapability', 'cms.schema_designer', 'sourceLocale', 'en-US',
+    'defaultLocale', 'en-US', 'workflowKey', 'editorial', 'workflowVersion', '1',
+    'defaultTemplateVersionId', null, 'fields', jsonb_build_array(field_b, field_a),
+    'relations', '[]'::jsonb, 'templateBindings', '[]'::jsonb,
+    'capabilityBindings', '[]'::jsonb
+  ) as request_b
+from field_values;
+select is(
+  (select platform_private.cms_definition_artifact_hash(request_a) from s09_hash_requests),
+  (select platform_private.cms_definition_artifact_hash(request_b) from s09_hash_requests),
+  'CMS schema artifact compilation is deterministic under field input reordering'
+);
+
+-- A01 must roll back the aggregate and its effects when a protected child
+-- registry check fails after the parent rows have been staged.
+select set_config('request.jwt.claim.role', 'authenticated', true);
+select throws_ok(
+  $$select platform_api.cms_create_type_draft(
+    (select request || jsonb_build_object(
+      'typeKey', 'atomicbad', 'idempotencyKey', 's09-atomic-fail-0001',
+      'fields', jsonb_build_array(
+        (request->'fields'->0) || jsonb_build_object(
+          'validatorKey', 'cms.unknown', 'validatorVersion', '1'
+        )
+      )
+    ) from s09_type_request)
+  )$$,
+  'P0001', 'VALIDATION_FAILED',
+  'CMS-03A-01 rejects an unknown child registry without partial aggregate effects'
+);
+select is(
+  (select count(*)::integer from platform_private.cms_content_types where type_key = 'atomicbad'),
+  0,
+  'CMS-03A-01 rolls back the staged content type on child validation failure'
+);
+select is(
+  (select count(*)::integer
+   from platform_private.outbox_events
+   where event_type = 'cms.schema.draft.created.v1'
+     and payload->>'typeKey' = 'atomicbad'),
+  0,
+  'CMS-03A-01 does not emit an outbox event for a rolled-back aggregate'
+);
+
+-- A06 exposes each discriminated registry kind through the same protected,
+-- deterministic projection boundary.
+select is(
+  jsonb_array_length(platform_api.cms_list_content_types(jsonb_build_object(
+    'resourceKind', 'content_type', 'limit', 25
+  ))->'items'),
+  1,
+  'CMS-03A-06 lists content_type resources'
+);
+select is(
+  jsonb_array_length(platform_api.cms_list_content_types(jsonb_build_object(
+    'resourceKind', 'content_type_version', 'limit', 25
+  ))->'items'),
+  1,
+  'CMS-03A-06 lists content_type_version resources'
+);
+select is(
+  jsonb_array_length(platform_api.cms_list_content_types(jsonb_build_object(
+    'resourceKind', 'field_definition_version', 'limit', 25
+  ))->'items'),
+  2,
+  'CMS-03A-06 lists field_definition_version resources'
+);
+select is(
+  jsonb_array_length(platform_api.cms_list_content_types(jsonb_build_object(
+    'resourceKind', 'relation_definition', 'limit', 25
+  ))->'items'),
+  1,
+  'CMS-03A-06 lists relation_definition resources'
+);
+select is(
+  jsonb_array_length(platform_api.cms_list_content_types(jsonb_build_object(
+    'resourceKind', 'schema_artifact', 'limit', 25
+  ))->'items'),
+  1,
+  'CMS-03A-06 lists schema_artifact resources'
+);
+select is(
+  jsonb_array_length(platform_api.cms_list_content_types(jsonb_build_object(
+    'resourceKind', 'block_definition_registry_record', 'limit', 25
+  ))->'items'),
+  0,
+  'CMS-03A-06 omits block resources outside the acting scope'
+);
+select is(
+  jsonb_array_length(platform_api.cms_list_content_types(jsonb_build_object(
+    'resourceKind', 'template_binding', 'limit', 25
+  ))->'items'),
+  0,
+  'CMS-03A-06 lists template_binding resources without leaking absent rows'
+);
+select is(
+  jsonb_array_length(platform_api.cms_list_content_types(jsonb_build_object(
+    'resourceKind', 'capability_binding', 'limit', 25
+  ))->'items'),
+  0,
+  'CMS-03A-06 lists capability_binding resources without leaking absent rows'
+);
+create temp table s09_cursor_page on commit drop as
+select platform_api.cms_list_content_types(jsonb_build_object(
+  'limit', 1, 'sort', 'key', 'direction', 'asc'
+)) as response;

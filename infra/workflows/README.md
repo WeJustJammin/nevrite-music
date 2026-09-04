@@ -32,6 +32,11 @@ filesystem and validation operations.
   promoted revision is checked out.
 - `apply-production-migrations.sh` applies forward-only Supabase migrations,
   verifies the exact remote migration version, and records expanded state.
+- `verify-content-schema-registry-release-evidence.ts` validates the strict S09
+  production-observability, hosted-E2E, and manual-accessibility sidecar against
+  independently supplied immutable build/deployment/origin identity and
+  recomputes every referenced report digest inside an approved root. It performs
+  no provider calls and a pass does not replace protected-workflow source review.
 
 ## Conventions
 

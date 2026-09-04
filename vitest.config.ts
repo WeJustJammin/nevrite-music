@@ -31,7 +31,7 @@ export default defineConfig({
     coverage: {
       all: true,
       exclude: [
-        '**/*.test.ts',
+        '**/*.test.{ts,tsx}',
         '**/*.test-support.ts',
         'packages/application/src/index.ts',
         'packages/application/src/infrastructure/security.ts',
@@ -56,7 +56,7 @@ export default defineConfig({
       },
     },
     include: [
-      'apps/**/*.test.ts',
+      'apps/**/*.test.{ts,tsx}',
       'packages/**/*.test.ts',
       'tests/contracts/**/*.test.ts',
       'tests/integration/**/*.test.ts',

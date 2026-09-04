@@ -1,0 +1,504 @@
+@layer components {
+  .platform-configuration-page {
+    --configuration-paper: var(--color-paper, #f6f4ef);
+    --configuration-surface: var(--color-surface, #fffdfa);
+    --configuration-ink: var(--color-graphite, #202124);
+    --configuration-muted: var(--color-muted, #5e6268);
+    --configuration-border: var(--color-border, #c8c7c1);
+    --configuration-accent: var(--color-jam-magenta, #a12662);
+    --configuration-danger: var(--color-danger, oklch(55% 0.2 25));
+    --configuration-focus: var(--color-focus, oklch(67% 0.2 350));
+    --configuration-radius-control: var(--radius-control, 0.375rem);
+    --configuration-radius-surface: var(--radius-surface, 0.625rem);
+    --configuration-font-data: var(--font-size-data, 0.8125rem);
+    --configuration-font-label: var(--font-size-label, 0.875rem);
+    --configuration-font-title: var(--font-size-title, 1.25rem);
+    --configuration-font-headline: var(--font-size-headline, 2rem);
+    min-block-size: 100vh;
+    min-block-size: 100dvb;
+    background: var(--configuration-paper);
+    color: var(--configuration-ink);
+  }
+
+  .platform-configuration-page * {
+    box-sizing: border-box;
+  }
+
+  .platform-configuration-page a {
+    color: var(--configuration-accent);
+    text-underline-offset: 0.15em;
+    text-decoration-thickness: 0.12em;
+  }
+
+  .platform-configuration-page a:focus-visible,
+  .platform-configuration-page button:focus-visible,
+  .platform-configuration-page input:focus-visible,
+  .platform-configuration-page select:focus-visible,
+  .platform-configuration-page textarea:focus-visible {
+    outline: 3px solid var(--configuration-focus);
+    outline-offset: 3px;
+  }
+
+  .platform-configuration-page button,
+  .platform-configuration-page input,
+  .platform-configuration-page select,
+  .platform-configuration-page textarea {
+    font: inherit;
+  }
+
+  .platform-configuration-page button,
+  .platform-configuration-shell-header nav a,
+  .platform-configuration-page-heading nav a {
+    min-block-size: 44px;
+  }
+
+  .platform-configuration-shell-header nav a,
+  .platform-configuration-page-heading nav a {
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .platform-configuration-page button {
+    border: 1px solid var(--configuration-ink);
+    border-radius: var(--configuration-radius-control);
+    background: var(--configuration-ink);
+    color: var(--configuration-surface);
+    cursor: pointer;
+    padding: 0.55rem 0.85rem;
+  }
+
+  .platform-configuration-page button:hover:not(:disabled) {
+    background: var(--configuration-accent);
+    border-color: var(--configuration-accent);
+  }
+
+  .platform-configuration-page button:disabled {
+    cursor: not-allowed;
+    opacity: 0.58;
+  }
+
+  .platform-configuration-page .secondary-action {
+    background: transparent;
+    color: var(--configuration-ink);
+  }
+
+  .platform-configuration-page .destructive-action {
+    background: transparent;
+    border-color: var(--configuration-danger);
+    color: var(--configuration-danger);
+  }
+
+  .platform-configuration-skip-link {
+    position: absolute;
+    inset-block-start: 0.75rem;
+    inset-inline-start: 0.75rem;
+    transform: translateY(-200%);
+    z-index: 2;
+  }
+
+  .platform-configuration-skip-link:focus-visible {
+    transform: translateY(0);
+  }
+
+  .platform-configuration-shell-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    border-block-end: 1px solid var(--configuration-border);
+    padding: 0.9rem max(1rem, calc((100% - 90rem) / 2));
+  }
+
+  .platform-configuration-shell-header nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+  }
+
+  .platform-configuration-brand {
+    font-weight: 750;
+  }
+
+  .platform-configuration-main {
+    display: grid;
+    gap: 1.25rem;
+    inline-size: min(calc(100% - 3rem), 90rem);
+    margin-inline: auto;
+    padding-block: 2rem 4rem;
+  }
+
+  .platform-configuration-page-heading,
+  .platform-configuration-workbench-header,
+  .platform-configuration-status-panel,
+  .platform-configuration-status,
+  .platform-configuration-capability-gate,
+  .platform-configuration-filter-bar,
+  .platform-configuration-record-detail,
+  .platform-configuration-command-form,
+  .platform-configuration-action-bar,
+  .platform-configuration-offline-status,
+  .platform-configuration-sync-conflict {
+    min-inline-size: 0;
+    background: var(--configuration-surface);
+    border: 1px solid var(--configuration-border);
+    border-radius: var(--configuration-radius-surface);
+    padding: 1rem;
+  }
+
+  .platform-configuration-page-heading {
+    border-color: var(--configuration-accent);
+  }
+
+  .platform-configuration-page-heading nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    margin-block-start: 1rem;
+  }
+
+  .platform-configuration-eyebrow {
+    color: var(--configuration-muted);
+    font-size: var(--configuration-font-data);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    margin-block: 0 0.35rem;
+    text-transform: uppercase;
+  }
+
+  .platform-configuration-main h1,
+  .platform-configuration-main h2,
+  .platform-configuration-main h3,
+  .platform-configuration-main h4 {
+    line-height: 1.2;
+    margin-block: 0 0.65rem;
+  }
+
+  .platform-configuration-main h1 {
+    font-size: var(--configuration-font-headline);
+  }
+
+  .platform-configuration-main h2 {
+    font-size: var(--configuration-font-title);
+  }
+
+  .platform-configuration-main p {
+    max-inline-size: 72ch;
+  }
+
+  .platform-configuration-workbench,
+  .platform-configuration-workbench > div {
+    display: grid;
+    gap: 1rem;
+    min-inline-size: 0;
+  }
+
+  .platform-configuration-workbench-skip {
+    position: absolute;
+    block-size: 1px;
+    inline-size: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+  }
+
+  .platform-configuration-workbench-skip:focus {
+    position: static;
+    block-size: auto;
+    inline-size: auto;
+    clip: auto;
+    clip-path: none;
+  }
+
+  .platform-configuration-help,
+  .platform-configuration-request-id,
+  .platform-configuration-security-note,
+  .platform-configuration-a11y-note {
+    color: var(--configuration-muted);
+    font-size: var(--configuration-font-label);
+  }
+
+  .platform-configuration-back-action-mobile-only {
+    display: none;
+  }
+
+  .platform-configuration-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .platform-configuration-field {
+    display: grid;
+    gap: 0.35rem;
+  }
+
+  .platform-configuration-field label,
+  .platform-configuration-command-form legend {
+    font-weight: 650;
+  }
+
+  .platform-configuration-field input,
+  .platform-configuration-field select,
+  .platform-configuration-field textarea {
+    inline-size: 100%;
+    min-block-size: 44px;
+    border: 1px solid var(--configuration-border);
+    border-radius: var(--configuration-radius-control);
+    background: var(--configuration-surface);
+    color: var(--configuration-ink);
+    padding: 0.55rem 0.65rem;
+  }
+
+  .platform-configuration-command-form,
+  .platform-configuration-filter-bar {
+    display: grid;
+    gap: 0.8rem;
+  }
+
+  .platform-configuration-command-form fieldset {
+    display: grid;
+    gap: 0.8rem;
+    border: 0;
+    margin: 0;
+    padding: 0;
+  }
+
+  .platform-configuration-validation-summary {
+    border: 1px solid var(--configuration-accent);
+    border-radius: var(--configuration-radius-control);
+    padding: 0.8rem;
+  }
+
+  .platform-configuration-validation-summary h3 {
+    font-size: 1rem;
+  }
+
+  .platform-configuration-table-wrap {
+    max-inline-size: 100%;
+    min-inline-size: 0;
+    overflow-x: auto;
+  }
+
+  .platform-configuration-data-table {
+    border-collapse: collapse;
+    inline-size: 100%;
+  }
+
+  .platform-configuration-data-table caption {
+    font-weight: 700;
+    padding-block-end: 0.6rem;
+    text-align: start;
+  }
+
+  .platform-configuration-data-table th,
+  .platform-configuration-data-table td {
+    border-block-end: 1px solid var(--configuration-border);
+    padding: 0.65rem 0.5rem;
+    text-align: start;
+    vertical-align: top;
+  }
+
+  .platform-configuration-data-table thead button {
+    min-block-size: 44px;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    padding: 0;
+    text-decoration: underline;
+  }
+
+  .platform-configuration-data-table tbody tr[aria-selected='true'] {
+    background: color-mix(
+      in srgb,
+      var(--configuration-accent) 10%,
+      var(--configuration-surface)
+    );
+  }
+
+  .platform-configuration-priority-list {
+    display: none;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .platform-configuration-priority-list li {
+    display: grid;
+    gap: 0.5rem;
+    border-block-end: 1px solid var(--configuration-border);
+    padding-block: 0.8rem;
+  }
+
+  .platform-configuration-priority-list dl,
+  .platform-configuration-record-meta,
+  .platform-configuration-offline-status dl {
+    display: grid;
+    gap: 0.6rem;
+    margin: 0;
+  }
+
+  .platform-configuration-priority-list dl > div,
+  .platform-configuration-record-meta > div,
+  .platform-configuration-offline-status dl > div {
+    display: grid;
+    gap: 0.15rem;
+    grid-template-columns: minmax(8rem, 0.4fr) minmax(0, 1fr);
+  }
+
+  .platform-configuration-record-meta dt,
+  .platform-configuration-offline-status dt {
+    color: var(--configuration-muted);
+    font-weight: 650;
+  }
+
+  .platform-configuration-record-meta dd,
+  .platform-configuration-offline-status dd {
+    margin: 0;
+    overflow-wrap: anywhere;
+  }
+
+  .platform-configuration-record-detail ol {
+    margin-block: 0;
+    padding-inline-start: 1.25rem;
+  }
+
+  .platform-configuration-record-detail li {
+    overflow-wrap: anywhere;
+    padding-block-end: 0.5rem;
+  }
+
+  .platform-configuration-skeleton {
+    display: grid;
+    gap: 0.5rem;
+  }
+
+  .platform-configuration-skeleton span {
+    display: block;
+    block-size: 1rem;
+    inline-size: 70%;
+    background: color-mix(
+      in srgb,
+      var(--configuration-border) 70%,
+      transparent
+    );
+  }
+
+  .platform-configuration-contract-errors,
+  .platform-configuration-a11y-note {
+    font-size: var(--configuration-font-data);
+  }
+
+  .platform-configuration-admin-inbox {
+    display: grid;
+    gap: 1rem;
+    min-inline-size: 0;
+  }
+
+  .platform-configuration-admin-inbox > h3 {
+    margin-block-end: 0;
+  }
+
+  .platform-configuration-admin-task-list,
+  .platform-configuration-admin-task-detail {
+    min-inline-size: 0;
+    overflow-wrap: anywhere;
+  }
+
+  .platform-configuration-admin-task-list > ul {
+    display: grid;
+    gap: 0.5rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .platform-configuration-admin-task-list > ul > li {
+    display: grid;
+    gap: 0.5rem;
+    grid-template-columns: minmax(0, 1fr) repeat(3, minmax(5rem, auto));
+    min-inline-size: 0;
+    padding: 0.75rem;
+    border: 1px solid var(--configuration-border);
+    border-radius: var(--configuration-radius-surface);
+  }
+
+  @media (min-width: 1025px) {
+    .platform-configuration-admin-inbox {
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+      align-items: start;
+    }
+
+    .platform-configuration-admin-inbox > h3 {
+      grid-column: 1 / -1;
+    }
+  }
+
+  @media (max-width: 1024px) {
+    .platform-configuration-main {
+      inline-size: min(calc(100% - 3rem), 90rem);
+    }
+
+    .platform-configuration-data-table {
+      table-layout: fixed;
+    }
+
+    .platform-configuration-data-table th,
+    .platform-configuration-data-table td {
+      overflow-wrap: anywhere;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .platform-configuration-shell-header {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+
+    .platform-configuration-main {
+      inline-size: min(calc(100% - 2rem), 42rem);
+      padding-block-start: 1.25rem;
+    }
+
+    .platform-configuration-back-action-mobile-only {
+      display: block;
+    }
+
+    .platform-configuration-data-table {
+      display: none;
+    }
+
+    .platform-configuration-priority-list {
+      display: block;
+    }
+
+    .platform-configuration-actions {
+      align-items: stretch;
+      flex-direction: column;
+    }
+
+    .platform-configuration-actions > * {
+      inline-size: 100%;
+    }
+
+    .platform-configuration-admin-task-list > ul > li {
+      grid-template-columns: 1fr;
+    }
+
+    .platform-configuration-record-meta > div,
+    .platform-configuration-offline-status dl > div {
+      grid-template-columns: minmax(7rem, 0.5fr) minmax(0, 1fr);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .platform-configuration-page *,
+    .platform-configuration-page *::before,
+    .platform-configuration-page *::after {
+      animation-duration: 0.01ms;
+      animation-iteration-count: 1;
+      scroll-behavior: auto;
+      transition-duration: 0.01ms;
+    }
+  }
+}

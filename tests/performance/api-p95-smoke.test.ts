@@ -1,3 +1,8 @@
+import { spawnSync } from 'node:child_process';
+import { mkdtempSync, rmSync, symlinkSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { describe, expect, it, vi } from 'vitest';
 
 import {
@@ -11,6 +16,30 @@ import {
 } from '../../infra/performance/api-p95-smoke.mjs';
 
 describe('Phase 1 API p95 smoke contract', () => {
+  it('executes the API p95 smoke CLI when invoked through a symlink', () => {
+    const sandbox = mkdtempSync(join(tmpdir(), 'wejammin-api-p95-smoke-'));
+    const smokePath = fileURLToPath(
+      new URL('../../infra/performance/api-p95-smoke.mjs', import.meta.url),
+    );
+    const symlinkedSmokePath = join(sandbox, 'api-p95-smoke.mjs');
+
+    try {
+      symlinkSync(smokePath, symlinkedSmokePath);
+      const result = spawnSync(
+        process.execPath,
+        [symlinkedSmokePath, '--help'],
+        { encoding: 'utf8' },
+      );
+
+      expect(result.status).toBe(0);
+      expect(result.stdout).toContain(
+        'Usage: node infra/performance/api-p95-smoke.mjs',
+      );
+    } finally {
+      rmSync(sandbox, { force: true, recursive: true });
+    }
+  });
+
   it('locks the one-user, twenty-iteration, no-retry profile', () => {
     expect(PHASE_1_P95_PROFILE).toMatchObject({
       id: 'phase-1-api-p95-smoke',

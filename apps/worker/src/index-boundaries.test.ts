@@ -1,9 +1,19 @@
 import { EnvironmentConfigurationError } from '@wejammin/config/environment';
 import { describe, expect, it } from 'vitest';
 
-import handler, { routeTemplateFor } from './index';
+import * as runtimeModule from './runtime-entry';
+import handler, { DIAGNOSTICS_CAPABILITY, routeTemplateFor } from './index';
 
 describe('Worker entrypoint boundaries', () => {
+  it('preserves the public diagnostics capability contract', () => {
+    expect(DIAGNOSTICS_CAPABILITY).toBe('diagnostics.read');
+  });
+
+  it('exposes only the callable default binding to Cloudflare', () => {
+    expect(Object.keys(runtimeModule)).toEqual(['default']);
+    expect(typeof runtimeModule.default.fetch).toBe('function');
+  });
+
   it('normalizes only unregistered route markers', () => {
     expect(routeTemplateFor('/api/v1/health')).toBe('/api/v1/health');
     expect(routeTemplateFor('unregistered')).toBe('/_unmatched');

@@ -1,0 +1,93 @@
+create temp table s09_worker_activation_request on commit drop as
+select jsonb_build_object(
+  'migrationPlanId', 'a9090000-0000-4000-8000-000000000105',
+  'contentTypeId', (select content_type_id from s09_type_ids),
+  'schemaVersionId', 'a9090000-0000-4000-8000-000000000103',
+  'expectedVersion', '6',
+  'expectedActiveVersionId', (select version_id from s09_type_ids),
+  'transformKey', null, 'transformVersion', null, 'compilerHash', repeat('b', 64),
+  'sourceHash', (select definition_hash from platform_private.cms_content_type_versions
+                where id = (select version_id from s09_type_ids)),
+  'targetHash', repeat('b', 64), 'idempotencyKey', 's09-worker-activate-0001',
+  'switchOnlyOnce', true
+) as request;
+create temp table s09_worker_activated on commit drop as
+select platform_api.cms_activate_schema_migration(request) as response
+from s09_worker_activation_request;
+select ok(
+  (select response->>'activated' = 'true' and response->>'status' = 'activated'
+    and response->>'schemaVersionId' = 'a9090000-0000-4000-8000-000000000103'
+    and response->>'eventId' is not null from s09_worker_activated),
+  'S09 worker activation switches exactly once through the service RPC'
+);
+select is(
+  (select platform_api.cms_activate_schema_migration(request) from s09_worker_activation_request),
+  (select response from s09_worker_activated),
+  'S09 worker activation replay returns the exact original response payload'
+);
+select is(
+  (select count(*)::integer from platform_private.outbox_events
+   where event_type = 'cms.schema.activated.v1'
+     and payload->>'migrationPlanId' = 'a9090000-0000-4000-8000-000000000105'),
+  1,
+  'S09 worker activation atomically appends one durable outbox event'
+);
+select ok(
+  (select (platform_api.cms_reconcile_schema_activation(jsonb_build_object(
+    'migrationPlanId', 'a9090000-0000-4000-8000-000000000105',
+    'schemaVersionId', 'a9090000-0000-4000-8000-000000000103',
+    'expectedActiveVersionId', (select version_id from s09_type_ids),
+    'idempotencyKey', 's09-worker-reconcile-0001'
+  ))->>'activated')::boolean),
+  'S09 worker activation reconciliation confirms the durable active/superseded pair'
+);
+
+create temp table s09_worker_event_request on commit drop as
+select jsonb_build_object(
+  'eventId', event.id, 'eventType', event.event_type,
+  'schemaVersion', event.schema_version, 'aggregateType', event.aggregate_type,
+  'aggregateId', event.aggregate_id,
+  'aggregateVersion', event.aggregate_version::text,
+  'migrationPlanId', 'a9090000-0000-4000-8000-000000000105',
+  'claimToken', 'a9090000-0000-4000-8000-000000000108', 'replay', false
+) as request
+from platform_private.outbox_events event
+where event.id = (select (response->>'eventId')::uuid from s09_worker_activated);
+create temp table s09_worker_event_claim on commit drop as
+select platform_api.cms_claim_schema_migration_event(request) as response
+from s09_worker_event_request;
+select is(
+  (select response->>'status' from s09_worker_event_claim),
+  'new',
+  'S09 worker event claim reserves a new activation event'
+);
+select is(
+  (select platform_api.cms_claim_schema_migration_event(request)->>'status'
+   from s09_worker_event_request),
+  'in_progress',
+  'S09 worker event claim deduplicates an in-flight delivery'
+);
+select is(
+  (select platform_api.cms_acknowledge_schema_migration_event(
+    (request - 'replay') || jsonb_build_object('outcome', 'success')
+  )->>'accepted' from s09_worker_event_request),
+  'true',
+  'S09 worker event acknowledgement durably completes the claim'
+);
+select is(
+  (select platform_api.cms_claim_schema_migration_event(request)->>'status'
+   from s09_worker_event_request),
+  'duplicate',
+  'S09 worker event claim returns duplicate after acknowledgement'
+);
+
+insert into platform_private.outbox_events(
+  id, event_type, schema_version, aggregate_type, aggregate_id,
+  aggregate_version, correlation_id, payload, occurred_at
+) values (
+  'a9090000-0000-4000-8000-000000000107', 'cms.schema.activated.v1', 1,
+  'cms.schema.migration', 'a9090000-0000-4000-8000-000000000105', 1,
+  'a9090000-0000-4000-8000-000000000607',
+  jsonb_build_object('migrationPlanId', 'a9090000-0000-4000-8000-000000000105'),
+  clock_timestamp()
+);

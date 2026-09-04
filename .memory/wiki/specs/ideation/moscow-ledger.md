@@ -845,6 +845,9 @@ their authority is the accurate and reversible choice.
 <!-- spec-graph: auto-generated -->
 ## Related Specs
 
+### Phases into
+- [[specs/phases/phase-2|Phase 2 — Identity, admin, CMS/settings]]
+
 ### Constrained by
 - [[decisions.md#d-20|D-20]]
 - [[decisions.md#d-85|D-85]]
@@ -867,3 +870,6 @@ their authority is the accurate and reversible choice.
 - [[decisions.md#d-13c|D-13c]]
 - [[decisions.md#d-12|D-12]]
 - [[decisions.md#d-84|D-84]]
+
+### References
+- [[specs/phases/phase-2|Phase 2 — Identity, admin, CMS/settings]]

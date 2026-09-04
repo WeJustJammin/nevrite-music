@@ -1,0 +1,195 @@
+---
+import { createRequestId, ProfileUuidSchema } from '@wejammin/contracts';
+import { normalizeSafeReturnPath } from '@wejammin/ui/infrastructure/navigation';
+import { env } from 'cloudflare:workers';
+import ProfilePortfolioEpkWorkbench from '../../../components/profile-portfolio/ProfilePortfolioEpkWorkbench';
+import ProfilesVerificationRoute from '../../../components/profile-ownership/ProfilesVerificationRoute';
+import ShadowClaimOwnershipWorkbench from '../../../components/profile-ownership/ShadowClaimOwnershipWorkbench';
+import { resolveProfileOwnershipPage } from '../../../server/profile-ownership-context';
+import {
+  PROFILE_PORTFOLIO_CONTRACT_FIELDS,
+  profilePortfolioInitial,
+  profilePortfolioRecord,
+  profilePortfolioVariant,
+} from '../../../server/profile-portfolio-app-state';
+import { resolveProfilePortfolioPage } from '../../../server/profile-portfolio-context';
+import Shell from './_shell.astro';
+export const prerender = false;
+const requestId = createRequestId(
+  Astro.request.headers.get('x-request-id') ?? undefined,
+);
+const selectedId = Astro.url.searchParams.get('selected');
+const tab = Astro.url.searchParams.get('tab') ?? 'ownership';
+const requestedPartyId = Astro.url.searchParams.get('party');
+const localApiOrigin = (
+  env as unknown as { PROFILE_PORTFOLIO_LOCAL_API_ORIGIN?: string }
+).PROFILE_PORTFOLIO_LOCAL_API_ORIGIN;
+const returnTo = normalizeSafeReturnPath(Astro.url.pathname + Astro.url.search);
+if (
+  requestedPartyId !== null &&
+  !ProfileUuidSchema.safeParse(requestedPartyId).success
+) {
+  return new Response('Bad request', { status: 400 });
+}
+const resolved = await resolveProfileOwnershipPage({
+  request: Astro.request,
+  binding: env.PLATFORM_API,
+  selectedId,
+  requestId,
+});
+if (resolved.kind === 'unauthenticated') {
+  return Astro.redirect(
+    `/auth/sign-in?returnTo=${encodeURIComponent(returnTo)}`,
+    303,
+  );
+}
+if (resolved.kind === 'invalid_selection') {
+  return new Response('Bad request', { status: 400 });
+}
+const page = resolved.page;
+const claim = page.claim;
+const record =
+  claim === null
+    ? null
+    : {
+        id: claim.id,
+        version: claim.version,
+        state: claim.state,
+        provenance: [
+          {
+            source: 'profile-ownership',
+            evidence: 'server-authorized-claim',
+            at: new Date().toISOString(),
+            visibility: 'authorized',
+          },
+        ],
+        projection: {
+          targetPartyId: claim.targetPartyId,
+          controlLevel: claim.controlLevel,
+          windowEndsAt: claim.windowEndsAt,
+        },
+      };
+const initial = {
+  status:
+    claim === null
+      ? page.state === 'ready'
+        ? 'empty'
+        : 'degraded'
+      : 'success',
+  ...(record === null
+    ? { data: [] }
+    : { data: [record], version: record.version }),
+  stale: false,
+  ...(page.state === 'degraded'
+    ? {
+        error: {
+          code: 'DEPENDENCY_UNAVAILABLE',
+          message: 'Profile ownership records are temporarily unavailable.',
+          requestId: page.requestId,
+        },
+        retryable: true,
+      }
+    : {}),
+} as const;
+const contractFields = {
+  source: '02a-shadow-claim-ownership.md',
+  fields: {
+    shadow: [
+      'id',
+      'partyId',
+      'state',
+      'sourceDomain',
+      'sourceEntityId',
+      'version',
+    ],
+    invitation: ['id', 'state', 'attemptNo', 'jobId', 'version'],
+    remedy: ['accepted', 'action', 'scope', 'state', 'version'],
+    claim: [
+      'id',
+      'state',
+      'targetPartyId',
+      'controlLevel',
+      'windowEndsAt',
+      'version',
+    ],
+    challenge: ['id', 'method', 'expiresAt', 'attemptsRemaining'],
+    ownership: ['partyId', 'controlLevel', 'basis', 'version'],
+  },
+} as const;
+const profileResolved =
+  requestedPartyId === null
+    ? null
+    : await resolveProfilePortfolioPage({
+        request: Astro.request,
+        binding: env.PLATFORM_API,
+        ...(localApiOrigin === undefined ? {} : { localApiOrigin }),
+        partyId: requestedPartyId,
+        requestId,
+        surface: 'app',
+      });
+const profilePage =
+  profileResolved?.kind === 'ready' ? profileResolved.page : null;
+const profileRecord =
+  requestedPartyId === null
+    ? null
+    : profilePortfolioRecord(requestedPartyId, profilePage);
+const profileInitial = profilePortfolioInitial(
+  profileResolved,
+  profilePage,
+  profileRecord,
+);
+---
+
+<Shell>
+  {
+    requestedPartyId !== null && profileResolved !== null ? (
+      <div id="profile-portfolio-island">
+        <ProfilePortfolioEpkWorkbench
+          contractFields={PROFILE_PORTFOLIO_CONTRACT_FIELDS}
+          variant={profilePortfolioVariant(profileResolved)}
+          initial={profileInitial}
+          actorId={profilePage?.actorId ?? null}
+          actingPartyId={profilePage?.actingPartyId ?? null}
+          access={profilePage?.access ?? 'disabled'}
+          query={{
+            tab,
+            selected: profileRecord?.id ?? requestedPartyId,
+            filter: Astro.url.searchParams.get('filter'),
+          }}
+          selectedId={profileRecord?.id ?? requestedPartyId}
+          expectedVersion={
+            profilePage?.projectionVersion === null || profilePage === null
+              ? null
+              : `"${profilePage.projectionVersion}"`
+          }
+          csrfToken={profilePage?.csrfToken ?? ''}
+        />
+      </div>
+    ) : null
+  }
+  <ProfilesVerificationRoute
+    variant="appPage"
+    actorId={page.state === 'ready' ? page.actorId : null}
+    actingPartyId={page.state === 'ready' ? page.actingPartyId : null}
+    capabilitySnapshot={page.state === 'ready' ? page.capabilitySnapshot : []}
+    canonicalUrl={`${Astro.url.pathname}${Astro.url.search}`}
+    initialQuery={{ tab, selected: claim?.id ?? null }}
+    requestId={requestId}
+  />
+  <div id="profile-ownership-island">
+    <ShadowClaimOwnershipWorkbench
+      contractFields={contractFields}
+      variant={page.state === 'ready' ? 'ownerFull' : 'disabledPrerequisite'}
+      initial={initial}
+      actorId={page.state === 'ready' ? page.actorId : null}
+      actingPartyId={page.state === 'ready' ? page.actingPartyId : null}
+      access={claim === null ? 'disabled' : page.access}
+      query={{ tab, selected: claim?.id ?? null }}
+      selectedId={claim?.id ?? null}
+      expectedVersion={claim === null ? '' : `"${claim.version}"`}
+      csrfToken={page.csrfToken}
+      client:load
+    />
+  </div>
+  <script src="../../../lib/profile-portfolio-progressive.ts"></script>
+</Shell>

@@ -1,0 +1,253 @@
+import { CONTENT_SCHEMA_REGISTRY_OPERATION_IDS as GENERATED_CONTENT_SCHEMA_REGISTRY_OPERATION_IDS } from '@wejammin/contracts';
+import type { ContentSchemaRegistryOperationId as GeneratedContentSchemaRegistryOperationId } from '@wejammin/contracts';
+import type {
+  ContentSchemaRegistryDetail,
+  ContentSchemaRegistryListPage,
+  ContentSchemaRegistryQuery,
+  ContentTypeDraftRequest,
+  ContentTypeVersionResource,
+  FieldDefinitionVersionResource,
+  FieldSchemaChangeRequest,
+  RelationBindingRequest,
+  RelationDefinitionResource,
+  SchemaActivationRequest,
+  SchemaActivationResource,
+} from '../../server/content-schema-registry-contracts';
+
+export type {
+  ContentSchemaRegistryDetail,
+  ContentSchemaRegistryListPage,
+  ContentSchemaRegistryQuery,
+  ContentSchemaRegistryRecord,
+  ContentSchemaRegistryResourceKind,
+  ContentSchemaRegistrySafeBlockProjection,
+  ContentTypeDraftRequest,
+  ContentTypeVersionResource,
+  FieldDefinitionVersionResource,
+  FieldSchemaChangeRequest,
+  RelationBindingRequest,
+  RelationDefinitionResource,
+  SchemaActivationRequest,
+  SchemaActivationResource,
+} from '../../server/content-schema-registry-contracts';
+
+export type ContentSchemaRegistryAccess =
+  'full' | 'read-only' | 'disabled' | 'not-rendered';
+export type ContentSchemaRegistryVariant =
+  | 'degradedPage'
+  | 'entitledRead'
+  | 'ownerFull'
+  | 'guardianMandate'
+  | 'juniorRestricted'
+  | 'businessMandate'
+  | 'staffCaseScoped'
+  | 'adminStepUp'
+  | 'forbiddenHidden'
+  | 'disabledPrerequisite';
+
+export interface ContentSchemaRegistryContractFields {
+  readonly source: string;
+  readonly fields: Readonly<Record<string, string>>;
+}
+
+/** The browser consumes the exact operation-ID union owned by BE03a. */
+export type ContentSchemaRegistryOperationId =
+  GeneratedContentSchemaRegistryOperationId;
+
+export const CONTENT_SCHEMA_REGISTRY_OPERATION_IDS =
+  GENERATED_CONTENT_SCHEMA_REGISTRY_OPERATION_IDS;
+
+export type ContentSchemaRegistryMutationRequest =
+  | ContentTypeDraftRequest
+  | FieldSchemaChangeRequest
+  | RelationBindingRequest
+  | SchemaActivationRequest;
+
+export type ContentSchemaRegistryMutationResource =
+  | ContentTypeVersionResource
+  | FieldDefinitionVersionResource
+  | RelationDefinitionResource
+  | SchemaActivationResource;
+
+export type ContentSchemaRegistryCommandState =
+  'idle' | 'pending' | 'success' | 'error' | 'degraded' | 'disabled';
+
+export const CONTENT_SCHEMA_REGISTRY_CONTRACT_FIELDS = {
+  source: 'packages/contracts/src/content-schema-registry/index.ts',
+  fields: {
+    resourceKind: 'ContentSchemaRegistryRecord.resourceKind',
+    query: 'ContentSchemaRegistryListQuery',
+    list: 'ContentSchemaRegistryListPage',
+    detail: 'ContentSchemaRegistryDetail',
+    blockProjection: 'BlockDefinitionRegistryRecord',
+  },
+} as const satisfies ContentSchemaRegistryContractFields;
+
+export interface ContentSchemaRegistryUiError {
+  readonly code: ContentSchemaRegistryErrorCode;
+  readonly message: string;
+  readonly requestId: string;
+}
+
+export type ContentSchemaRegistryErrorCode =
+  | 'INVALID_REQUEST'
+  | 'UNAUTHENTICATED'
+  | 'FORBIDDEN'
+  | 'NOT_FOUND'
+  | 'VALIDATION_FAILED'
+  | 'RATE_LIMITED'
+  | 'DEPENDENCY_INVALID_RESPONSE'
+  | 'DEPENDENCY_UNAVAILABLE'
+  | 'DEPENDENCY_DEADLINE_EXCEEDED'
+  | 'INTERNAL_ERROR';
+
+export const CONTENT_SCHEMA_REGISTRY_SAFE_ERROR_MESSAGES: Readonly<
+  Record<ContentSchemaRegistryErrorCode, string>
+> = {
+  INVALID_REQUEST: 'The registry request is invalid.',
+  UNAUTHENTICATED: 'Sign in to view the content schema registry.',
+  FORBIDDEN: 'You do not have access to this registry.',
+  NOT_FOUND: 'The requested registry record was not found.',
+  VALIDATION_FAILED: 'The registry request did not pass validation.',
+  RATE_LIMITED: 'Too many registry requests. Try again shortly.',
+  DEPENDENCY_INVALID_RESPONSE: 'The registry returned invalid data.',
+  DEPENDENCY_UNAVAILABLE: 'The registry is temporarily unavailable.',
+  DEPENDENCY_DEADLINE_EXCEEDED:
+    'The registry did not respond in time. Try again shortly.',
+  INTERNAL_ERROR: 'The registry could not be loaded.',
+};
+
+export const safeContentSchemaRegistryErrorMessage = (code: string): string =>
+  CONTENT_SCHEMA_REGISTRY_SAFE_ERROR_MESSAGES[
+    code as ContentSchemaRegistryErrorCode
+  ] ?? 'The registry could not be loaded.';
+
+export type ContentSchemaRegistryListState =
+  | {
+      readonly status: 'idle' | 'loading';
+      readonly preserveSafePriorContent?: boolean;
+    }
+  | {
+      readonly status: 'success';
+      readonly data: ContentSchemaRegistryListPage;
+      readonly version: string;
+      readonly stale: boolean;
+    }
+  | {
+      readonly status: 'empty';
+      readonly reason: 'no-records' | 'filter-miss';
+    }
+  | {
+      readonly status: 'error';
+      readonly error: ContentSchemaRegistryUiError;
+      readonly retryable: boolean;
+      readonly httpStatus?: number;
+      readonly retryAfterSeconds?: number | null;
+    }
+  | {
+      readonly status: 'degraded';
+      readonly data: ContentSchemaRegistryListPage | null;
+      readonly code?:
+        | 'DEPENDENCY_INVALID_RESPONSE'
+        | 'DEPENDENCY_UNAVAILABLE'
+        | 'DEPENDENCY_DEADLINE_EXCEEDED';
+      readonly requestId: string;
+      readonly lastVerifiedAt: string | null;
+      /** Server-declared dependency retry proof; absent means fail closed. */
+      readonly retryable?: boolean;
+      readonly httpStatus?: number;
+      readonly retryAfterSeconds?: number | null;
+      readonly etag?: string | null;
+    }
+  | {
+      readonly status: 'disabled';
+      readonly reason: string;
+    };
+
+export type ContentSchemaRegistryDetailState =
+  | {
+      readonly status: 'idle' | 'loading';
+      readonly preserveSafePriorContent?: boolean;
+    }
+  | {
+      readonly status: 'success';
+      readonly data: ContentSchemaRegistryDetail;
+      readonly version: string;
+      readonly stale: boolean;
+    }
+  | {
+      readonly status: 'empty';
+      readonly reason: 'not-selected' | 'not-found';
+    }
+  | {
+      readonly status: 'error';
+      readonly error: ContentSchemaRegistryUiError;
+      readonly retryable: boolean;
+      readonly httpStatus?: number;
+      readonly retryAfterSeconds?: number | null;
+    }
+  | {
+      readonly status: 'degraded';
+      readonly data: ContentSchemaRegistryDetail | null;
+      readonly code?:
+        | 'DEPENDENCY_INVALID_RESPONSE'
+        | 'DEPENDENCY_UNAVAILABLE'
+        | 'DEPENDENCY_DEADLINE_EXCEEDED';
+      readonly requestId: string;
+      readonly lastVerifiedAt: string | null;
+      /** Server-declared dependency retry proof; absent means fail closed. */
+      readonly retryable?: boolean;
+      readonly httpStatus?: number;
+      readonly retryAfterSeconds?: number | null;
+      readonly etag?: string | null;
+    }
+  | {
+      readonly status: 'disabled';
+      readonly reason: string;
+    };
+
+export interface ContentSchemaRegistryWorkbenchProps {
+  readonly children?: never;
+  readonly initialList: ContentSchemaRegistryListState;
+  readonly initialDetail: ContentSchemaRegistryDetailState | null;
+  readonly contractFields: ContentSchemaRegistryContractFields;
+  readonly variant: ContentSchemaRegistryVariant;
+  readonly access: ContentSchemaRegistryAccess;
+  /** Required for an authorized Workbench; unavailable pages are outside it. */
+  readonly actorId: string;
+  readonly actingPartyId: string;
+  readonly query: ContentSchemaRegistryQuery;
+  readonly contentTypeId: string | null;
+  readonly versionId: string | null;
+  readonly cursor: string | null;
+  readonly expectedVersion: string | null;
+  readonly requestId: string;
+  readonly canonicalUrl: string;
+  readonly listUrl: string;
+  readonly retryUrl: string;
+  readonly csrfToken: string;
+  readonly onCanonicalRefetch: (
+    reason: 'list-read' | 'detail-read' | 'mutation' | 'reconnect',
+  ) => Promise<void>;
+}
+
+export interface ContentSchemaRegistryPage {
+  readonly state: 'ready' | 'degraded';
+  readonly variant: ContentSchemaRegistryVariant;
+  readonly access: ContentSchemaRegistryAccess;
+  readonly actorId: string | null;
+  readonly actingPartyId: string | null;
+  readonly query: ContentSchemaRegistryQuery;
+  readonly contentTypeId: string | null;
+  readonly versionId: string | null;
+  readonly cursor: string | null;
+  readonly expectedVersion: string | null;
+  readonly requestId: string;
+  readonly canonicalUrl: string;
+  readonly listUrl: string;
+  readonly retryUrl: string;
+  readonly csrfToken: string;
+  readonly initialList: ContentSchemaRegistryListState;
+  readonly initialDetail: ContentSchemaRegistryDetailState | null;
+  readonly contractFields: ContentSchemaRegistryContractFields;
+}

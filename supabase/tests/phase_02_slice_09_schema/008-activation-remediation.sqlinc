@@ -1,0 +1,388 @@
+-- Second-pass A04 activation regressions: complete-set binding, exact block
+-- lifecycle, plan creation evidence, worker review freshness, and move races.
+select set_config('app.cms_rpc', 'true', true);
+select set_config('app.cfg_rpc', 'true', true);
+
+-- Build a review candidate whose artifact contains one exact field.  The
+-- persisted graph is intentionally changed after the artifact is compiled.
+insert into platform_private.cms_content_type_versions(
+  id, owner_id, state, version, content_type_id, version_no, labels,
+  workflow_key, workflow_version, source_locale, default_locale,
+  schema_artifact_id, definition_hash, compatibility, dry_run_id, created_by
+) values (
+  'a9090000-0000-4000-8000-000000000150',
+  (select owner_id from platform_private.cms_content_type_versions
+   where id = (select version_id from s09_type_ids)),
+  'review', 1, (select content_type_id from s09_type_ids), 5,
+  '{"label":"Article X exact"}'::jsonb, 'editorial', 1, 'en-US', 'en-US',
+  'a9090000-0000-4000-8000-000000000151', repeat('9', 64), 'conditional',
+  'a9090000-0000-4000-8000-000000000405',
+  'a9090000-0000-4000-8000-000000000001'
+);
+insert into platform_private.cms_field_definition_versions(
+  id, owner_id, state, version, content_type_version_id, stable_field_id,
+  field_key, kind, constraints, required, default_mode, localization_mode,
+  editor_config, created_by
+) values (
+  'a9090000-0000-4000-8000-000000000152',
+  (select owner_id from platform_private.cms_content_type_versions
+   where id = 'a9090000-0000-4000-8000-000000000150'),
+  'active', 1, 'a9090000-0000-4000-8000-000000000150',
+  'a9090000-0000-4000-8000-000000000152', 'title', 'short_text', '{}'::jsonb,
+  false, 'none', 'none', '{"label":"Title","order":0}'::jsonb,
+  'a9090000-0000-4000-8000-000000000001'
+);
+insert into platform_private.cms_schema_artifacts(
+  id, owner_id, state, version, content_type_version_id, compiler_version,
+  zod_contract_ref, editor_manifest, renderer_manifest, artifact_hash, compiled_at
+) values (
+  'a9090000-0000-4000-8000-000000000151',
+  (select owner_id from platform_private.cms_content_type_versions
+   where id = 'a9090000-0000-4000-8000-000000000150'),
+  'compiled', 1, 'a9090000-0000-4000-8000-000000000150', '1',
+  'cms/content-type/articlex/v1',
+  jsonb_build_object(
+    'schema', jsonb_build_object(
+      'typeKey', 'articlex', 'label', 'Article X exact',
+      'ownerCapability', 'cms.schema_designer', 'sourceLocale', 'en-US',
+      'defaultLocale', 'en-US', 'workflowKey', 'editorial',
+      'workflowVersion', '1', 'defaultTemplateVersionId', null,
+      'fields', jsonb_build_array(jsonb_build_object(
+        'stableFieldId', 'a9090000-0000-4000-8000-000000000152',
+        'key', 'title', 'kind', 'short_text', 'constraints', '{}'::jsonb,
+        'required', false, 'validatorKey', null, 'validatorVersion', null,
+        'defaultMode', 'none', 'localizationMode', 'none',
+        'editorConfig', jsonb_build_object('label', 'Title', 'order', 0),
+        'lifecycle', 'active'
+      )),
+      'relations', '[]'::jsonb, 'templateBindings', '[]'::jsonb,
+      'capabilityBindings', '[]'::jsonb
+    ),
+    'fields', jsonb_build_array(jsonb_build_object(
+      'stableFieldId', 'a9090000-0000-4000-8000-000000000152',
+      'key', 'title', 'kind', 'short_text', 'constraints', '{}'::jsonb,
+      'required', false, 'validatorKey', null, 'validatorVersion', null,
+      'defaultMode', 'none', 'localizationMode', 'none',
+      'editorConfig', jsonb_build_object('label', 'Title', 'order', 0),
+      'lifecycle', 'active'
+    ))
+  ),
+  jsonb_build_object(
+    'relations', '[]'::jsonb, 'templateBindings', '[]'::jsonb,
+    'capabilityBindings', '[]'::jsonb
+  ), repeat('9', 64), clock_timestamp()
+);
+select ok(
+  platform_private.cms_activation_references_valid(
+    'a9090000-0000-4000-8000-000000000150'
+  ),
+  'AC095 exact artifact and persisted graph pass before an extra child appears'
+);
+insert into platform_private.cms_field_definition_versions(
+  id, owner_id, state, version, content_type_version_id, stable_field_id,
+  field_key, kind, constraints, required, default_mode, localization_mode,
+  editor_config, created_by
+) values (
+  'a9090000-0000-4000-8000-000000000153',
+  (select owner_id from platform_private.cms_content_type_versions
+   where id = 'a9090000-0000-4000-8000-000000000150'),
+  'active', 1, 'a9090000-0000-4000-8000-000000000150',
+  'a9090000-0000-4000-8000-000000000153', 'subtitle', 'short_text', '{}'::jsonb,
+  false, 'none', 'none', '{"label":"Subtitle","order":1}'::jsonb,
+  'a9090000-0000-4000-8000-000000000001'
+);
+select ok(
+  not platform_private.cms_activation_references_valid(
+    'a9090000-0000-4000-8000-000000000150'
+  ),
+  'AC095 rejects an extra persisted field outside the artifact manifest'
+);
+delete from platform_private.cms_field_definition_versions
+where id = 'a9090000-0000-4000-8000-000000000153';
+insert into platform_private.cms_content_type_capability_bindings(
+  id, owner_id, state, version, content_type_version_id,
+  capability_key, capability_version
+) values (
+  'a9090000-0000-4000-8000-000000000154',
+  (select owner_id from platform_private.cms_content_type_versions
+   where id = 'a9090000-0000-4000-8000-000000000150'),
+  'active', 1, 'a9090000-0000-4000-8000-000000000150',
+  'cms.schema_designer', 1
+);
+select ok(
+  not platform_private.cms_activation_references_valid(
+    'a9090000-0000-4000-8000-000000000150'
+  ),
+  'AC095 rejects an extra persisted capability binding outside the manifest'
+);
+delete from platform_private.cms_content_type_capability_bindings
+where id = 'a9090000-0000-4000-8000-000000000154';
+insert into platform_private.cms_relation_definitions(
+  id, owner_id, state, version, field_definition_id, target_kind, target_type,
+  projection_key, cardinality, min_count, max_count, ordered, on_unavailable,
+  created_by
+) values (
+  'a9090000-0000-4000-8000-000000000157',
+  (select owner_id from platform_private.cms_content_type_versions
+   where id = 'a9090000-0000-4000-8000-000000000150'),
+  'active', 1, 'a9090000-0000-4000-8000-000000000152', 'content', 'profile',
+  'profile.summary', 'one', 0, 1, false, 'omit',
+  'a9090000-0000-4000-8000-000000000001'
+);
+select ok(
+  not platform_private.cms_activation_references_valid(
+    'a9090000-0000-4000-8000-000000000150'
+  ),
+  'AC095 rejects an extra persisted relation outside the artifact manifest'
+);
+delete from platform_private.cms_relation_definitions
+where id = 'a9090000-0000-4000-8000-000000000157';
+insert into platform_private.cms_content_type_template_bindings(
+  id, owner_id, state, version, content_type_version_id,
+  template_version_id, position
+) values (
+  'a9090000-0000-4000-8000-000000000158',
+  (select owner_id from platform_private.cms_content_type_versions
+   where id = 'a9090000-0000-4000-8000-000000000150'),
+  'active', 1, 'a9090000-0000-4000-8000-000000000150',
+  'a9090000-0000-4000-8000-000000000159', 0
+);
+select ok(
+  not platform_private.cms_activation_references_valid(
+    'a9090000-0000-4000-8000-000000000150'
+  ),
+  'AC095 rejects an extra persisted template binding outside the manifest'
+);
+delete from platform_private.cms_content_type_template_bindings
+where id = 'a9090000-0000-4000-8000-000000000158';
+
+select ok(
+  platform_private.cms_block_reference_valid(
+    jsonb_build_object('blockKey', 'hero', 'blockVersion', 2, 'lifecycle', 'supported')
+  ),
+  'AC095 accepts the exact currently-derived block lifecycle'
+);
+select ok(
+  not platform_private.cms_block_reference_valid(
+    jsonb_build_object('blockKey', 'hero', 'blockVersion', 2, 'lifecycle', 'deprecated')
+  )
+  and not platform_private.cms_block_reference_valid(
+    jsonb_build_object('blockKey', 'hero', 'blockVersion', 1, 'lifecycle', 'withdrawn')
+  ),
+  'AC095 rejects an unregistered block version and a withdrawn lifecycle'
+);
+
+-- A conditional plan can be created only with an independently validated
+-- report.  Missing evidence and candidate-ID stand-ins are denied.
+select throws_ok(
+  $$select platform_private.cms_prepare_activation_migration(
+    'a9090000-0000-4000-8000-000000000150',
+    'a9090000-0000-4000-8000-000000000103', null,
+    'a9090000-0000-4000-8000-000000000405', 'cms.schema.migrate', 1, null
+  )$$,
+  'P0001', 'VALIDATION_FAILED',
+  'AC099 conditional plan creation requires a supplied dry-run report'
+);
+select throws_ok(
+  $$select platform_private.cms_prepare_activation_migration(
+    'a9090000-0000-4000-8000-000000000150',
+    'a9090000-0000-4000-8000-000000000103', null,
+    'a9090000-0000-4000-8000-000000000150'
+  )$$,
+  'P0001', 'VALIDATION_FAILED',
+  'AC096 rejects a candidate UUID used as its own dry-run evidence ID'
+);
+
+insert into platform_private.cms_content_type_versions(
+  id, owner_id, state, version, content_type_id, version_no, labels,
+  workflow_key, workflow_version, source_locale, default_locale,
+  schema_artifact_id, definition_hash, compatibility, dry_run_id, created_by
+) values (
+  'a9090000-0000-4000-8000-000000000155',
+  (select owner_id from platform_private.cms_content_type_versions
+   where id = 'a9090000-0000-4000-8000-000000000103'),
+  'approved', 1, (select content_type_id from s09_type_ids), 6,
+  '{"label":"Article X conditional"}'::jsonb, 'editorial', 1, 'en-US', 'en-US',
+  'a9090000-0000-4000-8000-000000000156', repeat('f', 64), 'conditional',
+  'a9090000-0000-4000-8000-000000000406',
+  'a9090000-0000-4000-8000-000000000001'
+);
+insert into platform_private.cms_schema_artifacts(
+  id, owner_id, state, version, content_type_version_id, compiler_version,
+  zod_contract_ref, editor_manifest, renderer_manifest, artifact_hash, compiled_at
+) values (
+  'a9090000-0000-4000-8000-000000000156',
+  (select owner_id from platform_private.cms_content_type_versions
+   where id = 'a9090000-0000-4000-8000-000000000155'),
+  'compiled', 1, 'a9090000-0000-4000-8000-000000000155', '1',
+  'cms/content-type/articlex/v1',
+  jsonb_build_object('schema', jsonb_build_object(
+    'typeKey', 'articlex', 'label', 'Article X conditional',
+    'ownerCapability', 'cms.schema_designer', 'sourceLocale', 'en-US',
+    'defaultLocale', 'en-US', 'workflowKey', 'editorial', 'workflowVersion', '1',
+    'defaultTemplateVersionId', null, 'fields', '[]'::jsonb,
+    'relations', '[]'::jsonb, 'templateBindings', '[]'::jsonb,
+    'capabilityBindings', '[]'::jsonb
+  ), 'fields', '[]'::jsonb),
+  jsonb_build_object('relations', '[]'::jsonb, 'templateBindings', '[]'::jsonb,
+    'capabilityBindings', '[]'::jsonb), repeat('f', 64), clock_timestamp()
+);
+select is(
+  platform_private.cms_prepare_activation_migration(
+    'a9090000-0000-4000-8000-000000000155',
+    'a9090000-0000-4000-8000-000000000103', null,
+    'a9090000-0000-4000-8000-000000000406', 'cms.schema.migrate', 1,
+    jsonb_build_object(
+      'dryRunId', 'a9090000-0000-4000-8000-000000000406', 'result', 'pass',
+      'sourceHash', (select definition_hash from platform_private.cms_content_type_versions
+                    where id = 'a9090000-0000-4000-8000-000000000103'),
+      'targetHash', repeat('f', 64),
+      'transformHash', platform_private.cms_migration_transform_hash(
+        'conditional', 'cms.schema.migrate', 1,
+        (select definition_hash from platform_private.cms_content_type_versions
+         where id = 'a9090000-0000-4000-8000-000000000103'),
+        repeat('f', 64), repeat('f', 64), '1'
+      ),
+      'transformKey', 'cms.schema.migrate', 'transformVersion', '1',
+      'compilerHash', repeat('f', 64), 'compilerVersion', '1',
+      'sourceCount', '0', 'targetCount', '0', 'rowErrorCount', '0',
+      'migratedCount', '0', 'failedCount', '0',
+      'lease', jsonb_build_object(
+        'state', 'completed', 'expiresAt', (clock_timestamp() + interval '10 minutes')::text
+      )
+    )
+  ),
+  'a9090000-0000-4000-8000-000000000406'::uuid,
+  'AC099 creates and advances a conditional plan only after exact report evidence'
+);
+select ok(
+  (select classification = 'conditional'
+      and transform_key = 'cms.schema.migrate'
+      and transform_version = 1
+      and state = 'completed'
+   from platform_private.cms_schema_migration_plans
+   where id = 'a9090000-0000-4000-8000-000000000406'),
+  'AC099 persists the conditional plan and advances its zero-row state'
+);
+
+-- Worker evidence must remain fresh and bound to the current review version
+-- and an active recent context binding.
+insert into platform_private.cms_content_type_versions(
+  id, owner_id, state, version, content_type_id, version_no, labels,
+  workflow_key, workflow_version, source_locale, default_locale,
+  schema_artifact_id, definition_hash, compatibility, dry_run_id, created_by
+) values (
+  'a9090000-0000-4000-8000-000000000160',
+  (select owner_id from platform_private.cms_content_type_versions
+   where id = 'a9090000-0000-4000-8000-000000000103'),
+  'approved', 1, (select content_type_id from s09_type_ids), 7,
+  '{"label":"Article X worker evidence"}'::jsonb, 'editorial', 1, 'en-US', 'en-US',
+  'a9090000-0000-4000-8000-000000000161', repeat('a', 64), 'additive',
+  'a9090000-0000-4000-8000-000000000408',
+  'a9090000-0000-4000-8000-000000000001'
+);
+insert into platform_private.cms_schema_artifacts(
+  id, owner_id, state, version, content_type_version_id, compiler_version,
+  zod_contract_ref, editor_manifest, renderer_manifest, artifact_hash, compiled_at
+) values (
+  'a9090000-0000-4000-8000-000000000161',
+  (select owner_id from platform_private.cms_content_type_versions
+   where id = 'a9090000-0000-4000-8000-000000000160'),
+  'compiled', 1, 'a9090000-0000-4000-8000-000000000160', '1',
+  'cms/content-type/articlex/v1',
+  jsonb_build_object('schema', jsonb_build_object(
+    'typeKey', 'articlex', 'label', 'Article X worker evidence',
+    'ownerCapability', 'cms.schema_designer', 'sourceLocale', 'en-US',
+    'defaultLocale', 'en-US', 'workflowKey', 'editorial', 'workflowVersion', '1',
+    'defaultTemplateVersionId', null, 'fields', '[]'::jsonb,
+    'relations', '[]'::jsonb, 'templateBindings', '[]'::jsonb,
+    'capabilityBindings', '[]'::jsonb
+  ), 'fields', '[]'::jsonb),
+  jsonb_build_object('relations', '[]'::jsonb, 'templateBindings', '[]'::jsonb,
+    'capabilityBindings', '[]'::jsonb), repeat('a', 64), clock_timestamp()
+);
+insert into platform_private.cfg_config_change_reviews(
+  id, candidate_type, candidate_id, candidate_version, frozen_hash,
+  impact_manifest, impact_manifest_hash, effective_context_hash,
+  risk_class, required_approvals, state, submitted_by, submitted_at, version_no
+) values (
+  'a9090000-0000-4000-8000-000000000409', 'setting_value',
+  'a9090000-0000-4000-8000-000000000160', 1, repeat('a', 64), '{}'::jsonb,
+  platform_private.cfg_hash_json('{}'::jsonb),
+  platform_private.cfg_hash_json(jsonb_build_object(
+    'actingContextId', 'a9090000-0000-4000-8000-000000000090'
+  )), 'high', 1, 'review',
+  'a9090000-0000-4000-8000-000000000001', clock_timestamp(), 1
+);
+insert into platform_private.cfg_config_approvals(
+  review_id, reviewer_person_id, acting_party_id, capability, decision,
+  reason, reviewed_hash, decided_at, review_version
+) values (
+  'a9090000-0000-4000-8000-000000000409',
+  'a9090000-0000-4000-8000-000000000002',
+  (select organization_id from s09_fixture_org), 'cms.schema_designer',
+  'approve', 'worker freshness', repeat('a', 64), clock_timestamp(), 1
+);
+with approval_digest as (
+  select encode(extensions.digest(convert_to(
+    coalesce(jsonb_agg(jsonb_build_object(
+      'reviewId', approval.review_id, 'reviewerAuthUserId', approval.reviewer_person_id,
+      'capability', approval.capability, 'reviewedHash', approval.reviewed_hash,
+      'reviewVersion', approval.review_version, 'decidedAt', approval.decided_at
+    ) order by approval.review_id, approval.reviewer_person_id)::text, '[]'),
+    'utf8'), 'sha256'), 'hex') as hash
+  from platform_private.cfg_config_approvals approval
+  where approval.review_id = 'a9090000-0000-4000-8000-000000000409'
+)
+update platform_private.cms_content_type_versions candidate
+set activation_workflow_policy_key = 'cms.schema.activate',
+    activation_workflow_policy_version = 1,
+    activation_workflow_policy_hash = encode(extensions.digest(convert_to(
+      'cms.schema.activate:1:1:["cms.schema_designer"]', 'utf8'), 'sha256'), 'hex'),
+    activation_required_decision_count = 1,
+    activation_required_capabilities = jsonb_build_array('cms.schema_designer'),
+    activation_approval_evidence_hash = encode(extensions.digest(convert_to(
+  jsonb_build_object(
+    'key', 'cms.schema.activate', 'version', '1',
+    'policyHash', encode(extensions.digest(convert_to(
+      'cms.schema.activate:1:1:["cms.schema_designer"]', 'utf8'), 'sha256'), 'hex'),
+    'riskClass', 'ordinary',
+    'requiredDecisionCount', 1,
+    'requiredCapabilities', jsonb_build_array('cms.schema_designer'),
+    'approvalEvidenceHash', approval_digest.hash
+  )::text, 'utf8'), 'sha256'), 'hex')
+from approval_digest
+where candidate.id = 'a9090000-0000-4000-8000-000000000160';
+update platform_private.cfg_config_change_reviews
+set state = 'approved', updated_at = clock_timestamp()
+where id = 'a9090000-0000-4000-8000-000000000409';
+select ok(
+  platform_private.cms_worker_human_approval_valid(
+    'a9090000-0000-4000-8000-000000000160'
+  ),
+  'AC102 worker accepts fresh approval, review version, and active MFA context'
+);
+update platform_private.cfg_config_change_reviews
+set version_no = version_no + 1, updated_at = clock_timestamp()
+where id = 'a9090000-0000-4000-8000-000000000409';
+select ok(
+  not platform_private.cms_worker_human_approval_valid(
+    'a9090000-0000-4000-8000-000000000160'
+  ),
+  'AC102 worker rejects an approval tied to a stale review version'
+);
+update platform_private.cfg_config_change_reviews
+set version_no = version_no - 1, updated_at = clock_timestamp()
+where id = 'a9090000-0000-4000-8000-000000000409';
+update platform_private.acting_context_binding
+set last_seen_at = clock_timestamp() - interval '11 minutes'
+where id = 'a9090000-0000-4000-8000-000000000090';
+select ok(
+  not platform_private.cms_worker_human_approval_valid(
+    'a9090000-0000-4000-8000-000000000160'
+  ),
+  'AC102 worker rejects a stale MFA/context binding'
+);
+update platform_private.acting_context_binding
+set last_seen_at = clock_timestamp()
+where id = 'a9090000-0000-4000-8000-000000000090';

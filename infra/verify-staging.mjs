@@ -1,3 +1,4 @@
+import { realpathSync } from 'node:fs';
 import { pathToFileURL } from 'node:url';
 
 import { HealthResponseSchema } from '../packages/contracts/src/index.ts';
@@ -240,7 +241,7 @@ async function main() {
 }
 
 const entrypoint = process.argv[1]
-  ? pathToFileURL(process.argv[1]).href
+  ? pathToFileURL(realpathSync(process.argv[1])).href
   : undefined;
 
 if (entrypoint === import.meta.url) {

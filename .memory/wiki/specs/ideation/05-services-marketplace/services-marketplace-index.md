@@ -115,6 +115,9 @@ Buying and selling human music work — mixing, mastering, production, remote se
 <!-- spec-graph: auto-generated -->
 ## Related Specs
 
+### Phases into
+- [[specs/phases/phase-2|Phase 2 — Identity, admin, CMS/settings]]
+
 ### Constrained by
 - [[decisions.md#d-07|D-07]]
 - [[decisions.md#d-19|D-19]]
@@ -129,3 +132,6 @@ Buying and selling human music work — mixing, mastering, production, remote se
 - [[decisions.md#d-09|D-09]]
 - [[decisions.md#d-17|D-17]]
 - [[decisions.md#d-28|D-28]]
+
+### References
+- [[specs/phases/phase-2|Phase 2 — Identity, admin, CMS/settings]]

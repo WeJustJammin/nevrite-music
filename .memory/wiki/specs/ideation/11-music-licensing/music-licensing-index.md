@@ -178,6 +178,9 @@ domain's and currently has no home (Q-05).
 <!-- spec-graph: auto-generated -->
 ## Related Specs
 
+### Phases into
+- [[specs/phases/phase-2|Phase 2 — Identity, admin, CMS/settings]]
+
 ### Constrained by
 - [[decisions.md#d-10|D-10]]
 - [[decisions.md#d-05|D-05]]
@@ -193,3 +196,6 @@ domain's and currently has no home (Q-05).
 - [[decisions.md#d-09|D-09]]
 - [[decisions.md#d-71|D-71]]
 - [[decisions.md#d-31|D-31]]
+
+### References
+- [[specs/phases/phase-2|Phase 2 — Identity, admin, CMS/settings]]

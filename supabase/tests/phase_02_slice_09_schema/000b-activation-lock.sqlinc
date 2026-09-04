@@ -1,0 +1,284 @@
+-- Exercise the activation lock order before the main pgTAP transaction starts.
+-- Session A owns the dependency graph. Session B first owns the authority rows,
+-- then intentionally probes the graph with a bounded lock timeout. A's
+-- graph -> authority request is started only after B owns authority, so the
+-- inverse authority -> graph attempt is synchronized and cannot hang cleanup.
+do $probe$
+declare
+  race_auth constant uuid := 'a9090000-0000-4000-8000-000000000691';
+  race_person constant uuid := 'a9090000-0000-4000-8000-000000000692';
+  race_org constant uuid := 'a9090000-0000-4000-8000-000000000693';
+  race_context_a constant uuid := 'a9090000-0000-4000-8000-000000000694';
+  race_context_b constant uuid := 'a9090000-0000-4000-8000-000000000695';
+  race_tenure constant uuid := 'a9090000-0000-4000-8000-000000000696';
+  race_type constant uuid := 'a9090000-0000-4000-8000-000000000697';
+  race_version constant uuid := 'a9090000-0000-4000-8000-000000000698';
+  race_artifact constant uuid := 'a9090000-0000-4000-8000-000000000699';
+  race_type_key constant text := 's09_activation_lock_probe';
+  cleanup_sql text;
+  setup_sql text;
+  remote_sql text;
+  lock_rows integer;
+  busy boolean;
+  a_waiting boolean := false;
+  poll integer;
+  b_outcome text;
+  a_result text;
+  drained boolean := false;
+begin
+  cleanup_sql := format($cleanup$
+    do $body$
+    begin
+      -- Artifacts are immutable in normal operation.  Temporarily remove the
+      -- cleanup-only guard so this committed probe leaves no registry rows;
+      -- the exception path recreates it before returning the error.
+      execute 'drop trigger if exists cms_schema_artifacts_immutable_guard on platform_private.cms_schema_artifacts';
+      delete from platform_private.cms_schema_artifacts where id = %L::uuid;
+      delete from platform_private.cms_content_type_versions where id = %L::uuid;
+      delete from platform_private.cms_content_types where id = %L::uuid;
+      delete from platform_private.acting_context_binding where id in (%L::uuid, %L::uuid);
+      delete from identity_private.organization_actor_grant
+       where organization_id = %L::uuid and person_id = %L::uuid;
+      delete from identity_private.membership_tenure where id = %L::uuid;
+      delete from identity.auth_user_bindings where auth_user_id = %L::uuid;
+      delete from platform_private.person_party where party_id = %L::uuid;
+      delete from identity_private.organization_party where party_id = %L::uuid;
+      delete from platform_private.party where id in (%L::uuid, %L::uuid);
+      delete from auth.users where id = %L::uuid;
+      execute 'create trigger cms_schema_artifacts_immutable_guard before update or delete on platform_private.cms_schema_artifacts for each row execute function platform_private.cms_immutable_guard()';
+    exception when others then
+      begin
+        execute 'create trigger cms_schema_artifacts_immutable_guard before update or delete on platform_private.cms_schema_artifacts for each row execute function platform_private.cms_immutable_guard()';
+      exception when duplicate_object then null;
+      end;
+      raise;
+    end;
+    $body$;
+  $cleanup$,
+    race_artifact, race_version, race_type, race_context_a, race_context_b, race_org,
+    race_person, race_tenure, race_auth, race_person, race_org, race_person,
+    race_org, race_auth
+  );
+
+  begin perform extensions.dblink_disconnect('s09_activation_lock_b'); exception when others then null; end;
+  begin perform extensions.dblink_disconnect('s09_activation_lock_a'); exception when others then null; end;
+  perform extensions.dblink_connect(
+    's09_activation_lock_a',
+    'host=db port=5432 dbname=postgres user=postgres password=postgres'
+  );
+  perform extensions.dblink_exec('s09_activation_lock_a', 'set app.cms_rpc = ''true''');
+  perform extensions.dblink_exec('s09_activation_lock_a', 'set statement_timeout = ''3s''');
+  perform extensions.dblink_exec('s09_activation_lock_a', cleanup_sql);
+
+  setup_sql := format($setup$
+    do $body$
+    begin
+      insert into auth.users(id, is_sso_user, is_anonymous)
+      values (%L::uuid, false, false);
+      insert into platform_private.party(id, kind)
+      values (%L::uuid, 'person'), (%L::uuid, 'organization');
+      insert into platform_private.person_party(party_id, auth_user_id, account_state)
+      values (%L::uuid, %L::uuid, 'active');
+      insert into identity.auth_user_bindings(auth_user_id, person_id, state)
+      values (%L::uuid, %L::uuid, 'active');
+      insert into identity_private.organization_party(
+        party_id, ownership_state, governance_mode, lifecycle
+      ) values (%L::uuid, 'owned', 'ungoverned', 'active');
+      insert into identity_private.membership_tenure(
+        id, organization_id, person_id, state, provenance, governance_mode,
+        starts_on, accepted_at, actor_id
+      ) values (
+        %L::uuid, %L::uuid, %L::uuid, 'confirmed', 'invitation', 'ungoverned',
+        current_date, clock_timestamp(), %L::uuid
+      );
+      insert into identity_private.organization_actor_grant(
+        organization_id, person_id, capability_code, valid_from, active
+      ) values (%L::uuid, %L::uuid, 'cms.schema_designer', current_date, true);
+      insert into platform_private.acting_context_binding(
+        id, person_id, acting_party_id, context_kind, client_binding_id, state,
+        selected_at, last_seen_at, expires_at, projection_version, version
+      ) values
+        (%L::uuid, %L::uuid, %L::uuid, 'organization', 's09-lock-a', 'active',
+         clock_timestamp(), clock_timestamp(), clock_timestamp() + interval '1 hour', 1, 1),
+        (%L::uuid, %L::uuid, %L::uuid, 'organization', 's09-lock-b', 'active',
+         clock_timestamp(), clock_timestamp(), clock_timestamp() + interval '1 hour', 1, 1);
+      insert into platform_private.cms_content_types(
+        id, owner_id, state, version, type_key, owner_capability, built_in, created_by
+      ) values (
+        %L::uuid, %L::uuid, 'retired', 1, %L, 'cms.schema_designer', false, %L::uuid
+      );
+      insert into platform_private.cms_content_type_versions(
+        id, owner_id, state, version, content_type_id, version_no, labels,
+        workflow_key, workflow_version, source_locale, default_locale,
+        schema_artifact_id, definition_hash, compatibility, created_by
+      ) values (
+        %L::uuid, %L::uuid, 'review', 1, %L::uuid, 1, '{}'::jsonb,
+        'editorial', 1, 'en-US', 'en-US', %L::uuid, repeat('e', 64),
+        'additive', %L::uuid
+      );
+      insert into platform_private.cms_schema_artifacts(
+        id, owner_id, state, version, content_type_version_id, compiler_version,
+        zod_contract_ref, editor_manifest, renderer_manifest, artifact_hash, compiled_at
+      ) values (
+        %L::uuid, %L::uuid, 'compiled', 1, %L::uuid, '1',
+        'cms/content-type/s09_activation_lock_probe/v1', '{}'::jsonb, '{}'::jsonb,
+        repeat('e', 64), clock_timestamp()
+      );
+    end;
+    $body$;
+  $setup$,
+    race_auth, race_person, race_org, race_person, race_auth, race_auth,
+    race_person, race_org, race_tenure, race_org, race_person, race_person,
+    race_org, race_person, race_context_a, race_person, race_org,
+    race_context_b, race_person,
+    race_org, race_type, race_org, race_type_key, race_auth, race_version,
+    race_org, race_type, race_artifact, race_auth,
+    race_artifact, race_org, race_version
+  );
+  perform extensions.dblink_exec('s09_activation_lock_a', setup_sql);
+  perform extensions.dblink_exec('s09_activation_lock_a', 'begin');
+  perform extensions.dblink_exec(
+    's09_activation_lock_a',
+    format(
+      'do $body$ begin perform platform_private.cms_lock_activation_graph(%L::uuid); end $body$;',
+      race_version
+    )
+  );
+
+  perform extensions.dblink_connect(
+    's09_activation_lock_b',
+    'host=db port=5432 dbname=postgres user=postgres password=postgres'
+  );
+  perform extensions.dblink_exec('s09_activation_lock_b', 'set statement_timeout = ''3s''');
+  perform extensions.dblink_exec('s09_activation_lock_b', 'set lock_timeout = ''750ms''');
+  perform extensions.dblink_exec(
+    's09_activation_lock_b',
+    'create temp table s09_inverse_lock_result(outcome text) on commit preserve rows'
+  );
+  perform extensions.dblink_exec('s09_activation_lock_b', 'begin');
+  -- Synchronous acquisition is the handshake: B owns authority before A is
+  -- asked to wait on that same authority set.
+  perform extensions.dblink_exec(
+    's09_activation_lock_b',
+    format(
+      'do $body$ begin perform platform_private.cms_lock_activation_authority(%L::uuid, %L::uuid, null); end $body$;',
+      race_version,
+      race_auth
+    )
+  );
+  perform extensions.dblink_send_query(
+    's09_activation_lock_a',
+    format(
+      'do $body$ begin perform platform_private.cms_lock_activation_authority(%L::uuid, %L::uuid, null); end $body$;',
+      race_version,
+      race_auth
+    )
+  );
+  for poll in 1..20 loop
+    if extensions.dblink_is_busy('s09_activation_lock_a') = 1 then
+      a_waiting := true;
+      exit;
+    end if;
+    perform pg_catalog.pg_sleep(0.05);
+  end loop;
+  busy := a_waiting;
+  if not a_waiting then
+    raise exception 'S09 activation inverse probe did not observe Session A waiting on authority';
+  end if;
+  -- B now attempts the inverse authority -> graph acquisition. The bounded
+  -- lock timeout is caught inside a subtransaction so B can commit its
+  -- authority release and let A finish; successful graph acquisition fails the
+  -- probe because it means Session A did not retain the graph lock.
+  remote_sql := format($inverse$
+    do $body$
+    begin
+      begin
+        perform platform_private.cms_lock_activation_graph(%L::uuid);
+        insert into pg_temp.s09_inverse_lock_result(outcome) values ('graph_acquired');
+      exception when lock_not_available then
+        insert into pg_temp.s09_inverse_lock_result(outcome) values ('lock_timeout');
+      end;
+    end
+    $body$;
+  $inverse$, race_version);
+  perform extensions.dblink_exec('s09_activation_lock_b', remote_sql);
+  perform extensions.dblink_exec('s09_activation_lock_b', 'commit');
+  select outcome into b_outcome
+    from extensions.dblink(
+      's09_activation_lock_b',
+      'select outcome from pg_temp.s09_inverse_lock_result order by outcome desc limit 1'
+    ) as result(outcome text);
+  if b_outcome is distinct from 'lock_timeout' then
+    raise exception 'S09 activation inverse probe expected bounded graph lock timeout, got %', b_outcome;
+  end if;
+  while extensions.dblink_is_busy('s09_activation_lock_a') = 1 loop
+    perform pg_catalog.pg_sleep(0.05);
+  end loop;
+  -- dblink_get_result needs one extra zero-row read to consume the async
+  -- command terminator before the connection can accept COMMIT.
+  for poll in 1..4 loop
+    select count(*), coalesce(string_agg(result.value, E'\n'), '')
+      into lock_rows, a_result
+      from extensions.dblink_get_result('s09_activation_lock_a', false) as result(value text);
+    if a_result like 'ERROR:%' then
+      raise exception 'Session A authority lock failed: %', a_result;
+    end if;
+    if lock_rows = 0 then
+      drained := true;
+      exit;
+    end if;
+  end loop;
+  if not drained then
+    raise exception 'Session A async result was not fully drained';
+  end if;
+  perform extensions.dblink_exec('s09_activation_lock_a', 'commit');
+  insert into s09_activation_lock_probe(busy, drained) values (busy, drained);
+  perform extensions.dblink_exec('s09_activation_lock_a', cleanup_sql);
+  perform extensions.dblink_disconnect('s09_activation_lock_b');
+  perform extensions.dblink_disconnect('s09_activation_lock_a');
+exception when others then
+  begin
+    if extensions.dblink_is_busy('s09_activation_lock_b') = 1 then
+      perform extensions.dblink_cancel_query('s09_activation_lock_b');
+    end if;
+  exception when others then null;
+  end;
+  begin
+    while extensions.dblink_is_busy('s09_activation_lock_b') = 1 loop
+      perform pg_catalog.pg_sleep(0.05);
+    end loop;
+  exception when others then null;
+  end;
+  begin
+    perform extensions.dblink_get_result('s09_activation_lock_b');
+  exception when others then null;
+  end;
+  begin perform extensions.dblink_exec('s09_activation_lock_b', 'rollback'); exception when others then null; end;
+  begin perform extensions.dblink_disconnect('s09_activation_lock_b'); exception when others then null; end;
+  begin
+    if extensions.dblink_is_busy('s09_activation_lock_a') = 1 then
+      perform extensions.dblink_cancel_query('s09_activation_lock_a');
+    end if;
+  exception when others then null;
+  end;
+  begin
+    for poll in 1..20 loop
+      exit when extensions.dblink_is_busy('s09_activation_lock_a') = 0;
+      perform pg_catalog.pg_sleep(0.05);
+    end loop;
+  exception when others then null;
+  end;
+  begin
+    for poll in 1..4 loop
+      select count(*) into lock_rows
+        from extensions.dblink_get_result('s09_activation_lock_a', false) as result(value text);
+      exit when lock_rows = 0;
+    end loop;
+  exception when others then null;
+  end;
+  begin perform extensions.dblink_exec('s09_activation_lock_a', 'rollback'); exception when others then null; end;
+  begin perform extensions.dblink_exec('s09_activation_lock_a', cleanup_sql); exception when others then null; end;
+  begin perform extensions.dblink_disconnect('s09_activation_lock_a'); exception when others then null; end;
+  raise;
+end;
+$probe$;

@@ -39,9 +39,36 @@ const envelope = {
   schemaVersion: 1,
 } as const;
 
-const createMessage = (body: unknown): PlatformJobsMessage => ({
+const schemaMigrationEvent = {
+  eventId: '44444444-4444-4444-8444-444444444444',
+  eventType: 'cms.schema.activated.v1' as const,
+  schemaVersion: 1 as const,
+  occurredAt: '2026-09-02T12:00:00.000Z',
+  producer: 'cms.schema_registry',
+  correlationId: '55555555-5555-4555-8555-555555555555',
+  causationId: null,
+  aggregateType: 'cms.schema.migration',
+  aggregateId: '66666666-6666-4666-8666-666666666666',
+  aggregateVersion: '7',
+  payload: {
+    contentTypeId: '77777777-7777-4777-8777-777777777777',
+    schemaVersionId: '88888888-8888-4888-8888-888888888888',
+    migrationPlanId: null,
+    activationEvidence: {
+      key: 'cms.schema.activate',
+      version: '1',
+      policyHash: 'a'.repeat(64),
+      riskClass: 'ordinary',
+      requiredDecisionCount: 1,
+      requiredCapabilities: ['cms.schema_designer'],
+      approvalEvidenceHash: 'b'.repeat(64),
+    },
+  },
+} as const;
+
+const createMessage = (body: unknown, attempts = 1): PlatformJobsMessage => ({
   ack: vi.fn(),
-  attempts: 1,
+  attempts,
   body,
   id: 'message-1',
   retry: vi.fn(),
@@ -79,6 +106,56 @@ describe('Worker asynchronous entrypoint', () => {
     });
     expect(message.ack).toHaveBeenCalledOnce();
     expect(message.retry).not.toHaveBeenCalled();
+  });
+
+  it('routes validated schema activation events to the migration worker seam', async () => {
+    const message = createMessage(schemaMigrationEvent);
+    const processSchemaMigration = vi.fn(async () => 'ack' as const);
+    const entrypoint = createAsyncEntrypoint({ processSchemaMigration });
+
+    await entrypoint.queue(createBatch([message]), bindings, executionContext);
+
+    expect(processSchemaMigration).toHaveBeenCalledWith({
+      env: bindings,
+      executionContext,
+      message,
+      event: schemaMigrationEvent,
+    });
+    expect(message.ack).toHaveBeenCalledOnce();
+    expect(message.retry).not.toHaveBeenCalled();
+  });
+
+  it('forwards malformed schema activation candidates for worker DLQ handling', async () => {
+    const malformed = { ...schemaMigrationEvent, schemaVersion: 2 };
+    const message = createMessage(malformed);
+    const processSchemaMigration = vi.fn(async () => 'ack' as const);
+    const entrypoint = createAsyncEntrypoint({ processSchemaMigration });
+
+    await entrypoint.queue(createBatch([message]), bindings, executionContext);
+
+    expect(processSchemaMigration).toHaveBeenCalledWith(
+      expect.objectContaining({ event: malformed }),
+    );
+    expect(message.ack).toHaveBeenCalledOnce();
+  });
+
+  it('keeps an exhausted schema message retryable when DLQ persistence throws', async () => {
+    const message = createMessage(
+      { ...schemaMigrationEvent, schemaVersion: 2 },
+      4,
+    );
+    const processSchemaMigration = vi.fn(async () => {
+      throw Object.assign(new Error('DLQ unavailable'), {
+        code: 'DEPENDENCY_UNAVAILABLE',
+      });
+    });
+    const entrypoint = createAsyncEntrypoint({ processSchemaMigration });
+
+    await entrypoint.queue(createBatch([message]), bindings, executionContext);
+
+    expect(processSchemaMigration).toHaveBeenCalledOnce();
+    expect(message.retry).toHaveBeenCalledOnce();
+    expect(message.ack).not.toHaveBeenCalled();
   });
 
   it('admits the platform queue name assigned to each hosted environment', async () => {
@@ -140,6 +217,24 @@ describe('Worker asynchronous entrypoint', () => {
     );
     expect(unavailableMessage.retry).toHaveBeenCalledOnce();
     expect(unavailableMessage.ack).not.toHaveBeenCalled();
+  });
+
+  it('retries schema candidates when migration processing is unavailable or asks for retry', async () => {
+    const unavailableMessage = createMessage(schemaMigrationEvent);
+    await createAsyncEntrypoint().queue(
+      createBatch([unavailableMessage]),
+      bindings,
+      executionContext,
+    );
+    expect(unavailableMessage.retry).toHaveBeenCalledOnce();
+    expect(unavailableMessage.ack).not.toHaveBeenCalled();
+
+    const retryMessage = createMessage(schemaMigrationEvent);
+    await createAsyncEntrypoint({
+      processSchemaMigration: async () => 'retry' as const,
+    }).queue(createBatch([retryMessage]), bindings, executionContext);
+    expect(retryMessage.retry).toHaveBeenCalledOnce();
+    expect(retryMessage.ack).not.toHaveBeenCalled();
   });
 
   it('fails closed for a queue that is not the registered platform queue', async () => {

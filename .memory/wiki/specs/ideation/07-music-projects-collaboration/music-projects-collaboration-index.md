@@ -136,6 +136,9 @@ seven features across four sub-domains independently named it as a hard dependen
 <!-- spec-graph: auto-generated -->
 ## Related Specs
 
+### Phases into
+- [[specs/phases/phase-2|Phase 2 — Identity, admin, CMS/settings]]
+
 ### Constrained by
 - [[decisions.md#d-04|D-04]]
 - [[decisions.md#d-01|D-01]]
@@ -156,3 +159,6 @@ seven features across four sub-domains independently named it as a hard dependen
 - [[decisions.md#d-18|D-18]]
 - [[decisions.md#d-19|D-19]]
 - [[decisions.md#d-13|D-13]]
+
+### References
+- [[specs/phases/phase-2|Phase 2 — Identity, admin, CMS/settings]]

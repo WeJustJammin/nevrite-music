@@ -1,0 +1,166 @@
+---
+interface Props {
+  readonly routeKind: 'index' | 'detail' | 'degraded';
+  readonly query: string;
+  readonly detailHref: string;
+  readonly backHref: string;
+  readonly displayName: string | null;
+  readonly handle: string | null;
+  readonly lifecycle: string | null;
+  readonly version: string | null;
+  readonly isDegraded: boolean;
+  readonly isForbidden: boolean;
+  readonly publicOnly: boolean;
+}
+
+const {
+  routeKind,
+  query,
+  detailHref,
+  backHref,
+  displayName,
+  handle,
+  lifecycle,
+  version,
+  isDegraded,
+  isForbidden,
+  publicOnly,
+} = Astro.props;
+---
+
+<div
+  class="identity-layout"
+  data-testid="identity-authority-layout"
+  data-breakpoint="desktop"
+  data-columns="12"
+  data-composition="list-detail-action-rail"
+  data-route-kind={routeKind}
+>
+  <aside
+    class="panel identity-sidebar"
+    data-testid="identity-authority-sidebar"
+    aria-label="Acting context"
+  >
+    <h2>Acting context</h2>
+    <div
+      class="context-indicator"
+      data-testid="acting-context-indicator"
+      data-context-id="self-context"
+    >
+      Self context
+      <small>Server-selected context for this session</small>
+    </div>
+    <button type="button" aria-label="Collapse acting context sidebar">
+      Collapse sidebar
+    </button>
+  </aside>
+
+  <section
+    class="panel identity-list"
+    data-testid="identity-authority-list"
+    aria-labelledby="identity-list-heading"
+  >
+    <h2 id="identity-list-heading">Identity records</h2>
+    <form class="filter-form" method="get" action="/app/identity-authority">
+      <label for="identity-query">Filter records</label>
+      <input
+        id="identity-query"
+        name="q"
+        type="search"
+        value={query}
+        autocomplete="off"
+      />
+      <button type="submit">Apply filters</button>
+    </form>
+    <p role="status" aria-live="polite">
+      Showing server-approved identity records.
+    </p>
+    <div class="table-wrap">
+      <table>
+        <caption>Identity records and lifecycle state</caption>
+        <thead>
+          <tr>
+            <th scope="col">Identity</th>
+            <th scope="col">State</th>
+            <th scope="col">Version</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td
+              ><a href={detailHref}
+                >{displayName ?? 'Current identity record'}</a
+              ></td
+            >
+            <td>{lifecycle ?? (isDegraded ? 'unavailable' : 'active')}</td>
+            <td><code>{version ?? 'not disclosed'}</code></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <section
+      class="row-details"
+      data-testid="identity-authority-row-details"
+      aria-label="Additional identity row facts"
+      aria-expanded="true"
+    >
+      <h3>Additional identity facts</h3>
+      <p>
+        Facets, aliases, and provenance appear only after the canonical read
+        succeeds.
+      </p>
+    </section>
+  </section>
+
+  <section
+    class="panel identity-detail"
+    data-testid="identity-authority-detail"
+    aria-labelledby="identity-detail-heading"
+  >
+    <a href={backHref}>Back to identity records</a>
+    <h2 id="identity-detail-heading">Selected identity</h2>
+    <p>
+      {
+        publicOnly
+          ? 'Public projection: only publication-approved identity facts are shown.'
+          : 'Server-authorized identity facts for the current acting context.'
+      }
+    </p>
+    <dl class="record-facts">
+      <div><dt>Display name</dt><dd>{displayName ?? 'Not available'}</dd></div>
+      <div><dt>Handle</dt><dd>{handle ?? 'Not available'}</dd></div>
+      <div>
+        <dt>Lifecycle</dt><dd>
+          {lifecycle ?? (isDegraded ? 'Unavailable' : 'Active')}
+        </dd>
+      </div>
+      <div>
+        <dt>Record version</dt><dd>
+          <code>{version ?? 'Not available'}</code>
+        </dd>
+      </div>
+    </dl>
+  </section>
+
+  <aside
+    class="panel action-rail"
+    data-testid="identity-authority-action-rail"
+    aria-label="Identity authority actions"
+  >
+    <h2>Actions</h2>
+    <div data-testid="identity-authority-write-actions" class="action-list">
+      <button type="button" disabled={isDegraded || isForbidden || publicOnly}>
+        Create person record
+      </button>
+      <button type="button" disabled={isDegraded || isForbidden || publicOnly}>
+        Add role facet
+      </button>
+      <button type="button" disabled={isDegraded || isForbidden || publicOnly}>
+        Create alias
+      </button>
+      <p class="request-id">
+        Writes require server authority, current version, CSRF, and idempotency.
+      </p>
+    </div>
+  </aside>
+</div>

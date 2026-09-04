@@ -1,0 +1,54 @@
+import { createLogger, type Logger } from '@wejammin/observability/logging';
+
+import { CONTENT_SCHEMA_REGISTRY_RUNBOOK, type TelemetryEvent } from './types';
+
+export const productionTelemetry =
+  (logger: Logger): ((event: TelemetryEvent) => void) =>
+  (event) => {
+    logger.info(
+      {
+        eventName: 'cms.registry.request',
+        operation: `cms.registry.${event.operationId}`,
+        outcome: event.outcome,
+        requestId: event.requestId,
+        ...(event.correlationId === undefined
+          ? {}
+          : { correlationId: event.correlationId }),
+        ...(event.errorCode === undefined
+          ? {}
+          : { errorCode: event.errorCode }),
+        attributes: {
+          rate_class: event.rateClass ?? 'unknown',
+          rate_limit: event.rateLimit ?? 0,
+          rate_window_seconds: event.rateWindowSeconds ?? 0,
+          deadline_ms: event.deadlineMs ?? 0,
+          slo_tier: event.slo?.tier ?? 2,
+          slo_command_p95_ms: event.slo?.commandP95Ms ?? 1_200,
+          slo_protected_rpc_p95_ms: event.slo?.protectedRpcP95Ms ?? 300,
+          slo_acceptance_p99_ms: event.slo?.acceptanceP99Ms ?? 1_000,
+          alert_class: event.alertClass ?? 'content_schema_registry_tier2',
+          alert_route: event.alertRoute ?? 'platform.on_call',
+          runbook: event.runbook ?? CONTENT_SCHEMA_REGISTRY_RUNBOOK,
+        },
+        ...(event.traceSteps === undefined
+          ? {}
+          : { traceSteps: [...event.traceSteps] }),
+        ...(event.metrics === undefined
+          ? {}
+          : { metrics: { ...event.metrics } }),
+        durationMs: event.durationMs,
+        retryable: event.outcome === 'failure',
+      },
+      { samplingClass: 'always', highRisk: event.outcome !== 'success' },
+    );
+  };
+
+export const defaultProductionLogger = (environment: {
+  APP_ENVIRONMENT: string;
+  APP_RELEASE: string;
+}): Logger =>
+  createLogger({
+    environment: environment.APP_ENVIRONMENT,
+    release: environment.APP_RELEASE,
+    service: 'wejammin-api',
+  });
