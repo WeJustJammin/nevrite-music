@@ -432,25 +432,42 @@ describe('upload-intent P1 contract boundary', () => {
   });
 
   it('fences a delayed repository attempt before it can commit', async () => {
+    vi.useFakeTimers();
+    let markCommitStarted!: () => void;
+    const commitStarted = new Promise<void>((resolve) => {
+      markCommitStarted = resolve;
+    });
     let fenced = false;
     let committed = false;
     const cancelIntent = vi.fn(async () => {
       fenced = true;
     });
     const createIntent = vi.fn(async () => {
+      markCommitStarted();
       await new Promise((resolve) => setTimeout(resolve, 25));
       if (fenced) throw new Error('canonical attempt fenced');
       committed = true;
       return { kind: 'created' as const, resource };
     });
-    const response = await make({
-      deadlineMs: 5,
-      repository: { cancelIntent, createIntent },
-    })(request());
+    try {
+      const responsePromise = make({
+        deadlineMs: 5,
+        repository: { cancelIntent, createIntent },
+      })(request());
+      await commitStarted;
+      await vi.advanceTimersByTimeAsync(5);
+      const response = await responsePromise;
 
-    expect(response.status).toBe(503);
-    expect(fenced).toBe(true);
-    expect(committed).toBe(false);
+      expect(response.status).toBe(503);
+      expect(cancelIntent).toHaveBeenCalledOnce();
+      expect(fenced).toBe(true);
+      expect(committed).toBe(false);
+
+      await vi.advanceTimersByTimeAsync(20);
+      expect(committed).toBe(false);
+    } finally {
+      vi.useRealTimers();
+    }
   });
 
   it('reconciles a late successful repository result after the fence completes', async () => {
