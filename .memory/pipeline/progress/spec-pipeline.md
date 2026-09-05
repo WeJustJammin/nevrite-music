@@ -74,18 +74,17 @@
   `.memory/pipeline/progress/phases/phase-02.md` and
   `.memory/pipeline/progress/slices/phase-02-slice-09.md`.
 - **CURRENT VALIDATION:** `pnpm validate` passes 418/418 Vitest files and
-  3,094/3,094 tests at 100% coverage, 102/102 Playwright tests, every workspace
+  3,101/3,101 tests at 100% coverage, 102/102 Playwright tests, every workspace
   build, bundle budgets, and the fresh immutable-Worker API p95 smoke.
   `pnpm db:verify` passes 33/33 migrations and 45/45 pgTAP files with
   1,670/1,670 assertions and exact generated types.
-- **PRIOR REMOTE CANDIDATE:** Before this remediation, PR #9 branch
+- **HISTORICAL PRE-REMEDIATION CANDIDATE:** Before this remediation, PR #9 branch
   `codex/phase-2-slices-01-09` was at
   `67264c5e9b5196d00ac3f0aa272896a010c872d7`; synthetic merge
   `a79dfe30db60e4f54024f064fc2fdf2d01033919` passed all three jobs in GitHub CI
   run `33841270472`. That run is not evidence for the remediation. The branch
-  remains unmerged and no Slice 09 candidate has been deployed.
-  Staging continues to serve Phase 1 baseline
-  `9b2cff7849b25dd12ffae6287b1024e50654bc14`.
+  remained unmerged and no Slice 09 candidate had been deployed. This snapshot
+  is superseded by the current exact-SHA evidence below.
 - **PRIOR INFRASTRUCTURE VERDICT (historical):** post-remediation
   `/verify-infrastructure` verified
   live `main` review/check protection, staging custom branch policy, and the
@@ -95,16 +94,15 @@
   `.memory/wiki/specs/audits/verify-infrastructure-2026-09-04-1353.md`; the
   12:55 failure record remains preserved.
 - **CURRENT INFRASTRUCTURE VERDICT:** exact merged/deployed `main` SHA
-  `4f700dcfbefc15f3d6e9274d4e0a01f85859d3a1` is backed by CI run
-  `33922965987` with all three required jobs successful, immutable artifact
-  `9955861514` (`sha256:a6d1793d...`), staging run `33923345878`, deployment
-  `6273515701`, hosted migration `20260902080000` in `expanded` state, and
-  candidate artifact `9955886196`. Production run `33947004503` attempt 6 then
-  applied all production migrations and deployed both Workers. The run remains
-  red only because `actions/upload-artifact` excluded the hidden `.promotion`
-  evidence directory; the current branch contains the focused workflow fix.
-  The business-account-only production reviewer correction and the four
-  external acceptance blockers keep the slice fail-closed. See
+  `7250754dcdc9c1b7a863aa41d79772e6ab7092ab` is backed by CI run
+  `33950299169` with all three required jobs successful and immutable artifact
+  `9964679790` (`sha256:c2b4808e...`); staging run `33950592657`, deployment
+  `6278097284`, candidate artifact `9964694043`, and evidence artifact
+  `9964694291`; and business-account-approved production run `33950658266` /
+  deployment `6278109516`. Production applied all migrations, deployed both
+  Workers, and retained five-file evidence artifact `9964724622`
+  (`sha256:388dee00...`). The four external acceptance blockers keep the slice
+  fail-closed. See
   `.memory/wiki/specs/audits/verify-infrastructure-2026-09-04-2139.md`.
 - **NEXT:** retain Slice 09 blocked at 279/283 and Phase 2 at 8/17 until the
   remaining external/live evidence passes: AC209 live alert delivery, AC211
