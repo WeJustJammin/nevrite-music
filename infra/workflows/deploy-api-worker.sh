@@ -53,6 +53,15 @@ if [[ -z "${SUPABASE_SECRET_KEY:-}" || "$SUPABASE_SECRET_KEY" =~ [[:space:]] ]];
   echo "::error::SUPABASE_SECRET_KEY is required"
   exit 1
 fi
+if [[ ! "${CLOUDFLARE_ACCOUNT_ID:-}" =~ ^[0-9a-f]{32}$ ]]; then
+  echo "::error::CLOUDFLARE_ACCOUNT_ID must be a 32-character lowercase account ID"
+  exit 1
+fi
+if [[ "$task_environment" == "production" ]] &&
+  [[ -z "${CLOUDFLARE_OBSERVABILITY_API_TOKEN:-}" || "$CLOUDFLARE_OBSERVABILITY_API_TOKEN" =~ [[:space:]] ]]; then
+  echo "::error::CLOUDFLARE_OBSERVABILITY_API_TOKEN is required for production alerts"
+  exit 1
+fi
 if [[
   "${RUNNER_TEMP:-}" != /* ||
   "$RUNNER_TEMP" == "/" ||
@@ -74,6 +83,11 @@ task_secrets_file="$(
 trap 'rm -f "$task_secrets_file"' EXIT
 printf 'SUPABASE_SECRET_KEY=%s\n' "$SUPABASE_SECRET_KEY" > "$task_secrets_file"
 unset SUPABASE_SECRET_KEY
+if [[ "$task_environment" == "production" ]]; then
+  printf 'CLOUDFLARE_OBSERVABILITY_API_TOKEN=%s\n' \
+    "$CLOUDFLARE_OBSERVABILITY_API_TOKEN" >> "$task_secrets_file"
+  unset CLOUDFLARE_OBSERVABILITY_API_TOKEN
+fi
 
 pnpm --filter @wejammin/worker exec wrangler deploy \
   "$task_artifact" \
@@ -82,4 +96,5 @@ pnpm --filter @wejammin/worker exec wrangler deploy \
   --secrets-file "$task_secrets_file" \
   --var APP_ENVIRONMENT:"$task_environment" \
   --var APP_RELEASE:"$DEPLOY_SHA" \
+  --var CLOUDFLARE_ACCOUNT_ID:"$CLOUDFLARE_ACCOUNT_ID" \
   --var SUPABASE_URL:"$SUPABASE_URL"

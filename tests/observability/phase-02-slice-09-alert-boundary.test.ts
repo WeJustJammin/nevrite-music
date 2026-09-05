@@ -19,8 +19,11 @@ const registryTelemetry = read(
 const migrationTelemetry = read('apps/worker/src/production-worker-runtime.ts');
 const workerConfig = read('apps/worker/wrangler.jsonc');
 const boundaryReadme = read('infra/observability/README.md');
+const productionBoundary = read(
+  'apps/worker/src/content-schema-registry/operational-alert-production.ts',
+);
 
-describe('[P2-S09-AC-209] provider-free alert boundary evidence', () => {
+describe('[P2-S09-AC-209] production alert boundary evidence', () => {
   it('consumes the policy at a provider-free sink boundary without hidden side effects', () => {
     const emitted: string[] = [];
     const snapshot: ContentSchemaRegistryOperationalSnapshot = {
@@ -62,15 +65,15 @@ describe('[P2-S09-AC-209] provider-free alert boundary evidence', () => {
     expect(workerConfig).toContain('"max_retries": 3');
   });
 
-  it('records the honest no-provider setup boundary without claiming live delivery', () => {
+  it('records the configured provider boundary without claiming deployment evidence', () => {
     expect(boundaryReadme).toMatch(/side-effect-free[\s\S]*policy adapter/iu);
-    expect(boundaryReadme).toMatch(/no configured provider API/iu);
-    expect(boundaryReadme).toMatch(/local tests prove threshold semantics/iu);
+    expect(boundaryReadme).toMatch(/Cloudflare Workers Logs/iu);
     expect(boundaryReadme).toMatch(
-      /connect (?:a|the) native\s+observability query/iu,
+      /Queue metrics, Cron Triggers, Email Service/iu,
     );
-    expect(boundaryReadme).toMatch(
-      /before\s+claiming production alert measurements/iu,
-    );
+    expect(boundaryReadme).toMatch(/before AC209 closes/iu);
+    expect(productionBoundary).toContain('CLOUDFLARE_OBSERVABILITY_API_TOKEN');
+    expect(productionBoundary).toContain('cms_claim_operational_alert');
+    expect(productionBoundary).toContain('PLATFORM_ALERT_EMAIL.send');
   });
 });

@@ -407,6 +407,20 @@
   web root/sign-in/degraded rendering and protected-route redirect contracts;
   Auth providers remain intentionally fail-closed at `503` until AC265 setup.
 
+- 2026-09-05 operational-alert implementation checkpoint: the production
+  Worker now aggregates bounded `cms.registry.*` logs, Supabase registry state,
+  and the production Queue DLQ backlog; evaluates all twelve locked alert
+  conditions; claims a deduplicated database receipt; sends only redacted
+  safe-code content through the `PLATFORM_ALERT_EMAIL` binding; and completes a
+  digest-only receipt. Production deployment requires the environment-scoped
+  `CLOUDFLARE_OBSERVABILITY_API_TOKEN` with Workers Observability Write and
+  Account Analytics Read, while staging remains independent of that secret.
+  Local validation passes 423 Vitest files / 3,143 tests at 100% coverage, 102
+  Playwright checks, build/bundle/performance gates, and database type parity.
+  This checkpoint implements the provider boundary but does not claim AC209 or
+  AC211: exact-SHA deployment, a post-configuration delivered alert receipt,
+  and the complete production UTC-day SLO/DLQ evidence are still required.
+
 ## Depth Ratio
 
 - Verified acceptance items: 279/283.
@@ -414,8 +428,8 @@
 
 ## Blocking release evidence
 
-- P2-S09-AC-209: configured provider dashboard/API query and live alert delivery.
-- P2-S09-AC-211: production telemetry attainment and daily production DLQ query.
+- P2-S09-AC-209: deploy the configured provider query and retain a post-configuration redacted live-delivery receipt.
+- P2-S09-AC-211: retain a complete production UTC-day with at least 200 command/RPC/acceptance samples, all five SLO results, and daily queue/DLQ counts.
 - P2-S09-AC-265: deployed Supabase Auth/RLS/IdP browser-to-backend E2E.
 - P2-S09-AC-266: VoiceOver/Safari and NVDA/Firefox manual smoke.
 

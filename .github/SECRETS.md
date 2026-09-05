@@ -15,7 +15,14 @@ Only the credentials listed below are authorized. They belong in protected GitHu
 
 ## Production environment secrets
 
-Production uses the same names in the protected `production` environment with distinct values, required reviewers, main-branch restrictions, and serialized deployment concurrency. Staging values must never be copied into production or vice versa.
+Production uses the same names in the protected `production` environment with
+distinct values, plus the production-only
+`CLOUDFLARE_OBSERVABILITY_API_TOKEN`. That token is restricted to the WeJammin
+account with Workers Observability Write and Account Analytics Read; it must not
+have Workers Scripts Edit. The scheduled S09 alert boundary uses it only to
+read structured Workers Logs and Queue metrics. Required reviewers,
+main-branch restrictions, and serialized deployment concurrency remain in
+force. Staging values must never be copied into production or vice versa.
 
 The production environment reports required-reviewer rule `64231612` for the
 business account `WeJustJammin` (reviewer ID `305953066`),
@@ -35,7 +42,7 @@ tokens. Secret scanning, push protection, vulnerability alerts, and automated
 security fixes are enabled. Environment secrets remain protected and must never
 be placed in repository contents, workflow arguments, artifacts, or logs.
 
-The Cloudflare token is restricted to the WeJammin account with Cloudflare
+The Cloudflare deployment token is restricted to the WeJammin account with Cloudflare
 Pages Edit and Workers Scripts Edit, plus zone-scoped Workers Routes Edit for
 the production custom-domain binding. Create separate staging and production
 tokens; never reuse the interactive Wrangler OAuth credential in CI.

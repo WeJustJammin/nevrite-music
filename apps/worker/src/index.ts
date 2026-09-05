@@ -12,7 +12,7 @@ import {
   SERVER_ENVIRONMENT_KEYS,
   type ServerEnvironment,
 } from '@wejammin/config/environment';
-import { type Logger } from '@wejammin/observability/logging';
+import { createLogger, type Logger } from '@wejammin/observability/logging';
 import { Hono, type Context } from 'hono';
 
 import {
@@ -32,6 +32,10 @@ import type {
   AuthenticationSession,
 } from './authentication/types';
 import type { ContentSchemaRegistryDependencies } from './content-schema-registry/types';
+import { createProductionOperationalAlertDependencies } from './content-schema-registry/operational-alert-production';
+import { runContentSchemaRegistryOperationalAlerts } from './content-schema-registry/operational-alert-runtime';
+import type { OperationalAlertDependencies } from './content-schema-registry/operational-alert-runtime';
+import { logSchemaMigrationQueueAttempt } from './content-schema-registry/operational-alert-queue-telemetry';
 import type { IdentityAuthorityDependencies } from './identity-authority/types';
 import type { ProfileOwnershipDependencies } from './profile-ownership/types';
 import type { ProfilePortfolioDependencies } from './profile-portfolio/types';
@@ -269,6 +273,7 @@ export const createProductionAsyncEntrypoint = (
       object,
       ReturnType<typeof createProductionSchemaMigrationWorker>
     >();
+    const queueLoggers = new WeakMap<object, Logger>();
     return createAsyncEntrypoint({
       ...dependencies,
       processSchemaMigration: async ({ env, event, message }) => {
@@ -284,10 +289,55 @@ export const createProductionAsyncEntrypoint = (
         const result = await worker.process(event, {
           attempt: message.attempts,
         });
+        let queueLogger = queueLoggers.get(env);
+        if (queueLogger === undefined) {
+          queueLogger = createLogger({
+            environment: env.APP_ENVIRONMENT,
+            release: env.APP_RELEASE,
+            service: 'wejammin-cms-migration-worker',
+          });
+          queueLoggers.set(env, queueLogger);
+        }
+        logSchemaMigrationQueueAttempt(queueLogger, result, message);
         return migrationQueueOutcome(result);
       },
     });
   })();
+
+export const runProductionOperationalAlerts = async (
+  controller: Pick<ScheduledController, 'scheduledTime'>,
+  env: AsyncWorkerBindings,
+  dependencies?: OperationalAlertDependencies,
+): Promise<void> => {
+  if (env.APP_ENVIRONMENT !== 'production') return;
+  if (
+    dependencies === undefined &&
+    (env.CLOUDFLARE_ACCOUNT_ID === undefined ||
+      env.CLOUDFLARE_OBSERVABILITY_API_TOKEN === undefined ||
+      env.CLOUDFLARE_PLATFORM_DLQ_ID === undefined ||
+      env.PLATFORM_ALERT_EMAIL === undefined)
+  )
+    throw new Error('Operational alert bindings unavailable');
+  await runContentSchemaRegistryOperationalAlerts(
+    {
+      environment: 'production',
+      release: env.APP_RELEASE,
+      scheduledAt: new Date(controller.scheduledTime).toISOString(),
+    },
+    dependencies ??
+      createProductionOperationalAlertDependencies({
+        CLOUDFLARE_ACCOUNT_ID: env.CLOUDFLARE_ACCOUNT_ID as string,
+        CLOUDFLARE_OBSERVABILITY_API_TOKEN:
+          env.CLOUDFLARE_OBSERVABILITY_API_TOKEN as string,
+        CLOUDFLARE_PLATFORM_DLQ_ID: env.CLOUDFLARE_PLATFORM_DLQ_ID as string,
+        PLATFORM_ALERT_EMAIL: env.PLATFORM_ALERT_EMAIL as NonNullable<
+          AsyncWorkerBindings['PLATFORM_ALERT_EMAIL']
+        >,
+        SUPABASE_SECRET_KEY: env.SUPABASE_SECRET_KEY,
+        SUPABASE_URL: env.SUPABASE_URL,
+      }),
+  );
+};
 
 let cachedProductionApp: WorkerApp | undefined;
 let cachedProductionEnvironment: ServerEnvironment | undefined;
@@ -318,11 +368,13 @@ const handler = {
   },
   queue: (batch, env, executionContext) =>
     createProductionAsyncEntrypoint().queue(batch, env, executionContext),
-  scheduled: (controller, env, executionContext) =>
-    createProductionAsyncEntrypoint().scheduled(
+  scheduled: async (controller, env, executionContext) => {
+    await createProductionAsyncEntrypoint().scheduled(
       controller,
       env,
       executionContext,
-    ),
+    );
+    await runProductionOperationalAlerts(controller, env);
+  },
 } satisfies ExportedHandler<AsyncWorkerBindings>;
 export default handler;

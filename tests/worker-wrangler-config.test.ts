@@ -91,8 +91,14 @@ describe('Worker Wrangler queue and schedule contract', () => {
 
     expect(config.observability).toEqual({
       enabled: true,
-      head_sampling_rate: 0.1,
+      head_sampling_rate: 1,
     });
+    expect(config.send_email).toEqual([
+      {
+        destination_address: 'admin.wejammin@gmail.com',
+        name: 'PLATFORM_ALERT_EMAIL',
+      },
+    ]);
     expect(config.env).not.toHaveProperty('production');
     expect(JSON.stringify(config).toLowerCase()).not.toContain('sentry');
   });

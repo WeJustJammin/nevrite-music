@@ -40,6 +40,7 @@ select ok(
 \ir phase_02_slice_09_schema/008b-activation-move-invalidation.sqlinc
 \ir phase_02_slice_09_schema/009-recovery-acceptance.sqlinc
 \ir phase_02_slice_09_schema/009b-recovery-activation.sqlinc
+\ir phase_02_slice_09_schema/010-operational-alerts.sqlinc
 
 select finish();
 

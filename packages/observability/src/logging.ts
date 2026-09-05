@@ -140,7 +140,7 @@ const samplingRates = {
 } as const;
 
 const consoleSink = (line: string): void => {
-  console.info(line);
+  console.info(JSON.parse(line) as LogEvent);
 };
 
 export const createLogger = (

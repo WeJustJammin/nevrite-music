@@ -1,7 +1,7 @@
 # Spec Pipeline Progress
 
 **Project**: WeJammin
-**Last updated**: 2026-09-04
+**Last updated**: 2026-09-05
 **Overall**: IA 43/43 authored and independently ambiguity-passed (**fresh rerun PASS — 0/344 = 0.00%, 2026-08-28**); Phase 1 complete at 7/7 slices; Phase 2 at 8/17 complete with Slice 09 blocked at 279/283.
 
 ## Legend
@@ -69,15 +69,16 @@
   approval passed; live production deployment was not required or performed.
   See `.memory/wiki/specs/audits/phase-1-validation.md`.
 - **CURRENT IMPLEMENTATION:** Phase 2 Slices 01–08 are complete. Slice 09 is
-  implemented and locally QA-GREEN at 279/283, with depth ratio `0.986`; Slice
-  10 remains dependency-locked. See
+  implemented and locally QA-GREEN at 279/283, including the follow-up
+  production operational-alert provider boundary; depth ratio remains `0.986`
+  because no live receipt has been claimed. Slice 10 remains dependency-locked. See
   `.memory/pipeline/progress/phases/phase-02.md` and
   `.memory/pipeline/progress/slices/phase-02-slice-09.md`.
-- **CURRENT VALIDATION:** `pnpm validate` passes 418/418 Vitest files and
-  3,101/3,101 tests at 100% coverage, 102/102 Playwright tests, every workspace
+- **CURRENT VALIDATION:** `pnpm validate` passes 423/423 Vitest files and
+  3,143/3,143 tests at 100% coverage, 102/102 Playwright tests, every workspace
   build, bundle budgets, and the fresh immutable-Worker API p95 smoke.
   `pnpm db:verify` passes 33/33 migrations and 45/45 pgTAP files with
-  1,670/1,670 assertions and exact generated types.
+  1,678/1,678 assertions and exact generated types.
 - **HISTORICAL PRE-REMEDIATION CANDIDATE:** Before this remediation, PR #9 branch
   `codex/phase-2-slices-01-09` was at
   `67264c5e9b5196d00ac3f0aa272896a010c872d7`; synthetic merge
@@ -104,8 +105,10 @@
   (`sha256:388dee00...`). The four external acceptance blockers keep the slice
   fail-closed. See
   `.memory/wiki/specs/audits/verify-infrastructure-2026-09-04-2139.md`.
-- **NEXT:** retain Slice 09 blocked at 279/283 and Phase 2 at 8/17 until the
-  remaining external/live evidence passes: AC209 live alert delivery, AC211
-  production telemetry/DLQ evidence, AC265 deployed Auth/RLS/Google IdP E2E,
-  and AC266 VoiceOver/Safari plus NVDA/Firefox manual smoke. Do not start
-  Slice 10 until all four pass.
+- **NEXT:** deploy the operational-alert follow-up from an exact main SHA after
+  the production environment receives its scoped Cloudflare observability
+  token, then retain the post-configuration redacted delivery receipt. Keep
+  Slice 09 blocked at 279/283 and Phase 2 at 8/17 until AC209, the complete
+  UTC-day/200-sample SLO and DLQ evidence for AC211, deployed Auth/RLS/Google
+  IdP E2E for AC265, and VoiceOver/Safari plus NVDA/Firefox manual smoke for
+  AC266 all pass. Do not start Slice 10 until all four pass.

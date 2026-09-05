@@ -129,6 +129,7 @@ printf '%s\n' "$*" > "$CALL_LOG"
       root,
       {
         CALL_LOG: calls,
+        CLOUDFLARE_ACCOUNT_ID: 'a'.repeat(32),
         DEPLOY_SHA: 'a'.repeat(40),
         PATH: `${bin}:${process.env.PATH ?? ''}`,
         RUNNER_TEMP: runnerTemp,

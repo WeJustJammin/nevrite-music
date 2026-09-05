@@ -1,0 +1,68 @@
+select ok(
+  to_regclass('platform_private.cms_operational_alert_deliveries') is not null,
+  'P2-S09 operational alert delivery receipts use a private table'
+);
+
+select ok(
+  (select relrowsecurity from pg_catalog.pg_class where oid = 'platform_private.cms_operational_alert_deliveries'::regclass),
+  'P2-S09 operational alert delivery receipts have RLS enabled'
+);
+
+select ok(
+  has_function_privilege('service_role', 'platform_api.cms_get_operational_state_snapshot(jsonb)', 'execute')
+  and not has_function_privilege('anon', 'platform_api.cms_get_operational_state_snapshot(jsonb)', 'execute')
+  and not has_function_privilege('authenticated', 'platform_api.cms_get_operational_state_snapshot(jsonb)', 'execute'),
+  'P2-S09 operational snapshot is service-only'
+);
+
+select ok(
+  has_function_privilege('service_role', 'platform_api.cms_claim_operational_alert(jsonb)', 'execute')
+  and not has_function_privilege('anon', 'platform_api.cms_claim_operational_alert(jsonb)', 'execute')
+  and not has_function_privilege('authenticated', 'platform_api.cms_claim_operational_alert(jsonb)', 'execute'),
+  'P2-S09 operational alert claims are service-only'
+);
+
+create temp table s09_alert_claim as
+select platform_api.cms_claim_operational_alert(jsonb_build_object(
+  'alertCode', 'dlq_nonempty',
+  'claimToken', '019c0000-0000-7000-8000-000000000002',
+  'release', 'test-release',
+  'scheduledAt', now()
+)) as value;
+
+select ok(
+  (select (value->>'claimed')::boolean from s09_alert_claim),
+  'P2-S09 first operational alert claim succeeds'
+);
+
+select ok(
+  not (platform_api.cms_claim_operational_alert(jsonb_build_object(
+    'alertCode', 'dlq_nonempty',
+    'claimToken', '019c0000-0000-7000-8000-000000000003',
+    'release', 'test-release',
+    'scheduledAt', now()
+  ))->>'claimed')::boolean,
+  'P2-S09 duplicate operational alert delivery is suppressed'
+);
+
+select ok(
+  platform_api.cms_complete_operational_alert(jsonb_build_object(
+    'alertCode', 'dlq_nonempty',
+    'claimId', (select value->>'claimId' from s09_alert_claim),
+    'claimToken', '019c0000-0000-7000-8000-000000000002',
+    'deliveredAt', now(),
+    'receiptId', '019c0000-0000-7000-8000-000000000004'
+  )),
+  'P2-S09 redacted operational alert receipt completes with the original claim token'
+);
+
+select ok(
+  exists (
+    select 1
+      from platform_private.cms_operational_alert_deliveries
+     where state = 'delivered'
+       and octet_length(claim_token_hash) = 32
+       and octet_length(receipt_hash) = 32
+  ),
+  'P2-S09 only fixed-length claim and receipt hashes persist'
+);

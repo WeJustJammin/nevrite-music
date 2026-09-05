@@ -19,13 +19,20 @@ export type PlatformJobsQueue = Pick<Queue<QueueEnvelope>, 'send'>;
 
 export type AsyncWorkerBindings = ServerEnvironment &
   Readonly<{
+    CLOUDFLARE_ACCOUNT_ID?: string;
+    CLOUDFLARE_OBSERVABILITY_API_TOKEN?: string;
+    CLOUDFLARE_PLATFORM_DLQ_ID?: string;
     PLATFORM_JOBS: PlatformJobsQueue;
+    PLATFORM_ALERT_EMAIL?: Readonly<{
+      send: (message: Readonly<Record<string, unknown>>) => Promise<unknown>;
+    }>;
   }>;
 
 export type PlatformJobsMessage = Pick<
   Message<unknown>,
   'ack' | 'attempts' | 'body' | 'id' | 'retry'
->;
+> &
+  Readonly<{ timestamp?: Date }>;
 
 export type PlatformJobsBatch = Readonly<{
   messages: readonly PlatformJobsMessage[];

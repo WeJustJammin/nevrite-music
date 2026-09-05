@@ -476,6 +476,7 @@ export type Database = {
         Returns: Json
       }
       cms_bind_relation: { Args: { p_request: Json }; Returns: Json }
+      cms_claim_operational_alert: { Args: { p_request: Json }; Returns: Json }
       cms_claim_schema_migration_event: {
         Args: { p_request: Json }
         Returns: Json
@@ -483,6 +484,10 @@ export type Database = {
       cms_claim_schema_migration_lease: {
         Args: { p_request: Json }
         Returns: Json
+      }
+      cms_complete_operational_alert: {
+        Args: { p_request: Json }
+        Returns: boolean
       }
       cms_complete_schema_migration: {
         Args: { p_request: Json }
@@ -498,6 +503,10 @@ export type Database = {
         Returns: Json
       }
       cms_get_content_type_version: { Args: { p_request: Json }; Returns: Json }
+      cms_get_operational_state_snapshot: {
+        Args: { p_request: Json }
+        Returns: Json
+      }
       cms_get_schema_migration_plan: {
         Args: { p_request: Json }
         Returns: Json
@@ -3044,6 +3053,39 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      cms_operational_alert_deliveries: {
+        Row: {
+          alert_code: string
+          claim_token_hash: string
+          claimed_at: string
+          delivered_at: string | null
+          id: string
+          receipt_hash: string | null
+          release: string
+          state: string
+        }
+        Insert: {
+          alert_code: string
+          claim_token_hash: string
+          claimed_at?: string
+          delivered_at?: string | null
+          id?: string
+          receipt_hash?: string | null
+          release: string
+          state?: string
+        }
+        Update: {
+          alert_code?: string
+          claim_token_hash?: string
+          claimed_at?: string
+          delivered_at?: string | null
+          id?: string
+          receipt_hash?: string | null
+          release?: string
+          state?: string
+        }
+        Relationships: []
       }
       cms_relation_definitions: {
         Row: {
