@@ -75,9 +75,9 @@
   `.memory/pipeline/progress/phases/phase-02.md` and
   `.memory/pipeline/progress/slices/phase-02-slice-09.md`.
 - **CURRENT VALIDATION:** `pnpm validate` passes 423/423 Vitest files and
-  3,147/3,147 tests at 100% coverage, 102/102 Playwright tests, every workspace
+  3,148/3,148 tests at 100% coverage, 102/102 Playwright tests, every workspace
   build, bundle budgets, and the fresh immutable-Worker API p95 smoke.
-  `pnpm db:verify` passes 33/33 migrations and 45/45 pgTAP files with
+  `pnpm db:verify` passes 34/34 migrations and 45/45 pgTAP files with
   1,678/1,678 assertions and exact generated types.
 - **HISTORICAL PRE-REMEDIATION CANDIDATE:** Before this remediation, PR #9 branch
   `codex/phase-2-slices-01-09` was at
@@ -94,20 +94,21 @@
   overall gate remains blocked. See
   `.memory/wiki/specs/audits/verify-infrastructure-2026-09-04-1353.md`; the
   12:55 failure record remains preserved.
-- **CURRENT INFRASTRUCTURE VERDICT:** exact merged/deployed `main` SHA
-  `c995ce31821e39ac6f27538813f536f9af6b39f2` is backed by CI run
-  `33960218010` with all three required jobs successful; staging run
-  `33960712969` / deployment `6279914420`, artifacts `9967847252` and
-  `9967847034`; and business-account-approved production run `33960764747` /
-  deployment `6279925490`, artifact `9967870332`. Cloudflare records two
-  consecutive successful scheduled evaluations at `06:31:00.649` and
-  `06:31:54.674 EDT`; the last provider-envelope error predates deployment.
-  Gmail contains no genuine platform-on-call delivery, so AC209 remains open
-  alongside AC211, AC265, and AC266. The four external acceptance blockers keep
-  the slice fail-closed. See
-  `.memory/wiki/specs/audits/verify-infrastructure-2026-09-04-2139.md`.
+- **CURRENT INFRASTRUCTURE VERDICT:** PR #20 fixed the Worker fetch-context
+  defect and PR #21 stabilized two repository-wide CI time budgets without
+  changing assertions. Exact merged/deployed `main` SHA
+  `b22a914327291e2895bbcc7dc8f60837c8faa0d6` passed CI `33965293079`, staging
+  `33965655238` / deployment `6280862362`, and business-account-approved
+  production `33965764707` / deployment `6280885024`. Both staging origins and
+  five sequential production auth-provider requests return HTTP `200` with the
+  valid catalog; Cloudflare shows the five at info level with 21 successes and
+  0 errors in the 15-minute window. Google remains disabled and unconfigured,
+  Gmail contains no genuine platform-on-call delivery, and AC209, AC211, AC265,
+  and AC266 remain open. See
+  `.memory/wiki/specs/audits/verify-infrastructure-2026-09-05-0824.md`.
 - **NEXT:** retain a genuine post-configuration redacted alert delivery receipt.
   Keep Slice 09 blocked at 279/283 and Phase 2 at 8/17 until AC209, the complete
-  UTC-day/200-sample SLO and DLQ evidence for AC211, deployed Auth/RLS/Google
-  IdP E2E for AC265, and VoiceOver/Safari plus NVDA/Firefox manual smoke for
+  UTC-day/200-sample SLO and DLQ evidence for AC211, owner acceptance of the
+  Google Cloud terms plus business-owned OAuth/test identities and deployed
+  Auth/RLS/Google IdP E2E for AC265, and VoiceOver/Safari plus NVDA/Firefox manual smoke for
   AC266 all pass. Do not start Slice 10 until all four pass.
