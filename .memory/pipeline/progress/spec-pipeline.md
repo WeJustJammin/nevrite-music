@@ -75,7 +75,7 @@
   `.memory/pipeline/progress/phases/phase-02.md` and
   `.memory/pipeline/progress/slices/phase-02-slice-09.md`.
 - **CURRENT VALIDATION:** `pnpm validate` passes 423/423 Vitest files and
-  3,143/3,143 tests at 100% coverage, 102/102 Playwright tests, every workspace
+  3,147/3,147 tests at 100% coverage, 102/102 Playwright tests, every workspace
   build, bundle budgets, and the fresh immutable-Worker API p95 smoke.
   `pnpm db:verify` passes 33/33 migrations and 45/45 pgTAP files with
   1,678/1,678 assertions and exact generated types.
@@ -95,20 +95,19 @@
   `.memory/wiki/specs/audits/verify-infrastructure-2026-09-04-1353.md`; the
   12:55 failure record remains preserved.
 - **CURRENT INFRASTRUCTURE VERDICT:** exact merged/deployed `main` SHA
-  `7250754dcdc9c1b7a863aa41d79772e6ab7092ab` is backed by CI run
-  `33950299169` with all three required jobs successful and immutable artifact
-  `9964679790` (`sha256:c2b4808e...`); staging run `33950592657`, deployment
-  `6278097284`, candidate artifact `9964694043`, and evidence artifact
-  `9964694291`; and business-account-approved production run `33950658266` /
-  deployment `6278109516`. Production applied all migrations, deployed both
-  Workers, and retained five-file evidence artifact `9964724622`
-  (`sha256:388dee00...`). The four external acceptance blockers keep the slice
-  fail-closed. See
+  `c995ce31821e39ac6f27538813f536f9af6b39f2` is backed by CI run
+  `33960218010` with all three required jobs successful; staging run
+  `33960712969` / deployment `6279914420`, artifacts `9967847252` and
+  `9967847034`; and business-account-approved production run `33960764747` /
+  deployment `6279925490`, artifact `9967870332`. Cloudflare records two
+  consecutive successful scheduled evaluations at `06:31:00.649` and
+  `06:31:54.674 EDT`; the last provider-envelope error predates deployment.
+  Gmail contains no genuine platform-on-call delivery, so AC209 remains open
+  alongside AC211, AC265, and AC266. The four external acceptance blockers keep
+  the slice fail-closed. See
   `.memory/wiki/specs/audits/verify-infrastructure-2026-09-04-2139.md`.
-- **NEXT:** deploy the operational-alert follow-up from an exact main SHA after
-  the production environment receives its scoped Cloudflare observability
-  token, then retain the post-configuration redacted delivery receipt. Keep
-  Slice 09 blocked at 279/283 and Phase 2 at 8/17 until AC209, the complete
+- **NEXT:** retain a genuine post-configuration redacted alert delivery receipt.
+  Keep Slice 09 blocked at 279/283 and Phase 2 at 8/17 until AC209, the complete
   UTC-day/200-sample SLO and DLQ evidence for AC211, deployed Auth/RLS/Google
   IdP E2E for AC265, and VoiceOver/Safari plus NVDA/Firefox manual smoke for
   AC266 all pass. Do not start Slice 10 until all four pass.

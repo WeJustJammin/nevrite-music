@@ -2,7 +2,7 @@
 
 **Status**: in-progress  
 **Progress**: 8/17 slices (47%)  
-**Current gate**: Slice 09 operational-alert provider boundary is locally green; exact-SHA deployment and four external acceptance receipts remain blocked at 279/283  
+**Current gate**: Slice 09 exact-SHA operational-alert provider execution is green in production; four external acceptance criteria remain blocked at 279/283  
 **Plan**: [Phase 2 plan](../../../wiki/specs/phases/phase-2.md)  
 **Updated**: 2026-09-05  
 **Prior remote evidence**: Before this remediation, PR #9 head `67264c5e9b5196d00ac3f0aa272896a010c872d7` produced synthetic merge `a79dfe30db60e4f54024f064fc2fdf2d01033919` and passing CI run `33841270472`. That run is not evidence for the remediation; no merge or deployment is claimed
@@ -36,10 +36,22 @@ not deployment evidence: the production-only observability token, exact-SHA
 promotion, post-configuration delivery receipt, and full UTC-day SLO/DLQ
 window remain outstanding.
 
+The provider boundary is now deployed and live-verified. PR #18 merged the
+root-cause empty-result handling as exact main SHA
+`c995ce31821e39ac6f27538813f536f9af6b39f2`; CI `33960218010`, staging
+`33960712969` / deployment `6279914420`, and business-account-approved
+production `33960764747` / deployment `6279925490` passed. Cloudflare records
+two consecutive successful scheduled executions at `06:31:00.649` and
+`06:31:54.674 EDT`, after the last pre-deployment envelope error at
+`06:29:54.678 EDT`. The current complete local gate passes 423 Vitest files /
+3,147 tests at 100% coverage, 102 Playwright checks, and 45 pgTAP files / 1,678
+tests. No genuine alert email has been delivered, so AC209 remains open on its
+receipt requirement rather than its provider-deployment requirement.
+
 The [fresh verification report](../../../wiki/specs/audits/verify-infrastructure-2026-09-04-2139.md)
 records the exact-SHA execution and repaired release protection. External acceptance
-remains blocked at 279/283: AC209 exact-SHA provider deployment and live delivery
-receipt, AC211 full UTC-day SLO/DLQ telemetry, AC265 Google/test
+remains blocked at 279/283: AC209 genuine live delivery receipt, AC211 full
+UTC-day SLO/DLQ telemetry, AC265 Google/test
 identities with the current provider endpoint still returning HTTP 503, and AC266
 manual assistive-technology evidence remain open. The prior audit remains linked
 for history: [2026-09-04-1353](../../../wiki/specs/audits/verify-infrastructure-2026-09-04-1353.md)
@@ -97,6 +109,7 @@ and [2026-09-04-1255](../../../wiki/specs/audits/verify-infrastructure-2026-09-0
       repository.
 - [x] Production release identity corrected — production requires exact business-account reviewer `WeJustJammin`, allows explicit owner self-approval, disables administrator bypass, and retains its sole custom `main` branch policy. The rejected personal account is no longer used by the live rule or verifier.
 - [x] Production evidence artifact `9964724622` retained all five hidden promotion files for exact SHA `7250754d...`; digest `sha256:388dee00a587e04f88e4a1dfbf8c48b5e0c50507910f220dc900173bf3630077`.
-- [!] Slice 09 `/verify-infrastructure` remains blocked on four external acceptance checks: AC209 production-window/provider evidence, AC211 production-window SLO/DLQ telemetry, AC265 Google/test identities with the current provider endpoint at HTTP 503, and AC266 manual assistive-technology evidence.
+- [x] Slice 09 operational-alert provider execution — exact SHA `c995ce31821e39ac6f27538813f536f9af6b39f2`, CI `33960218010`, staging `33960712969` / deployment `6279914420`, production `33960764747` / deployment `6279925490`, and two consecutive successful production cron events verified; actor `WeJustJammin`.
+- [!] Slice 09 `/verify-infrastructure` remains blocked on four external acceptance checks: AC209 genuine live delivery receipt, AC211 production-window SLO/DLQ telemetry, AC265 Google/test identities with the current provider endpoint at HTTP 503, and AC266 manual assistive-technology evidence.
 - [ ] Slice 17 close-gate `/verify-infrastructure` passes.
 - [ ] `/validate-phase` passes after every slice is complete.
