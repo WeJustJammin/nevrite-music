@@ -10,8 +10,8 @@ const CI_WORKFLOW_PATH = '.github/workflows/ci.yml';
 const CI_WORKFLOW_FILE = 'ci.yml';
 const CI_WORKFLOW_NAME = 'CI';
 const PRODUCTION_REVIEW_RULE_ID = 64231612;
-const PRODUCTION_REVIEWER_ID = 214191222;
-const PRODUCTION_REVIEWER_LOGIN = 'NEVRITERob';
+const PRODUCTION_REVIEWER_ID = 305953066;
+const PRODUCTION_REVIEWER_LOGIN = 'WeJustJammin';
 
 type JsonObject = Record<string, unknown>;
 
@@ -331,7 +331,7 @@ export const verifyProductionEnvironment = async (
   const hasRequiredReviewers =
     requiredReviewerRule !== null &&
     requiredReviewerRule.id === PRODUCTION_REVIEW_RULE_ID &&
-    requiredReviewerRule.prevent_self_review === true &&
+    requiredReviewerRule.prevent_self_review === false &&
     isJsonObject(soleReviewer) &&
     soleReviewer.type === 'User' &&
     isJsonObject(reviewerIdentity) &&
@@ -339,7 +339,7 @@ export const verifyProductionEnvironment = async (
     reviewerIdentity.login === PRODUCTION_REVIEWER_LOGIN;
   if (!hasRequiredReviewers) {
     throw new Error(
-      'The production environment requires production reviewers with the exact configured production reviewer and self-review prevention.',
+      'The production environment requires production reviewers with the exact configured production reviewer and owner self-review enabled.',
     );
   }
   if (environment.can_admins_bypass !== false) {

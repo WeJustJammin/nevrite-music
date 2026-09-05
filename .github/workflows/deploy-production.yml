@@ -15,9 +15,7 @@ on:
         required: true
         type: boolean
         default: false
-concurrency:
-  group: deploy-production
-  cancel-in-progress: false
+concurrency: { group: deploy-production, cancel-in-progress: false }
 permissions: { actions: read, contents: read }
 jobs:
   preflight:
@@ -95,5 +93,6 @@ jobs:
           path: |
             .promotion/deployment-manifest.sha256
             .promotion/*.json
+          include-hidden-files: true
           if-no-files-found: error
           retention-days: 30

@@ -35,10 +35,12 @@ artifact ID `9778720478` has digest
 Staging p95 is 38.615692 ms and independent exact-SHA p95 is 43.175515 ms,
 both with 20 samples, 1 virtual user, 0 retries, 0 errors, and a 500 ms limit.
 Final local rerun p95 is 1.689102 ms against the 500 ms limit with zero errors.
-The required production reviewer is `NEVRITERob` (ID `214191222`) under rule
-`64231612`, with `prevent_self_review: true`, `can_admins_bypass: false`, and
-the sole exact `main` branch policy. Phase 1 validation passes; production
-deployment remains not required and was not performed.
+The original Phase 1 reviewer snapshot was superseded on 2026-09-05 by the
+owner's business-account-only policy: rule `64231612` names `WeJustJammin`
+(ID `305953066`), with `prevent_self_review: false`,
+`can_admins_bypass: false`, and the sole exact `main` branch policy. Phase 1
+validation remains historical evidence; production deployment first occurred
+during the Slice 09 evidence run.
 
 **Setup checkpoint**: workspace scaffold, CI/CD, Cloudflare hosting, managed Supabase staging provisioning, immutable artifact promotion, public health verification, live structured-log verification, and exact local surface-map skill resolution are complete at commit `aa1039b`. The billing audit confirms Supabase organization `wejamm.in` is on Free with a `$0.00` invoice. The owner explicitly reconfirmed Cloudflare Workers Paid as the sole paid-service exception under DEC-103's soft `$10/month` ceiling; it has a `$5/month` minimum plus usage overage, with an exact `$10` notification rather than a hard ceiling. DEC-104 removes third-party monitoring and requires every other service to remain genuinely free unless a new exact-price approval is recorded. Infrastructure verification passes and the setup-to-implementation handoff is unblocked. See `verification/2026-08-30-workspace-infrastructure.md`.
 

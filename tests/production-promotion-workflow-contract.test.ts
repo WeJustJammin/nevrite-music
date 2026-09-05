@@ -131,6 +131,7 @@ describe('production promotion workflow contract', () => {
     expect(workflow).toContain(
       'name: production-deployment-attempt-${{ env.DEPLOY_SHA }}-${{ job.status }}',
     );
+    expect(workflow).toContain('include-hidden-files: true');
     expect(workflow).not.toContain(
       'name: production-deployment-${{ env.DEPLOY_SHA }}',
     );
