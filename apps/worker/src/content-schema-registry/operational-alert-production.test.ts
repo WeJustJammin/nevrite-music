@@ -36,7 +36,7 @@ const nativeFetch = (input: {
       return Promise.resolve(
         Response.json(
           input.logs === undefined
-            ? { result: { events: { events: [] } }, success: true }
+            ? { result: { events: { events: [] } } }
             : input.logs,
         ),
       );
@@ -57,7 +57,7 @@ describe('production operational alert dependencies', () => {
         );
       if (target.includes('/workers/observability/telemetry/query'))
         return Promise.resolve(
-          Response.json({ result: { events: { events: [] } }, success: true }),
+          Response.json({ result: { events: { events: [] } } }),
         );
       if (target.endsWith('/graphql'))
         return Promise.resolve(
@@ -209,7 +209,8 @@ describe('production operational alert dependencies', () => {
 
   it.each([
     null,
-    { success: false },
+    { result: { events: { events: [] } }, success: false },
+    { result: { events: { events: [] } }, success: 'true' },
     { success: true, result: null },
     { success: true, result: { events: null } },
     { success: true, result: { events: { events: null } } },

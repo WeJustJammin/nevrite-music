@@ -101,7 +101,7 @@ const cloudflareEvents = async (
   );
   if (
     !isRecord(payload) ||
-    payload.success !== true ||
+    (Object.hasOwn(payload, 'success') && payload.success !== true) ||
     !isRecord(payload.result)
   )
     throw new Error('Invalid Workers Logs response');
