@@ -125,7 +125,7 @@ const queueBacklog = async (
     'https://api.cloudflare.com/client/v4/graphql',
     { Authorization: `Bearer ${bindings.CLOUDFLARE_OBSERVABILITY_API_TOKEN}` },
     {
-      query: `query QueueBacklog($accountTag: string!, $queueId: string!, $datetimeStart: Time!, $datetimeEnd: Time!) { viewer { accounts(filter: { accountTag: $accountTag }) { queueBacklogAdaptiveGroups(limit: 1, filter: { queueId: $queueId, datetime_geq: $datetimeStart, datetime_leq: $datetimeEnd }, orderBy: [datetime_DESC]) { avg { messages } } } } }`,
+      query: `query QueueBacklog($accountTag: string!, $queueId: string!, $datetimeStart: Time!, $datetimeEnd: Time!) { viewer { accounts(filter: { accountTag: $accountTag }) { queueBacklogAdaptiveGroups(limit: 1, filter: { queueId: $queueId, datetime_geq: $datetimeStart, datetime_leq: $datetimeEnd }) { avg { messages } } } } }`,
       variables: {
         accountTag: bindings.CLOUDFLARE_ACCOUNT_ID,
         datetimeEnd: input.scheduledAt,
@@ -136,6 +136,12 @@ const queueBacklog = async (
       },
     },
   );
+  if (
+    isRecord(payload) &&
+    Object.hasOwn(payload, 'errors') &&
+    (!Array.isArray(payload.errors) || payload.errors.length > 0)
+  )
+    throw new Error('Invalid Queue analytics response');
   const data = isRecord(payload) ? payload.data : undefined;
   const viewer = isRecord(data) ? data.viewer : undefined;
   const accounts = isRecord(viewer) ? viewer.accounts : undefined;
