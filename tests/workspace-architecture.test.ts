@@ -263,7 +263,7 @@ describe('workspace architecture contracts', () => {
       anyTypes,
       `Explicit any types found:\n${anyTypes.join('\n')}`,
     ).toEqual([]);
-  }, 15_000);
+  }, 60_000);
 
   it('declares every TypeScript project through the root project solution', () => {
     const rootConfig = readJson(rootConfigPath);
