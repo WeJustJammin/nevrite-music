@@ -216,7 +216,7 @@ describe('Phase 2 Slice 07 runtime adapter behavior', () => {
       );
 
       const event = info.mock.calls
-        .map(([line]) => JSON.parse(String(line)) as Record<string, unknown>)
+        .map(([line]) => line as Record<string, unknown>)
         .find((entry) => entry.eventName === 'cfg.definition.registered');
       expect(event).toEqual(
         expect.objectContaining({
@@ -249,7 +249,7 @@ describe('Phase 2 Slice 07 runtime adapter behavior', () => {
         resultingState: 'scheduled',
       });
       const event = info.mock.calls
-        .map(([line]) => JSON.parse(String(line)) as Record<string, unknown>)
+        .map(([line]) => line as Record<string, unknown>)
         .find((entry) => entry.eventName === 'cfg.change.transitioned');
       expect(event).toEqual(
         expect.objectContaining({
@@ -280,7 +280,7 @@ describe('Phase 2 Slice 07 runtime adapter behavior', () => {
         compatibility: 'contract_fallback',
       });
       const event = info.mock.calls
-        .map(([line]) => JSON.parse(String(line)) as Record<string, unknown>)
+        .map(([line]) => line as Record<string, unknown>)
         .find((entry) => entry.eventName === 'cfg.value.resolved');
       expect(event).toEqual(
         expect.objectContaining({

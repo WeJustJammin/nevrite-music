@@ -15,7 +15,7 @@ import {
   type ConfigurationPort,
 } from './phase-02-slice-07.test-support';
 
-const captured: string[] = [];
+const captured: unknown[] = [];
 
 afterEach(() => {
   vi.restoreAllMocks();
@@ -24,13 +24,17 @@ afterEach(() => {
 
 const captureLogs = (): void => {
   vi.spyOn(console, 'info').mockImplementation((line) => {
-    captured.push(String(line));
+    captured.push(line);
   });
 };
 
 const telemetry = (): readonly Record<string, unknown>[] =>
   captured
-    .map((line) => JSON.parse(line) as Record<string, unknown>)
+    .map((line) =>
+      typeof line === 'string'
+        ? (JSON.parse(line) as Record<string, unknown>)
+        : (line as Record<string, unknown>),
+    )
     .filter((event) => String(event.eventName).startsWith('cfg.'));
 
 describe('Phase 2 Slice 07 production route telemetry', () => {

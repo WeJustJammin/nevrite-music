@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 
 import { createLogger, type LogEventDetails } from './logging';
 
@@ -16,6 +16,26 @@ const validDetails: LogEventDetails = {
 };
 
 describe('structured logger', () => {
+  it('emits structured objects through the default Cloudflare console sink', () => {
+    const info = vi.spyOn(console, 'info').mockImplementation(() => undefined);
+    const logger = createLogger({
+      environment: 'production',
+      release: 'a'.repeat(40),
+      service: 'wejammin-api',
+    });
+
+    expect(logger.info(validDetails)).toBe('written');
+    expect(info).toHaveBeenCalledWith(
+      expect.objectContaining({
+        durationMs: 12,
+        eventName: 'http.request.completed',
+        service: 'wejammin-api',
+      }),
+    );
+    expect(typeof info.mock.calls[0]?.[0]).toBe('object');
+    info.mockRestore();
+  });
+
   it('emits one schema-validated NDJSON event with immutable context', () => {
     const lines: string[] = [];
     const logger = createLogger(

@@ -5,42 +5,52 @@ import { CONTENT_SCHEMA_REGISTRY_RUNBOOK, type TelemetryEvent } from './types';
 export const productionTelemetry =
   (logger: Logger): ((event: TelemetryEvent) => void) =>
   (event) => {
-    logger.info(
-      {
-        eventName: 'cms.registry.request',
-        operation: `cms.registry.${event.operationId}`,
-        outcome: event.outcome,
-        requestId: event.requestId,
-        ...(event.correlationId === undefined
-          ? {}
-          : { correlationId: event.correlationId }),
-        ...(event.errorCode === undefined
-          ? {}
-          : { errorCode: event.errorCode }),
-        attributes: {
-          rate_class: event.rateClass ?? 'unknown',
-          rate_limit: event.rateLimit ?? 0,
-          rate_window_seconds: event.rateWindowSeconds ?? 0,
-          deadline_ms: event.deadlineMs ?? 0,
-          slo_tier: event.slo?.tier ?? 2,
-          slo_command_p95_ms: event.slo?.commandP95Ms ?? 1_200,
-          slo_protected_rpc_p95_ms: event.slo?.protectedRpcP95Ms ?? 300,
-          slo_acceptance_p99_ms: event.slo?.acceptanceP99Ms ?? 1_000,
-          alert_class: event.alertClass ?? 'content_schema_registry_tier2',
-          alert_route: event.alertRoute ?? 'platform.on_call',
-          runbook: event.runbook ?? CONTENT_SCHEMA_REGISTRY_RUNBOOK,
-        },
-        ...(event.traceSteps === undefined
-          ? {}
-          : { traceSteps: [...event.traceSteps] }),
-        ...(event.metrics === undefined
-          ? {}
-          : { metrics: { ...event.metrics } }),
-        durationMs: event.durationMs,
-        retryable: event.outcome === 'failure',
+    const details = {
+      eventName: 'cms.registry.request',
+      operation: `cms.registry.${event.operationId}`,
+      outcome: event.outcome,
+      requestId: event.requestId,
+      ...(event.correlationId === undefined
+        ? {}
+        : { correlationId: event.correlationId }),
+      ...(event.errorCode === undefined ? {} : { errorCode: event.errorCode }),
+      attributes: {
+        rate_class: event.rateClass ?? 'unknown',
+        rate_limit: event.rateLimit ?? 0,
+        rate_window_seconds: event.rateWindowSeconds ?? 0,
+        deadline_ms: event.deadlineMs ?? 0,
+        slo_tier: event.slo?.tier ?? 2,
+        slo_command_p95_ms: event.slo?.commandP95Ms ?? 1_200,
+        slo_protected_rpc_p95_ms: event.slo?.protectedRpcP95Ms ?? 300,
+        slo_acceptance_p99_ms: event.slo?.acceptanceP99Ms ?? 1_000,
+        alert_class: event.alertClass ?? 'content_schema_registry_tier2',
+        alert_route: event.alertRoute ?? 'platform.on_call',
+        runbook: event.runbook ?? CONTENT_SCHEMA_REGISTRY_RUNBOOK,
       },
-      { samplingClass: 'always', highRisk: event.outcome !== 'success' },
-    );
+      ...(event.traceSteps === undefined
+        ? {}
+        : { traceSteps: [...event.traceSteps] }),
+      ...(event.metrics === undefined ? {} : { metrics: { ...event.metrics } }),
+      durationMs: event.durationMs,
+      retryable: event.outcome === 'failure',
+    } as const;
+    logger.info(details, {
+      samplingClass: 'always',
+      highRisk: event.outcome !== 'success',
+    });
+    const measurement = (eventName: string): void => {
+      logger.info(
+        { ...details, eventName },
+        { samplingClass: 'always', highRisk: event.outcome !== 'success' },
+      );
+    };
+    if (
+      event.operationId !== 'CMS-03A-06' &&
+      event.operationId !== 'CMS-03A-07'
+    )
+      measurement('cms.registry.command');
+    measurement('cms.registry.rpc');
+    measurement('cms.registry.acceptance');
   };
 
 export const defaultProductionLogger = (environment: {

@@ -380,7 +380,7 @@ describe('Worker readiness boundary', () => {
 
     expect(response.status).toBe(500);
     expect(consoleInfo).toHaveBeenCalledTimes(1);
-    expect(JSON.parse(String(consoleInfo.mock.calls[0]?.[0]))).toMatchObject({
+    expect(consoleInfo.mock.calls[0]?.[0]).toMatchObject({
       environment: 'staging',
       errorCode: 'INTERNAL_ERROR',
       release: 'a2ec4803',

@@ -54,6 +54,11 @@ describe('Worker runtime environment contract', () => {
     expect(workerConfiguration).toContain('"APP_ENVIRONMENT": "production"');
     expect(workerConfiguration).toContain('"APP_ENVIRONMENT": "staging"');
     expect(workerConfiguration).toContain('"APP_RELEASE": "local"');
+    expect(workerConfiguration).toContain('"PLATFORM_ALERT_EMAIL"');
+    expect(workerConfiguration).toContain(
+      '"destination_address": "admin.wejammin@gmail.com"',
+    );
+    expect(workerConfiguration).toContain('"head_sampling_rate": 1');
   });
 
   it('keeps immutable staging promotion and runtime identity', () => {
@@ -82,6 +87,12 @@ describe('Worker runtime environment contract', () => {
     );
     expect(apiDeploymentScript).toContain('--var APP_RELEASE:"$DEPLOY_SHA"');
     expect(apiDeploymentScript).toContain('--var SUPABASE_URL:"$SUPABASE_URL"');
+    expect(apiDeploymentScript).toContain(
+      '--var CLOUDFLARE_ACCOUNT_ID:"$CLOUDFLARE_ACCOUNT_ID"',
+    );
+    expect(apiDeploymentScript).toContain(
+      'CLOUDFLARE_OBSERVABILITY_API_TOKEN=',
+    );
     expect(apiDeploymentScript).toContain(
       '--secrets-file "$task_secrets_file"',
     );

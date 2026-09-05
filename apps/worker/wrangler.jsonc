@@ -4,15 +4,21 @@
   "main": "src/runtime-entry.ts",
   "compatibility_date": "2026-08-29",
   "minify": true,
-  "workers_dev": false,
   "limits": { "cpu_ms": 50 },
   "observability": {
     "enabled": true,
-    "head_sampling_rate": 0.1,
+    "head_sampling_rate": 1,
   },
   "vars": {
     "APP_ENVIRONMENT": "production",
+    "CLOUDFLARE_PLATFORM_DLQ_ID": "88155985aa0c49caa591b9bf9e6ca937",
   },
+  "send_email": [
+    {
+      "name": "PLATFORM_ALERT_EMAIL",
+      "destination_address": "admin.wejammin@gmail.com",
+    },
+  ],
   "queues": {
     "producers": [
       {
@@ -35,10 +41,6 @@
     "local": {
       "name": "wejammin-api-local",
       "workers_dev": true,
-      "observability": {
-        "enabled": true,
-        "head_sampling_rate": 0.1,
-      },
       "vars": {
         "APP_ENVIRONMENT": "development",
         "APP_RELEASE": "local",

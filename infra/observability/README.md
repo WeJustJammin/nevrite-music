@@ -43,14 +43,14 @@ alert route, and runbook attributes consumed by the native Cloudflare/Supabase
 observability boundary; neither module accepts request bodies, cookies, tokens,
 content values, or capability graphs.
 
-The repository has no configured provider API for creating or querying
-production dashboards. Therefore local tests prove threshold semantics,
-telemetry field compatibility, and provider-free sink consumption only. A
-deployment must connect a native observability query/scheduled boundary to
-`evaluateAndEmitContentSchemaRegistryAlerts` (or an equivalent policy
-implementation) and record the resulting redacted alert delivery before
-claiming production alert measurements. The policy intentionally does not
-fabricate an alert when an aggregate measurement is missing or non-finite.
+The production Worker now connects this policy to Cloudflare Workers Logs,
+Queue metrics, Cron Triggers, Email Service, and service-only Supabase claim and
+receipt RPCs through
+`apps/worker/src/content-schema-registry/operational-alert-production.ts`.
+Deployment still must prove the scoped provider token, exact production config,
+and one post-configuration redacted delivery receipt before AC209 closes. The
+policy intentionally does not fabricate an alert when an aggregate measurement
+is missing or non-finite.
 
 Run the local contract evidence with:
 
