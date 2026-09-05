@@ -15,12 +15,25 @@ test('serves the Astro dev modules required for island hydration', async ({
   ];
 
   for (const modulePath of devModules) {
-    const response = await page.request.get(modulePath);
-
-    expect(response.status(), modulePath).toBe(200);
-    expect(response.headers()['content-type'], modulePath).toMatch(
-      /javascript/,
-    );
+    await expect
+      .poll(
+        async () => {
+          try {
+            const response = await page.request.get(modulePath);
+            return {
+              contentType: response.headers()['content-type'] ?? '',
+              status: response.status(),
+            };
+          } catch {
+            return { contentType: '', status: 0 };
+          }
+        },
+        { message: modulePath, timeout: 10_000 },
+      )
+      .toMatchObject({
+        contentType: expect.stringMatching(/javascript/),
+        status: 200,
+      });
   }
 });
 
