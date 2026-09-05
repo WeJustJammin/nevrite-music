@@ -242,7 +242,8 @@ export const app = createWorkerApp(createRuntimeDependencies());
 
 export const createProductionWorkerApp = (
   environment: WorkerBindings,
-  fetchImpl: JobStatusProductionFetch = globalThis.fetch,
+  fetchImpl: JobStatusProductionFetch = (input, init) =>
+    globalThis.fetch(input, init),
   uploadCompletion?: UploadCompletionRouteDependencies,
   checkReadiness?: WorkerDependencies['checkReadiness'],
   platformConfigurationOptions?: ProductionPlatformConfigurationOptions,

@@ -120,6 +120,47 @@ describe('Worker readiness boundary', () => {
     expect(fetchImpl).not.toHaveBeenCalled();
   });
 
+  it('[P2-S09-AC-265] resolves outbound fetch in the active Worker request context', async () => {
+    const staleFetch = vi.fn(async () => {
+      throw new Error('stale request context');
+    });
+    vi.stubGlobal('fetch', staleFetch);
+    const productionApp = createProductionWorkerApp(bindings);
+    const activeFetch = vi.fn(
+      async (input: RequestInfo | URL, init?: RequestInit) => {
+        expect(init?.method).toBe('POST');
+        const operation = new URL(String(input)).pathname.split('/').at(-1);
+        return Response.json(
+          operation === 'auth_rate_limit'
+            ? {
+                allowed: true,
+                limit: 30,
+                remaining: 29,
+                resetAt: 1_788_236_460,
+              }
+            : {
+                emailRecoveryEnabled: true,
+                providers: [
+                  { code: 'google', label: 'Google', state: 'enabled' },
+                ],
+                version: '1',
+              },
+        );
+      },
+    );
+    vi.stubGlobal('fetch', activeFetch);
+
+    const response = await productionApp.request(
+      '/api/v1/auth/providers',
+      {},
+      bindings,
+    );
+
+    expect(response.status).toBe(200);
+    expect(staleFetch).not.toHaveBeenCalled();
+    expect(activeFetch).toHaveBeenCalledTimes(2);
+  });
+
   it('acknowledges missing production verification as manual review without fake success', async () => {
     const fetchImpl = vi.fn(
       async (input: RequestInfo | URL, init?: RequestInit) => {
