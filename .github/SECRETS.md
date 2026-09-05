@@ -17,15 +17,14 @@ Only the credentials listed below are authorized. They belong in protected GitHu
 
 Production uses the same names in the protected `production` environment with distinct values, required reviewers, main-branch restrictions, and serialized deployment concurrency. Staging values must never be copied into production or vice versa.
 
-The production environment reports required-reviewer rule `64231612` for
-`NEVRITERob` (reviewer ID `214191222`), `prevent_self_review: true`,
+The production environment reports required-reviewer rule `64231612` for the
+business account `WeJustJammin` (reviewer ID `305953066`),
+`prevent_self_review: false`,
 `can_admins_bypass: false`, and the sole custom deployment branch policy
-`{ name: "main", type: "branch" }`. The prior private-repository-plan HTTP 422
-was resolved after the repository changed from PRIVATE to PUBLIC. Workflow
-`346315225` is active but remains `workflow_dispatch`/manual-only; its immutable
-preflight passes for staging run `33449203645` and source
-`fd65360f509e268c7cbae2e52cc7fcbbd7eeec8f`. No production deployment was
-triggered or performed.
+`{ name: "main", type: "branch" }`. This single-business-account repository
+keeps production `workflow_dispatch`/manual-only while allowing the dispatching
+owner to provide the explicit protected-environment approval. Administrator
+bypass remains disabled.
 
 ## Repository security controls
 
@@ -36,7 +35,10 @@ tokens. Secret scanning, push protection, vulnerability alerts, and automated
 security fixes are enabled. Environment secrets remain protected and must never
 be placed in repository contents, workflow arguments, artifacts, or logs.
 
-The Cloudflare token is restricted to the WeJammin account with only Workers Scripts Edit and Cloudflare Pages Edit permissions. Create separate staging and production tokens; never reuse the interactive Wrangler OAuth credential in CI.
+The Cloudflare token is restricted to the WeJammin account with Cloudflare
+Pages Edit and Workers Scripts Edit, plus zone-scoped Workers Routes Edit for
+the production custom-domain binding. Create separate staging and production
+tokens; never reuse the interactive Wrangler OAuth credential in CI.
 
 ## Environment variables
 

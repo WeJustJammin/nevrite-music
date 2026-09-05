@@ -51,8 +51,8 @@ const ciRun = {
 const canonicalProductionReviewer = {
   type: 'User',
   reviewer: {
-    login: 'NEVRITERob',
-    id: 214191222,
+    login: 'WeJustJammin',
+    id: 305953066,
   },
 };
 
@@ -60,7 +60,7 @@ const canonicalProductionReviewRule = {
   id: 64231612,
   type: 'required_reviewers',
   reviewers: [canonicalProductionReviewer],
-  prevent_self_review: true,
+  prevent_self_review: false,
 };
 
 const protectedEnvironment = {
@@ -301,8 +301,8 @@ describe('production promotion input guard', () => {
     ).rejects.toThrow('administrator bypass');
   });
 
-  it('rejects required reviewers when self-review is not prevented', async () => {
-    for (const preventSelfReview of [false, undefined]) {
+  it('rejects required reviewers when owner self-review is prevented', async () => {
+    for (const preventSelfReview of [true, undefined]) {
       await expect(
         verifyProductionPromotionInputs(
           options(),
@@ -368,7 +368,7 @@ describe('production promotion input guard', () => {
             reviewers: [
               {
                 type: 'Team',
-                reviewer: { login: 'NEVRITERob', id: 214191222 },
+                reviewer: { login: 'WeJustJammin', id: 305953066 },
               },
             ],
           },
@@ -379,7 +379,7 @@ describe('production promotion input guard', () => {
         protection_rules: [
           {
             ...canonicalProductionReviewRule,
-            reviewers: [{ type: 'User', id: 214191222 }],
+            reviewers: [{ type: 'User', id: 305953066 }],
           },
         ],
       },
