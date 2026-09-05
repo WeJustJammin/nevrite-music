@@ -106,9 +106,13 @@ const cloudflareEvents = async (
   )
     throw new Error('Invalid Workers Logs response');
   const eventsContainer = payload.result.events;
-  if (!isRecord(eventsContainer) || !Array.isArray(eventsContainer.events))
+  if (eventsContainer === undefined) return [];
+  if (!isRecord(eventsContainer))
     throw new Error('Invalid Workers Logs response');
-  return eventsContainer.events.filter(isRecord);
+  const events = eventsContainer.events;
+  if (events === undefined) return [];
+  if (!Array.isArray(events)) throw new Error('Invalid Workers Logs response');
+  return events.filter(isRecord);
 };
 
 const queueBacklog = async (

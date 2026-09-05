@@ -235,6 +235,31 @@ describe('production operational alert dependencies', () => {
     );
   });
 
+  it.each([{ result: {} }, { result: { events: {} } }])(
+    'accepts an empty Workers Logs result when optional event fields are omitted',
+    async (logs) => {
+      const dependencies = createProductionOperationalAlertDependencies(
+        environment,
+        nativeFetch({
+          logs,
+          queue: {
+            data: {
+              viewer: {
+                accounts: [
+                  { queueBacklogAdaptiveGroups: [{ avg: { messages: 0 } }] },
+                ],
+              },
+            },
+          },
+        }),
+      );
+
+      await expect(dependencies.loadSnapshot(runInput)).resolves.toMatchObject({
+        dlqDepth: 0,
+      });
+    },
+  );
+
   it.each([
     null,
     {},
