@@ -103,6 +103,13 @@ describe('production operational alert dependencies', () => {
           ?.body ?? '{}',
       ),
     ).toMatchObject({ parameters: { limit: 2_000 } });
+    const queueRequest = JSON.parse(
+      requests.find((request) => request.url.endsWith('/graphql'))?.body ??
+        '{}',
+    ) as { query?: string; variables?: Record<string, unknown> };
+    expect(queueRequest.query).toContain('queueBacklogAdaptiveGroups(limit: 1');
+    expect(queueRequest.query).not.toContain('orderBy');
+    expect(queueRequest.variables).toMatchObject({ queueId: 'dlq-id' });
     expect(JSON.stringify(requests)).not.toContain('admin.wejammin@gmail.com');
   });
 
@@ -329,6 +336,22 @@ describe('production operational alert dependencies', () => {
     await expect(dependencies.loadSnapshot(runInput)).resolves.toMatchObject({
       dlqDepth: 0,
     });
+  });
+
+  it('fails closed when Queue Analytics returns GraphQL errors', async () => {
+    const dependencies = createProductionOperationalAlertDependencies(
+      environment,
+      nativeFetch({
+        queue: {
+          data: { viewer: { accounts: [] } },
+          errors: [{ message: 'invalid aggregation ordering' }],
+        },
+      }),
+    );
+
+    await expect(dependencies.loadSnapshot(runInput)).rejects.toThrow(
+      'Invalid Queue analytics response',
+    );
   });
 
   it('rejects a non-object database snapshot', async () => {
