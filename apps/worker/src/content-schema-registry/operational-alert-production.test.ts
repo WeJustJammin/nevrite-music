@@ -97,7 +97,39 @@ describe('production operational alert dependencies', () => {
       requests.find((request) => request.url.includes('telemetry/query'))
         ?.headers,
     ).toContain('Bearer observability-token');
+    expect(
+      JSON.parse(
+        requests.find((request) => request.url.includes('telemetry/query'))
+          ?.body ?? '{}',
+      ),
+    ).toMatchObject({ parameters: { limit: 2_000 } });
     expect(JSON.stringify(requests)).not.toContain('admin.wejammin@gmail.com');
+  });
+
+  it('reports a safe HTTP status when a provider rejects a request', async () => {
+    const fetchImpl = vi.fn<typeof fetch>().mockImplementation((url) => {
+      const target = String(url);
+      if (target.includes('cms_get_operational_state_snapshot'))
+        return Promise.resolve(Response.json({}));
+      if (target.endsWith('/graphql'))
+        return Promise.resolve(Response.json({}));
+      if (target.includes('/workers/observability/telemetry/query'))
+        return Promise.resolve(
+          Response.json(
+            { errors: [{ message: 'sensitive provider detail' }] },
+            { status: 400 },
+          ),
+        );
+      throw new Error(`unexpected URL: ${target}`);
+    });
+    const dependencies = createProductionOperationalAlertDependencies(
+      environment,
+      fetchImpl,
+    );
+
+    await expect(dependencies.loadSnapshot(runInput)).rejects.toThrow(
+      'Operational provider request failed (HTTP 400)',
+    );
   });
 
   it('claims, sends a redacted platform.on_call email, and hashes completion evidence server-side', async () => {

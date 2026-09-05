@@ -30,7 +30,10 @@ const isRecord = (value: unknown): value is Record<string, unknown> =>
   typeof value === 'object' && value !== null && !Array.isArray(value);
 
 const boundedJson = async (response: Response): Promise<unknown> => {
-  if (!response.ok) throw new Error('Operational provider request failed');
+  if (!response.ok)
+    throw new Error(
+      `Operational provider request failed (HTTP ${response.status})`,
+    );
   const declared = response.headers.get('content-length');
   if (declared !== null && Number(declared) > MAX_PROVIDER_BYTES)
     throw new Error('Operational provider response too large');
@@ -88,7 +91,7 @@ const cloudflareEvents = async (
     {
       parameters: {
         datasets: ['cloudflare-workers'],
-        limit: 10_000,
+        limit: 2_000,
         needle: { isRegex: false, value: 'cms.registry.' },
         view: 'events',
       },
