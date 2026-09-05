@@ -421,6 +421,26 @@
   AC211: exact-SHA deployment, a post-configuration delivered alert receipt,
   and the complete production UTC-day SLO/DLQ evidence are still required.
 
+- 2026-09-05 production provider recovery: PR #16 merged the bounded Cloudflare
+  query/error-sanitization correction as `6ff9bedacdab916f5de71a8b39460b14718941f7`;
+  PR #17 merged current-envelope compatibility as
+  `1c969366926e9fe5db50cdd1f523207a477d243e`; and PR #18 merged the
+  root-cause empty-result decoder as
+  `c995ce31821e39ac6f27538813f536f9af6b39f2`. Exact-SHA CI run
+  `33960218010` passed after one unchanged rerun confirmed an unrelated late
+  upload-admission promise rejection was transient, staging run `33960712969`
+  / deployment `6279914420` passed, and business-account-approved production
+  run `33960764747` / deployment `6279925490` passed. Retained staging and
+  production artifacts are `9967847252`, `9967847034`, and `9967870332`.
+  Fresh Cloudflare production logs record two consecutive successful scheduled
+  executions at `2026-09-05 06:31:00.649 EDT` and
+  `2026-09-05 06:31:54.674 EDT`; the last `Invalid Workers Logs response` is
+  pre-deployment at `2026-09-05 06:29:54.678 EDT`. Local validation passes 423
+  Vitest files / 3,147 tests at 100% coverage, 102 Playwright checks, all
+  build/bundle/performance gates, and 45 pgTAP files / 1,678 tests. Gmail still
+  reports no message from `platform.on-call@alerts.wejamm.in`, so no live
+  delivery receipt is claimed and AC209 remains open.
+
 ## Depth Ratio
 
 - Verified acceptance items: 279/283.
@@ -428,16 +448,16 @@
 
 ## Blocking release evidence
 
-- P2-S09-AC-209: deploy the configured provider query and retain a post-configuration redacted live-delivery receipt.
+- P2-S09-AC-209: retain a genuine post-configuration redacted live-delivery receipt; exact-SHA provider deployment and two consecutive successful scheduled evaluations are verified.
 - P2-S09-AC-211: retain a complete production UTC-day with at least 200 command/RPC/acceptance samples, all five SLO results, and daily queue/DLQ counts.
 - P2-S09-AC-265: deployed Supabase Auth/RLS/IdP browser-to-backend E2E.
 - P2-S09-AC-266: VoiceOver/Safari and NVDA/Firefox manual smoke.
 
 Operational controls outside the 283-item acceptance count are verified for
 this candidate: fail-closed staging migration executed before app deployment,
-immutable migration evidence retained, and exact-main-SHA CI/staging/deployment
-identity recorded. Protected production execution and retained evidence are now
-verified; the four external acceptance receipts above remain required.
+immutable migration evidence retained, exact-main-SHA CI/staging/deployment
+identity recorded, and two consecutive production cron evaluations succeeded.
+The four external acceptance receipts above remain required.
 
 Slice 09 remains blocked. Slice 10 depends on Slice 09 and must not start until
 all four release-evidence gates pass.
