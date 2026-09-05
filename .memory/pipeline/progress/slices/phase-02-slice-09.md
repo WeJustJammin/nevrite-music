@@ -436,10 +436,30 @@
   executions at `2026-09-05 06:31:00.649 EDT` and
   `2026-09-05 06:31:54.674 EDT`; the last `Invalid Workers Logs response` is
   pre-deployment at `2026-09-05 06:29:54.678 EDT`. Local validation passes 423
-  Vitest files / 3,147 tests at 100% coverage, 102 Playwright checks, all
+  Vitest files / 3,148 tests at 100% coverage, 102 Playwright checks, all
   build/bundle/performance gates, and 45 pgTAP files / 1,678 tests. Gmail still
   reports no message from `platform.on-call@alerts.wejamm.in`, so no live
   delivery receipt is claimed and AC209 remains open.
+
+- 2026-09-05 hosted auth-provider transport recovery: PR #20 merged the
+  active-request-context Worker fetch correction as
+  `fcdf0ac027453bc764fd835859a059253dfd2b1f`. Two exact-main reruns then
+  reproduced timeout-only failures in the repository-wide AST scan and
+  two-build SSR deployment contract while the other 3,146 tests passed. PR #21
+  retained every assertion and added shared-runner time-budget headroom; its
+  merge `b22a914327291e2895bbcc7dc8f60837c8faa0d6` passed exact-main CI
+  `33965293079`, staging `33965655238` / deployment `6280862362`, and
+  business-account-approved production `33965764707` / deployment
+  `6280885024`. Retained artifacts are `9969324579`, `9969307786`,
+  `9969340186`, `9969340453`, and `9969392638`. Both staging auth origins and
+  five sequential production requests now return HTTP `200` with the valid
+  provider catalog; Cloudflare records the five production requests at info
+  level with 21 successes and 0 errors in the 15-minute window. Google remains
+  `temporarily_unavailable`: both Supabase projects have the provider disabled
+  with blank OAuth credentials, and Google Cloud requires owner acceptance of
+  its Terms of Service before business-owned client setup. The
+  [current infrastructure report](../../../wiki/specs/audits/verify-infrastructure-2026-09-05-0824.md)
+  records the evidence and keeps AC265 open.
 
 ## Depth Ratio
 
@@ -450,13 +470,17 @@
 
 - P2-S09-AC-209: retain a genuine post-configuration redacted live-delivery receipt; exact-SHA provider deployment and two consecutive successful scheduled evaluations are verified.
 - P2-S09-AC-211: retain a complete production UTC-day with at least 200 command/RPC/acceptance samples, all five SLO results, and daily queue/DLQ counts.
-- P2-S09-AC-265: deployed Supabase Auth/RLS/IdP browser-to-backend E2E.
+- P2-S09-AC-265: accept the Google Cloud terms, configure the business-owned
+  Google OAuth client and authorized non-production identities, then retain the
+  complete deployed Supabase Auth/RLS/RPC/Worker/web browser E2E. The provider
+  catalog transport is verified at HTTP `200`; Google remains disabled.
 - P2-S09-AC-266: VoiceOver/Safari and NVDA/Firefox manual smoke.
 
 Operational controls outside the 283-item acceptance count are verified for
 this candidate: fail-closed staging migration executed before app deployment,
 immutable migration evidence retained, exact-main-SHA CI/staging/deployment
-identity recorded, and two consecutive production cron evaluations succeeded.
+identity recorded, two consecutive production cron evaluations succeeded, and
+the staging/production auth-provider catalog transport is healthy.
 The four external acceptance receipts above remain required.
 
 Slice 09 remains blocked. Slice 10 depends on Slice 09 and must not start until
