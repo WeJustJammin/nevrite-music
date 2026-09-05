@@ -397,6 +397,16 @@
   [prior post-remediation report](../../../wiki/specs/audits/verify-infrastructure-2026-09-04-1353.md)
   and [12:55 audit](../../../wiki/specs/audits/verify-infrastructure-2026-09-04-1255.md).
 
+- Fresh release-evidence correction merged through PR #13 as exact main SHA
+  `7250754dcdc9c1b7a863aa41d79772e6ab7092ab`. CI `33950299169`, staging
+  `33950592657` / deployment `6278097284`, and production `33950658266` /
+  deployment `6278109516` all passed. Production applied all migrations,
+  deployed API Worker `b5ab753d-8388-490d-b6a0-ba3096f074b4` and web Worker
+  `68a414d7-2f74-40d8-a9fd-367404573b93`, and retained five-file evidence
+  artifact `9964724622` (`sha256:388dee00...`). Independent public checks pass
+  web root/sign-in/degraded rendering and protected-route redirect contracts;
+  Auth providers remain intentionally fail-closed at `503` until AC265 setup.
+
 ## Depth Ratio
 
 - Verified acceptance items: 279/283.
@@ -412,9 +422,8 @@
 Operational controls outside the 283-item acceptance count are verified for
 this candidate: fail-closed staging migration executed before app deployment,
 immutable migration evidence retained, and exact-main-SHA CI/staging/deployment
-identity recorded. Production environment metadata and deployment remain
-owner-controlled and unverified; the four external acceptance receipts above
-remain required.
+identity recorded. Protected production execution and retained evidence are now
+verified; the four external acceptance receipts above remain required.
 
 Slice 09 remains blocked. Slice 10 depends on Slice 09 and must not start until
 all four release-evidence gates pass.

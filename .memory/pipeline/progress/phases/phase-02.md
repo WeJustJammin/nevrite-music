@@ -7,22 +7,22 @@
 **Updated**: 2026-09-05  
 **Prior remote evidence**: Before this remediation, PR #9 head `67264c5e9b5196d00ac3f0aa272896a010c872d7` produced synthetic merge `a79dfe30db60e4f54024f064fc2fdf2d01033919` and passing CI run `33841270472`. That run is not evidence for the remediation; no merge or deployment is claimed
 
-Slice 08 is complete (51/51). Slice 09 local QA-GREEN passes. Exact-SHA
-infrastructure execution for candidate `4f700dcfbefc15f3d6e9274d4e0a01f85859d3a1`
-is resolved: CI run `33922965987` is green, staging run `33923345878` is green,
-deployment `6273515701` succeeded, and hosted migration
-`20260902080000` expanded. GitHub Actions and deployment actor: `WeJustJammin`.
+Slice 08 is complete (51/51). Slice 09 local QA-GREEN passes. PR #13 merged as
+exact main SHA `7250754dcdc9c1b7a863aa41d79772e6ab7092ab`; CI run
+`33950299169`, staging run `33950592657` / deployment `6278097284`, and
+business-account-approved production run `33950658266` / deployment
+`6278109516` all passed. GitHub Actions and deployment actor: `WeJustJammin`.
 Owner-confirmed Supabase production project `gzqgpdlfwbqhutvrkaeo` is
 `ACTIVE_HEALTHY` in `us-east-1`, and its non-secret GitHub production bindings are
 configured for confirmed origin `https://wejamm.in`; production credentials,
 and exact-candidate preflight now pass. At the owner's direction, production
 rule `64231612` now names only business account `WeJustJammin` (`305953066`),
 allows the dispatching owner to approve, disables administrator bypass, and
-retains the sole custom `main` policy. Production run `33947004503` attempt 6
-applied all migrations and deployed both Workers; its final evidence upload
-failed because the workflow omitted `include-hidden-files` for `.promotion/**`.
-That workflow defect has a focused RED→GREEN regression on the current branch.
-The corrected branch passes the complete local gate: 418 Vitest files / 3,101
+retains the sole custom `main` policy. The corrected production workflow applied
+all migrations, deployed API version `b5ab753d-8388-490d-b6a0-ba3096f074b4`
+and web version `68a414d7-2f74-40d8-a9fd-367404573b93`, and retained artifact
+`9964724622` with digest `sha256:388dee00a587e04f88e4a1dfbf8c48b5e0c50507910f220dc900173bf3630077`.
+The corrected release passes the complete local gate: 418 Vitest files / 3,101
 tests at 100% coverage, 102 Playwright checks, all builds/contracts/format/lint/
 type/performance checks, and database verification with 45 pgTAP files / 1,670
 tests plus regenerated type parity.
@@ -80,14 +80,14 @@ and [2026-09-04-1255](../../../wiki/specs/audits/verify-infrastructure-2026-09-0
 
 - [x] Owner approves Phase 2 plan — explicitly approved 2026-08-31.
 - [x] Slice 08 `/verify-infrastructure` local auth/admin checkpoint passes; remote activation remains explicitly gated.
-- [x] Slice 09 exact-SHA execution — CI `33922965987`, staging `33923345878`, deployment `6273515701`, and expanded migration `20260902080000` verified for candidate `4f700dcfbefc15f3d6e9274d4e0a01f85859d3a1`; actor `WeJustJammin`.
+- [x] Slice 09 exact-SHA execution — PR #13 merge `7250754dcdc9c1b7a863aa41d79772e6ab7092ab`, CI `33950299169`, staging `33950592657` / deployment `6278097284`, production `33950658266` / deployment `6278109516`, and expanded migration `20260902080000` all verified; actor `WeJustJammin`.
 - [x] `main` remains pull-request-only with strict completion of the exact three
   GitHub Actions checks, administrator enforcement, linear history, and
   conversation resolution; the unavailable second-identity approval and
   last-push approval requirements are disabled for this single-business-account
   repository.
 - [x] Production release identity corrected — production requires exact business-account reviewer `WeJustJammin`, allows explicit owner self-approval, disables administrator bypass, and retains its sole custom `main` branch policy. The rejected personal account is no longer used by the live rule or verifier.
-- [!] Production deployment run `33947004503` attempt 6 applied all migrations and deployed API/web Workers, but the terminal evidence upload failed because `.promotion/**` is hidden. The current branch adds `include-hidden-files: true`; a fresh exact-SHA CI/staging/production chain is still required.
+- [x] Production evidence artifact `9964724622` retained all five hidden promotion files for exact SHA `7250754d...`; digest `sha256:388dee00a587e04f88e4a1dfbf8c48b5e0c50507910f220dc900173bf3630077`.
 - [!] Slice 09 `/verify-infrastructure` remains blocked on four external acceptance checks: AC209 production-window/provider evidence, AC211 production-window SLO/DLQ telemetry, AC265 Google/test identities with the current provider endpoint at HTTP 503, and AC266 manual assistive-technology evidence.
 - [ ] Slice 17 close-gate `/verify-infrastructure` passes.
 - [ ] `/validate-phase` passes after every slice is complete.
