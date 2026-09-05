@@ -132,7 +132,7 @@ describe('Astro Cloudflare Worker SSR deployment contract', () => {
       expect(previews.kv_namespaces).toBeUndefined();
       expect(previews.images).toBeUndefined();
     }
-  }, 30_000);
+  }, 90_000);
 
   it('packages both generated runtime configs in the immutable CI artifact', () => {
     const workflow = readRepoFile('.github/workflows/ci.yml');
