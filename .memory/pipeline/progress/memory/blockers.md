@@ -18,14 +18,19 @@
   read-only provider inspection additionally confirms the Worker Send Email
   binding, enabled `alerts.wejamm.in` sending domain with bounce
   MX/SPF/DKIM/DMARC records, and verified `admin.wejammin@gmail.com`
-  destination. No complete retained production UTC-day report exists. AC-209
-  now requires only a genuine threshold-triggered provider/mailbox receipt.
+  destination. The current Worker completed 504 post-deployment schedules with
+  zero exceptions, while both individual and aggregate Email Sending analytics
+  returned zero events across the latest 30-day window. No complete retained
+  production UTC-day report exists. AC-209 now requires only a genuine
+  threshold-triggered provider/mailbox receipt.
   AC-211 still requires a complete
   production UTC day with at least 200 command/RPC/acceptance samples, five
   attained SLOs, and daily queue/DLQ counts. The earliest eligible day is
   2026-09-07 UTC and collection can run after `2026-09-08T00:00:00Z`.
-  Google/test identities and
-  deployed Supabase Auth/RLS/IdP browser E2E remain required for AC-265, and
+  Both hosted provider catalogs remain HTTP 200 with Google
+  `temporarily_unavailable`. Google Cloud terms, the business Web OAuth client,
+  staging provider configuration, test identities, and deployed Supabase
+  Auth/RLS/IdP browser E2E remain required for AC-265, and
   VoiceOver/Safari plus NVDA/Firefox manual smoke remains required for AC-266.
   This blocks dependency-locked Slice 10. Evidence:
   `.memory/wiki/specs/audits/phase-02-slice-09-qa-green.md` and

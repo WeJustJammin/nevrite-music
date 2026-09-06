@@ -24,6 +24,7 @@ export * from './operational-release-evidence-browser.ts';
 export * from './operational-release-evidence-collector.ts';
 export * from './operational-release-evidence-common.ts';
 export * from './operational-release-evidence-observability.ts';
+export * from './operational-release-evidence-hosted-report.ts';
 
 export const OperationalReleaseEvidenceExpectedIdentitySchema = z
   .object({

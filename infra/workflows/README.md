@@ -37,8 +37,10 @@ filesystem and validation operations.
 - `verify-content-schema-registry-release-evidence.ts` validates the strict S09
   production-observability, hosted-E2E, and manual-accessibility sidecar against
   independently supplied immutable build/deployment/origin identity and
-  recomputes every referenced report digest inside an approved root. It performs
-  no provider calls and a pass does not replace protected-workflow source review.
+  streams the approved report tree within path-derived entry/depth budgets, then
+  recomputes every referenced digest from descriptor-pinned bounded reads. It
+  performs no provider calls and a pass does not replace protected-workflow
+  source review.
 - `verify-content-schema-registry-slo-source.ts` proves the requested source SHA,
   production deployment, successful production status, and complete UTC-day
   ordering through bounded GitHub deployment API reads.

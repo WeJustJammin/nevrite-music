@@ -483,7 +483,7 @@
   `3bf66a610b013bf9600889780ee26319559fb31c`. CI `34013034252` and staging
   `34013296132` passed. Protected production run `34016439881` reached the new
   permission check and failed with `Cloudflare Account Analytics permission
-  check failed` before migrations or deployment. Existing production Worker
+check failed` before migrations or deployment. Existing production Worker
   version `9bd444fe-e7ed-499c-88f5-a3a8762ddb5c` remained active at 100%.
   Public staging and production provider catalogs remain HTTP `200`. Business
   Wrangler OAuth can read Queue Analytics, but its scope cannot read Workers
@@ -504,7 +504,7 @@
   `ccfefa7862900357586fef9031b314e7b30989b4`; CI `34019423084` and staging
   `34019696293` passed. Protected production `34019780775` stopped before
   migration/deployment and safely classified Account Analytics as `malformed
-  response`; Workers Observability passed. Cloudflare's documented successful
+response`; Workers Observability passed. Cloudflare's documented successful
   GraphQL envelope permits `errors: null`, while the verifier rejected every
   non-array value. Regression RED failed 1/18 with `invalid errors envelope`;
   GREEN passes 18/18 after accepting `null`. AC209 remains open; Slice 09 stays
@@ -566,6 +566,25 @@
   inbound Email Routing change, manual email dispatch, or synthetic threshold
   is warranted. AC209 is reduced to the genuine threshold-triggered
   provider/mailbox receipt; Slice 09 remains 279/283.
+
+- 2026-09-06 AC209/AC265 focused remediation: current production Worker version
+  `a726691a-64bc-47e5-bc5e-6b52088efbff` recorded 504 successful scheduled
+  invocations after deployment with zero script exceptions. Cloudflare's
+  zone-level `emailSendingAdaptive` individual and aggregate queries returned
+  zero outbound events across the latest 30-day window ending
+  `2026-09-06T20:37:15.119Z`; AC209 therefore has no genuine provider receipt
+  to retain. Fresh staging and production provider-catalog requests returned
+  HTTP 200 at `2026-09-06T20:43:30.654Z`, with Google still
+  `temporarily_unavailable`. No threshold, traffic, OAuth state, or identity was
+  synthesized. AC265 retained-report verification now parses a strict redacted
+  hosted body, binds it to protected release identity, streams the fixed report
+  tree, and pins each bounded read to one descriptor and byte buffer. It rejects
+  symlinks, special files, and unreferenced evidence. Focused
+  regression RED failed 7/24 checks; GREEN passes 54/54. This hardens future
+  evidence without claiming a hosted run. Final `pnpm validate` passes 433
+  Vitest files / 3,248 tests at 100% coverage, 102/102 Playwright checks, and all
+  remaining repository gates. AC209 and AC265 remain open; Slice 09 stays
+  279/283.
 
 ## Depth Ratio
 
