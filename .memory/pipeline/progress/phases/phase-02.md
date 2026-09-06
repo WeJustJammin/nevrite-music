@@ -2,7 +2,7 @@
 
 **Status**: in-progress  
 **Progress**: 8/17 slices (47%)  
-**Current gate**: Slice 09 runtime parser fix is live at exact-main SHA `93c2fd837cffa89baea9d43a9f482000c5739440`; production run `34022888837` and a natural scheduled event passed. Four external acceptance criteria remain blocked at 279/283  
+**Current gate**: The latest verified production candidate is exact-main SHA `dea90c88165f44ec7bbeeb57e5e38bbb09800acb`; CI `34023766963`, staging `34024060321`, protected production run `34028028367` / deployment `6291955682`, artifact `9987714292`, API Worker `5d6a9bde-5b51-46f3-91df-19cfc9b8553d`, and web Worker `64b355fe-a5e8-446a-8250-124e6f4b49a7` passed or are verified. Protected secret verification passed and `CLOUDFLARE_PLATFORM_QUEUE_ID` is set and verified. The AC211 collector exists in the current worktree but is not merged or deployed, and no complete retained production UTC-day report exists. Four external acceptance criteria remain blocked at 279/283  
 **Plan**: [Phase 2 plan](../../../wiki/specs/phases/phase-2.md)  
 **Updated**: 2026-09-06  
 **Prior remote evidence**: Before this remediation, PR #9 head `67264c5e9b5196d00ac3f0aa272896a010c872d7` produced synthetic merge `a79dfe30db60e4f54024f064fc2fdf2d01033919` and passing CI run `33841270472`. That run is not evidence for the remediation; no merge or deployment is claimed
@@ -47,6 +47,15 @@ two consecutive successful scheduled executions at `06:31:00.649` and
 3,148 tests at 100% coverage, 102 Playwright checks, and 45 pgTAP files / 1,678
 tests. No genuine alert email has been delivered, so AC209 remains open on its
 receipt requirement rather than its provider-deployment requirement.
+
+The 2026-09-06 AC211 collector candidate is implemented in the current worktree
+but is not merged or deployed. Full `pnpm validate` passes 432/432 Vitest files /
+3,233/3,233 tests at 100% coverage and 102/102 Playwright checks. The candidate does
+not produce a release claim: no complete retained production UTC-day report
+exists, so AC211 remains open. AC209 still requires a genuine provider/mailbox
+receipt; AC265 still requires business-owned Google OAuth/test identities and
+the complete hosted matrix; AC266 still requires the manual assistive-technology
+browser pairs. Slice 09 remains 279/283 and Phase 2 remains 8/17.
 
 The auth-provider transport is also deployed and live-verified. PR #20 fixed
 the cached Worker app's stale default fetch context. After two exact-main runs

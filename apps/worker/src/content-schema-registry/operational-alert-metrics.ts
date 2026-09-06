@@ -17,10 +17,13 @@ type StructuredEvent = Readonly<{
   durationMs?: number;
   errorCode?: string;
   eventName?: string;
+  metrics?: unknown;
   outcome?: string;
   retryable?: boolean;
   timestamp?: string;
 }>;
+
+const MIGRATION_DLQ_TOTAL = 'cms.migration.dlq.total' as const;
 
 const record = (value: unknown): Record<string, unknown> | undefined =>
   typeof value === 'object' && value !== null && !Array.isArray(value)
@@ -62,6 +65,24 @@ const count = (
 const errorIncludes = (event: StructuredEvent, value: string): boolean =>
   typeof event.errorCode === 'string' && event.errorCode.includes(value);
 
+const migrationDlqTotal = (
+  events: readonly StructuredEvent[],
+): number | undefined => {
+  const migrations = events.filter(
+    (event) => event.eventName === 'cms.registry.migration',
+  );
+  if (migrations.length === 0) return undefined;
+
+  let total = 0;
+  for (const event of migrations) {
+    const metrics = record(event.metrics);
+    const value = metrics?.[MIGRATION_DLQ_TOTAL];
+    if (!finite(value)) return undefined;
+    total += value;
+  }
+  return total;
+};
+
 export const buildContentSchemaRegistryOperationalSnapshot = (
   input: SnapshotInput,
 ): ContentSchemaRegistryOperationalSnapshot => {
@@ -72,6 +93,7 @@ export const buildContentSchemaRegistryOperationalSnapshot = (
     const at = timestamp(event);
     return at !== undefined && at >= input.now - 86_400_000 && at <= input.now;
   });
+
   const current = day.filter((event) => {
     const at = timestamp(event);
     return at !== undefined && at >= input.now - 300_000;
@@ -92,15 +114,7 @@ export const buildContentSchemaRegistryOperationalSnapshot = (
     day,
     (event) => event.eventName === 'cms.registry.queue_attempt',
   );
-  const dlqTransitions = count(
-    day,
-    (event) =>
-      event.eventName === 'cms.registry.migration' &&
-      event.outcome === 'failure' &&
-      event.retryable === true &&
-      finite(event.attempt) &&
-      event.attempt >= 4,
-  );
+  const dlqTransitions = migrationDlqTotal(day);
   const retryAttempts = current
     .filter(
       (event) =>
@@ -144,7 +158,7 @@ export const buildContentSchemaRegistryOperationalSnapshot = (
     ...(protectedRpcP95Ms === undefined ? {} : { protectedRpcP95Ms }),
     ...(acceptanceP99Ms === undefined ? {} : { acceptanceP99Ms }),
     ...(queueFirstAttemptP95Ms === undefined ? {} : { queueFirstAttemptP95Ms }),
-    ...(queueAttempts > 0
+    ...(queueAttempts > 0 && dlqTransitions !== undefined
       ? { dailyDlqRate: dlqTransitions / queueAttempts }
       : {}),
   };

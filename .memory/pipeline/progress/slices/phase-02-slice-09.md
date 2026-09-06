@@ -541,6 +541,20 @@
   remains open because no threshold fired and no genuine provider/mailbox
   receipt exists; Slice 09 stays 279/283.
 
+- 2026-09-06 AC211 collector validation candidate: the collector, provider,
+  and source-verifier implementation exists in the current worktree but is not
+  merged or deployed. Full `pnpm validate` passes 432/432 Vitest files,
+  3,233/3,233 tests at 100% coverage, and 102/102 Playwright checks. The
+  latest verified production candidate is exact main SHA
+  `dea90c88165f44ec7bbeeb57e5e38bbb09800acb`; CI `34023766963`, staging
+  `34024060321`, protected production run `34028028367` / deployment
+  `6291955682`, artifact `9987714292`, API Worker
+  `5d6a9bde-5b51-46f3-91df-19cfc9b8553d`, and web Worker
+  `64b355fe-a5e8-446a-8250-124e6f4b49a7` are verified. Protected secret
+  verification passed and `CLOUDFLARE_PLATFORM_QUEUE_ID` is set and verified;
+  no complete retained production UTC-day report exists, so AC211 remains open
+  and Slice 09 stays 279/283.
+
 ## Depth Ratio
 
 - Verified acceptance items: 279/283.
@@ -548,8 +562,8 @@
 
 ## Blocking release evidence
 
-- P2-S09-AC-209: merge the GraphQL success-envelope parser fix, pass exact-main production preflight with the environment token, and retain a genuine post-configuration redacted live-delivery receipt. If the fixed parser reports a true permission/resource failure, replace the token with Account / Workers Observability / Write plus Account / Account Analytics / Read. Earlier exact-SHA provider deployment and two consecutive successful scheduled evaluations remain verified.
-- P2-S09-AC-211: retain a complete production UTC-day with at least 200 command/RPC/acceptance samples, all five SLO results, and daily queue/DLQ counts.
+- P2-S09-AC-209: retain a genuine post-configuration redacted live-delivery receipt. Exact-main production preflight, protected secret verification, and the provider deployment candidate are verified, but no genuine provider/mailbox receipt exists.
+- P2-S09-AC-211: the collector candidate is implemented and locally validated but is not merged or deployed; retain a complete production UTC-day with at least 200 command/RPC/acceptance samples, all five SLO results, and daily queue/DLQ counts.
 - P2-S09-AC-265: accept the Google Cloud terms, configure the business-owned
   Google OAuth client and authorized non-production identities, then retain the
   complete deployed Supabase Auth/RLS/RPC/Worker/web browser E2E. The provider

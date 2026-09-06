@@ -5,11 +5,20 @@
 - **P2-S09 external release evidence** (2026-09-03) — Slice 09 is locally
   green at 279/283, and its prior exact-SHA infrastructure execution is
   resolved. The 2026-09-05 follow-up implements the twelve-condition production
-  operational-alert boundary, but AC-209 still requires an exact-SHA deployment
-  with the production-only scoped Cloudflare observability token and a retained
-  post-configuration redacted delivery receipt. AC-211 still requires a
-  complete production UTC day with at least 200 command/RPC/acceptance samples,
-  five attained SLOs, and daily queue/DLQ counts. Google/test identities and
+  operational-alert boundary, and the 2026-09-06 AC211 collector candidate is
+  locally validated but remains unmerged and undeployed. Full `pnpm validate`
+  passes 432/432 Vitest files, 3,233/3,233 tests at 100% coverage, and 102/102
+  Playwright checks. The latest verified production candidate is exact SHA
+  `dea90c88165f44ec7bbeeb57e5e38bbb09800acb`; CI `34023766963`, staging
+  `34024060321`, protected production run `34028028367` / deployment
+  `6291955682`, artifact `9987714292`, API Worker
+  `5d6a9bde-5b51-46f3-91df-19cfc9b8553d`, and web Worker
+  `64b355fe-a5e8-446a-8250-124e6f4b49a7` are verified. Protected secret
+  verification passed and `CLOUDFLARE_PLATFORM_QUEUE_ID` is set and verified;
+  no complete retained production UTC-day report exists. AC-209 still requires
+  a genuine provider/mailbox receipt. AC-211 still requires a complete
+  production UTC day with at least 200 command/RPC/acceptance samples, five
+  attained SLOs, and daily queue/DLQ counts. Google/test identities and
   deployed Supabase Auth/RLS/IdP browser E2E remain required for AC-265, and
   VoiceOver/Safari plus NVDA/Firefox manual smoke remains required for AC-266.
   This blocks dependency-locked Slice 10. Evidence:

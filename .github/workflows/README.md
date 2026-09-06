@@ -7,6 +7,8 @@
   verification.
 - `deploy-production.yml` — manually initiated, protected promotion of the
   staging-verified artifact.
+- `collect-production-ac211.yml` — manually initiated, protected collection of
+  one complete production UTC day of redacted AC211 SLO evidence.
 
 ## Ownership
 
@@ -26,6 +28,8 @@ the completed staging run ID, its full source SHA, and an explicit confirmation.
 - Pin third-party actions by full commit digest.
 - Grant minimum workflow permissions.
 - Scope deployment secrets to the final deploy steps.
+- Scope observability credentials to the protected AC211 collection step and
+  upload reports only after the collector succeeds.
 - Make promotion evidence before production deployment and after its source gate.
 - Run the identity and protected-environment preflight before the production job
   references the `production` environment.

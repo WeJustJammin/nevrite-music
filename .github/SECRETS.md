@@ -20,7 +20,9 @@ distinct values, plus the production-only
 `CLOUDFLARE_OBSERVABILITY_API_TOKEN`. That token is restricted to the WeJammin
 account with Workers Observability Write and Account Analytics Read; it must not
 have Workers Scripts Edit. The scheduled S09 alert boundary uses it only to
-read structured Workers Logs and Queue metrics. Required reviewers,
+read structured Workers Logs and Queue metrics. The manual AC211 collection
+workflow uses the same read-only scopes to assemble bounded aggregate evidence;
+it never retains raw provider responses. Required reviewers,
 main-branch restrictions, and serialized deployment concurrency remain in
 force. Staging values must never be copied into production or vice versa.
 The protected production workflow exercises both provider APIs with
@@ -52,7 +54,7 @@ tokens; never reuse the interactive Wrangler OAuth credential in CI.
 
 ## Environment variables
 
-Non-secret GitHub environment variables include `CLOUDFLARE_ACCOUNT_ID`, `STAGING_WEB_ORIGIN`, `STAGING_API_ORIGIN`, `SUPABASE_PROJECT_REF`, and `SUPABASE_URL`. Production also records `STAGING_SUPABASE_PROJECT_REF` so promotion can independently match staging migration evidence to the configured staging project. Browser-safe application values are variables rather than secrets: `PUBLIC_APP_ORIGIN`, `PUBLIC_SUPABASE_URL`, and `PUBLIC_SUPABASE_PUBLISHABLE_KEY`. Administrative keys and database passwords remain secrets. No third-party application-provider credential is authorized.
+Non-secret GitHub environment variables include `CLOUDFLARE_ACCOUNT_ID`, `STAGING_WEB_ORIGIN`, `STAGING_API_ORIGIN`, `SUPABASE_PROJECT_REF`, and `SUPABASE_URL`. Production also records `CLOUDFLARE_PLATFORM_QUEUE_ID` for the AC211 Queue Analytics query and `STAGING_SUPABASE_PROJECT_REF` so promotion can independently match staging migration evidence to the configured staging project. Browser-safe application values are variables rather than secrets: `PUBLIC_APP_ORIGIN`, `PUBLIC_SUPABASE_URL`, and `PUBLIC_SUPABASE_PUBLISHABLE_KEY`. Administrative keys and database passwords remain secrets. No third-party application-provider credential is authorized.
 
 ## Cost control
 

@@ -1,11 +1,11 @@
 # WeJammin - Living Architecture Map
 
 **Last Updated:** 2026-09-06  
-**Implementation scope:** Phase 1 operational foundation plus Phase 2 Slices 01–09 identity access, authority, organizations, profile ownership, public profile/portfolio delivery, governed settings and admin workspaces, the content-schema/block registry, and its production operational-alert boundary  
+**Implementation scope:** Phase 1 operational foundation plus Phase 2 Slices 01–09 identity access, authority, organizations, profile ownership, public profile/portfolio delivery, governed settings and admin workspaces, the content-schema/block registry, its production operational-alert boundary, and protected AC211 evidence collection  
 **Deployment status:** The Slice 09 product surface, scheduled Cloudflare telemetry, Queue DLQ, Supabase alert-state, Email Sending adapters, and repaired auth-provider transport are live through exact SHA `93c2fd837cffa89baea9d43a9f482000c5739440`. Exact-main CI `34022522801`, staging `34022811556`, and protected production `34022888837` passed; a natural post-deploy scheduled event completed with outcome `ok` and zero exceptions. Four environment-owned acceptance receipts keep Slice 09 at 279/283 and prevent Slice 10 from starting.  
 **Purpose:** Evidence-backed map of the code currently on disk: entry points, module boundaries, contracts, persistence authority, Cloudflare bindings, and request/data flows.
 
-> This document maps implemented behavior, not the larger product architecture described in `.memory/wiki/specs/2026-08-02-architecture-design.md`. Generated output (`dist/`, `.astro/`, coverage), dependency trees (`node_modules/`), and generated Cloudflare ambient declarations are excluded from the tree. Slice 07 adds governed settings; Slice 08 adds the private admin authority and workspace; Slice 09 adds eight `CMS-03A` routes, twelve private content-schema/block tables, a server-first modeling workbench, a fenced activation/migration consumer, and a fail-closed scheduled operational-alert pipeline. The Slice 09 local quality gate is green, but four environment-owned release checks keep it at 279/283 and prevent Slice 10 from starting (`.memory/pipeline/progress/slices/phase-02-slice-09.md`; `.memory/pipeline/progress/verification/2026-09-03-slice-09-external-infrastructure.md`). `CFG-05A-01` through `CFG-05A-04`, `CFG-05B-01`, `CFG-05B-04`, and the `read_audit` branch of `CFG-05B-05` are active. `CFG-05B-02`, `CFG-05B-03`, and `run_diagnostic` remain deferred/unmounted (`.memory/pipeline/progress/slices/phase-02-slice-08.md`; `.memory/wiki/operations/runbooks/platform-configuration.md`).
+> This document maps implemented behavior, not the larger product architecture described in `.memory/wiki/specs/2026-08-02-architecture-design.md`. Generated output (`dist/`, `.astro/`, coverage), dependency trees (`node_modules/`), and generated Cloudflare ambient declarations are excluded from the tree. Slice 07 adds governed settings; Slice 08 adds the private admin authority and workspace; Slice 09 adds eight `CMS-03A` routes, twelve private content-schema/block tables, a server-first modeling workbench, a fenced activation/migration consumer, a fail-closed scheduled operational-alert pipeline, and a manual protected AC211 evidence collector. The collector exists on disk, but no eligible production UTC-day report has been retained. Four environment-owned release checks keep Slice 09 at 279/283 and prevent Slice 10 from starting (`.memory/pipeline/progress/slices/phase-02-slice-09.md`; `.memory/pipeline/progress/verification/2026-09-03-slice-09-external-infrastructure.md`). `CFG-05A-01` through `CFG-05A-04`, `CFG-05B-01`, `CFG-05B-04`, and the `read_audit` branch of `CFG-05B-05` are active. `CFG-05B-02`, `CFG-05B-03`, and `run_diagnostic` remain deferred/unmounted (`.memory/pipeline/progress/slices/phase-02-slice-08.md`; `.memory/wiki/operations/runbooks/platform-configuration.md`).
 
 ---
 
@@ -715,7 +715,10 @@
 │   │   ├── read-production-candidate.sh
 │   │   ├── README.md
 │   │   ├── record-staging-artifacts.sh
+│   │   ├── collect-content-schema-registry-slo-evidence.ts
+│   │   ├── content-schema-registry-slo-provider.ts
 │   │   ├── verify-ci-release-gates.sh
+│   │   ├── verify-content-schema-registry-slo-source.ts
 │   │   ├── verify-performance-evidence.ts
 │   │   ├── verify-production-candidate.sh
 │   │   ├── verify-staging-migration-evidence.mjs
@@ -738,6 +741,7 @@
 │   │       └── action.yml
 │   ├── workflows
 │   │   ├── ci.yml
+│   │   ├── collect-production-ac211.yml
 │   │   ├── deploy-production.yml
 │   │   ├── deploy-staging.yml
 │   │   └── README.md
@@ -1051,6 +1055,7 @@ Together, the base tree and delta are the current inventory of the listed source
 | `apps/worker/src/content-schema-registry/production*.ts`                                                                               | Adapt registry reads and commands to named service-role `platform_api` RPCs, validate canonical responses, verify release signatures/nonces before JSON parsing, and emit redacted operation telemetry.                                                     |
 | `apps/worker/src/content-schema-registry/migration-worker-*.ts`                                                                        | Consume schema-activation events through plan validation, fenced event and plan leases, dry-run/backfill/verification, activation reconciliation, rollback, full-identity ACK/release/dead-letter, and typed retry/terminal outcomes.                       |
 | `apps/worker/src/content-schema-registry/operational-alert-*.ts`                                                                       | Aggregate redacted registry logs plus Queue and database state, evaluate all twelve alert conditions, claim a deduplicated alert receipt, deliver through Cloudflare Email Sending, and complete the receipt without exposing claim tokens or payload data. |
+| `infra/workflows/{verify-content-schema-registry-slo-source,content-schema-registry-slo-provider,collect-content-schema-registry-slo-evidence}.ts` | Verify exact production deployment chronology, collect bounded source-SHA Workers Observability and Queue Analytics data, validate locked AC211 sample/SLO constraints, and atomically publish three digest-linked redacted reports.                  |
 | `apps/web/astro.config.mjs:35-99`                                                                                                      | Configures Astro SSR, React, Cloudflare, and the post-build outer security wrapper protecting adapter and static-asset responses.                                                                                                                           |
 | `apps/web/src/pages/app/infrastructure/index.astro:18-138`                                                                             | Server-authorized infrastructure list route; redirects unauthenticated users, returns non-disclosing failures, projects permitted props, then hydrates the bounded workbench with `client:visible`.                                                         |
 | `apps/web/src/pages/app/infrastructure/[recordId].astro:18-140`                                                                        | Equivalent record-detail SSR route with validated record identity and the same authority/projection boundary.                                                                                                                                               |
@@ -1221,6 +1226,7 @@ Release artifacts, gate sets, migration evidence, bundle/p95 evidence, promotion
 4. PostgreSQL owns immutable definitions and versions, relation and block compatibility, dry-run evidence, activation serialization, last-known-good rollback, audit/outbox/idempotency effects, and all protected reads/mutations. Active-state changes commit only after the exact artifact and migration gates pass (`supabase/migrations/20260902080000_content_schema_registry_authority.sql`).
 5. The async consumer claims the activation event with a fresh UUID whose SHA-256 digest and server-time lease are persisted. Plan work is separately leased and progresses through dry-run, batch, verification, activation reconciliation, or rollback. Release, ACK, and dead-letter RPCs fence on the full event identity plus claim token; an expired lease may be taken over, but a stale owner cannot mutate or finalize the event (`apps/worker/src/content-schema-registry/migration-worker-runtime.ts`; `migration-worker-engine.ts`; `migration-worker-results.ts`; `supabase/tests/phase_02_slice_09_schema/005f-worker-event-claim-lease.sqlinc`).
 6. Each production cron queries the bounded Cloudflare Workers Logs window for redacted `cms.registry.*` events, reads the production DLQ backlog through Cloudflare GraphQL, and reads current activation/outbox/nonce state through a service-only Supabase RPC. The package evaluator checks twelve fixed alert conditions. A breached condition must win a database claim before the Worker sends a redacted message through `PLATFORM_ALERT_EMAIL`; successful delivery stores a digest-only receipt. Missing bindings, malformed provider responses, oversized responses, claim races, and delivery/completion failures all fail closed (`apps/worker/src/content-schema-registry/operational-alert-production.ts`; `operational-alert-runtime.ts`; `operational-alert-metrics.ts`; `packages/observability/src/content-schema-registry-alert-policy.ts`; `supabase/migrations/20260905080000_content_schema_registry_operational_alerts.sql`).
+7. An operator may dispatch `collect-production-ac211.yml` on `main` after a complete UTC day. The preflight proves the exact successful production deployment through read-only GitHub APIs; the protected job then paginates source-bound Workers Observability events, aggregates Queue Analytics attempts/DLQ results, enforces exact service/operation/outcome identities and strict SLO limits, and publishes only `slo/dataset.json`, `slo/measurement.json`, and `slo/ac211-slo.json`. No artifact uploads on collection failure, and no raw provider payload is retained (`.github/workflows/collect-production-ac211.yml`; `infra/workflows/verify-content-schema-registry-slo-source.ts`; `content-schema-registry-slo-provider.ts`; `collect-content-schema-registry-slo-evidence.ts`).
 
 ---
 
@@ -1457,13 +1463,22 @@ codes, time windows, and content digests
 `apps/worker/src/content-schema-registry/operational-alert-*.ts`;
 `supabase/migrations/20260905080000_content_schema_registry_operational_alerts.sql`).
 
+AC211 collection is a separate read-only, reviewer-gated evidence path. GitHub
+deployment metadata establishes source/window chronology; Cloudflare Workers
+Observability supplies bounded sanitized duration samples; Queue Analytics
+supplies adaptive attempt/DLQ aggregates; strict contracts bind identity,
+counts, percentiles, report paths, and digests before atomic publication
+(`.github/workflows/collect-production-ac211.yml`;
+`infra/workflows/*content-schema-registry-slo*.ts`;
+`packages/contracts/src/content-schema-registry/operational-release-evidence-collector.ts`).
+
 ---
 
 ## 5. Current Boundaries and Maintenance Rules
 
 - Phase 1 is complete and validated. No Phase 1 quality/readiness gate remains open; live production deployment was intentionally not required or performed (`.memory/wiki/specs/audits/phase-1-validation.md:13,170-179`).
 - The implemented product surface is the operational foundation plus Phase 2 Slices 01–09: authentication/session/bootstrap, login-method linking and duplicate-account merge, person/facet/alias/acting-context authority, organization/type-assignment/membership-tenure authority, shadow-party/invitation/claim-proof authority, viewer-safe public profile/credit-backed portfolio authority, governed setting definition/effective-value/change/rollback authority, the admin shell/task inbox/capability-grant/audit read surface, and content-schema/block-registry authoring, activation, release, migration recovery, and scheduled alerting. EPK/share/PDF, flag/experiment/kill-switch runtime operations, admin search/bulk/run-diagnostic branches, editorial entry/composition/public-delivery surfaces, and later music-product domains remain unmounted specifications.
-- Slice 09 is locally QA-GREEN and deployed through exact SHA `b22a914327291e2895bbcc7dc8f60837c8faa0d6`, but remains release-blocked at 279/283 on a genuine alert delivery receipt, complete UTC-day SLO/DLQ evidence, configured Google OAuth/test identities plus deployed Supabase Auth/RLS/RPC/Worker/web E2E, and the two required manual screen-reader/browser pairs. Google remains disabled in both Supabase projects; the business Google Cloud account requires owner acceptance of its Terms of Service before OAuth client setup. Any later promotion must continue to verify exact source SHA, migration, contracts, artifact identity, protected review, and retained evidence before activation.
+- Slice 09 is locally QA-GREEN and its latest verified production runtime is exact SHA `dea90c88165f44ec7bbeeb57e5e38bbb09800acb`, but it remains release-blocked at 279/283 on a genuine alert delivery receipt, complete UTC-day SLO/DLQ evidence, configured Google OAuth/test identities plus deployed Supabase Auth/RLS/RPC/Worker/web E2E, and the two required manual screen-reader/browser pairs. The protected AC211 collector is implemented, but no complete production report has been retained. Google remains disabled in both Supabase projects; the business Google Cloud account requires owner acceptance of its Terms of Service before OAuth client setup. Any later promotion must continue to verify exact source SHA, migration, contracts, artifact identity, protected review, and retained evidence before activation.
 - Upload admission/completion, dynamic webhooks, diagnostics authority, and readiness probes have complete boundaries/tests but are not activated by the default exported Worker dependency composition. Any activation must inject real verified ports and preserve the existing failure behavior.
 - `packages/domain` and `packages/integrations` currently contain only boundary READMEs. They must not be described as runtime services until implementation files exist.
 - Refresh this map after a phase validation pass or any change to routes, bindings, package edges, migrations/RPCs, or runtime composition. Verify with `pnpm validate`, `pnpm contracts:check`, `pnpm db:types:check`, and `git diff --check` as appropriate.

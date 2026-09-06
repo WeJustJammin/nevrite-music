@@ -39,6 +39,15 @@ filesystem and validation operations.
   independently supplied immutable build/deployment/origin identity and
   recomputes every referenced report digest inside an approved root. It performs
   no provider calls and a pass does not replace protected-workflow source review.
+- `verify-content-schema-registry-slo-source.ts` proves the requested source SHA,
+  production deployment, successful production status, and complete UTC-day
+  ordering through bounded GitHub deployment API reads.
+- `content-schema-registry-slo-provider.ts` performs bounded Workers
+  Observability pagination and Queue Analytics aggregation, normalizing only the
+  allowlisted fields needed by AC211.
+- `collect-content-schema-registry-slo-evidence.ts` validates exact
+  service/operation/event identity, recomputes the locked percentiles and DLQ
+  ratio, and atomically publishes three digest-linked redacted reports.
 
 ## Conventions
 
@@ -64,8 +73,9 @@ with a local fake and never contact Supabase. Contract coverage lives in
 ## Extension
 
 Add one focused script per repeatable workflow concern. Keep provider calls in
-the workflow deploy steps, pass identity through explicit environment values,
-and preserve `set -euo pipefail` in every shell entrypoint. Production promotion
+bounded adapters invoked by their protected workflow steps, pass identity
+through explicit environment values, and preserve `set -euo pipefail` in every
+shell entrypoint. Production promotion
 must retain its manual trigger, preflight identity/protection checks, and
 protected environment gate.
 
