@@ -113,6 +113,29 @@ describe('production operational alert dependencies', () => {
     expect(JSON.stringify(requests)).not.toContain('admin.wejammin@gmail.com');
   });
 
+  it('accepts the documented Queue Analytics success envelope with null errors', async () => {
+    const dependencies = createProductionOperationalAlertDependencies(
+      environment,
+      nativeFetch({
+        logs: { result: { events: { events: [] } }, success: true },
+        queue: {
+          data: {
+            viewer: {
+              accounts: [
+                { queueBacklogAdaptiveGroups: [{ avg: { messages: 0 } }] },
+              ],
+            },
+          },
+          errors: null,
+        },
+      }),
+    );
+
+    await expect(dependencies.loadSnapshot(runInput)).resolves.toMatchObject({
+      dlqDepth: 0,
+    });
+  });
+
   it('reports a safe HTTP status when a provider rejects a request', async () => {
     const fetchImpl = vi.fn<typeof fetch>().mockImplementation((url) => {
       const target = String(url);
