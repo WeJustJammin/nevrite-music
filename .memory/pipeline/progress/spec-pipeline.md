@@ -70,8 +70,8 @@
   See `.memory/wiki/specs/audits/phase-1-validation.md`.
 - **CURRENT IMPLEMENTATION:** Phase 2 Slices 01–08 are complete. Slice 09 is
   implemented and locally QA-GREEN at 279/283, including the follow-up
-  production operational-alert provider boundary and an unmerged/un-deployed
-  AC211 collector candidate; depth ratio remains `0.986` because the required
+  production operational-alert provider boundary and the deployed protected
+  AC211 collector; depth ratio remains `0.986` because the required
   external evidence has not been claimed. Slice 10 remains dependency-locked. See
   `.memory/pipeline/progress/phases/phase-02.md` and
   `.memory/pipeline/progress/slices/phase-02-slice-09.md`.
@@ -125,14 +125,15 @@
   reproduced the verifier failure. Parser-fix RED failed 1/18; GREEN passes
   18/18. Missing Account Analytics permission is not the confirmed cause.
 - **LATEST PRODUCTION EVIDENCE:** Exact `main` SHA
-  `dea90c88165f44ec7bbeeb57e5e38bbb09800acb`; CI `34023766963`, staging
-  `34024060321`, and protected production run `34028028367` / deployment
-  `6291955682` are verified. Artifact `9987714292`, API Worker
-  `5d6a9bde-5b51-46f3-91df-19cfc9b8553d`, web Worker
-  `64b355fe-a5e8-446a-8250-124e6f4b49a7`, protected secret verification, and
-  `CLOUDFLARE_PLATFORM_QUEUE_ID` configuration are verified. The AC211
-  collector exists in the current worktree but is not merged or deployed, and
-  no complete retained production UTC-day report exists. AC211 remains open.
+  `621f7b99745318948720afa4d670ae1a707d3365`; CI `34031918191`, staging
+  `34032219768`, and protected production run `34032282370` / deployment
+  `6292744330` are verified. Artifact `9989024106`, API Worker
+  `a726691a-64bc-47e5-bc5e-6b52088efbff`, web Worker
+  `18b0287a-8af7-47e8-ad43-e5bdc29a10ab`, protected secret verification, and
+  `CLOUDFLARE_PLATFORM_QUEUE_ID` configuration are verified. The protected
+  AC211 collector is deployed. No complete retained production UTC-day report
+  exists; the earliest eligible day is 2026-09-07 UTC and collection can run
+  after `2026-09-08T00:00:00Z`. AC211 remains open.
 - **NEXT:** retain a genuine post-configuration redacted alert delivery receipt.
   Keep Slice 09 blocked at 279/283 and Phase 2 at 8/17 until AC209, the complete
   UTC-day/200-sample SLO and DLQ evidence for AC211, owner acceptance of the

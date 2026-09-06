@@ -541,19 +541,21 @@
   remains open because no threshold fired and no genuine provider/mailbox
   receipt exists; Slice 09 stays 279/283.
 
-- 2026-09-06 AC211 collector validation candidate: the collector, provider,
-  and source-verifier implementation exists in the current worktree but is not
-  merged or deployed. Full `pnpm validate` passes 432/432 Vitest files,
+- 2026-09-06 AC211 collector production deployment: PR #29 merged the
+  collector, provider, and source-verifier implementation and it is deployed.
+  Full `pnpm validate` passes 432/432 Vitest files,
   3,233/3,233 tests at 100% coverage, and 102/102 Playwright checks. The
   latest verified production candidate is exact main SHA
-  `dea90c88165f44ec7bbeeb57e5e38bbb09800acb`; CI `34023766963`, staging
-  `34024060321`, protected production run `34028028367` / deployment
-  `6291955682`, artifact `9987714292`, API Worker
-  `5d6a9bde-5b51-46f3-91df-19cfc9b8553d`, and web Worker
-  `64b355fe-a5e8-446a-8250-124e6f4b49a7` are verified. Protected secret
+  `621f7b99745318948720afa4d670ae1a707d3365`; CI `34031918191`, staging
+  `34032219768`, protected production run `34032282370` / deployment
+  `6292744330`, artifact `9989024106` with digest
+  `sha256:e21aeb18405deab77f8b12d43f00903481ce16fe9580ea778425ca53fffea33a`, API Worker
+  `a726691a-64bc-47e5-bc5e-6b52088efbff`, and web Worker
+  `18b0287a-8af7-47e8-ad43-e5bdc29a10ab` are verified. Protected secret
   verification passed and `CLOUDFLARE_PLATFORM_QUEUE_ID` is set and verified;
-  no complete retained production UTC-day report exists, so AC211 remains open
-  and Slice 09 stays 279/283.
+  no complete retained production UTC-day report exists. The earliest eligible
+  window is 2026-09-07 UTC and collection can run after
+  `2026-09-08T00:00:00Z`, so AC211 remains open and Slice 09 stays 279/283.
 
 ## Depth Ratio
 
@@ -563,7 +565,7 @@
 ## Blocking release evidence
 
 - P2-S09-AC-209: retain a genuine post-configuration redacted live-delivery receipt. Exact-main production preflight, protected secret verification, and the provider deployment candidate are verified, but no genuine provider/mailbox receipt exists.
-- P2-S09-AC-211: the collector candidate is implemented and locally validated but is not merged or deployed; retain a complete production UTC-day with at least 200 command/RPC/acceptance samples, all five SLO results, and daily queue/DLQ counts.
+- P2-S09-AC-211: the protected collector is merged, deployed, and permission-verified; after `2026-09-08T00:00:00Z`, retain the complete 2026-09-07 production UTC day with at least 200 command/RPC/acceptance samples, all five SLO results, and daily queue/DLQ counts.
 - P2-S09-AC-265: accept the Google Cloud terms, configure the business-owned
   Google OAuth client and authorized non-production identities, then retain the
   complete deployed Supabase Auth/RLS/RPC/Worker/web browser E2E. The provider
