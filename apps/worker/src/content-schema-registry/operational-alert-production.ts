@@ -139,6 +139,7 @@ const queueBacklog = async (
   if (
     isRecord(payload) &&
     Object.hasOwn(payload, 'errors') &&
+    payload.errors !== null &&
     (!Array.isArray(payload.errors) || payload.errors.length > 0)
   )
     throw new Error('Invalid Queue analytics response');

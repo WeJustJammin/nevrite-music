@@ -2,25 +2,25 @@
 
 **Date**: 2026-09-06T03:00:15-04:00  
 **Trigger**: `/implement-slice` infrastructure/auth branch for Phase 2 Slice 09  
-**Verdict**: **FAIL — exact-main CI and staging are green, but protected production correctly failed before mutation because the Account Analytics response did not satisfy the verified contract; four external acceptance criteria keep Slice 09 at 279/283**
+**Verdict**: **PARTIAL PASS — exact-main CI, staging, protected production, observability permissions, migrations, and deployments are green; the scheduled runtime repeats the corrected GraphQL-envelope assumption, so a genuine alert receipt is still absent and four acceptance criteria keep Slice 09 at 279/283**
 
 ## Results
 
 | # | Gate | Result | Evidence |
 |---:|------|--------|----------|
 | 0 | Placeholder/map audit | PASS | Web surface, cross-cutting skills, commands, and project settings are populated. Matches are limited to explanatory template prose and `example.md`; no active `⚠️` map cell exists. |
-| 1 | CI/CD config | PASS | `main` HEAD `ccfefa7862900357586fef9031b314e7b30989b4` adds fixed secret-safe Cloudflare failure classes before migrations or deployment. Production remains protected and manually approved. |
-| 2 | CI/CD green | PASS | Exact-main CI run `34019423084` completed successfully: quality, database, and immutable-build jobs all passed. |
-| 3 | Environment/secrets audit | BLOCKED | Production secret metadata contains `CLOUDFLARE_OBSERVABILITY_API_TOKEN`, last updated `2026-09-06T07:07:48Z`. Exact-main production run `34019780775` proved Workers Observability access, then classified Account Analytics as `malformed response`. No secret value or provider payload was read or logged. |
-| 4 | Migrations/rollback readiness | PASS, NO MUTATION | Runs `34016439881`, `34018343506`, and `34019780775` stopped at observability preflight before hosted migrations. Last verified production remains on 34 forward-only migrations; Supabase Free recovery boundary remains unchanged. |
-| 5 | Staging deployment/health | PASS | Exact-main staging run `34019696293` passed. Direct staging API, pathless staging web origin, and production web origin remain the verified health surfaces. |
+| 1 | CI/CD config | PASS | `main` HEAD `6d33bd189a51b4e041e582feb604d5fe22ddce78` accepts Cloudflare's valid `errors: null` GraphQL success envelope while retaining fixed secret-safe diagnostics. Production remains protected and manually approved. |
+| 2 | CI/CD green | PASS | Exact-main CI run `34020909710` completed successfully: quality, database, and immutable-build jobs all passed. |
+| 3 | Environment/secrets audit | PASS | Production secret metadata contains `CLOUDFLARE_OBSERVABILITY_API_TOKEN`, last updated `2026-09-06T07:07:48Z`. Production run `34021249248` verified both Workers Observability and Account Analytics permissions. No secret value or provider payload was read or logged. |
+| 4 | Migrations/rollback readiness | PASS | Production run `34021249248` verified the remote database up to date through all 34 forward-only migrations before deployment. Supabase Free recovery boundary remains unchanged. |
+| 5 | Staging deployment/health | PASS | Exact-main staging run `34021192537` passed migration, API/web deployment, public contract, p95, and promotion-evidence gates. |
 | 6 | Auth smoke | BLOCKED | Provider catalog transport is healthy. Google, Apple, Facebook, and SoundCloud remain `temporarily_unavailable`; Google Cloud terms, business OAuth client, Supabase provider configuration, and hosted test identities remain absent. |
-| 7 | Logging/alerting | BLOCKED | Current production Worker deployment remains version `9bd444fe-e7ed-499c-88f5-a3a8762ddb5c` from `2026-09-06T04:27:21.173Z`. Exact-main `3bf66a61...` did not deploy. AC209 lacks a genuine delivered receipt. |
+| 7 | Logging/alerting | BLOCKED | Production API Worker version `e1891c96-f8d9-47e4-ac5c-0671d17d3696` and web Worker version `6565d60c-ab9f-483d-8b3c-bb44f9ad9ba5` deployed successfully. The scheduled runtime repeats the now-corrected `errors: null` rejection in its Queue Analytics parser; runtime-fix RED failed 1/29 and GREEN passes 29/29. AC209 still lacks a genuine delivered receipt. |
 | 8 | Production telemetry | BLOCKED | Business Wrangler OAuth can query Account Analytics but cannot query Workers Observability or manage API tokens. The complete production UTC-day, 200-sample minimum, five SLO results, and daily Queue/DLQ counts required by AC211 do not yet exist. |
 | 9 | Manual accessibility | BLOCKED | Automated gates remain green. Signed VoiceOver/Safari/macOS and NVDA/Firefox/Windows runs required by AC266 remain absent. |
 | 10 | Spec-pipeline integrity | PASS WITH BLOCKER | Phase 2 remains 8/17. Slice 09 remains 279/283 with depth ratio `0.986`; Slices 10–17 remain dependency-locked. |
 
-## Fail-Closed Proof
+## Historical Fail-Closed Proof
 
 Production workflow `34019780775` targeted exact source SHA
 `ccfefa7862900357586fef9031b314e7b30989b4` and staging run `34019696293`.
@@ -48,32 +48,39 @@ GraphQL success envelope. The verifier incorrectly treated any present non-array
 class: RED failed 1/18 with `invalid errors envelope`; GREEN passes 18/18 after
 accepting `null`. This parser-contract bug, not a proven token-scope defect, is
 the current root cause.
-Full `pnpm validate` passes 424 Vitest files / 3,168 tests at 100% coverage,
+Latest full `pnpm validate` passes 424 Vitest files / 3,169 tests at 100% coverage,
 102 Playwright checks, builds, bundle budgets, and API p95 smoke. One unrelated
 Slice 07 focus check flaked once during an earlier run, passed 2/2 in isolation,
 and passed in the clean full rerun.
 
+## Successful Exact-Main Promotion
+
+PR #26 merged the preflight parser fix as exact main SHA
+`6d33bd189a51b4e041e582feb604d5fe22ddce78`. CI `34020909710`, staging
+`34021192537`, and protected production `34021249248` passed. Production verified
+both Cloudflare scopes, remote migration parity, promotion identity, API Worker
+version `e1891c96-f8d9-47e4-ac5c-0671d17d3696`, web Worker version
+`6565d60c-ab9f-483d-8b3c-bb44f9ad9ba5`, and deployment artifact `9985578911`
+with digest `sha256:f81bc912c1c571dfe354aa17564ff751c05997cd6caf1f1e0be6afeac460bc8a`.
+
+The production alert runtime independently contained the same invalid
+`errors: null` assumption in its Queue Analytics reader. A focused regression
+reproduced it (RED 1/29) and the one-line parser correction passes GREEN 29/29.
+No receipt is claimed until that runtime fix reaches exact-main production and
+a threshold condition produces a real provider delivery.
+
 ## Required External Actions
 
-1. Merge the GraphQL success-envelope parser fix and rerun exact-main CI,
-   staging, and protected production without exposing the response body.
-2. If the fixed parser returns a GraphQL permission/resource or unavailable queue-field
-   class, replace the production token with one scoped to the exact account and
-   containing Account / Workers Observability / Write plus Account / Account
-   Analytics / Read. Keep it only in GitHub environment `production`.
-3. If the result identifies an invalid provider envelope, reconcile the query
-   with the documented Cloudflare GraphQL response contract before retrying.
-4. Retain a genuine redacted `platform.on_call` delivery receipt for AC209.
-5. After one complete production UTC day exists, retain the AC211 dataset and
+1. Merge and promote the scheduled-runtime Queue Analytics `errors: null` fix
+   through exact-main CI, staging, and protected production.
+2. Retain a genuine redacted `platform.on_call` delivery receipt for AC209.
+3. After one complete production UTC day exists, retain the AC211 dataset and
    SLO/DLQ report. Complete Google hosted-auth setup for AC265 and signed manual
    assistive-technology runs for AC266.
 
-The authenticated local Wrangler session cannot perform token repair: both
-user-token and account-token metadata endpoints return HTTP `403`. Cloudflare's
-[official token guide](https://developers.cloudflare.com/fundamentals/api/get-started/create-token/)
-requires token creation through an authorized token-management surface, and its
-[Analytics guide](https://developers.cloudflare.com/analytics/graphql-api/getting-started/authentication/api-token-auth/)
-specifies Account / Account Analytics / Read for GraphQL Analytics access.
+Current production evidence proves the rotated token has both required scopes;
+no further secret change is required. Do not rotate it again unless a future
+fixed diagnostic reports an actual permission or resource failure.
 
 ## Open Acceptance Criteria
 

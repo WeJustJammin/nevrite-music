@@ -2,7 +2,7 @@
 
 **Status**: in-progress  
 **Progress**: 8/17 slices (47%)  
-**Current gate**: Slice 09 production run `34019780775` failed closed before mutation because the verifier rejected Cloudflare's valid `errors: null` GraphQL success envelope. Parser fix is locally GREEN; four external acceptance criteria remain blocked at 279/283 pending exact-main retry  
+**Current gate**: Slice 09 exact-main production run `34021249248` is green, including observability permissions, migrations, and API/web deploys. The scheduled runtime repeats the corrected `errors: null` Queue Analytics bug; its fix is locally GREEN. Four external acceptance criteria remain blocked at 279/283  
 **Plan**: [Phase 2 plan](../../../wiki/specs/phases/phase-2.md)  
 **Updated**: 2026-09-06  
 **Prior remote evidence**: Before this remediation, PR #9 head `67264c5e9b5196d00ac3f0aa272896a010c872d7` produced synthetic merge `a79dfe30db60e4f54024f064fc2fdf2d01033919` and passing CI run `33841270472`. That run is not evidence for the remediation; no merge or deployment is claimed
@@ -128,5 +128,7 @@ and [2026-09-04-1255](../../../wiki/specs/audits/verify-infrastructure-2026-09-0
 - [x] Slice 09 exact-main observability preflight — CI `34013034252` and staging `34013296132` passed for `3bf66a610b013bf9600889780ee26319559fb31c`; protected production `34016439881` failed before migrations/deployment with `Cloudflare Account Analytics permission check failed`, proving the release path fails closed without the required token scope.
 - [x] Slice 09 rotated-secret retest — production secret metadata changed at `2026-09-06T07:07:48Z`; protected production `34018343506` consumed the replacement and repeated the Account Analytics failure before mutation. Workers Observability still passed, isolating the remaining fault to effective Account Analytics permission/resource scope.
 - [x] Slice 09 safe diagnostic deployment — PR #25 merged as exact main SHA `ccfefa7862900357586fef9031b314e7b30989b4`; CI `34019423084` and staging `34019696293` passed. Protected production `34019780775` classified the Account Analytics result as `malformed response` before mutation. Cloudflare's valid `errors: null` success envelope reproduced the fault; parser-fix RED failed 1/18 and GREEN passes 18/18.
+- [x] Slice 09 corrected preflight promotion — PR #26 merged as exact main SHA `6d33bd189a51b4e041e582feb604d5fe22ddce78`; CI `34020909710`, staging `34021192537`, and protected production `34021249248` passed. Observability scopes, remote migration parity, release identity, API Worker `e1891c96-f8d9-47e4-ac5c-0671d17d3696`, and web Worker `6565d60c-ab9f-483d-8b3c-bb44f9ad9ba5` are verified.
+- [x] Slice 09 scheduled-runtime parser correction — Queue Analytics repeated the invalid `errors: null` assumption. Focused RED failed 1/29; GREEN passes 29/29. Full `pnpm validate` passes 424/424 Vitest files, 3,169/3,169 tests at 100% coverage, and 102/102 Playwright checks. Exact-main promotion and a genuine post-deploy receipt remain required before AC209 can close.
 - [ ] Slice 17 close-gate `/verify-infrastructure` passes.
 - [ ] `/validate-phase` passes after every slice is complete.

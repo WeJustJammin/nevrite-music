@@ -512,6 +512,21 @@
   `pnpm validate` passes 424 Vitest files / 3,168 tests at 100% coverage, all 102
   Playwright checks, builds, bundle budgets, and API p95 smoke.
 
+- 2026-09-06 successful observability promotion and runtime follow-up: PR #26
+  merged as exact main SHA `6d33bd189a51b4e041e582feb604d5fe22ddce78`;
+  CI `34020909710`, staging `34021192537`, and protected production
+  `34021249248` passed. Production verified both Cloudflare scopes, remote
+  migration parity, release identity, API Worker version
+  `e1891c96-f8d9-47e4-ac5c-0671d17d3696`, web Worker version
+  `6565d60c-ab9f-483d-8b3c-bb44f9ad9ba5`, and artifact `9985578911`. The
+  scheduled runtime repeated the valid `errors: null` rejection in its Queue
+  Analytics parser; runtime RED failed 1/29 and GREEN passes 29/29. No manual
+  dispatch or delivery-ledger read path exists. AC209 remains open pending
+  exact-main runtime promotion and genuine mailbox/provider receipt; Slice 09
+  stays 279/283. Full `pnpm validate` passes 424 Vitest files / 3,169 tests at
+  100% coverage, all 102 Playwright checks, builds, bundle budgets, and API p95
+  smoke.
+
 ## Depth Ratio
 
 - Verified acceptance items: 279/283.

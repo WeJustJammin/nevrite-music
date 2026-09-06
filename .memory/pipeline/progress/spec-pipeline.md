@@ -75,7 +75,7 @@
   `.memory/pipeline/progress/phases/phase-02.md` and
   `.memory/pipeline/progress/slices/phase-02-slice-09.md`.
 - **CURRENT VALIDATION:** `pnpm validate` passes 424/424 Vitest files and
-  3,154/3,154 tests at 100% coverage, 102/102 Playwright tests, every workspace
+  3,169/3,169 tests at 100% coverage, 102/102 Playwright tests, every workspace
   build, bundle budgets, and the fresh immutable-Worker API p95 smoke.
   `pnpm db:verify` passes 34/34 migrations and 45/45 pgTAP files with
   1,678/1,678 assertions and exact generated types.
@@ -123,6 +123,13 @@
   Cloudflare's documented valid `errors: null` GraphQL success envelope
   reproduced the verifier failure. Parser-fix RED failed 1/18; GREEN passes
   18/18. Missing Account Analytics permission is not the confirmed cause.
+- **LATEST PRODUCTION EVIDENCE:** PR #26 merged as exact `main` SHA
+  `6d33bd189a51b4e041e582feb604d5fe22ddce78`; CI `34020909710`, staging
+  `34021192537`, and protected production `34021249248` passed. Both Cloudflare
+  scopes, remote migration parity, release identity, and API/web Worker deploys
+  are verified. The scheduled runtime contains the same `errors: null` Queue
+  Analytics assumption; runtime-fix RED failed 1/29 and GREEN passes 29/29.
+  AC209 remains open pending exact-main runtime deployment and genuine receipt.
 - **NEXT:** retain a genuine post-configuration redacted alert delivery receipt.
   Keep Slice 09 blocked at 279/283 and Phase 2 at 8/17 until AC209, the complete
   UTC-day/200-sample SLO and DLQ evidence for AC211, owner acceptance of the
