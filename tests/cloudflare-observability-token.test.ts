@@ -48,6 +48,26 @@ describe('Cloudflare observability token verification', () => {
     expect(String(analyticsInit?.body)).not.toContain(config.token);
   });
 
+  it('accepts the documented GraphQL success envelope with null errors', async () => {
+    const fetchImpl = vi
+      .fn<typeof fetch>()
+      .mockResolvedValueOnce(jsonResponse({ result: {}, success: true }))
+      .mockResolvedValueOnce(
+        jsonResponse({
+          data: {
+            viewer: {
+              accounts: [{ queueBacklogAdaptiveGroups: [] }],
+            },
+          },
+          errors: null,
+        }),
+      );
+
+    await expect(
+      verifyCloudflareObservabilityToken(config, fetchImpl),
+    ).resolves.toBeUndefined();
+  });
+
   it('fails safely when Workers Observability permission is rejected', async () => {
     const fetchImpl = vi.fn<typeof fetch>().mockResolvedValueOnce(
       jsonResponse({
@@ -156,12 +176,47 @@ describe('Cloudflare observability token verification', () => {
   );
 
   it.each([
-    new Response('not-json', { status: 200 }),
-    jsonResponse({ errors: {} }),
-    jsonResponse({ data: { viewer: { accounts: [{}] } } }),
+    {
+      analyticsResponse: new Response('not-json', { status: 200 }),
+      detail: 'invalid JSON response',
+    },
+    {
+      analyticsResponse: jsonResponse(null),
+      detail: 'invalid response envelope',
+    },
+    {
+      analyticsResponse: jsonResponse({ errors: {} }),
+      detail: 'invalid errors envelope',
+    },
+    {
+      analyticsResponse: jsonResponse({ data: null }),
+      detail: 'missing data envelope',
+    },
+    {
+      analyticsResponse: jsonResponse({ data: { viewer: null } }),
+      detail: 'missing viewer envelope',
+    },
+    {
+      analyticsResponse: jsonResponse({
+        data: { viewer: { accounts: null } },
+      }),
+      detail: 'missing accounts envelope',
+    },
+    {
+      analyticsResponse: jsonResponse({
+        data: { viewer: { accounts: [null] } },
+      }),
+      detail: 'malformed account envelope',
+    },
+    {
+      analyticsResponse: jsonResponse({
+        data: { viewer: { accounts: [{}] } },
+      }),
+      detail: 'queue analytics field unavailable',
+    },
   ])(
-    'classifies malformed Account Analytics responses without exposing their contents',
-    async (analyticsResponse) => {
+    'classifies Account Analytics $detail without exposing response contents',
+    async ({ analyticsResponse, detail }) => {
       const fetchImpl = vi
         .fn<typeof fetch>()
         .mockResolvedValueOnce(jsonResponse({ result: {}, success: true }))
@@ -170,7 +225,7 @@ describe('Cloudflare observability token verification', () => {
       await expect(
         verifyCloudflareObservabilityToken(config, fetchImpl),
       ).rejects.toThrow(
-        'Cloudflare Account Analytics permission check failed: malformed response',
+        `Cloudflare Account Analytics permission check failed: ${detail}`,
       );
     },
   );
