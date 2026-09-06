@@ -5,7 +5,8 @@ Versioned Cloudflare and Supabase policy plus bounded setup, verification, and r
 ## Contents
 
 Scripts cover database type synchronization, local database verification,
-staging health checks, and OpenAPI generation from the contract registry.
+staging health checks, production Cloudflare observability permission
+verification, and OpenAPI generation from the contract registry.
 Provider manifests and workflow policy remain in their respective top-level
 configuration directories.
 

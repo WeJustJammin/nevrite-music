@@ -728,6 +728,7 @@
 │   ├── openapi-document.mjs
 │   ├── README.md
 │   ├── sync-database-types.mjs
+│   ├── verify-cloudflare-observability.ts
 │   ├── verify-database.sh
 │   ├── verify-release-promotion.ts
 │   └── verify-staging.mjs
@@ -1111,7 +1112,7 @@ Together, the base tree and delta are the current inventory of the listed source
 | Supabase   | PostgreSQL 17/Auth/Storage/Realtime | Data API exposes only `platform_api` and `public_api`; 1,000-row cap; migrations and seed enabled                                                                                      | `supabase/config.toml:5-18,32-41,58-70,86-87,114-128,154-177`                                                          |
 | Docs app   | Static Astro app                    | React integration; consumes `@wejammin/ui`; no Cloudflare binding in its package                                                                                                       | `apps/docs/astro.config.mjs:1-9`; `apps/docs/package.json`                                                             |
 
-Secrets do not cross into the browser contract. The application environment schema admits exactly `APP_ENVIRONMENT`, `APP_RELEASE`, `SUPABASE_SECRET_KEY`, and `SUPABASE_URL`; browser keys are exactly `PUBLIC_APP_ORIGIN`, `PUBLIC_SUPABASE_PUBLISHABLE_KEY`, and `PUBLIC_SUPABASE_URL` (`packages/config/src/environment.schema.ts:57-97`). The Worker runtime additionally accepts production-only `CLOUDFLARE_ACCOUNT_ID`, `CLOUDFLARE_OBSERVABILITY_API_TOKEN`, `CLOUDFLARE_PLATFORM_DLQ_ID`, and `PLATFORM_ALERT_EMAIL` bindings. The scheduled alert boundary runs only when all four exist; the deploy script injects the token through a protected temporary secrets file and unsets it before the Wrangler subprocess exits (`apps/worker/src/async-entrypoint.ts`; `infra/workflows/deploy-api-worker.sh`; `.github/workflows/deploy-production.yml`).
+Secrets do not cross into the browser contract. The application environment schema admits exactly `APP_ENVIRONMENT`, `APP_RELEASE`, `SUPABASE_SECRET_KEY`, and `SUPABASE_URL`; browser keys are exactly `PUBLIC_APP_ORIGIN`, `PUBLIC_SUPABASE_PUBLISHABLE_KEY`, and `PUBLIC_SUPABASE_URL` (`packages/config/src/environment.schema.ts:57-97`). The Worker runtime additionally accepts production-only `CLOUDFLARE_ACCOUNT_ID`, `CLOUDFLARE_OBSERVABILITY_API_TOKEN`, `CLOUDFLARE_PLATFORM_DLQ_ID`, and `PLATFORM_ALERT_EMAIL` bindings. The scheduled alert boundary runs only when all four exist; the protected production workflow first proves Workers Observability and Account Analytics access without echoing provider details, then the deploy script injects the token through a protected temporary secrets file and unsets it before the Wrangler subprocess exits (`apps/worker/src/async-entrypoint.ts`; `infra/verify-cloudflare-observability.ts`; `infra/workflows/deploy-api-worker.sh`; `.github/workflows/deploy-production.yml`).
 
 ### Flow A — authenticated infrastructure SSR and React island
 

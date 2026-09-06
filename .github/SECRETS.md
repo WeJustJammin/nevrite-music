@@ -23,6 +23,9 @@ have Workers Scripts Edit. The scheduled S09 alert boundary uses it only to
 read structured Workers Logs and Queue metrics. Required reviewers,
 main-branch restrictions, and serialized deployment concurrency remain in
 force. Staging values must never be copied into production or vice versa.
+The protected production workflow exercises both provider APIs with
+`infra/verify-cloudflare-observability.ts` before migrations or deployment and
+fails with a secret-safe permission error when either scope is unavailable.
 
 The production environment reports required-reviewer rule `64231612` for the
 business account `WeJustJammin` (reviewer ID `305953066`),
