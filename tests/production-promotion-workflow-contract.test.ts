@@ -127,6 +127,24 @@ describe('production promotion workflow contract', () => {
     );
   });
 
+  it('proves the production observability token before migrations', () => {
+    const observabilityIndex = workflow.indexOf(
+      '- name: Verify Cloudflare observability permissions',
+    );
+    const migrationIndex = workflow.indexOf(
+      '- name: Apply and verify forward-only production migrations',
+    );
+
+    expect(observabilityIndex).toBeGreaterThan(-1);
+    expect(observabilityIndex).toBeLessThan(migrationIndex);
+    expect(workflow).toContain(
+      'CLOUDFLARE_OBSERVABILITY_API_TOKEN: ${{ secrets.CLOUDFLARE_OBSERVABILITY_API_TOKEN }}',
+    );
+    expect(workflow).toContain(
+      'node --experimental-strip-types infra/verify-cloudflare-observability.ts',
+    );
+  });
+
   it('labels retained deployment evidence with the terminal job status', () => {
     expect(workflow).toContain(
       'name: production-deployment-attempt-${{ env.DEPLOY_SHA }}-${{ job.status }}',
