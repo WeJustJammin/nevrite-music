@@ -17,6 +17,7 @@
 - [[specs/audits/propagation-option-a-2026-09-02|Slice 09 Option A propagation record]]
 - [[specs/audits/propagation-scan-2026-08-30|Sentry Removal and Free-Only Operations Propagation Scan]]
 - [[specs/audits/propagation-scan-2026-09-02|Option A downstream propagation scan]]
+- [[specs/audits/remediation-state|Pipeline remediation state]]
 - [[specs/audits/verify-infrastructure-2026-09-04-1255|Infrastructure Verification Report]]
 - [[specs/audits/verify-infrastructure-2026-09-04-1353|Infrastructure Verification Report]]
 - [[specs/audits/verify-infrastructure-2026-09-04-1703|Infrastructure Verification Report: Post-deploy candidate `5d6e49f34b678c59da2ac4f7059f08e6dc3b4790`]]

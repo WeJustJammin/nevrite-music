@@ -194,6 +194,33 @@ currently unformatted; those files were not changed here. Canonical
 `pnpm validate` and final per-slice reconciliation remain parent-owned and
 must run after active agents finish.
 
+## 2026-09-06 supersession
+
+The AC209 and AC211 limitations recorded above describe the earlier QA-GREEN
+baseline, not current implementation state. Later contract-first work added the
+production operational-alert runtime, Cloudflare Workers Observability and
+Queue Analytics adapters, fail-closed token preflight, scheduled execution, and
+the protected AC211 collector.
+
+Exact-main production run `34032282370` passed on source
+`621f7b99745318948720afa4d670ae1a707d3365` and deployed API Worker version
+`a726691a-64bc-47e5-bc5e-6b52088efbff`. Read-only provider verification on
+2026-09-06 confirmed:
+
+- the observability permission preflight passes;
+- `PLATFORM_ALERT_EMAIL` is present as a Send Email binding;
+- Email Sending is enabled for `alerts.wejamm.in` with bounce MX, SPF, DKIM,
+  and DMARC records present; and
+- `admin.wejammin@gmail.com` is a verified destination.
+
+No local implementation/configuration gap remains for AC209. It still requires
+one genuine post-configuration threshold-triggered provider/mailbox receipt.
+AC211 is collector-ready but time-gated: the earliest eligible full day is
+2026-09-07 UTC and collection may run only after
+`2026-09-08T00:00:00Z`. AC265 still requires owner-approved Google/Supabase
+configuration and hosted identities; AC266 still requires the two locked manual
+assistive-technology runs. No synthetic evidence is accepted.
+
 
 <!-- spec-graph: auto-generated -->
 ## Related Specs

@@ -15,8 +15,12 @@
   `a726691a-64bc-47e5-bc5e-6b52088efbff`, and web Worker
   `18b0287a-8af7-47e8-ad43-e5bdc29a10ab` are verified. Protected secret
   verification passed and `CLOUDFLARE_PLATFORM_QUEUE_ID` is set and verified;
-  no complete retained production UTC-day report exists. AC-209 still requires
-  a genuine provider/mailbox receipt. AC-211 still requires a complete
+  read-only provider inspection additionally confirms the Worker Send Email
+  binding, enabled `alerts.wejamm.in` sending domain with bounce
+  MX/SPF/DKIM/DMARC records, and verified `admin.wejammin@gmail.com`
+  destination. No complete retained production UTC-day report exists. AC-209
+  now requires only a genuine threshold-triggered provider/mailbox receipt.
+  AC-211 still requires a complete
   production UTC day with at least 200 command/RPC/acceptance samples, five
   attained SLOs, and daily queue/DLQ counts. The earliest eligible day is
   2026-09-07 UTC and collection can run after `2026-09-08T00:00:00Z`.
@@ -27,7 +31,8 @@
   `.memory/wiki/specs/audits/phase-02-slice-09-qa-green.md` and
   `.memory/wiki/specs/audits/verify-infrastructure-2026-09-04-1255.md` and
   `.memory/wiki/specs/audits/verify-infrastructure-2026-09-04-1353.md` and
-  `.memory/wiki/specs/audits/verify-infrastructure-2026-09-04-1703.md`.
+  `.memory/wiki/specs/audits/verify-infrastructure-2026-09-04-1703.md` and
+  `.memory/wiki/specs/audits/verify-infrastructure-2026-09-06-0300.md`.
 
 ## Resolved
 

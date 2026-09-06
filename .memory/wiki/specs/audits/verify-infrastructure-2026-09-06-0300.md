@@ -102,6 +102,21 @@ fixed diagnostic reports an actual permission or resource failure.
 
 Slice 09 remains blocked. Slice 10 must not start until all four criteria pass.
 
+## Post-report remediation update
+
+The parser promotion listed as Required External Action 1 completed after this
+report's original cutoff. The current exact-main production candidate is
+`621f7b99745318948720afa4d670ae1a707d3365`, production run `34032282370`,
+deployment `6292744330`, and API Worker version
+`a726691a-64bc-47e5-bc5e-6b52088efbff`.
+
+Read-only provider inspection also confirmed that Email Sending is enabled for
+`alerts.wejamm.in`, its bounce MX/SPF/DKIM/DMARC records are present, the Worker
+has the `PLATFORM_ALERT_EMAIL` binding, and `admin.wejammin@gmail.com` is a
+verified destination. The updated observability secret therefore has no known
+remaining scope/configuration defect. AC209 remains open only because no real
+threshold has produced the required delivered receipt.
+
 
 <!-- spec-graph: auto-generated -->
 ## Related Specs
