@@ -39,7 +39,7 @@ const requestJson = async (
   try {
     return await response.json();
   } catch {
-    throw verificationError(failureMessage, 'malformed response');
+    throw verificationError(failureMessage, 'invalid JSON response');
   }
 };
 
@@ -120,12 +120,14 @@ export const verifyCloudflareObservabilityToken = async (
     },
     analyticsFailure,
   );
+  if (!isRecord(analyticsPayload))
+    throw verificationError(analyticsFailure, 'invalid response envelope');
   if (
-    !isRecord(analyticsPayload) ||
-    (Object.hasOwn(analyticsPayload, 'errors') &&
-      !Array.isArray(analyticsPayload.errors))
+    Object.hasOwn(analyticsPayload, 'errors') &&
+    analyticsPayload.errors !== null &&
+    !Array.isArray(analyticsPayload.errors)
   )
-    throw verificationError(analyticsFailure, 'malformed response');
+    throw verificationError(analyticsFailure, 'invalid errors envelope');
   if (
     Array.isArray(analyticsPayload.errors) &&
     analyticsPayload.errors.length > 0
@@ -135,13 +137,24 @@ export const verifyCloudflareObservabilityToken = async (
       classifyGraphqlErrors(analyticsPayload.errors),
     );
   const data = analyticsPayload.data;
-  const viewer = isRecord(data) ? data.viewer : undefined;
-  const accounts = isRecord(viewer) ? viewer.accounts : undefined;
-  const account = Array.isArray(accounts) ? accounts[0] : undefined;
-  if (Array.isArray(accounts) && accounts.length === 0)
+  if (!isRecord(data))
+    throw verificationError(analyticsFailure, 'missing data envelope');
+  const viewer = data.viewer;
+  if (!isRecord(viewer))
+    throw verificationError(analyticsFailure, 'missing viewer envelope');
+  const accounts = viewer.accounts;
+  if (!Array.isArray(accounts))
+    throw verificationError(analyticsFailure, 'missing accounts envelope');
+  if (accounts.length === 0)
     throw verificationError(analyticsFailure, 'GraphQL resource error');
-  if (!isRecord(account) || !Array.isArray(account.queueBacklogAdaptiveGroups))
-    throw verificationError(analyticsFailure, 'malformed response');
+  const account = accounts[0];
+  if (!isRecord(account))
+    throw verificationError(analyticsFailure, 'malformed account envelope');
+  if (!Array.isArray(account.queueBacklogAdaptiveGroups))
+    throw verificationError(
+      analyticsFailure,
+      'queue analytics field unavailable',
+    );
 };
 
 const run = async (): Promise<void> => {

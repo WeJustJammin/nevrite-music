@@ -115,6 +115,14 @@
   Account Analytics still failed. Existing production version
   `9bd444fe-e7ed-499c-88f5-a3a8762ddb5c` remained active. See
   `.memory/wiki/specs/audits/verify-infrastructure-2026-09-06-0300.md`.
+- **LATEST DIAGNOSTIC EVIDENCE:** PR #25 merged as exact `main` SHA
+  `ccfefa7862900357586fef9031b314e7b30989b4`; CI `34019423084` and staging
+  `34019696293` passed. Protected production run `34019780775` stopped before
+  migrations/deployment with `Cloudflare Account Analytics permission check
+  failed: malformed response`. The token still passes Workers Observability.
+  Cloudflare's documented valid `errors: null` GraphQL success envelope
+  reproduced the verifier failure. Parser-fix RED failed 1/18; GREEN passes
+  18/18. Missing Account Analytics permission is not the confirmed cause.
 - **NEXT:** retain a genuine post-configuration redacted alert delivery receipt.
   Keep Slice 09 blocked at 279/283 and Phase 2 at 8/17 until AC209, the complete
   UTC-day/200-sample SLO and DLQ evidence for AC211, owner acceptance of the

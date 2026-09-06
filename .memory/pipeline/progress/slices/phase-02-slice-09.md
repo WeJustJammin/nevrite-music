@@ -500,6 +500,18 @@
   3,162 tests at 100% coverage, 102 Playwright checks, build, bundle, and
   performance smoke. AC209 remains open; Slice 09 stays 279/283.
 
+- 2026-09-06 exact-main parser diagnosis: PR #25 merged as
+  `ccfefa7862900357586fef9031b314e7b30989b4`; CI `34019423084` and staging
+  `34019696293` passed. Protected production `34019780775` stopped before
+  migration/deployment and safely classified Account Analytics as `malformed
+  response`; Workers Observability passed. Cloudflare's documented successful
+  GraphQL envelope permits `errors: null`, while the verifier rejected every
+  non-array value. Regression RED failed 1/18 with `invalid errors envelope`;
+  GREEN passes 18/18 after accepting `null`. AC209 remains open; Slice 09 stays
+  279/283 pending exact-main production and genuine delivery evidence. Clean
+  `pnpm validate` passes 424 Vitest files / 3,168 tests at 100% coverage, all 102
+  Playwright checks, builds, bundle budgets, and API p95 smoke.
+
 ## Depth Ratio
 
 - Verified acceptance items: 279/283.
@@ -507,7 +519,7 @@
 
 ## Blocking release evidence
 
-- P2-S09-AC-209: replace the production observability token with Account / Workers Observability / Write plus Account / Account Analytics / Read, pass the exact-main production preflight, and retain a genuine post-configuration redacted live-delivery receipt. Earlier exact-SHA provider deployment and two consecutive successful scheduled evaluations remain verified.
+- P2-S09-AC-209: merge the GraphQL success-envelope parser fix, pass exact-main production preflight with the environment token, and retain a genuine post-configuration redacted live-delivery receipt. If the fixed parser reports a true permission/resource failure, replace the token with Account / Workers Observability / Write plus Account / Account Analytics / Read. Earlier exact-SHA provider deployment and two consecutive successful scheduled evaluations remain verified.
 - P2-S09-AC-211: retain a complete production UTC-day with at least 200 command/RPC/acceptance samples, all five SLO results, and daily queue/DLQ counts.
 - P2-S09-AC-265: accept the Google Cloud terms, configure the business-owned
   Google OAuth client and authorized non-production identities, then retain the
