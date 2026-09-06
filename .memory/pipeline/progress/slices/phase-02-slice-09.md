@@ -461,6 +461,24 @@
   [current infrastructure report](../../../wiki/specs/audits/verify-infrastructure-2026-09-05-0824.md)
   records the evidence and keeps AC265 open.
 
+- 2026-09-06 production DLQ-alert verification: PR #23 merged the fail-closed
+  Queue Analytics response correction as exact main SHA
+  `2e806ed8b399b024181878dd71e5834bfa73579f`; CI run `33969135163`, staging
+  run `33969454591`, and business-account-approved production run
+  `33969517664` all passed. Cloudflare Queue Analytics, queried through the
+  business Wrangler OAuth session at `2026-09-06T04:29:37.083Z`, reported
+  `platform-jobs=0` and `platform-jobs-dlq=1`. Production Worker version
+  `9bd444fe-e7ed-499c-88f5-a3a8762ddb5c` then ran the one-minute schedule and
+  failed closed with `Invalid Queue analytics response`; the durable delivery
+  ledger remained empty. The exact deployed query succeeds through the
+  business OAuth session, isolating the remaining fault to the protected
+  `CLOUDFLARE_OBSERVABILITY_API_TOKEN` scope/resource configuration. PR #24
+  adds a secret-safe pre-mutation release check for Workers Observability Write
+  plus Account Analytics Read. Its local gate passes 424 Vitest files / 3,154
+  tests at 100% coverage, 102 Playwright checks, all build/bundle/performance
+  gates, and 45 pgTAP files / 1,678 tests. AC209 remains open until the
+  production secret is rotated and a genuine delivered receipt is retained.
+
 ## Depth Ratio
 
 - Verified acceptance items: 279/283.
