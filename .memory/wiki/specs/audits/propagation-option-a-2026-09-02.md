@@ -1,7 +1,7 @@
 # Slice 09 Option A propagation record
 
 **Date**: 2026-09-02  
-**Status**: IN PROGRESS  
+**Status**: CLOSED — verified 2026-09-06 (see closure record below)  
 **Scan**: [Option A downstream propagation scan](propagation-scan-2026-09-02.md)  
 **Authorization**: User response `a`
 
@@ -43,6 +43,27 @@ contracts.
 No product or architecture choice remains open. Remaining work is deterministic
 downstream propagation, audit remediation, acceptance-plan regeneration, and
 contract-first implementation.
+
+## Verified closure
+
+The apply and validation ledgers above preserve the state observed while this
+record was active. They are no longer current work queues.
+
+- FE03, the Phase 2 Slice 09 plan/tracker, and generated indexes were reconciled
+  before implementation began.
+- Fresh IA audit processed 83 documents and passed 344/344 checkpoints with
+  0.00% ambiguity.
+- Fresh BE audit processed 157 documents and passed 1,716/1,716 checkpoints with
+  0.00% ambiguity.
+- Fresh FE audit processed all 43 scored FE shard documents and passed 473/473
+  checkpoints with 0.00% ambiguity.
+- Slice 09 implementation now tracks 283 contiguous criteria. Its four open
+  release-evidence criteria are AC209, AC211, AC265, and AC266; none is an
+  unresolved Option A propagation item.
+
+This closes the propagation record without rewriting its historical sequence.
+Current implementation and infrastructure blockers are owned by
+`remediation-state.md` and the Slice 09 tracker.
 
 
 <!-- spec-graph: auto-generated -->

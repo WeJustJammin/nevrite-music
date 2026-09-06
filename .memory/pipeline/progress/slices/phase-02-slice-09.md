@@ -557,6 +557,16 @@
   window is 2026-09-07 UTC and collection can run after
   `2026-09-08T00:00:00Z`, so AC211 remains open and Slice 09 stays 279/283.
 
+- 2026-09-06 blocker remediation audit: read-only inspection of production run
+  `34032282370` reconfirmed the observability permission preflight. Current API
+  Worker version `a726691a-64bc-47e5-bc5e-6b52088efbff` contains the
+  `PLATFORM_ALERT_EMAIL` Send Email binding. Cloudflare Email Sending is enabled
+  for `alerts.wejamm.in`, its bounce MX/SPF/DKIM/DMARC records are present, and
+  `admin.wejammin@gmail.com` is a verified destination. No secret rotation,
+  inbound Email Routing change, manual email dispatch, or synthetic threshold
+  is warranted. AC209 is reduced to the genuine threshold-triggered
+  provider/mailbox receipt; Slice 09 remains 279/283.
+
 ## Depth Ratio
 
 - Verified acceptance items: 279/283.
@@ -564,7 +574,11 @@
 
 ## Blocking release evidence
 
-- P2-S09-AC-209: retain a genuine post-configuration redacted live-delivery receipt. Exact-main production preflight, protected secret verification, and the provider deployment candidate are verified, but no genuine provider/mailbox receipt exists.
+- P2-S09-AC-209: retain a genuine post-configuration redacted live-delivery
+  receipt. Exact-main production preflight, protected secret verification,
+  Worker Send Email binding, sending domain/DNS, and verified destination are
+  confirmed; no genuine provider/mailbox receipt exists because no threshold
+  has fired.
 - P2-S09-AC-211: the protected collector is merged, deployed, and permission-verified; after `2026-09-08T00:00:00Z`, retain the complete 2026-09-07 production UTC day with at least 200 command/RPC/acceptance samples, all five SLO results, and daily queue/DLQ counts.
 - P2-S09-AC-265: accept the Google Cloud terms, configure the business-owned
   Google OAuth client and authorized non-production identities, then retain the

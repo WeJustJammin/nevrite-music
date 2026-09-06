@@ -1,7 +1,7 @@
 {
-  "builtAt": "2026-09-06T11:04:54.100Z",
-  "nodeCount": 1626,
-  "edgeCount": 10113,
+  "builtAt": "2026-09-06T19:41:51.711Z",
+  "nodeCount": 1627,
+  "edgeCount": 10115,
   "nodes": [
     {
       "id": "plan:2026-08-02-architecture-design",
@@ -267,6 +267,13 @@
       "type": "audit",
       "label": "Option A downstream propagation scan",
       "path": ".memory/wiki/specs/audits/propagation-scan-2026-09-02.md",
+      "shardId": null
+    },
+    {
+      "id": "audit:audits/remediation-state",
+      "type": "audit",
+      "label": "Pipeline remediation state",
+      "path": ".memory/wiki/specs/audits/remediation-state.md",
       "shardId": null
     },
     {
@@ -11623,6 +11630,18 @@
     },
     {
       "from": "audit:audits/propagation-scan-2026-09-02",
+      "to": "phase-plan:phases/phase-2",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "audit:audits/remediation-state",
+      "to": "phase-plan:phases/phase-2",
+      "type": "phases_into",
+      "source": "phase-ref"
+    },
+    {
+      "from": "audit:audits/remediation-state",
       "to": "phase-plan:phases/phase-2",
       "type": "references",
       "source": "wikilink"
@@ -72070,7 +72089,7 @@
     "byNodeType": {
       "plan": 12,
       "architecture": 18,
-      "audit": 23,
+      "audit": 24,
       "be-spec": 157,
       "fe-spec": 44,
       "ia-spec": 85,
@@ -72079,9 +72098,9 @@
       "decision": 97
     },
     "byEdgeType": {
-      "phases_into": 87,
+      "phases_into": 88,
       "constrained_by": 9041,
-      "references": 912,
+      "references": 913,
       "derives_from": 64,
       "implemented_by": 6,
       "split_from": 3
