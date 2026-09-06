@@ -11,7 +11,8 @@ export const logSchemaMigrationQueueAttempt = (
 ): void => {
   const retryable =
     result.outcome === 'retry' || result.outcome === 'failed_retryable';
-  const failed = result.outcome === 'failed_terminal';
+  const failed =
+    result.outcome === 'failed_terminal' || result.outcome === 'dead_letter';
   const sentAt = message.timestamp?.getTime();
   logger.info(
     {

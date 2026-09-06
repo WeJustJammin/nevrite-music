@@ -70,12 +70,13 @@
   See `.memory/wiki/specs/audits/phase-1-validation.md`.
 - **CURRENT IMPLEMENTATION:** Phase 2 Slices 01–08 are complete. Slice 09 is
   implemented and locally QA-GREEN at 279/283, including the follow-up
-  production operational-alert provider boundary; depth ratio remains `0.986`
-  because no live receipt has been claimed. Slice 10 remains dependency-locked. See
+  production operational-alert provider boundary and an unmerged/un-deployed
+  AC211 collector candidate; depth ratio remains `0.986` because the required
+  external evidence has not been claimed. Slice 10 remains dependency-locked. See
   `.memory/pipeline/progress/phases/phase-02.md` and
   `.memory/pipeline/progress/slices/phase-02-slice-09.md`.
-- **CURRENT VALIDATION:** `pnpm validate` passes 424/424 Vitest files and
-  3,169/3,169 tests at 100% coverage, 102/102 Playwright tests, every workspace
+- **CURRENT VALIDATION:** `pnpm validate` passes 432/432 Vitest files and
+  3,233/3,233 tests at 100% coverage, 102/102 Playwright tests, every workspace
   build, bundle budgets, and the fresh immutable-Worker API p95 smoke.
   `pnpm db:verify` passes 34/34 migrations and 45/45 pgTAP files with
   1,678/1,678 assertions and exact generated types.
@@ -123,16 +124,15 @@
   Cloudflare's documented valid `errors: null` GraphQL success envelope
   reproduced the verifier failure. Parser-fix RED failed 1/18; GREEN passes
   18/18. Missing Account Analytics permission is not the confirmed cause.
-- **LATEST PRODUCTION EVIDENCE:** PR #27 merged as exact `main` SHA
-  `93c2fd837cffa89baea9d43a9f482000c5739440`; CI `34022522801`, staging
-  `34022811556` / deployment `6291019997`, and protected production
-  `34022888837` / deployment `6291034733` passed. Both Cloudflare scopes,
-  remote migration parity, release identity, API Worker
-  `1b2d3c02-d3e9-4681-9fde-7d05f06e0cd5`, web Worker
-  `a5d3d651-29ff-4226-bff2-d11376671b6d`, artifact `9986107430`, and one
-  post-deploy scheduled event with outcome `ok` and zero exceptions are
-  verified. AC209 remains open pending a genuine threshold-triggered
-  provider/mailbox receipt.
+- **LATEST PRODUCTION EVIDENCE:** Exact `main` SHA
+  `dea90c88165f44ec7bbeeb57e5e38bbb09800acb`; CI `34023766963`, staging
+  `34024060321`, and protected production run `34028028367` / deployment
+  `6291955682` are verified. Artifact `9987714292`, API Worker
+  `5d6a9bde-5b51-46f3-91df-19cfc9b8553d`, web Worker
+  `64b355fe-a5e8-446a-8250-124e6f4b49a7`, protected secret verification, and
+  `CLOUDFLARE_PLATFORM_QUEUE_ID` configuration are verified. The AC211
+  collector exists in the current worktree but is not merged or deployed, and
+  no complete retained production UTC-day report exists. AC211 remains open.
 - **NEXT:** retain a genuine post-configuration redacted alert delivery receipt.
   Keep Slice 09 blocked at 279/283 and Phase 2 at 8/17 until AC209, the complete
   UTC-day/200-sample SLO and DLQ evidence for AC211, owner acceptance of the

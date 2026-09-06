@@ -41,6 +41,7 @@ describe('content schema registry operational metrics', () => {
         eventName: 'cms.registry.migration',
         attempt: 4,
         errorCode: 'UNKNOWN_EVENT_VERSION',
+        metrics: { 'cms.migration.dlq.total': 1 },
         outcome: 'failure',
         retryable: true,
       }),
@@ -79,6 +80,78 @@ describe('content schema registry operational metrics', () => {
       queueFirstAttemptP95Ms: 61_000,
       unknownEventVersions: 1,
     });
+  });
+
+  it('uses the authoritative migration DLQ total below the retry threshold', () => {
+    const now = Date.parse('2026-09-05T12:00:00.000Z');
+    const snapshot = buildContentSchemaRegistryOperationalSnapshot({
+      database: {},
+      events: [
+        at('2026-09-05T11:59:00.000Z', {
+          eventName: 'cms.registry.queue_attempt',
+          attempt: 1,
+          outcome: 'success',
+        }),
+        at('2026-09-05T11:59:10.000Z', {
+          eventName: 'cms.registry.migration',
+          attempt: 1,
+          metrics: { 'cms.migration.dlq.total': 1 },
+          outcome: 'success',
+          retryable: false,
+        }),
+      ],
+      now,
+    });
+
+    expect(snapshot.dailyDlqRate).toBe(1);
+  });
+
+  it('does not fall back to the retry-attempt heuristic when the authoritative total is zero', () => {
+    const now = Date.parse('2026-09-05T12:00:00.000Z');
+    const snapshot = buildContentSchemaRegistryOperationalSnapshot({
+      database: {},
+      events: [
+        at('2026-09-05T11:59:00.000Z', {
+          eventName: 'cms.registry.queue_attempt',
+          attempt: 1,
+          outcome: 'success',
+        }),
+        at('2026-09-05T11:59:10.000Z', {
+          eventName: 'cms.registry.migration',
+          attempt: 4,
+          metrics: { 'cms.migration.dlq.total': 0 },
+          outcome: 'failure',
+          retryable: true,
+        }),
+      ],
+      now,
+    });
+
+    expect(snapshot.dailyDlqRate).toBe(0);
+  });
+
+  it('omits the daily DLQ rate when the authoritative total is malformed', () => {
+    const now = Date.parse('2026-09-05T12:00:00.000Z');
+    const snapshot = buildContentSchemaRegistryOperationalSnapshot({
+      database: {},
+      events: [
+        at('2026-09-05T11:59:00.000Z', {
+          eventName: 'cms.registry.queue_attempt',
+          attempt: 1,
+          outcome: 'success',
+        }),
+        at('2026-09-05T11:59:10.000Z', {
+          eventName: 'cms.registry.migration',
+          attempt: 4,
+          metrics: { 'cms.migration.dlq.total': '1' },
+          outcome: 'failure',
+          retryable: true,
+        }),
+      ],
+      now,
+    });
+
+    expect(snapshot).not.toHaveProperty('dailyDlqRate');
   });
 
   it('omits measurements that cannot be established from finite provider data', () => {

@@ -36,6 +36,30 @@ describe('schema migration queue telemetry', () => {
     },
   );
 
+  it.each([
+    ['failed_terminal', 'failure', false],
+    ['dead_letter', 'failure', false],
+  ] as const)(
+    'marks terminal outcome %s as a non-retryable failure',
+    (workerOutcome, outcome, retryable) => {
+      const info = vi.fn();
+      logSchemaMigrationQueueAttempt(
+        { info } as unknown as Logger,
+        result(workerOutcome),
+        { attempts: 4, timestamp: new Date(900) },
+        () => 1_000,
+      );
+      expect(info).toHaveBeenCalledWith(
+        expect.objectContaining({
+          eventName: 'cms.registry.queue_attempt',
+          outcome,
+          retryable,
+        }),
+        { highRisk: true, samplingClass: 'always' },
+      );
+    },
+  );
+
   it.each([undefined, new Date(Number.NaN)])(
     'uses a safe zero delay for an unavailable timestamp',
     (timestamp) => {

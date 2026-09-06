@@ -1,0 +1,84 @@
+name: Collect production AC211 SLO evidence
+
+on:
+  workflow_dispatch:
+    inputs:
+      utc_day:
+        description: Complete UTC day to collect (YYYY-MM-DD)
+        required: true
+        type: string
+      source_revision:
+        description: Full lowercase production source revision
+        required: true
+        type: string
+      production_deployment_id:
+        description: Protected production deployment identifier
+        required: true
+        type: string
+      confirm_collection:
+        description: Confirm this explicit production evidence collection
+        required: true
+        type: boolean
+        default: false
+
+concurrency: { group: collect-production-ac211, cancel-in-progress: false }
+permissions: { actions: read, contents: read, deployments: read }
+
+jobs:
+  preflight:
+    if: inputs.confirm_collection == true && github.ref == 'refs/heads/main'
+    outputs:
+      window_start: ${{ steps.verify.outputs.window_start }}
+      window_end: ${{ steps.verify.outputs.window_end }}
+      source_revision: ${{ steps.verify.outputs.source_revision }}
+      production_deployment_id: ${{ steps.verify.outputs.production_deployment_id }}
+      production_deployed_at: ${{ steps.verify.outputs.production_deployed_at }}
+      query_id: ${{ steps.verify.outputs.query_id }}
+    runs-on: [self-hosted, wejammin]
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 1
+      - uses: ./.github/actions/setup
+      - name: Verify AC211 source and deployment identity
+        id: verify
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          UTC_DAY: ${{ inputs.utc_day }}
+          SOURCE_REVISION: ${{ inputs.source_revision }}
+          PRODUCTION_DEPLOYMENT_ID: ${{ inputs.production_deployment_id }}
+        run: node --experimental-strip-types infra/workflows/verify-content-schema-registry-slo-source.ts
+
+  collect:
+    needs: preflight
+    if: needs.preflight.result == 'success'
+    runs-on: [self-hosted, wejammin]
+    environment:
+      name: production
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 1
+      - uses: ./.github/actions/setup
+      - name: Collect redacted AC211 production evidence
+        env:
+          WINDOW_START: ${{ needs.preflight.outputs.window_start }}
+          WINDOW_END: ${{ needs.preflight.outputs.window_end }}
+          SOURCE_REVISION: ${{ needs.preflight.outputs.source_revision }}
+          PRODUCTION_DEPLOYMENT_ID: ${{ needs.preflight.outputs.production_deployment_id }}
+          PRODUCTION_DEPLOYED_AT: ${{ needs.preflight.outputs.production_deployed_at }}
+          QUERY_ID: ${{ needs.preflight.outputs.query_id }}
+          AC211_REPORT_DIR: ac211-reports
+          CLOUDFLARE_ACCOUNT_ID: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
+          CLOUDFLARE_PLATFORM_QUEUE_ID: ${{ vars.CLOUDFLARE_PLATFORM_QUEUE_ID }}
+          CLOUDFLARE_OBSERVABILITY_API_TOKEN: ${{ secrets.CLOUDFLARE_OBSERVABILITY_API_TOKEN }}
+        run: node --experimental-strip-types infra/workflows/collect-content-schema-registry-slo-evidence.ts
+      - name: Upload retained AC211 reports
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+        with:
+          name: production-ac211-slo-${{ inputs.utc_day }}
+          path: ac211-reports
+          if-no-files-found: error
+          retention-days: 30

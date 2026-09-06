@@ -21,6 +21,7 @@ import {
 import { validateOperationalReleaseEvidence } from './operational-release-evidence-validation.ts';
 
 export * from './operational-release-evidence-browser.ts';
+export * from './operational-release-evidence-collector.ts';
 export * from './operational-release-evidence-common.ts';
 export * from './operational-release-evidence-observability.ts';
 

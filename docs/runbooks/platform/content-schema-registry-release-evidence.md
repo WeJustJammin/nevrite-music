@@ -39,6 +39,38 @@ completion time, report digest, `passed` outcome, and every canonical check
 exactly once. A Linux screen reader or Chromium run cannot substitute for the
 two locked platform pairs.
 
+## Collect AC211 evidence
+
+Wait until a UTC day has ended and that entire day follows the selected
+production deployment. Dispatch `collect-production-ac211.yml` from `main` with
+the complete `utc_day`, full lowercase `source_revision`, GitHub
+`production_deployment_id`, and `confirm_collection: true`. Its unprotected
+preflight reads GitHub deployment metadata and statuses; only a verified source,
+successful production status, and eligible day enter the protected `production`
+job.
+
+The protected job requires `CLOUDFLARE_OBSERVABILITY_API_TOKEN` plus the
+non-secret `CLOUDFLARE_ACCOUNT_ID` and `CLOUDFLARE_PLATFORM_QUEUE_ID`
+environment variables. It reads Workers Observability events for the exact
+production release and UTC window, queries Queue Analytics `ReadMessage`
+attempts and `DeleteMessage` rows whose outcome is `dlq`, and retains only:
+
+- `slo/dataset.json`
+- `slo/measurement.json`
+- `slo/ac211-slo.json`
+
+The collector fails closed on incomplete pagination, unexpected event identity,
+fewer than 200 command/RPC/acceptance samples, missing queue first-attempt data,
+incoherent queue counts, threshold equality or failure, and any report-integrity
+mismatch. It publishes the three files atomically and uploads them for 30 days
+only after successful collection. Raw provider payloads are never retained.
+
+Queue Analytics returns Cloudflare's adaptive aggregate counts. The report
+preserves that provider provenance and does not claim a lossless raw queue-event
+ledger. Low natural traffic is a real failed gate: do not manufacture production
+requests merely to reach 200 samples. Re-run promptly after an eligible day
+because Workers Observability retention is bounded.
+
 ## Assemble the sidecar
 
 Create the JSON only inside the protected workflow workspace. Its strict shape
