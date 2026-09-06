@@ -527,6 +527,20 @@
   100% coverage, all 102 Playwright checks, builds, bundle budgets, and API p95
   smoke.
 
+- 2026-09-06 scheduled-runtime exact-main promotion: PR #27 merged as
+  `93c2fd837cffa89baea9d43a9f482000c5739440`; CI `34022522801`, staging
+  `34022811556` / deployment `6291019997`, and protected production
+  `34022888837` / deployment `6291034733` passed. Production re-verified both
+  Cloudflare scopes and remote migration parity, deployed API Worker version
+  `1b2d3c02-d3e9-4681-9fde-7d05f06e0cd5` and web Worker version
+  `a5d3d651-29ff-4226-bff2-d11376671b6d`, and retained artifact `9986107430`
+  with digest
+  `sha256:6e18252a24f02cb790a56bf5b10e3685b3e491b2567ecec97e09f1f86991fcc2`.
+  Native production tail captured a natural scheduled event at
+  `2026-09-06T08:54:51.000Z` with outcome `ok` and zero exceptions. AC209
+  remains open because no threshold fired and no genuine provider/mailbox
+  receipt exists; Slice 09 stays 279/283.
+
 ## Depth Ratio
 
 - Verified acceptance items: 279/283.

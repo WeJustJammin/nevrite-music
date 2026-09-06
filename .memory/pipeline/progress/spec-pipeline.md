@@ -123,13 +123,16 @@
   Cloudflare's documented valid `errors: null` GraphQL success envelope
   reproduced the verifier failure. Parser-fix RED failed 1/18; GREEN passes
   18/18. Missing Account Analytics permission is not the confirmed cause.
-- **LATEST PRODUCTION EVIDENCE:** PR #26 merged as exact `main` SHA
-  `6d33bd189a51b4e041e582feb604d5fe22ddce78`; CI `34020909710`, staging
-  `34021192537`, and protected production `34021249248` passed. Both Cloudflare
-  scopes, remote migration parity, release identity, and API/web Worker deploys
-  are verified. The scheduled runtime contains the same `errors: null` Queue
-  Analytics assumption; runtime-fix RED failed 1/29 and GREEN passes 29/29.
-  AC209 remains open pending exact-main runtime deployment and genuine receipt.
+- **LATEST PRODUCTION EVIDENCE:** PR #27 merged as exact `main` SHA
+  `93c2fd837cffa89baea9d43a9f482000c5739440`; CI `34022522801`, staging
+  `34022811556` / deployment `6291019997`, and protected production
+  `34022888837` / deployment `6291034733` passed. Both Cloudflare scopes,
+  remote migration parity, release identity, API Worker
+  `1b2d3c02-d3e9-4681-9fde-7d05f06e0cd5`, web Worker
+  `a5d3d651-29ff-4226-bff2-d11376671b6d`, artifact `9986107430`, and one
+  post-deploy scheduled event with outcome `ok` and zero exceptions are
+  verified. AC209 remains open pending a genuine threshold-triggered
+  provider/mailbox receipt.
 - **NEXT:** retain a genuine post-configuration redacted alert delivery receipt.
   Keep Slice 09 blocked at 279/283 and Phase 2 at 8/17 until AC209, the complete
   UTC-day/200-sample SLO and DLQ evidence for AC211, owner acceptance of the
