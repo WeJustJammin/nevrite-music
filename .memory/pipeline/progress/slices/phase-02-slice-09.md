@@ -479,6 +479,27 @@
   gates, and 45 pgTAP files / 1,678 tests. AC209 remains open until the
   production secret is rotated and a genuine delivered receipt is retained.
 
+- 2026-09-06 exact-main observability preflight: PR #24 is current `main` SHA
+  `3bf66a610b013bf9600889780ee26319559fb31c`. CI `34013034252` and staging
+  `34013296132` passed. Protected production run `34016439881` reached the new
+  permission check and failed with `Cloudflare Account Analytics permission
+  check failed` before migrations or deployment. Existing production Worker
+  version `9bd444fe-e7ed-499c-88f5-a3a8762ddb5c` remained active at 100%.
+  Public staging and production provider catalogs remain HTTP `200`. Business
+  Wrangler OAuth can read Queue Analytics, but its scope cannot read Workers
+  Observability or manage API tokens; user-token and account-token endpoints
+  both return HTTP `403`. The retained report is
+  [verify-infrastructure-2026-09-06-0300.md](../../../wiki/specs/audits/verify-infrastructure-2026-09-06-0300.md).
+
+- 2026-09-06 rotated-secret retest and diagnostics: production secret metadata
+  changed at `2026-09-06T07:07:48Z`. Protected run `34018343506` consumed the
+  replacement and again passed Workers Observability before failing Account
+  Analytics, with no migration or deployment mutation. TDD added fixed safe
+  classifications for HTTP, GraphQL permission, GraphQL resource, and malformed
+  responses: RED 8/12, GREEN 12/12. Full `pnpm validate` passes 424 Vitest files /
+  3,162 tests at 100% coverage, 102 Playwright checks, build, bundle, and
+  performance smoke. AC209 remains open; Slice 09 stays 279/283.
+
 ## Depth Ratio
 
 - Verified acceptance items: 279/283.
@@ -486,7 +507,7 @@
 
 ## Blocking release evidence
 
-- P2-S09-AC-209: retain a genuine post-configuration redacted live-delivery receipt; exact-SHA provider deployment and two consecutive successful scheduled evaluations are verified.
+- P2-S09-AC-209: replace the production observability token with Account / Workers Observability / Write plus Account / Account Analytics / Read, pass the exact-main production preflight, and retain a genuine post-configuration redacted live-delivery receipt. Earlier exact-SHA provider deployment and two consecutive successful scheduled evaluations remain verified.
 - P2-S09-AC-211: retain a complete production UTC-day with at least 200 command/RPC/acceptance samples, all five SLO results, and daily queue/DLQ counts.
 - P2-S09-AC-265: accept the Google Cloud terms, configure the business-owned
   Google OAuth client and authorized non-production identities, then retain the

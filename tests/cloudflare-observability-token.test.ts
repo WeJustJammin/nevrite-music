@@ -78,6 +78,103 @@ describe('Cloudflare observability token verification', () => {
     await expect(verification).rejects.not.toThrow(config.token);
   });
 
+  it.each([403, 500])(
+    'reports Account Analytics HTTP %i without leaking the response body',
+    async (status) => {
+      const fetchImpl = vi
+        .fn<typeof fetch>()
+        .mockResolvedValueOnce(jsonResponse({ result: {}, success: true }))
+        .mockResolvedValueOnce(
+          jsonResponse(
+            {
+              errors: [
+                {
+                  message: `token ${config.token} cannot access ${config.accountId}`,
+                },
+              ],
+            },
+            status,
+          ),
+        );
+
+      const verification = verifyCloudflareObservabilityToken(
+        config,
+        fetchImpl,
+      );
+      await expect(verification).rejects.toThrow(
+        `Cloudflare Account Analytics permission check failed: HTTP ${status}`,
+      );
+      await expect(verification).rejects.not.toThrow(config.token);
+      await expect(verification).rejects.not.toThrow(config.accountId);
+    },
+  );
+
+  it('classifies Account Analytics GraphQL permission errors without leaking provider data', async () => {
+    const fetchImpl = vi
+      .fn<typeof fetch>()
+      .mockResolvedValueOnce(jsonResponse({ result: {}, success: true }))
+      .mockResolvedValueOnce(
+        jsonResponse({
+          errors: [
+            {
+              message: `permission denied for token ${config.token} on ${config.accountId}`,
+            },
+          ],
+        }),
+      );
+
+    const verification = verifyCloudflareObservabilityToken(config, fetchImpl);
+    await expect(verification).rejects.toThrow(
+      'Cloudflare Account Analytics permission check failed: GraphQL permission error',
+    );
+    await expect(verification).rejects.not.toThrow(config.token);
+    await expect(verification).rejects.not.toThrow(config.accountId);
+  });
+
+  it.each([
+    {
+      errors: [{ message: `account ${config.accountId} does not exist` }],
+    },
+    { data: { viewer: { accounts: [] } } },
+  ])(
+    'classifies an unavailable Account Analytics resource without leaking provider data',
+    async (analyticsPayload) => {
+      const fetchImpl = vi
+        .fn<typeof fetch>()
+        .mockResolvedValueOnce(jsonResponse({ result: {}, success: true }))
+        .mockResolvedValueOnce(jsonResponse(analyticsPayload));
+
+      const verification = verifyCloudflareObservabilityToken(
+        config,
+        fetchImpl,
+      );
+      await expect(verification).rejects.toThrow(
+        'Cloudflare Account Analytics permission check failed: GraphQL resource error',
+      );
+      await expect(verification).rejects.not.toThrow(config.accountId);
+    },
+  );
+
+  it.each([
+    new Response('not-json', { status: 200 }),
+    jsonResponse({ errors: {} }),
+    jsonResponse({ data: { viewer: { accounts: [{}] } } }),
+  ])(
+    'classifies malformed Account Analytics responses without exposing their contents',
+    async (analyticsResponse) => {
+      const fetchImpl = vi
+        .fn<typeof fetch>()
+        .mockResolvedValueOnce(jsonResponse({ result: {}, success: true }))
+        .mockResolvedValueOnce(analyticsResponse);
+
+      await expect(
+        verifyCloudflareObservabilityToken(config, fetchImpl),
+      ).rejects.toThrow(
+        'Cloudflare Account Analytics permission check failed: malformed response',
+      );
+    },
+  );
+
   it('rejects invalid local configuration before making a request', async () => {
     const fetchImpl = vi.fn<typeof fetch>();
 

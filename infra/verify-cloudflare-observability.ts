@@ -11,6 +11,9 @@ const CLOUDFLARE_ACCOUNT_ID = /^[0-9a-f]{32}$/u;
 const isRecord = (value: unknown): value is Record<string, unknown> =>
   typeof value === 'object' && value !== null && !Array.isArray(value);
 
+const verificationError = (message: string, detail: string): Error =>
+  new Error(`${message}: ${detail}`);
+
 const requestJson = async (
   fetchImpl: typeof fetch,
   url: string,
@@ -18,20 +21,47 @@ const requestJson = async (
   body: Readonly<Record<string, unknown>>,
   failureMessage: string,
 ): Promise<unknown> => {
-  const response = await fetchImpl(url, {
-    body: JSON.stringify(body),
-    headers: {
-      Authorization: `Bearer ${token}`,
-      'Content-Type': 'application/json',
-    },
-    method: 'POST',
-  });
-  if (!response.ok) throw new Error(failureMessage);
+  let response: Response;
+  try {
+    response = await fetchImpl(url, {
+      body: JSON.stringify(body),
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+      method: 'POST',
+    });
+  } catch {
+    throw verificationError(failureMessage, 'request failed');
+  }
+  if (!response.ok)
+    throw verificationError(failureMessage, `HTTP ${response.status}`);
   try {
     return await response.json();
   } catch {
-    throw new Error(failureMessage);
+    throw verificationError(failureMessage, 'malformed response');
   }
+};
+
+const classifyGraphqlErrors = (errors: unknown[]): string => {
+  const messages = errors
+    .map((error) => (isRecord(error) ? error.message : undefined))
+    .filter((message): message is string => typeof message === 'string');
+  if (
+    messages.some((message) =>
+      /not found|does not exist|unknown (?:account|resource)/iu.test(message),
+    )
+  )
+    return 'GraphQL resource error';
+  if (
+    messages.some((message) =>
+      /unauthorized|not authorized|forbidden|permission|access|denied/iu.test(
+        message,
+      ),
+    )
+  )
+    return 'GraphQL permission error';
+  return 'GraphQL error';
 };
 
 export const verifyCloudflareObservabilityToken = async (
@@ -93,16 +123,25 @@ export const verifyCloudflareObservabilityToken = async (
   if (
     !isRecord(analyticsPayload) ||
     (Object.hasOwn(analyticsPayload, 'errors') &&
-      (!Array.isArray(analyticsPayload.errors) ||
-        analyticsPayload.errors.length > 0))
+      !Array.isArray(analyticsPayload.errors))
   )
-    throw new Error(analyticsFailure);
+    throw verificationError(analyticsFailure, 'malformed response');
+  if (
+    Array.isArray(analyticsPayload.errors) &&
+    analyticsPayload.errors.length > 0
+  )
+    throw verificationError(
+      analyticsFailure,
+      classifyGraphqlErrors(analyticsPayload.errors),
+    );
   const data = analyticsPayload.data;
   const viewer = isRecord(data) ? data.viewer : undefined;
   const accounts = isRecord(viewer) ? viewer.accounts : undefined;
   const account = Array.isArray(accounts) ? accounts[0] : undefined;
+  if (Array.isArray(accounts) && accounts.length === 0)
+    throw verificationError(analyticsFailure, 'GraphQL resource error');
   if (!isRecord(account) || !Array.isArray(account.queueBacklogAdaptiveGroups))
-    throw new Error(analyticsFailure);
+    throw verificationError(analyticsFailure, 'malformed response');
 };
 
 const run = async (): Promise<void> => {

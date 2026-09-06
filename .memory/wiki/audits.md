@@ -22,3 +22,4 @@
 - [[specs/audits/verify-infrastructure-2026-09-04-1703|Infrastructure Verification Report: Post-deploy candidate `5d6e49f34b678c59da2ac4f7059f08e6dc3b4790`]]
 - [[specs/audits/verify-infrastructure-2026-09-04-2139|Infrastructure Verification Report: Slice 09 range gate refresh]]
 - [[specs/audits/verify-infrastructure-2026-09-05-0824|Infrastructure Verification Report: Slice 09 hosted auth recovery]]
+- [[specs/audits/verify-infrastructure-2026-09-06-0300|Infrastructure Verification Report: Slice 09 observability-token preflight]]

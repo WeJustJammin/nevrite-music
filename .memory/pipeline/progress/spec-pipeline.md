@@ -1,7 +1,7 @@
 # Spec Pipeline Progress
 
 **Project**: WeJammin
-**Last updated**: 2026-09-05
+**Last updated**: 2026-09-06
 **Overall**: IA 43/43 authored and independently ambiguity-passed (**fresh rerun PASS — 0/344 = 0.00%, 2026-08-28**); Phase 1 complete at 7/7 slices; Phase 2 at 8/17 complete with Slice 09 blocked at 279/283.
 
 ## Legend
@@ -74,8 +74,8 @@
   because no live receipt has been claimed. Slice 10 remains dependency-locked. See
   `.memory/pipeline/progress/phases/phase-02.md` and
   `.memory/pipeline/progress/slices/phase-02-slice-09.md`.
-- **CURRENT VALIDATION:** `pnpm validate` passes 423/423 Vitest files and
-  3,148/3,148 tests at 100% coverage, 102/102 Playwright tests, every workspace
+- **CURRENT VALIDATION:** `pnpm validate` passes 424/424 Vitest files and
+  3,154/3,154 tests at 100% coverage, 102/102 Playwright tests, every workspace
   build, bundle budgets, and the fresh immutable-Worker API p95 smoke.
   `pnpm db:verify` passes 34/34 migrations and 45/45 pgTAP files with
   1,678/1,678 assertions and exact generated types.
@@ -106,6 +106,15 @@
   Gmail contains no genuine platform-on-call delivery, and AC209, AC211, AC265,
   and AC266 remain open. See
   `.memory/wiki/specs/audits/verify-infrastructure-2026-09-05-0824.md`.
+- **LATEST FAIL-CLOSED EVIDENCE:** PR #24 is exact `main` SHA
+  `3bf66a610b013bf9600889780ee26319559fb31c`; CI `34013034252` and staging
+  `34013296132` passed. Protected production runs `34016439881` and
+  post-rotation `34018343506` stopped before migrations or deployment with
+  `Cloudflare Account Analytics permission check failed`. The environment secret
+  was updated at `2026-09-06T07:07:48Z`; Workers Observability passed while
+  Account Analytics still failed. Existing production version
+  `9bd444fe-e7ed-499c-88f5-a3a8762ddb5c` remained active. See
+  `.memory/wiki/specs/audits/verify-infrastructure-2026-09-06-0300.md`.
 - **NEXT:** retain a genuine post-configuration redacted alert delivery receipt.
   Keep Slice 09 blocked at 279/283 and Phase 2 at 8/17 until AC209, the complete
   UTC-day/200-sample SLO and DLQ evidence for AC211, owner acceptance of the
