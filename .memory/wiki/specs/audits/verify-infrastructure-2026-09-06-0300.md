@@ -117,6 +117,23 @@ verified destination. The updated observability secret therefore has no known
 remaining scope/configuration defect. AC209 remains open only because no real
 threshold has produced the required delivered receipt.
 
+At `2026-09-06T20:37:15.119Z`, a fresh zone-level Cloudflare query confirmed
+504 successful scheduled invocations after the current production deployment,
+zero script exceptions, and zero Email Sending events in both the individual
+and aggregate datasets across the latest 30-day window. No Email Sending event
+was observed in that retained window, and no qualifying AC209 receipt is
+retained. At `2026-09-06T20:43:30.654Z`, fresh staging and production provider
+catalog requests both returned HTTP 200 with Google
+`temporarily_unavailable`, so AC265 remains fail-closed pending owner setup.
+
+The AC265 retained-report verifier now requires a strict redacted hosted body,
+streams the fixed report tree within path-derived entry/depth budgets, rejects
+symlinks, special files, and unreferenced entries, and hashes/parses
+descriptor-pinned bounded bytes. Final `pnpm validate` passed 433 Vitest files /
+3,248 tests at 100% coverage, 102/102 Playwright checks, and every remaining
+repository gate. This hardens future evidence; it does not claim the missing
+hosted browser run.
+
 
 <!-- spec-graph: auto-generated -->
 ## Related Specs

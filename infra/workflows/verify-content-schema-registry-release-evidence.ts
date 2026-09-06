@@ -1,6 +1,4 @@
-import { createHash } from 'node:crypto';
-import { existsSync, readFileSync, realpathSync, statSync } from 'node:fs';
-import { isAbsolute, relative, resolve, sep } from 'node:path';
+import { readFileSync, realpathSync } from 'node:fs';
 import { pathToFileURL } from 'node:url';
 
 import {
@@ -8,8 +6,13 @@ import {
   OperationalReleaseEvidenceExpectedIdentitySchema,
   type ContentSchemaRegistryOperationalReleaseEvidence,
 } from '../../packages/contracts/src/content-schema-registry/operational-release-evidence.ts';
+import { verifyContentSchemaRegistryRetainedReports } from './content-schema-registry-retained-report-verifier.ts';
 
-const MAX_RETAINED_REPORT_BYTES = 10 * 1024 * 1024;
+export {
+  validateContentSchemaRegistryHostedE2eReport,
+  validateContentSchemaRegistryHostedE2eReportBytes,
+} from './content-schema-registry-hosted-e2e-report-verifier.ts';
+
 type TrustedNow = () => number;
 
 export const validateContentSchemaRegistryOperationalReleaseEvidence = (
@@ -106,78 +109,26 @@ export const validateContentSchemaRegistryOperationalReleaseEvidence = (
   return parsed.data;
 };
 
-type RetainedReportReference = Readonly<{
-  path: string;
-  sha256: string;
-}>;
-
-const retainedReports = (
-  evidence: ContentSchemaRegistryOperationalReleaseEvidence,
-): readonly (readonly [string, RetainedReportReference])[] => [
-  ['alert configuration', evidence.alerting.configurationReport],
-  ['alert delivery receipt', evidence.alerting.deliveryReceipt.report],
-  ['SLO measurement', evidence.slo.measurementReport],
-  ['SLO dataset', evidence.slo.datasetReport],
-  ['hosted E2E', evidence.hostedE2e.report],
-  ['automated accessibility', evidence.accessibility.automatedReport],
-  ['VoiceOver accessibility', evidence.accessibility.manualRuns[0].report],
-  ['NVDA accessibility', evidence.accessibility.manualRuns[1].report],
-];
-
-const sha256File = (path: string): string =>
-  createHash('sha256').update(readFileSync(path)).digest('hex');
-
-const verifyRetainedReports = (
-  evidence: ContentSchemaRegistryOperationalReleaseEvidence,
-  reportRoot: string,
-): void => {
-  const approvedRoot = realpathSync(reportRoot);
-  if (!statSync(approvedRoot).isDirectory())
-    throw new Error('Retained report root must be a directory.');
-  const seenPaths = new Set<string>();
-  const seenFileIdentities = new Set<string>();
-  for (const [label, reference] of retainedReports(evidence)) {
-    const candidate = resolve(approvedRoot, reference.path);
-    if (!existsSync(candidate))
-      throw new Error(`Retained report is missing: ${label}.`);
-    const retainedPath = realpathSync(candidate);
-    const rootRelativePath = relative(approvedRoot, retainedPath);
-    if (
-      isAbsolute(rootRelativePath) ||
-      rootRelativePath === '..' ||
-      rootRelativePath.startsWith(`..${sep}`)
-    )
-      throw new Error(`Retained report escapes its approved root: ${label}.`);
-    if (seenPaths.has(retainedPath))
-      throw new Error(`Retained report path is duplicated: ${label}.`);
-    seenPaths.add(retainedPath);
-    const retainedReportStat = statSync(retainedPath);
-    if (!retainedReportStat.isFile())
-      throw new Error(`Retained report must be a regular file: ${label}.`);
-    if (retainedReportStat.size === 0)
-      throw new Error(`Retained report must not be empty: ${label}.`);
-    if (retainedReportStat.size > MAX_RETAINED_REPORT_BYTES)
-      throw new Error(`Retained report exceeds the 10 MiB limit: ${label}.`);
-    const fileIdentity = `${retainedReportStat.dev}:${retainedReportStat.ino}`;
-    if (seenFileIdentities.has(fileIdentity))
-      throw new Error(`Retained report file is duplicated: ${label}.`);
-    seenFileIdentities.add(fileIdentity);
-    if (sha256File(retainedPath) !== reference.sha256)
-      throw new Error(`Retained report digest does not match: ${label}.`);
-  }
-};
-
 export const verifyContentSchemaRegistryOperationalReleaseEvidenceFile = (
   evidencePath: string,
   expectedReleaseIdentity: unknown,
   reportRoot: string,
 ): ContentSchemaRegistryOperationalReleaseEvidence => {
   const evidence: unknown = JSON.parse(readFileSync(evidencePath, 'utf8'));
-  const validated = validateContentSchemaRegistryOperationalReleaseEvidence(
-    evidence,
+  const expected = OperationalReleaseEvidenceExpectedIdentitySchema.safeParse(
     expectedReleaseIdentity,
   );
-  verifyRetainedReports(validated, reportRoot);
+  if (!expected.success)
+    throw new Error('Expected release identity is invalid.');
+  const validated = validateContentSchemaRegistryOperationalReleaseEvidence(
+    evidence,
+    expected.data,
+  );
+  verifyContentSchemaRegistryRetainedReports(
+    validated,
+    expected.data,
+    reportRoot,
+  );
   return validated;
 };
 

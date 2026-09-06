@@ -81,9 +81,16 @@ authorization headers, email addresses, content values, and capability graphs
 do not belong in the sidecar.
 
 Every digest is paired with a safe path relative to one retained-report root.
-The verifier resolves each path inside that root, rejects symlink escapes,
-requires a unique regular file no larger than 10 MiB, recomputes every SHA-256
-digest, and then confirms shape, exact check coverage,
+The verifier streams that fixed tree within entry and depth budgets derived
+from the declared report paths, resolves each path inside the root, forbids
+symlink report entries and escapes, rejects special files before a nonblocking
+open, pins each unique regular file's identity and size to that descriptor,
+reads no more than 10 MiB plus a growth sentinel, recomputes every SHA-256 digest
+from the same bytes it parses, and rejects every unreferenced file or directory.
+`hosted/e2e.json` must satisfy the strict redacted
+`ContentSchemaRegistryHostedE2eReportSchema`; it contains only exact release
+identity, timestamps, passed role/scenario keys, and bounded durations. The
+verifier then confirms shape, exact check coverage,
 immutable identity, ordering, strict SLO limits, derived daily DLQ rate,
 hosted-origin safety, deployment chronology, trusted-cutoff bounds, and evidence
 timing. It does not collect telemetry,
@@ -134,5 +141,7 @@ passing sidecar and an operator reviews the retained source reports.
 - Disable Playwright traces for authenticated hosted runs unless the protected
   artifact process proves they contain no cookies, tokens, email addresses, or
   OAuth query values.
+- Keep retained report roots minimal. Unreferenced traces, screenshots, videos,
+  storage state, provider payloads, files, and directories fail verification.
 - Retain only allowlisted aggregate measurements and opaque report IDs/digests.
 - Never enable a paid provider or integration from this runbook.

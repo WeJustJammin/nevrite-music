@@ -1,116 +1,34 @@
 import { spawnSync } from 'node:child_process';
-import { createHash } from 'node:crypto';
 import {
   linkSync,
   mkdirSync,
-  mkdtempSync,
   readFileSync,
   rmSync,
   symlinkSync,
   truncateSync,
   writeFileSync,
 } from 'node:fs';
-import { tmpdir } from 'node:os';
 import { dirname, join } from 'node:path';
 
 import { afterEach, describe, expect, it } from 'vitest';
 
-import { verifyContentSchemaRegistryOperationalReleaseEvidenceFile } from '../../infra/workflows/verify-content-schema-registry-release-evidence.ts';
 import {
-  completeEvidence,
   expectedIdentity,
   sourceRevision,
 } from './phase-02-slice-09-operational-release-evidence.test-support.ts';
+import {
+  cleanupRetainedEvidenceFixtures,
+  createRetainedEvidenceFixture,
+  hostedReportContents,
+  replaceHostedReport,
+  reportContents,
+  sha256,
+  verifyWithReports,
+} from './phase-02-slice-09-retained-evidence.test-support.ts';
 
-const reportContents = Object.freeze({
-  'alerts/configuration.json': 'production alert configuration\n',
-  'alerts/delivery-receipt.json': 'redacted alert delivery receipt\n',
-  'slo/measurement.json': 'production SLO measurement\n',
-  'slo/dataset.json': 'production SLO dataset\n',
-  'hosted/e2e.json': 'hosted auth and RLS E2E report\n',
-  'accessibility/axe.json': 'automated accessibility report\n',
-  'accessibility/macos-voiceover-safari.json':
-    'VoiceOver and Safari manual report\n',
-  'accessibility/windows-nvda-firefox.json': 'NVDA and Firefox manual report\n',
-});
+const createFixture = createRetainedEvidenceFixture;
 
-type ReportPath = keyof typeof reportContents;
-
-const sha256 = (contents: string): string =>
-  createHash('sha256').update(contents).digest('hex');
-
-const reference = (path: ReportPath) => ({
-  path,
-  sha256: sha256(reportContents[path]),
-});
-
-const evidenceWithRealReportDigests = () => {
-  const [voiceOver, nvda] = completeEvidence.accessibility.manualRuns;
-  return {
-    ...completeEvidence,
-    alerting: {
-      ...completeEvidence.alerting,
-      configurationReport: reference('alerts/configuration.json'),
-      deliveryReceipt: {
-        ...completeEvidence.alerting.deliveryReceipt,
-        report: reference('alerts/delivery-receipt.json'),
-      },
-    },
-    slo: {
-      ...completeEvidence.slo,
-      measurementReport: reference('slo/measurement.json'),
-      datasetReport: reference('slo/dataset.json'),
-    },
-    hostedE2e: {
-      ...completeEvidence.hostedE2e,
-      report: reference('hosted/e2e.json'),
-    },
-    accessibility: {
-      ...completeEvidence.accessibility,
-      automatedReport: reference('accessibility/axe.json'),
-      manualRuns: [
-        {
-          ...voiceOver,
-          report: reference('accessibility/macos-voiceover-safari.json'),
-        },
-        {
-          ...nvda,
-          report: reference('accessibility/windows-nvda-firefox.json'),
-        },
-      ],
-    },
-  } as const;
-};
-
-const sandboxes: string[] = [];
-
-const createFixture = () => {
-  const sandbox = mkdtempSync(join(tmpdir(), 'wejammin-s09-evidence-'));
-  sandboxes.push(sandbox);
-  const reportRoot = join(sandbox, 'reports');
-  for (const [path, contents] of Object.entries(reportContents)) {
-    const absolutePath = join(reportRoot, path);
-    mkdirSync(dirname(absolutePath), { recursive: true });
-    writeFileSync(absolutePath, contents);
-  }
-  const evidencePath = join(sandbox, 'release-evidence.json');
-  writeFileSync(evidencePath, JSON.stringify(evidenceWithRealReportDigests()));
-  const expectedIdentityPath = join(sandbox, 'expected-release-identity.json');
-  writeFileSync(expectedIdentityPath, JSON.stringify(expectedIdentity));
-  return { evidencePath, expectedIdentityPath, reportRoot, sandbox };
-};
-
-const verifyWithReports =
-  verifyContentSchemaRegistryOperationalReleaseEvidenceFile as (
-    evidencePath: string,
-    expectedReleaseIdentity: unknown,
-    reportRoot: string,
-  ) => unknown;
-
-afterEach(() => {
-  for (const sandbox of sandboxes.splice(0))
-    rmSync(sandbox, { recursive: true, force: true });
-});
+afterEach(cleanupRetainedEvidenceFixtures);
 
 describe('Slice 09 retained operational evidence files', () => {
   it('accepts only when every referenced report matches its SHA-256 digest', () => {
@@ -149,6 +67,120 @@ describe('Slice 09 retained operational evidence files', () => {
         fixture.reportRoot,
       ),
     ).toThrow('Retained report is missing');
+  });
+
+  it('rejects unreferenced retained files', () => {
+    const fixture = createFixture();
+    writeFileSync(
+      join(fixture.reportRoot, 'hosted/raw-trace.zip'),
+      'authenticated browser trace',
+    );
+    expect(() =>
+      verifyWithReports(
+        fixture.evidencePath,
+        expectedIdentity,
+        fixture.reportRoot,
+      ),
+    ).toThrow('Unreferenced retained report file');
+  });
+
+  it('bounds streamed root entries from the fixed report set', () => {
+    const fixture = createFixture();
+    for (let index = 0; index < 33; index += 1)
+      writeFileSync(join(fixture.reportRoot, `extra-${index}.txt`), 'x');
+    expect(() =>
+      verifyWithReports(
+        fixture.evidencePath,
+        expectedIdentity,
+        fixture.reportRoot,
+      ),
+    ).toThrow('Retained report tree exceeds the entry limit');
+  });
+
+  it('validates the retained report root before traversing it', () => {
+    const fixture = createFixture();
+    const reportRootFile = join(fixture.sandbox, 'report-root-file');
+    writeFileSync(reportRootFile, 'not a directory\n');
+    expect(() =>
+      verifyWithReports(fixture.evidencePath, expectedIdentity, reportRootFile),
+    ).toThrow('Retained report root must be a directory');
+  });
+
+  it('bounds streamed nested entries from the fixed report set', () => {
+    const fixture = createFixture();
+    const hostedDirectory = join(fixture.reportRoot, 'hosted');
+    for (let index = 0; index < 16; index += 1)
+      writeFileSync(join(hostedDirectory, `unreferenced-${index}.json`), 'x\n');
+    expect(() =>
+      verifyWithReports(
+        fixture.evidencePath,
+        expectedIdentity,
+        fixture.reportRoot,
+      ),
+    ).toThrow('Retained report tree exceeds the entry limit');
+  });
+
+  it('bounds unapproved nesting at the deepest approved directory', () => {
+    const fixture = createFixture();
+    mkdirSync(join(fixture.reportRoot, 'hosted/unapproved'));
+    expect(() =>
+      verifyWithReports(
+        fixture.evidencePath,
+        expectedIdentity,
+        fixture.reportRoot,
+      ),
+    ).toThrow('Retained report tree exceeds the maximum depth');
+  });
+
+  it('accepts a contract-valid retained report path with deeper nesting', () => {
+    const fixture = createFixture();
+    const originalPath = join(fixture.reportRoot, 'hosted/e2e.json');
+    const deepPath = join(fixture.reportRoot, 'hosted/a/b/e2e.json');
+    rmSync(originalPath);
+    mkdirSync(dirname(deepPath), { recursive: true });
+    writeFileSync(deepPath, hostedReportContents);
+    const evidence = JSON.parse(readFileSync(fixture.evidencePath, 'utf8')) as {
+      hostedE2e: { report: { path: string; sha256: string } };
+    };
+    evidence.hostedE2e.report = {
+      path: 'hosted/a/b/e2e.json',
+      sha256: sha256(hostedReportContents),
+    };
+    writeFileSync(fixture.evidencePath, JSON.stringify(evidence));
+    expect(() =>
+      verifyWithReports(
+        fixture.evidencePath,
+        expectedIdentity,
+        fixture.reportRoot,
+      ),
+    ).not.toThrow();
+  });
+
+  it('parses the hosted report after digest verification and rejects mismatched identity', () => {
+    const fixture = createFixture();
+    replaceHostedReport(
+      fixture,
+      hostedReportContents.replace(sourceRevision, 'b'.repeat(40)),
+    );
+    expect(() =>
+      verifyWithReports(
+        fixture.evidencePath,
+        expectedIdentity,
+        fixture.reportRoot,
+      ),
+    ).toThrow('Hosted E2E report does not match the expected source SHA');
+  });
+
+  it('rejects a hosted report that is not JSON after digest verification', () => {
+    const fixture = createFixture();
+    replaceHostedReport(fixture, 'raw trace bytes\n');
+    expect(() =>
+      verifyWithReports(
+        fixture.evidencePath,
+        expectedIdentity,
+        fixture.reportRoot,
+      ),
+    ).toThrow('Hosted E2E retained report is not valid JSON');
   });
 
   it('rejects a symlink that escapes the retained-report root', () => {
@@ -259,6 +291,35 @@ describe('Slice 09 retained operational evidence files', () => {
       ),
     ).toThrow('Retained report exceeds the 10 MiB limit');
   });
+
+  it.skipIf(process.platform === 'win32')(
+    'rejects a referenced FIFO without blocking the CLI',
+    () => {
+      const fixture = createFixture();
+      const fifoPath = join(fixture.reportRoot, 'slo/measurement.json');
+      rmSync(fifoPath);
+      expect(spawnSync('mkfifo', [fifoPath]).status).toBe(0);
+      const result = spawnSync(
+        process.execPath,
+        [
+          '--experimental-strip-types',
+          join(
+            process.cwd(),
+            'infra/workflows/verify-content-schema-registry-release-evidence.ts',
+          ),
+          fixture.evidencePath,
+          fixture.expectedIdentityPath,
+          fixture.reportRoot,
+        ],
+        { encoding: 'utf8', timeout: 1_000 },
+      );
+      expect(result.signal).toBeNull();
+      expect(result.status).toBe(1);
+      expect(result.stderr).toContain(
+        'Retained report must be a regular file: SLO measurement.',
+      );
+    },
+  );
 
   it('fails closed at the executable CLI boundary when report-root input is absent', () => {
     const fixture = createFixture();
