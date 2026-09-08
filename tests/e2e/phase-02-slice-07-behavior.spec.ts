@@ -66,16 +66,9 @@ test.describe('Phase 2 Slice 07 production browser behavior', () => {
   test('[P2-S07-AC-099..P2-S07-AC-130, P2-S07-AC-151] URL roles never grant authority; trusted capabilities do', async ({
     page,
   }) => {
-    const roles = [
-      'free',
-      'paid',
-      'creator',
-      'guardian',
-      'junior',
-      'business',
-      'staff',
-      'admin',
-    ];
+    test.slow();
+    const roles =
+      'free paid creator guardian junior business staff admin'.split(' ');
     for (const role of roles) {
       await openConfiguration(page, 'web.read-only', `&role=${role}`);
       const workbench = page.locator(

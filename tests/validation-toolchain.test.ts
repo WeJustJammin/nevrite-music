@@ -19,6 +19,7 @@ const runNode = (relativePath: string, ...arguments_: string[]): string =>
     cwd: repositoryRoot,
     encoding: 'utf8',
     stdio: ['ignore', 'pipe', 'pipe'],
+    timeout: 10_000,
   });
 
 describe('validation toolchain contracts', () => {
@@ -49,7 +50,12 @@ describe('validation toolchain contracts', () => {
   it('declares each local test project and the managed E2E server boundary', () => {
     const vitest = readRepositoryFile('vitest.config.ts');
     const playwright = readRepositoryFile('playwright.config.ts');
+    const s09RealPlaywright = readRepositoryFile(
+      'playwright.s09-real.config.ts',
+    );
     const webAstro = readRepositoryFile('apps/web/astro.config.mjs');
+    const ciWorkflow = readRepositoryFile('.github/workflows/ci.yml');
+    const packageDocument = readRepositoryJson('package.json');
     const e2e = readRepositoryFile('tests/e2e/scaffold.spec.ts');
     const fixture = createE2EFixture();
 
@@ -74,6 +80,8 @@ describe('validation toolchain contracts', () => {
     expect(vitest).toContain("'tests/accessibility/**/*.test.ts'");
     expect(vitest).toContain("'tests/performance/**/*.test.ts'");
     expect(vitest).toContain("'tests/security/**/*.test.ts'");
+    expect(vitest).toContain('maxWorkers: process.env.CI ? 4 : 2');
+    expect(vitest).toContain('testTimeout: 15_000');
     expect(playwright).toContain("testDir: './tests/e2e'");
     expect(playwright).toContain("name: 'chromium'");
     expect(playwright).toContain('const ciRunId = process.env.GITHUB_RUN_ID;');
@@ -81,46 +89,82 @@ describe('validation toolchain contracts', () => {
     expect(playwright).toContain('30_000 + ciPortSlot * 2');
     expect(playwright).toContain('--port ${webPort}');
     expect(playwright).toContain('--port ${docsPort}');
+    expect(playwright).toContain("WEJAMMIN_E2E_ISOLATED: '1'");
+    expect(playwright).toContain('const cloudflareWebServerTimeout = 300_000;');
+    expect(playwright).toContain('timeout: cloudflareWebServerTimeout');
     expect(playwright).toContain('metadata: { docsOrigin }');
     expect(playwright).toContain('baseURL: webOrigin');
     expect(playwright).toContain(
+      "'phase-02-slice-09-content-schema-registry-performance.spec.ts'",
+    );
+    expect(playwright).toContain(
       `const webPort = ciPortSlot === undefined ? ${new URL(fixture.baseUrl).port}`,
     );
+    expect(s09RealPlaywright).toContain(
+      'const realRouteServerTimeout = 300_000;',
+    );
+    expect(s09RealPlaywright).toContain('timeout: realRouteServerTimeout');
+    expect(s09RealPlaywright).toContain("trace: 'off'");
     expect(e2e).toContain("metadata['docsOrigin']");
     expect(e2e).not.toContain('http://127.0.0.1:4322');
-    expect(webAstro).toContain("'GITHUB_RUN_ID' in runtimeProcess.env");
+    expect(webAstro).toContain("'GITHUB_RUN_ID' in runtimeEnvironment");
+    expect(webAstro).toContain("'WEJAMMIN_E2E_ISOLATED' in runtimeEnvironment");
+    expect(webAstro).toContain(
+      "runtimeEnvironment.WEJAMMIN_E2E_ISOLATED === '1'",
+    );
     expect(webAstro).toContain('inspectorPort: false');
     expect(webAstro).toContain('persistState: false');
+    expect(webAstro).toContain(
+      'devToolbar: { enabled: !isolateCloudflareDev }',
+    );
+    expect(webAstro).toContain("'react-dom/client'");
+    expect(packageDocument.scripts).toMatchObject({
+      'test:e2e': 'pnpm test:e2e:functional && pnpm test:e2e:s09-real',
+      'test:e2e:functional': 'playwright test',
+      'test:e2e:s09-real': expect.stringContaining(
+        'playwright.s09-real.config.ts',
+      ),
+      'test:evidence:s09': expect.stringContaining(
+        'phase-02-slice-09-evidence-map.test.ts',
+      ),
+    });
+    expect(ciWorkflow).toContain(
+      'run: pnpm test:coverage && pnpm test:evidence:s09',
+    );
     expect(e2e).toContain(fixture.title);
     expect(e2e).toContain(fixture.heading);
     expect(e2e).toContain(fixture.statusText);
   });
 
-  it('keeps OpenAPI output generated from the contract authority', () => {
-    expect(() =>
-      runNode('infra/generate-openapi.mjs', '--check'),
-    ).not.toThrow();
+  it(
+    'keeps OpenAPI output generated from the contract authority',
+    { timeout: 15_000 },
+    () => {
+      expect(() =>
+        runNode('infra/generate-openapi.mjs', '--check'),
+      ).not.toThrow();
 
-    const document = readRepositoryJson('docs/openapi/openapi.json');
-    const paths = document.paths;
-    const components = document.components;
+      const document = readRepositoryJson('docs/openapi/openapi.json');
+      const paths = document.paths;
+      const components = document.components;
 
-    expect(document.openapi).toBe('3.1.0');
-    expect(paths).toMatchObject({
-      '/api/v1/health': expect.any(Object),
-      '/api/v1/ready': expect.any(Object),
-      '/api/v1/internal/diagnostics': expect.any(Object),
-    });
-    expect(components).toMatchObject({
-      schemas: expect.objectContaining({
-        ApiError: expect.any(Object),
-        HealthResponse: expect.any(Object),
-        ReadinessResponse: expect.any(Object),
-        RequestContext: expect.any(Object),
-      }),
-    });
-    expect(JSON.stringify(document)).not.toMatch(/\{\{[^}]+\}\}/);
-  });
+      expect(document.openapi).toBe('3.1.0');
+      expect(paths).toMatchObject({
+        '/api/v1/health': expect.any(Object),
+        '/api/v1/ready': expect.any(Object),
+        '/api/v1/internal/diagnostics': expect.any(Object),
+      });
+      expect(components).toMatchObject({
+        schemas: expect.objectContaining({
+          ApiError: expect.any(Object),
+          HealthResponse: expect.any(Object),
+          ReadinessResponse: expect.any(Object),
+          RequestContext: expect.any(Object),
+        }),
+      });
+      expect(JSON.stringify(document)).not.toMatch(/\{\{[^}]+\}\}/);
+    },
+  );
 
   it('keeps database type drift and generated artifact checks reviewable', () => {
     const syncTypes = readRepositoryFile('infra/sync-database-types.mjs');

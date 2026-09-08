@@ -68,6 +68,9 @@ export default function ContentSchemaRegistryWorkbenchIsland(
       props.canonicalRefetchUrl,
       (reason) => onCanonicalRefetch(reason),
     );
+    document
+      .querySelector<HTMLElement>('[data-workbench="content-schema-registry"]')
+      ?.setAttribute('data-content-schema-registry-hydrated', 'true');
     return () => {
       commandCleanupRef.current();
       commandCleanupRef.current = () => undefined;

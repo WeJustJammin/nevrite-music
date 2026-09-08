@@ -586,6 +586,21 @@ response`; Workers Observability passed. Cloudflare's documented successful
   remaining repository gates. AC209 and AC265 remain open; Slice 09 stays
   279/283.
 
+- 2026-09-07 evidence and CI gate stabilization: the executable evidence gate
+  now runs separately from coverage, strips parent Vitest and npm lifecycle
+  state before spawning bounded child commands, and is enforced in CI with a
+  45-minute quality-job ceiling. Functional browser gates use one isolated
+  worker, while the production-built Slice 09 route owns a dedicated five-test
+  performance/auth suite. Full local `pnpm validate` passes 433/433 Vitest
+  files and 3,248/3,248 tests at 100% coverage, 101/101 functional Playwright
+  checks, 5/5 production-built Slice 09 Playwright checks, builds, bundle
+  budgets, and performance smoke. A fresh staging catalog request returned
+  HTTP 200 with Google `temporarily_unavailable`; direct staging Supabase
+  authorization returned HTTP 400 `validation_failed` because Google remains
+  disabled. No alert, OAuth flow, identity, or accessibility evidence was
+  synthesized. AC209, AC211, AC265, and AC266 remain open; Slice 09 stays
+  279/283 and Slice 10 remains locked.
+
 ## Depth Ratio
 
 - Verified acceptance items: 279/283.

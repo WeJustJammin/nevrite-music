@@ -28,6 +28,10 @@ export default defineConfig({
     },
   },
   test: {
+    // Contract tests exercise bounded child CLIs and builds. Keep enough host
+    // capacity for those children instead of oversubscribing the runner.
+    maxWorkers: process.env.CI ? 4 : 2,
+    testTimeout: 15_000,
     coverage: {
       all: true,
       exclude: [

@@ -6,9 +6,10 @@
   green at 279/283, and its prior exact-SHA infrastructure execution is
   resolved. The 2026-09-05 follow-up implements the twelve-condition production
   operational-alert boundary, and the 2026-09-06 AC211 collector is locally
-  validated, merged, and deployed. Full `pnpm validate`
-  passes 432/432 Vitest files, 3,233/3,233 tests at 100% coverage, and 102/102
-  Playwright checks. The latest verified production candidate is exact SHA
+  validated, merged, and deployed. The current remediation branch passes full
+  `pnpm validate`: 433/433 Vitest files, 3,248/3,248 tests at 100% coverage,
+  101/101 functional Playwright checks, and 5/5 production-built Slice 09
+  checks. The latest verified production candidate is exact SHA
   `621f7b99745318948720afa4d670ae1a707d3365`; CI `34031918191`, staging
   `34032219768`, protected production run `34032282370` / deployment
   `6292744330`, artifact `9989024106`, API Worker
@@ -25,10 +26,12 @@
   threshold-triggered provider/mailbox receipt.
   AC-211 still requires a complete
   production UTC day with at least 200 command/RPC/acceptance samples, five
-  attained SLOs, and daily queue/DLQ counts. The earliest eligible day is
-  2026-09-07 UTC and collection can run after `2026-09-08T00:00:00Z`.
-  Both hosted provider catalogs remain HTTP 200 with Google
-  `temporarily_unavailable`. Google Cloud terms, the business Web OAuth client,
+  attained SLOs, and daily queue/DLQ counts. The 2026-09-07 UTC collection
+  became time-eligible after `2026-09-08T00:00:00Z`; it was not dispatched in
+  the AC209/AC265-focused scope. Fresh staging inspection returned HTTP 200
+  with Google `temporarily_unavailable`, while direct Supabase authorization
+  returned HTTP 400 `validation_failed` because the provider is not enabled.
+  Google Cloud terms, the business Web OAuth client,
   staging provider configuration, test identities, and deployed Supabase
   Auth/RLS/IdP browser E2E remain required for AC-265, and
   VoiceOver/Safari plus NVDA/Firefox manual smoke remains required for AC-266.

@@ -4,6 +4,16 @@ const PARTY_ID = '018f0c45-73fe-7dc2-9c09-68f7ecf132d4';
 const PUBLIC_PATH = `/profiles/${PARTY_ID}`;
 const APP_PATH = `/app/profiles-verification?party=${PARTY_ID}`;
 
+const waitForProfilePortfolioHydration = async (page: Page) => {
+  const workbench = page.locator('[data-workbench="profile-portfolio-epk"]');
+  await expect(workbench).toHaveAttribute(
+    'data-profile-portfolio-hydrated',
+    'true',
+    { timeout: 30_000 },
+  );
+  return workbench;
+};
+
 const seedProtectedSession = async (page: Page) => {
   await page.context().addCookies([
     {
@@ -28,7 +38,9 @@ test.describe('P2-S06 public profile and credit-backed portfolio discovery', () 
   test('[P2-S06-AC-001..002, P2-S06-AC-111..113] composes the public projection in fixed layers with no private leakage', async ({
     page,
   }) => {
+    test.slow();
     await page.goto(PUBLIC_PATH);
+    await waitForProfilePortfolioHydration(page);
     await expect(page.locator('main')).toBeVisible();
     await expect(
       page.getByRole('main').getByRole('heading', {
@@ -94,9 +106,7 @@ test.describe('P2-S06 public profile and credit-backed portfolio discovery', () 
         height: viewport.height,
       });
       await page.goto(PUBLIC_PATH);
-      const workbench = page.locator(
-        '[data-workbench="profile-portfolio-epk"]',
-      );
+      const workbench = await waitForProfilePortfolioHydration(page);
       await expect(workbench).toHaveAttribute('data-breakpoint', viewport.name);
       await expect(workbench).toHaveAttribute(
         'data-no-horizontal-scroll',
@@ -249,7 +259,9 @@ test.describe('P2-S06 public profile and credit-backed portfolio discovery', () 
   test('[P2-S06-AC-080..088, P2-S06-AC-111..113] keeps focus and URL selection stable through keyboard filtering and browser back', async ({
     page,
   }) => {
+    test.slow();
     await page.goto(PUBLIC_PATH);
+    await waitForProfilePortfolioHydration(page);
     const filter = page
       .getByRole('searchbox')
       .or(page.getByRole('combobox'))

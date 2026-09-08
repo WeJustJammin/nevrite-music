@@ -18,6 +18,12 @@ const docsPort = webPort + 1;
 const webOrigin = `http://127.0.0.1:${webPort}`;
 const docsOrigin = `http://127.0.0.1:${docsPort}`;
 const profilePortfolioApiOrigin = 'http://127.0.0.1:8787';
+const cloudflareWebServerTimeout = 300_000;
+const inheritedEnvironment = Object.fromEntries(
+  Object.entries(process.env).filter(
+    (entry): entry is [string, string] => entry[1] !== undefined,
+  ),
+);
 
 export default defineConfig({
   forbidOnly: Boolean(process.env.CI),
@@ -35,7 +41,10 @@ export default defineConfig({
   reporter: process.env.CI ? 'github' : 'list',
   retries: process.env.CI ? 2 : 0,
   testDir: './tests/e2e',
-  testIgnore: 'phase-02-slice-09-content-schema-registry-real-route.spec.ts',
+  testIgnore: [
+    'phase-02-slice-09-content-schema-registry-performance.spec.ts',
+    'phase-02-slice-09-content-schema-registry-real-route.spec.ts',
+  ],
   use: {
     baseURL: webOrigin,
     trace: 'retain-on-failure',
@@ -49,8 +58,12 @@ export default defineConfig({
     },
     {
       command: `pnpm --filter @wejammin/web dev --host 127.0.0.1 --port ${webPort}`,
+      env: {
+        ...inheritedEnvironment,
+        WEJAMMIN_E2E_ISOLATED: '1',
+      },
       reuseExistingServer: false,
-      timeout: 120_000,
+      timeout: cloudflareWebServerTimeout,
       url: `${webOrigin}/auth/sign-in`,
     },
     {

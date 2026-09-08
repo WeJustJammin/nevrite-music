@@ -14,6 +14,7 @@ const port = (name: string, fallback: number): number => {
 
 const webPort = port('S09_WEB_PORT', 4324);
 const webOrigin = `http://127.0.0.1:${webPort}`;
+const realRouteServerTimeout = 300_000;
 const serverLauncher = fileURLToPath(
   new URL('./tests/e2e/support/run-s09-real-servers.mjs', import.meta.url),
 );
@@ -28,14 +29,15 @@ export default defineConfig({
   testMatch: 'phase-02-slice-09-content-schema-registry-real-route.spec.ts',
   use: {
     baseURL: webOrigin,
-    trace: 'retain-on-failure',
+    // Trace DOM snapshots perturb the Event Timing values this project owns.
+    trace: 'off',
     ...devices['Desktop Chrome'],
   },
   webServer: {
     command: `node ${JSON.stringify(serverLauncher)}`,
     gracefulShutdown: { signal: 'SIGTERM', timeout: 10_000 },
     reuseExistingServer: false,
-    timeout: 120_000,
+    timeout: realRouteServerTimeout,
     url: webOrigin,
   },
 });
