@@ -15,6 +15,7 @@ import {
   appendEffectiveConfigurationQuery,
 } from './platform-configuration-query';
 import { isSameOriginPlatformConfigurationRequest } from './platform-configuration-request';
+import { appendAllowedServiceBindingCookies } from './service-binding-cookies';
 
 export {
   PLATFORM_CONFIGURATION_BROWSER_ROUTES,
@@ -242,22 +243,8 @@ const copyAllowedResponseHeaders = (source: Response): Headers => {
   return returned;
 };
 
-const cookieName = (value: string): string | null => {
-  const separator = value.indexOf('=');
-  return separator > 0 ? value.slice(0, separator).trim() : null;
-};
-
 const appendAllowedSetCookies = (source: Response, target: Headers): void => {
-  const headers = source.headers as Headers & { getSetCookie?: () => string[] };
-  const cookies = headers.getSetCookie?.() ?? [];
-  const fallback =
-    cookies.length > 0 ? cookies : [source.headers.get('set-cookie')];
-  for (const value of fallback) {
-    const name = value === null ? null : cookieName(value);
-    if (value !== null && name !== null && cookieNames.has(name)) {
-      target.append('set-cookie', value);
-    }
-  }
+  appendAllowedServiceBindingCookies(source, target, cookieNames);
 };
 
 const createLocalBinding = (

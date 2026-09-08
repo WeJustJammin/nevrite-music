@@ -2,6 +2,7 @@ import { ApiErrorSchema, createRequestId } from '@wejammin/contracts';
 
 import { PROFILE_PORTFOLIO_ROUTE_CONTRACTS } from './profile-portfolio-route-contracts';
 import { createProfilePortfolioHttpBinding } from './profile-portfolio-local-binding.ts';
+import { appendAllowedServiceBindingCookies } from './service-binding-cookies';
 
 export { PROFILE_PORTFOLIO_ROUTE_CONTRACTS } from './profile-portfolio-route-contracts';
 export { createProfilePortfolioHttpBinding } from './profile-portfolio-local-binding.ts';
@@ -184,22 +185,8 @@ const copyAllowedResponseHeaders = (source: Response): Headers => {
   return returned;
 };
 
-const cookieName = (cookie: string): string | null => {
-  const separator = cookie.indexOf('=');
-  return separator > 0 ? cookie.slice(0, separator).trim() : null;
-};
-
 const appendAllowedSetCookies = (source: Response, target: Headers): void => {
-  const headers = source.headers as Headers & { getSetCookie?: () => string[] };
-  const cookies = headers.getSetCookie?.() ?? [];
-  const fallback =
-    cookies.length > 0 ? cookies : [source.headers.get('set-cookie')];
-  for (const cookie of fallback) {
-    const name = cookie === null ? null : cookieName(cookie);
-    if (cookie !== null && name !== null && allowedCookies.has(name)) {
-      target.append('set-cookie', cookie);
-    }
-  }
+  appendAllowedServiceBindingCookies(source, target, allowedCookies);
 };
 
 /** Forward an active browser request through the private profile service binding. */

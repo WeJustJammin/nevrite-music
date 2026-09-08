@@ -43,7 +43,9 @@ Keep request-boundary modules under 300 lines and route new exports through
 
 Preserve middleware order, import contracts from `@wejammin/contracts`, derive
 security context server-side, and keep public health/readiness responses
-disclosure-safe.
+disclosure-safe. Post-route middleware must set only the security headers it
+owns; never round-trip the complete response header set because repeated
+`Set-Cookie` fields must remain independent.
 
 `GET /api/v1/ready` is fail-closed. A composition without the explicit,
 server-only `checkReadiness` dependency returns a sanitized `503 not_ready`;
