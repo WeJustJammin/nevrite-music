@@ -171,9 +171,14 @@ export const verifyTokenResponse = async (
     );
   }
   const candidate = payload as Readonly<Record<string, unknown>>;
+  const hasIdentityToken = Object.prototype.hasOwnProperty.call(
+    candidate,
+    'id_token',
+  );
   if (
     typeof candidate.access_token !== 'string' ||
-    typeof candidate.refresh_token !== 'string'
+    typeof candidate.refresh_token !== 'string' ||
+    (hasIdentityToken && typeof candidate.id_token !== 'string')
   ) {
     return authError(
       502,
@@ -207,10 +212,12 @@ export const verifyTokenResponse = async (
   const audience = claims?.aud;
   const subject =
     user === null ? null : providerSubject(user, expectedProvider);
-  const requiresOidcNonce =
+  const requiresProviderSubject =
+    expectedProvider !== undefined && expectedProvider !== 'email';
+  const verifiesReturnedOidcNonce =
+    requiresProviderSubject &&
     expectedNonce !== undefined &&
-    expectedProvider !== undefined &&
-    expectedProvider !== 'email';
+    typeof candidate.id_token === 'string';
   if (
     typeof authUserId !== 'string' ||
     !RequestIdSchema.safeParse(authUserId).success ||
@@ -224,9 +231,10 @@ export const verifyTokenResponse = async (
       audience === 'authenticated' ||
       (Array.isArray(audience) && audience.includes('authenticated'))
     ) ||
-    (requiresOidcNonce &&
+    (hasIdentityToken && identityClaims === null) ||
+    (verifiesReturnedOidcNonce &&
       (identityClaims === null || identityClaims.nonce !== expectedNonce)) ||
-    (requiresOidcNonce && subject === null)
+    (requiresProviderSubject && subject === null)
   ) {
     return authError(
       502,
