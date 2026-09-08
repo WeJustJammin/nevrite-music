@@ -57,7 +57,10 @@ upstream bodies, and unsupported provider state fail closed.
 
 Use strict TypeScript, bounded response reads, `Cache-Control: no-store`, and
 allowlisted forwarded headers. Treat Cloudflare service bindings as private
-transports, not authority sources. Add integration tests for success,
+transports, not authority sources. Read repeated authentication cookies through
+the Workers `Headers.getAll('Set-Cookie')` API before the standard
+`getSetCookie()` fallback, then allowlist every returned cookie independently.
+Add integration tests for success,
 conditional reads, authentication failure, disclosure collapse, and dependency
 failure.
 

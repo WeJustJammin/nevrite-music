@@ -37,7 +37,7 @@ describe('authentication platform API forwarding', () => {
     expect(response.headers.get('set-cookie')).toContain('wj_session_ref=');
   });
 
-  it('preserves each callback Set-Cookie header independently', async () => {
+  it('uses the Cloudflare Headers getAll API to preserve each callback cookie', async () => {
     const allowedCookies = [
       'wj_access=access; HttpOnly; Secure; SameSite=Lax; Path=/',
       'wj_refresh=refresh; HttpOnly; Secure; SameSite=Strict; Path=/',
@@ -56,7 +56,9 @@ describe('authentication platform API forwarding', () => {
       rawHeaders.append('set-cookie', cookie);
     const upstreamHeaders = {
       get: rawHeaders.get.bind(rawHeaders),
-      getSetCookie: () => upstreamCookies,
+      getAll: (name: string) =>
+        name.toLowerCase() === 'set-cookie' ? upstreamCookies : [],
+      getSetCookie: () => [upstreamCookies.at(-1)!],
       forEach: (
         callback: (value: string, key: string, parent: Headers) => void,
       ) => {
