@@ -46,7 +46,7 @@ const workersPage = (
   messages: [{ message: 'Successful request' }],
   result: {
     events: { count, events },
-    run: {},
+    run: { status: 'COMPLETED' },
     statistics: {},
   },
   success: true,
@@ -163,14 +163,46 @@ describe('content schema registry SLO provider adapter', () => {
           },
         ],
         needle: { isRegex: false, value: 'cms.registry.' },
-        view: 'events',
       });
+      expect(firstBody.view).toBe('events');
+      expect(firstBody.parameters).not.toHaveProperty('view');
       expect(secondBody.offset).toBe('cursor-1');
       expect(secondBody.limit).toBe(2000);
       expect(secondBody.offsetDirection).toBe('next');
     });
 
-    it('rejects malformed, duplicate, truncated, or inconsistent event pages', async () => {
+    it('accepts only completed empty-result envelopes as zero events', async () => {
+      const pages = [
+        { success: true, result: { run: { status: 'COMPLETED' } } },
+        {
+          success: true,
+          result: { events: {}, run: { status: 'COMPLETED' } },
+        },
+        {
+          success: true,
+          result: { events: { count: 0 }, run: { status: 'COMPLETED' } },
+        },
+        {
+          success: true,
+          result: { events: { events: [] }, run: { status: 'COMPLETED' } },
+        },
+      ];
+
+      for (const page of pages) {
+        const fetchImpl = vi
+          .fn<typeof fetch>()
+          .mockResolvedValue(jsonResponse(page));
+        await expect(
+          queryWorkersObservabilityEvents(workersInput(fetchImpl)),
+        ).resolves.toEqual({
+          events: [],
+          pageCount: 1,
+          providerEventCount: 0,
+        });
+      }
+    });
+
+    it('rejects incomplete runs and malformed, duplicate, truncated, or inconsistent event pages', async () => {
       const cases: Array<{
         name: string;
         page: unknown;
@@ -192,9 +224,40 @@ describe('content schema registry SLO provider adapter', () => {
           expected: 'inconsistent provider event count',
         },
         {
-          name: 'malformed envelope',
+          name: 'missing run',
           page: { success: true, result: {} },
+          expected: 'query is incomplete',
+        },
+        {
+          name: 'missing run status',
+          page: { success: true, result: { run: {} } },
+          expected: 'query is incomplete',
+        },
+        {
+          name: 'started run',
+          page: { success: true, result: { run: { status: 'STARTED' } } },
+          expected: 'query is incomplete',
+        },
+        {
+          name: 'malformed run status',
+          page: { success: true, result: { run: { status: 42 } } },
+          expected: 'query is incomplete',
+        },
+        {
+          name: 'malformed envelope',
+          page: {
+            success: true,
+            result: { events: null, run: { status: 'COMPLETED' } },
+          },
           expected: 'missing events envelope',
+        },
+        {
+          name: 'nonzero count without events',
+          page: {
+            success: true,
+            result: { events: { count: 1 }, run: { status: 'COMPLETED' } },
+          },
+          expected: 'malformed events envelope',
         },
       ];
 
