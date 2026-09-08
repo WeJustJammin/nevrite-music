@@ -2,45 +2,32 @@
 
 ## Active
 
-- **P2-S09 external release evidence** (2026-09-03) — Slice 09 is locally
-  green at 279/283, and its prior exact-SHA infrastructure execution is
-  resolved. The 2026-09-05 follow-up implements the twelve-condition production
-  operational-alert boundary, and the 2026-09-06 AC211 collector is locally
-  validated, merged, and deployed. The current remediation branch passes full
-  `pnpm validate`: 433/433 Vitest files, 3,248/3,248 tests at 100% coverage,
-  101/101 functional Playwright checks, and 5/5 production-built Slice 09
-  checks. The latest verified production candidate is exact SHA
-  `621f7b99745318948720afa4d670ae1a707d3365`; CI `34031918191`, staging
-  `34032219768`, protected production run `34032282370` / deployment
-  `6292744330`, artifact `9989024106`, API Worker
-  `a726691a-64bc-47e5-bc5e-6b52088efbff`, and web Worker
-  `18b0287a-8af7-47e8-ad43-e5bdc29a10ab` are verified. Protected secret
-  verification passed and `CLOUDFLARE_PLATFORM_QUEUE_ID` is set and verified;
-  read-only provider inspection additionally confirms the Worker Send Email
-  binding, enabled `alerts.wejamm.in` sending domain with bounce
-  MX/SPF/DKIM/DMARC records, and verified `admin.wejammin@gmail.com`
-  destination. The current Worker completed 504 post-deployment schedules with
-  zero exceptions, while both individual and aggregate Email Sending analytics
-  returned zero events across the latest 30-day window. No complete retained
-  production UTC-day report exists. AC-209 now requires only a genuine
-  threshold-triggered provider/mailbox receipt.
-  AC-211 still requires a complete
-  production UTC day with at least 200 command/RPC/acceptance samples, five
-  attained SLOs, and daily queue/DLQ counts. The 2026-09-07 UTC collection
-  became time-eligible after `2026-09-08T00:00:00Z`; it was not dispatched in
-  the AC209/AC265-focused scope. Fresh staging inspection returned HTTP 200
-  with Google `temporarily_unavailable`, while direct Supabase authorization
-  returned HTTP 400 `validation_failed` because the provider is not enabled.
-  Google Cloud terms, the business Web OAuth client,
-  staging provider configuration, test identities, and deployed Supabase
-  Auth/RLS/IdP browser E2E remain required for AC-265, and
-  VoiceOver/Safari plus NVDA/Firefox manual smoke remains required for AC-266.
-  This blocks dependency-locked Slice 10. Evidence:
+- **P2-S09 external release evidence** (2026-09-08) — Slice 09 remains locally
+  green at 279/283. The AC211 provider adapter defect is fixed on main SHA
+  `ad1efe40963e3273714dfdee85c9a97a89d1123b`; exact-main CI `34189412445` and
+  staging `34189831032` passed. Full local `pnpm validate` passes 433/433 Vitest
+  files, 3,249 tests plus one intentional skip at 100% coverage, 101/101
+  functional Playwright checks, and 5/5 production-built Slice 09 checks.
+  Production remains source `621f7b99745318948720afa4d670ae1a707d3365`,
+  deployment `6292744330`, and API Worker
+  `a726691a-64bc-47e5-bc5e-6b52088efbff`. Fresh AC209 inspection observed
+  three successful scheduled evaluations but zero Cloudflare Email Sending
+  events in the 31-day retained window, so no genuine provider/mailbox receipt
+  exists. Corrected AC211 run `34189916813` reached the real provider query and
+  failed closed at `AC211 production samples are insufficient.` Google remains
+  disabled in staging, direct Supabase authorization returns HTTP 400
+  `validation_failed`, and hosted users/identities are empty; approved Google
+  credentials and the complete hosted matrix remain required for AC265. Hosted
+  Chromium axe, media-preference, zoom, and keyboard checks pass, but no real
+  macOS/Safari/VoiceOver or Windows/Firefox/NVDA surface exists for AC266. No
+  threshold, traffic, OAuth flow, identity, or accessibility receipt was
+  synthesized. This blocks dependency-locked Slice 10. Evidence:
   `.memory/wiki/specs/audits/phase-02-slice-09-qa-green.md` and
   `.memory/wiki/specs/audits/verify-infrastructure-2026-09-04-1255.md` and
   `.memory/wiki/specs/audits/verify-infrastructure-2026-09-04-1353.md` and
   `.memory/wiki/specs/audits/verify-infrastructure-2026-09-04-1703.md` and
-  `.memory/wiki/specs/audits/verify-infrastructure-2026-09-06-0300.md`.
+  `.memory/wiki/specs/audits/verify-infrastructure-2026-09-06-0300.md` and
+  `.memory/pipeline/progress/verification/2026-09-08-slice-09-external-infrastructure-remediation.md`.
 
 ## Resolved
 

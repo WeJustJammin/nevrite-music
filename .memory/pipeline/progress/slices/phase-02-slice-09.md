@@ -601,6 +601,23 @@ response`; Workers Observability passed. Cloudflare's documented successful
   synthesized. AC209, AC211, AC265, and AC266 remain open; Slice 09 stays
   279/283 and Slice 10 remains locked.
 
+- 2026-09-08 four-gate remediation: AC209 production configuration and three
+  fresh scheduled evaluations are healthy, but the retained 31-day Email
+  Sending window contains zero events and no genuine receipt. AC211 run
+  `34187499317` exposed Cloudflare request-schema drift; PR `34` moved
+  `view: events` to the required top level and added completed-run/empty-result
+  guards. Full local validation passes 433/433 Vitest files, 3,249 tests plus
+  one intentional skip at 100% coverage, 101/101 functional Playwright checks,
+  and 5/5 production-built Slice 09 checks. Exact-main CI `34189412445` and
+  staging `34189831032` pass for SHA
+  `ad1efe40963e3273714dfdee85c9a97a89d1123b`; corrected collector run
+  `34189916813` reaches the real provider dataset and fails closed because
+  production samples are insufficient. AC265 recheck confirms Google disabled,
+  zero hosted users/identities, and no approved OAuth client. AC266 hosted
+  Chromium axe, media, zoom, and keyboard checks pass, but the two signed real
+  platform reports cannot run on the Linux-only host/runners. No external
+  acceptance item closed; Slice 09 remains 279/283 and Slice 10 remains locked.
+
 ## Depth Ratio
 
 - Verified acceptance items: 279/283.
@@ -609,16 +626,19 @@ response`; Workers Observability passed. Cloudflare's documented successful
 ## Blocking release evidence
 
 - P2-S09-AC-209: retain a genuine post-configuration redacted live-delivery
-  receipt. Exact-main production preflight, protected secret verification,
-  Worker Send Email binding, sending domain/DNS, and verified destination are
-  confirmed; no genuine provider/mailbox receipt exists because no threshold
-  has fired.
-- P2-S09-AC-211: the protected collector is merged, deployed, and permission-verified; after `2026-09-08T00:00:00Z`, retain the complete 2026-09-07 production UTC day with at least 200 command/RPC/acceptance samples, all five SLO results, and daily queue/DLQ counts.
+  receipt. Worker scheduling, Send Email binding, sending domain/DNS, and the
+  destination are healthy, but the retained provider window has zero events.
+- P2-S09-AC-211: the corrected protected collector reaches the real production
+  provider query but the 2026-09-07 UTC day has insufficient natural samples.
+  Retain a later complete UTC day with at least 200 command/RPC/acceptance
+  samples, all five SLO results, and daily queue/DLQ counts.
 - P2-S09-AC-265: accept the Google Cloud terms, configure the business-owned
   Google OAuth client and authorized non-production identities, then retain the
   complete deployed Supabase Auth/RLS/RPC/Worker/web browser E2E. The provider
   catalog transport is verified at HTTP `200`; Google remains disabled.
-- P2-S09-AC-266: VoiceOver/Safari and NVDA/Firefox manual smoke.
+- P2-S09-AC-266: retain signed VoiceOver/Safari and NVDA/Firefox manual smoke
+  against the exact hosted candidate. Linux-hosted automation passes but cannot
+  replace either real-platform report.
 
 Operational controls outside the 283-item acceptance count are verified for
 this candidate: fail-closed staging migration executed before app deployment,
