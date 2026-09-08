@@ -1,5 +1,7 @@
 import { ApiErrorSchema, createRequestId } from '@wejammin/contracts';
 
+import { copyIdentityAuthorityCookies } from './identity-authority-platform-api';
+
 export type AuthPlatformApiBinding = Readonly<{
   fetch: (input: RequestInfo | URL, init?: RequestInit) => Promise<Response>;
 }>;
@@ -25,7 +27,6 @@ const responseHeaders = new Set([
   'ratelimit-remaining',
   'ratelimit-reset',
   'retry-after',
-  'set-cookie',
   'vary',
   'x-correlation-id',
   'x-request-id',
@@ -95,21 +96,11 @@ export const forwardAuthRequest = async (
     if (responseHeaders.has(name.toLowerCase()))
       returnedHeaders.append(name, value);
   });
+  copyIdentityAuthorityCookies(response, returnedHeaders);
   return new Response(response.body, {
     status: response.status,
     headers: returnedHeaders,
   });
 };
 
-export const copyAuthCookies = (source: Response, target: Headers): void => {
-  const headers = source.headers as Headers & {
-    getSetCookie?: () => string[];
-  };
-  const cookies = headers.getSetCookie?.() ?? [];
-  if (cookies.length > 0) {
-    for (const cookie of cookies) target.append('set-cookie', cookie);
-    return;
-  }
-  const cookie = source.headers.get('set-cookie');
-  if (cookie !== null) target.append('set-cookie', cookie);
-};
+export const copyAuthCookies = copyIdentityAuthorityCookies;
