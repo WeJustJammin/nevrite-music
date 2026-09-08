@@ -132,9 +132,12 @@ const cookieName = (cookie: string): string | null => {
 
 const appendAllowedSetCookies = (source: Response, target: Headers): void => {
   const headers = source.headers as Headers & {
+    getAll?: (name: string) => string[];
     getSetCookie?: () => string[];
   };
-  const cookies = headers.getSetCookie?.() ?? [];
+  const workerCookies = headers.getAll?.('Set-Cookie') ?? [];
+  const cookies =
+    workerCookies.length > 0 ? workerCookies : (headers.getSetCookie?.() ?? []);
   const fallback =
     cookies.length > 0 ? cookies : [source.headers.get('set-cookie')];
   for (const cookie of fallback) {
