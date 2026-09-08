@@ -33,10 +33,26 @@ const parseWorkersPage = (
       fail('malformed_response', 'malformed Workers Observability response');
   }
   const result = payload.result;
-  if (!isRecord(result) || !isRecord(result.events))
+  if (
+    !isRecord(result) ||
+    !isRecord(result.run) ||
+    result.run.status !== 'COMPLETED'
+  )
+    fail('malformed_response', 'Workers Observability query is incomplete');
+  const eventsContainer = result.events;
+  if (eventsContainer === undefined) return { count: 0, events: [] };
+  if (!isRecord(eventsContainer))
     fail('malformed_response', 'missing events envelope');
-  const count = result.events.count;
-  const events = result.events.events;
+  const count = eventsContainer.count;
+  const events = eventsContainer.events;
+  if (count === undefined && events === undefined)
+    return { count: 0, events: [] };
+  if (events === undefined) {
+    if (count === 0) return { count: 0, events: [] };
+    fail('malformed_response', 'malformed events envelope');
+  }
+  if (count === undefined && Array.isArray(events) && events.length === 0)
+    return { count: 0, events: [] };
   if (
     typeof count !== 'number' ||
     !Number.isSafeInteger(count) ||
@@ -122,10 +138,10 @@ export const queryWorkersObservabilityEvents = async (
           },
         ],
         needle: { isRegex: false, value: 'cms.registry.' },
-        view: 'events',
       },
       queryId,
       timeframe,
+      view: 'events',
     };
     if (offset !== undefined) body.offset = offset;
     const payload = await requestJson(

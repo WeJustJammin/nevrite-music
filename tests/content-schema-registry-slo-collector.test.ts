@@ -206,6 +206,10 @@ describe('content schema registry AC211 SLO collector', () => {
   });
 
   it('fails closed on insufficient samples and missing queue evidence', () => {
+    expect(() =>
+      build({ events: [], pageCount: 1, providerEventCount: 0 }),
+    ).toThrow('AC211 production samples are insufficient');
+
     const tooFewCommands = measuredEvents().filter(
       (candidate) =>
         candidate.eventName !== 'cms.registry.command' ||
