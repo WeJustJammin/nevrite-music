@@ -553,9 +553,11 @@ response`; Workers Observability passed. Cloudflare's documented successful
   `a726691a-64bc-47e5-bc5e-6b52088efbff`, and web Worker
   `18b0287a-8af7-47e8-ad43-e5bdc29a10ab` are verified. Protected secret
   verification passed and `CLOUDFLARE_PLATFORM_QUEUE_ID` is set and verified;
-  no complete retained production UTC-day report exists. The earliest eligible
-  window is 2026-09-07 UTC and collection can run after
-  `2026-09-08T00:00:00Z`, so AC211 remains open and Slice 09 stays 279/283.
+  no complete retained production UTC-day report exists. Protected run
+  `34189916813` attempted 2026-09-07 UTC and failed closed for insufficient
+  natural samples; the next eligible complete day is 2026-09-08 UTC and can be
+  collected only after `2026-09-09T00:00:00Z`, so AC211 remains open and Slice
+  09 stays 279/283.
 
 - 2026-09-06 blocker remediation audit: read-only inspection of production run
   `34032282370` reconfirmed the observability permission preflight. Current API
@@ -606,7 +608,7 @@ response`; Workers Observability passed. Cloudflare's documented successful
   Sending window contains zero events and no genuine receipt. AC211 run
   `34187499317` exposed Cloudflare request-schema drift; PR `34` moved
   `view: events` to the required top level and added completed-run/empty-result
-  guards. Full local validation passes 433/433 Vitest files, 3,249 tests plus
+  guards. Full local validation passes 434/434 Vitest files, 3,256 tests plus
   one intentional skip at 100% coverage, 101/101 functional Playwright checks,
   and 5/5 production-built Slice 09 checks. Exact-main CI `34189412445` and
   staging `34189831032` pass for SHA
@@ -617,6 +619,18 @@ response`; Workers Observability passed. Cloudflare's documented successful
   Chromium axe, media, zoom, and keyboard checks pass, but the two signed real
   platform reports cannot run on the Linux-only host/runners. No external
   acceptance item closed; Slice 09 remains 279/283 and Slice 10 remains locked.
+
+- 2026-09-08 hosted OAuth remediation follow-up: the exact staged candidate
+  `10f320b97ccce0c62fba2ee27a3b792f08f83285` passed CI `34224641678` and
+  staging `34225256920` / deployment `6327379740`. Google is now configured
+  through Supabase Auth, and the provider registry is `enabled` and verified at
+  version `16`. A live external-browser callback retained five distinct
+  cookies, completed the session boundary, reached the protected registry route,
+  and created one real Google identity. This supersedes the pre-configuration
+  Google-disabled result above; AC265 remains open for the approved
+  9-role/10-scenario hosted report, role/identity lifecycle, MFA/step-up, and
+  teardown evidence. AC209, AC211, and AC266 remain open; Slice 09 stays
+  279/283 and Slice 10 remains dependency-locked.
 
 ## Depth Ratio
 
@@ -632,10 +646,14 @@ response`; Workers Observability passed. Cloudflare's documented successful
   provider query but the 2026-09-07 UTC day has insufficient natural samples.
   Retain a later complete UTC day with at least 200 command/RPC/acceptance
   samples, all five SLO results, and daily queue/DLQ counts.
-- P2-S09-AC-265: accept the Google Cloud terms, configure the business-owned
-  Google OAuth client and authorized non-production identities, then retain the
-  complete deployed Supabase Auth/RLS/RPC/Worker/web browser E2E. The provider
-  catalog transport is verified at HTTP `200`; Google remains disabled.
+- P2-S09-AC-265: Google Cloud terms are accepted and the business-owned Google
+  OAuth client is configured on exact staged SHA
+  `10f320b97ccce0c62fba2ee27a3b792f08f83285` (CI `34224641678`; staging
+  `34225256920` / deployment `6327379740`). The Supabase provider registry is
+  `enabled` and verified at version `16`; one real Google identity completed a
+  live five-cookie callback/session/protected-route flow. AC265 remains open
+  for the approved 9-role/10-scenario hosted report, role/identity lifecycle,
+  MFA/step-up, teardown, and complete hosted Auth/RLS/IdP evidence.
 - P2-S09-AC-266: retain signed VoiceOver/Safari and NVDA/Firefox manual smoke
   against the exact hosted candidate. Linux-hosted automation passes but cannot
   replace either real-platform report.

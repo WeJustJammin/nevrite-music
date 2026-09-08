@@ -10,11 +10,26 @@ manually triggered, wrong-platform, or locally substituted evidence was accepted
 - Production evidence target: source
   `621f7b99745318948720afa4d670ae1a707d3365`, deployment `6292744330`, API
   Worker version `a726691a-64bc-47e5-bc5e-6b52088efbff`.
-- Current remediation source: main SHA
+- Final exact candidate: main SHA
+  `10f320b97ccce0c62fba2ee27a3b792f08f83285`; exact-main CI run
+  `34224641678`; staging run `34225256920`; deployment `6327379740`; API
+  Worker version `dc75b898-c757-4549-9eb8-e4735c3a71ba`.
+- Historical pre-PR #36 remediation candidate: main SHA
   `ec5bac7dacb871539bea630761adc1a3071325d0`; exact-main CI run
   `34191031357`, staging run `34191603747`, deployment `6321398893`, and
   artifact SHA-256
   `d27697c4cb578baa70155fabd7fb067217aa9ef1a4386291340500304597eaad`.
+- Complete hosted-auth remediation chain (all merged to `main` and promoted
+  through staging):
+
+  | PR  | Scope                                     | Main SHA                                   |            CI | Deploy staging |
+  | --- | ----------------------------------------- | ------------------------------------------ | ------------: | -------------: |
+  | #36 | Supabase OAuth state ownership            | `2ad5a0fd327a70d2eb04b392d96ab3b1eece6dcd` | `34204239274` |  `34204830280` |
+  | #37 | Auth callback redirect preservation       | `b3e7a6bb328afec14f3977a572a71e8febcfbe16` | `34208728028` |  `34209347776` |
+  | #38 | Supabase social PKCE token contract       | `564eed0fd7d8b533b2daa8c5ad9a06b364fdf3db` | `34213496725` |  `34214044450` |
+  | #39 | Auth callback session-cookie preservation | `710cf3bf3a43ea982d250ef5c54069c0162dfaf2` | `34217322123` |  `34217845173` |
+  | #40 | Cloudflare callback-cookie preservation   | `9e4112b73d50da451f160676bdf12b13bfc65629` | `34220084899` |  `34220620569` |
+  | #41 | Repeated session-cookie preservation      | `10f320b97ccce0c62fba2ee27a3b792f08f83285` | `34224641678` |  `34225256920` |
 
 ## P2-S09-AC-209 — genuine alert delivery
 
@@ -92,18 +107,43 @@ queue/DLQ counts.
   PKCE and nonce handling are unchanged. Focused tests failed before the fix and
   passed 38/38 afterward, including sign-in, link, and merge-proof invariants;
   full local validation also passed.
+- The complete callback remediation chain is PRs #36–#41 above. Against final
+  candidate `10f320b97ccce0c62fba2ee27a3b792f08f83285`, the live OAuth retest at
+  approximately `2026-09-08T12:21Z` returned `/auth/start` 303; the Supabase
+  authorize request contained exactly `code_challenge`,
+  `code_challenge_method`, `nonce`, `provider`, and `redirect_to`, with no outer
+  application `state`; the Google/Supabase callback returned 303; and the
+  application retained five distinct cookies: `wj_access`, `wj_refresh`,
+  `wj_session_ref`, `wj_csrf`, and `wj_auth_flow`. Four stored secure session
+  cookies were observed, the final route was `/app/cms-content-modeling`, and the
+  latest database intent was consumed at `12:20:59Z`. One Google identity exists,
+  and the Google registry is `enabled`/verified at version 16.
+- The proof session was logged out through the same-origin authenticated endpoint
+  with HTTP 204. Its four browser cookies were deleted, the browser profile was
+  verified clear of `wj_*` and provider-token cookies, and the session index
+  recorded one revoked session. Seven earlier staging probe sessions remain active;
+  they were not globally revoked because that operation requires a fresh step-up
+  and could invalidate a user-owned session.
+- A fresh production provider-catalog request returned HTTP 200 with Google in
+  `temporarily_unavailable` state. A production Google `/auth/start` request
+  returned 303 to `wejamm.in/auth/sign-in` rather than Supabase, and the visible
+  Google control remained disabled. This proves the production application
+  boundary remains unavailable without inferring an unqueried provider backend.
+- The ordinary Supabase PKCE response omits the raw provider `id_token`.
+  Therefore no independent provider nonce evidence beyond the Supabase
+  boundary is claimed.
 - No canonical role-to-identity mapping, MFA/step-up plan, teardown lifecycle,
   or complete hosted role/resilience report has yet been retained.
 
-**Open evidence:** merge and deploy the OAuth state fix, repeat foreground
-Google consent against that exact staging candidate, then define the approved
-staging identity/role lifecycle and retain the hosted report covering all nine
-roles and ten canonical scenarios. Provider setup is no longer a blocker, but
-the hosted matrix remains incomplete.
+**Open evidence:** define the approved staging identity/role lifecycle and retain
+the hosted report covering all nine roles and ten canonical scenarios. The live
+Google callback now proves one real identity/session boundary, but AC265 remains
+open until the approved matrix, RLS/IdP cases, MFA/step-up behavior, and teardown
+evidence are retained.
 
 ## P2-S09-AC-266 — real-platform accessibility
 
-- Fresh hosted Chromium checks against current source
+- Fresh hosted Chromium checks against the prior remediation source
   `ec5bac7dacb871539bea630761adc1a3071325d0` passed axe on `/`,
   `/auth/sign-in`, and the protected registry redirect with zero violations,
   including zero Serious or Critical findings.
@@ -111,9 +151,9 @@ the hosted matrix remains incomplete.
   checks.
 - The available host and three online self-hosted runners are Linux-only. No
   real macOS/Safari/VoiceOver or Windows/Firefox/NVDA surface exists.
-- No signed macOS or Windows report exists in the retained artifacts. Google is
-  now configured, but the protected authenticated registry route remains
-  untested until the corrected OAuth callback succeeds on staging.
+- No signed macOS or Windows report exists in the retained artifacts. The live
+  OAuth retest reached the protected `/app/cms-content-modeling` route, but that does
+  not substitute for the required real-platform accessibility reports.
 
 **Open evidence:** run and sign the full canonical matrix on real
 macOS/Safari/VoiceOver and Windows/Firefox/NVDA against the exact candidate,
@@ -124,8 +164,9 @@ then retain both redacted reports through the protected evidence workflow.
 - Node `22.23.1`; pnpm `11.24.0`.
 - OAuth state regression: 2 expected RED failures before implementation, then
   38/38 focused authentication tests passed after the two-line correction and
-  review hardening.
-- 433/433 Vitest files passed; 3,249 tests passed and one intentional test was
+  review hardening; callback redirect, PKCE, and repeated-cookie regressions
+  also passed through PRs #37–#41.
+- 434/434 Vitest files passed; 3,256 tests passed and one intentional test was
   skipped; statements, branches, functions, and lines are 100% covered.
 - 101/101 functional Playwright checks and 5/5 production-built Slice 09 checks
   passed.

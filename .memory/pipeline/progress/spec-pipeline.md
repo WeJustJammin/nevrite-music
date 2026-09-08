@@ -1,7 +1,7 @@
 # Spec Pipeline Progress
 
 **Project**: WeJammin
-**Last updated**: 2026-09-06
+**Last updated**: 2026-09-08
 **Overall**: IA 43/43 authored and independently ambiguity-passed (**fresh rerun PASS — 0/344 = 0.00%, 2026-08-28**); Phase 1 complete at 7/7 slices; Phase 2 at 8/17 complete with Slice 09 blocked at 279/283.
 
 ## Legend
@@ -75,9 +75,10 @@
   external evidence has not been claimed. Slice 10 remains dependency-locked. See
   `.memory/pipeline/progress/phases/phase-02.md` and
   `.memory/pipeline/progress/slices/phase-02-slice-09.md`.
-- **CURRENT VALIDATION:** `pnpm validate` passes 432/432 Vitest files and
-  3,233/3,233 tests at 100% coverage, 102/102 Playwright tests, every workspace
-  build, bundle budgets, and the fresh immutable-Worker API p95 smoke.
+- **CURRENT VALIDATION:** `pnpm validate` passes 434/434 Vitest files and
+  3,256 tests plus one intentional skip at 100% coverage, 101/101 functional
+  Playwright checks, 5/5 production-built Slice 09 checks, every workspace build,
+  bundle budgets, and the fresh immutable-Worker API p95 smoke.
   `pnpm db:verify` passes 34/34 migrations and 45/45 pgTAP files with
   1,678/1,678 assertions and exact generated types.
 - **HISTORICAL PRE-REMEDIATION CANDIDATE:** Before this remediation, PR #9 branch
@@ -95,7 +96,7 @@
   overall gate remains blocked. See
   `.memory/wiki/specs/audits/verify-infrastructure-2026-09-04-1353.md`; the
   12:55 failure record remains preserved.
-- **CURRENT INFRASTRUCTURE VERDICT:** PR #20 fixed the Worker fetch-context
+- **HISTORICAL INFRASTRUCTURE VERDICT:** PR #20 fixed the Worker fetch-context
   defect and PR #21 stabilized two repository-wide CI time budgets without
   changing assertions. Exact merged/deployed `main` SHA
   `b22a914327291e2895bbcc7dc8f60837c8faa0d6` passed CI `33965293079`, staging
@@ -120,11 +121,11 @@
   `ccfefa7862900357586fef9031b314e7b30989b4`; CI `34019423084` and staging
   `34019696293` passed. Protected production run `34019780775` stopped before
   migrations/deployment with `Cloudflare Account Analytics permission check
-  failed: malformed response`. The token still passes Workers Observability.
+failed: malformed response`. The token still passes Workers Observability.
   Cloudflare's documented valid `errors: null` GraphQL success envelope
   reproduced the verifier failure. Parser-fix RED failed 1/18; GREEN passes
   18/18. Missing Account Analytics permission is not the confirmed cause.
-- **LATEST PRODUCTION EVIDENCE:** Exact `main` SHA
+- **HISTORICAL PRODUCTION EVIDENCE:** Exact `main` SHA
   `621f7b99745318948720afa4d670ae1a707d3365`; CI `34031918191`, staging
   `34032219768`, and protected production run `34032282370` / deployment
   `6292744330` are verified. Artifact `9989024106`, API Worker
@@ -132,11 +133,19 @@
   `18b0287a-8af7-47e8-ad43-e5bdc29a10ab`, protected secret verification, and
   `CLOUDFLARE_PLATFORM_QUEUE_ID` configuration are verified. The protected
   AC211 collector is deployed. No complete retained production UTC-day report
-  exists; the earliest eligible day is 2026-09-07 UTC and collection can run
-  after `2026-09-08T00:00:00Z`. AC211 remains open.
+  exists. Protected run `34189916813` attempted 2026-09-07 UTC and failed closed
+  for insufficient natural samples; the next eligible complete day is 2026-09-08
+  UTC and can be collected only after `2026-09-09T00:00:00Z`. AC211 remains open.
+- **CURRENT HOSTED OAUTH EVIDENCE:** Exact `main` SHA
+  `10f320b97ccce0c62fba2ee27a3b792f08f83285`; CI `34224641678`, staging
+  `34225256920` / deployment `6327379740` passed. Google is configured and the
+  provider registry is enabled and verified at version `16`. Live external-browser
+  callback/session/protected-route proof passed on staging. AC265 remains open:
+  the approved 9-role/10-scenario hosted report and identity provisioning,
+  teardown, and lifecycle evidence are still missing.
 - **NEXT:** retain a genuine post-configuration redacted alert delivery receipt.
   Keep Slice 09 blocked at 279/283 and Phase 2 at 8/17 until AC209, the complete
-  UTC-day/200-sample SLO and DLQ evidence for AC211, owner acceptance of the
-  Google Cloud terms plus business-owned OAuth/test identities and deployed
-  Auth/RLS/Google IdP E2E for AC265, and VoiceOver/Safari plus NVDA/Firefox manual smoke for
-  AC266 all pass. Do not start Slice 10 until all four pass.
+  UTC-day/200-sample SLO and DLQ evidence for AC211, the approved 9-role/10-scenario
+  hosted report plus identity lifecycle evidence for AC265, and VoiceOver/Safari
+  plus NVDA/Firefox manual smoke for AC266 all pass. Do not start Slice 10 until
+  all four pass.
