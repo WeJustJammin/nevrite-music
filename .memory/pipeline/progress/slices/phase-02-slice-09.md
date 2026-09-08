@@ -618,6 +618,18 @@ response`; Workers Observability passed. Cloudflare's documented successful
   platform reports cannot run on the Linux-only host/runners. No external
   acceptance item closed; Slice 09 remains 279/283 and Slice 10 remains locked.
 
+- 2026-09-08 hosted OAuth remediation follow-up: the exact staged candidate
+  `10f320b97ccce0c62fba2ee27a3b792f08f83285` passed CI `34224641678` and
+  staging `34225256920` / deployment `6327379740`. Google is now configured
+  through Supabase Auth, and the provider registry is `enabled` and verified at
+  version `16`. A live external-browser callback retained five distinct
+  cookies, completed the session boundary, reached the protected registry route,
+  and created one real Google identity. This supersedes the pre-configuration
+  Google-disabled result above; AC265 remains open for the approved
+  9-role/10-scenario hosted report, role/identity lifecycle, MFA/step-up, and
+  teardown evidence. AC209, AC211, and AC266 remain open; Slice 09 stays
+  279/283 and Slice 10 remains dependency-locked.
+
 ## Depth Ratio
 
 - Verified acceptance items: 279/283.
@@ -632,10 +644,14 @@ response`; Workers Observability passed. Cloudflare's documented successful
   provider query but the 2026-09-07 UTC day has insufficient natural samples.
   Retain a later complete UTC day with at least 200 command/RPC/acceptance
   samples, all five SLO results, and daily queue/DLQ counts.
-- P2-S09-AC-265: accept the Google Cloud terms, configure the business-owned
-  Google OAuth client and authorized non-production identities, then retain the
-  complete deployed Supabase Auth/RLS/RPC/Worker/web browser E2E. The provider
-  catalog transport is verified at HTTP `200`; Google remains disabled.
+- P2-S09-AC-265: Google Cloud terms are accepted and the business-owned Google
+  OAuth client is configured on exact staged SHA
+  `10f320b97ccce0c62fba2ee27a3b792f08f83285` (CI `34224641678`; staging
+  `34225256920` / deployment `6327379740`). The Supabase provider registry is
+  `enabled` and verified at version `16`; one real Google identity completed a
+  live five-cookie callback/session/protected-route flow. AC265 remains open
+  for the approved 9-role/10-scenario hosted report, role/identity lifecycle,
+  MFA/step-up, teardown, and complete hosted Auth/RLS/IdP evidence.
 - P2-S09-AC-266: retain signed VoiceOver/Safari and NVDA/Firefox manual smoke
   against the exact hosted candidate. Linux-hosted automation passes but cannot
   replace either real-platform report.

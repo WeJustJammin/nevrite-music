@@ -2,9 +2,9 @@
 
 **Status**: in-progress  
 **Progress**: 8/17 slices (47%)  
-**Current gate**: The latest verified production candidate is exact-main SHA `621f7b99745318948720afa4d670ae1a707d3365`; CI `34031918191`, staging `34032219768`, protected production run `34032282370` / deployment `6292744330`, artifact `9989024106`, API Worker `a726691a-64bc-47e5-bc5e-6b52088efbff`, and web Worker `18b0287a-8af7-47e8-ad43-e5bdc29a10ab` passed or are verified. Protected secret verification passed, `CLOUDFLARE_PLATFORM_QUEUE_ID` is set and verified, and the AC211 collector is deployed. No complete retained production UTC-day report exists; the earliest eligible day is 2026-09-07 UTC and collection can run after `2026-09-08T00:00:00Z`. Four external acceptance criteria remain blocked at 279/283  
+**Current gate**: The latest verified production candidate is exact-main SHA `621f7b99745318948720afa4d670ae1a707d3365`; CI `34031918191`, staging `34032219768`, protected production run `34032282370` / deployment `6292744330`, artifact `9989024106`, API Worker `a726691a-64bc-47e5-bc5e-6b52088efbff`, and web Worker `18b0287a-8af7-47e8-ad43-e5bdc29a10ab` passed or are verified. Protected secret verification passed, `CLOUDFLARE_PLATFORM_QUEUE_ID` is set and verified, and the AC211 collector is deployed. No complete retained production UTC-day report exists; the earliest eligible day is 2026-09-07 UTC and collection can run after `2026-09-08T00:00:00Z`. The latest hosted OAuth candidate is exact-main SHA `10f320b97ccce0c62fba2ee27a3b792f08f83285`, with CI `34224641678` and staging `34225256920` / deployment `6327379740`; Google is enabled and the Supabase provider registry is verified at version `16`, with live five-cookie callback/session/protected-route proof and one real Google identity. Four external acceptance criteria remain blocked at 279/283  
 **Plan**: [Phase 2 plan](../../../wiki/specs/phases/phase-2.md)  
-**Updated**: 2026-09-06  
+**Updated**: 2026-09-08  
 **Prior remote evidence**: Before this remediation, PR #9 head `67264c5e9b5196d00ac3f0aa272896a010c872d7` produced synthetic merge `a79dfe30db60e4f54024f064fc2fdf2d01033919` and passing CI run `33841270472`. That run is not evidence for the remediation; no merge or deployment is claimed
 
 Slice 08 is complete (51/51). Slice 09 local QA-GREEN passes. PR #13 merged as
@@ -54,8 +54,9 @@ PR #29 merged and deployed the 2026-09-06 AC211 collector. Full
 not produce an AC211 release claim: no complete retained production UTC-day
 report exists. The earliest eligible day is 2026-09-07 UTC and collection can
 run after `2026-09-08T00:00:00Z`, so AC211 remains open. AC209 still requires a genuine provider/mailbox
-receipt; AC265 still requires business-owned Google OAuth/test identities and
-the complete hosted matrix; AC266 still requires the manual assistive-technology
+receipt; AC265 still requires the approved 9-role/10-scenario hosted report,
+role/identity lifecycle, MFA/step-up, teardown, and complete hosted matrix;
+AC266 still requires the manual assistive-technology
 browser pairs. Slice 09 remains 279/283 and Phase 2 remains 8/17.
 
 The auth-provider transport is also deployed and live-verified. PR #20 fixed
@@ -69,7 +70,7 @@ sequential production requests return HTTP `200` with the valid catalog;
 Cloudflare records those production requests at info level with 21 successes
 and 0 errors in the 15-minute window.
 
-The [fresh verification report](../../../wiki/specs/audits/verify-infrastructure-2026-09-05-0824.md)
+The [historical pre-configuration verification report](../../../wiki/specs/audits/verify-infrastructure-2026-09-05-0824.md)
 records the exact-SHA execution and repaired release protection. External acceptance
 remains blocked at 279/283: AC209 genuine live delivery receipt, AC211 full
 UTC-day SLO/DLQ telemetry, AC265 business-owned Google OAuth configuration and
@@ -79,6 +80,17 @@ credentials in both Supabase projects, and Google Cloud requires owner
 acceptance of its Terms of Service before client setup. The prior audit remains linked
 for history: [2026-09-04-1353](../../../wiki/specs/audits/verify-infrastructure-2026-09-04-1353.md)
 and [2026-09-04-1255](../../../wiki/specs/audits/verify-infrastructure-2026-09-04-1255.md).
+
+The 2026-09-08 hosted OAuth retest supersedes the pre-configuration Google
+statements above: exact staged SHA
+`10f320b97ccce0c62fba2ee27a3b792f08f83285` passed CI `34224641678` and staging
+`34225256920` / deployment `6327379740`; the Supabase provider registry is
+`enabled` and verified at version `16`; and a live external-browser callback
+retained five cookies, completed the session, reached the protected registry
+route, and created one real Google identity. AC265 remains open for the
+approved 9-role/10-scenario hosted report, role/identity lifecycle, MFA/step-up,
+teardown, and complete hosted Auth/RLS/IdP evidence. AC209, AC211, and AC266
+remain open; Slice 09 stays at 279/283 and Slice 10 remains locked.
 
 |                                                                Slice | Status      | Criteria | Depends on       | Link                                |
 | -------------------------------------------------------------------: | ----------- | -------: | ---------------- | ----------------------------------- |
@@ -134,7 +146,7 @@ and [2026-09-04-1255](../../../wiki/specs/audits/verify-infrastructure-2026-09-0
 - [x] Production evidence artifact `9964724622` retained all five hidden promotion files for exact SHA `7250754d...`; digest `sha256:388dee00a587e04f88e4a1dfbf8c48b5e0c50507910f220dc900173bf3630077`.
 - [x] Slice 09 operational-alert provider execution — exact SHA `c995ce31821e39ac6f27538813f536f9af6b39f2`, CI `33960218010`, staging `33960712969` / deployment `6279914420`, production `33960764747` / deployment `6279925490`, and two consecutive successful production cron events verified; actor `WeJustJammin`.
 - [x] Slice 09 hosted auth-provider transport — PR #20 fetch-context correction plus PR #21 CI stabilization, exact SHA `b22a914327291e2895bbcc7dc8f60837c8faa0d6`, CI `33965293079`, staging `33965655238` / deployment `6280862362`, production `33965764707` / deployment `6280885024`, HTTP `200` staging/production catalogs, and 0 Cloudflare errors in the observed production window verified; actor `WeJustJammin`.
-- [!] Slice 09 `/verify-infrastructure` remains blocked on four external acceptance checks: AC209 genuine live delivery receipt, AC211 production-window SLO/DLQ telemetry, AC265 Google Cloud terms plus business-owned OAuth/test identities and the complete hosted matrix, and AC266 manual assistive-technology evidence.
+- [!] Slice 09 `/verify-infrastructure` remains blocked on four external acceptance checks: AC209 genuine live delivery receipt, AC211 production-window SLO/DLQ telemetry, AC265 the approved 9-role/10-scenario hosted report plus role/identity lifecycle, MFA/step-up, teardown, and complete hosted Auth/RLS/IdP evidence, and AC266 manual assistive-technology evidence.
 - [x] Slice 09 exact-main observability preflight — CI `34013034252` and staging `34013296132` passed for `3bf66a610b013bf9600889780ee26319559fb31c`; protected production `34016439881` failed before migrations/deployment with `Cloudflare Account Analytics permission check failed`, proving the release path fails closed without the required token scope.
 - [x] Slice 09 rotated-secret retest — production secret metadata changed at `2026-09-06T07:07:48Z`; protected production `34018343506` consumed the replacement and repeated the Account Analytics failure before mutation. Workers Observability still passed, isolating the remaining fault to effective Account Analytics permission/resource scope.
 - [x] Slice 09 safe diagnostic deployment — PR #25 merged as exact main SHA `ccfefa7862900357586fef9031b314e7b30989b4`; CI `34019423084` and staging `34019696293` passed. Protected production `34019780775` classified the Account Analytics result as `malformed response` before mutation. Cloudflare's valid `errors: null` success envelope reproduced the fault; parser-fix RED failed 1/18 and GREEN passes 18/18.
