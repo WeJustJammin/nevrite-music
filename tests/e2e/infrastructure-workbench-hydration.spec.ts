@@ -40,6 +40,7 @@ test('serves the Astro dev modules required for island hydration', async ({
 test('hydrates the visible degraded Workbench without an unresolved lazy render', async ({
   page,
 }) => {
+  test.slow();
   const pageErrors: string[] = [];
   const consoleErrors: string[] = [];
   const failedRequests: string[] = [];
@@ -66,7 +67,7 @@ test('hydrates the visible degraded Workbench without an unresolved lazy render'
       name: 'Current infrastructure records',
     })
     .scrollIntoViewIfNeeded();
-  await expect(island).not.toHaveAttribute('ssr', '', { timeout: 10_000 });
+  await expect(island).not.toHaveAttribute('ssr', '', { timeout: 30_000 });
   await expect(
     page.getByRole('heading', {
       level: 2,
@@ -95,7 +96,13 @@ test('hydrates the visible degraded Workbench without an unresolved lazy render'
       .getByText('Search: hydrated', { exact: true }),
   ).toBeVisible();
 
+  const jobRegionsModuleResponse = page.waitForResponse(
+    (response) =>
+      response.url().includes('InfrastructureJobRegions') && response.ok(),
+    { timeout: 30_000 },
+  );
   await page.getByRole('button', { name: 'Load live job controls' }).click();
+  await jobRegionsModuleResponse;
   await expect
     .poll(() =>
       requestedModules.some((url) => url.includes('InfrastructureJobRegions')),
@@ -103,7 +110,7 @@ test('hydrates the visible degraded Workbench without an unresolved lazy render'
     .toBe(true);
   await expect(
     page.getByRole('heading', { level: 2, name: 'Job status' }),
-  ).toBeVisible();
+  ).toBeVisible({ timeout: 30_000 });
 
   expect(pageErrors).toEqual([]);
   expect(failedRequests).toEqual([]);

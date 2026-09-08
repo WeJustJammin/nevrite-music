@@ -14,7 +14,10 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
-    "test:e2e": "playwright test",
+    "test:evidence:s09": "vitest run tests/contracts/phase-02-slice-09-evidence-map.test.ts -t \"executes every declared nonbrowser command\" --maxWorkers=1",
+    "test:e2e": "pnpm test:e2e:functional && pnpm test:e2e:s09-real",
+    "test:e2e:functional": "playwright test",
+    "test:e2e:s09-real": "playwright test --config=playwright.s09-real.config.ts",
     "bundle:check": "node scripts/verify-bundle-budget.mjs",
     "performance:smoke": "node infra/performance/api-p95-smoke.mjs --mode local",
     "performance:smoke:staging": "node infra/performance/api-p95-smoke.mjs --mode staging --origin \"$STAGING_API_ORIGIN\"",
@@ -35,7 +38,7 @@
     "format:check": "prettier --check package.json pnpm-workspace.yaml tsconfig.json tsconfig.base.json eslint.config.js vitest.config.ts playwright.config.ts '.github/**/*.{yml,yaml,md}' 'apps/**/*.{astro,ts,tsx,js,mjs,json,jsonc,css,md}' docs/README.md docs/local-bootstrap.md 'docs/openapi/**/*.md' 'docs/runbooks/**/*.md' 'packages/**/*.{ts,tsx,json,css,md}' 'tests/**/*.{ts,tsx,json,md}' 'infra/**/*.{ts,js,mjs,json,yaml,yml,md}' scripts/verify-bundle-budget.mjs 'supabase/**/*.md'",
     "type-check": "tsc --build --pretty false tsconfig.json",
     "progress:check": "node scripts/check-progress-consistency.mjs --quiet",
-    "validate": "pnpm contracts:check && pnpm db:types:check && pnpm progress:check && pnpm format:check && pnpm lint && pnpm type-check && pnpm test:coverage && pnpm test:e2e && pnpm build && pnpm bundle:check && pnpm performance:smoke",
+    "validate": "pnpm contracts:check && pnpm db:types:check && pnpm progress:check && pnpm format:check && pnpm lint && pnpm type-check && pnpm test:coverage && pnpm test:evidence:s09 && pnpm test:e2e && pnpm build && pnpm bundle:check && pnpm performance:smoke",
     "verify:staging": "node infra/verify-staging.mjs"
   },
   "devEngines": {

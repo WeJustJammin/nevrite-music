@@ -218,43 +218,32 @@ type SpawnResult = Readonly<{
 type CommandRunner = (file: string, args: string[]) => SpawnResult;
 type EvidenceCommandOptions = Readonly<{ allowPlaywright?: boolean }>;
 
-const runSpawnedCommand: CommandRunner = (file, args) =>
+const runLiveEvidenceCommand: CommandRunner = (file, args) =>
   spawnSync(file, args, {
     cwd: ROOT,
-    encoding: 'utf8',
-    stdio: 'pipe',
-    timeout: 120_000,
-    // Playwright's config derives its web port from GITHUB_RUN_ID. Isolate
-    // manifest browser runs from a developer's already-running dev server;
-    // the command and arguments remain exactly those declared by the map.
-    env:
-      args[0] === 'exec' && args[1] === 'playwright'
-        ? {
-            ...Object.fromEntries(
-              Object.entries(process.env).filter(
-                ([key]) =>
-                  !['VITEST', 'VITEST_POOL_ID', 'VITEST_WORKER_ID'].includes(
-                    key,
-                  ),
-              ),
-            ),
-            GITHUB_RUN_ID: String(900_000 + (process.pid % 9_000)),
-          }
-        : process.env,
+    env: Object.fromEntries(
+      Object.entries(process.env).filter(
+        ([key, value]) =>
+          value !== undefined &&
+          !key.startsWith('VITEST') &&
+          !['npm_lifecycle_event', 'npm_lifecycle_script'].includes(key),
+      ),
+    ),
+    stdio: 'inherit',
+    timeout: 300_000,
   });
 
 /**
  * Execute only the repository's declared evidence command shapes. Splitting
  * `&&` ourselves avoids a shell, and the allowlist prevents a manifest edit
- * from gaining arbitrary command execution. Every executed segment must exit
- * zero. Playwright is opt-in because launching a second browser/server graph
- * from inside Vitest can load a second React module instance and report a
- * misleading invalid-hook failure; direct `pnpm test:e2e` remains the browser
- * evidence gate.
+ * from gaining arbitrary command execution. The caller supplies the command
+ * boundary so the coverage suite never recursively launches Vitest. Every
+ * executed segment must exit zero. Playwright remains opt-in; direct
+ * `pnpm test:e2e` is the browser evidence gate.
  */
 export const executeAllowedS09EvidenceCommand = (
   command: string,
-  runner: CommandRunner = runSpawnedCommand,
+  runner: CommandRunner,
   options: EvidenceCommandOptions = {},
 ): void => {
   if (!command.trim() || /[;|`$<>\n\r]/u.test(command))
@@ -338,26 +327,44 @@ describe('[P2-S09-AC-269] executable S09 evidence map', () => {
     }
   });
 
-  it(
-    '[P2-S09-AC-269] validates every declared command, executes local evidence, and rejects nonzero runners',
-    { timeout: 180_000 },
+  it('[P2-S09-AC-269] validates every declared command without recursively launching test runners and rejects nonzero runners', () => {
+    const executed: string[] = [];
+    const successRunner: CommandRunner = (file, args) => {
+      executed.push([file, ...args].join(' '));
+      return { status: 0, signal: null };
+    };
+    for (const entry of S09_EVIDENCE_MAP)
+      executeAllowedS09EvidenceCommand(entry.command, successRunner);
+
+    expect(executed).toEqual(
+      S09_EVIDENCE_MAP.flatMap(({ command }) =>
+        command
+          .split(/\s+&&\s+/u)
+          .filter((segment) => !segment.includes('playwright test')),
+      ),
+    );
+
+    expect(() =>
+      executeAllowedS09EvidenceCommand('pnpm progress:check', () => ({
+        status: 1,
+        signal: null,
+      })),
+    ).toThrow(/Evidence command failed/iu);
+    expect(() =>
+      executeAllowedS09EvidenceCommand(
+        'pnpm exec playwright test --config=playwright.s09-real.config.ts tests/e2e/phase-02-slice-09-content-schema-registry-real-route.spec.ts',
+        () => ({ status: 1, signal: null }),
+        { allowPlaywright: true },
+      ),
+    ).toThrow(/Evidence command failed/iu);
+  });
+
+  it.runIf(process.env.npm_lifecycle_event === 'test:evidence:s09')(
+    '[P2-S09-AC-269] executes every declared nonbrowser command',
+    { timeout: 900_000 },
     () => {
       for (const entry of S09_EVIDENCE_MAP)
-        executeAllowedS09EvidenceCommand(entry.command);
-
-      expect(() =>
-        executeAllowedS09EvidenceCommand('pnpm progress:check', () => ({
-          status: 1,
-          signal: null,
-        })),
-      ).toThrow(/Evidence command failed/iu);
-      expect(() =>
-        executeAllowedS09EvidenceCommand(
-          'pnpm exec playwright test tests/e2e/phase-02-slice-09-content-schema-registry-performance.spec.ts --project=chromium',
-          () => ({ status: 1, signal: null }),
-          { allowPlaywright: true },
-        ),
-      ).toThrow(/Evidence command failed/iu);
+        executeAllowedS09EvidenceCommand(entry.command, runLiveEvidenceCommand);
     },
   );
 

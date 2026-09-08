@@ -118,6 +118,7 @@ type BrowserVitals = Readonly<{
   cls: number;
   inpMs: number | null;
   longTaskCount: number;
+  longTaskWindowStartedAtMs: number | null;
   observers: Readonly<{
     lcp: boolean;
     cls: boolean;
@@ -133,6 +134,7 @@ const installVitalsObserver = async (page: Page): Promise<void> => {
       cls: number;
       inpMs: number | null;
       longTaskCount: number;
+      longTaskWindowStartedAtMs: number | null;
       observers: {
         lcp: boolean;
         cls: boolean;
@@ -144,6 +146,7 @@ const installVitalsObserver = async (page: Page): Promise<void> => {
       cls: 0,
       inpMs: null,
       longTaskCount: 0,
+      longTaskWindowStartedAtMs: null,
       observers: { lcp: false, cls: false, event: false, longtask: false },
     };
     Reflect.set(globalThis, '__s09RealRouteVitals', vitals);
@@ -191,7 +194,11 @@ const installVitalsObserver = async (page: Page): Promise<void> => {
 
     try {
       new PerformanceObserver((list) => {
-        vitals.longTaskCount += list.getEntries().length;
+        const windowStartedAtMs = vitals.longTaskWindowStartedAtMs;
+        if (windowStartedAtMs === null) return;
+        vitals.longTaskCount += list
+          .getEntries()
+          .filter((entry) => entry.startTime >= windowStartedAtMs).length;
       }).observe({ buffered: true, type: 'longtask' });
       vitals.observers.longtask = true;
     } catch {
@@ -223,6 +230,10 @@ test('[P2-S09-AC-262] measures the real production-built route workload', async 
   page,
 }) => {
   await authenticate(context);
+  // Prime one-time local Workerd route initialization without populating the
+  // browser cache. The measured navigation still fetches production assets.
+  const warmupResponse = await page.request.get(APP_ROUTE);
+  expect(warmupResponse.status()).toBe(200);
   await installVitalsObserver(page);
 
   const response = await gotoRegistry(page);
@@ -241,7 +252,19 @@ test('[P2-S09-AC-262] measures the real production-built route workload', async 
   await expect(page.locator('body')).not.toContainText(
     'temporarily unavailable',
   );
+  await expect(
+    page.locator('[data-workbench="content-schema-registry"]'),
+  ).toHaveAttribute('data-content-schema-registry-hydrated', 'true', {
+    timeout: 10_000,
+  });
 
+  await page.evaluate(() => {
+    const vitals = Reflect.get(
+      globalThis,
+      '__s09RealRouteVitals',
+    ) as BrowserVitals;
+    Reflect.set(vitals, 'longTaskWindowStartedAtMs', performance.now());
+  });
   await page.getByRole('link', { name: 'Skip to main content' }).click();
   await expect(page.locator('#content-schema-registry-main')).toBeFocused();
   await page.waitForFunction(

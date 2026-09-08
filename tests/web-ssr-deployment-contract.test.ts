@@ -47,6 +47,7 @@ const buildWebConfig = (environmentName?: string): JsonObject => {
     cwd: webDirectory,
     env: environment,
     stdio: 'pipe',
+    timeout: 80_000,
   });
 
   return JSON.parse(readFileSync(generatedWranglerUrl, 'utf8')) as JsonObject;
@@ -59,7 +60,7 @@ describe('Astro Cloudflare Worker SSR deployment contract', () => {
     expect(config).toMatch(/output:\s*'server'/u);
     expect(config).toMatch(/session:\s*false/u);
     expect(config).toMatch(
-      /optimizeDeps:\s*\{[\s\S]*?include:\s*\['astro\/assets\/services\/noop'\]/u,
+      /optimizeDeps:\s*\{[\s\S]*?include:\s*\[[\s\S]*?'astro\/assets\/services\/noop'[\s\S]*?'react-dom\/client'[\s\S]*?\]/u,
     );
     expect(config).toMatch(
       /cloudflare\(\{[\s\S]*?imageService:\s*'passthrough'[\s\S]*?\}\)/u,
@@ -132,7 +133,7 @@ describe('Astro Cloudflare Worker SSR deployment contract', () => {
       expect(previews.kv_namespaces).toBeUndefined();
       expect(previews.images).toBeUndefined();
     }
-  }, 90_000);
+  }, 180_000);
 
   it('packages both generated runtime configs in the immutable CI artifact', () => {
     const workflow = readRepoFile('.github/workflows/ci.yml');

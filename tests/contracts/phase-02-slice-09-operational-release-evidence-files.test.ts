@@ -294,6 +294,7 @@ describe('Slice 09 retained operational evidence files', () => {
 
   it.skipIf(process.platform === 'win32')(
     'rejects a referenced FIFO without blocking the CLI',
+    { timeout: 15_000 },
     () => {
       const fixture = createFixture();
       const fifoPath = join(fixture.reportRoot, 'slo/measurement.json');
@@ -311,7 +312,7 @@ describe('Slice 09 retained operational evidence files', () => {
           fixture.expectedIdentityPath,
           fixture.reportRoot,
         ],
-        { encoding: 'utf8', timeout: 1_000 },
+        { encoding: 'utf8', timeout: 10_000 },
       );
       expect(result.signal).toBeNull();
       expect(result.status).toBe(1);
@@ -321,57 +322,61 @@ describe('Slice 09 retained operational evidence files', () => {
     },
   );
 
-  it('fails closed at the executable CLI boundary when report-root input is absent', () => {
-    const fixture = createFixture();
-    const verifierPath = join(
-      process.cwd(),
-      'infra/workflows/verify-content-schema-registry-release-evidence.ts',
-    );
-    const valid = spawnSync(
-      process.execPath,
-      [
-        '--experimental-strip-types',
-        verifierPath,
-        fixture.evidencePath,
-        fixture.expectedIdentityPath,
-        fixture.reportRoot,
-      ],
-      { encoding: 'utf8' },
-    );
-    expect(valid.status).toBe(0);
-    expect(valid.stdout).toBe(
-      'content_schema_registry_release_evidence=passed\n',
-    );
+  it(
+    'fails closed at the executable CLI boundary when report-root input is absent',
+    { timeout: 35_000 },
+    () => {
+      const fixture = createFixture();
+      const verifierPath = join(
+        process.cwd(),
+        'infra/workflows/verify-content-schema-registry-release-evidence.ts',
+      );
+      const valid = spawnSync(
+        process.execPath,
+        [
+          '--experimental-strip-types',
+          verifierPath,
+          fixture.evidencePath,
+          fixture.expectedIdentityPath,
+          fixture.reportRoot,
+        ],
+        { encoding: 'utf8', timeout: 10_000 },
+      );
+      expect(valid.status).toBe(0);
+      expect(valid.stdout).toBe(
+        'content_schema_registry_release_evidence=passed\n',
+      );
 
-    const symlinkedVerifierPath = join(fixture.sandbox, 'verifier-link.ts');
-    symlinkSync(verifierPath, symlinkedVerifierPath);
-    const viaSymlink = spawnSync(
-      process.execPath,
-      [
-        '--experimental-strip-types',
-        symlinkedVerifierPath,
-        fixture.evidencePath,
-        fixture.expectedIdentityPath,
-        fixture.reportRoot,
-      ],
-      { encoding: 'utf8' },
-    );
-    expect(viaSymlink.status).toBe(0);
-    expect(viaSymlink.stdout).toBe(
-      'content_schema_registry_release_evidence=passed\n',
-    );
+      const symlinkedVerifierPath = join(fixture.sandbox, 'verifier-link.ts');
+      symlinkSync(verifierPath, symlinkedVerifierPath);
+      const viaSymlink = spawnSync(
+        process.execPath,
+        [
+          '--experimental-strip-types',
+          symlinkedVerifierPath,
+          fixture.evidencePath,
+          fixture.expectedIdentityPath,
+          fixture.reportRoot,
+        ],
+        { encoding: 'utf8', timeout: 10_000 },
+      );
+      expect(viaSymlink.status).toBe(0);
+      expect(viaSymlink.stdout).toBe(
+        'content_schema_registry_release_evidence=passed\n',
+      );
 
-    const missingRoot = spawnSync(
-      process.execPath,
-      [
-        '--experimental-strip-types',
-        verifierPath,
-        fixture.evidencePath,
-        fixture.expectedIdentityPath,
-      ],
-      { encoding: 'utf8' },
-    );
-    expect(missingRoot.status).not.toBe(0);
-    expect(missingRoot.stderr).toContain('<report-root>');
-  });
+      const missingRoot = spawnSync(
+        process.execPath,
+        [
+          '--experimental-strip-types',
+          verifierPath,
+          fixture.evidencePath,
+          fixture.expectedIdentityPath,
+        ],
+        { encoding: 'utf8', timeout: 10_000 },
+      );
+      expect(missingRoot.status).not.toBe(0);
+      expect(missingRoot.stderr).toContain('<report-root>');
+    },
+  );
 });

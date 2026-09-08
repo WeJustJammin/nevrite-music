@@ -3,33 +3,25 @@
 import { copyFile, readFile, writeFile } from 'node:fs/promises';
 
 import { defineConfig } from 'astro/config';
-
 import react from '@astrojs/react';
 import cloudflare from '@astrojs/cloudflare';
 
-const runtimeProcess = /** @type {unknown} */ (
-  Reflect.get(globalThis, 'process')
-);
-const ciRunId =
-  typeof runtimeProcess === 'object' &&
-  runtimeProcess !== null &&
-  'env' in runtimeProcess &&
-  typeof runtimeProcess.env === 'object' &&
-  runtimeProcess.env !== null &&
-  'GITHUB_RUN_ID' in runtimeProcess.env &&
-  typeof runtimeProcess.env.GITHUB_RUN_ID === 'string'
-    ? runtimeProcess.env.GITHUB_RUN_ID
-    : undefined;
+const runtimeProcess = /** @type {{
+  env?: Record<string, string | undefined>;
+  argv?: unknown;
+}} */ (Reflect.get(globalThis, 'process') ?? {});
+const runtimeEnvironment = runtimeProcess.env ?? {};
+const isolateCloudflareDev =
+  'GITHUB_RUN_ID' in runtimeEnvironment ||
+  ('WEJAMMIN_E2E_ISOLATED' in runtimeEnvironment &&
+    runtimeEnvironment.WEJAMMIN_E2E_ISOLATED === '1');
 /** @type {import('@astrojs/cloudflare').Options} */
-const ciCloudflareDevIsolation =
-  ciRunId === undefined ? {} : { inspectorPort: false, persistState: false };
-const runtimeArgv =
-  typeof runtimeProcess === 'object' &&
-  runtimeProcess !== null &&
-  'argv' in runtimeProcess &&
-  Array.isArray(runtimeProcess.argv)
-    ? runtimeProcess.argv
-    : [];
+const cloudflareDevIsolation = isolateCloudflareDev
+  ? { inspectorPort: false, persistState: false }
+  : {};
+const runtimeArgv = Array.isArray(runtimeProcess.argv)
+  ? runtimeProcess.argv
+  : [];
 const isAstroDevCommand = runtimeArgv.includes('dev');
 
 /**
@@ -85,14 +77,21 @@ worker_entry_default.fetch = __wejamminCreateEdgeFetchHandler(worker_entry_defau
 export default defineConfig({
   output: 'server',
   session: false,
+  devToolbar: { enabled: !isolateCloudflareDev },
   integrations: [react(), edgeSecurityIntegration()],
   vite: {
     optimizeDeps: {
-      include: ['astro/assets/services/noop'],
+      include: [
+        'astro/assets/services/noop',
+        'react',
+        'react-dom',
+        'react-dom/client',
+        'react/jsx-dev-runtime',
+      ],
     },
   },
   adapter: cloudflare({
-    ...ciCloudflareDevIsolation,
+    ...cloudflareDevIsolation,
     ...(isAstroDevCommand ? { configPath: './wrangler.dev.jsonc' } : {}),
     imageService: 'passthrough',
   }),
