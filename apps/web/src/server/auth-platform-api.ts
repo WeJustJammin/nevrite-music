@@ -77,6 +77,7 @@ export const forwardAuthRequest = async (
       new Request(target, {
         method,
         headers,
+        redirect: 'manual',
         ...(method === 'GET' ? {} : { body: await request.arrayBuffer() }),
       }),
     );
