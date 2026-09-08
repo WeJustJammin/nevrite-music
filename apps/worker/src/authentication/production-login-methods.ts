@@ -140,7 +140,6 @@ export const createAccountControlFlow = async (
     await sha256Base64Url(verifier),
   );
   authorization.searchParams.set('code_challenge_method', 's256');
-  authorization.searchParams.set('state', state);
   authorization.searchParams.set('nonce', nonce);
   const resource = AuthorizationStartSchema.parse({
     authorizationUrl: authorization.toString(),

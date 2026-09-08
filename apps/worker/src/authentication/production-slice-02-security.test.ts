@@ -331,9 +331,22 @@ describe('Slice 02 production security regressions', () => {
       new AbortController().signal,
     );
     expect(replay.resource.intentId).toBe(INTENT_ID);
-    expect(
-      new URL(replay.resource.authorizationUrl).searchParams.get('state'),
-    ).toBe('original-state');
+    const authorization = new URL(replay.resource.authorizationUrl);
+    expect(authorization.searchParams.get('provider')).toBe('google');
+    expect(authorization.searchParams.get('state')).toBeNull();
+    expect(authorization.searchParams.get('code_challenge')).toMatch(
+      /^[A-Za-z0-9_-]{43}$/,
+    );
+    expect(authorization.searchParams.get('code_challenge_method')).toBe(
+      's256',
+    );
+    expect(authorization.searchParams.get('nonce')).toBe('original-nonce');
+    const redirectTo = authorization.searchParams.get('redirect_to');
+    expect(redirectTo).not.toBeNull();
+    if (redirectTo === null) throw new Error('Expected OAuth redirect');
+    expect(new URL(redirectTo).searchParams.get('state')).toBe(
+      'original-state',
+    );
   });
 
   it('rejects a CSRF token replayed with another session reference', async () => {
