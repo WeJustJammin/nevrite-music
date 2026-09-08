@@ -153,6 +153,53 @@ describe('production authentication adapter', () => {
     expect(result).toMatchObject({ ok: false, status: 502 });
   });
 
+  it('accepts a Supabase social PKCE response without an optional provider ID token', async () => {
+    const fetchImpl = vi.fn(async () =>
+      json({
+        id: AUTH_USER_ID,
+        identities: [{ provider: 'google', identity_id: 'provider-subject' }],
+      }),
+    );
+    const result = await verifyTokenResponse(
+      { access_token: jwt(), refresh_token: 'refresh-secret' },
+      config(fetchImpl),
+      new AbortController().signal,
+      'expected-nonce',
+      'google',
+    );
+    expect(result).toMatchObject({
+      ok: true,
+      value: {
+        authUserId: AUTH_USER_ID,
+        sessionId: SESSION_ID,
+        providerSubjectDigest: expect.stringMatching(/^\\x[0-9a-f]{64}$/),
+      },
+    });
+  });
+
+  it('rejects malformed provider ID tokens when the token response includes one', async () => {
+    const fetchImpl = vi.fn(async () =>
+      json({
+        id: AUTH_USER_ID,
+        identities: [{ provider: 'google', identity_id: 'provider-subject' }],
+      }),
+    );
+    for (const idToken of [{ nonce: 'expected-nonce' }, 'broken']) {
+      const result = await verifyTokenResponse(
+        {
+          access_token: jwt(),
+          refresh_token: 'refresh-secret',
+          id_token: idToken,
+        },
+        config(fetchImpl),
+        new AbortController().signal,
+        'expected-nonce',
+        'google',
+      );
+      expect(result).toMatchObject({ ok: false, status: 502 });
+    }
+  });
+
   it('loads the protected provider catalog through the named RPC', async () => {
     const fetchImpl = vi.fn(async (input: string | URL | Request) => {
       void input;
@@ -597,7 +644,7 @@ describe('production authentication operation coverage', () => {
     ).resolves.toMatchObject({ ok: false, status: 503 });
   });
 
-  it('completes a valid callback and rotates secure session cookies', async () => {
+  it('completes a valid Supabase callback without an ID token and rotates secure session cookies', async () => {
     const options = {
       environment,
       now: () => NOW,
@@ -621,7 +668,6 @@ describe('production authentication operation coverage', () => {
         return json({
           access_token: jwt(),
           refresh_token: 'refresh-secret',
-          id_token: jwt({ nonce: flow.nonce }),
         });
       }
       if (url.endsWith('/auth/v1/user'))

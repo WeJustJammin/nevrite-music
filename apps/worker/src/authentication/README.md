@@ -18,7 +18,7 @@ Route modules separate provider access, sessions, login methods, and account mer
 
 Errors use the shared `ApiError` envelope. Logs contain stable IDs and outcome codes, never tokens, raw emails, state, nonces, PKCE verifiers, or provider payloads.
 
-OAuth callbacks require a locally validated ID-token nonce and digest provider subjects before an intent-specific RPC may run. Sign-in/recovery callbacks may establish a session; provider-link and duplicate-proof callbacks preserve the initiating survivor session. Mutation CSRF tokens are bound to the sealed session reference, and high-risk step-up freshness comes from the original explicit MFA AMR event rather than JWT issue or refresh time. Provider unlink remains `reconciling` until its governed provider operation reaches a terminal outcome.
+OAuth callbacks require locally validated one-time app state and PKCE. The nonce remains hashed in the intent, sealed in the first-party flow cookie, and sent through the Supabase provider adapter. Supabase social PKCE responses may omit the provider ID token; when one is returned, the worker requires a valid token shape and an exact nonce match. A verified Supabase user and provider subject are required before an intent-specific RPC may run. Sign-in/recovery callbacks may establish a session; provider-link and duplicate-proof callbacks preserve the initiating survivor session. Mutation CSRF tokens are bound to the sealed session reference, and high-risk step-up freshness comes from the original explicit MFA AMR event rather than JWT issue or refresh time. Provider unlink remains `reconciling` until its governed provider operation reaches a terminal outcome.
 
 ## Related links
 
