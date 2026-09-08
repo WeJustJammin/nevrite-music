@@ -1,6 +1,6 @@
 # Pipeline remediation state
 
-**Assessed at**: 2026-09-06T20:43:30Z  
+**Assessed at**: 2026-09-08T05:18:30Z  
 **Status**: remediation executed; external evidence pending  
 **Current layer**: implementation/infrastructure verification — Phase 2 Slice 09  
 **Advancement**: blocked at 279/283; Slice 10 remains dependency-locked
@@ -28,12 +28,12 @@
 
 ## Current blockers
 
-| Criterion | Classification                          | Verified state                                                                                                                                                                            | Required next evidence                                                                                                                                   |
-| --------- | --------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| AC209     | external event receipt                  | Current Worker ran 504 post-deployment schedules successfully with zero exceptions; Email Sending analytics reported zero outbound events in the latest 30-day window.                    | Retain the next genuine threshold-triggered redacted provider/mailbox receipt. Do not dispatch manually or synthesize a threshold.                       |
-| AC211     | elapsed-time and production-volume gate | Protected collector is merged, deployed, permission-verified, and has no prior run.                                                                                                       | After `2026-09-08T00:00:00Z`, recheck deployment identity and collect 2026-09-07 UTC only if it remains eligible and naturally has at least 200 samples. |
-| AC265     | owner/legal/provider setup              | Local role/resilience coverage passes; both hosted provider catalogs return HTTP 200 with Google `temporarily_unavailable`; no approved business OAuth client or hosted identities exist. | Owner accepts Google Cloud terms and approves credential/identity handling; then configure staging and run protected hosted Google/Supabase E2E.         |
-| AC266     | external manual platform evidence       | Automated axe and keyboard coverage pass; no Mac/Windows interactive session is available.                                                                                                | Run every canonical check on real macOS/VoiceOver/Safari and Windows/NVDA/Firefox against the exact hosted candidate.                                    |
+| Criterion | Classification                    | Verified state                                                                                                                                                                                | Required next evidence                                                                                                                           |
+| --------- | --------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
+| AC209     | external event receipt            | Current Worker and scheduled handler are healthy; three fresh schedules completed successfully, while Email Sending analytics returned zero events through `2026-09-08T04:46:14.657Z`.        | Retain the next genuine threshold-triggered redacted provider/mailbox receipt. Do not dispatch manually or synthesize a threshold.               |
+| AC211     | production-volume gate            | The Cloudflare request-shape defect is fixed on main. Corrected protected run `34189916813` reached the real provider dataset and failed closed because production samples were insufficient. | Collect a later complete UTC day with at least 200 natural command/RPC/acceptance samples, five attained SLOs, and daily queue/DLQ counts.       |
+| AC265     | owner/legal/provider setup        | Staging is healthy, but Google remains disabled, direct authorization fails closed, hosted users/identities are empty, and no approved business OAuth client exists.                          | Owner accepts Google Cloud terms and approves credential/identity handling; then configure staging and run protected hosted Google/Supabase E2E. |
+| AC266     | external manual platform evidence | Fresh hosted Chromium automation passes; the authenticated route is unavailable while Google is disabled, and no real Mac/Windows runner or interactive session exists.                       | Run every canonical check on real macOS/VoiceOver/Safari and Windows/NVDA/Firefox against the exact hosted candidate.                            |
 
 ## Gaps Fixed
 
@@ -68,13 +68,36 @@
 9. Ran final `pnpm validate`: 433 Vitest files / 3,248 tests passed at 100%
    coverage, 102/102 Playwright checks passed, and every contract, database type,
    progress, formatting, lint, type, build, bundle, and performance gate passed.
+10. Corrected AC211's Cloudflare telemetry request to send `view: events` at
+    the documented top level, require a completed provider query, and keep
+    optional empty responses behind the production minimum-sample gate.
+11. Promoted the correction through PR `34`, exact-main SHA
+    `ad1efe40963e3273714dfdee85c9a97a89d1123b`, CI `34189412445`, and staging
+    `34189831032`. Corrected collection `34189916813` now reaches the truthful
+    production-volume refusal: `AC211 production samples are insufficient.`
+12. Rechecked AC209 without forcing an event. Three new schedules completed
+    successfully, but Cloudflare Email Sending retained zero events and no
+    genuine receipt exists.
+13. Rechecked hosted AC265 state: Google is disabled, the authorize endpoint
+    fails closed, and no approved credentials, users, or identities exist.
+14. Executed the safe AC266 hosted automation. Axe, media preference, zoom, and
+    keyboard checks pass; the two signed real-platform reports remain external.
+
+## Fresh recheck — 2026-09-08
+
+The retained evidence and exact run identities are recorded in
+`.memory/pipeline/progress/verification/2026-09-08-slice-09-external-infrastructure-remediation.md`.
+No acceptance item closed during this recheck. The implementation defect found
+in AC211 was removed, but all four criteria still require external facts that
+do not currently exist.
 
 ## Fresh confirmation gate
 
 Do not advance the pipeline from this record. After real evidence closes any
 blocker, update the Slice 09 tracker and run a fresh infrastructure/release
 evidence verification against one immutable candidate. Slice 09 reaches 1.0
-only when all four protected reports pass and are reviewed.
+only when all four protected reports pass and are reviewed. Current recheck:
+`.memory/pipeline/progress/verification/2026-09-08-slice-09-external-infrastructure-remediation.md`.
 
 
 <!-- spec-graph: auto-generated -->
