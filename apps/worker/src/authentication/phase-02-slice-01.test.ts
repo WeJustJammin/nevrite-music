@@ -491,6 +491,37 @@ describe('Phase 2 Slice 01 authentication acceptance', () => {
     }
   });
 
+  it('preserves every callback cookie while applying global security headers', async () => {
+    const cookies = [
+      'wj_access=access; HttpOnly; Secure; SameSite=Lax; Path=/',
+      'wj_refresh=refresh; HttpOnly; Secure; SameSite=Lax; Path=/',
+      'wj_session_ref=reference; HttpOnly; Secure; SameSite=Lax; Path=/',
+      'wj_csrf=csrf; Secure; SameSite=Lax; Path=/',
+      'wj_auth_flow=; Max-Age=0; HttpOnly; Secure; SameSite=Lax; Path=/',
+    ];
+    const { app } = createApp(
+      createAuth({
+        completeCallback: vi.fn(async () =>
+          success({ location: '/app', cookies }),
+        ),
+      }),
+    );
+
+    const response = await app.fetch(
+      new Request(
+        'https://api.example.test/auth/callback?state=opaque&code=opaque',
+      ),
+      bindings,
+    );
+    const headers = response.headers as Headers & {
+      getSetCookie: () => string[];
+    };
+
+    expect(response.status).toBe(303);
+    expect(headers.getSetCookie()).toEqual(cookies);
+    expect(response.headers.get('content-security-policy')).not.toBeNull();
+  });
+
   const customSecurityCases = [
     ['step-up blocks global logout', '/api/v1/auth/logout', '{"scope":"all"}'],
     [

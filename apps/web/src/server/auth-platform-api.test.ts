@@ -91,4 +91,48 @@ describe('authentication platform API forwarding', () => {
 
     expect(returned.getSetCookie()).toEqual(allowedCookies);
   });
+
+  it('fails closed when Set-Cookie values are available only as a folded header', async () => {
+    const folded =
+      'wj_access=access; HttpOnly; Secure; Path=/, provider_token=must-not-reach-browser; HttpOnly; Secure; Path=/';
+    const upstreamHeaders = {
+      get: (name: string) =>
+        name.toLowerCase() === 'set-cookie'
+          ? folded
+          : name.toLowerCase() === 'location'
+            ? '/app/cms-content-modeling'
+            : null,
+      forEach: (
+        callback: (value: string, key: string, parent: Headers) => void,
+      ) => {
+        callback(
+          '/app/cms-content-modeling',
+          'location',
+          upstreamHeaders as unknown as Headers,
+        );
+        callback(folded, 'set-cookie', upstreamHeaders as unknown as Headers);
+      },
+    } as unknown as Headers;
+    const response = await forwardAuthRequest(
+      new Request(
+        'https://staging.example.test/auth/callback?code=provider-code&state=application-state',
+      ),
+      {
+        fetch: vi.fn(() =>
+          Promise.resolve({
+            body: null,
+            headers: upstreamHeaders,
+            status: 303,
+          } as unknown as Response),
+        ),
+      },
+      '/auth/callback',
+      'GET',
+    );
+    const returned = response.headers as Headers & {
+      getSetCookie: () => string[];
+    };
+
+    expect(returned.getSetCookie()).toEqual([]);
+  });
 });

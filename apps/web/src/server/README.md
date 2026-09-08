@@ -14,6 +14,8 @@ second domain-policy or persistence layer.
 - `job-status-boundary.ts` — same-origin JobStatus response policy.
 - `job-status-platform-api.ts` — opaque Bearer forwarding through the private
   `PLATFORM_API` Worker binding.
+- `service-binding-cookies.ts` — runtime-aware, fail-closed forwarding for
+  repeated allowlisted authentication cookies.
 
 ## Content schema registry map
 
@@ -60,7 +62,8 @@ allowlisted forwarded headers. Treat Cloudflare service bindings as private
 transports, not authority sources. Read repeated authentication cookies through
 the Workers `Headers.getAll('Set-Cookie')` API before the standard
 `getSetCookie()` fallback, then allowlist every returned cookie independently.
-Add integration tests for success,
+A runtime exposing only a folded `Set-Cookie` value fails closed. Add
+integration tests for success,
 conditional reads, authentication failure, disclosure collapse, and dependency
 failure.
 

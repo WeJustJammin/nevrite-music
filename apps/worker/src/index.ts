@@ -59,6 +59,7 @@ import {
 } from './worker-route-composition';
 import {
   applySecurityHeaders,
+  createSecurityHeaders,
   createHttpsRedirectResponse,
   generateRequestNonce,
   shouldRedirectToHttps,
@@ -198,11 +199,9 @@ export const createWorkerApp = (dependencies: WorkerDependencies) => {
 
     await next();
 
-    const responseWithSecurityHeaders = applySecurityHeaders(
-      context.res,
-      requestNonce,
-    );
-    for (const [name, value] of responseWithSecurityHeaders.headers) {
+    for (const [name, value] of Object.entries(
+      createSecurityHeaders(requestNonce),
+    )) {
       context.res.headers.set(name, value);
     }
     context.res.headers.set('x-correlation-id', correlationId);

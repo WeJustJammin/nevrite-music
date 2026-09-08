@@ -1,5 +1,7 @@
 import { ApiErrorSchema, createRequestId } from '@wejammin/contracts';
 
+import { appendAllowedServiceBindingCookies } from './service-binding-cookies';
+
 /** The service binding surface used by the Astro identity-authority façade. */
 export type IdentityAuthorityPlatformApiBinding = Readonly<{
   fetch: (input: RequestInfo | URL, init?: RequestInit) => Promise<Response>;
@@ -122,30 +124,8 @@ const copyAllowedResponseHeaders = (source: Response): Headers => {
   return returned;
 };
 
-const setCookieNames = new Set<string>(IDENTITY_AUTHORITY_COOKIE_NAMES);
-
-const cookieName = (cookie: string): string | null => {
-  const separator = cookie.indexOf('=');
-  if (separator <= 0) return null;
-  return cookie.slice(0, separator).trim();
-};
-
 const appendAllowedSetCookies = (source: Response, target: Headers): void => {
-  const headers = source.headers as Headers & {
-    getAll?: (name: string) => string[];
-    getSetCookie?: () => string[];
-  };
-  const workerCookies = headers.getAll?.('Set-Cookie') ?? [];
-  const cookies =
-    workerCookies.length > 0 ? workerCookies : (headers.getSetCookie?.() ?? []);
-  const fallback =
-    cookies.length > 0 ? cookies : [source.headers.get('set-cookie')];
-  for (const cookie of fallback) {
-    if (cookie === null || !setCookieNames.has(cookieName(cookie) ?? '')) {
-      continue;
-    }
-    target.append('set-cookie', cookie);
-  }
+  appendAllowedServiceBindingCookies(source, target, allowedCookies);
 };
 
 /**

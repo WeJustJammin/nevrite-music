@@ -1,5 +1,7 @@
 import { ApiErrorSchema, createRequestId } from '@wejammin/contracts';
 
+import { appendAllowedServiceBindingCookies } from './service-binding-cookies';
+
 /** Private service binding used by the same-origin profile ownership façade. */
 export type ProfileOwnershipPlatformApiBinding = Readonly<{
   fetch: (input: RequestInfo | URL, init?: RequestInit) => Promise<Response>;
@@ -196,27 +198,8 @@ const copyAllowedResponseHeaders = (source: Response): Headers => {
   return returned;
 };
 
-const cookieName = (cookie: string): string | null => {
-  const separator = cookie.indexOf('=');
-  return separator > 0 ? cookie.slice(0, separator).trim() : null;
-};
-
 const appendAllowedSetCookies = (source: Response, target: Headers): void => {
-  const headers = source.headers as Headers & {
-    getSetCookie?: () => string[];
-  };
-  const cookies = headers.getSetCookie?.() ?? [];
-  const fallback =
-    cookies.length > 0 ? cookies : [source.headers.get('set-cookie')];
-  for (const cookie of fallback) {
-    if (
-      cookie !== null &&
-      cookieName(cookie) !== null &&
-      allowedCookies.has(cookieName(cookie) as string)
-    ) {
-      target.append('set-cookie', cookie);
-    }
-  }
+  appendAllowedServiceBindingCookies(source, target, allowedCookies);
 };
 
 /** Forward a browser request through the private service binding safely. */

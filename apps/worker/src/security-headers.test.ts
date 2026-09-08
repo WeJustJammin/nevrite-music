@@ -47,6 +47,20 @@ describe('edge security headers', () => {
     );
   });
 
+  it('preserves a boundary response replay-safe JSON reader while cloning', async () => {
+    const readJson = vi.fn(async () => ({ status: 'safe' }));
+    const source = new Response('{"status":"safe"}');
+    Object.defineProperty(source, 'json', {
+      configurable: true,
+      value: readJson,
+    });
+
+    const response = applySecurityHeaders(source, generateRequestNonce());
+
+    await expect(response.json()).resolves.toEqual({ status: 'safe' });
+    expect(readJson).toHaveBeenCalledOnce();
+  });
+
   it('redirects explicit insecure edge requests before route execution', async () => {
     const request = new Request(
       'http://api.example.test/api/v1/health?return=%2Fapp',
