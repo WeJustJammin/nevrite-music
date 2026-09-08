@@ -4,6 +4,7 @@ import type { WorkerBindings } from '../index';
 import { normalizeAuthProductionOptions } from './production-configuration';
 import { createAccountMergeDependencies } from './production-account-merges';
 import { createLoginMethodDependencies } from './production-login-methods';
+import { base64UrlEncode } from './production-support';
 import {
   loginMethods,
   mergeCase,
@@ -307,9 +308,31 @@ describe('Slice 02 production adapter branches', () => {
     await expect(
       required(valid.readAccountMerge)(readInput, environment, signal),
     ).resolves.toMatchObject({ ok: true, value: mergeCase });
-    await expect(
-      required(valid.startAccountMergeProof)(proofInput, environment, signal),
-    ).resolves.toMatchObject({ ok: true });
+    const proof = await required(valid.startAccountMergeProof)(
+      proofInput,
+      environment,
+      signal,
+    );
+    expect(proof).toMatchObject({ ok: true });
+    if (!proof.ok) throw new Error('Expected account merge proof start');
+    const proofAuthorization = new URL(proof.value.resource.authorizationUrl);
+    expect(proofAuthorization.searchParams.get('provider')).toBe('google');
+    expect(proofAuthorization.searchParams.get('state')).toBeNull();
+    expect(proofAuthorization.searchParams.get('code_challenge')).toMatch(
+      /^[A-Za-z0-9_-]{43}$/,
+    );
+    expect(proofAuthorization.searchParams.get('code_challenge_method')).toBe(
+      's256',
+    );
+    expect(proofAuthorization.searchParams.get('nonce')).toBe(
+      base64UrlEncode(new Uint8Array(32).fill(7)),
+    );
+    const proofRedirect = proofAuthorization.searchParams.get('redirect_to');
+    expect(proofRedirect).not.toBeNull();
+    if (proofRedirect === null) throw new Error('Expected OAuth redirect');
+    expect(new URL(proofRedirect).searchParams.get('state')).toBe(
+      base64UrlEncode(new Uint8Array(32).fill(7)),
+    );
     await expect(
       required(valid.confirmAccountMerge)(confirmInput, environment, signal),
     ).resolves.toMatchObject({ ok: true, value: job });

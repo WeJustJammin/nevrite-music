@@ -498,8 +498,25 @@ describe('production authentication operation coverage', () => {
       signal,
     );
     expect(started).toMatchObject({ ok: true });
-    expect(started.ok && started.value.resource.authorizationUrl).toContain(
-      '/auth/v1/authorize',
+    if (!started.ok) throw new Error('Expected OAuth start success');
+    const authorization = new URL(started.value.resource.authorizationUrl);
+    expect(authorization.pathname).toBe('/auth/v1/authorize');
+    expect(authorization.searchParams.get('provider')).toBe('google');
+    expect(authorization.searchParams.get('state')).toBeNull();
+    expect(authorization.searchParams.get('code_challenge')).toMatch(
+      /^[A-Za-z0-9_-]{43}$/,
+    );
+    expect(authorization.searchParams.get('code_challenge_method')).toBe(
+      's256',
+    );
+    expect(authorization.searchParams.get('nonce')).toBe(
+      base64UrlEncode(new Uint8Array(32).fill(9)),
+    );
+    const redirectTo = authorization.searchParams.get('redirect_to');
+    expect(redirectTo).not.toBeNull();
+    if (redirectTo === null) throw new Error('Expected OAuth redirect');
+    expect(new URL(redirectTo).searchParams.get('state')).toBe(
+      base64UrlEncode(new Uint8Array(32).fill(9)),
     );
     await expect(
       auth.startOAuth(

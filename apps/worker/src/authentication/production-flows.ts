@@ -148,7 +148,6 @@ export const createAuthenticationFlowDependencies = (
       authorization.searchParams.set('redirect_to', callback.toString());
       authorization.searchParams.set('code_challenge', flow.challenge);
       authorization.searchParams.set('code_challenge_method', 's256');
-      authorization.searchParams.set('state', flow.state);
       authorization.searchParams.set('nonce', flow.nonce);
       return {
         ok: true,
