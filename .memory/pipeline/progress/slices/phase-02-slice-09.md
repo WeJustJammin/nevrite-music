@@ -553,9 +553,11 @@ response`; Workers Observability passed. Cloudflare's documented successful
   `a726691a-64bc-47e5-bc5e-6b52088efbff`, and web Worker
   `18b0287a-8af7-47e8-ad43-e5bdc29a10ab` are verified. Protected secret
   verification passed and `CLOUDFLARE_PLATFORM_QUEUE_ID` is set and verified;
-  no complete retained production UTC-day report exists. The earliest eligible
-  window is 2026-09-07 UTC and collection can run after
-  `2026-09-08T00:00:00Z`, so AC211 remains open and Slice 09 stays 279/283.
+  no complete retained production UTC-day report exists. Protected run
+  `34189916813` attempted 2026-09-07 UTC and failed closed for insufficient
+  natural samples; the next eligible complete day is 2026-09-08 UTC and can be
+  collected only after `2026-09-09T00:00:00Z`, so AC211 remains open and Slice
+  09 stays 279/283.
 
 - 2026-09-06 blocker remediation audit: read-only inspection of production run
   `34032282370` reconfirmed the observability permission preflight. Current API
@@ -606,7 +608,7 @@ response`; Workers Observability passed. Cloudflare's documented successful
   Sending window contains zero events and no genuine receipt. AC211 run
   `34187499317` exposed Cloudflare request-schema drift; PR `34` moved
   `view: events` to the required top level and added completed-run/empty-result
-  guards. Full local validation passes 433/433 Vitest files, 3,249 tests plus
+  guards. Full local validation passes 434/434 Vitest files, 3,256 tests plus
   one intentional skip at 100% coverage, 101/101 functional Playwright checks,
   and 5/5 production-built Slice 09 checks. Exact-main CI `34189412445` and
   staging `34189831032` pass for SHA

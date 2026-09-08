@@ -75,9 +75,10 @@
   external evidence has not been claimed. Slice 10 remains dependency-locked. See
   `.memory/pipeline/progress/phases/phase-02.md` and
   `.memory/pipeline/progress/slices/phase-02-slice-09.md`.
-- **CURRENT VALIDATION:** `pnpm validate` passes 432/432 Vitest files and
-  3,233/3,233 tests at 100% coverage, 102/102 Playwright tests, every workspace
-  build, bundle budgets, and the fresh immutable-Worker API p95 smoke.
+- **CURRENT VALIDATION:** `pnpm validate` passes 434/434 Vitest files and
+  3,256 tests plus one intentional skip at 100% coverage, 101/101 functional
+  Playwright checks, 5/5 production-built Slice 09 checks, every workspace build,
+  bundle budgets, and the fresh immutable-Worker API p95 smoke.
   `pnpm db:verify` passes 34/34 migrations and 45/45 pgTAP files with
   1,678/1,678 assertions and exact generated types.
 - **HISTORICAL PRE-REMEDIATION CANDIDATE:** Before this remediation, PR #9 branch
@@ -132,8 +133,9 @@ failed: malformed response`. The token still passes Workers Observability.
   `18b0287a-8af7-47e8-ad43-e5bdc29a10ab`, protected secret verification, and
   `CLOUDFLARE_PLATFORM_QUEUE_ID` configuration are verified. The protected
   AC211 collector is deployed. No complete retained production UTC-day report
-  exists; the earliest eligible day is 2026-09-07 UTC and collection can run
-  after `2026-09-08T00:00:00Z`. AC211 remains open.
+  exists. Protected run `34189916813` attempted 2026-09-07 UTC and failed closed
+  for insufficient natural samples; the next eligible complete day is 2026-09-08
+  UTC and can be collected only after `2026-09-09T00:00:00Z`. AC211 remains open.
 - **CURRENT HOSTED OAUTH EVIDENCE:** Exact `main` SHA
   `10f320b97ccce0c62fba2ee27a3b792f08f83285`; CI `34224641678`, staging
   `34225256920` / deployment `6327379740` passed. Google is configured and the

@@ -2,7 +2,7 @@
 
 **Status**: in-progress  
 **Progress**: 8/17 slices (47%)  
-**Current gate**: The latest verified production candidate is exact-main SHA `621f7b99745318948720afa4d670ae1a707d3365`; CI `34031918191`, staging `34032219768`, protected production run `34032282370` / deployment `6292744330`, artifact `9989024106`, API Worker `a726691a-64bc-47e5-bc5e-6b52088efbff`, and web Worker `18b0287a-8af7-47e8-ad43-e5bdc29a10ab` passed or are verified. Protected secret verification passed, `CLOUDFLARE_PLATFORM_QUEUE_ID` is set and verified, and the AC211 collector is deployed. No complete retained production UTC-day report exists; the earliest eligible day is 2026-09-07 UTC and collection can run after `2026-09-08T00:00:00Z`. The latest hosted OAuth candidate is exact-main SHA `10f320b97ccce0c62fba2ee27a3b792f08f83285`, with CI `34224641678` and staging `34225256920` / deployment `6327379740`; Google is enabled and the Supabase provider registry is verified at version `16`, with live five-cookie callback/session/protected-route proof and one real Google identity. Four external acceptance criteria remain blocked at 279/283  
+**Current gate**: The latest verified production candidate is exact-main SHA `621f7b99745318948720afa4d670ae1a707d3365`; CI `34031918191`, staging `34032219768`, protected production run `34032282370` / deployment `6292744330`, artifact `9989024106`, API Worker `a726691a-64bc-47e5-bc5e-6b52088efbff`, and web Worker `18b0287a-8af7-47e8-ad43-e5bdc29a10ab` passed or are verified. Protected secret verification passed, `CLOUDFLARE_PLATFORM_QUEUE_ID` is set and verified, and the AC211 collector is deployed. Protected run `34189916813` attempted the complete 2026-09-07 UTC day and failed closed for insufficient natural samples; the next eligible complete day is 2026-09-08 UTC, collectible only after `2026-09-09T00:00:00Z`. The latest hosted OAuth candidate is exact-main SHA `10f320b97ccce0c62fba2ee27a3b792f08f83285`, with CI `34224641678` and staging `34225256920` / deployment `6327379740`; Google is enabled and the Supabase provider registry is verified at version `16`, with live five-cookie callback/session/protected-route proof and one real Google identity. Four external acceptance criteria remain blocked at 279/283  
 **Plan**: [Phase 2 plan](../../../wiki/specs/phases/phase-2.md)  
 **Updated**: 2026-09-08  
 **Prior remote evidence**: Before this remediation, PR #9 head `67264c5e9b5196d00ac3f0aa272896a010c872d7` produced synthetic merge `a79dfe30db60e4f54024f064fc2fdf2d01033919` and passing CI run `33841270472`. That run is not evidence for the remediation; no merge or deployment is claimed
@@ -48,12 +48,15 @@ two consecutive successful scheduled executions at `06:31:00.649` and
 tests. No genuine alert email has been delivered, so AC209 remains open on its
 receipt requirement rather than its provider-deployment requirement.
 
-PR #29 merged and deployed the 2026-09-06 AC211 collector. Full
-`pnpm validate` passes 432/432 Vitest files /
-3,233/3,233 tests at 100% coverage and 102/102 Playwright checks. The candidate does
+PR #29 merged and deployed the 2026-09-06 AC211 collector. Current full
+`pnpm validate` passes 434/434 Vitest files /
+3,256 tests plus one intentional skip at 100% coverage, 101/101 functional
+Playwright checks, and 5/5 production-built Slice 09 checks. The candidate does
 not produce an AC211 release claim: no complete retained production UTC-day
-report exists. The earliest eligible day is 2026-09-07 UTC and collection can
-run after `2026-09-08T00:00:00Z`, so AC211 remains open. AC209 still requires a genuine provider/mailbox
+report exists. Protected run `34189916813` attempted 2026-09-07 UTC and failed
+closed for insufficient natural samples; the next eligible complete day is
+2026-09-08 UTC and can be collected only after `2026-09-09T00:00:00Z`, so
+AC211 remains open. AC209 still requires a genuine provider/mailbox
 receipt; AC265 still requires the approved 9-role/10-scenario hosted report,
 role/identity lifecycle, MFA/step-up, teardown, and complete hosted matrix;
 AC266 still requires the manual assistive-technology

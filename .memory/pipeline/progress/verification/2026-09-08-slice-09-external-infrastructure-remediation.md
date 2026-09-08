@@ -124,9 +124,11 @@ queue/DLQ counts.
   recorded one revoked session. Seven earlier staging probe sessions remain active;
   they were not globally revoked because that operation requires a fresh step-up
   and could invalidate a user-owned session.
-- A fresh production sign-in-page check returned HTTP 200 from `wejamm.in`; its
-  Google control remains disabled. The provider enablement is therefore confined
-  to staging.
+- A fresh production provider-catalog request returned HTTP 200 with Google in
+  `temporarily_unavailable` state. A production Google `/auth/start` request
+  returned 303 to `wejamm.in/auth/sign-in` rather than Supabase, and the visible
+  Google control remained disabled. This proves the production application
+  boundary remains unavailable without inferring an unqueried provider backend.
 - The ordinary Supabase PKCE response omits the raw provider `id_token`.
   Therefore no independent provider nonce evidence beyond the Supabase
   boundary is claimed.
