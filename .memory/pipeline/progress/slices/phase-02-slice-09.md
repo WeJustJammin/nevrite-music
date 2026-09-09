@@ -679,10 +679,16 @@ all four release-evidence gates pass.
   gate conflicts with later Slice 13 authority ownership and requires a locked
   planning decision; no synthetic identities were created.
 - AC266: exact-release axe/provider evidence collection is implemented and
-  locally validated, pending exact-main staging publication. Signed
+  locally validated. Exact-main staging run `34362941970` on
+  `a4a411d2edd3c83057392fd86f87c93fd72e220c` passed served-release,
+  provider-version, hosted axe, and final axe binding, but published no
+  verified candidate because natural API p95 was `526.912447 ms` against the
+  locked `<500 ms` budget. The follow-up preserves the threshold and makes
+  both CI/staging streamed JSON producers fail at source through `pipefail`
+  with silent pnpm output. Signed
   VoiceOver/Safari and NVDA/Firefox reports remain required.
 
-Validated with Node `22.23.1` and pnpm `11.24.0`: 443 Vitest files, 3,296
+Validated with Node `22.23.1` and pnpm `11.24.0`: 443 Vitest files, 3,297
 passing tests plus one intentional skip, 100% coverage, 101 functional
 Playwright checks, 5 production-built Slice 09 checks, builds, bundle budgets,
 and performance smoke. Status remains **279/283**; Slice 10 remains locked.

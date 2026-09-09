@@ -1,6 +1,15 @@
-import { execFileSync } from 'node:child_process';
-import { existsSync, readFileSync } from 'node:fs';
-import { dirname, resolve } from 'node:path';
+import { execFileSync, spawnSync } from 'node:child_process';
+import {
+  chmodSync,
+  existsSync,
+  mkdirSync,
+  mkdtempSync,
+  readFileSync,
+  rmSync,
+  writeFileSync,
+} from 'node:fs';
+import { tmpdir } from 'node:os';
+import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 import { createE2EFixture } from '@wejammin/test-support';
@@ -208,9 +217,16 @@ describe('validation toolchain contracts', () => {
     expect(scripts.validate.indexOf('pnpm build')).toBeLessThan(
       scripts.validate.indexOf('pnpm bundle:check'),
     );
-    expect(ciWorkflow).toContain('pnpm bundle:check');
-    expect(ciWorkflow).toContain('pnpm performance:smoke');
-    expect(stagingWorkflow).toContain('pnpm performance:smoke:staging');
+    expect(ciWorkflow).toContain('set -o pipefail');
+    expect(ciWorkflow).toContain(
+      'pnpm --silent bundle:check | tee performance-evidence/bundle-budget.json',
+    );
+    expect(ciWorkflow).toContain(
+      'pnpm --silent performance:smoke | tee performance-evidence/api-p95-smoke.json',
+    );
+    expect(stagingWorkflow).toContain(
+      'run: set -o pipefail; pnpm --silent performance:smoke:staging | tee promotion-candidate/api-p95-smoke.json',
+    );
 
     const acceptanceIds = [...sliceProgress.matchAll(/P1-S01-AC-\d{3}/g)].map(
       (match) => match[0],
@@ -218,6 +234,51 @@ describe('validation toolchain contracts', () => {
     expect(new Set(acceptanceIds).size).toBe(24);
     expect(sliceProgress).toContain('**Spec depth floor**: 0');
     expect(sliceProgress).not.toMatch(/\{\{[^}]+\}\}/);
+  });
+
+  it('keeps streamed JSON parseable while propagating producer failure', () => {
+    const root = mkdtempSync(join(tmpdir(), 'wejammin-json-evidence-'));
+    const bin = join(root, 'bin');
+    const evidencePath = join(root, 'evidence.json');
+
+    try {
+      mkdirSync(bin);
+      const pnpm = join(bin, 'pnpm');
+      writeFileSync(
+        pnpm,
+        [
+          '#!/usr/bin/env bash',
+          'set -euo pipefail',
+          'printf \'{"passed":false}\\n\'',
+          'test "$1" = "--silent" || printf \'[ELIFECYCLE] failed\\n\'',
+          'exit 1',
+        ].join('\n'),
+      );
+      chmodSync(pnpm, 0o700);
+
+      const result = spawnSync(
+        'bash',
+        [
+          '-c',
+          'set -o pipefail; pnpm --silent performance:smoke | tee "$EVIDENCE_PATH"',
+        ],
+        {
+          encoding: 'utf8',
+          env: {
+            ...process.env,
+            EVIDENCE_PATH: evidencePath,
+            PATH: `${bin}:${process.env.PATH ?? ''}`,
+          },
+        },
+      );
+
+      expect(result.status).toBe(1);
+      const evidence = readFileSync(evidencePath, 'utf8');
+      expect(JSON.parse(evidence)).toEqual({ passed: false });
+      expect(evidence.trimEnd().split('\n')).toHaveLength(1);
+    } finally {
+      rmSync(root, { force: true, recursive: true });
+    }
   });
 
   it('copies the executable Worker module to the immutable release-evidence path', () => {
