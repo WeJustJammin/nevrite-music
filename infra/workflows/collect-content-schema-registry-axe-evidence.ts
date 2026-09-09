@@ -15,6 +15,7 @@ import {
   assertExpectedReleaseHeader,
   blockCrossOriginDocumentRequests,
   relativePathFromHostedUrl,
+  waitForExpectedReleaseNavigation,
 } from './content-schema-registry-axe-navigation.ts';
 import {
   buildContentSchemaRegistryAutomatedAxeReport,
@@ -33,6 +34,7 @@ export {
   isApprovedHostedDocumentUrl,
   relativePathFromHostedUrl,
   targetForRequestedPath,
+  waitForExpectedReleaseNavigation,
 } from './content-schema-registry-axe-navigation.ts';
 export {
   buildContentSchemaRegistryAutomatedAxeReport,
@@ -107,38 +109,48 @@ export const collectContentSchemaRegistryAutomatedAxeEvidence = async (
       axe: AxeAnalysisResult;
     }> = [];
     for (const target of CONTENT_SCHEMA_REGISTRY_AUTOMATED_A11Y_TARGETS) {
-      const context = await browser.newContext({
-        serviceWorkers: 'block',
-        viewport: { width: 1_280, height: 900 },
-      });
-      try {
-        await blockCrossOriginDocumentRequests(context, expectedOrigin);
-        const page = await context.newPage();
-        const response = await page.goto(
-          new URL(target.requestedPath, options.webOrigin).toString(),
-          { waitUntil: 'networkidle', timeout: 60_000 },
-        );
-        const finalPath = relativePathFromHostedUrl(page.url(), expectedOrigin);
-        const httpStatus = response?.status() ?? null;
-        assertExpectedAxeNavigation({
-          requestedPath: target.requestedPath,
-          finalPath,
-          httpStatus,
-        });
-        assertExpectedReleaseHeader({
-          sourceRevision: options.sourceRevision,
-          releaseHeader: response?.headers()['x-wejammin-release'] ?? null,
-        });
-        pages.push({
-          requestedPath: target.requestedPath,
-          finalPath,
-          httpStatus,
-          coverage: target.coverage,
-          axe: await new AxeBuilder({ page }).analyze(),
-        });
-      } finally {
-        await context.close();
-      }
+      pages.push(
+        await waitForExpectedReleaseNavigation({
+          navigate: async () => {
+            const context = await browser.newContext({
+              serviceWorkers: 'block',
+              viewport: { width: 1_280, height: 900 },
+            });
+            try {
+              await blockCrossOriginDocumentRequests(context, expectedOrigin);
+              const page = await context.newPage();
+              const response = await page.goto(
+                new URL(target.requestedPath, options.webOrigin).toString(),
+                { waitUntil: 'networkidle', timeout: 60_000 },
+              );
+              const finalPath = relativePathFromHostedUrl(
+                page.url(),
+                expectedOrigin,
+              );
+              const httpStatus = response?.status() ?? null;
+              assertExpectedAxeNavigation({
+                requestedPath: target.requestedPath,
+                finalPath,
+                httpStatus,
+              });
+              assertExpectedReleaseHeader({
+                sourceRevision: options.sourceRevision,
+                releaseHeader:
+                  response?.headers()['x-wejammin-release'] ?? null,
+              });
+              return {
+                requestedPath: target.requestedPath,
+                finalPath,
+                httpStatus,
+                coverage: target.coverage,
+                axe: await new AxeBuilder({ page }).analyze(),
+              };
+            } finally {
+              await context.close();
+            }
+          },
+        }),
+      );
     }
     const report = buildContentSchemaRegistryAutomatedAxeReport({
       sourceRevision: options.sourceRevision,

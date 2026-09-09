@@ -5,6 +5,26 @@ import { CONTENT_SCHEMA_REGISTRY_AUTOMATED_A11Y_TARGETS } from '../../packages/c
 export type AutomatedA11yTarget =
   (typeof CONTENT_SCHEMA_REGISTRY_AUTOMATED_A11Y_TARGETS)[number];
 
+const defaultReleaseNavigationAttempts = 5;
+const defaultReleaseNavigationDelayMs = 3_000;
+const maximumReleaseNavigationAttempts = 10;
+const maximumReleaseNavigationDelayMs = 30_000;
+
+class UnexpectedReleaseHeaderError extends Error {
+  constructor() {
+    super(
+      'Automated axe document release header did not match SOURCE_REVISION.',
+    );
+    this.name = 'UnexpectedReleaseHeaderError';
+  }
+}
+
+const sleep = async (delayMs: number): Promise<void> => {
+  await new Promise<void>((resolve) => {
+    setTimeout(resolve, delayMs);
+  });
+};
+
 export const targetForRequestedPath = (
   requestedPath: string,
 ): AutomatedA11yTarget => {
@@ -37,9 +57,49 @@ export const assertExpectedReleaseHeader = (input: {
   releaseHeader: string | null;
 }): void => {
   if (input.releaseHeader !== input.sourceRevision)
+    throw new UnexpectedReleaseHeaderError();
+};
+
+export const waitForExpectedReleaseNavigation = async <Result>(
+  input: Readonly<{
+    navigate: () => Promise<Result>;
+    attempts?: number;
+    delayMs?: number;
+    sleepImpl?: (delayMs: number) => Promise<void>;
+  }>,
+): Promise<Result> => {
+  const attempts = input.attempts ?? defaultReleaseNavigationAttempts;
+  const delayMs = input.delayMs ?? defaultReleaseNavigationDelayMs;
+  const sleepImpl = input.sleepImpl ?? sleep;
+  if (!Number.isInteger(attempts) || attempts < 1)
     throw new Error(
-      'Automated axe document release header did not match SOURCE_REVISION.',
+      'Automated axe release attempts must be a positive integer',
     );
+  if (attempts > maximumReleaseNavigationAttempts)
+    throw new Error('Automated axe release attempts must not exceed 10');
+  if (!Number.isFinite(delayMs) || delayMs < 0)
+    throw new Error('Automated axe release retry delay must be non-negative');
+  if (delayMs > maximumReleaseNavigationDelayMs)
+    throw new Error(
+      'Automated axe release retry delay must not exceed 30000 ms',
+    );
+
+  for (let attempt = 1; attempt <= attempts; attempt += 1) {
+    try {
+      return await input.navigate();
+    } catch (error) {
+      if (
+        !(error instanceof UnexpectedReleaseHeaderError) ||
+        attempt === attempts
+      )
+        throw error;
+      await sleepImpl(delayMs);
+    }
+  }
+
+  throw new Error(
+    'Automated axe release navigation exhausted without a result',
+  );
 };
 
 export const isApprovedHostedDocumentUrl = (

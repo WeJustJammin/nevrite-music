@@ -687,8 +687,17 @@ all four release-evidence gates pass.
   both CI/staging streamed JSON producers fail at source through `pipefail`
   with silent pnpm output. Signed
   VoiceOver/Safari and NVDA/Firefox reports remain required.
+- AC266 follow-up: PR `44` merged as
+  `54852db03394ae2763b3241c100837c0a229fe11`; exact-main CI
+  `34367574498` passed. Staging `34368311674` passed its public contract probe
+  but failed closed when an axe browser document observed a different release
+  header during edge propagation. All three live canonical paths later served
+  the exact SHA. The collector now retries only this redacted mismatch five
+  times at three-second intervals with a fresh context, while all path/status/
+  origin/navigation/axe failures remain immediate. Staging CLI verification
+  now rejects any expected-release override that differs from `DEPLOY_SHA`.
 
-Validated with Node `22.23.1` and pnpm `11.24.0`: 443 Vitest files, 3,297
+Validated with Node `22.23.1` and pnpm `11.24.0`: 443 Vitest files, 3,308
 passing tests plus one intentional skip, 100% coverage, 101 functional
 Playwright checks, 5 production-built Slice 09 checks, builds, bundle budgets,
 and performance smoke. Status remains **279/283**; Slice 10 remains locked.

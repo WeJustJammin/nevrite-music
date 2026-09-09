@@ -24,7 +24,9 @@ describe('verifyStaging', () => {
     );
     const symlinkedVerifierPath = join(sandbox, 'verify-staging.mjs');
     const environment = { ...process.env };
+    environment.DEPLOY_SHA = 'a'.repeat(40);
     delete environment.STAGING_API_ORIGIN;
+    delete environment.STAGING_EXPECTED_RELEASE;
     delete environment.STAGING_WEB_ORIGIN;
 
     try {
