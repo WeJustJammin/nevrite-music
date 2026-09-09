@@ -218,5 +218,24 @@ then retain both redacted reports through the protected evidence workflow.
   files, 3,297 tests passed and one intentional skip, 100% statement/branch/
   function/line coverage, 101 functional Playwright checks, 5 production-built
   Slice 09 checks, builds, bundle budgets, and local API p95 smoke.
+- PR `44` merged as exact-main SHA
+  `54852db03394ae2763b3241c100837c0a229fe11`; exact-main CI run
+  `34367574498` passed. Staging run `34368311674` deployed and passed the
+  public contract check, then failed closed when one automated axe browser
+  document returned a release header different from `SOURCE_REVISION`. Live
+  rechecks later returned the exact SHA on all three canonical paths, matching
+  a transient edge-propagation race; no mismatched value was retained or
+  accepted.
+- The axe collector now retries only that redacted release-header mismatch,
+  at most five attempts separated by three seconds, with a fresh browser
+  context per attempt. Path, status, origin, navigation, and axe failures remain
+  immediate. Command-line staging verification is also bound directly to the
+  lowercase 40-character `DEPLOY_SHA`; a differing override is rejected before
+  any hosted probe. RED/GREEN tests cover convergence, exhaustion, no secret
+  leakage, non-release failures, defaults, and bounded retry inputs.
+- Updated pinned validation passes 443/443 Vitest files, 3,308 tests plus one
+  intentional skip, 100% statement/branch/function/line coverage, 101
+  functional Playwright checks, 5 production-built Slice 09 checks, builds,
+  bundle budgets, and local API p95 smoke.
 
 **Status remains BLOCKED — 279/283.** Slice 10 remains dependency-locked.

@@ -3,6 +3,8 @@ import { pathToFileURL } from 'node:url';
 
 import { HealthResponseSchema } from '../packages/contracts/src/index.ts';
 
+import { resolveExpectedSourceRevision } from './staging-release-identity.mjs';
+
 const expectedTitle = '<title>WeJammin | Operational foundation</title>';
 const expectedHeadingPattern =
   /<h1(?:\s[^>]*)?>WeJammin operational foundation<\/h1>/iu;
@@ -268,8 +270,10 @@ export async function verifyStagingWithRetries({
 async function main() {
   const result = await verifyStagingWithRetries({
     apiOrigin: process.env.STAGING_API_ORIGIN,
-    expectedRelease:
-      process.env.STAGING_EXPECTED_RELEASE ?? process.env.DEPLOY_SHA,
+    expectedRelease: resolveExpectedSourceRevision({
+      deploySha: process.env.DEPLOY_SHA,
+      configuredRelease: process.env.STAGING_EXPECTED_RELEASE,
+    }),
     webOrigin: process.env.STAGING_WEB_ORIGIN,
   });
   console.log(JSON.stringify(result));

@@ -730,6 +730,7 @@
 │   ├── openapi-definitions.mjs
 │   ├── openapi-document.mjs
 │   ├── README.md
+│   ├── staging-release-identity.mjs
 │   ├── sync-database-types.mjs
 │   ├── verify-cloudflare-observability.ts
 │   ├── verify-database.sh

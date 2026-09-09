@@ -9,7 +9,7 @@ import {
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 
 import {
   assertPlaywrightChromiumExecutable,
@@ -20,6 +20,7 @@ import {
   assertExpectedReleaseHeader,
   isApprovedHostedDocumentUrl,
   relativePathFromHostedUrl,
+  waitForExpectedReleaseNavigation,
 } from '../../infra/workflows/collect-content-schema-registry-axe-evidence.ts';
 import { resolveReportRoot } from '../../infra/workflows/content-schema-registry-axe-report-files.ts';
 import { summarizeAxeResult } from '../../infra/workflows/content-schema-registry-axe-report-builder.ts';
@@ -88,10 +89,11 @@ describe('Slice 09 AC266 automated axe navigation contract', () => {
       ),
       'utf8',
     );
-    expect(collectorSource).toContain(
-      'relativePathFromHostedUrl(page.url(), expectedOrigin)',
+    expect(collectorSource).toMatch(
+      /relativePathFromHostedUrl\(\s*page\.url\(\),\s*expectedOrigin,?\s*\)/u,
     );
     expect(collectorSource).not.toContain('new URL(page.url()).pathname');
+    expect(collectorSource).toContain('waitForExpectedReleaseNavigation({');
   });
 
   it('requires the expected final path and successful status for every target', () => {
@@ -147,6 +149,117 @@ describe('Slice 09 AC266 automated axe navigation contract', () => {
     ).toThrow(
       'Automated axe document release header did not match SOURCE_REVISION.',
     );
+  });
+
+  it('retries only release-header propagation and accepts the exact revision', async () => {
+    const releases = ['b'.repeat(40), null, sourceRevision];
+    const delays: number[] = [];
+    let attempts = 0;
+
+    const result = await waitForExpectedReleaseNavigation({
+      attempts: 5,
+      delayMs: 25,
+      navigate: async () => {
+        const releaseHeader = releases[attempts++] ?? null;
+        assertExpectedReleaseHeader({ sourceRevision, releaseHeader });
+        return { releaseHeader, finalPath: '/auth/sign-in' };
+      },
+      sleepImpl: async (delayMs) => {
+        delays.push(delayMs);
+      },
+    });
+
+    expect(result).toEqual({
+      releaseHeader: sourceRevision,
+      finalPath: '/auth/sign-in',
+    });
+    expect(attempts).toBe(3);
+    expect(delays).toEqual([25, 25]);
+  });
+
+  it('uses the bounded production retry defaults', async () => {
+    vi.useFakeTimers();
+    let attempts = 0;
+    try {
+      const result = waitForExpectedReleaseNavigation({
+        navigate: async () => {
+          attempts += 1;
+          assertExpectedReleaseHeader({
+            sourceRevision,
+            releaseHeader: attempts === 1 ? null : sourceRevision,
+          });
+          return attempts;
+        },
+      });
+
+      await vi.runAllTimersAsync();
+      await expect(result).resolves.toBe(2);
+      expect(attempts).toBe(2);
+    } finally {
+      vi.useRealTimers();
+    }
+  });
+
+  it('fails closed after bounded release-header retries without leaking values', async () => {
+    let attempts = 0;
+    const mismatch = 'b'.repeat(40);
+
+    const failure = waitForExpectedReleaseNavigation({
+      attempts: 3,
+      delayMs: 0,
+      navigate: async () => {
+        attempts += 1;
+        assertExpectedReleaseHeader({
+          sourceRevision,
+          releaseHeader: mismatch,
+        });
+        return { releaseHeader: mismatch };
+      },
+      sleepImpl: async () => undefined,
+    });
+
+    await expect(failure).rejects.toThrow(
+      'Automated axe document release header did not match SOURCE_REVISION.',
+    );
+    await expect(failure).rejects.not.toThrow(mismatch);
+    expect(attempts).toBe(3);
+  });
+
+  it('does not retry non-release navigation failures', async () => {
+    let attempts = 0;
+    let sleeps = 0;
+
+    await expect(
+      waitForExpectedReleaseNavigation({
+        attempts: 5,
+        delayMs: 25,
+        navigate: async () => {
+          attempts += 1;
+          throw new Error('navigation contract failed');
+        },
+        sleepImpl: async () => {
+          sleeps += 1;
+        },
+      }),
+    ).rejects.toThrow('navigation contract failed');
+    expect(attempts).toBe(1);
+    expect(sleeps).toBe(0);
+  });
+
+  it.each([
+    [{ attempts: 0 }, 'attempts must be a positive integer'],
+    [{ attempts: 1.5 }, 'attempts must be a positive integer'],
+    [{ attempts: 11 }, 'attempts must not exceed 10'],
+    [{ delayMs: -1 }, 'retry delay must be non-negative'],
+    [{ delayMs: Number.POSITIVE_INFINITY }, 'retry delay must be non-negative'],
+    [{ delayMs: 30_001 }, 'retry delay must not exceed 30000 ms'],
+  ])('rejects invalid release retry options %#', async (options, message) => {
+    await expect(
+      waitForExpectedReleaseNavigation({
+        navigate: async () => undefined,
+        ...options,
+      }),
+    ).rejects.toThrow(message);
   });
 
   it('uses the lockfile-pinned Playwright Chromium and fails when absent', () => {

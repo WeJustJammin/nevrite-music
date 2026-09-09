@@ -1,5 +1,6 @@
 import { describe, expect, it, vi } from 'vitest';
 
+import { resolveExpectedSourceRevision } from '../infra/staging-release-identity.mjs';
 import { verifyStaging as verifyStagingImplementation } from '../infra/verify-staging.mjs';
 import {
   protectedHeaders,
@@ -8,6 +9,35 @@ import {
 } from './verify-staging.test-support';
 
 describe('verifyStaging release identity', () => {
+  it('binds command-line verification to DEPLOY_SHA', () => {
+    const deploySha = 'a'.repeat(40);
+
+    expect(
+      resolveExpectedSourceRevision({
+        deploySha,
+        configuredRelease: undefined,
+      }),
+    ).toBe(deploySha);
+    expect(
+      resolveExpectedSourceRevision({
+        deploySha,
+        configuredRelease: deploySha,
+      }),
+    ).toBe(deploySha);
+    expect(() =>
+      resolveExpectedSourceRevision({
+        deploySha,
+        configuredRelease: 'b'.repeat(40),
+      }),
+    ).toThrow('STAGING_EXPECTED_RELEASE must match DEPLOY_SHA');
+    expect(() =>
+      resolveExpectedSourceRevision({
+        deploySha: 'release-alias',
+        configuredRelease: deploySha,
+      }),
+    ).toThrow('DEPLOY_SHA must be a lowercase 40-character SHA');
+  });
+
   it('requires the expected release identity before probing hosted services', async () => {
     const fetchImpl = vi.fn<typeof fetch>();
 
