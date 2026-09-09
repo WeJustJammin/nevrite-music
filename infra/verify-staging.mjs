@@ -20,6 +20,8 @@ const expectedStaticSecurityHeaders = {
 
 const noncePattern = /'nonce-([A-Za-z0-9_-]{22})'/u;
 const staticAssetPattern = /\b(?:src|href)=["'](\/[^"']+)["']/gu;
+const releaseHeader = 'x-wejammin-release';
+const releasePattern = /^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$/u;
 const defaultRetryAttempts = 5;
 const defaultRetryDelayMs = 3_000;
 
@@ -76,6 +78,22 @@ function assertSecurityHeaders(response, label) {
   }
 }
 
+function parseExpectedRelease(value) {
+  if (typeof value !== 'string' || !releasePattern.test(value)) {
+    throw new Error(
+      'Expected staging release is required and must be a bounded release identifier',
+    );
+  }
+
+  return value;
+}
+
+function assertReleaseHeader(response, expectedRelease, label) {
+  if (response.headers.get(releaseHeader) !== expectedRelease) {
+    throw new Error(`${label} release identity mismatch`);
+  }
+}
+
 function discoverStaticAssetPath(html) {
   for (const match of html.matchAll(staticAssetPattern)) {
     const candidate = match[1];
@@ -99,7 +117,13 @@ function toHttpOrigin(origin) {
   return url.origin;
 }
 
-async function assertHttpsRedirect(fetchImpl, url, expectedLocation, label) {
+async function assertHttpsRedirect(
+  fetchImpl,
+  url,
+  expectedLocation,
+  label,
+  expectedRelease,
+) {
   const response = await fetchImpl(url, {
     headers: { accept: 'application/json, text/html;q=0.9' },
     redirect: 'manual',
@@ -115,15 +139,18 @@ async function assertHttpsRedirect(fetchImpl, url, expectedLocation, label) {
   }
 
   assertSecurityHeaders(response, `${label} HTTP redirect`);
+  assertReleaseHeader(response, expectedRelease, `${label} HTTP redirect`);
 }
 
 export async function verifyStaging({
   apiOrigin,
   fetchImpl = fetch,
+  expectedRelease,
   webOrigin,
 }) {
   const webUrl = parseOrigin(webOrigin, 'Web origin');
   const apiUrl = parseOrigin(apiOrigin, 'API origin');
+  const release = parseExpectedRelease(expectedRelease);
   const requestOptions = {
     headers: { accept: 'application/json, text/html;q=0.9' },
     redirect: 'error',
@@ -133,6 +160,7 @@ export async function verifyStaging({
   const webResponse = await fetchImpl(`${webUrl}/`, requestOptions);
   assertOk(webResponse, 'Staging web');
   assertSecurityHeaders(webResponse, 'Staging web');
+  assertReleaseHeader(webResponse, release, 'Staging web');
 
   const contentType = webResponse.headers.get('content-type') ?? '';
   const html = await webResponse.text();
@@ -157,6 +185,7 @@ export async function verifyStaging({
     throw new Error('Web SSR boundary mismatch');
   }
   assertSecurityHeaders(webRuntimeResponse, 'Staging web runtime');
+  assertReleaseHeader(webRuntimeResponse, release, 'Staging web runtime');
 
   const apiResponse = await fetchImpl(
     `${apiUrl}/api/v1/health`,
@@ -164,6 +193,7 @@ export async function verifyStaging({
   );
   assertOk(apiResponse, 'Staging API');
   assertSecurityHeaders(apiResponse, 'Staging API');
+  assertReleaseHeader(apiResponse, release, 'Staging API');
 
   const health = HealthResponseSchema.safeParse(await apiResponse.json());
   if (!health.success) {
@@ -182,18 +212,21 @@ export async function verifyStaging({
   });
   assertOk(staticAssetResponse, 'Staging static web asset');
   assertSecurityHeaders(staticAssetResponse, 'Staging static web asset');
+  assertReleaseHeader(staticAssetResponse, release, 'Staging static web asset');
 
   await assertHttpsRedirect(
     fetchImpl,
     `${toHttpOrigin(webUrl)}/`,
     `${webUrl}/`,
     'Staging web',
+    release,
   );
   await assertHttpsRedirect(
     fetchImpl,
     `${toHttpOrigin(apiUrl)}/api/v1/health`,
     `${apiUrl}/api/v1/health`,
     'Staging API',
+    release,
   );
 
   return {
@@ -235,6 +268,8 @@ export async function verifyStagingWithRetries({
 async function main() {
   const result = await verifyStagingWithRetries({
     apiOrigin: process.env.STAGING_API_ORIGIN,
+    expectedRelease:
+      process.env.STAGING_EXPECTED_RELEASE ?? process.env.DEPLOY_SHA,
     webOrigin: process.env.STAGING_WEB_ORIGIN,
   });
   console.log(JSON.stringify(result));

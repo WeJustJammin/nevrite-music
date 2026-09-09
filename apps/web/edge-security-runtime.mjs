@@ -11,6 +11,18 @@ import { rewriteHtmlTags } from './edge-security-html.mjs';
 const HSTS_VALUE = 'max-age=63072000; includeSubDomains';
 const PERMISSIONS_POLICY_VALUE =
   'camera=(), microphone=(), geolocation=(), payment=(), usb=(), bluetooth=(), serial=(), hid=(), publickey-credentials-get=(self)';
+const RELEASE_HEADER = 'x-wejammin-release';
+const RELEASE_PATTERN = /^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$/u;
+
+const setReleaseHeader = (headers, env) => {
+  const release = env?.APP_RELEASE;
+  if (typeof release !== 'string' || !RELEASE_PATTERN.test(release)) {
+    headers.delete(RELEASE_HEADER);
+    return;
+  }
+
+  headers.set(RELEASE_HEADER, release);
+};
 
 export const generateRequestNonce = () => {
   const bytes = new Uint8Array(16);
@@ -126,11 +138,12 @@ const transformWithCloudflareHtmlRewriter = (response, headers, nonce) => {
  * The Cloudflare HTMLRewriter path preserves streaming; the conservative
  * parser is used only where that edge primitive is unavailable.
  */
-export const withSecurityHeaders = async (response, nonce) => {
+export const withSecurityHeaders = async (response, nonce, env) => {
   const headers = new Headers(response.headers);
   for (const [name, value] of Object.entries(createSecurityHeaders(nonce))) {
     headers.set(name, value);
   }
+  setReleaseHeader(headers, env);
 
   const contentType = headers.get('content-type')?.toLowerCase() ?? '';
   if (!contentType.includes('text/html')) {
@@ -164,6 +177,7 @@ export const createEdgeFetchHandler =
       return await withSecurityHeaders(
         createHttpsRedirectResponse(request),
         nonce,
+        env,
       );
     }
 
@@ -171,11 +185,13 @@ export const createEdgeFetchHandler =
       return await withSecurityHeaders(
         await handler(request, env, context),
         nonce,
+        env,
       );
     } catch {
       return await withSecurityHeaders(
         createInternalServerErrorResponse(),
         nonce,
+        env,
       );
     }
   };

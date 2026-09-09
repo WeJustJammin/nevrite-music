@@ -667,3 +667,22 @@ The four external acceptance receipts above remain required.
 
 Slice 09 remains blocked. Slice 10 depends on Slice 09 and must not start until
 all four release-evidence gates pass.
+
+## 2026-09-09 external-evidence remediation update
+
+- AC209: production configuration and scheduled evaluations remain healthy;
+  no genuine threshold-triggered delivery receipt exists.
+- AC211: run `34296129205` truthfully failed the complete 2026-09-08 UTC day
+  for insufficient natural samples; count-only failure diagnostics are ready
+  for the next eligible complete-day run after `2026-09-10T00:00:00Z`.
+- AC265: one real Google hosted identity flow is proven. The remaining nine-role
+  gate conflicts with later Slice 13 authority ownership and requires a locked
+  planning decision; no synthetic identities were created.
+- AC266: exact-release axe/provider evidence collection is implemented and
+  locally validated, pending exact-main staging publication. Signed
+  VoiceOver/Safari and NVDA/Firefox reports remain required.
+
+Validated with Node `22.23.1` and pnpm `11.24.0`: 443 Vitest files, 3,296
+passing tests plus one intentional skip, 100% coverage, 101 functional
+Playwright checks, 5 production-built Slice 09 checks, builds, bundle budgets,
+and performance smoke. Status remains **279/283**; Slice 10 remains locked.

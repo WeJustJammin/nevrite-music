@@ -127,6 +127,33 @@ describe('Slice 09 hosted E2E report body contract', () => {
         expectedIdentity,
       ),
     ).toThrow('Hosted E2E report completion does not match the sidecar');
+    expect(() =>
+      validateContentSchemaRegistryHostedE2eReport(
+        { ...report, startedAt: '2026-09-03T09:59:59.000Z' },
+        completeEvidence.hostedE2e,
+        expectedIdentity,
+      ),
+    ).toThrow('Hosted E2E report predates the expected hosted deployment');
+    expect(() =>
+      validateContentSchemaRegistryHostedE2eReport(
+        report,
+        completeEvidence.hostedE2e,
+        {
+          ...expectedIdentity,
+          trustedCutoffAt: '2026-09-03T10:45:00.000Z',
+        },
+      ),
+    ).toThrow('Hosted E2E report exceeds the trusted cutoff');
+    expect(() =>
+      validateContentSchemaRegistryHostedE2eReport(
+        report,
+        completeEvidence.hostedE2e,
+        {
+          ...expectedIdentity,
+          trustedCutoffAt: '2026-09-03T09:00:00.000Z',
+        },
+      ),
+    ).toThrow('Hosted E2E expected identity time bounds are invalid');
   });
 
   it('verifies the digest and parses one retained byte buffer', () => {

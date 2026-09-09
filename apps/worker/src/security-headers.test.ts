@@ -26,6 +26,38 @@ const expectedHeaders = [
 ] as const;
 
 describe('edge security headers', () => {
+  it('exposes the validated release identity on normal, error, and redirect responses', async () => {
+    const app = createWorkerApp({
+      captureException: vi.fn(),
+      createLogger: () =>
+        createLogger(
+          {
+            environment: 'staging',
+            release: bindings.APP_RELEASE,
+            service: 'wejammin-api',
+          },
+          { sink: vi.fn() },
+        ),
+      now: () => 0,
+    });
+    app.get('/api/v1/security-failure', () => {
+      throw new Error('test-only failure');
+    });
+
+    for (const [url, status] of [
+      ['https://api.example.test/api/v1/health', 200],
+      ['https://api.example.test/api/v1/not-found', 404],
+      ['https://api.example.test/api/v1/security-failure', 500],
+      ['http://api.example.test/api/v1/health', 308],
+    ] as const) {
+      const response = await app.request(url, {}, bindings);
+      expect(response.status).toBe(status);
+      expect(response.headers.get('x-wejammin-release')).toBe(
+        bindings.APP_RELEASE,
+      );
+    }
+  });
+
   it('generates an unguessable request nonce and applies the locked policy', () => {
     const nonce = generateRequestNonce();
     const response = applySecurityHeaders(new Response('ok'), nonce);

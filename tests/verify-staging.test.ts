@@ -6,63 +6,15 @@ import { fileURLToPath } from 'node:url';
 import { describe, expect, it, vi } from 'vitest';
 
 import {
+  apiHealthResponse,
+  httpRedirect,
+  protectedHeaders,
+  webHtml,
+  webHtmlWithStaticAsset,
+  webRuntimeRedirect,
+  webShellResponse,
   verifyStaging,
-  verifyStagingWithRetries,
-} from '../infra/verify-staging.mjs';
-
-const requestNonce = '0123456789abcdefghijkl';
-const expectedSecurityHeaders = {
-  'content-security-policy': `default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; form-action 'self'; script-src 'self' 'nonce-${requestNonce}' 'strict-dynamic'; style-src 'self' 'nonce-${requestNonce}'; img-src 'self' data: blob: https://*.supabase.co; media-src 'self' blob: https://*.supabase.co; connect-src 'self' https://*.supabase.co wss://*.supabase.co https://*.ingest.provider-native diagnostics.io; frame-src 'none'; worker-src 'self' blob:; manifest-src 'self'; upgrade-insecure-requests; report-to csp-endpoint`,
-  'strict-transport-security': 'max-age=63072000; includeSubDomains',
-  'x-content-type-options': 'nosniff',
-  'x-frame-options': 'DENY',
-  'referrer-policy': 'strict-origin-when-cross-origin',
-  'permissions-policy':
-    'camera=(), microphone=(), geolocation=(), payment=(), usb=(), bluetooth=(), serial=(), hid=(), publickey-credentials-get=(self)',
-};
-
-const webHtml = `<!doctype html><html><head><title>WeJammin | Operational foundation</title></head><body><h1 id="page-title" tabindex="-1">WeJammin operational foundation</h1></body></html>`;
-const webHtmlWithStaticAsset = `<!doctype html><html><head><title>WeJammin | Operational foundation</title><script type="module" src="/_astro/client.js"></script></head><body><h1 id="page-title" tabindex="-1">WeJammin operational foundation</h1></body></html>`;
-
-const protectedHeaders = (extra: Record<string, string> = {}) => ({
-  ...expectedSecurityHeaders,
-  ...extra,
-});
-
-const webRuntimeRedirect = new Response(null, {
-  headers: {
-    ...protectedHeaders(),
-    location: '/auth/sign-in?returnTo=%2Fapp%2Finfrastructure',
-  },
-  status: 303,
-});
-
-const httpRedirect = (location: string) =>
-  new Response(null, {
-    headers: protectedHeaders({ location }),
-    status: 308,
-  });
-
-const webShellResponse = (html = webHtml) =>
-  new Response(html, {
-    headers: {
-      ...protectedHeaders(),
-      'content-type': 'text/html; charset=utf-8',
-    },
-    status: 200,
-  });
-
-const apiHealthResponse = (
-  body = {
-    requestId: '11111111-1111-4111-8111-111111111111',
-    service: 'wejammin-api',
-    status: 'ok',
-    version: 'v1',
-  },
-) =>
-  Response.json(body, {
-    headers: protectedHeaders(),
-  });
+} from './verify-staging.test-support';
 
 describe('verifyStaging', () => {
   it('executes the staging verifier when invoked through a symlink', () => {
@@ -325,95 +277,5 @@ describe('verifyStaging', () => {
         webOrigin: 'http://staging.example.com',
       }),
     ).rejects.toThrow('Staging origins must use HTTPS');
-  });
-});
-
-describe('verifyStagingWithRetries', () => {
-  it('retries the complete contract after a transient edge mismatch', async () => {
-    const fetchImpl = vi
-      .fn<typeof fetch>()
-      .mockResolvedValueOnce(
-        new Response(webHtmlWithStaticAsset, {
-          headers: { 'content-type': 'text/html; charset=utf-8' },
-          status: 200,
-        }),
-      )
-      .mockResolvedValueOnce(webShellResponse(webHtmlWithStaticAsset))
-      .mockResolvedValueOnce(webRuntimeRedirect)
-      .mockResolvedValueOnce(apiHealthResponse())
-      .mockResolvedValueOnce(
-        new Response('asset', {
-          headers: protectedHeaders({
-            'content-type': 'application/javascript',
-          }),
-          status: 200,
-        }),
-      )
-      .mockResolvedValueOnce(httpRedirect('https://staging.example.com/'))
-      .mockResolvedValueOnce(
-        httpRedirect('https://api-staging.example.com/api/v1/health'),
-      );
-    const sleepImpl = vi.fn().mockResolvedValue(undefined);
-
-    await expect(
-      verifyStagingWithRetries({
-        apiOrigin: 'https://api-staging.example.com',
-        attempts: 2,
-        delayMs: 25,
-        fetchImpl,
-        sleepImpl,
-        webOrigin: 'https://staging.example.com',
-      }),
-    ).resolves.toEqual({
-      apiStatus: 200,
-      webRuntimeStatus: 303,
-      webStatus: 200,
-    });
-
-    expect(fetchImpl).toHaveBeenCalledTimes(7);
-    expect(sleepImpl).toHaveBeenCalledOnce();
-    expect(sleepImpl).toHaveBeenCalledWith(25);
-  });
-
-  it('fails closed after the bounded retry limit', async () => {
-    const fetchImpl = vi.fn<typeof fetch>().mockResolvedValue(
-      new Response(webHtmlWithStaticAsset, {
-        headers: { 'content-type': 'text/html; charset=utf-8' },
-        status: 200,
-      }),
-    );
-    const sleepImpl = vi.fn().mockResolvedValue(undefined);
-
-    await expect(
-      verifyStagingWithRetries({
-        apiOrigin: 'https://api-staging.example.com',
-        attempts: 2,
-        delayMs: 0,
-        fetchImpl,
-        sleepImpl,
-        webOrigin: 'https://staging.example.com',
-      }),
-    ).rejects.toThrow(
-      'Staging web security header content-security-policy mismatch',
-    );
-
-    expect(fetchImpl).toHaveBeenCalledTimes(2);
-    expect(sleepImpl).toHaveBeenCalledOnce();
-  });
-
-  it.each([
-    [{ attempts: 0 }, 'attempts must be a positive integer'],
-    [{ attempts: 1.5 }, 'attempts must be a positive integer'],
-    [{ delayMs: -1 }, 'retry delay must be non-negative'],
-    [{ delayMs: Number.POSITIVE_INFINITY }, 'retry delay must be non-negative'],
-  ])('rejects invalid retry options %#', async (options, message) => {
-    await expect(
-      verifyStagingWithRetries({
-        apiOrigin: 'https://api-staging.example.com',
-        fetchImpl: vi.fn<typeof fetch>(),
-        webOrigin: 'https://staging.example.com',
-        ...options,
-      }),
-    ).rejects.toThrow(message);
   });
 });

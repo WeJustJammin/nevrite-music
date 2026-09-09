@@ -21,10 +21,13 @@ import {
 import { validateOperationalReleaseEvidence } from './operational-release-evidence-validation.ts';
 
 export * from './operational-release-evidence-browser.ts';
+export * from './operational-release-evidence-axe-report.ts';
+export * from './operational-release-evidence-automated-a11y.ts';
 export * from './operational-release-evidence-collector.ts';
 export * from './operational-release-evidence-common.ts';
 export * from './operational-release-evidence-observability.ts';
 export * from './operational-release-evidence-hosted-report.ts';
+export * from './operational-release-evidence-provider.ts';
 
 export const OperationalReleaseEvidenceExpectedIdentitySchema = z
   .object({

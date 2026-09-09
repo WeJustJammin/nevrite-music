@@ -21,6 +21,16 @@ const sameMembers = (
   );
 };
 
+const parseExpectedTimestamp = (
+  name: 'hostedDeployedAt' | 'trustedCutoffAt',
+  value: string,
+): number => {
+  const parsed = Date.parse(value);
+  if (!Number.isFinite(parsed))
+    throw new Error(`Hosted E2E expected ${name} timestamp is invalid.`);
+  return parsed;
+};
+
 export const validateContentSchemaRegistryHostedE2eReport = (
   report: unknown,
   hostedEvidence: ContentSchemaRegistryOperationalReleaseEvidence['hostedE2e'],
@@ -67,12 +77,24 @@ export const validateContentSchemaRegistryHostedE2eReport = (
     throw new Error('Hosted E2E report does not match the expected IdP.');
   if (value.completedAt !== hostedEvidence.completedAt)
     throw new Error('Hosted E2E report completion does not match the sidecar.');
-  if (
-    Date.parse(value.startedAt) < Date.parse(expectedIdentity.hostedDeployedAt)
-  )
+  const hostedDeployedAt = parseExpectedTimestamp(
+    'hostedDeployedAt',
+    expectedIdentity.hostedDeployedAt,
+  );
+  const trustedCutoffAt = parseExpectedTimestamp(
+    'trustedCutoffAt',
+    expectedIdentity.trustedCutoffAt,
+  );
+  if (hostedDeployedAt > trustedCutoffAt)
+    throw new Error('Hosted E2E expected identity time bounds are invalid.');
+  const startedAt = Date.parse(value.startedAt);
+  const completedAt = Date.parse(value.completedAt);
+  if (startedAt < hostedDeployedAt)
     throw new Error(
       'Hosted E2E report predates the expected hosted deployment.',
     );
+  if (completedAt > trustedCutoffAt)
+    throw new Error('Hosted E2E report exceeds the trusted cutoff.');
   if (
     !sameMembers(
       value.roles.map((result) => result.role),

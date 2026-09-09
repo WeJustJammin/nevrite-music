@@ -10,6 +10,47 @@ import {
 } from './security-headers';
 
 describe('web edge security boundary', () => {
+  it('exposes the bounded release identity on every outer-edge response', async () => {
+    const release = 'a2ec4803';
+    const env = { APP_RELEASE: release };
+    const edgeFetch = createEdgeFetchHandler(async (request) => {
+      const path = new URL(request.url).pathname;
+      if (path === '/failure') throw new Error('test-only failure');
+      return new Response(path === '/missing' ? 'missing' : 'ok', {
+        status: path === '/missing' ? 404 : 200,
+      });
+    });
+
+    for (const [url, status] of [
+      ['https://web.example.test/', 200],
+      ['https://web.example.test/missing', 404],
+      ['https://web.example.test/failure', 500],
+      ['http://web.example.test/', 308],
+    ] as const) {
+      const response = await edgeFetch(new Request(url), env, {});
+      expect(response.status).toBe(status);
+      expect(response.headers.get('x-wejammin-release')).toBe(release);
+    }
+  });
+
+  it('removes an upstream release identity when edge release metadata is absent or invalid', async () => {
+    const edgeFetch = createEdgeFetchHandler(
+      async () =>
+        new Response('ok', {
+          headers: { 'x-wejammin-release': 'spoofed-upstream-release' },
+        }),
+    );
+
+    for (const env of [{}, { APP_RELEASE: 'invalid release' }, undefined]) {
+      const response = await edgeFetch(
+        new Request('https://web.example.test/'),
+        env,
+        {},
+      );
+      expect(response.headers.get('x-wejammin-release')).toBeNull();
+    }
+  });
+
   it('applies the locked headers and a fresh nonce', () => {
     const nonce = generateRequestNonce();
     const response = applySecurityHeaders(new Response('ok'), nonce);

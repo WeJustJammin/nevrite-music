@@ -114,6 +114,7 @@ describe('immutable release identity contract', () => {
     );
     expect(workflow).toMatch(/deploy-api-worker\.sh staging/u);
     expect(apiDeploymentScript).toMatch(/--var APP_RELEASE:"\$DEPLOY_SHA"/u);
+    expect(workflow).toMatch(/--var APP_RELEASE:"\$DEPLOY_SHA"/u);
     expect(workflow).toMatch(/pnpm verify:staging/u);
     expect(workflow).toMatch(/name: staging-verified-candidate/u);
     expect(candidateScript).toMatch(/promotion-candidate\/artifacts/u);
@@ -130,6 +131,7 @@ describe('immutable release identity contract', () => {
     expect(verificationScript).toMatch(/verify-performance-evidence\.ts/u);
     expect(evidenceScript).toMatch(/performance-evidence/u);
     expect(evidenceScript).toMatch(/api-p95-smoke\.json/u);
+    expect(evidenceScript).toMatch(/verify-provider-release-evidence\.sh/u);
     expect(performanceVerifier).toMatch(/source revision/u);
     expect(workflow).toMatch(
       /bash infra\/workflows\/finalize-staging-candidate\.sh/u,

@@ -23,6 +23,9 @@ node "$workflow_dir/verify-staging-migration-evidence.mjs" \
   "$DEPLOY_SHA" \
   "$CI_RUN_ID" \
   "$SUPABASE_PROJECT_REF"
+bash "$workflow_dir/verify-staging-axe-evidence.sh"
+bash "$workflow_dir/verify-provider-release-evidence.sh" \
+  promotion-candidate/provider-release-evidence.json
 gate_set="$(
   node --input-type=module - "$DEPLOY_SHA" <<'NODE'
 import { readFileSync } from 'node:fs';

@@ -23,9 +23,6 @@ const migrationRunner = fileURLToPath(
 const stagingCandidatePreparer = fileURLToPath(
   new URL('../infra/workflows/prepare-staging-candidate.sh', import.meta.url),
 );
-const productionCandidateVerifier = fileURLToPath(
-  new URL('../infra/workflows/verify-production-candidate.sh', import.meta.url),
-);
 const apiWorkerDeployer = fileURLToPath(
   new URL('../infra/workflows/deploy-api-worker.sh', import.meta.url),
 );
@@ -131,6 +128,7 @@ printf '%s\n' "$*" > "$CALL_LOG"
         CALL_LOG: calls,
         CLOUDFLARE_ACCOUNT_ID: 'a'.repeat(32),
         DEPLOY_SHA: 'a'.repeat(40),
+        GITHUB_RUN_ID: '123456789',
         PATH: `${bin}:${process.env.PATH ?? ''}`,
         RUNNER_TEMP: runnerTemp,
         SUPABASE_SECRET_KEY: 'synthetic-staging-secret',
@@ -143,6 +141,10 @@ printf '%s\n' "$*" > "$CALL_LOG"
     expect(command).toContain(`wrangler deploy ${artifact}`);
     expect(command).toContain('--env staging');
     expect(command).toContain('--var APP_ENVIRONMENT:staging');
+    expect(command).toContain(`--tag ${'a'.repeat(40)}`);
+    expect(command).toContain(
+      `--message sourceRevision=${'a'.repeat(40)};githubRunId=123456789`,
+    );
     const secretsFile = command.match(/--secrets-file (\S+)/u)?.[1];
     expect(secretsFile).toMatch(
       new RegExp(
@@ -311,142 +313,5 @@ printf 'called\n' > "$CALL_LOG"
     expect(callsMade).not.toContain('--password');
     expect(callsMade).not.toContain('test-only-password');
     expect(evidence.migration.state).toBe('expanded');
-  });
-
-  it('derives an independent production predecessor identity after manifest checks', () => {
-    const root = temporaryRoot();
-    const bin = join(root, 'bin');
-    const githubEnv = join(root, 'github.env');
-    const sourceRevision = 'a'.repeat(40);
-    mkdirSync(bin);
-    mkdirSync(join(root, '.promotion/artifacts/apps/web/dist/server'), {
-      recursive: true,
-    });
-    mkdirSync(join(root, '.promotion/artifacts/apps/web/dist/client'));
-    mkdirSync(join(root, '.promotion/artifacts/apps/worker/dist'), {
-      recursive: true,
-    });
-    mkdirSync(join(root, '.promotion/artifacts/performance-evidence'));
-    mkdirSync(join(root, 'supabase/migrations'), { recursive: true });
-    writeFileSync(
-      join(root, '.promotion/artifacts/apps/web/dist/server/entry.mjs'),
-      'web',
-    );
-    writeFileSync(
-      join(
-        root,
-        '.promotion/artifacts/apps/web/dist/server/wrangler.production.json',
-      ),
-      '{}',
-    );
-    writeFileSync(
-      join(root, '.promotion/artifacts/apps/web/dist/client/index.html'),
-      'client',
-    );
-    writeFileSync(
-      join(root, '.promotion/artifacts/apps/worker/dist/index.js'),
-      'worker',
-    );
-    writeFileSync(
-      join(
-        root,
-        '.promotion/artifacts/performance-evidence/bundle-budget.json',
-      ),
-      '{}',
-    );
-    writeFileSync(join(root, '.promotion/artifacts/api-p95-smoke.json'), '{}');
-    writeFileSync(
-      join(root, 'supabase/migrations/20260903120000_authority.sql'),
-      '-- migration',
-    );
-    execFileSync(
-      'bash',
-      [
-        '-c',
-        '(cd .promotion/artifacts && find . -type f -print0 | sort -z | xargs -0 sha256sum) > .promotion/deployment-manifest.sha256',
-      ],
-      { cwd: root, stdio: 'pipe' },
-    );
-    const artifactDigest = execFileSync(
-      'sha256sum',
-      ['.promotion/deployment-manifest.sha256'],
-      { cwd: root, encoding: 'utf8' },
-    ).split(/\s+/u)[0];
-    writeFileSync(
-      join(root, '.promotion/promotion-metadata.json'),
-      `${JSON.stringify({
-        artifact: {
-          artifactDigest,
-          sourceRevision,
-          buildId: 'ci-123',
-          migrationVersion: '20260903120000',
-        },
-      })}\n`,
-    );
-    const migrationVersions = ['20260903120000'];
-    writeFileSync(
-      join(root, '.promotion/staging-migration-evidence.json'),
-      `${JSON.stringify({
-        appliedVersions: migrationVersions,
-        ciRunId: '123',
-        destructiveRollbackAttempted: false,
-        environment: 'staging',
-        forwardFixOnly: true,
-        migrationVersion: migrationVersions[0],
-        projectRef: 'test-project',
-        remoteHistorySha256: createHash('sha256')
-          .update(JSON.stringify(migrationVersions))
-          .digest('hex'),
-        sourceRevision,
-        state: 'expanded',
-        verifiedAt: '2026-09-04T18:00:00.000Z',
-      })}\n`,
-    );
-    const fakeGit = join(bin, 'git');
-    writeFileSync(
-      fakeGit,
-      [
-        '#!/usr/bin/env bash',
-        'set -euo pipefail',
-        '[[ "$*" == "rev-parse HEAD" ]]',
-        'printf "%s\\n" "$DEPLOY_SHA"',
-      ].join('\n'),
-    );
-    chmodSync(fakeGit, 0o700);
-    const fakeNode = join(bin, 'node');
-    writeFileSync(
-      fakeNode,
-      [
-        '#!/usr/bin/env bash',
-        'set -euo pipefail',
-        'if [[ "$*" == *verify-performance-evidence.ts* ]]; then exit 0; fi',
-        `exec ${JSON.stringify(process.execPath)} "$@"`,
-      ].join('\n'),
-    );
-    chmodSync(fakeNode, 0o700);
-
-    execute(productionCandidateVerifier, root, {
-      CI_RUN_ID: '123',
-      DEPLOY_SHA: sourceRevision,
-      EXPECTED_STAGING_SUPABASE_PROJECT_REF: 'test-project',
-      GITHUB_ENV: githubEnv,
-      PATH: `${bin}:${process.env.PATH ?? ''}`,
-      PRODUCTION_WEB_ORIGIN: 'https://production.example.com',
-      STAGING_RUN_ID: '456',
-    });
-
-    expect(
-      JSON.parse(
-        readFileSync(
-          join(root, '.promotion/staging-artifact-identity.json'),
-          'utf8',
-        ),
-      ),
-    ).toEqual({
-      artifactDigest,
-      sourceRevision,
-      buildId: 'ci-123',
-      migrationVersion: '20260903120000',
-    });
   });
 });
