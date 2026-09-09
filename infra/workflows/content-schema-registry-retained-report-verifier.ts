@@ -17,6 +17,11 @@ import type {
   ContentSchemaRegistryOperationalReleaseEvidence,
   OperationalReleaseEvidenceExpectedIdentity,
 } from '../../packages/contracts/src/content-schema-registry/operational-release-evidence.ts';
+import {
+  CONTENT_SCHEMA_REGISTRY_AUTOMATED_AXE_DIGEST_PATH,
+  parseContentSchemaRegistryAutomatedAxeDigestSidecar,
+  validateContentSchemaRegistryAutomatedAxeReportBytes,
+} from './content-schema-registry-axe-report-verifier.ts';
 import { validateContentSchemaRegistryHostedE2eReportBytes } from './content-schema-registry-hosted-e2e-report-verifier.ts';
 
 const MAX_RETAINED_REPORT_BYTES = 10 * 1024 * 1024;
@@ -179,7 +184,18 @@ export const verifyContentSchemaRegistryRetainedReports = (
     throw new Error('Retained report root must be a directory.');
   const references = retainedReports(evidence);
   const allowedPaths = new Set(
-    references.map(([, reference]) => reference.path),
+    references
+      .map(([, reference]) => reference.path)
+      .concat(
+        existsSync(
+          resolve(
+            approvedRoot,
+            CONTENT_SCHEMA_REGISTRY_AUTOMATED_AXE_DIGEST_PATH,
+          ),
+        )
+          ? [CONTENT_SCHEMA_REGISTRY_AUTOMATED_AXE_DIGEST_PATH]
+          : [],
+      ),
   );
   verifyReportTree(approvedRoot, allowedPaths);
   const seenPaths = new Set<string>();
@@ -214,7 +230,49 @@ export const verifyContentSchemaRegistryRetainedReports = (
         evidence.hostedE2e,
         expectedIdentity,
       );
+    } else if (label === 'automated accessibility') {
+      validateContentSchemaRegistryAutomatedAxeReportBytes(
+        reportBytes,
+        reference.sha256,
+        evidence.accessibility,
+        expectedIdentity,
+      );
     } else if (sha256Bytes(reportBytes) !== reference.sha256)
       throw new Error(`Retained report digest does not match: ${label}.`);
+  }
+  const automatedAxeDigestSidecarPath = resolve(
+    approvedRoot,
+    CONTENT_SCHEMA_REGISTRY_AUTOMATED_AXE_DIGEST_PATH,
+  );
+  if (existsSync(automatedAxeDigestSidecarPath)) {
+    const retainedPath = realpathSync(automatedAxeDigestSidecarPath);
+    const rootRelativePath = relative(approvedRoot, retainedPath);
+    if (
+      isAbsolute(rootRelativePath) ||
+      rootRelativePath === '..' ||
+      rootRelativePath.startsWith(`..${sep}`)
+    )
+      throw new Error(
+        'Automated axe digest sidecar escapes its approved root.',
+      );
+    const label = 'automated accessibility digest sidecar';
+    if (seenPaths.has(retainedPath))
+      throw new Error(`Retained report path is duplicated: ${label}.`);
+    seenPaths.add(retainedPath);
+    const { bytes: sidecarBytes, fileIdentity } = readStableReport(
+      automatedAxeDigestSidecarPath,
+      retainedPath,
+      label,
+    );
+    if (seenFileIdentities.has(fileIdentity))
+      throw new Error(`Retained report file is duplicated: ${label}.`);
+    seenFileIdentities.add(fileIdentity);
+    const sidecarDigest = parseContentSchemaRegistryAutomatedAxeDigestSidecar(
+      sidecarBytes.toString('utf8'),
+    );
+    if (sidecarDigest !== evidence.accessibility.automatedReport.sha256)
+      throw new Error(
+        'Automated axe digest sidecar does not match the report.',
+      );
   }
 };

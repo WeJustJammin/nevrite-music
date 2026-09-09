@@ -229,8 +229,46 @@ describe('content schema registry AC211 SLO collector', () => {
         ),
     );
     expect(() => build(telemetry(noFirstAttempt))).toThrow(
-      'AC211 queue first-attempt samples are insufficient',
+      'AC211 production samples are insufficient',
     );
+  });
+
+  it('reports only aggregate sample counts for every sample gate', () => {
+    const cases = [
+      {
+        events: measuredEvents().filter(
+          (candidate) => candidate.cursor !== 'command-199',
+        ),
+        expected:
+          'commands=199, protectedRpcs=200, acceptances=200, queueFirstAttempts=1',
+      },
+      {
+        events: measuredEvents().filter(
+          (candidate) => candidate.cursor !== 'rpc-199',
+        ),
+        expected:
+          'commands=200, protectedRpcs=199, acceptances=200, queueFirstAttempts=1',
+      },
+      {
+        events: measuredEvents().filter(
+          (candidate) => candidate.cursor !== 'acceptance-199',
+        ),
+        expected:
+          'commands=200, protectedRpcs=200, acceptances=199, queueFirstAttempts=1',
+      },
+      {
+        events: measuredEvents().filter(
+          (candidate) => candidate.cursor !== 'queue-first',
+        ),
+        expected:
+          'commands=200, protectedRpcs=200, acceptances=200, queueFirstAttempts=0',
+      },
+    ];
+
+    for (const testCase of cases)
+      expect(() => build(telemetry(testCase.events))).toThrow(
+        `AC211 production samples are insufficient (${testCase.expected})`,
+      );
   });
 
   it('rejects threshold equality and inconsistent provider completeness', () => {

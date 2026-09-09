@@ -21,6 +21,10 @@ if [[ ! "${DEPLOY_SHA:-}" =~ ^[0-9a-f]{40}$ ]]; then
   echo "::error::DEPLOY_SHA must be a full lowercase commit SHA"
   exit 1
 fi
+if [[ ! "${GITHUB_RUN_ID:-}" =~ ^[1-9][0-9]{0,19}$ ]]; then
+  echo "::error::GITHUB_RUN_ID must be a positive decimal ID"
+  exit 1
+fi
 if ! node --input-type=module - "${SUPABASE_URL:-}" <<'NODE'
 const candidate = process.argv[2];
 
@@ -97,4 +101,6 @@ pnpm --filter @wejammin/worker exec wrangler deploy \
   --var APP_ENVIRONMENT:"$task_environment" \
   --var APP_RELEASE:"$DEPLOY_SHA" \
   --var CLOUDFLARE_ACCOUNT_ID:"$CLOUDFLARE_ACCOUNT_ID" \
-  --var SUPABASE_URL:"$SUPABASE_URL"
+  --var SUPABASE_URL:"$SUPABASE_URL" \
+  --tag "$DEPLOY_SHA" \
+  --message "sourceRevision=$DEPLOY_SHA;githubRunId=$GITHUB_RUN_ID"

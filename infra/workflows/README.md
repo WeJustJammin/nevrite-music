@@ -26,6 +26,26 @@ filesystem and validation operations.
   the promotion candidate directory.
 - `finalize-staging-candidate.sh` writes the complete release-promotion
   evidence after public staging verification succeeds.
+- `collect-staging-axe-evidence.sh` paginates and binds the current protected
+  staging deployment/status record to the promoted SHA and run metadata, runs
+  the redacted AC266 axe collector, independently hashes and verifies its
+  strict report, and leaves `promotion-candidate/accessibility/axe.json` plus
+  `axe.sha256` for the staging artifact upload. It requires the preceding
+  staging verification to observe the served Cloudflare web response header
+  `x-wejammin-release` equal to the promoted SHA. The GitHub deployment ID and
+  Cloudflare Worker version ID remain distinct identities and must be retained
+  separately. It writes the validated report digest, deployment identity, and
+  collection timestamps to the following workflow step through `GITHUB_ENV`.
+- `verify-staging-axe-evidence.sh` rechecks the canonical sidecar and report
+  digest at finalization, then revalidates the report against the collected
+  identity and time bounds so later workflow steps cannot mutate retained AC266
+  evidence.
+- `collect-content-schema-registry-axe-evidence.ts` runs the canonical hosted
+  paths with Playwright and axe, retaining only bounded rule summaries and
+  exact hosted identity.
+- `content-schema-registry-axe-report-verifier.ts` validates the retained axe
+  report independently and recomputes its SHA-256 before the full sidecar
+  verifier accepts it.
 - `verify-production-candidate.sh` validates production promotion evidence,
   artifact identity, and manifest checksums before deployment.
 - `read-production-candidate.sh` validates workflow-run identity before the

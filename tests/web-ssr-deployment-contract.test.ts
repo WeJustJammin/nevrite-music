@@ -193,7 +193,9 @@ describe('Astro Cloudflare Worker SSR deployment contract', () => {
       /\.artifacts\/apps\/web\/dist\/server\/wrangler\.staging\.json/u,
     );
     expect(deployStep).toMatch(/--domain "\$WEB_CUSTOM_DOMAIN"/u);
-    expect(deployStep).not.toMatch(/--env|API_ORIGIN|PUBLIC_API|--var/u);
+    expect(deployStep).toMatch(/--var APP_RELEASE:"\$DEPLOY_SHA"/u);
+    expect(deployStep.match(/--var/gu)).toHaveLength(1);
+    expect(deployStep).not.toMatch(/--env|API_ORIGIN|PUBLIC_API/u);
     expect(
       workflow.indexOf('- name: Deploy API Worker staging artifact'),
     ).toBeGreaterThan(-1);

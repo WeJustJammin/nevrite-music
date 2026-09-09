@@ -79,11 +79,12 @@ export const buildContentSchemaRegistrySloEvidence = (
   if (
     command.length < 200 ||
     protectedRpc.length < 200 ||
-    acceptance.length < 200
+    acceptance.length < 200 ||
+    queueFirstAttempt.length === 0
   )
-    throw new Error('AC211 production samples are insufficient.');
-  if (queueFirstAttempt.length === 0)
-    throw new Error('AC211 queue first-attempt samples are insufficient.');
+    throw new Error(
+      `AC211 production samples are insufficient (commands=${command.length}, protectedRpcs=${protectedRpc.length}, acceptances=${acceptance.length}, queueFirstAttempts=${queueFirstAttempt.length}).`,
+    );
   const apiEvidenceGroups = assertApiEvidenceGroups(input.telemetry.events);
 
   const queue = strictQueueCounts(

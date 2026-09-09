@@ -172,3 +172,38 @@ then retain both redacted reports through the protected evidence workflow.
   passed.
 - Contracts, database types, progress consistency, formatting, lint,
   type-check, builds, bundle budgets, and API p95 smoke passed.
+
+## 2026-09-09 remediation implementation
+
+- AC209 was rechecked without changing thresholds or emitting test traffic.
+  Production cron executions remained successful, but Cloudflare Email Sending
+  analytics and retained delivery receipts remained empty. The criterion still
+  waits for a genuine threshold-triggered `platform.on_call` receipt.
+- AC211 protected run `34296129205` reached the complete 2026-09-08 UTC
+  production window on exact source
+  `a0d1b94c48f55d9ba650f44d63b0496b4aac7295` and failed closed for
+  insufficient natural samples without publishing an artifact. Failure
+  diagnostics now retain only bounded aggregate sample counts. The next
+  eligible complete 2026-09-09 UTC window begins after
+  `2026-09-10T00:00:00Z` if the production deployment identity is unchanged.
+- AC265 retains one genuine Google callback/session/protected-route proof. A
+  dependency audit confirmed that guardian, junior/age, business, staff-case,
+  and complete admin role authority is owned by later contracts, primarily
+  Slice 13. No role was fabricated from labels or caller-controlled flags. The
+  criterion remains open pending an approved correction to the locked plan or
+  an upstream authoritative role-context contract.
+- AC266 now has a fail-closed hosted automation path ready for exact-main
+  deployment: canonical page outcomes, pinned Playwright Chromium, cross-origin
+  navigation refusal, zero Serious/Critical enforcement, independent digest
+  sidecar validation, exact GitHub run/deployment correlation, served web/API
+  release-header binding, separately retained Cloudflare API/web Worker version
+  IDs, collection-to-finalizer digest/identity binding, and atomic no-follow
+  evidence writes. This implementation is not accepted as hosted evidence until an
+  exact-main staging run publishes and verifies the artifacts. It does not
+  replace either required manual screen-reader report.
+- Pinned validation passed on Node `22.23.1` and pnpm `11.24.0`: 443 Vitest
+  files, 3,296 tests passed and one intentional skip, 100% statement/branch/
+  function/line coverage, 101 functional Playwright checks, 5 production-built
+  Slice 09 checks, builds, bundle budgets, and local API p95 smoke.
+
+**Status remains BLOCKED — 279/283.** Slice 10 remains dependency-locked.

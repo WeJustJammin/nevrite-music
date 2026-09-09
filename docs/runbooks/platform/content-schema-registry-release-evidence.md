@@ -33,6 +33,39 @@ provider exports, or manual-test recordings to the repository.
 | AC265     | Hosted staging or production Playwright report against pathless HTTPS origins, Google through Supabase Auth, all locked role variants, every resilience scenario, the deployed migration, and exact artifact SHA. |
 | AC266     | Automated axe report with zero Serious/Critical findings and complete manual VoiceOver/Safari/macOS plus NVDA/Firefox/Windows runs against the exact hosted deployment, origin, and SHA.                          |
 
+The automated axe target `/app/cms-content-modeling` is an unauthenticated
+auth-boundary check only: it must finish at `/auth/sign-in` with HTTP 200. It
+does not claim authenticated CMS page coverage; authenticated coverage belongs
+to the AC265 hosted matrix and the manual accessibility runs.
+
+The protected staging deployment runs `infra/workflows/collect-staging-axe-evidence.sh`
+after public contract verification. It paginates GitHub deployment/status metadata,
+binds the record to the current protected run's SHA, staging environment, ref,
+task, creator, timestamps, and current `in_progress` status, then writes
+`promotion-candidate/accessibility/axe.json` plus its independently generated
+`axe.sha256` sidecar. The report verifier receives the independent sidecar
+digest before the candidate and deployment evidence artifacts are uploaded, together with the
+run-owned deployment creation time and a protected collection cutoff. GitHub keeps
+the deployment status `in_progress` while this collection step runs; it may mark
+the deployment `success` only after the job completes. This proves only the
+automated Chromium/axe portion and GitHub run binding. Its precondition is the
+preceding `verify-staging` gate: the served Cloudflare web response must expose
+`x-wejammin-release` equal to the promoted SHA (the API response is checked too).
+The GitHub deployment ID and Cloudflare Worker version ID are distinct provider
+identities and must be recorded separately; neither substitutes for the served
+release header or the other ID. The collector does not create or replace either
+required manual screen-reader report.
+
+After both staging Workers deploy, the protected workflow runs
+`collect-provider-release-evidence.sh`. It queries Wrangler's JSON versions and
+deployments listings for `wejammin-api-staging` and `wejammin-web-staging` and
+retains only `promotion-candidate/provider-release-evidence.json`. The report
+requires the newest deployment for each Worker to route exactly one version at
+100%, that version to exist in the retained versions response, and its exact
+`workers/tag`/`workers/message` annotations to bind `DEPLOY_SHA` and
+`GITHUB_RUN_ID`. It contains version/deployment IDs, bounded timestamps, and
+redacted annotations only; Wrangler payloads and credentials are never retained.
+
 Manual accessibility reports record stable operator IDs rather than names or
 email addresses. They include concrete OS, browser, and screen-reader versions,
 completion time, report digest, `passed` outcome, and every canonical check

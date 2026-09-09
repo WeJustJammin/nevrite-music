@@ -14,6 +14,7 @@ import {
   CONTENT_SCHEMA_REGISTRY_HOSTED_ROLES,
   CONTENT_SCHEMA_REGISTRY_HOSTED_SCENARIOS,
 } from '../../packages/contracts/src/content-schema-registry/operational-release-evidence.ts';
+import { CONTENT_SCHEMA_REGISTRY_AUTOMATED_A11Y_TARGETS } from '../../packages/contracts/src/content-schema-registry/operational-release-evidence-automated-a11y.ts';
 import {
   completeEvidence,
   expectedIdentity,
@@ -50,13 +51,47 @@ export const hostedReportContents = `${JSON.stringify(
   2,
 )}\n`;
 
+export const automatedAxeReportContents = `${JSON.stringify(
+  {
+    criterion: 'P2-S09-AC-266',
+    schemaVersion: 'ac266-automated-axe-v1',
+    sourceRevision: completeEvidence.accessibility.sourceRevision,
+    environment: completeEvidence.accessibility.environment,
+    deploymentId: completeEvidence.accessibility.deploymentId,
+    webOrigin: completeEvidence.accessibility.webOrigin,
+    browser: { name: 'chromium', version: '123.0.0.0' },
+    startedAt: '2026-09-03T10:30:00.000Z',
+    completedAt: '2026-09-03T11:05:00.000Z',
+    outcome: 'passed',
+    redacted: true,
+    axeSerious: 0,
+    axeCritical: 0,
+    pages: CONTENT_SCHEMA_REGISTRY_AUTOMATED_A11Y_TARGETS.map(
+      ({ requestedPath, expectedFinalPath, expectedHttpStatus, coverage }) => ({
+        requestedPath,
+        finalPath: expectedFinalPath,
+        httpStatus: expectedHttpStatus,
+        coverage,
+        violationCount: 0,
+        seriousCount: 0,
+        criticalCount: 0,
+        incompleteCount: 0,
+        passCount: 1,
+        violations: [],
+      }),
+    ),
+  },
+  null,
+  2,
+)}\n`;
+
 export const reportContents = Object.freeze({
   'alerts/configuration.json': 'production alert configuration\n',
   'alerts/delivery-receipt.json': 'redacted alert delivery receipt\n',
   'slo/measurement.json': 'production SLO measurement\n',
   'slo/dataset.json': 'production SLO dataset\n',
   'hosted/e2e.json': hostedReportContents,
-  'accessibility/axe.json': 'automated accessibility report\n',
+  'accessibility/axe.json': automatedAxeReportContents,
   'accessibility/macos-voiceover-safari.json':
     'VoiceOver and Safari manual report\n',
   'accessibility/windows-nvda-firefox.json': 'NVDA and Firefox manual report\n',
@@ -121,6 +156,10 @@ export const createRetainedEvidenceFixture = () => {
     mkdirSync(dirname(absolutePath), { recursive: true });
     writeFileSync(absolutePath, contents);
   }
+  writeFileSync(
+    join(reportRoot, 'accessibility/axe.sha256'),
+    `${sha256(reportContents['accessibility/axe.json'])}  accessibility/axe.json\n`,
+  );
   const evidencePath = join(sandbox, 'release-evidence.json');
   writeFileSync(evidencePath, JSON.stringify(evidenceWithRealReportDigests()));
   const expectedIdentityPath = join(sandbox, 'expected-release-identity.json');
