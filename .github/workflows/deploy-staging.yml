@@ -70,7 +70,7 @@ jobs:
       - name: Enforce staging API p95 budget
         env:
           SOURCE_REVISION: ${{ env.DEPLOY_SHA }}
-        run: pnpm performance:smoke:staging | tee promotion-candidate/api-p95-smoke.json
+        run: set -o pipefail; pnpm --silent performance:smoke:staging | tee promotion-candidate/api-p95-smoke.json
       - name: Finalize staging promotion evidence
         env:
           SUPABASE_PROJECT_REF: ${{ vars.SUPABASE_PROJECT_REF }}

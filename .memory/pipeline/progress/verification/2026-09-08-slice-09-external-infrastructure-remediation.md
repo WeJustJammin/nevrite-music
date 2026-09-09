@@ -201,8 +201,21 @@ then retain both redacted reports through the protected evidence workflow.
   evidence writes. This implementation is not accepted as hosted evidence until an
   exact-main staging run publishes and verifies the artifacts. It does not
   replace either required manual screen-reader report.
+- PR `43` merged as exact-main SHA
+  `a4a411d2edd3c83057392fd86f87c93fd72e220c`. CI run `34311782073`
+  passed on retry after the first attempt lost self-hosted-runner communication.
+  Staging run `34362941970` deployed that SHA and passed served-release,
+  provider-version, hosted axe, and final axe digest/identity checks. It
+  correctly withheld the verified candidate when the natural staging API p95
+  was `526.912447 ms` against the locked `<500 ms` budget.
+- The failed staging run exposed a workflow defect: `tee` masked the producer
+  exit and non-silent pnpm appended a lifecycle line to the JSON. CI and
+  staging evidence producers now use `pipefail` plus silent pnpm output, with
+  an executable regression proving nonzero failure propagation and one valid
+  JSON document. No performance threshold, sample count, or retry policy was
+  changed.
 - Pinned validation passed on Node `22.23.1` and pnpm `11.24.0`: 443 Vitest
-  files, 3,296 tests passed and one intentional skip, 100% statement/branch/
+  files, 3,297 tests passed and one intentional skip, 100% statement/branch/
   function/line coverage, 101 functional Playwright checks, 5 production-built
   Slice 09 checks, builds, bundle budgets, and local API p95 smoke.
 
