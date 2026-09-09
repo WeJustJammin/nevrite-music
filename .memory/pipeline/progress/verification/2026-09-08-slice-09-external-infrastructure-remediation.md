@@ -237,5 +237,24 @@ then retain both redacted reports through the protected evidence workflow.
   intentional skip, 100% statement/branch/function/line coverage, 101
   functional Playwright checks, 5 production-built Slice 09 checks, builds,
   bundle budgets, and local API p95 smoke.
+- PR `45` merged as exact-main SHA
+  `8c319243c459017e3298c00c11a071671a0459d7`. Exact-main CI
+  `34373503215` passed, and staging `34374213155` / GitHub deployment
+  `6354008407` passed every step and published verified-candidate artifact
+  `10113208945` plus deployment artifact `10113209626`.
+- The retained candidate binds build `ci-34373503215`, all ten promotion gates,
+  34 applied migrations through `20260905080000`, and both staging Workers at
+  100% traffic to the exact SHA. Natural staging API smoke passed at p95
+  `71.92763 ms` against `<500 ms` with 20/20 samples, zero retries, and zero
+  errors.
+- The redacted Chromium `151.0.7922.34` axe report covers `/`,
+  `/auth/sign-in`, and the protected registry auth boundary. All three returned
+  the exact release and expected final path/status with zero violations, zero
+  Serious, and zero Critical findings; its retained digest
+  `008fd27f498178c8ec89c82f50da63e5963d97679cbcb2deeac9afc916d47c37`
+  matches the sidecar. Each page retains one axe incomplete item, and the
+  required signed VoiceOver/Safari and NVDA/Firefox manual reports remain
+  unavailable. AC266 therefore remains open rather than treating automation as
+  real-platform acceptance.
 
 **Status remains BLOCKED — 279/283.** Slice 10 remains dependency-locked.
