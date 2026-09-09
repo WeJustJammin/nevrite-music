@@ -696,6 +696,16 @@ all four release-evidence gates pass.
   times at three-second intervals with a fresh context, while all path/status/
   origin/navigation/axe failures remain immediate. Staging CLI verification
   now rejects any expected-release override that differs from `DEPLOY_SHA`.
+- AC266 exact-main result: PR `45` merged as
+  `8c319243c459017e3298c00c11a071671a0459d7`; CI `34373503215` and staging
+  `34374213155` / deployment `6354008407` passed. Verified-candidate artifact
+  `10113208945` binds all ten promotion gates, 34 migrations, and both staging
+  Workers at 100% traffic to that SHA. Natural API p95 was `71.92763 ms` over
+  20/20 samples with zero retries/errors. Retained Chromium axe evidence covers
+  all three canonical paths with zero violations and zero Serious/Critical
+  findings. AC266 stays open only because signed VoiceOver/Safari and
+  NVDA/Firefox manual reports are still required; automated evidence is not a
+  substitute.
 
 Validated with Node `22.23.1` and pnpm `11.24.0`: 443 Vitest files, 3,308
 passing tests plus one intentional skip, 100% coverage, 101 functional
