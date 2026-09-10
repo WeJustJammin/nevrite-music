@@ -79,10 +79,12 @@ filesystem and validation operations.
   ratio, and atomically publishes three digest-linked redacted reports.
 - `collect-content-schema-registry-alert-configuration.ts` orchestrates the
   protected AC209 configuration capture. Its contract module locks all twelve
-  conditions and thresholds; its provider client reads only the allowlisted
-  active deployment, version-specific binding targets, observability settings,
-  schedule, and release fields. Raw provider payloads and the alert address are
-  discarded before the atomic redacted artifact is written.
+  conditions and thresholds; its provider client reads only the documented
+  active deployment, exact-version binding targets, observability settings, and
+  schedule fields. `ac209-wrangler-version-attestation.ts` obtains the same
+  exact version's tag, message, and upload provenance through the pinned
+  Wrangler CLI. Raw provider payloads and the alert address are discarded
+  before the atomic redacted artifact is written.
 
 ## Conventions
 

@@ -85,10 +85,19 @@ const normalizeObservability = (value: unknown) => {
     },
   };
 };
-const normalizeVersion = (value: unknown) => {
+const normalizeVersion = (value: unknown, attestationValue: unknown) => {
   const version = isRecord(value)
     ? value
     : fail('worker version response is malformed');
+  const attestation = isRecord(attestationValue)
+    ? attestationValue
+    : fail('worker version attestation is malformed');
+  const versionId = readString(version['id'], 'worker version ID');
+  if (
+    readString(attestation['versionId'], 'worker attestation version ID') !==
+    versionId
+  )
+    fail('worker version attestation identity does not match version detail');
   const resources = isRecord(version['resources'])
     ? version['resources']
     : fail('worker version resources are malformed');
@@ -100,9 +109,6 @@ const normalizeVersion = (value: unknown) => {
     return entry;
   });
   const bindings = normalizeBindings(entries);
-  const annotations = isRecord(version['annotations'])
-    ? version['annotations']
-    : fail('worker version annotations are malformed');
   const metadata = isRecord(version['metadata'])
     ? version['metadata']
     : fail('worker version metadata is malformed');
@@ -124,7 +130,7 @@ const normalizeVersion = (value: unknown) => {
     'worker alert destination',
   );
   return {
-    versionId: readString(version['id'], 'worker version ID'),
+    versionId,
     versionSource: readString(metadata['source'], 'worker version source'),
     versionCreatedAt: readString(
       metadata['created_on'],
@@ -138,13 +144,10 @@ const normalizeVersion = (value: unknown) => {
     queueName: readString(queue['queue_name'], 'worker queue target'),
     alertEmailSha256: createHash('sha256').update(destination).digest('hex'),
     versionAnnotations: {
-      tag: readString(annotations['workers/tag'], 'worker version tag'),
-      message: readString(
-        annotations['workers/message'],
-        'worker version message',
-      ),
+      tag: readString(attestation['tag'], 'worker version tag'),
+      message: readString(attestation['message'], 'worker version message'),
       triggeredBy: readString(
-        annotations['workers/triggered_by'],
+        attestation['triggeredBy'],
         'worker version provenance',
       ),
     },
@@ -197,17 +200,15 @@ export type CloudflareProviderReadInput = {
   accountId: string;
   providerToken: string;
   versionId: string;
+  versionAttestation: unknown;
   fetchImpl?: FetchImplementation;
 };
-/**
- * Reads only the provider fields needed for AC209 and immediately discards
- * response payloads. No secret binding value, destination address, annotation
- * other than the release message, or provider error body enters the report.
- */
+// Read only report-safe AC209 fields; raw provider bodies are discarded.
 export const readAc209ProviderStateFromCloudflare = async ({
   accountId,
   providerToken,
   versionId,
+  versionAttestation,
   fetchImpl = fetch,
 }: CloudflareProviderReadInput): Promise<Ac209ProviderState> => {
   if (!CLOUDFLARE_ACCOUNT_ID.test(accountId))
@@ -246,14 +247,12 @@ export const readAc209ProviderStateFromCloudflare = async ({
       'worker version',
     ),
   ]);
+  const settings = providerResult(settingsResponse, 'worker settings');
+  const version = providerResult(versionResponse, 'worker version');
   const state = {
     workerName: AC209_WORKER_NAME,
-    settings: normalizeVersion(
-      providerResult(versionResponse, 'worker version'),
-    ),
-    observability: normalizeObservability(
-      providerResult(settingsResponse, 'worker settings'),
-    ),
+    settings: normalizeVersion(version, versionAttestation),
+    observability: normalizeObservability(settings),
     schedules: normalizeSchedules(
       providerResult(schedulesResponse, 'worker schedules'),
     ),

@@ -7,10 +7,6 @@ on:
         description: Full lowercase main source revision deployed to production
         required: true
         type: string
-      production_deployment_id:
-        description: Exact production deployment identifier
-        required: true
-        type: string
       production_version_id:
         description: Exact 100 percent production version identifier
         required: true
@@ -50,7 +46,6 @@ jobs:
     env:
       GITHUB_ENVIRONMENT: production
       SOURCE_REVISION: ${{ inputs.source_revision }}
-      PRODUCTION_DEPLOYMENT_ID: ${{ inputs.production_deployment_id }}
       PRODUCTION_VERSION_ID: ${{ inputs.production_version_id }}
       EXPECTED_DLQ_ID: ${{ inputs.expected_dlq_id }}
       EXPECTED_SUPABASE_URL: ${{ vars.SUPABASE_URL }}

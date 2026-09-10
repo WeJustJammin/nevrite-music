@@ -9,96 +9,24 @@ import {
   AC209_REQUIRED_BINDINGS,
   Ac209ProviderStateSchema,
   collectContentSchemaRegistryAlertConfiguration,
-  type Ac209ProviderState,
 } from '../infra/workflows/collect-content-schema-registry-alert-configuration.ts';
 import { CONTENT_SCHEMA_REGISTRY_ALERT_CONDITIONS } from '../packages/contracts/src/content-schema-registry/operational-release-evidence-common.ts';
 import { CONTENT_SCHEMA_REGISTRY_ALERT_THRESHOLDS } from '../packages/observability/src/content-schema-registry-alert-thresholds.ts';
-
-const sourceRevision = '7f72272c4ca46c738cc8e7941573af08cad33169';
-const deploymentId = 'a42d3b94-3093-4de5-85ee-8ba630fd4fed';
-const versionId = '544ce939-93c4-43d8-967f-f7e878e40dae';
-const dlqId = '88155985aa0c49caa591b9bf9e6ca937';
-const supabaseUrl = 'https://gzqgpdlfwbqhutvrkaeo.supabase.co';
-const alertEmailSha256 =
-  '0b0d32ad7cbafc5f75b399fdadc1211d29c0f41cea2f57a6ba8531667fcade48';
-const capturedAt = '2026-09-10T19:00:00.000Z';
-
-const providerState = (): Ac209ProviderState => ({
-  workerName: 'wejammin-api',
-  settings: {
-    versionId,
-    versionSource: 'wrangler',
-    versionCreatedAt: '2026-09-10T18:41:52.694911Z',
-    appEnvironment: 'production',
-    appRelease: sourceRevision,
-    cloudflareAccountId: 'b1c05c00f04130a0d100adbca6696e6e',
-    dlqId,
-    supabaseUrl,
-    queueName: 'platform-jobs',
-    alertEmailSha256,
-    versionAnnotations: {
-      tag: sourceRevision,
-      message: `sourceRevision=${sourceRevision};githubRunId=34515738514`,
-      triggeredBy: 'version_upload',
-    },
-    bindings: AC209_REQUIRED_BINDINGS.map((binding) => ({ ...binding })),
-  },
-  observability: {
-    enabled: true,
-    headSamplingRate: 1,
-    logs: {
-      enabled: true,
-      headSamplingRate: 1,
-      invocationLogs: true,
-      persist: true,
-    },
-  },
-  schedules: [{ cron: '* * * * *' }],
-  deployments: [
-    {
-      id: deploymentId,
-      source: 'wrangler',
-      strategy: 'percentage',
-      createdAt: '2026-09-10T18:41:53.694911Z',
-      annotations: {
-        'workers/triggered_by': 'deployment',
-      },
-      versions: [{ id: versionId, percentage: 100 }],
-    },
-  ],
-});
-
-const input = (
-  overrides: Partial<
-    Parameters<typeof collectContentSchemaRegistryAlertConfiguration>[0]
-  > = {},
-) => ({
-  accountId: 'b1c05c00f04130a0d100adbca6696e6e',
-  observabilityToken: 'observability-token-that-must-never-be-emitted',
-  providerToken: 'provider-token-that-must-never-be-emitted',
+import {
+  deploymentId,
+  input,
+  providerState,
   sourceRevision,
-  productionDeploymentId: deploymentId,
-  productionVersionId: versionId,
-  expectedDlqId: dlqId,
-  expectedSupabaseUrl: supabaseUrl,
-  expectedAlertEmailSha256: alertEmailSha256,
-  configurationId: 'ac209-config-20260910',
-  configurationReference: 'change:ac209-20260910',
-  execution: {
-    environment: 'production' as const,
-    ref: 'refs/heads/main',
-    checkedOutSha: sourceRevision,
-  },
-  readProviderState: vi.fn(async () => providerState()),
-  verifyObservability: vi.fn(async () => undefined),
-  capturedAt,
-  ...overrides,
-});
+  versionId,
+} from './ac209-alert-configuration-test-fixtures.ts';
 
 describe('AC209 protected alert configuration collector', () => {
   it('captures exact production identity, provider state, all locked conditions, and thresholds', async () => {
+    const testInput = input();
     const result =
-      await collectContentSchemaRegistryAlertConfiguration(input());
+      await collectContentSchemaRegistryAlertConfiguration(testInput);
+
+    expect(testInput.readProviderState).toHaveBeenCalledTimes(1);
 
     expect(result.report).toMatchObject({
       sourceRevision,
@@ -112,6 +40,9 @@ describe('AC209 protected alert configuration collector', () => {
         versionId,
         trafficPercent: 100,
         sourceRevision,
+        versionTriggeredBy: 'version_upload',
+        versionTag: sourceRevision,
+        versionMessage: `sourceRevision=${sourceRevision};githubRunId=34515738514`,
       },
       schedule: { cron: '* * * * *' },
       route: 'platform.on_call',
@@ -176,6 +107,40 @@ describe('AC209 protected alert configuration collector', () => {
         input({
           readProviderState: vi.fn(async () => ({
             ...providerState(),
+            settings: {
+              ...providerState().settings,
+              versionAnnotations: {
+                ...providerState().settings.versionAnnotations,
+                tag: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+              },
+            },
+          })),
+        }),
+      ),
+    ).rejects.toThrow('workers/tag');
+
+    await expect(
+      collectContentSchemaRegistryAlertConfiguration(
+        input({
+          readProviderState: vi.fn(async () => ({
+            ...providerState(),
+            settings: {
+              ...providerState().settings,
+              versionAnnotations: {
+                ...providerState().settings.versionAnnotations,
+                message: `sourceRevision=${sourceRevision};githubRunId=0`,
+              },
+            },
+          })),
+        }),
+      ),
+    ).rejects.toThrow('workers/message');
+
+    await expect(
+      collectContentSchemaRegistryAlertConfiguration(
+        input({
+          readProviderState: vi.fn(async () => ({
+            ...providerState(),
             deployments: [
               {
                 ...providerState().deployments[0],
@@ -200,6 +165,123 @@ describe('AC209 protected alert configuration collector', () => {
         }),
       ),
     ).rejects.toThrow('queue');
+  });
+
+  it('derives the active deployment from the requested version in one provider snapshot', async () => {
+    const testInput = input();
+    const result =
+      await collectContentSchemaRegistryAlertConfiguration(testInput);
+
+    expect(result.report.worker.deploymentId).toBe(deploymentId);
+    expect(testInput.readProviderState).toHaveBeenCalledTimes(1);
+  });
+
+  it('fails closed when the requested version is only in a historical deployment', async () => {
+    const historicalVersionId = 'aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa';
+    const historicalDeploymentId = 'bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb';
+    const readProviderState = vi.fn(async () => ({
+      ...providerState(),
+      deployments: [
+        {
+          ...providerState().deployments[0],
+          id: historicalDeploymentId,
+          versions: [{ id: historicalVersionId, percentage: 100 }],
+        },
+        {
+          ...providerState().deployments[0],
+          id: deploymentId,
+          versions: [{ id: versionId, percentage: 100 }],
+        },
+      ],
+    }));
+
+    await expect(
+      collectContentSchemaRegistryAlertConfiguration(
+        input({ readProviderState }),
+      ),
+    ).rejects.toThrow('requested version is not the current active deployment');
+    expect(readProviderState).toHaveBeenCalledTimes(1);
+  });
+
+  it('fails closed when no deployment contains the requested version', async () => {
+    const readProviderState = vi.fn(async () => ({
+      ...providerState(),
+      deployments: [],
+    }));
+
+    await expect(
+      collectContentSchemaRegistryAlertConfiguration(
+        input({ readProviderState }),
+      ),
+    ).rejects.toThrow(
+      /provider configuration response is malformed|requested version|active deployment/iu,
+    );
+    expect(readProviderState).toHaveBeenCalledTimes(1);
+  });
+
+  it('fails closed when the requested version maps to multiple deployments', async () => {
+    const duplicateDeploymentId = 'cccccccc-cccc-4ccc-8ccc-cccccccccccc';
+    const readProviderState = vi.fn(async () => ({
+      ...providerState(),
+      deployments: [
+        providerState().deployments[0],
+        {
+          ...providerState().deployments[0],
+          id: duplicateDeploymentId,
+        },
+      ],
+    }));
+
+    await expect(
+      collectContentSchemaRegistryAlertConfiguration(
+        input({ readProviderState }),
+      ),
+    ).rejects.toThrow('requested version maps to multiple deployments');
+    expect(readProviderState).toHaveBeenCalledTimes(1);
+  });
+
+  it('fails closed when the active deployment does not route the requested version at 100%', async () => {
+    const readProviderState = vi.fn(async () => ({
+      ...providerState(),
+      deployments: [
+        {
+          ...providerState().deployments[0],
+          versions: [{ id: versionId, percentage: 50 }],
+        },
+      ],
+    }));
+
+    await expect(
+      collectContentSchemaRegistryAlertConfiguration(
+        input({ readProviderState }),
+      ),
+    ).rejects.toThrow('active deployment is not the exact 100% version');
+    expect(readProviderState).toHaveBeenCalledTimes(1);
+  });
+
+  it('fails closed when the active deployment routes more than one version', async () => {
+    const secondVersionId = 'dddddddd-dddd-4ddd-8ddd-dddddddddddd';
+    const readProviderState = vi.fn(async () => ({
+      ...providerState(),
+      deployments: [
+        {
+          ...providerState().deployments[0],
+          versions: [
+            { id: versionId, percentage: 50 },
+            { id: secondVersionId, percentage: 50 },
+          ],
+        },
+      ],
+    }));
+
+    await expect(
+      collectContentSchemaRegistryAlertConfiguration(
+        input({ readProviderState }),
+      ),
+    ).rejects.toThrow(
+      'active deployment must contain only the requested version',
+    );
+    expect(readProviderState).toHaveBeenCalledTimes(1);
   });
 
   it('never emits either token or raw provider payload and can write one redacted artifact', async () => {
@@ -271,6 +353,9 @@ describe('AC209 protected alert configuration collector', () => {
     );
 
     expect(workflow).toContain('workflow_dispatch:');
+    expect(workflow).toContain('production_version_id:');
+    expect(workflow).not.toContain('production_deployment_id:');
+    expect(workflow).not.toContain('PRODUCTION_DEPLOYMENT_ID');
     expect(workflow).toContain("github.ref == 'refs/heads/main'");
     expect(workflow).toContain('name: production');
     expect(workflow).toContain('contents: read');
