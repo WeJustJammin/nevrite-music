@@ -145,11 +145,42 @@ describe('production promotion workflow contract', () => {
     );
   });
 
+  it('verifies the deployed public origins before accepting production', () => {
+    const webDeployIndex = workflow.indexOf(
+      '- name: Deploy web SSR Worker production artifact',
+    );
+    const healthIndex = workflow.indexOf(
+      '- name: Verify production deployment health',
+    );
+    const evidenceIndex = workflow.indexOf(
+      'uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a',
+    );
+    const healthStep = workflow.match(
+      /- name: Verify production deployment health[\s\S]*?(?=\n\s{6}- (?:name:|if:))/u,
+    )?.[0];
+
+    expect(healthIndex).toBeGreaterThan(webDeployIndex);
+    expect(healthIndex).toBeLessThan(evidenceIndex);
+    expect(healthStep).toBeDefined();
+    expect(healthStep).not.toMatch(/secrets\./u);
+    expect(workflow).toContain(
+      "STAGING_API_ORIGIN: '${{ vars.PRODUCTION_API_ORIGIN }}'",
+    );
+    expect(workflow).toContain(
+      "STAGING_WEB_ORIGIN: '${{ vars.PRODUCTION_WEB_ORIGIN }}'",
+    );
+    expect(workflow).toContain(
+      'run: set -o pipefail; pnpm --silent verify:staging | tee .promotion/production-verification.json',
+    );
+    expect(workflow).toContain('.promotion/*.json');
+  });
+
   it('labels retained deployment evidence with the terminal job status', () => {
     expect(workflow).toContain(
       'name: production-deployment-attempt-${{ env.DEPLOY_SHA }}-${{ job.status }}',
     );
     expect(workflow).toContain('include-hidden-files: true');
+    expect(workflow).toContain('retention-days: 30');
     expect(workflow).not.toContain(
       'name: production-deployment-${{ env.DEPLOY_SHA }}',
     );

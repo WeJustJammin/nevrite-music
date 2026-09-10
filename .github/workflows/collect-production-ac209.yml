@@ -1,0 +1,93 @@
+name: Collect production AC209 alert configuration
+
+on:
+  workflow_dispatch:
+    inputs:
+      source_revision:
+        description: Full lowercase main source revision deployed to production
+        required: true
+        type: string
+      production_deployment_id:
+        description: Exact production deployment identifier
+        required: true
+        type: string
+      production_version_id:
+        description: Exact 100 percent production version identifier
+        required: true
+        type: string
+      expected_dlq_id:
+        description: Exact production platform-jobs-dlq identifier
+        required: true
+        type: string
+      configuration_id:
+        description: Reviewer-approved AC209 configuration record identifier
+        required: true
+        type: string
+      configuration_reference:
+        description: Reviewer-approved change or reference identifier
+        required: true
+        type: string
+      confirm_collection:
+        description: Confirm protected read-only AC209 configuration collection
+        required: true
+        type: boolean
+        default: false
+
+concurrency:
+  group: collect-production-ac209-${{ inputs.source_revision }}
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  collect:
+    if: inputs.confirm_collection == true && github.ref == 'refs/heads/main'
+    runs-on: [self-hosted, wejammin]
+    timeout-minutes: 15
+    environment:
+      name: production
+    env:
+      GITHUB_ENVIRONMENT: production
+      SOURCE_REVISION: ${{ inputs.source_revision }}
+      PRODUCTION_DEPLOYMENT_ID: ${{ inputs.production_deployment_id }}
+      PRODUCTION_VERSION_ID: ${{ inputs.production_version_id }}
+      EXPECTED_DLQ_ID: ${{ inputs.expected_dlq_id }}
+      EXPECTED_SUPABASE_URL: ${{ vars.SUPABASE_URL }}
+      EXPECTED_ALERT_EMAIL_SHA256: ${{ vars.PRODUCTION_ALERT_EMAIL_SHA256 }}
+      CONFIGURATION_ID: ${{ inputs.configuration_id }}
+      CONFIGURATION_REFERENCE: ${{ inputs.configuration_reference }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
+    steps:
+      - name: Check out exact main revision
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          ref: ${{ inputs.source_revision }}
+          fetch-depth: 1
+
+      - name: Set up workspace
+        uses: ./.github/actions/setup
+
+      - name: Verify protected execution identity
+        env:
+          EXPECTED_SOURCE_REVISION: ${{ inputs.source_revision }}
+        run: |
+          checked_out_sha="$(git rev-parse HEAD)"
+          test "$GITHUB_REF" = "refs/heads/main"
+          test "$checked_out_sha" = "$EXPECTED_SOURCE_REVISION"
+          test "$GITHUB_ENVIRONMENT" = "production"
+          echo "CHECKED_OUT_SHA=$checked_out_sha" >> "$GITHUB_ENV"
+
+      - name: Collect redacted AC209 configuration
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_OBSERVABILITY_API_TOKEN: ${{ secrets.CLOUDFLARE_OBSERVABILITY_API_TOKEN }}
+        run: node --experimental-strip-types infra/workflows/collect-content-schema-registry-alert-configuration.ts
+
+      - name: Upload redacted AC209 configuration
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+        with:
+          name: production-ac209-alert-configuration-${{ inputs.source_revision }}
+          path: ac209-reports/alerts/configuration.json
+          if-no-files-found: error
+          retention-days: 30

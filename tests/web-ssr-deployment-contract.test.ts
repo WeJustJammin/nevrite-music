@@ -213,7 +213,9 @@ describe('Astro Cloudflare Worker SSR deployment contract', () => {
     );
     const deployStep = webDeployStep(workflow);
 
-    expect(workflow).toMatch(/url: \$\{\{ vars\.PRODUCTION_WEB_ORIGIN \}\}/u);
+    expect(workflow).toMatch(
+      /url: '?\$\{\{ vars\.PRODUCTION_WEB_ORIGIN \}\}'?/u,
+    );
     expect(workflow).toMatch(
       /PRODUCTION_WEB_ORIGIN: '?\$\{\{ vars\.PRODUCTION_WEB_ORIGIN \}\}'?/u,
     );
@@ -246,9 +248,13 @@ describe('Astro Cloudflare Worker SSR deployment contract', () => {
       /\.promotion\/artifacts\/apps\/web\/dist\/server\/wrangler\.production\.json/u,
     );
     expect(deployStep).toMatch(/--domain "\$WEB_CUSTOM_DOMAIN"/u);
-    expect(deployStep).not.toMatch(
-      /--env staging|API_ORIGIN|PUBLIC_API|--var/u,
+    expect(deployStep).toMatch(/--var APP_RELEASE:"\$DEPLOY_SHA"/u);
+    expect(deployStep.match(/--var/gu)).toHaveLength(1);
+    expect(deployStep).toMatch(/--tag "\$DEPLOY_SHA"/u);
+    expect(deployStep).toMatch(
+      /--message "sourceRevision=\$DEPLOY_SHA;githubRunId=\$GITHUB_RUN_ID"/u,
     );
+    expect(deployStep).not.toMatch(/--env staging|API_ORIGIN|PUBLIC_API/u);
     expect(
       workflow.indexOf('- name: Deploy API Worker production artifact'),
     ).toBeGreaterThan(-1);

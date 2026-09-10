@@ -77,6 +77,12 @@ filesystem and validation operations.
 - `collect-content-schema-registry-slo-evidence.ts` validates exact
   service/operation/event identity, recomputes the locked percentiles and DLQ
   ratio, and atomically publishes three digest-linked redacted reports.
+- `collect-content-schema-registry-alert-configuration.ts` orchestrates the
+  protected AC209 configuration capture. Its contract module locks all twelve
+  conditions and thresholds; its provider client reads only the allowlisted
+  active deployment, version-specific binding targets, observability settings,
+  schedule, and release fields. Raw provider payloads and the alert address are
+  discarded before the atomic redacted artifact is written.
 
 ## Conventions
 
