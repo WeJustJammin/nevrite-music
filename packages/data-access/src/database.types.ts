@@ -3087,6 +3087,78 @@ export type Database = {
         }
         Relationships: []
       }
+      cms_owner_initialization: {
+        Row: {
+          alias_id: string
+          auth_user_id: string
+          authorization_ref: string
+          created_at: string
+          grant_ends_at: string
+          operator_role: unknown
+          organization_id: string
+          person_id: string
+          singleton: boolean
+        }
+        Insert: {
+          alias_id: string
+          auth_user_id: string
+          authorization_ref: string
+          created_at?: string
+          grant_ends_at: string
+          operator_role: unknown
+          organization_id: string
+          person_id: string
+          singleton?: boolean
+        }
+        Update: {
+          alias_id?: string
+          auth_user_id?: string
+          authorization_ref?: string
+          created_at?: string
+          grant_ends_at?: string
+          operator_role?: unknown
+          organization_id?: string
+          person_id?: string
+          singleton?: boolean
+        }
+        Relationships: [
+          {
+            foreignKeyName: "cms_owner_initialization_alias_id_fkey"
+            columns: ["alias_id"]
+            isOneToOne: false
+            referencedRelation: "alias_party"
+            referencedColumns: ["party_id"]
+          },
+          {
+            foreignKeyName: "cms_owner_initialization_alias_id_fkey"
+            columns: ["alias_id"]
+            isOneToOne: false
+            referencedRelation: "identity_public_projection"
+            referencedColumns: ["party_id"]
+          },
+          {
+            foreignKeyName: "cms_owner_initialization_person_id_fkey"
+            columns: ["person_id"]
+            isOneToOne: false
+            referencedRelation: "identity_public_person_projection"
+            referencedColumns: ["party_id"]
+          },
+          {
+            foreignKeyName: "cms_owner_initialization_person_id_fkey"
+            columns: ["person_id"]
+            isOneToOne: false
+            referencedRelation: "identity_self_projection"
+            referencedColumns: ["person_id"]
+          },
+          {
+            foreignKeyName: "cms_owner_initialization_person_id_fkey"
+            columns: ["person_id"]
+            isOneToOne: false
+            referencedRelation: "person_party"
+            referencedColumns: ["party_id"]
+          },
+        ]
+      }
       cms_relation_definitions: {
         Row: {
           cardinality: string
@@ -5722,6 +5794,17 @@ export type Database = {
       identity_validate_display_name: {
         Args: { p_display_name: string }
         Returns: undefined
+      }
+      initialize_cms_owner: {
+        Args: {
+          p_auth_user_id: string
+          p_authorization_ref: string
+          p_expected_email: string
+          p_grant_ends_at: string
+          p_person_id: string
+          p_preview: boolean
+        }
+        Returns: Json
       }
       normalize_identity_handle: { Args: { p_handle: string }; Returns: string }
       protected_writes_allowed: { Args: never; Returns: boolean }

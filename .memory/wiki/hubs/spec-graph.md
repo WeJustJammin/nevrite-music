@@ -1,7 +1,7 @@
 # Spec Graph
 
-- **Nodes**: 1629
-- **Edges**: 10117
+- **Nodes**: 1630
+- **Edges**: 10120
 
 ## Relationship Chains
 

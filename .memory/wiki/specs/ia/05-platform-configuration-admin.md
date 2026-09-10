@@ -1,5 +1,25 @@
 # Shard 05 — Platform configuration, admin and quality
 
+## Initial-owner operational setup (owner-approved 2026-09-10)
+
+An empty installation has no administrator capable of issuing the first grant.
+The database operator may perform exactly one audited initial-owner setup, outside
+the HTTP/API grant flow, for the owner's verified and immutable Auth/person pair.
+This exception is limited to `cms.schema_registry.read`, `cms.schema_designer`,
+`admin.inbox.read` and `admin.audit.read` for the new owner organization. It grants
+no delegation, wildcard, case-purpose, approval, or step-up exemption. Normal
+CFG-11 grantor, MFA, distinct-approval and revocation rules remain unchanged.
+
+Setup creates the WeBeJammin alias with private person linkage and an owned
+organization through existing identity operations. It refuses existing CMS/admin
+authority, unavailable handle, unconfirmed/inactive identity, invalid term and
+replay. A preview changes no data. Commit is atomic with a singleton receipt and
+operator-provenance audit; application roles cannot execute the operation. The
+requested term must end after today and within seven days. Date-granularity
+organization capabilities expire at the UTC midnight at or before that end,
+never after it. Initial rollout is staging only. This establishes configuration,
+not hosted login, MFA, alert, performance or accessibility acceptance evidence.
+
 > **Architecture Source**: [2026-08-02-architecture-design.md](../2026-08-02-architecture-design.md)
 > **Decomposition Source**: [decomposition-plan.md](decomposition-plan.md)
 > **Deep Dive**: [deep-dives/05-platform-configuration-admin.md](deep-dives/05-platform-configuration-admin.md)
