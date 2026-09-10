@@ -5,10 +5,8 @@
   "compatibility_date": "2026-08-29",
   "minify": true,
   "limits": { "cpu_ms": 50 },
-  "observability": {
-    "enabled": true,
-    "head_sampling_rate": 1,
-  },
+  // prettier-ignore
+  "observability": { "enabled": true, "head_sampling_rate": 1, "logs": { "enabled": true, "head_sampling_rate": 1, "invocation_logs": true, "persist": true } },
   "vars": {
     "APP_ENVIRONMENT": "production",
     "CLOUDFLARE_PLATFORM_DLQ_ID": "88155985aa0c49caa591b9bf9e6ca937",

@@ -92,6 +92,12 @@ describe('Worker Wrangler queue and schedule contract', () => {
     expect(config.observability).toEqual({
       enabled: true,
       head_sampling_rate: 1,
+      logs: {
+        enabled: true,
+        head_sampling_rate: 1,
+        invocation_logs: true,
+        persist: true,
+      },
     });
     expect(config.send_email).toEqual([
       {

@@ -38,9 +38,7 @@ jobs:
     if: inputs.confirm_production == true && github.ref == 'refs/heads/main' && needs.preflight.result == 'success'
     runs-on: [self-hosted, wejammin]
     timeout-minutes: 20
-    environment:
-      name: production
-      url: ${{ vars.PRODUCTION_WEB_ORIGIN }}
+    environment: { name: production, url: '${{ vars.PRODUCTION_WEB_ORIGIN }}' }
     # prettier-ignore
     env: { DEPLOY_SHA: '${{ inputs.source_sha }}', CI_RUN_ID: '${{ needs.preflight.outputs.ci_run_id }}', EXPECTED_STAGING_SUPABASE_PROJECT_REF: '${{ vars.STAGING_SUPABASE_PROJECT_REF }}', PRODUCTION_WEB_ORIGIN: '${{ vars.PRODUCTION_WEB_ORIGIN }}', RELEASE_PROTECTED_ENVIRONMENT: production, STAGING_RUN_ID: '${{ inputs.staging_run_id }}' }
     steps:
@@ -62,15 +60,12 @@ jobs:
       - name: Verify artifact boundaries and deployment inputs
         run: bash infra/workflows/verify-production-candidate.sh && node --experimental-strip-types infra/verify-release-promotion.ts .promotion/promotion-metadata.json candidate .promotion/staging-artifact-identity.json
       - name: Verify Cloudflare observability permissions
-        env:
-          CLOUDFLARE_ACCOUNT_ID: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
-          CLOUDFLARE_OBSERVABILITY_API_TOKEN: ${{ secrets.CLOUDFLARE_OBSERVABILITY_API_TOKEN }}
+        # prettier-ignore
+        env: { CLOUDFLARE_ACCOUNT_ID: '${{ vars.CLOUDFLARE_ACCOUNT_ID }}', CLOUDFLARE_OBSERVABILITY_API_TOKEN: '${{ secrets.CLOUDFLARE_OBSERVABILITY_API_TOKEN }}' }
         run: node --experimental-strip-types infra/verify-cloudflare-observability.ts
       - name: Apply and verify forward-only production migrations
-        env:
-          SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
-          SUPABASE_DB_PASSWORD: ${{ secrets.SUPABASE_DB_PASSWORD }}
-          SUPABASE_PROJECT_REF: ${{ vars.SUPABASE_PROJECT_REF }}
+        # prettier-ignore
+        env: { SUPABASE_ACCESS_TOKEN: '${{ secrets.SUPABASE_ACCESS_TOKEN }}', SUPABASE_DB_PASSWORD: '${{ secrets.SUPABASE_DB_PASSWORD }}', SUPABASE_PROJECT_REF: '${{ vars.SUPABASE_PROJECT_REF }}' }
         run: bash infra/workflows/apply-hosted-migrations.sh
       - name: Verify release promotion evidence
         run: node --experimental-strip-types infra/verify-release-promotion.ts .promotion/promotion-metadata.json production .promotion/staging-artifact-identity.json
@@ -86,7 +81,11 @@ jobs:
         env:
           CLOUDFLARE_ACCOUNT_ID: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-        run: pnpm --filter @wejammin/web exec wrangler deploy --config "$GITHUB_WORKSPACE/.promotion/artifacts/apps/web/dist/server/wrangler.production.json" --domain "$WEB_CUSTOM_DOMAIN"
+        run: pnpm --filter @wejammin/web exec wrangler deploy --config "$GITHUB_WORKSPACE/.promotion/artifacts/apps/web/dist/server/wrangler.production.json" --domain "$WEB_CUSTOM_DOMAIN" --var APP_RELEASE:"$DEPLOY_SHA" --tag "$DEPLOY_SHA" --message "sourceRevision=$DEPLOY_SHA;githubRunId=$GITHUB_RUN_ID"
+      - name: Verify production deployment health
+        # prettier-ignore
+        env: { STAGING_API_ORIGIN: '${{ vars.PRODUCTION_API_ORIGIN }}', STAGING_WEB_ORIGIN: '${{ vars.PRODUCTION_WEB_ORIGIN }}' }
+        run: set -o pipefail; pnpm --silent verify:staging | tee .promotion/production-verification.json
       - if: always()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
         with:
