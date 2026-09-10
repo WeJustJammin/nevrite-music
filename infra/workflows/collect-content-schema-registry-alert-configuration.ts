@@ -17,6 +17,7 @@ import {
 } from './ac209-alert-configuration-contract.ts';
 import { assertAc209ProviderState } from './ac209-collector-validation.ts';
 import { readAc209ProviderStateFromCloudflare } from './ac209-provider-client.ts';
+import { collectAc209WranglerVersionAttestation } from './ac209-wrangler-version-attestation.ts';
 import { CONTENT_SCHEMA_REGISTRY_ALERT_CONDITIONS } from '../../packages/contracts/src/content-schema-registry/operational-release-evidence-common.ts';
 import { CONTENT_SCHEMA_REGISTRY_ALERT_THRESHOLDS } from '../../packages/observability/src/content-schema-registry-alert-thresholds.ts';
 export * from './ac209-alert-configuration-contract.ts';
@@ -33,7 +34,6 @@ export type CollectAc209AlertConfigurationInput = {
   observabilityToken: string;
   providerToken: string;
   sourceRevision: string;
-  productionDeploymentId: string;
   productionVersionId: string;
   expectedDlqId: string;
   expectedSupabaseUrl: string;
@@ -78,7 +78,6 @@ const assertInput = (input: CollectAc209AlertConfigurationInput): void => {
   if (!SOURCE_REVISION.test(input.sourceRevision))
     fail('source revision is invalid');
   for (const [value, name] of [
-    [input.productionDeploymentId, 'production deployment ID'],
     [input.productionVersionId, 'production version ID'],
     [input.expectedDlqId, 'expected DLQ ID'],
     [input.configurationId, 'configuration ID'],
@@ -121,11 +120,8 @@ const assertInput = (input: CollectAc209AlertConfigurationInput): void => {
 const buildReport = (
   input: CollectAc209AlertConfigurationInput,
   state: Ac209ProviderState,
+  deployment: Ac209ProviderState['deployments'][number],
 ): Ac209AlertConfigurationReport => {
-  const deployment = state.deployments.find(
-    (candidate) => candidate.id === input.productionDeploymentId,
-  );
-  if (deployment === undefined) fail('production deployment is unavailable');
   const report = {
     schemaVersion: 'ac209-alert-configuration-v1',
     artifactPath: input.artifactPath ?? AC209_DEFAULT_ARTIFACT_PATH,
@@ -217,11 +213,11 @@ export const collectContentSchemaRegistryAlertConfiguration = async (
       { accountId: input.accountId, token: input.observabilityToken },
       input.fetchImpl,
     );
-  const state = assertAc209ProviderState(
+  const { state, activeDeployment } = assertAc209ProviderState(
     await input.readProviderState(),
     input,
   );
-  const report = buildReport(input, state);
+  const report = buildReport(input, state, activeDeployment);
   const serialized = `${JSON.stringify(report, null, 2)}\n`;
   const sha256 = createHash('sha256').update(serialized).digest('hex');
   if (input.outputPath !== undefined) {
@@ -250,7 +246,6 @@ const run = async (): Promise<void> => {
     observabilityToken: process.env['CLOUDFLARE_OBSERVABILITY_API_TOKEN'] ?? '',
     providerToken,
     sourceRevision,
-    productionDeploymentId: process.env['PRODUCTION_DEPLOYMENT_ID'] ?? '',
     productionVersionId: process.env['PRODUCTION_VERSION_ID'] ?? '',
     expectedDlqId: process.env['EXPECTED_DLQ_ID'] ?? '',
     expectedSupabaseUrl: process.env['EXPECTED_SUPABASE_URL'] ?? '',
@@ -262,12 +257,20 @@ const run = async (): Promise<void> => {
       ref: process.env['GITHUB_REF'] ?? '',
       checkedOutSha: process.env['CHECKED_OUT_SHA'] ?? '',
     },
-    readProviderState: () =>
-      readAc209ProviderStateFromCloudflare({
+    readProviderState: () => {
+      const versionId = process.env['PRODUCTION_VERSION_ID'] ?? '';
+      const versionAttestation = collectAc209WranglerVersionAttestation({
+        workspaceRoot,
+        versionId,
+        sourceRevision,
+      });
+      return readAc209ProviderStateFromCloudflare({
         accountId,
         providerToken,
-        versionId: process.env['PRODUCTION_VERSION_ID'] ?? '',
-      }),
+        versionId,
+        versionAttestation,
+      });
+    },
     outputPath,
     workspaceRoot,
     artifactPath: artifactPath.split(sep).join('/'),

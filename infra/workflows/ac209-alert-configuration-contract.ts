@@ -109,7 +109,7 @@ const BindingSchema = z
 const DeploymentVersionSchema = z
   .object({
     id: SafeReleaseIdSchema,
-    percentage: z.number().int().min(0).max(100),
+    percentage: z.number().min(0.01).max(100),
   })
   .strict();
 const DeploymentSchema = z

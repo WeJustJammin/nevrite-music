@@ -4,12 +4,22 @@ import { AC209_REQUIRED_BINDINGS } from '../infra/workflows/ac209-alert-configur
 import { readAc209ProviderStateFromCloudflare } from '../infra/workflows/ac209-provider-client.ts';
 
 const accountId = 'b1c05c00f04130a0d100adbca6696e6e';
+const workerBase = `https://api.cloudflare.com/client/v4/accounts/${accountId}/workers/scripts/wejammin-api`;
 const sourceRevision = '7f72272c4ca46c738cc8e7941573af08cad33169';
 const deploymentId = 'a42d3b94-3093-4de5-85ee-8ba630fd4fed';
 const versionId = '544ce939-93c4-43d8-967f-f7e878e40dae';
+const historicalDeploymentId = 'aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa';
+const historicalVersionA = 'bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb';
+const historicalVersionB = 'cccccccc-cccc-4ccc-8ccc-cccccccccccc';
 const dlqId = '88155985aa0c49caa591b9bf9e6ca937';
 const alertEmailSha256 =
   '0b0d32ad7cbafc5f75b399fdadc1211d29c0f41cea2f57a6ba8531667fcade48';
+const versionAttestation = () => ({
+  versionId,
+  tag: sourceRevision,
+  message: `sourceRevision=${sourceRevision};githubRunId=34515738514`,
+  triggeredBy: 'version_upload' as const,
+});
 
 const response = (result: unknown, status = 200): Response =>
   new Response(JSON.stringify({ success: status < 400, result }), {
@@ -28,18 +38,19 @@ const settingsResult = () => ({
       persist: true,
     },
   },
-});
-
-const versionResult = () => ({
-  id: versionId,
-  metadata: {
-    created_on: '2026-09-10T18:41:52.694911Z',
-    source: 'wrangler',
-  },
   annotations: {
     'workers/tag': sourceRevision,
     'workers/message': `sourceRevision=${sourceRevision};githubRunId=34515738514`,
     'workers/triggered_by': 'version_upload',
+  },
+});
+
+const versionResult = () => ({
+  id: versionId,
+  number: 1,
+  metadata: {
+    created_on: '2026-09-10T18:41:52.694911Z',
+    source: 'wrangler',
   },
   resources: {
     bindings: AC209_REQUIRED_BINDINGS.map((binding) => {
@@ -75,6 +86,17 @@ const deploymentsResult = () => ({
       annotations: { 'workers/triggered_by': 'deployment' },
       versions: [{ version_id: versionId, percentage: 100 }],
     },
+    {
+      id: historicalDeploymentId,
+      created_on: '2026-09-10T17:41:53.694911Z',
+      source: 'wrangler',
+      strategy: 'percentage',
+      annotations: { 'workers/triggered_by': 'deployment' },
+      versions: [
+        { version_id: historicalVersionA, percentage: 33.33 },
+        { version_id: historicalVersionB, percentage: 66.67 },
+      ],
+    },
   ],
 });
 
@@ -91,10 +113,17 @@ describe('AC209 Cloudflare provider client', () => {
       accountId,
       providerToken: 'provider-token-that-must-never-be-emitted',
       versionId,
+      versionAttestation: versionAttestation(),
       fetchImpl,
     });
 
     expect(fetchImpl).toHaveBeenCalledTimes(4);
+    expect(fetchImpl.mock.calls.map(([url]) => String(url))).toEqual([
+      `${workerBase}/settings`,
+      `${workerBase}/schedules`,
+      `${workerBase}/deployments`,
+      `${workerBase}/versions/${versionId}`,
+    ]);
     expect(state.settings).toMatchObject({
       versionId,
       versionSource: 'wrangler',
@@ -112,6 +141,7 @@ describe('AC209 Cloudflare provider client', () => {
         triggeredBy: 'version_upload',
       },
     });
+    expect(state.settings.bindings).toEqual(AC209_REQUIRED_BINDINGS);
     expect(state.observability).toEqual({
       enabled: true,
       headSamplingRate: 1,
@@ -128,6 +158,13 @@ describe('AC209 Cloudflare provider client', () => {
       source: 'wrangler',
       strategy: 'percentage',
       versions: [{ id: versionId, percentage: 100 }],
+    });
+    expect(state.deployments[1]).toMatchObject({
+      id: historicalDeploymentId,
+      versions: [
+        { id: historicalVersionA, percentage: 33.33 },
+        { id: historicalVersionB, percentage: 66.67 },
+      ],
     });
   });
 
@@ -148,6 +185,7 @@ describe('AC209 Cloudflare provider client', () => {
         accountId,
         providerToken: 'provider-token-that-must-never-be-emitted',
         versionId,
+        versionAttestation: versionAttestation(),
         fetchImpl,
       }),
     ).rejects.toThrow('normalized provider configuration is malformed');
@@ -167,6 +205,7 @@ describe('AC209 Cloudflare provider client', () => {
         accountId,
         providerToken: token,
         versionId,
+        versionAttestation: versionAttestation(),
         fetchImpl,
       });
     } catch (error) {
@@ -192,6 +231,7 @@ describe('AC209 Cloudflare provider client', () => {
         accountId,
         providerToken: 'provider-token-that-must-never-be-emitted',
         versionId,
+        versionAttestation: versionAttestation(),
         fetchImpl,
       }),
     ).rejects.toThrow('normalized provider configuration is malformed');
@@ -212,8 +252,36 @@ describe('AC209 Cloudflare provider client', () => {
         accountId,
         providerToken: 'provider-token-that-must-never-be-emitted',
         versionId,
+        versionAttestation: versionAttestation(),
         fetchImpl,
       }),
-    ).rejects.toThrow('version response identity');
+    ).rejects.toThrow('version attestation identity');
+  });
+
+  it('does not promote unqualified settings annotations into version-bound evidence', async () => {
+    const settings = settingsResult();
+    settings.annotations['workers/tag'] =
+      'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa';
+    const fetchImpl = vi
+      .fn<typeof fetch>()
+      .mockResolvedValueOnce(response(settings))
+      .mockResolvedValueOnce(response(schedulesResult()))
+      .mockResolvedValueOnce(response(deploymentsResult()))
+      .mockResolvedValueOnce(response(versionResult()));
+
+    const state = await readAc209ProviderStateFromCloudflare({
+      accountId,
+      providerToken: 'provider-token-that-must-never-be-emitted',
+      versionId,
+      versionAttestation: versionAttestation(),
+      fetchImpl,
+    });
+    expect(fetchImpl).toHaveBeenCalledTimes(4);
+    expect(state.settings.appRelease).toBe(sourceRevision);
+    expect(state.settings.versionAnnotations).toEqual({
+      tag: sourceRevision,
+      message: `sourceRevision=${sourceRevision};githubRunId=34515738514`,
+      triggeredBy: 'version_upload',
+    });
   });
 });

@@ -66,6 +66,26 @@ requires the newest deployment for each Worker to route exactly one version at
 `GITHUB_RUN_ID`. It contains version/deployment IDs, bounded timestamps, and
 redacted annotations only; Wrangler payloads and credentials are never retained.
 
+## Collect AC209 configuration evidence
+
+After an exact `main` revision has passed CI, staging, and production promotion,
+dispatch `collect-production-ac209.yml` from `main` with its full lowercase
+`source_revision`, exact Cloudflare `production_version_id`, expected production
+DLQ ID, approved configuration ID and reference, and
+`confirm_collection: true`. The protected collector resolves the Cloudflare
+deployment from one documented REST snapshot and obtains the exact retained
+version's release attestation through the repository-pinned Wrangler CLI. It
+fails closed unless the requested version appears in exactly one deployment,
+that deployment is the current first deployment and routes only that version at
+100%, and the version's `workers/tag` and `workers/message` bind the requested
+source revision to a nonzero GitHub run ID. Mutable worker-settings annotations
+are not accepted as version evidence. A GitHub deployment ID must not be
+supplied as a Cloudflare deployment identity.
+
+The retained configuration artifact is redacted configuration proof only. It
+does not replace the required production-native alert exercise, Cloudflare email
+delivery event, mailbox receipt, or exact-message DLQ cleanup evidence.
+
 Manual accessibility reports record stable operator IDs rather than names or
 email addresses. They include concrete OS, browser, and screen-reader versions,
 completion time, report digest, `passed` outcome, and every canonical check
