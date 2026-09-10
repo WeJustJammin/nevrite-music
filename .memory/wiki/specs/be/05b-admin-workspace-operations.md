@@ -1,5 +1,39 @@
 # BE 05b — Admin workspace and operations
 
+## Operator-only initial-owner setup (2026-09-10)
+
+The owner-approved empty-installation exception is
+`platform_private.initialize_cms_owner(uuid, uuid, text, timestamptz, uuid, boolean)`:
+verified Auth ID, pinned person ID, expected email, grant end, authorization
+reference and preview flag. Only the `postgres` operator may execute it; PUBLIC,
+anon, authenticated and service_role have no execution or receipt-table grants.
+It is SECURITY INVOKER with fixed empty search path and UTC timezone, not an HTTP
+endpoint. The email is compared but never retained in its receipt/audit payload.
+
+It serializes the empty-authority and singleton checks, locks the confirmed,
+nondeleted, nonbanned active/claimed owner identity, and refuses any existing CMS
+or admin grant. It creates a private-linked WeBeJammin alias and self-member
+organization through canonical identity operations. Only four organization
+capabilities are initialized: `cms.schema_registry.read`, `cms.schema_designer`,
+`admin.inbox.read`, `admin.audit.read`. The two admin capabilities receive named
+organization-scoped `read` rows, with no delegation or purpose grant. End time is
+bounded to seven days and date-only grants round down to avoid overrun.
+
+`cms_owner_initialization` is a forced-RLS singleton receipt recording immutable
+Auth/person/alias/organization IDs, authorization reference, operator role and
+term. The explicit `operator.cms_owner.initialize` audit records operator setup;
+it must not be described as user login or MFA. Failure rolls back all identity,
+membership, capability, audit and receipt effects. Actor settings are restored
+after success. Typed refusals are `BOOTSTRAP_OPERATOR_REQUIRED`,
+`BOOTSTRAP_INVALID`, `BOOTSTRAP_ALREADY_INITIALIZED`,
+`BOOTSTRAP_IDENTITY_MISMATCH`, `BOOTSTRAP_AUTHORITY_EXISTS` and
+`BOOTSTRAP_HANDLE_UNAVAILABLE`; canonical identity failures also roll back.
+Preview returns proposed person, handle, capabilities and term without mutation.
+
+This is the sole initial-installation exception to the grant-RPC-only insertion
+rule below. Ordinary grantor-subset, step-up, distinct-approver and revocation
+requirements are unchanged. Hosted tests must separately prove real access.
+
 ## Split Group
 
 This companion is the backend contract for Shard 05 administration and

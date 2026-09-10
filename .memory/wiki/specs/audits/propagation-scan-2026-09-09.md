@@ -24,3 +24,6 @@ Approval is already given for this correction; no additional scope is inferred.
 
 ### Phases into
 - [[specs/phases/phase-2|Phase 2 — Identity, admin, CMS/settings]]
+
+### References
+- [[specs/phases/phase-2|Phase 2 — Identity, admin, CMS/settings]]

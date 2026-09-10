@@ -1,7 +1,7 @@
 {
-  "builtAt": "2026-09-09T22:20:08.210Z",
-  "nodeCount": 1629,
-  "edgeCount": 10117,
+  "builtAt": "2026-09-10T02:12:10.669Z",
+  "nodeCount": 1630,
+  "edgeCount": 10120,
   "nodes": [
     {
       "id": "plan:2026-08-02-architecture-design",
@@ -260,6 +260,13 @@
       "type": "audit",
       "label": "Slice 09 Option A propagation record",
       "path": ".memory/wiki/specs/audits/propagation-option-a-2026-09-02.md",
+      "shardId": null
+    },
+    {
+      "id": "audit:audits/propagation-owner-bootstrap-2026-09-10",
+      "type": "audit",
+      "label": "Initial-owner propagation",
+      "path": ".memory/wiki/specs/audits/propagation-owner-bootstrap-2026-09-10.md",
       "shardId": null
     },
     {
@@ -11619,6 +11626,12 @@
       "source": "phase-ref"
     },
     {
+      "from": "audit:audits/propagation-ac265-2026-09-09",
+      "to": "phase-plan:phases/phase-2",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
       "from": "audit:audits/propagation-option-a-2026-09-02",
       "to": "phase-plan:phases/phase-2",
       "type": "phases_into",
@@ -11629,6 +11642,12 @@
       "to": "phase-plan:phases/phase-2",
       "type": "references",
       "source": "wikilink"
+    },
+    {
+      "from": "audit:audits/propagation-owner-bootstrap-2026-09-10",
+      "to": "phase-plan:phases/phase-2",
+      "type": "phases_into",
+      "source": "phase-ref"
     },
     {
       "from": "audit:audits/propagation-scan-2026-08-30",
@@ -11659,6 +11678,12 @@
       "to": "phase-plan:phases/phase-2",
       "type": "phases_into",
       "source": "phase-ref"
+    },
+    {
+      "from": "audit:audits/propagation-scan-2026-09-09",
+      "to": "phase-plan:phases/phase-2",
+      "type": "references",
+      "source": "wikilink"
     },
     {
       "from": "audit:audits/remediation-state",
@@ -72115,7 +72140,7 @@
     "byNodeType": {
       "plan": 12,
       "architecture": 18,
-      "audit": 26,
+      "audit": 27,
       "be-spec": 157,
       "fe-spec": 44,
       "ia-spec": 85,
@@ -72124,9 +72149,9 @@
       "decision": 97
     },
     "byEdgeType": {
-      "phases_into": 90,
+      "phases_into": 91,
       "constrained_by": 9041,
-      "references": 913,
+      "references": 915,
       "derives_from": 64,
       "implemented_by": 6,
       "split_from": 3
