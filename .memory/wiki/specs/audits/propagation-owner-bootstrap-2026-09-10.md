@@ -46,3 +46,6 @@ unproven. No additional spec gap was found within this operator-only boundary.
 
 ### Phases into
 - [[specs/phases/phase-2|Phase 2 — Identity, admin, CMS/settings]]
+
+### References
+- [[specs/phases/phase-2|Phase 2 — Identity, admin, CMS/settings]]

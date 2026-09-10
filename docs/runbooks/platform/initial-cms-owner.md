@@ -28,6 +28,11 @@ admin read capabilities. It creates no delegation authority, staff case,
 approval or elevated-purpose grant. Existing request-time admission and MFA
 requirements remain in force. The function returns the created IDs and term.
 
+Operator setup does not reuse a browser-selected acting context. It uses the
+canonical self-person default, leaves expired browser bindings unchanged and
+restores caller settings afterward. A later browser session must still perform
+its normal context reconfirmation; initialization is not a session renewal.
+
 Verify exactly one initialization receipt, the explicit operator audit, one
 privileged person, the four named organization grants and two admin read grants.
 Verify ordinary accounts still lack CMS/admin grants. Then use a real hosted
