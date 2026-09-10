@@ -14,6 +14,17 @@ const preflight = workflow.match(
 const collect = workflow.match(/\n\s{2}collect:\n[\s\S]*$/u)?.[0];
 
 describe('production AC211 collection workflow contract', () => {
+  it('runs count-only diagnosis before collection without replacing the evidence gate', () => {
+    expect(collect).toContain('diagnose-content-schema-registry-slo.mjs');
+    expect(
+      collect?.indexOf('diagnose-content-schema-registry-slo.mjs'),
+    ).toBeLessThan(
+      collect?.indexOf('collect-content-schema-registry-slo-evidence.ts') ?? -1,
+    );
+    expect(collect).toContain(
+      'AC211 diagnostic unavailable; normal collection still required.',
+    );
+  });
   it('is manual, explicit, main-only, and serialized without cancellation', () => {
     expect(workflowHeader).toContain('workflow_dispatch:');
     expect(workflowHeader).not.toMatch(

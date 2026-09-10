@@ -74,7 +74,11 @@ jobs:
           CLOUDFLARE_ACCOUNT_ID: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
           CLOUDFLARE_PLATFORM_QUEUE_ID: ${{ vars.CLOUDFLARE_PLATFORM_QUEUE_ID }}
           CLOUDFLARE_OBSERVABILITY_API_TOKEN: ${{ secrets.CLOUDFLARE_OBSERVABILITY_API_TOKEN }}
-        run: node --experimental-strip-types infra/workflows/collect-content-schema-registry-slo-evidence.ts
+        run: |
+          if ! node --experimental-strip-types infra/workflows/diagnose-content-schema-registry-slo.mjs; then
+            echo '::warning::AC211 diagnostic unavailable; normal collection still required.'
+          fi
+          node --experimental-strip-types infra/workflows/collect-content-schema-registry-slo-evidence.ts
       - name: Upload retained AC211 reports
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
         with:
