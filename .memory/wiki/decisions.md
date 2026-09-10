@@ -2,8 +2,24 @@
 
 ## Summary
 
-- **Total decisions**: 100
-- **Unique decision titles**: 100
+- **Total decisions**: 101
+- **Unique decision titles**: 101
+
+## DEC-101: AC265 deferred-role denial evidence (2026-09-09)
+
+- **Problem**: Positive hosted minor/guardian variants conflicted with adult-only
+  launch policy; Phase 2 also defers mandates.
+- **Options considered**: Preserve launch scope with exercised denial evidence,
+  or expand architecture and phase scope to deliver all authority prerequisites.
+- **Decision**: The user approved the first option ("ac265 approved"). Guardian,
+  junior, and business-mandate cases require denial without disclosure or
+  mutation; currently authorized roles retain positive hosted checks. All nine
+  cases and ten scenarios remain required. Approval is not acceptance evidence.
+- **Downstream**: FE03, Phase 2 AC265, retained report version 2, verifier tests,
+  release runbook, and tracking. See
+  [propagation record](specs/audits/propagation-ac265-2026-09-09.md).
+- **Reversibility**: Medium; future positive deferred-role access requires the
+  owning architecture and launch approvals plus a downstream contract migration.
 
 ## DEC-001: The rights stack is the thesis, not an adjacency (2026-07-16)
 

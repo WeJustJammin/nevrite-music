@@ -600,6 +600,27 @@ props snapshot, snapshot signature, release signature, or verification evidence.
 
 ## Conditional Rendering Matrix
 
+### Phase 2 AC265 launch overlay (approved 2026-09-09)
+
+The matrix below describes capability-selected variants across the product
+roadmap; it does not activate deferred authority. For Phase 2 registry release
+evidence, `guardianMandate`, `juniorRestricted`, and `businessMandate` require
+exercised denial with no protected disclosure or mutation. Minor/guardian
+accounts must not be provisioned to bypass the adult-only launch boundary;
+use eligible adult test sessions to exercise rejected context requests.
+Mandate labels never create grants. Positive `entitledRead`, `ownerFull`,
+`staffCaseScoped`, and `adminStepUp` checks require real, independently verified
+server authority, including case scope or recent MFA where applicable. Missing
+authority blocks those checks; it cannot be relabeled as a passing denial.
+`forbiddenHidden` requires denial/non-disclosure; `disabledPrerequisite` requires
+disabled controls and no mutation. All nine cases and all ten AC265 scenarios
+remain mandatory. Retain actual hosted IdP/RLS, step-up, and teardown evidence;
+skips and local fixtures do not satisfy the release gate.
+
+The retained report uses `ac265-hosted-e2e-v2` with each role's explicit
+`authorized_access`, `denied_no_disclosure`, or `disabled_no_mutation` assertion.
+Future positive deferred-role tests require their owning launch prerequisites.
+
 | Feature/component                                      | Free                            | Paid                                            | Creator                                  | Guardian                             | Junior                                                      | Business                                        | Staff                                    | Admin                                                           |
 | ------------------------------------------------------ | ------------------------------- | ----------------------------------------------- | ---------------------------------------- | ------------------------------------ | ----------------------------------------------------------- | ----------------------------------------------- | ---------------------------------------- | --------------------------------------------------------------- |
 | Public/read projection for publication/entry consumers | full public                     | full entitled                                   | full owned/public                        | full mandate-visible                 | full age-allowed own/public                                 | full organization public/mandated               | read-only with explicit case capability  | read-only with explicit capability                              |

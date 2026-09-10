@@ -17,7 +17,7 @@ import {
 
 const hostedReport = () => ({
   criterion: 'P2-S09-AC-265',
-  schemaVersion: 'ac265-hosted-e2e-v1',
+  schemaVersion: 'ac265-hosted-e2e-v2',
   sourceRevision: completeEvidence.hostedE2e.sourceRevision,
   environment: completeEvidence.hostedE2e.environment,
   deploymentId: completeEvidence.hostedE2e.deploymentId,
@@ -32,6 +32,17 @@ const hostedReport = () => ({
   redacted: true,
   roles: CONTENT_SCHEMA_REGISTRY_HOSTED_ROLES.map((role) => ({
     role,
+    assertion: {
+      entitled_read: 'authorized_access',
+      owner_full: 'authorized_access',
+      guardian_mandate: 'denied_no_disclosure',
+      junior_restricted: 'denied_no_disclosure',
+      business_mandate: 'denied_no_disclosure',
+      staff_case_scoped: 'authorized_access',
+      admin_step_up: 'authorized_access',
+      forbidden_hidden: 'denied_no_disclosure',
+      disabled_prerequisite: 'disabled_no_mutation',
+    }[role],
     outcome: 'passed',
     durationMs: 1,
   })),
@@ -43,6 +54,48 @@ const hostedReport = () => ({
 });
 
 describe('Slice 09 hosted E2E report body contract', () => {
+  it('rejects legacy reports without explicit access assertions', () => {
+    const report = hostedReport();
+    expect(
+      ContentSchemaRegistryHostedE2eReportSchema.safeParse({
+        ...report,
+        schemaVersion: 'ac265-hosted-e2e-v1',
+        roles: report.roles.map(({ role, outcome, durationMs }) => ({
+          role,
+          outcome,
+          durationMs,
+        })),
+      }).success,
+    ).toBe(false);
+  });
+
+  it.each(CONTENT_SCHEMA_REGISTRY_HOSTED_ROLES)(
+    'rejects a mismatched or skipped assertion for %s',
+    (role) => {
+      const report = hostedReport();
+      const expected = report.roles.find(
+        (result) => result.role === role,
+      )?.assertion;
+      for (const assertion of [
+        'authorized_access',
+        'denied_no_disclosure',
+        'disabled_no_mutation',
+        'skipped',
+        undefined,
+      ]) {
+        if (assertion === expected) continue;
+        expect(
+          ContentSchemaRegistryHostedE2eReportSchema.safeParse({
+            ...report,
+            roles: report.roles.map((result) =>
+              result.role === role ? { ...result, assertion } : result,
+            ),
+          }).success,
+        ).toBe(false);
+      }
+    },
+  );
+
   it('accepts the complete redacted hosted report shape', () => {
     const report = hostedReport();
     expect(ContentSchemaRegistryHostedE2eReportSchema.parse(report)).toEqual(
