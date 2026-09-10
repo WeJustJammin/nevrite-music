@@ -11,6 +11,12 @@ reader platform reports to one immutable artifact without storing raw provider
 payloads, credentials, tokens, or PII. Each digest has a traversal-safe relative
 report path; the workflow verifier binds those references to retained files.
 
+Hosted report version `ac265-hosted-e2e-v2` uses the role assertion policy in
+`operational-release-evidence-hosted-role.ts`. It distinguishes authorized
+access, denial without disclosure, and disabled controls without mutation.
+Deferred Phase 2 guardian/junior/business-mandate contexts require denial;
+the policy never grants runtime authority or supplies hosted proof.
+
 ## Ownership
 
 These schemas define the cross-surface boundary. They do not grant authority,

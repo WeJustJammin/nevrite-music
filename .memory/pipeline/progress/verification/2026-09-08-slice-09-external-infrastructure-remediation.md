@@ -187,11 +187,14 @@ then retain both redacted reports through the protected evidence workflow.
   eligible complete 2026-09-09 UTC window begins after
   `2026-09-10T00:00:00Z` if the production deployment identity is unchanged.
 - AC265 retains one genuine Google callback/session/protected-route proof. A
-  dependency audit confirmed that guardian, junior/age, business, staff-case,
-  and complete admin role authority is owned by later contracts, primarily
-  Slice 13. No role was fabricated from labels or caller-controlled flags. The
-  criterion remains open pending an approved correction to the locked plan or
-  an upstream authoritative role-context contract.
+  previous dependency audit attributed missing authority to Slice 13. The
+  [2026-09-09 source audit](2026-09-09-ac265-scope-conflict.md) corrects that
+  attribution: BE03a inherits authority from BE01; Slice 13 covers navigation.
+  Positive minor/guardian variants conflict with the adult-only launch policy;
+  Phase 2 also defers mandates. No roles were fabricated. The criterion remains
+  open for complete hosted evidence. The user approved the scope correction on
+  2026-09-09; version 2 of the report now enforces the role assertions documented
+  in the source audit and FE03 launch overlay.
 - AC266 now has a fail-closed hosted automation path ready for exact-main
   deployment: canonical page outcomes, pinned Playwright Chromium, cross-origin
   navigation refusal, zero Serious/Critical enforcement, independent digest

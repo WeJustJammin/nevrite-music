@@ -1,7 +1,7 @@
 {
-  "builtAt": "2026-09-08T05:24:03.746Z",
-  "nodeCount": 1627,
-  "edgeCount": 10115,
+  "builtAt": "2026-09-09T22:20:08.210Z",
+  "nodeCount": 1629,
+  "edgeCount": 10117,
   "nodes": [
     {
       "id": "plan:2026-08-02-architecture-design",
@@ -242,6 +242,13 @@
       "shardId": null
     },
     {
+      "id": "audit:audits/propagation-ac265-2026-09-09",
+      "type": "audit",
+      "label": "Approved AC265 propagation",
+      "path": ".memory/wiki/specs/audits/propagation-ac265-2026-09-09.md",
+      "shardId": null
+    },
+    {
       "id": "audit:audits/propagation-observability-cost-2026-08-30",
       "type": "audit",
       "label": "Sentry Removal and Free-Only Operations Propagation Record",
@@ -267,6 +274,13 @@
       "type": "audit",
       "label": "Option A downstream propagation scan",
       "path": ".memory/wiki/specs/audits/propagation-scan-2026-09-02.md",
+      "shardId": null
+    },
+    {
+      "id": "audit:audits/propagation-scan-2026-09-09",
+      "type": "audit",
+      "label": "AC265 scope propagation scan",
+      "path": ".memory/wiki/specs/audits/propagation-scan-2026-09-09.md",
       "shardId": null
     },
     {
@@ -11599,6 +11613,12 @@
       "source": "wikilink"
     },
     {
+      "from": "audit:audits/propagation-ac265-2026-09-09",
+      "to": "phase-plan:phases/phase-2",
+      "type": "phases_into",
+      "source": "phase-ref"
+    },
+    {
       "from": "audit:audits/propagation-option-a-2026-09-02",
       "to": "phase-plan:phases/phase-2",
       "type": "phases_into",
@@ -11633,6 +11653,12 @@
       "to": "phase-plan:phases/phase-2",
       "type": "references",
       "source": "wikilink"
+    },
+    {
+      "from": "audit:audits/propagation-scan-2026-09-09",
+      "to": "phase-plan:phases/phase-2",
+      "type": "phases_into",
+      "source": "phase-ref"
     },
     {
       "from": "audit:audits/remediation-state",
@@ -72089,7 +72115,7 @@
     "byNodeType": {
       "plan": 12,
       "architecture": 18,
-      "audit": 24,
+      "audit": 26,
       "be-spec": 157,
       "fe-spec": 44,
       "ia-spec": 85,
@@ -72098,7 +72124,7 @@
       "decision": 97
     },
     "byEdgeType": {
-      "phases_into": 88,
+      "phases_into": 90,
       "constrained_by": 9041,
       "references": 913,
       "derives_from": 64,

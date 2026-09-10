@@ -15,6 +15,7 @@ import {
   CONTENT_SCHEMA_REGISTRY_HOSTED_SCENARIOS,
 } from '../../packages/contracts/src/content-schema-registry/operational-release-evidence.ts';
 import { CONTENT_SCHEMA_REGISTRY_AUTOMATED_A11Y_TARGETS } from '../../packages/contracts/src/content-schema-registry/operational-release-evidence-automated-a11y.ts';
+import { CONTENT_SCHEMA_REGISTRY_HOSTED_ROLE_ASSERTIONS } from '../../packages/contracts/src/content-schema-registry/operational-release-evidence-hosted-role.ts';
 import {
   completeEvidence,
   expectedIdentity,
@@ -23,7 +24,7 @@ import {
 export const hostedReportContents = `${JSON.stringify(
   {
     criterion: 'P2-S09-AC-265',
-    schemaVersion: 'ac265-hosted-e2e-v1',
+    schemaVersion: 'ac265-hosted-e2e-v2',
     sourceRevision: completeEvidence.hostedE2e.sourceRevision,
     environment: completeEvidence.hostedE2e.environment,
     deploymentId: completeEvidence.hostedE2e.deploymentId,
@@ -38,6 +39,7 @@ export const hostedReportContents = `${JSON.stringify(
     redacted: true,
     roles: CONTENT_SCHEMA_REGISTRY_HOSTED_ROLES.map((role) => ({
       role,
+      assertion: CONTENT_SCHEMA_REGISTRY_HOSTED_ROLE_ASSERTIONS[role],
       outcome: 'passed',
       durationMs: 1,
     })),

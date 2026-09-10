@@ -10,25 +10,12 @@ import {
   ReleaseEvidenceHostedOriginSchema,
   ReleaseEvidenceSourceRevisionSchema,
 } from './operational-release-evidence-common.ts';
+import { HostedE2eRoleResultSchema } from './operational-release-evidence-hosted-role.ts';
 
 export const CONTENT_SCHEMA_REGISTRY_HOSTED_E2E_REPORT_SCHEMA_VERSION =
-  'ac265-hosted-e2e-v1' as const;
+  'ac265-hosted-e2e-v2' as const;
 
 const MAX_CHECK_DURATION_MS = 86_400_000;
-
-const HostedE2eRoleResultSchema = z
-  .object({
-    role: z.enum(CONTENT_SCHEMA_REGISTRY_HOSTED_ROLES),
-    outcome: z.literal('passed'),
-    durationMs: z
-      .number()
-      .finite()
-      .int()
-      .nonnegative()
-      .max(MAX_CHECK_DURATION_MS),
-  })
-  .strict()
-  .readonly();
 
 const HostedE2eScenarioResultSchema = z
   .object({

@@ -122,7 +122,25 @@ reads no more than 10 MiB plus a growth sentinel, recomputes every SHA-256 diges
 from the same bytes it parses, and rejects every unreferenced file or directory.
 `hosted/e2e.json` must satisfy the strict redacted
 `ContentSchemaRegistryHostedE2eReportSchema`; it contains only exact release
-identity, timestamps, passed role/scenario keys, and bounded durations. The
+identity, timestamps, passed role/scenario keys, explicit role assertions, and
+bounded durations. Report version `ac265-hosted-e2e-v2` rejects legacy reports.
+The approved Phase 2 role assertions are:
+
+| Roles                                                                   | Required assertion   |
+| ----------------------------------------------------------------------- | -------------------- |
+| entitled_read, owner_full, staff_case_scoped, admin_step_up             | authorized_access    |
+| guardian_mandate, junior_restricted, business_mandate, forbidden_hidden | denied_no_disclosure |
+| disabled_prerequisite                                                   | disabled_no_mutation |
+
+Exercise deferred context denial using eligible adult sessions, without creating
+minor accounts or invented mandates. Assert no protected disclosure or mutation
+on denied contexts. Positive cases require real server capability, ownership,
+case scope, and recent step-up as applicable; unavailable authority remains a
+blocker. A disabled case must demonstrate disabled controls and no mutation.
+All nine cases and all ten scenarios remain mandatory, with actual hosted
+IdP/RLS and session teardown evidence. Do not relabel an old result, skip a case,
+or use the policy map to generate claimed passes. The map validates evidence;
+it neither runs a test nor grants authority. The
 verifier then confirms shape, exact check coverage,
 immutable identity, ordering, strict SLO limits, derived daily DLQ rate,
 hosted-origin safety, deployment chronology, trusted-cutoff bounds, and evidence
