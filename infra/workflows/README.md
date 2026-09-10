@@ -9,6 +9,13 @@ filesystem and validation operations.
 
 ### Entry points
 
+- `diagnose-content-schema-registry-slo.mjs` emits four count-only historical
+  telemetry comparisons inside the protected AC211 job. It uses the existing
+  observability credential, one returned event maximum per query, a 10-second
+  request timeout, and a 2 MiB response cap. Raw events and secrets never enter
+  output. Missing counts remain null, not zero. Diagnostic failures warn but
+  never replace or bypass the subsequent normal evidence collector.
+
 - `build-immutable-artifacts.sh` builds the workspace and packages both web
   runtime configurations for the immutable CI artifact.
 - `write-ci-gate-evidence.sh` derives the release gate set from successful CI
