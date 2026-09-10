@@ -1,7 +1,7 @@
 {
-  "builtAt": "2026-09-10T02:12:10.669Z",
+  "builtAt": "2026-09-10T02:36:44.569Z",
   "nodeCount": 1630,
-  "edgeCount": 10120,
+  "edgeCount": 10121,
   "nodes": [
     {
       "id": "plan:2026-08-02-architecture-design",
@@ -11648,6 +11648,12 @@
       "to": "phase-plan:phases/phase-2",
       "type": "phases_into",
       "source": "phase-ref"
+    },
+    {
+      "from": "audit:audits/propagation-owner-bootstrap-2026-09-10",
+      "to": "phase-plan:phases/phase-2",
+      "type": "references",
+      "source": "wikilink"
     },
     {
       "from": "audit:audits/propagation-scan-2026-08-30",
@@ -72151,7 +72157,7 @@
     "byEdgeType": {
       "phases_into": 91,
       "constrained_by": 9041,
-      "references": 915,
+      "references": 916,
       "derives_from": 64,
       "implemented_by": 6,
       "split_from": 3

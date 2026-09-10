@@ -30,6 +30,11 @@ after success. Typed refusals are `BOOTSTRAP_OPERATOR_REQUIRED`,
 `BOOTSTRAP_HANDLE_UNAVAILABLE`; canonical identity failures also roll back.
 Preview returns proposed person, handle, capabilities and term without mutation.
 
+Operator setup must not reuse a browser-selected acting context. Its canonical
+self-person operation context leaves all existing browser bindings unchanged,
+including expired ones; both acting-party and acting-context caller settings
+are restored afterward. No session is renewed or reauthenticated by setup.
+
 This is the sole initial-installation exception to the grant-RPC-only insertion
 rule below. Ordinary grantor-subset, step-up, distinct-approver and revocation
 requirements are unchanged. Hosted tests must separately prove real access.

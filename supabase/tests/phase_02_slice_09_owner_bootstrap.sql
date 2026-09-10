@@ -63,11 +63,30 @@ select is((select count(*) from identity_private.organization_party),0::bigint,'
 select is((select count(*) from identity_private.organization_actor_grant),0::bigint,'Failure rolls back all grants');
 drop trigger reject_bootstrap_receipt on platform_private.cms_owner_initialization;
 
+-- A database operator has no browser context. Existing browser bindings must
+-- neither block initialization nor be renewed by it.
+update platform_private.acting_context_binding
+ set selected_at=clock_timestamp()-interval '3 days',
+ expires_at=clock_timestamp()-interval '1 day',last_seen_at=clock_timestamp()-interval '2 days'
+ where person_id=(select person_id from bootstrap_subject);
+select set_config('app.acting_context_id',
+ (select id::text from platform_private.acting_context_binding
+  where person_id=(select person_id from bootstrap_subject) limit 1),true);
+create temp table original_bootstrap_context as
+ select id,expires_at,last_seen_at,version from platform_private.acting_context_binding
+ where person_id=(select person_id from bootstrap_subject);
+
 create temp table bootstrap_result as select platform_private.initialize_cms_owner(
  'a9100000-0000-4000-8000-000000000001',(select person_id from bootstrap_subject),
  'bootstrap-owner@example.test',clock_timestamp()+interval '1 day',
  'a9100000-0000-4000-8000-000000000099',false) as body;
 select is((select body->>'state' from bootstrap_result),'initialized','Initial owner setup succeeds');
+select is((select count(*) from platform_private.acting_context_binding b
+ join original_bootstrap_context old using(id)
+ where b.expires_at=old.expires_at and b.last_seen_at=old.last_seen_at and b.version=old.version),
+ (select count(*) from original_bootstrap_context),'Operator setup never renews stale browser sessions');
+select is(current_setting('app.acting_context_id'),
+ (select id::text from original_bootstrap_context limit 1),'Caller context setting restored after operator setup');
 select lives_ok($$select platform_private.cms_require_read(
  'a9100000-0000-4000-8000-000000000001',
  (select (body->>'organizationId')::uuid from bootstrap_result))$$,
