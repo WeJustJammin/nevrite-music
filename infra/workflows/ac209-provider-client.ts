@@ -5,8 +5,14 @@ import {
   Ac209ProviderStateSchema,
   type Ac209ProviderState,
 } from './ac209-alert-configuration-contract.ts';
+import {
+  BoundedProviderResponseError,
+  requestBoundedProviderResponseText,
+} from './bounded-provider-response.ts';
 const CLOUDFLARE_ACCOUNT_ID = /^[0-9a-f]{32}$/u;
 const WORKER_VERSION_ID = /^[0-9a-f-]{36}$/u;
+const MAX_RESPONSE_BYTES = 2 * 1024 * 1024;
+export const AC209_PROVIDER_REQUEST_TIMEOUT_MS = 10_000 as const;
 type FetchImplementation = typeof fetch;
 const fail = (message: string): never => {
   throw new Error(`AC209 provider configuration check failed: ${message}`);
@@ -16,33 +22,61 @@ const requireSecret = (value: string, name: string): void => {
     fail(`${name} is unavailable`);
 };
 const isRecord = (value: unknown): value is Record<string, unknown> =>
-  typeof value === 'object' && value !== null;
+  typeof value === 'object' && value !== null && !Array.isArray(value);
+const hasEntries = (value: unknown): boolean => {
+  if (value === undefined || value === null) return false;
+  if (Array.isArray(value)) return value.length > 0;
+  if (isRecord(value)) return Object.keys(value).length > 0;
+  if (typeof value === 'string') return value.length > 0;
+  return true;
+};
 const requestCloudflareJson = async (
   fetchImpl: FetchImplementation,
   url: string,
   token: string,
   label: string,
+  signal: AbortSignal,
 ): Promise<unknown> => {
-  let response: Response | undefined;
+  let result: Awaited<ReturnType<typeof requestBoundedProviderResponseText>>;
   try {
-    response = await fetchImpl(url, {
-      headers: {
-        accept: 'application/json',
-        authorization: `Bearer ${token}`,
+    result = await requestBoundedProviderResponseText(
+      fetchImpl,
+      url,
+      {
+        headers: {
+          accept: 'application/json',
+          authorization: `Bearer ${token}`,
+        },
       },
-    });
-  } catch {
+      {
+        maxBytes: MAX_RESPONSE_BYTES,
+        signal,
+        timeoutMs: AC209_PROVIDER_REQUEST_TIMEOUT_MS,
+      },
+    );
+  } catch (error: unknown) {
+    if (
+      error instanceof BoundedProviderResponseError &&
+      error.code === 'timed_out'
+    )
+      fail(`${label} request timed out`);
     fail(`${label} request failed`);
   }
-  if (response === undefined || !response.ok) fail(`${label} request failed`);
+  if (!result.response.ok) fail(`${label} request failed`);
   try {
-    return await response.json();
+    return JSON.parse(result.text) as unknown;
   } catch {
     fail(`${label} response is not JSON`);
   }
 };
 const providerResult = (value: unknown, label: string): unknown => {
-  if (!isRecord(value) || value.success !== true || !('result' in value))
+  if (
+    !isRecord(value) ||
+    value.success !== true ||
+    !('result' in value) ||
+    hasEntries(value.errors) ||
+    hasEntries(value.messages)
+  )
     fail(`${label} response envelope is invalid`);
   return value['result'];
 };
@@ -216,37 +250,49 @@ export const readAc209ProviderStateFromCloudflare = async ({
   if (!WORKER_VERSION_ID.test(versionId)) fail('worker version ID is invalid');
   requireSecret(providerToken, 'CLOUDFLARE_API_TOKEN');
   const base = `https://api.cloudflare.com/client/v4/accounts/${accountId}/workers/scripts/${AC209_WORKER_NAME}`;
+  const controller = new AbortController();
+  let responses: [unknown, unknown, unknown, unknown];
+  try {
+    responses = (await Promise.all([
+      requestCloudflareJson(
+        fetchImpl,
+        `${base}/settings`,
+        providerToken,
+        'worker settings',
+        controller.signal,
+      ),
+      requestCloudflareJson(
+        fetchImpl,
+        `${base}/schedules`,
+        providerToken,
+        'worker schedules',
+        controller.signal,
+      ),
+      requestCloudflareJson(
+        fetchImpl,
+        `${base}/deployments`,
+        providerToken,
+        'worker deployments',
+        controller.signal,
+      ),
+      requestCloudflareJson(
+        fetchImpl,
+        `${base}/versions/${encodeURIComponent(versionId)}`,
+        providerToken,
+        'worker version',
+        controller.signal,
+      ),
+    ])) as [unknown, unknown, unknown, unknown];
+  } catch (error: unknown) {
+    controller.abort();
+    throw error;
+  }
   const [
     settingsResponse,
     schedulesResponse,
     deploymentsResponse,
     versionResponse,
-  ] = await Promise.all([
-    requestCloudflareJson(
-      fetchImpl,
-      `${base}/settings`,
-      providerToken,
-      'worker settings',
-    ),
-    requestCloudflareJson(
-      fetchImpl,
-      `${base}/schedules`,
-      providerToken,
-      'worker schedules',
-    ),
-    requestCloudflareJson(
-      fetchImpl,
-      `${base}/deployments`,
-      providerToken,
-      'worker deployments',
-    ),
-    requestCloudflareJson(
-      fetchImpl,
-      `${base}/versions/${encodeURIComponent(versionId)}`,
-      providerToken,
-      'worker version',
-    ),
-  ]);
+  ] = responses;
   const settings = providerResult(settingsResponse, 'worker settings');
   const version = providerResult(versionResponse, 'worker version');
   const state = {

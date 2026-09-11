@@ -1,12 +1,19 @@
 import { resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
+import {
+  BoundedProviderResponseError,
+  requestBoundedProviderResponseText,
+} from './workflows/bounded-provider-response.ts';
+
 export interface CloudflareObservabilityVerificationConfig {
   readonly accountId: string;
   readonly token: string;
 }
 
 const CLOUDFLARE_ACCOUNT_ID = /^[0-9a-f]{32}$/u;
+const MAX_RESPONSE_BYTES = 512 * 1024;
+export const CLOUDFLARE_OBSERVABILITY_REQUEST_TIMEOUT_MS = 10_000 as const;
 
 const isRecord = (value: unknown): value is Record<string, unknown> =>
   typeof value === 'object' && value !== null && !Array.isArray(value);
@@ -20,24 +27,39 @@ const requestJson = async (
   token: string,
   body: Readonly<Record<string, unknown>>,
   failureMessage: string,
+  signal?: AbortSignal,
 ): Promise<unknown> => {
-  let response: Response;
+  let result: Awaited<ReturnType<typeof requestBoundedProviderResponseText>>;
   try {
-    response = await fetchImpl(url, {
-      body: JSON.stringify(body),
-      headers: {
-        Authorization: `Bearer ${token}`,
-        'Content-Type': 'application/json',
+    result = await requestBoundedProviderResponseText(
+      fetchImpl,
+      url,
+      {
+        body: JSON.stringify(body),
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+        method: 'POST',
       },
-      method: 'POST',
-    });
-  } catch {
+      {
+        maxBytes: MAX_RESPONSE_BYTES,
+        signal,
+        timeoutMs: CLOUDFLARE_OBSERVABILITY_REQUEST_TIMEOUT_MS,
+      },
+    );
+  } catch (error: unknown) {
+    if (
+      error instanceof BoundedProviderResponseError &&
+      error.code === 'timed_out'
+    )
+      throw verificationError(failureMessage, 'request timed out');
     throw verificationError(failureMessage, 'request failed');
   }
-  if (!response.ok)
-    throw verificationError(failureMessage, `HTTP ${response.status}`);
+  if (!result.response.ok)
+    throw verificationError(failureMessage, `HTTP ${result.response.status}`);
   try {
-    return await response.json();
+    return JSON.parse(result.text) as unknown;
   } catch {
     throw verificationError(failureMessage, 'invalid JSON response');
   }

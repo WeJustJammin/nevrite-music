@@ -2,26 +2,22 @@ select ok(
   to_regclass('platform_private.cms_operational_alert_deliveries') is not null,
   'P2-S09 operational alert delivery receipts use a private table'
 );
-
 select ok(
   (select relrowsecurity from pg_catalog.pg_class where oid = 'platform_private.cms_operational_alert_deliveries'::regclass),
   'P2-S09 operational alert delivery receipts have RLS enabled'
 );
-
 select ok(
   has_function_privilege('service_role', 'platform_api.cms_get_operational_state_snapshot(jsonb)', 'execute')
   and not has_function_privilege('anon', 'platform_api.cms_get_operational_state_snapshot(jsonb)', 'execute')
   and not has_function_privilege('authenticated', 'platform_api.cms_get_operational_state_snapshot(jsonb)', 'execute'),
   'P2-S09 operational snapshot is service-only'
 );
-
 select ok(
   has_function_privilege('service_role', 'platform_api.cms_claim_operational_alert(jsonb)', 'execute')
   and not has_function_privilege('anon', 'platform_api.cms_claim_operational_alert(jsonb)', 'execute')
   and not has_function_privilege('authenticated', 'platform_api.cms_claim_operational_alert(jsonb)', 'execute'),
   'P2-S09 operational alert claims are service-only'
 );
-
 create temp table s09_alert_claim as
 select platform_api.cms_claim_operational_alert(jsonb_build_object(
   'alertCode', 'dlq_nonempty',
@@ -29,12 +25,10 @@ select platform_api.cms_claim_operational_alert(jsonb_build_object(
   'release', 'test-release',
   'scheduledAt', now()
 )) as value;
-
 select ok(
   (select (value->>'claimed')::boolean from s09_alert_claim),
   'P2-S09 first operational alert claim succeeds'
 );
-
 select ok(
   not (platform_api.cms_claim_operational_alert(jsonb_build_object(
     'alertCode', 'dlq_nonempty',
@@ -44,18 +38,17 @@ select ok(
   ))->>'claimed')::boolean,
   'P2-S09 duplicate operational alert delivery is suppressed'
 );
-
 select ok(
   platform_api.cms_complete_operational_alert(jsonb_build_object(
     'alertCode', 'dlq_nonempty',
     'claimId', (select value->>'claimId' from s09_alert_claim),
     'claimToken', '019c0000-0000-7000-8000-000000000002',
     'deliveredAt', now(),
-    'receiptId', '019c0000-0000-7000-8000-000000000004'
+    'receiptId', '019c0000-0000-7000-8000-000000000004',
+    'providerMessageId', 'cloudflare-provider-message-0001'
   )),
   'P2-S09 redacted operational alert receipt completes with the original claim token'
 );
-
 select ok(
   exists (
     select 1
@@ -63,6 +56,337 @@ select ok(
      where state = 'delivered'
        and octet_length(claim_token_hash) = 32
        and octet_length(receipt_hash) = 32
+       and octet_length(provider_message_hash) = 32
   ),
-  'P2-S09 only fixed-length claim and receipt hashes persist'
+  'P2-S09 only fixed-length claim, receipt, and provider hashes persist'
+);
+-- AC209 delivery verification is a separate, read-only service boundary.  It
+-- accepts only the exact production exercise tuple, hashes the provider-owned
+-- message identifier inside PostgreSQL, and never returns it or any
+-- persisted hash.  A positive result is possible only for one delivered row.
+select ok(
+  coalesce((
+    select p.prosecdef
+       and p.proconfig @> array['search_path=""']::text[]
+       and has_function_privilege('service_role', p.oid, 'execute')
+       and not has_function_privilege('public', p.oid, 'execute')
+       and not has_function_privilege('anon', p.oid, 'execute')
+       and not has_function_privilege('authenticated', p.oid, 'execute')
+    from pg_catalog.pg_proc p
+    join pg_catalog.pg_namespace n on n.oid = p.pronamespace
+    where n.nspname = 'platform_api'
+      and p.proname = 'cms_verify_operational_alert_delivery'
+      and p.pronargs = 1
+  ), false),
+  'P2-S09-AC-209 delivery verification is SECURITY DEFINER, fixed-path, and service-role only'
+);
+select ok(
+  to_regprocedure('platform_api.cms_verify_operational_alert_delivery(jsonb)') is not null,
+  'P2-S09-AC-209 delivery verification RPC exists with the jsonb contract'
+);
+select throws_ok(
+  $$select platform_api.cms_verify_operational_alert_delivery(null::jsonb)$$,
+  '22023', 'invalid operational alert delivery verification',
+  'P2-S09-AC-209 rejects a null request'
+);
+select throws_ok(
+  $$select platform_api.cms_verify_operational_alert_delivery('[]'::jsonb)$$,
+  '22023', 'invalid operational alert delivery verification',
+  'P2-S09-AC-209 rejects a non-object request'
+);
+select throws_ok(
+  $$select platform_api.cms_verify_operational_alert_delivery(jsonb_build_object(
+    'alertCode', 'dlq_nonempty', 'notBefore', clock_timestamp() - interval '3 minutes',
+    'release', repeat('a', 40)
+  ))$$,
+  '22023', 'invalid operational alert delivery verification',
+  'P2-S09-AC-209 rejects a request missing providerMessageId'
+);
+select throws_ok(
+  $$select platform_api.cms_verify_operational_alert_delivery(jsonb_build_object(
+    'alertCode', 'dlq_nonempty', 'notBefore', clock_timestamp() - interval '3 minutes',
+    'release', repeat('a', 40),
+    'providerMessageId', 'cloudflare-provider-message-0010', 'extra', true
+  ))$$,
+  '22023', 'invalid operational alert delivery verification',
+  'P2-S09-AC-209 rejects extra request keys'
+);
+select throws_ok(
+  $$select platform_api.cms_verify_operational_alert_delivery(jsonb_build_object(
+    'alertCode', 'outbox_age_exceeded', 'notBefore', clock_timestamp() - interval '3 minutes',
+    'release', repeat('a', 40),
+    'providerMessageId', 'cloudflare-provider-message-0010'
+  ))$$,
+  '22023', 'invalid operational alert delivery verification',
+  'P2-S09-AC-209 rejects an alert code other than dlq_nonempty'
+);
+select throws_ok(
+  $$select platform_api.cms_verify_operational_alert_delivery(jsonb_build_object(
+    'alertCode', 'dlq_nonempty', 'notBefore', clock_timestamp() - interval '3 minutes',
+    'release', repeat('A', 40),
+    'providerMessageId', 'cloudflare-provider-message-0010'
+  ))$$,
+  '22023', 'invalid operational alert delivery verification',
+  'P2-S09-AC-209 rejects an uppercase release digest'
+);
+select throws_ok(
+  $$select platform_api.cms_verify_operational_alert_delivery(jsonb_build_object(
+    'alertCode', 'dlq_nonempty', 'notBefore', clock_timestamp() - interval '3 minutes',
+    'release', repeat('a', 39) || 'z',
+    'providerMessageId', 'cloudflare-provider-message-0010'
+  ))$$,
+  '22023', 'invalid operational alert delivery verification',
+  'P2-S09-AC-209 rejects a release that is not a lowercase SHA-40'
+);
+insert into platform_private.cms_operational_alert_deliveries(
+  id, alert_code, release, state, claim_token_hash, claimed_at,
+  delivered_at, receipt_hash, provider_message_hash
+) values (
+  'a9090000-0000-4000-8000-000000000930', 'dlq_nonempty', repeat('a', 40),
+  'delivered',
+  extensions.digest(convert_to('019c0000-0000-7000-8000-000000000931', 'utf8'), 'sha256'),
+  clock_timestamp() - interval '2 minutes',
+  clock_timestamp() - interval '1 minute',
+  extensions.digest(convert_to('019c0000-0000-7000-8000-000000000010', 'utf8'), 'sha256'),
+  extensions.digest(convert_to('cloudflare-provider-message-0010', 'utf8'), 'sha256')
+);
+create temp table s09_delivery_verification on commit drop as
+select platform_api.cms_verify_operational_alert_delivery(jsonb_build_object(
+  'alertCode', 'dlq_nonempty',
+  'notBefore', clock_timestamp() - interval '3 minutes',
+  'release', repeat('a', 40),
+  'providerMessageId', 'cloudflare-provider-message-0010'
+)) as response;
+select ok(
+  (select response - array[
+      'schemaVersion', 'verified', 'alertCode', 'release', 'state',
+      'claimedAt', 'deliveredAt', 'providerMessageIdMatched'
+    ]::text[] = '{}'::jsonb
+    and response ?& array[
+      'schemaVersion', 'verified', 'alertCode', 'release', 'state',
+      'claimedAt', 'deliveredAt', 'providerMessageIdMatched'
+    ]::text[]
+    and response->>'schemaVersion' = 'ac209-delivery-verification-v1'
+    and (response->>'verified')::boolean
+    and response->>'alertCode' = 'dlq_nonempty'
+    and response->>'release' = repeat('a', 40)
+    and response->>'state' = 'delivered'
+    and (response->>'providerMessageIdMatched')::boolean
+    and (response->>'claimedAt')::timestamptz = (
+      select claimed_at from platform_private.cms_operational_alert_deliveries
+       where id = 'a9090000-0000-4000-8000-000000000930'
+    )
+    and (response->>'deliveredAt')::timestamptz = (
+      select delivered_at from platform_private.cms_operational_alert_deliveries
+       where id = 'a9090000-0000-4000-8000-000000000930'
+    )
+    and not response ? 'receiptId'
+    and not response ? 'receiptHash'
+    and not response ? 'claimToken'
+   from s09_delivery_verification),
+  'P2-S09-AC-209 returns only the redacted allowlist for one exact delivered receipt'
+);
+select ok(
+  (select receipt_hash = extensions.digest(
+      convert_to('019c0000-0000-7000-8000-000000000010', 'utf8'), 'sha256'
+    )
+    and octet_length(receipt_hash) = 32
+   from platform_private.cms_operational_alert_deliveries
+  where id = 'a9090000-0000-4000-8000-000000000930'),
+  'P2-S09-AC-209 verifies by an internal SHA-256 receipt digest without exposing it'
+);
+select ok(
+  (select provider_message_hash = extensions.digest(
+      convert_to('cloudflare-provider-message-0010', 'utf8'), 'sha256'
+    )
+    and octet_length(provider_message_hash) = 32
+   from platform_private.cms_operational_alert_deliveries
+  where id = 'a9090000-0000-4000-8000-000000000930'),
+  'P2-S09-AC-209 stores only a fixed-length provider message identifier digest'
+);
+select ok(
+  (select (response->>'verified')::boolean = false
+      and response - array['schemaVersion', 'verified']::text[] = '{}'::jsonb
+      and response->>'schemaVersion' = 'ac209-delivery-verification-v1'
+   from (select platform_api.cms_verify_operational_alert_delivery(jsonb_build_object(
+     'alertCode', 'dlq_nonempty', 'notBefore', clock_timestamp() - interval '3 minutes',
+     'release', repeat('a', 40),
+     'providerMessageId', 'cloudflare-provider-message-0011'
+   )) response) verification),
+  'P2-S09-AC-209 rejects a provider identifier digest mismatch with a redacted negative result'
+);
+
+select ok(
+  (select (response->>'verified')::boolean = false
+      and response - array['schemaVersion', 'verified']::text[] = '{}'::jsonb
+   from (select platform_api.cms_verify_operational_alert_delivery(jsonb_build_object(
+     'alertCode', 'dlq_nonempty', 'notBefore', clock_timestamp() - interval '3 minutes',
+     'release', repeat('b', 40),
+     'providerMessageId', 'cloudflare-provider-message-0010'
+   )) response) verification),
+  'P2-S09-AC-209 rejects a release mismatch with a redacted negative result'
+);
+insert into platform_private.cms_operational_alert_deliveries(
+  id, alert_code, release, state, claim_token_hash, claimed_at,
+  delivered_at, receipt_hash, provider_message_hash
+) values (
+  'a9090000-0000-4000-8000-000000000932', 'dlq_nonempty', repeat('a', 40),
+  'delivered',
+  extensions.digest(convert_to('019c0000-0000-7000-8000-000000000933', 'utf8'), 'sha256'),
+  clock_timestamp() - interval '2 minutes',
+  clock_timestamp() - interval '1 minute',
+  extensions.digest(convert_to('019c0000-0000-7000-8000-000000000010', 'utf8'), 'sha256'),
+  extensions.digest(convert_to('cloudflare-provider-message-0010', 'utf8'), 'sha256')
+);
+select ok(
+  (select (response->>'verified')::boolean = false
+      and response - array['schemaVersion', 'verified']::text[] = '{}'::jsonb
+   from (select platform_api.cms_verify_operational_alert_delivery(jsonb_build_object(
+     'alertCode', 'dlq_nonempty', 'notBefore', clock_timestamp() - interval '3 minutes',
+     'release', repeat('a', 40),
+     'providerMessageId', 'cloudflare-provider-message-0010'
+   )) response) verification),
+  'P2-S09-AC-209 rejects duplicate delivered receipt rows instead of accepting an ambiguous match'
+);
+-- The queue exercise must prove that the alert cooldown is clear before it
+-- injects a marker.  This read-only boundary intentionally exposes no row
+-- identity, release, receipt, or hash.
+select ok(
+  coalesce((
+    select p.prosecdef
+       and p.proconfig @> array['search_path=""']::text[]
+       and has_function_privilege('service_role', p.oid, 'execute')
+       and not has_function_privilege('public', p.oid, 'execute')
+       and not has_function_privilege('anon', p.oid, 'execute')
+       and not has_function_privilege('authenticated', p.oid, 'execute')
+    from pg_catalog.pg_proc p
+    join pg_catalog.pg_namespace n on n.oid = p.pronamespace
+    where n.nspname = 'platform_api'
+      and p.proname = 'cms_get_operational_alert_exercise_eligibility'
+      and p.pronargs = 1
+  ), false),
+  'P2-S09-AC-209 exercise eligibility is SECURITY DEFINER, fixed-path, and service-role only'
+);
+select ok(
+  to_regprocedure('platform_api.cms_get_operational_alert_exercise_eligibility(jsonb)') is not null,
+  'P2-S09-AC-209 exercise eligibility RPC exists with the jsonb contract'
+);
+select throws_ok(
+  $$select platform_api.cms_get_operational_alert_exercise_eligibility(null::jsonb)$$,
+  '22023', 'invalid operational alert exercise eligibility',
+  'P2-S09-AC-209 eligibility rejects a null request'
+);
+select throws_ok(
+  $$select platform_api.cms_get_operational_alert_exercise_eligibility(jsonb_build_object(
+    'alertCode', 'dlq_nonempty'
+  ))$$,
+  '22023', 'invalid operational alert exercise eligibility',
+  'P2-S09-AC-209 eligibility rejects a request missing checkedAt'
+);
+select throws_ok(
+  $$select platform_api.cms_get_operational_alert_exercise_eligibility(jsonb_build_object(
+    'alertCode', 'dlq_nonempty', 'checkedAt', clock_timestamp()::text, 'extra', true
+  ))$$,
+  '22023', 'invalid operational alert exercise eligibility',
+  'P2-S09-AC-209 eligibility rejects extra request keys'
+);
+select throws_ok(
+  $$select platform_api.cms_get_operational_alert_exercise_eligibility(jsonb_build_object(
+    'alertCode', 'outbox_age_exceeded', 'checkedAt', clock_timestamp()::text
+  ))$$,
+  '22023', 'invalid operational alert exercise eligibility',
+  'P2-S09-AC-209 eligibility rejects an alert code other than dlq_nonempty'
+);
+select throws_ok(
+  $$select platform_api.cms_get_operational_alert_exercise_eligibility(jsonb_build_object(
+    'alertCode', 'dlq_nonempty', 'checkedAt', (clock_timestamp() - interval '6 minutes')::text
+  ))$$,
+  '22023', 'invalid operational alert exercise eligibility',
+  'P2-S09-AC-209 eligibility rejects a stale checkedAt'
+);
+delete from platform_private.cms_operational_alert_deliveries
+ where alert_code = 'dlq_nonempty';
+create temp table s09_exercise_eligibility_input on commit drop as
+select clock_timestamp() as checked_at;
+select ok(
+  (select response - array['schemaVersion', 'eligible', 'checkedAt']::text[] = '{}'::jsonb
+      and response ?& array['schemaVersion', 'eligible', 'checkedAt']::text[]
+      and response->>'schemaVersion' = 'ac209-exercise-eligibility-v1'
+      and (response->>'eligible')::boolean
+      and (response->>'checkedAt')::timestamptz = checked_at
+      and not response ? 'blockedUntil'
+   from (
+     select platform_api.cms_get_operational_alert_exercise_eligibility(jsonb_build_object(
+       'alertCode', 'dlq_nonempty', 'checkedAt', checked_at::text
+     )) response, checked_at
+     from s09_exercise_eligibility_input
+   ) eligibility),
+  'P2-S09-AC-209 eligibility reports the empty cooldown with the redacted allowlist'
+);
+insert into platform_private.cms_operational_alert_deliveries(
+  id, alert_code, release, state, claim_token_hash, claimed_at
+) select
+  'a9090000-0000-4000-8000-000000000940', 'dlq_nonempty', repeat('c', 40),
+  'claimed',
+  extensions.digest(convert_to('019c0000-0000-7000-8000-000000000941', 'utf8'), 'sha256'),
+  checked_at - interval '1 minute'
+from s09_exercise_eligibility_input;
+select ok(
+  (select response - array['schemaVersion', 'eligible', 'checkedAt', 'blockedUntil']::text[] = '{}'::jsonb
+      and response ?& array['schemaVersion', 'eligible', 'checkedAt', 'blockedUntil']::text[]
+      and response->>'schemaVersion' = 'ac209-exercise-eligibility-v1'
+      and not (response->>'eligible')::boolean
+      and (response->>'blockedUntil')::timestamptz = checked_at + interval '4 minutes'
+   from (
+     select platform_api.cms_get_operational_alert_exercise_eligibility(jsonb_build_object(
+       'alertCode', 'dlq_nonempty', 'checkedAt', checked_at::text
+     )) response, checked_at
+     from s09_exercise_eligibility_input
+   ) eligibility),
+  'P2-S09-AC-209 eligibility blocks while a recent claim is active'
+);
+delete from platform_private.cms_operational_alert_deliveries
+ where id = 'a9090000-0000-4000-8000-000000000940';
+insert into platform_private.cms_operational_alert_deliveries(
+  id, alert_code, release, state, claim_token_hash, claimed_at,
+  delivered_at, receipt_hash
+) select
+  'a9090000-0000-4000-8000-000000000942', 'dlq_nonempty', repeat('d', 40),
+  'delivered',
+  extensions.digest(convert_to('019c0000-0000-7000-8000-000000000943', 'utf8'), 'sha256'),
+  checked_at - interval '11 minutes',
+  checked_at - interval '1 minute',
+  extensions.digest(convert_to('019c0000-0000-7000-8000-000000000944', 'utf8'), 'sha256')
+from s09_exercise_eligibility_input;
+select ok(
+  (select response - array['schemaVersion', 'eligible', 'checkedAt', 'blockedUntil']::text[] = '{}'::jsonb
+      and response ?& array['schemaVersion', 'eligible', 'checkedAt', 'blockedUntil']::text[]
+      and response->>'schemaVersion' = 'ac209-exercise-eligibility-v1'
+      and not (response->>'eligible')::boolean
+      and (response->>'blockedUntil')::timestamptz = checked_at + interval '14 minutes'
+   from (
+     select platform_api.cms_get_operational_alert_exercise_eligibility(jsonb_build_object(
+       'alertCode', 'dlq_nonempty', 'checkedAt', checked_at::text
+     )) response, checked_at
+     from s09_exercise_eligibility_input
+   ) eligibility),
+  'P2-S09-AC-209 eligibility blocks while a recent delivery is active'
+);
+update platform_private.cms_operational_alert_deliveries
+   set claimed_at = (select checked_at from s09_exercise_eligibility_input) - interval '20 minutes',
+       delivered_at = (select checked_at from s09_exercise_eligibility_input) - interval '20 minutes'
+ where id = 'a9090000-0000-4000-8000-000000000942';
+select ok(
+  (select response - array['schemaVersion', 'eligible', 'checkedAt']::text[] = '{}'::jsonb
+      and response ?& array['schemaVersion', 'eligible', 'checkedAt']::text[]
+      and response->>'schemaVersion' = 'ac209-exercise-eligibility-v1'
+      and (response->>'eligible')::boolean
+      and not response ? 'blockedUntil'
+   from (
+     select platform_api.cms_get_operational_alert_exercise_eligibility(jsonb_build_object(
+       'alertCode', 'dlq_nonempty', 'checkedAt', checked_at::text
+     )) response
+     from s09_exercise_eligibility_input
+   ) eligibility),
+  'P2-S09-AC-209 eligibility reopens after claim and delivery cooldowns expire'
 );

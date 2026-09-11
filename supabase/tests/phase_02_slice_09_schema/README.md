@@ -9,12 +9,14 @@ The final fragment returns control to the entrypoint for `finish()` and
 Keep fragments ordered and below the repository's 400-line test cap. The
 fragments are includes, not independently discovered Supabase test files.
 
-| Fragment                               | Coverage                                                                                                   |
-| -------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
-| `000b-activation-lock.sqlinc`          | Graph -> authority lock order, synchronized authority -> graph inverse probe, bounded timeout, and cleanup |
-| `005c-worker-nonzero.sqlinc`           | Conditional non-zero evidence and the fail-closed S10 source-adapter boundary                              |
-| `005d-worker-breaking.sqlinc`          | Breaking non-zero evidence, fail-closed execution, and old-active preservation                             |
-| `005f-worker-event-claim-lease.sqlinc` | Event lease release, expiry takeover, stale-owner fencing, and terminal ACK                                |
+| Fragment                                  | Coverage                                                                                                   |
+| ----------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
+| `000b-activation-lock.sqlinc`             | Graph -> authority lock order, synchronized authority -> graph inverse probe, bounded timeout, and cleanup |
+| `005c-worker-nonzero.sqlinc`              | Conditional non-zero evidence and the fail-closed S10 source-adapter boundary                              |
+| `005d-worker-breaking.sqlinc`             | Breaking non-zero evidence, fail-closed execution, and old-active preservation                             |
+| `005f-worker-event-claim-lease.sqlinc`    | Event lease release, expiry takeover, stale-owner fencing, and terminal ACK                                |
+| `010-operational-alerts.sqlinc`           | Alert claim/delivery integrity plus service-only AC209 cooldown and exact receipt verification RPCs        |
+| `010b-provider-message-boundaries.sqlinc` | Opaque provider message identifier write/read boundary validation                                          |
 
 `009c-independent-sessions.mjs` is the committed-session AC217 supplement.
 Run it only after checking that no database reset/test is active:
