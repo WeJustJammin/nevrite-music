@@ -71,16 +71,21 @@
 - **CURRENT IMPLEMENTATION:** Phase 2 Slices 01–08 are complete. Slice 09 is
   implemented and locally QA-GREEN at 279/283, including the follow-up
   production operational-alert provider boundary and the deployed protected
-  AC211 collector; depth ratio remains `0.986` because the required
-  external evidence has not been claimed. Slice 10 remains dependency-locked. See
+  AC211 collector. PR #53 is deployed at exact-main SHA
+  `cfb6922320752dfc09a413175b2939b3658b942a` through CI `34554417586`, staging
+  `34554852947`, and production `34554996116`. Protected collector `34555299792`
+  verifies the provider-aware API version at 100% traffic. Draft PR #54 prepares
+  the provider-ID tighten but remains blocked on a genuine provider-aware
+  completion with a non-null digest. Depth ratio remains `0.986` because the
+  required external evidence has not been claimed. Slice 10 remains dependency-locked. See
   `.memory/pipeline/progress/phases/phase-02.md` and
   `.memory/pipeline/progress/slices/phase-02-slice-09.md`.
-- **CURRENT VALIDATION:** `pnpm validate` passes 434/434 Vitest files and
-  3,256 tests plus one intentional skip at 100% coverage, 101/101 functional
+- **CURRENT VALIDATION:** `pnpm validate` passes 458/458 Vitest files and
+  3,517 tests plus one intentional skip at 100% coverage, 101/101 functional
   Playwright checks, 5/5 production-built Slice 09 checks, every workspace build,
   bundle budgets, and the fresh immutable-Worker API p95 smoke.
-  `pnpm db:verify` passes 34/34 migrations and 45/45 pgTAP files with
-  1,678/1,678 assertions and exact generated types.
+  `pnpm db:verify` passes 46/46 pgTAP files with 1,751/1,751 assertions and
+  exact generated types on the draft tighten branch.
 - **HISTORICAL PRE-REMEDIATION CANDIDATE:** Before this remediation, PR #9 branch
   `codex/phase-2-slices-01-09` was at
   `67264c5e9b5196d00ac3f0aa272896a010c872d7`; synthetic merge
