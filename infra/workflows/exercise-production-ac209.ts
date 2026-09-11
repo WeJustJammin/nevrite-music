@@ -24,6 +24,8 @@ import {
   type Ac209ProductionExerciseInput,
 } from './ac209-production-exercise-input.ts';
 import {
+  Ac209QueueExerciseError,
+  parseAc209QueueDiagnostic,
   runAc209QueueExercise,
   type Ac209QueueExerciseInput,
   type Ac209QueueExerciseReport,
@@ -37,6 +39,14 @@ export { Ac209ProductionExerciseReportSchema } from './ac209-production-exercise
 export type { Ac209ProductionExerciseReport } from './ac209-production-exercise-contract.ts';
 export type { Ac209ProductionExerciseInput } from './ac209-production-exercise-input.ts';
 
+export const formatAc209QueueDiagnostic = (
+  value: unknown,
+): string | undefined => {
+  const diagnostic = parseAc209QueueDiagnostic(value);
+  if (diagnostic === undefined) return undefined;
+  return `AC209_DIAGNOSTIC boundary=${diagnostic.boundary} code=${diagnostic.code} status=${diagnostic.status ?? 'none'}`;
+};
+
 export type Ac209ProductionExerciseDependencies = Readonly<{
   queueExercise?: (
     input: Ac209QueueExerciseInput,
@@ -45,6 +55,7 @@ export type Ac209ProductionExerciseDependencies = Readonly<{
   collectEmailAnalytics?: typeof collectAc209EmailSendingAnalytics;
   verifyDelivery?: typeof verifyAc209AlertDelivery;
   now?: () => number;
+  reportQueueDiagnostic?: (diagnostic: string) => void;
   sleep?: (milliseconds: number) => Promise<void>;
 }>;
 
@@ -165,6 +176,20 @@ export const exerciseProductionAc209 = async (
     if (!parsed.success) failAc209ProductionExercise();
     return parsed.data;
   } catch (error: unknown) {
+    const diagnostic =
+      error instanceof Ac209QueueExerciseError
+        ? formatAc209QueueDiagnostic(error.diagnostic)
+        : undefined;
+    if (
+      diagnostic !== undefined &&
+      dependencies.reportQueueDiagnostic !== undefined
+    ) {
+      try {
+        dependencies.reportQueueDiagnostic(diagnostic);
+      } catch {
+        // Diagnostic reporting must not alter the fail-closed exercise result.
+      }
+    }
     if (
       error instanceof Error &&
       error.message === 'AC209 production exercise failed'
@@ -215,28 +240,34 @@ const run = async (): Promise<void> => {
     process.env['AC209_EXERCISE_OUTPUT_PATH'] ?? 'ac209-exercise/exercise.json';
   const outputPath = resolveArtifact(workspaceRoot, artifactPath);
   if (existsSync(outputPath)) failAc209ProductionExercise();
-  const report = await exerciseProductionAc209({
-    accountId: process.env['CLOUDFLARE_ACCOUNT_ID'] ?? '',
-    queueToken: process.env['CLOUDFLARE_QUEUE_EXERCISE_TOKEN'] ?? '',
-    emailAnalyticsToken:
-      process.env['CLOUDFLARE_EMAIL_ANALYTICS_API_TOKEN'] ?? '',
-    emailZoneId: process.env['CLOUDFLARE_EMAIL_ZONE_ID'] ?? '',
-    sourceRevision: process.env['SOURCE_REVISION'] ?? '',
-    productionVersionId: process.env['PRODUCTION_VERSION_ID'] ?? '',
-    exerciseMarker: process.env['AC209_EXERCISE_MARKER'] ?? '',
-    expectedSourceQueueId: process.env['CLOUDFLARE_PLATFORM_QUEUE_ID'] ?? '',
-    expectedDeadLetterQueueId: process.env['EXPECTED_DLQ_ID'] ?? '',
-    expectedSenderSha256: process.env['EXPECTED_ALERT_SENDER_SHA256'] ?? '',
-    expectedRecipientSha256: process.env['EXPECTED_ALERT_EMAIL_SHA256'] ?? '',
-    supabaseUrl: process.env['SUPABASE_URL'] ?? '',
-    supabaseServiceKey: process.env['SUPABASE_SECRET_KEY'] ?? '',
-    configuration: readConfiguration(configurationPath),
-    execution: {
-      environment: process.env['GITHUB_ENVIRONMENT'] ?? '',
-      ref: process.env['GITHUB_REF'] ?? '',
-      checkedOutSha: process.env['CHECKED_OUT_SHA'] ?? '',
+  const report = await exerciseProductionAc209(
+    {
+      accountId: process.env['CLOUDFLARE_ACCOUNT_ID'] ?? '',
+      queueToken: process.env['CLOUDFLARE_QUEUE_EXERCISE_TOKEN'] ?? '',
+      emailAnalyticsToken:
+        process.env['CLOUDFLARE_EMAIL_ANALYTICS_API_TOKEN'] ?? '',
+      emailZoneId: process.env['CLOUDFLARE_EMAIL_ZONE_ID'] ?? '',
+      sourceRevision: process.env['SOURCE_REVISION'] ?? '',
+      productionVersionId: process.env['PRODUCTION_VERSION_ID'] ?? '',
+      exerciseMarker: process.env['AC209_EXERCISE_MARKER'] ?? '',
+      expectedSourceQueueId: process.env['CLOUDFLARE_PLATFORM_QUEUE_ID'] ?? '',
+      expectedDeadLetterQueueId: process.env['EXPECTED_DLQ_ID'] ?? '',
+      expectedSenderSha256: process.env['EXPECTED_ALERT_SENDER_SHA256'] ?? '',
+      expectedRecipientSha256: process.env['EXPECTED_ALERT_EMAIL_SHA256'] ?? '',
+      supabaseUrl: process.env['SUPABASE_URL'] ?? '',
+      supabaseServiceKey: process.env['SUPABASE_SECRET_KEY'] ?? '',
+      configuration: readConfiguration(configurationPath),
+      execution: {
+        environment: process.env['GITHUB_ENVIRONMENT'] ?? '',
+        ref: process.env['GITHUB_REF'] ?? '',
+        checkedOutSha: process.env['CHECKED_OUT_SHA'] ?? '',
+      },
     },
-  });
+    {
+      reportQueueDiagnostic: (diagnostic: string) =>
+        console.error(`::error::${diagnostic}`),
+    },
+  );
   const serialized = `${JSON.stringify(report, null, 2)}\n`;
   writeProviderReleaseEvidenceFile(serialized, outputPath, workspaceRoot);
   const sha256 = createHash('sha256').update(serialized).digest('hex');

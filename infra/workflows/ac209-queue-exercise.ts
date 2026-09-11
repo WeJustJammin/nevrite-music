@@ -36,6 +36,7 @@ export {
   type Ac209QueueMessageContext,
   type Ac209QueueRuntimeInput,
   type Ac209SourceConsumerExpectation,
+  parseAc209QueueDiagnostic,
 } from './ac209-queue-contracts.ts';
 export { cleanupAc209QueueMarker } from './ac209-queue-cleanup.ts';
 
@@ -110,6 +111,7 @@ export const runAc209QueueExercise = async (
     pushAttempted = true;
     await request(
       runtime,
+      'queue_publish',
       'POST',
       queueEndpoint(input.accountId, sourceQueue.id, '/messages'),
       input.providerToken,
@@ -174,7 +176,8 @@ export const runAc209QueueExercise = async (
       }
     }
   }
-  if (cleanupError !== undefined) throw cleanupError;
+  if (cleanupError !== undefined)
+    throw cleanupError.withDiagnostic(primaryError?.diagnostic);
   if (primaryError !== undefined) throw primaryError;
   if (
     sourceQueue === undefined ||

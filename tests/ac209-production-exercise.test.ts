@@ -3,9 +3,13 @@ import { describe, expect, it, vi } from 'vitest';
 import {
   Ac209ProductionExerciseReportSchema,
   exerciseProductionAc209,
+  formatAc209QueueDiagnostic,
 } from '../infra/workflows/exercise-production-ac209.ts';
 import { sha256CanonicalEmail } from '../infra/workflows/ac209-email-sending-analytics.ts';
-import type { Ac209QueueExerciseReport } from '../infra/workflows/ac209-queue-exercise.ts';
+import {
+  Ac209QueueExerciseError,
+  type Ac209QueueExerciseReport,
+} from '../infra/workflows/ac209-queue-exercise.ts';
 import {
   alertEmailSha256,
   dlqId,
@@ -202,6 +206,39 @@ describe('production AC209 queue-to-email exercise orchestration', () => {
       exerciseProductionAc209(await baseInput(), deps),
     ).rejects.toThrow('AC209 production exercise failed');
     expect(deps.queueExercise).not.toHaveBeenCalled();
+  });
+
+  it('reports one allowlisted queue diagnostic while preserving the generic failure', async () => {
+    const deps = dependencies();
+    const reportQueueDiagnostic = vi.fn<(diagnostic: string) => void>();
+    deps.queueExercise.mockRejectedValueOnce(
+      new Ac209QueueExerciseError(
+        'cleanup_failed',
+        'queue cleanup bound exceeded',
+        {
+          boundary: 'queue_publish',
+          code: 'provider_request_failed',
+          status: 403,
+        },
+      ),
+    );
+
+    await expect(
+      exerciseProductionAc209(await baseInput(), {
+        ...deps,
+        reportQueueDiagnostic,
+      }),
+    ).rejects.toThrow('AC209 production exercise failed');
+    expect(reportQueueDiagnostic).toHaveBeenCalledExactlyOnceWith(
+      'AC209_DIAGNOSTIC boundary=queue_publish code=provider_request_failed status=403',
+    );
+    expect(
+      formatAc209QueueDiagnostic({
+        boundary: 'not-allowlisted',
+        code: 'provider-body-secret',
+        status: Number.NaN,
+      }),
+    ).toBeUndefined();
   });
 
   it.each([

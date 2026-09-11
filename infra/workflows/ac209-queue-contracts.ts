@@ -22,13 +22,79 @@ export type Ac209QueueExerciseErrorCode =
   | 'cleanup_failed'
   | 'marker_remains_after_cleanup';
 
+export type Ac209QueueDiagnosticBoundary =
+  'queue_list' | 'queue_peek' | 'queue_publish' | 'queue_purge';
+
+export type Ac209QueueDiagnosticCode = Extract<
+  Ac209QueueExerciseErrorCode,
+  'provider_request_failed' | 'provider_response_invalid'
+>;
+
+export type Ac209QueueDiagnostic = Readonly<{
+  boundary: Ac209QueueDiagnosticBoundary;
+  code: Ac209QueueDiagnosticCode;
+  status: number | null;
+}>;
+
+const AC209_QUEUE_ERROR_PREFIX = 'AC209 queue exercise failed: ';
+const AC209_QUEUE_DIAGNOSTIC_BOUNDARIES = new Set<unknown>([
+  'queue_list',
+  'queue_peek',
+  'queue_publish',
+  'queue_purge',
+]);
+const AC209_QUEUE_DIAGNOSTIC_CODES = new Set<unknown>([
+  'provider_request_failed',
+  'provider_response_invalid',
+]);
+
+export const parseAc209QueueDiagnostic = (
+  value: unknown,
+): Ac209QueueDiagnostic | undefined => {
+  if (typeof value !== 'object' || value === null || Array.isArray(value))
+    return undefined;
+  const candidate = value as Record<string, unknown>;
+  if (
+    !AC209_QUEUE_DIAGNOSTIC_BOUNDARIES.has(candidate.boundary) ||
+    !AC209_QUEUE_DIAGNOSTIC_CODES.has(candidate.code) ||
+    (candidate.status !== null &&
+      (typeof candidate.status !== 'number' ||
+        !Number.isSafeInteger(candidate.status) ||
+        candidate.status < 100 ||
+        candidate.status > 599))
+  )
+    return undefined;
+  return Object.freeze({
+    boundary: candidate.boundary as Ac209QueueDiagnosticBoundary,
+    code: candidate.code as Ac209QueueDiagnosticCode,
+    status: candidate.status,
+  });
+};
+
 export class Ac209QueueExerciseError extends Error {
   public readonly code: Ac209QueueExerciseErrorCode;
+  public readonly diagnostic: Ac209QueueDiagnostic | undefined;
 
-  public constructor(code: Ac209QueueExerciseErrorCode, message: string) {
-    super(`AC209 queue exercise failed: ${message}`);
+  public constructor(
+    code: Ac209QueueExerciseErrorCode,
+    message: string,
+    diagnostic?: unknown,
+  ) {
+    super(`${AC209_QUEUE_ERROR_PREFIX}${message}`);
     this.name = 'Ac209QueueExerciseError';
     this.code = code;
+    this.diagnostic = parseAc209QueueDiagnostic(diagnostic);
+  }
+
+  public withDiagnostic(diagnostic: unknown): Ac209QueueExerciseError {
+    if (this.diagnostic !== undefined) return this;
+    const parsed = parseAc209QueueDiagnostic(diagnostic);
+    if (parsed === undefined) return this;
+    return new Ac209QueueExerciseError(
+      this.code,
+      this.message.slice(AC209_QUEUE_ERROR_PREFIX.length),
+      parsed,
+    );
   }
 }
 
@@ -134,8 +200,9 @@ export const isRecord = (value: unknown): value is JsonRecord =>
 export const fail = (
   code: Ac209QueueExerciseErrorCode,
   message: string,
+  diagnostic?: unknown,
 ): never => {
-  throw new Ac209QueueExerciseError(code, message);
+  throw new Ac209QueueExerciseError(code, message, diagnostic);
 };
 
 const validateRuntimeOptions = (input: Ac209QueueRuntimeInput): Runtime => {
