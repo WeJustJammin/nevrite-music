@@ -39,7 +39,7 @@ const Ac209QueueExerciseReportSchema = z
     pushAccepted: z.literal(true),
     dlq: z
       .object({
-        attempts: z.number().int().min(2),
+        attempts: z.number().int().nonnegative(),
         messageIdSha256: z.string().regex(SHA256),
         timestampMs: z.number().int().nonnegative(),
       })

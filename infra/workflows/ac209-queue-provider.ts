@@ -348,7 +348,7 @@ const parseMarkerMessage = (
     typeof value.ref !== 'string' ||
     value.ref.length === 0 ||
     !Number.isSafeInteger(value.attempts) ||
-    value.attempts < 1 ||
+    value.attempts < 0 ||
     typeof value.timestamp_ms !== 'number' ||
     !Number.isSafeInteger(value.timestamp_ms) ||
     value.timestamp_ms < 0

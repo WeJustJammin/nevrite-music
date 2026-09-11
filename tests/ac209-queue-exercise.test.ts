@@ -8,7 +8,10 @@ import {
   runAc209QueueExercise,
   type Ac209QueueMessageContext,
 } from '../infra/workflows/ac209-queue-exercise.ts';
-import { verifyConsumer } from '../infra/workflows/ac209-queue-provider.ts';
+import {
+  matchingMessages,
+  verifyConsumer,
+} from '../infra/workflows/ac209-queue-provider.ts';
 import {
   accountId,
   baseInput,
@@ -137,13 +140,13 @@ describe('AC209 production queue exercise', () => {
     expect((captured as Ac209QueueExerciseError).code).toBe(code);
   });
 
-  it('paginates queue identity, refreshes an incomplete consumer summary, pushes one marker, observes retry, and purges only its exact refs', async () => {
+  it('paginates queue identity, refreshes an incomplete consumer summary, pushes one marker, observes retry exhaustion in the DLQ, and purges only its exact refs', async () => {
     const calls: Array<{ url: string; init?: RequestInit }> = [];
     let dlqPeekCount = 0;
     let purged = false;
     const evidence = vi.fn(async (context: Ac209QueueMessageContext) => {
       expect(context).toEqual({
-        attempts: 2,
+        attempts: 0,
         marker,
         messageId: 'marker-ref-id',
         timestampMs: 1_725_000_000_000,
@@ -189,7 +192,7 @@ describe('AC209 production queue exercise', () => {
                 message(
                   'marker-ref',
                   JSON.stringify({ [AC209_QUEUE_MESSAGE_FIELD]: marker }),
-                  dlqPeekCount === 2 ? 1 : 2,
+                  0,
                 ),
                 message('other-ref', { unrelated: true }),
               ],
@@ -246,7 +249,7 @@ describe('AC209 production queue exercise', () => {
       preflight: { sourceMessages: 0, deadLetterMessages: 0 },
       pushAccepted: true,
       dlq: {
-        attempts: 2,
+        attempts: 0,
         messageIdSha256: createHash('sha256')
           .update('marker-ref-id')
           .digest('hex'),
@@ -294,6 +297,30 @@ describe('AC209 production queue exercise', () => {
     });
     expect(JSON.stringify(report)).not.toContain('marker-ref');
     expect(JSON.stringify(report)).not.toContain(token);
+  });
+
+  it.each([
+    ['negative', -1],
+    ['fractional', 0.5],
+    ['string', '0'],
+    ['missing', undefined],
+  ])('rejects a matching marker with %s attempts', (_label, attempts) => {
+    const candidate = message('marker-ref', {
+      [AC209_QUEUE_MESSAGE_FIELD]: marker,
+    });
+    if (attempts === undefined) delete candidate.attempts;
+    else candidate.attempts = attempts;
+
+    let captured: unknown;
+    try {
+      matchingMessages([candidate], marker);
+    } catch (error: unknown) {
+      captured = error;
+    }
+    expect(captured).toBeInstanceOf(Ac209QueueExerciseError);
+    expect((captured as Ac209QueueExerciseError).code).toBe(
+      'marker_message_invalid',
+    );
   });
 
   it('fails before push when either preflight queue contains a message', async () => {

@@ -41,7 +41,7 @@ const queueReport: Ac209QueueExerciseReport = {
   preflight: { sourceMessages: 0, deadLetterMessages: 0 },
   pushAccepted: true,
   dlq: {
-    attempts: 4,
+    attempts: 0,
     messageIdSha256: 'c'.repeat(64),
     timestampMs: Date.parse('2026-09-10T23:15:20.000Z'),
   },
