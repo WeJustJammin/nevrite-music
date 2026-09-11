@@ -27,6 +27,7 @@ import {
   Ac209QueueExerciseError,
   parseAc209QueueDiagnostic,
   runAc209QueueExercise,
+  type Ac209QueueExerciseErrorCode,
   type Ac209QueueExerciseInput,
   type Ac209QueueExerciseReport,
 } from './ac209-queue-exercise.ts';
@@ -38,6 +39,53 @@ const MAX_CONFIGURATION_BYTES = 256 * 1024;
 export { Ac209ProductionExerciseReportSchema } from './ac209-production-exercise-contract.ts';
 export type { Ac209ProductionExerciseReport } from './ac209-production-exercise-contract.ts';
 export type { Ac209ProductionExerciseInput } from './ac209-production-exercise-input.ts';
+
+type Ac209StageDiagnostic =
+  | Readonly<{ stage: 'configuration'; code: 'invalid_configuration' }>
+  | Readonly<{
+      stage: 'eligibility';
+      code: 'request_failed' | 'blocked';
+    }>
+  | Readonly<{ stage: 'queue'; code: Ac209QueueExerciseErrorCode }>
+  | Readonly<{ stage: 'evidence'; code: 'not_observed' | 'invalid' }>
+  | Readonly<{ stage: 'report'; code: 'invalid' }>;
+
+const AC209_STAGE_DIAGNOSTIC_CODES = Object.freeze({
+  configuration: new Set<unknown>(['invalid_configuration']),
+  eligibility: new Set<unknown>(['request_failed', 'blocked']),
+  queue: new Set<unknown>([
+    'invalid_configuration',
+    'provider_request_failed',
+    'provider_response_invalid',
+    'queue_identity_invalid',
+    'consumer_configuration_invalid',
+    'preflight_not_empty',
+    'marker_not_observed',
+    'marker_ambiguous',
+    'marker_message_invalid',
+    'cleanup_failed',
+    'marker_remains_after_cleanup',
+  ]),
+  evidence: new Set<unknown>(['not_observed', 'invalid']),
+  report: new Set<unknown>(['invalid']),
+});
+
+export const formatAc209StageDiagnostic = (
+  value: unknown,
+): string | undefined => {
+  if (typeof value !== 'object' || value === null || Array.isArray(value))
+    return undefined;
+  const candidate = value as Record<string, unknown>;
+  if (typeof candidate.stage !== 'string') return undefined;
+  if (!Object.hasOwn(AC209_STAGE_DIAGNOSTIC_CODES, candidate.stage))
+    return undefined;
+  const codes =
+    AC209_STAGE_DIAGNOSTIC_CODES[
+      candidate.stage as keyof typeof AC209_STAGE_DIAGNOSTIC_CODES
+    ];
+  if (codes === undefined || !codes.has(candidate.code)) return undefined;
+  return `AC209_DIAGNOSTIC stage=${candidate.stage} code=${String(candidate.code)}`;
+};
 
 export const formatAc209QueueDiagnostic = (
   value: unknown,
@@ -63,6 +111,10 @@ export const exerciseProductionAc209 = async (
   input: Ac209ProductionExerciseInput,
   dependencies: Ac209ProductionExerciseDependencies = {},
 ): Promise<Ac209ProductionExerciseReport> => {
+  let stageDiagnostic: Ac209StageDiagnostic = {
+    stage: 'configuration',
+    code: 'invalid_configuration',
+  };
   try {
     const configuration = validateAc209ProductionExerciseInput(input);
     const now = dependencies.now ?? Date.now;
@@ -77,12 +129,16 @@ export const exerciseProductionAc209 = async (
     const startedAt = new Date(startedAtMs).toISOString();
     const readEligibility =
       dependencies.readEligibility ?? readAc209ExerciseEligibility;
+    stageDiagnostic = { stage: 'eligibility', code: 'request_failed' };
     const eligibility = await readEligibility({
       supabaseUrl: input.supabaseUrl,
       serviceKey: input.supabaseServiceKey,
       checkedAt: startedAt,
     });
-    if (!eligibility.eligible) failAc209ProductionExercise();
+    if (!eligibility.eligible) {
+      stageDiagnostic = { stage: 'eligibility', code: 'blocked' };
+      failAc209ProductionExercise();
+    }
 
     let email: Ac209EmailSendingAnalyticsReport | undefined;
     let database: Ac209DeliveryVerification | undefined;
@@ -94,6 +150,7 @@ export const exerciseProductionAc209 = async (
     const pollInterval =
       input.evidencePollIntervalMs ?? AC209_DEFAULT_EVIDENCE_POLL_MS;
     const queueExercise = dependencies.queueExercise ?? runAc209QueueExercise;
+    stageDiagnostic = { stage: 'queue', code: 'provider_request_failed' };
     const queue = await queueExercise({
       accountId: input.accountId,
       providerToken: input.queueToken,
@@ -110,6 +167,7 @@ export const exerciseProductionAc209 = async (
       now,
       sleep,
       whileDlqMessagePresent: async () => {
+        stageDiagnostic = { stage: 'evidence', code: 'not_observed' };
         for (let poll = 0; poll < maxPolls; poll += 1) {
           const observedAt = new Date(now()).toISOString();
           try {
@@ -140,19 +198,25 @@ export const exerciseProductionAc209 = async (
               database = undefined;
             }
           }
-          if (email !== undefined && database !== undefined) return;
+          if (email !== undefined && database !== undefined) {
+            stageDiagnostic = { stage: 'queue', code: 'cleanup_failed' };
+            return;
+          }
           if (poll + 1 < maxPolls) await sleep(pollInterval);
         }
         failAc209ProductionExercise();
       },
     });
+    stageDiagnostic = { stage: 'evidence', code: 'not_observed' };
     if (email === undefined || database === undefined)
       failAc209ProductionExercise();
+    stageDiagnostic = { stage: 'evidence', code: 'invalid' };
     if (
       Date.parse(database.claimedAt) < startedAtMs ||
       Date.parse(database.deliveredAt) < startedAtMs
     )
       failAc209ProductionExercise();
+    stageDiagnostic = { stage: 'report', code: 'invalid' };
     const completedAt = new Date(now()).toISOString();
     const report = {
       schemaVersion: 'ac209-production-exercise-v1',
@@ -176,10 +240,16 @@ export const exerciseProductionAc209 = async (
     if (!parsed.success) failAc209ProductionExercise();
     return parsed.data;
   } catch (error: unknown) {
-    const diagnostic =
+    const queueDiagnostic =
       error instanceof Ac209QueueExerciseError
         ? formatAc209QueueDiagnostic(error.diagnostic)
         : undefined;
+    const diagnostic =
+      queueDiagnostic ??
+      (error instanceof Ac209QueueExerciseError &&
+      stageDiagnostic.stage !== 'evidence'
+        ? formatAc209StageDiagnostic({ stage: 'queue', code: error.code })
+        : formatAc209StageDiagnostic(stageDiagnostic));
     if (
       diagnostic !== undefined &&
       dependencies.reportQueueDiagnostic !== undefined

@@ -176,9 +176,8 @@ export const runAc209QueueExercise = async (
       }
     }
   }
-  if (cleanupError !== undefined)
-    throw cleanupError.withDiagnostic(primaryError?.diagnostic);
   if (primaryError !== undefined) throw primaryError;
+  if (cleanupError !== undefined) throw cleanupError;
   if (
     sourceQueue === undefined ||
     deadLetterQueue === undefined ||

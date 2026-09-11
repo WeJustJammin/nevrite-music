@@ -101,6 +101,47 @@ describe('AC209 queue exercise security boundary', () => {
       expect(serialized).not.toContain(forbidden);
   });
 
+  it('preserves a primary logical failure when cleanup also has a provider failure', async () => {
+    let sourcePeekCount = 0;
+    const fetchImpl = vi.fn<typeof fetch>(async (url) => {
+      const path = String(url);
+      if (path.endsWith('/queues?page=1&per_page=100'))
+        return queueList([validSource, validDeadLetter], 1);
+      if (path.endsWith(`/queues/${sourceQueueId}/messages/peek`)) {
+        sourcePeekCount += 1;
+        return sourcePeekCount === 1
+          ? peek([])
+          : jsonResponse(
+              { errors: [{ message: 'private cleanup error' }] },
+              403,
+            );
+      }
+      if (path.endsWith(`/queues/${deadLetterQueueId}/messages/peek`))
+        return peek([]);
+      if (path.endsWith(`/queues/${sourceQueueId}/messages`))
+        return jsonResponse({ success: true });
+      throw new Error('unexpected provider request');
+    });
+
+    let captured: unknown;
+    try {
+      await runAc209QueueExercise(
+        baseInput(fetchImpl, { maxPolls: 1, pollIntervalMs: 0 }),
+      );
+    } catch (error: unknown) {
+      captured = error;
+    }
+
+    expect(captured).toBeInstanceOf(Ac209QueueExerciseError);
+    if (!(captured instanceof Ac209QueueExerciseError))
+      throw new Error('expected an AC209 queue exercise error');
+    expect(captured.code).toBe('marker_not_observed');
+    expect(captured.diagnostic).toBeUndefined();
+    expect(`${captured.message}:${JSON.stringify(captured)}`).not.toContain(
+      'private cleanup error',
+    );
+  });
+
   it('rejects unsafe input before any provider call', async () => {
     const fetchImpl = vi.fn<typeof fetch>();
     await expect(
