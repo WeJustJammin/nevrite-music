@@ -44,6 +44,32 @@ describe('AC209 production queue exercise', () => {
     ).not.toThrow();
   });
 
+  it('accepts the observed Cloudflare worker script alias when the documented name is omitted', () => {
+    expect(() =>
+      verifyConsumer(
+        {
+          consumers: [consumer({ script: scriptName, script_name: undefined })],
+          id: sourceQueueId,
+          name: sourceQueueName,
+        },
+        baseInput(vi.fn<typeof fetch>()),
+      ),
+    ).not.toThrow();
+  });
+
+  it('accepts matching documented and observed script aliases together', () => {
+    expect(() =>
+      verifyConsumer(
+        {
+          consumers: [consumer({ script: scriptName })],
+          id: sourceQueueId,
+          name: sourceQueueName,
+        },
+        baseInput(vi.fn<typeof fetch>()),
+      ),
+    ).not.toThrow();
+  });
+
   it.each([
     ['count', 'consumer_count_invalid', []],
     ['type', 'consumer_type_invalid', [consumer({ type: 'http_pull' })]],
@@ -56,6 +82,31 @@ describe('AC209 production queue exercise', () => {
       'script',
       'consumer_script_invalid',
       [consumer({ script_name: 'other-worker' })],
+    ],
+    [
+      'conflicting script aliases',
+      'consumer_script_invalid',
+      [consumer({ script: 'other-worker' })],
+    ],
+    [
+      'null documented script alias',
+      'consumer_script_invalid',
+      [consumer({ script: scriptName, script_name: null })],
+    ],
+    [
+      'null observed script alias',
+      'consumer_script_invalid',
+      [consumer({ script: null })],
+    ],
+    [
+      'missing script aliases',
+      'consumer_script_invalid',
+      [consumer({ script_name: undefined })],
+    ],
+    [
+      'service-only consumer identity',
+      'consumer_script_invalid',
+      [consumer({ script_name: undefined, service: scriptName })],
     ],
     [
       'dead letter queue',
@@ -122,7 +173,10 @@ describe('AC209 production queue exercise', () => {
           3,
         );
       if (path.endsWith(`/queues/${sourceQueueId}/consumers`))
-        return jsonResponse({ result: [consumer()], success: true });
+        return jsonResponse({
+          result: [consumer({ script: scriptName, script_name: undefined })],
+          success: true,
+        });
       if (path.endsWith(`/queues/${sourceQueueId}/messages/peek`))
         return peek([]);
       if (path.endsWith(`/queues/${deadLetterQueueId}/messages/peek`)) {
