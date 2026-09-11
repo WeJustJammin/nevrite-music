@@ -639,9 +639,14 @@ response`; Workers Observability passed. Cloudflare's documented successful
 
 ## Blocking release evidence
 
-- P2-S09-AC-209: retain a genuine post-configuration redacted live-delivery
-  receipt. Worker scheduling, Send Email binding, sending domain/DNS, and the
-  destination are healthy, but the retained provider window has zero events.
+- P2-S09-AC-209: PR #53 deployed the provider-aware Worker and expand migration
+  at exact-main SHA `cfb6922320752dfc09a413175b2939b3658b942a`; protected
+  collector `34555299792` verifies API version
+  `e3a1772e-565f-4805-947e-3ab8c751c0e4` at 100% traffic. Retain a genuine
+  provider delivery, non-null database digest, and manual Gmail receipt. The
+  dedicated queue-exercise token remains absent, and draft PR #54 must not
+  tighten the completion contract until a real provider-aware completion is
+  observed.
 - P2-S09-AC-211: the corrected protected collector reaches the real production
   provider query but the 2026-09-07 UTC day has insufficient natural samples.
   Retain a later complete UTC day with at least 200 command/RPC/acceptance
@@ -716,3 +721,25 @@ Validated with Node `22.23.1` and pnpm `11.24.0`: 443 Vitest files, 3,308
 passing tests plus one intentional skip, 100% coverage, 101 functional
 Playwright checks, 5 production-built Slice 09 checks, builds, bundle budgets,
 and performance smoke. Status remains **279/283**; Slice 10 remains locked.
+
+## 2026-09-11 AC209 expand release and tighten hold
+
+- PR #53 merged as exact-main SHA
+  `cfb6922320752dfc09a413175b2939b3658b942a`. CI `34554417586`, staging
+  `34554852947` / deployment `6385193648`, and protected production
+  `34554996116` / deployment `6385219054` passed. Production serves API version
+  `e3a1772e-565f-4805-947e-3ab8c751c0e4` and web version
+  `2d954235-fcf5-41f6-a592-b375a86fde01`; migration `20260910030000` is
+  applied.
+- Protected collector `34555299792` binds configuration
+  `ac209-config-20260911-expand` to Cloudflare deployment
+  `001f8207-eedf-4d6f-b31b-ab8b1a795a91` at 100% traffic. This is deployment
+  and configuration proof only, not delivery acceptance.
+- Draft PR #54 contains the forward-only provider-ID tighten and passes the
+  canonical local/CI gates. It remains unmergeable until one genuine
+  provider-aware completion produces a non-null provider digest. The dedicated
+  `CLOUDFLARE_QUEUE_EXERCISE_TOKEN`, provider event, database delivery record,
+  and Gmail receipt remain absent.
+
+AC209, AC211, AC265, and AC266 remain unchecked. Slice 09 stays **279/283** at
+depth ratio `0.986`; Slices 10–17 remain dependency-locked.

@@ -2,19 +2,20 @@
 
 ## Active
 
-- **P2-S09 external release evidence** (2026-09-08) — Slice 09 remains locally
-  green at 279/283. The candidate is exact SHA
-  `10f320b97ccce0c62fba2ee27a3b792f08f83285`; exact-main CI `34224641678`,
-  staging `34225256920`, and deployment `6327379740` passed. Google is now
-  configured in hosted staging, enabled and verified on v16: one real callback
-  completed, the session persisted, a protected route authenticated, and one
-  real hosted identity exists. AC265 remains open for the approved
-  9-role/10-scenario hosted report plus role lifecycle, MFA, and teardown
-  evidence. AC209 remains open because no genuine provider/mailbox receipt was
-  observed; AC211 remains open because the real-provider production sample
-  threshold is still not met. AC266 remains open: hosted Chromium checks pass,
-  but real macOS/Safari/VoiceOver and Windows/Firefox/NVDA evidence is absent.
-  No synthetic traffic or threshold evidence was used. This keeps Slice 10
+- **P2-S09 external release evidence** (2026-09-11) — Slice 09 remains locally
+  green at 279/283. PR #53 is deployed as exact-main SHA
+  `cfb6922320752dfc09a413175b2939b3658b942a`; CI `34554417586`, staging
+  `34554852947` / deployment `6385193648`, and production `34554996116` /
+  deployment `6385219054` passed. Production API version
+  `e3a1772e-565f-4805-947e-3ab8c751c0e4` is verified at 100% traffic by
+  protected collector `34555299792`. Draft PR #54 prepares the provider-ID
+  tighten but is held until a genuine provider-aware completion produces a
+  non-null digest. AC209 still lacks that delivery, provider event, database
+  record, Gmail receipt, and the dedicated queue-exercise token. AC211 still
+  lacks a qualifying complete UTC day and natural sample floors. AC265 still
+  lacks the approved 9-role/10-scenario hosted Auth/RLS/IdP report. AC266 still
+  lacks real macOS/Safari/VoiceOver and Windows/Firefox/NVDA evidence. No
+  synthetic traffic or manual evidence was used. This keeps Slices 10–17
   dependency-locked. Evidence:
   `.memory/wiki/specs/audits/phase-02-slice-09-qa-green.md` and
   `.memory/wiki/specs/audits/verify-infrastructure-2026-09-04-1255.md` and

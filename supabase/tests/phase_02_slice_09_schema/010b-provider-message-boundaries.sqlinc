@@ -8,21 +8,114 @@ select platform_api.cms_claim_operational_alert(jsonb_build_object(
   'release', 'legacy-worker-release',
   'scheduledAt', now()
 )) as value;
-select ok(
-  platform_api.cms_complete_operational_alert(jsonb_build_object(
+select throws_ok(
+  $$select platform_api.cms_complete_operational_alert(jsonb_build_object(
     'alertCode', 'migration_retry_exceeded',
     'claimId', (select value->>'claimId' from s09_legacy_alert_claim),
     'claimToken', '019c0000-0000-7000-8000-000000000020',
     'deliveredAt', now(),
     'receiptId', '019c0000-0000-7000-8000-000000000021'
-  )),
-  'P2-S09 expand migration preserves the deployed five-field completion caller'
+  ))$$,
+  '22023', 'invalid operational alert completion',
+  'P2-S09 tighten migration rejects the deployed five-field completion caller'
 );
 select ok(
   (select provider_message_hash is null
      from platform_private.cms_operational_alert_deliveries
     where id = (select (value->>'claimId')::uuid from s09_legacy_alert_claim)),
   'P2-S09 legacy completion keeps the new provider digest nullable'
+);
+select throws_ok(
+  $$select platform_api.cms_complete_operational_alert(jsonb_build_object(
+    'alertCode', 'migration_retry_exceeded',
+    'claimId', (select value->>'claimId' from s09_legacy_alert_claim),
+    'claimToken', '019c0000-0000-7000-8000-000000000020',
+    'deliveredAt', now(),
+    'receiptId', '019c0000-0000-7000-8000-000000000021',
+    'providerMessageId', null
+  ))$$,
+  '22023', 'invalid operational alert completion',
+  'P2-S09 tighten migration rejects a null provider message identifier'
+);
+select throws_ok(
+  $$select platform_api.cms_complete_operational_alert(jsonb_build_object(
+    'alertCode', 'migration_retry_exceeded',
+    'claimId', (select value->>'claimId' from s09_legacy_alert_claim),
+    'claimToken', '019c0000-0000-7000-8000-000000000020',
+    'deliveredAt', now(),
+    'receiptId', '019c0000-0000-7000-8000-000000000021',
+    'providerMessageId', ''
+  ))$$,
+  '22023', 'invalid operational alert completion',
+  'P2-S09 tighten migration rejects an empty provider message identifier'
+);
+select throws_ok(
+  $$select platform_api.cms_complete_operational_alert(jsonb_build_object(
+    'alertCode', 'migration_retry_exceeded',
+    'claimId', (select value->>'claimId' from s09_legacy_alert_claim),
+    'claimToken', '019c0000-0000-7000-8000-000000000020',
+    'deliveredAt', now(),
+    'receiptId', '019c0000-0000-7000-8000-000000000021',
+    'providerMessageId', repeat('!', 513)
+  ))$$,
+  '22023', 'invalid operational alert completion',
+  'P2-S09 tighten migration rejects a provider message identifier over 512 bytes'
+);
+select throws_ok(
+  $$select platform_api.cms_complete_operational_alert(jsonb_build_object(
+    'alertCode', 'migration_retry_exceeded',
+    'claimId', (select value->>'claimId' from s09_legacy_alert_claim),
+    'claimToken', '019c0000-0000-7000-8000-000000000020',
+    'deliveredAt', now(),
+    'receiptId', '019c0000-0000-7000-8000-000000000021',
+    'providerMessageId', chr(9) || 'visible'
+  ))$$,
+  '22023', 'invalid operational alert completion',
+  'P2-S09 tighten migration rejects a provider message identifier containing a control character'
+);
+select throws_ok(
+  $$select platform_api.cms_complete_operational_alert(jsonb_build_object(
+    'alertCode', 'migration_retry_exceeded',
+    'claimId', (select value->>'claimId' from s09_legacy_alert_claim),
+    'claimToken', '019c0000-0000-7000-8000-000000000020',
+    'deliveredAt', now(),
+    'receiptId', '019c0000-0000-7000-8000-000000000021',
+    'providerMessageId', 'café'
+  ))$$,
+  '22023', 'invalid operational alert completion',
+  'P2-S09 tighten migration rejects a non-ASCII provider message identifier'
+);
+select ok(
+  (select not a.attnotnull
+     from pg_catalog.pg_attribute a
+     join pg_catalog.pg_class c on c.oid = a.attrelid
+     join pg_catalog.pg_namespace n on n.oid = c.relnamespace
+    where n.nspname = 'platform_private'
+      and c.relname = 'cms_operational_alert_deliveries'
+      and a.attname = 'provider_message_hash'
+      and a.attnum > 0
+      and not a.attisdropped),
+  'P2-S09 tighten migration preserves nullable historical provider digests'
+);
+select ok(
+  platform_api.cms_complete_operational_alert(jsonb_build_object(
+    'alertCode', 'migration_retry_exceeded',
+    'claimId', (select value->>'claimId' from s09_legacy_alert_claim),
+    'claimToken', '019c0000-0000-7000-8000-000000000020',
+    'deliveredAt', now(),
+    'receiptId', '019c0000-0000-7000-8000-000000000021',
+    'providerMessageId', repeat('~', 512)
+  )),
+  'P2-S09 tighten migration accepts the 512-byte visible-ASCII provider message identifier'
+);
+select ok(
+  (select provider_message_hash = extensions.digest(
+      convert_to(repeat('~', 512), 'utf8'), 'sha256'
+    )
+    and octet_length(provider_message_hash) = 32
+   from platform_private.cms_operational_alert_deliveries
+  where id = (select (value->>'claimId')::uuid from s09_legacy_alert_claim)),
+  'P2-S09 tighten migration stores the SHA-256 digest for a valid provider identifier'
 );
 select throws_ok(
   $$select platform_api.cms_complete_operational_alert(jsonb_build_object(

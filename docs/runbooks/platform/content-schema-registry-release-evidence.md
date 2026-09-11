@@ -120,6 +120,20 @@ the optional provider identifier. Deploy the Worker that supplies
 migration that requires the sixth field. Applying both phases before the Worker
 would break in-flight or still-running old-version completions.
 
+The second-release tighten preflight is an ordered deployment gate, separate
+from the AC209 delivery and receipt gate: confirm that remote migration history
+contains `20260910030000_ac209_operational_alert_verification.sql`; confirm
+that the provider-aware production Worker exact version routes at 100% traffic;
+confirm that legacy in-flight invocations have drained; and confirm that a real
+provider-aware completion produced a non-null provider digest. Only after all
+four checks pass may the forward-only migration use `CREATE OR REPLACE
+FUNCTION` to make `providerMessageId` required for new completion calls.
+Historical `provider_message_hash` remains nullable; this tighten does not
+rewrite historical rows. This runbook does not claim that the required
+provider-aware completion exists. The already-locked AC209 provider delivery,
+service/database evidence, and manual Gmail receipt remain separate mandatory
+acceptance requirements.
+
 The 75-minute exercise and its `always()` safety step purge only peek refs whose
 body exactly matches the pre-generated marker. Cleanup runs only after the
 exact-version configuration collector succeeds. Both paths reject

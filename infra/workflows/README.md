@@ -120,6 +120,18 @@ filesystem and validation operations.
   expand phase that temporarily accepts the deployed five-field completion
   caller; require `providerMessageId` only in a later forward migration after
   the new Worker is verified live.
+  The second-release tighten preflight is ordered and separate from the AC209
+  delivery/receipt gate: remote migration history must contain
+  `20260910030000_ac209_operational_alert_verification.sql`, the provider-aware
+  production Worker exact version must route at 100% traffic, legacy in-flight
+  invocations must be drained, and a real provider-aware completion must have
+  produced a non-null provider digest. Only then may a forward-only `CREATE OR
+REPLACE FUNCTION` migration make `providerMessageId` required for new
+  completion calls. Historical `provider_message_hash` remains nullable; the
+  tighten does not rewrite historical rows. This README does not claim that the
+  required provider-aware completion exists. The locked AC209 provider
+  delivery, service/database evidence, and manual Gmail receipt remain separate
+  mandatory acceptance requirements.
 
 ## Conventions
 
