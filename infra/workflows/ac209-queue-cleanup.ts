@@ -81,7 +81,11 @@ const assertPurgeAccepted = (payload: JsonRecord): void => {
       (hasEntries(payload.result.errors) ||
         hasEntries(payload.result.warnings)))
   )
-    fail('cleanup_failed', 'queue cleanup failed');
+    fail('cleanup_failed', 'queue cleanup failed', {
+      boundary: 'queue_purge',
+      code: 'provider_response_invalid',
+      status: null,
+    });
 };
 
 const purgeRefs = async (
@@ -94,13 +98,15 @@ const purgeRefs = async (
     try {
       payload = await request(
         runtime,
+        'queue_purge',
         'POST',
         queueEndpoint(target.accountId, queueId, '/messages/purge'),
         target.providerToken,
         { refs: [{ ref }] },
       );
-    } catch {
-      fail('cleanup_failed', 'queue cleanup failed');
+    } catch (error: unknown) {
+      const normalized = normalizeError(error);
+      fail('cleanup_failed', 'queue cleanup failed', normalized.diagnostic);
     }
     assertPurgeAccepted(payload);
   }
@@ -167,7 +173,11 @@ const cleanupResolvedQueueMarker = async (
         deadLetterMessages.length >= runtime.peekBatchSize &&
         deadLetterMatches.length === 0)
     )
-      fail('cleanup_failed', 'queue cleanup could not establish marker state');
+      fail(
+        'cleanup_failed',
+        'queue cleanup could not establish marker state',
+        readError?.diagnostic,
+      );
     if (refs.size > 0) {
       const refsThisPass = refs.size;
       await purgeRefs(runtime, target, refs);
@@ -175,7 +185,11 @@ const cleanupResolvedQueueMarker = async (
       refs.clear();
     }
     if (readError !== undefined)
-      fail('cleanup_failed', 'queue cleanup could not establish marker state');
+      fail(
+        'cleanup_failed',
+        'queue cleanup could not establish marker state',
+        readError.diagnostic,
+      );
     if (sourceMessages === undefined || deadLetterMessages === undefined)
       fail('cleanup_failed', 'queue cleanup could not establish marker state');
     const counts = {

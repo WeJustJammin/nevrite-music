@@ -2,6 +2,9 @@ import {
   AC209_QUEUE_LIST_PAGE_SIZE,
   AC209_QUEUE_MESSAGE_FIELD,
   Ac209QueueExerciseError,
+  type Ac209QueueDiagnostic,
+  type Ac209QueueDiagnosticBoundary,
+  type Ac209QueueDiagnosticCode,
   type Ac209QueueExerciseInput,
   type Ac209QueueRuntimeInput,
   type JsonRecord,
@@ -21,6 +24,27 @@ const QUEUE_ID = /^[0-9a-f]{32}$/u;
 const QUEUE_NAME = /^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$/u;
 const MAX_RESPONSE_BYTES = 2 * 1024 * 1024;
 
+const diagnostic = (
+  boundary: Ac209QueueDiagnosticBoundary,
+  code: Ac209QueueDiagnosticCode,
+  status: unknown,
+): Ac209QueueDiagnostic => ({
+  boundary,
+  code,
+  status:
+    typeof status === 'number' &&
+    Number.isSafeInteger(status) &&
+    status >= 100 &&
+    status <= 599
+      ? status
+      : null,
+});
+
+const invalidResponseDiagnostic = (
+  boundary: Ac209QueueDiagnosticBoundary,
+): Ac209QueueDiagnostic =>
+  diagnostic(boundary, 'provider_response_invalid', null);
+
 export const queueEndpoint = (
   accountId: string,
   queueId: string,
@@ -36,6 +60,7 @@ const withTimeout = async <T>(
   operation: Promise<T>,
   timeoutMs: number,
   controller: AbortController,
+  boundary: Ac209QueueDiagnosticBoundary,
 ): Promise<T> => {
   const timeout = Symbol('timeout');
   let timer: ReturnType<typeof setTimeout> | undefined;
@@ -49,7 +74,11 @@ const withTimeout = async <T>(
   } catch (error: unknown) {
     if (error === timeout) {
       controller.abort();
-      fail('provider_request_failed', 'provider request timed out');
+      fail(
+        'provider_request_failed',
+        'provider request timed out',
+        diagnostic(boundary, 'provider_request_failed', null),
+      );
     }
     throw error;
   } finally {
@@ -59,6 +88,7 @@ const withTimeout = async <T>(
 
 export const request = async (
   runtime: Runtime,
+  boundary: Ac209QueueDiagnosticBoundary,
   method: 'GET' | 'POST',
   url: string,
   token: string,
@@ -80,12 +110,22 @@ export const request = async (
       }),
       runtime.timeoutMs,
       controller,
+      boundary,
     );
   } catch (error: unknown) {
     if (error instanceof Ac209QueueExerciseError) throw error;
-    fail('provider_request_failed', 'provider request failed');
+    fail(
+      'provider_request_failed',
+      'provider request failed',
+      diagnostic(boundary, 'provider_request_failed', null),
+    );
   }
-  if (!response.ok) fail('provider_request_failed', 'provider request failed');
+  if (!response.ok)
+    fail(
+      'provider_request_failed',
+      'provider request failed',
+      diagnostic(boundary, 'provider_request_failed', response.status),
+    );
   let raw: string;
   try {
     raw = await readBoundedProviderResponseText(response, {
@@ -100,14 +140,26 @@ export const request = async (
       error instanceof BoundedProviderResponseError &&
       error.code === 'timed_out'
     )
-      fail('provider_request_failed', 'provider request timed out');
-    fail('provider_response_invalid', 'provider response is invalid');
+      fail(
+        'provider_request_failed',
+        'provider request timed out',
+        diagnostic(boundary, 'provider_request_failed', response.status),
+      );
+    fail(
+      'provider_response_invalid',
+      'provider response is invalid',
+      diagnostic(boundary, 'provider_response_invalid', response.status),
+    );
   }
   let payload: unknown;
   try {
     payload = JSON.parse(raw) as unknown;
   } catch {
-    fail('provider_response_invalid', 'provider response is invalid');
+    fail(
+      'provider_response_invalid',
+      'provider response is invalid',
+      diagnostic(boundary, 'provider_response_invalid', response.status),
+    );
   }
   if (
     !isRecord(payload) ||
@@ -115,7 +167,11 @@ export const request = async (
     providerIssueListIsInvalid(payload.errors) ||
     providerIssueListIsInvalid(payload.messages)
   )
-    fail('provider_response_invalid', 'provider response is invalid');
+    fail(
+      'provider_response_invalid',
+      'provider response is invalid',
+      diagnostic(boundary, 'provider_response_invalid', response.status),
+    );
   return payload;
 };
 
@@ -127,19 +183,31 @@ const parseQueue = (value: unknown): Queue => {
     typeof value.queue_name !== 'string' ||
     !QUEUE_NAME.test(value.queue_name)
   )
-    fail('queue_identity_invalid', 'queue identity is invalid');
+    fail(
+      'queue_identity_invalid',
+      'queue identity is invalid',
+      invalidResponseDiagnostic('queue_list'),
+    );
   const consumers = value.consumers;
   if (
     consumers !== undefined &&
     (!Array.isArray(consumers) || !consumers.every(isRecord))
   )
-    fail('queue_identity_invalid', 'queue identity is invalid');
+    fail(
+      'queue_identity_invalid',
+      'queue identity is invalid',
+      invalidResponseDiagnostic('queue_list'),
+    );
   if (
     value.consumers_total_count !== undefined &&
     (!Number.isSafeInteger(value.consumers_total_count) ||
       value.consumers_total_count !== (consumers?.length ?? 0))
   )
-    fail('queue_identity_invalid', 'queue identity is invalid');
+    fail(
+      'queue_identity_invalid',
+      'queue identity is invalid',
+      invalidResponseDiagnostic('queue_list'),
+    );
   return {
     consumers: consumers ?? [],
     id: value.queue_id,
@@ -164,12 +232,17 @@ export const listQueues = async (
       );
     const payload = await request(
       runtime,
+      'queue_list',
       'GET',
       `${API_ROOT}/accounts/${input.accountId}/queues?page=${page}&per_page=${AC209_QUEUE_LIST_PAGE_SIZE}`,
       input.providerToken,
     );
     if (!Array.isArray(payload.result) || !isRecord(payload.result_info))
-      fail('queue_identity_invalid', 'queue list response is invalid');
+      fail(
+        'queue_identity_invalid',
+        'queue list response is invalid',
+        invalidResponseDiagnostic('queue_list'),
+      );
     const info = payload.result_info;
     if (
       info.page !== page ||
@@ -183,20 +256,32 @@ export const listQueues = async (
       payload.result.length > AC209_QUEUE_LIST_PAGE_SIZE ||
       (totalCount !== undefined && info.total_count !== totalCount)
     )
-      fail('queue_identity_invalid', 'queue list pagination is invalid');
+      fail(
+        'queue_identity_invalid',
+        'queue list pagination is invalid',
+        invalidResponseDiagnostic('queue_list'),
+      );
     totalPages = info.total_pages;
     totalCount = info.total_count;
     for (const value of payload.result) {
       const queue = parseQueue(value);
       if (names.has(queue.name) || ids.has(queue.id))
-        fail('queue_identity_invalid', 'queue identity is ambiguous');
+        fail(
+          'queue_identity_invalid',
+          'queue identity is ambiguous',
+          invalidResponseDiagnostic('queue_list'),
+        );
       names.add(queue.name);
       ids.add(queue.id);
       queues.push(queue);
     }
   }
   if (totalCount !== undefined && queues.length !== totalCount)
-    fail('queue_identity_invalid', 'queue list pagination is incomplete');
+    fail(
+      'queue_identity_invalid',
+      'queue list pagination is incomplete',
+      invalidResponseDiagnostic('queue_list'),
+    );
   return queues;
 };
 
@@ -207,7 +292,11 @@ const parseMessages = (payload: JsonRecord): readonly JsonRecord[] => {
     !Array.isArray(result.messages) ||
     !result.messages.every(isRecord)
   )
-    fail('provider_response_invalid', 'queue message response is invalid');
+    fail(
+      'provider_response_invalid',
+      'queue message response is invalid',
+      invalidResponseDiagnostic('queue_peek'),
+    );
   return result.messages;
 };
 
@@ -218,6 +307,7 @@ export const peekQueue = async (
 ): Promise<readonly JsonRecord[]> => {
   const payload = await request(
     runtime,
+    'queue_peek',
     'POST',
     `${API_ROOT}/accounts/${input.accountId}/queues/${queueId}/messages/peek`,
     input.providerToken,

@@ -1,6 +1,7 @@
 import { describe, expect, it, vi } from 'vitest';
 
 import {
+  Ac209QueueExerciseError,
   cleanupAc209QueueMarker,
   runAc209QueueExercise,
   type Ac209QueueCleanupInput,
@@ -189,6 +190,44 @@ describe('AC209 queue marker cleanup', () => {
     ).toBe(false);
   });
 
+  it('preserves a failed peek diagnostic when the other queue fills its batch', async () => {
+    const providerSecret = 'cleanup-peek-provider-secret';
+    const fetchImpl = vi.fn<typeof fetch>(async (url) => {
+      const path = String(url);
+      if (path.endsWith('/queues?page=1&per_page=100'))
+        return queueList([validSource, validDeadLetter], 1);
+      if (path.endsWith(`/queues/${sourceQueueId}/messages/peek`))
+        return jsonResponse(
+          { errors: [{ message: providerSecret }], success: false },
+          403,
+        );
+      if (path.endsWith(`/queues/${deadLetterQueueId}/messages/peek`))
+        return peek([message('unrelated-ref', { unrelated: true }, 1)]);
+      throw new Error('unexpected provider request');
+    });
+
+    let captured: unknown;
+    try {
+      await cleanupAc209QueueMarker(
+        cleanupInput(fetchImpl, { maxPolls: 1, peekBatchSize: 1 }),
+      );
+    } catch (error: unknown) {
+      captured = error;
+    }
+
+    expect(captured).toBeInstanceOf(Ac209QueueExerciseError);
+    if (!(captured instanceof Ac209QueueExerciseError))
+      throw new Error('expected an AC209 queue exercise error');
+    expect(captured.diagnostic).toEqual({
+      boundary: 'queue_peek',
+      code: 'provider_request_failed',
+      status: 403,
+    });
+    expect(`${captured.message}:${JSON.stringify(captured)}`).not.toContain(
+      providerSecret,
+    );
+  });
+
   it('rejects every nonempty purge error shape without claiming cleanup success', async () => {
     const fetchImpl = vi.fn<typeof fetch>(async (url) => {
       const path = String(url);
@@ -232,8 +271,20 @@ describe('AC209 queue marker cleanup', () => {
       throw new Error('unexpected provider request');
     });
 
-    await expect(
-      cleanupAc209QueueMarker(cleanupInput(fetchImpl, { maxPolls: 1 })),
-    ).rejects.toThrow('queue cleanup failed');
+    let captured: unknown;
+    try {
+      await cleanupAc209QueueMarker(cleanupInput(fetchImpl, { maxPolls: 1 }));
+    } catch (error: unknown) {
+      captured = error;
+    }
+
+    expect(captured).toBeInstanceOf(Ac209QueueExerciseError);
+    if (!(captured instanceof Ac209QueueExerciseError))
+      throw new Error('expected an AC209 queue exercise error');
+    expect(captured.diagnostic).toEqual({
+      boundary: 'queue_purge',
+      code: 'provider_response_invalid',
+      status: null,
+    });
   });
 });
