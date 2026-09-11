@@ -275,7 +275,7 @@ describe('AC209 production queue exercise', () => {
     expect(JSON.stringify(purgeBodies)).not.toContain('unrelated-ref');
   });
 
-  it('cleans an exact marker seen in source when a later provider failure interrupts polling', async () => {
+  it('cleans an exact marker while preserving the primary provider failure', async () => {
     let sourcePeekCount = 0;
     let dlqPeekCount = 0;
     const fetchImpl = vi.fn<typeof fetch>(async (url) => {
@@ -308,7 +308,7 @@ describe('AC209 production queue exercise', () => {
     });
 
     await expect(runAc209QueueExercise(baseInput(fetchImpl))).rejects.toThrow(
-      'queue cleanup could not establish marker state',
+      'provider request failed',
     );
     const purgeBodies = fetchImpl.mock.calls
       .filter(([url]) => String(url).endsWith('/messages/purge'))

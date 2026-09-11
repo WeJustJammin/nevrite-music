@@ -4,6 +4,7 @@ import {
   Ac209ProductionExerciseReportSchema,
   exerciseProductionAc209,
   formatAc209QueueDiagnostic,
+  formatAc209StageDiagnostic,
 } from '../infra/workflows/exercise-production-ac209.ts';
 import { sha256CanonicalEmail } from '../infra/workflows/ac209-email-sending-analytics.ts';
 import {
@@ -196,6 +197,7 @@ describe('production AC209 queue-to-email exercise orchestration', () => {
 
   it('fails before queue access when the alert cooldown is active', async () => {
     const deps = dependencies();
+    const reportQueueDiagnostic = vi.fn<(diagnostic: string) => void>();
     deps.readEligibility.mockResolvedValueOnce({
       schemaVersion: 'ac209-exercise-eligibility-v1',
       eligible: false,
@@ -203,9 +205,105 @@ describe('production AC209 queue-to-email exercise orchestration', () => {
       blockedUntil: '2026-09-10T23:20:00.000Z',
     });
     await expect(
-      exerciseProductionAc209(await baseInput(), deps),
+      exerciseProductionAc209(await baseInput(), {
+        ...deps,
+        reportQueueDiagnostic,
+      }),
     ).rejects.toThrow('AC209 production exercise failed');
     expect(deps.queueExercise).not.toHaveBeenCalled();
+    expect(reportQueueDiagnostic).toHaveBeenCalledExactlyOnceWith(
+      'AC209_DIAGNOSTIC stage=eligibility code=blocked',
+    );
+  });
+
+  it('reports a closed eligibility request failure without leaking the error', async () => {
+    const deps = dependencies();
+    const reportQueueDiagnostic = vi.fn<(diagnostic: string) => void>();
+    deps.readEligibility.mockRejectedValueOnce(
+      new Error('secret-token https://provider.invalid ::error::forged'),
+    );
+
+    await expect(
+      exerciseProductionAc209(await baseInput(), {
+        ...deps,
+        reportQueueDiagnostic,
+      }),
+    ).rejects.toThrow('AC209 production exercise failed');
+    expect(deps.queueExercise).not.toHaveBeenCalled();
+    expect(reportQueueDiagnostic).toHaveBeenCalledExactlyOnceWith(
+      'AC209_DIAGNOSTIC stage=eligibility code=request_failed',
+    );
+    expect(reportQueueDiagnostic.mock.calls.flat().join(' ')).not.toMatch(
+      /secret-token|provider\.invalid|forged/u,
+    );
+  });
+
+  it('reports an allowlisted queue-state failure without provider detail', async () => {
+    const deps = dependencies();
+    const reportQueueDiagnostic = vi.fn<(diagnostic: string) => void>();
+    deps.queueExercise.mockRejectedValueOnce(
+      new Ac209QueueExerciseError(
+        'preflight_not_empty',
+        'dynamic queue content must remain private',
+      ),
+    );
+
+    await expect(
+      exerciseProductionAc209(await baseInput(), {
+        ...deps,
+        reportQueueDiagnostic,
+      }),
+    ).rejects.toThrow('AC209 production exercise failed');
+    expect(reportQueueDiagnostic).toHaveBeenCalledExactlyOnceWith(
+      'AC209_DIAGNOSTIC stage=queue code=preflight_not_empty',
+    );
+    expect(reportQueueDiagnostic.mock.calls.flat().join(' ')).not.toContain(
+      'dynamic queue content',
+    );
+  });
+
+  it('reports cleanup as queue-stage after delivery evidence succeeds', async () => {
+    const deps = dependencies();
+    const reportQueueDiagnostic = vi.fn<(diagnostic: string) => void>();
+    deps.queueExercise.mockImplementationOnce(async (input) => {
+      if (input.whileDlqMessagePresent === undefined)
+        throw new Error('expected the delivery evidence callback');
+      await input.whileDlqMessagePresent({
+        attempts: 4,
+        marker: '22222222-2222-4222-8222-222222222222',
+        messageId: 'queue-message-id',
+        timestampMs: queueReport.dlq.timestampMs,
+      });
+      throw new Ac209QueueExerciseError(
+        'cleanup_failed',
+        'queue cleanup bound exceeded',
+      );
+    });
+
+    await expect(
+      exerciseProductionAc209(await baseInput(), {
+        ...deps,
+        reportQueueDiagnostic,
+      }),
+    ).rejects.toThrow('AC209 production exercise failed');
+    expect(reportQueueDiagnostic).toHaveBeenCalledExactlyOnceWith(
+      'AC209_DIAGNOSTIC stage=queue code=cleanup_failed',
+    );
+  });
+
+  it('rejects non-allowlisted stage diagnostics', () => {
+    expect(
+      formatAc209StageDiagnostic({
+        stage: 'queue\n::error::forged',
+        code: 'provider-body-secret',
+      }),
+    ).toBeUndefined();
+    expect(
+      formatAc209StageDiagnostic({
+        stage: '__proto__',
+        code: 'provider_request_failed',
+      }),
+    ).toBeUndefined();
   });
 
   it('reports one allowlisted queue diagnostic while preserving the generic failure', async () => {
@@ -251,36 +349,57 @@ describe('production AC209 queue-to-email exercise orchestration', () => {
     'rejects a %s mismatch against the exact configuration artifact',
     async (_name, override) => {
       const deps = dependencies();
+      const reportQueueDiagnostic = vi.fn<(diagnostic: string) => void>();
       await expect(
-        exerciseProductionAc209({ ...(await baseInput()), ...override }, deps),
+        exerciseProductionAc209(
+          { ...(await baseInput()), ...override },
+          { ...deps, reportQueueDiagnostic },
+        ),
       ).rejects.toThrow('AC209 production exercise failed');
       expect(deps.queueExercise).not.toHaveBeenCalled();
+      expect(reportQueueDiagnostic).toHaveBeenCalledExactlyOnceWith(
+        'AC209_DIAGNOSTIC stage=configuration code=invalid_configuration',
+      );
     },
   );
 
   it('fails closed when the provider message is not bound to the database delivery', async () => {
     const deps = dependencies();
+    const reportQueueDiagnostic = vi.fn<(diagnostic: string) => void>();
     deps.verifyDelivery.mockRejectedValue(new Error('not matched'));
     await expect(
-      exerciseProductionAc209(await baseInput(), deps),
+      exerciseProductionAc209(await baseInput(), {
+        ...deps,
+        reportQueueDiagnostic,
+      }),
     ).rejects.toThrow('AC209 production exercise failed');
     expect(deps.verifyDelivery).toHaveBeenCalledWith(
       expect.objectContaining({ providerMessageId: MESSAGE_ID }),
     );
     expect(deps.queueExercise).toHaveBeenCalledOnce();
+    expect(reportQueueDiagnostic).toHaveBeenCalledExactlyOnceWith(
+      'AC209_DIAGNOSTIC stage=evidence code=not_observed',
+    );
   });
 
   it('rejects database delivery evidence from before this exercise', async () => {
     const deps = dependencies();
+    const reportQueueDiagnostic = vi.fn<(diagnostic: string) => void>();
     deps.verifyDelivery.mockResolvedValue({
       ...delivery,
       claimedAt: '2026-09-10T23:14:58.000Z',
       deliveredAt: '2026-09-10T23:14:59.000Z',
     });
     await expect(
-      exerciseProductionAc209(await baseInput(), deps),
+      exerciseProductionAc209(await baseInput(), {
+        ...deps,
+        reportQueueDiagnostic,
+      }),
     ).rejects.toThrow('AC209 production exercise failed');
     expect(deps.queueExercise).toHaveBeenCalledOnce();
+    expect(reportQueueDiagnostic).toHaveBeenCalledExactlyOnceWith(
+      'AC209_DIAGNOSTIC stage=evidence code=invalid',
+    );
   });
 
   it('never includes credentials, raw addresses, marker, or queue ref in evidence', async () => {
