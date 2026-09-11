@@ -86,7 +86,7 @@ describe('AC209 queue marker cleanup', () => {
         deadLetterPeeks += 1;
         return peek(
           !purged && deadLetterPeeks === 3
-            ? [message('late-recovery-ref', { cfsa_ac209_test: marker })]
+            ? [message('late-recovery-ref', { cfsa_ac209_test: marker }, 0)]
             : [],
         );
       }

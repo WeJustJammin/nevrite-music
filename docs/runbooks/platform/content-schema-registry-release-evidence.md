@@ -104,6 +104,11 @@ the exact-version configuration before any mutation. It then requires an
 eligible alert cooldown and empty exact source/DLQ peeks, pushes one UUID-marked
 malformed envelope, observes retry exhaustion in the DLQ, and keeps that exact
 message present while it correlates one delivered Email Sending event. The
+retained `dlq.attempts` value is the DLQ-local consumer counter and can be zero
+before any DLQ consumer delivery. Retry exhaustion is proved by the verified
+source consumer retry limit and DLQ binding, empty exact preflight, source-only
+publish, and exact marker arrival in the bound DLQ; the DLQ-local counter is not
+used as the source retry count. The
 service-only database verifier hashes the provider-owned message identifier
 internally and requires one delivered `dlq_nonempty` row for the exact release.
 The identifier is an opaque, visible-ASCII provider value of at most 512 bytes;

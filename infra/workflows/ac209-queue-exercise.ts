@@ -139,7 +139,10 @@ export const runAc209QueueExercise = async (
       if (matches.length > 1)
         fail('marker_ambiguous', 'multiple matching messages were observed');
       const match = matches[0];
-      if (match !== undefined && match.attempts > 1) {
+      if (match !== undefined) {
+        // Cloudflare treats a DLQ as an independent queue. The peek attempt
+        // counter is local to that queue and can be zero before a DLQ consumer
+        // receives the message; exact arrival here proves source exhaustion.
         observed = match;
         break;
       }
