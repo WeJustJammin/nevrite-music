@@ -4,9 +4,11 @@ import { describe, expect, it, vi } from 'vitest';
 
 import {
   AC209_QUEUE_MESSAGE_FIELD,
+  Ac209QueueExerciseError,
   runAc209QueueExercise,
   type Ac209QueueMessageContext,
 } from '../infra/workflows/ac209-queue-exercise.ts';
+import { verifyConsumer } from '../infra/workflows/ac209-queue-provider.ts';
 import {
   accountId,
   baseInput,
@@ -29,7 +31,62 @@ import {
 } from './ac209-queue-exercise.fixtures.ts';
 
 describe('AC209 production queue exercise', () => {
-  it('paginates queue identity, verifies the consumer, pushes one marker, observes retry, and purges only its exact refs', async () => {
+  it('accepts endpoint-scoped queue identity and the documented retry default when optional provider fields are omitted', () => {
+    expect(() =>
+      verifyConsumer(
+        {
+          consumers: [consumer({ queue_name: undefined, settings: {} })],
+          id: sourceQueueId,
+          name: sourceQueueName,
+        },
+        baseInput(vi.fn<typeof fetch>()),
+      ),
+    ).not.toThrow();
+  });
+
+  it.each([
+    ['count', 'consumer_count_invalid', []],
+    ['type', 'consumer_type_invalid', [consumer({ type: 'http_pull' })]],
+    [
+      'queue name',
+      'consumer_queue_name_invalid',
+      [consumer({ queue_name: 'other-queue' })],
+    ],
+    [
+      'script',
+      'consumer_script_invalid',
+      [consumer({ script_name: 'other-worker' })],
+    ],
+    [
+      'dead letter queue',
+      'consumer_dead_letter_queue_invalid',
+      [consumer({ dead_letter_queue: 'other-dlq' })],
+    ],
+    [
+      'maximum retries',
+      'consumer_max_retries_invalid',
+      [consumer({ settings: { max_retries: 4 } })],
+    ],
+    [
+      'null maximum retries',
+      'consumer_max_retries_invalid',
+      [consumer({ settings: { max_retries: null } })],
+    ],
+  ])('reports a closed %s mismatch code', (_label, code, consumers) => {
+    let captured: unknown;
+    try {
+      verifyConsumer(
+        { consumers, id: sourceQueueId, name: sourceQueueName },
+        baseInput(vi.fn<typeof fetch>()),
+      );
+    } catch (error: unknown) {
+      captured = error;
+    }
+    expect(captured).toBeInstanceOf(Ac209QueueExerciseError);
+    expect((captured as Ac209QueueExerciseError).code).toBe(code);
+  });
+
+  it('paginates queue identity, refreshes an incomplete consumer summary, pushes one marker, observes retry, and purges only its exact refs', async () => {
     const calls: Array<{ url: string; init?: RequestInit }> = [];
     let dlqPeekCount = 0;
     let purged = false;
@@ -50,7 +107,22 @@ describe('AC209 production queue exercise', () => {
       if (path.endsWith('/queues?page=1&per_page=100'))
         return queueList([queue('3'.repeat(32), 'unrelated')], 1, 2, 3);
       if (path.endsWith('/queues?page=2&per_page=100'))
-        return queueList([validSource, validDeadLetter], 2, 2, 3);
+        return queueList(
+          [
+            {
+              consumers: [consumer({ script_name: 'stale-summary' })],
+              consumers_total_count: 0,
+              queue_id: sourceQueueId,
+              queue_name: sourceQueueName,
+            },
+            validDeadLetter,
+          ],
+          2,
+          2,
+          3,
+        );
+      if (path.endsWith(`/queues/${sourceQueueId}/consumers`))
+        return jsonResponse({ result: [consumer()], success: true });
       if (path.endsWith(`/queues/${sourceQueueId}/messages/peek`))
         return peek([]);
       if (path.endsWith(`/queues/${deadLetterQueueId}/messages/peek`)) {
@@ -89,6 +161,24 @@ describe('AC209 production queue exercise', () => {
     );
 
     expect(evidence).toHaveBeenCalledOnce();
+    expect(
+      calls.some((call) =>
+        call.url.endsWith(`/queues/${sourceQueueId}/consumers`),
+      ),
+    ).toBe(true);
+    const consumerCalls = calls.filter((call) =>
+      call.url.endsWith(`/queues/${sourceQueueId}/consumers`),
+    );
+    expect(consumerCalls).toHaveLength(1);
+    expect(consumerCalls[0]?.init).toEqual(
+      expect.objectContaining({
+        headers: {
+          Accept: 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        method: 'GET',
+      }),
+    );
 
     expect(report).toEqual({
       sourceQueue: { id: sourceQueueId, name: sourceQueueName },
@@ -157,6 +247,8 @@ describe('AC209 production queue exercise', () => {
       const path = String(url);
       if (path.endsWith('/queues?page=1&per_page=100'))
         return queueList([validSource, validDeadLetter], 1);
+      if (path.endsWith(`/queues/${sourceQueueId}/consumers`))
+        return jsonResponse({ result: validSource.consumers, success: true });
       if (path.endsWith(`/queues/${sourceQueueId}/messages/peek`))
         return peek([message('existing-ref', { existing: true }, 1)]);
       if (path.endsWith(`/queues/${deadLetterQueueId}/messages/peek`))
@@ -225,6 +317,8 @@ describe('AC209 production queue exercise', () => {
       const path = String(url);
       if (path.endsWith('/queues?page=1&per_page=100'))
         return queueList([validSource, validDeadLetter], 1);
+      if (path.endsWith(`/queues/${sourceQueueId}/consumers`))
+        return jsonResponse({ result: validSource.consumers, success: true });
       if (path.endsWith(`/queues/${sourceQueueId}/messages/peek`))
         return peek([]);
       if (path.endsWith(`/queues/${deadLetterQueueId}/messages/peek`)) {
@@ -282,6 +376,8 @@ describe('AC209 production queue exercise', () => {
       const path = String(url);
       if (path.endsWith('/queues?page=1&per_page=100'))
         return queueList([validSource, validDeadLetter], 1);
+      if (path.endsWith(`/queues/${sourceQueueId}/consumers`))
+        return jsonResponse({ result: validSource.consumers, success: true });
       if (path.endsWith(`/queues/${sourceQueueId}/messages/peek`)) {
         sourcePeekCount += 1;
         return sourcePeekCount === 1
@@ -322,6 +418,8 @@ describe('AC209 production queue exercise', () => {
       const path = String(url);
       if (path.endsWith('/queues?page=1&per_page=100'))
         return queueList([validSource, validDeadLetter], 1);
+      if (path.endsWith(`/queues/${sourceQueueId}/consumers`))
+        return jsonResponse({ result: validSource.consumers, success: true });
       if (path.endsWith(`/queues/${sourceQueueId}/messages/peek`))
         return peek([]);
       if (path.endsWith(`/queues/${deadLetterQueueId}/messages/peek`))
