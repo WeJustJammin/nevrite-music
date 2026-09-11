@@ -21,6 +21,8 @@ const runInput = {
   scheduledAt: '2026-09-05T12:00:00.000Z',
 } as const;
 
+const providerMessageId = 'cloudflare-email-message-0001' as const;
+
 const nativeFetch = (input: {
   database?: unknown;
   logs?: unknown;
@@ -174,7 +176,9 @@ describe('production operational alert dependencies', () => {
       .mockResolvedValueOnce(Response.json(true));
     const bindings = {
       ...environment,
-      PLATFORM_ALERT_EMAIL: { send: vi.fn().mockResolvedValue({}) },
+      PLATFORM_ALERT_EMAIL: {
+        send: vi.fn().mockResolvedValue({ messageId: providerMessageId }),
+      },
     };
     const dependencies = createProductionOperationalAlertDependencies(
       bindings,
@@ -201,12 +205,17 @@ describe('production operational alert dependencies', () => {
       release: 'release-sha',
       scheduledAt: input.scheduledAt,
     });
+    expect(receipt).toEqual({
+      receiptId: '019c0000-0000-7000-8000-000000000002',
+      providerMessageId,
+    });
     await dependencies.complete({
       alert,
       claimId: claim.claimId,
       claimToken: claim.claimToken,
       deliveredAt: '2026-09-05T12:00:01.000Z',
       receiptId: receipt.receiptId,
+      providerMessageId: receipt.providerMessageId,
     });
 
     const sent = bindings.PLATFORM_ALERT_EMAIL.send.mock.calls[0]?.[0];
@@ -215,11 +224,82 @@ describe('production operational alert dependencies', () => {
       subject: '[WeJammin] dlq_nonempty',
       to: 'admin.wejammin@gmail.com',
     });
+    expect(sent).not.toHaveProperty('headers');
     expect(JSON.stringify(sent)).not.toMatch(
       /observability-token|sb_secret_test|authorization|cookie|requestBody/iu,
     );
     expect(fetchImpl.mock.calls[1]?.[1]?.body).not.toContain(
       'admin.wejammin@gmail.com',
+    );
+    expect(fetchImpl.mock.calls[1]?.[1]?.body).toContain(providerMessageId);
+  });
+
+  it.each([
+    undefined,
+    null,
+    {},
+    { messageId: '' },
+    { messageId: 'contains space' },
+    { messageId: 'contains\nnewline' },
+    { messageId: `<${'x'.repeat(509)}@c>` },
+  ])('rejects a malformed provider send result: %j', async (result) => {
+    const dependencies = createProductionOperationalAlertDependencies(
+      {
+        ...environment,
+        PLATFORM_ALERT_EMAIL: { send: vi.fn().mockResolvedValue(result) },
+      },
+      vi.fn<typeof fetch>(),
+    );
+
+    await expect(
+      dependencies.deliver({
+        alert: {
+          code: 'dlq_nonempty',
+          observed: 1,
+          route: 'platform.on_call',
+          runbook: 'content-schema-registry',
+          threshold: 0,
+        },
+        claimId: '019c0000-0000-7000-8000-000000000001',
+        environment: 'production',
+        redacted: true,
+        release: 'release-sha',
+        scheduledAt: runInput.scheduledAt,
+      }),
+    ).rejects.toThrow('Invalid operational alert delivery response');
+  });
+
+  it('redacts provider send failures', async () => {
+    const providerFailure = new Error(
+      'provider-private detail token=secret-provider-token',
+    );
+    const dependencies = createProductionOperationalAlertDependencies({
+      ...environment,
+      PLATFORM_ALERT_EMAIL: {
+        send: vi.fn().mockRejectedValue(providerFailure),
+      },
+    });
+
+    const rejection = dependencies.deliver({
+      alert: {
+        code: 'dlq_nonempty',
+        observed: 1,
+        route: 'platform.on_call',
+        runbook: 'content-schema-registry',
+        threshold: 0,
+      },
+      claimId: '019c0000-0000-7000-8000-000000000001',
+      environment: 'production',
+      redacted: true,
+      release: 'release-sha',
+      scheduledAt: runInput.scheduledAt,
+    });
+
+    await expect(rejection).rejects.toThrow(
+      'Operational alert delivery failed',
+    );
+    await expect(rejection).rejects.not.toThrow(
+      /provider-private|secret-provider-token/u,
     );
   });
 
@@ -234,6 +314,104 @@ describe('production operational alert dependencies', () => {
     );
     await expect(dependencies.loadSnapshot(runInput)).rejects.toThrow(
       /provider request failed|response too large/u,
+    );
+  });
+
+  it.each([undefined, '1'])(
+    'bounds provider streams when content-length is %s or lies low',
+    async (contentLength) => {
+      let pulls = 0;
+      let cancelled = false;
+      const stream = new ReadableStream<Uint8Array>({
+        pull(controller) {
+          pulls += 1;
+          if (pulls > 2) return new Promise<never>(() => undefined);
+          controller.enqueue(new Uint8Array(1_000_001));
+        },
+        cancel() {
+          cancelled = true;
+        },
+      });
+      const headers = new Headers({ 'content-type': 'application/json' });
+      if (contentLength !== undefined)
+        headers.set('content-length', contentLength);
+      const dependencies = createProductionOperationalAlertDependencies(
+        environment,
+        vi
+          .fn<typeof fetch>()
+          .mockResolvedValue(new Response(stream, { headers })),
+        { providerTimeoutMs: 100 },
+      );
+
+      await expect(dependencies.loadSnapshot(runInput)).rejects.toThrow(
+        'Operational provider response too large',
+      );
+      expect(pulls).toBeLessThanOrEqual(3);
+      expect(cancelled).toBe(true);
+    },
+    1_000,
+  );
+
+  it('aborts a provider response whose body stalls before the absolute deadline', async () => {
+    let cancelled = false;
+    const stream = new ReadableStream<Uint8Array>({
+      pull() {
+        return new Promise<never>(() => undefined);
+      },
+      cancel() {
+        cancelled = true;
+      },
+    });
+    const dependencies = createProductionOperationalAlertDependencies(
+      environment,
+      vi.fn<typeof fetch>().mockResolvedValue(
+        new Response(stream, {
+          headers: { 'content-type': 'application/json' },
+        }),
+      ),
+      { providerTimeoutMs: 20 },
+    );
+
+    await expect(dependencies.loadSnapshot(runInput)).rejects.toThrow(
+      'Operational provider request timed out',
+    );
+    expect(cancelled).toBe(true);
+  }, 1_000);
+
+  it.each([new Uint8Array([0xff]), new TextEncoder().encode('{broken')])(
+    'rejects malformed provider response bodies without raw parser details',
+    async (body) => {
+      const dependencies = createProductionOperationalAlertDependencies(
+        environment,
+        vi.fn<typeof fetch>().mockResolvedValue(
+          new Response(body, {
+            headers: { 'content-type': 'application/json' },
+          }),
+        ),
+      );
+
+      await expect(dependencies.loadSnapshot(runInput)).rejects.toThrow(
+        'Invalid operational provider response',
+      );
+    },
+  );
+
+  it('redacts provider fetch failures', async () => {
+    const dependencies = createProductionOperationalAlertDependencies(
+      environment,
+      vi
+        .fn<typeof fetch>()
+        .mockRejectedValue(
+          new Error('provider-private token=secret-provider-token'),
+        ),
+    );
+
+    const rejection = dependencies.loadSnapshot(runInput);
+    await expect(rejection).rejects.toThrow(
+      'Operational provider request failed',
+    );
+    await expect(rejection).rejects.not.toThrow(
+      /provider-private|secret-provider-token/u,
     );
   });
 
@@ -421,6 +599,7 @@ describe('production operational alert dependencies', () => {
         claimToken: '019c0000-0000-7000-8000-000000000002',
         deliveredAt: '2026-09-05T12:00:01.000Z',
         receiptId: '019c0000-0000-7000-8000-000000000003',
+        providerMessageId,
       }),
     ).rejects.toThrow('Operational alert completion failed');
   });

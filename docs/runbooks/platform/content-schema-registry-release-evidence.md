@@ -86,6 +86,59 @@ The retained configuration artifact is redacted configuration proof only. It
 does not replace the required production-native alert exercise, Cloudflare email
 delivery event, mailbox receipt, or exact-message DLQ cleanup evidence.
 
+## Exercise AC209 delivery
+
+Provision `CLOUDFLARE_QUEUE_EXERCISE_TOKEN` in the protected production
+environment with account-scoped Workers Queues Write only. Do not reuse the
+deployment token or a local Wrangler OAuth credential. Pin the provider-verified
+Email Sending zone as `CLOUDFLARE_EMAIL_ZONE_ID`, the fixed sender digest as
+`PRODUCTION_ALERT_SENDER_SHA256`, and the production source queue as
+`CLOUDFLARE_PLATFORM_QUEUE_ID`. The existing observability token supplies the
+read-only Analytics permission for the Email Sending query.
+
+After the verification RPC migration and exercise workflow are deployed,
+dispatch `exercise-production-ac209.yml` from `main`. Supply the exact deployed
+source revision and Worker version, production DLQ ID, approved configuration ID
+and reference, and set `confirm_exercise: true`. The protected job recollects
+the exact-version configuration before any mutation. It then requires an
+eligible alert cooldown and empty exact source/DLQ peeks, pushes one UUID-marked
+malformed envelope, observes retry exhaustion in the DLQ, and keeps that exact
+message present while it correlates one delivered Email Sending event. The
+service-only database verifier hashes the provider-owned message identifier
+internally and requires one delivered `dlq_nonempty` row for the exact release.
+The identifier is an opaque, visible-ASCII provider value of at most 512 bytes;
+it is not a caller-authored RFC `Message-ID`. The verifier sends
+`notBefore = exercise.startedAt` and accepts only a row whose claim and delivery
+both occurred at or after that boundary. The internal UUID receipt remains
+separately hashed and private. Provider response bodies are capped while they
+stream, time out deterministically, and fail closed on invalid UTF-8.
+
+Migration `20260910030000_ac209_operational_alert_verification.sql` is the
+expand phase: it accepts the deployed five-field completion body while adding
+the optional provider identifier. Deploy the Worker that supplies
+`providerMessageId`, verify it, and only then deploy a separate forward-only
+migration that requires the sixth field. Applying both phases before the Worker
+would break in-flight or still-running old-version completions.
+
+The 75-minute exercise and its `always()` safety step purge only peek refs whose
+body exactly matches the pre-generated marker. Cleanup runs only after the
+exact-version configuration collector succeeds. Both paths reject
+ambiguous/full peeks and never invoke queue-wide purge. A hard-cancelled run is
+recovered by rerunning that same GitHub Actions run, which derives the same
+opaque marker. If its first rerun finds and removes a delayed marker during
+fail-closed preflight, rerun the same run again to start from verified-empty
+queues. On success, retain only
+`ac209-exercise/configuration.json` and `ac209-exercise/exercise.json` for 30
+days. The latter contains hashed addresses/queue identities plus the exact
+provider message identifier, and states `pending_manual_verification`; it is
+provider/database proof, not Gmail acceptance.
+
+Finally inspect the real Gmail receipt. Confirm the exact recipient, subject
+`[WeJammin] dlq_nonempty`, provider message identifier, delivery time, and
+redacted body fields for the same release, then record the bounded manual
+receipt and reviewer attestation. Do not close AC209 from the Cloudflare
+`delivered` status alone.
+
 Manual accessibility reports record stable operator IDs rather than names or
 email addresses. They include concrete OS, browser, and screen-reader versions,
 completion time, report digest, `passed` outcome, and every canonical check

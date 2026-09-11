@@ -85,6 +85,41 @@ filesystem and validation operations.
   exact version's tag, message, and upload provenance through the pinned
   Wrangler CLI. Raw provider payloads and the alert address are discarded
   before the atomic redacted artifact is written.
+- `ac209-queue-exercise.ts` runs the bounded AC209 queue marker exercise and
+  re-exports its contracts plus `cleanupAc209QueueMarker` for cancellation-safe
+  exact-marker cleanup.
+- `ac209-queue-contracts.ts` contains the validated queue exercise/cleanup
+  inputs, runtime bounds, redacted report types, and error boundary.
+- `ac209-queue-provider.ts` owns bounded Cloudflare Queue API requests,
+  pagination, peeks, exact marker matching, and source-consumer verification.
+- `ac209-queue-cleanup.ts` polls both exact queues, purges only matching opaque
+  references, rejects ambiguous full pages/provider error shapes, and proves
+  marker absence before reporting cleanup.
+- `exercise-production-ac209.ts` binds that exact-version configuration to one
+  reviewer-approved production queue exercise. The queue adapters require empty
+  exact source/DLQ preflights, observe real retry exhaustion, retain the marker
+  and message identities only as SHA-256 digests, hold the DLQ message while the
+  bounded Email Sending query and service-only Supabase receipt verification
+  complete, and purge only the correlated peek ref in `finally`.
+  Queue, Email Analytics, and Supabase response bodies are size-bounded during
+  streaming, timeout-bounded, and rejected on invalid UTF-8. The database check
+  receives `notBefore = exercise.startedAt`, so an earlier delivery for the same
+  release cannot satisfy the run.
+  `cleanup-production-ac209.ts` is the idempotent `always()` safety step: it
+  rechecks the pre-generated opaque marker across both exact queues and either
+  proves absence or purges only its matching refs. Neither path performs a
+  queue-wide purge. The 75-minute workflow invokes this safety step only after
+  the exact-version configuration collector succeeds. The retained exercise
+  report explicitly leaves Gmail inbox verification pending. The marker is
+  derived from the immutable GitHub
+  repository/run IDs, so rerunning the same workflow run after a hard
+  cancellation recovers the same marker. If the first rerun removes a delayed
+  marker during fail-closed preflight, rerun that same run once more to perform
+  the exercise from verified-empty queues.
+  Migration `20260910030000_ac209_operational_alert_verification.sql` is an
+  expand phase that temporarily accepts the deployed five-field completion
+  caller; require `providerMessageId` only in a later forward migration after
+  the new Worker is verified live.
 
 ## Conventions
 

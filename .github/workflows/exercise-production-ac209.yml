@@ -1,0 +1,132 @@
+name: Exercise production AC209 alert delivery
+
+on:
+  workflow_dispatch:
+    inputs:
+      source_revision:
+        description: Full lowercase main source revision deployed to production
+        required: true
+        type: string
+      production_version_id:
+        description: Exact 100 percent production API Worker version identifier
+        required: true
+        type: string
+      expected_dlq_id:
+        description: Exact production platform-jobs-dlq identifier
+        required: true
+        type: string
+      configuration_id:
+        description: Reviewer-approved AC209 exercise configuration identifier
+        required: true
+        type: string
+      configuration_reference:
+        description: Reviewer-approved change or reference identifier
+        required: true
+        type: string
+      confirm_exercise:
+        description: Confirm one protected production queue and email exercise
+        required: true
+        type: boolean
+        default: false
+
+concurrency: { group: exercise-production-ac209, cancel-in-progress: false }
+permissions: { contents: read }
+
+jobs:
+  exercise:
+    if: inputs.confirm_exercise == true && github.ref == 'refs/heads/main'
+    runs-on: [self-hosted, wejammin]
+    timeout-minutes: 75
+    environment:
+      name: production
+    env:
+      GITHUB_ENVIRONMENT: production
+      SOURCE_REVISION: ${{ inputs.source_revision }}
+      PRODUCTION_VERSION_ID: ${{ inputs.production_version_id }}
+      EXPECTED_DLQ_ID: ${{ inputs.expected_dlq_id }}
+      CONFIGURATION_ID: ${{ inputs.configuration_id }}
+      CONFIGURATION_REFERENCE: ${{ inputs.configuration_reference }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
+      EXPECTED_SUPABASE_URL: ${{ vars.SUPABASE_URL }}
+      EXPECTED_ALERT_EMAIL_SHA256: ${{ vars.PRODUCTION_ALERT_EMAIL_SHA256 }}
+      AC209_OUTPUT_PATH: ac209-exercise/configuration.json
+      AC209_EXERCISE_OUTPUT_PATH: ac209-exercise/exercise.json
+    steps:
+      - name: Check out exact main revision
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          ref: ${{ inputs.source_revision }}
+          fetch-depth: 1
+          persist-credentials: false
+
+      - name: Verify protected execution identity
+        env:
+          EXPECTED_SOURCE_REVISION: ${{ inputs.source_revision }}
+          EXPECTED_DISPATCH_SHA: ${{ github.sha }}
+        run: |
+          checked_out_sha="$(git rev-parse HEAD)"
+          test "$GITHUB_REF" = "refs/heads/main"
+          test "$SOURCE_REVISION" = "$EXPECTED_DISPATCH_SHA"
+          test "$checked_out_sha" = "$EXPECTED_SOURCE_REVISION"
+          test "$GITHUB_ENVIRONMENT" = "production"
+          echo "CHECKED_OUT_SHA=$checked_out_sha" >> "$GITHUB_ENV"
+
+      - name: Set up workspace
+        uses: ./.github/actions/setup
+
+      - name: Prepare opaque exercise marker
+        env:
+          AC209_MARKER_REPOSITORY_ID: ${{ github.repository_id }}
+          AC209_MARKER_RUN_ID: ${{ github.run_id }}
+        run: |
+          marker="$(node --experimental-strip-types infra/workflows/ac209-exercise-marker.ts)"
+          echo "AC209_EXERCISE_MARKER=$marker" >> "$GITHUB_ENV"
+
+      - name: Reverify immutable workspace before secrets
+        env:
+          EXPECTED_DISPATCH_SHA: ${{ github.sha }}
+        run: |
+          checked_out_sha="$(git rev-parse HEAD)"
+          test "$GITHUB_REF" = "refs/heads/main"
+          test "$SOURCE_REVISION" = "$EXPECTED_DISPATCH_SHA"
+          test "$checked_out_sha" = "$SOURCE_REVISION"
+          git diff --quiet
+          git diff --cached --quiet
+          test -z "$(git status --porcelain --untracked-files=all)"
+
+      - name: Collect exact-version AC209 configuration
+        id: configuration_collector
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_OBSERVABILITY_API_TOKEN: ${{ secrets.CLOUDFLARE_OBSERVABILITY_API_TOKEN }}
+        run: node --experimental-strip-types infra/workflows/collect-content-schema-registry-alert-configuration.ts
+
+      - name: Exercise one production queue message
+        id: production_exercise
+        env:
+          CLOUDFLARE_QUEUE_EXERCISE_TOKEN: ${{ secrets.CLOUDFLARE_QUEUE_EXERCISE_TOKEN }}
+          CLOUDFLARE_EMAIL_ANALYTICS_API_TOKEN: ${{ secrets.CLOUDFLARE_OBSERVABILITY_API_TOKEN }}
+          CLOUDFLARE_PLATFORM_QUEUE_ID: ${{ vars.CLOUDFLARE_PLATFORM_QUEUE_ID }}
+          CLOUDFLARE_EMAIL_ZONE_ID: ${{ vars.CLOUDFLARE_EMAIL_ZONE_ID }}
+          EXPECTED_ALERT_SENDER_SHA256: ${{ vars.PRODUCTION_ALERT_SENDER_SHA256 }}
+          EXPECTED_ALERT_EMAIL_SHA256: ${{ vars.PRODUCTION_ALERT_EMAIL_SHA256 }}
+          SUPABASE_URL: ${{ vars.SUPABASE_URL }}
+          SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
+        run: node --experimental-strip-types infra/workflows/exercise-production-ac209.ts
+
+      - name: Ensure exact AC209 marker cleanup
+        if: always() && steps.configuration_collector.outcome == 'success' && steps.production_exercise.outcome != 'success'
+        env:
+          CLOUDFLARE_QUEUE_EXERCISE_TOKEN: ${{ secrets.CLOUDFLARE_QUEUE_EXERCISE_TOKEN }}
+          CLOUDFLARE_PLATFORM_QUEUE_ID: ${{ vars.CLOUDFLARE_PLATFORM_QUEUE_ID }}
+        run: node --experimental-strip-types infra/workflows/cleanup-production-ac209.ts
+
+      - name: Upload redacted AC209 exercise evidence
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+        with:
+          name: production-ac209-exercise-${{ inputs.source_revision }}
+          path: |
+            ac209-exercise/configuration.json
+            ac209-exercise/exercise.json
+          if-no-files-found: error
+          retention-days: 30

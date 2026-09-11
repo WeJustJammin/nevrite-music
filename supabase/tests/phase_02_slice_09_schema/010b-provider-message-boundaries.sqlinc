@@ -1,0 +1,83 @@
+-- Provider message identifiers are opaque, bounded provider values rather than
+-- caller-authored RFC Message-ID headers. Both write and verification boundaries
+-- accept visible ASCII only and reject identifiers larger than 512 bytes.
+create temp table s09_legacy_alert_claim as
+select platform_api.cms_claim_operational_alert(jsonb_build_object(
+  'alertCode', 'migration_retry_exceeded',
+  'claimToken', '019c0000-0000-7000-8000-000000000020',
+  'release', 'legacy-worker-release',
+  'scheduledAt', now()
+)) as value;
+select ok(
+  platform_api.cms_complete_operational_alert(jsonb_build_object(
+    'alertCode', 'migration_retry_exceeded',
+    'claimId', (select value->>'claimId' from s09_legacy_alert_claim),
+    'claimToken', '019c0000-0000-7000-8000-000000000020',
+    'deliveredAt', now(),
+    'receiptId', '019c0000-0000-7000-8000-000000000021'
+  )),
+  'P2-S09 expand migration preserves the deployed five-field completion caller'
+);
+select ok(
+  (select provider_message_hash is null
+     from platform_private.cms_operational_alert_deliveries
+    where id = (select (value->>'claimId')::uuid from s09_legacy_alert_claim)),
+  'P2-S09 legacy completion keeps the new provider digest nullable'
+);
+select throws_ok(
+  $$select platform_api.cms_complete_operational_alert(jsonb_build_object(
+    'alertCode', 'dlq_nonempty',
+    'claimId', (select value->>'claimId' from s09_alert_claim),
+    'claimToken', '019c0000-0000-7000-8000-000000000002',
+    'deliveredAt', now(),
+    'receiptId', '019c0000-0000-7000-8000-000000000004',
+    'providerMessageId', 'contains space'
+  ))$$,
+  '22023', 'invalid operational alert completion',
+  'P2-S09 rejects a provider message identifier containing whitespace before completion'
+);
+select throws_ok(
+  $$select platform_api.cms_verify_operational_alert_delivery(jsonb_build_object(
+    'alertCode', 'dlq_nonempty', 'notBefore', clock_timestamp() - interval '3 minutes',
+    'release', repeat('a', 40),
+    'providerMessageId', '<' || repeat('x', 509) || '@c>'
+  ))$$,
+  '22023', 'invalid operational alert delivery verification',
+  'P2-S09-AC-209 rejects a provider message identifier over 512 bytes'
+);
+select throws_ok(
+  $$select platform_api.cms_verify_operational_alert_delivery(jsonb_build_object(
+    'alertCode', 'dlq_nonempty', 'notBefore', clock_timestamp() - interval '3 minutes',
+    'release', repeat('a', 40),
+    'providerMessageId', 'contains space'
+  ))$$,
+  '22023', 'invalid operational alert delivery verification',
+  'P2-S09-AC-209 rejects a provider message identifier containing whitespace'
+);
+select throws_ok(
+  $$select platform_api.cms_verify_operational_alert_delivery(jsonb_build_object(
+    'alertCode', 'dlq_nonempty', 'release', repeat('a', 40),
+    'providerMessageId', 'cloudflare-provider-message-0010'
+  ))$$,
+  '22023', 'invalid operational alert delivery verification',
+  'P2-S09-AC-209 requires the current exercise lower time boundary'
+);
+select throws_ok(
+  $$select platform_api.cms_verify_operational_alert_delivery(jsonb_build_object(
+    'alertCode', 'dlq_nonempty', 'notBefore', 'not-a-time',
+    'release', repeat('a', 40),
+    'providerMessageId', 'cloudflare-provider-message-0010'
+  ))$$,
+  '22023', 'invalid operational alert delivery verification',
+  'P2-S09-AC-209 rejects a malformed exercise lower time boundary'
+);
+select ok(
+  (select (response->>'verified')::boolean = false
+      and response - array['schemaVersion', 'verified']::text[] = '{}'::jsonb
+   from (select platform_api.cms_verify_operational_alert_delivery(jsonb_build_object(
+     'alertCode', 'dlq_nonempty', 'notBefore', clock_timestamp() + interval '1 minute',
+     'release', repeat('a', 40),
+     'providerMessageId', 'cloudflare-provider-message-0001'
+   )) response) verification),
+  'P2-S09-AC-209 rejects delivery evidence before the current exercise boundary'
+);

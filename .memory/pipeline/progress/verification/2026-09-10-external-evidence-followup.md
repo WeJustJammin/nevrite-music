@@ -210,3 +210,46 @@ opaque DLQ reference is purged. AC211 still requires a qualifying complete UTC
 day of natural production traffic; AC265 still requires governed real IdP
 subjects and hosted role/session proof; AC266 still requires physical
 VoiceOver/Safari and NVDA/Firefox reports. Slices 10–17 remain dependency-locked.
+
+## 2026-09-10T22:59Z exact-version collector release and production proof
+
+- PR [#52](https://github.com/WeJustJammin/nevrite-music/pull/52) merged by
+  squash as exact main revision
+  `e8786aad22a42dcefb22989ee49552dc11df8e85`. The collector now derives the
+  active Cloudflare deployment from one documented REST snapshot and binds the
+  requested version to the repository-pinned Wrangler versions view. Mutable
+  settings annotations are excluded; the exact retained version must have one
+  matching ID, `workers/tag` equal to the source SHA, the locked
+  `sourceRevision=<sha>;githubRunId=<positive-id>` message, and
+  `workers/triggered_by=version_upload`.
+- Local Node 22.23.1/pnpm 11.24.0 validation passed: 447 test files, 3,361
+  passing tests plus one intentional skip, 100% statement/branch/function/line
+  coverage, every Slice 09 executable evidence command, 101 functional and five
+  production-build Playwright tests, builds, bundle budgets, and performance
+  smoke. `pnpm db:verify` passed 46 database files and 1,709 assertions.
+- Exact-main CI run
+  [34539125516](https://github.com/WeJustJammin/nevrite-music/actions/runs/34539125516),
+  staging run
+  [34539653050](https://github.com/WeJustJammin/nevrite-music/actions/runs/34539653050),
+  and approved production promotion run
+  [34539773473](https://github.com/WeJustJammin/nevrite-music/actions/runs/34539773473)
+  all passed for that same SHA. Production deployed API version
+  `7c753f6d-2eb5-4e59-acb4-3dbfc624573f` and web version
+  `17f2f79e-3d4b-4319-a7a5-26008d8d1deb`.
+- Protected AC209 collector run
+  [34539963998](https://github.com/WeJustJammin/nevrite-music/actions/runs/34539963998)
+  passed. Its independently schema-validated redacted artifact has SHA-256
+  `0d481c4a2cd24f05f2380c1d3c0539d5d422d43a58dbbfeb79fb3fcdf4015d53`
+  and binds Cloudflare deployment `991eb5ee-0940-477f-b661-2f0856e7ee30`,
+  the exact API version and source SHA above, 100% traffic, the every-minute
+  schedule, all twelve conditions, all nine required binding descriptors, and
+  all five permission checks. No token, raw provider response, or email address
+  is retained.
+
+This closes the missing AC209 configuration-evidence sub-gate only. AC209 still
+requires one real production-native malformed-message exercise, retry/DLQ
+observation, database delivery record, Cloudflare Email Sending event, real
+Gmail receipt, and exact-reference cleanup. AC211, AC265, and AC266 remain open
+for the external evidence described above. Slice 09 therefore remains `279/283`
+and Slices 10–17 remain dependency-locked; no acceptance item was fabricated or
+waived.

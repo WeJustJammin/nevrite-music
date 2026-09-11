@@ -17,12 +17,22 @@ Only the credentials listed below are authorized. They belong in protected GitHu
 
 Production uses the same names in the protected `production` environment with
 distinct values, plus the production-only
-`CLOUDFLARE_OBSERVABILITY_API_TOKEN`. That token is restricted to the WeJammin
+`CLOUDFLARE_OBSERVABILITY_API_TOKEN` and the manual-only
+`CLOUDFLARE_QUEUE_EXERCISE_TOKEN`. The observability token is restricted to the WeJammin
 account with Workers Observability Write and Account Analytics Read; it must not
 have Workers Scripts Edit. The scheduled S09 alert boundary uses it only to
 read structured Workers Logs and Queue metrics. The manual AC211 collection
 workflow uses the same read-only scopes to assemble bounded aggregate evidence;
-it never retains raw provider responses. Required reviewers,
+the protected AC209 exercise also uses its Analytics Read scope for the bounded
+Email Sending delivery query. It never retains raw provider responses. The
+queue-exercise token is required but is not yet provisioned as of 2026-09-11.
+When provisioned, it must be restricted to the WeJammin account with Workers
+Queues Write and no deployment, zone-management, Email Sending management, or
+billing permission. It exists only for the serialized, reviewer-approved AC209
+workflow, which preflights empty exact queues and can purge only the correlated
+peek ref.
+The deployment token and interactive Wrangler OAuth credential must never be
+substituted for it. Required reviewers,
 main-branch restrictions, and serialized deployment concurrency remain in
 force. Staging values must never be copied into production or vice versa.
 The protected production workflow exercises both provider APIs with
@@ -54,7 +64,7 @@ tokens; never reuse the interactive Wrangler OAuth credential in CI.
 
 ## Environment variables
 
-Non-secret GitHub environment variables include `CLOUDFLARE_ACCOUNT_ID`, `STAGING_WEB_ORIGIN`, `STAGING_API_ORIGIN`, `SUPABASE_PROJECT_REF`, and `SUPABASE_URL`. Production also records `PRODUCTION_API_ORIGIN` for the post-deploy health gate, `PRODUCTION_ALERT_EMAIL_SHA256` for redacted AC209 destination verification, `CLOUDFLARE_PLATFORM_QUEUE_ID` for the AC211 Queue Analytics query, and `STAGING_SUPABASE_PROJECT_REF` so promotion can independently match staging migration evidence to the configured staging project. Browser-safe application values are variables rather than secrets: `PUBLIC_APP_ORIGIN`, `PUBLIC_SUPABASE_URL`, and `PUBLIC_SUPABASE_PUBLISHABLE_KEY`. Administrative keys and database passwords remain secrets. No third-party application-provider credential is authorized.
+Non-secret GitHub environment variables include `CLOUDFLARE_ACCOUNT_ID`, `STAGING_WEB_ORIGIN`, `STAGING_API_ORIGIN`, `SUPABASE_PROJECT_REF`, and `SUPABASE_URL`. Production also records `PRODUCTION_API_ORIGIN` for the post-deploy health gate, `PRODUCTION_ALERT_EMAIL_SHA256` and `PRODUCTION_ALERT_SENDER_SHA256` for redacted AC209 address verification, `CLOUDFLARE_EMAIL_ZONE_ID` for the exact Email Sending analytics zone, `CLOUDFLARE_PLATFORM_QUEUE_ID` for the exact production queue and AC211 Queue Analytics query, and `STAGING_SUPABASE_PROJECT_REF` so promotion can independently match staging migration evidence to the configured staging project. Browser-safe application values are variables rather than secrets: `PUBLIC_APP_ORIGIN`, `PUBLIC_SUPABASE_URL`, and `PUBLIC_SUPABASE_PUBLISHABLE_KEY`. Administrative keys and database passwords remain secrets. No third-party application-provider credential is authorized.
 
 ## Cost control
 

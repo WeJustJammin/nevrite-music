@@ -26,7 +26,10 @@ describe('content schema registry production alert runtime', () => {
       claimId: `claim-${alert.code}`,
       claimToken: `token-${alert.code}`,
     }));
-    const deliver = vi.fn(async () => ({ receiptId: 'provider-message-1' }));
+    const deliver = vi.fn(async () => ({
+      receiptId: '019c0000-0000-7000-8000-000000000101',
+      providerMessageId: 'cloudflare-provider-message-1',
+    }));
     const complete = vi.fn(async () => undefined);
 
     await expect(
@@ -48,6 +51,12 @@ describe('content schema registry production alert runtime', () => {
     expect(claim).toHaveBeenCalledTimes(12);
     expect(deliver).toHaveBeenCalledTimes(12);
     expect(complete).toHaveBeenCalledTimes(12);
+    expect(complete).toHaveBeenCalledWith(
+      expect.objectContaining({
+        providerMessageId: 'cloudflare-provider-message-1',
+        receiptId: '019c0000-0000-7000-8000-000000000101',
+      }),
+    );
     expect(deliver).toHaveBeenCalledWith(
       expect.objectContaining({
         alert: expect.objectContaining({
@@ -65,7 +74,10 @@ describe('content schema registry production alert runtime', () => {
   });
 
   it('skips unclaimed conditions and emits nothing for a healthy snapshot', async () => {
-    const deliver = vi.fn(async () => ({ receiptId: 'unused' }));
+    const deliver = vi.fn(async () => ({
+      receiptId: '019c0000-0000-7000-8000-000000000102',
+      providerMessageId: '<unused@cloudflare.com>',
+    }));
     const complete = vi.fn(async () => undefined);
     const claim = vi.fn(async () => ({ claimed: false as const }));
     const dependencies = { claim, complete, deliver };
@@ -115,27 +127,29 @@ describe('content schema registry production alert runtime', () => {
 
   it('does not record a receipt when Cloudflare delivery fails', async () => {
     const complete = vi.fn(async () => undefined);
-    await expect(
-      runContentSchemaRegistryOperationalAlerts(
-        {
-          environment: 'production',
-          release: 'c'.repeat(40),
-          scheduledAt: '2026-09-05T07:33:00.000Z',
+    const rejection = runContentSchemaRegistryOperationalAlerts(
+      {
+        environment: 'production',
+        release: 'c'.repeat(40),
+        scheduledAt: '2026-09-05T07:33:00.000Z',
+      },
+      {
+        loadSnapshot: async () => ({ dlqDepth: 1 }),
+        claim: async () => ({
+          claimed: true,
+          claimId: 'claim-dlq',
+          claimToken: 'claim-secret',
+        }),
+        deliver: async () => {
+          throw new Error('provider unavailable');
         },
-        {
-          loadSnapshot: async () => ({ dlqDepth: 1 }),
-          claim: async () => ({
-            claimed: true,
-            claimId: 'claim-dlq',
-            claimToken: 'claim-secret',
-          }),
-          deliver: async () => {
-            throw new Error('provider unavailable');
-          },
-          complete,
-        },
-      ),
-    ).rejects.toThrow('provider unavailable');
+        complete,
+      },
+    );
+    await expect(rejection).rejects.toThrow(
+      'Operational alert delivery failed',
+    );
+    await expect(rejection).rejects.not.toThrow(/provider unavailable/u);
     expect(complete).not.toHaveBeenCalled();
   });
 });

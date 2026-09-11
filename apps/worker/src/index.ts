@@ -195,12 +195,21 @@ const handler = {
   queue: (batch, env, executionContext) =>
     createProductionAsyncEntrypoint().queue(batch, env, executionContext),
   scheduled: async (controller, env, executionContext) => {
-    await createProductionAsyncEntrypoint().scheduled(
+    const outboxSweep = createProductionAsyncEntrypoint().scheduled(
       controller,
       env,
       executionContext,
     );
-    await runProductionOperationalAlerts(controller, env);
+    const operationalAlerts = runProductionOperationalAlerts(controller, env);
+    const [sweepResult, alertResult] = await Promise.allSettled([
+      outboxSweep,
+      operationalAlerts,
+    ]);
+
+    // Keep the sweep's rejection as the scheduled-event outcome so Cloudflare
+    // retries remain enabled, even when the independent alert run also fails.
+    if (sweepResult.status === 'rejected') throw sweepResult.reason;
+    if (alertResult.status === 'rejected') throw alertResult.reason;
   },
 } satisfies ExportedHandler<AsyncWorkerBindings>;
 export default handler;

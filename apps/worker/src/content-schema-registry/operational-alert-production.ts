@@ -1,5 +1,6 @@
 import { supabaseRpcHeaders } from '../supabase-rpc-headers';
 import { buildContentSchemaRegistryOperationalSnapshot } from './operational-alert-metrics';
+import { postOperationalProviderJson } from './operational-alert-provider';
 import type {
   OperationalAlertDependencies,
   OperationalAlertRunInput,
@@ -19,55 +20,35 @@ export type OperationalAlertProductionBindings = Readonly<{
 }>;
 
 type ProductionOptions = Readonly<{
+  providerTimeoutMs?: number;
   randomUuid?: () => string;
 }>;
 
 const ALERT_FROM = 'platform.on-call@alerts.wejamm.in' as const;
 const ALERT_TO = 'admin.wejammin@gmail.com' as const;
-const MAX_PROVIDER_BYTES = 2_000_000;
+const PROVIDER_MESSAGE_ID = /^[\x21-\x7e]{1,512}$/u;
 
 const isRecord = (value: unknown): value is Record<string, unknown> =>
   typeof value === 'object' && value !== null && !Array.isArray(value);
 
-const boundedJson = async (response: Response): Promise<unknown> => {
-  if (!response.ok)
-    throw new Error(
-      `Operational provider request failed (HTTP ${response.status})`,
-    );
-  const declared = response.headers.get('content-length');
-  if (declared !== null && Number(declared) > MAX_PROVIDER_BYTES)
-    throw new Error('Operational provider response too large');
-  const text = await response.text();
-  if (new TextEncoder().encode(text).byteLength > MAX_PROVIDER_BYTES)
-    throw new Error('Operational provider response too large');
-  return JSON.parse(text) as unknown;
+const providerMessageId = (value: unknown): string => {
+  if (
+    !isRecord(value) ||
+    typeof value.messageId !== 'string' ||
+    !PROVIDER_MESSAGE_ID.test(value.messageId)
+  )
+    throw new Error('Invalid operational alert delivery response');
+  return value.messageId;
 };
-
-const postJson = async (
-  fetchImpl: typeof fetch,
-  url: string,
-  headers: Readonly<Record<string, string>>,
-  body: unknown,
-): Promise<unknown> =>
-  boundedJson(
-    await fetchImpl(url, {
-      body: JSON.stringify(body),
-      headers: {
-        Accept: 'application/json',
-        'content-type': 'application/json',
-        ...headers,
-      },
-      method: 'POST',
-    }),
-  );
 
 const supabaseRpc = (
   bindings: OperationalAlertProductionBindings,
   fetchImpl: typeof fetch,
   operation: string,
   request: unknown,
+  timeoutMs: number,
 ): Promise<unknown> =>
-  postJson(
+  postOperationalProviderJson(
     fetchImpl,
     `${bindings.SUPABASE_URL}/rest/v1/rpc/${operation}`,
     {
@@ -76,15 +57,17 @@ const supabaseRpc = (
       ...supabaseRpcHeaders(bindings.SUPABASE_SECRET_KEY),
     },
     { p_request: request },
+    timeoutMs,
   );
 
 const cloudflareEvents = async (
   bindings: OperationalAlertProductionBindings,
   fetchImpl: typeof fetch,
   input: OperationalAlertRunInput,
+  timeoutMs: number,
 ): Promise<readonly Readonly<{ source?: unknown }>[]> => {
   const to = Date.parse(input.scheduledAt);
-  const payload = await postJson(
+  const payload = await postOperationalProviderJson(
     fetchImpl,
     `https://api.cloudflare.com/client/v4/accounts/${bindings.CLOUDFLARE_ACCOUNT_ID}/workers/observability/telemetry/query`,
     { Authorization: `Bearer ${bindings.CLOUDFLARE_OBSERVABILITY_API_TOKEN}` },
@@ -98,6 +81,7 @@ const cloudflareEvents = async (
       queryId: `wejammin-cms-alerts-${input.release}`,
       timeframe: { from: to - 86_400_000, to },
     },
+    timeoutMs,
   );
   if (
     !isRecord(payload) ||
@@ -119,8 +103,9 @@ const queueBacklog = async (
   bindings: OperationalAlertProductionBindings,
   fetchImpl: typeof fetch,
   input: OperationalAlertRunInput,
+  timeoutMs: number,
 ): Promise<number | undefined> => {
-  const payload = await postJson(
+  const payload = await postOperationalProviderJson(
     fetchImpl,
     'https://api.cloudflare.com/client/v4/graphql',
     { Authorization: `Bearer ${bindings.CLOUDFLARE_OBSERVABILITY_API_TOKEN}` },
@@ -135,6 +120,7 @@ const queueBacklog = async (
         queueId: bindings.CLOUDFLARE_PLATFORM_DLQ_ID,
       },
     },
+    timeoutMs,
   );
   if (
     isRecord(payload) &&
@@ -162,6 +148,7 @@ const databaseSnapshot = async (
   bindings: OperationalAlertProductionBindings,
   fetchImpl: typeof fetch,
   input: OperationalAlertRunInput,
+  timeoutMs: number,
 ): Promise<
   Readonly<{ activationBlockedMs?: number; outboxAgeMs?: number }>
 > => {
@@ -170,6 +157,7 @@ const databaseSnapshot = async (
     fetchImpl,
     'cms_get_operational_state_snapshot',
     { observedAt: input.scheduledAt },
+    timeoutMs,
   );
   if (!isRecord(value)) throw new Error('Invalid operational snapshot');
   return {
@@ -188,11 +176,31 @@ export const createProductionOperationalAlertDependencies = (
   options: ProductionOptions = {},
 ): OperationalAlertDependencies => {
   const randomUuid = options.randomUuid ?? crypto.randomUUID.bind(crypto);
+  const providerTimeoutMs =
+    Number.isSafeInteger(options.providerTimeoutMs) &&
+    (options.providerTimeoutMs as number) > 0
+      ? (options.providerTimeoutMs as number)
+      : 15_000;
   return {
     loadSnapshot: async (input) => {
-      const database = await databaseSnapshot(bindings, fetchImpl, input);
-      const dlqDepth = await queueBacklog(bindings, fetchImpl, input);
-      const events = await cloudflareEvents(bindings, fetchImpl, input);
+      const database = await databaseSnapshot(
+        bindings,
+        fetchImpl,
+        input,
+        providerTimeoutMs,
+      );
+      const dlqDepth = await queueBacklog(
+        bindings,
+        fetchImpl,
+        input,
+        providerTimeoutMs,
+      );
+      const events = await cloudflareEvents(
+        bindings,
+        fetchImpl,
+        input,
+        providerTimeoutMs,
+      );
       return buildContentSchemaRegistryOperationalSnapshot({
         database,
         ...(dlqDepth === undefined ? {} : { dlqDepth }),
@@ -212,6 +220,7 @@ export const createProductionOperationalAlertDependencies = (
           release: input.release,
           scheduledAt: input.scheduledAt,
         },
+        providerTimeoutMs,
       );
       if (!isRecord(value) || value.claimed !== true) return { claimed: false };
       if (typeof value.claimId !== 'string')
@@ -220,36 +229,49 @@ export const createProductionOperationalAlertDependencies = (
     },
     deliver: async (delivery) => {
       const receiptId = randomUuid();
-      await bindings.PLATFORM_ALERT_EMAIL.send({
-        from: ALERT_FROM,
-        headers: { 'Message-ID': `<${receiptId}@alerts.wejamm.in>` },
-        subject: `[WeJammin] ${delivery.alert.code}`,
-        text: [
-          'route=platform.on_call',
-          'runbook=content-schema-registry',
-          `alert=${delivery.alert.code}`,
-          `observed=${delivery.alert.observed}`,
-          `threshold=${delivery.alert.threshold}`,
-          `release=${delivery.release}`,
-          `scheduled_at=${delivery.scheduledAt}`,
-          'redacted=true',
-        ].join('\n'),
-        to: ALERT_TO,
-      });
-      return { receiptId };
+      let result: unknown;
+      try {
+        result = await bindings.PLATFORM_ALERT_EMAIL.send({
+          from: ALERT_FROM,
+          subject: `[WeJammin] ${delivery.alert.code}`,
+          text: [
+            'route=platform.on_call',
+            'runbook=content-schema-registry',
+            `alert=${delivery.alert.code}`,
+            `observed=${delivery.alert.observed}`,
+            `threshold=${delivery.alert.threshold}`,
+            `release=${delivery.release}`,
+            `scheduled_at=${delivery.scheduledAt}`,
+            'redacted=true',
+          ].join('\n'),
+          to: ALERT_TO,
+        });
+      } catch {
+        throw new Error('Operational alert delivery failed');
+      }
+      return { receiptId, providerMessageId: providerMessageId(result) };
     },
     complete: async ({
       alert,
       claimId,
       claimToken,
       deliveredAt,
+      providerMessageId,
       receiptId,
     }) => {
       const value = await supabaseRpc(
         bindings,
         fetchImpl,
         'cms_complete_operational_alert',
-        { alertCode: alert.code, claimId, claimToken, deliveredAt, receiptId },
+        {
+          alertCode: alert.code,
+          claimId,
+          claimToken,
+          deliveredAt,
+          providerMessageId,
+          receiptId,
+        },
+        providerTimeoutMs,
       );
       if (value !== true)
         throw new Error('Operational alert completion failed');

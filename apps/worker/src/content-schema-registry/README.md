@@ -29,6 +29,11 @@ Database RPCs remain the transaction and audit authority.
   worker aliases.
 - `migration-worker-runtime.ts` owns validated dependencies and durable
   dead-letter persistence.
+- `operational-alert-production.ts` composes the production alert
+  dependencies, while `operational-alert-provider.ts` owns absolute provider
+  deadlines, streaming response caps, fatal decoding, and redacted failures.
+  The scheduled entrypoint starts alert evaluation independently of the outbox
+  sweep so an outbox retry cannot suppress monitoring.
 
 ## Extension rules
 

@@ -249,4 +249,32 @@ describe('Cloudflare observability token verification', () => {
     ).rejects.toThrow('Cloudflare observability token is malformed');
     expect(fetchImpl).not.toHaveBeenCalled();
   });
+
+  it('fails closed for oversized provider response bodies before reading them', async () => {
+    const response = new Response('{}', {
+      headers: { 'content-length': '2000001' },
+      status: 200,
+    });
+    const fetchImpl = vi.fn<typeof fetch>().mockResolvedValueOnce(response);
+
+    await expect(
+      verifyCloudflareObservabilityToken(config, fetchImpl),
+    ).rejects.toThrow(
+      'Cloudflare Workers Observability permission check failed',
+    );
+  });
+
+  it('fails closed for malformed UTF-8 without exposing provider bytes', async () => {
+    const response = new Response(new Uint8Array([123, 195, 40, 125]), {
+      headers: { 'content-type': 'application/json' },
+      status: 200,
+    });
+    const fetchImpl = vi.fn<typeof fetch>().mockResolvedValueOnce(response);
+
+    const verification = verifyCloudflareObservabilityToken(config, fetchImpl);
+    await expect(verification).rejects.toThrow(
+      'Cloudflare Workers Observability permission check failed',
+    );
+    await expect(verification).rejects.not.toThrow(/195|provider bytes/u);
+  });
 });

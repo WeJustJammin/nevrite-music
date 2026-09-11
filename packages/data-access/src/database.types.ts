@@ -503,6 +503,10 @@ export type Database = {
         Returns: Json
       }
       cms_get_content_type_version: { Args: { p_request: Json }; Returns: Json }
+      cms_get_operational_alert_exercise_eligibility: {
+        Args: { p_request: Json }
+        Returns: Json
+      }
       cms_get_operational_state_snapshot: {
         Args: { p_request: Json }
         Returns: Json
@@ -534,6 +538,10 @@ export type Database = {
         Returns: Json
       }
       cms_rollback_schema_migration: {
+        Args: { p_request: Json }
+        Returns: Json
+      }
+      cms_verify_operational_alert_delivery: {
         Args: { p_request: Json }
         Returns: Json
       }
@@ -3061,6 +3069,7 @@ export type Database = {
           claimed_at: string
           delivered_at: string | null
           id: string
+          provider_message_hash: string | null
           receipt_hash: string | null
           release: string
           state: string
@@ -3071,6 +3080,7 @@ export type Database = {
           claimed_at?: string
           delivered_at?: string | null
           id?: string
+          provider_message_hash?: string | null
           receipt_hash?: string | null
           release: string
           state?: string
@@ -3081,6 +3091,7 @@ export type Database = {
           claimed_at?: string
           delivered_at?: string | null
           id?: string
+          provider_message_hash?: string | null
           receipt_hash?: string | null
           release?: string
           state?: string

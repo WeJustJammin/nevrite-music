@@ -216,6 +216,37 @@ describe('AC209 Cloudflare provider client', () => {
     expect(message).not.toContain('secret');
   });
 
+  it.each([
+    ['errors', [{ code: 1000, message: 'provider-private-error' }]],
+    ['messages', ['provider-private-message']],
+  ])('rejects a success envelope with nonempty %s', async (field, entries) => {
+    const envelope = {
+      success: true,
+      result: settingsResult(),
+      errors: [],
+      messages: [],
+      [field]: entries,
+    };
+    const fetchImpl = vi
+      .fn<typeof fetch>()
+      .mockResolvedValueOnce(
+        new Response(JSON.stringify(envelope), { status: 200 }),
+      )
+      .mockResolvedValueOnce(response(schedulesResult()))
+      .mockResolvedValueOnce(response(deploymentsResult()))
+      .mockResolvedValueOnce(response(versionResult()));
+
+    const result = readAc209ProviderStateFromCloudflare({
+      accountId,
+      providerToken: 'provider-token-that-must-never-be-emitted',
+      versionId,
+      versionAttestation: versionAttestation(),
+      fetchImpl,
+    });
+    await expect(result).rejects.toThrow('response envelope is invalid');
+    await expect(result).rejects.not.toThrow(/provider-private/u);
+  });
+
   it('fails closed when production observability or invocation logs are disabled', async () => {
     const settings = settingsResult();
     settings.observability.logs.invocation_logs = false;
@@ -283,5 +314,40 @@ describe('AC209 Cloudflare provider client', () => {
       message: `sourceRevision=${sourceRevision};githubRunId=34515738514`,
       triggeredBy: 'version_upload',
     });
+  });
+
+  it('cancels sibling collector reads when one provider response fails', async () => {
+    const signals: AbortSignal[] = [];
+    const fetchImpl = vi.fn<typeof fetch>((_url, init) => {
+      const signal = init?.signal as AbortSignal;
+      signals.push(signal);
+      if (signals.length === 1)
+        return Promise.resolve(
+          new Response(new Uint8Array([123, 195, 40, 125]), {
+            headers: { 'content-type': 'application/json' },
+          }),
+        );
+      return new Promise<Response>((_resolve, reject) => {
+        signal.addEventListener(
+          'abort',
+          () => reject(new DOMException('aborted', 'AbortError')),
+          { once: true },
+        );
+      });
+    });
+
+    await expect(
+      readAc209ProviderStateFromCloudflare({
+        accountId,
+        providerToken: 'provider-token-that-must-never-be-emitted',
+        versionId,
+        versionAttestation: versionAttestation(),
+        fetchImpl,
+      }),
+    ).rejects.toThrow('request failed');
+    await Promise.resolve();
+    expect(fetchImpl).toHaveBeenCalledTimes(4);
+    expect(signals).toHaveLength(4);
+    expect(signals.slice(1).every((signal) => signal.aborted)).toBe(true);
   });
 });

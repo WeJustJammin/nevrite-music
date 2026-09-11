@@ -35,13 +35,19 @@ export type OperationalAlertDependencies = Readonly<{
     alert: ContentSchemaRegistryAlert,
     input: OperationalAlertRunInput,
   ) => Promise<OperationalAlertClaim>;
-  deliver: (
-    delivery: OperationalAlertDelivery,
-  ) => Promise<Readonly<{ receiptId: string }>>;
+  deliver: (delivery: OperationalAlertDelivery) => Promise<
+    Readonly<{
+      /** Internal UUID retained for the private delivery receipt. */
+      receiptId: string;
+      /** Provider-owned unique message identifier returned by Email Sending. */
+      providerMessageId: string;
+    }>
+  >;
   complete: (input: {
     alert: ContentSchemaRegistryAlert;
     claimId: string;
     claimToken: string;
+    providerMessageId: string;
     receiptId: string;
     deliveredAt: string;
   }) => Promise<void>;
@@ -67,19 +73,25 @@ export const runContentSchemaRegistryOperationalAlerts = async (
     const claim = await dependencies.claim(alert, input);
     if (!claim.claimed) continue;
     claimed += 1;
-    const receipt = await dependencies.deliver({
-      alert,
-      claimId: claim.claimId,
-      environment: input.environment,
-      redacted: true,
-      release: input.release,
-      scheduledAt: input.scheduledAt,
-    });
+    let receipt: Awaited<ReturnType<OperationalAlertDependencies['deliver']>>;
+    try {
+      receipt = await dependencies.deliver({
+        alert,
+        claimId: claim.claimId,
+        environment: input.environment,
+        redacted: true,
+        release: input.release,
+        scheduledAt: input.scheduledAt,
+      });
+    } catch {
+      throw new Error('Operational alert delivery failed');
+    }
     const deliveredAt = new Date().toISOString();
     await dependencies.complete({
       alert,
       claimId: claim.claimId,
       claimToken: claim.claimToken,
+      providerMessageId: receipt.providerMessageId,
       receiptId: receipt.receiptId,
       deliveredAt,
     });
