@@ -52,6 +52,8 @@ describe('AC209 queue exercise security boundary', () => {
       const path = String(url);
       if (path.endsWith('/queues?page=1&per_page=100'))
         return queueList([validSource, validDeadLetter], 1);
+      if (path.endsWith(`/queues/${sourceQueueId}/consumers`))
+        return jsonResponse({ result: validSource.consumers, success: true });
       if (
         path.endsWith(`/queues/${sourceQueueId}/messages/peek`) ||
         path.endsWith(`/queues/${deadLetterQueueId}/messages/peek`)
@@ -107,6 +109,8 @@ describe('AC209 queue exercise security boundary', () => {
       const path = String(url);
       if (path.endsWith('/queues?page=1&per_page=100'))
         return queueList([validSource, validDeadLetter], 1);
+      if (path.endsWith(`/queues/${sourceQueueId}/consumers`))
+        return jsonResponse({ result: validSource.consumers, success: true });
       if (path.endsWith(`/queues/${sourceQueueId}/messages/peek`)) {
         sourcePeekCount += 1;
         return sourcePeekCount === 1
@@ -216,12 +220,45 @@ describe('AC209 queue exercise security boundary', () => {
     );
   });
 
+  it('labels a malformed dedicated consumer response without exposing its payload', async () => {
+    const providerSecret = 'malformed-consumer-provider-secret';
+    const fetchImpl = vi.fn<typeof fetch>(async (url) => {
+      const path = String(url);
+      if (path.endsWith('/queues?page=1&per_page=100'))
+        return queueList([validSource, validDeadLetter], 1);
+      if (path.endsWith(`/queues/${sourceQueueId}/consumers`))
+        return jsonResponse({ result: providerSecret, success: true });
+      throw new Error('unexpected provider request');
+    });
+
+    let captured: unknown;
+    try {
+      await runAc209QueueExercise(baseInput(fetchImpl));
+    } catch (error: unknown) {
+      captured = error;
+    }
+
+    expect(captured).toBeInstanceOf(Ac209QueueExerciseError);
+    if (!(captured instanceof Ac209QueueExerciseError))
+      throw new Error('expected an AC209 queue exercise error');
+    expect(captured.diagnostic).toEqual({
+      boundary: 'queue_consumer_list',
+      code: 'provider_response_invalid',
+      status: null,
+    });
+    expect(`${captured.message}:${JSON.stringify(captured)}`).not.toContain(
+      providerSecret,
+    );
+  });
+
   it('labels a malformed successful peek without exposing its payload', async () => {
     const providerSecret = 'malformed-peek-provider-secret';
     const fetchImpl = vi.fn<typeof fetch>(async (url) => {
       const path = String(url);
       if (path.endsWith('/queues?page=1&per_page=100'))
         return queueList([validSource, validDeadLetter], 1);
+      if (path.endsWith(`/queues/${sourceQueueId}/consumers`))
+        return jsonResponse({ result: validSource.consumers, success: true });
       if (path.endsWith(`/queues/${sourceQueueId}/messages/peek`))
         return jsonResponse({
           result: { messages: providerSecret },

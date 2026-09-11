@@ -188,28 +188,8 @@ const parseQueue = (value: unknown): Queue => {
       'queue identity is invalid',
       invalidResponseDiagnostic('queue_list'),
     );
-  const consumers = value.consumers;
-  if (
-    consumers !== undefined &&
-    (!Array.isArray(consumers) || !consumers.every(isRecord))
-  )
-    fail(
-      'queue_identity_invalid',
-      'queue identity is invalid',
-      invalidResponseDiagnostic('queue_list'),
-    );
-  if (
-    value.consumers_total_count !== undefined &&
-    (!Number.isSafeInteger(value.consumers_total_count) ||
-      value.consumers_total_count !== (consumers?.length ?? 0))
-  )
-    fail(
-      'queue_identity_invalid',
-      'queue identity is invalid',
-      invalidResponseDiagnostic('queue_list'),
-    );
   return {
-    consumers: consumers ?? [],
+    consumers: [],
     id: value.queue_id,
     name: value.queue_name,
   };
@@ -283,6 +263,31 @@ export const listQueues = async (
       invalidResponseDiagnostic('queue_list'),
     );
   return queues;
+};
+
+export const listQueueConsumers = async (
+  runtime: Runtime,
+  input: Pick<Ac209QueueRuntimeInput, 'accountId' | 'providerToken'>,
+  queueId: string,
+): Promise<readonly JsonRecord[]> => {
+  const payload = await request(
+    runtime,
+    'queue_consumer_list',
+    'GET',
+    queueEndpoint(input.accountId, queueId, '/consumers'),
+    input.providerToken,
+  );
+  if (
+    !Array.isArray(payload.result) ||
+    payload.result.length > AC209_QUEUE_LIST_PAGE_SIZE ||
+    !payload.result.every(isRecord)
+  )
+    fail(
+      'provider_response_invalid',
+      'provider response is invalid',
+      invalidResponseDiagnostic('queue_consumer_list'),
+    );
+  return payload.result;
 };
 
 const parseMessages = (payload: JsonRecord): readonly JsonRecord[] => {
@@ -372,21 +377,36 @@ export const verifyConsumer = (
   input: Ac209QueueExerciseInput,
 ): void => {
   if (queue.consumers.length !== 1)
-    fail(
-      'consumer_configuration_invalid',
-      'source consumer configuration is invalid',
-    );
+    fail('consumer_count_invalid', 'source consumer configuration is invalid');
   const consumer = queue.consumers[0];
-  const settings = isRecord(consumer?.settings) ? consumer.settings : undefined;
+  if (consumer?.type !== 'worker')
+    fail('consumer_type_invalid', 'source consumer configuration is invalid');
   if (
-    consumer?.type !== 'worker' ||
-    consumer.queue_name !== input.sourceQueueName ||
-    consumer.script_name !== input.expectedConsumer.scriptName ||
-    consumer.dead_letter_queue !== input.expectedConsumer.deadLetterQueueName ||
-    settings?.max_retries !== input.expectedConsumer.maxRetries
+    consumer.queue_name !== undefined &&
+    consumer.queue_name !== input.sourceQueueName
   )
     fail(
-      'consumer_configuration_invalid',
+      'consumer_queue_name_invalid',
+      'source consumer configuration is invalid',
+    );
+  if (consumer.script_name !== input.expectedConsumer.scriptName)
+    fail('consumer_script_invalid', 'source consumer configuration is invalid');
+  if (consumer.dead_letter_queue !== input.expectedConsumer.deadLetterQueueName)
+    fail(
+      'consumer_dead_letter_queue_invalid',
+      'source consumer configuration is invalid',
+    );
+  if (consumer.settings !== undefined && !isRecord(consumer.settings))
+    fail(
+      'consumer_max_retries_invalid',
+      'source consumer configuration is invalid',
+    );
+  const settings = isRecord(consumer.settings) ? consumer.settings : undefined;
+  const maxRetries =
+    settings?.max_retries === undefined ? 3 : settings.max_retries;
+  if (maxRetries !== input.expectedConsumer.maxRetries)
+    fail(
+      'consumer_max_retries_invalid',
       'source consumer configuration is invalid',
     );
 };

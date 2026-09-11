@@ -15,6 +15,7 @@ import {
 } from './ac209-queue-contracts.ts';
 import { cleanupResolvedAc209QueueMarker } from './ac209-queue-cleanup.ts';
 import {
+  listQueueConsumers,
   listQueues,
   matchingMessages,
   peekQueue,
@@ -98,6 +99,10 @@ export const runAc209QueueExercise = async (
         sourceQueue.id !== input.expectedSourceQueueId)
     )
       fail('queue_identity_invalid', 'queue identity is invalid');
+    sourceQueue = {
+      ...sourceQueue,
+      consumers: await listQueueConsumers(runtime, input, sourceQueue.id),
+    };
     verifyConsumer(sourceQueue, input);
     const sourcePreflight = await peekQueue(runtime, input, sourceQueue.id);
     const deadLetterPreflight = await peekQueue(

@@ -115,6 +115,8 @@ describe('AC209 queue marker cleanup', () => {
       const path = String(url);
       if (path.endsWith('/queues?page=1&per_page=100'))
         return queueList([validSource, validDeadLetter], 1);
+      if (path.endsWith(`/queues/${sourceQueueId}/consumers`))
+        return jsonResponse({ result: validSource.consumers, success: true });
       if (path.endsWith(`/queues/${sourceQueueId}/messages/peek`)) {
         sourcePeeks += 1;
         return peek([]);

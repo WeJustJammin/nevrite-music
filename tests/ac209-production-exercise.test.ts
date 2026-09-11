@@ -306,6 +306,15 @@ describe('production AC209 queue-to-email exercise orchestration', () => {
     ).toBeUndefined();
   });
 
+  it('formats field-specific consumer diagnostics from the closed queue allowlist', () => {
+    expect(
+      formatAc209StageDiagnostic({
+        stage: 'queue',
+        code: 'consumer_script_invalid',
+      }),
+    ).toBe('AC209_DIAGNOSTIC stage=queue code=consumer_script_invalid');
+  });
+
   it('reports one allowlisted queue diagnostic while preserving the generic failure', async () => {
     const deps = dependencies();
     const reportQueueDiagnostic = vi.fn<(diagnostic: string) => void>();

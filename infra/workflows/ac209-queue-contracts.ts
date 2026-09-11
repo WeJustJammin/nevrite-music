@@ -15,6 +15,12 @@ export type Ac209QueueExerciseErrorCode =
   | 'provider_response_invalid'
   | 'queue_identity_invalid'
   | 'consumer_configuration_invalid'
+  | 'consumer_count_invalid'
+  | 'consumer_type_invalid'
+  | 'consumer_queue_name_invalid'
+  | 'consumer_script_invalid'
+  | 'consumer_dead_letter_queue_invalid'
+  | 'consumer_max_retries_invalid'
   | 'preflight_not_empty'
   | 'marker_not_observed'
   | 'marker_ambiguous'
@@ -23,7 +29,11 @@ export type Ac209QueueExerciseErrorCode =
   | 'marker_remains_after_cleanup';
 
 export type Ac209QueueDiagnosticBoundary =
-  'queue_list' | 'queue_peek' | 'queue_publish' | 'queue_purge';
+  | 'queue_list'
+  | 'queue_consumer_list'
+  | 'queue_peek'
+  | 'queue_publish'
+  | 'queue_purge';
 
 export type Ac209QueueDiagnosticCode = Extract<
   Ac209QueueExerciseErrorCode,
@@ -39,6 +49,7 @@ export type Ac209QueueDiagnostic = Readonly<{
 const AC209_QUEUE_ERROR_PREFIX = 'AC209 queue exercise failed: ';
 const AC209_QUEUE_DIAGNOSTIC_BOUNDARIES = new Set<unknown>([
   'queue_list',
+  'queue_consumer_list',
   'queue_peek',
   'queue_publish',
   'queue_purge',
