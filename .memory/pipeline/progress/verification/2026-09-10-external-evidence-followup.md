@@ -253,3 +253,34 @@ Gmail receipt, and exact-reference cleanup. AC211, AC265, and AC266 remain open
 for the external evidence described above. Slice 09 therefore remains `279/283`
 and Slices 10–17 remain dependency-locked; no acceptance item was fabricated or
 waived.
+
+## 2026-09-11 first AC209 expand release and configuration proof
+
+- PR [#53](https://github.com/WeJustJammin/nevrite-music/pull/53) released the
+  AC209 expand migration and provider-boundary implementation at exact main SHA
+  `cfb6922320752dfc09a413175b2939b3658b942a`. Exact-main CI run
+  `34554417586` passed.
+- Staging run `34554852947` passed with deployment `6385193648`. Its candidate
+  artifact `10182181950` has SHA-256
+  `cd366558bc50660c8d7aba00abb5a57bba50728e5feee010d73f9932e2c849b9`, and its
+  staging deployment artifact `10182182519` has SHA-256
+  `d7cbee5566811500247b5393d5971512abb90034c395f255dd451de575512f51`.
+- Production run `34554996116` passed with deployment `6385219054`. The
+  production artifact `10182245089` has SHA-256
+  `732933172ecd93539176f81f5669d9c652a5544d7e27507b32d689edfe8de23b`.
+  Production serves API version `e3a1772e-565f-4805-947e-3ab8c751c0e4` and web
+  version `2d954235-fcf5-41f6-a592-b375a86fde01`.
+- Forward-only migration `20260910030000` is applied in production. Protected
+  collector run `34555299792` passed; artifact `10182330368` has archive
+  digest `sha256:9ac71dc493b9b8ef515396755b157980769da8064f14e56ecf3019e97bb39f3f`
+  and report digest
+  `2906c6e705a7de4512aa8a9a8d9947c51213b8634d8cbf885add750c685164d2`.
+  Configuration is bound to `ac209-config-20260911-expand/pr:53` and Cloudflare
+  deployment `001f8207-eedf-4d6f-b31b-ab8b1a795a91` at 100% traffic.
+
+This is configuration and release proof only. It does not claim an AC209
+exercise, provider delivery event, database delivery record, DLQ observation,
+or Gmail/mailbox receipt; none was fabricated. The dedicated
+`CLOUDFLARE_QUEUE_EXERCISE_TOKEN` remains absent. AC209, AC211, AC265, and AC266
+remain open. Slice 09 remains `279/283`, and Slices 10–17 remain locked behind
+its unresolved acceptance gates.
