@@ -389,7 +389,15 @@ export const verifyConsumer = (
       'consumer_queue_name_invalid',
       'source consumer configuration is invalid',
     );
-  if (consumer.script_name !== input.expectedConsumer.scriptName)
+  const scriptIdentifiers = [consumer.script_name, consumer.script].filter(
+    (value) => value !== undefined,
+  );
+  if (
+    scriptIdentifiers.length === 0 ||
+    scriptIdentifiers.some(
+      (value) => value !== input.expectedConsumer.scriptName,
+    )
+  )
     fail('consumer_script_invalid', 'source consumer configuration is invalid');
   if (consumer.dead_letter_queue !== input.expectedConsumer.deadLetterQueueName)
     fail(
