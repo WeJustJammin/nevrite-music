@@ -473,11 +473,13 @@ assistive-technology gates. Slice 09 therefore remains `279/283`, and Slices
   returned a well-formed nonempty GraphQL error envelope, but its intentionally
   discarded provider text cannot prove whether the cause was schema or access.
 - Cloudflare's documented `emailSendingAdaptive` event example filters only by
-  zone and time. The corrective branch therefore removes the undocumented
-  provider-side `status` and `isLastEvent` filter additions while retaining the
-  selected fields, strict local `delivered` and terminal-event checks, and the
-  fail-closed 50-row page boundary. TDD RED failed 1/39 on the query contract;
-  GREEN passed 39/39 and both AC209 suites passed 72/72.
+  zone and time. Corrective PR
+  [#64](https://github.com/WeJustJammin/nevrite-music/pull/64) therefore removes
+  the undocumented provider-side `status` and `isLastEvent` filter additions
+  while retaining the selected fields, strict local `delivered` and
+  terminal-event checks, and the fail-closed 50-row page boundary. TDD RED
+  failed 1/39 on the query contract; GREEN passed 39/39 and both AC209 suites
+  passed 72/72.
 - Full `pnpm validate` passes 458 test files, 3,575 tests plus one intentional
   skip, 100 percent statement/branch/function/line coverage, all executable
   Slice 09 evidence checks, 101 functional and five production-build browser
