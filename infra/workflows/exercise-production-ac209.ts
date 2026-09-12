@@ -11,6 +11,7 @@ import {
 import {
   Ac209EmailSendingAnalyticsError,
   collectAc209EmailSendingAnalytics,
+  type Ac209EmailSendingAnalyticsErrorCode,
   type Ac209EmailSendingAnalyticsReport,
 } from './ac209-email-sending-analytics.ts';
 import {
@@ -41,6 +42,13 @@ export { Ac209ProductionExerciseReportSchema } from './ac209-production-exercise
 export type { Ac209ProductionExerciseReport } from './ac209-production-exercise-contract.ts';
 export type { Ac209ProductionExerciseInput } from './ac209-production-exercise-input.ts';
 
+type Ac209EmailDiagnosticCode =
+  | 'email_not_observed'
+  | 'email_query_failed'
+  | 'email_invalid_configuration'
+  | 'email_provider_request_failed'
+  | 'email_provider_response_invalid';
+
 type Ac209StageDiagnostic =
   | Readonly<{ stage: 'configuration'; code: 'invalid_configuration' }>
   | Readonly<{
@@ -50,13 +58,27 @@ type Ac209StageDiagnostic =
   | Readonly<{ stage: 'queue'; code: Ac209QueueExerciseErrorCode }>
   | Readonly<{
       stage: 'evidence';
-      code:
-        | 'email_not_observed'
-        | 'email_query_failed'
-        | 'database_not_observed'
-        | 'invalid';
+      code: Ac209EmailDiagnosticCode | 'database_not_observed' | 'invalid';
     }>
   | Readonly<{ stage: 'report'; code: 'invalid' }>;
+
+const AC209_EMAIL_DIAGNOSTIC_CODES = Object.freeze({
+  event_not_unique: 'email_not_observed',
+  invalid_configuration: 'email_invalid_configuration',
+  provider_request_failed: 'email_provider_request_failed',
+  provider_response_invalid: 'email_provider_response_invalid',
+  unexpected_failure: 'email_query_failed',
+} satisfies Record<
+  Ac209EmailSendingAnalyticsErrorCode,
+  Ac209EmailDiagnosticCode
+>);
+
+const resolveAc209EmailDiagnosticCode = (
+  error: unknown,
+): Ac209EmailDiagnosticCode =>
+  error instanceof Ac209EmailSendingAnalyticsError
+    ? AC209_EMAIL_DIAGNOSTIC_CODES[error.code]
+    : 'email_query_failed';
 
 const AC209_STAGE_DIAGNOSTIC_CODES = Object.freeze({
   configuration: new Set<unknown>(['invalid_configuration']),
@@ -83,6 +105,9 @@ const AC209_STAGE_DIAGNOSTIC_CODES = Object.freeze({
   evidence: new Set<unknown>([
     'email_not_observed',
     'email_query_failed',
+    'email_invalid_configuration',
+    'email_provider_request_failed',
+    'email_provider_response_invalid',
     'database_not_observed',
     'invalid',
   ]),
@@ -161,8 +186,7 @@ export const exerciseProductionAc209 = async (
 
     let email: Ac209EmailSendingAnalyticsReport | undefined;
     let database: Ac209DeliveryVerification | undefined;
-    let emailDiagnosticCode: 'email_not_observed' | 'email_query_failed' =
-      'email_not_observed';
+    let emailDiagnosticCode: Ac209EmailDiagnosticCode = 'email_not_observed';
     const collectEmail =
       dependencies.collectEmailAnalytics ?? collectAc209EmailSendingAnalytics;
     const verifyDelivery =
@@ -205,11 +229,7 @@ export const exerciseProductionAc209 = async (
             });
           } catch (error: unknown) {
             email = undefined;
-            emailDiagnosticCode =
-              error instanceof Ac209EmailSendingAnalyticsError &&
-              error.code === 'event_not_unique'
-                ? 'email_not_observed'
-                : 'email_query_failed';
+            emailDiagnosticCode = resolveAc209EmailDiagnosticCode(error);
           }
           if (email !== undefined) {
             stageDiagnostic = {

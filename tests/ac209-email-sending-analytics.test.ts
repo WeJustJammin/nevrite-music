@@ -332,7 +332,36 @@ describe('AC209 Email Sending analytics collector', () => {
     const fetchImpl = vi.fn<typeof fetch>();
     await expect(
       collectAc209EmailSendingAnalytics({ ...input(fetchImpl), ...overrides }),
-    ).rejects.toThrow('AC209 Email Sending analytics query failed.');
+    ).rejects.toMatchObject({ code: 'invalid_configuration' });
+    expect(fetchImpl).not.toHaveBeenCalled();
+  });
+
+  it('does not misclassify an unexpected collector fault as invalid configuration', async () => {
+    const fetchImpl = vi.fn<typeof fetch>();
+    const privateDetail = 'secret-token unexpected runtime detail';
+    const parse = vi.spyOn(Date, 'parse').mockImplementationOnce(() => {
+      throw new Error(privateDetail);
+    });
+    let captured: unknown;
+
+    try {
+      try {
+        await collectAc209EmailSendingAnalytics(input(fetchImpl));
+      } catch (error: unknown) {
+        captured = error;
+      }
+    } finally {
+      parse.mockRestore();
+    }
+
+    expect(captured).toBeInstanceOf(Error);
+    if (!(captured instanceof Error))
+      throw new Error('expected an Email Sending analytics error');
+    expect(captured).toMatchObject({ code: 'unexpected_failure' });
+    expect(captured.message).toBe(
+      'AC209 Email Sending analytics query failed.',
+    );
+    expect(captured.message).not.toContain(privateDetail);
     expect(fetchImpl).not.toHaveBeenCalled();
   });
 
