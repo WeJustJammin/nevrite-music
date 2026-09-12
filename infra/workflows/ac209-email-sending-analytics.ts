@@ -24,7 +24,12 @@ export const AC209_EMAIL_SENDING_QUERY =
   viewer {
     zones(filter: { zoneTag: $zoneTag }) {
       emailSendingAdaptive(
-        filter: { datetime_geq: $start, datetime_leq: $end }
+        filter: {
+          datetime_geq: $start
+          datetime_leq: $end
+          status: "delivered"
+          isLastEvent: 1
+        }
         limit: 50
         orderBy: [datetime_DESC]
       ) {
@@ -42,8 +47,12 @@ export const AC209_EMAIL_SENDING_QUERY =
 
 export type Ac209EmailSendingAnalyticsErrorCode =
   | 'invalid_configuration'
+  | 'provider_graphql_error'
+  | 'provider_permission_denied'
   | 'provider_request_failed'
+  | 'provider_resource_unavailable'
   | 'provider_response_invalid'
+  | 'provider_result_truncated'
   | 'event_not_unique'
   | 'unexpected_failure';
 
@@ -137,6 +146,19 @@ export const sha256CanonicalEmail = (value: string): string =>
 const isRecord = (value: unknown): value is Record<string, unknown> =>
   typeof value === 'object' && value !== null && !Array.isArray(value);
 
+const failGraphqlErrors = (value: unknown): void => {
+  if (!Array.isArray(value))
+    fail('provider_response_invalid', 'provider errors are malformed.');
+  if (value.length === 0) return;
+  for (const error of value) {
+    if (!isRecord(error) || typeof error.message !== 'string')
+      fail('provider_response_invalid', 'provider errors are malformed.');
+    if (error.message.length === 0)
+      fail('provider_response_invalid', 'provider errors are malformed.');
+  }
+  fail('provider_graphql_error');
+};
+
 const readProviderEvent = (value: unknown) => {
   if (!isRecord(value))
     fail('provider_response_invalid', 'provider event is malformed.');
@@ -179,21 +201,23 @@ const readRows = (payload: unknown): unknown[] => {
     'errors' in payload &&
     payload.errors !== undefined &&
     payload.errors !== null
-  ) {
-    if (!Array.isArray(payload.errors) || payload.errors.length > 0)
-      fail('provider_response_invalid', 'provider response contains errors.');
-  }
+  )
+    failGraphqlErrors(payload.errors);
   const data = payload.data;
   if (!isRecord(data) || !isRecord(data.viewer))
     fail('provider_response_invalid', 'provider response is malformed.');
   const zones = data.viewer.zones;
-  if (!Array.isArray(zones) || zones.length !== 1 || !isRecord(zones[0]))
+  if (!Array.isArray(zones))
+    fail('provider_response_invalid', 'provider zone result is malformed.');
+  if (zones.length === 0)
+    fail('provider_resource_unavailable', 'provider zone is unavailable.');
+  if (zones.length !== 1 || !isRecord(zones[0]))
     fail('provider_response_invalid', 'provider zone result is not unique.');
   const rows = zones[0].emailSendingAdaptive;
   if (!Array.isArray(rows))
     fail('provider_response_invalid', 'provider event result is malformed.');
   if (rows.length >= AC209_EMAIL_SENDING_PAGE_LIMIT)
-    fail('provider_response_invalid', 'provider event page is full.');
+    fail('provider_result_truncated', 'provider event page is full.');
   return rows;
 };
 
@@ -222,6 +246,8 @@ const request = async (
     } catch {
       fail('provider_request_failed', 'provider request failed.');
     }
+    if (response.status === 401 || response.status === 403)
+      fail('provider_permission_denied');
     if (!response.ok)
       fail('provider_request_failed', 'provider request failed.');
     let bodyText: string;
