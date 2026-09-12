@@ -137,10 +137,14 @@ queues. Standalone cleanup performs a final source/DLQ peek after the elapsed
 poll bound is reached, so normal provider latency cannot prevent a verified
 already-absent result. A failed exercise reports
 `email_not_observed` when no unique delivered Email Sending event was found, or
-`email_query_failed` when the bounded provider query itself was rejected or
-malformed, or
-`database_not_observed` when that event was found but its exact provider message
-identifier was not bound to a delivered database row. On success, retain only
+`email_invalid_configuration` when the bounded analytics input was invalid,
+`email_provider_request_failed` when the provider request failed or returned a
+non-success status, `email_provider_response_invalid` when the response was
+unreadable, malformed, oversized, or rejected by the GraphQL response schema,
+or `email_query_failed` only for an unexpected internal query exception. It
+reports `database_not_observed` when that event was found but its exact provider
+message identifier was not bound to a delivered database row. On success,
+retain only
 `ac209-exercise/configuration.json` and `ac209-exercise/exercise.json` for 30
 days. The latter contains hashed addresses/queue identities plus the exact
 provider message identifier, and states `pending_manual_verification`; it is

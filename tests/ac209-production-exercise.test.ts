@@ -318,6 +318,22 @@ describe('production AC209 queue-to-email exercise orchestration', () => {
     ).toBe('AC209_DIAGNOSTIC stage=queue code=consumer_script_invalid');
   });
 
+  it.each([
+    'email_invalid_configuration',
+    'email_provider_request_failed',
+    'email_provider_response_invalid',
+  ])('formats the allowlisted Email Sending diagnostic %s', (code) => {
+    expect(formatAc209StageDiagnostic({ stage: 'evidence', code })).toBe(
+      `AC209_DIAGNOSTIC stage=evidence code=${code}`,
+    );
+    expect(
+      formatAc209StageDiagnostic({
+        stage: 'evidence',
+        code: `${code}\n::error::forged`,
+      }),
+    ).toBeUndefined();
+  });
+
   it('reports one allowlisted queue diagnostic while preserving the generic failure', async () => {
     const deps = dependencies();
     const reportQueueDiagnostic = vi.fn<(diagnostic: string) => void>();
@@ -417,27 +433,84 @@ describe('production AC209 queue-to-email exercise orchestration', () => {
     );
   });
 
-  it('distinguishes an Email Sending analytics query failure', async () => {
-    const deps = dependencies();
-    const reportQueueDiagnostic = vi.fn<(diagnostic: string) => void>();
-    deps.collectEmailAnalytics.mockRejectedValue(
-      new Ac209EmailSendingAnalyticsError('provider_request_failed'),
-    );
-    await expect(
-      exerciseProductionAc209(
-        {
-          ...(await baseInput()),
-          evidenceMaxPolls: 1,
-          evidencePollIntervalMs: 1_000,
-        },
-        { ...deps, reportQueueDiagnostic },
+  it.each([
+    [
+      'invalid configuration',
+      'invalid_configuration' as const,
+      'email_invalid_configuration',
+    ],
+    [
+      'provider request failure',
+      'provider_request_failed' as const,
+      'email_provider_request_failed',
+    ],
+    [
+      'provider response failure',
+      'provider_response_invalid' as const,
+      'email_provider_response_invalid',
+    ],
+  ])(
+    'distinguishes an Email Sending analytics %s',
+    async (_name, errorCode, diagnosticCode) => {
+      const deps = dependencies();
+      const reportQueueDiagnostic = vi.fn<(diagnostic: string) => void>();
+      deps.collectEmailAnalytics.mockRejectedValue(
+        new Ac209EmailSendingAnalyticsError(
+          errorCode,
+          'secret-token provider.invalid forged',
+        ),
+      );
+      await expect(
+        exerciseProductionAc209(
+          {
+            ...(await baseInput()),
+            evidenceMaxPolls: 1,
+            evidencePollIntervalMs: 1_000,
+          },
+          { ...deps, reportQueueDiagnostic },
+        ),
+      ).rejects.toThrow('AC209 production exercise failed');
+      expect(deps.verifyDelivery).not.toHaveBeenCalled();
+      expect(reportQueueDiagnostic).toHaveBeenCalledExactlyOnceWith(
+        `AC209_DIAGNOSTIC stage=evidence code=${diagnosticCode}`,
+      );
+    },
+  );
+
+  it.each([
+    [
+      'typed collector failure',
+      new Ac209EmailSendingAnalyticsError(
+        'unexpected_failure',
+        'secret-token provider.invalid forged',
       ),
-    ).rejects.toThrow('AC209 production exercise failed');
-    expect(deps.verifyDelivery).not.toHaveBeenCalled();
-    expect(reportQueueDiagnostic).toHaveBeenCalledExactlyOnceWith(
-      'AC209_DIAGNOSTIC stage=evidence code=email_query_failed',
-    );
-  });
+    ],
+    [
+      'untyped dependency failure',
+      new Error('secret-token provider.invalid forged'),
+    ],
+  ])(
+    'uses the generic Email Sending query diagnostic for an unexpected %s',
+    async (_name, error) => {
+      const deps = dependencies();
+      const reportQueueDiagnostic = vi.fn<(diagnostic: string) => void>();
+      deps.collectEmailAnalytics.mockRejectedValue(error);
+      await expect(
+        exerciseProductionAc209(
+          {
+            ...(await baseInput()),
+            evidenceMaxPolls: 1,
+            evidencePollIntervalMs: 1_000,
+          },
+          { ...deps, reportQueueDiagnostic },
+        ),
+      ).rejects.toThrow('AC209 production exercise failed');
+      expect(deps.verifyDelivery).not.toHaveBeenCalled();
+      expect(reportQueueDiagnostic).toHaveBeenCalledExactlyOnceWith(
+        'AC209_DIAGNOSTIC stage=evidence code=email_query_failed',
+      );
+    },
+  );
 
   it('rejects database delivery evidence from before this exercise', async () => {
     const deps = dependencies();

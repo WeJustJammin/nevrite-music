@@ -44,7 +44,8 @@ export type Ac209EmailSendingAnalyticsErrorCode =
   | 'invalid_configuration'
   | 'provider_request_failed'
   | 'provider_response_invalid'
-  | 'event_not_unique';
+  | 'event_not_unique'
+  | 'unexpected_failure';
 
 export class Ac209EmailSendingAnalyticsError extends Error {
   readonly code: Ac209EmailSendingAnalyticsErrorCode;
@@ -257,9 +258,11 @@ const request = async (
 export const collectAc209EmailSendingAnalytics = async (
   input: Ac209EmailSendingAnalyticsInput,
 ): Promise<Ac209EmailSendingAnalyticsReport> => {
+  let configurationValidated = false;
   try {
     const { fetchImpl, ...configuration } = input;
     const parsed = Ac209EmailSendingAnalyticsInputSchema.parse(configuration);
+    configurationValidated = true;
     const startMs = Date.parse(parsed.start);
     const endMs = Date.parse(parsed.end);
     if (
@@ -318,6 +321,8 @@ export const collectAc209EmailSendingAnalytics = async (
     });
   } catch (error) {
     if (error instanceof Ac209EmailSendingAnalyticsError) throw error;
-    fail('invalid_configuration');
+    fail(
+      configurationValidated ? 'unexpected_failure' : 'invalid_configuration',
+    );
   }
 };

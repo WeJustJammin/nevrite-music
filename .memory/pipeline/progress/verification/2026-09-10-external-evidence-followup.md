@@ -336,3 +336,56 @@ rerun, retained provider/database evidence, and the real Gmail receipt. No
 delivery evidence is inferred from the pre-request runner failure. AC211, AC265,
 and AC266 remain open, so Slice 09 stays `279/283` and Slices 10–17 remain
 dependency-locked.
+
+## 2026-09-12 exact-main exercise and Email Sending diagnostic refinement
+
+- Runner compatibility PR
+  [#61](https://github.com/WeJustJammin/nevrite-music/pull/61) merged as exact
+  main revision `e2574391a0d1a766c975822cf9911050545e87d3`. Exact-main CI run
+  [34672801883](https://github.com/WeJustJammin/nevrite-music/actions/runs/34672801883),
+  staging run
+  [34673099886](https://github.com/WeJustJammin/nevrite-music/actions/runs/34673099886),
+  and approved production promotion run
+  [34673207427](https://github.com/WeJustJammin/nevrite-music/actions/runs/34673207427)
+  passed for that SHA. Production deployment `6405918750` installed API version
+  `6d6430f7-c4ad-4431-b0b8-d84905ebc5f1` and web version
+  `ea4bc944-a058-48de-95e1-f4ebc5a0ee49`.
+- Protected configuration collector run
+  [34673317219](https://github.com/WeJustJammin/nevrite-music/actions/runs/34673317219)
+  passed. Artifact `10291118085` is 1,717 bytes with SHA-256
+  `f91023fc9878d4fef695a0d7be957e75860f0042c2ad40b0926b22843f88ae30`
+  and binds the exact source, API version, 100 percent traffic, queue/DLQ
+  identities, schedule, and five permission checks.
+- Serialized protected exercise run
+  [34673397513](https://github.com/WeJustJammin/nevrite-music/actions/runs/34673397513)
+  passed queue identity, consumer, empty-preflight, publish, and exact DLQ
+  observation, then failed closed with
+  `AC209_DIAGNOSTIC stage=evidence code=email_query_failed`. Its cleanup passed
+  with `purged=0`, `source_messages=0`, and `dlq_messages=0`; the evidence
+  artifact was correctly skipped. This proves the queue token and exact-marker
+  cleanup path, but supplies no provider/database delivery or mailbox evidence.
+- The deployed diagnostic groups typed Email Sending configuration, provider
+  request, and provider response failures. Strict regression TDD now maps those
+  fixed internal enums to `email_invalid_configuration`,
+  `email_provider_request_failed`, and `email_provider_response_invalid`, while
+  preserving `email_not_observed` for non-unique events and
+  `email_query_failed` for unexpected internal exceptions. RED failed the three
+  new cases; GREEN passed 24/24; temporarily restoring the old mapping failed
+  those same three cases; the restored implementation passed 24/24. Independent
+  review then found that the collector's outer catch mislabeled unexpected
+  runtime faults as invalid configuration. A second RED failed 1/32 on that
+  wrapper path; GREEN passed 57/57 across collector and orchestration; restoring
+  the old catch failed the same case; the corrected catch restored 57/57.
+  Diagnostics remain closed allowlists and never interpolate token, provider
+  body, or error detail. Independent re-review found no remaining P0–P3 issue.
+- Full `pnpm validate` passed after restoring the local Supabase preflight: 458
+  test files, 3,560 passing tests plus one intentional skip, 100 percent
+  statement/branch/function/line coverage, all executable Slice 09 evidence
+  checks, 101 functional and five production-build browser tests, builds, bundle
+  budgets, and performance smoke.
+
+The diagnostic refinement still requires merge, exact-main promotion, and a
+protected rerun after the Cloudflare Email Sending zone analytics scope is
+corrected. AC209 remains open until retained provider/database evidence and the
+real Gmail receipt exist. AC211, AC265, and AC266 remain open, so Slice 09 stays
+`279/283` and Slices 10–17 remain dependency-locked.
