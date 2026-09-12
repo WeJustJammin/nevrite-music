@@ -47,16 +47,16 @@ export type Ac209EmailSendingAnalyticsErrorCode =
   | 'event_not_unique';
 
 export class Ac209EmailSendingAnalyticsError extends Error {
-  constructor(
-    readonly code: Ac209EmailSendingAnalyticsErrorCode,
-    detail?: string,
-  ) {
+  readonly code: Ac209EmailSendingAnalyticsErrorCode;
+
+  constructor(code: Ac209EmailSendingAnalyticsErrorCode, detail?: string) {
     super(
       detail === undefined
         ? 'AC209 Email Sending analytics query failed.'
         : `AC209 Email Sending analytics query failed. ${detail}`,
     );
     this.name = 'Ac209EmailSendingAnalyticsError';
+    this.code = code;
   }
 }
 

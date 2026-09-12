@@ -295,3 +295,44 @@ database evidence, verified exact-marker cleanup, and the real Gmail receipt.
 No cleanup success or alert delivery is inferred from the failed run. AC211,
 AC265, and AC266 remain open, so Slice 09 stays `279/283` and Slices 10–17 remain
 dependency-locked.
+
+## 2026-09-12 exact-version AC209 runner compatibility remediation
+
+- PR [#60](https://github.com/WeJustJammin/nevrite-music/pull/60) merged as exact
+  main revision `507d3fe68f73d02aecb6c057154982d9da19d51a`. Exact-main CI run
+  [34670799695](https://github.com/WeJustJammin/nevrite-music/actions/runs/34670799695),
+  staging run
+  [34671099220](https://github.com/WeJustJammin/nevrite-music/actions/runs/34671099220),
+  and approved production promotion run
+  [34671313319](https://github.com/WeJustJammin/nevrite-music/actions/runs/34671313319)
+  passed. The first staging attempt observed a transient web release-identity
+  mismatch before the unchanged retry passed. Production deployed API version
+  `6f2a4a49-b8ba-4027-8b50-4cc05f3de73d` and web version
+  `0b36cc27-ac39-4630-9de1-3b0ddcb30c40`.
+- Protected configuration collector run
+  [34671562350](https://github.com/WeJustJammin/nevrite-music/actions/runs/34671562350)
+  passed for that exact source and API version. Its redacted artifact is
+  `10291420117`, 1,725 bytes, with SHA-256
+  `d6509d026de50bbfa368df970745c2f8f18312432fc533041d3f69e3ef9b41f8`.
+- Protected exercise run
+  [34671638934](https://github.com/WeJustJammin/nevrite-music/actions/runs/34671638934)
+  failed before any queue request because Node `22.23.1` strip-only execution
+  rejected a TypeScript constructor parameter property with
+  `ERR_UNSUPPORTED_TYPESCRIPT_SYNTAX`. The protected cleanup step nevertheless
+  passed and reported `purged=0`, `source_messages=0`, and `dlq_messages=0`.
+  The evidence artifact was correctly skipped, so this run proves cleanup but
+  supplies no alert-delivery evidence.
+- Strict regression TDD imports the complete production exercise graph under
+  the exact `node --experimental-strip-types` runner. RED failed 1/6; GREEN
+  passes 6/6 after replacing the parameter property with an explicit typed
+  field and constructor assignment. The focused exercise suites pass 55/55;
+  independent review found no P0/P1 issue. Full `pnpm validate` passes 458 test
+  files, 3,552 tests plus one intentional skip, 100% coverage, all executable
+  Slice 09 evidence checks, 101 functional and five production-build browser
+  tests, builds, bundle budgets, and performance smoke.
+
+AC209 remains open pending merge, exact-main promotion, one serialized protected
+rerun, retained provider/database evidence, and the real Gmail receipt. No
+delivery evidence is inferred from the pre-request runner failure. AC211, AC265,
+and AC266 remain open, so Slice 09 stays `279/283` and Slices 10–17 remain
+dependency-locked.
