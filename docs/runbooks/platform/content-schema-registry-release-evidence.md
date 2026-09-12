@@ -112,6 +112,11 @@ publish, and exact marker arrival in the bound DLQ; the DLQ-local counter is not
 used as the source retry count. The
 service-only database verifier hashes the provider-owned message identifier
 internally and requires one delivered `dlq_nonempty` row for the exact release.
+The Email Sending request follows Cloudflare's documented individual-event
+query shape and bounds the provider result by zone, exercise timestamps, and a
+50-row limit. The collector then accepts only `status = delivered` and
+`isLastEvent = 1` locally, and fails closed if the page reaches the limit so an
+unobserved matching event can never be inferred from a truncated result.
 The identifier is an opaque, visible-ASCII provider value of at most 512 bytes;
 it is not a caller-authored RFC `Message-ID`. The verifier sends
 `notBefore = exercise.startedAt` and accepts only a row whose claim and delivery
@@ -144,13 +149,13 @@ Provider failures are split into closed, non-secret categories:
 `email_provider_graphql_error` for a well-formed GraphQL error envelope whose
 free-text details are not interpreted; `email_provider_request_failed` for
 another request or non-success response; `email_provider_result_truncated` when
-the filtered terminal-delivery page reaches its hard limit; and
+the bounded time-window page reaches its hard limit; and
 `email_provider_response_invalid` when the response is unreadable, malformed,
 oversized, or rejected by the response schema. The diagnostic never includes a
 provider message, path, extension, body, address, or token. `email_query_failed`
-is reserved for an unexpected internal exception. The analytics request filters
-server-side to `status = delivered` and `isLastEvent = 1`, while the collector
-rechecks those values before accepting evidence. It reports
+is reserved for an unexpected internal exception. The analytics request uses
+the provider-documented zone/time filters, while the collector requires
+`status = delivered` and `isLastEvent = 1` before accepting evidence. It reports
 `database_not_observed` when that event was found but its exact provider message
 identifier was not bound to a delivered database row. On success, retain only
 `ac209-exercise/configuration.json` and `ac209-exercise/exercise.json` for 30

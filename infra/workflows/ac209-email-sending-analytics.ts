@@ -27,8 +27,6 @@ export const AC209_EMAIL_SENDING_QUERY =
         filter: {
           datetime_geq: $start
           datetime_leq: $end
-          status: "delivered"
-          isLastEvent: 1
         }
         limit: 50
         orderBy: [datetime_DESC]
