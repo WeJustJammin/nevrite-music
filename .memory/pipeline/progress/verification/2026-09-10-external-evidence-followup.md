@@ -389,3 +389,56 @@ protected rerun after the Cloudflare Email Sending zone analytics scope is
 corrected. AC209 remains open until retained provider/database evidence and the
 real Gmail receipt exist. AC211, AC265, and AC266 remain open, so Slice 09 stays
 `279/283` and Slices 10–17 remain dependency-locked.
+
+## 2026-09-12 exact-main GraphQL evidence diagnostics
+
+- Diagnostic PR [#62](https://github.com/WeJustJammin/nevrite-music/pull/62)
+  merged as exact main revision
+  `053155a495f5d802e42d0e0711e887c68576181a`. Exact-main CI run
+  [34676175982](https://github.com/WeJustJammin/nevrite-music/actions/runs/34676175982),
+  staging run
+  [34676476409](https://github.com/WeJustJammin/nevrite-music/actions/runs/34676476409),
+  and approved production promotion run
+  [34676542959](https://github.com/WeJustJammin/nevrite-music/actions/runs/34676542959)
+  passed. Production installed API version
+  `45257b16-9640-49c5-b381-d0cbd362b8d0` and web version
+  `a3e1ee0a-5d04-4685-9fca-8a1bb8cfc737`.
+- Protected configuration collector run
+  [34676709953](https://github.com/WeJustJammin/nevrite-music/actions/runs/34676709953)
+  passed for that exact source and API version. Artifact `10291829071` is 1,724
+  bytes with SHA-256
+  `aab6cfdec7bf49e18db9272bb03b1da4607ad513aa41bcfd753b572bd9b4a9be`
+  and binds the approved configuration, 100 percent traffic, queue/DLQ
+  identities, and all five permission checks.
+- Serialized protected exercise run
+  [34676790579](https://github.com/WeJustJammin/nevrite-music/actions/runs/34676790579)
+  passed setup, protected identity, exact-SHA workspace verification, and the
+  exact-version configuration collector, then failed closed with
+  `AC209_DIAGNOSTIC stage=evidence code=email_provider_response_invalid`. Exact
+  marker cleanup passed with `purged=0`, `source_messages=0`, and
+  `dlq_messages=0`; evidence upload was correctly skipped. The deployed code
+  did not retain which response branch caused the static diagnostic, so this
+  run supplies no provider/database delivery or mailbox evidence.
+- Follow-up PR
+  [#63](https://github.com/WeJustJammin/nevrite-music/pull/63) narrows the query
+  to terminal delivered events while retaining client-side lifecycle and
+  identity checks. It distinguishes a well-formed GraphQL error envelope, HTTP
+  authorization, unavailable exact-zone scope, a full result page, malformed
+  response content, and unexpected internal failure using only closed codes;
+  provider message text, paths, extensions, response bodies, addresses, and
+  tokens are never emitted. TDD RED failed 16/72 before the initial
+  implementation and GREEN passed 73/73. Adversarial review then rejected
+  free-text message classification; the focused RED failed 4/72, and the
+  corrected generic GraphQL classification passes 72/72. Independent final
+  review found no remaining P0–P3 or specification gap.
+- Final `pnpm validate` passes 458 test files, 3,575 tests plus one intentional
+  skip, 100 percent statement/branch/function/line coverage, all executable
+  Slice 09 evidence checks, 101 functional and five production-build browser
+  tests, builds, bundle budgets, and performance smoke.
+
+AC209 remains open pending merge, exact-main promotion, one serialized
+protected rerun, retained provider/database evidence, and the real Gmail
+receipt. AC211 still requires a complete post-deployment UTC day with its
+natural sample floors; AC265 and AC266 retain their hosted identity and physical
+assistive-technology gates. Slice 09 therefore remains `279/283`, and Slices
+10–17 remain dependency-locked.
