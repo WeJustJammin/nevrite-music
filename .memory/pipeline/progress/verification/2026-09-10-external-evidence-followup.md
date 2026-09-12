@@ -442,3 +442,50 @@ receipt. AC211 still requires a complete post-deployment UTC day with its
 natural sample floors; AC265 and AC266 retain their hosted identity and physical
 assistive-technology gates. Slice 09 therefore remains `279/283`, and Slices
 10–17 remain dependency-locked.
+
+## 2026-09-12 documented Email Sending event query follow-up
+
+- Follow-up PR [#63](https://github.com/WeJustJammin/nevrite-music/pull/63)
+  merged as exact main revision
+  `9bf121b5230db3abba0c684fa5b7943558b64146`. Exact-main CI run
+  [34680683988](https://github.com/WeJustJammin/nevrite-music/actions/runs/34680683988),
+  automatic staging run
+  [34680985881](https://github.com/WeJustJammin/nevrite-music/actions/runs/34680985881),
+  and approved production promotion run
+  [34681086643](https://github.com/WeJustJammin/nevrite-music/actions/runs/34681086643)
+  passed. Production installed API version
+  `4f3f5c16-f34f-43e0-a10e-9e30e9da3503` and web version
+  `b4b892df-3af8-4895-8f87-8a4a0b36c764`.
+- Approved configuration collector run
+  [34681248099](https://github.com/WeJustJammin/nevrite-music/actions/runs/34681248099)
+  passed. Artifact `10294053864` is 1,722 bytes with SHA-256
+  `7efa54fb128478f0908c16393ee5088906aab47422f74d2fa1fb7c2d18843402`
+  and binds the exact source, API version, 100 percent traffic, schedule,
+  queue/DLQ identities, approved configuration, and five permission checks.
+- Serialized protected exercise run
+  [34681349758](https://github.com/WeJustJammin/nevrite-music/actions/runs/34681349758)
+  passed protected identity, exact-SHA verification, configuration collection,
+  queue preflight, publish, retry exhaustion, and exact DLQ observation, then
+  failed closed after the bounded evidence window with
+  `AC209_DIAGNOSTIC stage=evidence code=email_provider_graphql_error`. Cleanup
+  passed with `purged=0`, `source_messages=0`, and `dlq_messages=0`; evidence
+  upload was correctly skipped. The static diagnostic proves that Cloudflare
+  returned a well-formed nonempty GraphQL error envelope, but its intentionally
+  discarded provider text cannot prove whether the cause was schema or access.
+- Cloudflare's documented `emailSendingAdaptive` event example filters only by
+  zone and time. The corrective branch therefore removes the undocumented
+  provider-side `status` and `isLastEvent` filter additions while retaining the
+  selected fields, strict local `delivered` and terminal-event checks, and the
+  fail-closed 50-row page boundary. TDD RED failed 1/39 on the query contract;
+  GREEN passed 39/39 and both AC209 suites passed 72/72.
+- Full `pnpm validate` passes 458 test files, 3,575 tests plus one intentional
+  skip, 100 percent statement/branch/function/line coverage, all executable
+  Slice 09 evidence checks, 101 functional and five production-build browser
+  tests, builds, bundle budgets, and performance smoke. Independent code and
+  adversarial specification review found no remaining P0–P3 finding or gap.
+
+AC209 remains open pending the corrected read-only Account Analytics token
+scope, merge and exact-main promotion of the documented query, one serialized
+protected rerun, retained provider/database evidence, and the real Gmail
+receipt. AC211, AC265, and AC266 remain open. Slice 09 therefore remains
+`279/283`, and Slices 10–17 remain dependency-locked.

@@ -88,8 +88,9 @@ describe('AC209 Email Sending analytics collector', () => {
     expect(AC209_EMAIL_SENDING_QUERY).toContain('emailSendingAdaptive');
     expect(AC209_EMAIL_SENDING_QUERY).toContain('datetime_geq: $start');
     expect(AC209_EMAIL_SENDING_QUERY).toContain('datetime_leq: $end');
-    expect(AC209_EMAIL_SENDING_QUERY).toContain('status: "delivered"');
-    expect(AC209_EMAIL_SENDING_QUERY).toContain('isLastEvent: 1');
+    expect(AC209_EMAIL_SENDING_QUERY).not.toContain('status: "delivered"');
+    expect(AC209_EMAIL_SENDING_QUERY).not.toContain('isLastEvent: 1');
+    expect(AC209_EMAIL_SENDING_QUERY).toContain('status');
     expect(AC209_EMAIL_SENDING_QUERY).toContain('isLastEvent');
     expect(report.event).toEqual({
       senderSha256,
