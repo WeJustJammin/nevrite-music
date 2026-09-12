@@ -1,3 +1,4 @@
+import { spawnSync } from 'node:child_process';
 import { readFileSync } from 'node:fs';
 
 import { describe, expect, it } from 'vitest';
@@ -9,7 +10,36 @@ const workflowPath = new URL(
 
 const readWorkflow = (): string => readFileSync(workflowPath, 'utf8');
 
+const exerciseEntrypointUrl = new URL(
+  '../infra/workflows/exercise-production-ac209.ts',
+  import.meta.url,
+);
+
 describe('production AC209 exercise workflow contract', () => {
+  it('loads its full import graph under the strip-only Node runtime used in production', () => {
+    const probe = spawnSync(
+      process.execPath,
+      [
+        '--experimental-strip-types',
+        '--input-type=module',
+        '--eval',
+        `await import(${JSON.stringify(exerciseEntrypointUrl.href)}); process.stdout.write('AC209_STRIP_IMPORT_OK\\n');`,
+      ],
+      { encoding: 'utf8' },
+    );
+
+    expect({
+      status: probe.status,
+      signal: probe.signal,
+      stdout: probe.stdout,
+    }).toEqual({
+      status: 0,
+      signal: null,
+      stdout: 'AC209_STRIP_IMPORT_OK\n',
+    });
+    expect(probe.stderr).not.toContain('ERR_UNSUPPORTED_TYPESCRIPT_SYNTAX');
+  });
+
   it('is an explicit serialized main-only production operation', () => {
     const workflow = readWorkflow();
     const header = workflow.slice(0, workflow.indexOf('\njobs:'));
