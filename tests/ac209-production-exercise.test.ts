@@ -5,6 +5,7 @@ import {
   exerciseProductionAc209,
   formatAc209QueueDiagnostic,
   formatAc209StageDiagnostic,
+  writeAc209CleanupRequiredOutput,
 } from '../infra/workflows/exercise-production-ac209.ts';
 import {
   Ac209EmailSendingAnalyticsError,
@@ -133,11 +134,13 @@ const dependencies = () => {
   });
   return {
     queueExercise,
+    beforeQueueAccess: vi.fn(),
     readEligibility: vi.fn(async () => ({
       schemaVersion: 'ac209-exercise-eligibility-v1' as const,
       eligible: true as const,
       checkedAt: CHECKED_AT,
     })),
+    verifyEmailCapability: vi.fn(async () => undefined),
     collectEmailAnalytics: vi.fn(async () => emailReport),
     verifyDelivery: vi.fn(async () => delivery),
     now: vi
@@ -167,6 +170,17 @@ describe('production AC209 queue-to-email exercise orchestration', () => {
     expect(Ac209ProductionExerciseReportSchema.parse(report)).toEqual(report);
     expect(deps.readEligibility).toHaveBeenCalledWith(
       expect.objectContaining({ checkedAt: CHECKED_AT }),
+    );
+    expect(deps.verifyEmailCapability).toHaveBeenCalledWith({
+      zoneId: ZONE_ID,
+      token: 'email-analytics-token-that-is-never-reported',
+    });
+    expect(deps.verifyEmailCapability.mock.invocationCallOrder[0]).toBeLessThan(
+      deps.beforeQueueAccess.mock.invocationCallOrder[0] ?? 0,
+    );
+    expect(deps.beforeQueueAccess).toHaveBeenCalledExactlyOnceWith();
+    expect(deps.beforeQueueAccess.mock.invocationCallOrder[0]).toBeLessThan(
+      deps.queueExercise.mock.invocationCallOrder[0] ?? 0,
     );
     expect(deps.queueExercise).toHaveBeenCalledWith(
       expect.objectContaining({
@@ -213,10 +227,82 @@ describe('production AC209 queue-to-email exercise orchestration', () => {
         reportQueueDiagnostic,
       }),
     ).rejects.toThrow('AC209 production exercise failed');
+    expect(deps.verifyEmailCapability).not.toHaveBeenCalled();
+    expect(deps.beforeQueueAccess).not.toHaveBeenCalled();
     expect(deps.queueExercise).not.toHaveBeenCalled();
     expect(reportQueueDiagnostic).toHaveBeenCalledExactlyOnceWith(
       'AC209_DIAGNOSTIC stage=eligibility code=blocked',
     );
+  });
+
+  it.each([
+    ['provider_graphql_error', 'email_provider_graphql_error'],
+    ['provider_resource_unavailable', 'email_provider_resource_unavailable'],
+    ['provider_response_invalid', 'email_provider_response_invalid'],
+  ] as const)(
+    'fails the %s capability preflight before queue mutation',
+    async (errorCode, diagnosticCode) => {
+      const deps = dependencies();
+      const reportQueueDiagnostic = vi.fn<(diagnostic: string) => void>();
+      deps.verifyEmailCapability.mockRejectedValueOnce(
+        new Ac209EmailSendingAnalyticsError(
+          errorCode,
+          'secret-token provider.invalid forged',
+        ),
+      );
+
+      await expect(
+        exerciseProductionAc209(await baseInput(), {
+          ...deps,
+          reportQueueDiagnostic,
+        }),
+      ).rejects.toThrow('AC209 production exercise failed');
+      expect(deps.beforeQueueAccess).not.toHaveBeenCalled();
+      expect(deps.queueExercise).not.toHaveBeenCalled();
+      expect(deps.collectEmailAnalytics).not.toHaveBeenCalled();
+      expect(reportQueueDiagnostic).toHaveBeenCalledExactlyOnceWith(
+        `AC209_DIAGNOSTIC stage=evidence code=${diagnosticCode}`,
+      );
+      expect(reportQueueDiagnostic.mock.calls.flat().join(' ')).not.toMatch(
+        /secret-token|provider\.invalid|forged/u,
+      );
+    },
+  );
+
+  it('fails before queue mutation when cleanup eligibility cannot be persisted', async () => {
+    const deps = dependencies();
+    const reportQueueDiagnostic = vi.fn<(diagnostic: string) => void>();
+    deps.beforeQueueAccess.mockImplementationOnce(() => {
+      throw new Error('unsafe output failure detail');
+    });
+
+    await expect(
+      exerciseProductionAc209(await baseInput(), {
+        ...deps,
+        reportQueueDiagnostic,
+      }),
+    ).rejects.toThrow('AC209 production exercise failed');
+    expect(deps.beforeQueueAccess).toHaveBeenCalledExactlyOnceWith();
+    expect(deps.queueExercise).not.toHaveBeenCalled();
+    expect(reportQueueDiagnostic).toHaveBeenCalledExactlyOnceWith(
+      'AC209_DIAGNOSTIC stage=queue code=provider_request_failed',
+    );
+    expect(reportQueueDiagnostic.mock.calls.flat().join(' ')).not.toContain(
+      'unsafe output failure detail',
+    );
+  });
+
+  it('writes only the cleanup-required step output', () => {
+    const writes: string[] = [];
+    writeAc209CleanupRequiredOutput('/github/output', (path, value) => {
+      expect(path).toBe('/github/output');
+      writes.push(value);
+    });
+
+    expect(writes).toEqual(['cleanup_required=true\n']);
+    expect(() =>
+      writeAc209CleanupRequiredOutput(undefined, () => undefined),
+    ).toThrow('AC209 production exercise failed');
   });
 
   it('reports a closed eligibility request failure without leaking the error', async () => {

@@ -491,3 +491,59 @@ scope, merge and exact-main promotion of the documented query, one serialized
 protected rerun, retained provider/database evidence, and the real Gmail
 receipt. AC211, AC265, and AC266 remain open. Slice 09 therefore remains
 `279/283`, and Slices 10–17 remain dependency-locked.
+
+## 2026-09-12 Email Sending capability preflight
+
+- Documented-query PR
+  [#64](https://github.com/WeJustJammin/nevrite-music/pull/64) merged as exact
+  main revision `f5aec5a5cf3e68dd6054d742e75d46bfd3a7e5d9`. Exact-main CI run
+  [34683546666](https://github.com/WeJustJammin/nevrite-music/actions/runs/34683546666),
+  automatic staging run
+  [34683838646](https://github.com/WeJustJammin/nevrite-music/actions/runs/34683838646),
+  and approved production promotion run
+  [34683933040](https://github.com/WeJustJammin/nevrite-music/actions/runs/34683933040)
+  passed. Production installed API version
+  `d4b83550-c90c-4b1f-9d6f-9ad019a8651c` and web version
+  `fd3ac95f-5dbe-4294-88f9-0740020d03c3`.
+- Protected configuration collector run
+  [34684043482](https://github.com/WeJustJammin/nevrite-music/actions/runs/34684043482)
+  passed. Artifact `10294926905` is 1,722 bytes with SHA-256
+  `5d0521dfa7773dca0f8c942e1072811548b0eb768ff22443f7f4f5cfc3825f9c`
+  and binds the exact source, production environment, provider-approved
+  configuration, API deployment/version, 100 percent traffic, schedule,
+  source queue, DLQ, and all five permission checks.
+- Serialized protected exercise run
+  [34684160833](https://github.com/WeJustJammin/nevrite-music/actions/runs/34684160833)
+  passed protected identity, exact-SHA verification, configuration collection,
+  queue preflight, publish, retry exhaustion, and exact DLQ observation. It
+  then failed closed after the bounded evidence window with
+  `AC209_DIAGNOSTIC stage=evidence code=email_provider_graphql_error`.
+  Cleanup passed with `purged=0`, `source_messages=0`, and
+  `dlq_messages=0`; evidence upload was correctly skipped. Removing the
+  undocumented event filters was therefore not sufficient to establish
+  provider access or delivery, and this run supplies no provider/database or
+  mailbox acceptance evidence.
+- The follow-up branch adds a non-event Cloudflare Settings preflight before
+  queue access. It requires the exact zone's `emailSendingAdaptive` dataset
+  to be enabled and its requester-specific `availableFields` to include all
+  seven selected event fields. The same Settings response must support the
+  50-row page bound and seven-field selection. It emits the fixed
+  `cleanup_required=true` step output only immediately before queue access,
+  so eligibility, capability, or output-write failure cannot mutate the queue
+  or trigger unnecessary standalone cleanup. Diagnostics remain fixed,
+  non-secret categories.
+- Strict TDD first failed the new capability/orchestration cases, then passed
+  104/104 focused AC209 tests after the Settings-field, query-limit, and
+  cleanup-output boundaries were implemented. Full `pnpm validate` passes 458
+  test files, 3,601 tests plus one intentional skip, 100 percent
+  statement/branch/function/line coverage, all executable Slice 09 evidence
+  checks, 101 functional and five production-build browser tests, every
+  workspace build, bundle budgets, and performance smoke.
+
+AC209 remains open pending merge, exact-main promotion, one serialized
+protected rerun with the corrected read-only Account Analytics token scope,
+retained provider/database evidence, and the real Gmail receipt. AC211 still
+requires a complete post-deployment UTC day with its natural sample floors;
+AC265 and AC266 retain their hosted identity and physical assistive-technology
+gates. Slice 09 therefore remains `279/283`, and Slices 10–17 remain
+dependency-locked.

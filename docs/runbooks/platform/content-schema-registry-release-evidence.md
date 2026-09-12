@@ -102,9 +102,16 @@ dispatch `exercise-production-ac209.yml` from `main`. Supply the exact deployed
 source revision and Worker version, production DLQ ID, approved configuration ID
 and reference, and set `confirm_exercise: true`. The protected job recollects
 the exact-version configuration before any mutation. It then requires an
-eligible alert cooldown and empty exact source/DLQ peeks, pushes one UUID-marked
-malformed envelope, observes retry exhaustion in the DLQ, and keeps that exact
-message present while it correlates one delivered Email Sending event. The
+eligible alert cooldown and queries the exact zone's Email Sending Settings
+node. The capability preflight requires `emailSendingAdaptive.enabled = true`
+and every field selected by the event query to appear in `availableFields` for
+the observability token. Its requester-specific `maxPageSize` must support the
+50-row bound and `maxNumberOfFields` must support all seven selections. Only
+after both preflights pass does the step record
+`cleanup_required=true`, enter the queue boundary, require empty exact
+source/DLQ peeks, push one UUID-marked malformed envelope, observe retry
+exhaustion in the DLQ, and keep that exact message present while it correlates
+one delivered Email Sending event. The
 retained `dlq.attempts` value is the DLQ-local consumer counter and can be zero
 before any DLQ consumer delivery. Retry exhaustion is proved by the verified
 source consumer retry limit and DLQ binding, empty exact preflight, source-only
@@ -133,7 +140,10 @@ would break in-flight or still-running old-version completions.
 
 The 75-minute exercise and its `always()` safety step purge only peek refs whose
 body exactly matches the pre-generated marker. Cleanup runs only after the
-exact-version configuration collector succeeds. Both paths reject
+exact-version configuration collector succeeds and the exercise step records
+that it is about to enter the queue boundary. Eligibility or Email Sending
+capability failure therefore performs no queue cleanup because no queue access
+began. Both cleanup paths reject
 ambiguous/full peeks and never invoke queue-wide purge. A hard-cancelled run is
 recovered by rerunning that same GitHub Actions run, which derives the same
 opaque marker. If its first rerun finds and removes a delayed marker during
@@ -145,7 +155,8 @@ already-absent result. A failed exercise reports
 `email_invalid_configuration` when the bounded analytics input was invalid.
 Provider failures are split into closed, non-secret categories:
 `email_provider_permission_denied` for an HTTP authorization response,
-`email_provider_resource_unavailable` for an empty exact-zone result, and
+`email_provider_resource_unavailable` for an empty exact-zone result, disabled
+dataset, or required event field unavailable to the requester, and
 `email_provider_graphql_error` for a well-formed GraphQL error envelope whose
 free-text details are not interpreted; `email_provider_request_failed` for
 another request or non-success response; `email_provider_result_truncated` when

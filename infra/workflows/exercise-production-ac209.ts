@@ -1,5 +1,5 @@
 import { createHash } from 'node:crypto';
-import { existsSync, readFileSync, statSync } from 'node:fs';
+import { appendFileSync, existsSync, readFileSync, statSync } from 'node:fs';
 import { relative, resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -11,6 +11,7 @@ import {
 import {
   Ac209EmailSendingAnalyticsError,
   collectAc209EmailSendingAnalytics,
+  verifyAc209EmailSendingCapability,
   type Ac209EmailSendingAnalyticsErrorCode,
   type Ac209EmailSendingAnalyticsReport,
 } from './ac209-email-sending-analytics.ts';
@@ -156,8 +157,10 @@ export type Ac209ProductionExerciseDependencies = Readonly<{
     input: Ac209QueueExerciseInput,
   ) => Promise<Ac209QueueExerciseReport>;
   readEligibility?: typeof readAc209ExerciseEligibility;
+  verifyEmailCapability?: typeof verifyAc209EmailSendingCapability;
   collectEmailAnalytics?: typeof collectAc209EmailSendingAnalytics;
   verifyDelivery?: typeof verifyAc209AlertDelivery;
+  beforeQueueAccess?: () => void;
   now?: () => number;
   reportQueueDiagnostic?: (diagnostic: string) => void;
   sleep?: (milliseconds: number) => Promise<void>;
@@ -196,6 +199,22 @@ export const exerciseProductionAc209 = async (
       failAc209ProductionExercise();
     }
 
+    const verifyEmailCapability =
+      dependencies.verifyEmailCapability ?? verifyAc209EmailSendingCapability;
+    stageDiagnostic = { stage: 'evidence', code: 'email_query_failed' };
+    try {
+      await verifyEmailCapability({
+        zoneId: input.emailZoneId,
+        token: input.emailAnalyticsToken,
+      });
+    } catch (error: unknown) {
+      stageDiagnostic = {
+        stage: 'evidence',
+        code: resolveAc209EmailDiagnosticCode(error),
+      };
+      failAc209ProductionExercise();
+    }
+
     let email: Ac209EmailSendingAnalyticsReport | undefined;
     let database: Ac209DeliveryVerification | undefined;
     let emailDiagnosticCode: Ac209EmailDiagnosticCode = 'email_not_observed';
@@ -208,6 +227,7 @@ export const exerciseProductionAc209 = async (
       input.evidencePollIntervalMs ?? AC209_DEFAULT_EVIDENCE_POLL_MS;
     const queueExercise = dependencies.queueExercise ?? runAc209QueueExercise;
     stageDiagnostic = { stage: 'queue', code: 'provider_request_failed' };
+    dependencies.beforeQueueAccess?.();
     const queue = await queueExercise({
       accountId: input.accountId,
       providerToken: input.queueToken,
@@ -339,6 +359,21 @@ export const exerciseProductionAc209 = async (
   }
 };
 
+type Ac209OutputWriter = (
+  path: string,
+  value: string,
+  encoding: 'utf8',
+) => void;
+
+export const writeAc209CleanupRequiredOutput = (
+  outputPath: string | undefined,
+  writeOutput: Ac209OutputWriter = appendFileSync,
+): void => {
+  if (outputPath === undefined || outputPath.length === 0)
+    failAc209ProductionExercise();
+  writeOutput(outputPath, 'cleanup_required=true\n', 'utf8');
+};
+
 const resolveArtifact = (
   workspaceRoot: string,
   artifactPath: string,
@@ -404,6 +439,8 @@ const run = async (): Promise<void> => {
       },
     },
     {
+      beforeQueueAccess: () =>
+        writeAc209CleanupRequiredOutput(process.env['GITHUB_OUTPUT']),
       reportQueueDiagnostic: (diagnostic: string) =>
         console.error(`::error::${diagnostic}`),
     },
