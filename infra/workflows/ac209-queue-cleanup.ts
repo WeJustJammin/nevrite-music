@@ -126,8 +126,6 @@ const cleanupResolvedQueueMarker = async (
   let markerWasObserved = false;
   let purgedRefCount = 0;
   for (let pass = 0; pass < runtime.maxPolls; pass += 1) {
-    if (nowOrFail(runtime) > deadline)
-      fail('cleanup_failed', 'queue cleanup bound exceeded');
     let sourceMessages: readonly JsonRecord[] | undefined;
     let deadLetterMessages: readonly JsonRecord[] | undefined;
     let readError: Ac209QueueExerciseError | undefined;
@@ -196,8 +194,10 @@ const cleanupResolvedQueueMarker = async (
       deadLetterMessages: deadLetterMessages.length,
       sourceMessages: sourceMessages.length,
     };
+    const boundReached =
+      pass + 1 === runtime.maxPolls || nowOrFail(runtime) >= deadline;
     if (!markerWasObserved) {
-      if (!requireMarker && pass + 1 === runtime.maxPolls)
+      if (!requireMarker && boundReached)
         return {
           ...counts,
           markerAbsent: true,
@@ -210,6 +210,7 @@ const cleanupResolvedQueueMarker = async (
         purgedRefCount,
       };
     }
+    if (boundReached) fail('cleanup_failed', 'queue cleanup bound exceeded');
     if (pass + 1 < runtime.maxPolls) {
       try {
         await runtime.sleep(runtime.pollIntervalMs);

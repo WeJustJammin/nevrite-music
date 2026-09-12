@@ -94,7 +94,8 @@ deployment token or a local Wrangler OAuth credential. Pin the provider-verified
 Email Sending zone as `CLOUDFLARE_EMAIL_ZONE_ID`, the fixed sender digest as
 `PRODUCTION_ALERT_SENDER_SHA256`, and the production source queue as
 `CLOUDFLARE_PLATFORM_QUEUE_ID`. The existing observability token supplies the
-read-only Analytics permission for the Email Sending query.
+read-only Account Analytics permission for the Email Sending query, and its Zone
+Resources must include the exact Email Sending zone.
 
 After the verification RPC migration and exercise workflow are deployed,
 dispatch `exercise-production-ac209.yml` from `main`. Supply the exact deployed
@@ -132,7 +133,14 @@ ambiguous/full peeks and never invoke queue-wide purge. A hard-cancelled run is
 recovered by rerunning that same GitHub Actions run, which derives the same
 opaque marker. If its first rerun finds and removes a delayed marker during
 fail-closed preflight, rerun the same run again to start from verified-empty
-queues. On success, retain only
+queues. Standalone cleanup performs a final source/DLQ peek after the elapsed
+poll bound is reached, so normal provider latency cannot prevent a verified
+already-absent result. A failed exercise reports
+`email_not_observed` when no unique delivered Email Sending event was found, or
+`email_query_failed` when the bounded provider query itself was rejected or
+malformed, or
+`database_not_observed` when that event was found but its exact provider message
+identifier was not bound to a delivered database row. On success, retain only
 `ac209-exercise/configuration.json` and `ac209-exercise/exercise.json` for 30
 days. The latter contains hashed addresses/queue identities plus the exact
 provider message identifier, and states `pending_manual_verification`; it is

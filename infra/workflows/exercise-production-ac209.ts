@@ -9,6 +9,7 @@ import {
   type Ac209DeliveryVerification,
 } from './ac209-delivery-verification.ts';
 import {
+  Ac209EmailSendingAnalyticsError,
   collectAc209EmailSendingAnalytics,
   type Ac209EmailSendingAnalyticsReport,
 } from './ac209-email-sending-analytics.ts';
@@ -47,7 +48,14 @@ type Ac209StageDiagnostic =
       code: 'request_failed' | 'blocked';
     }>
   | Readonly<{ stage: 'queue'; code: Ac209QueueExerciseErrorCode }>
-  | Readonly<{ stage: 'evidence'; code: 'not_observed' | 'invalid' }>
+  | Readonly<{
+      stage: 'evidence';
+      code:
+        | 'email_not_observed'
+        | 'email_query_failed'
+        | 'database_not_observed'
+        | 'invalid';
+    }>
   | Readonly<{ stage: 'report'; code: 'invalid' }>;
 
 const AC209_STAGE_DIAGNOSTIC_CODES = Object.freeze({
@@ -72,7 +80,12 @@ const AC209_STAGE_DIAGNOSTIC_CODES = Object.freeze({
     'cleanup_failed',
     'marker_remains_after_cleanup',
   ]),
-  evidence: new Set<unknown>(['not_observed', 'invalid']),
+  evidence: new Set<unknown>([
+    'email_not_observed',
+    'email_query_failed',
+    'database_not_observed',
+    'invalid',
+  ]),
   report: new Set<unknown>(['invalid']),
 });
 
@@ -148,6 +161,8 @@ export const exerciseProductionAc209 = async (
 
     let email: Ac209EmailSendingAnalyticsReport | undefined;
     let database: Ac209DeliveryVerification | undefined;
+    let emailDiagnosticCode: 'email_not_observed' | 'email_query_failed' =
+      'email_not_observed';
     const collectEmail =
       dependencies.collectEmailAnalytics ?? collectAc209EmailSendingAnalytics;
     const verifyDelivery =
@@ -173,7 +188,7 @@ export const exerciseProductionAc209 = async (
       now,
       sleep,
       whileDlqMessagePresent: async () => {
-        stageDiagnostic = { stage: 'evidence', code: 'not_observed' };
+        stageDiagnostic = { stage: 'evidence', code: 'email_not_observed' };
         for (let poll = 0; poll < maxPolls; poll += 1) {
           const observedAt = new Date(now()).toISOString();
           try {
@@ -188,10 +203,19 @@ export const exerciseProductionAc209 = async (
               expectedSubject: '[WeJammin] dlq_nonempty',
               expectedMessageId: undefined,
             });
-          } catch {
+          } catch (error: unknown) {
             email = undefined;
+            emailDiagnosticCode =
+              error instanceof Ac209EmailSendingAnalyticsError &&
+              error.code === 'event_not_unique'
+                ? 'email_not_observed'
+                : 'email_query_failed';
           }
           if (email !== undefined) {
+            stageDiagnostic = {
+              stage: 'evidence',
+              code: 'database_not_observed',
+            };
             try {
               database = await verifyDelivery({
                 notBefore: startedAt,
@@ -203,6 +227,11 @@ export const exerciseProductionAc209 = async (
             } catch {
               database = undefined;
             }
+          } else {
+            stageDiagnostic = {
+              stage: 'evidence',
+              code: emailDiagnosticCode,
+            };
           }
           if (email !== undefined && database !== undefined) {
             stageDiagnostic = { stage: 'queue', code: 'cleanup_failed' };
@@ -213,7 +242,10 @@ export const exerciseProductionAc209 = async (
         failAc209ProductionExercise();
       },
     });
-    stageDiagnostic = { stage: 'evidence', code: 'not_observed' };
+    stageDiagnostic = {
+      stage: 'evidence',
+      code: email === undefined ? emailDiagnosticCode : 'database_not_observed',
+    };
     if (email === undefined || database === undefined)
       failAc209ProductionExercise();
     stageDiagnostic = { stage: 'evidence', code: 'invalid' };

@@ -253,3 +253,45 @@ Gmail receipt, and exact-reference cleanup. AC211, AC265, and AC266 remain open
 for the external evidence described above. Slice 09 therefore remains `279/283`
 and Slices 10–17 remain dependency-locked; no acceptance item was fabricated or
 waived.
+
+## 2026-09-11 protected AC209 exercise remediation
+
+- PR [#59](https://github.com/WeJustJammin/nevrite-music/pull/59) merged as
+  exact main revision `1142846b2376f9e85d24df164c935c66d6dc8d26` after the
+  Cloudflare DLQ-local attempt counter was corrected to accept the documented
+  unconsumed value `0`. Exact-main CI run
+  [34643513544](https://github.com/WeJustJammin/nevrite-music/actions/runs/34643513544),
+  staging run
+  [34644121750](https://github.com/WeJustJammin/nevrite-music/actions/runs/34644121750),
+  and approved production run
+  [34644294422](https://github.com/WeJustJammin/nevrite-music/actions/runs/34644294422)
+  passed. Production deployed API version
+  `23b3e467-5291-4599-a5aa-f2afea5ac13a` and web version
+  `b32d1c93-8c02-4506-9202-7233a1251213`.
+- Protected configuration collector run
+  [34644562935](https://github.com/WeJustJammin/nevrite-music/actions/runs/34644562935)
+  passed for that exact revision and production API version. The protected
+  `CLOUDFLARE_QUEUE_EXERCISE_TOKEN` secret was present and successfully used;
+  its value was never read or retained.
+- Protected exercise run
+  [34644696176](https://github.com/WeJustJammin/nevrite-music/actions/runs/34644696176)
+  passed queue identity, consumer, empty-preflight, source publish, and exact
+  DLQ-arrival gates, then exhausted its 90-by-10-second provider/database poll
+  with `AC209_DIAGNOSTIC stage=evidence code=not_observed`. The combined code did
+  not reveal whether Email Sending analytics or the database delivery binding
+  was absent. Its standalone cleanup then failed after 303 seconds, so this run
+  supplies neither retained delivery evidence nor authoritative cleanup proof.
+- Strict RED reproduced the cleanup defect: the 300-second deadline was checked
+  before the final absence-confirmation peek even though normal provider latency
+  had consumed the remaining margin. The local remediation performs that final
+  bounded peek and distinguishes `email_not_observed`, `email_query_failed`, and
+  `database_not_observed`. All 160 AC209 tests and full `pnpm validate` pass:
+  458 files, 3,551 passing tests plus one intentional skip, 100% coverage, all
+  executable Slice 09 evidence checks, 101 functional and five production-build
+  browser tests, builds, bundle budgets, and performance smoke.
+
+AC209 remains open pending a deployed protected rerun, retained provider and
+database evidence, verified exact-marker cleanup, and the real Gmail receipt.
+No cleanup success or alert delivery is inferred from the failed run. AC211,
+AC265, and AC266 remain open, so Slice 09 stays `279/283` and Slices 10–17 remain
+dependency-locked.
