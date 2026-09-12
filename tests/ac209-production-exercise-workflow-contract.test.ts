@@ -181,7 +181,7 @@ describe('production AC209 exercise workflow contract', () => {
     )?.[0];
     expect(cleanup).toBeDefined();
     expect(cleanup).toContain(
-      "if: always() && steps.configuration_collector.outcome == 'success' && steps.production_exercise.outcome != 'success'",
+      "if: always() && steps.configuration_collector.outcome == 'success' && steps.production_exercise.outputs.cleanup_required == 'true' && steps.production_exercise.outcome != 'success'",
     );
     expect(cleanup).toContain(
       'CLOUDFLARE_QUEUE_EXERCISE_TOKEN: ${{ secrets.CLOUDFLARE_QUEUE_EXERCISE_TOKEN }}',

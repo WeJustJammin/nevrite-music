@@ -3,11 +3,14 @@ import { createHash } from 'node:crypto';
 import { describe, expect, it, vi } from 'vitest';
 
 import {
+  AC209_EMAIL_SENDING_CAPABILITY_QUERY,
   AC209_EMAIL_SENDING_MAX_RESPONSE_BYTES,
   AC209_EMAIL_SENDING_QUERY,
+  AC209_EMAIL_SENDING_REQUIRED_FIELDS,
   Ac209EmailSendingAnalyticsReportSchema,
   collectAc209EmailSendingAnalytics,
   sha256CanonicalEmail,
+  verifyAc209EmailSendingCapability,
 } from '../infra/workflows/ac209-email-sending-analytics.ts';
 
 const zoneId = 'c82fdacb63fe415d96d71b64ef9bbca1';
@@ -51,6 +54,31 @@ const graphqlResponse = (rows: unknown[]) => ({
   errors: null,
 });
 
+const capabilityResponse = (
+  enabled: unknown = true,
+  availableFields: unknown = [...AC209_EMAIL_SENDING_REQUIRED_FIELDS],
+  maxPageSize: unknown = 50,
+  maxNumberOfFields: unknown = AC209_EMAIL_SENDING_REQUIRED_FIELDS.length,
+) => ({
+  data: {
+    viewer: {
+      zones: [
+        {
+          settings: {
+            emailSendingAdaptive: {
+              enabled,
+              availableFields,
+              maxPageSize,
+              maxNumberOfFields,
+            },
+          },
+        },
+      ],
+    },
+  },
+  errors: null,
+});
+
 const input = (fetchImpl: typeof fetch) => ({
   zoneId,
   token,
@@ -65,6 +93,180 @@ const input = (fetchImpl: typeof fetch) => ({
 });
 
 describe('AC209 Email Sending analytics collector', () => {
+  it('verifies the Email Sending dataset capability without reading events', async () => {
+    const fetchImpl = vi
+      .fn<typeof fetch>()
+      .mockResolvedValue(response(capabilityResponse()));
+
+    await expect(
+      verifyAc209EmailSendingCapability({ zoneId, token, fetchImpl }),
+    ).resolves.toBeUndefined();
+
+    const [, init] = fetchImpl.mock.calls[0];
+    expect(JSON.parse(String(init?.body))).toEqual({
+      query: AC209_EMAIL_SENDING_CAPABILITY_QUERY,
+      variables: { zoneTag: zoneId },
+    });
+    expect(AC209_EMAIL_SENDING_CAPABILITY_QUERY).toContain('settings');
+    expect(AC209_EMAIL_SENDING_CAPABILITY_QUERY).toContain(
+      'emailSendingAdaptive',
+    );
+    expect(AC209_EMAIL_SENDING_CAPABILITY_QUERY).toContain('enabled');
+    expect(AC209_EMAIL_SENDING_CAPABILITY_QUERY).toContain('availableFields');
+    expect(AC209_EMAIL_SENDING_CAPABILITY_QUERY).toContain('maxPageSize');
+    expect(AC209_EMAIL_SENDING_CAPABILITY_QUERY).toContain('maxNumberOfFields');
+    expect(AC209_EMAIL_SENDING_CAPABILITY_QUERY).not.toContain('messageId');
+    for (const field of AC209_EMAIL_SENDING_REQUIRED_FIELDS)
+      expect(AC209_EMAIL_SENDING_QUERY).toMatch(
+        new RegExp(`^\\s*${field}\\s*$`, 'mu'),
+      );
+  });
+
+  it.each([
+    [
+      'GraphQL error',
+      { data: null, errors: [{ message: 'private provider detail' }] },
+      'provider_graphql_error',
+    ],
+    [
+      'unavailable zone',
+      { data: { viewer: { zones: [] } }, errors: null },
+      'provider_resource_unavailable',
+    ],
+    [
+      'disabled dataset',
+      capabilityResponse(false),
+      'provider_resource_unavailable',
+    ],
+    [
+      'missing available fields',
+      {
+        data: {
+          viewer: {
+            zones: [{ settings: { emailSendingAdaptive: { enabled: true } } }],
+          },
+        },
+        errors: null,
+      },
+      'provider_response_invalid',
+    ],
+    [
+      'malformed available fields',
+      capabilityResponse(true, ['datetime', 1]),
+      'provider_response_invalid',
+    ],
+    [
+      'duplicate available field',
+      capabilityResponse(true, [
+        ...AC209_EMAIL_SENDING_REQUIRED_FIELDS,
+        'datetime',
+      ]),
+      'provider_response_invalid',
+    ],
+    [
+      'insufficient page size',
+      capabilityResponse(true, [...AC209_EMAIL_SENDING_REQUIRED_FIELDS], 49),
+      'provider_resource_unavailable',
+    ],
+    [
+      'insufficient field count',
+      capabilityResponse(
+        true,
+        [...AC209_EMAIL_SENDING_REQUIRED_FIELDS],
+        50,
+        AC209_EMAIL_SENDING_REQUIRED_FIELDS.length - 1,
+      ),
+      'provider_resource_unavailable',
+    ],
+    [
+      'malformed query limits',
+      capabilityResponse(
+        true,
+        [...AC209_EMAIL_SENDING_REQUIRED_FIELDS],
+        '50',
+        7,
+      ),
+      'provider_response_invalid',
+    ],
+    [
+      'malformed field limit',
+      capabilityResponse(
+        true,
+        [...AC209_EMAIL_SENDING_REQUIRED_FIELDS],
+        50,
+        '7',
+      ),
+      'provider_response_invalid',
+    ],
+    [
+      'missing query limits',
+      {
+        data: {
+          viewer: {
+            zones: [
+              {
+                settings: {
+                  emailSendingAdaptive: {
+                    enabled: true,
+                    availableFields: [...AC209_EMAIL_SENDING_REQUIRED_FIELDS],
+                  },
+                },
+              },
+            ],
+          },
+        },
+        errors: null,
+      },
+      'provider_response_invalid',
+    ],
+    [
+      'malformed settings',
+      { data: { viewer: { zones: [{}] } }, errors: null },
+      'provider_response_invalid',
+    ],
+  ])('fails the capability preflight for %s', async (_label, payload, code) => {
+    const fetchImpl = vi
+      .fn<typeof fetch>()
+      .mockResolvedValue(response(payload));
+
+    await expect(
+      verifyAc209EmailSendingCapability({ zoneId, token, fetchImpl }),
+    ).rejects.toMatchObject({ code });
+  });
+
+  it.each(AC209_EMAIL_SENDING_REQUIRED_FIELDS)(
+    'fails capability preflight when %s is unavailable',
+    async (missingField) => {
+      const fetchImpl = vi.fn<typeof fetch>().mockResolvedValue(
+        response(
+          capabilityResponse(
+            true,
+            AC209_EMAIL_SENDING_REQUIRED_FIELDS.filter(
+              (field) => field !== missingField,
+            ),
+          ),
+        ),
+      );
+
+      await expect(
+        verifyAc209EmailSendingCapability({ zoneId, token, fetchImpl }),
+      ).rejects.toMatchObject({ code: 'provider_resource_unavailable' });
+    },
+  );
+
+  it('rejects invalid capability input without a provider request', async () => {
+    const fetchImpl = vi.fn<typeof fetch>();
+
+    await expect(
+      verifyAc209EmailSendingCapability({
+        zoneId: 'not-a-zone',
+        token,
+        fetchImpl,
+      }),
+    ).rejects.toMatchObject({ code: 'invalid_configuration' });
+    expect(fetchImpl).not.toHaveBeenCalled();
+  });
+
   it('queries the exact GraphQL endpoint with a bounded zone/time request', async () => {
     const fetchImpl = vi
       .fn<typeof fetch>()

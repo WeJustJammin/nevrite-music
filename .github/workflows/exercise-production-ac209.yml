@@ -115,7 +115,7 @@ jobs:
         run: node --experimental-strip-types infra/workflows/exercise-production-ac209.ts
 
       - name: Ensure exact AC209 marker cleanup
-        if: always() && steps.configuration_collector.outcome == 'success' && steps.production_exercise.outcome != 'success'
+        if: always() && steps.configuration_collector.outcome == 'success' && steps.production_exercise.outputs.cleanup_required == 'true' && steps.production_exercise.outcome != 'success'
         env:
           CLOUDFLARE_QUEUE_EXERCISE_TOKEN: ${{ secrets.CLOUDFLARE_QUEUE_EXERCISE_TOKEN }}
           CLOUDFLARE_PLATFORM_QUEUE_ID: ${{ vars.CLOUDFLARE_PLATFORM_QUEUE_ID }}
