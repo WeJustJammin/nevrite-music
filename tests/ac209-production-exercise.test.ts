@@ -6,7 +6,10 @@ import {
   formatAc209QueueDiagnostic,
   formatAc209StageDiagnostic,
 } from '../infra/workflows/exercise-production-ac209.ts';
-import { sha256CanonicalEmail } from '../infra/workflows/ac209-email-sending-analytics.ts';
+import {
+  Ac209EmailSendingAnalyticsError,
+  sha256CanonicalEmail,
+} from '../infra/workflows/ac209-email-sending-analytics.ts';
 import {
   Ac209QueueExerciseError,
   type Ac209QueueExerciseReport,
@@ -387,7 +390,52 @@ describe('production AC209 queue-to-email exercise orchestration', () => {
     );
     expect(deps.queueExercise).toHaveBeenCalledOnce();
     expect(reportQueueDiagnostic).toHaveBeenCalledExactlyOnceWith(
-      'AC209_DIAGNOSTIC stage=evidence code=not_observed',
+      'AC209_DIAGNOSTIC stage=evidence code=database_not_observed',
+    );
+  });
+
+  it('distinguishes missing Email Sending evidence before database verification', async () => {
+    const deps = dependencies();
+    const reportQueueDiagnostic = vi.fn<(diagnostic: string) => void>();
+    deps.collectEmailAnalytics.mockRejectedValue(
+      new Ac209EmailSendingAnalyticsError('event_not_unique'),
+    );
+    await expect(
+      exerciseProductionAc209(
+        {
+          ...(await baseInput()),
+          evidenceMaxPolls: 1,
+          evidencePollIntervalMs: 1_000,
+        },
+        { ...deps, reportQueueDiagnostic },
+      ),
+    ).rejects.toThrow('AC209 production exercise failed');
+    expect(deps.verifyDelivery).not.toHaveBeenCalled();
+    expect(deps.queueExercise).toHaveBeenCalledOnce();
+    expect(reportQueueDiagnostic).toHaveBeenCalledExactlyOnceWith(
+      'AC209_DIAGNOSTIC stage=evidence code=email_not_observed',
+    );
+  });
+
+  it('distinguishes an Email Sending analytics query failure', async () => {
+    const deps = dependencies();
+    const reportQueueDiagnostic = vi.fn<(diagnostic: string) => void>();
+    deps.collectEmailAnalytics.mockRejectedValue(
+      new Ac209EmailSendingAnalyticsError('provider_request_failed'),
+    );
+    await expect(
+      exerciseProductionAc209(
+        {
+          ...(await baseInput()),
+          evidenceMaxPolls: 1,
+          evidencePollIntervalMs: 1_000,
+        },
+        { ...deps, reportQueueDiagnostic },
+      ),
+    ).rejects.toThrow('AC209 production exercise failed');
+    expect(deps.verifyDelivery).not.toHaveBeenCalled();
+    expect(reportQueueDiagnostic).toHaveBeenCalledExactlyOnceWith(
+      'AC209_DIAGNOSTIC stage=evidence code=email_query_failed',
     );
   });
 

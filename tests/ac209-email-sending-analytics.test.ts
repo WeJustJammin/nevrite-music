@@ -195,7 +195,7 @@ describe('AC209 Email Sending analytics collector', () => {
         .mockResolvedValue(response(graphqlResponse(rows)));
       await expect(
         collectAc209EmailSendingAnalytics(input(fetchImpl)),
-      ).rejects.toThrow('AC209 Email Sending analytics query failed.');
+      ).rejects.toMatchObject({ code: 'event_not_unique' });
     }
   });
 
@@ -254,14 +254,14 @@ describe('AC209 Email Sending analytics collector', () => {
       .mockResolvedValue(response({}, 403));
     await expect(
       collectAc209EmailSendingAnalytics(input(httpFailure)),
-    ).rejects.toThrow('AC209 Email Sending analytics query failed.');
+    ).rejects.toMatchObject({ code: 'provider_request_failed' });
 
     const malformed = vi
       .fn<typeof fetch>()
       .mockResolvedValue(new Response('not-json', { status: 200 }));
     await expect(
       collectAc209EmailSendingAnalytics(input(malformed)),
-    ).rejects.toThrow('AC209 Email Sending analytics query failed.');
+    ).rejects.toMatchObject({ code: 'provider_response_invalid' });
   });
 
   it('rejects oversized provider responses before parsing them', async () => {

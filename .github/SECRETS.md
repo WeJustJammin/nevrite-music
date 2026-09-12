@@ -24,13 +24,13 @@ have Workers Scripts Edit. The scheduled S09 alert boundary uses it only to
 read structured Workers Logs and Queue metrics. The manual AC211 collection
 workflow uses the same read-only scopes to assemble bounded aggregate evidence;
 the protected AC209 exercise also uses its Analytics Read scope for the bounded
-Email Sending delivery query. It never retains raw provider responses. The
-queue-exercise token is required but is not yet provisioned as of 2026-09-11.
-When provisioned, it must be restricted to the WeJammin account with Workers
-Queues Write and no deployment, zone-management, Email Sending management, or
-billing permission. It exists only for the serialized, reviewer-approved AC209
-workflow, which preflights empty exact queues and can purge only the correlated
-peek ref.
+Email Sending delivery query. Because Email Sending analytics is a zone-level
+GraphQL dataset, the token's Zone Resources must include the exact Email Sending
+zone. It never retains raw provider responses. The queue-exercise token must be
+restricted to the WeJammin account with Workers Queues Write and no deployment,
+zone-management, Email Sending management, or billing permission. It exists
+only for the serialized, reviewer-approved AC209 workflow, which preflights
+empty exact queues and can purge only the correlated peek ref.
 The deployment token and interactive Wrangler OAuth credential must never be
 substituted for it. Required reviewers,
 main-branch restrictions, and serialized deployment concurrency remain in

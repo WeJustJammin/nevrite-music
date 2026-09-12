@@ -73,6 +73,46 @@ describe('AC209 queue marker cleanup', () => {
     expect(sleeps).toHaveBeenCalledTimes(2);
   });
 
+  it('performs the final absence peek when provider latency crosses the wall-clock bound', async () => {
+    let clockMs = 0;
+    const now = vi.fn(() => clockMs);
+    const sleep = vi.fn(async (milliseconds: number) => {
+      clockMs += milliseconds;
+    });
+    const fetchImpl = vi.fn<typeof fetch>(async (url) => {
+      clockMs += 40_000;
+      const path = String(url);
+      if (path.endsWith('/queues?page=1&per_page=100'))
+        return queueList([validSource, validDeadLetter], 1);
+      if (path.endsWith(`/queues/${sourceQueueId}/messages/peek`))
+        return peek([]);
+      if (path.endsWith(`/queues/${deadLetterQueueId}/messages/peek`))
+        return peek([]);
+      throw new Error('unexpected provider request');
+    });
+
+    await expect(
+      cleanupAc209QueueMarker(
+        cleanupInput(fetchImpl, {
+          maxPolls: 3,
+          now,
+          pollIntervalMs: 100_000,
+          sleep,
+        }),
+      ),
+    ).resolves.toEqual({
+      deadLetterMessages: 0,
+      markerAbsent: true,
+      purgedRefCount: 0,
+      sourceMessages: 0,
+    });
+    expect(
+      fetchImpl.mock.calls.filter(([url]) =>
+        String(url).endsWith('/messages/peek'),
+      ),
+    ).toHaveLength(6);
+  });
+
   it('purges a standalone-recovery marker that appears after two empty peeks', async () => {
     let deadLetterPeeks = 0;
     let purged = false;

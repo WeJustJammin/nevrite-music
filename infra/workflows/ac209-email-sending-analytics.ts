@@ -40,12 +40,31 @@ export const AC209_EMAIL_SENDING_QUERY =
   }
 }` as const;
 
-const fail = (detail?: string): never => {
-  throw new Error(
-    detail === undefined
-      ? 'AC209 Email Sending analytics query failed.'
-      : `AC209 Email Sending analytics query failed. ${detail}`,
-  );
+export type Ac209EmailSendingAnalyticsErrorCode =
+  | 'invalid_configuration'
+  | 'provider_request_failed'
+  | 'provider_response_invalid'
+  | 'event_not_unique';
+
+export class Ac209EmailSendingAnalyticsError extends Error {
+  constructor(
+    readonly code: Ac209EmailSendingAnalyticsErrorCode,
+    detail?: string,
+  ) {
+    super(
+      detail === undefined
+        ? 'AC209 Email Sending analytics query failed.'
+        : `AC209 Email Sending analytics query failed. ${detail}`,
+    );
+    this.name = 'Ac209EmailSendingAnalyticsError';
+  }
+}
+
+const fail = (
+  code: Ac209EmailSendingAnalyticsErrorCode,
+  detail?: string,
+): never => {
+  throw new Ac209EmailSendingAnalyticsError(code, detail);
 };
 
 const EmailShaSchema = z.string().regex(SHA256);
@@ -118,9 +137,11 @@ const isRecord = (value: unknown): value is Record<string, unknown> =>
   typeof value === 'object' && value !== null && !Array.isArray(value);
 
 const readProviderEvent = (value: unknown) => {
-  if (!isRecord(value)) fail('provider event is malformed.');
+  if (!isRecord(value))
+    fail('provider_response_invalid', 'provider event is malformed.');
   const datetime = SafeReleaseTimestampSchema.safeParse(value.datetime);
-  if (!datetime.success) fail('provider event timestamp is invalid.');
+  if (!datetime.success)
+    fail('provider_response_invalid', 'provider event timestamp is invalid.');
   const from = value.from;
   const to = value.to;
   const subject = value.subject;
@@ -138,7 +159,7 @@ const readProviderEvent = (value: unknown) => {
     !PROVIDER_MESSAGE_ID.test(messageId) ||
     (isLastEvent !== 0 && isLastEvent !== 1)
   )
-    fail('provider event fields are invalid.');
+    fail('provider_response_invalid', 'provider event fields are invalid.');
   return {
     from,
     to,
@@ -151,25 +172,27 @@ const readProviderEvent = (value: unknown) => {
 };
 
 const readRows = (payload: unknown): unknown[] => {
-  if (!isRecord(payload)) fail('provider response is malformed.');
+  if (!isRecord(payload))
+    fail('provider_response_invalid', 'provider response is malformed.');
   if (
     'errors' in payload &&
     payload.errors !== undefined &&
     payload.errors !== null
   ) {
     if (!Array.isArray(payload.errors) || payload.errors.length > 0)
-      fail('provider response contains errors.');
+      fail('provider_response_invalid', 'provider response contains errors.');
   }
   const data = payload.data;
   if (!isRecord(data) || !isRecord(data.viewer))
-    fail('provider response is malformed.');
+    fail('provider_response_invalid', 'provider response is malformed.');
   const zones = data.viewer.zones;
   if (!Array.isArray(zones) || zones.length !== 1 || !isRecord(zones[0]))
-    fail('provider zone result is not unique.');
+    fail('provider_response_invalid', 'provider zone result is not unique.');
   const rows = zones[0].emailSendingAdaptive;
-  if (!Array.isArray(rows)) fail('provider event result is malformed.');
+  if (!Array.isArray(rows))
+    fail('provider_response_invalid', 'provider event result is malformed.');
   if (rows.length >= AC209_EMAIL_SENDING_PAGE_LIMIT)
-    fail('provider event page is full.');
+    fail('provider_response_invalid', 'provider event page is full.');
   return rows;
 };
 
@@ -196,9 +219,10 @@ const request = async (
         signal: controller.signal,
       });
     } catch {
-      fail('provider request failed.');
+      fail('provider_request_failed', 'provider request failed.');
     }
-    if (!response.ok) fail('provider request failed.');
+    if (!response.ok)
+      fail('provider_request_failed', 'provider request failed.');
     let bodyText: string;
     try {
       bodyText = await readBoundedProviderResponseText(response, {
@@ -212,18 +236,18 @@ const request = async (
         error instanceof BoundedProviderResponseError &&
         (error.code === 'too_large' || error.code === 'invalid_content_length')
       )
-        fail('provider response is too large.');
+        fail('provider_response_invalid', 'provider response is too large.');
       if (
         error instanceof BoundedProviderResponseError &&
         error.code === 'invalid_encoding'
       )
-        fail('provider response is not JSON.');
-      fail('provider response could not be read.');
+        fail('provider_response_invalid', 'provider response is not JSON.');
+      fail('provider_response_invalid', 'provider response could not be read.');
     }
     try {
       return JSON.parse(bodyText) as unknown;
     } catch {
-      fail('provider response is not JSON.');
+      fail('provider_response_invalid', 'provider response is not JSON.');
     }
   } finally {
     clearTimeout(timeout);
@@ -244,7 +268,7 @@ export const collectAc209EmailSendingAnalytics = async (
       endMs <= startMs ||
       endMs - startMs > AC209_EMAIL_SENDING_MAX_WINDOW_MS
     )
-      fail('provider time window is invalid.');
+      fail('invalid_configuration', 'provider time window is invalid.');
     const rows = readRows(
       await request(fetchImpl ?? fetch, parsed.token, {
         query: AC209_EMAIL_SENDING_QUERY,
@@ -270,10 +294,13 @@ export const collectAc209EmailSendingAnalytics = async (
       );
     });
     const messageIds = new Set(matching.map((event) => event.messageId));
-    if (messageIds.size !== matching.length) fail('duplicate message ID.');
-    if (matching.length !== 1) fail('matching event is not unique.');
+    if (messageIds.size !== matching.length)
+      fail('event_not_unique', 'duplicate message ID.');
+    if (matching.length !== 1)
+      fail('event_not_unique', 'matching event is not unique.');
     const event = matching[0];
-    if (event === undefined) fail('matching event is not unique.');
+    if (event === undefined)
+      fail('event_not_unique', 'matching event is not unique.');
     return Ac209EmailSendingAnalyticsReportSchema.parse({
       schemaVersion: AC209_EMAIL_SENDING_SCHEMA_VERSION,
       sourceRevision: parsed.sourceRevision,
@@ -290,11 +317,7 @@ export const collectAc209EmailSendingAnalytics = async (
       },
     });
   } catch (error) {
-    if (
-      error instanceof Error &&
-      error.message.startsWith('AC209 Email Sending analytics query failed.')
-    )
-      throw error;
-    fail();
+    if (error instanceof Ac209EmailSendingAnalyticsError) throw error;
+    fail('invalid_configuration');
   }
 };
