@@ -88,6 +88,8 @@ describe('AC209 Email Sending analytics collector', () => {
     expect(AC209_EMAIL_SENDING_QUERY).toContain('emailSendingAdaptive');
     expect(AC209_EMAIL_SENDING_QUERY).toContain('datetime_geq: $start');
     expect(AC209_EMAIL_SENDING_QUERY).toContain('datetime_leq: $end');
+    expect(AC209_EMAIL_SENDING_QUERY).toContain('status: "delivered"');
+    expect(AC209_EMAIL_SENDING_QUERY).toContain('isLastEvent: 1');
     expect(AC209_EMAIL_SENDING_QUERY).toContain('isLastEvent');
     expect(report.event).toEqual({
       senderSha256,
@@ -248,14 +250,93 @@ describe('AC209 Email Sending analytics collector', () => {
     ).rejects.toThrow('AC209 Email Sending analytics query failed.');
   });
 
-  it('fails closed for HTTP and malformed JSON provider responses', async () => {
-    const httpFailure = vi
+  it.each([
+    [
+      'permission-like wording',
+      'zones [redacted] are not authorized',
+      'provider_graphql_error',
+    ],
+    [
+      'resource-like wording',
+      'requested resource does not exist',
+      'provider_graphql_error',
+    ],
+    [
+      'other execution failure',
+      'secret-token provider execution failed',
+      'provider_graphql_error',
+    ],
+    [
+      'ambiguous wording',
+      'unknown field "permission"',
+      'provider_graphql_error',
+    ],
+    ['long message', 'x'.repeat(5_000), 'provider_graphql_error'],
+  ])(
+    'classifies a safe GraphQL %s without exposing provider detail',
+    async (_label, message, code) => {
+      const fetchImpl = vi.fn<typeof fetch>().mockResolvedValue(
+        response({
+          data: graphqlResponse([row()]).data,
+          errors: [{ message, path: ['viewer', 'zones', 0] }],
+        }),
+      );
+      let captured: unknown;
+
+      try {
+        await collectAc209EmailSendingAnalytics(input(fetchImpl));
+      } catch (error: unknown) {
+        captured = error;
+      }
+
+      expect(captured).toMatchObject({ code });
+      expect(captured).toBeInstanceOf(Error);
+      if (!(captured instanceof Error)) throw new Error('expected an error');
+      expect(captured.message).toBe(
+        'AC209 Email Sending analytics query failed.',
+      );
+      expect(captured.message).not.toContain(message);
+      expect(captured.message).not.toContain(token);
+    },
+  );
+
+  it('distinguishes unavailable zone access and a truncated result page', async () => {
+    const unavailable = vi
+      .fn<typeof fetch>()
+      .mockResolvedValue(
+        response({ data: { viewer: { zones: [] } }, errors: null }),
+      );
+    await expect(
+      collectAc209EmailSendingAnalytics(input(unavailable)),
+    ).rejects.toMatchObject({ code: 'provider_resource_unavailable' });
+
+    const truncated = vi
+      .fn<typeof fetch>()
+      .mockResolvedValue(
+        response(graphqlResponse(Array.from({ length: 50 }, () => row()))),
+      );
+    await expect(
+      collectAc209EmailSendingAnalytics(input(truncated)),
+    ).rejects.toMatchObject({ code: 'provider_result_truncated' });
+  });
+
+  it('classifies HTTP authorization and other request failures', async () => {
+    const permissionFailure = vi
       .fn<typeof fetch>()
       .mockResolvedValue(response({}, 403));
     await expect(
-      collectAc209EmailSendingAnalytics(input(httpFailure)),
-    ).rejects.toMatchObject({ code: 'provider_request_failed' });
+      collectAc209EmailSendingAnalytics(input(permissionFailure)),
+    ).rejects.toMatchObject({ code: 'provider_permission_denied' });
 
+    const requestFailure = vi
+      .fn<typeof fetch>()
+      .mockResolvedValue(response({}, 503));
+    await expect(
+      collectAc209EmailSendingAnalytics(input(requestFailure)),
+    ).rejects.toMatchObject({ code: 'provider_request_failed' });
+  });
+
+  it('fails closed for malformed JSON provider responses', async () => {
     const malformed = vi
       .fn<typeof fetch>()
       .mockResolvedValue(new Response('not-json', { status: 200 }));

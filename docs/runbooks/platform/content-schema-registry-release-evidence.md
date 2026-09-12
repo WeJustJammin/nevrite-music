@@ -137,14 +137,22 @@ queues. Standalone cleanup performs a final source/DLQ peek after the elapsed
 poll bound is reached, so normal provider latency cannot prevent a verified
 already-absent result. A failed exercise reports
 `email_not_observed` when no unique delivered Email Sending event was found, or
-`email_invalid_configuration` when the bounded analytics input was invalid,
-`email_provider_request_failed` when the provider request failed or returned a
-non-success status, `email_provider_response_invalid` when the response was
-unreadable, malformed, oversized, or rejected by the GraphQL response schema,
-or `email_query_failed` only for an unexpected internal query exception. It
-reports `database_not_observed` when that event was found but its exact provider
-message identifier was not bound to a delivered database row. On success,
-retain only
+`email_invalid_configuration` when the bounded analytics input was invalid.
+Provider failures are split into closed, non-secret categories:
+`email_provider_permission_denied` for an HTTP authorization response,
+`email_provider_resource_unavailable` for an empty exact-zone result, and
+`email_provider_graphql_error` for a well-formed GraphQL error envelope whose
+free-text details are not interpreted; `email_provider_request_failed` for
+another request or non-success response; `email_provider_result_truncated` when
+the filtered terminal-delivery page reaches its hard limit; and
+`email_provider_response_invalid` when the response is unreadable, malformed,
+oversized, or rejected by the response schema. The diagnostic never includes a
+provider message, path, extension, body, address, or token. `email_query_failed`
+is reserved for an unexpected internal exception. The analytics request filters
+server-side to `status = delivered` and `isLastEvent = 1`, while the collector
+rechecks those values before accepting evidence. It reports
+`database_not_observed` when that event was found but its exact provider message
+identifier was not bound to a delivered database row. On success, retain only
 `ac209-exercise/configuration.json` and `ac209-exercise/exercise.json` for 30
 days. The latter contains hashed addresses/queue identities plus the exact
 provider message identifier, and states `pending_manual_verification`; it is

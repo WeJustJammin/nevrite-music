@@ -320,8 +320,12 @@ describe('production AC209 queue-to-email exercise orchestration', () => {
 
   it.each([
     'email_invalid_configuration',
+    'email_provider_graphql_error',
+    'email_provider_permission_denied',
     'email_provider_request_failed',
+    'email_provider_resource_unavailable',
     'email_provider_response_invalid',
+    'email_provider_result_truncated',
   ])('formats the allowlisted Email Sending diagnostic %s', (code) => {
     expect(formatAc209StageDiagnostic({ stage: 'evidence', code })).toBe(
       `AC209_DIAGNOSTIC stage=evidence code=${code}`,
@@ -445,9 +449,29 @@ describe('production AC209 queue-to-email exercise orchestration', () => {
       'email_provider_request_failed',
     ],
     [
+      'provider permission denial',
+      'provider_permission_denied' as const,
+      'email_provider_permission_denied',
+    ],
+    [
+      'provider GraphQL failure',
+      'provider_graphql_error' as const,
+      'email_provider_graphql_error',
+    ],
+    [
+      'provider resource failure',
+      'provider_resource_unavailable' as const,
+      'email_provider_resource_unavailable',
+    ],
+    [
       'provider response failure',
       'provider_response_invalid' as const,
       'email_provider_response_invalid',
+    ],
+    [
+      'provider result truncation',
+      'provider_result_truncated' as const,
+      'email_provider_result_truncated',
     ],
   ])(
     'distinguishes an Email Sending analytics %s',
