@@ -13,26 +13,22 @@ import type {
   RelationshipCommandInput,
   RelationshipReadInput,
 } from './relationship-types';
+import { identityRpcRequestHeaders } from './production-request-context';
 
 export const requestHeaders = (
-  request: Request,
+  input: RelationshipCommandInput | RelationshipReadInput,
   operationId: string,
   idempotencyKey?: string,
   ifMatch?: string | null,
-): Readonly<Record<string, string>> => {
-  const trace = traceFor(request);
-  return {
-    'X-Operation-Id': operationId,
-    'X-Request-Id': trace.requestId,
-    'X-Correlation-Id': trace.correlationId,
-    ...(idempotencyKey === undefined
-      ? {}
-      : { 'X-Idempotency-Key': idempotencyKey }),
-    ...(ifMatch === undefined || ifMatch === null
-      ? {}
-      : { 'If-Match': ifMatch }),
-  };
-};
+): Readonly<Record<string, string>> => ({
+  ...identityRpcRequestHeaders({
+    request: input.request,
+    session: input.session,
+    ...(idempotencyKey === undefined ? {} : { idempotencyKey }),
+  }),
+  'x-operation-id': operationId,
+  ...(ifMatch === undefined || ifMatch === null ? {} : { 'if-match': ifMatch }),
+});
 
 const databaseContext = (
   input: RelationshipCommandInput | RelationshipReadInput,
@@ -66,7 +62,7 @@ export const replayFor = (
   idField,
   idParameter,
   baseInput: databaseContext(input),
-  headers: requestHeaders(input.request, operationId),
+  headers: requestHeaders(input, operationId),
 });
 
 export const commandRpc = async <T>(
@@ -94,12 +90,7 @@ export const commandRpc = async <T>(
     },
     signal,
     schema,
-    requestHeaders(
-      input.request,
-      operationId,
-      input.idempotencyKey,
-      input.ifMatch,
-    ),
+    requestHeaders(input, operationId, input.idempotencyKey, input.ifMatch),
     replay,
   );
 
@@ -118,5 +109,5 @@ export const readRpc = <T>(
     { ...databaseContext(input), ...body },
     signal,
     schema,
-    requestHeaders(input.request, operationId),
+    requestHeaders(input, operationId),
   );

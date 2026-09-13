@@ -1,8 +1,12 @@
 // @vitest-environment jsdom
 
-import { afterEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
+import { createMemoryLockManager } from '../../lib/test-support/memory-lock-manager';
+import { MemoryStorage } from '../../lib/test-support/memory-storage';
 import { installContentSchemaRegistryCommandEnhancement } from './content-schema-registry-runtime-dom-mutations';
+
+let locks = createMemoryLockManager();
 
 const formMarkup = (): void => {
   window.history.replaceState({}, '', '/app/cms-content-modeling');
@@ -19,16 +23,32 @@ const formMarkup = (): void => {
     </main>`;
 };
 
-const submit = async (): Promise<void> => {
+const submit = async (completed: () => boolean): Promise<void> => {
   document
     .querySelector('form')
     ?.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
-  for (let index = 0; index < 8; index += 1) await Promise.resolve();
+  await vi.waitFor(() => expect(completed()).toBe(true));
 };
+
+beforeEach(() => {
+  locks = createMemoryLockManager();
+  Object.defineProperty(window, 'sessionStorage', {
+    configurable: true,
+    value: new MemoryStorage(),
+  });
+  Object.defineProperty(navigator, 'locks', {
+    configurable: true,
+    value: locks.manager,
+  });
+});
 
 afterEach(() => {
   vi.useRealTimers();
   vi.unstubAllGlobals();
+  window.dispatchEvent(new Event('pagehide'));
+  locks.releaseAll();
+  window.dispatchEvent(new Event('pageshow'));
+  window.sessionStorage.clear();
   document.body.replaceChildren();
 });
 
@@ -44,7 +64,7 @@ describe('content schema registry command feedback', () => {
       navigate,
     });
 
-    await submit();
+    await submit(() => navigate.mock.calls.length > 0);
 
     expect(navigate).toHaveBeenCalledWith(
       '/auth/sign-in?returnTo=%2Fapp%2Fcms-content-modeling',
@@ -61,7 +81,9 @@ describe('content schema registry command feedback', () => {
     );
     const cleanup = installContentSchemaRegistryCommandEnhancement(document);
 
-    await submit();
+    await submit(
+      () => document.querySelector('[data-cms-capability-gate]') !== null,
+    );
 
     expect(document.querySelector('[data-cms-capability-gate]')).not.toBeNull();
     expect(document.querySelector('[data-cms-command-status]')).toBeNull();
@@ -87,8 +109,9 @@ describe('content schema registry command feedback', () => {
     );
     const cleanup = installContentSchemaRegistryCommandEnhancement(document);
 
-    await submit();
-    await new Promise<void>((resolve) => setTimeout(resolve, 0));
+    await submit(
+      () => document.querySelector('[data-cms-sync-conflict]') !== null,
+    );
 
     expect(document.querySelector('[data-cms-sync-conflict]')).not.toBeNull();
     expect(document.body.textContent).toContain('Server version: 5');
@@ -113,8 +136,9 @@ describe('content schema registry command feedback', () => {
     );
     const cleanup = installContentSchemaRegistryCommandEnhancement(document);
 
-    await submit();
-    await new Promise<void>((resolve) => setTimeout(resolve, 0));
+    await submit(
+      () => document.querySelector('[data-cms-validation-summary]') !== null,
+    );
 
     const summary = document.querySelector<HTMLElement>(
       '[data-cms-validation-summary]',
@@ -139,7 +163,9 @@ describe('content schema registry command feedback', () => {
     );
     const cleanup = installContentSchemaRegistryCommandEnhancement(document);
 
-    await submit();
+    await submit(
+      () => document.body.textContent?.includes('Retry in 2 seconds') ?? false,
+    );
     const form = document.querySelector('form')!;
     expect(form.getAttribute('aria-busy')).toBe('true');
     expect(document.body.textContent).toContain('Retry in 2 seconds');
@@ -161,8 +187,9 @@ describe('content schema registry command feedback', () => {
     );
     const cleanup = installContentSchemaRegistryCommandEnhancement(document);
 
-    await submit();
-    await new Promise<void>((resolve) => setTimeout(resolve, 0));
+    await submit(
+      () => document.querySelector('[data-cms-command-retry]') !== null,
+    );
 
     expect(methods).toEqual(['POST', 'POST']);
     expect(document.querySelector('[data-cms-command-retry]')).not.toBeNull();

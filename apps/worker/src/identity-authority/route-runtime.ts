@@ -6,6 +6,7 @@ import {
   responseForAuthError,
   verifySameOriginCsrf,
 } from '../authentication/boundary';
+import { parseClientBindingIdHeader } from '../authentication/client-binding-header';
 import type {
   AuthenticationDependencies,
   AuthenticationError,
@@ -29,6 +30,8 @@ export const requireIdentityCsrf = async (
 export const requireIdentitySession = async (
   context: WorkerContext,
 ): Promise<AuthenticationResult<AuthenticationSession>> => {
+  const bindingId = parseClientBindingIdHeader(context.req.raw);
+  if (!bindingId.ok) return bindingId;
   const auth = context.get('identityAuth');
   if (auth === undefined) {
     return identityError(

@@ -2,6 +2,7 @@ import { authRoutePolicies, type AuthOperationId } from '@wejammin/contracts';
 
 import type { WorkerContext } from '../index';
 import { applyRateHeaders, authError, responseForAuthError } from './boundary';
+import { parseClientBindingIdHeader } from './client-binding-header';
 import type {
   AuthenticationDependencies,
   AuthenticationResult,
@@ -21,6 +22,8 @@ export const requireSession = async (
   context: WorkerContext,
   dependencies: AuthenticationDependencies,
 ): Promise<AuthenticationResult<AuthenticationSession>> => {
+  const bindingId = parseClientBindingIdHeader(context.req.raw);
+  if (!bindingId.ok) return bindingId;
   const controller = new AbortController();
   return dependencies.resolveSession(
     context.req.raw,

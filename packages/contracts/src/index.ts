@@ -1,6 +1,7 @@
 export * from './api-error.ts';
 export * from './authentication.ts';
 export * from './content-schema-registry/index.ts';
+export * from './idempotency-retention.ts';
 export * from './identifiers.ts';
 export * from './identity-authority.ts';
 export * from './infrastructure-state.ts';

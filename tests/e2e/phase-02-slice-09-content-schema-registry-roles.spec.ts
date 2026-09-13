@@ -7,52 +7,67 @@ import {
 
 const roleCases = [
   {
-    role: 'Free',
-    variant: 'forbiddenHidden',
-    access: 'not-rendered',
-    commands: 'none',
-  },
-  {
-    role: 'Paid',
+    role: 'entitled_read',
+    label: 'Paid',
+    assertion: 'authorized_access',
     variant: 'entitledRead',
     access: 'read-only',
-    commands: 'none',
   },
   {
-    role: 'Creator',
+    role: 'owner_full',
+    label: 'Creator',
+    assertion: 'authorized_access',
     variant: 'ownerFull',
     access: 'full',
-    commands: 'create',
   },
   {
-    role: 'Guardian',
+    role: 'guardian_mandate',
+    label: 'Guardian',
+    assertion: 'denied_no_disclosure',
     variant: 'guardianMandate',
-    access: 'read-only',
-    commands: 'none',
+    access: 'not-rendered',
   },
   {
-    role: 'Junior',
+    role: 'junior_restricted',
+    label: 'Junior',
+    assertion: 'denied_no_disclosure',
     variant: 'juniorRestricted',
-    access: 'read-only',
-    commands: 'none',
+    access: 'not-rendered',
   },
   {
-    role: 'Business',
+    role: 'business_mandate',
+    label: 'Business',
+    assertion: 'denied_no_disclosure',
     variant: 'businessMandate',
-    access: 'read-only',
-    commands: 'none',
+    access: 'not-rendered',
   },
   {
-    role: 'Staff',
+    role: 'staff_case_scoped',
+    label: 'Staff',
+    assertion: 'authorized_access',
     variant: 'staffCaseScoped',
     access: 'read-only',
-    commands: 'none',
   },
   {
-    role: 'Admin',
+    role: 'admin_step_up',
+    label: 'Admin',
+    assertion: 'authorized_access',
     variant: 'adminStepUp',
     access: 'read-only',
-    commands: 'none',
+  },
+  {
+    role: 'forbidden_hidden',
+    label: 'Free',
+    assertion: 'denied_no_disclosure',
+    variant: 'forbiddenHidden',
+    access: 'not-rendered',
+  },
+  {
+    role: 'disabled_prerequisite',
+    label: 'Prerequisite disabled',
+    assertion: 'disabled_no_mutation',
+    variant: 'disabledPrerequisite',
+    access: 'disabled',
   },
 ] as const;
 
@@ -88,7 +103,7 @@ const creatorWorkbench = (): string => `
   </section>`;
 
 const renderRoleWorkbench = (roleCase: (typeof roleCases)[number]): string =>
-  roleCase.role === 'Creator'
+  roleCase.role === 'owner_full'
     ? creatorWorkbench()
     : renderWorkbench({
         variant: roleCase.variant,
@@ -98,14 +113,62 @@ const renderRoleWorkbench = (roleCase: (typeof roleCases)[number]): string =>
 test('[P2-S09-AC-265] exercises protected FE03 role projections through the registry fixture', async ({
   page,
 }) => {
+  expect(roleCases.map(({ role }) => role)).toEqual([
+    'entitled_read',
+    'owner_full',
+    'guardian_mandate',
+    'junior_restricted',
+    'business_mandate',
+    'staff_case_scoped',
+    'admin_step_up',
+    'forbidden_hidden',
+    'disabled_prerequisite',
+  ]);
+  const mutationRequests: string[] = [];
+  page.on('request', (request) => {
+    if (/^(?:POST|PUT|PATCH|DELETE)$/u.test(request.method()))
+      mutationRequests.push(
+        `${request.method()} ${new URL(request.url()).pathname}`,
+      );
+  });
+
   for (const roleCase of roleCases) {
     await setRegistryFixture(page, renderRoleWorkbench(roleCase));
 
     const workbench = page.locator(
       '[data-workbench="content-schema-registry"]',
     );
-    if (roleCase.access === 'not-rendered') {
-      await expect(workbench, `${roleCase.role} must be hidden`).toHaveCount(0);
+    if (roleCase.assertion === 'denied_no_disclosure') {
+      await expect(workbench, `${roleCase.label} must be hidden`).toHaveCount(
+        0,
+      );
+      await expect(page.getByRole('table')).toHaveCount(0);
+      await expect(page.getByText('release_note', { exact: true })).toHaveCount(
+        0,
+      );
+      await expect(page.getByText('Release note', { exact: true })).toHaveCount(
+        0,
+      );
+      await expect(page.locator('form')).toHaveCount(0);
+      continue;
+    }
+    if (roleCase.assertion === 'disabled_no_mutation') {
+      await expect(workbench).toHaveCount(0);
+      const gate = page
+        .getByRole('status')
+        .filter({ hasText: 'Schema changes unavailable' });
+      await expect(gate).toBeVisible();
+      await expect(gate).toHaveAttribute('data-variant', 'disabled');
+      await expect(gate).toHaveAttribute(
+        'data-reason-code',
+        'SCHEMA_REGISTRY_UNAVAILABLE',
+      );
+      await expect(gate).toContainText(
+        'A server capability prerequisite is not satisfied.',
+      );
+      await expect(page.getByRole('table')).toHaveCount(0);
+      await expect(page.locator('form')).toHaveCount(0);
+      await expect(page.locator('button[type="submit"]')).toHaveCount(0);
       continue;
     }
 
@@ -122,7 +185,7 @@ test('[P2-S09-AC-265] exercises protected FE03 role projections through the regi
     await expect(
       page.getByRole('heading', { level: 1, name: 'Content schema registry' }),
     ).toBeVisible();
-    if (roleCase.role === 'Creator') {
+    if (roleCase.role === 'owner_full') {
       await expect(
         page.locator('form[data-operation-id="CMS-03A-01"]'),
       ).toHaveCount(1);
@@ -157,7 +220,7 @@ test('[P2-S09-AC-265] exercises protected FE03 role projections through the regi
     ).toBe(0);
     expect(
       await page.locator('.content-schema-registry-create-form').count(),
-    ).toBe(roleCase.commands === 'create' ? 1 : 0);
+    ).toBe(0);
     const firstControl = page
       .getByRole('main')
       .locator('a,button,input,select,textarea')
@@ -165,4 +228,5 @@ test('[P2-S09-AC-265] exercises protected FE03 role projections through the regi
     await firstControl.focus();
     await expect(firstControl).toBeFocused();
   }
+  expect(mutationRequests).toEqual([]);
 });

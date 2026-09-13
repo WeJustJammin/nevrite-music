@@ -6,7 +6,8 @@ import {
 } from '@wejammin/contracts';
 
 import type { WorkerContext, WorkerDependencies } from '../index';
-import { responseForAuthError } from '../authentication/boundary';
+import { authError, responseForAuthError } from '../authentication/boundary';
+import { parseClientBindingIdHeader } from '../authentication/client-binding-header';
 import {
   configureIdentityRoute,
   parseIdentityCommandHeaders,
@@ -66,11 +67,35 @@ export const bindActingContext = async (
   state: RecoveryState,
 ): Promise<Response> => {
   configureIdentityRoute(context, 'BE01b-13');
+  const bindingId = parseClientBindingIdHeader(context.req.raw);
+  if (!bindingId.ok) return responseForAuthError(context, bindingId);
   const body = await parseIdentityJsonBody(
     context.req.raw,
     BindContextRequestSchema,
   );
   if (!body.ok) return responseForAuthError(context, body);
+  if (
+    bindingId.value !== null &&
+    bindingId.value !== body.value.clientBindingId
+  ) {
+    return responseForAuthError(
+      context,
+      authError(
+        400,
+        'INVALID_REQUEST',
+        'The context binding selector does not match the request body.',
+        {
+          violations: [
+            {
+              path: '/headers/x-client-binding-id',
+              code: 'binding_id_mismatch',
+              message: 'The value is invalid.',
+            },
+          ],
+        },
+      ),
+    );
+  }
   const headers = parseIdentityCommandHeaders(context.req.raw, false);
   if (!headers.ok) return responseForAuthError(context, headers);
   const csrf = await requireIdentityCsrf(context);

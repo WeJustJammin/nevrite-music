@@ -15,6 +15,7 @@ const requestHeaders = [
   'origin',
   'x-correlation-id',
   'x-csrf-token',
+  'x-client-binding-id',
   'x-request-id',
 ] as const;
 

@@ -1,4 +1,6 @@
 ---
+import type { ActingContextListResource } from '@wejammin/contracts';
+
 import IdentityAuthorityShellReady from '../../../components/identity-authority/IdentityAuthorityShellReady.astro';
 import RelationshipsAuthorityGovernanceIsland, {
   type RelationshipsAuthorityGovernanceIslandProps,
@@ -14,6 +16,9 @@ interface Props {
   readonly lifecycle?: string | null;
   readonly version?: string | null;
   readonly publicOnly?: boolean;
+  readonly actingContexts?: ActingContextListResource | null;
+  readonly selectedContextId?: string | null;
+  readonly selectedPartyId?: string | null;
   readonly retryHref?: string;
   readonly backHref?: string;
   readonly relationshipWorkbench?: RelationshipsAuthorityGovernanceIslandProps;
@@ -29,6 +34,9 @@ const {
   lifecycle = null,
   version = null,
   publicOnly = false,
+  actingContexts = null,
+  selectedContextId = null,
+  selectedPartyId = null,
   retryHref = '/app/identity-authority',
   backHref = '/app/identity-authority',
   relationshipWorkbench,
@@ -162,6 +170,9 @@ const pageDescription = isDegraded
         {isDegraded}
         {isForbidden}
         {publicOnly}
+        {actingContexts}
+        {selectedContextId}
+        {selectedPartyId}
       />
       {
         relationshipWorkbench !== undefined && (

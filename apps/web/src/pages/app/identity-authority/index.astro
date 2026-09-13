@@ -67,6 +67,7 @@ let lifecycle: string | null = null;
 let version: string | null = null;
 let personId: string | null = null;
 let actingPartyId: string | null = null;
+let selectedContextId: string | null = null;
 let contexts: ActingContextListResource | null = null;
 
 if (hasSession) {
@@ -113,8 +114,12 @@ if (hasSession) {
         Astro.response.status = 503;
       } else {
         contexts = parsedContexts.data;
-        actingPartyId =
-          contexts.items.find((item) => item.selectable)?.partyId ?? personId;
+        const selfContext = contexts.items.find(
+          (item) => item.partyId === personId,
+        );
+        selectedContextId = selfContext?.contextId ?? null;
+        // SSR lacks the sessionStorage tab selector, so authority renders as self.
+        actingPartyId = personId;
       }
     }
   } else if (response.status !== 404) {
@@ -185,6 +190,9 @@ const relationshipWorkbench = createIdentityAuthorityRelationshipWorkbench({
   lifecycle={lifecycle}
   version={version}
   publicOnly={publicOnly}
+  actingContexts={state === 'ready' ? contexts : null}
+  selectedContextId={state === 'ready' ? selectedContextId : null}
+  selectedPartyId={state === 'ready' ? personId : null}
   retryHref={returnTo}
   backHref="/app/identity-authority"
   {...relationshipWorkbench === undefined ? {} : { relationshipWorkbench }}

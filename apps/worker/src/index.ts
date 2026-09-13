@@ -8,6 +8,7 @@ import {
 import { Hono } from 'hono';
 
 import type { AsyncWorkerBindings } from './async-entrypoint';
+import { AsyncRpcManualReviewError } from './async-runtime-support';
 import type { JobStatusProductionFetch } from './jobs/job-status-production';
 import type { UploadCompletionRouteDependencies } from './upload-completion/upload-intent-completion';
 import { type PlatformConfigurationProductionOptions } from './platform-configuration/production';
@@ -20,6 +21,7 @@ import {
   createProductionAsyncEntrypoint,
   runProductionOperationalAlerts,
 } from './production-async-entrypoint';
+import { runProductionIdempotencyExpirySweep } from './production-idempotency-expiry-sweep';
 import {
   logRequest,
   registerWorkerRoutes,
@@ -200,15 +202,29 @@ const handler = {
       env,
       executionContext,
     );
+    const idempotencyExpirySweep = runProductionIdempotencyExpirySweep(env);
     const operationalAlerts = runProductionOperationalAlerts(controller, env);
-    const [sweepResult, alertResult] = await Promise.allSettled([
+    const [sweepResult, expiryResult, alertResult] = await Promise.allSettled([
       outboxSweep,
+      idempotencyExpirySweep,
       operationalAlerts,
     ]);
+    const rejectedResults = [sweepResult, expiryResult, alertResult].filter(
+      (result): result is PromiseRejectedResult => result.status === 'rejected',
+    );
 
-    // Keep the sweep's rejection as the scheduled-event outcome so Cloudflare
-    // retries remain enabled, even when the independent alert run also fails.
+    if (
+      rejectedResults.length > 0 &&
+      rejectedResults.every(
+        ({ reason }) => reason instanceof AsyncRpcManualReviewError,
+      )
+    )
+      controller.noRetry();
+
+    // Surface the highest-priority rejection; retry disposition was decided
+    // above so manual-review-only failures remain visible without replay.
     if (sweepResult.status === 'rejected') throw sweepResult.reason;
+    if (expiryResult.status === 'rejected') throw expiryResult.reason;
     if (alertResult.status === 'rejected') throw alertResult.reason;
   },
 } satisfies ExportedHandler<AsyncWorkerBindings>;

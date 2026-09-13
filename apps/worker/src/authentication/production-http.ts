@@ -154,6 +154,24 @@ const knownRpcFailures: readonly RpcFailure[] = [
     message: 'All merge conflicts must be resolved first.',
   },
   {
+    match: 'CONTEXT_NOT_FOUND',
+    status: 404,
+    code: 'CONTEXT_NOT_FOUND',
+    message: 'The acting context was not found.',
+  },
+  {
+    match: 'CONTEXT_REVOKED',
+    status: 403,
+    code: 'CONTEXT_REVOKED',
+    message: 'The acting context is no longer available.',
+  },
+  {
+    match: 'CONTEXT_RECONFIRM_REQUIRED',
+    status: 403,
+    code: 'CONTEXT_RECONFIRM_REQUIRED',
+    message: 'Fresh confirmation is required.',
+  },
+  {
     match: 'NOT_FOUND',
     status: 404,
     code: 'NOT_FOUND',
@@ -220,6 +238,7 @@ export const callRpc = async (
   name: string,
   body: Readonly<Record<string, unknown>>,
   signal: AbortSignal,
+  extraHeaders: Readonly<Record<string, string>> = {},
 ): Promise<unknown> => {
   let response: Response;
   try {
@@ -232,6 +251,7 @@ export const callRpc = async (
         'accept-profile': 'platform_api',
         'content-profile': 'platform_api',
         'content-type': 'application/json',
+        ...extraHeaders,
       },
       body: JSON.stringify(body),
     });

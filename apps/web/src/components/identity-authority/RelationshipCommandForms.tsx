@@ -1,6 +1,10 @@
 import { useRef, useState, type FormEvent } from 'react';
 
 import {
+  addClientBindingIdHeader,
+  CLIENT_BINDING_ID_HEADER,
+} from '../../lib/client-binding';
+import {
   CREATE_ORGANIZATION_COMMAND,
   buildRelationshipCommandRequest,
   newRelationshipIdempotencyKey,
@@ -121,14 +125,41 @@ export function RelationshipCommandForms({
       message: 'Submitting command. The server remains authoritative.',
       error: false,
     });
+    let requestInit: RequestInit;
     try {
-      const response = await fetch(built.request.url, {
+      const headers = new Headers(built.request.headers);
+      headers.delete('authorization');
+      requestInit = await addClientBindingIdHeader(built.request.url, {
         method: built.request.method,
         credentials: 'same-origin',
         cache: 'no-store',
-        headers: built.request.headers,
+        headers,
         body: built.request.body,
       });
+    } catch {
+      setSubmission({
+        operationId,
+        message:
+          'This tab cannot verify its relationship context. Reload the page and try again.',
+        error: true,
+      });
+      setPendingOperation(null);
+      return;
+    }
+    if (
+      new Headers(requestInit.headers).get(CLIENT_BINDING_ID_HEADER) === null
+    ) {
+      setSubmission({
+        operationId,
+        message:
+          'This tab cannot safely submit a relationship command. Reload the page and try again.',
+        error: true,
+      });
+      setPendingOperation(null);
+      return;
+    }
+    try {
+      const response = await fetch(built.request.url, requestInit);
       const result = await responseMessage(response, operationId);
       setSubmission(result);
       if (!result.error) {

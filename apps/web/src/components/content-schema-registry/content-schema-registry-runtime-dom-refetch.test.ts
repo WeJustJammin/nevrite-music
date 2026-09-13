@@ -9,7 +9,7 @@ const currentMarkup = (): void => {
   document.body.innerHTML = `
     <main id="content-schema-registry-main">
       <h1>Registry</h1>
-      <section data-workbench="content-schema-registry">
+      <section data-workbench="content-schema-registry" data-content-schema-registry-hydrated="true">
         <button id="focus-me" type="button">Focused record</button>
       </section>
     </main>`;
@@ -86,6 +86,11 @@ describe('content schema registry canonical refetch', () => {
     expect(document.title).toBe('Refreshed registry');
     expect(document.activeElement?.id).toBe('focus-me');
     expect(document.querySelector('[data-cms-loading-skeleton]')).toBeNull();
+    expect(
+      document
+        .querySelector('[data-workbench="content-schema-registry"]')
+        ?.getAttribute('data-content-schema-registry-hydrated'),
+    ).toBe('true');
     expect(
       document.querySelector('[data-cms-canonical-status]')?.textContent,
     ).toBe('Current server-verified records refreshed.');

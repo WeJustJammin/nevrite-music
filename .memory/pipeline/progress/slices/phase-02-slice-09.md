@@ -716,3 +716,24 @@ Validated with Node `22.23.1` and pnpm `11.24.0`: 443 Vitest files, 3,308
 passing tests plus one intentional skip, 100% coverage, 101 functional
 Playwright checks, 5 production-built Slice 09 checks, builds, bundle budgets,
 and performance smoke. Status remains **279/283**; Slice 10 remains locked.
+
+## 2026-09-13 release-candidate hardening
+
+- Added per-tab acting-context selector isolation, same-origin-only binding
+  headers, canonical session/context verification, and metadata-free dependent
+  surface invalidation for accepted, ambiguous, and revoked context changes.
+- Bound CMS and private relationship reads/commands to the current tab. The
+  relationship projection stays read-only until bounded canonical organization
+  and membership pagination verifies the target/version; public ORG-02 remains
+  anonymous. Live server-to-browser revocation publication is not claimed.
+- Added audited bounded idempotency expiry cleanup and scheduled sweep handling,
+  while preserving manual-review `noRetry` work. Added fail-closed AC265 hosted
+  prerequisite validation without claiming a hosted matrix run.
+- `pnpm db:verify` passed 50 files and 1,818 assertions. Full `pnpm validate`
+  passed 478 Vitest files, 3,699 tests plus one intentional skip, 100% coverage,
+  all executable Slice 09 evidence checks, 101 functional and 5 production-built
+  browser tests, builds, bundle budgets, and performance smoke.
+
+AC209, AC211, AC265, and AC266 remain externally open. Status remains
+**279/283**; Slice 10 and dependent Slices 11–17 remain locked pending genuine
+hosted/manual acceptance evidence.

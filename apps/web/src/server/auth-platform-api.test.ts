@@ -3,6 +3,32 @@ import { describe, expect, it, vi } from 'vitest';
 import { forwardAuthRequest } from './auth-platform-api';
 
 describe('authentication platform API forwarding', () => {
+  it('forwards the optional per-tab context selector to the verified session read', async () => {
+    let forwardedRequest: Request | undefined;
+    const binding = {
+      fetch: vi.fn((input: RequestInfo | URL, init?: RequestInit) => {
+        forwardedRequest = new Request(input, init);
+        return Promise.resolve(Response.json({ authenticated: true }));
+      }),
+    };
+
+    await forwardAuthRequest(
+      new Request('https://app.example.test/api/v1/auth/session', {
+        headers: {
+          cookie: 'wj_session_ref=session-reference',
+          'x-client-binding-id': 'tab:auth-session-01',
+        },
+      }),
+      binding,
+      '/api/v1/auth/session',
+      'GET',
+    );
+
+    expect(forwardedRequest?.headers.get('x-client-binding-id')).toBe(
+      'tab:auth-session-01',
+    );
+  });
+
   it('preserves callback redirects for the browser instead of following them inside the API Worker', async () => {
     let forwardedRequest: Request | undefined;
     const binding = {

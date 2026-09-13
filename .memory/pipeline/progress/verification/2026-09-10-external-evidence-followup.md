@@ -547,3 +547,38 @@ requires a complete post-deployment UTC day with its natural sample floors;
 AC265 and AC266 retain their hosted identity and physical assistive-technology
 gates. Slice 09 therefore remains `279/283`, and Slices 10–17 remain
 dependency-locked.
+
+## 2026-09-13 release-candidate hardening and local validation
+
+- Per-tab acting-context binding now uses one opaque `sessionStorage` selector,
+  same-origin-only `x-client-binding-id`, Web Locks clone-collision recovery,
+  and server-confirmed canonical rereads. Ambiguous bind results and revocation
+  receipts emit metadata-free invalidation immediately so CMS and relationship
+  commands become non-actionable until their own bound reread succeeds. No live
+  server-to-browser revocation publisher is claimed.
+- The relationship workbench preserves useful SSR read content but withholds
+  mutations until a bound private organization read and every bounded membership
+  page verify the current organization/version. Cursor loops, duplicate tenures,
+  organization mismatches, malformed pages, and failed pages fail closed. The
+  public ORG-02 read remains anonymous and credential-free; browser
+  `Authorization` is never forwarded.
+- Canonical content-schema replacement preserves the hydrated marker and
+  reinstalls command enhancement. The idempotency expiry migration adds a
+  bounded, audited sweep, and scheduled execution preserves `noRetry` manual
+  review jobs.
+- Strict TDD captured both final release-review regressions before their fixes.
+  Full validation with Node `22.23.1` and pnpm `11.24.0` passes 478 Vitest files,
+  3,699 tests plus one intentional skip, 100 percent coverage (12,372/12,372
+  statements, 9,406/9,406 branches, 2,046/2,046 functions, and 11,489/11,489
+  lines), all executable Slice 09 evidence checks, 101 functional browser tests,
+  five production-built Slice 09 browser tests, builds, bundle budgets, and
+  performance smoke. Database verification separately passed 50 files and 1,818
+  assertions.
+
+This candidate still requires merge, exact-main CI/staging, manual production
+promotion, a fresh AC209 configuration collection, and a serialized production
+exercise with retained provider/database evidence plus the real Gmail receipt.
+AC211 still needs a complete post-deployment UTC day and natural sample floors;
+AC265 still needs the hosted identity matrix; AC266 still needs signed physical
+assistive-technology reports. Status remains `279/283`, so Slices 10–17 remain
+dependency-locked.

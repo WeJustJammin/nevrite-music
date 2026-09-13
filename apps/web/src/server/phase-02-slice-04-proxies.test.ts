@@ -1,12 +1,14 @@
 import { describe, expect, it, vi } from 'vitest';
 
 import { forwardIdentityAuthorityRequest } from './identity-authority-platform-api.ts';
+import { forwardPrivateOrganizationRead } from './identity-authority-private-organization-read';
 
 const requestId = '11111111-1111-4111-8111-111111111111';
 
 interface RouteContract {
   readonly method: 'DELETE' | 'GET' | 'POST';
   readonly path: string;
+  readonly platformPath?: string;
   readonly anonymous?: boolean;
 }
 
@@ -19,6 +21,11 @@ const routeContracts: readonly RouteContract[] = [
     method: 'GET',
     path: '/api/v1/organizations/organization-04',
     anonymous: true,
+  },
+  {
+    method: 'GET',
+    path: '/api/v1/me/organizations/22222222-2222-4222-8222-222222222221',
+    platformPath: '/api/v1/organizations/22222222-2222-4222-8222-222222222221',
   },
   {
     method: 'POST',
@@ -56,9 +63,10 @@ const routeContracts: readonly RouteContract[] = [
 
 describe('P2-S04 same-origin API proxies', () => {
   it('covers every active ORG, TYPE, and MEM route contract', () => {
-    expect(routeContracts).toHaveLength(10);
+    expect(routeContracts).toHaveLength(11);
     expect(routeContracts.map(({ method }) => method)).toEqual([
       'POST',
+      'GET',
       'GET',
       'POST',
       'DELETE',
@@ -76,12 +84,17 @@ describe('P2-S04 same-origin API proxies', () => {
       const upstream = vi.fn(async (input: RequestInfo | URL) => {
         const forwarded = input as Request;
         expect(forwarded.method).toBe(route.method);
-        expect(new URL(forwarded.url).pathname).toBe(route.path);
+        expect(new URL(forwarded.url).pathname).toBe(
+          route.platformPath ?? route.path,
+        );
         expect(forwarded.headers.get('cookie')).toBe(
           'wj_session_ref=session; wj_csrf=csrf',
         );
         expect(forwarded.headers.get('if-match')).toBe('"7"');
         expect(forwarded.headers.get('idempotency-key')).toBe('key-s04');
+        expect(forwarded.headers.get('x-client-binding-id')).toBe(
+          'tab:stable-04',
+        );
         expect(forwarded.headers.get('authorization')).toBeNull();
         expect(forwarded.headers.get('x-acting-party-id')).toBeNull();
         if (route.method !== 'GET') {
@@ -89,17 +102,34 @@ describe('P2-S04 same-origin API proxies', () => {
             command: route.method,
           });
         }
-        return new Response(JSON.stringify({ ok: true }), {
-          headers: {
-            'content-type': 'application/json',
-            etag: '"8"',
-            'x-request-id': requestId,
-            'x-private-upstream': 'never-expose',
+        return new Response(
+          JSON.stringify(
+            route.platformPath
+              ? {
+                  organizationId: '22222222-2222-4222-8222-222222222221',
+                  ownershipState: 'owned',
+                  lifecycle: 'active',
+                  typeCodes: ['band'],
+                  version: '8',
+                  etag: '"8"',
+                  createdAt: '2026-09-01T00:00:00.000Z',
+                  updatedAt: '2026-09-02T00:00:00.000Z',
+                }
+              : { ok: true },
+          ),
+          {
+            headers: {
+              'content-type': 'application/json',
+              etag: '"8"',
+              'x-request-id': requestId,
+              'x-private-upstream': 'never-expose',
+            },
           },
-        });
+        );
       });
-      const response = await forwardIdentityAuthorityRequest(
-        new Request(`https://web.example${route.path}?tab=relationships`, {
+      const request = new Request(
+        `https://web.example${route.path}?tab=relationships`,
+        {
           method: route.method,
           headers: {
             accept: 'application/json',
@@ -107,17 +137,27 @@ describe('P2-S04 same-origin API proxies', () => {
             cookie: 'wj_session_ref=session; wj_csrf=csrf; analytics=secret',
             'if-match': '"7"',
             'idempotency-key': 'key-s04',
+            'x-client-binding-id': 'tab:stable-04',
             authorization: 'Bearer attacker-controlled',
             'x-acting-party-id': 'attacker-controlled',
           },
           ...(route.method === 'GET'
             ? {}
             : { body: JSON.stringify({ command: route.method }) }),
-        }),
-        { fetch: upstream },
-        route.path,
-        route.method,
+        },
       );
+      const response = route.platformPath
+        ? await forwardPrivateOrganizationRead(
+            request,
+            { fetch: upstream },
+            '22222222-2222-4222-8222-222222222221',
+          )
+        : await forwardIdentityAuthorityRequest(
+            request,
+            { fetch: upstream },
+            route.path,
+            route.method,
+          );
       expect(response.status).toBe(200);
       expect(response.headers.get('etag')).toBe('"8"');
       expect(response.headers.get('x-private-upstream')).toBeNull();
@@ -131,6 +171,7 @@ describe('P2-S04 same-origin API proxies', () => {
       expect(forwarded.headers.get('x-csrf-token')).toBeNull();
       expect(forwarded.headers.get('if-match')).toBeNull();
       expect(forwarded.headers.get('idempotency-key')).toBeNull();
+      expect(forwarded.headers.get('x-client-binding-id')).toBeNull();
       return Response.json({ lifecycle: 'active' });
     });
     const response = await forwardIdentityAuthorityRequest(
@@ -140,6 +181,7 @@ describe('P2-S04 same-origin API proxies', () => {
           'x-csrf-token': 'csrf',
           'if-match': '"7"',
           'idempotency-key': 'key-s04',
+          'x-client-binding-id': 'tab:stable-04',
         },
       }),
       { fetch: upstream },
