@@ -784,3 +784,41 @@ No VoiceOver/Safari or NVDA/Firefox report was created, accepted, or inferred,
 and no protected AC266 workflow was dispatched. AC266 remains unchecked,
 Slice 09 remains **279/283** with depth ratio **0.986**, and Slices 10–17 remain
 dependency-locked.
+
+## 2026-09-13 AC209 zone-diagnostic follow-up
+
+- AC266 prerequisite hardening merged as exact main SHA
+  `47b5ff2ca788f4470254c0161e636246719b98da`. CI `34749050376` and staging
+  `34749287577` / deployment `6419900767` passed, and the verified-candidate
+  artifact now contains the exact staging run/attempt identity sidecar.
+- Reconciled live `ac266-manual-evidence` environment `21821361680` after
+  detecting administrator-bypass drift. Administrator bypass is again disabled;
+  reviewer `WeJustJammin`, owner self-review, and the sole custom `main` branch
+  policy remain intact. No AC266 report secret or manual report exists.
+- Protected production attempts `34749383380` and `34749687614` used that
+  exact candidate. Both passed immutable promotion identity and protection
+  preflight plus explicit production-environment approval, then failed closed
+  at `Verify Cloudflare observability permissions` with sanitized
+  `provider_graphql_error`. Migrations, release-evidence verification, Worker
+  deployments, and production health checks did not run; production remains
+  on `c8f0cbd52cb6140ee1a756f106fa329f8c23b0e2`.
+- TDD now classifies bounded HTTP-200 GraphQL error messages without retaining
+  provider detail: explicit authentication/authorization phrases map to
+  `provider_permission_denied`, fixed query/schema/resource phrases map to
+  `provider_resource_unavailable`, and mixed, unknown, or oversized messages
+  remain `provider_graphql_error`. Schema classification precedes permission
+  matching so a field named `forbidden` cannot be misclassified. RED reproduced
+  five original classification gaps, the authentication gap, and the schema
+  precedence gap; GREEN passes 64 focused collector tests and 124 related
+  AC209/Cloudflare tests. Independent adversarial review found no remaining
+  P0–P2 issue.
+- Final Node 22.23.1/pnpm 11.24.0 `pnpm validate` passes 486 Vitest files,
+  3,789 tests plus one intentional skip, 100% coverage, all executable Slice 09
+  evidence checks, 101 functional and five production-built browser tests,
+  builds, bundle budgets, and API p95 smoke (`1.669135 ms`). `pnpm db:verify`
+  passes 50 pgTAP files / 1,818 tests with migrated type parity.
+
+No acceptance item is inferred from diagnostics. AC209 still requires the
+effective zone-scoped token and genuine delivery evidence; AC211, AC265, and
+AC266 remain open. Slice 09 remains **279/283** with depth ratio **0.986**, and
+Slices 10–17 remain dependency-locked.

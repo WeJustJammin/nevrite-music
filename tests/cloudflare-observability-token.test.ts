@@ -99,7 +99,7 @@ describe('Cloudflare observability token verification', () => {
       fetchImpl,
     );
     await expect(verification).rejects.toThrow(
-      'Cloudflare Zone Analytics permission check failed: provider_graphql_error',
+      'Cloudflare Zone Analytics permission check failed: provider_permission_denied',
     );
     await expect(verification).rejects.not.toThrow(productionConfig.token);
     await expect(verification).rejects.not.toThrow(

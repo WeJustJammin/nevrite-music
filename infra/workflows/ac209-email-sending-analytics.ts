@@ -178,17 +178,43 @@ export const sha256CanonicalEmail = (value: string): string =>
 const isRecord = (value: unknown): value is Record<string, unknown> =>
   typeof value === 'object' && value !== null && !Array.isArray(value);
 
+const classifyGraphqlErrorMessage = (
+  message: string,
+): Ac209EmailSendingAnalyticsErrorCode => {
+  if (message.length > 1_024) return 'provider_graphql_error';
+  if (
+    /\b(?:not found|does not exist|unknown (?:account|resource|field)|cannot query field)\b/iu.test(
+      message,
+    )
+  )
+    return 'provider_resource_unavailable';
+  if (
+    /\b(?:authentication error|authorization error|unauthorized|not authorized|forbidden|permission denied|access denied|cannot access|does not have access)\b/iu.test(
+      message,
+    )
+  )
+    return 'provider_permission_denied';
+  return 'provider_graphql_error';
+};
+
 const failGraphqlErrors = (value: unknown): void => {
   if (!Array.isArray(value))
     fail('provider_response_invalid', 'provider errors are malformed.');
   if (value.length === 0) return;
+  const classifications = new Set<Ac209EmailSendingAnalyticsErrorCode>();
   for (const error of value) {
     if (!isRecord(error) || typeof error.message !== 'string')
       fail('provider_response_invalid', 'provider errors are malformed.');
     if (error.message.length === 0)
       fail('provider_response_invalid', 'provider errors are malformed.');
+    classifications.add(classifyGraphqlErrorMessage(error.message));
   }
-  fail('provider_graphql_error');
+  const [classification] = classifications;
+  fail(
+    classifications.size === 1 && classification !== undefined
+      ? classification
+      : 'provider_graphql_error',
+  );
 };
 
 const readProviderEvent = (value: unknown) => {
