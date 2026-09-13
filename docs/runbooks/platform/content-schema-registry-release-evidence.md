@@ -93,9 +93,9 @@ environment with account-scoped Workers Queues Write only. Do not reuse the
 deployment token or a local Wrangler OAuth credential. Pin the provider-verified
 Email Sending zone as `CLOUDFLARE_EMAIL_ZONE_ID`, the fixed sender digest as
 `PRODUCTION_ALERT_SENDER_SHA256`, and the production source queue as
-`CLOUDFLARE_PLATFORM_QUEUE_ID`. The existing observability token supplies the
-read-only Account Analytics permission for the Email Sending query, and its Zone
-Resources must include the exact Email Sending zone.
+`CLOUDFLARE_PLATFORM_QUEUE_ID`. The existing observability token supplies
+Account Analytics Read for Queue Analytics and Zone Analytics Read for the Email
+Sending query. Its Zone Resources must include the exact Email Sending zone.
 
 After the verification RPC migration and exercise workflow are deployed,
 dispatch `exercise-production-ac209.yml` from `main`. Supply the exact deployed

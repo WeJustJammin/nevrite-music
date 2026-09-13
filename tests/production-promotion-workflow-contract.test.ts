@@ -127,20 +127,27 @@ describe('production promotion workflow contract', () => {
     );
   });
 
-  it('proves the production observability token before migrations', () => {
+  it('proves the production observability and Email Sending analytics token before migrations', () => {
     const observabilityIndex = workflow.indexOf(
       '- name: Verify Cloudflare observability permissions',
     );
     const migrationIndex = workflow.indexOf(
       '- name: Apply and verify forward-only production migrations',
     );
+    const observabilityStep = workflow.slice(
+      observabilityIndex,
+      migrationIndex,
+    );
 
     expect(observabilityIndex).toBeGreaterThan(-1);
     expect(observabilityIndex).toBeLessThan(migrationIndex);
-    expect(workflow).toContain(
-      'CLOUDFLARE_OBSERVABILITY_API_TOKEN: ${{ secrets.CLOUDFLARE_OBSERVABILITY_API_TOKEN }}',
+    expect(observabilityStep).toContain(
+      "CLOUDFLARE_OBSERVABILITY_API_TOKEN: '${{ secrets.CLOUDFLARE_OBSERVABILITY_API_TOKEN }}'",
     );
-    expect(workflow).toContain(
+    expect(observabilityStep).toContain(
+      "CLOUDFLARE_EMAIL_ZONE_ID: '${{ vars.CLOUDFLARE_EMAIL_ZONE_ID }}'",
+    );
+    expect(observabilityStep).toContain(
       'node --experimental-strip-types infra/verify-cloudflare-observability.ts',
     );
   });

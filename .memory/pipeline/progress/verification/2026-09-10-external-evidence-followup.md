@@ -582,3 +582,58 @@ AC211 still needs a complete post-deployment UTC day and natural sample floors;
 AC265 still needs the hosted identity matrix; AC266 still needs signed physical
 assistive-technology reports. Status remains `279/283`, so Slices 10–17 remain
 dependency-locked.
+
+## 2026-09-13 exact-main production promotion and AC209 rerun
+
+- PR [#66](https://github.com/WeJustJammin/nevrite-music/pull/66) merged as
+  exact main revision `c8f0cbd52cb6140ee1a756f106fa329f8c23b0e2`.
+  Exact-main CI run
+  [34734302716](https://github.com/WeJustJammin/nevrite-music/actions/runs/34734302716),
+  staging run
+  [34734576935](https://github.com/WeJustJammin/nevrite-music/actions/runs/34734576935),
+  and approved production run
+  [34734646414](https://github.com/WeJustJammin/nevrite-music/actions/runs/34734646414)
+  all passed. Production deployment `6417116181` completed successfully at
+  `2026-09-13T03:07:54Z`; API Worker version
+  `c5f79163-86dc-4b97-beb5-33145f041b24` and web Worker version
+  `9948779d-1cb6-4db8-843e-cc58b8465787` are the promoted versions.
+- The first protected AC209 collector run
+  [34734831181](https://github.com/WeJustJammin/nevrite-music/actions/runs/34734831181)
+  failed one bounded Worker-deployments read at its ten-second deadline. The
+  identical read-only retry
+  [34734943588](https://github.com/WeJustJammin/nevrite-music/actions/runs/34734943588)
+  passed, establishing a transient provider read timeout rather than a
+  permission or identity failure. Artifact `10310088939` contains a 4,998-byte
+  redacted configuration report with SHA-256
+  `8ce35a764a4014699bd4f86383032858bfc004f4bdd652f1d2cf9b6452d279df`.
+  It binds the exact source and API version, 100 percent traffic, deployment
+  `196725ad-bb6e-44aa-a0e1-34ee1976f2f3`, expected DLQ
+  `88155985aa0c49caa591b9bf9e6ca937`, approved configuration, and all collected
+  permission checks.
+- Approved exercise run
+  [34735006559](https://github.com/WeJustJammin/nevrite-music/actions/runs/34735006559)
+  passed protected identity, immutable checkout, and exact-version configuration
+  collection, then failed its zone-level capability preflight with
+  `AC209_DIAGNOSTIC stage=evidence code=email_provider_graphql_error`. The
+  preflight failed before `cleanup_required=true`, so no queue read, publish, or
+  cleanup operation ran and no evidence artifact was accepted. The redacted
+  GraphQL category does not prove whether the cause is missing zone access or
+  dataset/schema availability.
+- The follow-up guardrail adds the exact Email Sending zone capability query to
+  production promotion before migrations or deployment. It also corrects the
+  operator contract to require both Zone Analytics Read and the exact zone
+  resource, in addition to the existing Workers Observability and Account
+  Analytics permissions. Strict TDD failed the three new expectations before
+  implementation and now passes both focused suites, 30/30. Full
+  `pnpm validate` passes 478 test files, 3,701 tests plus one intentional skip,
+  100 percent statement/branch/function/line coverage, all executable Slice 09
+  evidence checks, 101 functional browser tests, five production-built Slice 09
+  browser tests, builds, bundle budgets, and performance smoke.
+
+AC209 remains open pending a successful exact-zone capability check, retained
+provider/database exercise evidence, and the real Gmail receipt. The earliest
+eligible complete post-deployment UTC day for AC211 is `2026-09-14`; collection
+must wait until after `2026-09-15T00:00:00Z` and still satisfy its natural sample
+floors. AC265 and AC266 retain their hosted identity and physical
+assistive-technology gates. Status remains `279/283`, so Slices 10–17 remain
+dependency-locked.
