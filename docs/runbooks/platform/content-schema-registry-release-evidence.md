@@ -20,9 +20,12 @@ the cutoff from immutable deployment outputs/protected workflow state, never by
 copying values from the sidecar being checked. The cutoff is captured after the
 sidecar and reports are assembled, immediately before verification.
 
-The protected workflow must retain the sidecar and its referenced reports as
-workflow artifacts. Do not commit generated evidence, browser storage state,
-provider exports, or manual-test recordings to the repository.
+The protected workflow must retain the combined sidecar and its referenced,
+redacted component reports as workflow artifacts. AC266 raw manual reports are
+the exception: they are private workflow inputs only, and the intake and
+verification workflows retain sanitized manifests rather than the source JSON.
+Do not commit generated evidence, browser storage state, provider exports, raw
+manual reports, or manual-test recordings to the repository.
 
 ## Required reports
 
@@ -180,11 +183,76 @@ redacted body fields for the same release, then record the bounded manual
 receipt and reviewer attestation. Do not close AC209 from the Cloudflare
 `delivered` status alone.
 
-Manual accessibility reports record stable operator IDs rather than names or
-email addresses. They include concrete OS, browser, and screen-reader versions,
-completion time, report digest, `passed` outcome, and every canonical check
-exactly once. A Linux screen reader or Chromium run cannot substitute for the
-two locked platform pairs.
+Manual accessibility reports record stable opaque operator IDs rather than
+names or email addresses. They use strict schema version
+`ac266-manual-a11y-v1`, bind the exact source SHA, deployment, origin, and
+`/app/cms-content-modeling` path, and attest that the authenticated, authorized
+CMS workbench was tested rather than the sign-in or access-denied boundary.
+Each report records the matching OS, browser, and screen-reader product-family
+versions, UTC start/completion times, `passed` outcome, and every canonical
+check exactly once. Check observations are bounded structured values rather
+than free-text notes. A Linux screen reader or Chromium run cannot substitute
+for the two locked platform pairs.
+
+## Collect AC266 manual accessibility evidence
+
+Run one real macOS/Safari/VoiceOver session and one real
+Windows/Firefox/NVDA session against the same successful hosted staging
+candidate. Complete all 11 canonical checks in each report. The structured
+observations must cover keyboard order, focus visibility and restoration,
+pointer/keyboard equivalence, error association, screen-reader labels and
+descriptions, heading navigation and the sanitized announced-status identity,
+semantic landmarks/live regions, reflow and text spacing, zoom, contrast, and
+all eligible target sizes. Target-size evidence uses unique opaque target IDs,
+per-target CSS-pixel dimensions and any applicable exception, plus an explicit
+attestation that every eligible target was measured. Do not include content,
+names, email addresses, account identifiers, screenshots, recordings, or
+free-text notes.
+
+Hash the exact UTF-8 bytes of each completed JSON report with SHA-256. Store
+their base64 encodings as the protected `ac266-manual-evidence` environment
+secrets `AC266_VOICEOVER_REPORT_BASE64` and
+`AC266_NVDA_REPORT_BASE64`; set `STAGING_WEB_ORIGIN` to the exact hosted origin.
+The environment is limited to `main` and requires its configured reviewer. A
+single-account reviewer configuration permits owner self-approval, so it must
+not be described as independent review.
+
+Dispatch `intake-ac266-manual-accessibility-reports.yml` from `main` with the
+exact lowercase `voiceover_report_sha256` and `nvda_report_sha256` values. The
+protected job materializes the secret bytes only in a run-ID/run-attempt-specific
+directory below `runner.temp`, strictly parses the reports, verifies the two
+digests, and removes the private directory in both the implementation and an
+`always()` cleanup step. Its 30-day `ac266-manual-accessibility-intake`
+artifact contains only the sanitized intake manifest. Raw reports are never
+uploaded as artifacts.
+
+Then dispatch `collect-ac266-manual-accessibility.yml` from `main` with the
+exact `staging_run_id`, 40-character `source_sha`, GitHub
+`staging_deployment_id`, and successful `manual_report_run_id`. The protected
+collector downloads the named staging candidate and sanitized intake manifest,
+re-materializes the same secret bytes, and requires their digests to match the
+approved intake. It binds both source reports to the repository, workflow,
+source SHA, staging run ID and attempt, deployment, origin, and candidate
+artifact. It also verifies that the selected staging deployment was successful
+before testing and remained the effective hosted release through each report's
+completion. Report start must be at or after deployment; completion must be
+after start and no later than the trusted intake-run start.
+
+The collector removes the private report directory before uploading the 30-day
+`ac266-manual-accessibility-evidence` artifact, which contains only the
+sanitized verification manifest and report digests. Keep the two report secrets
+until the protected combined-sidecar finalizer has re-materialized, strictly
+parsed, and verified the exact report bytes in its private report root; rotate
+or remove them only after that step completes. A digest/status manifest alone
+does not substitute for the structured manual observations.
+
+Passing either dedicated workflow proves intake and provenance infrastructure
+only. The current combined release verifier does not automatically consume the
+sanitized AC266 manifest: its protected assembly step must supply the original
+strict report bytes privately, run the four-gate verifier, and remove them
+before artifact upload. AC266 closes only when the two genuine platform reports
+pass and that combined release sidecar succeeds with the other required
+evidence.
 
 ## Collect AC211 evidence
 

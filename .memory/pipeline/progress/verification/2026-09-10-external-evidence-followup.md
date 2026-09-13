@@ -296,6 +296,50 @@ No cleanup success or alert delivery is inferred from the failed run. AC211,
 AC265, and AC266 remain open, so Slice 09 stays `279/283` and Slices 10–17 remain
 dependency-locked.
 
+## 2026-09-13 AC266 protected manual-evidence prerequisite
+
+- Added strict `ac266-manual-a11y-v1` contracts and duplicate-key-safe JSON
+  parsing for the two required reports. Platform/version families, UTC
+  timestamps, exact authenticated CMS path/state, all 11 structured checks,
+  heading/status observations, and complete per-target measurements now fail
+  closed on mismatch. Opaque operator attestation plus SHA-256 provenance is
+  used; no cryptographic report signature is claimed.
+- Added protected intake and collection workflows. Each independently
+  materializes the exact base64 report bytes below a run-specific private
+  `runner.temp` directory, verifies strict schema and expected digests, and
+  removes the raw bytes before uploading only a sanitized 30-day manifest.
+  Both secret-bearing jobs use isolated GitHub-hosted `ubuntu-24.04` runners
+  because the existing self-hosted fleet is persistent.
+- Finalization binds the report pair to the exact repository, protected
+  workflow, main SHA, staging run and attempt, candidate artifact, GitHub
+  deployment, hosted origin, and trusted intake-run start. The deployment
+  verifier accepts the real `waiting`, `queued`, `in_progress`, and
+  `success` history shape while rejecting any newer non-inert deployment that
+  overlaps either report window.
+- Protected environment `ac266-manual-evidence` (ID `21821361680`) is
+  configured for `main`, exact staging origin, required reviewer
+  `WeJustJammin`, and no administrator bypass. The single-account rule permits
+  owner self-approval, so it is not independent review. No report secret is
+  present yet.
+- The published staging candidate from run `34736997698` predates the new
+  run-attempt sidecar and cannot satisfy this verifier. Merge plus a fresh
+  exact-main staging run is required before any AC266 collection.
+- Independent focused verification passes 12 files and 136 tests. Clean local
+  Node 22.23.1/pnpm 11.24.0 `pnpm validate` passes 486 Vitest files, 3,785 tests
+  plus one intentional skip, exact 100% statement/branch/function/line
+  coverage, all executable Slice 09 evidence checks, 101 functional and five
+  production-built browser tests, builds, bundle budgets, and performance
+  smoke. `pnpm db:verify` separately passes 50 pgTAP files and 1,818 tests with
+  migrated database-type parity; lint, type-check, line limits, and
+  `git diff --check` pass.
+
+The sanitized AC266 manifest is a prerequisite only. The combined release
+verifier does not consume it automatically and still requires the exact source
+reports to be privately re-materialized, parsed, matched, and cleaned by a
+protected assembly step. No physical-platform report or protected AC266 run was
+created or accepted. AC266 remains open; status remains `279/283`, and Slices
+10–17 remain dependency-locked.
+
 ## 2026-09-12 exact-version AC209 runner compatibility remediation
 
 - PR [#60](https://github.com/WeJustJammin/nevrite-music/pull/60) merged as exact
