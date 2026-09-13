@@ -2,19 +2,20 @@
 
 ## Active
 
-- **P2-S09 external release evidence** (2026-09-08) — Slice 09 remains locally
-  green at 279/283. The candidate is exact SHA
-  `10f320b97ccce0c62fba2ee27a3b792f08f83285`; exact-main CI `34224641678`,
-  staging `34225256920`, and deployment `6327379740` passed. Google is now
-  configured in hosted staging, enabled and verified on v16: one real callback
-  completed, the session persisted, a protected route authenticated, and one
-  real hosted identity exists. AC265 remains open for the approved
-  9-role/10-scenario hosted report plus role lifecycle, MFA, and teardown
-  evidence. AC209 remains open because no genuine provider/mailbox receipt was
-  observed; AC211 remains open because the real-provider production sample
-  threshold is still not met. AC266 remains open: hosted Chromium checks pass,
-  but real macOS/Safari/VoiceOver and Windows/Firefox/NVDA evidence is absent.
-  No synthetic traffic or threshold evidence was used. This keeps Slice 10
+- **P2-S09 external release evidence** (updated 2026-09-13) — Slice 09 remains
+  locally green at 279/283. Exact SHA
+  `47b5ff2ca788f4470254c0161e636246719b98da` passed CI `34749050376`, staging
+  `34749287577`, and deployment `6419900767`. Production remains on
+  `c8f0cbd52cb6140ee1a756f106fa329f8c23b0e2`: exact-candidate attempts
+  `34749383380` and `34749687614` passed identity/protection preflight and
+  protected approval, then failed closed before mutation at the zone Email
+  Sending GraphQL capability check. AC209 still needs an effective exact-zone
+  Analytics Read token and a genuine provider/mailbox receipt. AC211 still
+  lacks the required complete natural production day. AC265 has one real
+  Google callback/identity but no approved 9-role/10-scenario runner or report
+  producer. AC266 automation is present, while the real macOS/Safari/VoiceOver
+  and Windows/Firefox/NVDA reports are absent. No synthetic traffic, identity,
+  threshold, or accessibility evidence was used. This keeps Slice 10
   dependency-locked. Evidence:
   `.memory/wiki/specs/audits/phase-02-slice-09-qa-green.md` and
   `.memory/wiki/specs/audits/verify-infrastructure-2026-09-04-1255.md` and

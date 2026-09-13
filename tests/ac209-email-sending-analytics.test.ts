@@ -124,9 +124,9 @@ describe('AC209 Email Sending analytics collector', () => {
 
   it.each([
     [
-      'GraphQL error',
-      { data: null, errors: [{ message: 'private provider detail' }] },
-      'provider_graphql_error',
+      'GraphQL permission error',
+      { data: null, errors: [{ message: 'Permission denied' }] },
+      'provider_permission_denied',
     ],
     [
       'unavailable zone',
@@ -457,12 +457,22 @@ describe('AC209 Email Sending analytics collector', () => {
     [
       'permission-like wording',
       'zones [redacted] are not authorized',
-      'provider_graphql_error',
+      'provider_permission_denied',
+    ],
+    [
+      'authentication wording',
+      'Authentication error',
+      'provider_permission_denied',
     ],
     [
       'resource-like wording',
       'requested resource does not exist',
-      'provider_graphql_error',
+      'provider_resource_unavailable',
+    ],
+    [
+      'schema wording',
+      'Cannot query field "emailSendingAdaptive" on type "Zone"',
+      'provider_resource_unavailable',
     ],
     [
       'other execution failure',
@@ -470,9 +480,14 @@ describe('AC209 Email Sending analytics collector', () => {
       'provider_graphql_error',
     ],
     [
-      'ambiguous wording',
+      'schema wording containing a permission-like field name',
       'unknown field "permission"',
-      'provider_graphql_error',
+      'provider_resource_unavailable',
+    ],
+    [
+      'schema wording containing an authorization keyword',
+      'Cannot query field "forbidden" on type "Zone"',
+      'provider_resource_unavailable',
     ],
     ['long message', 'x'.repeat(5_000), 'provider_graphql_error'],
   ])(
@@ -502,6 +517,33 @@ describe('AC209 Email Sending analytics collector', () => {
       expect(captured.message).not.toContain(token);
     },
   );
+
+  it('keeps mixed GraphQL error classes generic and provider details private', async () => {
+    const fetchImpl = vi.fn<typeof fetch>().mockResolvedValue(
+      response({
+        data: graphqlResponse([row()]).data,
+        errors: [
+          { message: 'Permission denied' },
+          { message: `provider execution failed for ${token}` },
+        ],
+      }),
+    );
+    let captured: unknown;
+
+    try {
+      await collectAc209EmailSendingAnalytics(input(fetchImpl));
+    } catch (error: unknown) {
+      captured = error;
+    }
+
+    expect(captured).toMatchObject({ code: 'provider_graphql_error' });
+    expect(captured).toBeInstanceOf(Error);
+    if (!(captured instanceof Error)) throw new Error('expected an error');
+    expect(captured.message).toBe(
+      'AC209 Email Sending analytics query failed.',
+    );
+    expect(captured.message).not.toContain(token);
+  });
 
   it('distinguishes unavailable zone access and a truncated result page', async () => {
     const unavailable = vi
