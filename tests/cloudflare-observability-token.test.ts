@@ -21,11 +21,14 @@ const jsonResponse = (body: unknown, status = 200): Response =>
     status,
   });
 
+const dryObservabilityResponse = (): Response =>
+  jsonResponse({ result: { run: { dry: true } }, success: true });
+
 describe('Cloudflare observability token verification', () => {
   it('proves zone Email Sending analytics access before accepting the production token', async () => {
     const fetchImpl = vi
       .fn<typeof fetch>()
-      .mockResolvedValueOnce(jsonResponse({ result: {}, success: true }))
+      .mockResolvedValueOnce(dryObservabilityResponse())
       .mockResolvedValueOnce(
         jsonResponse({
           data: {
@@ -74,7 +77,7 @@ describe('Cloudflare observability token verification', () => {
   it('fails safely when zone Email Sending analytics access is rejected', async () => {
     const fetchImpl = vi
       .fn<typeof fetch>()
-      .mockResolvedValueOnce(jsonResponse({ result: {}, success: true }))
+      .mockResolvedValueOnce(dryObservabilityResponse())
       .mockResolvedValueOnce(
         jsonResponse({
           data: {
@@ -110,7 +113,7 @@ describe('Cloudflare observability token verification', () => {
   it('proves Workers Observability and Account Analytics access without exposing the token', async () => {
     const fetchImpl = vi
       .fn<typeof fetch>()
-      .mockResolvedValueOnce(jsonResponse({ result: {}, success: true }))
+      .mockResolvedValueOnce(dryObservabilityResponse())
       .mockResolvedValueOnce(
         jsonResponse({
           data: {
@@ -137,14 +140,39 @@ describe('Cloudflare observability token verification', () => {
       'Content-Type': 'application/json',
     });
     expect(analyticsInit?.headers).toEqual(logsInit?.headers);
+    expect(JSON.parse(String(logsInit?.body))).toMatchObject({ dry: true });
     expect(String(logsInit?.body)).not.toContain(config.token);
     expect(String(analyticsInit?.body)).not.toContain(config.token);
+  });
+
+  it('fails safely unless Workers Observability attests a non-persisted dry run', async () => {
+    const fetchImpl = vi
+      .fn<typeof fetch>()
+      .mockResolvedValueOnce(
+        jsonResponse({ result: { run: { dry: false } }, success: true }),
+      )
+      .mockResolvedValueOnce(
+        jsonResponse({
+          data: {
+            viewer: {
+              accounts: [{ queueBacklogAdaptiveGroups: [] }],
+            },
+          },
+        }),
+      );
+
+    const verification = verifyCloudflareObservabilityToken(config, fetchImpl);
+    await expect(verification).rejects.toThrow(
+      'Cloudflare Workers Observability permission check failed',
+    );
+    await expect(verification).rejects.not.toThrow(config.token);
+    expect(fetchImpl).toHaveBeenCalledTimes(1);
   });
 
   it('accepts the documented GraphQL success envelope with null errors', async () => {
     const fetchImpl = vi
       .fn<typeof fetch>()
-      .mockResolvedValueOnce(jsonResponse({ result: {}, success: true }))
+      .mockResolvedValueOnce(dryObservabilityResponse())
       .mockResolvedValueOnce(
         jsonResponse({
           data: {
@@ -179,7 +207,7 @@ describe('Cloudflare observability token verification', () => {
   it('fails safely when Account Analytics permission is rejected', async () => {
     const fetchImpl = vi
       .fn<typeof fetch>()
-      .mockResolvedValueOnce(jsonResponse({ result: {}, success: true }))
+      .mockResolvedValueOnce(dryObservabilityResponse())
       .mockResolvedValueOnce(
         jsonResponse({ errors: [{ message: `token ${config.token} denied` }] }),
       );
@@ -196,7 +224,7 @@ describe('Cloudflare observability token verification', () => {
     async (status) => {
       const fetchImpl = vi
         .fn<typeof fetch>()
-        .mockResolvedValueOnce(jsonResponse({ result: {}, success: true }))
+        .mockResolvedValueOnce(dryObservabilityResponse())
         .mockResolvedValueOnce(
           jsonResponse(
             {
@@ -225,7 +253,7 @@ describe('Cloudflare observability token verification', () => {
   it('classifies Account Analytics GraphQL permission errors without leaking provider data', async () => {
     const fetchImpl = vi
       .fn<typeof fetch>()
-      .mockResolvedValueOnce(jsonResponse({ result: {}, success: true }))
+      .mockResolvedValueOnce(dryObservabilityResponse())
       .mockResolvedValueOnce(
         jsonResponse({
           errors: [
@@ -254,7 +282,7 @@ describe('Cloudflare observability token verification', () => {
     async (analyticsPayload) => {
       const fetchImpl = vi
         .fn<typeof fetch>()
-        .mockResolvedValueOnce(jsonResponse({ result: {}, success: true }))
+        .mockResolvedValueOnce(dryObservabilityResponse())
         .mockResolvedValueOnce(jsonResponse(analyticsPayload));
 
       const verification = verifyCloudflareObservabilityToken(
@@ -312,7 +340,7 @@ describe('Cloudflare observability token verification', () => {
     async ({ analyticsResponse, detail }) => {
       const fetchImpl = vi
         .fn<typeof fetch>()
-        .mockResolvedValueOnce(jsonResponse({ result: {}, success: true }))
+        .mockResolvedValueOnce(dryObservabilityResponse())
         .mockResolvedValueOnce(analyticsResponse);
 
       await expect(

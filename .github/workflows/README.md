@@ -7,6 +7,9 @@
   verification.
 - `deploy-production.yml` — manually initiated, protected promotion of the
   staging-verified artifact.
+- `verify-production-cloudflare-observability.yml` — manually initiated,
+  protected, read-only verification of the production Cloudflare monitoring
+  capabilities without migrations or deployment.
 - `collect-production-ac211.yml` — manually initiated, protected collection of
   one complete production UTC day of redacted AC211 SLO evidence.
 
@@ -28,8 +31,10 @@ the completed staging run ID, its full source SHA, and an explicit confirmation.
 - Pin third-party actions by full commit digest.
 - Grant minimum workflow permissions.
 - Scope deployment secrets to the final deploy steps.
-- Scope observability credentials to the protected AC211 collection step and
-  upload reports only after the collector succeeds.
+- Scope observability credentials to individual protected verification or
+  collection steps and upload reports only after the collector succeeds. The
+  standalone verifier sends Workers Observability queries with `dry: true` and
+  requires Cloudflare to attest `run.dry: true`.
 - Make promotion evidence before production deployment and after its source gate.
 - Run the identity and protected-environment preflight before the production job
   references the `production` environment.
@@ -46,4 +51,5 @@ the completed staging run ID, its full source SHA, and an explicit confirmation.
 
 - `../actions/setup/action.yml`
 - `../../infra/verify-release-promotion.ts`
+- `../../infra/verify-cloudflare-observability.ts`
 - `../../docs/runbooks/platform/release-recovery-gates.md`

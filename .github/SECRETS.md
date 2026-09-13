@@ -19,17 +19,25 @@ Production uses the same names in the protected `production` environment with
 distinct values, plus the production-only
 `CLOUDFLARE_OBSERVABILITY_API_TOKEN` and the manual-only
 `CLOUDFLARE_QUEUE_EXERCISE_TOKEN`. Configure the observability token for the
-WeJammin account with Workers Observability Write and Account Analytics Read,
-plus Zone Analytics Read for only the exact Email Sending zone; it must not have
-Workers Scripts Edit. The scheduled S09 alert boundary uses it only to
-read structured Workers Logs and Queue metrics. The manual AC211 collection
+WeJammin account with Workers Observability Write (shown as **Edit** in the
+Cloudflare dashboard) and Account Analytics Read, plus Zone Analytics Read for
+only the exact Email Sending zone; it must not have Workers Scripts Edit. The
+standalone verifier uses that write-scoped capability only for a non-persisting
+`dry: true` query and requires the provider response to attest `run.dry: true`.
+The scheduled S09 alert boundary uses it only to read structured Workers Logs
+and Queue metrics. The manual AC211 collection
 workflow uses the same read-only scopes to assemble bounded aggregate evidence;
 the protected AC209 exercise also uses its Analytics Read scope for the bounded
 Email Sending delivery query. Because Email Sending analytics is a zone-level
 GraphQL dataset, both the Zone Analytics Read permission and the token's Zone
-Resources must name the exact Email Sending zone. The automated preflight proves
+Resources must name the parent Cloudflare DNS zone (`wejamm.in`). Set
+`CLOUDFLARE_EMAIL_ZONE_ID` to that DNS zone's ID, not the Email Sending
+subdomain tag returned for `alerts.wejamm.in`. The automated preflight proves
 access to that configured zone; confirm the token's exclusion of every other
-zone in its Cloudflare resource policy. It never retains raw provider responses.
+zone in its Cloudflare resource policy. Before production promotion, dispatch
+`Verify production Cloudflare observability` from `main` with that exact main
+SHA and proceed only after the protected read-only check passes. It never
+retains raw provider responses.
 The queue-exercise token must be
 restricted to the WeJammin account with Workers Queues Write and no deployment,
 zone-management, Email Sending management, or billing permission. It exists

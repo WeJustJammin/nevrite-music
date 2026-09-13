@@ -57,6 +57,9 @@ filesystem and validation operations.
   artifact identity, and manifest checksums before deployment.
 - `read-production-candidate.sh` validates workflow-run identity before the
   promoted revision is checked out.
+- `verify-production-environment.ts` verifies the dispatch confirmation,
+  repository identity, exact `main` revision, and live `production`
+  environment protection without referencing protected secrets.
 - `apply-hosted-migrations.sh` applies forward-only Supabase migrations for a
   hosted environment, verifies the exact remote version, and records expansion.
 - `verify-staging-migration-evidence.mjs` binds the staging migration history to
@@ -131,8 +134,12 @@ protected production job starts. The preflight also requires the immutable
 staging workflow ID/path, required reviewers, disabled administrator bypass,
 and either protected branches or one exact custom `main` branch policy. Only
 the production migration entrypoint contacts Supabase; its access token and
-database password remain scoped to that protected-environment step. Cloudflare
-credentials remain scoped to the individual deploy steps in the workflows.
+database password remain scoped to that protected-environment step. The
+standalone Cloudflare observability preflight reuses the production environment
+guard before entering the protected job, then scopes its capability token to
+one read-only verifier step. Its Workers Observability request sets `dry: true`
+and fails unless the provider response attests `run.dry: true`. Other
+Cloudflare credentials remain scoped to individual workflow steps.
 
 ### Verification
 
@@ -140,7 +147,9 @@ Run `bash <script>` only from a checked-out repository with the workflow
 environment supplied. Migration tests replace the `pnpm` provider boundary
 with a local fake and never contact Supabase. Contract coverage lives in
 `tests/release-identity-contract.test.ts`, `tests/workflow-evidence-scripts.test.ts`,
-`tests/web-ssr-deployment-contract.test.ts`, and `tests/environment-contract.test.ts`.
+`tests/web-ssr-deployment-contract.test.ts`, `tests/environment-contract.test.ts`,
+`tests/production-environment-preflight.test.ts`, and
+`tests/cloudflare-observability-preflight-workflow-contract.test.ts`.
 
 ## Extension
 
@@ -162,4 +171,5 @@ dispatch, full release evidence, and fail-closed artifact checks.
 - [CI workflow](../../.github/workflows/ci.yml)
 - [Staging deployment](../../.github/workflows/deploy-staging.yml)
 - [Production deployment](../../.github/workflows/deploy-production.yml)
+- [Production Cloudflare observability verification](../../.github/workflows/verify-production-cloudflare-observability.yml)
 - [Infrastructure guidance](../README.md)
