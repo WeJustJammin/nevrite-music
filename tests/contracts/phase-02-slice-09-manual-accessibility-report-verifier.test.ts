@@ -11,6 +11,7 @@ import {
   cleanupRetainedEvidenceFixtures,
   createRetainedEvidenceFixture,
   sha256,
+  trustedHostedE2eVerification,
 } from './phase-02-slice-09-retained-evidence.test-support.ts';
 
 type MutableManualRun = {
@@ -102,6 +103,7 @@ const expectRetainedToThrow = (
       evidence,
       expectedIdentity,
       reportRoot,
+      trustedHostedE2eVerification,
     ),
   ).toThrow(message);
 
@@ -114,6 +116,7 @@ const expectRetainedToPass = (
       evidence,
       expectedIdentity,
       reportRoot,
+      trustedHostedE2eVerification,
     ),
   ).not.toThrow();
 

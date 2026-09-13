@@ -10,7 +10,7 @@ import {
 import {
   cleanupRetainedEvidenceFixtures,
   createRetainedEvidenceFixture,
-  hostedReportContents,
+  retainedHostedReportContents,
   sha256,
   verifyWithReports,
 } from './phase-02-slice-09-retained-evidence.test-support.ts';
@@ -29,6 +29,40 @@ describe('Slice 09 retained operational evidence files', () => {
         fixture.reportRoot,
       ),
     ).toMatchObject({ artifact: { sourceRevision } });
+  });
+
+  it('rejects duplicate members in the outer release evidence bytes', () => {
+    const fixture = createFixture();
+    const validEvidence = readFileSync(fixture.evidencePath, 'utf8');
+    writeFileSync(
+      fixture.evidencePath,
+      `{"artifact":null,${validEvidence.slice(1)}`,
+    );
+
+    expect(() =>
+      verifyWithReports(
+        fixture.evidencePath,
+        expectedIdentity,
+        fixture.reportRoot,
+      ),
+    ).toThrow(/duplicate JSON object member/iu);
+  });
+
+  it('rejects escaped-equivalent duplicate outer evidence members', () => {
+    const fixture = createFixture();
+    const validEvidence = readFileSync(fixture.evidencePath, 'utf8');
+    writeFileSync(
+      fixture.evidencePath,
+      `{"\\u0061rtifact":null,${validEvidence.slice(1)}`,
+    );
+
+    expect(() =>
+      verifyWithReports(
+        fixture.evidencePath,
+        expectedIdentity,
+        fixture.reportRoot,
+      ),
+    ).toThrow(/duplicate JSON object member/iu);
   });
 
   it('rejects a tampered retained report', () => {
@@ -127,13 +161,13 @@ describe('Slice 09 retained operational evidence files', () => {
     const deepPath = join(fixture.reportRoot, 'hosted/a/b/e2e.json');
     rmSync(originalPath);
     mkdirSync(dirname(deepPath), { recursive: true });
-    writeFileSync(deepPath, hostedReportContents);
+    writeFileSync(deepPath, retainedHostedReportContents);
     const evidence = JSON.parse(readFileSync(fixture.evidencePath, 'utf8')) as {
       hostedE2e: { report: { path: string; sha256: string } };
     };
     evidence.hostedE2e.report = {
       path: 'hosted/a/b/e2e.json',
-      sha256: sha256(hostedReportContents),
+      sha256: sha256(retainedHostedReportContents),
     };
     writeFileSync(fixture.evidencePath, JSON.stringify(evidence));
     expect(() =>

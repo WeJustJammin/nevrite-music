@@ -822,3 +822,38 @@ No acceptance item is inferred from diagnostics. AC209 still requires the
 effective zone-scoped token and genuine delivery evidence; AC211, AC265, and
 AC266 remain open. Slice 09 remains **279/283** with depth ratio **0.986**, and
 Slices 10–17 remain dependency-locked.
+
+## 2026-09-13 AC209 production attempt 2
+
+- Exact main SHA `5c1af8cb7be676ec3e0bca4be5f28ceb91aeb776` passed CI
+  `34751474024` and staging `34751910125`.
+- Protected production run `34752000687`, attempt 2, was approved and then
+  failed closed at the Cloudflare Email Sending capability check before any
+  migration or deployment. Production remains unchanged on
+  `c8f0cbd52cb6140ee1a756f106fa329f8c23b0e2` / deployment `6417116181`.
+- Cloudflare Email Sending domain onboarding/DNS remains required. No genuine
+  provider/mailbox receipt or production mutation occurred; AC209 remains open.
+
+## 2026-09-13 AC265 hosted contract hardening (local only)
+
+- Added local `ac265-hosted-runner-v1` contract guidance for immutable candidate
+  identity, trusted run bounds, exact role/scenario mappings, authenticated
+  receipts, isolation, redaction, and bounded cleanup. The contract explicitly
+  does not authorize or prove hosted execution.
+- Hardened the report/receipt temporal contract to require caller-supplied
+  maximum run duration, keep the report within that bound, constrain each
+  receipt's `issuedAt` to the execution window and trusted cutoff, and require
+  the cleanup receipt to be issued at or after cleanup completion.
+- Focused temporal-coherence suite passes 68/68 tests, including per-receipt
+  window/cutoff checks and inclusive cleanup/report-end boundaries. This is
+  local contract verification only: no protected hosted runner, complete
+  9-role/10-scenario report, or AC265 acceptance is claimed.
+- Final AC265/retained-evidence suite passes 22 files / 201 tests after
+  adversarial review. Full `pnpm validate` passes 507 Vitest files / 3,981 tests
+  plus one intentional skip at exact 100% coverage, all executable Slice 09
+  evidence gates, 101 functional plus five real-Slice-09 Playwright checks,
+  builds, bundle budgets, and performance smoke. Separate database verification
+  remains green at 50 pgTAP files / 1,818 tests with type parity.
+
+AC209, AC211, AC265, and AC266 remain open. Slice 09 stays **279/283** with
+depth ratio **0.986**; Slices 10–17 remain dependency-locked.
