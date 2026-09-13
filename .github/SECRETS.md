@@ -18,15 +18,19 @@ Only the credentials listed below are authorized. They belong in protected GitHu
 Production uses the same names in the protected `production` environment with
 distinct values, plus the production-only
 `CLOUDFLARE_OBSERVABILITY_API_TOKEN` and the manual-only
-`CLOUDFLARE_QUEUE_EXERCISE_TOKEN`. The observability token is restricted to the WeJammin
-account with Workers Observability Write and Account Analytics Read; it must not
-have Workers Scripts Edit. The scheduled S09 alert boundary uses it only to
+`CLOUDFLARE_QUEUE_EXERCISE_TOKEN`. Configure the observability token for the
+WeJammin account with Workers Observability Write and Account Analytics Read,
+plus Zone Analytics Read for only the exact Email Sending zone; it must not have
+Workers Scripts Edit. The scheduled S09 alert boundary uses it only to
 read structured Workers Logs and Queue metrics. The manual AC211 collection
 workflow uses the same read-only scopes to assemble bounded aggregate evidence;
 the protected AC209 exercise also uses its Analytics Read scope for the bounded
 Email Sending delivery query. Because Email Sending analytics is a zone-level
-GraphQL dataset, the token's Zone Resources must include the exact Email Sending
-zone. It never retains raw provider responses. The queue-exercise token must be
+GraphQL dataset, both the Zone Analytics Read permission and the token's Zone
+Resources must name the exact Email Sending zone. The automated preflight proves
+access to that configured zone; confirm the token's exclusion of every other
+zone in its Cloudflare resource policy. It never retains raw provider responses.
+The queue-exercise token must be
 restricted to the WeJammin account with Workers Queues Write and no deployment,
 zone-management, Email Sending management, or billing permission. It exists
 only for the serialized, reviewer-approved AC209 workflow, which preflights

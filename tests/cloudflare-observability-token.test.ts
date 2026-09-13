@@ -1,10 +1,18 @@
 import { describe, expect, it, vi } from 'vitest';
 
-import { verifyCloudflareObservabilityToken } from '../infra/verify-cloudflare-observability.ts';
+import {
+  verifyCloudflareObservabilityToken,
+  verifyCloudflareProductionMonitoringToken,
+} from '../infra/verify-cloudflare-observability.ts';
+import { AC209_EMAIL_SENDING_REQUIRED_FIELDS } from '../infra/workflows/ac209-email-sending-analytics.ts';
 
 const config = {
   accountId: 'b1c05c00f04130a0d100adbca6696e6e',
   token: 'production-observability-token',
+} as const;
+const productionConfig = {
+  ...config,
+  emailZoneId: '4f2dc13e11f742b1a826268a27a76ac8',
 } as const;
 
 const jsonResponse = (body: unknown, status = 200): Response =>
@@ -14,6 +22,91 @@ const jsonResponse = (body: unknown, status = 200): Response =>
   });
 
 describe('Cloudflare observability token verification', () => {
+  it('proves zone Email Sending analytics access before accepting the production token', async () => {
+    const fetchImpl = vi
+      .fn<typeof fetch>()
+      .mockResolvedValueOnce(jsonResponse({ result: {}, success: true }))
+      .mockResolvedValueOnce(
+        jsonResponse({
+          data: {
+            viewer: {
+              accounts: [{ queueBacklogAdaptiveGroups: [] }],
+            },
+          },
+        }),
+      )
+      .mockResolvedValueOnce(
+        jsonResponse({
+          data: {
+            viewer: {
+              zones: [
+                {
+                  settings: {
+                    emailSendingAdaptive: {
+                      availableFields: [...AC209_EMAIL_SENDING_REQUIRED_FIELDS],
+                      enabled: true,
+                      maxNumberOfFields:
+                        AC209_EMAIL_SENDING_REQUIRED_FIELDS.length,
+                      maxPageSize: 50,
+                    },
+                  },
+                },
+              ],
+            },
+          },
+        }),
+      );
+
+    await expect(
+      verifyCloudflareProductionMonitoringToken(productionConfig, fetchImpl),
+    ).resolves.toBeUndefined();
+
+    expect(fetchImpl).toHaveBeenCalledTimes(3);
+    const [emailAnalyticsUrl, emailAnalyticsInit] = fetchImpl.mock.calls[2]!;
+    expect(emailAnalyticsUrl).toBe(
+      'https://api.cloudflare.com/client/v4/graphql',
+    );
+    expect(JSON.parse(String(emailAnalyticsInit?.body))).toMatchObject({
+      variables: { zoneTag: productionConfig.emailZoneId },
+    });
+  });
+
+  it('fails safely when zone Email Sending analytics access is rejected', async () => {
+    const fetchImpl = vi
+      .fn<typeof fetch>()
+      .mockResolvedValueOnce(jsonResponse({ result: {}, success: true }))
+      .mockResolvedValueOnce(
+        jsonResponse({
+          data: {
+            viewer: {
+              accounts: [{ queueBacklogAdaptiveGroups: [] }],
+            },
+          },
+        }),
+      )
+      .mockResolvedValueOnce(
+        jsonResponse({
+          errors: [
+            {
+              message: `token ${productionConfig.token} cannot access ${productionConfig.emailZoneId}`,
+            },
+          ],
+        }),
+      );
+
+    const verification = verifyCloudflareProductionMonitoringToken(
+      productionConfig,
+      fetchImpl,
+    );
+    await expect(verification).rejects.toThrow(
+      'Cloudflare Zone Analytics permission check failed: provider_graphql_error',
+    );
+    await expect(verification).rejects.not.toThrow(productionConfig.token);
+    await expect(verification).rejects.not.toThrow(
+      productionConfig.emailZoneId,
+    );
+  });
+
   it('proves Workers Observability and Account Analytics access without exposing the token', async () => {
     const fetchImpl = vi
       .fn<typeof fetch>()

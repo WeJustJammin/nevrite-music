@@ -5,10 +5,18 @@ import {
   BoundedProviderResponseError,
   requestBoundedProviderResponseText,
 } from './workflows/bounded-provider-response.ts';
+import {
+  Ac209EmailSendingAnalyticsError,
+  verifyAc209EmailSendingCapability,
+} from './workflows/ac209-email-sending-analytics.ts';
 
 export interface CloudflareObservabilityVerificationConfig {
   readonly accountId: string;
   readonly token: string;
+}
+
+export interface CloudflareProductionMonitoringVerificationConfig extends CloudflareObservabilityVerificationConfig {
+  readonly emailZoneId: string;
 }
 
 const CLOUDFLARE_ACCOUNT_ID = /^[0-9a-f]{32}$/u;
@@ -179,11 +187,39 @@ export const verifyCloudflareObservabilityToken = async (
     );
 };
 
+export const verifyCloudflareProductionMonitoringToken = async (
+  config: CloudflareProductionMonitoringVerificationConfig,
+  fetchImpl: typeof fetch = fetch,
+): Promise<void> => {
+  await verifyCloudflareObservabilityToken(config, fetchImpl);
+  try {
+    await verifyAc209EmailSendingCapability({
+      fetchImpl,
+      token: config.token,
+      zoneId: config.emailZoneId,
+    });
+  } catch (error: unknown) {
+    const detail =
+      error instanceof Ac209EmailSendingAnalyticsError
+        ? error.code
+        : 'unexpected_failure';
+    throw verificationError(
+      'Cloudflare Zone Analytics permission check failed',
+      detail,
+    );
+  }
+};
+
 const run = async (): Promise<void> => {
   const accountId = process.env['CLOUDFLARE_ACCOUNT_ID'] ?? '';
+  const emailZoneId = process.env['CLOUDFLARE_EMAIL_ZONE_ID'] ?? '';
   const token = process.env['CLOUDFLARE_OBSERVABILITY_API_TOKEN'] ?? '';
-  await verifyCloudflareObservabilityToken({ accountId, token });
-  console.log('Cloudflare observability token permissions verified.');
+  await verifyCloudflareProductionMonitoringToken({
+    accountId,
+    emailZoneId,
+    token,
+  });
+  console.log('Cloudflare production monitoring token permissions verified.');
 };
 
 const entrypoint = process.argv[1];

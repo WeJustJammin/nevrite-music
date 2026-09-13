@@ -61,7 +61,7 @@ jobs:
         run: bash infra/workflows/verify-production-candidate.sh && node --experimental-strip-types infra/verify-release-promotion.ts .promotion/promotion-metadata.json candidate .promotion/staging-artifact-identity.json
       - name: Verify Cloudflare observability permissions
         # prettier-ignore
-        env: { CLOUDFLARE_ACCOUNT_ID: '${{ vars.CLOUDFLARE_ACCOUNT_ID }}', CLOUDFLARE_OBSERVABILITY_API_TOKEN: '${{ secrets.CLOUDFLARE_OBSERVABILITY_API_TOKEN }}' }
+        env: { CLOUDFLARE_ACCOUNT_ID: '${{ vars.CLOUDFLARE_ACCOUNT_ID }}', CLOUDFLARE_EMAIL_ZONE_ID: '${{ vars.CLOUDFLARE_EMAIL_ZONE_ID }}', CLOUDFLARE_OBSERVABILITY_API_TOKEN: '${{ secrets.CLOUDFLARE_OBSERVABILITY_API_TOKEN }}' }
         run: node --experimental-strip-types infra/verify-cloudflare-observability.ts
       - name: Apply and verify forward-only production migrations
         # prettier-ignore
