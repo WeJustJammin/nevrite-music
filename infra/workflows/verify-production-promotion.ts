@@ -15,15 +15,20 @@ const PRODUCTION_REVIEWER_LOGIN = 'WeJustJammin';
 
 type JsonObject = Record<string, unknown>;
 
-export type ProductionPromotionGuardOptions = Readonly<{
+export type ProductionEnvironmentGuardOptions = Readonly<{
   apiUrl: string;
   confirmProduction: boolean;
   ref: string;
   repository: string;
   sourceSha: string;
-  stagingRunId: string;
   token: string;
 }>;
+
+export type ProductionPromotionGuardOptions =
+  ProductionEnvironmentGuardOptions &
+    Readonly<{
+      stagingRunId: string;
+    }>;
 
 const isJsonObject = (value: unknown): value is JsonObject =>
   typeof value === 'object' && value !== null && !Array.isArray(value);
@@ -88,8 +93,8 @@ const requestJson = async (
   }
 };
 
-const validateInputShape = (
-  options: ProductionPromotionGuardOptions,
+const validateEnvironmentInputShape = (
+  options: ProductionEnvironmentGuardOptions,
 ): readonly [URL, string, string] => {
   if (!options.confirmProduction) {
     throw new Error('An explicit production confirmation is required.');
@@ -100,14 +105,21 @@ const validateInputShape = (
   if (!SOURCE_SHA_PATTERN.test(options.sourceSha)) {
     throw new Error('source SHA must be a full lowercase commit SHA.');
   }
-  if (!STAGING_RUN_ID_PATTERN.test(options.stagingRunId)) {
-    throw new Error('Staging run ID must be a numeric completed workflow run.');
-  }
   if (options.token.length === 0) {
     throw new Error('A GitHub token is required for production preflight.');
   }
   const [owner, name] = repositoryParts(options.repository);
   return [baseApiUrl(options.apiUrl), owner, name];
+};
+
+const validateInputShape = (
+  options: ProductionPromotionGuardOptions,
+): readonly [URL, string, string] => {
+  const identity = validateEnvironmentInputShape(options);
+  if (!STAGING_RUN_ID_PATTERN.test(options.stagingRunId)) {
+    throw new Error('Staging run ID must be a numeric completed workflow run.');
+  }
+  return identity;
 };
 
 const endpointFor = (
@@ -299,10 +311,10 @@ export const verifyStagingWorkflowRun = async (
 };
 
 export const verifyProductionEnvironment = async (
-  options: ProductionPromotionGuardOptions,
+  options: ProductionEnvironmentGuardOptions,
   fetchImpl: typeof fetch = fetch,
 ): Promise<void> => {
-  const [base, owner, name] = validateInputShape(options);
+  const [base, owner, name] = validateEnvironmentInputShape(options);
   const environment = await requestJson(
     endpointFor(base, owner, name, 'environments/production'),
     options.token,

@@ -1,0 +1,82 @@
+name: Verify production Cloudflare observability
+
+on:
+  workflow_dispatch:
+    inputs:
+      source_sha:
+        description: Full lowercase main revision containing this verifier
+        required: true
+        type: string
+      confirm_verification:
+        description: Confirm protected read-only Cloudflare capability verification
+        required: true
+        type: boolean
+        default: false
+
+concurrency:
+  group: verify-production-cloudflare-observability
+  cancel-in-progress: false
+
+permissions: { actions: read, contents: read }
+
+jobs:
+  preflight:
+    runs-on: [self-hosted, wejammin]
+    timeout-minutes: 5
+    steps:
+      - name: Verify dispatch intent and exact main revision
+        env:
+          CONFIRM_VERIFICATION: ${{ inputs.confirm_verification }}
+          DISPATCHED_SOURCE_SHA: ${{ github.sha }}
+          SOURCE_SHA: ${{ inputs.source_sha }}
+        run: |
+          test "$CONFIRM_VERIFICATION" = "true"
+          test "$GITHUB_REF" = "refs/heads/main"
+          test "$SOURCE_SHA" = "$DISPATCHED_SOURCE_SHA"
+      - name: Check out the exact environment verifier revision
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          ref: ${{ inputs.source_sha }}
+          persist-credentials: false
+      - name: Verify live production environment protection
+        env:
+          CONFIRM_VERIFICATION: ${{ inputs.confirm_verification }}
+          GITHUB_TOKEN: ${{ github.token }}
+          SOURCE_SHA: ${{ inputs.source_sha }}
+        run: node --experimental-strip-types infra/workflows/verify-production-environment.ts
+  verify:
+    needs: preflight
+    runs-on: [self-hosted, wejammin]
+    timeout-minutes: 10
+    environment: { name: production }
+    steps:
+      - name: Check out the exact verifier revision
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          ref: ${{ inputs.source_sha }}
+          persist-credentials: false
+      - name: Verify protected execution identity
+        env:
+          EXPECTED_SOURCE_REVISION: ${{ inputs.source_sha }}
+        run: |
+          checked_out_sha="$(git rev-parse HEAD)"
+          test "$GITHUB_REF" = "refs/heads/main"
+          test "$checked_out_sha" = "$EXPECTED_SOURCE_REVISION"
+      - name: Set up pinned workspace dependencies
+        uses: ./.github/actions/setup
+      - name: Reverify immutable workspace before secret use
+        env:
+          EXPECTED_SOURCE_REVISION: ${{ inputs.source_sha }}
+        run: |
+          checked_out_sha="$(git rev-parse HEAD)"
+          test "$GITHUB_REF" = "refs/heads/main"
+          test "$checked_out_sha" = "$EXPECTED_SOURCE_REVISION"
+          git diff --quiet
+          git diff --cached --quiet
+          test -z "$(git status --porcelain --untracked-files=all)"
+      - name: Verify bounded Cloudflare monitoring capabilities
+        env:
+          CLOUDFLARE_ACCOUNT_ID: '${{ vars.CLOUDFLARE_ACCOUNT_ID }}'
+          CLOUDFLARE_EMAIL_ZONE_ID: '${{ vars.CLOUDFLARE_EMAIL_ZONE_ID }}'
+          CLOUDFLARE_OBSERVABILITY_API_TOKEN: '${{ secrets.CLOUDFLARE_OBSERVABILITY_API_TOKEN }}'
+        run: node --experimental-strip-types infra/verify-cloudflare-observability.ts

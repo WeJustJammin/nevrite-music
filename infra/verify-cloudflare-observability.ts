@@ -113,6 +113,7 @@ export const verifyCloudflareObservabilityToken = async (
     `https://api.cloudflare.com/client/v4/accounts/${config.accountId}/workers/observability/telemetry/query`,
     config.token,
     {
+      dry: true,
       parameters: {
         datasets: ['cloudflare-workers'],
         limit: 1,
@@ -127,7 +128,9 @@ export const verifyCloudflareObservabilityToken = async (
   if (
     !isRecord(logsPayload) ||
     logsPayload.success !== true ||
-    !isRecord(logsPayload.result)
+    !isRecord(logsPayload.result) ||
+    !isRecord(logsPayload.result.run) ||
+    logsPayload.result.run.dry !== true
   )
     throw new Error(headersFailure);
 
