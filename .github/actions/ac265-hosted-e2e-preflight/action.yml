@@ -1,0 +1,42 @@
+name: Preflight AC265 hosted E2E candidate
+description: Verify the exact staging deployment and successful CI artifact before approval.
+inputs:
+  source_sha:
+    required: true
+  staging_run_id:
+    required: true
+  staging_run_attempt:
+    required: true
+  ci_run_id:
+    required: true
+  ci_run_attempt:
+    required: true
+  staging_deployment_id:
+    required: true
+  staging_web_origin:
+    required: true
+  staging_api_origin:
+    required: true
+runs:
+  using: composite
+  steps:
+    - name: Prepare exact staging and CI artifacts
+      uses: ./.github/actions/ac265-hosted-e2e-prepare
+      with:
+        source_sha: ${{ inputs.source_sha }}
+        staging_run_id: ${{ inputs.staging_run_id }}
+        ci_run_id: ${{ inputs.ci_run_id }}
+    - name: Verify exact staging and CI candidate provenance
+      shell: bash
+      env:
+        AC265_SOURCE_SHA: ${{ inputs.source_sha }}
+        AC265_STAGING_RUN_ID: ${{ inputs.staging_run_id }}
+        AC265_STAGING_RUN_ATTEMPT: ${{ inputs.staging_run_attempt }}
+        AC265_CI_RUN_ID: ${{ inputs.ci_run_id }}
+        AC265_CI_RUN_ATTEMPT: ${{ inputs.ci_run_attempt }}
+        AC265_STAGING_DEPLOYMENT_ID: ${{ inputs.staging_deployment_id }}
+        AC265_STAGING_WEB_ORIGIN: ${{ inputs.staging_web_origin }}
+        AC265_STAGING_API_ORIGIN: ${{ inputs.staging_api_origin }}
+        GITHUB_REPOSITORY: ${{ github.repository }}
+        GITHUB_TOKEN: ${{ github.token }}
+      run: node --experimental-strip-types infra/workflows/collect-ac265-hosted-e2e-preflight.ts

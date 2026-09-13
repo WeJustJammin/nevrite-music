@@ -17,7 +17,15 @@
 - [x] `BE` data, API, and policy implementation
 - [x] `FE` Astro SSR and bounded React-island implementation
 - [x] `QA` GREEN, adversarial verification, and canonical validation (local
-      gates complete; exact-main-SHA CI/staging/deployment verified; four external release checks remain blocked)
+      gates complete; exact-main SHA `063ea14904291ee44f8b365620f557ee61f32e65`
+      passed CI `34766992913` attempt 1 and staging `34767568945` attempt 1 /
+      deployment `6423551109`; artifact `staging-verified-candidate`
+      (`10320309807`) passed the live read-only candidate provenance preflight;
+      the read-only main-only workflow, strict provenance, authenticated policy
+      mapping/outage-target contracts, and fail-closed collector port boundary
+      are implemented as local scaffolding only. No protected collector/service
+      protocol or hosted acceptance exists; four external release checks remain
+      blocked.)
 - [x] Documentation, runbooks, graph, feature ledger, and progress tracking
 
 ## Acceptance Criteria

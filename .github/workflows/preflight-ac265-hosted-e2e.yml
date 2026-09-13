@@ -1,0 +1,66 @@
+name: Preflight AC265 hosted E2E candidate
+
+on:
+  workflow_dispatch:
+    inputs:
+      source_sha:
+        description: Full lowercase source SHA represented by the staging candidate
+        required: true
+        type: string
+      staging_run_id:
+        description: Successful staging deployment workflow run ID
+        required: true
+        type: string
+      staging_run_attempt:
+        description: Successful staging deployment workflow run attempt
+        required: true
+        type: string
+      ci_run_id:
+        description: Successful CI workflow run ID for source_sha
+        required: true
+        type: string
+      ci_run_attempt:
+        description: Successful CI workflow run attempt for source_sha
+        required: true
+        type: string
+      staging_deployment_id:
+        description: Staging deployment ID represented by the candidate
+        required: true
+        type: string
+      staging_web_origin:
+        description: Exact staging web origin represented by the candidate
+        required: true
+        type: string
+      staging_api_origin:
+        description: Exact staging API origin represented by the candidate
+        required: true
+        type: string
+
+concurrency:
+  group: ac265-hosted-e2e-${{ github.ref }}
+  cancel-in-progress: false
+
+permissions: { actions: read, contents: read, deployments: read }
+
+jobs:
+  preflight:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - name: Check out the approved workflow revision
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      - name: Verify exact staging and CI candidate provenance
+        uses: ./.github/actions/ac265-hosted-e2e-preflight
+        with:
+          source_sha: ${{ inputs.source_sha }}
+          staging_run_id: ${{ inputs.staging_run_id }}
+          staging_run_attempt: ${{ inputs.staging_run_attempt }}
+          ci_run_id: ${{ inputs.ci_run_id }}
+          ci_run_attempt: ${{ inputs.ci_run_attempt }}
+          staging_deployment_id: ${{ inputs.staging_deployment_id }}
+          staging_web_origin: ${{ inputs.staging_web_origin }}
+          staging_api_origin: ${{ inputs.staging_api_origin }}

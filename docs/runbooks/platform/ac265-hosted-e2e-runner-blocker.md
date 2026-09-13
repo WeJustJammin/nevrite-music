@@ -61,13 +61,33 @@ logs, report, or retained artifacts. Resources must be pre-existing,
 synthetic, staging-only, and safe for adult test actors. Do not create minors,
 invent mandates, provision identity grants, or create acceptance resources.
 
-The expected mappings are separate trusted inputs:
-`expectedRoleResourceBindings` and `expectedScenarioRoleBindings`. Compare them
-exactly with the contract's `roleResourceBindings` and `scenarioRoleBindings`;
-do not accept mappings selected by the contract or report itself. Preserve all
-nine role keys and ten scenario keys. Bind role receipts to their approved
-session/resource reference digests and scenario receipts to the independently
-approved role assignments and corresponding reference digests.
+The independently versioned `ac265-hosted-runner-policy-v1` pins fixed
+scenario parameters only; it does not select per-role resource kinds or infer
+scenario/role pairs. V3 verification requires exact
+`ac265-approved-runner-mappings-v1` bytes from an independently protected
+source. That strict mapping schema binds `mappingId`, approval time, run ID,
+candidate identity, all role-to-resource reference arrays, and the complete
+scenario-to-role mapping. The protected V3 context must authenticate those
+exact bytes and keep its trusted mapping fields identical to the parsed source.
+The verifier compares the contract's mapping fields exactly to the
+authenticated source; safe-resource kinds follow from the referenced approved
+registry entries. Preserve each required role and scenario key exactly once,
+but never infer that every role participates in every scenario. Bind role
+receipts to their approved session/resource reference digests and scenario
+receipts to their independently approved role assignments and corresponding
+reference digests.
+
+No live mapping-source endpoint or authentication key/configuration is defined.
+The schema and callback are a fail-closed interface contract, not a deployed
+approval source or hosted acceptance evidence.
+
+The outage target is not invented by the policy: completing it additionally
+requires exact `ac265-approved-outage-target-v1` bytes authenticated by a
+separately protected source. Its validated scope supplies the expected run,
+hosting and Supabase projects, deployment, dependency, and route. Missing,
+placeholder, or unauthenticated target input leaves the gate closed. No live
+source endpoint or trusted key/configuration is currently defined, so this
+target cannot yet be obtained for hosted verification.
 
 The protected v3 reporter and verifier must bind every session/resource
 reference and every server receipt to the same immutable candidate identity.
@@ -79,9 +99,10 @@ receipt's run ID, deployment, source/build/artifact, origins, project, and
 migration against independently captured protected workflow/deployment
 outputs. Receipt sources must prove server-derived role, RLS, scenario, and
 cleanup results. The local v3 verifier requires caller-supplied trusted
-identity, run ID, contract digest, independent mappings, `trustedCutoffAt`,
-positive safe-integer `maxRunDurationMs`, receipt resolver, and
-receipt-authenticity callback. When execution evidence is declared, its
+identity, run ID, contract digest, authenticated approved-mapping bytes and
+authenticity callback, matching trusted map fields, `trustedCutoffAt`, positive
+safe-integer `maxRunDurationMs`, receipt resolver, and receipt-authenticity
+callback. When execution evidence is declared, its
 resolver must return the exact raw bytes; the verifier hashes those bytes
 before parsing and binds payload kind, candidate identity, subject, and session
 teardown to the expected reference digests. It also hashes raw receipt bytes,
@@ -97,10 +118,11 @@ members recursively. Reject duplicate names after JSON escape decoding, so
 escaped-equivalent and nested duplicate keys fail before parsing rather than
 being resolved by last-member-wins behavior.
 
-For `dependency_outage`, the independently expected
-`expectedOutageLeaseScope` must exactly match `runId`, `hostingProjectId`,
-`supabaseProjectRef`, `deploymentId`, `dependencyId`, and route
-`{ operationId, method, path }`. Require a signed/authenticated lease receipt,
+For `dependency_outage`, derive `expectedOutageLeaseScope` only from the
+authenticated `ApprovedOutageTarget`; do not accept it from workflow dispatch
+or the runner contract. The scope must exactly match `runId`,
+`hostingProjectId`, `supabaseProjectRef`, `deploymentId`, `dependencyId`, and
+route `{ operationId, method, path }`. Require a signed/authenticated lease receipt,
 an `ac265-lease://staging/<uuid>` reference with its exact-UTF-8 SHA-256,
 bounded acquired/expiry times, exactly one matching consume event, and a
 same-reference/digest release proof bound into cleanup. The lease is limited
@@ -116,8 +138,10 @@ consume event, and cleanup `outageLeaseReleaseProof`. Missing lease or proof
 fails validation; there is no skip or unleased outage pass.
 
 This is a local trust boundary only; it does not implement a protected broker,
-issuer, lease service, or evidence-byte service, or independently bind supplied
-trusted values to actual hosted workflow/deployment outputs.
+issuer, approved-outage-target source, lease service, or evidence-byte service,
+or independently bind supplied trusted values to actual hosted
+workflow/deployment outputs. The target source endpoint and authentication
+key/config remain unresolved; do not claim hosted acceptance.
 
 The report also requires a fresh `fresh_google_oauth_through_supabase` flow,
 real server-side expiry and HTTP 429 observations, a bounded one-request

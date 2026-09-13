@@ -21,7 +21,7 @@ export const AC265_HOSTED_ROLE_STORAGE_STATE_ENV: Readonly<
 );
 
 export const AC265_HOSTED_CONTROLS_BLOCKED_REASON =
-  'AC265 hosted execution is blocked: no approved contract defines the role-to-session authority mapping, safe test-resource setup and teardown, Google IdP sign-in inputs, or bounded controls for auth expiry, stale multi-tab state, HTTP 429, and dependency outage. Browser-local interception or the report policy map cannot substitute for hosted evidence.';
+  'AC265 hosted execution is blocked: protected hosted evidence infrastructure is incomplete. Missing: run-scoped session broker; approved safe-resource registry; authenticated evidence and receipt resolver; one-use outage lease service; hosted browser specs, orchestrator, and report producer. Browser-local interception or a policy map cannot substitute for verified hosted evidence.';
 
 export const assertAc265HostedStorageStatePermissions = (
   variable: string,

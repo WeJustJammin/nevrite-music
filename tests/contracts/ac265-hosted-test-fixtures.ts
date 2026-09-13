@@ -88,6 +88,16 @@ export const runnerContract = (
   overrides: Partial<ContentSchemaRegistryHostedRunnerContract> = {},
 ): ContentSchemaRegistryHostedRunnerContract => {
   const effectiveResources = overrides.resourceRefs ?? resourceRefs;
+  const resourceReference = (
+    kind: (typeof effectiveResources)[number]['kind'],
+  ) => {
+    const resource = effectiveResources.find(
+      (candidate) => candidate.kind === kind,
+    );
+    if (resource === undefined)
+      throw new Error(`Missing hosted test resource kind: ${kind}`);
+    return resource.ref;
+  };
 
   return {
     schemaVersion:
@@ -98,7 +108,7 @@ export const runnerContract = (
     sessionHandles,
     resourceRefs: effectiveResources,
     scenarioParameters: {
-      viewportWidthsCssPx: { mobile: 390, tablet: 820, desktop: 1_440 },
+      viewportWidthsCssPx: { mobile: 320, tablet: 769, desktop: 1_025 },
       rateLimit429: {
         target: {
           operationId: 'CMS-03A-06',
@@ -126,12 +136,17 @@ export const runnerContract = (
         },
       },
     },
-    roleResourceBindings: Object.fromEntries(
-      CONTENT_SCHEMA_REGISTRY_HOSTED_ROLES.map((role) => [
-        role,
-        [effectiveResources[0].ref],
-      ]),
-    ) as ContentSchemaRegistryHostedRunnerContract['roleResourceBindings'],
+    roleResourceBindings: Object.fromEntries([
+      ['entitled_read', [resourceReference('content_schema')]],
+      ['owner_full', [resourceReference('organization')]],
+      ['guardian_mandate', [resourceReference('content_schema')]],
+      ['junior_restricted', [resourceReference('content_schema')]],
+      ['business_mandate', [resourceReference('organization')]],
+      ['staff_case_scoped', [resourceReference('staff_case')]],
+      ['admin_step_up', [resourceReference('organization')]],
+      ['forbidden_hidden', [resourceReference('content_schema')]],
+      ['disabled_prerequisite', [resourceReference('prerequisite')]],
+    ] as const) as ContentSchemaRegistryHostedRunnerContract['roleResourceBindings'],
     scenarioRoleBindings: Object.fromEntries(
       CONTENT_SCHEMA_REGISTRY_HOSTED_SCENARIOS.map((scenario) => [
         scenario,

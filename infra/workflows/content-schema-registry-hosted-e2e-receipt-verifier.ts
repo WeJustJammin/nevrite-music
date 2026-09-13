@@ -8,6 +8,7 @@ import {
 } from '../../packages/contracts/src/content-schema-registry/operational-release-evidence.ts';
 import { CONTENT_SCHEMA_REGISTRY_HOSTED_ROLES } from '../../packages/contracts/src/content-schema-registry/operational-release-evidence-common.ts';
 import { assertHostedRunnerMappingsApproved } from './content-schema-registry-hosted-e2e-trusted-mappings.ts';
+import { assertAc265HostedRunnerPolicyV1 } from './ac265-hosted-runner-policy-v1.ts';
 import {
   parseHostedE2eVerificationContext,
   type ContentSchemaRegistryHostedE2eReportV3VerificationContext,
@@ -141,6 +142,13 @@ export const verifyContentSchemaRegistryHostedE2eV3Bindings = (input: {
     );
   if (input.contract.runId !== context.expectedRunId)
     throw new Error('Hosted E2E runner contract does not match expected run.');
+  assertAc265HostedRunnerPolicyV1(
+    input.contract,
+    context.approvedOutageTarget,
+    context.approvedRunnerMappings,
+    input.report.startedAt,
+    context.trustedCutoffAt,
+  );
   assertHostedRunnerMappingsApproved(input.contract, context);
   const executionWindow = {
     startedAt: Date.parse(input.report.startedAt),
