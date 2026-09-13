@@ -71,6 +71,9 @@ describe('release workflow evidence scripts', () => {
     execute(stagingCandidatePreparer, root, {
       CI_RUN_ID: '33915048658',
       DEPLOY_SHA: sourceRevision,
+      GITHUB_REPOSITORY: 'WeJustJammin/nevrite-music',
+      GITHUB_RUN_ATTEMPT: '2',
+      GITHUB_RUN_ID: '33915049999',
     });
 
     expect(
@@ -85,6 +88,21 @@ describe('release workflow evidence scripts', () => {
       sourceRevision,
       buildId: 'ci-33915048658',
       migrationVersion,
+    });
+    expect(
+      JSON.parse(
+        readFileSync(
+          join(root, 'promotion-candidate/staging-run-identity.json'),
+          'utf8',
+        ),
+      ),
+    ).toEqual({
+      schemaVersion: 'ac266-staging-run-identity-v1',
+      repository: 'WeJustJammin/nevrite-music',
+      workflowPath: '.github/workflows/deploy-staging.yml',
+      runId: '33915049999',
+      runAttempt: '2',
+      headSha: sourceRevision,
     });
   });
 

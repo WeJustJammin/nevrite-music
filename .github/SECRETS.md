@@ -52,6 +52,29 @@ keeps production `workflow_dispatch`/manual-only while allowing the dispatching
 owner to provide the explicit protected-environment approval. Administrator
 bypass remains disabled.
 
+## AC266 manual evidence environment secrets
+
+The protected `ac266-manual-evidence` environment contains only these two
+strict, privacy-bounded report inputs:
+
+| Name                            | Owner         | Purpose                                                   |
+| ------------------------------- | ------------- | --------------------------------------------------------- |
+| `AC266_VOICEOVER_REPORT_BASE64` | Accessibility | Exact base64-encoded macOS/Safari/VoiceOver report bytes. |
+| `AC266_NVDA_REPORT_BASE64`      | Accessibility | Exact base64-encoded Windows/Firefox/NVDA report bytes.   |
+
+Reports must satisfy `ac266-manual-a11y-v1`: opaque operator IDs, bounded
+structured observations, no free-text notes, and no names, email addresses,
+content, cookies, credentials, screenshots, or recordings. The workflows run
+on isolated GitHub-hosted `ubuntu-24.04` runners, materialize bytes only below
+the run-specific `runner.temp` directory, and upload sanitized manifests only.
+Keep the secrets until the protected combined-sidecar verifier has
+re-materialized and verified the exact bytes; then remove or rotate them.
+
+The environment is restricted to `main`, exposes only
+`STAGING_WEB_ORIGIN=https://staging.wejamm.in`, requires reviewer
+`WeJustJammin`, and disables administrator bypass. This single-account setup
+allows owner self-approval, so it is not independent review.
+
 ## Repository security controls
 
 Before changing `WeJustJammin/nevrite-music` from PRIVATE to PUBLIC, a

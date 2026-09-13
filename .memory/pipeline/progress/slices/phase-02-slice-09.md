@@ -654,9 +654,9 @@ response`; Workers Observability passed. Cloudflare's documented successful
   live five-cookie callback/session/protected-route flow. AC265 remains open
   for the approved 9-role/10-scenario hosted report, role/identity lifecycle,
   MFA/step-up, teardown, and complete hosted Auth/RLS/IdP evidence.
-- P2-S09-AC-266: retain signed VoiceOver/Safari and NVDA/Firefox manual smoke
-  against the exact hosted candidate. Linux-hosted automation passes but cannot
-  replace either real-platform report.
+- P2-S09-AC-266: retain operator-attested VoiceOver/Safari and NVDA/Firefox
+  manual smoke against the exact hosted candidate. Linux-hosted automation
+  passes but cannot replace either real-platform report.
 
 Operational controls outside the 283-item acceptance count are verified for
 this candidate: fail-closed staging migration executed before app deployment,
@@ -737,3 +737,50 @@ and performance smoke. Status remains **279/283**; Slice 10 remains locked.
 AC209, AC211, AC265, and AC266 remain externally open. Status remains
 **279/283**; Slice 10 and dependent Slices 11–17 remain locked pending genuine
 hosted/manual acceptance evidence.
+
+## 2026-09-13 AC266 manual-evidence prerequisite hardening
+
+- Added strict `ac266-manual-a11y-v1` report contracts for the two locked
+  platform pairs. Reports require the exact authenticated and authorized CMS
+  workbench path/state, matching OS/browser/screen-reader product families,
+  UTC timestamps, opaque operator IDs, all 11 structured checks, explicit
+  heading/status observations, and operator-attested complete target
+  measurements. Free-text notes and unknown fields fail closed.
+- Added protected intake and finalizer workflows for digest-bound report
+  secrets. Raw report bytes exist only in a run-ID/run-attempt-specific private
+  runner-temp directory; cleanup runs in the implementation and an `always()`
+  step. Only sanitized 30-day manifests are uploaded.
+- Bound finalization to the exact repository, workflow, main SHA, staging run
+  and attempt, candidate artifact, deployment, hosted origin, and trusted
+  intake cutoff. Real GitHub deployment histories with
+  `waiting`/`queued`/`in_progress` are parsed, while any newer active,
+  failed, inactive, or successful deployment overlapping a report window
+  rejects the evidence.
+- Moved both report-secret jobs to isolated GitHub-hosted `ubuntu-24.04`
+  runners. The three project self-hosted runners are persistent and continue
+  to execute same-repository PR CI, so they are not an acceptable boundary for
+  these raw report secrets.
+- Created protected environment `ac266-manual-evidence` (ID `21821361680`)
+  with the exact staging origin, `main`-only policy, required business-account
+  reviewer, and administrator bypass disabled. Owner self-approval remains
+  possible in the single-account repository and is not independent review.
+- The dedicated AC266 manifest is a prerequisite, not the combined release
+  sidecar. The current combined verifier still requires the exact source report
+  bytes to be privately re-materialized, parsed, matched to the manifest, and
+  removed by a protected assembly step.
+- Clean Node 22.23.1/pnpm 11.24.0 verification passes 486 Vitest files,
+  3,785 tests plus one intentional skip, 100% statement/branch/function/line
+  coverage, every executable Slice 09 evidence check, 101 functional and five
+  production-built browser tests, builds, bundle budgets, and performance
+  smoke. `pnpm db:verify` separately passes 50 pgTAP files and 1,818 tests with
+  migrated database-type parity.
+
+Earlier dated entries use “signed” as shorthand for manual sign-off. No
+cryptographic report signature exists; the implemented boundary uses an opaque
+operator attestation, exact byte digests, protected workflow provenance, and
+environment approval.
+
+No VoiceOver/Safari or NVDA/Firefox report was created, accepted, or inferred,
+and no protected AC266 workflow was dispatched. AC266 remains unchecked,
+Slice 09 remains **279/283** with depth ratio **0.986**, and Slices 10–17 remain
+dependency-locked.

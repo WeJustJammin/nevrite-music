@@ -20,6 +20,7 @@ import {
   completeEvidence,
   expectedIdentity,
 } from './phase-02-slice-09-operational-release-evidence.test-support.ts';
+import { createManualAccessibilityReport } from './phase-02-slice-09-manual-accessibility-report-fixture.ts';
 
 export const hostedReportContents = `${JSON.stringify(
   {
@@ -87,6 +88,55 @@ export const automatedAxeReportContents = `${JSON.stringify(
   2,
 )}\n`;
 
+type ManualA11yRun = (typeof completeEvidence.accessibility.manualRuns)[number];
+
+const retainedManualRuns = [
+  {
+    ...completeEvidence.accessibility.manualRuns[0],
+    operator: 'op_0123456789abcdef0123456789abcdef',
+  },
+  {
+    ...completeEvidence.accessibility.manualRuns[1],
+    operator: 'op_abcdef0123456789abcdef0123456789',
+  },
+] as const;
+
+const manualAccessibilityReportContents = (
+  run: ManualA11yRun,
+  platform: 'mac_safari_voiceover' | 'windows_firefox_nvda',
+  startedAt: string,
+): string =>
+  `${JSON.stringify(
+    {
+      ...createManualAccessibilityReport(platform),
+      sourceRevision: expectedIdentity.sourceRevision,
+      environment: expectedIdentity.hostedEnvironment,
+      deploymentId: expectedIdentity.hostedDeploymentId,
+      webOrigin: expectedIdentity.webOrigin,
+      operatorId: run.operator,
+      osVersion: run.osVersion,
+      browserVersion: run.browserVersion,
+      screenReaderVersion: run.screenReaderVersion,
+      startedAt,
+      completedAt: run.completedAt,
+      outcome: run.outcome,
+    },
+    null,
+    2,
+  )}\n`;
+
+const macManualAccessibilityReportContents = manualAccessibilityReportContents(
+  retainedManualRuns[0],
+  'mac_safari_voiceover',
+  '2026-09-03T11:00:00.000Z',
+);
+const windowsManualAccessibilityReportContents =
+  manualAccessibilityReportContents(
+    retainedManualRuns[1],
+    'windows_firefox_nvda',
+    '2026-09-03T11:15:00.000Z',
+  );
+
 export const reportContents = Object.freeze({
   'alerts/configuration.json': 'production alert configuration\n',
   'alerts/delivery-receipt.json': 'redacted alert delivery receipt\n',
@@ -95,8 +145,9 @@ export const reportContents = Object.freeze({
   'hosted/e2e.json': hostedReportContents,
   'accessibility/axe.json': automatedAxeReportContents,
   'accessibility/macos-voiceover-safari.json':
-    'VoiceOver and Safari manual report\n',
-  'accessibility/windows-nvda-firefox.json': 'NVDA and Firefox manual report\n',
+    macManualAccessibilityReportContents,
+  'accessibility/windows-nvda-firefox.json':
+    windowsManualAccessibilityReportContents,
 });
 
 type ReportPath = keyof typeof reportContents;
@@ -110,7 +161,7 @@ const reference = (path: ReportPath) => ({
 });
 
 const evidenceWithRealReportDigests = () => {
-  const [voiceOver, nvda] = completeEvidence.accessibility.manualRuns;
+  const [voiceOver, nvda] = retainedManualRuns;
   return {
     ...completeEvidence,
     alerting: {

@@ -1,0 +1,63 @@
+name: Intake AC266 manual accessibility reports
+on:
+  workflow_dispatch:
+    inputs:
+      voiceover_report_sha256:
+        description: Lowercase SHA-256 of the exact VoiceOver report bytes
+        required: true
+        type: string
+      nvda_report_sha256:
+        description: Lowercase SHA-256 of the exact NVDA report bytes
+        required: true
+        type: string
+permissions: { contents: read }
+jobs:
+  intake:
+    name: Validate and privately stage manual reports
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    environment: { name: ac266-manual-evidence }
+    steps:
+      - name: Check out the approved workflow revision
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      - name: Set up pinned workspace dependencies
+        uses: ./.github/actions/setup
+      - name: Materialize and validate manual report secrets
+        env:
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          GITHUB_RUN_ID: ${{ github.run_id }}
+          GITHUB_RUN_ATTEMPT: ${{ github.run_attempt }}
+          GITHUB_SHA: ${{ github.sha }}
+          RUNNER_TEMP: ${{ runner.temp }}
+          AC266_PRIVATE_EVIDENCE_DIR: ${{ runner.temp }}/ac266-private-evidence-${{ github.run_id }}-${{ github.run_attempt }}
+          AC266_EXPECTED_VOICEOVER_REPORT_SHA256: ${{ inputs.voiceover_report_sha256 }}
+          AC266_EXPECTED_NVDA_REPORT_SHA256: ${{ inputs.nvda_report_sha256 }}
+          AC266_VOICEOVER_REPORT_BASE64: ${{ secrets.AC266_VOICEOVER_REPORT_BASE64 }}
+          AC266_NVDA_REPORT_BASE64: ${{ secrets.AC266_NVDA_REPORT_BASE64 }}
+        shell: bash
+        run: node --experimental-strip-types infra/workflows/materialize-ac266-manual-accessibility-intake.ts
+      - name: Remove private raw reports before manifest upload
+        if: ${{ always() }}
+        env:
+          RUNNER_TEMP: ${{ runner.temp }}
+          AC266_PRIVATE_EVIDENCE_DIR: ${{ runner.temp }}/ac266-private-evidence-${{ github.run_id }}-${{ github.run_attempt }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ -n "${RUNNER_TEMP:-}" && -n "${AC266_PRIVATE_EVIDENCE_DIR:-}" && -n "${GITHUB_RUN_ID:-}" && -n "${GITHUB_RUN_ATTEMPT:-}" && "$GITHUB_RUN_ID" =~ ^[0-9]+$ && "$GITHUB_RUN_ATTEMPT" =~ ^[0-9]+$ && "$AC266_PRIVATE_EVIDENCE_DIR" == "$RUNNER_TEMP/ac266-private-evidence-$GITHUB_RUN_ID-$GITHUB_RUN_ATTEMPT" ]]; then
+            rm -rf -- "$AC266_PRIVATE_EVIDENCE_DIR"
+          else
+            printf '%s\n' 'Refusing unsafe AC266 private evidence cleanup.' >&2
+            exit 1
+          fi
+      - name: Upload sanitized manual intake manifest
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+        with:
+          name: ac266-manual-accessibility-intake
+          path: manual/intake-manifest.json
+          if-no-files-found: error
+          retention-days: 30

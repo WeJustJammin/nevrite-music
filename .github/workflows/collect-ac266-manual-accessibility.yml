@@ -1,0 +1,94 @@
+name: Collect AC266 manual accessibility evidence
+on:
+  workflow_dispatch:
+    inputs:
+      staging_run_id:
+        description: Successful staging promotion run ID for the candidate artifact
+        required: true
+        type: string
+      source_sha:
+        description: Exact 40-character source commit deployed to staging
+        required: true
+        type: string
+      staging_deployment_id:
+        description: Trusted GitHub staging deployment ID
+        required: true
+        type: string
+      manual_report_run_id:
+        description: Successful approved manual-report intake run ID
+        required: true
+        type: string
+permissions: { actions: read, contents: read, deployments: read }
+jobs:
+  collect:
+    name: Verify protected manual evidence against staging
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    environment:
+      name: ac266-manual-evidence
+      url: ${{ vars.STAGING_WEB_ORIGIN }}
+    env:
+      DEPLOY_SHA: ${{ inputs.source_sha }}
+      STAGING_RUN_ID: ${{ inputs.staging_run_id }}
+      STAGING_DEPLOYMENT_ID: ${{ inputs.staging_deployment_id }}
+      MANUAL_REPORT_RUN_ID: ${{ inputs.manual_report_run_id }}
+      STAGING_WEB_ORIGIN: ${{ vars.STAGING_WEB_ORIGIN }}
+      AC266_MANUAL_CANDIDATE_PATH: candidate/staging-artifact-identity.json
+      AC266_MANUAL_INTAKE_MANIFEST_PATH: manual-intake/intake-manifest.json
+    steps:
+      - name: Check out the protected finalizer revision
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      - name: Set up pinned workspace dependencies
+        uses: ./.github/actions/setup
+      - name: Download the requested staging candidate
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
+        with:
+          name: staging-verified-candidate
+          path: candidate
+          repository: ${{ github.repository }}
+          run-id: ${{ inputs.staging_run_id }}
+          github-token: ${{ github.token }}
+      - name: Download the sanitized manual intake manifest
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
+        with:
+          name: ac266-manual-accessibility-intake
+          path: manual-intake
+          repository: ${{ github.repository }}
+          run-id: ${{ inputs.manual_report_run_id }}
+          github-token: ${{ github.token }}
+      - name: Strictly verify staging, intake provenance, and protected reports
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          RUNNER_TEMP: ${{ runner.temp }}
+          AC266_PRIVATE_EVIDENCE_DIR: ${{ runner.temp }}/ac266-private-evidence-${{ github.run_id }}-${{ github.run_attempt }}
+          AC266_MANUAL_REPORT_DIRECTORY: ${{ runner.temp }}/ac266-private-evidence-${{ github.run_id }}-${{ github.run_attempt }}
+          AC266_VOICEOVER_REPORT_BASE64: ${{ secrets.AC266_VOICEOVER_REPORT_BASE64 }}
+          AC266_NVDA_REPORT_BASE64: ${{ secrets.AC266_NVDA_REPORT_BASE64 }}
+        shell: bash
+        run: node --experimental-strip-types infra/workflows/verify-ac266-manual-accessibility-evidence.ts
+      - name: Remove private raw reports before evidence upload
+        if: ${{ always() }}
+        env:
+          RUNNER_TEMP: ${{ runner.temp }}
+          AC266_PRIVATE_EVIDENCE_DIR: ${{ runner.temp }}/ac266-private-evidence-${{ github.run_id }}-${{ github.run_attempt }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ -n "${RUNNER_TEMP:-}" && -n "${AC266_PRIVATE_EVIDENCE_DIR:-}" && -n "${GITHUB_RUN_ID:-}" && -n "${GITHUB_RUN_ATTEMPT:-}" && "$GITHUB_RUN_ID" =~ ^[0-9]+$ && "$GITHUB_RUN_ATTEMPT" =~ ^[0-9]+$ && "$AC266_PRIVATE_EVIDENCE_DIR" == "$RUNNER_TEMP/ac266-private-evidence-$GITHUB_RUN_ID-$GITHUB_RUN_ATTEMPT" ]]; then
+            rm -rf -- "$AC266_PRIVATE_EVIDENCE_DIR"
+          else
+            printf '%s\n' 'Refusing unsafe AC266 private evidence cleanup.' >&2
+            exit 1
+          fi
+      - name: Upload only the minimized verification manifest
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+        with:
+          name: ac266-manual-accessibility-evidence
+          path: ac266-manual-evidence/verification-manifest.json
+          if-no-files-found: error
+          retention-days: 30

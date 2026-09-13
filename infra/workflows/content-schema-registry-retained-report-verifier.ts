@@ -23,6 +23,7 @@ import {
   validateContentSchemaRegistryAutomatedAxeReportBytes,
 } from './content-schema-registry-axe-report-verifier.ts';
 import { validateContentSchemaRegistryHostedE2eReportBytes } from './content-schema-registry-hosted-e2e-report-verifier.ts';
+import { validateContentSchemaRegistryManualAccessibilityReportBytes } from './content-schema-registry-manual-accessibility-report-verifier.ts';
 
 const MAX_RETAINED_REPORT_BYTES = 10 * 1024 * 1024;
 
@@ -235,6 +236,24 @@ export const verifyContentSchemaRegistryRetainedReports = (
         reportBytes,
         reference.sha256,
         evidence.accessibility,
+        expectedIdentity,
+      );
+    } else if (label === 'VoiceOver accessibility') {
+      validateContentSchemaRegistryManualAccessibilityReportBytes(
+        reportBytes,
+        reference.sha256,
+        evidence.accessibility.manualRuns[0],
+        evidence.accessibility,
+        evidence.hostedE2e,
+        expectedIdentity,
+      );
+    } else if (label === 'NVDA accessibility') {
+      validateContentSchemaRegistryManualAccessibilityReportBytes(
+        reportBytes,
+        reference.sha256,
+        evidence.accessibility.manualRuns[1],
+        evidence.accessibility,
+        evidence.hostedE2e,
         expectedIdentity,
       );
     } else if (sha256Bytes(reportBytes) !== reference.sha256)
