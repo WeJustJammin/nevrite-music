@@ -87,10 +87,16 @@ unleased outage path that can pass the retained gate.
 
 Role/resource and scenario/role mappings are independently trusted inputs, not
 values the runner contract or report may authorize. Supply
-`expectedRoleResourceBindings` and `expectedScenarioRoleBindings` from the
-approved versioned policy, compare them exactly with the contract's mapping
-fields, and bind role/scenario receipts to the approved session and resource
-reference digests. Keep all nine role and ten scenario keys exact.
+the protected V3 context's `approvedRunnerMappingsBytes` and
+`verifyApprovedRunnerMappingsAuthenticity` for the versioned
+`ac265-approved-runner-mappings-v1` source. Its exact run/candidate-bound role
+resource-reference arrays and scenario-role assignments must authenticate over
+the raw bytes. The context's `expectedRoleResourceBindings` and
+`expectedScenarioRoleBindings` are cross-checked against that payload, then the
+contract is compared exactly with the authenticated mappings. Keep required
+keys complete; do not infer all role/scenario pairs or per-role resource kinds.
+Bind role/scenario receipts to the approved session and resource reference
+digests.
 
 The protected workflow must resolve each opaque reference and receipt to its
 exact raw bytes, recompute SHA-256 before parsing, and cross-verify the
@@ -101,8 +107,9 @@ over those same bytes; a digest alone is not authentication. Execution evidence
 bytes must likewise be resolved, hashed, and bound to the expected evidence
 kind, identity, subject, and (for teardown) session-reference digest. The local
 v3 verifier uses caller-supplied trusted identity, run ID, contract digest,
-independent mappings, `resolveReceipt`, and `verifyReceiptAuthenticity`; when
-execution evidence is declared, its resolver must provide the raw bytes.
+authenticated approved-mapping bytes and authenticity callback, matching trusted
+map fields, `resolveReceipt`, and `verifyReceiptAuthenticity`; when execution
+evidence is declared, its resolver must provide the raw bytes.
 
 The retained V3 report, runner-contract JSON, and resolved receipt JSON must
 reject duplicate object members before `JSON.parse` or schema validation.
@@ -112,10 +119,15 @@ duplicates and escaped-equivalent keys fail closed. For each role and scenario,
 `durationMs <= completedAt - startedAt`.
 
 The trusted verification context also supplies a positive safe-integer
-`maxRunDurationMs`, `trustedCutoffAt`, and
-`expectedOutageLeaseScope`. The outage scope is exactly `runId`,
+`maxRunDurationMs`, `trustedCutoffAt`, the exact
+`approvedOutageTargetBytes`, and an authenticity verifier for those raw bytes.
+The target is parsed as `ac265-approved-outage-target-v1` and its scope is the
+only source of `expectedOutageLeaseScope`; do not accept that scope from
+workflow dispatch or the runner contract. The scope is exactly `runId`,
 `hostingProjectId`, `supabaseProjectRef`, `deploymentId`, `dependencyId`, and
-route `{ operationId, method, path }`. The signed/authenticated lease receipt
+route `{ operationId, method, path }`. No live target-source endpoint or
+authentication key/config is defined, so the retained gate stays closed. The
+signed/authenticated lease receipt
 must bind that scope to the staging-only `ac265-lease://staging/<uuid>` ref and
 its exact-UTF-8 SHA-256, bounded acquire/expiry timestamps, one matching
 consume event, one-request limit, and replay rejection. Cleanup release proof
@@ -419,8 +431,8 @@ case scope, and recent step-up as applicable; unavailable authority remains a
 blocker. A disabled case must demonstrate disabled controls and no mutation.
 All nine cases and all ten scenarios remain mandatory, with actual hosted
 IdP/RLS and session teardown evidence. Do not relabel an old result, skip a case,
-or use the policy map to generate claimed passes. The map validates evidence;
-it neither runs a test nor grants authority. The
+or use the policy or authenticated mapping to generate claimed passes. They
+validate evidence; neither runs a test nor grants authority. The
 verifier then confirms shape, exact check coverage,
 immutable identity, ordering, strict SLO limits, derived daily DLQ rate,
 hosted-origin safety, deployment chronology, trusted-cutoff bounds, and evidence
@@ -434,11 +446,14 @@ the verifier hashes exact raw runner-contract, reference, execution-evidence,
 and receipt bytes; checks their declared digests; resolves protected evidence
 by opaque reference; validates receipt authenticity through the supplied
 authenticity verifier; and compares subjects, results, resource bindings, and
-complete candidate identity. It also requires independently supplied
-role/resource and scenario/role mappings, validates the outage-lease lifecycle
-against `expectedOutageLeaseScope`, and enforces caller-supplied
-`maxRunDurationMs`, trusted cutoff, receipt run-window, and cleanup-receipt
-ordering. A hash of `hosted/e2e.json` or a local fixture alone proves none of
+complete candidate identity. It compares complete role/resource and
+scenario/role maps against the separately authenticated
+`ac265-approved-runner-mappings-v1` bytes; only fixed scenario parameters come
+from `ac265-hosted-runner-policy-v1`. It validates the outage-lease lifecycle
+against the scope from authenticated approved-target bytes. Both protected
+source endpoints and authentication key/configuration remain unresolved. The
+verifier also enforces caller-supplied `maxRunDurationMs`, trusted cutoff, receipt run-window, and
+cleanup-receipt ordering. A hash of `hosted/e2e.json` or a local fixture alone proves none of
 the external sessions, resources, signed receipts, or hosted observations.
 
 This remains a local trust-boundary check, not hosted AC265 acceptance. The
@@ -467,8 +482,9 @@ Only a protected workflow entrypoint may call
 `verifyContentSchemaRegistryOperationalReleaseEvidenceFile` with
 `hostedV3Verification` constructed from trusted protected context. That context
 must supply the exact protected `runnerContractBytes`, independently trusted
-identity/digests/mappings/time bounds, and the receipt/evidence resolvers and
-authenticity verifier. The workflow may emit
+identity/digests, authenticated approved-mapping bytes and authenticity
+callback, matching mapping fields, time bounds, and the receipt/evidence
+resolvers and authenticity verifier. The workflow may emit
 `content_schema_registry_release_evidence=passed` only after the V3 retained
 report and all other gates pass. Until that protected entrypoint exists, no
 standalone command can produce acceptance success. Keep Slice 09 and dependent

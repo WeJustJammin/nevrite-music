@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 
 import { ContentSchemaRegistryHostedE2eReportV3Schema } from '../../packages/contracts/src/content-schema-registry/operational-release-evidence-hosted-report-v3.ts';
+import { authenticateApprovedRunnerMappingsV1 } from '../../infra/workflows/ac265-hosted-runner-policy-v1.ts';
 import {
   contextFor,
   createFixture,
@@ -178,11 +179,11 @@ describe('AC265 required dependency outage lease evidence', () => {
     );
   });
 
-  it('requires independently trusted outage lease scope', () => {
+  it('requires a protected approved outage target as the independent lease scope source', () => {
     const built = buildLeaseFixture();
     expectValidBuiltFixture(built);
     const context = contextWithCutoff(built);
-    delete context.expectedOutageLeaseScope;
+    delete context.approvedOutageTargetBytes;
 
     expect(() =>
       validateWithContext(
@@ -190,7 +191,7 @@ describe('AC265 required dependency outage lease evidence', () => {
         built.fixture.contractBytes,
         context,
       ),
-    ).toThrow(/trusted outage lease scope is required/i);
+    ).toThrow(/approved outage target bytes.*required/i);
   });
 
   it('requires a resolved control-plane lease receipt', () => {
@@ -242,5 +243,33 @@ describe('AC265 required dependency outage lease evidence', () => {
     expect(() => validateBuilt(built)).toThrow(
       /hosted e2e report v3 body is invalid/i,
     );
+  });
+
+  it('freezes nested authenticated mapping data before trusted use', () => {
+    const contract = buildLeaseFixture().fixture.contract;
+    const bytes = jsonBytes({
+      schemaVersion: 'ac265-approved-runner-mappings-v1',
+      source: 'protected-ac265-runner-mapping-control-plane',
+      mappingId: 'ac265-policy-test-source-01',
+      approvedAt: '2026-09-03T10:29:00.000Z',
+      runId: contract.runId,
+      identity: contract.identity,
+      roleResourceBindings: contract.roleResourceBindings,
+      scenarioRoleBindings: contract.scenarioRoleBindings,
+    });
+    const approved = authenticateApprovedRunnerMappingsV1(bytes, () => true);
+
+    expect(Object.isFrozen(approved)).toBe(true);
+    expect(Object.isFrozen(approved.identity)).toBe(true);
+    expect(Object.isFrozen(approved.roleResourceBindings)).toBe(true);
+    expect(Object.isFrozen(approved.roleResourceBindings.entitled_read)).toBe(
+      true,
+    );
+    expect(Reflect.set(approved.roleResourceBindings, 'owner_full', [])).toBe(
+      false,
+    );
+    expect(
+      Reflect.set(approved.roleResourceBindings.entitled_read, '0', 'changed'),
+    ).toBe(false);
   });
 });

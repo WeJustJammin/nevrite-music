@@ -75,12 +75,13 @@
   external evidence has not been claimed. Slice 10 remains dependency-locked. See
   `.memory/pipeline/progress/phases/phase-02.md` and
   `.memory/pipeline/progress/slices/phase-02-slice-09.md`.
-- **CURRENT VALIDATION:** `pnpm validate` passes 434/434 Vitest files and
-  3,256 tests plus one intentional skip at 100% coverage, 101/101 functional
-  Playwright checks, 5/5 production-built Slice 09 checks, every workspace build,
-  bundle budgets, and the fresh immutable-Worker API p95 smoke.
-  `pnpm db:verify` passes 34/34 migrations and 45/45 pgTAP files with
-  1,678/1,678 assertions and exact generated types.
+- **CURRENT VALIDATION:** Focused AC265 verification passes 9 files / 68 tests,
+  including the public contract-export guard;
+  format, lint, and type-check pass. `pnpm validate` passes 514 Vitest files /
+  4,022 tests plus one intentional skip at 100% coverage, the Slice 09 evidence
+  gate, 101 functional plus 5 recovery Playwright checks, workspace builds,
+  bundle budgets, and performance smoke. `pnpm db:verify` passes 50 pgTAP files /
+  1,818 tests with migrated database types matching.
 - **HISTORICAL PRE-REMEDIATION CANDIDATE:** Before this remediation, PR #9 branch
   `codex/phase-2-slices-01-09` was at
   `67264c5e9b5196d00ac3f0aa272896a010c872d7`; synthetic merge
@@ -143,6 +144,15 @@ failed: malformed response`. The token still passes Workers Observability.
   callback/session/protected-route proof passed on staging. AC265 remains open:
   the approved 9-role/10-scenario hosted report and identity provisioning,
   teardown, and lifecycle evidence are still missing.
+- **LATEST AC265 CANDIDATE / PREFLIGHT:** PR #70 is merged at `origin/main` SHA
+  `063ea14904291ee44f8b365620f557ee61f32e65`; exact-main CI `34766992913`
+  attempt 1 and staging `34767568945` attempt 1 / deployment `6423551109` passed.
+  Candidate artifact `staging-verified-candidate` (`10320309807`) passed a live,
+  read-only provenance preflight. The current unmerged tranche adds a read-only
+  main-only preflight workflow, strict candidate provenance, authenticated policy mapping/outage-target
+  contracts, and a fail-closed collector port boundary. This remains scaffolding:
+  no protected collector/service protocol or hosted acceptance exists, and AC265
+  remains open.
 - **NEXT:** retain a genuine post-configuration redacted alert delivery receipt.
   Keep Slice 09 blocked at 279/283 and Phase 2 at 8/17 until AC209, the complete
   UTC-day/200-sample SLO and DLQ evidence for AC211, the approved 9-role/10-scenario

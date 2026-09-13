@@ -110,16 +110,48 @@ reference alone is not sufficient authority to resolve a protected object.
 ## Independent role and scenario mappings
 
 The contract and report cannot authorize their own role/resource or
-scenario/role mappings. Load `expectedRoleResourceBindings` and
-`expectedScenarioRoleBindings` from an independently trusted, versioned test
-policy and compare them exactly with the contract's `roleResourceBindings`
-and `scenarioRoleBindings`. Require the complete locked role and scenario
-keys; reject omitted, extra, duplicated, or altered assignments. Do not
-derive the expected mappings from the submitted contract or report. Bind each
-role receipt to that role's session-reference digest and resource-reference
-digests, and each scenario receipt to its approved role bindings and the
-corresponding session/resource digests. A browser or manifest assertion alone
-does not prove the mapping was authorized.
+scenario/role mappings. Policy version `ac265-hosted-runner-policy-v1` in
+[`infra/workflows/ac265-hosted-runner-policy-v1.ts`](../../../infra/workflows/ac265-hosted-runner-policy-v1.ts)
+pins fixed scenario parameters only; it does not invent resource kinds or
+scenario/role pairs. V3 verification requires exact
+`ac265-approved-runner-mappings-v1` bytes from an independently protected
+source. The strict, duplicate-member-rejecting schema binds `mappingId`,
+`approvedAt`, `runId`, candidate `identity`, the complete
+`roleResourceBindings` reference arrays, and the complete
+`scenarioRoleBindings` map. An authenticity callback must validate those exact
+bytes. Trusted context map fields must match the authenticated bytes, and the
+contract must match them exactly. Resource kinds are those of the approved
+safe-resource references; no per-role kind map is inferred here.
+
+Require every locked role and scenario key exactly once where the report
+requires coverage; reject omitted, extra, duplicated, or altered mapping keys.
+The approved `scenarioRoleBindings` source supplies the role set for each
+scenario. Never infer that every role participates in every scenario or derive
+either mapping from the submitted contract or report. Bind each role receipt to
+that role's session-reference digest and resource-reference digests, and each
+scenario receipt to its authenticated role bindings and corresponding
+session/resource digests. A browser or manifest assertion alone does not prove
+the mapping was authorized. No live mapping-source endpoint or trusted key/
+configuration is currently defined, so this interface does not establish
+hosted approval.
+
+## Versioned scenario parameter policy
+
+Policy v1 pins `viewportWidthsCssPx` to mobile 320, tablet 769, and desktop
+1025; it pins the `CMS-03A-06` `GET /api/v1/cms/content-types` rate-limit
+target to 120 requests per user per minute and stops after request 121. These
+values are compared exactly, in addition to the schema's valid ranges.
+
+The locked sources do not name a safe dependency-outage target. The verifier
+therefore cannot complete policy v1 from contract or dispatch data. It requires
+raw `ac265-approved-outage-target-v1` bytes from the protected staging fault
+control plane plus an authenticity check over those exact bytes. The target
+must bind the current run, staging hosting project, Supabase project, and
+deployment; placeholders, missing input, or failed authenticity leave the
+retained gate closed. No such hosted approval source is currently implemented.
+The policy pins the outage lease to one request and at most 60 seconds; the
+run-scoped lease reference and timestamps remain bound to the authenticated
+control-plane receipt and the run window.
 
 ## Locked role matrix
 
@@ -196,10 +228,14 @@ actor, or exercise production.
 `dependency_outage` is the only injected-failure control. The control plane
 must issue a `staging_one_use_lease` reference in the form
 `ac265-lease://staging/<uuid>` and a signed/authenticated control-plane receipt.
-The verifier receives the expected lease scope independently as
-`expectedOutageLeaseScope` and requires exact equality with the contract and
-receipt scope: `runId`, `hostingProjectId`, `supabaseProjectRef`,
-`deploymentId`, `dependencyId`, and route `{ operationId, method, path }`.
+The verifier derives `expectedOutageLeaseScope` only from separately protected
+`ac265-approved-outage-target-v1` bytes after authenticating those exact raw
+bytes. Do not accept the target or its scope from workflow dispatch or the
+runner contract. The derived scope must exactly match the contract and receipt:
+`runId`, `hostingProjectId`, `supabaseProjectRef`, `deploymentId`,
+`dependencyId`, and route `{ operationId, method, path }`. No live source
+endpoint or authentication key/config is currently defined, so the hosted
+gate remains closed until one is approved and implemented.
 The lease reference's lowercase SHA-256 digest is computed from its exact
 UTF-8 bytes. Acquisition and expiry are bounded timestamps; the lease must be
 acquired during the run, expire after acquisition but no later than its

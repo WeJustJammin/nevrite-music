@@ -617,9 +617,11 @@ disabled controls and no mutation. All nine cases and all ten AC265 scenarios
 remain mandatory. Retain actual hosted IdP/RLS, step-up, and teardown evidence;
 skips and local fixtures do not satisfy the release gate.
 
-The retained report uses `ac265-hosted-e2e-v2` with each role's explicit
-`authorized_access`, `denied_no_disclosure`, or `disabled_no_mutation` assertion.
-Future positive deferred-role tests require their owning launch prerequisites.
+The retained accepted report uses `ac265-hosted-e2e-v3` with each role's
+explicit `authorized_access`, `denied_no_disclosure`, or
+`disabled_no_mutation` assertion. The V2 schema remains a compatibility format
+and cannot satisfy the retained release gate. Future positive deferred-role
+tests require their owning launch prerequisites.
 
 | Feature/component                                      | Free                            | Paid                                            | Creator                                  | Guardian                             | Junior                                                      | Business                                        | Staff                                    | Admin                                                           |
 | ------------------------------------------------------ | ------------------------------- | ----------------------------------------------- | ---------------------------------------- | ------------------------------------ | ----------------------------------------------------------- | ----------------------------------------------- | ---------------------------------------- | --------------------------------------------------------------- |
@@ -1517,18 +1519,21 @@ None. New product or architecture choices must re-open their originating locked 
 - [x] Global design-system components and state language are consumed without reinvention.
 - [x] Seven mandatory passes, two-implementer review, devil's-advocate review, and convergence pass completed.
 
-
 <!-- spec-graph: auto-generated -->
+
 ## Related Specs
 
 ### Derives from
+
 - [[specs/ia/03-cms-content-modeling|Shard 03 — CMS content modeling and authoring]]
 - [[specs/ia/deep-dives/03-cms-content-modeling|Deep Dive 03 — CMS content modeling and authoring]]
 
 ### Phases into
+
 - [[specs/phases/phase-2|Phase 2 — Identity, admin, CMS/settings]]
 
 ### References
+
 - [[specs/ia/03-cms-content-modeling|Shard 03 — CMS content modeling and authoring]]
 - [[specs/ia/deep-dives/03-cms-content-modeling|Deep Dive 03 — CMS content modeling and authoring]]
 - [[specs/phases/phase-2|Phase 2 — Identity, admin, CMS/settings]]

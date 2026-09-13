@@ -11,11 +11,17 @@ reader platform reports to one immutable artifact without storing raw provider
 payloads, credentials, tokens, or PII. Each digest has a traversal-safe relative
 report path; the workflow verifier binds those references to retained files.
 
-Hosted report version `ac265-hosted-e2e-v2` uses the role assertion policy in
-`operational-release-evidence-hosted-role.ts`. It distinguishes authorized
-access, denial without disclosure, and disabled controls without mutation.
-Deferred Phase 2 guardian/junior/business-mandate contexts require denial;
-the policy never grants runtime authority or supplies hosted proof.
+The retained hosted-report gate accepts `ac265-hosted-e2e-v3` only;
+`ac265-hosted-e2e-v2` remains a compatibility schema and cannot satisfy the
+gate. V3 uses the role assertion policy in
+`operational-release-evidence-hosted-role.ts` to distinguish authorized access,
+denial without disclosure, and disabled controls without mutation. The
+independently versioned runner policy pins only fixed scenario parameters;
+run/candidate-bound role-resource references and scenario-role assignments
+must come from authenticated `ac265-approved-runner-mappings-v1` bytes. Its
+strict schema requires complete keys and read-only parsed maps. Deferred Phase
+2 guardian/junior/business-mandate contexts require denial; these schemas and
+policies never grant runtime authority or supply hosted proof.
 
 ## Ownership
 

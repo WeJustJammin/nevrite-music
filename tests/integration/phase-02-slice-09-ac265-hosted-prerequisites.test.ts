@@ -206,6 +206,9 @@ describe('AC265 hosted-runner prerequisites', () => {
   });
 
   it('blocks execution while the approved role-authority and fault-control contract is absent', () => {
+    expect(AC265_HOSTED_CONTROLS_BLOCKED_REASON).toBe(
+      'AC265 hosted execution is blocked: protected hosted evidence infrastructure is incomplete. Missing: run-scoped session broker; approved safe-resource registry; authenticated evidence and receipt resolver; one-use outage lease service; hosted browser specs, orchestrator, and report producer. Browser-local interception or a policy map cannot substitute for verified hosted evidence.',
+    );
     expect(assertAc265HostedControlsApproved).toThrow(
       AC265_HOSTED_CONTROLS_BLOCKED_REASON,
     );

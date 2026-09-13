@@ -1,0 +1,30 @@
+name: Prepare AC265 hosted E2E candidate
+description: Set up the checked-out workspace and fetch its exact CI and staging artifacts.
+inputs:
+  source_sha:
+    required: true
+  staging_run_id:
+    required: true
+  ci_run_id:
+    required: true
+runs:
+  using: composite
+  steps:
+    - name: Set up pinned workspace dependencies
+      uses: ./.github/actions/setup
+    - name: Download the staging-verified candidate
+      uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
+      with:
+        github-token: ${{ github.token }}
+        name: staging-verified-candidate
+        path: candidate
+        repository: ${{ github.repository }}
+        run-id: ${{ inputs.staging_run_id }}
+    - name: Download the exact CI build
+      uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
+      with:
+        github-token: ${{ github.token }}
+        name: workspace-build-${{ inputs.source_sha }}
+        path: ci-build
+        repository: ${{ github.repository }}
+        run-id: ${{ inputs.ci_run_id }}
