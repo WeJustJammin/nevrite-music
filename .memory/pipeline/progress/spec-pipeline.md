@@ -144,12 +144,13 @@ failed: malformed response`. The token still passes Workers Observability.
   callback/session/protected-route proof passed on staging. AC265 remains open:
   the approved 9-role/10-scenario hosted report and identity provisioning,
   teardown, and lifecycle evidence are still missing.
-- **LATEST AC265 CANDIDATE / PREFLIGHT:** PR #70 is merged at `origin/main` SHA
-  `063ea14904291ee44f8b365620f557ee61f32e65`; exact-main CI `34766992913`
-  attempt 1 and staging `34767568945` attempt 1 / deployment `6423551109` passed.
-  Candidate artifact `staging-verified-candidate` (`10320309807`) passed a live,
-  read-only provenance preflight. The current unmerged tranche adds a read-only
-  main-only preflight workflow, strict candidate provenance, authenticated policy mapping/outage-target
+- **LATEST AC265 CANDIDATE / PREFLIGHT:** PR #71 is merged at `origin/main` SHA
+  `03329530ce1375de63d1d5a0ecee6b5ce8ccb50d`; exact-main CI `34776703106`
+  attempt 1 and staging `34777077865` attempt 1 / deployment `6425379348` passed.
+  Candidate artifact `staging-verified-candidate` (`10323417853`) passed
+  read-only hosted preflight run `34777223023` with
+  `candidate_provenance_verified`. PR #71 adds a read-only main-only preflight
+  workflow, strict candidate provenance, authenticated policy mapping/outage-target
   contracts, and a fail-closed collector port boundary. This remains scaffolding:
   no protected collector/service protocol or hosted acceptance exists, and AC265
   remains open.
