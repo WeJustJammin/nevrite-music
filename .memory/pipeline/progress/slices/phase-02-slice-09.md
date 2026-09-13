@@ -791,6 +791,10 @@ dependency-locked.
   `47b5ff2ca788f4470254c0161e636246719b98da`. CI `34749050376` and staging
   `34749287577` / deployment `6419900767` passed, and the verified-candidate
   artifact now contains the exact staging run/attempt identity sidecar.
+- Reconciled live `ac266-manual-evidence` environment `21821361680` after
+  detecting administrator-bypass drift. Administrator bypass is again disabled;
+  reviewer `WeJustJammin`, owner self-review, and the sole custom `main` branch
+  policy remain intact. No AC266 report secret or manual report exists.
 - Protected production attempts `34749383380` and `34749687614` used that
   exact candidate. Both passed immutable promotion identity and protection
   preflight plus explicit production-environment approval, then failed closed
