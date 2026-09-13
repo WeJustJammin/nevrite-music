@@ -1,4 +1,5 @@
 import {
+  ClientBindingIdSchema,
   ContentTypeDraftRequestSchema,
   ContentTypeVersionResourceSchema,
   FieldDefinitionVersionResourceSchema,
@@ -165,6 +166,12 @@ export const requestHeaders = (request: Request): Headers => {
       headers.set(key, value);
     }
   }
+  const clientBindingId = request.headers.get('x-client-binding-id');
+  if (
+    clientBindingId !== null &&
+    ClientBindingIdSchema.safeParse(clientBindingId).success
+  )
+    headers.set('x-client-binding-id', clientBindingId);
   return headers;
 };
 
@@ -202,6 +209,17 @@ export const requestUpstream = async (
   request: Request,
   path: string,
 ): Promise<UpstreamResult> => {
+  const clientBindingId = request.headers.get('x-client-binding-id');
+  if (
+    clientBindingId !== null &&
+    !ClientBindingIdSchema.safeParse(clientBindingId).success
+  ) {
+    const error = new ContentSchemaRegistryPlatformError(
+      'invalid_request',
+      400,
+    );
+    return { kind: 'invalid_request', error };
+  }
   let response: Response;
   try {
     response = await binding.fetch(

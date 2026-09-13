@@ -1,106 +1,64 @@
-import { useEffect, useMemo, useState } from 'react';
+import type { ActingContextSwitcherProps } from './acting-context-model';
+import { useActingContextSwitcher } from './use-acting-context-switcher';
 
-export interface ActingContextItem {
-  readonly contextId: string;
-  readonly partyId: string;
-  readonly kind: 'person' | 'alias' | 'organization' | 'representation';
-  readonly label: string;
-  readonly avatarRef: string | null;
-  readonly selectable: boolean;
-  readonly authorityFreshUntil: string;
-}
+export type {
+  ActingContextItem,
+  ActingContextResource,
+  ActingContextSwitcherProps,
+} from './acting-context-model';
 
-interface ActingContextResource {
-  readonly projectionVersion: string;
-  readonly items: readonly ActingContextItem[];
-  readonly nextCursor: string | null;
-  readonly hasMore: boolean;
-}
-
-export interface ActingContextSwitcherProps {
-  readonly contexts?: readonly ActingContextItem[];
-  readonly items?: readonly ActingContextItem[];
-  readonly initial: ActingContextResource;
-  readonly selectedContextId: string;
-  readonly selectedPartyId: string;
-  readonly suggestedContextId?: string | null;
-  readonly onBindContext: (contextId: string) => Promise<unknown>;
-  readonly onCanonicalRefetch: () => Promise<ActingContextResource>;
-  readonly invalidationChannel: string;
-}
-
-export function ActingContextSwitcher({
-  contexts,
-  items,
-  initial,
-  selectedContextId,
-  suggestedContextId = null,
-  onBindContext,
-  onCanonicalRefetch,
-  invalidationChannel,
-}: ActingContextSwitcherProps) {
-  const supplied = contexts ?? items ?? initial.items;
-  const [canonicalItems, setCanonicalItems] = useState(supplied);
-  const [selected, setSelected] = useState(selectedContextId);
-  const [draft, setDraft] = useState(selectedContextId);
-  const [revoked, setRevoked] = useState(false);
-  const current = useMemo(
-    () => canonicalItems.find(({ contextId }) => contextId === selected),
-    [canonicalItems, selected],
-  );
-  const suggestion = canonicalItems.find(
-    ({ contextId }) => contextId === suggestedContextId,
-  );
-
-  useEffect(() => {
-    const channel = new BroadcastChannel(invalidationChannel);
-    channel.onmessage = (event: MessageEvent<unknown>) => {
-      const payload = event.data;
-      if (
-        typeof payload !== 'object' ||
-        payload === null ||
-        !('eventType' in payload) ||
-        payload.eventType !== 'identity.acting-context.revoked.v1'
-      ) {
-        return;
-      }
-      void onCanonicalRefetch().then((resource) => {
-        setCanonicalItems(resource.items);
-        const fallback =
-          resource.items.find(({ kind }) => kind === 'person') ??
-          resource.items[0];
-        if (fallback !== undefined) {
-          setSelected(fallback.contextId);
-          setDraft(fallback.contextId);
-        }
-        setRevoked(true);
-      });
-    };
-    return () => channel.close();
-  }, [invalidationChannel, onCanonicalRefetch]);
-
-  const confirmSelection = async (): Promise<void> => {
-    const candidate = canonicalItems.find(
-      ({ contextId }) => contextId === draft,
-    );
-    if (candidate === undefined || !candidate.selectable || draft === selected)
-      return;
-    await onBindContext(draft);
-    setSelected(draft);
-    setRevoked(false);
-  };
+export function ActingContextSwitcher(props: ActingContextSwitcherProps) {
+  const { tabContextStatus = 'verified', contextReverted = false } = props;
+  const {
+    canonicalItems,
+    selected,
+    draft,
+    revoked,
+    error,
+    pending,
+    contextVerified,
+    indicatorLabel,
+    current,
+    suggestion,
+    errorRef,
+    changeDraft,
+    confirmSelection,
+  } = useActingContextSwitcher(props);
 
   return (
     <section aria-labelledby="acting-context-heading">
-      <h1 id="acting-context-heading">Acting context</h1>
+      <h2 id="acting-context-heading">Acting context</h2>
       <p
         data-testid="acting-context-indicator"
-        data-context-id={current?.contextId ?? selected}
+        data-context-id={
+          contextVerified ? (current?.contextId ?? selected) : 'unverified'
+        }
         aria-live="polite"
         aria-atomic="true"
       >
-        Current context: {current?.label ?? 'My profile'}
+        Current context: {indicatorLabel}
       </p>
+      {tabContextStatus === 'checking' ? (
+        <p role="status" aria-live="polite">
+          Checking the server-selected context for this tab.
+        </p>
+      ) : null}
+      {tabContextStatus === 'unavailable' ? (
+        <p role="alert" aria-live="assertive">
+          This tab’s current context could not be verified. Reload before
+          continuing.
+        </p>
+      ) : null}
+      {contextReverted ? (
+        <p
+          data-testid="acting-context-reverted"
+          role="status"
+          aria-live="polite"
+        >
+          The previous acting context was unavailable. The server confirmed My
+          profile for this tab.
+        </p>
+      ) : null}
       {suggestion === undefined ? null : (
         <p
           data-testid="acting-context-suggestion"
@@ -122,7 +80,12 @@ export function ActingContextSwitcher({
       <select
         id="acting-context-select"
         value={draft}
-        onChange={(event) => setDraft(event.currentTarget.value)}
+        aria-invalid={error !== null}
+        aria-describedby={error === null ? undefined : 'acting-context-error'}
+        disabled={pending || !contextVerified}
+        onChange={(event) => {
+          changeDraft(event.currentTarget.value);
+        }}
       >
         {canonicalItems.map((item) => (
           <option
@@ -134,9 +97,25 @@ export function ActingContextSwitcher({
           </option>
         ))}
       </select>
-      <button type="button" onClick={() => void confirmSelection()}>
-        Confirm context switch
+      <button
+        type="button"
+        disabled={pending || !contextVerified || draft === selected}
+        onClick={() => void confirmSelection()}
+      >
+        {pending ? 'Changing context…' : 'Confirm context switch'}
       </button>
+      {error === null ? null : (
+        <p
+          ref={errorRef}
+          id="acting-context-error"
+          data-testid="acting-context-error"
+          role="alert"
+          aria-live="assertive"
+          tabIndex={-1}
+        >
+          {error}
+        </p>
+      )}
     </section>
   );
 }

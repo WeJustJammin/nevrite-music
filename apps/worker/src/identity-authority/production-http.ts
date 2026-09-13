@@ -6,6 +6,10 @@ import type {
   AuthenticationResult,
 } from '../authentication/types';
 import { supabaseRpcHeaders } from '../supabase-rpc-headers';
+import {
+  identityRpcRequestHeaders,
+  type IdentityRpcRequestContext,
+} from './production-request-context';
 
 const boundedJson = async (response: Response): Promise<unknown> => {
   const text = await response.text();
@@ -86,6 +90,16 @@ const rpcFailure = (value: unknown): AuthenticationError => {
       code: 'TRANSFER_NOT_ALLOWED',
       message: 'The transfer is not allowed.',
     },
+    IDEMPOTENCY_MISMATCH: {
+      status: 409,
+      code: 'IDEMPOTENCY_MISMATCH',
+      message: 'The idempotency key was used for another request.',
+    },
+    INVALID_CURSOR: {
+      status: 400,
+      code: 'INVALID_REQUEST',
+      message: 'The context cursor is invalid.',
+    },
     CONTEXT_NOT_FOUND: {
       status: 404,
       code: 'CONTEXT_NOT_FOUND',
@@ -143,6 +157,7 @@ export const callIdentityRpc = async (
   name: string,
   input: Readonly<Record<string, unknown>>,
   signal: AbortSignal,
+  extraHeaders: Readonly<Record<string, string>> = {},
 ): Promise<unknown> => {
   let response: Response;
   try {
@@ -155,6 +170,7 @@ export const callIdentityRpc = async (
         ...supabaseRpcHeaders(config.secret),
         'Content-Profile': 'platform_api',
         'Content-Type': 'application/json',
+        ...extraHeaders,
       },
       body: JSON.stringify(input),
     });
@@ -183,10 +199,15 @@ export const callIdentity = async <T>(
       value: unknown,
     ) => { success: true; data: T } | { success: false };
   },
+  requestContext?: IdentityRpcRequestContext,
 ): Promise<AuthenticationResult<T>> => {
   try {
+    const extraHeaders =
+      requestContext === undefined
+        ? {}
+        : identityRpcRequestHeaders(requestContext);
     const parsed = schema.safeParse(
-      await callIdentityRpc(config, name, input, signal),
+      await callIdentityRpc(config, name, input, signal, extraHeaders),
     );
     return parsed.success
       ? { ok: true, value: parsed.data }

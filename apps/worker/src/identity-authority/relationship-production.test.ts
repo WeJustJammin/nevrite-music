@@ -31,7 +31,14 @@ const SESSION_ID = '13131313-1313-4131-8131-131313131313';
 const ACTING_PARTY_ID = '14141414-1414-4141-8141-141414141414';
 
 const request = new Request('https://api.example.test/relationships', {
-  headers: { 'x-request-id': REQUEST_ID },
+  headers: {
+    cookie: 'wj_access=relationship-cookie-access.jwt.signature',
+    authorization: 'Bearer browser-controlled-token',
+    'idempotency-key': 'relationship-adapter-test',
+    'x-client-binding-id': 'relationship-tab-7',
+    'x-request-id': REQUEST_ID,
+    'x-correlation-id': REQUEST_ID,
+  },
 });
 const session = {
   authUserId: AUTH_USER_ID,
@@ -230,15 +237,18 @@ describe('relationship production adapters', () => {
 
     expect(callRelationshipMock).toHaveBeenCalledTimes(10);
     expect(callRelationshipMock.mock.calls[0]![5]).toMatchObject({
-      'X-Operation-Id': 'ORG-01',
-      'X-Request-Id': REQUEST_ID,
-      'X-Correlation-Id': REQUEST_ID,
-      'X-Idempotency-Key': command.idempotencyKey,
+      'x-operation-id': 'ORG-01',
+      'x-request-id': REQUEST_ID,
+      'x-correlation-id': REQUEST_ID,
+      'idempotency-key': command.idempotencyKey,
+      'x-client-binding-id': 'relationship-tab-7',
+      authorization: 'Bearer relationship-cookie-access.jwt.signature',
     });
     expect(callRelationshipMock.mock.calls[1]![5]).toEqual({
-      'X-Operation-Id': 'ORG-02',
-      'X-Request-Id': REQUEST_ID,
-      'X-Correlation-Id': REQUEST_ID,
+      'x-operation-id': 'ORG-02',
+      'x-request-id': REQUEST_ID,
+      'x-correlation-id': REQUEST_ID,
+      'x-client-binding-id': 'relationship-tab-7',
     });
   });
 

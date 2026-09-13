@@ -142,7 +142,7 @@ select is(pg_temp.identity_edge_count('platform_private.acting_context_binding',
 update platform_private.acting_context_binding set state='active',version=version+1,updated_at=clock_timestamp() where id='93333333-3333-4333-8333-33333333333d' and version=1;
 select is(pg_temp.identity_edge_count('platform_private.acting_context_binding','id=''93333333-3333-4333-8333-33333333333d'' and state=''active'''),0::bigint,'stale concurrent binding reactivation cannot win');
 select pg_temp.edge_context('93333333-3333-4333-8333-333333333333','93333333-3333-4333-8333-333333333334','93333333-3333-4333-8333-33333333333d','93333333-3333-4333-8333-333333333334','93333333-3333-4333-8333-333333333349','edge-revoked-binding','b7','b8');
-select throws_ok($$select platform_api.identity_context_bind('93333333-3333-4333-8333-333333333337',true,'edge-tab-a')$$,'P0001','CONTEXT_REVOKED','revoked binding cannot be reused after a race');
+select throws_ok($$select platform_api.identity_context_bind('93333333-3333-4333-8333-33333333333d',true,'edge-tab-a')$$,'P0001','CONTEXT_REVOKED','revoked binding cannot be reused after a race');
 select is(pg_temp.identity_edge_count('platform_private.acting_context_binding','person_id=''93333333-3333-4333-8333-333333333334'' and acting_party_id=''93333333-3333-4333-8333-333333333334'' and state=''active'''),1::bigint,'revoked alias context falls back to self');
 
 select throws_ok($$insert into platform_private.handle_reservation(id,normalized_handle,display_handle,party_id,state,first_used_at,last_used_at) values ('93333333-3333-4333-8333-33333333334a','edge-authority','edge-authority','93333333-3333-4333-8333-333333333336','active',clock_timestamp(),clock_timestamp())$$,'23505',null,'same normalized handle has one race winner');

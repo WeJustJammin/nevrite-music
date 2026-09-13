@@ -2,6 +2,7 @@ import {
   isAuthoritativeContentSchemaRegistryMutationResponse,
   reconcileContentSchemaRegistryMutation,
 } from './content-schema-registry-runtime-mutation-reconciliation';
+import { addClientBindingIdHeader } from '../../lib/client-binding';
 import { parseContentSchemaRegistryRetryAfter } from './content-schema-registry-runtime-constants';
 
 export {
@@ -123,7 +124,9 @@ export const executeContentSchemaRegistryMutation = async (input: {
   readonly fetcher?: Fetcher;
   readonly sleep?: Sleeper;
 }): Promise<ContentSchemaRegistryMutationResult> => {
-  const fetcher = input.fetcher ?? fetch;
+  const baseFetcher = input.fetcher ?? fetch;
+  const fetcher: Fetcher = async (request, init) =>
+    baseFetcher(request, await addClientBindingIdHeader(request, init));
   const idempotencyKey = idempotencyKeyFrom(input.formData);
   let statusChecks = 0;
   const outcomeFor = (

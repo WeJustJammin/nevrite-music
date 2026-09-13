@@ -1,4 +1,7 @@
 ---
+import type { ActingContextListResource } from '@wejammin/contracts';
+import ActingContextSwitcherIsland from './ActingContextSwitcherIsland';
+
 interface Props {
   readonly routeKind: 'index' | 'detail' | 'degraded';
   readonly query: string;
@@ -11,6 +14,9 @@ interface Props {
   readonly isDegraded: boolean;
   readonly isForbidden: boolean;
   readonly publicOnly: boolean;
+  readonly actingContexts?: ActingContextListResource | null;
+  readonly selectedContextId?: string | null;
+  readonly selectedPartyId?: string | null;
 }
 
 const {
@@ -25,6 +31,9 @@ const {
   isDegraded,
   isForbidden,
   publicOnly,
+  actingContexts = null,
+  selectedContextId = null,
+  selectedPartyId = null,
 } = Astro.props;
 ---
 
@@ -41,15 +50,31 @@ const {
     data-testid="identity-authority-sidebar"
     aria-label="Acting context"
   >
-    <h2>Acting context</h2>
-    <div
-      class="context-indicator"
-      data-testid="acting-context-indicator"
-      data-context-id="self-context"
-    >
-      Self context
-      <small>Server-selected context for this session</small>
-    </div>
+    {
+      actingContexts !== null &&
+      selectedContextId !== null &&
+      selectedPartyId !== null ? (
+        <ActingContextSwitcherIsland
+          initial={actingContexts}
+          selectedContextId={selectedContextId}
+          selectedPartyId={selectedPartyId}
+          invalidationChannel="identity-acting-context"
+          client:load
+        />
+      ) : (
+        <>
+          <h2>Acting context</h2>
+          <div
+            class="context-indicator"
+            data-testid="acting-context-indicator"
+            data-context-id="self-context"
+          >
+            Self context
+            <small>Server-selected context for this session</small>
+          </div>
+        </>
+      )
+    }
     <button type="button" aria-label="Collapse acting context sidebar">
       Collapse sidebar
     </button>

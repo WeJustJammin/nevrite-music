@@ -32,6 +32,7 @@ export const IDENTITY_AUTHORITY_REQUEST_HEADERS = [
   'origin',
   'x-correlation-id',
   'x-csrf-token',
+  'x-client-binding-id',
   'x-request-id',
 ] as const;
 
@@ -204,6 +205,7 @@ export const forwardIdentityAuthorityRequest = async (
     headers.delete('x-csrf-token');
     headers.delete('if-match');
     headers.delete('idempotency-key');
+    headers.delete('x-client-binding-id');
   }
 
   let response: Response;

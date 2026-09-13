@@ -124,6 +124,35 @@ describe('identity production HTTP adapter', () => {
     }
   });
 
+  it('maps idempotency and cursor RPC failures to stable public errors', async () => {
+    const cases: ReadonlyArray<readonly [unknown, number, string, string]> = [
+      [
+        { code: 'P0001', message: 'IDEMPOTENCY_MISMATCH' },
+        409,
+        'IDEMPOTENCY_MISMATCH',
+        'The idempotency key was used for another request.',
+      ],
+      [
+        { code: 'P0001', message: 'INVALID_CURSOR' },
+        400,
+        'INVALID_REQUEST',
+        'The context cursor is invalid.',
+      ],
+    ];
+
+    for (const [payload, status, code, message] of cases) {
+      const fetchImpl = vi.fn(async () => json(payload, 400)) as typeof fetch;
+      const result = await callIdentityRpc(
+        configuration(fetchImpl),
+        'identity_context_list',
+        {},
+        new AbortController().signal,
+      ).catch((error: unknown) => error);
+
+      expect(failure(result)).toMatchObject({ status, code, message });
+    }
+  });
+
   it('treats unreadable, oversized, and unknown non-success responses as unavailable', async () => {
     const bodies = [
       '{not-json',

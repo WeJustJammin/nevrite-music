@@ -12,43 +12,62 @@ import {
   normalizeAuthProductionOptions,
   type AuthProductionOptions,
 } from '../authentication/production-configuration';
+import type { AuthenticationSession } from '../authentication/types';
 import type { IdentityAuthorityDependencies } from './types';
 import { callIdentity } from './production-http';
+import type { IdentityRpcRequestContext } from './production-request-context';
 import { createProductionRelationshipDependencies } from './relationship-production';
+
+type AuthenticatedIdentityInput = IdentityRpcRequestContext &
+  Readonly<{ session: AuthenticationSession }>;
+
+type IdentityResponseSchema<T> = Readonly<{
+  safeParse: (
+    value: unknown,
+  ) => { success: true; data: T } | { success: false };
+}>;
 
 export const createProductionIdentityAuthorityDependencies = (
   options: AuthProductionOptions,
 ): IdentityAuthorityDependencies => {
   const config = normalizeAuthProductionOptions(options);
+  const authenticatedCall = <T>(
+    input: AuthenticatedIdentityInput,
+    name: string,
+    body: Readonly<Record<string, unknown>>,
+    signal: AbortSignal,
+    schema: IdentityResponseSchema<T>,
+  ) => callIdentity(config, name, body, signal, schema, input);
+
   return {
     ...createProductionRelationshipDependencies(config),
     createPerson: async (input, _env, signal) =>
-      callIdentity(
-        config,
+      authenticatedCall(
+        input,
         'identity_create',
         {},
         signal,
         PersonIdentityResponseSchema,
       ),
     readPerson: async (input, _env, signal) =>
-      callIdentity(
-        config,
+      authenticatedCall(
+        input,
         'identity_person_read',
         {},
         signal,
         PersonIdentityResponseSchema,
       ),
     addFacet: async (input, _env, signal) =>
-      callIdentity(
-        config,
+      authenticatedCall(
+        input,
         'identity_facet_add',
         { p_facet_code: input.facetCode },
         signal,
         FacetMutationResponseSchema,
       ),
     removeFacet: async (input, _env, signal) =>
-      callIdentity(
-        config,
+      authenticatedCall(
+        input,
         'identity_facet_remove',
         {
           p_facet_code: input.facetCode,
@@ -58,8 +77,8 @@ export const createProductionIdentityAuthorityDependencies = (
         FacetMutationResponseSchema,
       ),
     createAlias: async (input, _env, signal) =>
-      callIdentity(
-        config,
+      authenticatedCall(
+        input,
         'identity_alias_create',
         {
           p_display_name: input.displayName,
@@ -70,8 +89,8 @@ export const createProductionIdentityAuthorityDependencies = (
         AliasResponseSchema,
       ),
     patchAlias: async (input, _env, signal) =>
-      callIdentity(
-        config,
+      authenticatedCall(
+        input,
         'identity_alias_patch',
         {
           p_alias_id: input.aliasId,
@@ -87,8 +106,8 @@ export const createProductionIdentityAuthorityDependencies = (
         AliasResponseSchema,
       ),
     changeHandle: async (input, _env, signal) =>
-      callIdentity(
-        config,
+      authenticatedCall(
+        input,
         'identity_handle_change',
         {
           p_alias_id: input.aliasId,
@@ -99,8 +118,8 @@ export const createProductionIdentityAuthorityDependencies = (
         AliasResponseSchema,
       ),
     retireAlias: async (input, _env, signal) =>
-      callIdentity(
-        config,
+      authenticatedCall(
+        input,
         'identity_alias_retire',
         {
           p_alias_id: input.aliasId,
@@ -110,8 +129,8 @@ export const createProductionIdentityAuthorityDependencies = (
         AliasResponseSchema,
       ),
     createTransferOffer: async (input, _env, signal) =>
-      callIdentity(
-        config,
+      authenticatedCall(
+        input,
         'identity_transfer_offer_create',
         {
           p_alias_id: input.aliasId,
@@ -121,8 +140,8 @@ export const createProductionIdentityAuthorityDependencies = (
         TransferOfferResponseSchema,
       ),
     acceptTransferOffer: async (input, _env, signal) =>
-      callIdentity(
-        config,
+      authenticatedCall(
+        input,
         'identity_transfer_accept',
         {
           p_offer_id: input.offerId,
@@ -132,8 +151,8 @@ export const createProductionIdentityAuthorityDependencies = (
         AliasResponseSchema,
       ),
     declineTransferOffer: async (input, _env, signal) =>
-      callIdentity(
-        config,
+      authenticatedCall(
+        input,
         'identity_transfer_decline',
         {
           p_offer_id: input.offerId,
@@ -143,16 +162,16 @@ export const createProductionIdentityAuthorityDependencies = (
         TransferOfferResponseSchema,
       ),
     readActingContexts: async (input, _env, signal) =>
-      callIdentity(
-        config,
+      authenticatedCall(
+        input,
         'identity_contexts_read',
         { p_cursor: input.cursor },
         signal,
         ActingContextListResponseSchema,
       ),
     bindActingContext: async (input, _env, signal) =>
-      callIdentity(
-        config,
+      authenticatedCall(
+        input,
         'identity_context_bind',
         {
           p_context_id: input.contextId,

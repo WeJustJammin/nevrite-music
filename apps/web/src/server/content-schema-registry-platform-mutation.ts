@@ -1,4 +1,8 @@
-import { CmsStrongEtagSchema, createRequestId } from '@wejammin/contracts';
+import {
+  ClientBindingIdSchema,
+  CmsStrongEtagSchema,
+  createRequestId,
+} from '@wejammin/contracts';
 import {
   CONTENT_SCHEMA_REGISTRY_MUTATION_OPERATIONS,
   isBinding,
@@ -36,6 +40,13 @@ export const forwardContentSchemaRegistryMutation = async (
     return localMutationError(request, 503);
   if (!sameOriginMutationRequest(request))
     return localMutationError(request, 403);
+  const clientBindingId = request.headers.get('x-client-binding-id');
+  if (
+    clientBindingId !== null &&
+    !ClientBindingIdSchema.safeParse(clientBindingId).success
+  ) {
+    return localMutationError(request, 400);
+  }
   const path = mutationPath(target);
   if (path === null) return localMutationError(request, 400);
 
@@ -138,6 +149,8 @@ export const forwardContentSchemaRegistryMutation = async (
   const correlationId = request.headers.get('x-correlation-id');
   if (correlationId !== null && printableToken(correlationId, 128))
     headers.set('x-correlation-id', correlationId);
+  if (clientBindingId !== null)
+    headers.set('x-client-binding-id', clientBindingId);
 
   let upstream: Response;
   try {

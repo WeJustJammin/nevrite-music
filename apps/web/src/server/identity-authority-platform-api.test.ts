@@ -31,6 +31,9 @@ describe('identity authority web service boundary', () => {
       );
       expect(forwarded.headers.get('if-match')).toBe('"7"');
       expect(forwarded.headers.get('idempotency-key')).toBe('key-03');
+      expect(forwarded.headers.get('x-client-binding-id')).toBe(
+        'tab:stable-03',
+      );
       expect(forwarded.headers.get('authorization')).toBeNull();
       expect(forwarded.headers.get('x-acting-party-id')).toBeNull();
       await expect(forwarded.json()).resolves.toEqual({
@@ -58,6 +61,7 @@ describe('identity authority web service boundary', () => {
             'if-match': '"7"',
             'idempotency-key': 'key-03',
             authorization: 'Bearer must-not-forward',
+            'x-client-binding-id': 'tab:stable-03',
             'x-acting-party-id': 'attacker-controlled',
           },
           body: JSON.stringify({ displayName: 'Neon Harbor Live' }),
@@ -80,6 +84,7 @@ describe('identity authority web service boundary', () => {
       expect(forwarded.headers.get('x-csrf-token')).toBeNull();
       expect(forwarded.headers.get('if-match')).toBeNull();
       expect(forwarded.headers.get('idempotency-key')).toBeNull();
+      expect(forwarded.headers.get('x-client-binding-id')).toBeNull();
       return Response.json({ public: true });
     });
 
@@ -91,6 +96,7 @@ describe('identity authority web service boundary', () => {
             'x-csrf-token': 'csrf',
             'if-match': '"1"',
             'idempotency-key': 'key',
+            'x-client-binding-id': 'tab:must-not-forward-to-public-route',
           },
         }),
         { fetch },

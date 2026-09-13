@@ -1,6 +1,7 @@
 import type {
   ActingContextListResource,
   MembershipCollection,
+  MembershipTenureResource,
   OrganizationReadResponse,
 } from '@wejammin/contracts';
 import {
@@ -13,6 +14,8 @@ import type {
   IdentityAuthorityRecord,
 } from '../components/identity-authority/identity-authority-workbench-types';
 import type { RelationshipsAuthorityGovernanceIslandProps } from '../components/identity-authority/RelationshipsAuthorityGovernanceIsland';
+
+const MAX_MEMBERSHIP_PAGES = 32;
 
 export interface IdentityAuthorityRelationshipLoadResult {
   readonly actingPartyId: string | null;
@@ -109,10 +112,10 @@ const recordFromResource = (
 });
 
 const membershipRecords = (
-  collection: MembershipCollection,
+  items: readonly MembershipTenureResource[],
   now: string,
 ): readonly IdentityAuthorityRecord[] =>
-  collection.items.map((item) => ({
+  items.map((item) => ({
     id: item.tenureId,
     version: item.version,
     state: item.state,
@@ -126,6 +129,78 @@ const membershipRecords = (
     ],
     projection: item as unknown as Readonly<Record<string, unknown>>,
   }));
+
+const degradedResult = (
+  actingPartyId: string | null,
+  organizationId: string,
+  requestId: string,
+): IdentityAuthorityRelationshipLoadResult => ({
+  actingPartyId,
+  organizationId,
+  expectedVersion: null,
+  initial: {
+    status: 'degraded',
+    data: null,
+    requestId,
+    lastVerifiedAt: null,
+  },
+});
+
+const readMembershipPages = async (
+  canonicalRead: RelationshipReadInput['canonicalRead'],
+  readJson: RelationshipReadInput['readJson'],
+  organizationId: string,
+): Promise<readonly MembershipTenureResource[] | null> => {
+  const items: MembershipTenureResource[] = [];
+  const tenureIds = new Set<string>();
+  const cursors = new Set<string>();
+  const base = `/api/v1/organizations/${encodeURIComponent(organizationId)}/memberships`;
+  let cursor: string | null = null;
+
+  for (let pageIndex = 0; pageIndex < MAX_MEMBERSHIP_PAGES; pageIndex += 1) {
+    const path =
+      cursor === null ? base : `${base}?cursor=${encodeURIComponent(cursor)}`;
+    let collection: MembershipCollection;
+    try {
+      const response = await canonicalRead(path);
+      if (!response.ok) return null;
+      const parsed = MembershipCollectionSchema.safeParse(
+        await readJson(response),
+      );
+      if (
+        !parsed.success ||
+        parsed.data.hasMore !== (parsed.data.nextCursor !== null)
+      )
+        return null;
+      collection = parsed.data;
+    } catch {
+      return null;
+    }
+
+    for (const item of collection.items) {
+      if (
+        item.organizationId !== organizationId ||
+        tenureIds.has(item.tenureId)
+      )
+        return null;
+      tenureIds.add(item.tenureId);
+      items.push(item);
+    }
+    if (!collection.hasMore) return items;
+
+    const nextCursor = collection.nextCursor;
+    if (
+      nextCursor === null ||
+      nextCursor.length === 0 ||
+      cursors.has(nextCursor)
+    )
+      return null;
+    cursors.add(nextCursor);
+    cursor = nextCursor;
+  }
+
+  return null;
+};
 
 export const loadIdentityAuthorityRelationships = async ({
   canonicalRead,
@@ -155,17 +230,7 @@ export const loadIdentityAuthorityRelationships = async ({
   const parsed = response.ok ? await readJson(response) : null;
   const organization = OrganizationReadResponseSchema.safeParse(parsed);
   if (!organization.success) {
-    return {
-      actingPartyId,
-      organizationId: targetOrganizationId,
-      expectedVersion: null,
-      initial: {
-        status: 'degraded',
-        data: null,
-        requestId,
-        lastVerifiedAt: null,
-      },
-    };
+    return degradedResult(actingPartyId, targetOrganizationId, requestId);
   }
 
   const resource = organization.data;
@@ -178,20 +243,14 @@ export const loadIdentityAuthorityRelationships = async ({
   );
   let records: readonly IdentityAuthorityRecord[] = [organizationRecord];
   if (privateResource) {
-    const memberships = await canonicalRead(
-      `/api/v1/organizations/${encodeURIComponent(targetOrganizationId)}/memberships`,
+    const memberships = await readMembershipPages(
+      canonicalRead,
+      readJson,
+      targetOrganizationId,
     );
-    if (memberships.ok) {
-      const parsedMemberships = MembershipCollectionSchema.safeParse(
-        await readJson(memberships),
-      );
-      if (parsedMemberships.success) {
-        records = [
-          organizationRecord,
-          ...membershipRecords(parsedMemberships.data, now),
-        ];
-      }
-    }
+    if (memberships === null)
+      return degradedResult(actingPartyId, targetOrganizationId, requestId);
+    records = [organizationRecord, ...membershipRecords(memberships, now)];
   }
   return {
     actingPartyId,

@@ -1,6 +1,7 @@
 import { resolve } from 'node:path';
 
 import { expect, test, type Page, type Route } from '@playwright/test';
+import { CLIENT_BINDING_ID_STORAGE_KEY } from '../../apps/web/src/lib/client-binding';
 import { CONTENT_SCHEMA_REGISTRY_RETRYABLE_HEADER } from '../../packages/contracts/src/content-schema-registry/route-policy-base';
 
 import {
@@ -53,27 +54,30 @@ const installRefetchBridge = async (page: Page): Promise<void> => {
       }) => Promise<void>;
     };
     const reasons: string[] = [];
+    const completedReasons: string[] = [];
     const cleanup = module.installContentSchemaRegistryCanonicalRefetch(
       document,
       '/app/cms-content-modeling',
-      (reason) => {
+      async (reason) => {
         reasons.push(reason);
-        void module
-          .refetchContentSchemaRegistryCanonical({
+        try {
+          await module.refetchContentSchemaRegistryCanonical({
             document,
             canonicalUrl: '/app/cms-content-modeling',
             reason,
-          })
-          .catch((error: unknown) => {
-            Reflect.set(
-              globalThis,
-              '__s09RefetchError',
-              error instanceof Error ? error.message : String(error),
-            );
           });
+          completedReasons.push(reason);
+        } catch (error: unknown) {
+          Reflect.set(
+            globalThis,
+            '__s09RefetchError',
+            error instanceof Error ? error.message : String(error),
+          );
+        }
       },
     );
     Reflect.set(globalThis, '__s09RefetchReasons', reasons);
+    Reflect.set(globalThis, '__s09RefetchCompletedReasons', completedReasons);
     Reflect.set(globalThis, '__s09RefetchCleanup', cleanup);
   }, RUNTIME_REFETCH_URL);
 };
@@ -155,7 +159,7 @@ test('[P2-S09-AC-265] exercises actual browser GET recovery, offline/reconnect, 
   await setRegistryFixture(page);
   const secondTab = await context.newPage();
   await setRegistryFixture(secondTab);
-  const readStatuses = [503, 200, 429, 200, 200];
+  const readStatuses = [200, 503, 200, 429, 200, 200, 200];
   const requests: Array<{ method: string; url: string }> = [];
   await context.route(`**${REGISTRY_ROUTE}*`, async (route) => {
     requests.push({
@@ -168,6 +172,19 @@ test('[P2-S09-AC-265] exercises actual browser GET recovery, offline/reconnect, 
     await fulfillRead(route, status);
   });
   await installRefetchBridge(page);
+  await expect
+    .poll(() =>
+      page.evaluate(() => Reflect.get(globalThis, '__s09RefetchReasons')),
+    )
+    .toEqual(['list-read']);
+  await expect
+    .poll(() =>
+      page.evaluate(() =>
+        Reflect.get(globalThis, '__s09RefetchCompletedReasons'),
+      ),
+    )
+    .toEqual(['list-read']);
+  expect(requests).toHaveLength(1);
 
   await context.setOffline(true);
   await expect.poll(() => page.evaluate(() => navigator.onLine)).toBe(false);
@@ -178,12 +195,19 @@ test('[P2-S09-AC-265] exercises actual browser GET recovery, offline/reconnect, 
     .poll(() =>
       page.evaluate(() => Reflect.get(globalThis, '__s09RefetchReasons')),
     )
-    .toEqual(['reconnect']);
+    .toEqual(['list-read', 'reconnect']);
+  await expect
+    .poll(() =>
+      page.evaluate(() =>
+        Reflect.get(globalThis, '__s09RefetchCompletedReasons'),
+      ),
+    )
+    .toEqual(['list-read', 'reconnect']);
   await expect(page.locator('[data-cms-canonical-status]')).toHaveText(
     'Current server-verified records refreshed.',
   );
-  expect(requests).toHaveLength(2);
-  expect(readStatuses).toEqual([429, 200, 200]);
+  expect(requests).toHaveLength(3);
+  expect(readStatuses).toEqual([429, 200, 200, 200]);
 
   await sendInvalidationFromOtherTab(secondTab);
   await expect(page.locator('[data-cms-canonical-status]')).toHaveText(
@@ -199,21 +223,41 @@ test('[P2-S09-AC-265] exercises actual browser GET recovery, offline/reconnect, 
   await expect(page.locator('body')).not.toContainText(
     'provider detail must never reach the browser',
   );
-  expect(requests).toHaveLength(3);
-  expect(readStatuses).toEqual([200, 200]);
+  expect(requests).toHaveLength(4);
+  expect(readStatuses).toEqual([200, 200, 200]);
 
   await page.getByRole('link', { name: 'Retry', exact: true }).click();
   await expect(
     page.locator('[data-workbench="content-schema-registry"]'),
   ).toBeVisible();
   await installRefetchBridge(page);
-  await sendInvalidationFromOtherTab(secondTab);
-  await expect.poll(() => requests.length).toBe(5);
   await expect
     .poll(() =>
       page.evaluate(() => Reflect.get(globalThis, '__s09RefetchReasons')),
     )
     .toEqual(['list-read']);
+  await expect
+    .poll(() =>
+      page.evaluate(() =>
+        Reflect.get(globalThis, '__s09RefetchCompletedReasons'),
+      ),
+    )
+    .toEqual(['list-read']);
+  expect(requests).toHaveLength(6);
+  await sendInvalidationFromOtherTab(secondTab);
+  await expect
+    .poll(() =>
+      page.evaluate(() => Reflect.get(globalThis, '__s09RefetchReasons')),
+    )
+    .toEqual(['list-read', 'list-read']);
+  await expect
+    .poll(() =>
+      page.evaluate(() =>
+        Reflect.get(globalThis, '__s09RefetchCompletedReasons'),
+      ),
+    )
+    .toEqual(['list-read', 'list-read']);
+  expect(requests).toHaveLength(7);
   await expect(page.locator('[data-cms-canonical-status]')).toHaveText(
     'Current server-verified records refreshed.',
   );
@@ -222,7 +266,14 @@ test('[P2-S09-AC-265] exercises actual browser GET recovery, offline/reconnect, 
     await page.evaluate(() => Reflect.get(globalThis, '__s09RefetchError')),
   ).toBeUndefined();
   expect(await page.evaluate(() => localStorage.length)).toBe(0);
-  expect(await page.evaluate(() => sessionStorage.length)).toBe(0);
+  const sessionState = await page.evaluate((bindingKey) => {
+    return {
+      keys: Object.keys(sessionStorage),
+      bindingId: sessionStorage.getItem(bindingKey),
+    };
+  }, CLIENT_BINDING_ID_STORAGE_KEY);
+  expect(sessionState.keys).toEqual([CLIENT_BINDING_ID_STORAGE_KEY]);
+  expect(sessionState.bindingId).toMatch(/^[A-Za-z0-9._:-]{1,128}$/u);
   await secondTab.close();
 });
 

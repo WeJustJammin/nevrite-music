@@ -1,5 +1,6 @@
 import { CONTENT_SCHEMA_REGISTRY_RETRYABLE_HEADER } from '@wejammin/contracts';
 
+import { addClientBindingIdHeader } from '../../lib/client-binding';
 import {
   CONTENT_SCHEMA_REGISTRY_MAX_RETRIES,
   CONTENT_SCHEMA_REGISTRY_RETRY_DELAYS_MS,
@@ -50,15 +51,18 @@ export const executeContentSchemaRegistryRead = async (input: {
     attempts += 1;
     let response: Response;
     try {
-      response = await fetcher(input.url, {
-        method: 'GET',
-        headers: new Headers({
-          accept: 'text/html',
-          'cache-control': 'no-store',
+      response = await fetcher(
+        input.url,
+        await addClientBindingIdHeader(input.url, {
+          method: 'GET',
+          headers: new Headers({
+            accept: 'text/html',
+            'cache-control': 'no-store',
+          }),
+          credentials: 'same-origin',
+          redirect: 'manual',
         }),
-        credentials: 'same-origin',
-        redirect: 'manual',
-      });
+      );
     } catch {
       return {
         outcome: 'degraded',

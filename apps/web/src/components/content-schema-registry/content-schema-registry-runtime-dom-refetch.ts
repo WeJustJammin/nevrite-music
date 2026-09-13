@@ -10,6 +10,12 @@ import {
   mergeContentSchemaRegistryRefetchReason,
   restoreContentSchemaRegistryFocus,
 } from './content-schema-registry-runtime-dom-refetch-support';
+import {
+  clearContentSchemaRegistryOfflineStatus,
+  ensureContentSchemaRegistryLiveRegion,
+  showContentSchemaRegistryOfflineStatus,
+} from './content-schema-registry-runtime-dom-refetch-status';
+import { ACTING_CONTEXT_CHANGED_EVENT } from '../../lib/client-binding';
 export type ContentSchemaRegistryRefetchReason =
   'list-read' | 'detail-read' | 'reconnect';
 
@@ -19,21 +25,6 @@ export interface ContentSchemaRegistryCanonicalRefetchOptions {
   readonly reason: ContentSchemaRegistryRefetchReason;
   readonly onAfterReplace?: () => void;
 }
-
-const ensureLiveRegion = (document: Document): HTMLElement => {
-  let live = document.querySelector<HTMLElement>('[data-cms-canonical-status]');
-  if (live !== null) return live;
-  live = document.createElement('p');
-  live.dataset.cmsCanonicalStatus = 'true';
-  live.className = 'visually-hidden';
-  live.setAttribute('role', 'status');
-  live.setAttribute('aria-live', 'polite');
-  live.setAttribute('aria-atomic', 'true');
-  const main = document.querySelector('main');
-  if (main === null) document.body.insertBefore(live, document.body.firstChild);
-  else main.insertBefore(live, main.firstChild);
-  return live;
-};
 
 const sameOriginTarget = (document: Document, value: string): string | null => {
   try {
@@ -53,31 +44,6 @@ const routeToSignIn = (document: Document): void => {
   location.assign(`/auth/sign-in?returnTo=${encodeURIComponent(returnTo)}`);
 };
 
-const showOfflineStatus = (document: Document): void => {
-  const root = document.querySelector<HTMLElement>(
-    '[data-workbench="content-schema-registry"]',
-  );
-  if (root === null || root.querySelector('[data-cms-offline-status]') !== null)
-    return;
-  const status = document.createElement('section');
-  status.dataset.cmsOfflineStatus = 'true';
-  status.className = 'content-schema-registry-offline-status';
-  status.setAttribute('role', 'status');
-  status.setAttribute('aria-live', 'polite');
-  const heading = document.createElement('h3');
-  heading.textContent = 'Registry is offline';
-  const message = document.createElement('p');
-  message.textContent =
-    'Canonical registry reads are unavailable. No registry intent was retained offline.';
-  status.appendChild(heading);
-  status.appendChild(message);
-  root.insertBefore(status, root.firstChild);
-};
-
-const clearOfflineStatus = (document: Document): void => {
-  document.querySelector<HTMLElement>('[data-cms-offline-status]')?.remove();
-};
-
 /** Fetch one canonical projection and replace only the bounded workbench. */
 export const refetchContentSchemaRegistryCanonical = async (
   options: ContentSchemaRegistryCanonicalRefetchOptions,
@@ -88,7 +54,7 @@ export const refetchContentSchemaRegistryCanonical = async (
   );
   if (currentRoot === null) return;
   const focusLocator = captureContentSchemaRegistryFocus(currentRoot);
-  const live = ensureLiveRegion(document);
+  const live = ensureContentSchemaRegistryLiveRegion(document);
   let skeleton: HTMLElement | null = null;
   const loadingTimer = document.defaultView?.setTimeout(() => {
     currentRoot.setAttribute('aria-busy', 'true');
@@ -215,12 +181,21 @@ export const refetchContentSchemaRegistryCanonical = async (
     live.textContent = 'The registry response could not be rendered safely.';
     return;
   }
+  const hydrationState = currentRoot.getAttribute(
+    'data-content-schema-registry-hydrated',
+  );
+  if (hydrationState !== null) {
+    nextRoot.setAttribute(
+      'data-content-schema-registry-hydrated',
+      hydrationState,
+    );
+  }
   currentRoot.replaceWith(nextRoot);
   if (parsed.title.length > 0) document.title = parsed.title;
   onAfterReplace?.();
   hydrateContentSchemaRegistryRetryCountdown(nextRoot, canonicalUrl);
   restoreContentSchemaRegistryFocus(document, focusLocator);
-  clearOfflineStatus(document);
+  clearContentSchemaRegistryOfflineStatus(document);
   live.textContent =
     response.status === 429
       ? 'Registry retry timing refreshed from the server.'
@@ -277,13 +252,22 @@ export const installContentSchemaRegistryCanonicalRefetch = (
   const subscription = subscribeContentSchemaRegistryInvalidation({
     onInvalidate: () => run(readReason),
   });
-  const onOffline = (): void => showOfflineStatus(document);
+  const onOffline = (): void =>
+    showContentSchemaRegistryOfflineStatus(document);
   const onOnline = (): void => {
-    clearOfflineStatus(document);
+    clearContentSchemaRegistryOfflineStatus(document);
     run('reconnect');
   };
+  const onActingContextChanged = (): void => run(readReason);
   windowObject.addEventListener('offline', onOffline);
   windowObject.addEventListener('online', onOnline);
+  windowObject.addEventListener(
+    ACTING_CONTEXT_CHANGED_EVENT,
+    onActingContextChanged,
+  );
+  // Astro SSR cannot carry sessionStorage-backed acting context. Re-read the
+  // canonical page projection once after hydration with this tab's selector.
+  run(readReason);
   return () => {
     disposed = true;
     if (debounceTimer !== undefined) windowObject.clearTimeout(debounceTimer);
@@ -291,5 +275,9 @@ export const installContentSchemaRegistryCanonicalRefetch = (
     subscription.unsubscribe();
     windowObject.removeEventListener('offline', onOffline);
     windowObject.removeEventListener('online', onOnline);
+    windowObject.removeEventListener(
+      ACTING_CONTEXT_CHANGED_EVENT,
+      onActingContextChanged,
+    );
   };
 };

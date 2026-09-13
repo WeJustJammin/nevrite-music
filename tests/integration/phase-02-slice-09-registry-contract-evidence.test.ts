@@ -171,6 +171,7 @@ describe('P2-S09 generated contract integration evidence', () => {
           'content-type': 'application/json',
           'x-csrf-token': 'csrf',
           'idempotency-key': IDEMPOTENCY_KEY,
+          'x-client-binding-id': 'tab:cms-mutation-01',
           ...(options.ifMatch === undefined
             ? {}
             : { 'if-match': options.ifMatch }),
@@ -193,6 +194,9 @@ describe('P2-S09 generated contract integration evidence', () => {
       expect(response.status).toBe(status);
       expect(response.headers.get('etag')).toBe('"2"');
       expect(forwarded?.headers.get('idempotency-key')).toBe(IDEMPOTENCY_KEY);
+      expect(forwarded?.headers.get('x-client-binding-id')).toBe(
+        'tab:cms-mutation-01',
+      );
       expect(forwarded?.headers.get('cache-control')).toBe('no-store');
       expect(
         CONTENT_SCHEMA_REGISTRY_MUTATION_OPERATIONS[operationId],

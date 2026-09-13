@@ -36,6 +36,7 @@ describe('content schema registry PLATFORM_API adapter', () => {
         headers: {
           cookie: 'wj_access=opaque-session; unrelated=must-not-forward',
           'x-request-id': 'request-123',
+          'x-client-binding-id': 'tab:cms-list-01',
         },
       },
     );
@@ -66,6 +67,9 @@ describe('content schema registry PLATFORM_API adapter', () => {
     );
     expect(requests[0]?.headers.get('cookie')).toBe('wj_access=opaque-session');
     expect(requests[0]?.headers.get('x-request-id')).toBe('request-123');
+    expect(requests[0]?.headers.get('x-client-binding-id')).toBe(
+      'tab:cms-list-01',
+    );
     expect(requests[0]?.headers.get('authorization')).toBeNull();
     expect(authority.capabilities).toEqual([
       'cms.schema_registry.read',
@@ -93,6 +97,22 @@ describe('content schema registry PLATFORM_API adapter', () => {
     expect(binding.fetch).toHaveBeenCalledTimes(1);
     expect(requests[0]).toBeInstanceOf(Request);
     expect(requests[0]?.method).toBe('GET');
+  });
+
+  it('rejects a malformed client binding selector instead of falling back to self', async () => {
+    const binding = { fetch: vi.fn(async () => Response.json(LIST)) };
+    const ports = createContentSchemaRegistryPlatformPorts(binding);
+    const request = new Request('https://app.test/app/cms-content-modeling', {
+      headers: {
+        cookie: 'wj_access=opaque-session',
+        'x-client-binding-id': 'tab selector with spaces',
+      },
+    });
+
+    await expect(ports.verifySession(request)).rejects.toBeInstanceOf(
+      ContentSchemaRegistryPlatformError,
+    );
+    expect(binding.fetch).not.toHaveBeenCalled();
   });
 
   it('preserves exact upstream status categories at the private boundary', async () => {

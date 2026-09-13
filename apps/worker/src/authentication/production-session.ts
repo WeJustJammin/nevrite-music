@@ -1,6 +1,7 @@
 import { SessionResourceSchema } from '@wejammin/contracts';
 
 import { authError } from './boundary';
+import { parseClientBindingIdHeader } from './client-binding-header';
 import {
   asRecord,
   traceFor,
@@ -50,12 +51,16 @@ const readIndexedSession = async (
   expiresAt: string,
   config: AuthProductionConfiguration,
   signal: AbortSignal,
+  clientBindingId: string | null,
 ) => {
+  const headers =
+    clientBindingId === null ? {} : { 'x-client-binding-id': clientBindingId };
   const projection = await callRpc(
     config,
     'auth_session_read',
     { p_auth_user_id: authUserId, p_session_id: sessionId },
     signal,
+    headers,
   );
   return sessionProjection(projection, { expiresAt });
 };
@@ -68,6 +73,8 @@ export const createSessionDependencies = (
 > => ({
   resolveSession: async (request, _env, signal) => {
     try {
+      const bindingId = parseClientBindingIdHeader(request);
+      if (!bindingId.ok) return bindingId;
       if (new URL(request.url).pathname === '/api/v1/auth/session/refresh') {
         const sealed = readCookie(request, SESSION_REF_COOKIE);
         const reference =
@@ -85,6 +92,7 @@ export const createSessionDependencies = (
           new Date(config.now() + 60_000).toISOString(),
           config,
           signal,
+          bindingId.value,
         );
         if (!indexed.ok) return indexed;
         return {
@@ -135,6 +143,7 @@ export const createSessionDependencies = (
         verified.value.expiresAt,
         config,
         signal,
+        bindingId.value,
       );
       if (!indexed.ok) return indexed;
       return {
@@ -173,6 +182,8 @@ export const createSessionDependencies = (
 
   refreshSession: async (request, _env, signal) => {
     try {
+      const bindingId = parseClientBindingIdHeader(request);
+      if (!bindingId.ok) return bindingId;
       const refreshToken = readCookie(request, REFRESH_COOKIE);
       const sealedReference = readCookie(request, SESSION_REF_COOKIE);
       const sessionReference =
@@ -236,6 +247,7 @@ export const createSessionDependencies = (
         token.value.expiresAt,
         config,
         signal,
+        bindingId.value,
       );
       if (!indexed.ok) return indexed;
       return {

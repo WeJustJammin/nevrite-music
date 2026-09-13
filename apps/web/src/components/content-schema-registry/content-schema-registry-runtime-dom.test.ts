@@ -6,7 +6,52 @@ import {
   createContentSchemaRegistryInvalidationHint,
   type ContentSchemaRegistryInvalidationChannel,
 } from './content-schema-registry-invalidation';
-import { installContentSchemaRegistryCanonicalRefetch } from './content-schema-registry-runtime-dom';
+import {
+  ACTING_CONTEXT_CHANGED_EVENT,
+  CLIENT_BINDING_ID_STORAGE_KEY,
+} from '../../lib/client-binding';
+import { createMemoryLockManager } from '../../lib/test-support/memory-lock-manager';
+import {
+  installContentSchemaRegistryCanonicalRefetch,
+  refetchContentSchemaRegistryCanonical,
+} from './content-schema-registry-runtime-dom';
+
+class MemoryStorage implements Storage {
+  private values = new Map<string, string>();
+
+  get length(): number {
+    return this.values.size;
+  }
+
+  clear(): void {
+    this.values.clear();
+  }
+
+  getItem(key: string): string | null {
+    return this.values.get(key) ?? null;
+  }
+
+  key(index: number): string | null {
+    return [...this.values.keys()][index] ?? null;
+  }
+
+  removeItem(key: string): void {
+    this.values.delete(key);
+  }
+
+  setItem(key: string, value: string): void {
+    this.values.set(key, String(value));
+  }
+}
+
+const originalSessionStorage = Object.getOwnPropertyDescriptor(
+  window,
+  'sessionStorage',
+);
+const originalNavigatorLocks = Object.getOwnPropertyDescriptor(
+  navigator,
+  'locks',
+);
 
 class FakeChannel implements ContentSchemaRegistryInvalidationChannel {
   private listener: ((event: { readonly data: unknown }) => void) | null = null;
@@ -35,14 +80,98 @@ class FakeChannel implements ContentSchemaRegistryInvalidationChannel {
 }
 
 let channel: FakeChannel;
+let lockManager: ReturnType<typeof createMemoryLockManager> | null = null;
 
 afterEach(() => {
   vi.useRealTimers();
   vi.unstubAllGlobals();
+  if (lockManager !== null) {
+    window.dispatchEvent(new Event('pagehide'));
+    lockManager.releaseAll();
+    window.dispatchEvent(new Event('pageshow'));
+    lockManager = null;
+  }
+  if (originalNavigatorLocks === undefined)
+    Reflect.deleteProperty(navigator, 'locks');
+  else Object.defineProperty(navigator, 'locks', originalNavigatorLocks);
+  if (originalSessionStorage === undefined)
+    Reflect.deleteProperty(window, 'sessionStorage');
+  else Object.defineProperty(window, 'sessionStorage', originalSessionStorage);
   document.body.replaceChildren();
 });
 
 describe('content schema registry DOM refetch bridge', () => {
+  it('performs one immediate canonical client read with this tab binding on mount', async () => {
+    vi.useFakeTimers();
+    document.body.innerHTML =
+      '<main><section data-workbench="content-schema-registry"></section></main>';
+    window.history.replaceState({}, '', '/app/cms-content-modeling');
+    const clientBindingId = '99999999-9999-4999-8999-999999999999';
+    const tabStorage = new MemoryStorage();
+    tabStorage.setItem(CLIENT_BINDING_ID_STORAGE_KEY, clientBindingId);
+    Object.defineProperty(window, 'sessionStorage', {
+      configurable: true,
+      value: tabStorage,
+    });
+    lockManager = createMemoryLockManager();
+    Object.defineProperty(navigator, 'locks', {
+      configurable: true,
+      value: lockManager.manager,
+    });
+    const calls: Array<{ input: RequestInfo | URL; init?: RequestInit }> = [];
+    const fetcher = vi.fn(
+      async (input: RequestInfo | URL, init?: RequestInit) => {
+        calls.push(init === undefined ? { input } : { input, init });
+        return new Response(
+          '<html><head><title>Canonical CMS</title></head><body><main><section data-workbench="content-schema-registry"></section></main></body></html>',
+          { status: 200 },
+        );
+      },
+    );
+    vi.stubGlobal('fetch', fetcher);
+    const cleanup = installContentSchemaRegistryCanonicalRefetch(
+      document,
+      '/app/cms-content-modeling',
+      (reason) =>
+        refetchContentSchemaRegistryCanonical({
+          document,
+          canonicalUrl: '/app/cms-content-modeling',
+          reason,
+        }),
+    );
+
+    await vi.runAllTimersAsync();
+    await vi.runAllTimersAsync();
+
+    expect(fetcher).toHaveBeenCalledOnce();
+    expect(calls[0]?.input).toBe('/app/cms-content-modeling');
+    expect(calls[0]?.init?.method).toBe('GET');
+    expect(
+      new Headers(calls[0]?.init?.headers).get('x-client-binding-id'),
+    ).toBe(clientBindingId);
+    expect(document.title).toBe('Canonical CMS');
+    cleanup();
+  });
+
+  it('re-reads canonical CMS state when the acting context changes in this tab', async () => {
+    vi.useFakeTimers();
+    document.body.innerHTML =
+      '<section data-workbench="content-schema-registry"></section>';
+    const onRefetch = vi.fn();
+    const cleanup = installContentSchemaRegistryCanonicalRefetch(
+      document,
+      '/app/cms-content-modeling',
+      onRefetch,
+    );
+
+    window.dispatchEvent(new CustomEvent(ACTING_CONTEXT_CHANGED_EVENT));
+    await vi.runAllTimersAsync();
+
+    expect(onRefetch).toHaveBeenCalledOnce();
+    expect(onRefetch).toHaveBeenCalledWith('list-read');
+    cleanup();
+  });
+
   it.each([
     ['/app/cms-content-modeling', 'list-read'],
     [

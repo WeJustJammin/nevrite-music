@@ -735,6 +735,10 @@ export type Database = {
         }
         Returns: boolean
       }
+      idempotency_expiry_sweep: {
+        Args: { p_correlation_id: string; p_limit: number }
+        Returns: Json
+      }
       identity_alias_create: {
         Args: {
           p_display_name: string
@@ -5751,6 +5755,21 @@ export type Database = {
         Returns: string
       }
       identity_auth_user: { Args: never; Returns: string }
+      identity_context_candidate: {
+        Args: {
+          p_lock_sources?: boolean
+          p_party_id: string
+          p_person_id: string
+        }
+        Returns: {
+          acting_party_id: string
+          context_kind: string
+          display_label: string
+          projection_version: number
+          sort_rank: number
+          source_relationship_id: string
+        }[]
+      }
       identity_current_owner: { Args: { p_alias_id: string }; Returns: string }
       identity_hash_setting: { Args: { p_name: string }; Returns: string }
       identity_idempotency_reserve: {
