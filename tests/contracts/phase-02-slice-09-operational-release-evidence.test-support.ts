@@ -78,7 +78,7 @@ export const completeEvidence = {
     migrationVersion: '20260903120000',
     webOrigin: 'https://staging.wejamm.in',
     apiOrigin: 'https://wejammin-api-staging.wejammin.workers.dev',
-    supabaseOrigin: 'https://example.supabase.co',
+    supabaseOrigin: 'https://abcdefghijklmnopqrst.supabase.co',
     idpProvider: 'google',
     report: report('hosted/e2e.json', '1'),
     completedAt: '2026-09-03T11:00:00.000Z',

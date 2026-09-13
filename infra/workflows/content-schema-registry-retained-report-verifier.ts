@@ -22,15 +22,15 @@ import {
   parseContentSchemaRegistryAutomatedAxeDigestSidecar,
   validateContentSchemaRegistryAutomatedAxeReportBytes,
 } from './content-schema-registry-axe-report-verifier.ts';
-import { validateContentSchemaRegistryHostedE2eReportBytes } from './content-schema-registry-hosted-e2e-report-verifier.ts';
 import { validateContentSchemaRegistryManualAccessibilityReportBytes } from './content-schema-registry-manual-accessibility-report-verifier.ts';
+import {
+  validateAndBindRetainedHostedE2eReportV3,
+  type RetainedHostedE2eVerificationInput,
+} from './content-schema-registry-retained-hosted-report-verifier.ts';
 
 const MAX_RETAINED_REPORT_BYTES = 10 * 1024 * 1024;
 
-type RetainedReportReference = Readonly<{
-  path: string;
-  sha256: string;
-}>;
+type RetainedReportReference = Readonly<{ path: string; sha256: string }>;
 
 const retainedReports = (
   evidence: ContentSchemaRegistryOperationalReleaseEvidence,
@@ -179,6 +179,7 @@ export const verifyContentSchemaRegistryRetainedReports = (
   evidence: ContentSchemaRegistryOperationalReleaseEvidence,
   expectedIdentity: OperationalReleaseEvidenceExpectedIdentity,
   reportRoot: string,
+  hostedV3Verification: RetainedHostedE2eVerificationInput,
 ): void => {
   const approvedRoot = realpathSync(reportRoot);
   if (!statSync(approvedRoot).isDirectory())
@@ -225,10 +226,11 @@ export const verifyContentSchemaRegistryRetainedReports = (
       throw new Error(`Retained report file is duplicated: ${label}.`);
     seenFileIdentities.add(fileIdentity);
     if (label === 'hosted E2E') {
-      validateContentSchemaRegistryHostedE2eReportBytes(
+      validateAndBindRetainedHostedE2eReportV3(
         reportBytes,
         reference.sha256,
-        evidence.hostedE2e,
+        hostedV3Verification,
+        evidence,
         expectedIdentity,
       );
     } else if (label === 'automated accessibility') {

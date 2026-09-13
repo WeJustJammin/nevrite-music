@@ -19,7 +19,7 @@ import {
 import {
   cleanupRetainedEvidenceFixtures,
   createRetainedEvidenceFixture,
-  hostedReportContents,
+  retainedHostedReportContents,
   replaceHostedReport,
   reportContents,
   sha256,
@@ -31,11 +31,11 @@ const createFixture = createRetainedEvidenceFixture;
 afterEach(cleanupRetainedEvidenceFixtures);
 
 describe('Slice 09 retained operational axe and provider evidence files', () => {
-  it('parses the hosted report after digest verification and rejects mismatched identity', () => {
+  it('verifies the retained V3 report against trusted runner identity after its digest', () => {
     const fixture = createFixture();
     replaceHostedReport(
       fixture,
-      hostedReportContents.replace(sourceRevision, 'b'.repeat(40)),
+      retainedHostedReportContents.replace(sourceRevision, 'b'.repeat(40)),
     );
     expect(() =>
       verifyWithReports(
@@ -43,7 +43,9 @@ describe('Slice 09 retained operational axe and provider evidence files', () => 
         expectedIdentity,
         fixture.reportRoot,
       ),
-    ).toThrow('Hosted E2E report does not match the expected source SHA');
+    ).toThrow(
+      'Hosted E2E report does not match runner identity field: sourceRevision',
+    );
   });
 
   it('binds the retained axe digest before enforcing its trusted cutoff', () => {
@@ -93,7 +95,7 @@ describe('Slice 09 retained operational axe and provider evidence files', () => 
         expectedIdentity,
         fixture.reportRoot,
       ),
-    ).toThrow('Hosted E2E retained report is not valid JSON');
+    ).toThrow('Hosted E2E retained report v3 is not valid JSON');
   });
 
   it('rejects a symlink that escapes the retained-report root', () => {
@@ -206,37 +208,25 @@ describe('Slice 09 retained operational axe and provider evidence files', () => 
   });
 
   it.skipIf(process.platform === 'win32')(
-    'rejects a referenced FIFO without blocking the CLI',
+    'rejects a referenced FIFO without blocking the retained verifier',
     { timeout: 15_000 },
     () => {
       const fixture = createFixture();
       const fifoPath = join(fixture.reportRoot, 'slo/measurement.json');
       rmSync(fifoPath);
       expect(spawnSync('mkfifo', [fifoPath]).status).toBe(0);
-      const result = spawnSync(
-        process.execPath,
-        [
-          '--experimental-strip-types',
-          join(
-            process.cwd(),
-            'infra/workflows/verify-content-schema-registry-release-evidence.ts',
-          ),
+      expect(() =>
+        verifyWithReports(
           fixture.evidencePath,
-          fixture.expectedIdentityPath,
+          expectedIdentity,
           fixture.reportRoot,
-        ],
-        { encoding: 'utf8', timeout: 10_000 },
-      );
-      expect(result.signal).toBeNull();
-      expect(result.status).toBe(1);
-      expect(result.stderr).toContain(
-        'Retained report must be a regular file: SLO measurement.',
-      );
+        ),
+      ).toThrow('Retained report must be a regular file: SLO measurement.');
     },
   );
 
   it(
-    'fails closed at the executable CLI boundary when report-root input is absent',
+    'requires protected AC265 V3 context at the executable CLI boundary',
     { timeout: 35_000 },
     () => {
       const fixture = createFixture();
@@ -255,10 +245,11 @@ describe('Slice 09 retained operational axe and provider evidence files', () => 
         ],
         { encoding: 'utf8', timeout: 10_000 },
       );
-      expect(valid.status).toBe(0);
-      expect(valid.stdout).toBe(
-        'content_schema_registry_release_evidence=passed\n',
+      expect(valid.status).toBe(1);
+      expect(valid.stderr).toContain(
+        'CLI cannot construct the protected AC265 hosted E2E verification context',
       );
+      expect(valid.stdout).toBe('');
 
       const symlinkedVerifierPath = join(fixture.sandbox, 'verifier-link.ts');
       symlinkSync(verifierPath, symlinkedVerifierPath);
@@ -273,10 +264,11 @@ describe('Slice 09 retained operational axe and provider evidence files', () => 
         ],
         { encoding: 'utf8', timeout: 10_000 },
       );
-      expect(viaSymlink.status).toBe(0);
-      expect(viaSymlink.stdout).toBe(
-        'content_schema_registry_release_evidence=passed\n',
+      expect(viaSymlink.status).toBe(1);
+      expect(viaSymlink.stderr).toContain(
+        'CLI cannot construct the protected AC265 hosted E2E verification context',
       );
+      expect(viaSymlink.stdout).toBe('');
 
       const missingRoot = spawnSync(
         process.execPath,

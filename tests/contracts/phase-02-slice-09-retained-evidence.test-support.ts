@@ -10,6 +10,7 @@ import { tmpdir } from 'node:os';
 import { dirname, join } from 'node:path';
 
 import { verifyContentSchemaRegistryOperationalReleaseEvidenceFile } from '../../infra/workflows/verify-content-schema-registry-release-evidence.ts';
+import type { RetainedHostedE2eVerificationInput } from '../../infra/workflows/content-schema-registry-retained-hosted-context.ts';
 import {
   CONTENT_SCHEMA_REGISTRY_HOSTED_ROLES,
   CONTENT_SCHEMA_REGISTRY_HOSTED_SCENARIOS,
@@ -20,9 +21,14 @@ import {
   completeEvidence,
   expectedIdentity,
 } from './phase-02-slice-09-operational-release-evidence.test-support.ts';
+import {
+  contextFor,
+  createFixture as createHostedFixture,
+} from './ac265-hosted-receipt-test-fixtures.ts';
+import { makeContract } from './ac265-hosted-test-fixtures.ts';
 import { createManualAccessibilityReport } from './phase-02-slice-09-manual-accessibility-report-fixture.ts';
 
-export const hostedReportContents = `${JSON.stringify(
+export const legacyHostedReportContents = `${JSON.stringify(
   {
     criterion: 'P2-S09-AC-265',
     schemaVersion: 'ac265-hosted-e2e-v2',
@@ -53,6 +59,49 @@ export const hostedReportContents = `${JSON.stringify(
   null,
   2,
 )}\n`;
+
+const baseHostedContract = makeContract();
+const retainedHostedContract = {
+  ...baseHostedContract,
+  identity: {
+    ...baseHostedContract.identity,
+    environment: expectedIdentity.hostedEnvironment,
+    sourceRevision: expectedIdentity.sourceRevision,
+    deploymentId: expectedIdentity.hostedDeploymentId,
+    deployedAt: expectedIdentity.hostedDeployedAt,
+    buildId: expectedIdentity.buildId,
+    artifactSha256: expectedIdentity.artifactDigest,
+    migrationVersion: expectedIdentity.migrationVersion,
+    webOrigin: expectedIdentity.webOrigin,
+    apiOrigin: expectedIdentity.apiOrigin,
+    supabaseOrigin: expectedIdentity.supabaseOrigin,
+    supabaseProjectRef: new URL(expectedIdentity.supabaseOrigin).hostname.split(
+      '.',
+    )[0],
+  },
+};
+
+const trustedHostedFixture = createHostedFixture({
+  contract: retainedHostedContract,
+  includeCandidateIdentityReceipt: true,
+  includeExecutionBindings: true,
+  receiptIssuedAt: '2026-09-03T11:00:00.000Z',
+});
+
+export const retainedHostedReportContents = `${JSON.stringify(
+  trustedHostedFixture.report,
+  null,
+  2,
+)}\n`;
+
+export const trustedHostedE2eVerification: RetainedHostedE2eVerificationInput =
+  {
+    runnerContractBytes: trustedHostedFixture.contractBytes,
+    verificationContext: contextFor(
+      trustedHostedFixture,
+      trustedHostedFixture.contract,
+    ),
+  };
 
 export const automatedAxeReportContents = `${JSON.stringify(
   {
@@ -142,7 +191,7 @@ export const reportContents = Object.freeze({
   'alerts/delivery-receipt.json': 'redacted alert delivery receipt\n',
   'slo/measurement.json': 'production SLO measurement\n',
   'slo/dataset.json': 'production SLO dataset\n',
-  'hosted/e2e.json': hostedReportContents,
+  'hosted/e2e.json': retainedHostedReportContents,
   'accessibility/axe.json': automatedAxeReportContents,
   'accessibility/macos-voiceover-safari.json':
     macManualAccessibilityReportContents,
@@ -232,12 +281,17 @@ export const replaceHostedReport = (
   writeFileSync(fixture.evidencePath, JSON.stringify(evidence));
 };
 
-export const verifyWithReports =
-  verifyContentSchemaRegistryOperationalReleaseEvidenceFile as (
-    evidencePath: string,
-    expectedReleaseIdentity: unknown,
-    reportRoot: string,
-  ) => unknown;
+export const verifyWithReports = (
+  evidencePath: string,
+  expectedReleaseIdentity: unknown,
+  reportRoot: string,
+): unknown =>
+  verifyContentSchemaRegistryOperationalReleaseEvidenceFile(
+    evidencePath,
+    expectedReleaseIdentity,
+    reportRoot,
+    trustedHostedE2eVerification,
+  );
 
 export const cleanupRetainedEvidenceFixtures = (): void => {
   for (const sandbox of sandboxes.splice(0))

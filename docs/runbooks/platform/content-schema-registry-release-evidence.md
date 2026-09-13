@@ -9,16 +9,23 @@ Passing local tests does not satisfy these gates.
 Start from one successful immutable build. Record its full lowercase 40-character
 source SHA, artifact SHA-256 digest, build ID, and migration version. Every
 component report in the sidecar must name that same source SHA, and the hosted
-E2E migration version must equal the artifact migration version.
+E2E migration version must equal the artifact migration version. AC265 follows
+the staging-only identity and evidence contract in the
+[AC265 hosted E2E runner contract v1](./ac265-hosted-e2e-contract-v1.md); a
+production-origin E2E run cannot satisfy AC265.
 
 The protected workflow must independently create an expected-release-identity
 JSON containing the trusted source SHA, artifact digest, build ID, migration
 version, production deployment ID/`productionDeployedAt`, hosted
 environment/deployment ID/`hostedDeployedAt`, exact web/API/Supabase origins,
-and trusted evidence cutoff `trustedCutoffAt`. Populate deployment times and
-the cutoff from immutable deployment outputs/protected workflow state, never by
-copying values from the sidecar being checked. The cutoff is captured after the
-sidecar and reports are assembled, immediately before verification.
+and trusted evidence cutoff `trustedCutoffAt`. For AC265, it must additionally
+pin the protected CI run ID/attempt, staging run ID/attempt, exact staging
+deployment, build-manifest digest, deployed artifact digest, public pathless
+web/API origins, hosting account and project, Supabase project reference, and
+applied migration version and digest. Populate these values, deployment times,
+and the cutoff from immutable deployment outputs/protected workflow state,
+never by copying values from the sidecar being checked. The cutoff is captured
+after the sidecar and reports are assembled, immediately before verification.
 
 The protected workflow must retain the combined sidecar and its referenced,
 redacted component reports as workflow artifacts. AC266 raw manual reports are
@@ -29,17 +36,104 @@ manual reports, or manual-test recordings to the repository.
 
 ## Required reports
 
-| Criterion | Required non-local evidence                                                                                                                                                                                       |
-| --------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| AC209     | Production-native alert configuration containing every locked condition plus one redacted delivered `platform.on_call` receipt captured after that configuration.                                                 |
-| AC211     | Production query/report and dataset, at least 200 command/RPC/acceptance samples, retained queue/DLQ counts, one complete UTC day, and all five observed values below their strict thresholds.                    |
-| AC265     | Hosted staging or production Playwright report against pathless HTTPS origins, Google through Supabase Auth, all locked role variants, every resilience scenario, the deployed migration, and exact artifact SHA. |
-| AC266     | Automated axe report with zero Serious/Critical findings and complete manual VoiceOver/Safari/macOS plus NVDA/Firefox/Windows runs against the exact hosted deployment, origin, and SHA.                          |
+| Criterion | Required non-local evidence                                                                                                                                                                                                                              |
+| --------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| AC209     | Production-native alert configuration containing every locked condition plus one redacted delivered `platform.on_call` receipt captured after that configuration.                                                                                        |
+| AC211     | Production query/report and dataset, at least 200 command/RPC/acceptance samples, retained queue/DLQ counts, one complete UTC day, and all five observed values below their strict thresholds.                                                           |
+| AC265     | Staging-only `ac265-hosted-e2e-v3` report: all nine locked roles and ten scenarios, fresh Google through Supabase Auth, exact immutable candidate identity, opaque external session/resource references, server-derived receipts, and verified teardown. |
+| AC266     | Automated axe report with zero Serious/Critical findings and complete manual VoiceOver/Safari/macOS plus NVDA/Firefox/Windows runs against the exact hosted deployment, origin, and SHA.                                                                 |
 
 The automated axe target `/app/cms-content-modeling` is an unauthenticated
 auth-boundary check only: it must finish at `/auth/sign-in` with HTTP 200. It
 does not claim authenticated CMS page coverage; authenticated coverage belongs
 to the AC265 hosted matrix and the manual accessibility runs.
+
+## AC265 contract and current gate
+
+The required runner input and evidence shape is defined by
+[`ac265-hosted-runner-v1`](./ac265-hosted-e2e-contract-v1.md). Its accepted
+aggregate report version is `ac265-hosted-e2e-v3`; an `ac265-hosted-e2e-v2`
+report is legacy and cannot satisfy this gate. The report must bind the exact
+CI/staging runs and attempts, deployment, source, build and build manifest,
+artifact, public web/API origins, hosting and Supabase projects, and applied
+migration. Every role, scenario, reference, and server receipt must bind to
+that same identity.
+
+The retained release gate is V3-only and fails closed without
+`hostedV3Verification`, including the exact protected `runnerContractBytes` and
+trusted `verificationContext`. The report's `runnerContractSha256` and trusted
+`expectedRunnerContractSha256` must bind those exact bytes. Do not route this
+gate through the legacy V2 compatibility validator: V2 cannot satisfy or
+downgrade the retained release requirement.
+
+The manifest carries exactly nine opaque
+`ac265-session://<role>/<uuid>` handles and pre-existing safe staging resources
+identified as `ac265-resource://<kind>/<uuid>`, with `kind` limited to
+`content_schema`, `staff_case`, `organization`, or `prerequisite`. Session
+contents never enter repository files, logs, reports, or retained artifacts.
+Denied cases use eligible adults and do not create minors or invent mandates.
+The real `fresh_google_oauth_through_supabase` flow, natural provider expiry,
+server-generated HTTP 429, one-use staging-only `staging_one_use_lease`,
+server-derived role/RLS/UI/scenario receipts, fixed `current_session_only`
+logout, and a cleanup receipt are required. Any missing assertion or cleanup
+failure blocks report publication.
+
+`dependency_outage` and its lease proof are mandatory. The runner contract
+must declare `scenarioParameters.dependencyOutage.outageLease`; the V3 report
+must include the matching outage evidence, authenticated `leaseReceipt`, exactly
+one consume event, and cleanup `outageLeaseReleaseProof`. The one-request lease
+must be staging-only and at most 60 seconds. There is no skipped, omitted, or
+unleased outage path that can pass the retained gate.
+
+Role/resource and scenario/role mappings are independently trusted inputs, not
+values the runner contract or report may authorize. Supply
+`expectedRoleResourceBindings` and `expectedScenarioRoleBindings` from the
+approved versioned policy, compare them exactly with the contract's mapping
+fields, and bind role/scenario receipts to the approved session and resource
+reference digests. Keep all nine role and ten scenario keys exact.
+
+The protected workflow must resolve each opaque reference and receipt to its
+exact raw bytes, recompute SHA-256 before parsing, and cross-verify the
+session-to-role binding, resource kind/project/safety, and every receipt's
+subject and complete candidate identity against independently captured
+protected deployment outputs. Receipt signatures/authenticity must be checked
+over those same bytes; a digest alone is not authentication. Execution evidence
+bytes must likewise be resolved, hashed, and bound to the expected evidence
+kind, identity, subject, and (for teardown) session-reference digest. The local
+v3 verifier uses caller-supplied trusted identity, run ID, contract digest,
+independent mappings, `resolveReceipt`, and `verifyReceiptAuthenticity`; when
+execution evidence is declared, its resolver must provide the raw bytes.
+
+The retained V3 report, runner-contract JSON, and resolved receipt JSON must
+reject duplicate object members before `JSON.parse` or schema validation.
+Duplicate detection is recursive and compares decoded member names, so nested
+duplicates and escaped-equivalent keys fail closed. For each role and scenario,
+`durationMs` must fit inside the report window:
+`durationMs <= completedAt - startedAt`.
+
+The trusted verification context also supplies a positive safe-integer
+`maxRunDurationMs`, `trustedCutoffAt`, and
+`expectedOutageLeaseScope`. The outage scope is exactly `runId`,
+`hostingProjectId`, `supabaseProjectRef`, `deploymentId`, `dependencyId`, and
+route `{ operationId, method, path }`. The signed/authenticated lease receipt
+must bind that scope to the staging-only `ac265-lease://staging/<uuid>` ref and
+its exact-UTF-8 SHA-256, bounded acquire/expiry timestamps, one matching
+consume event, one-request limit, and replay rejection. Cleanup release proof
+must use the same lease ref/digest and be covered by the authenticated cleanup
+result. Report duration must fit the trusted `maxRunDurationMs`; every receipt
+`issuedAt` must be inside the report window and at or before the trusted
+cutoff. All nine sessions require teardown proof using only
+`current_session_only`; the authenticated cleanup receipt must be issued at or
+after `cleanup.completedAt` and within that run window/cutoff.
+
+These are local trust-boundary checks only. The verifier does not implement a
+protected issuer, session broker, evidence-byte service, outage-lease service,
+or independent binding to actual protected workflow/deployment outputs. The
+v1 session broker, safe-resource registry, fault-evidence service, isolated
+hosted workflow, and report producer remain unimplemented. The runner must be
+isolated and disposable; shared persistent self-hosted runners and cross-run
+browser/session state are prohibited. Keep this criterion blocked: this
+contract and local checks do not prove hosted acceptance.
 
 The protected staging deployment runs `infra/workflows/collect-staging-axe-evidence.sh`
 after public contract verification. It paginates GitHub deployment/status metadata,
@@ -295,7 +389,8 @@ Unknown fields fail. Raw provider payloads, request bodies, cookies, tokens,
 authorization headers, email addresses, content values, and capability graphs
 do not belong in the sidecar.
 
-Every digest is paired with a safe path relative to one retained-report root.
+Every retained-file digest in the release sidecar is paired with a safe path
+relative to one retained-report root.
 The verifier streams that fixed tree within entry and depth budgets derived
 from the declared report paths, resolves each path inside the root, forbids
 symlink report entries and escapes, rejects special files before a nonblocking
@@ -303,9 +398,12 @@ open, pins each unique regular file's identity and size to that descriptor,
 reads no more than 10 MiB plus a growth sentinel, recomputes every SHA-256 digest
 from the same bytes it parses, and rejects every unreferenced file or directory.
 `hosted/e2e.json` must satisfy the strict redacted
-`ContentSchemaRegistryHostedE2eReportSchema`; it contains only exact release
-identity, timestamps, passed role/scenario keys, explicit role assertions, and
-bounded durations. Report version `ac265-hosted-e2e-v2` rejects legacy reports.
+`ContentSchemaRegistryHostedE2eReportSchema` for version
+`ac265-hosted-e2e-v3`; it contains only exact release identity, timestamps,
+passed role/scenario keys, explicit role assertions, bounded durations,
+approved opaque references and digests, verified server-receipt references and
+digests, and the redacted cleanup result. Version `ac265-hosted-e2e-v2` is
+legacy and cannot satisfy this contract.
 The approved Phase 2 role assertions are:
 
 | Roles                                                                   | Required assertion   |
@@ -331,49 +429,68 @@ activate a provider, provision identities, attest provider truth independently,
 or perform the manual tests. A local pass proves sidecar/report consistency; it
 does not by itself satisfy any of the four release criteria.
 
+The local v3 schema and internal cross-verifier are implemented. For AC265,
+the verifier hashes exact raw runner-contract, reference, execution-evidence,
+and receipt bytes; checks their declared digests; resolves protected evidence
+by opaque reference; validates receipt authenticity through the supplied
+authenticity verifier; and compares subjects, results, resource bindings, and
+complete candidate identity. It also requires independently supplied
+role/resource and scenario/role mappings, validates the outage-lease lifecycle
+against `expectedOutageLeaseScope`, and enforces caller-supplied
+`maxRunDurationMs`, trusted cutoff, receipt run-window, and cleanup-receipt
+ordering. A hash of `hosted/e2e.json` or a local fixture alone proves none of
+the external sessions, resources, signed receipts, or hosted observations.
+
+This remains a local trust-boundary check, not hosted AC265 acceptance. The
+protected session broker, safe-resource registry, authenticated outage
+lease/fault-evidence service, evidence-byte service, isolated hosted workflow,
+and v3 hosted report producer are still missing. A future protected workflow
+must supply the verifier's trusted context from authenticated CI/deployment
+outputs and resolve/sign the real staging evidence. Keep the criterion
+blocked until a complete protected staging run and accepted v3 report exist.
+
 Treat `approved_scheduled_boundary` as incomplete until the protected-workflow
 reviewer confirms that its alert-configuration report contains the approved
 change/reference record. The verifier hashes that report but does not interpret
 its provider-specific contents; the enum value alone is not approval evidence.
 
-## Verify
+## Protected verification entrypoint
 
-Run from the immutable checkout after all four report families exist:
+The standalone command is not a successful verification path. Its local JSON
+arguments cannot provide the function-valued V3 trust inputs `resolveReceipt`,
+`verifyReceiptAuthenticity`, or `resolveEvidence` when execution evidence is
+present. The direct CLI therefore fails closed with an error instructing the
+caller to use a protected workflow; do not invoke it as an acceptance gate or
+expect a success marker.
 
-```bash
-node --experimental-strip-types \
-  infra/workflows/verify-content-schema-registry-release-evidence.ts \
-  "$S09_RELEASE_EVIDENCE_PATH" \
-  "$S09_EXPECTED_RELEASE_IDENTITY_PATH" \
-  "$S09_RELEASE_REPORT_ROOT"
-```
+Only a protected workflow entrypoint may call
+`verifyContentSchemaRegistryOperationalReleaseEvidenceFile` with
+`hostedV3Verification` constructed from trusted protected context. That context
+must supply the exact protected `runnerContractBytes`, independently trusted
+identity/digests/mappings/time bounds, and the receipt/evidence resolvers and
+authenticity verifier. The workflow may emit
+`content_schema_registry_release_evidence=passed` only after the V3 retained
+report and all other gates pass. Until that protected entrypoint exists, no
+standalone command can produce acceptance success. Keep Slice 09 and dependent
+Slice 10 blocked until the protected run produces a passing sidecar and an
+operator reviews the retained source reports.
 
-The executable samples `Date.now()` once for its trusted clock. It rejects an
-expected `trustedCutoffAt` later than that clock; equality is accepted. Direct
-callers may inject a trusted clock for deterministic tests, but production
-verification must use the default executable clock and create the expected
-identity from protected deployment outputs.
-
-Success emits exactly:
-
-```text
-content_schema_registry_release_evidence=passed
-```
-
-Any missing, malformed, duplicate, out-of-root, digest-mismatched, structurally
-local/synthetic, stale-order, threshold-equal, threshold-exceeding, or sidecar
-record declared non-redacted exits nonzero. Matching bytes and a `redacted: true`
-declaration do not prove report truth or redaction; protected source review must
-reject forged, synthetic, or sensitive report contents.
-Keep Slice 09 and dependent Slice 10 blocked until the protected run produces a
-passing sidecar and an operator reviews the retained source reports.
+Any missing, malformed, duplicate, out-of-root, digest-mismatched,
+structurally local/synthetic, stale-order, threshold-equal,
+threshold-exceeding, or sidecar record declared non-redacted fails closed.
+Matching bytes and a `redacted: true` declaration do not prove report truth or
+redaction; protected source review must reject forged, synthetic, or sensitive
+report contents.
 
 ## Security boundary
 
-- Provision hosted test identities and storage state outside repository files.
-- Disable Playwright traces for authenticated hosted runs unless the protected
-  artifact process proves they contain no cookies, tokens, email addresses, or
-  OAuth query values.
+- Resolve exactly nine role-bound session handles through the protected
+  external broker; keep session contents outside repository files, logs, and
+  retained artifacts.
+- Use a protected ephemeral runner per attempt. Do not share a persistent
+  self-hosted worker, browser profile, or session state across runs.
+- Disable Playwright traces, screenshots, video, and HAR for authenticated
+  hosted runs. The v1 contract does not retain browser session state.
 - Keep retained report roots minimal. Unreferenced traces, screenshots, videos,
   storage state, provider payloads, files, and directories fail verification.
 - Retain only allowlisted aggregate measurements and opaque report IDs/digests.

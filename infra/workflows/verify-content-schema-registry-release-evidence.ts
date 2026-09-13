@@ -7,6 +7,8 @@ import {
   type ContentSchemaRegistryOperationalReleaseEvidence,
 } from '../../packages/contracts/src/content-schema-registry/operational-release-evidence.ts';
 import { verifyContentSchemaRegistryRetainedReports } from './content-schema-registry-retained-report-verifier.ts';
+import type { RetainedHostedE2eVerificationInput } from './content-schema-registry-retained-hosted-context.ts';
+import { parseJsonWithoutDuplicateMembers } from './strict-json-object-members.ts';
 
 export {
   validateContentSchemaRegistryHostedE2eReport,
@@ -113,8 +115,12 @@ export const verifyContentSchemaRegistryOperationalReleaseEvidenceFile = (
   evidencePath: string,
   expectedReleaseIdentity: unknown,
   reportRoot: string,
+  hostedV3Verification: RetainedHostedE2eVerificationInput,
 ): ContentSchemaRegistryOperationalReleaseEvidence => {
-  const evidence: unknown = JSON.parse(readFileSync(evidencePath, 'utf8'));
+  const evidence = parseJsonWithoutDuplicateMembers(
+    readFileSync(evidencePath, 'utf8'),
+    'Content schema registry release evidence',
+  );
   const expected = OperationalReleaseEvidenceExpectedIdentitySchema.safeParse(
     expectedReleaseIdentity,
   );
@@ -128,6 +134,7 @@ export const verifyContentSchemaRegistryOperationalReleaseEvidenceFile = (
     validated,
     expected.data,
     reportRoot,
+    hostedV3Verification,
   );
   return validated;
 };
@@ -141,15 +148,9 @@ const run = (
     throw new Error(
       'Usage: verify-content-schema-registry-release-evidence.ts <evidence-json> <expected-release-identity-json> <report-root>',
     );
-  const expectedReleaseIdentity: unknown = JSON.parse(
-    readFileSync(expectedReleaseIdentityPath, 'utf8'),
+  throw new Error(
+    'The CLI cannot construct the protected AC265 hosted E2E verification context; use a protected workflow caller with trusted runner-contract bytes and receipt/evidence verifiers.',
   );
-  verifyContentSchemaRegistryOperationalReleaseEvidenceFile(
-    evidencePath,
-    expectedReleaseIdentity,
-    reportRoot,
-  );
-  process.stdout.write('content_schema_registry_release_evidence=passed\n');
 };
 
 const entrypoint = process.argv[1];
