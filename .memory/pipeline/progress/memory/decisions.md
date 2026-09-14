@@ -44,3 +44,14 @@ Canonical project decisions are compiled at .memory/wiki/decisions.md. This file
   authorization state. Raw runner credentials, JWTs, sessions, and provider
   responses are neither logged nor persisted. This handshake is an enabling
   control-plane boundary, not AC265 hosted acceptance evidence.
+
+## 2026-09-14 — Bound GitHub Actions run timestamp skew
+
+- GitHub Actions run `34818589300` returned `created_at` one second after
+  `run_started_at`. The AC265 provenance verifier treats those provider fields
+  as independent timestamp sources and accepts at most five seconds of positive
+  created/start skew; exactly five seconds passes and six seconds fails.
+- The tolerance does not relax workflow, repository, branch, source SHA, run
+  attempt, conclusion, or artifact-origin checks. `run_started_at` must still
+  precede completion, and the exact CI run must still complete before the
+  staging workflow starts.

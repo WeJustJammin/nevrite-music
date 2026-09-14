@@ -258,10 +258,15 @@ describe('AC265 candidate enrollment PostgREST client', () => {
     vi.useFakeTimers();
     const request = await makeRequest();
     let capturedSignal: AbortSignal | undefined;
+    let resolveSignalCaptured!: () => void;
+    const signalCaptured = new Promise<void>((resolve) => {
+      resolveSignalCaptured = resolve;
+    });
     const fetchImpl = vi.fn<typeof fetch>(
       async (_input, init) =>
         await new Promise<Response>((_resolve, reject) => {
           capturedSignal = init?.signal as AbortSignal | undefined;
+          resolveSignalCaptured();
           capturedSignal?.addEventListener(
             'abort',
             () => reject(new Error('transport abort detail')),
@@ -277,6 +282,7 @@ describe('AC265 candidate enrollment PostgREST client', () => {
     const rejected = expect(pending).rejects.toThrow(
       'AC265 candidate enrollment failed',
     );
+    await signalCaptured;
     await vi.advanceTimersByTimeAsync(
       AC265_CANDIDATE_ENROLLMENT_HTTP_TIMEOUT_MS,
     );

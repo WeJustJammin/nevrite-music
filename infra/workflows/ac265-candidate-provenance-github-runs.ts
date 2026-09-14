@@ -21,6 +21,8 @@ import {
   requireSafeInteger,
 } from './ac265-candidate-provenance-github-api.ts';
 
+const GITHUB_RUN_TIMESTAMP_SKEW_MS = 5 * 1000;
+
 const verifyWorkflow = async (
   path: string,
   name: string,
@@ -92,7 +94,10 @@ const assertAttemptRun = (
   const createdAt = timestampMs(value.created_at);
   const startedAt = timestampMs(value.run_started_at);
   const completedAt = timestampMs(value.updated_at);
-  if (createdAt > startedAt || startedAt > completedAt)
+  if (
+    createdAt - startedAt > GITHUB_RUN_TIMESTAMP_SKEW_MS ||
+    startedAt > completedAt
+  )
     return failAc265CandidateProvenance();
   return {
     runId: expected.runId,
