@@ -70,18 +70,24 @@
   See `.memory/wiki/specs/audits/phase-1-validation.md`.
 - **CURRENT IMPLEMENTATION:** Phase 2 Slices 01–08 are complete. Slice 09 is
   implemented and locally QA-GREEN at 279/283, including the follow-up
-  production operational-alert provider boundary and the deployed protected
-  AC211 collector; depth ratio remains `0.986` because the required
-  external evidence has not been claimed. Slice 10 remains dependency-locked. See
+  production operational-alert provider boundary and deployed AC211 collector.
+  PR #74 branch commit `540e32ef` adds local AC211 deployment-provenance
+  verification and AC266 report-preparation tooling; it is pending CI/merge and
+  is not exact-main or hosted acceptance. Depth ratio remains `0.986` because
+  all four external acceptance criteria remain open. Slice 10 remains
+  dependency-locked. See
   `.memory/pipeline/progress/phases/phase-02.md` and
   `.memory/pipeline/progress/slices/phase-02-slice-09.md`.
-- **CURRENT VALIDATION:** Focused AC265 verification passes 9 files / 68 tests,
-  including the public contract-export guard;
-  format, lint, and type-check pass. `pnpm validate` passes 514 Vitest files /
-  4,022 tests plus one intentional skip at 100% coverage, the Slice 09 evidence
-  gate, 101 functional plus 5 recovery Playwright checks, workspace builds,
-  bundle budgets, and performance smoke. `pnpm db:verify` passes 50 pgTAP files /
-  1,818 tests with migrated database types matching.
+- **CURRENT VALIDATION:** PR #74 local validation passes: `pnpm validate` exits
+  0 with 522 Vitest files / 4,091 passed + 1 skipped at 100% coverage (12,634
+  statements, 9,578 branches, 2,099 functions, 11,747 lines), the Slice 09
+  evidence gate, 101 functional plus 5 real-route Playwright checks, workspace
+  builds, bundle budgets, and performance smoke. `pnpm db:verify` passes 50
+  pgTAP files / 1,818 checks with migrated types matching. Focused AC211 passes
+  59/59; AC266 passes 83/83; adversarial reviews have no remaining findings.
+  `pnpm progress:check`, the Prettier check on updated records, and the Git diff
+  whitespace check pass. PR #74 is pending CI/merge, not exact-main or hosted
+  acceptance.
 - **HISTORICAL PRE-REMEDIATION CANDIDATE:** Before this remediation, PR #9 branch
   `codex/phase-2-slices-01-09` was at
   `67264c5e9b5196d00ac3f0aa272896a010c872d7`; synthetic merge
@@ -109,7 +115,13 @@
   Gmail contains no genuine platform-on-call delivery, and AC209, AC211, AC265,
   and AC266 remain open. See
   `.memory/wiki/specs/audits/verify-infrastructure-2026-09-05-0824.md`.
-- **LATEST FAIL-CLOSED EVIDENCE:** PR #24 is exact `main` SHA
+- **CURRENT EXACT-MAIN / FAIL-CLOSED EVIDENCE:** PR #73 is merged at exact
+  `main` SHA `2b397453709f8135537cb849c4f308986abfb3f4`; exact-main CI and
+  staging passed. Protected exercise run `34782931928` failed closed at
+  Cloudflare's Zone Analytics Email Sending capability check with sanitized
+  `provider_graphql_error`; no genuine delivery receipt or production
+  acceptance is claimed. The token policy edit/retest remains pending.
+- **HISTORICAL DIAGNOSTIC EVIDENCE:** PR #24 was exact `main` SHA
   `3bf66a610b013bf9600889780ee26319559fb31c`; CI `34013034252` and staging
   `34013296132` passed. Protected production runs `34016439881` and
   post-rotation `34018343506` stopped before migrations or deployment with
@@ -135,8 +147,10 @@ failed: malformed response`. The token still passes Workers Observability.
   `CLOUDFLARE_PLATFORM_QUEUE_ID` configuration are verified. The protected
   AC211 collector is deployed. No complete retained production UTC-day report
   exists. Protected run `34189916813` attempted 2026-09-07 UTC and failed closed
-  for insufficient natural samples; the next eligible complete day is 2026-09-08
-  UTC and can be collected only after `2026-09-09T00:00:00Z`. AC211 remains open.
+  for insufficient natural samples; the next eligible complete day at that time
+  was 2026-09-08 UTC and could be collected only after `2026-09-09T00:00:00Z`.
+  Current earliest eligibility is 2026-09-14 UTC, with earliest dispatch at
+  `2026-09-15T00:01:00Z`, subject to natural sample floors. AC211 remains open.
 - **CURRENT HOSTED OAUTH EVIDENCE:** Exact `main` SHA
   `10f320b97ccce0c62fba2ee27a3b792f08f83285`; CI `34224641678`, staging
   `34225256920` / deployment `6327379740` passed. Google is configured and the
@@ -144,7 +158,7 @@ failed: malformed response`. The token still passes Workers Observability.
   callback/session/protected-route proof passed on staging. AC265 remains open:
   the approved 9-role/10-scenario hosted report and identity provisioning,
   teardown, and lifecycle evidence are still missing.
-- **LATEST AC265 CANDIDATE / PREFLIGHT:** PR #71 is merged at `origin/main` SHA
+- **AC265 PREFLIGHT EVIDENCE (PR #71 BASELINE):** PR #71 merged at `origin/main` SHA
   `03329530ce1375de63d1d5a0ecee6b5ce8ccb50d`; exact-main CI `34776703106`
   attempt 1 and staging `34777077865` attempt 1 / deployment `6425379348` passed.
   Candidate artifact `staging-verified-candidate` (`10323417853`) passed

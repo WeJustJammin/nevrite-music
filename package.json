@@ -15,6 +15,7 @@
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
     "test:evidence:s09": "vitest run tests/contracts/phase-02-slice-09-evidence-map.test.ts -t \"executes every declared nonbrowser command\" --maxWorkers=1",
+    "ac266:reports": "node --experimental-strip-types infra/workflows/ac266-manual-accessibility-report-cli.ts",
     "test:e2e": "pnpm test:e2e:functional && pnpm test:e2e:s09-real",
     "test:e2e:functional": "playwright test",
     "test:e2e:s09-real": "playwright test --config=playwright.s09-real.config.ts",

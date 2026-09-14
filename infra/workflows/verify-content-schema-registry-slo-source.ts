@@ -8,6 +8,14 @@ import {
   verifyDeployment,
   verifySuccessfulStatus,
 } from './content-schema-registry-slo-source-helpers.ts';
+import { collectDeploymentStatuses } from './content-schema-registry-slo-deployment-statuses.ts';
+import {
+  verifyProductionJob,
+  verifyProductionJobReference,
+  verifyProductionDeploymentTimeline,
+  verifyProductionWorkflow,
+  verifyProductionWorkflowRun,
+} from './content-schema-registry-slo-deployment-provenance.ts';
 import type {
   ContentSchemaRegistrySloSourceOptions,
   ContentSchemaRegistrySloSourceResult,
@@ -29,13 +37,7 @@ export const verifyContentSchemaRegistrySloSource = async (
     validated.name,
     `deployments/${options.productionDeploymentId}`,
   );
-  const statusesEndpoint = endpointFor(
-    validated.base,
-    validated.owner,
-    validated.name,
-    `deployments/${options.productionDeploymentId}/statuses?per_page=100`,
-  );
-  verifyDeployment(
+  const deployment = verifyDeployment(
     await requestJson(
       deploymentEndpoint,
       options.token,
@@ -47,15 +49,80 @@ export const verifyContentSchemaRegistrySloSource = async (
     options.sourceRevision,
   );
   const successfulStatus = verifySuccessfulStatus(
+    await collectDeploymentStatuses({
+      base: validated.base,
+      owner: validated.owner,
+      name: validated.name,
+      deploymentId: options.productionDeploymentId,
+      token: options.token,
+      fetchImpl,
+      timeoutMs: validated.timeoutMs,
+    }),
+  );
+  const jobReference = verifyProductionJobReference(
+    successfulStatus.status,
+    validated.owner,
+    validated.name,
+  );
+  const job = verifyProductionJob(
     await requestJson(
-      statusesEndpoint,
+      endpointFor(
+        validated.base,
+        validated.owner,
+        validated.name,
+        `actions/jobs/${jobReference.jobId}`,
+      ),
       options.token,
       fetchImpl,
       validated.timeoutMs,
-      'deployment status',
+      'Deploy production job',
+    ),
+    jobReference,
+    options.sourceRevision,
+    successfulStatus.status,
+  );
+  const workflowId = verifyProductionWorkflow(
+    await requestJson(
+      endpointFor(
+        validated.base,
+        validated.owner,
+        validated.name,
+        'actions/workflows/deploy-production.yml',
+      ),
+      options.token,
+      fetchImpl,
+      validated.timeoutMs,
+      'Deploy production workflow',
     ),
   );
-  const productionDeployedAt = successfulStatus.timestamp;
+  const run = verifyProductionWorkflowRun(
+    await requestJson(
+      endpointFor(
+        validated.base,
+        validated.owner,
+        validated.name,
+        `actions/runs/${job.runId}/attempts/${job.runAttempt}`,
+      ),
+      options.token,
+      fetchImpl,
+      validated.timeoutMs,
+      'Deploy production run',
+    ),
+    {
+      runId: job.runId,
+      runAttempt: job.runAttempt,
+      workflowId,
+      repository: options.repository,
+      sourceRevision: options.sourceRevision,
+    },
+  );
+  const productionDeployedAt = verifyProductionDeploymentTimeline(
+    deployment,
+    successfulStatus.status,
+    job,
+    run,
+    successfulStatus.timestamp,
+  );
   if (validated.windowStart < productionDeployedAt)
     throw new Error('The SLO window starts before the successful deployment.');
 

@@ -11,7 +11,9 @@
   protected, read-only verification of the production Cloudflare monitoring
   capabilities without migrations or deployment.
 - `collect-production-ac211.yml` — manually initiated, protected collection of
-  one complete production UTC day of redacted AC211 SLO evidence.
+  one complete production UTC day of redacted AC211 SLO evidence. Its preflight
+  binds the supplied deployment to the successful `Deploy production` job/run
+  and exact deployed source SHA before collection.
 
 ## Ownership
 

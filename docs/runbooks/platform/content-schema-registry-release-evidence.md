@@ -315,6 +315,40 @@ attestation that every eligible target was measured. Do not include content,
 names, email addresses, account identifiers, screenshots, recordings, or
 free-text notes.
 
+Run the helper only on a trusted Linux operator workstation, using a local
+filesystem where POSIX mode bits and the ACL mask authoritatively constrain
+access. The helper rejects macOS and Windows because their ACL models are not
+proven safe by Node's owner/group mode checks. Securely transfer the completed
+macOS and Windows reports to that workstation without changing their bytes.
+Create the two candidate-bound draft files in a new private directory outside
+the repository. The drafts contain the exact 11 check identifiers but are
+intentionally incomplete and fail the report schema until a human tester
+records every required observation:
+
+```sh
+pnpm ac266:reports -- template \
+  --source-revision <40-character-staging-source-sha> \
+  --deployment-id <staging-deployment-id> \
+  --web-origin <pathless-staging-https-origin> \
+  --output-dir <absolute-private-draft-directory>
+```
+
+After both real platform sessions are complete, validate and encode the exact
+report bytes into a second new private directory. The command rejects schema,
+platform, candidate, UTF-8, duplicate-key, size, symlink, permission, and
+overwrite failures and prints only filenames, byte counts, SHA-256 digests, and
+the public candidate identity:
+
+```sh
+pnpm ac266:reports -- prepare \
+  --voiceover-report <absolute-private-voiceover-report> \
+  --nvda-report <absolute-private-nvda-report> \
+  --source-revision <40-character-staging-source-sha> \
+  --deployment-id <staging-deployment-id> \
+  --web-origin <pathless-staging-https-origin> \
+  --output-dir <absolute-private-secret-file-directory>
+```
+
 Hash the exact UTF-8 bytes of each completed JSON report with SHA-256. Store
 their base64 encodings as the protected `ac266-manual-evidence` environment
 secrets `AC266_VOICEOVER_REPORT_BASE64` and
