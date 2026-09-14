@@ -17,15 +17,16 @@
 - [x] `BE` data, API, and policy implementation
 - [x] `FE` Astro SSR and bounded React-island implementation
 - [x] `QA` GREEN, adversarial verification, and canonical validation (local
-      gates complete; PR #71 merged at exact-main SHA
-      `03329530ce1375de63d1d5a0ecee6b5ce8ccb50d`; CI `34776703106` attempt 1
-      and staging `34777077865` attempt 1 / deployment `6425379348` passed;
-      artifact `staging-verified-candidate` (`10323417853`) passed read-only
-      hosted preflight run `34777223023` with `candidate_provenance_verified`.
-      The read-only main-only workflow, strict provenance, authenticated policy
-      mapping/outage-target contracts, and fail-closed collector port boundary
-      remain scaffolding only. No protected collector/service protocol or hosted
-      acceptance exists; four external release checks remain blocked.)
+      validation completed for PR #74 branch commit `540e32ef`: `pnpm validate`
+      exits 0 with 522 Vitest files / 4,091 passed + 1 skipped at 100% coverage
+      (12,634 statements, 9,578 branches, 2,099 functions, 11,747 lines), 101
+      functional and 5 real-route Playwright checks, and `pnpm db:verify` with
+      50 pgTAP files / 1,818 checks and matching migrated types. Focused AC211
+      tests pass 59/59; AC266 tests pass 83/83; adversarial reviews have no
+      remaining findings. PR #74 is pending CI/merge, not exact-main or hosted
+      acceptance. Its AC211 provenance and AC266 report-preparation tooling
+      improve evidence collection; all four external release checks remain
+      blocked.)
 - [x] Documentation, runbooks, graph, feature ledger, and progress tracking
 
 ## Acceptance Criteria
