@@ -1,3 +1,5 @@
+import { trustedGitHubApiBase } from './content-schema-registry-slo-api-origin.ts';
+
 const SOURCE_SHA_PATTERN = /^[0-9a-f]{40}$/u;
 const DEPLOYMENT_ID_PATTERN = /^[1-9][0-9]*$/u;
 const REPOSITORY_PATTERN = /^[A-Za-z0-9_.-]+\/[A-Za-z0-9_.-]+$/u;
@@ -6,7 +8,7 @@ const UTC_DAY_MS = 86_400_000;
 const DEFAULT_TIMEOUT_MS = 10_000;
 const MAX_RESPONSE_BYTES = 1_000_000;
 
-type JsonObject = Record<string, unknown>;
+export type JsonObject = Record<string, unknown>;
 
 export type ContentSchemaRegistrySloSourceOptions = Readonly<{
   apiUrl: string;
@@ -38,27 +40,8 @@ export type ValidatedContentSchemaRegistrySloSourceOptions = Readonly<{
   timeoutMs: number;
 }>;
 
-const isJsonObject = (value: unknown): value is JsonObject =>
+export const isJsonObject = (value: unknown): value is JsonObject =>
   typeof value === 'object' && value !== null && !Array.isArray(value);
-
-const baseApiUrl = (apiUrl: string): URL => {
-  let parsed: URL;
-  try {
-    parsed = new URL(apiUrl);
-  } catch {
-    throw new Error('GITHUB_API_URL must be a valid HTTPS URL.');
-  }
-  if (
-    parsed.protocol !== 'https:' ||
-    parsed.search !== '' ||
-    parsed.hash !== ''
-  )
-    throw new Error('GITHUB_API_URL must be a valid HTTPS URL.');
-  parsed.pathname = parsed.pathname.endsWith('/')
-    ? parsed.pathname
-    : `${parsed.pathname}/`;
-  return parsed;
-};
 
 const repositoryParts = (repository: string): readonly [string, string] => {
   if (!REPOSITORY_PATTERN.test(repository))
@@ -92,7 +75,7 @@ const parseUtcDay = (utcDay: string): number => {
   return start;
 };
 
-const parseTimestamp = (value: unknown, label: string): number => {
+export const parseTimestamp = (value: unknown, label: string): number => {
   if (typeof value !== 'string')
     throw new Error(`${label} timestamp is invalid.`);
   const timestamp = Date.parse(value);
@@ -155,13 +138,18 @@ const readResponseText = async (
   }
 };
 
-export const requestJson = async (
+export type GitHubJsonResponse = Readonly<{
+  value: unknown;
+  link: string | null;
+}>;
+
+export const requestJsonWithLink = async (
   endpoint: URL,
   token: string,
   fetchImpl: typeof fetch,
   timeoutMs: number,
   label: string,
-): Promise<unknown> => {
+): Promise<GitHubJsonResponse> => {
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), timeoutMs);
   try {
@@ -190,7 +178,10 @@ export const requestJson = async (
       throw new Error(`GitHub ${label} API returned invalid JSON.`);
     }
     try {
-      return JSON.parse(responseText.text) as unknown;
+      return {
+        value: JSON.parse(responseText.text) as unknown,
+        link: response.headers.get('link'),
+      };
     } catch {
       throw new Error(`GitHub ${label} API returned invalid JSON.`);
     }
@@ -199,10 +190,20 @@ export const requestJson = async (
   }
 };
 
+export const requestJson = async (
+  endpoint: URL,
+  token: string,
+  fetchImpl: typeof fetch,
+  timeoutMs: number,
+  label: string,
+): Promise<unknown> =>
+  (await requestJsonWithLink(endpoint, token, fetchImpl, timeoutMs, label))
+    .value;
+
 export const validateOptions = (
   options: ContentSchemaRegistrySloSourceOptions,
 ): ValidatedContentSchemaRegistrySloSourceOptions => {
-  const base = baseApiUrl(options.apiUrl);
+  const base = trustedGitHubApiBase(options.apiUrl);
   const [owner, name] = repositoryParts(options.repository);
   if (!DEPLOYMENT_ID_PATTERN.test(options.productionDeploymentId))
     throw new Error('Production deployment ID must be numeric.');
@@ -246,7 +247,9 @@ export const verifyDeployment = (
   if (
     value.id !== deploymentNumber ||
     value.environment !== 'production' ||
-    value.sha !== sourceRevision
+    value.sha !== sourceRevision ||
+    value.ref !== 'main' ||
+    value.task !== 'deploy'
   )
     throw new Error(
       'Production deployment identity does not match the requested source.',
@@ -255,9 +258,17 @@ export const verifyDeployment = (
 };
 
 const statusTimestamp = (status: JsonObject): number => {
-  if (status.created_at !== undefined)
-    return parseTimestamp(status.created_at, 'Deployment status');
-  return parseTimestamp(status.updated_at, 'Deployment status');
+  const createdAt = parseTimestamp(
+    status.created_at ?? status.updated_at,
+    'Deployment status',
+  );
+  const updatedAt = parseTimestamp(
+    status.updated_at ?? status.created_at,
+    'Deployment status',
+  );
+  if (createdAt > updatedAt)
+    throw new Error('GitHub deployment status timestamps are invalid.');
+  return updatedAt;
 };
 
 export const verifySuccessfulStatus = (
@@ -267,13 +278,18 @@ export const verifySuccessfulStatus = (
     throw new Error('GitHub deployment statuses response is invalid.');
   let latest:
     { readonly timestamp: number; readonly status: JsonObject } | undefined;
+  let latestAmbiguous = false;
   for (const candidate of value) {
     if (!isJsonObject(candidate))
       throw new Error('GitHub deployment statuses response is invalid.');
     const timestamp = statusTimestamp(candidate);
-    if (latest === undefined || timestamp > latest.timestamp)
+    if (latest === undefined || timestamp > latest.timestamp) {
       latest = { timestamp, status: candidate };
+      latestAmbiguous = false;
+    } else if (timestamp === latest.timestamp) latestAmbiguous = true;
   }
+  if (latestAmbiguous)
+    throw new Error('GitHub deployment status timestamps are ambiguous.');
   if (latest === undefined || latest.status.state !== 'success')
     throw new Error('A successful production deployment status is required.');
   if (latest.status.environment !== 'production')

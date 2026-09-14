@@ -71,9 +71,23 @@ filesystem and validation operations.
   recomputes every referenced digest from descriptor-pinned bounded reads. It
   performs no provider calls and a pass does not replace protected-workflow
   source review.
-- `verify-content-schema-registry-slo-source.ts` proves the requested source SHA,
-  production deployment, successful production status, and complete UTC-day
-  ordering through bounded GitHub deployment API reads.
+- `verify-content-schema-registry-slo-source.ts` pins bearer-authenticated
+  requests to the canonical GitHub REST origin, compares two complete bounded
+  deployment-status snapshots, and proves the latest status belongs to the
+  requested source SHA and exact `Deploy production` workflow job and attempt.
+  The deployment must identify `ref=main` and `task=deploy`; its creation and
+  status times must agree with the linked job/run before setting the SLO boundary.
+- `content-schema-registry-slo-deployment-provenance.ts` requires that job and
+  run to match the active `Deploy production` workflow ID, path, name, manual
+  event, `main` branch, source SHA, and repository identity. Every GitHub
+  response remains timeout- and size-bounded.
+- `ac266-manual-accessibility-report-cli.ts` exposes the offline
+  `pnpm ac266:reports` operator command. `template` creates intentionally
+  incomplete VoiceOver/Safari and NVDA/Firefox drafts; `prepare` strictly
+  validates the completed private reports against one staging candidate and
+  writes bounded, owner-only base64 files for the two protected GitHub secrets.
+  It performs no network calls or uploads and never turns a template into
+  accessibility evidence.
 - `content-schema-registry-slo-provider.ts` performs bounded Workers
   Observability pagination and Queue Analytics aggregation, normalizing only the
   allowlisted fields needed by AC211.

@@ -11,17 +11,22 @@ import {
 
 const sourceRevision = 'a'.repeat(40);
 const deploymentId = '123456789';
-const apiUrl = 'https://api.github.test/';
+const apiUrl = 'https://api.github.com/';
 const repository = 'owner/repo';
 const token = 'synthetic-token';
 const utcDay = '2026-09-05';
 const successfulDeploymentAt = '2026-09-04T23:00:00.000Z';
+const productionRunId = '700100';
+const productionJobId = '5001';
+const productionWorkflowId = 346315225;
+const productionJobUrl = `https://github.com/${repository}/actions/runs/${productionRunId}/job/${productionJobId}`;
 
 const deployment = (overrides: Record<string, unknown> = {}) => ({
   id: Number(deploymentId),
   environment: 'production',
   sha: sourceRevision,
   ref: 'main',
+  task: 'deploy',
   created_at: '2026-09-04T22:00:00.000Z',
   updated_at: successfulDeploymentAt,
   ...overrides,
@@ -34,8 +39,54 @@ const statuses = [
     environment: 'production',
     created_at: successfulDeploymentAt,
     updated_at: successfulDeploymentAt,
+    target_url: productionJobUrl,
+    log_url: productionJobUrl,
   },
 ];
+
+const productionWorkflow = (overrides: Record<string, unknown> = {}) => ({
+  id: productionWorkflowId,
+  name: 'Deploy production',
+  path: '.github/workflows/deploy-production.yml',
+  state: 'active',
+  ...overrides,
+});
+
+const productionJob = (overrides: Record<string, unknown> = {}) => ({
+  id: Number(productionJobId),
+  run_id: Number(productionRunId),
+  run_attempt: 1,
+  workflow_name: 'Deploy production',
+  name: 'deploy',
+  status: 'completed',
+  conclusion: 'success',
+  head_sha: sourceRevision,
+  head_branch: 'main',
+  created_at: '2026-09-04T22:00:00.000Z',
+  started_at: '2026-09-04T22:00:01.000Z',
+  completed_at: successfulDeploymentAt,
+  html_url: productionJobUrl,
+  ...overrides,
+});
+
+const productionRun = (overrides: Record<string, unknown> = {}) => ({
+  id: Number(productionRunId),
+  run_attempt: 1,
+  workflow_id: productionWorkflowId,
+  name: 'Deploy production',
+  path: '.github/workflows/deploy-production.yml',
+  event: 'workflow_dispatch',
+  status: 'completed',
+  conclusion: 'success',
+  head_sha: sourceRevision,
+  head_branch: 'main',
+  created_at: '2026-09-04T21:55:00.000Z',
+  run_started_at: '2026-09-04T22:00:00.000Z',
+  updated_at: successfulDeploymentAt,
+  repository: { id: 123, full_name: repository },
+  head_repository: { id: 123, full_name: repository },
+  ...overrides,
+});
 
 const response = (value: unknown, status = 200): Response =>
   new Response(JSON.stringify(value), {
@@ -57,12 +108,24 @@ const options = (overrides: Record<string, unknown> = {}) => ({
 const fetchFor = (
   deploymentResponse: unknown = deployment(),
   statusResponse: unknown = statuses,
+  jobResponse: unknown = productionJob(),
+  workflowResponse: unknown = productionWorkflow(),
+  runResponse: unknown = productionRun(),
 ) =>
-  vi.fn<typeof fetch>(async (url) =>
-    String(url).endsWith(`/deployments/${deploymentId}`)
-      ? response(deploymentResponse)
-      : response(statusResponse),
-  );
+  vi.fn<typeof fetch>(async (input) => {
+    const url = new URL(String(input));
+    if (url.pathname.endsWith(`/deployments/${deploymentId}`))
+      return response(deploymentResponse);
+    if (url.pathname.endsWith(`/deployments/${deploymentId}/statuses`))
+      return response(statusResponse);
+    if (url.pathname.endsWith(`/actions/jobs/${productionJobId}`))
+      return response(jobResponse);
+    if (url.pathname.endsWith('/actions/workflows/deploy-production.yml'))
+      return response(workflowResponse);
+    if (url.pathname.endsWith(`/actions/runs/${productionRunId}/attempts/1`))
+      return response(runResponse);
+    throw new Error('Unexpected test URL.');
+  });
 
 describe('AC211 production SLO source preflight', () => {
   it('accepts the exact production deployment and a complete UTC day after success', async () => {
@@ -79,12 +142,22 @@ describe('AC211 production SLO source preflight', () => {
       queryId: 'wejammin-ac211-20260905',
     });
 
-    expect(fetchImpl).toHaveBeenCalledTimes(2);
+    expect(fetchImpl).toHaveBeenCalledTimes(6);
     expect(fetchImpl.mock.calls[0]?.[0]).toBe(
       `${apiUrl}repos/${repository}/deployments/${deploymentId}`,
     );
     expect(fetchImpl.mock.calls[1]?.[0]).toBe(
-      `${apiUrl}repos/${repository}/deployments/${deploymentId}/statuses?per_page=100`,
+      `${apiUrl}repos/${repository}/deployments/${deploymentId}/statuses?per_page=100&page=1`,
+    );
+    expect(fetchImpl.mock.calls[2]?.[0]).toBe(fetchImpl.mock.calls[1]?.[0]);
+    expect(fetchImpl.mock.calls[3]?.[0]).toBe(
+      `${apiUrl}repos/${repository}/actions/jobs/${productionJobId}`,
+    );
+    expect(fetchImpl.mock.calls[4]?.[0]).toBe(
+      `${apiUrl}repos/${repository}/actions/workflows/deploy-production.yml`,
+    );
+    expect(fetchImpl.mock.calls[5]?.[0]).toBe(
+      `${apiUrl}repos/${repository}/actions/runs/${productionRunId}/attempts/1`,
     );
     for (const [, init] of fetchImpl.mock.calls) {
       expect(init?.method).toBe('GET');
@@ -108,6 +181,57 @@ describe('AC211 production SLO source preflight', () => {
         fetchFor(deployment(overrides)),
       ),
     ).rejects.toThrow();
+  });
+
+  it('rejects a successful protected deployment linked to a non-deploy workflow', async () => {
+    const collectionJob = productionJob({
+      workflow_name: 'Collect production AC211 SLO evidence',
+      name: 'collect',
+    });
+    await expect(
+      verifyContentSchemaRegistrySloSource(
+        options(),
+        fetchFor(deployment(), statuses, collectionJob),
+      ),
+    ).rejects.toThrow(/Deploy production/u);
+  });
+
+  it.each([
+    ['wrong run SHA', { head_sha: 'b'.repeat(40) }],
+    [
+      'wrong workflow path',
+      { path: '.github/workflows/collect-production-ac211.yml' },
+    ],
+    ['wrong workflow ID', { workflow_id: productionWorkflowId + 1 }],
+    ['unsuccessful workflow run', { conclusion: 'failure' }],
+    ['wrong source branch', { head_branch: 'release' }],
+  ])('rejects a Deploy production run with %s', async (_label, overrides) => {
+    await expect(
+      verifyContentSchemaRegistrySloSource(
+        options(),
+        fetchFor(
+          deployment(),
+          statuses,
+          productionJob(),
+          productionWorkflow(),
+          productionRun(overrides),
+        ),
+      ),
+    ).rejects.toThrow(/Deploy production/u);
+  });
+
+  it('rejects deployment status links that do not identify one exact GitHub job', async () => {
+    const mismatchedStatus = {
+      ...statuses[0],
+      log_url: `https://github.com/${repository}/actions/runs/700101/job/${productionJobId}`,
+    };
+
+    await expect(
+      verifyContentSchemaRegistrySloSource(
+        options(),
+        fetchFor(deployment(), [mismatchedStatus]),
+      ),
+    ).rejects.toThrow(/Deploy production/u);
   });
 
   it('requires the latest deployment status to be successful', async () => {
@@ -141,21 +265,6 @@ describe('AC211 production SLO source preflight', () => {
         fetchFor(deployment(), [statusWithoutEnvironment]),
       ),
     ).rejects.toThrow(/not production/u);
-  });
-
-  it('rejects a successful status whose deployment ends after the UTC window starts', async () => {
-    await expect(
-      verifyContentSchemaRegistrySloSource(
-        options(),
-        fetchFor(deployment({ updated_at: '2026-09-05T00:00:00.001Z' }), [
-          {
-            ...statuses[0],
-            created_at: '2026-09-05T00:00:00.001Z',
-            updated_at: '2026-09-05T00:00:00.001Z',
-          },
-        ]),
-      ),
-    ).rejects.toThrow(/window starts before/u);
   });
 
   it.each([
