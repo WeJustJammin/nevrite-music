@@ -65,7 +65,7 @@ const inputBlock = (source: string, name: string): string => {
 };
 
 describe('AC265 hosted E2E preflight workflow contract', () => {
-  it('is explicitly preflight-only and omits all protected execution surfaces', () => {
+  it('is explicitly preflight-only and omits hosted execution surfaces', () => {
     const workflowHeader = workflow.slice(0, workflow.indexOf('\njobs:'));
     const jobs = workflow.slice(workflow.indexOf('\njobs:'));
     const jobNames = [...jobs.matchAll(/^\x20{2}([a-zA-Z0-9_-]+):\s*$/gmu)].map(
@@ -76,9 +76,10 @@ describe('AC265 hosted E2E preflight workflow contract', () => {
     expect(workflow).toContain('name: Preflight AC265 hosted E2E candidate');
     expect(jobNames).toEqual(['preflight']);
     expect(workflow).not.toMatch(/^\x20{2}execute:\s*$/mu);
-    expect(workflow).not.toMatch(/^\s+environment:/mu);
     expect(workflow).not.toMatch(/^\s+id-token:\s*write\s*$/mu);
-    expect(preflightSources).not.toMatch(/\$\{\{\s*vars\./u);
+    expect(`${prepareAction}\n${preflightAction}`).not.toMatch(
+      /\$\{\{\s*secrets\./u,
+    );
     for (const serviceVariable of [
       'AC265_SESSION_BROKER_ORIGIN',
       'AC265_EVIDENCE_SERVICE_ORIGIN',
@@ -89,6 +90,7 @@ describe('AC265 hosted E2E preflight workflow contract', () => {
     expect(preflightSources).not.toContain(
       'infra/workflows/collect-ac265-hosted-e2e.ts',
     );
+    expect(preflightSources).not.toContain('ac265_prepare_hosted_run');
     expect(preflightSources).not.toContain(
       './.github/actions/ac265-hosted-e2e-execution',
     );
@@ -111,7 +113,7 @@ describe('AC265 hosted E2E preflight workflow contract', () => {
     }
   });
 
-  it('is manual-only and requires exactly eight staging and CI candidate inputs', () => {
+  it('is manual-only and requires exactly six staging and CI candidate selectors', () => {
     expect(workflow).not.toBe('');
     const workflowHeader = workflow.slice(0, workflow.indexOf('\njobs:'));
     expect(workflowHeader).toMatch(/^on:\n {2}workflow_dispatch:\s*$/mu);
@@ -130,8 +132,6 @@ describe('AC265 hosted E2E preflight workflow contract', () => {
       'ci_run_id',
       'ci_run_attempt',
       'staging_deployment_id',
-      'staging_web_origin',
-      'staging_api_origin',
     ]);
 
     for (const input of [
@@ -141,8 +141,6 @@ describe('AC265 hosted E2E preflight workflow contract', () => {
       'ci_run_id',
       'ci_run_attempt',
       'staging_deployment_id',
-      'staging_web_origin',
-      'staging_api_origin',
     ]) {
       const definition = inputBlock(workflowHeader, input);
       expect(definition, input).not.toBe('');
@@ -159,7 +157,7 @@ describe('AC265 hosted E2E preflight workflow contract', () => {
     );
   });
 
-  it('preflights the exact candidate on an isolated hosted runner without protected context', () => {
+  it('preflights the exact candidate on an isolated hosted runner in protected staging', () => {
     const preflight = jobBlock(workflow, 'preflight');
     expect(preflight).not.toBe('');
     expect(preflight).toContain("if: github.ref == 'refs/heads/main'");
@@ -169,8 +167,11 @@ describe('AC265 hosted E2E preflight workflow contract', () => {
     );
     expect(timeout).toBeGreaterThan(0);
     expect(timeout).toBeLessThanOrEqual(20);
-    expect(preflight).not.toMatch(/^\s+environment:/mu);
-    expect(preflight).not.toMatch(/\$\{\{\s*(?:secrets|vars)\./u);
+    expect(preflight).toMatch(/^ {4}environment:\s*$/mu);
+    expect(preflight).toMatch(/^ {6}name:\s*staging\s*$/mu);
+    expect(preflight).toContain(
+      'candidate_ref: ${{ steps.enroll.outputs.candidate_ref }}',
+    );
     expect(preflight).not.toMatch(/^\s+id-token:\s*write\s*$/mu);
     expect(preflight).not.toMatch(/\b(?:self-hosted|wejammin)\b/iu);
 
@@ -189,10 +190,16 @@ describe('AC265 hosted E2E preflight workflow contract', () => {
       'ci_run_id: ${{ inputs.ci_run_id }}',
       'ci_run_attempt: ${{ inputs.ci_run_attempt }}',
       'staging_deployment_id: ${{ inputs.staging_deployment_id }}',
-      'staging_web_origin: ${{ inputs.staging_web_origin }}',
-      'staging_api_origin: ${{ inputs.staging_api_origin }}',
     ])
       expect(preflightInvocation).toContain(mapping);
+    for (const protectedValue of [
+      'staging_web_origin: ${{ vars.STAGING_WEB_ORIGIN }}',
+      'staging_api_origin: ${{ vars.STAGING_API_ORIGIN }}',
+      'hosting_account_id: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}',
+      'supabase_project_ref: ${{ vars.SUPABASE_PROJECT_REF }}',
+      'supabase_origin: ${{ vars.SUPABASE_URL }}',
+    ])
+      expect(preflightInvocation).toContain(protectedValue);
 
     const preflightActionPreparation = namedStep(
       preflightAction,
@@ -265,8 +272,11 @@ describe('AC265 hosted E2E preflight workflow contract', () => {
       'AC265_CI_RUN_ID: ${{ inputs.ci_run_id }}',
       'AC265_CI_RUN_ATTEMPT: ${{ inputs.ci_run_attempt }}',
       'AC265_STAGING_DEPLOYMENT_ID: ${{ inputs.staging_deployment_id }}',
-      'AC265_STAGING_WEB_ORIGIN: ${{ inputs.staging_web_origin }}',
-      'AC265_STAGING_API_ORIGIN: ${{ inputs.staging_api_origin }}',
+      'STAGING_WEB_ORIGIN: ${{ inputs.staging_web_origin }}',
+      'STAGING_API_ORIGIN: ${{ inputs.staging_api_origin }}',
+      'CLOUDFLARE_ACCOUNT_ID: ${{ inputs.hosting_account_id }}',
+      'SUPABASE_PROJECT_REF: ${{ inputs.supabase_project_ref }}',
+      'SUPABASE_URL: ${{ inputs.supabase_origin }}',
       'GITHUB_TOKEN: ${{ github.token }}',
       'GITHUB_REPOSITORY: ${{ github.repository }}',
     ])
@@ -274,5 +284,39 @@ describe('AC265 hosted E2E preflight workflow contract', () => {
     expect(verifier).toContain(
       'node --experimental-strip-types infra/workflows/collect-ac265-hosted-e2e-preflight.ts',
     );
+
+    const registration = namedStep(
+      preflight,
+      'Register exact candidate in staging',
+      6,
+    );
+    expect(registration).toContain(
+      'node --experimental-strip-types infra/workflows/register-ac265-candidate-enrollment.ts',
+    );
+    expect(registration).toContain('SUPABASE_URL: ${{ vars.SUPABASE_URL }}');
+    expect(registration).toContain(
+      'SUPABASE_PROJECT_REF: ${{ vars.SUPABASE_PROJECT_REF }}',
+    );
+    expect(registration).toContain(
+      'SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}',
+    );
+    expect(registration).toContain(
+      'AC265_ENROLLMENT_REQUEST_PATH: ${{ steps.preflight.outputs.enrollment_request_path }}',
+    );
+    expect(preflightInvocation).not.toContain('SUPABASE_SECRET_KEY');
+    expect(preflightAction).not.toContain('SUPABASE_SECRET_KEY');
+    expect(preflight.indexOf(registration)).toBeGreaterThan(
+      preflight.indexOf(preflightInvocation),
+    );
+
+    expect(preflightAction).toContain(
+      'value: ${{ steps.verify.outputs.enrollment_request_path }}',
+    );
+    const serviceKeyLines = workflow
+      .split(/\r?\n/u)
+      .filter((line) => line.includes('SUPABASE_SECRET_KEY'));
+    expect(serviceKeyLines).toEqual([
+      '          SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}',
+    ]);
   });
 });

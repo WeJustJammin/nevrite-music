@@ -1,13 +1,21 @@
 import { createHash } from 'node:crypto';
 import { spawnSync } from 'node:child_process';
-import { readdirSync, readFileSync } from 'node:fs';
+import {
+  mkdtempSync,
+  readFileSync,
+  readdirSync,
+  rmSync,
+  writeFileSync,
+} from 'node:fs';
+import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { runAc265HostedE2ePreflight } from '../infra/workflows/collect-ac265-hosted-e2e-preflight.ts';
+import { AC265_STAGING_HOSTING_PROJECT_ID } from '../packages/contracts/src/content-schema-registry/operational-release-evidence-hosted-candidate-enrollment.ts';
+import { AC265_STAGING_API_ORIGIN } from '../packages/contracts/src/content-schema-registry/operational-release-evidence-hosted-control-plane.ts';
 import {
-  API_ORIGIN,
   CI_RUN_ATTEMPT,
   CI_RUN_ID,
   DEPLOYMENT_ID,
@@ -24,6 +32,9 @@ import {
 type CandidateFixture = ReturnType<typeof createCandidateFixture>;
 type TestEnvironment = Record<string, string | undefined>;
 
+const SUPABASE_PROJECT_REF = 'abcdef1234567890abcd';
+const SUPABASE_URL = `https://${SUPABASE_PROJECT_REF}.supabase.co`;
+
 const requiredEnvironmentKeys = [
   'GITHUB_REPOSITORY',
   'GITHUB_TOKEN',
@@ -33,8 +44,13 @@ const requiredEnvironmentKeys = [
   'AC265_CI_RUN_ID',
   'AC265_CI_RUN_ATTEMPT',
   'AC265_STAGING_DEPLOYMENT_ID',
-  'AC265_STAGING_WEB_ORIGIN',
-  'AC265_STAGING_API_ORIGIN',
+  'STAGING_WEB_ORIGIN',
+  'STAGING_API_ORIGIN',
+  'CLOUDFLARE_ACCOUNT_ID',
+  'SUPABASE_PROJECT_REF',
+  'SUPABASE_URL',
+  'RUNNER_TEMP',
+  'GITHUB_OUTPUT',
 ] as const;
 
 const entrypointPath = fileURLToPath(
@@ -43,19 +59,6 @@ const entrypointPath = fileURLToPath(
     import.meta.url,
   ),
 );
-
-const environmentFor = (): TestEnvironment => ({
-  GITHUB_REPOSITORY: REPOSITORY,
-  GITHUB_TOKEN: TOKEN,
-  AC265_SOURCE_SHA: SOURCE_SHA,
-  AC265_STAGING_RUN_ID: STAGING_RUN_ID,
-  AC265_STAGING_RUN_ATTEMPT: STAGING_RUN_ATTEMPT,
-  AC265_CI_RUN_ID: CI_RUN_ID,
-  AC265_CI_RUN_ATTEMPT: CI_RUN_ATTEMPT,
-  AC265_STAGING_DEPLOYMENT_ID: DEPLOYMENT_ID,
-  AC265_STAGING_WEB_ORIGIN: WEB_ORIGIN,
-  AC265_STAGING_API_ORIGIN: API_ORIGIN,
-});
 
 const artifactTreeDigest = (root: string): string => {
   const entries: string[] = [];
@@ -78,28 +81,58 @@ const artifactTreeDigest = (root: string): string => {
 };
 
 let fixture: CandidateFixture;
+let runnerTemp: string;
+let outputIndex = 0;
+
+const environmentFor = (): TestEnvironment => {
+  const outputPath = join(runnerTemp, `github-output-${outputIndex++}`);
+  writeFileSync(outputPath, '');
+  return {
+    GITHUB_REPOSITORY: REPOSITORY,
+    GITHUB_TOKEN: TOKEN,
+    AC265_SOURCE_SHA: SOURCE_SHA,
+    AC265_STAGING_RUN_ID: STAGING_RUN_ID,
+    AC265_STAGING_RUN_ATTEMPT: STAGING_RUN_ATTEMPT,
+    AC265_CI_RUN_ID: CI_RUN_ID,
+    AC265_CI_RUN_ATTEMPT: CI_RUN_ATTEMPT,
+    AC265_STAGING_DEPLOYMENT_ID: DEPLOYMENT_ID,
+    STAGING_WEB_ORIGIN: WEB_ORIGIN,
+    STAGING_API_ORIGIN: AC265_STAGING_API_ORIGIN,
+    CLOUDFLARE_ACCOUNT_ID: 'f'.repeat(32),
+    SUPABASE_PROJECT_REF,
+    SUPABASE_URL,
+    RUNNER_TEMP: runnerTemp,
+    GITHUB_OUTPUT: outputPath,
+  };
+};
 
 beforeEach(() => {
   fixture = createCandidateFixture();
+  runnerTemp = mkdtempSync(join(tmpdir(), 'ac265-enrollment-test-'));
+  outputIndex = 0;
 });
 
 afterEach(() => {
   fixture.close();
+  rmSync(runnerTemp, { recursive: true, force: true });
 });
 
 describe('AC265 hosted E2E candidate provenance preflight entrypoint', () => {
-  it('verifies the exact candidate, logs only sanitized identities, and leaves evidence files untouched', async () => {
+  it('verifies provenance before persisting a strict enrollment request from protected configuration', async () => {
     const api = createMockGitHubApi();
     const messages: string[] = [];
     const before = artifactTreeDigest(fixture.workspaceRoot);
+    const env = {
+      ...environmentFor(),
+      SOURCE_SHA: 'e'.repeat(40),
+      STAGING_RUN_ID: '999999999999',
+      AC265_STAGING_WEB_ORIGIN: 'https://attacker.example',
+      AC265_STAGING_API_ORIGIN: 'https://attacker.example',
+      UNRELATED_GITHUB_ENV: 'workflow metadata',
+    };
 
-    await runAc265HostedE2ePreflight({
-      env: {
-        ...environmentFor(),
-        SOURCE_SHA: 'e'.repeat(40),
-        STAGING_RUN_ID: '999999999999',
-        UNRELATED_GITHUB_ENV: 'workflow metadata',
-      },
+    const { enrollmentRequestPath } = await runAc265HostedE2ePreflight({
+      env,
       cwd: fixture.workspaceRoot,
       fetchImpl: api.fetchImpl,
       logger: { log: (message: string) => messages.push(message) },
@@ -128,10 +161,38 @@ describe('AC265 hosted E2E candidate provenance preflight entrypoint', () => {
           new Headers(init.headers).get('authorization') === `Bearer ${TOKEN}`,
       ),
     ).toBe(true);
+
+    const enrollmentRequest = JSON.parse(
+      readFileSync(enrollmentRequestPath, 'utf8'),
+    ) as Record<string, unknown>;
+    expect(enrollmentRequest).toMatchObject({
+      criterion: 'P2-S09-AC-265',
+      schemaVersion: 'ac265-candidate-enrollment-v1',
+      identity: {
+        sourceRevision: SOURCE_SHA,
+        deploymentId: DEPLOYMENT_ID,
+        webOrigin: WEB_ORIGIN,
+        apiOrigin: AC265_STAGING_API_ORIGIN,
+        hostingProjectId: AC265_STAGING_HOSTING_PROJECT_ID,
+        supabaseProjectRef: SUPABASE_PROJECT_REF,
+        supabaseOrigin: SUPABASE_URL,
+      },
+      provenance: {
+        sourceRevision: SOURCE_SHA,
+        repository: REPOSITORY,
+      },
+    });
+    expect(JSON.stringify(enrollmentRequest)).not.toContain(TOKEN);
+    expect(JSON.stringify(enrollmentRequest)).not.toContain(
+      'SUPABASE_SECRET_KEY',
+    );
+    expect(readFileSync(env.GITHUB_OUTPUT!, 'utf8')).toBe(
+      `enrollment_request_path=${enrollmentRequestPath}\n`,
+    );
     expect(artifactTreeDigest(fixture.workspaceRoot)).toBe(before);
   });
 
-  it('rejects each missing or empty required environment value before GitHub access or logging', async () => {
+  it('rejects each missing or empty required value before GitHub access or logging', async () => {
     for (const key of requiredEnvironmentKeys) {
       for (const value of [undefined, '']) {
         const env = environmentFor();
@@ -154,12 +215,13 @@ describe('AC265 hosted E2E candidate provenance preflight entrypoint', () => {
     }
   });
 
-  it('rejects whitespace-only or padded values without disclosing them', async () => {
+  it('rejects whitespace-only or padded protected values without disclosing them', async () => {
     const secretLikeValue = '  private-token-value  ';
     for (const [key, value] of [
       ['GITHUB_TOKEN', secretLikeValue],
       ['GITHUB_REPOSITORY', '   '],
-      ['AC265_STAGING_API_ORIGIN', ` ${API_ORIGIN}`],
+      ['STAGING_API_ORIGIN', ` ${AC265_STAGING_API_ORIGIN}`],
+      ['SUPABASE_PROJECT_REF', ` ${SUPABASE_PROJECT_REF} `],
     ] as const) {
       const env = { ...environmentFor(), [key]: value };
       const fetchImpl = vi.fn<typeof fetch>();
@@ -194,6 +256,27 @@ describe('AC265 hosted E2E candidate provenance preflight entrypoint', () => {
 
       expect(fetchImpl).not.toHaveBeenCalled();
     }
+  });
+
+  it('rejects a protected Supabase target that differs from verified migration evidence after verification', async () => {
+    const api = createMockGitHubApi();
+    const env = {
+      ...environmentFor(),
+      SUPABASE_PROJECT_REF: 'zyxwvutsrqponmlkjihg',
+      SUPABASE_URL: 'https://zyxwvutsrqponmlkjihg.supabase.co',
+    };
+
+    await expect(
+      runAc265HostedE2ePreflight({
+        env,
+        cwd: fixture.workspaceRoot,
+        fetchImpl: api.fetchImpl,
+        logger: { log: vi.fn() },
+      }),
+    ).rejects.toThrow();
+
+    expect(api.requests.length).toBeGreaterThan(0);
+    expect(readFileSync(env.GITHUB_OUTPUT!, 'utf8')).toBe('');
   });
 
   it('sets a nonzero exit code and emits only a generic message when run directly with invalid inputs', () => {

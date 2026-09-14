@@ -28,6 +28,25 @@ const HASH_PATTERN = /^[a-f0-9]{64}$/u;
 const MIGRATION_PATTERN = /^[0-9]{14,20}$/u;
 const MAX_JSON_BYTES = 1024 * 1024;
 
+export interface Ac265VerifiedCandidateEvidenceFiles {
+  readonly migration: Readonly<{
+    projectRef: string;
+    remoteHistorySha256: string;
+    verifiedAt: string;
+  }>;
+  readonly provider: Readonly<{
+    evidenceSha256: string;
+    collectedAt: string;
+    workers: readonly Readonly<{
+      workerName: 'wejammin-api-staging' | 'wejammin-web-staging';
+      versionId: string;
+      deploymentId: string;
+      versionCreatedAt: string;
+      deploymentCreatedAt: string;
+    }>[];
+  }>;
+}
+
 const parseStagingRunIdentity = (
   value: unknown,
   input: Ac265CandidateProvenanceInputs,
@@ -60,7 +79,7 @@ const parseMigrationEvidence = (
   input: Ac265CandidateProvenanceInputs,
   trusted: Ac265GitHubProvenance,
   migrationVersion: string,
-): void => {
+): Ac265VerifiedCandidateEvidenceFiles['migration'] => {
   const expectedKeys = [
     'appliedVersions',
     'ciRunId',
@@ -104,6 +123,11 @@ const parseMigrationEvidence = (
     verifiedAt > trusted.stagingRun.completedAt
   )
     return failAc265CandidateProvenance();
+  return {
+    projectRef: value.projectRef,
+    remoteHistorySha256: value.remoteHistorySha256,
+    verifiedAt: new Date(verifiedAt).toISOString(),
+  };
 };
 
 export const verifyAc265CandidateEvidenceFiles = (
@@ -111,7 +135,7 @@ export const verifyAc265CandidateEvidenceFiles = (
   input: Ac265CandidateProvenanceInputs,
   trusted: Ac265GitHubProvenance,
   identity: ReleaseArtifactIdentity,
-): void => {
+): Ac265VerifiedCandidateEvidenceFiles => {
   const promotionMetadata = readAc265CandidateJsonFile(
     join(candidateDirectory, 'promotion-metadata.json'),
   );
@@ -139,7 +163,7 @@ export const verifyAc265CandidateEvidenceFiles = (
     input,
     trusted,
   );
-  parseMigrationEvidence(
+  const migration = parseMigrationEvidence(
     readAc265CandidateJsonFile(
       join(candidateDirectory, 'staging-migration-evidence.json'),
     ),
@@ -148,10 +172,12 @@ export const verifyAc265CandidateEvidenceFiles = (
     identity.migrationVersion,
   );
 
+  const providerEvidenceBytes = readAc265CandidateRegularFile(
+    join(candidateDirectory, 'provider-release-evidence.json'),
+    MAX_JSON_BYTES,
+  );
   const providerResult = CloudflareProviderReleaseEvidenceSchema.safeParse(
-    readAc265CandidateJsonFile(
-      join(candidateDirectory, 'provider-release-evidence.json'),
-    ),
+    parseJsonBytes(providerEvidenceBytes),
   );
   if (
     !providerResult.success ||
@@ -218,4 +244,19 @@ export const verifyAc265CandidateEvidenceFiles = (
     1,
   );
   if (marker.length !== 0) return failAc265CandidateProvenance();
+
+  return {
+    migration,
+    provider: {
+      evidenceSha256: sha256Ac265CandidateBytes(providerEvidenceBytes),
+      collectedAt: providerResult.data.collectedAt,
+      workers: providerResult.data.workers.map((worker) => ({
+        workerName: worker.workerName,
+        versionId: worker.versionId,
+        deploymentId: worker.deploymentId,
+        versionCreatedAt: worker.versionCreatedAt,
+        deploymentCreatedAt: worker.deploymentCreatedAt,
+      })),
+    },
+  };
 };

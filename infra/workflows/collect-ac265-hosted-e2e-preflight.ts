@@ -1,6 +1,14 @@
 import { isAbsolute, resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
+import {
+  appendFileSync,
+  lstatSync,
+  realpathSync,
+  statSync,
+  writeFileSync,
+} from 'node:fs';
 
+import { buildAc265CandidateEnrollment } from './ac265-candidate-enrollment.ts';
 import { verifyAc265CandidateProvenance } from './ac265-candidate-provenance.ts';
 import type { Ac265Fetch } from './ac265-candidate-provenance-common.ts';
 
@@ -11,6 +19,10 @@ export interface Ac265HostedE2ePreflightOptions {
   readonly cwd: string;
   readonly fetchImpl?: Ac265Fetch;
   readonly logger?: Readonly<Pick<Console, 'log'>>;
+}
+
+export interface Ac265HostedE2ePreflightResult {
+  readonly enrollmentRequestPath: string;
 }
 
 const required = (
@@ -34,27 +46,103 @@ const safeWorkspaceRoot = (cwd: string): string => {
   return cwd;
 };
 
+const safeRunnerTemp = (path: string): string => {
+  if (
+    typeof path !== 'string' ||
+    !isAbsolute(path) ||
+    resolve(path) !== path ||
+    path.includes('\0') ||
+    realpathSync(path) !== path ||
+    !lstatSync(path).isDirectory() ||
+    statSync(path).isSymbolicLink()
+  )
+    throw new Error(FAILURE);
+  return path;
+};
+
+const safeWorkflowFile = (path: string): string => {
+  if (
+    typeof path !== 'string' ||
+    !isAbsolute(path) ||
+    resolve(path) !== path ||
+    path.includes('\0') ||
+    path.includes('\n') ||
+    path.includes('\r') ||
+    realpathSync(path) !== path ||
+    !lstatSync(path).isFile()
+  )
+    throw new Error(FAILURE);
+  return path;
+};
+
 export const runAc265HostedE2ePreflight = async ({
   env,
   cwd,
   fetchImpl = fetch,
   logger = console,
-}: Ac265HostedE2ePreflightOptions): Promise<void> => {
+}: Ac265HostedE2ePreflightOptions): Promise<Ac265HostedE2ePreflightResult> => {
+  const runnerTemp = safeRunnerTemp(required(env, 'RUNNER_TEMP'));
+  const outputPath = safeWorkflowFile(required(env, 'GITHUB_OUTPUT'));
+  const repository = required(env, 'GITHUB_REPOSITORY');
+  const token = required(env, 'GITHUB_TOKEN');
+  const sourceSha = required(env, 'AC265_SOURCE_SHA');
+  const stagingRunId = required(env, 'AC265_STAGING_RUN_ID');
+  const stagingRunAttempt = required(env, 'AC265_STAGING_RUN_ATTEMPT');
+  const ciRunId = required(env, 'AC265_CI_RUN_ID');
+  const ciRunAttempt = required(env, 'AC265_CI_RUN_ATTEMPT');
+  const stagingDeploymentId = required(env, 'AC265_STAGING_DEPLOYMENT_ID');
+  const protectedConfig = {
+    hostingAccountId: required(env, 'CLOUDFLARE_ACCOUNT_ID'),
+    stagingWebOrigin: required(env, 'STAGING_WEB_ORIGIN'),
+    stagingApiOrigin: required(env, 'STAGING_API_ORIGIN'),
+    supabaseProjectRef: required(env, 'SUPABASE_PROJECT_REF'),
+    supabaseOrigin: required(env, 'SUPABASE_URL'),
+  };
   const provenance = await verifyAc265CandidateProvenance(
     {
-      repository: required(env, 'GITHUB_REPOSITORY'),
-      token: required(env, 'GITHUB_TOKEN'),
-      sourceSha: required(env, 'AC265_SOURCE_SHA'),
-      stagingRunId: required(env, 'AC265_STAGING_RUN_ID'),
-      stagingRunAttempt: required(env, 'AC265_STAGING_RUN_ATTEMPT'),
-      ciRunId: required(env, 'AC265_CI_RUN_ID'),
-      ciRunAttempt: required(env, 'AC265_CI_RUN_ATTEMPT'),
-      stagingDeploymentId: required(env, 'AC265_STAGING_DEPLOYMENT_ID'),
-      stagingWebOrigin: required(env, 'AC265_STAGING_WEB_ORIGIN'),
-      stagingApiOrigin: required(env, 'AC265_STAGING_API_ORIGIN'),
+      repository,
+      token,
+      sourceSha,
+      stagingRunId,
+      stagingRunAttempt,
+      ciRunId,
+      ciRunAttempt,
+      stagingDeploymentId,
+      stagingWebOrigin: protectedConfig.stagingWebOrigin,
+      stagingApiOrigin: protectedConfig.stagingApiOrigin,
       workspaceRoot: safeWorkspaceRoot(cwd),
     },
     fetchImpl,
+  );
+
+  const enrollmentRequest = await buildAc265CandidateEnrollment(
+    provenance,
+    protectedConfig,
+  );
+
+  const enrollmentRequestPath = resolve(
+    runnerTemp,
+    'ac265-candidate-enrollment-request.json',
+  );
+  if (
+    !enrollmentRequestPath.startsWith(`${runnerTemp}/`) ||
+    enrollmentRequestPath === outputPath
+  )
+    throw new Error(FAILURE);
+
+  writeFileSync(
+    enrollmentRequestPath,
+    `${JSON.stringify(enrollmentRequest)}\n`,
+    {
+      encoding: 'utf8',
+      flag: 'wx',
+      mode: 0o600,
+    },
+  );
+  appendFileSync(
+    outputPath,
+    `enrollment_request_path=${enrollmentRequestPath}\n`,
+    { encoding: 'utf8' },
   );
 
   logger.log(
@@ -70,6 +158,8 @@ export const runAc265HostedE2ePreflight = async ({
       stagingWebOrigin: provenance.staging.webOrigin,
     }),
   );
+
+  return { enrollmentRequestPath };
 };
 
 const isDirectExecution = (): boolean => {

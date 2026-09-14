@@ -5,6 +5,7 @@ import {
 } from '@wejammin/contracts';
 import type { Logger, LogEventDetails } from '@wejammin/observability/logging';
 
+import { registerAc265HostedRoutes } from './ac265-hosted/routes';
 import { registerDiagnosticsRoute } from './diagnostics';
 import { registerAuthenticationRoutes } from './authentication/routes';
 import { createContentSchemaRegistryApp } from './content-schema-registry/routes';
@@ -201,6 +202,8 @@ export const registerWorkerRoutes = (
   app: WorkerApp,
   dependencies: WorkerDependencies,
 ): void => {
+  if (dependencies.ac265Hosted !== undefined)
+    registerAc265HostedRoutes(app, dependencies.ac265Hosted);
   registerAuthenticationRoutes(app, dependencies.auth);
   if (dependencies.contentSchemaRegistry !== undefined) {
     app.route(

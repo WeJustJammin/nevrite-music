@@ -1,22 +1,17 @@
 name: Preflight AC265 hosted E2E candidate
-description: Verify the exact staging deployment and successful CI artifact before approval.
+description: Verify and prepare a strict staging candidate enrollment request.
 inputs:
-  source_sha:
-    required: true
-  staging_run_id:
-    required: true
-  staging_run_attempt:
-    required: true
-  ci_run_id:
-    required: true
-  ci_run_attempt:
-    required: true
-  staging_deployment_id:
-    required: true
-  staging_web_origin:
-    required: true
-  staging_api_origin:
-    required: true
+  source_sha: { required: true }
+  staging_run_id: { required: true }
+  staging_run_attempt: { required: true }
+  ci_run_id: { required: true }
+  ci_run_attempt: { required: true }
+  staging_deployment_id: { required: true }
+  staging_web_origin: { required: true }
+  staging_api_origin: { required: true }
+  hosting_account_id: { required: true }
+  supabase_project_ref: { required: true }
+  supabase_origin: { required: true }
 runs:
   using: composite
   steps:
@@ -27,6 +22,7 @@ runs:
         staging_run_id: ${{ inputs.staging_run_id }}
         ci_run_id: ${{ inputs.ci_run_id }}
     - name: Verify exact staging and CI candidate provenance
+      id: verify
       shell: bash
       env:
         AC265_SOURCE_SHA: ${{ inputs.source_sha }}
@@ -35,8 +31,15 @@ runs:
         AC265_CI_RUN_ID: ${{ inputs.ci_run_id }}
         AC265_CI_RUN_ATTEMPT: ${{ inputs.ci_run_attempt }}
         AC265_STAGING_DEPLOYMENT_ID: ${{ inputs.staging_deployment_id }}
-        AC265_STAGING_WEB_ORIGIN: ${{ inputs.staging_web_origin }}
-        AC265_STAGING_API_ORIGIN: ${{ inputs.staging_api_origin }}
+        STAGING_WEB_ORIGIN: ${{ inputs.staging_web_origin }}
+        STAGING_API_ORIGIN: ${{ inputs.staging_api_origin }}
+        CLOUDFLARE_ACCOUNT_ID: ${{ inputs.hosting_account_id }}
+        SUPABASE_PROJECT_REF: ${{ inputs.supabase_project_ref }}
+        SUPABASE_URL: ${{ inputs.supabase_origin }}
         GITHUB_REPOSITORY: ${{ github.repository }}
         GITHUB_TOKEN: ${{ github.token }}
       run: node --experimental-strip-types infra/workflows/collect-ac265-hosted-e2e-preflight.ts
+outputs:
+  enrollment_request_path:
+    description: Runner-temp path containing the verified strict enrollment request.
+    value: ${{ steps.verify.outputs.enrollment_request_path }}

@@ -52,16 +52,18 @@ export const AC209_EMAIL_SENDING_QUERY =
   }
 }` as const;
 export const AC209_EMAIL_SENDING_CAPABILITY_QUERY =
-  `query Ac209EmailSendingCapability($zoneTag: string!) {
+  `query Ac209EmailSendingCapability($zoneTag: string!, $start: Time!, $end: Time!) {
   viewer {
     zones(filter: { zoneTag: $zoneTag }) {
-      settings {
-        emailSendingAdaptive {
-          enabled
-          availableFields
-          maxPageSize
-          maxNumberOfFields
+      emailSendingAdaptive(
+        filter: {
+          datetime_geq: $start
+          datetime_leq: $end
         }
+        limit: 1
+        orderBy: [datetime_DESC]
+      ) {
+        status
       }
     }
   }
@@ -71,10 +73,12 @@ export type Ac209EmailSendingAnalyticsErrorCode =
   | 'invalid_configuration'
   | 'provider_graphql_error'
   | 'provider_permission_denied'
+  | 'provider_query_invalid'
   | 'provider_request_failed'
   | 'provider_resource_unavailable'
   | 'provider_response_invalid'
   | 'provider_result_truncated'
+  | 'provider_temporarily_unavailable'
   | 'event_not_unique'
   | 'unexpected_failure';
 
@@ -182,6 +186,18 @@ const classifyGraphqlErrorMessage = (
   message: string,
 ): Ac209EmailSendingAnalyticsErrorCode => {
   if (message.length > 1_024) return 'provider_graphql_error';
+  if (
+    /\b(?:error parsing args|scalar fields must have no selections|object field must have selections|unknown field|query contains error)\b/iu.test(
+      message,
+    )
+  )
+    return 'provider_query_invalid';
+  if (
+    /\b(?:unable to execute query,\s*please try again later|too many queries in progress,\s*please try again later)\b/iu.test(
+      message,
+    )
+  )
+    return 'provider_temporarily_unavailable';
   if (
     /\b(?:not found|does not exist|unknown (?:account|resource|field)|cannot query field)\b/iu.test(
       message,
@@ -298,45 +314,20 @@ const verifyCapabilityResponse = (payload: unknown): void => {
     fail('provider_resource_unavailable', 'provider zone is unavailable.');
   if (zones.length !== 1 || !isRecord(zones[0]))
     fail('provider_response_invalid', 'provider zone result is not unique.');
-  const settings = zones[0].settings;
-  if (!isRecord(settings) || !isRecord(settings.emailSendingAdaptive))
-    fail('provider_response_invalid', 'provider settings are malformed.');
-  const enabled = settings.emailSendingAdaptive.enabled;
-  if (typeof enabled !== 'boolean')
-    fail('provider_response_invalid', 'provider settings are malformed.');
-  if (!enabled)
-    fail('provider_resource_unavailable', 'provider dataset is unavailable.');
-  const availableFields = settings.emailSendingAdaptive.availableFields;
+  const events = zones[0].emailSendingAdaptive;
+  if (!Array.isArray(events) || events.length > 1)
+    fail('provider_response_invalid', 'provider event result is malformed.');
   if (
-    !Array.isArray(availableFields) ||
-    availableFields.some(
-      (field) =>
-        typeof field !== 'string' || field.length === 0 || field.length > 256,
-    ) ||
-    new Set(availableFields).size !== availableFields.length
-  )
-    fail('provider_response_invalid', 'provider fields are malformed.');
-  const availableFieldSet = new Set(availableFields);
-  if (
-    AC209_EMAIL_SENDING_REQUIRED_FIELDS.some(
-      (field) => !availableFieldSet.has(field),
+    events.some(
+      (event) =>
+        !isRecord(event) ||
+        Object.keys(event).length !== 1 ||
+        typeof event.status !== 'string' ||
+        event.status.length === 0 ||
+        event.status.length > 256,
     )
   )
-    fail('provider_resource_unavailable', 'provider field is unavailable.');
-  const maxPageSize = settings.emailSendingAdaptive.maxPageSize;
-  const maxNumberOfFields = settings.emailSendingAdaptive.maxNumberOfFields;
-  if (
-    !Number.isSafeInteger(maxPageSize) ||
-    !Number.isSafeInteger(maxNumberOfFields) ||
-    Number(maxPageSize) <= 0 ||
-    Number(maxNumberOfFields) <= 0
-  )
-    fail('provider_response_invalid', 'provider limits are malformed.');
-  if (
-    Number(maxPageSize) < AC209_EMAIL_SENDING_PAGE_LIMIT ||
-    Number(maxNumberOfFields) < AC209_EMAIL_SENDING_REQUIRED_FIELDS.length
-  )
-    fail('provider_resource_unavailable', 'provider limits are insufficient.');
+    fail('provider_response_invalid', 'provider event status is malformed.');
 };
 
 const request = async (
@@ -366,7 +357,7 @@ const request = async (
     }
     if (response.status === 401 || response.status === 403)
       fail('provider_permission_denied');
-    if (!response.ok)
+    if (!response.ok && response.status !== 400 && response.status !== 503)
       fail('provider_request_failed', 'provider request failed.');
     let bodyText: string;
     try {
@@ -377,6 +368,8 @@ const request = async (
         timeoutMs: AC209_EMAIL_SENDING_REQUEST_TIMEOUT_MS,
       });
     } catch (error: unknown) {
+      if (!response.ok)
+        fail('provider_request_failed', 'provider request failed.');
       if (
         error instanceof BoundedProviderResponseError &&
         (error.code === 'too_large' || error.code === 'invalid_content_length')
@@ -389,11 +382,25 @@ const request = async (
         fail('provider_response_invalid', 'provider response is not JSON.');
       fail('provider_response_invalid', 'provider response could not be read.');
     }
+    let payload: unknown;
     try {
-      return JSON.parse(bodyText) as unknown;
+      payload = JSON.parse(bodyText) as unknown;
     } catch {
+      if (!response.ok)
+        fail('provider_request_failed', 'provider request failed.');
       fail('provider_response_invalid', 'provider response is not JSON.');
     }
+    if (!response.ok) {
+      if (
+        isRecord(payload) &&
+        'errors' in payload &&
+        payload.errors !== undefined &&
+        payload.errors !== null
+      )
+        failGraphqlErrors(payload.errors);
+      fail('provider_request_failed', 'provider request failed.');
+    }
+    return payload;
   } finally {
     clearTimeout(timeout);
   }
@@ -407,10 +414,17 @@ export const verifyAc209EmailSendingCapability = async (
     const { fetchImpl, ...configuration } = input;
     const parsed = Ac209EmailSendingCapabilityInputSchema.parse(configuration);
     configurationValidated = true;
+    const endMs = Date.now();
     verifyCapabilityResponse(
       await request(fetchImpl ?? fetch, parsed.token, {
         query: AC209_EMAIL_SENDING_CAPABILITY_QUERY,
-        variables: { zoneTag: parsed.zoneId },
+        variables: {
+          zoneTag: parsed.zoneId,
+          start: new Date(
+            endMs - AC209_EMAIL_SENDING_MAX_WINDOW_MS,
+          ).toISOString(),
+          end: new Date(endMs).toISOString(),
+        },
       }),
     );
   } catch (error: unknown) {

@@ -89,6 +89,7 @@ describe('production Worker runtime', () => {
 
     expect(result).toBe(app);
     expect(createApp).toHaveBeenCalledOnce();
+    expect(captured?.ac265Hosted).toBeDefined();
     expect(captured?.contentSchemaRegistry).toBeDefined();
     expect(captured?.contentSchemaRegistry?.verifyRelease).toEqual(
       expect.any(Function),

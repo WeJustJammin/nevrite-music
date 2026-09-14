@@ -26,3 +26,19 @@ Canonical project decisions are compiled at .memory/wiki/decisions.md. This file
   Observability Write plus Account Analytics Read. The deployment token keeps
   its existing separate permissions; no Workers Scripts Edit permission is
   added to the observability token.
+
+## 2026-09-14 — Authenticate the AC265 runner through GitHub OIDC
+
+- The protected AC265 hosted runner uses a fresh GitHub-hosted `ubuntu-24.04`
+  VM and exchanges GitHub Actions OIDC directly with a staging-only route on
+  the existing Hono Worker. No new identity, hosting, or secret-store provider
+  is introduced.
+- The verifier accepts RS256 tokens only from GitHub's fixed issuer and JWKS,
+  with audience `urn:wejammin:ac265:staging-runner:v1`. It binds immutable
+  repository and owner IDs, the protected `main` ref, staging environment,
+  exact workflow ref and SHA, workflow run and attempt, and the candidate
+  source revision. A name-based subject is never sufficient by itself.
+- Only a SHA-256 of the OIDC `jti` may cross into private forced-RLS
+  authorization state. Raw runner credentials, JWTs, sessions, and provider
+  responses are neither logged nor persisted. This handshake is an enabling
+  control-plane boundary, not AC265 hosted acceptance evidence.

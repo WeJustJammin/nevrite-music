@@ -87,6 +87,11 @@ export type Database = {
       }
     }
     Functions: {
+      ac265_enroll_verified_candidate: {
+        Args: { p_request: Json }
+        Returns: Json
+      }
+      ac265_prepare_hosted_run: { Args: { p_request: Json }; Returns: Json }
       accept_job_with_outbox: {
         Args: {
           p_acting_party_id: string
@@ -1122,6 +1127,122 @@ export type Database = {
   }
   platform_private: {
     Tables: {
+      ac265_runner_authorization_jtis: {
+        Row: {
+          authorization_id: string
+          jti_sha256: string
+        }
+        Insert: {
+          authorization_id: string
+          jti_sha256: string
+        }
+        Update: {
+          authorization_id?: string
+          jti_sha256?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ac265_runner_authorization_jtis_authorization_id_fkey"
+            columns: ["authorization_id"]
+            isOneToOne: false
+            referencedRelation: "ac265_runner_authorizations"
+            referencedColumns: ["authorization_id"]
+          },
+        ]
+      }
+      ac265_runner_authorizations: {
+        Row: {
+          authorization_id: string
+          authorized_at: string
+          deployment_id: string
+          expires_at: string
+          github_run_attempt: number
+          github_run_id: string
+          identity_sha256: string
+          jti_sha256: string
+          request_sha256: string
+          run_id: string
+          source_revision: string
+          workflow_sha: string
+        }
+        Insert: {
+          authorization_id?: string
+          authorized_at: string
+          deployment_id: string
+          expires_at: string
+          github_run_attempt: number
+          github_run_id: string
+          identity_sha256: string
+          jti_sha256: string
+          request_sha256: string
+          run_id: string
+          source_revision: string
+          workflow_sha: string
+        }
+        Update: {
+          authorization_id?: string
+          authorized_at?: string
+          deployment_id?: string
+          expires_at?: string
+          github_run_attempt?: number
+          github_run_id?: string
+          identity_sha256?: string
+          jti_sha256?: string
+          request_sha256?: string
+          run_id?: string
+          source_revision?: string
+          workflow_sha?: string
+        }
+        Relationships: []
+      }
+      ac265_verified_candidates: {
+        Row: {
+          candidate_id: string
+          ci_artifact_id: number
+          ci_run_attempt: number
+          ci_run_id: string
+          deployment_id: string
+          enrolled_at: string
+          identity: Json
+          identity_sha256: string
+          provenance: Json
+          source_revision: string
+          staging_artifact_id: number
+          staging_run_attempt: number
+          staging_run_id: string
+        }
+        Insert: {
+          candidate_id?: string
+          ci_artifact_id: number
+          ci_run_attempt: number
+          ci_run_id: string
+          deployment_id: string
+          enrolled_at?: string
+          identity: Json
+          identity_sha256: string
+          provenance: Json
+          source_revision: string
+          staging_artifact_id: number
+          staging_run_attempt: number
+          staging_run_id: string
+        }
+        Update: {
+          candidate_id?: string
+          ci_artifact_id?: number
+          ci_run_attempt?: number
+          ci_run_id?: string
+          deployment_id?: string
+          enrolled_at?: string
+          identity?: Json
+          identity_sha256?: string
+          provenance?: Json
+          source_revision?: string
+          staging_artifact_id?: number
+          staging_run_attempt?: number
+          staging_run_id?: string
+        }
+        Relationships: []
+      }
       acting_context_binding: {
         Row: {
           acting_party_id: string
@@ -4698,6 +4819,10 @@ export type Database = {
       }
     }
     Functions: {
+      ac265_prepare_hosted_run_candidate: {
+        Args: { p_request: Json }
+        Returns: Json
+      }
       accept_job_with_outbox: {
         Args: {
           p_acting_party_id: string

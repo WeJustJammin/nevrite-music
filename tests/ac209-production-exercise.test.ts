@@ -237,6 +237,11 @@ describe('production AC209 queue-to-email exercise orchestration', () => {
 
   it.each([
     ['provider_graphql_error', 'email_provider_graphql_error'],
+    ['provider_query_invalid', 'email_provider_query_invalid'],
+    [
+      'provider_temporarily_unavailable',
+      'email_provider_temporarily_unavailable',
+    ],
     ['provider_resource_unavailable', 'email_provider_resource_unavailable'],
     ['provider_response_invalid', 'email_provider_response_invalid'],
   ] as const)(
@@ -408,10 +413,12 @@ describe('production AC209 queue-to-email exercise orchestration', () => {
     'email_invalid_configuration',
     'email_provider_graphql_error',
     'email_provider_permission_denied',
+    'email_provider_query_invalid',
     'email_provider_request_failed',
     'email_provider_resource_unavailable',
     'email_provider_response_invalid',
     'email_provider_result_truncated',
+    'email_provider_temporarily_unavailable',
   ])('formats the allowlisted Email Sending diagnostic %s', (code) => {
     expect(formatAc209StageDiagnostic({ stage: 'evidence', code })).toBe(
       `AC209_DIAGNOSTIC stage=evidence code=${code}`,
@@ -543,6 +550,16 @@ describe('production AC209 queue-to-email exercise orchestration', () => {
       'provider GraphQL failure',
       'provider_graphql_error' as const,
       'email_provider_graphql_error',
+    ],
+    [
+      'provider query failure',
+      'provider_query_invalid' as const,
+      'email_provider_query_invalid',
+    ],
+    [
+      'temporary provider failure',
+      'provider_temporarily_unavailable' as const,
+      'email_provider_temporarily_unavailable',
     ],
     [
       'provider resource failure',

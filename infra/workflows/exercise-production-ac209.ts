@@ -49,10 +49,12 @@ type Ac209EmailDiagnosticCode =
   | 'email_invalid_configuration'
   | 'email_provider_graphql_error'
   | 'email_provider_permission_denied'
+  | 'email_provider_query_invalid'
   | 'email_provider_request_failed'
   | 'email_provider_resource_unavailable'
   | 'email_provider_response_invalid'
-  | 'email_provider_result_truncated';
+  | 'email_provider_result_truncated'
+  | 'email_provider_temporarily_unavailable';
 
 type Ac209StageDiagnostic =
   | Readonly<{ stage: 'configuration'; code: 'invalid_configuration' }>
@@ -72,10 +74,12 @@ const AC209_EMAIL_DIAGNOSTIC_CODES = Object.freeze({
   invalid_configuration: 'email_invalid_configuration',
   provider_graphql_error: 'email_provider_graphql_error',
   provider_permission_denied: 'email_provider_permission_denied',
+  provider_query_invalid: 'email_provider_query_invalid',
   provider_request_failed: 'email_provider_request_failed',
   provider_resource_unavailable: 'email_provider_resource_unavailable',
   provider_response_invalid: 'email_provider_response_invalid',
   provider_result_truncated: 'email_provider_result_truncated',
+  provider_temporarily_unavailable: 'email_provider_temporarily_unavailable',
   unexpected_failure: 'email_query_failed',
 } satisfies Record<
   Ac209EmailSendingAnalyticsErrorCode,
@@ -117,10 +121,12 @@ const AC209_STAGE_DIAGNOSTIC_CODES = Object.freeze({
     'email_invalid_configuration',
     'email_provider_graphql_error',
     'email_provider_permission_denied',
+    'email_provider_query_invalid',
     'email_provider_request_failed',
     'email_provider_resource_unavailable',
     'email_provider_response_invalid',
     'email_provider_result_truncated',
+    'email_provider_temporarily_unavailable',
     'database_not_observed',
     'invalid',
   ]),

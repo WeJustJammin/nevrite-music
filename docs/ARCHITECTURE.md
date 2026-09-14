@@ -1,8 +1,8 @@
 # WeJammin - Living Architecture Map
 
-**Last Updated:** 2026-09-12  
-**Implementation scope:** Phase 1 operational foundation plus Phase 2 Slices 01–09 identity access, authority, organizations, profile ownership, public profile/portfolio delivery, governed settings and admin workspaces, the content-schema/block registry, its production operational-alert boundary, protected AC211 evidence collection, the AC265 per-tab acting-context bridge and fail-closed hosted-runner scaffold, and audited idempotency TTL retention  
-**Deployment status:** The Slice 09 product surface, scheduled Cloudflare telemetry, Queue DLQ, Supabase alert-state, Email Sending adapters, and repaired auth-provider transport are verified through immutable staging candidate SHA `10f320b97ccce0c62fba2ee27a3b792f08f83285`. Exact-main CI `34224641678` and staging run `34225256920` passed; staging deployment `6327379740` is the candidate deployment. A live Google OAuth callback/session proof passed with the provider registry `enabled` and `verified` at setup version `16`. Four environment-owned acceptance receipts keep Slice 09 at 279/283 and prevent Slice 10 from starting. The acting-context bridge, hosted-runner scaffold, and idempotency TTL sweep described below are pending promotion, are not part of this candidate, and are not evidence of hosted acceptance.  
+**Last Updated:** 2026-09-14  
+**Implementation scope:** Phase 1 operational foundation plus Phase 2 Slices 01–09 identity access, authority, organizations, profile ownership, public profile/portfolio delivery, governed settings and admin workspaces, the content-schema/block registry, its production operational-alert boundary, protected AC211 evidence collection, the AC265 per-tab acting-context bridge and protected candidate-enrollment/GitHub-OIDC runner-authorization foundation, and audited idempotency TTL retention  
+**Deployment status:** The latest exact-main baseline is SHA `74ef45ce90712e51e1c1b34ce37180944408edaf`; CI `34794061024` and staging run `34794440541` passed, producing staging deployment `6428523608`. A live Google OAuth callback/session proof previously passed with the provider registry `enabled` and `verified` at setup version `16`. Four environment-owned acceptance receipts keep Slice 09 at 279/283 and prevent Slice 10 from starting. The AC209 event-dataset capability correction and the AC265 enrollment/authorization foundation described below are pending promotion from the current worktree, are not part of that staging baseline, and are not evidence of alert delivery or hosted browser acceptance.  
 **Purpose:** Evidence-backed map of the code currently on disk: entry points, module boundaries, contracts, persistence authority, Cloudflare bindings, and request/data flows.
 
 > This document maps implemented behavior, not the larger product architecture described in `.memory/wiki/specs/2026-08-02-architecture-design.md`. Generated output (`dist/`, `.astro/`, coverage), dependency trees (`node_modules/`), and generated Cloudflare ambient declarations are excluded from the tree. Slice 07 adds governed settings; Slice 08 adds the private admin authority and workspace; Slice 09 adds eight `CMS-03A` routes, twelve private content-schema/block tables, a server-first modeling workbench, a fenced activation/migration consumer, a fail-closed scheduled operational-alert pipeline, and a manual protected AC211 evidence collector. The collector exists on disk, but no eligible production UTC-day report has been retained. Four environment-owned release checks keep Slice 09 at 279/283 and prevent Slice 10 from starting (`.memory/pipeline/progress/slices/phase-02-slice-09.md`; `.memory/pipeline/progress/verification/2026-09-03-slice-09-external-infrastructure.md`). `CFG-05A-01` through `CFG-05A-04`, `CFG-05B-01`, `CFG-05B-04`, and the `read_audit` branch of `CFG-05B-05` are active. `CFG-05B-02`, `CFG-05B-03`, and `run_diagnostic` remain deferred/unmounted (`.memory/pipeline/progress/slices/phase-02-slice-08.md`; `.memory/wiki/operations/runbooks/platform-configuration.md`).
@@ -1037,7 +1037,7 @@ verification, reconciliation, rollback, event claim/release/ACK, and
 dead-letter transitions
 (`supabase/migrations/20260902080000_content_schema_registry_authority.sql`).
 
-### Phase 2 per-tab acting-context bridge and AC265 hosted-runner scaffold
+### Phase 2 per-tab acting-context bridge and AC265 hosted-runner authorization foundation
 
 These on-disk changes are pending promotion. They extend the existing BE01b-12..13 context-read/bind flow and do not change the staging evidence recorded above.
 
@@ -1055,6 +1055,11 @@ apps/web/src/
 │   └── acting-context-bindings.ts          # existing POST facade
 └── server/identity-authority-platform-api.ts
 apps/worker/src/
+├── ac265-hosted/
+│   ├── github-oidc.ts
+│   ├── production.ts
+│   ├── routes.ts
+│   └── types.ts
 ├── authentication/{boundary,production-session,route-support}.ts
 └── identity-authority/
     ├── handlers-context.ts
@@ -1062,18 +1067,36 @@ apps/worker/src/
     ├── production-request-context.ts
     ├── production.ts
     └── route-runtime.ts
+infra/workflows/
+├── ac265-candidate-enrollment.ts
+├── ac265-candidate-enrollment-rpc.ts
+├── ac265-github-oidc-client.ts
+├── collect-ac265-hosted-e2e-preflight.ts
+├── register-ac265-candidate-enrollment.ts
+└── run-ac265-hosted-runner-authorization.ts
+packages/contracts/src/content-schema-registry/
+├── operational-release-evidence-hosted-candidate-enrollment.ts
+└── operational-release-evidence-hosted-control-plane.ts
 packages/data-access/src/database.types.ts
 supabase/migrations/
-└── 20260912010000_identity_context_candidate_switching.sql
+├── 20260912010000_identity_context_candidate_switching.sql
+└── 20260914021600_ac265_prepare_run_authorization.sql
 supabase/tests/
 ├── phase_02_slice_03_context_switching_01_candidates.sql
 ├── phase_02_slice_03_context_switching_02_binding.sql
-└── phase_02_slice_03_context_switching_03_auth_sessions.sql
+├── phase_02_slice_03_context_switching_03_auth_sessions.sql
+├── ac265_prepare_run_authorization.sql
+└── ac265_verified_candidate_registry.sql
+.github/actions/ac265-hosted-e2e-preflight/action.yml
+.github/workflows/
+├── preflight-ac265-hosted-e2e.yml
+└── run-ac265-hosted-e2e.yml
 apps/web/src/components/identity-authority/acting-context-switcher.test.tsx
 apps/web/src/lib/client-binding.test.ts
 apps/web/src/pages/app/identity-authority/acting-context-route.test.ts
 apps/worker/src/identity-authority/production-context-bridge.test.ts
 playwright.s09-hosted.config.ts
+tests/ac265-{candidate-enrollment,hosted-runner-authorization}*.test.ts
 tests/e2e/support/ac265-hosted-{config,global-setup,prerequisites}.ts
 ```
 
@@ -1083,7 +1106,9 @@ The existing Astro facades expose `GET /api/v1/me/acting-contexts` and `POST /ap
 
 The new migration adds a private `identity_context_candidate` resolver and protected `platform_api.identity_contexts_read` / `identity_context_bind` functions, and updates `auth_session_read` to resolve the current acting party for the selected tab. It reuses the existing `platform_private.acting_context_binding` relation rather than introducing a new table, with explicit function privilege boundaries. The three new SQL tests cover candidates, binding, and session resolution (`supabase/migrations/20260912010000_identity_context_candidate_switching.sql`; `supabase/tests/phase_02_slice_03_context_switching_*.sql`).
 
-The separate hosted Playwright config expects an explicit public `STAGING_WEB_ORIGIN` and distinct owner-only storage-state files outside the repository for every hosted role. Its global setup currently calls `assertAc265HostedControlsApproved()`, which fails closed because the approved role/session mapping, safe test-resource setup/teardown, Google IdP inputs, and bounded failure controls are not defined. No matching `*.ac265-hosted.spec.ts` or dedicated GitHub workflow exists, so this scaffold does not run hosted cases or produce acceptance evidence (`playwright.s09-hosted.config.ts`; `tests/e2e/support/ac265-hosted-*.ts`).
+The AC265 preflight verifies immutable CI, staging, migration, and provider provenance before building an enrollment identity from protected configuration. A service-role-only RPC independently validates the request, recomputes the schema-ordered identity digest, stores immutable provenance behind forced RLS, and returns only a server-generated `ac265-candidate://staging/...` reference. The protected runner workflow accepts only that reference, obtains a short-lived GitHub OIDC token whose repository, owner, workflow, protected main ref, staging environment, runner class, event, SHA, lifetime, and JTI are pinned, then calls the staging-only Worker prepare route. Supabase resolves the enrolled candidate and issues a five-minute redacted authorization; neither workflow-dispatch text nor the browser supplies deployment identity or authority (`preflight-ac265-hosted-e2e.yml`; `run-ac265-hosted-e2e.yml`; `apps/worker/src/ac265-hosted/`; `20260914021600_ac265_prepare_run_authorization.sql`).
+
+This is an authorization foundation, not a hosted test runner. The separate Playwright config still expects an explicit public `STAGING_WEB_ORIGIN`, and global setup still calls `assertAc265HostedControlsApproved()`. That guard fails closed because the run-scoped session broker, approved safe-resource registry, authenticated evidence/receipt resolver, one-use outage lease service, matching `*.ac265-hosted.spec.ts`, orchestrator, and V3 report producer are not implemented. No hosted browser case or AC265 acceptance evidence is produced (`playwright.s09-hosted.config.ts`; `tests/e2e/support/ac265-hosted-*.ts`).
 
 ### Phase 2 audited idempotency TTL sweep
 

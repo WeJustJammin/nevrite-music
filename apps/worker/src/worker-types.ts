@@ -6,6 +6,7 @@ import type {
 } from '@wejammin/contracts';
 import type { Logger } from '@wejammin/observability/logging';
 import type { Context } from 'hono';
+import type { Ac265HostedDependencies } from './ac265-hosted/types';
 import type { JobStatusDependencies } from './jobs/job-status';
 import type { UploadCompletionRouteDependencies } from './upload-completion/upload-intent-completion';
 import type {
@@ -65,6 +66,7 @@ export type WebhookRouteRegistration = Readonly<{
   handler: (request: Request) => MaybePromise<Response>;
 }>;
 export type WorkerDependencies = {
+  ac265Hosted?: Ac265HostedDependencies;
   auth?: AuthenticationDependencies;
   contentSchemaRegistry?: ContentSchemaRegistryDependencies;
   identityAuthority?: IdentityAuthorityDependencies;

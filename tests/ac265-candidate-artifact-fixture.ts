@@ -11,6 +11,7 @@ import {
 import { tmpdir } from 'node:os';
 import { dirname, join } from 'node:path';
 
+import { AC265_STAGING_API_ORIGIN } from '../packages/contracts/src/content-schema-registry/operational-release-evidence-hosted-control-plane.ts';
 import { report as axeReport } from './contracts/phase-02-slice-09-automated-axe-report.test-support.ts';
 
 export const REPOSITORY = 'WeJustJammin/nevrite-music';
@@ -21,7 +22,8 @@ export const STAGING_RUN_ID = '7001002';
 export const STAGING_RUN_ATTEMPT = '3';
 export const DEPLOYMENT_ID = '7001003';
 export const WEB_ORIGIN = 'https://staging.wejamm.in';
-export const API_ORIGIN = 'https://staging-api.wejamm.in';
+export const API_ORIGIN = AC265_STAGING_API_ORIGIN;
+export const SUPABASE_PROJECT_REF = 'abcdef1234567890abcd';
 export const TOKEN = 'read-only-token-fixture';
 export const CI_WORKFLOW_ID = 1001;
 export const STAGING_WORKFLOW_ID = 1002;
@@ -191,7 +193,7 @@ export const createCandidateFixture = () => {
     environment: 'staging',
     forwardFixOnly: true,
     migrationVersion: identity.migrationVersion,
-    projectRef: 'abcdef123456',
+    projectRef: SUPABASE_PROJECT_REF,
     remoteHistorySha256: 'd'.repeat(64),
     sourceRevision: SOURCE_SHA,
     state: 'expanded',
