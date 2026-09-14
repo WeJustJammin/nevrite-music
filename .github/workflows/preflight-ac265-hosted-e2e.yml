@@ -73,3 +73,14 @@ jobs:
           SUPABASE_URL: ${{ vars.SUPABASE_URL }}
           SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
         run: node --experimental-strip-types infra/workflows/register-ac265-candidate-enrollment.ts
+      - name: Persist candidate reference artifact
+        env:
+          AC265_CANDIDATE_REF: ${{ steps.enroll.outputs.candidate_ref }}
+        run: node --experimental-strip-types infra/workflows/write-ac265-candidate-ref-artifact.ts
+      - name: Upload candidate reference artifact
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+        with:
+          name: ac265-candidate-ref-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/ac265-candidate-ref.txt
+          if-no-files-found: error
+          retention-days: 1

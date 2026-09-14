@@ -23,9 +23,11 @@ Canonical project decisions are compiled at .memory/wiki/decisions.md. This file
   deduplication and digest-only delivery receipts. Raw claim tokens, provider
   responses, email bodies, and secrets are never persisted.
 - The observability token is production-environment-only and limited to Workers
-  Observability Write plus Account Analytics Read. The deployment token keeps
-  its existing separate permissions; no Workers Scripts Edit permission is
-  added to the observability token.
+  Observability Write, Account Analytics Read, and zone Analytics Read scoped
+  to the Email Service zone. Account Analytics Read covers queue analytics but
+  does not grant the zone-level `emailSendingAdaptive` dataset. The deployment
+  token keeps its existing separate permissions; no Workers Scripts Edit
+  permission is added to the observability token.
 
 ## 2026-09-14 — Authenticate the AC265 runner through GitHub OIDC
 

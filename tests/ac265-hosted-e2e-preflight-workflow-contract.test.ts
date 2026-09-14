@@ -94,9 +94,7 @@ describe('AC265 hosted E2E preflight workflow contract', () => {
     expect(preflightSources).not.toContain(
       './.github/actions/ac265-hosted-e2e-execution',
     );
-    expect(preflightSources).not.toMatch(
-      /upload-artifact|hosted-e2e-report-v3/iu,
-    );
+    expect(preflightSources).not.toMatch(/hosted-e2e-report-v3/iu);
     expect(`${workflowHeader}\n${preflightSources}`).not.toMatch(
       /acceptance|accepted|collection/iu,
     );
@@ -318,5 +316,63 @@ describe('AC265 hosted E2E preflight workflow contract', () => {
     expect(serviceKeyLines).toEqual([
       '          SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}',
     ]);
+  });
+
+  it('uploads only the short-lived non-secret candidate reference for authorization handoff', () => {
+    const preflight = jobBlock(workflow, 'preflight');
+    const registration = namedStep(
+      preflight,
+      'Register exact candidate in staging',
+    );
+    const artifactWrite = namedStep(
+      preflight,
+      'Persist candidate reference artifact',
+    );
+    const artifactUpload = namedStep(
+      preflight,
+      'Upload candidate reference artifact',
+    );
+
+    expect(artifactWrite).not.toBe('');
+    expect(artifactWrite).toContain(
+      'AC265_CANDIDATE_REF: ${{ steps.enroll.outputs.candidate_ref }}',
+    );
+    expect(artifactWrite).toContain(
+      'node --experimental-strip-types infra/workflows/write-ac265-candidate-ref-artifact.ts',
+    );
+    expect(artifactWrite).not.toMatch(/\$\{\{\s*(?:secrets|vars)\./u);
+    expect(artifactWrite).not.toMatch(
+      /enrollment.request|provenance|identity/iu,
+    );
+
+    expect(artifactUpload).toMatch(
+      /uses: actions\/upload-artifact@[0-9a-f]{40}(?:\s+# v\d+)?/u,
+    );
+    expect(artifactUpload).toContain(
+      'uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7',
+    );
+    expect(artifactUpload).toContain(
+      'name: ac265-candidate-ref-${{ github.run_id }}-${{ github.run_attempt }}',
+    );
+    expect(artifactUpload).toContain(
+      'path: ${{ runner.temp }}/ac265-candidate-ref.txt',
+    );
+    expect(artifactUpload).toContain('retention-days: 1');
+    expect(artifactUpload).toContain('if-no-files-found: error');
+    expect(artifactUpload).not.toMatch(
+      /enrollment.request|provenance|identity/iu,
+    );
+    expect(`${artifactWrite}\n${artifactUpload}`).not.toMatch(
+      /SUPABASE_SECRET_KEY|SUPABASE_URL|provenance|identity|enrollment.request/iu,
+    );
+    expect([
+      ...preflight.matchAll(/uses: actions\/upload-artifact@/gu),
+    ]).toHaveLength(1);
+    expect(preflight.indexOf(registration)).toBeLessThan(
+      preflight.indexOf(artifactWrite),
+    );
+    expect(preflight.indexOf(artifactWrite)).toBeLessThan(
+      preflight.indexOf(artifactUpload),
+    );
   });
 });
