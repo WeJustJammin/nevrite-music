@@ -23,7 +23,7 @@ const CANDIDATE_REF =
 const FIRST_RUN_ID = '10000000-0000-4000-8000-000000000001';
 const SECOND_RUN_ID = '10000000-0000-4000-8000-000000000002';
 const OIDC_REQUEST_URL =
-  'https://pipelines.actions.githubusercontent.com/runner/_apis/idtoken';
+  'https://pipelinesghubeus24.actions.githubusercontent.com/runner/_apis/idtoken';
 const OIDC_REQUEST_TOKEN = 'runner-request-secret-credential';
 const RAW_GITHUB_OIDC_JWT = 'header.payload.raw-github-oidc-token';
 const SOURCE_REVISION = 'a'.repeat(40);
@@ -262,6 +262,33 @@ describe('AC265 protected runner authorization entrypoint', () => {
     }
     expect(String(captured)).toBe(`Error: ${FAILURE}`);
     expect(String(captured)).not.toContain(providerSecret);
+    expect(captured).not.toHaveProperty('cause');
     expect(readFileSync(summaryPath, 'utf8')).toBe('');
   });
+
+  it.each([
+    [
+      'destination_validation',
+      'AC265 hosted-run destination validation failed',
+    ],
+    ['oidc_request', 'AC265 GitHub OIDC token request failed'],
+    ['staging_prepare', 'AC265 hosted-run preparation request failed'],
+  ] as const)(
+    'surfaces only the fixed %s failure phase',
+    async (phase, clientMessage) => {
+      const { env, summaryPath } = createFixture();
+      const requestAuthorization = vi.fn<
+        typeof requestAc265HostedRunAuthorization
+      >(async () => {
+        throw new Error(clientMessage);
+      });
+
+      const error = await runAc265HostedRunnerAuthorization(
+        authorizationOptions({ env, requestAuthorization }),
+      ).catch((caught: unknown) => caught);
+      expect(requestAuthorization).toHaveBeenCalledOnce();
+      expect(error).toMatchObject({ message: `${FAILURE} [${phase}]` });
+      expect(readFileSync(summaryPath, 'utf8')).toBe('');
+    },
+  );
 });

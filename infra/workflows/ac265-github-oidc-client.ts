@@ -10,8 +10,8 @@ import {
 export const AC265_RUNNER_HTTP_TIMEOUT_MS = 10_000;
 export const AC265_RUNNER_HTTP_MAX_RESPONSE_BYTES = 16 * 1024;
 
-const GITHUB_ACTIONS_TOKEN_SERVICE_HOST =
-  'pipelines.actions.githubusercontent.com';
+const GITHUB_ACTIONS_TOKEN_SERVICE_DOMAIN = '.actions.githubusercontent.com';
+const DNS_LABEL = /^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$/u;
 const COMPACT_JWT = /^[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+$/u;
 const MAX_COMPACT_JWT_LENGTH = 12 * 1024;
 
@@ -34,14 +34,31 @@ export interface PrepareAc265HostedRunOptions {
 export type RequestAc265HostedRunAuthorizationOptions =
   RequestAc265GithubOidcTokenOptions;
 
-type ClientOperation = 'oidc' | 'prepare';
+export type Ac265RunnerAuthorizationFailurePhase =
+  'destination_validation' | 'oidc_request' | 'staging_prepare';
 
-function failure(operation: ClientOperation): Error {
-  return new Error(
-    operation === 'oidc'
-      ? 'AC265 GitHub OIDC token request failed'
-      : 'AC265 hosted-run preparation request failed',
-  );
+const FAILURE_MESSAGES: Readonly<
+  Record<Ac265RunnerAuthorizationFailurePhase, string>
+> = {
+  destination_validation: 'AC265 hosted-run destination validation failed',
+  oidc_request: 'AC265 GitHub OIDC token request failed',
+  staging_prepare: 'AC265 hosted-run preparation request failed',
+};
+
+export class Ac265RunnerAuthorizationFailure extends Error {
+  public readonly phase: Ac265RunnerAuthorizationFailurePhase;
+
+  public constructor(phase: Ac265RunnerAuthorizationFailurePhase) {
+    super(FAILURE_MESSAGES[phase]);
+    this.name = 'Ac265RunnerAuthorizationFailure';
+    this.phase = phase;
+  }
+}
+
+function failure(
+  phase: Ac265RunnerAuthorizationFailurePhase,
+): Ac265RunnerAuthorizationFailure {
+  return new Ac265RunnerAuthorizationFailure(phase);
 }
 
 function readGithubActionsEnvironment(): Ac265GithubActionsEnvironment {
@@ -54,7 +71,10 @@ function readGithubActionsEnvironment(): Ac265GithubActionsEnvironment {
 }
 
 async function withinTimeout<T>(
-  operation: ClientOperation,
+  phase: Exclude<
+    Ac265RunnerAuthorizationFailurePhase,
+    'destination_validation'
+  >,
   perform: (signal: AbortSignal) => Promise<T>,
 ): Promise<T> {
   const controller = new AbortController();
@@ -62,17 +82,25 @@ async function withinTimeout<T>(
   const timedOut = new Promise<never>((_resolve, reject) => {
     timeout = setTimeout(() => {
       controller.abort();
-      reject(failure(operation));
+      reject(failure(phase));
     }, AC265_RUNNER_HTTP_TIMEOUT_MS);
   });
 
   try {
     return await Promise.race([perform(controller.signal), timedOut]);
   } catch {
-    throw failure(operation);
+    throw failure(phase);
   } finally {
     if (timeout !== undefined) clearTimeout(timeout);
   }
+}
+
+function isGithubActionsTokenServiceHost(hostname: string): boolean {
+  return (
+    hostname.endsWith(GITHUB_ACTIONS_TOKEN_SERVICE_DOMAIN) &&
+    hostname.length > GITHUB_ACTIONS_TOKEN_SERVICE_DOMAIN.length &&
+    hostname.split('.').every((label) => DNS_LABEL.test(label))
+  );
 }
 
 function readTokenServiceUrl(rawUrl: string | undefined): URL {
@@ -83,7 +111,7 @@ function readTokenServiceUrl(rawUrl: string | undefined): URL {
     url.protocol !== 'https:' ||
     url.username !== '' ||
     url.password !== '' ||
-    url.hostname !== GITHUB_ACTIONS_TOKEN_SERVICE_HOST ||
+    !isGithubActionsTokenServiceHost(url.hostname) ||
     url.port !== '' ||
     url.hash !== ''
   ) {
@@ -217,7 +245,7 @@ function parseStrictTokenResponse(responseText: string): string {
 export async function requestAc265GithubOidcToken(
   options: RequestAc265GithubOidcTokenOptions = {},
 ): Promise<string> {
-  return withinTimeout('oidc', async (signal) => {
+  return withinTimeout('oidc_request', async (signal) => {
     const environment = options.environment ?? readGithubActionsEnvironment();
     const url = readTokenServiceUrl(environment.ACTIONS_ID_TOKEN_REQUEST_URL);
     const credential = readRunnerRequestCredential(
@@ -246,7 +274,7 @@ export async function prepareAc265HostedRun(
   githubOidcToken: string,
   options: PrepareAc265HostedRunOptions,
 ): Promise<ContentSchemaRegistryAc265RunnerAuthorization> {
-  return withinTimeout('prepare', async (signal) => {
+  return withinTimeout('staging_prepare', async (signal) => {
     const destination = validatePrepareDestination(request);
     if (!destination || !isCompactJwt(githubOidcToken)) {
       throw new Error('invalid prepare request');
@@ -285,7 +313,7 @@ export async function requestAc265HostedRunAuthorization(
   options: RequestAc265HostedRunAuthorizationOptions,
 ): Promise<ContentSchemaRegistryAc265RunnerAuthorization> {
   const destination = validatePrepareDestination(request);
-  if (!destination) throw failure('prepare');
+  if (!destination) throw failure('destination_validation');
 
   const githubOidcToken = await requestAc265GithubOidcToken({
     ...(options.environment ? { environment: options.environment } : {}),

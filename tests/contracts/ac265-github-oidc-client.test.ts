@@ -9,6 +9,7 @@ import {
 } from '@wejammin/contracts';
 
 import {
+  Ac265RunnerAuthorizationFailure,
   AC265_RUNNER_HTTP_MAX_RESPONSE_BYTES,
   AC265_RUNNER_HTTP_TIMEOUT_MS,
   prepareAc265HostedRun,
@@ -48,7 +49,7 @@ const authorization = ContentSchemaRegistryAc265RunnerAuthorizationSchema.parse(
 
 const githubEnvironment = {
   ACTIONS_ID_TOKEN_REQUEST_URL:
-    'https://pipelines.actions.githubusercontent.com/runner/_apis/idtoken?api-version=2.0&audience=wrong',
+    'https://pipelinesghubeus24.actions.githubusercontent.com/runner/_apis/idtoken?api-version=2.0&audience=wrong',
   ACTIONS_ID_TOKEN_REQUEST_TOKEN: 'runner-request-credential',
 };
 
@@ -60,6 +61,22 @@ function response(body: string, status = 200): Response {
 }
 
 describe('AC265 GitHub Actions OIDC client', () => {
+  it('labels failures with a fixed OIDC phase and no provider detail', async () => {
+    const error = await requestAc265GithubOidcToken({
+      environment: {
+        ...githubEnvironment,
+        ACTIONS_ID_TOKEN_REQUEST_URL: 'https://attacker.example/runner',
+      },
+      fetcher: vi.fn<typeof fetch>(),
+    }).catch((caught: unknown) => caught);
+
+    expect(error).toBeInstanceOf(Ac265RunnerAuthorizationFailure);
+    expect(error).toMatchObject({
+      message: 'AC265 GitHub OIDC token request failed',
+      phase: 'oidc_request',
+    });
+  });
+
   it('requests the exact audience from GitHub over HTTPS with the runner bearer credential', async () => {
     const fetcher = vi
       .fn<typeof fetch>()
@@ -72,7 +89,9 @@ describe('AC265 GitHub Actions OIDC client', () => {
     const [input, init] = fetcher.mock.calls[0]!;
     const url = new URL(String(input));
     expect(url.protocol).toBe('https:');
-    expect(url.hostname).toBe('pipelines.actions.githubusercontent.com');
+    expect(url.hostname).toBe(
+      'pipelinesghubeus24.actions.githubusercontent.com',
+    );
     expect(url.searchParams.getAll('audience')).toEqual([
       AC265_GITHUB_OIDC_AUDIENCE,
     ]);
@@ -91,6 +110,11 @@ describe('AC265 GitHub Actions OIDC client', () => {
       'http://pipelines.actions.githubusercontent.com/runner',
       'https://user:password@pipelines.actions.githubusercontent.com/runner',
       'https://attacker.example/runner',
+      'https://actions.githubusercontent.com/runner',
+      'https://pipelines.actions.githubusercontent.com.attacker.example/runner',
+      'https://foo..actions.githubusercontent.com/runner',
+      'https://pipelines.actions.githubusercontent.com:444/runner',
+      'https://pipelines.actions.githubusercontent.com/runner#fragment',
     ]) {
       await expect(
         requestAc265GithubOidcToken({
@@ -182,6 +206,32 @@ describe('AC265 GitHub Actions OIDC client', () => {
 });
 
 describe('AC265 hosted-run preparation client', () => {
+  it('labels destination validation and staging preparation as separate fixed phases', async () => {
+    const destinationError = await requestAc265HostedRunAuthorization(
+      { ...request, unexpected: true } as never,
+      {
+        environment: githubEnvironment,
+        fetcher: vi.fn<typeof fetch>(),
+      },
+    ).catch((caught: unknown) => caught);
+    expect(destinationError).toBeInstanceOf(Ac265RunnerAuthorizationFailure);
+    expect(destinationError).toMatchObject({
+      message: 'AC265 hosted-run destination validation failed',
+      phase: 'destination_validation',
+    });
+
+    const preparationError = await prepareAc265HostedRun(
+      request,
+      'not-a-compact-jwt',
+      { fetcher: vi.fn<typeof fetch>() },
+    ).catch((caught: unknown) => caught);
+    expect(preparationError).toBeInstanceOf(Ac265RunnerAuthorizationFailure);
+    expect(preparationError).toMatchObject({
+      message: 'AC265 hosted-run preparation request failed',
+      phase: 'staging_prepare',
+    });
+  });
+
   it('posts a validated staging request with the GitHub JWT and validates the authorization', async () => {
     const fetcher = vi
       .fn<typeof fetch>()
@@ -300,7 +350,7 @@ describe('AC265 hosted-run preparation client', () => {
           fetcher: oidcFetcher,
         },
       ),
-    ).rejects.toThrow('AC265 hosted-run preparation request failed');
+    ).rejects.toThrow('AC265 hosted-run destination validation failed');
     expect(oidcFetcher).not.toHaveBeenCalled();
   });
 
@@ -318,7 +368,7 @@ describe('AC265 hosted-run preparation client', () => {
     ).resolves.toEqual(authorization);
     expect(fetcher).toHaveBeenCalledTimes(2);
     expect(new URL(String(fetcher.mock.calls[0]?.[0])).hostname).toBe(
-      'pipelines.actions.githubusercontent.com',
+      'pipelinesghubeus24.actions.githubusercontent.com',
     );
     expect(String(fetcher.mock.calls[1]?.[0])).toBe(
       `${AC265_STAGING_API_ORIGIN}/api/v1/internal/ac265/runs/prepare`,
@@ -341,7 +391,7 @@ describe('AC265 hosted-run preparation client', () => {
     expect(fetcher).toHaveBeenCalledTimes(2);
     const [tokenServiceUrl, tokenServiceInit] = fetcher.mock.calls[0]!;
     expect(new URL(String(tokenServiceUrl)).hostname).toBe(
-      'pipelines.actions.githubusercontent.com',
+      'pipelinesghubeus24.actions.githubusercontent.com',
     );
     expect(new Headers(tokenServiceInit?.headers).get('authorization')).toBe(
       'Bearer runner-request-credential',

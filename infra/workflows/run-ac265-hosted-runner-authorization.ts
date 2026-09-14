@@ -14,6 +14,24 @@ import {
 import { requestAc265HostedRunAuthorization } from './ac265-github-oidc-client.ts';
 
 const FAILURE = 'AC265 hosted-runner authorization failed';
+const SAFE_FAILURE_PHASES = new Map<string, string>([
+  ['AC265 hosted-run destination validation failed', 'destination_validation'],
+  ['AC265 GitHub OIDC token request failed', 'oidc_request'],
+  ['AC265 hosted-run preparation request failed', 'staging_prepare'],
+]);
+
+const safeFailureMessage = (error: unknown): string => {
+  const message =
+    typeof error === 'object' &&
+    error !== null &&
+    'message' in error &&
+    typeof error.message === 'string'
+      ? error.message
+      : undefined;
+  const phase =
+    message === undefined ? undefined : SAFE_FAILURE_PHASES.get(message);
+  return phase === undefined ? FAILURE : `${FAILURE} [${phase}]`;
+};
 
 export type Ac265HostedRunnerAuthorizationSummary = Pick<
   ContentSchemaRegistryAc265RunnerAuthorization,
@@ -115,8 +133,10 @@ export const runAc265HostedRunnerAuthorization = async ({
     };
     writeSummary(summaryPath, summary);
     return summary;
-  } catch {
-    throw new Error(FAILURE);
+  } catch (error: unknown) {
+    const message = safeFailureMessage(error);
+    // eslint-disable-next-line preserve-caught-error -- Provider errors can contain bearer material or response bodies.
+    throw new Error(message);
   }
 };
 
@@ -131,8 +151,8 @@ const isDirectExecution = (): boolean => {
 if (isDirectExecution()) {
   try {
     await runAc265HostedRunnerAuthorization({ env: process.env });
-  } catch {
-    console.error(FAILURE);
+  } catch (error: unknown) {
+    console.error(error instanceof Error ? error.message : FAILURE);
     process.exitCode = 1;
   }
 }
