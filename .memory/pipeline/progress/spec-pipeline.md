@@ -71,23 +71,27 @@
 - **CURRENT IMPLEMENTATION:** Phase 2 Slices 01–08 are complete. Slice 09 is
   implemented and locally QA-GREEN at 279/283, including the follow-up
   production operational-alert provider boundary and deployed AC211 collector.
-  PR #74 branch commit `540e32ef` adds local AC211 deployment-provenance
-  verification and AC266 report-preparation tooling; it is pending CI/merge and
-  is not exact-main or hosted acceptance. Depth ratio remains `0.986` because
+  PR #74 is merged at exact `main` SHA
+  `f8e10db06b5e70ea6262a3531f7fab69965febc3` and adds AC211
+  deployment-provenance verification plus AC266 report-preparation tooling. The
+  tooling is landed, but it is not hosted acceptance. Depth ratio remains
+  `0.986` because
   all four external acceptance criteria remain open. Slice 10 remains
   dependency-locked. See
   `.memory/pipeline/progress/phases/phase-02.md` and
   `.memory/pipeline/progress/slices/phase-02-slice-09.md`.
-- **CURRENT VALIDATION:** PR #74 local validation passes: `pnpm validate` exits
-  0 with 522 Vitest files / 4,091 passed + 1 skipped at 100% coverage (12,634
+- **CURRENT VALIDATION:** PR #74 exact-main CI `34792878043` and staging
+  `34793282345` / deployment `6428325619` pass at SHA
+  `f8e10db06b5e70ea6262a3531f7fab69965febc3`. Local `pnpm validate` exits 0
+  with 522 Vitest files / 4,091 passed + 1 skipped at 100% coverage (12,634
   statements, 9,578 branches, 2,099 functions, 11,747 lines), the Slice 09
   evidence gate, 101 functional plus 5 real-route Playwright checks, workspace
   builds, bundle budgets, and performance smoke. `pnpm db:verify` passes 50
   pgTAP files / 1,818 checks with migrated types matching. Focused AC211 passes
   59/59; AC266 passes 83/83; adversarial reviews have no remaining findings.
   `pnpm progress:check`, the Prettier check on updated records, and the Git diff
-  whitespace check pass. PR #74 is pending CI/merge, not exact-main or hosted
-  acceptance.
+  whitespace check pass. Exact-main and staging prove the tooling release, not
+  any still-open external acceptance criterion.
 - **HISTORICAL PRE-REMEDIATION CANDIDATE:** Before this remediation, PR #9 branch
   `codex/phase-2-slices-01-09` was at
   `67264c5e9b5196d00ac3f0aa272896a010c872d7`; synthetic merge
