@@ -5,7 +5,7 @@ import {
   ContentSchemaRegistryAc265RunnerAuthorizationSchema,
   type ContentSchemaRegistryAc265PrepareRunRequest,
   type ContentSchemaRegistryAc265RunnerAuthorization,
-} from '@wejammin/contracts';
+} from '../../packages/contracts/src/content-schema-registry/operational-release-evidence-hosted-control-plane.ts';
 
 export const AC265_RUNNER_HTTP_TIMEOUT_MS = 10_000;
 export const AC265_RUNNER_HTTP_MAX_RESPONSE_BYTES = 16 * 1024;

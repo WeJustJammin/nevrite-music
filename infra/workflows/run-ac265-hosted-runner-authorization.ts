@@ -9,7 +9,7 @@ import {
   ContentSchemaRegistryAc265RunnerAuthorizationSchema,
   type ContentSchemaRegistryAc265PrepareRunRequest,
   type ContentSchemaRegistryAc265RunnerAuthorization,
-} from '@wejammin/contracts';
+} from '../../packages/contracts/src/content-schema-registry/operational-release-evidence-hosted-control-plane.ts';
 
 import { requestAc265HostedRunAuthorization } from './ac265-github-oidc-client.ts';
 

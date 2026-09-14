@@ -1,6 +1,8 @@
+import { spawnSync } from 'node:child_process';
 import { mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
@@ -27,6 +29,12 @@ const RAW_GITHUB_OIDC_JWT = 'header.payload.raw-github-oidc-token';
 const SOURCE_REVISION = 'a'.repeat(40);
 const IDENTITY_SHA256 = 'b'.repeat(64);
 const FAILURE = 'AC265 hosted-runner authorization failed';
+const ENTRYPOINT_PATH = fileURLToPath(
+  new URL(
+    '../infra/workflows/run-ac265-hosted-runner-authorization.ts',
+    import.meta.url,
+  ),
+);
 
 let scratchDirectory = '';
 
@@ -90,6 +98,24 @@ const authorizationOptions = (
 });
 
 describe('AC265 protected runner authorization entrypoint', () => {
+  it('loads under the raw Node runtime used by the protected workflow', () => {
+    const result = spawnSync(
+      process.execPath,
+      ['--experimental-strip-types', ENTRYPOINT_PATH],
+      {
+        encoding: 'utf8',
+        env: {},
+      },
+    );
+
+    expect(result.status).toBe(1);
+    expect(result.signal).toBeNull();
+    expect(result.stdout).toBe('');
+    expect(result.stderr).toContain(FAILURE);
+    expect(result.stderr).not.toContain('ERR_MODULE_NOT_FOUND');
+    expect(result.stderr).not.toContain('@wejammin/contracts');
+  });
+
   it('generates its own run ID, sends only the opaque candidate reference, and writes filtered metadata', async () => {
     const { env, summaryPath } = createFixture();
     const requestAuthorization = vi.fn<
