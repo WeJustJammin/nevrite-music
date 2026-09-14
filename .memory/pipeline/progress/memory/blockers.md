@@ -3,27 +3,25 @@
 ## Active
 
 - **P2-S09 external release evidence** (updated 2026-09-14) — Slice 09 remains
-  at **279/283** with depth ratio **0.986**. [PR #78](https://github.com/WeJustJammin/nevrite-music/pull/78)
-  merged the raw-Node import correction as
-  `ec31c640b052b26c0febc232a8e63cb2125163d9`; exact-main CI
-  [run 34813554693](https://github.com/WeJustJammin/nevrite-music/actions/runs/34813554693)
-  and staging [run 34814232319](https://github.com/WeJustJammin/nevrite-music/actions/runs/34814232319)
-  passed, producing staging deployment `6431777124`. Fresh AC265 preflight
-  [run 34814399455](https://github.com/WeJustJammin/nevrite-music/actions/runs/34814399455)
-  passed and its candidate-reference artifact was strictly validated.
-  Authorization-only [run 34814535711](https://github.com/WeJustJammin/nevrite-music/actions/runs/34814535711)
-  then loaded the raw runtime successfully but failed inside the deliberately
-  redacted authorization step; the retained log cannot distinguish destination
-  validation, GitHub OIDC retrieval, or the staging prepare request. A code
-  audit found that the client accepted only one unsharded token-service host,
-  despite GitHub-hosted runners supplying region-sharded hosts inside the
-  GitHub-owned `.actions.githubusercontent.com` namespace. The local TDD
-  correction accepts only valid nonempty DNS subdomains of that namespace,
-  retains HTTPS/credential/port/fragment protections, and emits one of three
-  fixed phase codes without provider details. It remains pending promotion.
-  AC265 tests pass **42 files / 389 tests**. Latest local validation passes **535
-  Vitest files / 4,227 tests plus one skip**, 100% coverage, **101 functional +
-  5 real Slice 09 E2E tests**, and performance smoke (`p95=0.678046 ms`).
+  at **279/283** with depth ratio **0.986**. [PR #79](https://github.com/WeJustJammin/nevrite-music/pull/79)
+  merged the GitHub token-service host and safe phase-diagnostic correction as
+  `e68d2e7d92867d3f00ac1942a430437dc5c5be9e`; exact-main CI
+  [run 34818589300](https://github.com/WeJustJammin/nevrite-music/actions/runs/34818589300)
+  and staging [run 34819154810](https://github.com/WeJustJammin/nevrite-music/actions/runs/34819154810)
+  passed, producing staging deployment `6432620253`. Fresh AC265 preflight
+  [run 34819341770](https://github.com/WeJustJammin/nevrite-music/actions/runs/34819341770)
+  failed before enrollment or artifact publication because GitHub reported the
+  exact CI run's `created_at` one second after `run_started_at`. Every other
+  workflow, SHA, repository, run-attempt, artifact, deployment, migration, and
+  provider predicate passed; all 240 candidate files matched the CI artifact.
+  The local TDD correction permits at most five seconds of positive
+  created/start skew, proves exactly five seconds passes and six seconds fails,
+  and leaves completion, CI-before-staging, identity, and artifact checks
+  strict. The full live provenance tuple now passes locally, but this correction
+  still requires promotion and a new protected preflight before authorization
+  can be retried. Latest local validation passes **535 Vitest files / 4,228
+  tests plus one skip**, 100% coverage, **101 functional + 5 real Slice 09 E2E
+  tests**, and performance smoke (`p95=0.963413 ms`).
   Production remains on `c8f0cbd52cb6140ee1a756f106fa329f8c23b0e2` /
   deployment `6417116181`. Read-only AC209 verifier
   [run 34813947512](https://github.com/WeJustJammin/nevrite-music/actions/runs/34813947512)

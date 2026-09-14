@@ -101,6 +101,29 @@ describe('AC265 read-only staging candidate provenance verifier', () => {
     ).toBe(true);
   });
 
+  it('allows only bounded GitHub created/start timestamp skew', async () => {
+    const base = createMockGitHubApi();
+    const ciRun = asRecord(base.values.ciRun);
+
+    await expect(
+      verify({
+        ciRun: {
+          ...ciRun,
+          created_at: '2026-09-08T12:01:05.000Z',
+        },
+      }).result,
+    ).resolves.toMatchObject({ status: 'candidate_provenance_verified' });
+
+    await expect(
+      verify({
+        ciRun: {
+          ...ciRun,
+          created_at: '2026-09-08T12:01:06.000Z',
+        },
+      }).result,
+    ).rejects.toThrow();
+  });
+
   it('rejects malformed dispatch fields before making any GitHub request', async () => {
     for (const patch of [
       { repository: 'https://github.com/WeJustJammin/nevrite-music' },
