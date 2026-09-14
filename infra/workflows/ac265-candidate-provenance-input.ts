@@ -4,6 +4,7 @@ import {
   isAc265Record,
   safeOrigin,
 } from './ac265-candidate-provenance-common.ts';
+import { AC265_STAGING_API_ORIGIN } from '../../packages/contracts/src/content-schema-registry/operational-release-evidence-hosted-control-plane.ts';
 
 const SHA_PATTERN = /^[a-f0-9]{40}$/u;
 const RUN_ID_PATTERN = /^[1-9][0-9]{0,18}$/u;
@@ -92,6 +93,7 @@ export const validateAc265CandidateProvenanceInputs = (
     return failAc265CandidateProvenance();
 
   safeOrigin(input.stagingWebOrigin);
-  safeOrigin(input.stagingApiOrigin);
+  if (safeOrigin(input.stagingApiOrigin) !== AC265_STAGING_API_ORIGIN)
+    return failAc265CandidateProvenance();
   return input;
 };

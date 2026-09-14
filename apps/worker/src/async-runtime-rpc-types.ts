@@ -14,6 +14,7 @@ export type AsyncRpcOperation =
   | 'heartbeat_job_lease'
   | 'apply_job_outcome'
   | 'record_processed_event'
+  | 'ac265_prepare_hosted_run'
   | SchemaMigrationRpcName;
 
 export const PLATFORM_API_PROFILE = 'platform_api' as const;

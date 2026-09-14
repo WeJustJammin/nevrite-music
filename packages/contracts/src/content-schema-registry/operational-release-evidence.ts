@@ -25,6 +25,8 @@ export * from './operational-release-evidence-axe-report.ts';
 export * from './operational-release-evidence-automated-a11y.ts';
 export * from './operational-release-evidence-collector.ts';
 export * from './operational-release-evidence-common.ts';
+export * from './operational-release-evidence-hosted-control-plane.ts';
+export * from './operational-release-evidence-hosted-candidate-enrollment.ts';
 export * from './operational-release-evidence-observability.ts';
 export * from './operational-release-evidence-hosted-input.ts';
 export * from './operational-release-evidence-hosted-receipt.ts';

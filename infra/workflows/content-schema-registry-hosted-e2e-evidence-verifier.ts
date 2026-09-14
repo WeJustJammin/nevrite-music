@@ -5,6 +5,7 @@ import {
   type ContentSchemaRegistryHostedRunnerContract,
 } from '../../packages/contracts/src/content-schema-registry/operational-release-evidence.ts';
 import { CONTENT_SCHEMA_REGISTRY_HOSTED_ROLES } from '../../packages/contracts/src/content-schema-registry/operational-release-evidence-common.ts';
+import { serializeAc265HostedRunnerIdentityForDigest } from '../../packages/contracts/src/content-schema-registry/operational-release-evidence-hosted-candidate-enrollment.ts';
 import {
   HostedExecutionEvidencePayloadSchema,
   HostedRoleExecutionEvidenceReferenceSchema,
@@ -53,7 +54,12 @@ export const verifyHostedExecutionEvidence = (input: {
   )
     throw new Error('Hosted cleanup must bind every session teardown exactly.');
 
-  const candidateIdentitySha256 = sha256Json(input.contract.identity);
+  const candidateIdentitySha256 = sha256Bytes(
+    Buffer.from(
+      serializeAc265HostedRunnerIdentityForDigest(input.contract.identity),
+      'utf8',
+    ),
+  );
   const usedReferences = new Set<string>();
   const verifyEvidence = (
     reference: unknown,

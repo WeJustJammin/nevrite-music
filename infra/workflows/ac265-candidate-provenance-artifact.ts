@@ -20,6 +20,22 @@ export interface Ac265VerifiedCandidateFiles {
   readonly artifactDigest: string;
   readonly buildId: string;
   readonly migrationVersion: string;
+  readonly migration: Readonly<{
+    projectRef: string;
+    remoteHistorySha256: string;
+    verifiedAt: string;
+  }>;
+  readonly provider: Readonly<{
+    evidenceSha256: string;
+    collectedAt: string;
+    workers: readonly Readonly<{
+      workerName: 'wejammin-api-staging' | 'wejammin-web-staging';
+      versionId: string;
+      deploymentId: string;
+      versionCreatedAt: string;
+      deploymentCreatedAt: string;
+    }>[];
+  }>;
 }
 
 export const verifyAc265CandidateArtifactFiles = (
@@ -53,7 +69,7 @@ export const verifyAc265CandidateArtifactFiles = (
     candidateArtifacts,
     manifest,
   );
-  verifyAc265CandidateEvidenceFiles(
+  const evidence = verifyAc265CandidateEvidenceFiles(
     directories.candidate,
     input,
     trusted,
@@ -64,5 +80,7 @@ export const verifyAc265CandidateArtifactFiles = (
     artifactDigest: identity.artifactDigest,
     buildId: identity.buildId,
     migrationVersion: identity.migrationVersion,
+    migration: evidence.migration,
+    provider: evidence.provider,
   };
 };

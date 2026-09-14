@@ -12,6 +12,14 @@ import {
   type Ac265CandidateProvenanceInputs,
   validateAc265CandidateProvenanceInputs,
 } from './ac265-candidate-provenance-input.ts';
+import { ContentSchemaRegistryAc265VerifiedCandidateProvenanceSchema } from '../../packages/contracts/src/content-schema-registry/operational-release-evidence-hosted-candidate-enrollment.ts';
+
+const verifiedCandidates = new WeakSet<object>();
+
+export const isVerifiedAc265CandidateProvenance = (
+  value: unknown,
+): value is Ac265VerifiedCandidateProvenance =>
+  typeof value === 'object' && value !== null && verifiedCandidates.has(value);
 
 export const verifyAc265CandidateProvenance = async (
   untrustedInputs: unknown,
@@ -21,31 +29,38 @@ export const verifyAc265CandidateProvenance = async (
     validateAc265CandidateProvenanceInputs(untrustedInputs);
   const trusted = await verifyAc265GitHubCandidateProvenance(input, fetchImpl);
   const artifact = verifyAc265CandidateArtifactFiles(input, trusted);
+  const { migration, provider, ...artifactIdentity } = artifact;
 
-  return {
-    status: 'candidate_provenance_verified',
-    repository: AC265_REPOSITORY,
-    sourceRevision: input.sourceSha,
-    ci: {
-      runId: trusted.ciRun.runId,
-      runAttempt: trusted.ciRun.runAttempt,
-      workflowPath: AC265_CI_WORKFLOW_PATH,
-      artifactName: `workspace-build-${input.sourceSha}`,
-      artifactId: trusted.ciArtifact.id,
-      artifactDigest: trusted.ciArtifact.digest,
-    },
-    staging: {
-      runId: trusted.stagingRun.runId,
-      runAttempt: trusted.stagingRun.runAttempt,
-      workflowPath: AC265_STAGING_WORKFLOW_PATH,
-      artifactName: AC265_CANDIDATE_ARTIFACT_NAME,
-      artifactId: trusted.stagingArtifact.id,
-      artifactDigest: trusted.stagingArtifact.digest,
-      deploymentId: trusted.deployment.id,
-      environment: trusted.deployment.environment,
-      webOrigin: trusted.deployment.webOrigin,
-      apiOrigin: input.stagingApiOrigin,
-    },
-    artifact,
-  };
+  const result =
+    ContentSchemaRegistryAc265VerifiedCandidateProvenanceSchema.parse({
+      status: 'candidate_provenance_verified',
+      repository: AC265_REPOSITORY,
+      sourceRevision: input.sourceSha,
+      ci: {
+        runId: trusted.ciRun.runId,
+        runAttempt: trusted.ciRun.runAttempt,
+        workflowPath: AC265_CI_WORKFLOW_PATH,
+        artifactName: `workspace-build-${input.sourceSha}`,
+        artifactId: trusted.ciArtifact.id,
+        artifactDigest: trusted.ciArtifact.digest,
+      },
+      staging: {
+        runId: trusted.stagingRun.runId,
+        runAttempt: trusted.stagingRun.runAttempt,
+        workflowPath: AC265_STAGING_WORKFLOW_PATH,
+        artifactName: AC265_CANDIDATE_ARTIFACT_NAME,
+        artifactId: trusted.stagingArtifact.id,
+        artifactDigest: trusted.stagingArtifact.digest,
+        deploymentId: trusted.deployment.id,
+        deployedAt: new Date(trusted.deployment.createdAt).toISOString(),
+        environment: trusted.deployment.environment,
+        webOrigin: trusted.deployment.webOrigin,
+        apiOrigin: input.stagingApiOrigin,
+      },
+      artifact: artifactIdentity,
+      migration,
+      provider,
+    });
+  verifiedCandidates.add(result);
+  return result;
 };

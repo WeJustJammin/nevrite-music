@@ -27,14 +27,6 @@ on:
         description: Staging deployment ID represented by the candidate
         required: true
         type: string
-      staging_web_origin:
-        description: Exact staging web origin represented by the candidate
-        required: true
-        type: string
-      staging_api_origin:
-        description: Exact staging API origin represented by the candidate
-        required: true
-        type: string
 
 concurrency:
   group: ac265-hosted-e2e-${{ github.ref }}
@@ -47,6 +39,11 @@ jobs:
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-24.04
     timeout-minutes: 15
+    environment:
+      name: staging
+      url: ${{ vars.STAGING_WEB_ORIGIN }}
+    outputs:
+      candidate_ref: ${{ steps.enroll.outputs.candidate_ref }}
     steps:
       - name: Check out the approved workflow revision
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
@@ -54,6 +51,7 @@ jobs:
           ref: ${{ github.sha }}
           persist-credentials: false
       - name: Verify exact staging and CI candidate provenance
+        id: preflight
         uses: ./.github/actions/ac265-hosted-e2e-preflight
         with:
           source_sha: ${{ inputs.source_sha }}
@@ -62,5 +60,16 @@ jobs:
           ci_run_id: ${{ inputs.ci_run_id }}
           ci_run_attempt: ${{ inputs.ci_run_attempt }}
           staging_deployment_id: ${{ inputs.staging_deployment_id }}
-          staging_web_origin: ${{ inputs.staging_web_origin }}
-          staging_api_origin: ${{ inputs.staging_api_origin }}
+          staging_web_origin: ${{ vars.STAGING_WEB_ORIGIN }}
+          staging_api_origin: ${{ vars.STAGING_API_ORIGIN }}
+          hosting_account_id: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
+          supabase_project_ref: ${{ vars.SUPABASE_PROJECT_REF }}
+          supabase_origin: ${{ vars.SUPABASE_URL }}
+      - name: Register exact candidate in staging
+        id: enroll
+        env:
+          AC265_ENROLLMENT_REQUEST_PATH: ${{ steps.preflight.outputs.enrollment_request_path }}
+          SUPABASE_PROJECT_REF: ${{ vars.SUPABASE_PROJECT_REF }}
+          SUPABASE_URL: ${{ vars.SUPABASE_URL }}
+          SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
+        run: node --experimental-strip-types infra/workflows/register-ac265-candidate-enrollment.ts

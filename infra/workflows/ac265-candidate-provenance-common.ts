@@ -72,6 +72,7 @@ export interface Ac265VerifiedCandidateProvenance {
     artifactId: number;
     artifactDigest: string;
     deploymentId: string;
+    deployedAt: string;
     environment: 'staging';
     webOrigin: string;
     apiOrigin: string;
@@ -80,6 +81,22 @@ export interface Ac265VerifiedCandidateProvenance {
     artifactDigest: string;
     buildId: string;
     migrationVersion: string;
+  }>;
+  readonly migration: Readonly<{
+    projectRef: string;
+    remoteHistorySha256: string;
+    verifiedAt: string;
+  }>;
+  readonly provider: Readonly<{
+    evidenceSha256: string;
+    collectedAt: string;
+    workers: readonly Readonly<{
+      workerName: 'wejammin-api-staging' | 'wejammin-web-staging';
+      versionId: string;
+      deploymentId: string;
+      versionCreatedAt: string;
+      deploymentCreatedAt: string;
+    }>[];
   }>;
 }
 

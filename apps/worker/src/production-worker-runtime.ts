@@ -2,6 +2,8 @@ import { createLogger } from '@wejammin/observability/logging';
 import type { Logger } from '@wejammin/observability/logging';
 import { parseServerEnvironment } from '@wejammin/config/environment';
 
+import { createProductionAc265HostedDependencies } from './ac265-hosted/production';
+import type { Ac265HostedDependencies } from './ac265-hosted/types';
 import type { JobStatusDependencies } from './jobs/job-status';
 import {
   createProductionJobStatusDependencies,
@@ -207,6 +209,7 @@ export const createRuntimeDependencies = (
   platformConfiguration?: PlatformConfigurationDependencies,
   resolveRequestContext?: WorkerDependencies['resolveRequestContext'],
   contentSchemaRegistry?: ContentSchemaRegistryDependencies,
+  ac265Hosted?: Ac265HostedDependencies,
 ): WorkerDependencies => ({
   captureException: () => {},
   createLogger: (bindings) =>
@@ -223,6 +226,7 @@ export const createRuntimeDependencies = (
   ...(platformConfiguration === undefined ? {} : { platformConfiguration }),
   ...(resolveRequestContext === undefined ? {} : { resolveRequestContext }),
   ...(contentSchemaRegistry === undefined ? {} : { contentSchemaRegistry }),
+  ...(ac265Hosted === undefined ? {} : { ac265Hosted }),
   ...(jobs === undefined ? {} : { jobs }),
   ...(uploadCompletion === undefined ? {} : { uploadCompletion }),
   now: Date.now,
@@ -262,6 +266,10 @@ export const createProductionWorkerAppRuntime = (
       ...(resolveCapabilities === undefined ? {} : { resolveCapabilities }),
       ...(contentSchemaRegistryOptions ?? {}),
     });
+  const ac265Hosted = createProductionAc265HostedDependencies(
+    environment,
+    fetchImpl,
+  );
   return createApp(
     createRuntimeDependencies(
       createProductionJobStatusDependencies({ environment, fetchImpl }),
@@ -274,6 +282,7 @@ export const createProductionWorkerAppRuntime = (
       platformConfiguration,
       resolveRequestContext,
       contentSchemaRegistry,
+      ac265Hosted,
     ),
   );
 };
