@@ -16,17 +16,18 @@
 - [x] `QA` RED: failing contract, permission, unit, integration, component, accessibility, and applicable E2E tests
 - [x] `BE` data, API, and policy implementation
 - [x] `FE` Astro SSR and bounded React-island implementation
-- [x] `QA` GREEN, adversarial verification, and canonical validation (local
-      validation completed for PR #74 branch commit `540e32ef`: `pnpm validate`
+- [x] `QA` GREEN, adversarial verification, and canonical validation (PR #74
+      merged at exact `main` SHA `f8e10db06b5e70ea6262a3531f7fab69965febc3`;
+      exact-main CI `34792878043` and staging `34793282345` / deployment
+      `6428325619` passed. Local `pnpm validate`
       exits 0 with 522 Vitest files / 4,091 passed + 1 skipped at 100% coverage
       (12,634 statements, 9,578 branches, 2,099 functions, 11,747 lines), 101
       functional and 5 real-route Playwright checks, and `pnpm db:verify` with
       50 pgTAP files / 1,818 checks and matching migrated types. Focused AC211
       tests pass 59/59; AC266 tests pass 83/83; adversarial reviews have no
-      remaining findings. PR #74 is pending CI/merge, not exact-main or hosted
-      acceptance. Its AC211 provenance and AC266 report-preparation tooling
-      improve evidence collection; all four external release checks remain
-      blocked.)
+      remaining findings. AC211 provenance and AC266 report-preparation tooling
+      are landed, but do not constitute hosted acceptance; all four external
+      release checks remain blocked.)
 - [x] Documentation, runbooks, graph, feature ledger, and progress tracking
 
 ## Acceptance Criteria
