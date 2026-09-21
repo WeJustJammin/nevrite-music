@@ -41,6 +41,11 @@
   (39 never-read, 6 unused, 1 immutable/stable), and generated database types
   match. Architecture compile passed **1,632 nodes / 10,125 edges** with 55
   known lint issues.
+- PR #88 CI run `35609574745` found one hosted scheduling variance in the
+  pre-existing profile-ownership in-flight coverage test. Replacing its arbitrary
+  event-loop tick with a wait for the second rate-limit boundary covered both
+  pending-request branches in five consecutive isolated runs; the full local
+  **551-file / 4,387-pass** suite then returned to 100% coverage.
 
 ## Evidence boundary
 

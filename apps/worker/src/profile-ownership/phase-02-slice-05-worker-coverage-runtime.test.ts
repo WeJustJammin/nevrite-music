@@ -48,7 +48,9 @@ describe('Phase 2 Slice 05 worker runtime defensive coverage', () => {
       ),
       bindings,
     );
-    await new Promise<void>((resolve) => setImmediate(resolve));
+    await vi.waitFor(() =>
+      expect(harness.auth.rateLimit).toHaveBeenCalledTimes(2),
+    );
     const changed = await harness.app.fetch(
       commandRequest(
         '/api/v1/party-claims',
