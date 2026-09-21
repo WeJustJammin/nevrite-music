@@ -701,7 +701,7 @@ response`; Workers Observability passed. Cloudflare's documented successful
 ## Blocking release evidence (current as of 2026-09-21)
 
 - P2-S09-AC-209: retain a genuine post-configuration redacted live-delivery
-  receipt. The latest read-only observability run `34813947512` failed with
+  receipt. The latest read-only observability run `35612514031` failed with
   `provider_graphql_error` on `emailSendingAdaptive`; it sent no email,
   changed no queue or production state, performed no deployment, and produced
   no receipt.
@@ -715,27 +715,22 @@ response`; Workers Observability passed. Cloudflare's documented successful
   and staging `34824312138` / deployment `6433521892`. Preflight `34824500796`
   passed, but authorization foundation run `34824651793` failed at
   `staging_prepare`; no hosted browser matrix or accepted 9-role/10-scenario
-  report exists. Current `main` is PR #86 SHA
-  `4fa8691d24177d0a528335f3c3d06ef50d67d3a9`; exact-main CI `35597438023`
-  passed and staging workflow `35598236704` / deployment `6568074493`
-  succeeded at `https://staging.wejamm.in`. CP-01 now has a
-  promoted, staging-only one-use outage-lease database control plane, but it
-  seeds no target, exposes no hosted route, and produces no signed receipt or
-  browser evidence. CP-02 now provides a promoted staging-only private
-  safe-resource/runner-mapping registry foundation, but it seeds no registry
-  rows and does not establish hosted acceptance. CP-03 adds a promoted signed
-  runner-mapping attestation code foundation on PR #85 / deployment
-  `6567092259`, but has no live signing-key configuration, registry rows,
-  retained mapping/attestation artifact, attestation workflow run, hosted
-  matrix, independently authenticated receipt, or AC265 acceptance. CP-04a
-  adds a promoted target read/attestation foundation, but it has no live
-  signing-key configuration, target row, retained target/attestation artifact,
-  protected workflow run, hosted matrix, receipt, or AC265 acceptance. None of
-  these checkpoints authenticates a live
-  mapping/resource source or verifies underlying resource contents. The authenticated
-  canonical mapping/resource source, target source, role/session broker,
-  MFA/step-up, evidence resolver, teardown, and complete hosted Auth/RLS/IdP
-  matrix remain open.
+  report exists. The current deployed baseline is PR #89 main SHA
+  `35d8f3806e37c0a438c4a103a6d269a42e1beb38`; exact-main CI `35616283525`
+  and staging workflow `35617273193` passed, and deployment `6571588413`
+  succeeded at `https://staging.wejamm.in`. CP-01 through CP-04b provide
+  promoted staging-only outage-lease, safe-resource/runner-mapping registry,
+  signed mapping/target attestation, target-read, and target-registration
+  foundations. They intentionally seed no live policy, target, registry row,
+  signing key, retained attestation/evidence artifact, hosted matrix, or
+  independently authenticated receipt. CP-04c candidate PR #90 head
+  `e06823fdc354280c8b2b9c4937b4b4b784c834d0` adds a locally validated strict
+  artifact-attestation and branded-resolver foundation only. It does not add an
+  authenticated upstream manifest/registry/run authority, external replay
+  ledger, live artifact source, protected producer integration, or hosted
+  acceptance. The canonical mapping/resource and target sources, role/session
+  broker, MFA/step-up, evidence service, teardown, durable uniqueness, and
+  complete hosted Auth/RLS/IdP matrix remain open.
 - P2-S09-AC-266: owner-deferred because the required real devices are
   unavailable. Retain operator-attested VoiceOver/Safari and NVDA/Firefox
   manual smoke against the exact hosted candidate when devices are available;
