@@ -1,5 +1,7 @@
 import {
   AC265_OUTAGE_LEASE_MAX_DURATION_SECONDS,
+  AC265_APPROVED_OUTAGE_TARGET_POLICY_REFERENCE,
+  AC265_APPROVED_OUTAGE_TARGET_REGISTRATION_SCHEMA_VERSION,
   AC265_APPROVED_OUTAGE_TARGET_SCHEMA_VERSION,
   AC265_APPROVED_RUNNER_MAPPING_ATTESTATION_ALGORITHM,
   AC265_APPROVED_RUNNER_MAPPING_ATTESTATION_DOMAIN,
@@ -10,6 +12,9 @@ import {
   ApprovedOutageTargetV1Schema,
   ApprovedRunnerMappingAttestationV1Schema,
   ApprovedRunnerMappingsV1Schema,
+  ContentSchemaRegistryAc265ApprovedOutageTargetRegisterRequestSchema,
+  ContentSchemaRegistryAc265ApprovedOutageTargetRegisterResponseSchema,
+  ContentSchemaRegistryAc265ApprovedOutageTargetRegisterResultSchema,
   ContentSchemaRegistryAc265ApprovedRegistryConflictSchema,
   ContentSchemaRegistryAc265ApprovedRunnerMappingReadRequestSchema,
   ContentSchemaRegistryAc265ApprovedRunnerMappingReadResponseSchema,
@@ -82,6 +87,24 @@ describe('AC265 hosted control-plane public contract exports', () => {
     ).toBeDefined();
     expect(
       ContentSchemaRegistryAc265ApprovedRunnerMappingReadResponseSchema,
+    ).toBeDefined();
+  });
+
+  it('exposes the CP-04b protected outage-target registration contracts', () => {
+    expect(AC265_APPROVED_OUTAGE_TARGET_REGISTRATION_SCHEMA_VERSION).toBe(
+      'ac265-hosted-approved-outage-target-registration-v1',
+    );
+    expect(AC265_APPROVED_OUTAGE_TARGET_POLICY_REFERENCE).toBe(
+      'ac265-outage-policy://staging/v1',
+    );
+    expect(
+      ContentSchemaRegistryAc265ApprovedOutageTargetRegisterRequestSchema,
+    ).toBeDefined();
+    expect(
+      ContentSchemaRegistryAc265ApprovedOutageTargetRegisterResultSchema,
+    ).toBeDefined();
+    expect(
+      ContentSchemaRegistryAc265ApprovedOutageTargetRegisterResponseSchema,
     ).toBeDefined();
   });
 

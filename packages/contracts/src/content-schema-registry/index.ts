@@ -2,6 +2,7 @@ export * from './models.ts';
 export * from './openapi.ts';
 export * from './operational-release-evidence-hosted-approved-outage-target-attestation.ts';
 export * from './operational-release-evidence-hosted-approved-outage-target-control.ts';
+export * from './operational-release-evidence-hosted-approved-outage-target-registration.ts';
 export * from './operational-release-evidence-hosted-approved-outage-target.ts';
 export * from './operational-release-evidence-hosted-approved-registry-control.ts';
 export * from './operational-release-evidence-hosted-approved-runner-mapping-attestation.ts';

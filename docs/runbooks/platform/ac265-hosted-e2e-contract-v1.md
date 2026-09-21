@@ -167,27 +167,60 @@ resources. The source key, live registry population, retained mapping artifact,
 and protected hosted run remain absent; fixtures and generated test keys are not
 acceptance evidence.
 
-CP-04a now supplies a promoted approved outage-target read and
-attestation boundary. Its service-role-only
-`ac265_approved_outage_target_read` RPC reads CP-01 target rows and returns a
-redacted canonical projection plus the stored target digest. A distinct,
-domain-separated Ed25519 envelope authenticates the exact
-`ac265-approved-outage-target-v1` bytes, target reference, run ID, digest, key
-ID, and validity window. The protected manual main/staging entrypoint and
+CP-04a remains the promoted approved outage-target read and attestation
+boundary. Its service-role-only `ac265_approved_outage_target_read` RPC reads
+CP-01 target rows and returns a redacted canonical projection plus the stored
+target digest. A distinct, domain-separated Ed25519 envelope authenticates the
+exact `ac265-approved-outage-target-v1` bytes, target reference, run ID, digest,
+key ID, and validity window. The protected manual main/staging entrypoint and
 workflow require that signed target attestation; the verifier and policy do
-not accept a caller-provided authenticity callback as a substitute. Focused
-AC265 verification covers 54 files / 483 tests. Exact-runtime `pnpm validate`
-exits 0 with 549 Vitest files, 4,366 passed + 1 intentional skip (4,367 total),
-100% coverage, 101 functional Chromium checks, five production-built checks,
-green builds/bundle checks, and local API p95 1.377056 ms. After a clean reset,
-all `pnpm db:verify` components are green: 57 pgTAP files / 2,087 assertions,
-database lint, and generated-type checks pass. Independent security review
-found no CP-04a blocker; a protected orchestrator remains a required trust
-boundary. PR #86 / exact-main SHA
-`4fa8691d24177d0a528335f3c3d06ef50d67d3a9`, CI `35597438023`, and staging
-workflow `35598236704` / deployment `6568074493` are green. Live target key/configuration, seeded
-target or registry rows, retained artifact, or workflow run remain absent, so
-CP-04a is not hosted acceptance evidence.
+not accept a caller-provided authenticity callback as a substitute. The
+current promoted baseline is PR #87 at exact-main SHA
+`2b83b9abe0f4de3992b6514e9d2f2ffcb83ca770`, exact-main CI `35601260266`,
+staging workflow `35602077901`, and deployment `6568798373`. Live target
+key/configuration, seeded target or registry rows, retained artifact, or
+workflow run remain absent, so CP-04a is not hosted acceptance evidence.
+
+CP-04b is an unpromoted local approved outage-target registration foundation.
+The strict `ac265-hosted-approved-outage-target-registration-v1` request accepts
+only the criterion, schema version, authorization reference, exact
+`ac265-outage-policy://staging/v1` policy reference, and idempotency reference.
+The bounded service-role client calls only
+`ac265_approved_outage_target_register`, validates the exact Supabase origin
+and project reference, bounds and parses the response, rejects redirects, and
+collapses transport, body, timeout, and malformed-response failures to one
+generic error. The expanded RPC-client suite has 15 tests covering status and
+redirect failures, duplicate keys, malformed/oversized content lengths and
+streams, awaited cancellation, missing/undefined reader chunks, release/read
+failures, invalid UTF-8, timeout, and secret non-disclosure. The migration
+creates private forced-RLS policy and registration ledgers with immutable
+mutation triggers and service-role-only RPC execution. It seeds no policy or
+registration rows; disposable SQL fixtures populate them only inside local
+tests and clean them up.
+
+Registration is fail-closed and server-derived. The policy target validity is
+exactly 120 seconds, which reserves a bounded 60-second acquisition window
+before CP-01's exact 60-second, one-request lease. The RPC requires the policy
+to be active and the authorization window to cover the full 120-second target
+validity (`authorized_at <= v_now` and `expires_at >= target_expires_at`),
+matches the verified candidate's source revision, deployment, staging hosting
+project, and Supabase project identity, and derives the dependency, route,
+target reference, timestamps, validity window, project fields, and canonical
+target digest on the server. The canonical JSON golden test pins digest
+`ecd573c63eff6b11b4ff044a70a8180901948e88a9c1db036f51f4a27e1f3d7e`.
+The direct SQL integration proof registers a target and then calls CP-01 lease
+acquisition using the returned target reference; it proves `state=acquired`,
+`leaseDurationSeconds=60`, and `requestLimit=1`. Future-dated policies and
+policy windows shorter than the required 120 seconds return only
+`{"status":"conflict"}` and create no target. Replay returns the same
+redacted registration only for the same request digest; changed requests,
+missing/expired/mismatched authorization or policy, and registration races
+return the same generic conflict. The SQL suite contains 35 registration
+assertions and the lock-aware concurrency probe contains 2 assertions proving
+single-winner behavior with exactly one target and one registration sidecar.
+This foundation has no live dependency/route policy, target, signing key,
+retained artifact, hosted matrix, or independently authenticated receipt; it
+does not alter the deployed baseline, close AC265, or unlock Slice 10.
 
 ## Versioned scenario parameter policy
 
@@ -203,13 +236,17 @@ control plane plus the CP-04a domain-separated Ed25519 attestation over those
 exact bytes. The target must bind the current run, staging hosting project,
 Supabase project, and deployment; placeholders, missing input, unsigned input,
 or failed authenticity leave the retained gate closed. CP-04a implements only
-the local read/attestation boundary: no live source key/configuration, seeded
-target, retained target artifact, or protected workflow run currently exists.
-The CP-03 mapping-attestation source does not provide this outage-target source
-and must not be treated as one.
-The policy pins the outage lease to one request and at most 60 seconds; the
-run-scoped lease reference and timestamps remain bound to the authenticated
-control-plane receipt and the run window.
+the local read/attestation boundary, and CP-04b implements only local
+server-derived registration: the CP-04b policy table is empty outside
+disposable tests, with no live dependency/route policy, source key/configuration,
+seeded target, retained target artifact, or protected workflow run currently
+existing. The CP-03 mapping-attestation source does not provide this
+outage-target source and must not be treated as one.
+The policy pins the registered target validity to exactly 120 seconds. This
+reserves a bounded 60-second acquisition window before CP-01's exact
+60-second, one-request lease; the active policy and authorization must cover
+the full target window. The run-scoped lease reference and timestamps remain
+bound to the authenticated control-plane receipt and the run window.
 
 ## Locked role matrix
 
@@ -345,6 +382,35 @@ authenticates the exact target bytes with a distinct Ed25519 domain. Its
 focused and full local checks pass, but it has no live signing key/configuration,
 seeded target or registry rows, retained artifact, protected workflow run,
 hosted matrix, or receipt. CP-04a does not establish AC265 acceptance.
+
+CP-04b is an unpromoted local registration foundation
+(`operational-release-evidence-hosted-approved-outage-target-registration.ts`;
+`ac265-approved-outage-target-registration-rpc.ts`;
+`20260921040000_ac265_approved_outage_target_registration.sql`). Its strict
+request contains only the criterion, schema version, authorization reference,
+exact policy reference, and idempotency reference. The service-role client
+calls the exact registration RPC through the exact project origin and applies
+bounded, redirect-rejecting, generic-error transport handling. The migration's
+private forced-RLS policy and registration ledgers are immutable and
+service-role-only; the policy table and registration table are empty in the
+foundation, with disposable policy fixtures used only by local SQL tests.
+The policy target validity is exactly 120 seconds. The RPC requires the policy
+to be active at server time and requires `authorized_at <= v_now` and
+`expires_at >= target_expires_at`, reserving a bounded 60-second acquisition
+window before CP-01's exact 60-second, one-request lease. It derives the
+target, candidate/source/deployment/project identity, dependency, route,
+timestamps, and target validity on the server, hashes the canonical target JSON
+(golden digest `ecd573c63eff6b11b4ff044a70a8180901948e88a9c1db036f51f4a27e1f3d7e`),
+and returns only a redacted registration or the generic conflict sentinel.
+The direct registration-to-lease SQL proof acquires CP-01's lease from the
+returned target reference and proves `state=acquired`, 60 seconds, and one
+request. Future-dated and short-policy windows return generic conflicts; the
+35 registration assertions and 2 concurrency assertions also cover replay,
+immutable-ledger, missing/expired/future authorization, candidate mismatch,
+and lock-aware single-winner behavior. The 15 RPC-client tests cover bounded
+transport and reader edge cases. CP-04b does not provide a live
+dependency/route policy, target, signing key, retained artifact, hosted matrix,
+or receipt and does not establish AC265 acceptance.
 
 The lease reference's lowercase SHA-256 digest is computed from its exact
 UTF-8 bytes. Acquisition and expiry are bounded timestamps; the lease must be

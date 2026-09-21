@@ -70,10 +70,10 @@
   See `.memory/wiki/specs/audits/phase-1-validation.md`.
 - **CURRENT IMPLEMENTATION (2026-09-21):** Phase 2 Slices 01–08 are complete.
   Slice 09 remains locally QA-GREEN at 279/282 active (283 authored IDs) with
-  authored depth ratio `0.986`. The current exact-main baseline is PR #86 at
-  SHA `4fa8691d24177d0a528335f3c3d06ef50d67d3a9`; exact-main CI `35597438023`
-  and staging `35598236704` / deployment `6568074493` passed. Staging is
-  available at `https://staging.wejamm.in`. AC211 provenance and AC266
+  authored depth ratio `0.986`. The current deployed baseline is PR #87 at
+  exact-main SHA `2b83b9abe0f4de3992b6514e9d2f2ffcb83ca770`; exact-main CI
+  `35601260266` and staging `35602077901` / deployment `6568798373` passed.
+  Staging is available at `https://staging.wejamm.in`. AC211 provenance and AC266
   report-preparation tooling is landed, but neither is hosted acceptance.
   AC265 preflight `34824500796` passed, while authorization foundation run
   `34824651793` failed at `staging_prepare`; no hosted browser acceptance ran.
@@ -90,25 +90,30 @@
   read/attestation boundary, but it has no live target-signing key, seeded
   target, retained target/attestation artifact, protected workflow run, hosted
   matrix, or receipt. These promotions cover code and staging deployment only.
+  CP-04b is currently an unpromoted local approved-outage-target registration
+  foundation. It adds an empty immutable policy/registration ledger and a
+  service-role-only, correlation-bound registration RPC; it does not seed a
+  live policy or target, expose a hosted route, configure a signing key, retain
+  an artifact, run a hosted matrix, or produce a receipt.
   AC266 is owner-deferred because the required real devices are unavailable; it
   remains unchecked and excluded from active Phase 2 completion. Slice 10
   remains locked only on AC209, AC211, and AC265; AC266 remains a mandatory
   post-Phase 2 production-readiness/release gate. See
   `.memory/pipeline/progress/phases/phase-02.md` and
   `.memory/pipeline/progress/slices/phase-02-slice-09.md`.
-- **LATEST COMPLETE LOCAL VALIDATION (CP-04a, 2026-09-21):** Under exact Node
-  `22.23.1` and pnpm `11.24.0`, `pnpm validate` passed 549 Vitest files / 4,366
-  passed + 1 intentional skip (4,367 total) at 100% coverage, 101 functional
-  Chromium checks, five production-built checks, all workspace builds, bundle
-  budgets, and performance smoke (`p95=1.377056 ms`, threshold `500 ms`, zero
-  errors). Fresh `pnpm db:verify` passed 57 pgTAP files / 2,087 assertions,
-  database lint, and generated-type parity. Focused AC265 verification passed
-  54 files / 483 tests. Independent security review found no CP-04a blocker;
-  the protected orchestrator remains a required trust boundary. These local
-  and promoted application results do not supply live keys, rows, artifacts,
-  the hosted matrix, an independently authenticated receipt, or AC265
-  acceptance. See the [CP-03 verification record](verification/2026-09-21-ac265-approved-runner-mapping-attestation.md)
-  and [CP-04a verification record](verification/2026-09-21-ac265-approved-outage-target-attestation.md).
+- **LATEST COMPLETE LOCAL VALIDATION (CP-04b, 2026-09-21):** Under exact Node
+  `22.23.1` and pnpm `11.24.0`, final canonical `pnpm validate` passed **551
+  Vitest files, 4,387 passed + 1 intentional skip**. Coverage is complete:
+  **13,143/13,143 statements, 9,850/9,850 branches, 2,160/2,160 functions,
+  and 12,224/12,224 lines** (100%). The evidence-map gate passed; Playwright
+  passed **101 functional checks + 5 production-built Slice 09 real-route
+  checks**. Workspace builds, bundle budgets, and performance smoke are green;
+  API p95 is **1.491154 ms**. Fresh `pnpm db:verify` is current-final at **59
+  pgTAP files / 2,124 assertions**, with database lint and generated-type parity
+  passing. Architecture compile passed **1,632 nodes / 10,125 edges**, with 55
+  known lint issues. These local results do not supply live keys, rows,
+  artifacts, the hosted matrix, an independently authenticated receipt, or
+  AC265 acceptance. See the [CP-04b verification record](verification/2026-09-21-ac265-approved-outage-target-registration.md).
 - **CURRENT CP-04A CHECKS (promoted foundation):** CP-04a adds a strict
   service-role-only approved-target read over CP-01 rows, canonical target and
   stored-digest binding, a distinct domain-separated Ed25519 target attestation,
@@ -123,13 +128,37 @@
   components are green: **57 pgTAP files / 2,087 assertions**, database lint,
   and generated-type checks pass. Independent security review found no CP-04a
   blocker; a protected orchestrator remains a required trust boundary.
-  PR #86 at exact-main SHA `4fa8691d24177d0a528335f3c3d06ef50d67d3a9`
-  passed exact-main CI `35597438023`; staging workflow `35598236704` applied
-  the migration and published deployment `6568074493` at
-  `https://staging.wejamm.in`. Live target key/configuration, seeded target or
+  CP-04a code was promoted in PR #86 at SHA
+  `4fa8691d24177d0a528335f3c3d06ef50d67d3a9`; the current deployed baseline
+  is the PR #87 promotion record at exact-main SHA
+  `2b83b9abe0f4de3992b6514e9d2f2ffcb83ca770`, with CI `35601260266`, staging
+  `35602077901`, and deployment `6568798373`. Live target key/configuration, seeded target or
   registry rows, retained target/attestation artifacts, attestation workflow
   execution, hosted browser matrix, independently authenticated receipt, and
   AC265 acceptance remain absent. See the [CP-04a verification record](verification/2026-09-21-ac265-approved-outage-target-attestation.md).
+- **CURRENT CP-04B CHECKS (unpromoted foundation):** The RPC client suite
+  passes **15 tests**; together with the registration contract/public-export
+  tests this is **3 files / 24 tests**. Registration SQL covers **35 pgTAP
+  assertions**, including direct registration-to-lease acquisition for the
+  exact CP-01 60-second lease; the separate two-connection concurrency proof
+  covers **2 assertions**. The policy requires **exact 120-second target
+  validity**, leaving a bounded 60-second acquisition window; future-dated or
+  too-short policy windows return generic conflict. Final canonical validation
+  via `pnpm validate` is current-final at **551 Vitest files, 4,387 passed + 1
+  intentional skip**, with **13,143/13,143 statements, 9,850/9,850 branches,
+  2,160/2,160 functions, and 12,224/12,224 lines** (100%). The evidence-map
+  gate passed; Playwright passed **101 functional + 5 production-built Slice
+  09 real-route checks**. Builds, bundle budgets, and performance are green;
+  API p95 is **1.491154 ms**. Fresh `pnpm db:verify` is current-final at **59
+  pgTAP files / 2,124 assertions**; database lint exits 0 with **46
+  longstanding warnings** (39 never-read, 6 unused, 1 immutable/stable), and
+  generated database types match. Architecture compile passed **1,632 nodes /
+  10,125 edges** with 55 known lint issues. CP-04b is not
+  promoted, seeds no live policy or target, configures no key, retains no
+  artifact, and provides no hosted matrix or receipt. AC265 remains open and
+  Slice 10 remains locked on AC209, AC211, and AC265. AC266 remains deferred,
+  unchecked, and mandatory at the post-Phase 2 production-readiness/release
+  gate.
 - **HISTORICAL PRE-REMEDIATION CANDIDATE:** Before this remediation, PR #9 branch
   `codex/phase-2-slices-01-09` was at
   `67264c5e9b5196d00ac3f0aa272896a010c872d7`; synthetic merge

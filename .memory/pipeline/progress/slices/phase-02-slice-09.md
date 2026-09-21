@@ -22,18 +22,20 @@
 - [x] `BE` data, API, and policy implementation
 - [x] `FE` Astro SSR and bounded React-island implementation
 - [x] `QA` GREEN, adversarial verification, and canonical validation (current
-      exact-main baseline PR #86 SHA `4fa8691d24177d0a528335f3c3d06ef50d67d3a9`;
-      exact-main CI `35597438023` passed and staging workflow `35598236704` /
-      deployment `6568074493` succeeded at `https://staging.wejamm.in`. The
-      final CP-04a validation under exact Node `22.23.1` and pnpm `11.24.0`
-      passed 549 Vitest files / 4,366 passed + 1 intentional skip (4,367 total)
-      at 100% coverage, 101 functional Chromium checks, five production-built
-      checks, builds, bundle checks, and performance smoke (`p95=1.377056 ms`,
-      threshold `500 ms`, zero errors); `pnpm db:verify` passed 57 pgTAP files /
-      2,087 assertions, database lint, and generated-type parity. Focused AC265
-      verification passed 54 files / 483 tests. See the [CP-03 verification
-      record](../verification/2026-09-21-ac265-approved-runner-mapping-attestation.md)
-      and [CP-04a verification record](../verification/2026-09-21-ac265-approved-outage-target-attestation.md).
+      deployed baseline PR #87 exact-main SHA
+      `2b83b9abe0f4de3992b6514e9d2f2ffcb83ca770`; exact-main CI `35601260266`
+      passed and staging workflow `35602077901` / deployment `6568798373`
+      succeeded at `https://staging.wejamm.in`. Final canonical validation under
+      exact Node `22.23.1` and pnpm `11.24.0` passed **551 Vitest files, 4,387
+      passed + 1 intentional skip**, with **13,143/13,143 statements,
+      9,850/9,850 branches, 2,160/2,160 functions, and 12,224/12,224 lines**
+      at 100% coverage. The evidence-map gate passed; Playwright passed **101
+      functional + 5 production-built Slice 09 real-route checks**. Builds,
+      bundle budgets, and performance are green with API p95 **1.491154 ms**;
+      `pnpm db:verify` passed **59 pgTAP files / 2,124 assertions**, with
+      database lint and generated-type parity. Architecture compile passed
+      **1,632 nodes / 10,125 edges** with 55 known lint issues. See the [CP-04b
+      verification record](../verification/2026-09-21-ac265-approved-outage-target-registration.md).
       AC265 preflight `34824500796`
       passed, while authorization foundation run `34824651793` failed at
       `staging_prepare`; CP-01 is promoted and staging-green but seeds no
@@ -768,6 +770,43 @@ implementation while remaining a mandatory post-Phase 2 release gate.
   AC209, AC211, and AC265. AC266 remains unchecked and owner-deferred as the
   mandatory post-Phase 2 production-readiness/release gate.
 - See the [CP-04a verification record](../verification/2026-09-21-ac265-approved-outage-target-attestation.md).
+
+## 2026-09-21 AC265 CP-04b approved outage-target registration (unpromoted)
+
+- Added the local contract, bounded service-role-only RPC, and forward-only
+  migration for owner-approved outage-target registration. The migration keeps
+  immutable policy and registration ledgers empty; registration derives target
+  scope from authenticated authorization/candidate context and server policy,
+  binds exact correlation/idempotency references, and returns only a redacted
+  registered envelope. No live policy or target is seeded and no hosted route
+  is exposed.
+- The RPC client suite passes **15 tests**; together with the registration
+  contract/public-export tests this is **3 files / 24 tests**. The registration
+  SQL passes **35 pgTAP assertions**, including direct registration-to-lease
+  acquisition proving that the registered target remains valid for the exact
+  CP-01 60-second lease. The separate two-connection concurrency proof passes
+  **2 assertions**. The policy requires **exact 120-second target validity**,
+  leaving a bounded 60-second acquisition window before the exact 60-second
+  lease; future-dated or too-short policy windows return generic conflict.
+- Final canonical `pnpm validate` is current-final at **551 Vitest files, 4,387
+  passed + 1 intentional skip**, with **13,143/13,143 statements, 9,850/9,850
+  branches, 2,160/2,160 functions, and 12,224/12,224 lines** (100%). The
+  evidence-map gate passed; Playwright passed **101 functional + 5 production-built
+  Slice 09 real-route checks**. Builds, bundle budgets, and performance are
+  green; API p95 is **1.491154 ms**. Fresh `pnpm db:verify` is current-final at
+  **59 pgTAP files / 2,124 assertions**, with database lint exiting 0 after **46
+  longstanding warnings** (39 never-read, 6 unused, 1 immutable/stable) and
+  generated database types matching. Architecture compile passed **1,632 nodes /
+  10,125 edges** with 55 known lint issues. The current deployed baseline remains PR #87
+  exact-main SHA `2b83b9abe0f4de3992b6514e9d2f2ffcb83ca770`, CI `35601260266`,
+  staging `35602077901`, deployment `6568798373`.
+- CP-04b is not promoted and has no live key/configuration, seeded policy or
+  target, retained artifact, hosted matrix, independently authenticated
+  receipt, or AC265 acceptance. AC265 remains open at **279/282 active**;
+  Slice 10 remains locked on AC209, AC211, and AC265. AC266 remains unchecked,
+  owner-deferred, and mandatory at the post-Phase 2 production-readiness/
+  release gate. See the [CP-04b verification
+  record](../verification/2026-09-21-ac265-approved-outage-target-registration.md).
 
 ## 2026-09-09 external-evidence remediation update
 

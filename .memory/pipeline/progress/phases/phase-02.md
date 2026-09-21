@@ -3,7 +3,7 @@
 **Status**: in-progress  
 **Progress**: 8/17 slices (47%)  
 **Criteria (2026-09-21)**: 1,999 active / 2,000 authored; AC266 is owner-deferred and excluded from the active Phase 2 completion denominator, but remains mandatory for post-Phase 2 production-readiness/release.  
-**Current gate (2026-09-21)**: Slice 09 remains blocked at **279/282 active** (**283 authored IDs**) with depth ratio **0.986**; Phase 2 remains **8/17** slices. The current exact-main baseline is PR #86 at SHA `4fa8691d24177d0a528335f3c3d06ef50d67d3a9`; exact-main CI `35597438023` passed and staging workflow `35598236704` / deployment `6568074493` succeeded at `https://staging.wejamm.in`. CP-04a local validation passed 549 Vitest files / 4,366 passed + 1 intentional skip (4,367 total) at 100% coverage, 101 functional browser checks, five production-built checks, builds, bundle budgets, and performance smoke (`p95=1.377056 ms`, threshold `500 ms`, zero errors); database verification passed 57 pgTAP files / 2,087 assertions plus generated type parity. AC265 preflight `34824500796` passed, while authorization foundation run `34824651793` failed at `staging_prepare`; no hosted browser acceptance ran. [CP-01](../verification/2026-09-21-ac265-outage-lease-control-plane.md), [CP-02](../verification/2026-09-21-ac265-approved-runner-registry.md), [CP-03](../verification/2026-09-21-ac265-approved-runner-mapping-attestation.md), and [CP-04a](../verification/2026-09-21-ac265-approved-outage-target-attestation.md) are promoted foundations only; no live signing key/configuration, seeded target or registry rows, retained attestations, protected attestation workflow run, independently authenticated receipt, or browser proof exists, so AC265 remains open. AC209 run `34813947512` failed with `provider_graphql_error` and produced no receipt. AC211 run `35560241699` passed preflight but collection failed for insufficient samples (`commands=0`, `protectedRpcs=0`, `acceptances=0`, `queueFirstAttempts=0`) and produced no artifact. AC266 is owner-deferred because the required real devices are unavailable; it remains unchecked and excluded from active Phase 2 completion. Slice 10 remains locked only on AC209, AC211, and AC265; AC266 remains a mandatory post-Phase 2 production-readiness/release gate.  
+**Current gate (2026-09-21)**: Slice 09 remains blocked at **279/282 active** (**283 authored IDs**) with depth ratio **0.986**; Phase 2 remains **8/17** slices. The current deployed baseline is PR #87 at exact-main SHA `2b83b9abe0f4de3992b6514e9d2f2ffcb83ca770`; exact-main CI `35601260266` passed and staging workflow `35602077901` / deployment `6568798373` succeeded at `https://staging.wejamm.in`. CP-04a local validation passed 549 Vitest files / 4,366 passed + 1 intentional skip (4,367 total) at 100% coverage, 101 functional browser checks, five production-built checks, builds, bundle budgets, and performance smoke (`p95=1.377056 ms`, threshold `500 ms`, zero errors); database verification passed 57 pgTAP files / 2,087 assertions plus generated type parity. AC265 preflight `34824500796` passed, while authorization foundation run `34824651793` failed at `staging_prepare`; no hosted browser acceptance ran. [CP-01](../verification/2026-09-21-ac265-outage-lease-control-plane.md), [CP-02](../verification/2026-09-21-ac265-approved-runner-registry.md), [CP-03](../verification/2026-09-21-ac265-approved-runner-mapping-attestation.md), and [CP-04a](../verification/2026-09-21-ac265-approved-outage-target-attestation.md) are promoted foundations only; no live signing key/configuration, seeded target or registry rows, retained attestations, protected attestation workflow run, independently authenticated receipt, or browser proof exists, so AC265 remains open. The unpromoted CP-04b registration foundation is local-only and leaves the policy and target ledgers empty; it has no live key, artifact, hosted matrix, or receipt. AC209 run `34813947512` failed with `provider_graphql_error` and produced no receipt. AC211 run `35560241699` passed preflight but collection failed for insufficient samples (`commands=0`, `protectedRpcs=0`, `acceptances=0`, `queueFirstAttempts=0`) and produced no artifact. AC266 is owner-deferred because the required real devices are unavailable; it remains unchecked and excluded from active Phase 2 completion. Slice 10 remains locked only on AC209, AC211, and AC265; AC266 remains a mandatory post-Phase 2 production-readiness/release gate.  
 **Plan**: [Phase 2 plan](../../../wiki/specs/phases/phase-2.md)  
 **Updated**: 2026-09-21
 **Prior remote evidence**: Before this remediation, PR #9 head `67264c5e9b5196d00ac3f0aa272896a010c872d7` produced synthetic merge `a79dfe30db60e4f54024f064fc2fdf2d01033919` and passing CI run `33841270472`. That run is not evidence for the remediation; no merge or deployment is claimed
@@ -33,6 +33,46 @@ attestation artifact, attestation workflow run, hosted browser matrix,
 independently authenticated receipt, or AC265 acceptance remain absent. Slice
 09 remains **279/282 active** and Slice 10 remains locked on AC209, AC211, and
 AC265. See the [CP-04a verification record](../verification/2026-09-21-ac265-approved-outage-target-attestation.md).
+
+## CP-04b approved outage-target registration (unpromoted foundation)
+
+CP-04b adds the local contract, bounded RPC, and forward-only database boundary
+for registering an owner-approved outage target. The migration creates empty
+immutable policy and registration ledgers; the service-role-only RPC derives
+target scope from authenticated authorization/candidate context and server
+policy, binds exact correlation and idempotency references, and returns only a
+redacted registered envelope. No live policy or target is seeded, and no hosted
+route is exposed.
+
+The RPC client suite passes **15 tests**; together with the registration
+contract/public-export tests this is **3 files / 24 tests**. The registration
+SQL has **35 pgTAP assertions**, including direct registration-to-lease
+acquisition proving that a registered target remains valid for the exact CP-01
+60-second lease. The separate two-connection concurrency proof has **2
+assertions**. The policy requires **exact 120-second target validity**, leaving
+a bounded 60-second acquisition window before the exact 60-second lease;
+future-dated or too-short policy windows return generic conflict.
+
+Final canonical `pnpm validate` is current-final at **551 Vitest files, 4,387
+passed + 1 intentional skip**, with **13,143/13,143 statements, 9,850/9,850
+branches, 2,160/2,160 functions, and 12,224/12,224 lines** (100%). The
+evidence-map gate passed; Playwright passed **101 functional + 5 production-built
+Slice 09 real-route checks**. Builds, bundle budgets, and performance are green;
+API p95 is **1.491154 ms**. Fresh `pnpm db:verify` is current-final at **59
+pgTAP files / 2,124 assertions**; database lint exits 0 with **46 longstanding
+warnings** (39 never-read, 6 unused, 1 immutable/stable), and generated
+database types match. Architecture compile passed **1,632 nodes / 10,125 edges**
+with 55 known lint issues.
+
+CP-04b is not promoted and provides no live signing key/configuration, seeded
+policy or target, retained artifact, hosted matrix, independently authenticated
+receipt, or AC265 acceptance. The deployed baseline remains PR #87 exact-main
+SHA `2b83b9abe0f4de3992b6514e9d2f2ffcb83ca770`, CI `35601260266`, staging
+`35602077901`, deployment `6568798373`. Slice 09 remains **279/282 active**;
+AC265 remains open and Slice 10 remains locked on AC209, AC211, and AC265.
+AC266 remains unchecked, owner-deferred, and mandatory at the post-Phase 2
+production-readiness/release gate. See the [CP-04b verification
+record](../verification/2026-09-21-ac265-approved-outage-target-registration.md).
 
 Slice 08 is complete (51/51). Slice 09 local QA-GREEN passes. PR #13 merged as
 exact main SHA `7250754dcdc9c1b7a863aa41d79772e6ab7092ab`; CI run
