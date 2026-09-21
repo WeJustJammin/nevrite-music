@@ -38,14 +38,12 @@ eligible command, protected-RPC, acceptance, and queue-first-attempt samples and
 produced no retained artifact. No external Slice 09 criterion and no AC266
 acceptance is claimed by this propagation.
 
-<!-- spec-graph: auto-generated -->
 
+<!-- spec-graph: auto-generated -->
 ## Related Specs
 
 ### Phases into
-
 - [[specs/phases/phase-2|Phase 2 — Identity, admin, CMS/settings]]
 
 ### References
-
 - [[specs/phases/phase-2|Phase 2 — Identity, admin, CMS/settings]]

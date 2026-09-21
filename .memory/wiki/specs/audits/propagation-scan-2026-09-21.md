@@ -35,14 +35,12 @@ not accessibility acceptance: it authorizes Slice 10 only after AC209, AC211,
 and AC265 pass, and it does not authorize production release while AC266 is
 unproven.
 
-<!-- spec-graph: auto-generated -->
 
+<!-- spec-graph: auto-generated -->
 ## Related Specs
 
 ### Phases into
-
 - [[specs/phases/phase-2|Phase 2 — Identity, admin, CMS/settings]]
 
 ### References
-
 - [[specs/phases/phase-2|Phase 2 — Identity, admin, CMS/settings]]

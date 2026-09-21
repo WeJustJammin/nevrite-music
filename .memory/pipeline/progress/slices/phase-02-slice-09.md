@@ -22,16 +22,19 @@
 - [x] `BE` data, API, and policy implementation
 - [x] `FE` Astro SSR and bounded React-island implementation
 - [x] `QA` GREEN, adversarial verification, and canonical validation (current
-      exact-main baseline PR #81 SHA `f8a6b77e529c7b150df367f5ce59e43b1aed0db1`;
-      CI `35560004822` and staging `35560514952` / deployment `6561553954`
+      exact-main baseline PR #82 SHA `71d59166e5b1b6440ac0786d2d4c192dfba526fa`;
+      CI `35563634660` and staging `35564168797` / deployment `6562174644`
       passed. Fresh 2026-09-21 local validation under exact Node `22.23.1` and
-      pnpm `11.24.0` passed 536 Vitest files / 4,234 tests plus one skip at 100%
-      coverage, 101 functional and 5 real Slice 09 E2E tests, builds, bundle
-      checks, and performance smoke (`p95=1.527671 ms`, threshold `500 ms`, zero
-      errors); `pnpm db:verify` passed 52 pgTAP files / 1,917 tests with migrated
-      type parity. AC265 preflight `34824500796`
+      pnpm `11.24.0` passed 537 Vitest files / 4,241 tests plus one skip at 100%
+      coverage (13,048 statements, 9,828 branches, 2,152 functions, and 12,129
+      lines), 101 functional and 5 real Slice 09 E2E tests, builds, bundle
+      checks, and performance smoke (`p95=1.190315 ms`, threshold `500 ms`, zero
+      errors); `pnpm db:verify` passed 54 pgTAP files / 2,000 tests with migrated
+      type parity. See the [CP-01 verification record](../verification/2026-09-21-ac265-outage-lease-control-plane.md).
+      AC265 preflight `34824500796`
       passed, while authorization foundation run `34824651793` failed at
-      `staging_prepare`; no hosted acceptance is claimed. AC266 is
+      `staging_prepare`; CP-01 is locally green but unpromoted and produces no
+      hosted receipt or browser evidence, so no hosted acceptance is claimed. AC266 is
       owner-deferred because the required real devices are unavailable, and
       remains unchecked and excluded from active Phase 2 completion; the three
       active external release checks remain open.)
@@ -673,9 +676,14 @@ response`; Workers Observability passed. Cloudflare's documented successful
   and staging `34824312138` / deployment `6433521892`. Preflight `34824500796`
   passed, but authorization foundation run `34824651793` failed at
   `staging_prepare`; no hosted browser matrix or accepted 9-role/10-scenario
-  report exists. Current `main` is PR #81 SHA
-  `f8a6b77e529c7b150df367f5ce59e43b1aed0db1`. Role/identity lifecycle,
-  MFA/step-up, teardown, and complete hosted Auth/RLS/IdP evidence remain open.
+  report exists. Current `main` is PR #82 SHA
+  `71d59166e5b1b6440ac0786d2d4c192dfba526fa`; CI `35563634660` and
+  staging `35564168797` / deployment `6562174644` passed. CP-01 now has a
+  locally verified, staging-only one-use outage-lease database control plane,
+  but it seeds no target, exposes no hosted route, and produces no signed
+  receipt or browser evidence. The approved target/mapping/resource source,
+  role/session broker, MFA/step-up, evidence resolver, teardown, and complete
+  hosted Auth/RLS/IdP matrix remain open.
 - P2-S09-AC-266: owner-deferred because the required real devices are
   unavailable. Retain operator-attested VoiceOver/Safari and NVDA/Firefox
   manual smoke against the exact hosted candidate when devices are available;

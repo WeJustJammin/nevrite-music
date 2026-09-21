@@ -137,11 +137,13 @@ V3 report must include matching outage evidence and `leaseReceipt`, exactly one
 consume event, and cleanup `outageLeaseReleaseProof`. Missing lease or proof
 fails validation; there is no skip or unleased outage pass.
 
-This is a local trust boundary only; it does not implement a protected broker,
-issuer, approved-outage-target source, lease service, or evidence-byte service,
-or independently bind supplied trusted values to actual hosted
-workflow/deployment outputs. The target source endpoint and authentication
-key/config remain unresolved; do not claim hosted acceptance.
+This remains a local trust boundary only. CP-01 implements the private
+database lease lifecycle and its service-role-only RPCs, but it does not
+implement a protected session broker, signed receipt issuer, independently
+authenticated approved-outage-target source, evidence-byte service, or hosted
+workflow integration. It also seeds no live target. The target source endpoint
+and authentication key/config remain unresolved; do not claim hosted
+acceptance or infer it from local pgTAP results.
 
 The report also requires a fresh `fresh_google_oauth_through_supabase` flow,
 real server-side expiry and HTTP 429 observations, a bounded one-request

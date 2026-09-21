@@ -236,6 +236,18 @@ runner contract. The derived scope must exactly match the contract and receipt:
 `dependencyId`, and route `{ operationId, method, path }`. No live source
 endpoint or authentication key/config is currently defined, so the hosted
 gate remains closed until one is approved and implemented.
+
+The CP-01 database foundation now provides private, forced-RLS approved-target
+and lease ledgers plus service-role-only acquire, consume, and release RPCs
+(`supabase/migrations/20260921010000_ac265_hosted_control_plane.sql`). It
+enforces the staging identity, exact 60-second/one-request policy, canonical
+lease digest, one active lease per authorization/target binding, exactly-once
+consumption, bounded release, and retry-safe conflict behavior. The migration
+seeds no approved target and exposes no public Worker route. It is therefore a
+local control-plane prerequisite only: the independently authenticated target
+source, hosted workflow wiring, signed receipt issuer/resolver, and genuine
+provider fault remain mandatory before AC265 acceptance.
+
 The lease reference's lowercase SHA-256 digest is computed from its exact
 UTF-8 bytes. Acquisition and expiry are bounded timestamps; the lease must be
 acquired during the run, expire after acquisition but no later than its
