@@ -96,17 +96,26 @@ must be staging-only and at most 60 seconds. There is no skipped, omitted, or
 unleased outage path that can pass the retained gate.
 
 Role/resource and scenario/role mappings are independently trusted inputs, not
-values the runner contract or report may authorize. Supply
-the protected V3 context's `approvedRunnerMappingsBytes` and
-`verifyApprovedRunnerMappingsAuthenticity` for the versioned
+values the runner contract or report may authorize. Supply the protected V3
+context's `approvedRunnerMappingsBytes`,
+`approvedRunnerMappingAttestationBytes`, and
+`approvedRunnerMappingTrustedKeys` for the versioned
 `ac265-approved-runner-mappings-v1` source. Its exact run/candidate-bound role
 resource-reference arrays and scenario-role assignments must authenticate over
-the raw bytes. The context's `expectedRoleResourceBindings` and
+the canonical bytes through the domain-separated Ed25519 envelope. The context's
+`expectedRoleResourceBindings` and
 `expectedScenarioRoleBindings` are cross-checked against that payload, then the
 contract is compared exactly with the authenticated mappings. Keep required
 keys complete; do not infer all role/scenario pairs or per-role resource kinds.
 Bind role/scenario receipts to the approved session and resource reference
 digests.
+
+CP-03 now supplies only a local, unpromoted attestation boundary for the exact
+`ac265-approved-runner-mappings-v1` bytes. It canonicalizes those bytes and
+verifies a trusted Ed25519 signature, key/report validity windows, domain
+separator, and run/mapping identity. No live signing-key configuration,
+registry rows, retained mapping/attestation artifact, hosted run, receipt, or
+promotion exists; fixtures and generated test keys are not acceptance evidence.
 
 The protected workflow must resolve each opaque reference and receipt to its
 exact raw bytes, recompute SHA-256 before parsing, and cross-verify the
@@ -116,10 +125,11 @@ protected deployment outputs. Receipt signatures/authenticity must be checked
 over those same bytes; a digest alone is not authentication. Execution evidence
 bytes must likewise be resolved, hashed, and bound to the expected evidence
 kind, identity, subject, and (for teardown) session-reference digest. The local
-v3 verifier uses caller-supplied trusted identity, run ID, contract digest,
-authenticated approved-mapping bytes and authenticity callback, matching trusted
-map fields, `resolveReceipt`, and `verifyReceiptAuthenticity`; when execution
-evidence is declared, its resolver must provide the raw bytes.
+v3 verifier uses trusted release-policy identity, run ID, contract digest,
+canonical approved-mapping and attestation bytes, an independently trusted key
+registry, matching trusted map fields, `resolveReceipt`, and
+`verifyReceiptAuthenticity`; when execution evidence is declared, its resolver
+must provide the raw bytes.
 
 The retained V3 report, runner-contract JSON, and resolved receipt JSON must
 reject duplicate object members before `JSON.parse` or schema validation.
@@ -148,13 +158,28 @@ cutoff. All nine sessions require teardown proof using only
 `current_session_only`; the authenticated cleanup receipt must be issued at or
 after `cleanup.completedAt` and within that run window/cutoff.
 
+The trusted-key list, `trustedCutoffAt`, and `maxRunDurationMs` are trusted
+release-policy context preconditions. A future protected orchestration
+constructor must source them from authenticated release/deployment policy
+context; they must not be supplied by an untrusted caller. No current
+untrusted caller exists, and this local verifier does not establish that
+protected constructor.
+
 These are local trust-boundary checks only. The verifier does not implement a
 protected issuer, session broker, evidence-byte service, outage-lease service,
 or independent binding to actual protected workflow/deployment outputs. CP-02
-now provides a local, unpromoted private safe-resource and runner-mapping
+now provides a promoted staging private safe-resource and runner-mapping
 registry foundation with forced-RLS tables and service-role-only RPCs; it stores
 only opaque references/digests and redacted bindings, does not authenticate
 mapping provenance or verify underlying resource contents, and seeds no rows.
+CP-03 authenticates only supplied canonical mapping bytes; it does not provide
+the live source key, resource-content validation, or protected artifact needed
+for hosted acceptance.
+Its local hardening covers UUID-v4 mapping-ID alignment, awaited response-body
+cancellation, realpath/symlink-safe execution, an unnamed Linux `O_TMPFILE`
+writability preflight, no-follow held descriptors, summaries constrained
+beneath `RUNNER_TEMP`, and deletion-free fail-closed handling that preserves
+only private runner-local remnants.
 The protected population/authentication source, v1 session broker,
 fault-evidence service, isolated hosted workflow, and report producer remain
 unimplemented. The runner must be isolated and disposable; shared persistent
@@ -505,7 +530,10 @@ verifier also enforces caller-supplied `maxRunDurationMs`, trusted cutoff, recei
 cleanup-receipt ordering. A hash of `hosted/e2e.json` or a local fixture alone proves none of
 the external sessions, resources, signed receipts, or hosted observations.
 
-This remains a local trust-boundary check, not hosted AC265 acceptance. The
+This remains a local trust-boundary check, not hosted AC265 acceptance. CP-03's
+attestation implementation authenticates exact canonical mapping bytes only;
+it does not make the local verifier a hosted issuer, source, or acceptance
+runner. The
 protected session broker, authenticated population/mapping source, authenticated
 outage lease/fault-evidence service, evidence-byte service, isolated hosted
 workflow, and v3 hosted report producer are still missing. A future protected workflow

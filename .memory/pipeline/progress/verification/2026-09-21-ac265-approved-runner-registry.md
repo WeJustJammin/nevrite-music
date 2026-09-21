@@ -1,8 +1,9 @@
 # AC265 CP-02 approved runner registry verification
 
 **Date:** 2026-09-21  
-**Scope:** local, unpromoted CP-02 foundation only  
-**Verdict:** CP-02 GREEN locally; AC265 remains OPEN
+**Scope:** promoted staging CP-02 foundation; no live registry rows or hosted
+acceptance  
+**Verdict:** CP-02 GREEN locally and promoted to staging; AC265 remains OPEN
 
 ## Implemented boundary
 
@@ -43,23 +44,26 @@ impossible defensive branches were refactored, focused schema coverage reached
 
 ## Evidence boundary
 
-This checkpoint is local and unpromoted. It does not authenticate the canonical
-mapping/resource source, verify underlying resource safety or contents, seed a
-live staging registry, invoke a protected hosted resource, mint an independently
-authenticated receipt, run the nine-role/ten-scenario browser matrix, or prove
-Auth/RLS/IdP behavior. The registry's schema/source marker and locator digest
-are not authenticity or safety evidence. CP-01's promotion remains the only
-promotion evidence: PR #83 exact-main
-`05e88ea52f1c9cf206d54f455e53bc849044cb9b`, CI `35569923623`, staging
-`35570556554`, deployment `6563225343`; that promotion proves CP-01 only.
+This checkpoint is promoted to staging, but its forward-only migration seeds no
+live registry rows. It does not authenticate the canonical mapping/resource
+source, verify underlying resource safety or contents, invoke a protected hosted
+resource, mint an independently authenticated receipt, run the
+nine-role/ten-scenario browser matrix, or prove Auth/RLS/IdP behavior. The
+registry's schema/source marker and locator digest are not authenticity or
+safety evidence. CP-02 promotion is recorded on exact-main PR #84 SHA
+`cea2e5601872975a2f974d13e739ace26da677ff`, exact-main CI `35578970402`,
+staging `35579638864`, and deployment `6564785922`; it proves the private
+foundation only and does not establish hosted acceptance.
 
 AC265 therefore remains open at 279/282 active criteria. Slice 10 remains
 locked on AC209, AC211, and AC265. No hosted acceptance, mapping authenticity,
-or promotion claim is made here.
+or live-registry claim is made here; the recorded promotion covers only the
+empty private foundation.
 
 ## Next dependency
 
-CP-03 must provide an independently authenticated canonical mapping/resource
-source. Later checkpoints must add the run-scoped session broker,
-evidence/receipt resolver and authenticity, protected hosted workflow, genuine
-execution, teardown, and accepted report verification before AC265 can close.
+CP-03 now provides a local signed mapping-attestation foundation, but no live
+key, populated source, or retained artifact. Later checkpoints must add the
+authenticated outage-target source, run-scoped session broker, evidence/receipt
+resolver and authenticity, protected hosted workflow, genuine execution,
+teardown, and accepted report verification before AC265 can close.

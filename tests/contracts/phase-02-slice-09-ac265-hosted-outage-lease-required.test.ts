@@ -1,8 +1,15 @@
 import { describe, expect, it } from 'vitest';
 
 import { ContentSchemaRegistryHostedE2eReportV3Schema } from '../../packages/contracts/src/content-schema-registry/operational-release-evidence-hosted-report-v3.ts';
-import { authenticateApprovedRunnerMappingsV1 } from '../../infra/workflows/ac265-hosted-runner-policy-v1.ts';
 import {
+  authenticateAc265ApprovedRunnerMappingsV1,
+  canonicalizeAc265ApprovedRunnerMappingsV1,
+  createAc265ApprovedRunnerMappingAttestation,
+} from '../../infra/workflows/ac265-approved-runner-mapping-attestation.ts';
+import {
+  AC265_TEST_RUNNER_MAPPING_KEY_ID,
+  AC265_TEST_RUNNER_MAPPING_PRIVATE_KEY_PEM,
+  AC265_TEST_RUNNER_MAPPING_TRUSTED_KEYS,
   contextFor,
   createFixture,
   validateWithContext,
@@ -247,17 +254,28 @@ describe('AC265 required dependency outage lease evidence', () => {
 
   it('freezes nested authenticated mapping data before trusted use', () => {
     const contract = buildLeaseFixture().fixture.contract;
-    const bytes = jsonBytes({
+    const canonical = canonicalizeAc265ApprovedRunnerMappingsV1({
       schemaVersion: 'ac265-approved-runner-mappings-v1',
       source: 'protected-ac265-runner-mapping-control-plane',
-      mappingId: 'ac265-policy-test-source-01',
+      mappingId: '60000000-0000-4000-8000-000000000001',
       approvedAt: '2026-09-03T10:29:00.000Z',
       runId: contract.runId,
       identity: contract.identity,
       roleResourceBindings: contract.roleResourceBindings,
       scenarioRoleBindings: contract.scenarioRoleBindings,
     });
-    const approved = authenticateApprovedRunnerMappingsV1(bytes, () => true);
+    const created = createAc265ApprovedRunnerMappingAttestation({
+      mappingBytes: canonical.bytes,
+      keyId: AC265_TEST_RUNNER_MAPPING_KEY_ID,
+      privateKeyPem: AC265_TEST_RUNNER_MAPPING_PRIVATE_KEY_PEM,
+      issuedAt: '2026-09-03T10:30:00.000Z',
+      expiresAt: '2026-09-03T10:35:00.000Z',
+    });
+    const approved = authenticateAc265ApprovedRunnerMappingsV1({
+      mappingBytes: canonical.bytes,
+      attestationBytes: created.attestationBytes,
+      trustedKeys: AC265_TEST_RUNNER_MAPPING_TRUSTED_KEYS,
+    }).mapping;
 
     expect(Object.isFrozen(approved)).toBe(true);
     expect(Object.isFrozen(approved.identity)).toBe(true);

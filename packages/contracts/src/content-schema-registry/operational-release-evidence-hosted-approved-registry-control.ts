@@ -34,7 +34,7 @@ const Ac265IdempotencyReferenceSchema = z
   .string()
   .regex(new RegExp(`^ac265-idempotency://staging/${AC265_UUID_V4}$`, 'u'));
 
-const Ac265ApprovedMappingIdSchema = z
+export const Ac265ApprovedMappingIdSchema = z
   .string()
   .regex(new RegExp(`^${AC265_UUID_V4}$`, 'u'));
 

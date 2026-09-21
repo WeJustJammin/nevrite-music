@@ -13,11 +13,15 @@ import {
   type HostedOutageLeaseScope,
 } from '../../packages/contracts/src/content-schema-registry/operational-release-evidence-hosted-outage-lease-scope.ts';
 import type { ApprovedRunnerMappingsV1 } from '../../packages/contracts/src/content-schema-registry/operational-release-evidence-hosted-approved-runner-mappings.ts';
+import type { ApprovedRunnerMappingAttestationV1 } from '../../packages/contracts/src/content-schema-registry/operational-release-evidence-hosted-approved-runner-mapping-attestation.ts';
 import {
   authenticateApprovedOutageTargetV1,
-  authenticateApprovedRunnerMappingsV1,
   type ApprovedOutageTargetV1,
 } from './ac265-hosted-runner-policy-v1.ts';
+import {
+  authenticateAc265ApprovedRunnerMappingsV1,
+  type Ac265ApprovedRunnerMappingTrustedKey,
+} from './ac265-approved-runner-mapping-attestation.ts';
 
 type HostedIdentity = ContentSchemaRegistryHostedRunnerContract['identity'];
 
@@ -32,13 +36,11 @@ export type ContentSchemaRegistryHostedE2eReportV3VerificationContext =
     readonly expectedOutageLeaseScope: HostedOutageLeaseScope;
     readonly approvedOutageTargetBytes: Uint8Array;
     readonly approvedRunnerMappingsBytes: Uint8Array;
+    readonly approvedRunnerMappingAttestationBytes: Uint8Array;
+    readonly approvedRunnerMappingTrustedKeys: readonly Ac265ApprovedRunnerMappingTrustedKey[];
     readonly verifyApprovedOutageTargetAuthenticity: (
       bytes: Uint8Array,
       parsedTarget: unknown,
-    ) => boolean;
-    readonly verifyApprovedRunnerMappingsAuthenticity: (
-      bytes: Uint8Array,
-      parsedMappings: unknown,
     ) => boolean;
     readonly resolveReceipt: (ref: string) => Uint8Array | undefined;
     readonly resolveEvidence: (ref: string) => Uint8Array | undefined;
@@ -54,10 +56,12 @@ type ParsedContentSchemaRegistryHostedE2eReportV3VerificationContext = Omit<
   | 'approvedOutageTargetBytes'
   | 'verifyApprovedOutageTargetAuthenticity'
   | 'approvedRunnerMappingsBytes'
-  | 'verifyApprovedRunnerMappingsAuthenticity'
+  | 'approvedRunnerMappingAttestationBytes'
+  | 'approvedRunnerMappingTrustedKeys'
 > & {
   readonly approvedOutageTarget: ApprovedOutageTargetV1;
   readonly approvedRunnerMappings: ApprovedRunnerMappingsV1;
+  readonly approvedRunnerMappingAttestation: ApprovedRunnerMappingAttestationV1;
 };
 
 const isRecord = (value: unknown): value is Record<string, unknown> =>
@@ -86,23 +90,29 @@ export const parseHostedE2eVerificationContext = (
   if (typeof expectedRunId !== 'string')
     throw new Error('Hosted E2E trusted expected run is required.');
   const approvedRunnerMappingsBytes = context['approvedRunnerMappingsBytes'];
-  const verifyApprovedRunnerMappingsAuthenticity =
-    context['verifyApprovedRunnerMappingsAuthenticity'];
+  const approvedRunnerMappingAttestationBytes =
+    context['approvedRunnerMappingAttestationBytes'];
+  const approvedRunnerMappingTrustedKeys =
+    context['approvedRunnerMappingTrustedKeys'];
   if (
     !(approvedRunnerMappingsBytes instanceof Uint8Array) ||
     approvedRunnerMappingsBytes.byteLength === 0 ||
-    typeof verifyApprovedRunnerMappingsAuthenticity !== 'function'
+    !(approvedRunnerMappingAttestationBytes instanceof Uint8Array) ||
+    approvedRunnerMappingAttestationBytes.byteLength === 0 ||
+    !Array.isArray(approvedRunnerMappingTrustedKeys)
   )
     throw new Error(
-      'Protected AC265 approved runner mapping bytes and authenticity verifier are required.',
+      'Protected AC265 approved runner mapping bytes, signed attestation, and trusted keys are required.',
     );
-  const approvedRunnerMappings = authenticateApprovedRunnerMappingsV1(
-    approvedRunnerMappingsBytes,
-    verifyApprovedRunnerMappingsAuthenticity as (
-      bytes: Uint8Array,
-      parsedMappings: ApprovedRunnerMappingsV1,
-    ) => boolean,
+  const authenticatedRunnerMappings = authenticateAc265ApprovedRunnerMappingsV1(
+    {
+      mappingBytes: approvedRunnerMappingsBytes,
+      attestationBytes: approvedRunnerMappingAttestationBytes,
+      trustedKeys:
+        approvedRunnerMappingTrustedKeys as readonly Ac265ApprovedRunnerMappingTrustedKey[],
+    },
   );
+  const approvedRunnerMappings = authenticatedRunnerMappings.mapping;
   if (
     approvedRunnerMappings.runId !== expectedRunId ||
     !isDeepStrictEqual(approvedRunnerMappings.identity, expectedIdentity.data)
@@ -182,6 +192,7 @@ export const parseHostedE2eVerificationContext = (
     expectedOutageLeaseScope: approvedOutageTarget.scope,
     approvedOutageTarget,
     approvedRunnerMappings,
+    approvedRunnerMappingAttestation: authenticatedRunnerMappings.attestation,
     resolveReceipt: context['resolveReceipt'] as (
       ref: string,
     ) => Uint8Array | undefined,

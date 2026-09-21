@@ -23,7 +23,11 @@ import type {
 } from './ac265-hosted-receipt-test-types.ts';
 
 export {
+  AC265_TEST_RUNNER_MAPPING_KEY_ID,
+  AC265_TEST_RUNNER_MAPPING_PRIVATE_KEY_PEM,
+  AC265_TEST_RUNNER_MAPPING_TRUSTED_KEYS,
   contextFor,
+  setApprovedRunnerMappingSource,
   validateWithContext,
 } from './ac265-hosted-receipt-context-fixtures.ts';
 export type { VerifierContext } from './ac265-hosted-receipt-context-fixtures.ts';

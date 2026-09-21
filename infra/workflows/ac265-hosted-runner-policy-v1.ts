@@ -7,18 +7,15 @@ import {
   ApprovedOutageTargetV1Schema,
   type ApprovedOutageTargetV1,
 } from '../../packages/contracts/src/content-schema-registry/operational-release-evidence-hosted-approved-outage-target.ts';
-import {
-  AC265_APPROVED_RUNNER_MAPPINGS_SCHEMA_VERSION,
-  ApprovedRunnerMappingsV1Schema,
-  type ApprovedRunnerMappingsV1,
-} from '../../packages/contracts/src/content-schema-registry/operational-release-evidence-hosted-approved-runner-mappings.ts';
+import { type ApprovedRunnerMappingsV1 } from '../../packages/contracts/src/content-schema-registry/operational-release-evidence-hosted-approved-runner-mappings.ts';
+import type { ApprovedRunnerMappingAttestationV1 } from '../../packages/contracts/src/content-schema-registry/operational-release-evidence-hosted-approved-runner-mapping-attestation.ts';
 import type { ContentSchemaRegistryHostedRunnerContract } from '../../packages/contracts/src/content-schema-registry/operational-release-evidence-hosted-input.ts';
 import { parseJsonBytesWithoutDuplicateMembers } from './strict-json-object-members.ts';
+import { assertAc265ApprovedRunnerMappingAttestationWindow } from './ac265-approved-runner-mapping-attestation.ts';
 
 export const AC265_HOSTED_RUNNER_POLICY_V1_VERSION =
   'ac265-hosted-runner-policy-v1' as const;
 const authenticatedTargets = new WeakSet<object>();
-const authenticatedRunnerMappings = new WeakSet<object>();
 
 const deepFreeze = <Value>(value: Value): Value => {
   if (typeof value === 'object' && value !== null && !Object.isFrozen(value)) {
@@ -91,45 +88,6 @@ export const authenticateApprovedOutageTargetV1 = (
   return result.data;
 };
 
-export const authenticateApprovedRunnerMappingsV1 = (
-  bytes: Uint8Array,
-  verifyAuthenticity: (
-    bytes: Uint8Array,
-    parsedMappings: ApprovedRunnerMappingsV1,
-  ) => boolean,
-): ApprovedRunnerMappingsV1 => {
-  let parsed: unknown;
-  const sourceBytes = bytes.slice();
-  try {
-    parsed = parseJsonBytesWithoutDuplicateMembers(
-      sourceBytes,
-      'AC265 approved runner mappings',
-    );
-  } catch (error: unknown) {
-    throw new Error(
-      `AC265 approved runner mapping bytes are invalid: ${error instanceof Error ? error.message : 'unknown error'}.`,
-      {
-        cause: error,
-      },
-    );
-  }
-  const result = ApprovedRunnerMappingsV1Schema.safeParse(parsed);
-  if (!result.success)
-    throw new Error('AC265 approved runner mappings are invalid.');
-  if (
-    /(placeholder|approved-staging|example|fixture|todo)/iu.test(
-      result.data.mappingId,
-    )
-  )
-    throw new Error(
-      'AC265 approved runner mapping contains placeholder values.',
-    );
-  if (verifyAuthenticity(sourceBytes, result.data) !== true)
-    throw new Error('AC265 approved runner mapping authenticity is untrusted.');
-  authenticatedRunnerMappings.add(result.data);
-  return result.data;
-};
-
 const assertApprovedTargetIsReal = (target: ApprovedOutageTargetV1): void => {
   if (!authenticatedTargets.has(target))
     throw new Error(
@@ -155,11 +113,16 @@ const assertApprovedTargetIsReal = (target: ApprovedOutageTargetV1): void => {
 
 const assertApprovedRunnerMappingsAreReal = (
   mappings: ApprovedRunnerMappingsV1,
+  attestation: ApprovedRunnerMappingAttestationV1,
+  reportStartedAt: string,
+  trustedCutoffAt: string,
 ): void => {
-  if (!authenticatedRunnerMappings.has(mappings))
-    throw new Error(
-      `AC265 approved runner mappings must come from the protected source (${AC265_APPROVED_RUNNER_MAPPINGS_SCHEMA_VERSION}).`,
-    );
+  assertAc265ApprovedRunnerMappingAttestationWindow({
+    mapping: mappings,
+    attestation,
+    reportStartedAt,
+    trustedCutoffAt,
+  });
   if (
     /(placeholder|approved-staging|example|fixture|todo)/iu.test(
       mappings.mappingId,
@@ -226,11 +189,17 @@ export const assertAc265HostedRunnerPolicyV1 = (
   contract: HostedRunnerContract,
   target: ApprovedOutageTargetV1,
   mappings: ApprovedRunnerMappingsV1,
+  attestation: ApprovedRunnerMappingAttestationV1,
   reportStartedAt: string,
   trustedCutoffAt: string,
 ): void => {
   const policy = createCompletePolicy(target);
-  assertApprovedRunnerMappingsAreReal(mappings);
+  assertApprovedRunnerMappingsAreReal(
+    mappings,
+    attestation,
+    reportStartedAt,
+    trustedCutoffAt,
+  );
   if (
     mappings.runId !== contract.runId ||
     !isDeepStrictEqual(mappings.identity, contract.identity)

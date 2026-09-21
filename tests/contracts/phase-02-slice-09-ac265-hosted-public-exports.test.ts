@@ -1,10 +1,14 @@
 import {
   AC265_OUTAGE_LEASE_MAX_DURATION_SECONDS,
   AC265_APPROVED_OUTAGE_TARGET_SCHEMA_VERSION,
+  AC265_APPROVED_RUNNER_MAPPING_ATTESTATION_ALGORITHM,
+  AC265_APPROVED_RUNNER_MAPPING_ATTESTATION_DOMAIN,
+  AC265_APPROVED_RUNNER_MAPPING_ATTESTATION_SCHEMA_VERSION,
   AC265_APPROVED_REGISTRY_CONTROL_SCHEMA_VERSION,
   AC265_APPROVED_RUNNER_MAPPINGS_SCHEMA_VERSION,
   CONTENT_SCHEMA_REGISTRY_AC265_OUTAGE_LEASE_CONTROL_SCHEMA_VERSION,
   ApprovedOutageTargetV1Schema,
+  ApprovedRunnerMappingAttestationV1Schema,
   ApprovedRunnerMappingsV1Schema,
   ContentSchemaRegistryAc265ApprovedRegistryConflictSchema,
   ContentSchemaRegistryAc265ApprovedRunnerMappingReadRequestSchema,
@@ -35,6 +39,14 @@ describe('AC265 hosted control-plane public contract exports', () => {
     );
     expect(ApprovedRunnerMappingsV1Schema).toBeDefined();
     expect(ApprovedOutageTargetV1Schema).toBeDefined();
+    expect(AC265_APPROVED_RUNNER_MAPPING_ATTESTATION_SCHEMA_VERSION).toBe(
+      'ac265-approved-runner-mapping-attestation-v1',
+    );
+    expect(AC265_APPROVED_RUNNER_MAPPING_ATTESTATION_DOMAIN).toBe(
+      'WEJAMMIN-AC265-APPROVED-RUNNER-MAPPING-V1',
+    );
+    expect(AC265_APPROVED_RUNNER_MAPPING_ATTESTATION_ALGORITHM).toBe('Ed25519');
+    expect(ApprovedRunnerMappingAttestationV1Schema).toBeDefined();
   });
 
   it('exposes the CP-02 approved registry control contracts', () => {

@@ -10,8 +10,11 @@ protected population/authentication path for the CP-02 registry, session
 broker, safe staging resources, fault-evidence service, hosted specs, protected
 workflow, report producer, and independent verification against protected
 workflow/deployment outputs exist and pass protected verification. CP-02 now
-provides only a local, unpromoted private registry foundation; it does not
-authenticate mapping provenance or establish hosted evidence.
+provides only a promoted staging private registry foundation with no seeded
+rows; it does not authenticate mapping provenance or establish hosted evidence. CP-03 now adds
+only a local, unpromoted signed runner-mapping attestation boundary; no live
+signing-key configuration, registry rows, retained mapping/attestation
+artifact, hosted run, independently authenticated receipt, or promotion exists.
 The local v3 schema/verifier does not satisfy those hosted gates. Do not generate
 `hosted/e2e.json` from policy, configuration, local fixtures, or a partial run.
 
@@ -87,6 +90,21 @@ population path is defined. The schema, callback, and local registry are
 fail-closed interface/control-plane foundations, not an authenticated approval
 source or hosted acceptance evidence.
 
+CP-03 supplies a local attestation implementation for exact
+`ac265-approved-runner-mappings-v1` bytes. It canonicalizes the mapping,
+binds the run/mapping identity and digest, and verifies the Ed25519 signature,
+trusted key window, domain separator, and report validity. Its workflow/RPC
+boundary is unpromoted and has no live trusted key, source artifact, protected
+run, or hosted acceptance evidence; local fixtures and generated test keys are
+not deployment configuration. Local hardening covers UUID-v4 mapping-ID
+alignment, awaited response-body cancellation, realpath/symlink-safe
+execution, an unnamed Linux `O_TMPFILE` writability preflight, no-follow held
+descriptors, summaries constrained beneath `RUNNER_TEMP`, and deletion-free
+fail-closed handling that preserves only private runner-local remnants.
+The trusted-key list, cutoff, and maximum run duration remain trusted
+release-policy context preconditions for a future protected orchestration
+constructor; no current untrusted caller exists.
+
 The outage target is not invented by the policy: completing it additionally
 requires exact `ac265-approved-outage-target-v1` bytes authenticated by a
 separately protected source. Its validated scope supplies the expected run,
@@ -104,17 +122,17 @@ resource kind and staging project, the protected resource registry, and every
 receipt's run ID, deployment, source/build/artifact, origins, project, and
 migration against independently captured protected workflow/deployment
 outputs. Receipt sources must prove server-derived role, RLS, scenario, and
-cleanup results. The local v3 verifier requires caller-supplied trusted
-identity, run ID, contract digest, authenticated approved-mapping bytes and
-authenticity callback, matching trusted map fields, `trustedCutoffAt`, positive
-safe-integer `maxRunDurationMs`, receipt resolver, and receipt-authenticity
-callback. When execution evidence is declared, its
+cleanup results. The local v3 verifier requires trusted release-policy identity,
+run ID, contract digest, canonical approved-mapping and attestation bytes, an
+independently trusted key registry, matching trusted map fields,
+`trustedCutoffAt`, positive safe-integer `maxRunDurationMs`, receipt resolver,
+and receipt-authenticity callback. When execution evidence is declared, its
 resolver must return the exact raw bytes; the verifier hashes those bytes
 before parsing and binds payload kind, candidate identity, subject, and session
 teardown to the expected reference digests. It also hashes raw receipt bytes,
 checks each receipt's authenticity and exact subject/result/identity, and
-rejects any digest mismatch. The report window must fit within
-caller-supplied `maxRunDurationMs` and the trusted cutoff; every receipt's
+rejects any digest mismatch. The report window must fit within the trusted
+release-policy `maxRunDurationMs` and cutoff; every receipt's
 `issuedAt` must be within that run window and cutoff. These are local
 verification inputs, not values a report may self-assert.
 
@@ -145,11 +163,13 @@ fails validation; there is no skip or unleased outage pass.
 
 This remains a local trust boundary only. CP-01 implements the private
 database lease lifecycle and its service-role-only RPCs, while CP-02 provides
-the local private safe-resource and runner-mapping registry foundation. CP-02
+the local private safe-resource and runner-mapping registry foundation and
+CP-03 provides only the local signed mapping-attestation boundary. CP-02
 stores only opaque references and digests, derives candidate/run/identity/
 deployment/project scope from the authorized candidate, and returns redacted
-mapping envelopes; it does not verify underlying resource contents or
-authenticate mapping bytes. Neither checkpoint implements a protected session
+mapping envelopes; CP-03 authenticates only supplied local canonical bytes.
+Neither CP-02 nor CP-03 verifies live underlying resource contents or
+implements a protected session
 broker, signed receipt issuer, independently authenticated
 approved-outage-target source, evidence-byte service, or hosted workflow
 integration. It also seeds no live target or registry rows. The target source
@@ -178,7 +198,8 @@ No hosted AC265 Playwright spec or protected workflow implements the matrix. The
 global setup continues to fail closed because no v1 session broker, protected
 registry population/authentication source, hosted control/evidence service,
 hosted spec, isolated protected workflow, or report producer is available. The
-local v3 verifier and CP-02 registry do not provide a protected broker/issuer or
+local v3 verifier, CP-02 registry, and CP-03 local attestation do not provide a
+protected broker/issuer or
 independent workflow/deployment verification. The workflow must use an isolated
 disposable runner; a shared
 persistent self-hosted runner, shared browser profile, or cross-run session
@@ -196,7 +217,9 @@ implemented and independently verified:
    pre-existing, safe adult-only staging resources, with server-derived
    before/after state evidence for denied and disabled cases. The registry's
    opaque references and locator digests do not establish resource safety by
-   themselves.
+   themselves. CP-03's attestation authenticates mapping bytes only; it does
+   not replace live key provisioning, source-artifact retention, or
+   authenticated resource validation.
 3. A staging fault-evidence service for genuine provider expiry and server
    429 evidence, plus the bounded one-use dependency-outage lease and cleanup
    receipt. The Google flow must traverse the real Google IdP and Supabase Auth.

@@ -71,38 +71,54 @@
 - **CURRENT IMPLEMENTATION (2026-09-21):** Phase 2 Slices 01–08 are complete.
   Slice 09 remains locally QA-GREEN at 279/282 active (283 authored IDs) with
   authored depth ratio `0.986`.
-  The current exact-main baseline is PR #83 at SHA
-  `05e88ea52f1c9cf206d54f455e53bc849044cb9b`; CI `35569923623` and staging
-  `35570556554` / deployment `6563225343` passed. AC211 provenance and AC266
+  The current exact-main baseline is PR #84 at SHA
+  `cea2e5601872975a2f974d13e739ace26da677ff`; exact-main CI `35578970402`
+  and staging `35579638864` / deployment `6564785922` passed. AC211 provenance and AC266
   report-preparation tooling is landed, but neither is hosted acceptance.
   AC265 preflight `34824500796` passed, while authorization foundation run
   `34824651793` failed at `staging_prepare`; no hosted browser acceptance ran.
   AC265 CP-01 now has a promoted staging-only outage-lease database control
   plane, but no target is seeded, no hosted route is exposed, and no hosted
-  receipt is produced. CP-02 adds only a local, unpromoted private
-  safe-resource/runner-mapping registry foundation; it seeds no registry rows
-  and does not authenticate mapping provenance or produce hosted evidence.
+  receipt is produced. CP-02 is promoted on that exact-main candidate as a
+  private safe-resource/runner-mapping registry foundation; it still seeds no
+  registry rows and does not authenticate mapping provenance or produce hosted
+  evidence. CP-03 remains local and unpromoted.
+  CP-03 adds a locally verified signed runner-mapping attestation boundary, but
+  no live registry rows, signing-key configuration, mapping artifact, or
+  promotion exists.
   AC266 is owner-deferred because the required real devices are unavailable; it
   remains unchecked and excluded from active Phase 2 completion. Slice 10
   remains locked only on AC209, AC211, and AC265; AC266 remains a mandatory
   post-Phase 2 production-readiness/release gate. See
   `.memory/pipeline/progress/phases/phase-02.md` and
   `.memory/pipeline/progress/slices/phase-02-slice-09.md`.
-- **CURRENT VALIDATION (clean full pass, 2026-09-21):** Under exact Node
-  `22.23.1` and pnpm `11.24.0`, `pnpm validate` passed 538 Vitest files / 4,250
-  passed + 1 intentional skip (4,251 total) at 100% coverage (13,093
-  statements, 9,836 branches, 2,156 functions, and 12,174 lines), the Slice 09
+- **LATEST COMPLETE LOCAL VALIDATION (CP-03 working tree, 2026-09-21):** Under
+  exact Node `22.23.1` and pnpm `11.24.0`, `pnpm validate` passed 543 Vitest
+  files / 4,312 passed + 1 intentional skip (4,313 total) at 100% coverage
+  (13,101 statements, 9,840 branches, 2,157 functions, and 12,182 lines), the Slice 09
   evidence command, 101 functional plus 5 real Slice 09 E2E tests, all workspace
-  builds, bundle budgets, and performance smoke (`p95=1.402399 ms`, threshold
-  `500 ms`, zero errors). The first full run exposed 99.96% branch coverage in
-  the new schema; impossible defensive branches were refactored, focused schema
-  coverage reached 100%, and the clean full pass then succeeded. Fresh
+  builds, bundle budgets, and performance smoke (`p95=1.277622 ms`, threshold
+  `500 ms`, zero errors). Fresh
   `pnpm db:verify` passed 56 pgTAP files / 2,065 tests with migrated type parity.
   The focused CP-02 contract set passed 2 files / 11 tests, and broader AC265
   contract verification passed 4 files / 31 tests; targeted CP-02 SQL passed 2
   files / 65 assertions. These local/tooling results do not close hosted
   acceptance; see the [CP-01 verification record](verification/2026-09-21-ac265-outage-lease-control-plane.md)
   and [CP-02 verification record](verification/2026-09-21-ac265-approved-runner-registry.md).
+- **CURRENT CP-03 LOCAL CHECKS (pre-promotion):** The focused AC265 verification
+  passed **44 files / 392 tests**, with `pnpm type-check` and `pnpm lint` passing.
+  Final hardening covers UUID-v4 mapping-ID alignment, awaited response-body
+  cancellation, realpath/symlink-safe execution, an unnamed Linux `O_TMPFILE`
+  writability preflight, no-follow held descriptors, summaries constrained
+  beneath `RUNNER_TEMP`, and deletion-free fail-closed handling that preserves
+  only private runner-local remnants. Current `pnpm db:verify` passed; `pnpm
+  db:test` passed exactly **56 files / 2,065 assertions**. Trusted-key list,
+  trusted cutoff, and maximum run duration are trusted release-policy context
+  preconditions that a future protected orchestration constructor must source;
+  no current untrusted caller exists. The final full `pnpm validate` totals are
+  recorded above; no live key, registry rows,
+  attestation artifact, hosted run, promotion, or AC265 acceptance is claimed.
+  See the [CP-03 verification record](verification/2026-09-21-ac265-approved-runner-mapping-attestation.md).
 - **HISTORICAL PRE-REMEDIATION CANDIDATE:** Before this remediation, PR #9 branch
   `codex/phase-2-slices-01-09` was at
   `67264c5e9b5196d00ac3f0aa272896a010c872d7`; synthetic merge
@@ -200,10 +216,10 @@ failed: malformed response`. The token still passes Workers Observability.
   no protected collector/service protocol or hosted acceptance exists, and AC265
   remains open.
 - **NEXT:** pursue the genuine AC209 delivery receipt, qualifying AC211
-  UTC-day/200-sample SLO and DLQ evidence, and the approved AC265
-  9-role/10-scenario hosted report plus identity-lifecycle evidence. Keep Slice
-  09 at 279/282 active (283 authored IDs) and Phase 2 at 8/17 slices with
-  1,999 active criteria out of 2,000 authored. Slice 10 remains locked only
-  until AC209, AC211, and AC265 pass. AC266 stays unchecked and owner-deferred,
-  excluded from active Phase 2 completion, and mandatory for post-Phase 2
-  production-readiness/release.
+  UTC-day/200-sample SLO and DLQ evidence, and the remaining AC265 protected
+  target source, run-scoped broker, evidence/receipt resolver, hosted workflow,
+  and accepted 9-role/10-scenario report. Keep Slice 09 at 279/282 active (283
+  authored IDs) and Phase 2 at 8/17 slices with 1,999 active criteria out of
+  2,000 authored. Slice 10 remains locked only until AC209, AC211, and AC265
+  pass. AC266 stays unchecked and owner-deferred, excluded from active Phase 2
+  completion, and mandatory for post-Phase 2 production-readiness/release.
