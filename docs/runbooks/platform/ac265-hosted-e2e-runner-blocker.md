@@ -22,7 +22,7 @@ attestation workflow run, hosted browser matrix, independently authenticated
 receipt, or AC265 acceptance exists. The staging workflow's failed-job retry
 was limited to the immediate Cloudflare provider-evidence query and made no
 provider configuration change.
-CP-04a is a local, unpromoted approved outage-target read/attestation
+CP-04a is a promoted approved outage-target read/attestation
 foundation. It adds a strict service-role-only read over CP-01 target rows, a
 canonical target projection with the stored digest, and a distinct
 domain-separated Ed25519 target attestation. The protected manual main/staging
@@ -35,10 +35,12 @@ five production-built checks, green builds/bundle checks, and local API p95
 1.377056 ms. After a clean reset, all `pnpm db:verify` components are green:
 57 pgTAP files / 2,087 assertions, database lint, and generated-type checks
 pass. Independent security review found no CP-04a blocker; a protected
-orchestrator remains a required trust boundary. Promotion, staging execution,
+orchestrator remains a required trust boundary. PR #86 / exact-main SHA
+`4fa8691d24177d0a528335f3c3d06ef50d67d3a9`, CI `35597438023`, and staging
+workflow `35598236704` / deployment `6568074493` are green.
 live target key/configuration, seeded target or registry rows, retained
 artifact, workflow run, hosted matrix, receipt, and AC265 acceptance remain
-pending.
+absent.
 The local v3 schema/verifier does not satisfy those hosted gates. Do not generate
 `hosted/e2e.json` from policy, configuration, local fixtures, or a partial run.
 
@@ -135,7 +137,7 @@ requires exact `ac265-approved-outage-target-v1` bytes authenticated by the
 separately protected CP-04a target source and its trusted Ed25519 key registry.
 Its validated scope supplies the expected run, hosting and Supabase projects,
 deployment, dependency, and route. Missing, placeholder, unsigned, or
-unauthenticated target input leaves the gate closed. CP-04a is only a local
+unauthenticated target input leaves the gate closed. CP-04a is a promoted
 read/attestation foundation; no live source key/configuration, approved row,
 or retained artifact currently exists, so this target cannot yet be obtained
 for hosted verification.
@@ -194,7 +196,7 @@ promoted. CP-01 implements the private
 database lease lifecycle and its service-role-only RPCs, while CP-02 provides
 the promoted private safe-resource and runner-mapping registry foundation and
 CP-03 provides the promoted signed mapping-attestation boundary. CP-04a
-provides only the unpromoted signed target-read/attestation boundary. CP-02
+provides the promoted signed target-read/attestation boundary. CP-02
 stores only opaque references and digests, derives candidate/run/identity/
 deployment/project scope from the authorized candidate, and returns redacted
 mapping envelopes; CP-03 authenticates only supplied canonical bytes.

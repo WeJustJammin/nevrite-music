@@ -123,7 +123,7 @@ retained mapping/attestation artifact, attestation workflow run, hosted browser
 matrix, independently authenticated receipt, or AC265 acceptance exists;
 fixtures and generated test keys are not acceptance evidence.
 
-CP-04a adds a local, unpromoted approved outage-target read and attestation
+CP-04a adds a promoted approved outage-target read and attestation
 boundary. The service-role-only `ac265_approved_outage_target_read` RPC reads
 CP-01 target rows and returns a redacted canonical target projection with its
 stored `targetSha256`. A distinct domain-separated Ed25519 envelope binds the
@@ -138,10 +138,12 @@ green builds/bundle checks, and local API p95 1.377056 ms. After a clean reset,
 all `pnpm db:verify` components are green: 57 pgTAP files / 2,087 assertions,
 database lint, and generated-type checks pass. Independent security review
 found no CP-04a blocker; a protected orchestrator remains a required trust
-boundary. Promotion, staging execution, live target key/configuration, seeded
+boundary. PR #86 / exact-main SHA
+`4fa8691d24177d0a528335f3c3d06ef50d67d3a9`, CI `35597438023`, and staging
+workflow `35598236704` / deployment `6568074493` are green. Live target key/configuration, seeded
 target or registry rows, retained artifact, workflow run, hosted browser
 matrix, independently authenticated receipt, and AC265 acceptance remain
-pending.
+absent.
 
 The protected workflow must resolve each opaque reference and receipt to its
 exact raw bytes, recompute SHA-256 before parsing, and cross-verify the
@@ -210,7 +212,7 @@ cancellation, realpath/symlink-safe execution, an unnamed Linux `O_TMPFILE`
 writability preflight, no-follow held descriptors, summaries constrained
 beneath `RUNNER_TEMP`, and deletion-free fail-closed handling that preserves
 only private runner-local remnants.
-CP-04a authenticates only supplied canonical target bytes through its local
+CP-04a authenticates only supplied canonical target bytes through its promoted
 domain-separated attestation boundary. It does not provide live target-key
 configuration, approved rows, retained artifacts, or hosted evidence.
 The protected population/authentication source, v1 session broker,

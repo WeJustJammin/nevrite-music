@@ -1,8 +1,8 @@
 # AC265 CP-04a approved outage-target attestation verification
 
 **Date:** 2026-09-21  
-**Scope:** local, unpromoted CP-04a foundation; hosted acceptance remains unproven  
-**Verdict:** CP-04a local foundation verified; AC265 remains OPEN
+**Scope:** promoted CP-04a foundation; hosted acceptance remains unproven  
+**Verdict:** CP-04a verified and promoted; AC265 remains OPEN
 
 ## Implemented boundary
 
@@ -39,10 +39,18 @@
 - Independent security review found no CP-04a blocker. A protected orchestrator
   remains a required trust boundary for trusted keys, cutoff, duration, target
   source, and hosted evidence context.
-- Promotion CI, staging deployment/execution, live signing-key configuration,
-  seeded rows, retained artifacts, protected-workflow execution, and hosted
-  acceptance remain **pending**. The local validation results do not imply
-  hosted acceptance.
+- PR #86 merged as exact-main SHA
+  `4fa8691d24177d0a528335f3c3d06ef50d67d3a9`. PR CI `35596733747` passed
+  its application (6m26s), database (2m15s), and immutable-artifact (58s)
+  jobs. Exact-main CI `35597438023` passed the same three gates in 6m19s,
+  2m00s, and 55s.
+- Staging workflow `35598236704` succeeded in 1m22s, applied the forward-only
+  migration, deployed both Workers, verified public contracts/accessibility
+  and p95, and published deployment `6568074493` with successful status
+  `18623350036` at `https://staging.wejamm.in`.
+- Live signing-key configuration, seeded rows, retained artifacts,
+  protected attestation-workflow execution, and hosted acceptance remain
+  **absent**. Promotion evidence does not imply hosted acceptance.
 
 ## Evidence boundary
 
@@ -57,8 +65,8 @@ post-Phase 2 production-readiness/release gate.
 
 ## Next dependency
 
-After CP-04a is independently reviewed and promoted, the protected source must
-still provision a live target-signing key, seed an approved target and registry
+With CP-04a reviewed and promoted, the protected source must still provision a
+live target-signing key, seed an approved target and registry
 population, retain the authenticated target/mapping artifacts, and run the
 protected broker, evidence/receipt, hosted workflow, teardown, and complete
 9-role/10-scenario Auth/RLS/IdP matrix. Until those external gates pass, Slice
