@@ -2,25 +2,32 @@
 
 ## Active
 
-- **P2-S09 external release evidence** (updated 2026-09-20) — Slice 09 remains
-  at **279/283** with depth ratio **0.986**. Current `main` is PR #80 at
-  `918f598525de772c82b0a0bcd82348ea8f5d523d`; exact-main CI
-  [run 34823698333](https://github.com/WeJustJammin/nevrite-music/actions/runs/34823698333)
-  and staging [run 34824312138](https://github.com/WeJustJammin/nevrite-music/actions/runs/34824312138)
-  passed, producing staging deployment `6433521892`. AC265 preflight
+- **P2-S09 external release evidence** (updated 2026-09-21) — Slice 09 remains
+  at **279/282 active** (**283 authored IDs**) with authored depth ratio
+  **0.986**. Phase 2 has **1,999 active criteria / 2,000 authored** because
+  AC266 is owner-deferred and excluded from the active completion denominator.
+  Current `main` is PR #81 at
+  `f8a6b77e529c7b150df367f5ce59e43b1aed0db1`; exact-main CI
+  [run 35560004822](https://github.com/WeJustJammin/nevrite-music/actions/runs/35560004822)
+  and staging [run 35560514952](https://github.com/WeJustJammin/nevrite-music/actions/runs/35560514952)
+  passed, producing staging deployment `6561553954`. AC265 preflight
   [run 34824500796](https://github.com/WeJustJammin/nevrite-music/actions/runs/34824500796)
   passed; authorization foundation [run 34824651793](https://github.com/WeJustJammin/nevrite-music/actions/runs/34824651793)
   failed at `staging_prepare`, so no hosted browser acceptance ran. Read-only
   AC209 verifier [run 34813947512](https://github.com/WeJustJammin/nevrite-music/actions/runs/34813947512)
   failed with `provider_graphql_error` and produced no email, queue mutation,
-  deployment, or receipt. AC211 collection [run 34424101528](https://github.com/WeJustJammin/nevrite-music/actions/runs/34424101528)
-  produced zero qualifying samples and no report. AC266 is owner-deferred
-  because the required real devices are unavailable; it remains open and is
-  not accepted or waived. No acceptance gate closed. All four remain open,
-  keeping Slices 10–17 dependency-locked. Fresh 2026-09-20 local validation
-  passes **535 Vitest files / 4,228 tests plus one skip**, 100% coverage,
+  deployment, or receipt. AC211 collection [run 35560241699](https://github.com/WeJustJammin/nevrite-music/actions/runs/35560241699)
+  passed preflight but collection failed for insufficient samples
+  (`commands=0`, `protectedRpcs=0`, `acceptances=0`,
+  `queueFirstAttempts=0`) and produced no artifact. AC266 is owner-deferred
+  because the required real devices are unavailable; it remains unchecked and
+  is excluded from active Phase 2 completion, but is mandatory for post-Phase 2
+  production-readiness/release. No active acceptance gate closed. Slice 10
+  remains locked only on AC209, AC211, and AC265; AC266 does not block Slice 10
+  implementation. Fresh 2026-09-21 local validation
+  passes **536 Vitest files / 4,234 tests plus one skip**, 100% coverage,
   **101 functional + 5 real Slice 09 E2E tests**, and performance smoke
-  (`p95=1.174159 ms`, threshold `500 ms`, zero errors). Fresh database
+  (`p95=1.527671 ms`, threshold `500 ms`, zero errors). Fresh database
   verification passes **52 pgTAP files / 1,917 tests** with migrated type parity.
 
 ## Historical

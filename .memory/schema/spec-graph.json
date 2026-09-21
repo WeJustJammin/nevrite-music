@@ -1,7 +1,7 @@
 {
-  "builtAt": "2026-09-13T08:37:01.621Z",
-  "nodeCount": 1630,
-  "edgeCount": 10121,
+  "builtAt": "2026-09-21T04:57:23.564Z",
+  "nodeCount": 1632,
+  "edgeCount": 10125,
   "nodes": [
     {
       "id": "plan:2026-08-02-architecture-design",
@@ -249,6 +249,13 @@
       "shardId": null
     },
     {
+      "id": "audit:audits/propagation-ac266-2026-09-21",
+      "type": "audit",
+      "label": "Approved AC266 Phase 2 completion-policy propagation",
+      "path": ".memory/wiki/specs/audits/propagation-ac266-2026-09-21.md",
+      "shardId": null
+    },
+    {
       "id": "audit:audits/propagation-observability-cost-2026-08-30",
       "type": "audit",
       "label": "Sentry Removal and Free-Only Operations Propagation Record",
@@ -288,6 +295,13 @@
       "type": "audit",
       "label": "AC265 scope propagation scan",
       "path": ".memory/wiki/specs/audits/propagation-scan-2026-09-09.md",
+      "shardId": null
+    },
+    {
+      "id": "audit:audits/propagation-scan-2026-09-21",
+      "type": "audit",
+      "label": "AC266 completion-policy propagation scan",
+      "path": ".memory/wiki/specs/audits/propagation-scan-2026-09-21.md",
       "shardId": null
     },
     {
@@ -11632,6 +11646,18 @@
       "source": "wikilink"
     },
     {
+      "from": "audit:audits/propagation-ac266-2026-09-21",
+      "to": "phase-plan:phases/phase-2",
+      "type": "phases_into",
+      "source": "phase-ref"
+    },
+    {
+      "from": "audit:audits/propagation-ac266-2026-09-21",
+      "to": "phase-plan:phases/phase-2",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
       "from": "audit:audits/propagation-option-a-2026-09-02",
       "to": "phase-plan:phases/phase-2",
       "type": "phases_into",
@@ -11687,6 +11713,18 @@
     },
     {
       "from": "audit:audits/propagation-scan-2026-09-09",
+      "to": "phase-plan:phases/phase-2",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "audit:audits/propagation-scan-2026-09-21",
+      "to": "phase-plan:phases/phase-2",
+      "type": "phases_into",
+      "source": "phase-ref"
+    },
+    {
+      "from": "audit:audits/propagation-scan-2026-09-21",
       "to": "phase-plan:phases/phase-2",
       "type": "references",
       "source": "wikilink"
@@ -72146,7 +72184,7 @@
     "byNodeType": {
       "plan": 12,
       "architecture": 18,
-      "audit": 27,
+      "audit": 29,
       "be-spec": 157,
       "fe-spec": 44,
       "ia-spec": 85,
@@ -72155,9 +72193,9 @@
       "decision": 97
     },
     "byEdgeType": {
-      "phases_into": 91,
+      "phases_into": 93,
       "constrained_by": 9041,
-      "references": 916,
+      "references": 918,
       "derives_from": 64,
       "implemented_by": 6,
       "split_from": 3

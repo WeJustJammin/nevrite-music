@@ -4,6 +4,16 @@ Use this runbook to assemble and verify the release sidecar for
 `P2-S09-AC-209`, `P2-S09-AC-211`, `P2-S09-AC-265`, and `P2-S09-AC-266`.
 Passing local tests does not satisfy these gates.
 
+For Phase 2 implementation completion, AC209, AC211, and AC265 are the
+mandatory external gates and Slice 10 remains locked until all three pass.
+The plan retains all 283 authored Slice 09 IDs and 2000 authored Phase 2
+criteria, while implementation completion uses denominators of 282 and 1999.
+AC266 remains authored and unchecked outside those implementation denominators
+as a mandatory post-Phase 2 production-readiness/release gate. While deferred,
+it must not be marked passed, waived, or simulated; only the genuine protected
+macOS/Safari/VoiceOver and Windows/Firefox/NVDA reports and combined
+verification can close it.
+
 ## Immutable identity
 
 Start from one successful immutable build. Record its full lowercase 40-character
@@ -473,7 +483,7 @@ hosted-origin safety, deployment chronology, trusted-cutoff bounds, and evidence
 timing. It does not collect telemetry,
 activate a provider, provision identities, attest provider truth independently,
 or perform the manual tests. A local pass proves sidecar/report consistency; it
-does not by itself satisfy any of the four release criteria.
+does not by itself satisfy any of the four release criteria or unlock Slice 10.
 
 The local v3 schema and internal cross-verifier are implemented. For AC265,
 the verifier hashes exact raw runner-contract, reference, execution-evidence,
@@ -520,10 +530,13 @@ identity/digests, authenticated approved-mapping bytes and authenticity
 callback, matching mapping fields, time bounds, and the receipt/evidence
 resolvers and authenticity verifier. The workflow may emit
 `content_schema_registry_release_evidence=passed` only after the V3 retained
-report and all other gates pass. Until that protected entrypoint exists, no
-standalone command can produce acceptance success. Keep Slice 09 and dependent
-Slice 10 blocked until the protected run produces a passing sidecar and an
-operator reviews the retained source reports.
+report and all four release gates pass. Until that protected entrypoint exists,
+no standalone command can produce acceptance success. Keep Slice 09
+implementation and dependent Slice 10 blocked until AC209, AC211, and AC265
+produce passing protected evidence and an operator reviews the retained source
+reports. AC266 remains the separate mandatory post-Phase 2
+production-readiness/release gate; while deferred it cannot be passed, waived,
+or simulated.
 
 Any missing, malformed, duplicate, out-of-root, digest-mismatched,
 structurally local/synthetic, stale-order, threshold-equal,

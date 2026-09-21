@@ -5,10 +5,15 @@
 **Surface scope**: web  
 **Depends on**: Slices 07 and 08  
 **Spec depth floor**: 283  
-**Acceptance criteria**: 283  
+**Acceptance criteria (authored)**: 283  
+**Active release denominator**: 282 (AC266 owner-deferred and excluded from the Phase 2 completion denominator)  
+**Phase 2 completion denominator**: 282  
+**Slice 10 implementation prerequisites**: AC209, AC211, and AC265.  
+**Authored criterion policy**: 283 authored Slice 09 IDs remain; AC266 is the deferred post-Phase 2 production-readiness gate.  
+**AC266 evidence status**: not passed, accepted, waived, simulated, or inferred.  
 **Plan source**: [Phase 2 plan](../../../wiki/specs/phases/phase-2.md)  
 **Preflight gate**: strict current-disk floor reconciled — [contract reconciliation](../verification/2026-09-02-slice-09-contract-reconciliation.md)
-**Local QA-GREEN**: 279/283 verified — [evidence and external gates](../../../wiki/specs/audits/phase-02-slice-09-qa-green.md)
+**Local QA-GREEN (active)**: 279/282 verified; 283 authored IDs remain — [evidence and external gates](../../../wiki/specs/audits/phase-02-slice-09-qa-green.md)
 
 ## Tasks
 
@@ -17,18 +22,19 @@
 - [x] `BE` data, API, and policy implementation
 - [x] `FE` Astro SSR and bounded React-island implementation
 - [x] `QA` GREEN, adversarial verification, and canonical validation (current
-      exact-main baseline PR #80 SHA `918f598525de772c82b0a0bcd82348ea8f5d523d`;
-      CI `34823698333` and staging `34824312138` / deployment `6433521892`
-      passed. Fresh 2026-09-20 local validation under exact Node `22.23.1` and
-      pnpm `11.24.0` passed 535 Vitest files / 4,228 tests plus one skip at 100%
+      exact-main baseline PR #81 SHA `f8a6b77e529c7b150df367f5ce59e43b1aed0db1`;
+      CI `35560004822` and staging `35560514952` / deployment `6561553954`
+      passed. Fresh 2026-09-21 local validation under exact Node `22.23.1` and
+      pnpm `11.24.0` passed 536 Vitest files / 4,234 tests plus one skip at 100%
       coverage, 101 functional and 5 real Slice 09 E2E tests, builds, bundle
-      checks, and performance smoke (`p95=1.174159 ms`, threshold `500 ms`, zero
+      checks, and performance smoke (`p95=1.527671 ms`, threshold `500 ms`, zero
       errors); `pnpm db:verify` passed 52 pgTAP files / 1,917 tests with migrated
       type parity. AC265 preflight `34824500796`
       passed, while authorization foundation run `34824651793` failed at
       `staging_prepare`; no hosted acceptance is claimed. AC266 is
       owner-deferred because the required real devices are unavailable, and
-      all four external release checks remain open.)
+      remains unchecked and excluded from active Phase 2 completion; the three
+      active external release checks remain open.)
 - [x] Documentation, runbooks, graph, feature ledger, and progress tracking
 
 ## Acceptance Criteria
@@ -645,41 +651,61 @@ response`; Workers Observability passed. Cloudflare's documented successful
 
 ## Depth Ratio
 
-- Verified acceptance items: 279/283.
-- Depth ratio: 0.986. The hard 1.0 completion gate is not met.
+- Authored acceptance items: 279/283 verified; authored depth ratio: 0.986.
+- Active release completion: 279/282; AC266 is excluded from the active
+  denominator while remaining unchecked and mandatory for post-Phase 2
+  production-readiness/release.
 
-## Blocking release evidence (current as of 2026-09-20)
+## Blocking release evidence (current as of 2026-09-21)
 
 - P2-S09-AC-209: retain a genuine post-configuration redacted live-delivery
   receipt. The latest read-only observability run `34813947512` failed with
   `provider_graphql_error` on `emailSendingAdaptive`; it sent no email,
   changed no queue or production state, performed no deployment, and produced
   no receipt.
-- P2-S09-AC-211: the latest collection run `34424101528` produced zero
-  qualifying command/RPC/acceptance/queue-first samples for its completed day.
-  No complete retained UTC-day report exists; retain a later complete day with
-  at least 200 samples, all five SLO results, and daily queue/DLQ counts.
-- P2-S09-AC-265: current exact-main SHA
-  `918f598525de772c82b0a0bcd82348ea8f5d523d` passed CI `34823698333` and
-  staging `34824312138` / deployment `6433521892`. Preflight `34824500796`
+- P2-S09-AC-211: collection run `35560241699` passed preflight but failed for
+  insufficient samples: `commands=0`, `protectedRpcs=0`, `acceptances=0`, and
+  `queueFirstAttempts=0`. No artifact was produced. No complete retained
+  UTC-day report exists; retain a later complete day with at least 200 samples,
+  all five SLO results, and daily queue/DLQ counts.
+- P2-S09-AC-265: the latest candidate authorization attempt used PR #80 SHA
+  `918f598525de772c82b0a0bcd82348ea8f5d523d`, which passed CI `34823698333`
+  and staging `34824312138` / deployment `6433521892`. Preflight `34824500796`
   passed, but authorization foundation run `34824651793` failed at
   `staging_prepare`; no hosted browser matrix or accepted 9-role/10-scenario
-  report exists. Role/identity lifecycle, MFA/step-up, teardown, and complete
-  hosted Auth/RLS/IdP evidence remain open.
+  report exists. Current `main` is PR #81 SHA
+  `f8a6b77e529c7b150df367f5ce59e43b1aed0db1`. Role/identity lifecycle,
+  MFA/step-up, teardown, and complete hosted Auth/RLS/IdP evidence remain open.
 - P2-S09-AC-266: owner-deferred because the required real devices are
   unavailable. Retain operator-attested VoiceOver/Safari and NVDA/Firefox
   manual smoke against the exact hosted candidate when devices are available;
   Linux-hosted automation cannot replace either real-platform report.
 
-Operational controls outside the 283-item acceptance count are verified for
+Operational controls outside the 283-item authored acceptance count are verified for
 this candidate: fail-closed staging migration executed before app deployment,
 immutable migration evidence retained, exact-main-SHA CI/staging/deployment
 identity recorded, two consecutive production cron evaluations succeeded, and
 the staging/production auth-provider catalog transport is healthy.
-The four external acceptance gates above remain required.
+The three active external acceptance gates above remain required. AC266 is
+owner-deferred, excluded from active Phase 2 completion, and remains mandatory
+for post-Phase 2 production-readiness/release.
 
-Slice 09 remains blocked. Slice 10 depends on Slice 09 and must not start until
-all four release-evidence gates pass; AC266 is deferred, not accepted or waived.
+Slice 09 remains blocked. Slice 10 remains locked only on AC209, AC211, and
+AC265; AC266 is deferred, not accepted or waived, and does not block Slice 10
+implementation while remaining a mandatory post-Phase 2 release gate.
+
+## 2026-09-21 AC266 owner-deferred phase propagation
+
+- The authored Slice 09 ledger remains **283 IDs**. Active Phase 2 completion
+  excludes unchecked AC266: Slice 09 is **279/282 active**, and Phase 2 has
+  **1,999 active criteria out of 2,000 authored**.
+- AC266 remains owner-deferred because the required real devices are
+  unavailable. It is excluded from active Phase 2 completion, but remains
+  mandatory for post-Phase 2 production-readiness/release.
+- AC211 run `35560241699` passed preflight but collection failed for insufficient
+  samples (`commands=0`, `protectedRpcs=0`, `acceptances=0`,
+  `queueFirstAttempts=0`); no artifact exists. AC209, AC211, and AC265 remain
+  the only Slice 10 blockers. Slice 10 remains locked on those three criteria.
 
 ## 2026-09-09 external-evidence remediation update
 

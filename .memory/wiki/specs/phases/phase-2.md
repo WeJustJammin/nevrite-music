@@ -29,6 +29,16 @@ In scope: IA and FE shards 01–05; BE companions 01a–c, 02a–b, 03a–c, 04a
 
 Explicitly deferred: IDA-05 and IDA-09–18; PRF-08–09 and PRF-13–16; CMS-15–16; CFG-05–07, CFG-09–10, CFG-13; endpoints only for those later flows; EPK, credentials, trader classification, contested ownership and transfer, representation, mandates, governance, treasury, dissolution, legacy, localization, related content, flags, experiments, kill switches, bulk, search, diagnostics, import, export, and restore. Phase 2 builds privacy request and lifecycle foundations; full consumer export and erasure fulfillment remains Phase 6.
 
+## Phase 2 completion policy
+
+**Phase 2 completion denominator**: 282 for Slice 09 implementation completion.  
+**Slice 10 implementation prerequisites**: AC209, AC211, and AC265.
+**Authored criterion policy**: 283 authored Slice 09 IDs remain; AC266 is the deferred post-Phase 2 production-readiness gate.
+
+DEC-101 preserves all **2000 authored acceptance criteria**, including all **283 contiguous authored Slice 09 IDs**. Phase 2 implementation completion uses a **1999-criterion denominator**: `P2-S09-AC-266` remains authored and unchecked, but is excluded from the Phase 2 completion denominator and is a mandatory post-Phase 2 production-readiness/release gate.
+
+Slice 09 implementation completion uses a **282-criterion denominator**. AC209, AC211, and AC265 remain mandatory external implementation gates, and Slice 10 implementation stays locked until all three pass. While deferred, AC266 must never be marked passed, waived, or simulated; it can close only through the existing genuine macOS/Safari/VoiceOver and Windows/Firefox/NVDA evidence contract and protected combined verification before production readiness or release.
+
 ## Coverage gates
 
 ### IA flow assignment
@@ -117,7 +127,7 @@ Every in-scope flow, endpoint, and ledger row has exactly one slice. Shared FE s
 01–16 -> 17 Integrated close -> verify-infrastructure
 ```
 
-After Slice 03, Slices 04, 05, and 07 may proceed in parallel when file claims do not overlap. After Slice 09, Slices 10 and 12 may proceed in parallel. Contracts, migrations, shared registries, route manifests, and lockfiles remain single-owner and frozen during parallel work.
+After Slice 03, Slices 04, 05, and 07 may proceed in parallel when file claims do not overlap. After Slice 09, Slice 10 implementation remains locked until AC209, AC211, and AC265 pass; AC266 remains outside the implementation denominator as the mandatory post-Phase 2 production-readiness/release gate. Slice 12 retains its existing dependency path. Contracts, migrations, shared registries, route manifests, and lockfiles remain single-owner and frozen during parallel work.
 
 ## Slice inventory
 
@@ -129,7 +139,7 @@ After Slice 03, Slices 04, 05, and 07 may proceed in parallel when file claims d
 - Slice 06 — Public profiles and credit-backed portfolio: 121 criteria, L, depends on Slices 03 and 05.
 - Slice 07 — Typed settings registry, effective values, and rollback: 176 criteria, L, depends on Slice 01.
 - Slice 08 — Admin shell, task inbox, capability grants, and audit: 51 criteria, M, depends on Slices 03 and 07.
-- Slice 09 — Content schemas, relations, activation, and block registry: 283 criteria, L, depends on Slices 07 and 08.
+- Slice 09 — Content schemas, relations, activation, and block registry: 283 authored criteria / 282 implementation-completion criteria, L, depends on Slices 07 and 08.
 - Slice 10 — Entry authoring, conflict resolution, and revision restore: 60 criteria, M, depends on Slice 09.
 - Slice 11 — Review, scheduling, preview, and safe publication: 45 criteria, M, depends on Slice 10.
 - Slice 12 — Templates, reusable patterns, and taxonomy governance: 50 criteria, M, depends on Slice 09.
@@ -140,6 +150,7 @@ After Slice 03, Slices 04, 05, and 07 may proceed in parallel when file claims d
 - Slice 17 — Phase 2 integration, infrastructure verification, and close gate: 10 criteria, S, depends on Slices 01–16.
 
 **Total authored acceptance criteria**: 2000; every slice meets its computed depth floor.
+**Phase 2 implementation-completion denominator**: 1999; AC266 remains authored, unchecked, and reserved for post-Phase 2 production readiness/release.
 
 ## Slice 01 — Authentication, recovery, session, and identity bootstrap
 
@@ -1530,6 +1541,7 @@ After Slice 03, Slices 04, 05, and 07 may proceed in parallel when file claims d
 **Spec depth floor**: 283 criteria  
 **Breakdown**: 17 Architecture + 200 BE03a + 49 FE03 + 17 Engineering Standards = 283 checkpoints  
 **Authored criteria**: 283 (strict current-disk floor)
+**Implementation-completion denominator**: 282; AC266 remains authored and unchecked as the post-Phase 2 production-readiness/release gate.
 
 ### Acceptance criteria
 
@@ -1821,7 +1833,7 @@ After Slice 03, Slices 04, 05, and 07 may proceed in parallel when file claims d
 
 **Status**: not started; awaiting plan approval  
 **Complexity**: M  
-**Depends on**: Slice 09  
+**Depends on**: Slice 09 implementation completion plus AC209, AC211, and AC265 passing; AC266 remains a post-Phase 2 production-readiness/release gate.  
 **Surface scope**: `web` — responsive Astro/PWA, bounded React islands, Hono REST/API, PostgreSQL/RLS, and admin/operator surface where applicable.  
 **Implementation layers**: Contract/data, API/policies, user-facing or system UI, admin/operator UI where applicable, QA, documentation/runbooks.  
 **IA flows**: CMS-05, CMS-06, CMS-07  
