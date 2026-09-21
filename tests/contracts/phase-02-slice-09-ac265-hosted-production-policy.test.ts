@@ -7,6 +7,7 @@ import {
 import {
   contextFor,
   createFixture,
+  setApprovedRunnerMappingSource,
   validateWithContext,
 } from './ac265-hosted-receipt-test-fixtures.ts';
 import {
@@ -31,7 +32,7 @@ const mappingPayloadFor = (
 ): MappingPayload => ({
   schemaVersion: 'ac265-approved-runner-mappings-v1',
   source: 'protected-ac265-runner-mapping-control-plane',
-  mappingId: 'ac265-policy-test-source-01',
+  mappingId: '60000000-0000-4000-8000-000000000001',
   approvedAt: '2026-09-03T10:29:00.000Z',
   runId: trustedContract.runId,
   identity: trustedContract.identity,
@@ -47,19 +48,14 @@ const addMappingSource = (
   context: ReturnType<typeof contextFor>,
   payload: MappingPayload,
 ): void => {
-  const input = context as unknown as Record<string, unknown>;
-  input['approvedRunnerMappingsBytes'] = jsonBytes(payload);
-  input['verifyApprovedRunnerMappingsAuthenticity'] = () => true;
+  setApprovedRunnerMappingSource(context, payload);
 };
 
 const addRawMappingSource = (
   context: ReturnType<typeof contextFor>,
   bytes: Uint8Array,
-  verifyAuthenticity: () => boolean = () => true,
 ): void => {
-  const input = context as unknown as Record<string, unknown>;
-  input['approvedRunnerMappingsBytes'] = bytes;
-  input['verifyApprovedRunnerMappingsAuthenticity'] = verifyAuthenticity;
+  context.approvedRunnerMappingsBytes = bytes;
 };
 
 const verifyContract = (
@@ -177,7 +173,7 @@ describe('AC265 independently versioned production runner policy', () => {
     ).toThrow(/approved runner mapping bytes.*required/i);
   });
 
-  it('rejects approved runner mappings when source authenticity fails', () => {
+  it('rejects approved runner mappings when no independently trusted signing key matches', () => {
     const contract = makeContract();
     const fixture = createFixture({
       contract,
@@ -186,18 +182,32 @@ describe('AC265 independently versioned production runner policy', () => {
       receiptIssuedAt: '2026-09-03T11:00:00.000Z',
     });
     const context = contextFor(fixture, contract);
-    addRawMappingSource(
-      context,
-      jsonBytes(mappingPayloadFor(contract)),
-      () => false,
-    );
+    context.approvedRunnerMappingTrustedKeys = [];
 
     expect(() =>
       validateWithContext(fixture.report, fixture.contractBytes, context),
-    ).toThrow(/approved runner mapping authenticity is untrusted/i);
+    ).toThrow(/approved runner mapping.*key|signing key.*unknown|trusted key/i);
   });
 
-  it('rejects placeholder approved mapping identifiers even with a local authenticator', () => {
+  it('does not accept a caller-provided boolean callback in place of a signed attestation', () => {
+    const contract = makeContract();
+    const fixture = createFixture({
+      contract,
+      includeCandidateIdentityReceipt: true,
+      includeExecutionBindings: true,
+      receiptIssuedAt: '2026-09-03T11:00:00.000Z',
+    });
+    const context = contextFor(fixture, contract);
+    delete context.approvedRunnerMappingAttestationBytes;
+    const untrusted = context as unknown as Record<string, unknown>;
+    untrusted['verifyApprovedRunnerMappingsAuthenticity'] = () => true;
+
+    expect(() =>
+      validateWithContext(fixture.report, fixture.contractBytes, context),
+    ).toThrow(/attestation.*required|mapping.*attestation/i);
+  });
+
+  it('rejects non-UUID approved mapping identifiers before signing', () => {
     const contract = makeContract();
     const fixture = createFixture({
       contract,
@@ -208,11 +218,10 @@ describe('AC265 independently versioned production runner policy', () => {
     const context = contextFor(fixture, contract);
     const payload = mappingPayloadFor(contract);
     payload.mappingId = 'placeholder';
-    addMappingSource(context, payload);
 
-    expect(() =>
-      validateWithContext(fixture.report, fixture.contractBytes, context),
-    ).toThrow(/placeholder/i);
+    expect(() => addMappingSource(context, payload)).toThrow(
+      /attestation.*invalid/i,
+    );
   });
 
   it('rejects incomplete or extra role and scenario keys in the approved mapping schema', () => {
@@ -227,11 +236,11 @@ describe('AC265 independently versioned production runner policy', () => {
     const payload = mappingPayloadFor(contract);
     delete payload.roleResourceBindings['entitled_read'];
     payload.scenarioRoleBindings['unapproved_scenario'] = ['owner_full'];
-    addMappingSource(context, payload);
+    addRawMappingSource(context, jsonBytes(payload));
 
     expect(() =>
       validateWithContext(fixture.report, fixture.contractBytes, context),
-    ).toThrow(/approved runner mappings are invalid/i);
+    ).toThrow(/approved runner mappings? (?:is|are) invalid/i);
   });
 
   it('rejects mapping bytes with duplicate JSON members before schema parsing', () => {

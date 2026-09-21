@@ -40,6 +40,13 @@ contents, locators, credentials, or tokens. The contract and local registry do
 not authenticate mapping provenance, verify underlying resource safety, expose a
 route, issue receipts, or prove hosted acceptance.
 
+`operational-release-evidence-hosted-approved-runner-mapping-attestation.ts`
+defines the strict CP-03 V1 attestation envelope. It binds the UUID-v4 mapping
+ID, run ID, exact lowercase canonical mapping SHA-256, protected key ID, Ed25519
+signature, domain separator, and a positive maximum five-minute validity
+window. The envelope is only a verification input; it does not create a key,
+authenticate a hosted run by itself, or prove AC265 acceptance.
+
 ## Ownership
 
 These schemas define the cross-surface boundary. They do not grant authority,

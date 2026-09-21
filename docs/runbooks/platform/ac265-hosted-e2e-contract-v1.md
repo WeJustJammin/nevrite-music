@@ -16,6 +16,14 @@ issuer, staging control plane, or AC265 acceptance. Hosted acceptance remains
 open until a protected staging run produces a complete v3 report and the
 existing release-evidence verifier accepts it.
 
+CP-03 adds a local, unpromoted signed mapping-attestation boundary for the
+exact `ac265-approved-runner-mappings-v1` bytes. It authenticates canonical
+mapping bytes with a trusted Ed25519 key, bounded key/report windows, a fixed
+domain separator, and run/mapping identity binding. No live signing-key
+configuration, registry rows, retained attestation artifact, protected hosted
+run, independently authenticated receipt, or promotion exists, so this local
+boundary does not alter the hosted acceptance gate.
+
 The retained release gate is V3-only. It requires the exact protected runner
 contract bytes and a separately trusted V3 verification context; a V2 report or
 the legacy compatibility validator cannot satisfy or downgrade this gate.
@@ -63,6 +71,13 @@ server receipt's `issuedAt` must be inside that report window and at or before
 the cutoff. Each role and scenario `durationMs` must also be no greater than
 `completedAt - startedAt`; a per-result duration cannot extend beyond the
 report window. Missing or invalid trusted bounds fail closed.
+
+The trusted-key list, `trustedCutoffAt`, and `maxRunDurationMs` are trusted
+release-policy context preconditions. A future protected orchestration
+constructor must source all three from authenticated release/deployment policy
+context; they must not be supplied by an untrusted caller. No current
+untrusted caller exists, and this local contract does not establish that
+protected constructor.
 
 ## Run manifest and external references
 
@@ -118,10 +133,12 @@ scenario/role pairs. V3 verification requires exact
 source. The strict, duplicate-member-rejecting schema binds `mappingId`,
 `approvedAt`, `runId`, candidate `identity`, the complete
 `roleResourceBindings` reference arrays, and the complete
-`scenarioRoleBindings` map. An authenticity callback must validate those exact
-bytes. Trusted context map fields must match the authenticated bytes, and the
-contract must match them exactly. Resource kinds are those of the approved
-safe-resource references; no per-role kind map is inferred here.
+`scenarioRoleBindings` map. V3 verification requires those canonical bytes plus
+the strict domain-separated Ed25519 attestation and independently trusted key
+registry; a caller-provided boolean callback cannot substitute. Trusted context
+map fields must match the authenticated bytes, and the contract must match them
+exactly. Resource kinds are those of the approved safe-resource references; no
+per-role kind map is inferred here.
 
 Require every locked role and scenario key exactly once where the report
 requires coverage; reject omitted, extra, duplicated, or altered mapping keys.
@@ -131,14 +148,21 @@ either mapping from the submitted contract or report. Bind each role receipt to
 that role's session-reference digest and resource-reference digests, and each
 scenario receipt to its authenticated role bindings and corresponding
 session/resource digests. A browser or manifest assertion alone does not prove
-the mapping was authorized. CP-02 now provides a local, unpromoted private
+the mapping was authorized. CP-02 now provides a promoted staging private
 registry foundation for these opaque resource references and mapping envelopes.
 Its forced-RLS tables and service-role-only RPCs derive
 candidate/run/identity/deployment/project scope, enforce immutable/idempotent
-redacted records, and never retain raw resource contents or locators. No live
-mapping-source endpoint or trusted authentication key/configuration is
-currently defined; the registry therefore does not authenticate mapping
-provenance or establish hosted approval.
+redacted records, and never retain raw resource contents or locators. Its
+forward-only migration seeds no registry rows. No live mapping-source endpoint
+or trusted authentication key/configuration is currently defined; the registry
+therefore does not authenticate mapping provenance or establish hosted approval.
+
+CP-03 now supplies only the local attestation verifier and protected-entrypoint
+contract for canonical mapping bytes. Its Ed25519 signature and trusted-window
+checks authenticate supplied bytes, not a live source or the referenced
+resources. The source key, live registry population, retained mapping artifact,
+and protected hosted run remain absent; fixtures and generated test keys are not
+acceptance evidence.
 
 ## Versioned scenario parameter policy
 
@@ -154,6 +178,8 @@ control plane plus an authenticity check over those exact bytes. The target
 must bind the current run, staging hosting project, Supabase project, and
 deployment; placeholders, missing input, or failed authenticity leave the
 retained gate closed. No such hosted approval source is currently implemented.
+The CP-03 mapping-attestation source code does not provide this outage-target
+source and must not be treated as one.
 The policy pins the outage lease to one request and at most 60 seconds; the
 run-scoped lease reference and timestamps remain bound to the authenticated
 control-plane receipt and the run window.
@@ -254,13 +280,29 @@ source, hosted workflow wiring, signed receipt issuer/resolver, and genuine
 provider fault remain mandatory before AC265 acceptance.
 
 The CP-02 approved safe-resource and runner-mapping registry is a separate
-local foundation (`20260921020000_ac265_approved_runner_registry.sql`). It
+promoted staging foundation on exact-main PR #84 SHA
+`cea2e5601872975a2f974d13e739ace26da677ff` / deployment `6564785922`
+(`20260921020000_ac265_approved_runner_registry.sql`). It
 stores only server-derived opaque references, reference/locator digests, and
 redacted role/scenario bindings behind forced RLS and service-role-only RPCs.
 The migration seeds no registry rows and exposes no public route. It does not
 authenticate an external approval source, verify underlying resource contents,
 issue receipts, or connect the hosted runner; those boundaries remain required
 for AC265 acceptance.
+
+The CP-03 approved runner-mapping attestation is a separate local foundation
+(`ac265-approved-runner-mapping-attestation.ts`; `attest-ac265-approved-runner-mapping.ts`;
+`attest-ac265-hosted-runner-mapping.yml`). It canonicalizes exact mapping bytes
+and verifies a trusted Ed25519 signature, key/report windows, and run binding,
+but has no live key configuration, registry rows, retained artifact, hosted run,
+receipt, or promotion. It therefore does not establish hosted acceptance.
+
+CP-03 hardening also verifies UUID-v4 mapping-ID alignment, awaited
+response-body cancellation, realpath/symlink-safe execution, an unnamed Linux
+`O_TMPFILE` writability preflight, no-follow held descriptors, summaries
+constrained beneath `RUNNER_TEMP`, and deletion-free fail-closed handling that
+preserves only private runner-local remnants. These are local
+implementation checks, not hosted evidence.
 
 The lease reference's lowercase SHA-256 digest is computed from its exact
 UTF-8 bytes. Acquisition and expiry are bounded timestamps; the lease must be

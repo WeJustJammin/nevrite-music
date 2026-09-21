@@ -6,19 +6,20 @@
   at **279/282 active** (**283 authored IDs**) with authored depth ratio
   **0.986**. Phase 2 has **1,999 active criteria / 2,000 authored** because
   AC266 is owner-deferred and excluded from the active completion denominator.
-  Current `main` is PR #83 at
-  `05e88ea52f1c9cf206d54f455e53bc849044cb9b`; exact-main CI
-  [run 35569923623](https://github.com/WeJustJammin/nevrite-music/actions/runs/35569923623)
-  and staging [run 35570556554](https://github.com/WeJustJammin/nevrite-music/actions/runs/35570556554)
-  passed, producing staging deployment `6563225343`. AC265 preflight
+  Current `main` is PR #84 at
+  `cea2e5601872975a2f974d13e739ace26da677ff`; exact-main CI
+  [run 35578970402](https://github.com/WeJustJammin/nevrite-music/actions/runs/35578970402)
+  and staging [run 35579638864](https://github.com/WeJustJammin/nevrite-music/actions/runs/35579638864)
+  passed, producing staging deployment `6564785922`. AC265 preflight
   [run 34824500796](https://github.com/WeJustJammin/nevrite-music/actions/runs/34824500796)
   passed; authorization foundation [run 34824651793](https://github.com/WeJustJammin/nevrite-music/actions/runs/34824651793)
   failed at `staging_prepare`, so no hosted browser acceptance ran. The local
   CP-01 outage-lease control plane is green and promoted to staging, but
   deliberately seeds no target and exposes no hosted route; it does not close
-  AC265. CP-02's local, unpromoted private safe-resource/runner-mapping
-  registry foundation seeds no registry rows and does not authenticate mapping
-  provenance or produce hosted evidence. Read-only
+  AC265. CP-02 is promoted on the exact-main candidate as a private
+  safe-resource/runner-mapping registry foundation; it still seeds no registry
+  rows and does not authenticate mapping provenance or produce hosted evidence.
+  Read-only
   AC209 verifier [run 34813947512](https://github.com/WeJustJammin/nevrite-music/actions/runs/34813947512)
   failed with `provider_graphql_error` and produced no email, queue mutation,
   deployment, or receipt. AC211 collection [run 35560241699](https://github.com/WeJustJammin/nevrite-music/actions/runs/35560241699)
@@ -29,17 +30,31 @@
   is excluded from active Phase 2 completion, but is mandatory for post-Phase 2
   production-readiness/release. No active acceptance gate closed. Slice 10
   remains locked only on AC209, AC211, and AC265; AC266 does not block Slice 10
-  implementation. Clean full 2026-09-21 validation passes **538 Vitest files /
-  4,250 passed + 1 intentional skip (4,251 total)**, 100% coverage
-  (**13,093 statements, 9,836 branches, 2,156 functions, and 12,174 lines**),
+  implementation. The final CP-03 working-tree validation passes **543 Vitest files /
+  4,312 passed + 1 intentional skip (4,313 total)**, 100% coverage
+  (**13,101 statements, 9,840 branches, 2,157 functions, and 12,182 lines**),
   the Slice 09 evidence command, **101 functional + 5 real Slice 09 E2E tests**,
-  builds, bundle budgets, and performance smoke (`p95=1.402399 ms`, threshold
+  builds, bundle budgets, and performance smoke (`p95=1.277622 ms`, threshold
   `500 ms`, zero errors). Fresh database verification passes **56 pgTAP files /
   2,065 tests** with migrated type parity;
   focused CP-02 contracts pass **2 files / 11 tests**, broader AC265 contract
   verification passes **4 files / 31 tests**, and targeted CP-02 SQL passes **2
   files / 65 assertions**. See [the CP-01 verification record](../verification/2026-09-21-ac265-outage-lease-control-plane.md)
   and [the CP-02 verification record](../verification/2026-09-21-ac265-approved-runner-registry.md).
+  Current CP-03 focused local verification covers **44 AC265 files / 392 tests**, with
+  `pnpm type-check` and `pnpm lint` passing. Final hardening covers UUID-v4
+  mapping-ID alignment, awaited response-body cancellation, realpath/symlink-safe
+  execution, an unnamed Linux `O_TMPFILE` writability preflight, no-follow held
+  descriptors, summaries constrained beneath `RUNNER_TEMP`, and deletion-free
+  fail-closed handling that preserves only private runner-local remnants.
+  Current `pnpm db:verify` passed; `pnpm db:test` passed exactly **56 files /
+  2,065 assertions**. Trusted-key list, trusted cutoff, and maximum run duration
+  are trusted release-policy context preconditions for a future protected
+  orchestration constructor; no current untrusted caller exists. See [the CP-03
+  verification record](../verification/2026-09-21-ac265-approved-runner-mapping-attestation.md).
+  CP-03 remains local and unpromoted: no live signing-key configuration,
+  registry rows, retained mapping/attestation artifact, hosted workflow run,
+  independently authenticated receipt, browser evidence, or promotion exists.
   Next AC265 dependency is CP-03: an independently authenticated canonical
   mapping/resource source. It must be followed by the run-scoped broker,
   evidence/receipt resolver, protected hosted workflow, and genuine hosted

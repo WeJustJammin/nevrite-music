@@ -22,23 +22,39 @@
 - [x] `BE` data, API, and policy implementation
 - [x] `FE` Astro SSR and bounded React-island implementation
 - [x] `QA` GREEN, adversarial verification, and canonical validation (current
-      exact-main baseline PR #83 SHA `05e88ea52f1c9cf206d54f455e53bc849044cb9b`;
-      CI `35569923623` and staging `35570556554` / deployment `6563225343`
-      passed. Fresh 2026-09-21 local validation under exact Node `22.23.1` and
-      pnpm `11.24.0` passed 538 Vitest files / 4,250 passed + 1 intentional
-      skip (4,251 total) at 100% coverage (13,093 statements, 9,836 branches,
-      2,156 functions, and 12,174 lines), 101 functional and 5 real Slice 09
+      exact-main baseline PR #84 SHA `cea2e5601872975a2f974d13e739ace26da677ff`;
+      exact-main CI `35578970402` and staging `35579638864` / deployment `6564785922`
+      passed. The final CP-03 working-tree validation under exact Node `22.23.1`
+      and pnpm `11.24.0` passed 543 Vitest files / 4,312 passed + 1 intentional
+      skip (4,313 total) at 100% coverage (13,101 statements, 9,840 branches,
+      2,157 functions, and 12,182 lines), 101 functional and 5 real Slice 09
       E2E tests, builds, bundle checks, and performance smoke
-      (`p95=1.402399 ms`, threshold `500 ms`, zero
+      (`p95=1.277622 ms`, threshold `500 ms`, zero
       errors); `pnpm db:verify` passed 56 pgTAP files / 2,065 tests with migrated
       type parity. See the [CP-01 verification record](../verification/2026-09-21-ac265-outage-lease-control-plane.md)
       and [CP-02 verification record](../verification/2026-09-21-ac265-approved-runner-registry.md).
+      The current CP-03 local focused verification covers 44 AC265 files /
+      392 tests, with `pnpm type-check` and `pnpm lint` passing. Final
+      hardening covers UUID-v4 mapping-ID alignment, awaited response-body
+      cancellation, realpath/symlink-safe execution, an unnamed Linux
+      `O_TMPFILE` writability preflight, no-follow held descriptors, summaries
+      constrained beneath `RUNNER_TEMP`, and deletion-free fail-closed handling
+      that preserves only private runner-local remnants. Current
+      `pnpm db:verify` passed; `pnpm db:test` passed exactly 56 files / 2,065
+      assertions. Trusted-key list, trusted cutoff, and maximum run duration
+      remain trusted release-policy context preconditions for a future
+      protected orchestration constructor; no current untrusted caller exists.
+      The final full validation totals are recorded above. See the [CP-03
+      verification record](../verification/2026-09-21-ac265-approved-runner-mapping-attestation.md).
       AC265 preflight `34824500796`
       passed, while authorization foundation run `34824651793` failed at
       `staging_prepare`; CP-01 is promoted and staging-green but seeds no
-      target, while CP-02 is local and unpromoted with no seeded registry rows;
-      neither exposes a hosted route or produces an independently authenticated
-      receipt or browser evidence, so no hosted acceptance is claimed. AC266 is
+      target, while CP-02 is promoted on the exact-main candidate but seeds no
+      registry rows and does not establish hosted acceptance; CP-03 is local
+      and unpromoted, with no live signing-key
+      configuration, registry rows, retained mapping/attestation artifact,
+      hosted run, independently authenticated receipt, or browser evidence;
+      no hosted acceptance or promotion is claimed. AC266 is
       owner-deferred because the required real devices are unavailable, and
       remains unchecked and excluded from active Phase 2 completion; the three
       active external release checks remain open.)
@@ -680,14 +696,18 @@ response`; Workers Observability passed. Cloudflare's documented successful
   and staging `34824312138` / deployment `6433521892`. Preflight `34824500796`
   passed, but authorization foundation run `34824651793` failed at
   `staging_prepare`; no hosted browser matrix or accepted 9-role/10-scenario
-  report exists. Current `main` is PR #83 SHA
-  `05e88ea52f1c9cf206d54f455e53bc849044cb9b`; CI `35569923623` and
-  staging `35570556554` / deployment `6563225343` passed. CP-01 now has a
+  report exists. Current `main` is PR #84 SHA
+  `cea2e5601872975a2f974d13e739ace26da677ff`; exact-main CI `35578970402` and
+  staging `35579638864` / deployment `6564785922` passed. CP-01 now has a
   promoted, staging-only one-use outage-lease database control plane, but it
   seeds no target, exposes no hosted route, and produces no signed receipt or
-  browser evidence. CP-02 now provides only a local, unpromoted private
-  safe-resource/runner-mapping registry foundation; it does not authenticate
-  mapping provenance or verify underlying resource contents. The authenticated
+  browser evidence. CP-02 now provides a promoted staging-only private
+  safe-resource/runner-mapping registry foundation, but it seeds no registry
+  rows and does not establish hosted acceptance. CP-03 adds only a local,
+  unpromoted signed runner-mapping attestation foundation. CP-03 has no live
+  signing-key configuration, registry rows, retained mapping/attestation
+  artifact, hosted run, or promotion. Neither checkpoint authenticates a live
+  mapping/resource source or verifies underlying resource contents. The authenticated
   canonical mapping/resource source, target source, role/session broker,
   MFA/step-up, evidence resolver, teardown, and complete hosted Auth/RLS/IdP
   matrix remain open.

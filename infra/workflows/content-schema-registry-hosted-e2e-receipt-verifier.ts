@@ -146,6 +146,7 @@ export const verifyContentSchemaRegistryHostedE2eV3Bindings = (input: {
     input.contract,
     context.approvedOutageTarget,
     context.approvedRunnerMappings,
+    context.approvedRunnerMappingAttestation,
     input.report.startedAt,
     context.trustedCutoffAt,
   );
