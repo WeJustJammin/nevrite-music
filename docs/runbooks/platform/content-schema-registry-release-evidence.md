@@ -182,6 +182,22 @@ dependency/route policy, target, signing key, retained artifact, hosted matrix,
 or independently authenticated receipt exists, so CP-04b promotion does not
 satisfy AC265 or unlock Slice 10.
 
+### CP-04c local attestation/resolver foundation (not release evidence)
+
+CP-04c now provides a local/private foundation for strict, domain-separated
+Ed25519 attestation over exact raw artifact bytes. The branded resolver requires
+an independent `expectedSubjectSha256` and binds the exact artifact reference,
+kind, run ID, candidate identity digest, and runner-contract digest. It keeps
+exact reference/kind membership and caps the source set at 256. Each artifact
+and attestation envelope is bounded to 64 KiB; public-key PEM input is bounded
+to 8192 characters.
+
+The upstream authenticated manifest/registry/run authority and external replay
+ledger remain open. No approved live target, signing key, issuer, artifact
+store, broker, hosted report, server receipt, or browser matrix exists. This
+local foundation is not synthetic or hosted acceptance evidence: AC265 remains
+open and Slice 10 remains locked.
+
 The read-only AC209 verifier `35612514031` passed exact-main preflight,
 protection, and workspace checks, then failed closed at the capability query
 with `provider_graphql_error`; it made no effects and retained no receipt.

@@ -3,7 +3,7 @@
 **Status**: in-progress  
 **Progress**: 8/17 slices (47%)  
 **Criteria (2026-09-21)**: 1,999 active / 2,000 authored; AC266 is owner-deferred and excluded from the active Phase 2 completion denominator, but remains mandatory for post-Phase 2 production-readiness/release.  
-**Current gate (2026-09-21)**: Slice 09 remains blocked at **279/282 active** (**283 authored IDs**) with depth ratio **0.986**; Phase 2 remains **8/17** slices. The current deployed baseline is PR #88 implementation main SHA `52b66272e61331827c59ac1e169868474a2c09c8`; PR CI `35611484121`, exact-main CI `35612415141`, and staging workflow `35613284966` passed; deployment `6570861931` succeeded at `https://staging.wejamm.in`. Final canonical validation passed 551 Vitest files / 4,387 passed + 1 intentional skip with complete 100% coverage; `pnpm db:verify` passed 59 pgTAP files / 2,124 assertions. CP-04b is promoted as a private registration foundation only: no live policy or target is seeded, no signing key is configured, and no retained target/attestation/evidence artifact, hosted matrix, or independently authenticated receipt exists. Promotion artifact `10645302055` has digest `sha256:12f05e8371586996dc413b85b75167934045f342091defff5197435b8b707782`; staging p95 was `32.589357 ms` and automated axe digest `df2522f8512dcea587146f5bce43ad5232b94964d5048825ffdb745286dd772d`. Read-only AC209 verifier `35612514031` failed with `provider_graphql_error` after all preflight/protection/workspace gates, with no effects or receipt. AC265 remains open. AC266 is owner-deferred because the required real devices are unavailable; it remains unchecked and excluded from active Phase 2 completion. Slice 10 remains locked only on AC209, AC211, and AC265; AC266 remains a mandatory post-Phase 2 production-readiness/release gate.  
+**Current gate (2026-09-21)**: Slice 09 remains blocked at **279/282 active** (**283 authored IDs**) with depth ratio **0.986**; Phase 2 remains **8/17** slices. The current deployed baseline is PR #89 main SHA `35d8f3806e37c0a438c4a103a6d269a42e1beb38`; exact-main CI `35616283525` and staging workflow `35617273193` passed, and deployment `6571588413` succeeded at `https://staging.wejamm.in`. Promotion artifact `10647305322` has digest `sha256:a58e42774d2bf24dd5fc3d5d176903ea99de7b0527897730d188a44d93cef085`; staging p95 was `238.097437 ms` and automated axe digest `d5bb4619f07bd6b282b82ee4cdb592b219588d16267bce0f639d479b7b1ba2b6`. CP-04c candidate PR #90 head `e06823fdc354280c8b2b9c4937b4b4b784c834d0` is locally validated as a private artifact-attestation/resolver foundation only: isolated `pnpm validate` passed 556 Vitest files / 4,461 passed + 1 intentional skip with complete 100% coverage, and `pnpm db:verify` passed 59 pgTAP files / 2,124 assertions. It has no authenticated upstream manifest/registry/run authority, external replay ledger, live artifact sources, hosted matrix, or independently authenticated receipt; AC265 remains open. Read-only AC209 verifier `35612514031` failed with `provider_graphql_error` after all preflight/protection/workspace gates, with no effects or receipt. AC211 also remains open. AC266 is owner-deferred because the required real devices are unavailable; it remains unchecked and excluded from active Phase 2 completion. Slice 10 remains locked only on AC209, AC211, and AC265; AC266 remains a mandatory post-Phase 2 production-readiness/release gate.  
 **Plan**: [Phase 2 plan](../../../wiki/specs/phases/phase-2.md)  
 **Updated**: 2026-09-21
 **Prior remote evidence**: Before this remediation, PR #9 head `67264c5e9b5196d00ac3f0aa272896a010c872d7` produced synthetic merge `a79dfe30db60e4f54024f064fc2fdf2d01033919` and passing CI run `33841270472`. That run is not evidence for the remediation; no merge or deployment is claimed
@@ -81,6 +81,21 @@ remains locked on AC209, AC211, and AC265. AC266 remains unchecked,
 owner-deferred, and mandatory at the post-Phase 2 production-readiness/release
 gate. See the [CP-04b verification
 record](../verification/2026-09-21-ac265-approved-outage-target-registration.md).
+
+## CP-04c hosted artifact attestation and branded resolver (local/private foundation)
+
+CP-04c is locally validated as a private construction foundation only. It adds
+strict Ed25519 attestation over exact artifact bytes and a branded resolver
+that enforces exact artifact kind/reference/key/subject/run/candidate/runner
+bindings with a maximum source set of **256**. The upstream authenticated
+manifest/registry/run authority and external replay ledger remain open; no
+hosted artifact, hosted matrix, independently authenticated receipt, or AC265
+acceptance is claimed. Focused local verification passes **5 files / 74 tests**
+and `pnpm type-check` is green. Phase 2 remains **8/17** with **1,999/2,000
+active criteria**; Slice 09 remains **279/282 active** (**283 authored IDs**),
+AC209/AC211/AC265 remain open, Slice 10 remains locked, and AC266 remains
+owner-deferred as the mandatory post-Phase 2 production-readiness/release
+gate.
 
 Slice 08 is complete (51/51). Slice 09 local QA-GREEN passes. PR #13 merged as
 exact main SHA `7250754dcdc9c1b7a863aa41d79772e6ab7092ab`; CI run

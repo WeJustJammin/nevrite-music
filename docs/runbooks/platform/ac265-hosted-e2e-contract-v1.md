@@ -16,6 +16,22 @@ issuer, staging control plane, or AC265 acceptance. Hosted acceptance remains
 open until a protected staging run produces a complete v3 report and the
 existing release-evidence verifier accepts it.
 
+## CP-04c local attestation/resolver foundation (not hosted acceptance)
+
+The local/private CP-04c foundation authenticates exact raw artifact bytes with a
+strict, domain-separated Ed25519 attestation. Its branded resolver requires an
+independent `expectedSubjectSha256` and binds the exact artifact reference,
+artifact kind, run ID, candidate identity digest, and runner-contract digest.
+It enforces exact reference/kind membership, snapshots the source set, and caps
+that set at 256 sources. Raw artifacts and attestation envelopes are each capped
+at 64 KiB; public-key PEM input is capped at 8192 characters.
+
+This foundation does not establish the upstream authenticated
+manifest/registry/run authority or the external replay ledger. No approved live
+target, signing key, issuer, artifact store, broker, hosted report, server
+receipt, or browser matrix exists. These local contracts and tests are not
+hosted acceptance evidence; AC265 remains open and Slice 10 remains locked.
+
 CP-03 adds a promoted signed mapping-attestation application boundary for the
 exact `ac265-approved-runner-mappings-v1` bytes. PR #85 at exact main SHA
 `a94ffbca3d41da703218dff12ee7527f31c23a34` passed exact-main CI

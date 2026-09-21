@@ -103,6 +103,20 @@
   unavailable; it is not passed or waived and remains a mandatory post-Phase 2
   production-readiness/release gate.
 
+- **P2-S09 AC265 CP-04c hosted artifact foundation** (updated 2026-09-21) —
+  CP-04c is locally validated as a private construction foundation only. The
+  strict Ed25519 artifact attestation covers exact bytes, and the branded
+  resolver enforces exact artifact kind/reference/key/subject/run/candidate/
+  runner bindings with a maximum source set of **256**. Upstream authenticated
+  manifest/registry/run authority and the external replay ledger remain open;
+  no hosted artifact, hosted matrix, independently authenticated receipt, or
+  AC265 acceptance exists. Focused local verification passes **5 files / 74
+  tests** and `pnpm type-check` is green. AC265 remains open; AC209 and AC211
+  remain open; Slice 10 remains locked; AC266 remains owner-deferred and is a
+  mandatory post-Phase 2 production-readiness/release gate. Totals remain
+  Slice 09 **279/282 active** (**283 authored IDs**) and Phase 2 **1,999/2,000
+  active criteria**, **8/17 slices**.
+
 ## Historical
 
 - **P2-S09 external release evidence (PR #79 snapshot)** (updated 2026-09-14) — Slice 09 remains

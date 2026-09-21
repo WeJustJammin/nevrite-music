@@ -111,6 +111,19 @@
   post-Phase 2 production-readiness/release gate. See
   `.memory/pipeline/progress/phases/phase-02.md` and
   `.memory/pipeline/progress/slices/phase-02-slice-09.md`.
+- **LATEST LOCAL CP-04C FOUNDATION (2026-09-21):** CP-04c is a locally
+  validated, private construction foundation only. Strict Ed25519 attestation
+  covers exact artifact bytes, and a branded resolver enforces exact
+  artifact kind/reference/key/subject/run/candidate/runner bindings with a
+  maximum source set of **256**. Upstream authenticated manifest/registry/run
+  authority and the external replay ledger remain open; no hosted artifact,
+  hosted matrix, independently authenticated receipt, or AC265 acceptance is
+  claimed. Focused local verification passes **5 files / 74 tests** and
+  `pnpm type-check` is green. Totals remain Slice 09 **279/282 active** with
+  **283 authored IDs**, Phase 2 **8/17** with **1,999/2,000 active criteria**;
+  AC209/AC211/AC265 remain open, Slice 10 remains locked, and AC266 remains
+  owner-deferred as the mandatory post-Phase 2 production-readiness/release
+  gate.
 - **LATEST COMPLETE LOCAL VALIDATION (CP-04b, 2026-09-21):** Under exact Node
   `22.23.1` and pnpm `11.24.0`, final canonical `pnpm validate` passed **551
   Vitest files, 4,387 passed + 1 intentional skip**. Coverage is complete:
