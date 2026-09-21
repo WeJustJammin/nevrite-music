@@ -22,10 +22,10 @@
 - [x] `BE` data, API, and policy implementation
 - [x] `FE` Astro SSR and bounded React-island implementation
 - [x] `QA` GREEN, adversarial verification, and canonical validation (current
-      deployed baseline PR #87 exact-main SHA
-      `2b83b9abe0f4de3992b6514e9d2f2ffcb83ca770`; exact-main CI `35601260266`
-      passed and staging workflow `35602077901` / deployment `6568798373`
-      succeeded at `https://staging.wejamm.in`. Final canonical validation under
+      deployed baseline PR #88 implementation main SHA
+      `52b66272e61331827c59ac1e169868474a2c09c8`; PR CI `35611484121`,
+      exact-main CI `35612415141`, and staging workflow `35613284966` passed;
+      deployment `6570861931` succeeded at `https://staging.wejamm.in`. Final canonical validation under
       exact Node `22.23.1` and pnpm `11.24.0` passed **551 Vitest files, 4,387
       passed + 1 intentional skip**, with **13,143/13,143 statements,
       9,850/9,850 branches, 2,160/2,160 functions, and 12,224/12,224 lines**
@@ -46,8 +46,19 @@
       attestation workflow run, independently authenticated receipt, or browser
       evidence. CP-04a is promoted but has no live target-signing key, seeded
       target, retained target/attestation artifact, protected workflow run,
-      hosted matrix, or receipt; no hosted acceptance is claimed. AC266 is
-      owner-deferred because the required real devices are unavailable, and
+      hosted matrix, or receipt; no hosted acceptance is claimed.
+      CP-04b is promoted through PR #88 as a private registration foundation:
+      implementation main SHA `52b66272e61331827c59ac1e169868474a2c09c8`, PR
+      CI `35611484121`, exact-main CI `35612415141`, staging `35613284966`,
+      deployment `6570861931`, and promotion artifact `10645302055` with digest
+      `sha256:12f05e8371586996dc413b85b75167934045f342091defff5197435b8b707782`.
+      Staging p95 was `32.589357 ms` and automated axe digest was
+      `df2522f8512dcea587146f5bce43ad5232b94964d5048825ffdb745286dd772d`.
+      No live policy/target/key, retained target/attestation/evidence artifact,
+      hosted matrix, or independently authenticated receipt exists. Read-only
+      AC209 verifier `35612514031` failed with `provider_graphql_error` after
+      all preflight/protection/workspace gates, with no effects or receipt.
+      AC266 is owner-deferred because the required real devices are unavailable,
       remains unchecked and excluded from active Phase 2 completion; the three
       active external release checks remain open.)
 - [x] Documentation, runbooks, graph, feature ledger, and progress tracking
@@ -771,7 +782,7 @@ implementation while remaining a mandatory post-Phase 2 release gate.
   mandatory post-Phase 2 production-readiness/release gate.
 - See the [CP-04a verification record](../verification/2026-09-21-ac265-approved-outage-target-attestation.md).
 
-## 2026-09-21 AC265 CP-04b approved outage-target registration (unpromoted)
+## 2026-09-21 AC265 CP-04b approved outage-target registration (promoted private foundation)
 
 - Added the local contract, bounded service-role-only RPC, and forward-only
   migration for owner-approved outage-target registration. The migration keeps
@@ -797,12 +808,19 @@ implementation while remaining a mandatory post-Phase 2 release gate.
   **59 pgTAP files / 2,124 assertions**, with database lint exiting 0 after **46
   longstanding warnings** (39 never-read, 6 unused, 1 immutable/stable) and
   generated database types matching. Architecture compile passed **1,632 nodes /
-  10,125 edges** with 55 known lint issues. The current deployed baseline remains PR #87
-  exact-main SHA `2b83b9abe0f4de3992b6514e9d2f2ffcb83ca770`, CI `35601260266`,
-  staging `35602077901`, deployment `6568798373`.
-- CP-04b is not promoted and has no live key/configuration, seeded policy or
-  target, retained artifact, hosted matrix, independently authenticated
-  receipt, or AC265 acceptance. AC265 remains open at **279/282 active**;
+  10,125 edges** with 55 known lint issues. PR #88 implementation main SHA
+  `52b66272e61331827c59ac1e169868474a2c09c8`, PR CI `35611484121`, exact-main
+  CI `35612415141`, staging `35613284966`, and deployment `6570861931` are
+  green. Promotion artifact `10645302055` has digest
+  `sha256:12f05e8371586996dc413b85b75167934045f342091defff5197435b8b707782`;
+  staging p95 was **32.589357 ms** and automated axe digest was
+  `df2522f8512dcea587146f5bce43ad5232b94964d5048825ffdb745286dd772d`.
+- CP-04b is promoted as code/staging evidence only and has no live
+  policy/target, signing-key configuration, retained target/attestation/evidence
+  artifact, hosted matrix, independently authenticated receipt, or AC265
+  acceptance. Read-only AC209 verifier `35612514031` failed with
+  `provider_graphql_error` after all preflight/protection/workspace gates and
+  produced no effects or receipt. AC265 remains open at **279/282 active**;
   Slice 10 remains locked on AC209, AC211, and AC265. AC266 remains unchecked,
   owner-deferred, and mandatory at the post-Phase 2 production-readiness/
   release gate. See the [CP-04b verification

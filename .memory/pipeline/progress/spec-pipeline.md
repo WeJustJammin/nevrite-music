@@ -70,9 +70,10 @@
   See `.memory/wiki/specs/audits/phase-1-validation.md`.
 - **CURRENT IMPLEMENTATION (2026-09-21):** Phase 2 Slices 01–08 are complete.
   Slice 09 remains locally QA-GREEN at 279/282 active (283 authored IDs) with
-  authored depth ratio `0.986`. The current deployed baseline is PR #87 at
-  exact-main SHA `2b83b9abe0f4de3992b6514e9d2f2ffcb83ca770`; exact-main CI
-  `35601260266` and staging `35602077901` / deployment `6568798373` passed.
+  authored depth ratio `0.986`. The current deployed baseline is PR #88 at
+  implementation main SHA `52b66272e61331827c59ac1e169868474a2c09c8`; PR CI
+  `35611484121`, exact-main CI `35612415141`, and staging `35613284966` passed;
+  deployment `6570861931` succeeded.
   Staging is available at `https://staging.wejamm.in`. AC211 provenance and AC266
   report-preparation tooling is landed, but neither is hosted acceptance.
   AC265 preflight `34824500796` passed, while authorization foundation run
@@ -90,11 +91,20 @@
   read/attestation boundary, but it has no live target-signing key, seeded
   target, retained target/attestation artifact, protected workflow run, hosted
   matrix, or receipt. These promotions cover code and staging deployment only.
-  CP-04b is currently an unpromoted local approved-outage-target registration
-  foundation. It adds an empty immutable policy/registration ledger and a
-  service-role-only, correlation-bound registration RPC; it does not seed a
-  live policy or target, expose a hosted route, configure a signing key, retain
-  an artifact, run a hosted matrix, or produce a receipt.
+  CP-04b is promoted through PR #88 as a private approved-outage-target
+  registration foundation. The immutable policy/registration ledgers remain
+  empty and the service-role-only, correlation-bound registration RPC is
+  deployed, but no live policy or target is seeded, no signing key is
+  configured, and no retained target/attestation/evidence artifact, hosted
+  matrix, or independently authenticated receipt exists. The promotion artifact
+  `10645302055` has digest
+  `sha256:12f05e8371586996dc413b85b75167934045f342091defff5197435b8b707782`;
+  it is CI/staging promotion evidence, not AC265 hosted evidence. Staging
+  p95 was **32.589357 ms** and the automated axe digest was
+  `df2522f8512dcea587146f5bce43ad5232b94964d5048825ffdb745286dd772d`.
+  Read-only AC209 verifier `35612514031` failed with
+  `provider_graphql_error` after all preflight, protection, and workspace
+  gates; it produced no effects and no receipt.
   AC266 is owner-deferred because the required real devices are unavailable; it
   remains unchecked and excluded from active Phase 2 completion. Slice 10
   remains locked only on AC209, AC211, and AC265; AC266 remains a mandatory
@@ -130,13 +140,13 @@
   blocker; a protected orchestrator remains a required trust boundary.
   CP-04a code was promoted in PR #86 at SHA
   `4fa8691d24177d0a528335f3c3d06ef50d67d3a9`; the current deployed baseline
-  is the PR #87 promotion record at exact-main SHA
-  `2b83b9abe0f4de3992b6514e9d2f2ffcb83ca770`, with CI `35601260266`, staging
-  `35602077901`, and deployment `6568798373`. Live target key/configuration, seeded target or
+  is the PR #88 promotion at implementation main SHA
+  `52b66272e61331827c59ac1e169868474a2c09c8`, with PR CI `35611484121`, exact-main
+  CI `35612415141`, staging `35613284966`, and deployment `6570861931`. Live target key/configuration, seeded target or
   registry rows, retained target/attestation artifacts, attestation workflow
   execution, hosted browser matrix, independently authenticated receipt, and
   AC265 acceptance remain absent. See the [CP-04a verification record](verification/2026-09-21-ac265-approved-outage-target-attestation.md).
-- **CURRENT CP-04B CHECKS (unpromoted foundation):** The RPC client suite
+- **CURRENT CP-04B CHECKS (promoted private foundation):** The RPC client suite
   passes **15 tests**; together with the registration contract/public-export
   tests this is **3 files / 24 tests**. Registration SQL covers **35 pgTAP
   assertions**, including direct registration-to-lease acquisition for the
@@ -153,9 +163,18 @@
   pgTAP files / 2,124 assertions**; database lint exits 0 with **46
   longstanding warnings** (39 never-read, 6 unused, 1 immutable/stable), and
   generated database types match. Architecture compile passed **1,632 nodes /
-  10,125 edges** with 55 known lint issues. CP-04b is not
-  promoted, seeds no live policy or target, configures no key, retains no
-  artifact, and provides no hosted matrix or receipt. AC265 remains open and
+  10,125 edges** with 55 known lint issues. PR #88 implementation main SHA
+  `52b66272e61331827c59ac1e169868474a2c09c8`, PR CI `35611484121`, exact-main
+  CI `35612415141`, staging `35613284966`, and deployment `6570861931` are
+  green. Promotion artifact `10645302055` has digest
+  `sha256:12f05e8371586996dc413b85b75167934045f342091defff5197435b8b707782`;
+  staging p95 was **32.589357 ms** and automated axe digest was
+  `df2522f8512dcea587146f5bce43ad5232b94964d5048825ffdb745286dd772d`.
+  CP-04b is promoted as code/staging evidence only; no live policy or target is
+  seeded, no signing key is configured, and no retained target/attestation/
+  evidence artifact, hosted matrix, or receipt exists. Read-only AC209 verifier
+  `35612514031` failed with `provider_graphql_error` after all
+  preflight/protection/workspace gates and produced no effects or receipt. AC265 remains open and
   Slice 10 remains locked on AC209, AC211, and AC265. AC266 remains deferred,
   unchecked, and mandatory at the post-Phase 2 production-readiness/release
   gate.

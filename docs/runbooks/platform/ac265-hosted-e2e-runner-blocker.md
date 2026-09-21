@@ -28,23 +28,31 @@ projection with the stored digest, and a distinct domain-separated Ed25519
 target attestation. The protected manual main/staging entrypoint and workflow,
 plus the verifier/policy, require that signed target; a caller-provided
 authenticity callback cannot substitute. The current promoted baseline is PR
-#87 at exact-main SHA `2b83b9abe0f4de3992b6514e9d2f2ffcb83ca770`, exact-main CI
-`35601260266`, staging workflow `35602077901`, and deployment `6568798373`.
+#88 at implementation main SHA `52b66272e61331827c59ac1e169868474a2c09c8`,
+exact-main CI `35612415141`, staging workflow `35613284966`, and deployment
+`6570861931`.
 Live target key/configuration, seeded target or registry rows, retained
 artifact, workflow run, hosted matrix, receipt, and AC265 acceptance remain
 absent.
 
-CP-04b is an unpromoted local approved outage-target registration foundation.
-It adds a strict contract, bounded service-role registration client, forward-only
-Supabase migration, and contract/RPC/SQL/concurrency tests. The request accepts
-only the criterion, schema version, authorization reference, exact
-`ac265-outage-policy://staging/v1` policy reference, and idempotency reference.
-The migration's policy target validity is exactly 120 seconds, reserving a
-bounded 60-second acquisition window before CP-01's exact 60-second,
-one-request lease. The RPC derives the target, candidate identity, project,
-dependency, route, timestamps, validity window, and canonical digest from the
-active server policy, verified candidate, and authorization. It requires the
-active policy and authorization to cover the full target window
+CP-04b is now a promoted approved outage-target registration foundation. PR #88
+at implementation main SHA `52b66272e61331827c59ac1e169868474a2c09c8` passed
+PR CI replacement `35611484121` with application (6m32s), database (1m55s),
+and artifact (57s) jobs; exact-main CI `35612415141` with application (6m43s),
+database (2m00s), and artifact (56s) jobs; and staging workflow
+`35613284966` in 1m28s / deployment `6570861931`. Candidate artifact
+`10645302055` has digest
+`12f05e8371586996dc413b85b75167934045f342091defff5197435b8b707782`.
+It adds a strict contract, bounded service-role registration client,
+forward-only Supabase migration, and contract/RPC/SQL/concurrency tests. The
+request accepts only the criterion, schema version, authorization reference,
+exact `ac265-outage-policy://staging/v1` policy reference, and idempotency
+reference. The migration's policy target validity is exactly 120 seconds,
+reserving a bounded 60-second acquisition window before CP-01's exact
+60-second, one-request lease. The RPC derives the target, candidate identity,
+project, dependency, route, timestamps, validity window, and canonical digest
+from the active server policy, verified candidate, and authorization. It
+requires the active policy and authorization to cover the full target window
 (`authorized_at <= v_now` and `expires_at >= target_expires_at`), returns a
 redacted registration or generic conflict, and uses immutable forced-RLS
 ledgers with service-role-only execution. Direct SQL integration registers a
@@ -54,10 +62,18 @@ windows return generic conflicts and create no target. Local evidence is 35
 registration pgTAP assertions, 2 concurrency assertions, and 15 RPC-client
 tests covering transport status/redirect/length/stream/UTF-8/cancellation,
 reader, timeout, and secret-boundary failures. The migration's policy table is
-empty and seeds no registration; disposable fixtures are local-test-only. There
-is no live dependency/route policy, target, signing key, retained artifact,
-hosted matrix, or independently authenticated receipt, so CP-04b does not
-close AC265 or unlock Slice 10.
+empty and seeds no registration; disposable fixtures are local-test-only. PR
+#88 also recorded staging API p95 `32.589357ms` and automated axe digest
+`df2522f8512dcea587146f5bce43ad5232b94964d5048825ffdb745286dd772d`; the axe
+result is only the automated AC266 component and cannot satisfy its deferred
+manual reports or combined verification. There is no live dependency/route
+policy, target, signing key, retained artifact, hosted matrix, or independently
+authenticated receipt, so CP-04b does not close AC265 or unlock Slice 10.
+The read-only AC209 verifier `35612514031` passed exact-main preflight,
+protection, and workspace checks, then failed closed at the capability query
+with `provider_graphql_error`; it made no effects and retained no receipt.
+AC209 remains open alongside AC265, and this CP-04b promotion does not unlock
+Slice 10.
 The local v3 schema/verifier does not satisfy those hosted gates. Do not generate
 `hosted/e2e.json` from policy, configuration, local fixtures, or a partial run.
 
@@ -154,12 +170,11 @@ requires exact `ac265-approved-outage-target-v1` bytes authenticated by the
 separately protected CP-04a target source and its trusted Ed25519 key registry.
 Its validated scope supplies the expected run, hosting and Supabase projects,
 deployment, dependency, and route. Missing, placeholder, unsigned, or
-unauthenticated target input leaves the gate closed. CP-04a is a promoted
-read/attestation foundation; CP-04b is only an unpromoted server-derived
-registration foundation. The CP-04b policy table is empty outside disposable
-tests, and no live source key/configuration, dependency/route policy, approved
-row, or retained artifact currently exists, so this target cannot yet be
-obtained for hosted verification.
+unauthenticated target input leaves the gate closed. CP-04a and CP-04b are
+promoted read/attestation and server-derived registration foundations. The
+CP-04b policy table is empty outside disposable tests, and no live source
+key/configuration, dependency/route policy, approved row, or retained artifact
+currently exists, so this target cannot yet be obtained for hosted verification.
 
 The protected v3 reporter and verifier must bind every session/resource
 reference and every server receipt to the same immutable candidate identity.

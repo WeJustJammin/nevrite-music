@@ -1,8 +1,8 @@
 # AC265 CP-04b approved outage-target registration verification
 
 **Date:** 2026-09-21  
-**Scope:** local, unpromoted approved-target registration foundation  
-**Verdict:** CP-04b locally verified; AC265 remains OPEN
+**Scope:** promoted private approved-target registration foundation; hosted acceptance remains unproven  
+**Verdict:** CP-04b verified and promoted; AC265 remains OPEN
 
 ## Implemented boundary
 
@@ -41,21 +41,36 @@
   (39 never-read, 6 unused, 1 immutable/stable), and generated database types
   match. Architecture compile passed **1,632 nodes / 10,125 edges** with 55
   known lint issues.
-- PR #88 CI run `35609574745` found one hosted scheduling variance in the
+- Initial PR #88 CI run `35609574745` found one hosted scheduling variance in the
   pre-existing profile-ownership in-flight coverage test. Replacing its arbitrary
   event-loop tick with a wait for the second rate-limit boundary covered both
   pending-request branches in five consecutive isolated runs; the full local
   **551-file / 4,387-pass** suite then returned to 100% coverage.
 
+## Promotion evidence
+
+- PR #88 promoted the implementation at main SHA
+  `52b66272e61331827c59ac1e169868474a2c09c8`. PR CI `35611484121`, exact-main
+  CI `35612415141`, and staging workflow `35613284966` passed; deployment
+  `6570861931` succeeded.
+- Immutable promotion artifact `10645302055` was retained with digest
+  `sha256:12f05e8371586996dc413b85b75167934045f342091defff5197435b8b707782`.
+  Staging API p95 was **32.589357 ms** and the automated axe digest was
+  `df2522f8512dcea587146f5bce43ad5232b94964d5048825ffdb745286dd772d`.
+- Read-only AC209 verifier `35612514031` failed with
+  `provider_graphql_error` after all preflight, protection, and workspace gates.
+  It produced no effects and no receipt.
+
 ## Evidence boundary
 
-This is a local foundation and is not hosted acceptance. It has no live policy,
-seeded target, live target-signing key or configuration, retained target or
-attestation artifact, protected hosted workflow run, hosted browser matrix,
-independently authenticated receipt, or AC265 acceptance. Test keys, fixtures,
-local RPC responses, and local concurrency results do not substitute for those
-external facts. AC265 remains open at **279/282 active**; Slice 10 remains
-locked on AC209, AC211, and AC265.
+This is a promoted private foundation and is not hosted acceptance. It has no
+live policy, seeded target, live target-signing key or configuration, retained
+target/attestation/evidence artifact, protected hosted workflow run, hosted
+browser matrix, independently authenticated receipt, or AC265 acceptance.
+The retained CI/staging promotion artifact above is deployment evidence only;
+test keys, fixtures, local RPC responses, and local concurrency results do not
+substitute for those external facts. AC265 remains open at **279/282 active**;
+Slice 10 remains locked on AC209, AC211, and AC265.
 
 AC266 remains unchecked and owner-deferred because the required real devices
 are unavailable. It is excluded from the active Phase 2 completion denominator,
@@ -64,10 +79,11 @@ mandatory post-Phase 2 production-readiness/release gate.
 
 ## Deployed baseline
 
-The deployed baseline is the PR #87 promotion record at exact-main SHA
-`2b83b9abe0f4de3992b6514e9d2f2ffcb83ca770`, exact-main CI
-`35601260266`, staging workflow `35602077901`, and deployment `6568798373`.
-CP-04b is not included in that deployed baseline and has not been promoted.
+The deployed baseline is PR #88 implementation main SHA
+`52b66272e61331827c59ac1e169868474a2c09c8`, with PR CI `35611484121`,
+exact-main CI `35612415141`, staging workflow `35613284966`, and deployment
+`6570861931`. CP-04b is included as a private registration foundation only;
+the live policy/target/key and hosted acceptance evidence remain absent.
 
 ## Next dependency
 
