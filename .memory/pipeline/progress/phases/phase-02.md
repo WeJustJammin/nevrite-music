@@ -3,7 +3,7 @@
 **Status**: in-progress  
 **Progress**: 8/17 slices (47%)  
 **Criteria (2026-09-21)**: 1,999 active / 2,000 authored; AC266 is owner-deferred and excluded from the active Phase 2 completion denominator, but remains mandatory for post-Phase 2 production-readiness/release.  
-**Current gate (2026-09-21)**: Slice 09 remains blocked at **279/282 active** (**283 authored IDs**) with depth ratio **0.986**; Phase 2 remains **8/17** slices. PR #90 remains the latest promoted main at exact SHA `e7525fa9ea80bbdf2325e8ce08d18930d6485b15`; exact-main CI `35634692281` succeeded, and staging workflow `35635650934` failed on `run_attempt=1` only at transient web release-identity propagation before succeeding on `run_attempt=2`. Deployment `6574859596` succeeded at `https://staging.wejamm.in`, and the exact staging endpoints serve `e7525fa9ea80bbdf2325e8ce08d18930d6485b15`; CP-04d includes the retry hardening in the current unpromoted worktree. CP-04d also adds the signed source-manifest contract, server-derived authorization window, separate manifest digest, canonical ordering, immutable reserve-to-finalize/readback authority, truthful `sourceSetComplete`/`kindComplete` fields that never assert acceptance, and resolver/semantic-subject/protected-context hardening. Known focused TypeScript evidence is **16 files / 104 tests**. Focused database authority evidence is **78/78 assertions** and concurrency evidence is **6/6** (**84/84 total**). After a fresh reset, `pnpm db:test` passed **61 files / 2,208 tests**; `pnpm db:lint` passed with unrelated existing warnings, and `pnpm db:types:check` passed. Final local `pnpm validate` passed **562 files** with **4,498 passed + 1 skipped / 4,499**, 100% coverage (**13,184 statements, 9,862 branches, 2,164 functions, 12,263 lines**); Slice 09 evidence passed, Playwright passed **101/101 functional** and **5/5 real-route** checks, builds and bundle budgets passed, and local API p95 was **1.2129150000000095 ms**. Final local `pnpm db:verify` passed after a fresh reset with migrations through `20260921050000`; database lint had existing warnings only, **61 files / 2,208 tests** passed, and generated types matched. The initial validate failure was root-caused to a fixture `PUBLIC_KEY_PEM` re-export issue; after the fix, focused **8/8** and **12-repeat** stability checks passed before the successful rerun. CP-04d exact-main CI, staging promotion, and any CP-04d promotion remain pending. The CP-04d foundation is local/private evidence only: no live hosted producer/source population, protected signer execution, retained hosted artifact, independently authenticated receipt, or complete hosted matrix exists; AC265 remains open. Read-only AC209 verifier `35612514031` failed with `provider_graphql_error` after all preflight/protection/workspace gates, with no effects or receipt. AC211 also remains open. AC266 is owner-deferred because the required real devices are unavailable; it remains unchecked and excluded from active Phase 2 completion. Slice 10 remains locked only on AC209, AC211, and AC265; AC266 remains a mandatory post-Phase 2 production-readiness/release gate.  
+**Current gate (2026-09-21)**: Slice 09 remains blocked at **279/282 active** (**283 authored IDs**) with depth ratio **0.986**; Phase 2 remains **8/17** slices. PR #91 is the latest promoted CP-04d implementation baseline at exact SHA `289ed3a2f4f92da383aa1464340f804777496257`; exact-main CI `35656504913` succeeded across all three jobs, and automatic staging run `35657406613` succeeded on `run_attempt=1` with deployment `6578526934`. Candidate artifact `10665966829` has digest `sha256:d51c0104d8ea7933e5d4a45af021b0ac2067a24150739390edb58e171cab827c`; deployment evidence artifact `10665756858` has digest `sha256:2724a98beb5e2152b7c601697c95042af508ee94d2e62da7ee143495362c9664`; source `artifactDigest` is `0e92da9874c0fae7e0d62fb4419678a83f00a8986087de558dc101c465451c04`; promoted migration is `20260921050000`; provider deployment IDs are `dac978c4-fe9d-4c86-9cf4-53d96a42d45e` and `b27ddb9f-0ab3-4c07-88da-5ff8ea0b2f7b`. Staging p95 was **29.956710999999927 ms** against the **500 ms** threshold, with automated axe digest `6a7f59d9792a176e3032a9b410c6a0c1bb03850f27ed2918bc98fe82fddbbcf4` and serious/critical counts **0/0**. These are exact-main CI and staging promotion proofs only; staging proof does not equal hosted AC265 acceptance. CP-04d adds the signed source-manifest contract, server-derived authorization window, separate manifest digest, canonical ordering, immutable reserve-to-finalize/readback authority, truthful `sourceSetComplete`/`kindComplete` fields that never assert acceptance, and resolver/semantic-subject/protected-context hardening. Known focused TypeScript evidence is **16 files / 104 tests**. Focused database authority evidence is **78/78 assertions** and concurrency evidence is **6/6** (**84/84 total**). After a fresh reset, `pnpm db:test` passed **61 files / 2,208 tests**; `pnpm db:lint` passed with unrelated existing warnings, and `pnpm db:types:check` passed. Final local `pnpm validate` passed **562 files** with **4,498 passed + 1 skipped / 4,499**, 100% coverage (**13,184 statements, 9,862 branches, 2,164 functions, 12,263 lines**); Slice 09 evidence passed, Playwright passed **101/101 functional** and **5/5 real-route** checks, builds and bundle budgets passed, and local API p95 was **1.2129150000000095 ms**. Final local `pnpm db:verify` passed after a fresh reset with migrations through `20260921050000`; database lint had existing warnings only, **61 files / 2,208 tests** passed, and generated types matched. The initial validate failure was root-caused to a fixture `PUBLIC_KEY_PEM` re-export issue; after the fix, focused **8/8** and **12-repeat** stability checks passed before the successful rerun. The CP-04d foundation is private construction evidence only: no live hosted producer/source population, protected signer execution, retained hosted artifact, independently authenticated receipt, or complete hosted matrix exists; AC265 remains open. Read-only AC209 verifier `35612514031` failed with `provider_graphql_error` after all preflight/protection/workspace gates, with no effects or receipt. AC211 also remains open. AC266 is owner-deferred because the required real devices are unavailable; it remains unchecked and excluded from active Phase 2 completion. Slice 10 remains locked only on AC209, AC211, and AC265; AC266 remains a mandatory post-Phase 2 production-readiness/release gate.  
 **Plan**: [Phase 2 plan](../../../wiki/specs/phases/phase-2.md)  
 **Updated**: 2026-09-21
 **Prior remote evidence**: Before this remediation, PR #9 head `67264c5e9b5196d00ac3f0aa272896a010c872d7` produced synthetic merge `a79dfe30db60e4f54024f064fc2fdf2d01033919` and passing CI run `33841270472`. That run is not evidence for the remediation; no merge or deployment is claimed
@@ -53,12 +53,12 @@ assertions**. The policy requires **exact 120-second target validity**, leaving
 a bounded 60-second acquisition window before the exact 60-second lease;
 future-dated or too-short policy windows return generic conflict.
 
-Final canonical `pnpm validate` is current-final at **551 Vitest files, 4,387
+The CP-04b baseline `pnpm validate` passed **551 Vitest files, 4,387
 passed + 1 intentional skip**, with **13,143/13,143 statements, 9,850/9,850
 branches, 2,160/2,160 functions, and 12,224/12,224 lines** (100%). The
 evidence-map gate passed; Playwright passed **101 functional + 5 production-built
 Slice 09 real-route checks**. Builds, bundle budgets, and performance are green;
-API p95 is **1.491154 ms**. Fresh `pnpm db:verify` is current-final at **59
+API p95 is **1.491154 ms**. Fresh `pnpm db:verify` passed **59
 pgTAP files / 2,124 assertions**; database lint exits 0 with **46 longstanding
 warnings** (39 never-read, 6 unused, 1 immutable/stable), and generated
 database types match. Architecture compile passed **1,632 nodes / 10,125 edges**
@@ -91,8 +91,7 @@ at exact main SHA `e7525fa9ea80bbdf2325e8ce08d18930d6485b15`; exact-main CI
 succeeding on `run_attempt=2`. Deployment `6574859596` succeeded at
 `https://staging.wejamm.in`; the exact staging endpoints now serve
 `e7525fa9ea80bbdf2325e8ce08d18930d6485b15`; that CP-04c promotion record
-predates the CP-04d retry hardening, which is present in the current unpromoted
-worktree.
+predates the CP-04d retry hardening now promoted in PR #91.
 Candidate artifact `10656615428` has digest
 `sha256:5568778c8bec9eacd8090ae2020518caa070ce82b1a901aa4c7fe9a95f03d592`;
 deployment evidence artifact `10655784856` has digest
@@ -140,14 +139,30 @@ fresh reset with migrations through `20260921050000`; database lint had
 existing warnings only, **61 files / 2,208 tests** passed, and generated types
 matched. The initial validate failure was root-caused to a fixture
 `PUBLIC_KEY_PEM` re-export issue; after the fix, focused **8/8** and
-**12-repeat** stability checks passed before the successful rerun. CP-04d
-exact-main CI, staging promotion, and any CP-04d promotion remain pending.
-This is local/private construction evidence only; no hosted producer or
-source population, protected signer execution, retained hosted artifact,
-independently authenticated receipt, or complete hosted matrix exists. AC265
-remains open, Slice 10 remains locked, and AC266 remains owner-deferred as the
-mandatory post-Phase 2 production-readiness/release gate. See the [CP-04d
-verification record](../verification/2026-09-21-ac265-hosted-artifact-source-manifest.md).
+**12-repeat** stability checks passed before the successful rerun. PR #91
+merged to `main` at exact SHA
+`289ed3a2f4f92da383aa1464340f804777496257`; exact-main CI `35656504913`
+succeeded across all three jobs, and automatic staging run `35657406613`
+succeeded on `run_attempt=1` with deployment `6578526934`. Candidate artifact
+`10665966829` has digest
+`sha256:d51c0104d8ea7933e5d4a45af021b0ac2067a24150739390edb58e171cab827c`;
+deployment evidence artifact `10665756858` has digest
+`sha256:2724a98beb5e2152b7c601697c95042af508ee94d2e62da7ee143495362c9664`;
+source `artifactDigest` is
+`0e92da9874c0fae7e0d62fb4419678a83f00a8986087de558dc101c465451c04`;
+migration `20260921050000` and provider deployments
+`dac978c4-fe9d-4c86-9cf4-53d96a42d45e` and
+`b27ddb9f-0ab3-4c07-88da-5ff8ea0b2f7b` are recorded. Staging p95 was
+**29.956710999999927 ms** against the **500 ms** threshold; automated axe
+digest is `6a7f59d9792a176e3032a9b410c6a0c1bb03850f27ed2918bc98fe82fddbbcf4`,
+serious/critical **0/0**. These are exact-main CI and staging promotion proofs
+only; staging proof does not equal hosted AC265 acceptance. This remains
+private construction evidence: no hosted producer/source population, protected
+signer execution, retained hosted artifact, independently authenticated
+receipt, or complete hosted matrix exists. AC265 remains open, Slice 10 remains
+locked, and AC266 remains owner-deferred as the mandatory post-Phase 2
+production-readiness/release gate. See the [CP-04d verification
+record](../verification/2026-09-21-ac265-hosted-artifact-source-manifest.md).
 
 Slice 08 is complete (51/51). Slice 09 local QA-GREEN passes. PR #13 merged as
 exact main SHA `7250754dcdc9c1b7a863aa41d79772e6ab7092ab`; CI run
@@ -303,7 +318,8 @@ remain open; Slice 09 stays at 279/283 and Slice 10 remains locked.
 - [x] Slice 09 scheduled-runtime parser correction — Queue Analytics repeated the invalid `errors: null` assumption. Focused RED failed 1/29; GREEN passes 29/29. Full `pnpm validate` passes 424/424 Vitest files, 3,169/3,169 tests at 100% coverage, and 102/102 Playwright checks. PR #27 merged as exact main SHA `93c2fd837cffa89baea9d43a9f482000c5739440`; CI `34022522801`, staging `34022811556` / deployment `6291019997`, and protected production `34022888837` / deployment `6291034733` passed. API Worker `1b2d3c02-d3e9-4681-9fde-7d05f06e0cd5`, web Worker `a5d3d651-29ff-4226-bff2-d11376671b6d`, artifact `9986107430`, and one natural scheduled event with outcome `ok` and zero exceptions are verified. A genuine provider/mailbox receipt remains required before AC209 can close.
 - [x] Slice 09 AC265 candidate provenance preflight scaffold — PR #71 merged at `origin/main` SHA `03329530ce1375de63d1d5a0ecee6b5ce8ccb50d`; exact-main CI `34776703106` attempt 1 and staging `34777077865` attempt 1 / deployment `6425379348` passed. Candidate artifact `staging-verified-candidate` (`10323417853`) passed read-only hosted preflight run `34777223023` with `candidate_provenance_verified`. The main-only preflight workflow, strict provenance, authenticated policy mapping/outage-target contracts, and fail-closed collector port boundary remain scaffolding only; no protected collector/service protocol or hosted AC265 acceptance exists. AC265 remains open; see [session evidence](../sessions/2026-09-13.md).
 - [x] Slice 09 AC211/AC266 evidence-tooling hardening — PR #74 merged at exact `main` SHA `f8e10db06b5e70ea6262a3531f7fab69965febc3`; exact-main CI `34792878043` and staging `34793282345` / deployment `6428325619` passed. Local `pnpm validate` passes 522 Vitest files / 4,091 passed + 1 skipped at 100% coverage; Playwright passes 101 functional plus 5 real-route checks; `pnpm db:verify` passes 50 pgTAP files / 1,818 checks with types matching. Focused AC211 and AC266 suites pass 59/59 and 83/83; adversarial reviews have no remaining findings. The tooling is landed, but no external criterion is closed. Slice 09 remains 279/283 and Slices 10–17 remain locked.
-- [x] Slice 09 current exact-main follow-up — PR #80 SHA `918f598525de772c82b0a0bcd82348ea8f5d523d`, CI `34823698333`, staging `34824312138` / deployment `6433521892`, and AC265 preflight `34824500796` passed. Authorization foundation `34824651793` failed at `staging_prepare`; AC209 run `34813947512` failed with `provider_graphql_error` and no receipt; AC211 run `35560241699` passed preflight but collection failed for insufficient samples (`commands=0`, `protectedRpcs=0`, `acceptances=0`, `queueFirstAttempts=0`) with no artifact. No active external criterion closed; AC266 is owner-deferred and unchecked.
+- [x] Slice 09 historical exact-main follow-up — PR #80 SHA `918f598525de772c82b0a0bcd82348ea8f5d523d`, CI `34823698333`, staging `34824312138` / deployment `6433521892`, and AC265 preflight `34824500796` passed. Authorization foundation `34824651793` failed at `staging_prepare`; AC209 run `34813947512` failed with `provider_graphql_error` and no receipt; AC211 run `35560241699` passed preflight but collection failed for insufficient samples (`commands=0`, `protectedRpcs=0`, `acceptances=0`, `queueFirstAttempts=0`) with no artifact. No active external criterion closed; AC266 is owner-deferred and unchecked.
+- [x] Slice 09 exact-main CP-04d implementation promotion — PR #91 SHA `289ed3a2f4f92da383aa1464340f804777496257`, exact-main CI `35656504913`, and staging `35657406613` attempt 1 / deployment `6578526934` passed. This is private construction evidence only; AC209, AC211, and AC265 remain open, Slice 10 remains locked, and AC266 remains owner-deferred as a mandatory post-Phase 2 release gate.
 - [ ] AC266 post-Phase 2 production-readiness/release evidence remains deferred and is excluded from the active Phase 2 completion denominator.
 - [ ] Slice 17 close-gate `/verify-infrastructure` passes.
 - [ ] `/validate-phase` passes after every slice is complete.
