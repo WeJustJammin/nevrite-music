@@ -1,10 +1,11 @@
-import { describe, expect, it, vi } from 'vitest';
+import { describe, expect, it } from 'vitest';
 
 import {
   CONTENT_SCHEMA_REGISTRY_HOSTED_ROLES,
   CONTENT_SCHEMA_REGISTRY_HOSTED_SCENARIOS,
 } from '../../packages/contracts/src/content-schema-registry/operational-release-evidence-common.ts';
 import { validateContentSchemaRegistryHostedE2eReportV3 } from '../../infra/workflows/content-schema-registry-hosted-e2e-report-verifier.ts';
+import { sha256Ac265HostedSemanticSubject } from '../../infra/workflows/ac265-hosted-semantic-subject.ts';
 import {
   contextFor,
   createFixture,
@@ -83,7 +84,7 @@ const recordEvidence = (
   const payload: EvidencePayload = {
     schemaVersion: 'ac265-execution-evidence-v1',
     candidateIdentitySha256: sha256(jsonBytes(fixture.contract.identity)),
-    subjectSha256: sha256(jsonBytes(subject)),
+    subjectSha256: sha256Ac265HostedSemanticSubject(subject),
     kind,
     artifactSha256: sha256(artifactBytes),
     ...(sessionRefSha256 === undefined ? {} : { sessionRefSha256 }),
@@ -144,7 +145,8 @@ const makeFixtureWithExecutionEvidence = () => {
     includeExecutionBindings: true,
     receiptIssuedAt,
   });
-  const evidenceBytes = new Map<string, Uint8Array>();
+  const evidenceBytes = fixture.evidenceBytes;
+  evidenceBytes.clear();
 
   for (
     let index = 0;
@@ -210,16 +212,11 @@ const makeFixtureWithExecutionEvidence = () => {
   return { fixture, evidenceBytes };
 };
 
-const validateFixture = (
-  fixture: TestFixture,
-  evidenceBytes: Map<string, Uint8Array>,
-  resolveEvidence: (ref: string) => Uint8Array | undefined = (ref) =>
-    evidenceBytes.get(ref),
-) =>
+const validateFixture = (fixture: TestFixture) =>
   validateContentSchemaRegistryHostedE2eReportV3(
     fixture.report,
     fixture.contractBytes,
-    { ...contextFor(fixture, fixture.contract), resolveEvidence },
+    contextFor(fixture, fixture.contract),
   );
 
 const firstEvidence = (
@@ -266,15 +263,9 @@ const rewriteEvidencePayload = (
 
 describe('AC265 signed execution-evidence binding', () => {
   it('accepts signed role/scenario evidence bound to the exact candidate identity and complete cleanup', () => {
-    const { fixture, evidenceBytes } = makeFixtureWithExecutionEvidence();
-    const resolveEvidence = vi.fn((ref: string) => evidenceBytes.get(ref));
+    const { fixture } = makeFixtureWithExecutionEvidence();
 
-    expect(validateFixture(fixture, evidenceBytes, resolveEvidence)).toEqual(
-      fixture.report,
-    );
-    expect(resolveEvidence).toHaveBeenCalledWith(
-      firstEvidence(fixture, 'roles').ref,
-    );
+    expect(validateFixture(fixture)).toEqual(fixture.report);
   });
 
   it('rejects role/scenario evidence bytes that differ from their signed digests', () => {
@@ -283,7 +274,7 @@ describe('AC265 signed execution-evidence binding', () => {
       const evidence = firstEvidence(fixture, collection);
       evidenceBytes.set(evidence.ref, Buffer.from('different synthetic bytes'));
 
-      expect(() => validateFixture(fixture, evidenceBytes)).toThrow(
+      expect(() => validateFixture(fixture)).toThrow(
         /evidence.*digest|digest.*evidence|evidence bytes/iu,
       );
     }
@@ -291,7 +282,7 @@ describe('AC265 signed execution-evidence binding', () => {
 
   it('rejects unresolved evidence references and evidence kinds outside the allowlist', () => {
     for (const mutation of ['reference', 'kind'] as const) {
-      const { fixture, evidenceBytes } = makeFixtureWithExecutionEvidence();
+      const { fixture } = makeFixtureWithExecutionEvidence();
       const evidence = firstEvidence(fixture, 'roles');
       const changed =
         mutation === 'reference'
@@ -299,9 +290,9 @@ describe('AC265 signed execution-evidence binding', () => {
           : { ...evidence, kind: 'unapproved_payload' };
       setReceiptEvidence(fixture, 'role', 0, changed);
 
-      expect(() => validateFixture(fixture, evidenceBytes)).toThrow(
+      expect(() => validateFixture(fixture)).toThrow(
         mutation === 'reference'
-          ? /evidence bytes are unavailable/iu
+          ? /evidence bytes are unavailable|exact membership|outside/iu
           : /report v3 body is invalid/iu,
       );
     }
@@ -324,7 +315,7 @@ describe('AC265 signed execution-evidence binding', () => {
         }),
       );
 
-      expect(() => validateFixture(fixture, evidenceBytes)).toThrow(
+      expect(() => validateFixture(fixture)).toThrow(
         /candidate identity|subject|evidence binding/iu,
       );
     }
@@ -337,7 +328,7 @@ describe('AC265 signed execution-evidence binding', () => {
   ] as const)(
     'rejects cleanup that does not bind every session teardown exactly (%s)',
     (mutation) => {
-      const { fixture, evidenceBytes } = makeFixtureWithExecutionEvidence();
+      const { fixture } = makeFixtureWithExecutionEvidence();
       const cleanup = reportRecord(fixture)['cleanup'] as Record<
         string,
         unknown
@@ -360,7 +351,7 @@ describe('AC265 signed execution-evidence binding', () => {
         };
       replaceCleanupFields(fixture, { sessionTeardowns });
 
-      expect(() => validateFixture(fixture, evidenceBytes)).toThrow(
+      expect(() => validateFixture(fixture)).toThrow(
         mutation === 'missing_session'
           ? /report v3 body is invalid/iu
           : /cleanup|session|teardown|binding|evidence/iu,
@@ -379,16 +370,16 @@ describe('AC265 signed execution-evidence binding', () => {
     const evidence = sessionTeardowns[role].evidence;
     evidenceBytes.set(evidence.ref, Buffer.from('altered synthetic teardown'));
 
-    expect(() => validateFixture(fixture, evidenceBytes)).toThrow(
+    expect(() => validateFixture(fixture)).toThrow(
       /cleanup.*evidence|evidence.*digest|evidence bytes/iu,
     );
   });
 
   it('rejects cleanup that widens logout beyond the fixed current-session policy', () => {
-    const { fixture, evidenceBytes } = makeFixtureWithExecutionEvidence();
+    const { fixture } = makeFixtureWithExecutionEvidence();
     replaceCleanupFields(fixture, { logoutPolicy: 'all_sessions' });
 
-    expect(() => validateFixture(fixture, evidenceBytes)).toThrow(
+    expect(() => validateFixture(fixture)).toThrow(
       /report v3 body is invalid/iu,
     );
   });

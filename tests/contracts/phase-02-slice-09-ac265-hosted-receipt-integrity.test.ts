@@ -121,26 +121,11 @@ describe('AC265 hosted receipt integrity verifier context', () => {
       ContentSchemaRegistryHostedE2eReportV3Schema.safeParse(fixture.report)
         .success,
     ).toBe(true);
-    const verifiedRefs: string[] = [];
-    const context = {
-      ...contextFor(fixture),
-      verifyReceiptAuthenticity: (ref: string) => {
-        verifiedRefs.push(ref);
-        return true;
-      },
-    };
+    const context = contextFor(fixture);
 
     expect(
       validateWithContext(fixture.report, fixture.contractBytes, context),
     ).toEqual(fixture.report);
-    expect(verifiedRefs.sort()).toEqual(
-      [
-        ...fixture.slots.map(({ ref }) => ref),
-        ...(fixture.outageLeaseReceiptRef === undefined
-          ? []
-          : [fixture.outageLeaseReceiptRef]),
-      ].sort(),
-    );
     expect(fixture.slots).toHaveLength(1 + 9 + 10 + 1);
   });
 });

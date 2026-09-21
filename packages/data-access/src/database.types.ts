@@ -111,6 +111,18 @@ export type Database = {
         Args: { p_request: Json }
         Returns: Json
       }
+      ac265_hosted_artifact_manifest_finalize: {
+        Args: { p_request: Json }
+        Returns: Json
+      }
+      ac265_hosted_artifact_manifest_read: {
+        Args: { p_request: Json }
+        Returns: Json
+      }
+      ac265_hosted_artifact_manifest_register: {
+        Args: { p_request: Json }
+        Returns: Json
+      }
       ac265_hosted_outage_lease_acquire: {
         Args: { p_request: Json }
         Returns: Json
@@ -1505,6 +1517,254 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "ac265_runner_authorizations"
             referencedColumns: ["authorization_id"]
+          },
+        ]
+      }
+      ac265_hosted_artifact_manifest_finalizations: {
+        Row: {
+          authorization_id: string
+          finalization_id: string
+          finalization_ref: string
+          finalized_at: string
+          manifest_id: string
+          manifest_sha256: string
+          request_sha256: string
+        }
+        Insert: {
+          authorization_id: string
+          finalization_id?: string
+          finalization_ref: string
+          finalized_at: string
+          manifest_id: string
+          manifest_sha256: string
+          request_sha256: string
+        }
+        Update: {
+          authorization_id?: string
+          finalization_id?: string
+          finalization_ref?: string
+          finalized_at?: string
+          manifest_id?: string
+          manifest_sha256?: string
+          request_sha256?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ac265_hosted_artifact_manifest_finalizati_authorization_id_fkey"
+            columns: ["authorization_id"]
+            isOneToOne: false
+            referencedRelation: "ac265_runner_authorizations"
+            referencedColumns: ["authorization_id"]
+          },
+          {
+            foreignKeyName: "ac265_hosted_artifact_manifest_finalizations_manifest_id_fkey"
+            columns: ["manifest_id"]
+            isOneToOne: true
+            referencedRelation: "ac265_hosted_artifact_manifests"
+            referencedColumns: ["manifest_id"]
+          },
+        ]
+      }
+      ac265_hosted_artifact_manifest_sources: {
+        Row: {
+          artifact_kind: string
+          artifact_ref: string
+          artifact_sha256: string
+          attestation_key_id: string
+          attestation_sha256: string
+          expires_at: string
+          issued_at: string
+          manifest_id: string
+          source_id: string
+          source_ordinal: number
+          subject_sha256: string
+        }
+        Insert: {
+          artifact_kind: string
+          artifact_ref: string
+          artifact_sha256: string
+          attestation_key_id: string
+          attestation_sha256: string
+          expires_at: string
+          issued_at: string
+          manifest_id: string
+          source_id?: string
+          source_ordinal: number
+          subject_sha256: string
+        }
+        Update: {
+          artifact_kind?: string
+          artifact_ref?: string
+          artifact_sha256?: string
+          attestation_key_id?: string
+          attestation_sha256?: string
+          expires_at?: string
+          issued_at?: string
+          manifest_id?: string
+          source_id?: string
+          source_ordinal?: number
+          subject_sha256?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ac265_hosted_artifact_manifest_sources_artifact_ref_fkey"
+            columns: ["artifact_ref"]
+            isOneToOne: false
+            referencedRelation: "ac265_hosted_artifact_replay_ledger"
+            referencedColumns: ["artifact_ref"]
+          },
+          {
+            foreignKeyName: "ac265_hosted_artifact_manifest_sources_manifest_id_fkey"
+            columns: ["manifest_id"]
+            isOneToOne: false
+            referencedRelation: "ac265_hosted_artifact_manifests"
+            referencedColumns: ["manifest_id"]
+          },
+        ]
+      }
+      ac265_hosted_artifact_manifests: {
+        Row: {
+          authorization_id: string
+          candidate_id: string
+          deployment_id: string
+          environment: string
+          hosting_project_id: string
+          idempotency_ref: string
+          identity_sha256: string
+          kind_complete: boolean
+          manifest_id: string
+          manifest_ref: string
+          registered_at: string
+          request_sha256: string
+          run_id: string
+          source_count: number
+          source_revision: string
+          source_set_complete: boolean
+          supabase_project_ref: string
+        }
+        Insert: {
+          authorization_id: string
+          candidate_id: string
+          deployment_id: string
+          environment: string
+          hosting_project_id: string
+          idempotency_ref: string
+          identity_sha256: string
+          kind_complete: boolean
+          manifest_id?: string
+          manifest_ref: string
+          registered_at: string
+          request_sha256: string
+          run_id: string
+          source_count: number
+          source_revision: string
+          source_set_complete: boolean
+          supabase_project_ref: string
+        }
+        Update: {
+          authorization_id?: string
+          candidate_id?: string
+          deployment_id?: string
+          environment?: string
+          hosting_project_id?: string
+          idempotency_ref?: string
+          identity_sha256?: string
+          kind_complete?: boolean
+          manifest_id?: string
+          manifest_ref?: string
+          registered_at?: string
+          request_sha256?: string
+          run_id?: string
+          source_count?: number
+          source_revision?: string
+          source_set_complete?: boolean
+          supabase_project_ref?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ac265_hosted_artifact_manifests_authorization_id_fkey"
+            columns: ["authorization_id"]
+            isOneToOne: true
+            referencedRelation: "ac265_runner_authorizations"
+            referencedColumns: ["authorization_id"]
+          },
+        ]
+      }
+      ac265_hosted_artifact_replay_ledger: {
+        Row: {
+          artifact_kind: string
+          artifact_ref: string
+          artifact_sha256: string
+          attestation_key_id: string
+          attestation_sha256: string
+          authorization_id: string
+          candidate_id: string
+          deployment_id: string
+          expires_at: string
+          first_seen_at: string
+          hosting_project_id: string
+          identity_sha256: string
+          issued_at: string
+          manifest_id: string
+          run_id: string
+          source_revision: string
+          subject_sha256: string
+          supabase_project_ref: string
+        }
+        Insert: {
+          artifact_kind: string
+          artifact_ref: string
+          artifact_sha256: string
+          attestation_key_id: string
+          attestation_sha256: string
+          authorization_id: string
+          candidate_id: string
+          deployment_id: string
+          expires_at: string
+          first_seen_at: string
+          hosting_project_id: string
+          identity_sha256: string
+          issued_at: string
+          manifest_id: string
+          run_id: string
+          source_revision: string
+          subject_sha256: string
+          supabase_project_ref: string
+        }
+        Update: {
+          artifact_kind?: string
+          artifact_ref?: string
+          artifact_sha256?: string
+          attestation_key_id?: string
+          attestation_sha256?: string
+          authorization_id?: string
+          candidate_id?: string
+          deployment_id?: string
+          expires_at?: string
+          first_seen_at?: string
+          hosting_project_id?: string
+          identity_sha256?: string
+          issued_at?: string
+          manifest_id?: string
+          run_id?: string
+          source_revision?: string
+          subject_sha256?: string
+          supabase_project_ref?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ac265_hosted_artifact_replay_ledger_authorization_id_fkey"
+            columns: ["authorization_id"]
+            isOneToOne: false
+            referencedRelation: "ac265_runner_authorizations"
+            referencedColumns: ["authorization_id"]
+          },
+          {
+            foreignKeyName: "ac265_hosted_artifact_replay_ledger_manifest_id_fkey"
+            columns: ["manifest_id"]
+            isOneToOne: false
+            referencedRelation: "ac265_hosted_artifact_manifests"
+            referencedColumns: ["manifest_id"]
           },
         ]
       }
@@ -5338,6 +5598,10 @@ export type Database = {
           p_idempotency_ref?: string
           p_mapping_id: string
         }
+        Returns: Json
+      }
+      ac265_build_hosted_artifact_manifest_envelope: {
+        Args: { p_manifest_id: string }
         Returns: Json
       }
       ac265_prepare_hosted_run_candidate: {

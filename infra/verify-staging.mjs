@@ -24,8 +24,9 @@ const noncePattern = /'nonce-([A-Za-z0-9_-]{22})'/u;
 const staticAssetPattern = /\b(?:src|href)=["'](\/[^"']+)["']/gu;
 const releaseHeader = 'x-wejammin-release';
 const releasePattern = /^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$/u;
-const defaultRetryAttempts = 5;
-const defaultRetryDelayMs = 3_000;
+// Allow twelve five-second waits across thirteen bounded verification attempts.
+const defaultRetryAttempts = 13;
+const defaultRetryDelayMs = 5_000;
 
 const sleep = (delayMs) =>
   new Promise((resolve) => {
@@ -251,6 +252,11 @@ export async function verifyStagingWithRetries({
   if (!Number.isFinite(delayMs) || delayMs < 0) {
     throw new Error('Staging verification retry delay must be non-negative');
   }
+
+  // Fail immediately on malformed inputs instead of consuming the retry window.
+  parseOrigin(verificationOptions.webOrigin, 'Web origin');
+  parseOrigin(verificationOptions.apiOrigin, 'API origin');
+  parseExpectedRelease(verificationOptions.expectedRelease);
 
   for (let attempt = 1; attempt <= attempts; attempt += 1) {
     try {

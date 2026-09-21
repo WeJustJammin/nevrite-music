@@ -26,16 +26,12 @@ describe('AC265 hosted receipt integrity fail-closed behavior', () => {
         ContentSchemaRegistryHostedE2eReportV3Schema.safeParse(missing.report)
           .success,
       ).toBe(true);
-      const missingContext = {
-        ...contextFor(missing),
-        resolveReceipt: (ref: string) =>
-          ref === slot.ref ? undefined : missing.receiptBytes.get(ref),
-      };
+      missing.receiptBytes.delete(slot.ref);
       expect(() =>
         validateWithContext(
           missing.report,
           missing.contractBytes,
-          missingContext,
+          contextFor(missing),
         ),
       ).toThrow();
 
@@ -63,21 +59,17 @@ describe('AC265 hosted receipt integrity fail-closed behavior', () => {
       const tamperedBytes = createFixture({
         includeCandidateIdentityReceipt: true,
       });
-      const resolver = contextFor(tamperedBytes);
-      const tamperedContext = {
-        ...resolver,
-        resolveReceipt: (ref: string) => {
-          const bytes = tamperedBytes.receiptBytes.get(ref);
-          return ref === slot.ref && bytes !== undefined
-            ? Buffer.concat([Buffer.from(bytes), Buffer.from(' ')])
-            : bytes;
-        },
-      };
+      const bytes = tamperedBytes.receiptBytes.get(slot.ref);
+      expect(bytes).toBeDefined();
+      tamperedBytes.receiptBytes.set(
+        slot.ref,
+        Buffer.concat([Buffer.from(bytes!), Buffer.from(' ')]),
+      );
       expect(() =>
         validateWithContext(
           tamperedBytes.report,
           tamperedBytes.contractBytes,
-          tamperedContext,
+          contextFor(tamperedBytes),
         ),
       ).toThrow();
     }
@@ -110,27 +102,30 @@ describe('AC265 hosted receipt integrity fail-closed behavior', () => {
     }
   });
 
-  it('requires an authenticity verifier and rejects receipts the trust callback does not authenticate', () => {
+  it('requires genuine resolver branding and trusted artifact coverage', () => {
     const fixture = createFixture({ includeCandidateIdentityReceipt: true });
     expect(
       ContentSchemaRegistryHostedE2eReportV3Schema.safeParse(fixture.report)
         .success,
     ).toBe(true);
     const context = contextFor(fixture);
-    expect(() =>
-      validateWithContext(fixture.report, fixture.contractBytes, {
-        ...context,
-        verifyReceiptAuthenticity: () => false,
-      }),
-    ).toThrow();
-    const withoutAuthenticity = { ...context };
-    Reflect.deleteProperty(withoutAuthenticity, 'verifyReceiptAuthenticity');
+    const withoutResolver = { ...context } as Record<string, unknown>;
+    delete withoutResolver['resolver'];
     expect(() =>
       validateWithContext(
         fixture.report,
         fixture.contractBytes,
-        withoutAuthenticity as VerifierContext,
+        withoutResolver as VerifierContext,
       ),
-    ).toThrow();
+    ).toThrow(/context|resolver|incomplete/i);
+
+    fixture.receiptBytes.delete(fixture.slots[0].ref);
+    expect(() =>
+      validateWithContext(
+        fixture.report,
+        fixture.contractBytes,
+        contextFor(fixture),
+      ),
+    ).toThrow(/unavailable|artifact|resolver|trusted/i);
   });
 });

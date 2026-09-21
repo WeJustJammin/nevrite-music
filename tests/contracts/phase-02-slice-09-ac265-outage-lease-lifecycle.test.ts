@@ -14,16 +14,8 @@ import { sha256, sha256Ref, uuidFor } from './ac265-hosted-test-fixtures.ts';
 describe('AC265 outage lease lifecycle proof', () => {
   it('binds the canonical lease reference, one consume event, and signed release proof through the report', () => {
     const built = buildLeaseFixture();
-    const { fixture, lease, leaseEvidence, releaseProof, leaseReceiptRef } =
-      built;
-    const authenticatedRefs: string[] = [];
-    const context = {
-      ...contextWithCutoff(built),
-      verifyReceiptAuthenticity: (ref: string) => {
-        authenticatedRefs.push(ref);
-        return true;
-      },
-    };
+    const { fixture, lease, leaseEvidence, releaseProof } = built;
+    const context = contextWithCutoff(built);
 
     expect(
       ContentSchemaRegistryHostedRunnerContractSchema.safeParse(
@@ -44,10 +36,6 @@ describe('AC265 outage lease lifecycle proof', () => {
       sha256: lease.sha256,
       outcome: 'released',
     });
-    expect(authenticatedRefs).toContain(
-      fixture.report.cleanup.serverReceipt.ref,
-    );
-    expect(authenticatedRefs).toContain(leaseReceiptRef);
     expect(context.expectedRunnerContractSha256).toBe(
       sha256(fixture.contractBytes),
     );
@@ -159,7 +147,7 @@ describe('AC265 outage lease lifecycle proof', () => {
     ).toThrow();
   });
 
-  it('requires authenticity verification of the cleanup receipt carrying the lease release proof', () => {
+  it('requires trusted resolver coverage for the cleanup receipt carrying the lease release proof', () => {
     const built = buildLeaseFixture();
     const { fixture } = built;
     expect(
@@ -170,13 +158,11 @@ describe('AC265 outage lease lifecycle proof', () => {
       ),
     ).toEqual(fixture.report);
     const cleanupReceiptRef = fixture.report.cleanup.serverReceipt.ref;
-    const context = {
-      ...contextWithCutoff(built),
-      verifyReceiptAuthenticity: (ref: string) => ref !== cleanupReceiptRef,
-    };
+    fixture.receiptBytes.delete(cleanupReceiptRef);
+    const context = contextWithCutoff(built);
 
     expect(() =>
       validateWithContext(fixture.report, fixture.contractBytes, context),
-    ).toThrow(/authenticity/i);
+    ).toThrow(/unavailable|artifact|resolver|trusted/i);
   });
 });

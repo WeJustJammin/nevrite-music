@@ -212,20 +212,9 @@ const buildFixture = (scopeOverride?: LeaseScope) => {
 const contextForScopeFixture = (
   fixture: HostedFixture,
   trustedScope: LeaseScope,
-  authenticatedSubjects: string[] = [],
 ) => ({
   ...contextFor(fixture, fixture.contract),
   expectedOutageLeaseScope: trustedScope,
-  verifyReceiptAuthenticity: (
-    ref: string,
-    _bytes: Uint8Array,
-    parsedEnvelope: unknown,
-  ) => {
-    const envelope = recordAt(parsedEnvelope, 'authenticated receipt');
-    const subject = recordAt(envelope['subject'], 'receipt subject');
-    if (subject['kind'] === 'outage_lease') authenticatedSubjects.push(ref);
-    return true;
-  },
 });
 
 const expectFixtureSchemasAccept = (
@@ -301,16 +290,14 @@ describe('AC265 independently trusted outage lease scope', () => {
   it('accepts a control-plane lease receipt bound to the exact trusted run scope', () => {
     const { fixture, leaseReceiptEnvelope, trustedScope } = buildFixture();
     expectFixtureSchemasAccept(fixture, leaseReceiptEnvelope);
-    const authenticatedSubjects: string[] = [];
 
     const report = validateContentSchemaRegistryHostedE2eReportV3(
       fixture.report,
       fixture.contractBytes,
-      contextForScopeFixture(fixture, trustedScope, authenticatedSubjects),
+      contextForScopeFixture(fixture, trustedScope),
     );
 
     expect(report.runId).toBe(trustedScope.runId);
-    expect(authenticatedSubjects).toContain(leaseReceiptRef);
   });
 
   it.each(wrongScopeCases)(
@@ -359,15 +346,13 @@ describe('AC265 independently trusted outage lease scope', () => {
       });
 
       expectFixtureSchemasAccept(fixture, wrongEnvelope);
-      const authenticatedSubjects: string[] = [];
       expect(() =>
         validateContentSchemaRegistryHostedE2eReportV3(
           fixture.report,
           fixture.contractBytes,
-          contextForScopeFixture(fixture, trustedScope, authenticatedSubjects),
+          contextForScopeFixture(fixture, trustedScope),
         ),
       ).toThrow(/outage lease.*scope|lease.*scope/i);
-      expect(authenticatedSubjects).toContain(leaseReceiptRef);
     },
   );
 });

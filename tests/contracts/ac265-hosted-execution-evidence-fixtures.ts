@@ -1,4 +1,5 @@
 import type { ContentSchemaRegistryHostedRunnerContract } from '../../packages/contracts/src/content-schema-registry/operational-release-evidence-hosted-input.ts';
+import { sha256Ac265HostedSemanticSubject } from '../../infra/workflows/ac265-hosted-semantic-subject.ts';
 import { jsonBytes, sha256, uuidFor } from './ac265-hosted-test-fixtures.ts';
 
 type HostedIdentity = ContentSchemaRegistryHostedRunnerContract['identity'];
@@ -25,7 +26,7 @@ export const createSyntheticHostedExecutionEvidence = (
     const payload = {
       schemaVersion: 'ac265-execution-evidence-v1',
       candidateIdentitySha256: sha256(jsonBytes(identity)),
-      subjectSha256: sha256(jsonBytes(subject)),
+      subjectSha256: sha256Ac265HostedSemanticSubject(subject),
       kind,
       artifactSha256: sha256(
         Buffer.from(`synthetic fixture artifact ${artifactIndex}`),

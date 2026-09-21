@@ -24,6 +24,10 @@ import {
   authenticateAc265ApprovedRunnerMappingsV1,
   type Ac265ApprovedRunnerMappingTrustedKey,
 } from './ac265-approved-runner-mapping-attestation.ts';
+import {
+  isAc265HostedArtifactResolver,
+  type Ac265HostedArtifactResolver,
+} from './content-schema-registry-hosted-e2e-protected-context.ts';
 
 type HostedIdentity = ContentSchemaRegistryHostedRunnerContract['identity'];
 
@@ -42,38 +46,87 @@ export type ContentSchemaRegistryHostedE2eReportV3VerificationContext =
     readonly approvedRunnerMappingsBytes: Uint8Array;
     readonly approvedRunnerMappingAttestationBytes: Uint8Array;
     readonly approvedRunnerMappingTrustedKeys: readonly Ac265ApprovedRunnerMappingTrustedKey[];
-    readonly resolveReceipt: (ref: string) => Uint8Array | undefined;
-    readonly resolveEvidence: (ref: string) => Uint8Array | undefined;
-    readonly verifyReceiptAuthenticity: (
-      ref: string,
-      bytes: Uint8Array,
-      parsedEnvelope: unknown,
-    ) => boolean;
+    readonly resolver: Ac265HostedArtifactResolver;
   };
 
-type ParsedContentSchemaRegistryHostedE2eReportV3VerificationContext = Omit<
-  ContentSchemaRegistryHostedE2eReportV3VerificationContext,
-  | 'approvedOutageTargetBytes'
-  | 'approvedOutageTargetAttestationBytes'
-  | 'approvedOutageTargetTrustedKeys'
-  | 'approvedRunnerMappingsBytes'
-  | 'approvedRunnerMappingAttestationBytes'
-  | 'approvedRunnerMappingTrustedKeys'
-> & {
-  readonly approvedOutageTarget: ApprovedOutageTargetV1;
-  readonly approvedOutageTargetAttestation: ApprovedOutageTargetAttestationV1;
-  readonly approvedRunnerMappings: ApprovedRunnerMappingsV1;
-  readonly approvedRunnerMappingAttestation: ApprovedRunnerMappingAttestationV1;
-};
+export type ParsedContentSchemaRegistryHostedE2eReportV3VerificationContext =
+  Omit<
+    ContentSchemaRegistryHostedE2eReportV3VerificationContext,
+    | 'approvedOutageTargetBytes'
+    | 'approvedOutageTargetAttestationBytes'
+    | 'approvedOutageTargetTrustedKeys'
+    | 'approvedRunnerMappingsBytes'
+    | 'approvedRunnerMappingAttestationBytes'
+    | 'approvedRunnerMappingTrustedKeys'
+  > & {
+    readonly approvedOutageTarget: ApprovedOutageTargetV1;
+    readonly approvedOutageTargetAttestation: ApprovedOutageTargetAttestationV1;
+    readonly approvedRunnerMappings: ApprovedRunnerMappingsV1;
+    readonly approvedRunnerMappingAttestation: ApprovedRunnerMappingAttestationV1;
+  };
 
 const isRecord = (value: unknown): value is Record<string, unknown> =>
   typeof value === 'object' && value !== null && !Array.isArray(value);
 
+const CONTEXT_KEYS = [
+  'expectedIdentity',
+  'trustedCutoffAt',
+  'expectedRoleResourceBindings',
+  'expectedScenarioRoleBindings',
+  'expectedRunId',
+  'approvedRunnerMappingsBytes',
+  'approvedRunnerMappingAttestationBytes',
+  'approvedRunnerMappingTrustedKeys',
+  'approvedOutageTargetBytes',
+  'approvedOutageTargetAttestationBytes',
+  'approvedOutageTargetTrustedKeys',
+  'expectedOutageLeaseScope',
+  'maxRunDurationMs',
+  'expectedRunnerContractSha256',
+  'resolver',
+] as const;
+
+const parsedContextBrands = new WeakSet<object>();
+
+const snapshotContext = (
+  input: Record<string, unknown>,
+): Record<string, unknown> => {
+  const snapshot: Record<string, unknown> = {};
+  for (const key of CONTEXT_KEYS) snapshot[key] = input[key];
+  return snapshot;
+};
+
+const cloneBytes = (value: unknown, label: string): Uint8Array => {
+  if (!(value instanceof Uint8Array) || value.byteLength === 0)
+    throw new Error(`${label} is required.`);
+  return new Uint8Array(value);
+};
+
+const deepFreeze = <T>(value: T): T => {
+  if (
+    value === null ||
+    typeof value !== 'object' ||
+    value instanceof Uint8Array ||
+    Object.isFrozen(value)
+  )
+    return value;
+  Object.freeze(value);
+  for (const key of Reflect.ownKeys(value))
+    deepFreeze((value as Record<PropertyKey, unknown>)[key]);
+  return value;
+};
+
+export const isParsedHostedE2eVerificationContext = (
+  value: unknown,
+): value is ParsedContentSchemaRegistryHostedE2eReportV3VerificationContext =>
+  isRecord(value) && parsedContextBrands.has(value);
+
 export const parseHostedE2eVerificationContext = (
-  context: unknown,
+  input: unknown,
 ): ParsedContentSchemaRegistryHostedE2eReportV3VerificationContext => {
-  if (!isRecord(context))
+  if (!isRecord(input))
     throw new Error('Hosted E2E trusted verification context is required.');
+  const context = snapshotContext(input);
   const expectedIdentity =
     ContentSchemaRegistryHostedRunnerIdentitySchema.safeParse(
       context['expectedIdentity'],
@@ -91,18 +144,17 @@ export const parseHostedE2eVerificationContext = (
   const expectedRunId = context['expectedRunId'];
   if (typeof expectedRunId !== 'string')
     throw new Error('Hosted E2E trusted expected run is required.');
-  const approvedRunnerMappingsBytes = context['approvedRunnerMappingsBytes'];
-  const approvedRunnerMappingAttestationBytes =
-    context['approvedRunnerMappingAttestationBytes'];
+  const approvedRunnerMappingsBytes = cloneBytes(
+    context['approvedRunnerMappingsBytes'],
+    'Protected AC265 approved runner mapping bytes',
+  );
+  const approvedRunnerMappingAttestationBytes = cloneBytes(
+    context['approvedRunnerMappingAttestationBytes'],
+    'Protected AC265 approved runner mapping attestation bytes',
+  );
   const approvedRunnerMappingTrustedKeys =
     context['approvedRunnerMappingTrustedKeys'];
-  if (
-    !(approvedRunnerMappingsBytes instanceof Uint8Array) ||
-    approvedRunnerMappingsBytes.byteLength === 0 ||
-    !(approvedRunnerMappingAttestationBytes instanceof Uint8Array) ||
-    approvedRunnerMappingAttestationBytes.byteLength === 0 ||
-    !Array.isArray(approvedRunnerMappingTrustedKeys)
-  )
+  if (!Array.isArray(approvedRunnerMappingTrustedKeys))
     throw new Error(
       'Protected AC265 approved runner mapping bytes, signed attestation, and trusted keys are required.',
     );
@@ -135,18 +187,17 @@ export const parseHostedE2eVerificationContext = (
     throw new Error(
       'AC265 approved runner mappings do not match the protected trusted mapping context.',
     );
-  const approvedOutageTargetBytes = context['approvedOutageTargetBytes'];
-  const approvedOutageTargetAttestationBytes =
-    context['approvedOutageTargetAttestationBytes'];
+  const approvedOutageTargetBytes = cloneBytes(
+    context['approvedOutageTargetBytes'],
+    'Protected AC265 approved outage target bytes',
+  );
+  const approvedOutageTargetAttestationBytes = cloneBytes(
+    context['approvedOutageTargetAttestationBytes'],
+    'Protected AC265 approved outage target attestation bytes',
+  );
   const approvedOutageTargetTrustedKeys =
     context['approvedOutageTargetTrustedKeys'];
-  if (
-    !(approvedOutageTargetBytes instanceof Uint8Array) ||
-    approvedOutageTargetBytes.byteLength === 0 ||
-    !(approvedOutageTargetAttestationBytes instanceof Uint8Array) ||
-    approvedOutageTargetAttestationBytes.byteLength === 0 ||
-    !Array.isArray(approvedOutageTargetTrustedKeys)
-  )
+  if (!Array.isArray(approvedOutageTargetTrustedKeys))
     throw new Error(
       'Protected AC265 approved outage target bytes, signed attestation, and trusted keys are required.',
     );
@@ -184,18 +235,18 @@ export const parseHostedE2eVerificationContext = (
     throw new Error(
       'Hosted E2E maximum run duration must be a positive safe integer.',
     );
+  const expectedRunnerContractSha256 = context['expectedRunnerContractSha256'];
+  const resolver = context['resolver'];
   if (
-    typeof context['expectedRunnerContractSha256'] !== 'string' ||
-    !/^[0-9a-f]{64}$/u.test(context['expectedRunnerContractSha256']) ||
-    typeof context['resolveReceipt'] !== 'function' ||
-    typeof context['resolveEvidence'] !== 'function' ||
-    typeof context['verifyReceiptAuthenticity'] !== 'function'
+    typeof expectedRunnerContractSha256 !== 'string' ||
+    !/^[0-9a-f]{64}$/u.test(expectedRunnerContractSha256) ||
+    !isAc265HostedArtifactResolver(resolver)
   )
     throw new Error('Hosted E2E trusted verification context is incomplete.');
-  return {
+  const parsed = deepFreeze({
     expectedIdentity: expectedIdentity.data,
     expectedRunId,
-    expectedRunnerContractSha256: context['expectedRunnerContractSha256'],
+    expectedRunnerContractSha256,
     maxRunDurationMs,
     ...trustedMappings,
     trustedCutoffAt: trustedCutoffAt.data,
@@ -204,16 +255,8 @@ export const parseHostedE2eVerificationContext = (
     approvedOutageTargetAttestation: authenticatedOutageTarget.attestation,
     approvedRunnerMappings,
     approvedRunnerMappingAttestation: authenticatedRunnerMappings.attestation,
-    resolveReceipt: context['resolveReceipt'] as (
-      ref: string,
-    ) => Uint8Array | undefined,
-    resolveEvidence: context['resolveEvidence'] as (
-      ref: string,
-    ) => Uint8Array | undefined,
-    verifyReceiptAuthenticity: context['verifyReceiptAuthenticity'] as (
-      ref: string,
-      bytes: Uint8Array,
-      parsedEnvelope: unknown,
-    ) => boolean,
-  };
+    resolver,
+  });
+  parsedContextBrands.add(parsed);
+  return parsed;
 };

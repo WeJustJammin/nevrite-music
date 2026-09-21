@@ -1,8 +1,11 @@
-import type { ContentSchemaRegistryHostedE2eReportV3VerificationContext } from './content-schema-registry-hosted-e2e-report-verifier.ts';
+import {
+  parseHostedE2eVerificationContext,
+  type ParsedContentSchemaRegistryHostedE2eReportV3VerificationContext,
+} from './content-schema-registry-hosted-e2e-verification-context.ts';
 
 export type RetainedHostedE2eVerificationInput = Readonly<{
   runnerContractBytes: Uint8Array;
-  verificationContext: ContentSchemaRegistryHostedE2eReportV3VerificationContext;
+  verificationContext: ParsedContentSchemaRegistryHostedE2eReportV3VerificationContext;
 }>;
 
 const isRecord = (value: unknown): value is Record<string, unknown> =>
@@ -25,9 +28,9 @@ export const parseHostedV3Verification = (
     throw new Error(
       'Protected AC265 hosted E2E V3 verification context is required.',
     );
-  return {
-    runnerContractBytes,
-    verificationContext:
-      verificationContext as unknown as ContentSchemaRegistryHostedE2eReportV3VerificationContext,
-  };
+  const parsedContext = parseHostedE2eVerificationContext(verificationContext);
+  return Object.freeze({
+    runnerContractBytes: new Uint8Array(runnerContractBytes),
+    verificationContext: parsedContext,
+  });
 };
