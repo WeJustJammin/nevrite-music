@@ -77,6 +77,22 @@ Slice 10.
 The local v3 schema/verifier does not satisfy those hosted gates. Do not generate
 `hosted/e2e.json` from policy, configuration, local fixtures, or a partial run.
 
+## CP-04c local attestation/resolver foundation (not hosted acceptance)
+
+CP-04c adds a local/private foundation for strict Ed25519, domain-separated
+attestation over the exact raw artifact bytes. Its branded resolver requires an
+independent `expectedSubjectSha256` and binds the exact artifact reference,
+artifact kind, run ID, candidate identity digest, and runner-contract digest.
+The resolver keeps exact reference/kind membership and snapshots its inputs with
+a maximum of 256 sources. Each raw artifact and attestation envelope is bounded
+to 64 KiB, and public-key PEM input is bounded to 8192 characters.
+
+These are local implementation and test boundaries only. Upstream authenticated
+manifest/registry/run authority and the external replay ledger remain open. No
+approved live target, signing key, issuer, artifact store, broker, hosted report,
+server receipt, or browser matrix exists. AC265 remains open and Slice 10 remains
+locked; local or synthetic proof cannot be promoted to hosted acceptance.
+
 ## Locked evidence contract
 
 The retained report must satisfy `ac265-hosted-e2e-v3` under

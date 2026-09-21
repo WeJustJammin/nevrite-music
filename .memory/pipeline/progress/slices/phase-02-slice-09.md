@@ -15,6 +15,22 @@
 **Preflight gate**: strict current-disk floor reconciled — [contract reconciliation](../verification/2026-09-02-slice-09-contract-reconciliation.md)
 **Local QA-GREEN (active)**: 279/282 verified; 283 authored IDs remain — [evidence and external gates](../../../wiki/specs/audits/phase-02-slice-09-qa-green.md)
 
+## 2026-09-21 AC265 CP-04c hosted artifact foundation (local/private only)
+
+- CP-04c adds strict Ed25519 attestation over exact artifact bytes and a
+  branded resolver with exact artifact kind/reference/key/subject/run/candidate/
+  runner bindings. The resolver bounds its source set at **256** entries and
+  fails closed outside exact membership.
+- This is a locally validated private construction foundation only. Upstream
+  authenticated manifest/registry/run authority and the external replay ledger
+  remain open; no hosted artifact, hosted matrix, independently authenticated
+  receipt, or AC265 acceptance is claimed. Focused local verification passes
+  **5 files / 74 tests** and `pnpm type-check` is green.
+- Totals are unchanged: Slice 09 remains **279/282 active** (**283 authored
+  IDs**), Phase 2 remains **8/17** with **1,999/2,000 active criteria**,
+  AC209/AC211/AC265 remain open, Slice 10 remains locked, and AC266 remains
+  owner-deferred as a mandatory post-Phase 2 production-readiness/release gate.
+
 ## Tasks
 
 - [x] Contract: lock Zod, data, registry, event, and route contracts

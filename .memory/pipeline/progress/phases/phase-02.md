@@ -82,6 +82,21 @@ owner-deferred, and mandatory at the post-Phase 2 production-readiness/release
 gate. See the [CP-04b verification
 record](../verification/2026-09-21-ac265-approved-outage-target-registration.md).
 
+## CP-04c hosted artifact attestation and branded resolver (local/private foundation)
+
+CP-04c is locally validated as a private construction foundation only. It adds
+strict Ed25519 attestation over exact artifact bytes and a branded resolver
+that enforces exact artifact kind/reference/key/subject/run/candidate/runner
+bindings with a maximum source set of **256**. The upstream authenticated
+manifest/registry/run authority and external replay ledger remain open; no
+hosted artifact, hosted matrix, independently authenticated receipt, or AC265
+acceptance is claimed. Focused local verification passes **5 files / 74 tests**
+and `pnpm type-check` is green. Phase 2 remains **8/17** with **1,999/2,000
+active criteria**; Slice 09 remains **279/282 active** (**283 authored IDs**),
+AC209/AC211/AC265 remain open, Slice 10 remains locked, and AC266 remains
+owner-deferred as the mandatory post-Phase 2 production-readiness/release
+gate.
+
 Slice 08 is complete (51/51). Slice 09 local QA-GREEN passes. PR #13 merged as
 exact main SHA `7250754dcdc9c1b7a863aa41d79772e6ab7092ab`; CI run
 `33950299169`, staging run `33950592657` / deployment `6278097284`, and
