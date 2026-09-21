@@ -57,6 +57,58 @@ describe('verifyStagingWithRetries', () => {
     expect(sleepImpl).toHaveBeenCalledWith(25);
   });
 
+  it('uses the default retry window for a release mismatch that outlives the old 15-second window', async () => {
+    let mismatchesRemaining = 12;
+    const successfulResponses = [
+      webShellResponse(webHtmlWithStaticAsset),
+      webRuntimeRedirect,
+      apiHealthResponse(),
+      new Response('asset', {
+        headers: protectedHeaders({
+          'content-type': 'application/javascript',
+        }),
+        status: 200,
+      }),
+      httpRedirect('https://staging.example.com/'),
+      httpRedirect('https://api-staging.example.com/api/v1/health'),
+    ];
+    const fetchImpl = vi.fn<typeof fetch>().mockImplementation(async () => {
+      if (mismatchesRemaining > 0) {
+        mismatchesRemaining -= 1;
+        return new Response(webHtmlWithStaticAsset, {
+          headers: {
+            ...protectedHeaders({ 'x-wejammin-release': 'b'.repeat(40) }),
+            'content-type': 'text/html; charset=utf-8',
+          },
+          status: 200,
+        });
+      }
+
+      const response = successfulResponses.shift();
+      if (response === undefined) throw new Error('Unexpected staging probe');
+      return response;
+    });
+    const sleepImpl = vi.fn().mockResolvedValue(undefined);
+
+    await expect(
+      verifyStagingWithRetries({
+        apiOrigin: 'https://api-staging.example.com',
+        fetchImpl,
+        sleepImpl,
+        webOrigin: 'https://staging.example.com',
+      }),
+    ).resolves.toEqual({
+      apiStatus: 200,
+      webRuntimeStatus: 303,
+      webStatus: 200,
+    });
+
+    expect(fetchImpl).toHaveBeenCalledTimes(18);
+    expect(sleepImpl).toHaveBeenCalledTimes(12);
+    expect(sleepImpl).toHaveBeenNthCalledWith(1, 5_000);
+    expect(sleepImpl).toHaveBeenLastCalledWith(5_000);
+  });
+
   it('fails closed after the bounded retry limit', async () => {
     const fetchImpl = vi.fn<typeof fetch>().mockResolvedValue(
       new Response(webHtmlWithStaticAsset, {
@@ -97,5 +149,22 @@ describe('verifyStagingWithRetries', () => {
         ...options,
       }),
     ).rejects.toThrow(message);
+  });
+
+  it('fails input validation before entering the propagation retry window', async () => {
+    const fetchImpl = vi.fn<typeof fetch>();
+    const sleepImpl = vi.fn().mockResolvedValue(undefined);
+
+    await expect(
+      verifyStagingWithRetries({
+        apiOrigin: 'https://api-staging.example.com',
+        fetchImpl,
+        sleepImpl,
+        webOrigin: 'http://staging.example.com',
+      }),
+    ).rejects.toThrow('Staging origins must use HTTPS');
+
+    expect(fetchImpl).not.toHaveBeenCalled();
+    expect(sleepImpl).not.toHaveBeenCalled();
   });
 });

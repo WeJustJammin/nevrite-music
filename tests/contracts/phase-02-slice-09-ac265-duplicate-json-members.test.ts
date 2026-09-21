@@ -101,19 +101,7 @@ describe('AC265 duplicate JSON object members', () => {
     );
     fixture.receiptBytes.set(slot.ref, duplicatedReceiptBytes);
     withReceiptHash(fixture.report, slot, sha256(duplicatedReceiptBytes));
-    const context = {
-      ...contextFor(fixture, fixture.contract),
-      verifyReceiptAuthenticity: (ref: string, bytes: Uint8Array) => {
-        const authenticatedBytes = fixture.receiptBytes.get(ref);
-        return (
-          authenticatedBytes !== undefined &&
-          Buffer.compare(
-            Buffer.from(bytes),
-            Buffer.from(authenticatedBytes),
-          ) === 0
-        );
-      },
-    };
+    const context = contextFor(fixture, fixture.contract);
     const reportBytes = jsonBytes(fixture.report);
 
     expect(() =>
@@ -142,19 +130,7 @@ describe('AC265 duplicate JSON object members', () => {
     );
     fixture.receiptBytes.set(slot.ref, duplicatedReceiptBytes);
     withReceiptHash(fixture.report, slot, sha256(duplicatedReceiptBytes));
-    const context = {
-      ...contextFor(fixture, fixture.contract),
-      verifyReceiptAuthenticity: (ref: string, bytes: Uint8Array) => {
-        const authenticatedBytes = fixture.receiptBytes.get(ref);
-        return (
-          authenticatedBytes !== undefined &&
-          Buffer.compare(
-            Buffer.from(bytes),
-            Buffer.from(authenticatedBytes),
-          ) === 0
-        );
-      },
-    };
+    const context = contextFor(fixture, fixture.contract);
     const reportBytes = jsonBytes(fixture.report);
 
     expect(() =>

@@ -10,11 +10,13 @@ import { CONTENT_SCHEMA_REGISTRY_HOSTED_ROLES } from '../../packages/contracts/s
 import { assertHostedRunnerMappingsApproved } from './content-schema-registry-hosted-e2e-trusted-mappings.ts';
 import { assertAc265HostedRunnerPolicyV1 } from './ac265-hosted-runner-policy-v1.ts';
 import {
+  isParsedHostedE2eVerificationContext,
   parseHostedE2eVerificationContext,
   type ContentSchemaRegistryHostedE2eReportV3VerificationContext,
 } from './content-schema-registry-hosted-e2e-verification-context.ts';
 import { verifyHostedOutageLeaseLifecycle } from './content-schema-registry-hosted-e2e-outage-lease-verifier.ts';
 import { verifyHostedExecutionEvidence } from './content-schema-registry-hosted-e2e-evidence-verifier.ts';
+import { sha256Ac265HostedSemanticSubject } from './ac265-hosted-semantic-subject.ts';
 import { parseJsonBytesWithoutDuplicateMembers } from './strict-json-object-members.ts';
 
 export type { ContentSchemaRegistryHostedE2eReportV3VerificationContext } from './content-schema-registry-hosted-e2e-verification-context.ts';
@@ -42,11 +44,15 @@ const verifyReceipt = (input: {
     readonly completedAt: number;
     readonly trustedCutoffAt: number;
   };
+  reportStartedAt: string;
   context: ContentSchemaRegistryHostedE2eReportV3VerificationContext;
 }): void => {
-  const bytes = input.context.resolveReceipt(input.receipt.ref);
-  if (!(bytes instanceof Uint8Array))
-    throw new Error('Hosted E2E server receipt bytes are unavailable.');
+  const resolution = input.context.resolver.resolveReceipt({
+    ref: input.receipt.ref,
+    reportStartedAt: input.reportStartedAt,
+    expectedSubjectSha256: sha256Ac265HostedSemanticSubject(input.subject),
+  });
+  const bytes = resolution.bytes;
   if (sha256Bytes(bytes) !== input.receipt.sha256)
     throw new Error('Hosted E2E server receipt digest does not match.');
   const envelopeResult =
@@ -72,14 +78,6 @@ const verifyReceipt = (input: {
     throw new Error('Hosted E2E server receipt body is invalid.');
   }
   const envelope = envelopeResult.data;
-  if (
-    input.context.verifyReceiptAuthenticity(
-      input.receipt.ref,
-      bytes,
-      envelope,
-    ) !== true
-  )
-    throw new Error('Hosted E2E server receipt authenticity is untrusted.');
   const issuedAt = Date.parse(envelope.issuedAt);
   if (issuedAt > input.executionWindow.trustedCutoffAt)
     throw new Error('Hosted E2E server receipt exceeds the trusted cutoff.');
@@ -134,7 +132,9 @@ export const verifyContentSchemaRegistryHostedE2eV3Bindings = (input: {
   runnerContractBytes: Uint8Array;
   context: unknown;
 }): void => {
-  const context = parseHostedE2eVerificationContext(input.context);
+  const context = isParsedHostedE2eVerificationContext(input.context)
+    ? input.context
+    : parseHostedE2eVerificationContext(input.context);
   const contractDigest = sha256Bytes(input.runnerContractBytes);
   if (contractDigest !== context.expectedRunnerContractSha256)
     throw new Error(
@@ -188,7 +188,7 @@ export const verifyContentSchemaRegistryHostedE2eV3Bindings = (input: {
   verifyHostedExecutionEvidence({
     report: input.report,
     contract: input.contract,
-    resolveEvidence: context.resolveEvidence,
+    resolver: context.resolver,
   });
 
   const verify = (receipt: HostedReceipt, subject: unknown, result: unknown) =>
@@ -199,6 +199,7 @@ export const verifyContentSchemaRegistryHostedE2eV3Bindings = (input: {
       runId: input.contract.runId,
       identity: input.contract.identity,
       executionWindow,
+      reportStartedAt: input.report.startedAt,
       context,
     });
 

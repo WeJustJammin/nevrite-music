@@ -13,6 +13,11 @@ import {
   HostedSessionTeardownEvidenceReferenceSchema,
 } from '../../packages/contracts/src/content-schema-registry/operational-release-evidence-hosted-execution-evidence.ts';
 import { parseJsonBytesWithoutDuplicateMembers } from './strict-json-object-members.ts';
+import {
+  isAc265HostedArtifactResolver,
+  type Ac265HostedArtifactResolver,
+} from './content-schema-registry-hosted-e2e-protected-context.ts';
+import { sha256Ac265HostedSemanticSubject } from './ac265-hosted-semantic-subject.ts';
 
 type HostedRole = (typeof CONTENT_SCHEMA_REGISTRY_HOSTED_ROLES)[number];
 type EvidenceKind =
@@ -25,19 +30,16 @@ const isRecord = (value: unknown): value is Record<string, unknown> =>
 const sha256Bytes = (value: Uint8Array): string =>
   createHash('sha256').update(value).digest('hex');
 
-const sha256Json = (value: unknown): string =>
-  sha256Bytes(Buffer.from(JSON.stringify(value), 'utf8'));
-
 const parseEvidenceBytes = (bytes: Uint8Array): unknown =>
   parseJsonBytesWithoutDuplicateMembers(bytes, 'Hosted execution evidence');
 
 export const verifyHostedExecutionEvidence = (input: {
   report: ContentSchemaRegistryHostedE2eReportV3;
   contract: ContentSchemaRegistryHostedRunnerContract;
-  resolveEvidence: (ref: string) => Uint8Array | undefined;
+  resolver: Ac265HostedArtifactResolver;
 }): void => {
-  if (typeof input.resolveEvidence !== 'function')
-    throw new Error('Hosted execution evidence resolver is required.');
+  if (!isAc265HostedArtifactResolver(input.resolver))
+    throw new Error('Hosted execution evidence resolver is not authenticated.');
   if (
     input.report.cleanup.logoutPolicy !== 'current_session_only' ||
     !isRecord(input.report.cleanup.sessionTeardowns)
@@ -83,9 +85,12 @@ export const verifyHostedExecutionEvidence = (input: {
       );
     usedReferences.add(evidenceReference.ref);
 
-    const bytes = input.resolveEvidence(evidenceReference.ref);
-    if (!(bytes instanceof Uint8Array))
-      throw new Error('Hosted execution evidence bytes are unavailable.');
+    const resolution = input.resolver.resolveEvidence({
+      ref: evidenceReference.ref,
+      reportStartedAt: input.report.startedAt,
+      expectedSubjectSha256: sha256Ac265HostedSemanticSubject(subject),
+    });
+    const bytes = resolution.bytes;
     if (sha256Bytes(bytes) !== evidenceReference.sha256)
       throw new Error('Hosted execution evidence digest does not match.');
 
@@ -106,7 +111,7 @@ export const verifyHostedExecutionEvidence = (input: {
       throw new Error(
         'Hosted execution evidence candidate identity does not match.',
       );
-    if (payload.subjectSha256 !== sha256Json(subject))
+    if (payload.subjectSha256 !== sha256Ac265HostedSemanticSubject(subject))
       throw new Error('Hosted execution evidence subject does not match.');
     if (
       sessionRefSha256 !== undefined &&

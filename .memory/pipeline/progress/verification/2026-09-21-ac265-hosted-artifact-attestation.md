@@ -56,6 +56,31 @@ threshold.
 files / 2,124 tests** all successful, and generated database types matched the
 migrated schema.
 
+## Exact-main and staging promotion evidence
+
+PR #90 promoted the CP04c private foundation at exact main SHA
+`e7525fa9ea80bbdf2325e8ce08d18930d6485b15`. Exact-main CI
+`35634692281` succeeded. Staging workflow `35635650934` failed on
+`run_attempt=1` only at transient web release-identity propagation before
+succeeding on `run_attempt=2`;
+deployment `6574859596` succeeded at `https://staging.wejamm.in`. The exact
+staging endpoints now serve
+`e7525fa9ea80bbdf2325e8ce08d18930d6485b15`; the CP04c promotion record
+predates the retry hardening now included in the unpromoted CP04d worktree.
+Candidate artifact `10656615428` has digest
+`sha256:5568778c8bec9eacd8090ae2020518caa070ce82b1a901aa4c7fe9a95f03d592`;
+deployment evidence artifact `10655784856` has digest
+`sha256:02422c5ef8b4988fe50bdc7d02771c286ac81c148e51bac6bc80927736ec461d`.
+Staging p95 was `49.30431599999997 ms` and the automated axe digest was
+`00968b6a806db4993ab895f83fcb592af81a65ec925f9b38e6aa3140c0f87d87`.
+These are exact-main and staging promotion records for the private foundation,
+not hosted AC265 acceptance evidence; AC265 remains open and no totals or gates
+changed.
+
+This CP04c record preserves the promotion-time state. The CP04c promotion
+record predates the retry hardening and source-authority work now tracked in the
+[CP04d signed source-manifest and authority verification record](2026-09-21-ac265-hosted-artifact-source-manifest.md).
+
 ## Explicit protections and limits
 
 - Ed25519 signatures use a dedicated AC265 domain and canonical signed bytes.

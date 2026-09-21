@@ -14,6 +14,19 @@ import {
   createAc265ApprovedRunnerMappingAttestation,
   type Ac265ApprovedRunnerMappingTrustedKey,
 } from '../../infra/workflows/ac265-approved-runner-mapping-attestation.ts';
+import {
+  createAc265HostedArtifactResolver,
+  type Ac265HostedArtifactResolver,
+  type Ac265HostedArtifactTrust,
+} from '../../infra/workflows/content-schema-registry-hosted-e2e-protected-context.ts';
+import {
+  AC265_TEST_RUNNER_MAPPING_KEY_ID,
+  AC265_TEST_RUNNER_MAPPING_PRIVATE_KEY_PEM,
+  AC265_TEST_RUNNER_MAPPING_TRUSTED_KEYS,
+  DEFAULT_HOSTED_ARTIFACT_ATTESTATION_WINDOWS,
+  hostedArtifactSourcesFor,
+  type Ac265HostedArtifactAttestationWindows,
+} from './ac265-hosted-artifact-resolver-fixtures.ts';
 import type { HostedReceiptFixtureByteStores } from './ac265-hosted-receipt-test-types.ts';
 import {
   jsonBytes,
@@ -37,14 +50,15 @@ export type VerifierContext = {
   approvedRunnerMappingTrustedKeys?: readonly Ac265ApprovedRunnerMappingTrustedKey[];
   maxRunDurationMs: number;
   trustedCutoffAt: string;
-  resolveReceipt: (ref: string) => Uint8Array | undefined;
-  resolveEvidence: (ref: string) => Uint8Array | undefined;
-  verifyReceiptAuthenticity: (
-    ref: string,
-    bytes: Uint8Array,
-    parsedEnvelope: unknown,
-  ) => boolean;
+  resolver: Ac265HostedArtifactResolver;
 };
+
+export {
+  AC265_TEST_RUNNER_MAPPING_KEY_ID,
+  AC265_TEST_RUNNER_MAPPING_PRIVATE_KEY_PEM,
+  AC265_TEST_RUNNER_MAPPING_PUBLIC_KEY_PEM,
+  AC265_TEST_RUNNER_MAPPING_TRUSTED_KEYS,
+} from './ac265-hosted-artifact-resolver-fixtures.ts';
 
 export const validateWithContext =
   validateContentSchemaRegistryHostedE2eReportV3 as unknown as (
@@ -125,14 +139,6 @@ const approvedRunnerMappingsBytesFor = (
     scenarioRoleBindings: trustedContract.scenarioRoleBindings,
   }).bytes;
 
-export const AC265_TEST_RUNNER_MAPPING_PRIVATE_KEY_PEM = `-----BEGIN PRIVATE KEY-----
-MC4CAQAwBQYDK2VwBCIEIJ1hsZ3v/VpguoRK9JLsLMREScVpezJpGXA7rAMcrn9g
------END PRIVATE KEY-----`;
-export const AC265_TEST_RUNNER_MAPPING_PUBLIC_KEY_PEM = `-----BEGIN PUBLIC KEY-----
-MCowBQYDK2VwAyEA11qYAYKxCrfVS/7TyWQHOg7hcvPapiMlrwIaaPcHURo=
------END PUBLIC KEY-----`;
-export const AC265_TEST_RUNNER_MAPPING_KEY_ID = 'ac265-runner-mapping-v1';
-
 const approvedRunnerMappingAttestationFor = (
   mappingBytes: Uint8Array,
 ): Readonly<{
@@ -147,19 +153,10 @@ const approvedRunnerMappingAttestationFor = (
     expiresAt: '2026-09-03T10:35:00.000Z',
   });
 
-export const AC265_TEST_RUNNER_MAPPING_TRUSTED_KEYS = [
-  {
-    keyId: AC265_TEST_RUNNER_MAPPING_KEY_ID,
-    publicKeyPem: AC265_TEST_RUNNER_MAPPING_PUBLIC_KEY_PEM,
-    validFrom: '2026-09-01T00:00:00.000Z',
-    validUntil: '2026-10-01T00:00:00.000Z',
-    status: 'active' as const,
-  },
-] as const;
-
 export const contextFor = (
   fixture: HostedReceiptFixtureByteStores,
   trustedContract: ContentSchemaRegistryHostedRunnerContract = makeContract(),
+  windows: Ac265HostedArtifactAttestationWindows = DEFAULT_HOSTED_ARTIFACT_ATTESTATION_WINDOWS,
 ): VerifierContext => {
   const approvedRunnerMappingsBytes =
     approvedRunnerMappingsBytesFor(trustedContract);
@@ -170,6 +167,22 @@ export const contextFor = (
   );
   const { attestationBytes } = approvedRunnerMappingAttestationFor(
     approvedRunnerMappingsBytes,
+  );
+  const hostedArtifactTrust: Ac265HostedArtifactTrust = {
+    runId: trustedContract.runId,
+    candidateIdentitySha256: sha256(jsonBytes(trustedContract.identity)),
+    runnerContractSha256: sha256(jsonBytes(trustedContract)),
+    trustedKeys: AC265_TEST_RUNNER_MAPPING_TRUSTED_KEYS,
+    trustedCutoffAt: '2026-09-03T12:00:00.000Z',
+  };
+  const resolver = createAc265HostedArtifactResolver(
+    hostedArtifactTrust,
+    hostedArtifactSourcesFor(
+      fixture,
+      trustedContract,
+      jsonBytes(trustedContract),
+      windows,
+    ),
   );
   return {
     expectedIdentity: trustedContract.identity,
@@ -188,9 +201,7 @@ export const contextFor = (
     // Test-only ceiling; production callers must supply their trusted policy.
     maxRunDurationMs: 60 * 60 * 1_000,
     trustedCutoffAt: '2026-09-03T12:00:00.000Z',
-    resolveReceipt: (ref) => fixture.receiptBytes.get(ref),
-    resolveEvidence: (ref) => fixture.evidenceBytes.get(ref),
-    verifyReceiptAuthenticity: () => true,
+    resolver,
   };
 };
 
