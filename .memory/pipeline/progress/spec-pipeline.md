@@ -71,12 +71,14 @@
 - **CURRENT IMPLEMENTATION (2026-09-21):** Phase 2 Slices 01–08 are complete.
   Slice 09 remains locally QA-GREEN at 279/282 active (283 authored IDs) with
   authored depth ratio `0.986`.
-  The current exact-main baseline is PR #81 at SHA
-  `f8a6b77e529c7b150df367f5ce59e43b1aed0db1`; CI `35560004822` and staging
-  `35560514952` / deployment `6561553954` passed. AC211 provenance and AC266
+  The current exact-main baseline is PR #82 at SHA
+  `71d59166e5b1b6440ac0786d2d4c192dfba526fa`; CI `35563634660` and staging
+  `35564168797` / deployment `6562174644` passed. AC211 provenance and AC266
   report-preparation tooling is landed, but neither is hosted acceptance.
   AC265 preflight `34824500796` passed, while authorization foundation run
   `34824651793` failed at `staging_prepare`; no hosted browser acceptance ran.
+  AC265 CP-01 now has a locally verified staging-only outage-lease database
+  control plane, but no target is seeded and no hosted receipt is produced.
   AC266 is owner-deferred because the required real devices are unavailable; it
   remains unchecked and excluded from active Phase 2 completion. Slice 10
   remains locked only on AC209, AC211, and AC265; AC266 remains a mandatory
@@ -84,13 +86,14 @@
   `.memory/pipeline/progress/phases/phase-02.md` and
   `.memory/pipeline/progress/slices/phase-02-slice-09.md`.
 - **CURRENT VALIDATION (fresh 2026-09-21):** Under exact Node `22.23.1` and
-  pnpm `11.24.0`, `pnpm validate` passed 536 Vitest files / 4,234 tests plus one
-  skip at 100% coverage (13,028 statements, 9,826 branches, 2,151 functions,
-  and 12,109 lines), the Slice 09 evidence gate, 101 functional plus 5 real
+  pnpm `11.24.0`, `pnpm validate` passed 537 Vitest files / 4,241 tests plus one
+  skip at 100% coverage (13,048 statements, 9,828 branches, 2,152 functions,
+  and 12,129 lines), the Slice 09 evidence gate, 101 functional plus 5 real
   Slice 09 E2E tests, all workspace builds, bundle budgets, and performance
-  smoke (`p95=1.527671 ms`, threshold `500 ms`, zero errors). Fresh
-  `pnpm db:verify` passed 52 pgTAP files / 1,917 tests with migrated type parity.
-  These local/tooling results do not close hosted acceptance.
+  smoke (`p95=1.190315 ms`, threshold `500 ms`, zero errors). Fresh
+  `pnpm db:verify` passed 54 pgTAP files / 2,000 tests with migrated type parity.
+  These local/tooling results do not close hosted acceptance; see the
+  [CP-01 verification record](verification/2026-09-21-ac265-outage-lease-control-plane.md).
 - **HISTORICAL PRE-REMEDIATION CANDIDATE:** Before this remediation, PR #9 branch
   `codex/phase-2-slices-01-09` was at
   `67264c5e9b5196d00ac3f0aa272896a010c872d7`; synthetic merge

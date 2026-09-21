@@ -23,6 +23,13 @@ strict schema requires complete keys and read-only parsed maps. Deferred Phase
 2 guardian/junior/business-mandate contexts require denial; these schemas and
 policies never grant runtime authority or supply hosted proof.
 
+`operational-release-evidence-hosted-outage-lease-control.ts` defines the
+strict CP-01 service boundary for acquiring, consuming, and releasing a
+staging-only one-request lease. It accepts opaque references only and returns
+redacted references, digests, policy, and server timestamps. The contract does
+not approve a target, issue a signed receipt, expose a public route, or prove a
+hosted outage run.
+
 ## Ownership
 
 These schemas define the cross-surface boundary. They do not grant authority,

@@ -2,6 +2,7 @@ export * from './models.ts';
 export * from './openapi.ts';
 export * from './operational-release-evidence-hosted-approved-outage-target.ts';
 export * from './operational-release-evidence-hosted-approved-runner-mappings.ts';
+export * from './operational-release-evidence-hosted-outage-lease-control.ts';
 export * from './operational-release-evidence.ts';
 export * from './primitives.ts';
 export * from './requests.ts';

@@ -91,6 +91,18 @@ export type Database = {
         Args: { p_request: Json }
         Returns: Json
       }
+      ac265_hosted_outage_lease_acquire: {
+        Args: { p_request: Json }
+        Returns: Json
+      }
+      ac265_hosted_outage_lease_consume: {
+        Args: { p_request: Json }
+        Returns: Json
+      }
+      ac265_hosted_outage_lease_release: {
+        Args: { p_request: Json }
+        Returns: Json
+      }
       ac265_prepare_hosted_run: { Args: { p_request: Json }; Returns: Json }
       accept_job_with_outbox: {
         Args: {
@@ -1127,6 +1139,177 @@ export type Database = {
   }
   platform_private: {
     Tables: {
+      ac265_approved_outage_targets: {
+        Row: {
+          approved_at: string
+          candidate_id: string
+          dependency_id: string
+          deployment_id: string
+          environment: string
+          expires_at: string
+          hosting_project_id: string
+          identity_sha256: string
+          route_method: string
+          route_operation_id: string
+          route_path: string
+          run_id: string
+          source_revision: string
+          supabase_project_ref: string
+          target_id: string
+          target_ref: string
+          target_sha256: string
+        }
+        Insert: {
+          approved_at: string
+          candidate_id: string
+          dependency_id: string
+          deployment_id: string
+          environment: string
+          expires_at: string
+          hosting_project_id: string
+          identity_sha256: string
+          route_method: string
+          route_operation_id: string
+          route_path: string
+          run_id: string
+          source_revision: string
+          supabase_project_ref: string
+          target_id?: string
+          target_ref: string
+          target_sha256: string
+        }
+        Update: {
+          approved_at?: string
+          candidate_id?: string
+          dependency_id?: string
+          deployment_id?: string
+          environment?: string
+          expires_at?: string
+          hosting_project_id?: string
+          identity_sha256?: string
+          route_method?: string
+          route_operation_id?: string
+          route_path?: string
+          run_id?: string
+          source_revision?: string
+          supabase_project_ref?: string
+          target_id?: string
+          target_ref?: string
+          target_sha256?: string
+        }
+        Relationships: []
+      }
+      ac265_hosted_outage_leases: {
+        Row: {
+          acquire_request_sha256: string
+          acquired_at: string
+          authorization_id: string
+          consume_request_sha256: string | null
+          consumed_at: string | null
+          consumed_idempotency_ref: string | null
+          dependency_id: string
+          deployment_id: string
+          environment: string
+          expires_at: string
+          hosting_project_id: string
+          idempotency_ref: string
+          identity_sha256: string
+          lease_duration_seconds: number
+          lease_id: string
+          lease_ref: string
+          lease_sha256: string
+          release_request_sha256: string | null
+          released_at: string | null
+          released_idempotency_ref: string | null
+          request_limit: number
+          route_method: string
+          route_operation_id: string
+          route_path: string
+          run_id: string
+          source_revision: string
+          supabase_project_ref: string
+          target_id: string
+          target_sha256: string
+        }
+        Insert: {
+          acquire_request_sha256: string
+          acquired_at: string
+          authorization_id: string
+          consume_request_sha256?: string | null
+          consumed_at?: string | null
+          consumed_idempotency_ref?: string | null
+          dependency_id: string
+          deployment_id: string
+          environment?: string
+          expires_at: string
+          hosting_project_id: string
+          idempotency_ref: string
+          identity_sha256: string
+          lease_duration_seconds?: number
+          lease_id?: string
+          lease_ref: string
+          lease_sha256: string
+          release_request_sha256?: string | null
+          released_at?: string | null
+          released_idempotency_ref?: string | null
+          request_limit?: number
+          route_method: string
+          route_operation_id: string
+          route_path: string
+          run_id: string
+          source_revision: string
+          supabase_project_ref: string
+          target_id: string
+          target_sha256: string
+        }
+        Update: {
+          acquire_request_sha256?: string
+          acquired_at?: string
+          authorization_id?: string
+          consume_request_sha256?: string | null
+          consumed_at?: string | null
+          consumed_idempotency_ref?: string | null
+          dependency_id?: string
+          deployment_id?: string
+          environment?: string
+          expires_at?: string
+          hosting_project_id?: string
+          idempotency_ref?: string
+          identity_sha256?: string
+          lease_duration_seconds?: number
+          lease_id?: string
+          lease_ref?: string
+          lease_sha256?: string
+          release_request_sha256?: string | null
+          released_at?: string | null
+          released_idempotency_ref?: string | null
+          request_limit?: number
+          route_method?: string
+          route_operation_id?: string
+          route_path?: string
+          run_id?: string
+          source_revision?: string
+          supabase_project_ref?: string
+          target_id?: string
+          target_sha256?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ac265_hosted_outage_leases_authorization_id_fkey"
+            columns: ["authorization_id"]
+            isOneToOne: false
+            referencedRelation: "ac265_runner_authorizations"
+            referencedColumns: ["authorization_id"]
+          },
+          {
+            foreignKeyName: "ac265_hosted_outage_leases_target_id_fkey"
+            columns: ["target_id"]
+            isOneToOne: false
+            referencedRelation: "ac265_approved_outage_targets"
+            referencedColumns: ["target_id"]
+          },
+        ]
+      }
       ac265_runner_authorization_jtis: {
         Row: {
           authorization_id: string
