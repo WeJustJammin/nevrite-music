@@ -167,7 +167,7 @@ resources. The source key, live registry population, retained mapping artifact,
 and protected hosted run remain absent; fixtures and generated test keys are not
 acceptance evidence.
 
-CP-04a now supplies a local, unpromoted approved outage-target read and
+CP-04a now supplies a promoted approved outage-target read and
 attestation boundary. Its service-role-only
 `ac265_approved_outage_target_read` RPC reads CP-01 target rows and returns a
 redacted canonical projection plus the stored target digest. A distinct,
@@ -183,8 +183,10 @@ green builds/bundle checks, and local API p95 1.377056 ms. After a clean reset,
 all `pnpm db:verify` components are green: 57 pgTAP files / 2,087 assertions,
 database lint, and generated-type checks pass. Independent security review
 found no CP-04a blocker; a protected orchestrator remains a required trust
-boundary. Promotion, staging execution, live target key/configuration, seeded
-target or registry rows, retained artifact, or workflow run remain pending, so
+boundary. PR #86 / exact-main SHA
+`4fa8691d24177d0a528335f3c3d06ef50d67d3a9`, CI `35597438023`, and staging
+workflow `35598236704` / deployment `6568074493` are green. Live target key/configuration, seeded
+target or registry rows, retained artifact, or workflow run remain absent, so
 CP-04a is not hosted acceptance evidence.
 
 ## Versioned scenario parameter policy
@@ -333,7 +335,7 @@ constrained beneath `RUNNER_TEMP`, and deletion-free fail-closed handling that
 preserves only private runner-local remnants. These are local
 implementation checks, not hosted evidence.
 
-CP-04a is a separate local, unpromoted target-read/attestation foundation
+CP-04a is a separate promoted target-read/attestation foundation
 (`ac265-approved-outage-target-rpc.ts`;
 `ac265-approved-outage-target-attestation.ts`;
 `attest-ac265-approved-outage-target.ts`;

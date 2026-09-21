@@ -6,14 +6,11 @@
   at **279/282 active** (**283 authored IDs**) with authored depth ratio
   **0.986**. Phase 2 has **1,999 active criteria / 2,000 authored** because
   AC266 is owner-deferred and excluded from the active completion denominator.
-  Current `main` is PR #85 at
-  `a94ffbca3d41da703218dff12ee7527f31c23a34`; exact-main CI
-  [run 35592046696](https://github.com/WeJustJammin/nevrite-music/actions/runs/35592046696)
-  passed and staging [run 35592722418](https://github.com/WeJustJammin/nevrite-music/actions/runs/35592722418)
-  / deployment `6567092259` succeeded at
-  `https://staging.wejamm.in`. The first staging attempt failed at the
-  immediate Cloudflare provider-evidence query after endpoint verification and
-  deploy; one failed-job retry succeeded with no provider configuration change.
+  Current `main` is PR #86 at
+  `4fa8691d24177d0a528335f3c3d06ef50d67d3a9`; exact-main CI
+  [run 35597438023](https://github.com/WeJustJammin/nevrite-music/actions/runs/35597438023)
+  passed and staging [run 35598236704](https://github.com/WeJustJammin/nevrite-music/actions/runs/35598236704)
+  / deployment `6568074493` succeeded at `https://staging.wejamm.in`.
   AC265 preflight
   [run 34824500796](https://github.com/WeJustJammin/nevrite-music/actions/runs/34824500796)
   passed; authorization foundation [run 34824651793](https://github.com/WeJustJammin/nevrite-music/actions/runs/34824651793)
@@ -34,35 +31,25 @@
   is excluded from active Phase 2 completion, but is mandatory for post-Phase 2
   production-readiness/release. No active acceptance gate closed. Slice 10
   remains locked only on AC209, AC211, and AC265; AC266 does not block Slice 10
-  implementation. The final CP-03 working-tree validation passes **543 Vitest files /
-  4,312 passed + 1 intentional skip (4,313 total)**, 100% coverage
-  (**13,101 statements, 9,840 branches, 2,157 functions, and 12,182 lines**),
-  the Slice 09 evidence command, **101 functional + 5 real Slice 09 E2E tests**,
-  builds, bundle budgets, and performance smoke (`p95=1.277622 ms`, threshold
-  `500 ms`, zero errors). Fresh database verification passes **56 pgTAP files /
-  2,065 tests** with migrated type parity;
-  focused CP-02 contracts pass **2 files / 11 tests**, broader AC265 contract
-  verification passes **4 files / 31 tests**, and targeted CP-02 SQL passes **2
-  files / 65 assertions**. See [the CP-01 verification record](../verification/2026-09-21-ac265-outage-lease-control-plane.md)
-  and [the CP-02 verification record](../verification/2026-09-21-ac265-approved-runner-registry.md).
-  Current CP-03 focused local verification covers **44 AC265 files / 392 tests**, with
-  `pnpm type-check` and `pnpm lint` passing. Final hardening covers UUID-v4
-  mapping-ID alignment, awaited response-body cancellation, realpath/symlink-safe
-  execution, an unnamed Linux `O_TMPFILE` writability preflight, no-follow held
-  descriptors, summaries constrained beneath `RUNNER_TEMP`, and deletion-free
-  fail-closed handling that preserves only private runner-local remnants.
-  Current `pnpm db:verify` passed; `pnpm db:test` passed exactly **56 files /
-  2,065 assertions**. Trusted-key list, trusted cutoff, and maximum run duration
-  are trusted release-policy context preconditions for a future protected
-  orchestration constructor; no current untrusted caller exists. See [the CP-03
-  verification record](../verification/2026-09-21-ac265-approved-runner-mapping-attestation.md).
-  CP-03 code is promoted on PR #85 and the staging deployment above, but no
+  implementation. The final CP-04a validation passes **549 Vitest files / 4,366
+  passed + 1 intentional skip (4,367 total)** at 100% coverage, 101 functional
+  Chromium checks, five production-built checks, builds, bundle budgets, and
+  performance smoke (`p95=1.377056 ms`, threshold `500 ms`, zero errors).
+  Fresh database verification passes **57 pgTAP files / 2,087 assertions**,
+  database lint, and generated-type parity; focused AC265 verification passes
+  **54 files / 483 tests**. See [the CP-01 verification record](../verification/2026-09-21-ac265-outage-lease-control-plane.md),
+  [the CP-02 verification record](../verification/2026-09-21-ac265-approved-runner-registry.md),
+  [the CP-03 verification record](../verification/2026-09-21-ac265-approved-runner-mapping-attestation.md),
+  and [the CP-04a verification record](../verification/2026-09-21-ac265-approved-outage-target-attestation.md).
+  CP-03 code is promoted, but no
   live signing-key configuration, registry rows, retained mapping/attestation
   artifact, attestation workflow run, hosted browser matrix,
   independently authenticated receipt, browser evidence, or AC265 acceptance
   exists. The next AC265 dependency is the independently authenticated
-  canonical mapping/resource source and promotion of the CP-04a
-  approved-outage-target read/attestation foundation. CP-04a currently has no
+  canonical mapping/resource population source. The CP-04a
+  approved-outage-target read/attestation foundation is promoted through PR #86,
+  exact-main CI `35597438023`, and staging `35598236704` / deployment
+  `6568074493`, but currently has no
   live target-signing key/configuration, seeded target or registry rows,
   retained target/attestation artifact, protected workflow run, hosted matrix,
   or receipt. Focused AC265 verification covers 54 files / 483 tests. Exact-
@@ -72,8 +59,8 @@
   API p95 1.377056 ms. After a clean reset, all `pnpm db:verify` components
   are green: 57 pgTAP files / 2,087 assertions, database lint, and generated-
   type checks pass. Independent security review found no CP-04a blocker; a
-  protected orchestrator remains a required trust boundary. Promotion,
-  staging execution, and hosted acceptance remain pending. These foundations
+  protected orchestrator remains a required trust boundary. Hosted acceptance
+  remains pending. These foundations
   must be followed by the run-scoped broker,
   evidence/receipt resolver, protected hosted workflow, and genuine hosted
   nine-role/ten-scenario execution before AC265 can close.
