@@ -1,10 +1,21 @@
 import {
   AC265_OUTAGE_LEASE_MAX_DURATION_SECONDS,
   AC265_APPROVED_OUTAGE_TARGET_SCHEMA_VERSION,
+  AC265_APPROVED_REGISTRY_CONTROL_SCHEMA_VERSION,
   AC265_APPROVED_RUNNER_MAPPINGS_SCHEMA_VERSION,
   CONTENT_SCHEMA_REGISTRY_AC265_OUTAGE_LEASE_CONTROL_SCHEMA_VERSION,
   ApprovedOutageTargetV1Schema,
   ApprovedRunnerMappingsV1Schema,
+  ContentSchemaRegistryAc265ApprovedRegistryConflictSchema,
+  ContentSchemaRegistryAc265ApprovedRunnerMappingReadRequestSchema,
+  ContentSchemaRegistryAc265ApprovedRunnerMappingReadResponseSchema,
+  ContentSchemaRegistryAc265ApprovedRunnerMappingReadResultSchema,
+  ContentSchemaRegistryAc265ApprovedRunnerMappingRegisterRequestSchema,
+  ContentSchemaRegistryAc265ApprovedRunnerMappingRegisterResponseSchema,
+  ContentSchemaRegistryAc265ApprovedRunnerMappingRegisterResultSchema,
+  ContentSchemaRegistryAc265ApprovedSafeResourceRegisterRequestSchema,
+  ContentSchemaRegistryAc265ApprovedSafeResourceRegisterResponseSchema,
+  ContentSchemaRegistryAc265ApprovedSafeResourceRegisterResultSchema,
   ContentSchemaRegistryAc265OutageLeaseAcquireRequestSchema,
   ContentSchemaRegistryAc265OutageLeaseAcquireResultSchema,
   ContentSchemaRegistryAc265OutageLeaseConsumeRequestSchema,
@@ -24,6 +35,42 @@ describe('AC265 hosted control-plane public contract exports', () => {
     );
     expect(ApprovedRunnerMappingsV1Schema).toBeDefined();
     expect(ApprovedOutageTargetV1Schema).toBeDefined();
+  });
+
+  it('exposes the CP-02 approved registry control contracts', () => {
+    expect(AC265_APPROVED_REGISTRY_CONTROL_SCHEMA_VERSION).toBe(
+      'ac265-hosted-approved-registry-control-v1',
+    );
+    expect(
+      ContentSchemaRegistryAc265ApprovedSafeResourceRegisterRequestSchema,
+    ).toBeDefined();
+    expect(
+      ContentSchemaRegistryAc265ApprovedSafeResourceRegisterResultSchema,
+    ).toBeDefined();
+    expect(
+      ContentSchemaRegistryAc265ApprovedRunnerMappingRegisterRequestSchema,
+    ).toBeDefined();
+    expect(
+      ContentSchemaRegistryAc265ApprovedRunnerMappingRegisterResultSchema,
+    ).toBeDefined();
+    expect(
+      ContentSchemaRegistryAc265ApprovedRunnerMappingReadRequestSchema,
+    ).toBeDefined();
+    expect(
+      ContentSchemaRegistryAc265ApprovedRunnerMappingReadResultSchema,
+    ).toBeDefined();
+    expect(
+      ContentSchemaRegistryAc265ApprovedRegistryConflictSchema,
+    ).toBeDefined();
+    expect(
+      ContentSchemaRegistryAc265ApprovedSafeResourceRegisterResponseSchema,
+    ).toBeDefined();
+    expect(
+      ContentSchemaRegistryAc265ApprovedRunnerMappingRegisterResponseSchema,
+    ).toBeDefined();
+    expect(
+      ContentSchemaRegistryAc265ApprovedRunnerMappingReadResponseSchema,
+    ).toBeDefined();
   });
 
   it('exposes the staging-only one-use outage-lease control contracts', () => {

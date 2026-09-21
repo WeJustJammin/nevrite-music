@@ -87,6 +87,18 @@ export type Database = {
       }
     }
     Functions: {
+      ac265_approved_runner_mapping_read: {
+        Args: { p_request: Json }
+        Returns: Json
+      }
+      ac265_approved_runner_mapping_register: {
+        Args: { p_request: Json }
+        Returns: Json
+      }
+      ac265_approved_safe_resource_register: {
+        Args: { p_request: Json }
+        Returns: Json
+      }
       ac265_enroll_verified_candidate: {
         Args: { p_request: Json }
         Returns: Json
@@ -1198,6 +1210,204 @@ export type Database = {
           target_sha256?: string
         }
         Relationships: []
+      }
+      ac265_approved_runner_mapping_resources: {
+        Row: {
+          mapping_id: string
+          mapping_resource_id: string
+          ordinal: number
+          resource_id: string
+          role_key: string
+        }
+        Insert: {
+          mapping_id: string
+          mapping_resource_id?: string
+          ordinal: number
+          resource_id: string
+          role_key: string
+        }
+        Update: {
+          mapping_id?: string
+          mapping_resource_id?: string
+          ordinal?: number
+          resource_id?: string
+          role_key?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ac265_approved_runner_mapping_resources_mapping_id_fkey"
+            columns: ["mapping_id"]
+            isOneToOne: false
+            referencedRelation: "ac265_approved_runner_mappings"
+            referencedColumns: ["mapping_id"]
+          },
+          {
+            foreignKeyName: "ac265_approved_runner_mapping_resources_resource_id_fkey"
+            columns: ["resource_id"]
+            isOneToOne: false
+            referencedRelation: "ac265_approved_safe_resources"
+            referencedColumns: ["resource_id"]
+          },
+        ]
+      }
+      ac265_approved_runner_mapping_scenarios: {
+        Row: {
+          mapping_id: string
+          mapping_scenario_id: string
+          ordinal: number
+          role_key: string
+          scenario_key: string
+        }
+        Insert: {
+          mapping_id: string
+          mapping_scenario_id?: string
+          ordinal: number
+          role_key: string
+          scenario_key: string
+        }
+        Update: {
+          mapping_id?: string
+          mapping_scenario_id?: string
+          ordinal?: number
+          role_key?: string
+          scenario_key?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ac265_approved_runner_mapping_scenarios_mapping_id_fkey"
+            columns: ["mapping_id"]
+            isOneToOne: false
+            referencedRelation: "ac265_approved_runner_mappings"
+            referencedColumns: ["mapping_id"]
+          },
+        ]
+      }
+      ac265_approved_runner_mappings: {
+        Row: {
+          approved_at: string
+          authorization_id: string
+          candidate_id: string
+          deployment_id: string
+          environment: string
+          hosting_project_id: string
+          idempotency_ref: string
+          identity: Json
+          identity_sha256: string
+          mapping_id: string
+          request_sha256: string
+          run_id: string
+          source_revision: string
+          supabase_project_ref: string
+        }
+        Insert: {
+          approved_at: string
+          authorization_id: string
+          candidate_id: string
+          deployment_id: string
+          environment: string
+          hosting_project_id: string
+          idempotency_ref: string
+          identity: Json
+          identity_sha256: string
+          mapping_id?: string
+          request_sha256: string
+          run_id: string
+          source_revision: string
+          supabase_project_ref: string
+        }
+        Update: {
+          approved_at?: string
+          authorization_id?: string
+          candidate_id?: string
+          deployment_id?: string
+          environment?: string
+          hosting_project_id?: string
+          idempotency_ref?: string
+          identity?: Json
+          identity_sha256?: string
+          mapping_id?: string
+          request_sha256?: string
+          run_id?: string
+          source_revision?: string
+          supabase_project_ref?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ac265_approved_runner_mappings_authorization_id_fkey"
+            columns: ["authorization_id"]
+            isOneToOne: false
+            referencedRelation: "ac265_runner_authorizations"
+            referencedColumns: ["authorization_id"]
+          },
+        ]
+      }
+      ac265_approved_safe_resources: {
+        Row: {
+          approved_at: string
+          authorization_id: string
+          candidate_id: string
+          deployment_id: string
+          environment: string
+          hosting_project_id: string
+          idempotency_ref: string
+          identity_sha256: string
+          locator_sha256: string
+          request_sha256: string
+          resource_id: string
+          resource_kind: string
+          resource_ref: string
+          resource_sha256: string
+          run_id: string
+          source_revision: string
+          supabase_project_ref: string
+        }
+        Insert: {
+          approved_at: string
+          authorization_id: string
+          candidate_id: string
+          deployment_id: string
+          environment: string
+          hosting_project_id: string
+          idempotency_ref: string
+          identity_sha256: string
+          locator_sha256: string
+          request_sha256: string
+          resource_id?: string
+          resource_kind: string
+          resource_ref: string
+          resource_sha256: string
+          run_id: string
+          source_revision: string
+          supabase_project_ref: string
+        }
+        Update: {
+          approved_at?: string
+          authorization_id?: string
+          candidate_id?: string
+          deployment_id?: string
+          environment?: string
+          hosting_project_id?: string
+          idempotency_ref?: string
+          identity_sha256?: string
+          locator_sha256?: string
+          request_sha256?: string
+          resource_id?: string
+          resource_kind?: string
+          resource_ref?: string
+          resource_sha256?: string
+          run_id?: string
+          source_revision?: string
+          supabase_project_ref?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ac265_approved_safe_resources_authorization_id_fkey"
+            columns: ["authorization_id"]
+            isOneToOne: false
+            referencedRelation: "ac265_runner_authorizations"
+            referencedColumns: ["authorization_id"]
+          },
+        ]
       }
       ac265_hosted_outage_leases: {
         Row: {
@@ -5002,6 +5212,14 @@ export type Database = {
       }
     }
     Functions: {
+      ac265_build_approved_runner_mapping_envelope: {
+        Args: {
+          p_authorization_id: string
+          p_idempotency_ref?: string
+          p_mapping_id: string
+        }
+        Returns: Json
+      }
       ac265_prepare_hosted_run_candidate: {
         Args: { p_request: Json }
         Returns: Json

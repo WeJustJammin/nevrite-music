@@ -30,6 +30,16 @@ redacted references, digests, policy, and server timestamps. The contract does
 not approve a target, issue a signed receipt, expose a public route, or prove a
 hosted outage run.
 
+`operational-release-evidence-hosted-approved-registry-control.ts` defines the
+strict CP-02 contract version `ac265-hosted-approved-registry-control-v1` for
+registering safe-resource references and complete runner mappings, plus reading
+an authorization-bound redacted mapping envelope. The private database
+foundation derives candidate/run/identity/deployment/project scope, enforces
+staging-only strict references and idempotency, and stores no raw resource
+contents, locators, credentials, or tokens. The contract and local registry do
+not authenticate mapping provenance, verify underlying resource safety, expose a
+route, issue receipts, or prove hosted acceptance.
+
 ## Ownership
 
 These schemas define the cross-surface boundary. They do not grant authority,
