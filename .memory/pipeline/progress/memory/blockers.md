@@ -6,11 +6,13 @@
   at **279/282 active** (**283 authored IDs**) with authored depth ratio
   **0.986**. Phase 2 has **1,999 active criteria / 2,000 authored** because
   AC266 is owner-deferred and excluded from the active completion denominator.
-  Current `main` is the PR #87 promotion record at exact-main SHA
-  `2b83b9abe0f4de3992b6514e9d2f2ffcb83ca770`; exact-main CI
-  [run 35601260266](https://github.com/WeJustJammin/nevrite-music/actions/runs/35601260266)
-  passed and staging [run 35602077901](https://github.com/WeJustJammin/nevrite-music/actions/runs/35602077901)
-  / deployment `6568798373` succeeded at `https://staging.wejamm.in`.
+  Current `main` is the PR #88 implementation at SHA
+  `52b66272e61331827c59ac1e169868474a2c09c8`; PR CI
+  [run 35611484121](https://github.com/WeJustJammin/nevrite-music/actions/runs/35611484121),
+  exact-main CI
+  [run 35612415141](https://github.com/WeJustJammin/nevrite-music/actions/runs/35612415141),
+  and staging [run 35613284966](https://github.com/WeJustJammin/nevrite-music/actions/runs/35613284966)
+  passed / deployment `6570861931` succeeded at `https://staging.wejamm.in`.
   AC265 preflight
   [run 34824500796](https://github.com/WeJustJammin/nevrite-music/actions/runs/34824500796)
   passed; authorization foundation [run 34824651793](https://github.com/WeJustJammin/nevrite-music/actions/runs/34824651793)
@@ -67,7 +69,7 @@
   nine-role/ten-scenario execution before AC265 can close.
 
 - **P2-S09 AC265 CP-04b registration foundation** (updated 2026-09-21) — The
-  unpromoted local target-registration contract and bounded RPC are green at
+  promoted private target-registration contract and bounded RPC are green at
   **3 files / 24 tests**; the RPC client contributes **15 tests**. Registration
   SQL passes **35 pgTAP assertions**, including direct registration-to-lease
   acquisition for the exact CP-01 60-second lease; the separate concurrency
@@ -84,12 +86,22 @@
   database lint exits 0 with **46 longstanding warnings** (39 never-read, 6
   unused, 1 immutable/stable), and generated database types match. Architecture
   compile passed **1,632 nodes / 10,125 edges** with 55 known lint issues. The deployed
-  baseline remains PR #87 exact-main SHA
-  `2b83b9abe0f4de3992b6514e9d2f2ffcb83ca770`, CI `35601260266`, staging
-  `35602077901`, deployment `6568798373`. CP-04b seeds no live policy or
-  target, configures no key, retains no artifact, and produces no hosted matrix
-  or receipt; AC265 remains open and Slice 10 remains locked on AC209, AC211,
-  and AC265.
+  PR #88 promotion is implementation main SHA
+  `52b66272e61331827c59ac1e169868474a2c09c8`, PR CI `35611484121`, exact-main
+  CI `35612415141`, staging `35613284966`, and deployment `6570861931`.
+  Promotion artifact `10645302055` has digest
+  `sha256:12f05e8371586996dc413b85b75167934045f342091defff5197435b8b707782`;
+  staging p95 was **32.589357 ms** and automated axe digest was
+  `df2522f8512dcea587146f5bce43ad5232b94964d5048825ffdb745286dd772d`.
+  CP-04b has no live policy/target, signing-key configuration, retained
+  target/attestation/evidence artifact, hosted matrix, independently
+  authenticated receipt, or AC265 acceptance. Read-only AC209 verifier
+  `35612514031` failed with `provider_graphql_error` after all
+  preflight/protection/workspace gates and produced no effects or receipt;
+  AC265 remains open and Slice 10 remains locked on AC209, AC211, and AC265.
+  AC266 remains unchecked and owner-deferred because real devices are
+  unavailable; it is not passed or waived and remains a mandatory post-Phase 2
+  production-readiness/release gate.
 
 ## Historical
 
