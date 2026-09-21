@@ -43,6 +43,9 @@ pnpm-debug.log*
 
 # === Test / coverage ===
 coverage/
+.coverage-*/
+.ctx-coverage/
+.ctx-*-cov/
 .nyc_output/
 test-results/
 playwright-report/
