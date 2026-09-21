@@ -6,11 +6,11 @@
   at **279/282 active** (**283 authored IDs**) with authored depth ratio
   **0.986**. Phase 2 has **1,999 active criteria / 2,000 authored** because
   AC266 is owner-deferred and excluded from the active completion denominator.
-  Current `main` is PR #86 at
-  `4fa8691d24177d0a528335f3c3d06ef50d67d3a9`; exact-main CI
-  [run 35597438023](https://github.com/WeJustJammin/nevrite-music/actions/runs/35597438023)
-  passed and staging [run 35598236704](https://github.com/WeJustJammin/nevrite-music/actions/runs/35598236704)
-  / deployment `6568074493` succeeded at `https://staging.wejamm.in`.
+  Current `main` is the PR #87 promotion record at exact-main SHA
+  `2b83b9abe0f4de3992b6514e9d2f2ffcb83ca770`; exact-main CI
+  [run 35601260266](https://github.com/WeJustJammin/nevrite-music/actions/runs/35601260266)
+  passed and staging [run 35602077901](https://github.com/WeJustJammin/nevrite-music/actions/runs/35602077901)
+  / deployment `6568798373` succeeded at `https://staging.wejamm.in`.
   AC265 preflight
   [run 34824500796](https://github.com/WeJustJammin/nevrite-music/actions/runs/34824500796)
   passed; authorization foundation [run 34824651793](https://github.com/WeJustJammin/nevrite-music/actions/runs/34824651793)
@@ -31,13 +31,15 @@
   is excluded from active Phase 2 completion, but is mandatory for post-Phase 2
   production-readiness/release. No active acceptance gate closed. Slice 10
   remains locked only on AC209, AC211, and AC265; AC266 does not block Slice 10
-  implementation. The final CP-04a validation passes **549 Vitest files / 4,366
-  passed + 1 intentional skip (4,367 total)** at 100% coverage, 101 functional
-  Chromium checks, five production-built checks, builds, bundle budgets, and
-  performance smoke (`p95=1.377056 ms`, threshold `500 ms`, zero errors).
-  Fresh database verification passes **57 pgTAP files / 2,087 assertions**,
-  database lint, and generated-type parity; focused AC265 verification passes
-  **54 files / 483 tests**. See [the CP-01 verification record](../verification/2026-09-21-ac265-outage-lease-control-plane.md),
+  implementation. Final canonical validation passes **551 Vitest files, 4,387
+  passed + 1 intentional skip**, with **13,143/13,143 statements,
+  9,850/9,850 branches, 2,160/2,160 functions, and 12,224/12,224 lines** at
+  100%. The evidence-map gate passed; Playwright passed **101 functional + 5
+  production-built Slice 09 real-route checks**. Builds, bundle budgets, and
+  performance are green with API p95 **1.491154 ms**. Fresh database
+  verification passes **59 pgTAP files / 2,124 assertions**, database lint,
+  and generated-type parity; architecture compile passed **1,632 nodes / 10,125
+  edges** with 55 known lint issues. See [the CP-01 verification record](../verification/2026-09-21-ac265-outage-lease-control-plane.md),
   [the CP-02 verification record](../verification/2026-09-21-ac265-approved-runner-registry.md),
   [the CP-03 verification record](../verification/2026-09-21-ac265-approved-runner-mapping-attestation.md),
   and [the CP-04a verification record](../verification/2026-09-21-ac265-approved-outage-target-attestation.md).
@@ -52,18 +54,42 @@
   `6568074493`, but currently has no
   live target-signing key/configuration, seeded target or registry rows,
   retained target/attestation artifact, protected workflow run, hosted matrix,
-  or receipt. Focused AC265 verification covers 54 files / 483 tests. Exact-
-  runtime `pnpm validate` exits 0 with 549 Vitest files, 4,366 passed + 1
-  intentional skip (4,367 total), 100% coverage, 101 functional Chromium
-  checks, five production-built checks, green builds/bundle checks, and local
-  API p95 1.377056 ms. After a clean reset, all `pnpm db:verify` components
-  are green: 57 pgTAP files / 2,087 assertions, database lint, and generated-
-  type checks pass. Independent security review found no CP-04a blocker; a
+  or receipt. Final canonical `pnpm validate` exits 0 with 551 Vitest files,
+  4,387 passed + 1 intentional skip, 100% coverage, 101 functional plus 5
+  production-built Slice 09 real-route checks, green builds/bundle checks,
+  evidence-map gate, and API p95 1.491154 ms. Fresh `pnpm db:verify` is green:
+  59 pgTAP files / 2,124 assertions, database lint, and generated-type checks
+  pass. Independent security review found no CP-04a blocker; a
   protected orchestrator remains a required trust boundary. Hosted acceptance
   remains pending. These foundations
   must be followed by the run-scoped broker,
   evidence/receipt resolver, protected hosted workflow, and genuine hosted
   nine-role/ten-scenario execution before AC265 can close.
+
+- **P2-S09 AC265 CP-04b registration foundation** (updated 2026-09-21) — The
+  unpromoted local target-registration contract and bounded RPC are green at
+  **3 files / 24 tests**; the RPC client contributes **15 tests**. Registration
+  SQL passes **35 pgTAP assertions**, including direct registration-to-lease
+  acquisition for the exact CP-01 60-second lease; the separate concurrency
+  proof passes **2 assertions**. The policy requires **exact 120-second target
+  validity**, leaving a bounded 60-second acquisition window; future-dated or
+  too-short policy windows return generic conflict.
+  Final canonical `pnpm validate` is current-final at **551 Vitest files, 4,387
+  passed + 1 intentional skip**, with **13,143/13,143 statements, 9,850/9,850
+  branches, 2,160/2,160 functions, and 12,224/12,224 lines** (100%). The
+  evidence-map gate passed; Playwright passed **101 functional + 5 production-built
+  Slice 09 real-route checks**. Builds, bundle budgets, and performance are
+  green; API p95 is **1.491154 ms**. Fresh post-remediation database
+  verification is current-final at **59 pgTAP files / 2,124 assertions**;
+  database lint exits 0 with **46 longstanding warnings** (39 never-read, 6
+  unused, 1 immutable/stable), and generated database types match. Architecture
+  compile passed **1,632 nodes / 10,125 edges** with 55 known lint issues. The deployed
+  baseline remains PR #87 exact-main SHA
+  `2b83b9abe0f4de3992b6514e9d2f2ffcb83ca770`, CI `35601260266`, staging
+  `35602077901`, deployment `6568798373`. CP-04b seeds no live policy or
+  target, configures no key, retains no artifact, and produces no hosted matrix
+  or receipt; AC265 remains open and Slice 10 remains locked on AC209, AC211,
+  and AC265.
 
 ## Historical
 

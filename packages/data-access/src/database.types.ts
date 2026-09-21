@@ -91,6 +91,10 @@ export type Database = {
         Args: { p_request: Json }
         Returns: Json
       }
+      ac265_approved_outage_target_register: {
+        Args: { p_request: Json }
+        Returns: Json
+      }
       ac265_approved_runner_mapping_read: {
         Args: { p_request: Json }
         Returns: Json
@@ -1155,6 +1159,97 @@ export type Database = {
   }
   platform_private: {
     Tables: {
+      ac265_approved_outage_target_policies: {
+        Row: {
+          approved_at: string
+          dependency_id: string
+          environment: string
+          expires_at: string
+          policy_ref: string
+          request_limit: number
+          route_method: string
+          route_operation_id: string
+          route_path: string
+          target_validity_seconds: number
+        }
+        Insert: {
+          approved_at: string
+          dependency_id: string
+          environment: string
+          expires_at: string
+          policy_ref: string
+          request_limit: number
+          route_method: string
+          route_operation_id: string
+          route_path: string
+          target_validity_seconds: number
+        }
+        Update: {
+          approved_at?: string
+          dependency_id?: string
+          environment?: string
+          expires_at?: string
+          policy_ref?: string
+          request_limit?: number
+          route_method?: string
+          route_operation_id?: string
+          route_path?: string
+          target_validity_seconds?: number
+        }
+        Relationships: []
+      }
+      ac265_approved_outage_target_registrations: {
+        Row: {
+          authorization_id: string
+          idempotency_ref: string
+          policy_ref: string
+          registered_at: string
+          registration_id: string
+          request_sha256: string
+          target_id: string
+        }
+        Insert: {
+          authorization_id: string
+          idempotency_ref: string
+          policy_ref: string
+          registered_at: string
+          registration_id?: string
+          request_sha256: string
+          target_id: string
+        }
+        Update: {
+          authorization_id?: string
+          idempotency_ref?: string
+          policy_ref?: string
+          registered_at?: string
+          registration_id?: string
+          request_sha256?: string
+          target_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ac265_approved_outage_target_registration_authorization_id_fkey"
+            columns: ["authorization_id"]
+            isOneToOne: true
+            referencedRelation: "ac265_runner_authorizations"
+            referencedColumns: ["authorization_id"]
+          },
+          {
+            foreignKeyName: "ac265_approved_outage_target_registrations_policy_ref_fkey"
+            columns: ["policy_ref"]
+            isOneToOne: false
+            referencedRelation: "ac265_approved_outage_target_policies"
+            referencedColumns: ["policy_ref"]
+          },
+          {
+            foreignKeyName: "ac265_approved_outage_target_registrations_target_id_fkey"
+            columns: ["target_id"]
+            isOneToOne: true
+            referencedRelation: "ac265_approved_outage_targets"
+            referencedColumns: ["target_id"]
+          },
+        ]
+      }
       ac265_approved_outage_targets: {
         Row: {
           approved_at: string
@@ -5216,6 +5311,27 @@ export type Database = {
       }
     }
     Functions: {
+      ac265_build_approved_outage_target_canonical_json: {
+        Args: {
+          p_approved_at: string
+          p_dependency_id: string
+          p_deployment_id: string
+          p_expires_at: string
+          p_hosting_project_id: string
+          p_route_method: string
+          p_route_operation_id: string
+          p_route_path: string
+          p_run_id: string
+          p_supabase_project_ref: string
+          p_target_id: string
+          p_target_ref: string
+        }
+        Returns: string
+      }
+      ac265_build_approved_outage_target_registration_envelope: {
+        Args: { p_registration_id: string }
+        Returns: Json
+      }
       ac265_build_approved_runner_mapping_envelope: {
         Args: {
           p_authorization_id: string

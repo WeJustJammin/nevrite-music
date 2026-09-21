@@ -22,25 +22,42 @@ attestation workflow run, hosted browser matrix, independently authenticated
 receipt, or AC265 acceptance exists. The staging workflow's failed-job retry
 was limited to the immediate Cloudflare provider-evidence query and made no
 provider configuration change.
-CP-04a is a promoted approved outage-target read/attestation
-foundation. It adds a strict service-role-only read over CP-01 target rows, a
-canonical target projection with the stored digest, and a distinct
-domain-separated Ed25519 target attestation. The protected manual main/staging
-entrypoint and workflow, plus the verifier/policy, require that signed target;
-a caller-provided authenticity callback cannot substitute. Focused local
-verification covers 54 files / 483 tests with `pnpm type-check` passing. Exact-
-runtime `pnpm validate` exits 0 with 549 Vitest files, 4,366 passed + 1
-intentional skip (4,367 total), 100% coverage, 101 functional Chromium checks,
-five production-built checks, green builds/bundle checks, and local API p95
-1.377056 ms. After a clean reset, all `pnpm db:verify` components are green:
-57 pgTAP files / 2,087 assertions, database lint, and generated-type checks
-pass. Independent security review found no CP-04a blocker; a protected
-orchestrator remains a required trust boundary. PR #86 / exact-main SHA
-`4fa8691d24177d0a528335f3c3d06ef50d67d3a9`, CI `35597438023`, and staging
-workflow `35598236704` / deployment `6568074493` are green.
-live target key/configuration, seeded target or registry rows, retained
+CP-04a is a promoted approved outage-target read/attestation foundation. It
+adds a strict service-role-only read over CP-01 target rows, a canonical target
+projection with the stored digest, and a distinct domain-separated Ed25519
+target attestation. The protected manual main/staging entrypoint and workflow,
+plus the verifier/policy, require that signed target; a caller-provided
+authenticity callback cannot substitute. The current promoted baseline is PR
+#87 at exact-main SHA `2b83b9abe0f4de3992b6514e9d2f2ffcb83ca770`, exact-main CI
+`35601260266`, staging workflow `35602077901`, and deployment `6568798373`.
+Live target key/configuration, seeded target or registry rows, retained
 artifact, workflow run, hosted matrix, receipt, and AC265 acceptance remain
 absent.
+
+CP-04b is an unpromoted local approved outage-target registration foundation.
+It adds a strict contract, bounded service-role registration client, forward-only
+Supabase migration, and contract/RPC/SQL/concurrency tests. The request accepts
+only the criterion, schema version, authorization reference, exact
+`ac265-outage-policy://staging/v1` policy reference, and idempotency reference.
+The migration's policy target validity is exactly 120 seconds, reserving a
+bounded 60-second acquisition window before CP-01's exact 60-second,
+one-request lease. The RPC derives the target, candidate identity, project,
+dependency, route, timestamps, validity window, and canonical digest from the
+active server policy, verified candidate, and authorization. It requires the
+active policy and authorization to cover the full target window
+(`authorized_at <= v_now` and `expires_at >= target_expires_at`), returns a
+redacted registration or generic conflict, and uses immutable forced-RLS
+ledgers with service-role-only execution. Direct SQL integration registers a
+target and acquires CP-01's lease from its returned target reference, proving
+`state=acquired`, 60 seconds, and one request. Future-dated and short-policy
+windows return generic conflicts and create no target. Local evidence is 35
+registration pgTAP assertions, 2 concurrency assertions, and 15 RPC-client
+tests covering transport status/redirect/length/stream/UTF-8/cancellation,
+reader, timeout, and secret-boundary failures. The migration's policy table is
+empty and seeds no registration; disposable fixtures are local-test-only. There
+is no live dependency/route policy, target, signing key, retained artifact,
+hosted matrix, or independently authenticated receipt, so CP-04b does not
+close AC265 or unlock Slice 10.
 The local v3 schema/verifier does not satisfy those hosted gates. Do not generate
 `hosted/e2e.json` from policy, configuration, local fixtures, or a partial run.
 
@@ -138,9 +155,11 @@ separately protected CP-04a target source and its trusted Ed25519 key registry.
 Its validated scope supplies the expected run, hosting and Supabase projects,
 deployment, dependency, and route. Missing, placeholder, unsigned, or
 unauthenticated target input leaves the gate closed. CP-04a is a promoted
-read/attestation foundation; no live source key/configuration, approved row,
-or retained artifact currently exists, so this target cannot yet be obtained
-for hosted verification.
+read/attestation foundation; CP-04b is only an unpromoted server-derived
+registration foundation. The CP-04b policy table is empty outside disposable
+tests, and no live source key/configuration, dependency/route policy, approved
+row, or retained artifact currently exists, so this target cannot yet be
+obtained for hosted verification.
 
 The protected v3 reporter and verifier must bind every session/resource
 reference and every server receipt to the same immutable candidate identity.
@@ -200,7 +219,10 @@ provides the promoted signed target-read/attestation boundary. CP-02
 stores only opaque references and digests, derives candidate/run/identity/
 deployment/project scope from the authorized candidate, and returns redacted
 mapping envelopes; CP-03 authenticates only supplied canonical bytes.
-Neither CP-02, CP-03, nor CP-04a verifies live underlying resource contents or
+CP-04b only registers a target from an active server policy, authorization, and
+verified candidate; its policy table is empty outside disposable tests, and it
+does not provide the live dependency/route policy or signing/receipt boundary.
+Neither CP-02, CP-03, CP-04a, nor CP-04b verifies live underlying resource contents or
 implements a protected session
 broker, signed receipt issuer, independently authenticated
 approved-outage-target population, evidence-byte service, or hosted workflow
