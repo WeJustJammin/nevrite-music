@@ -1,6 +1,6 @@
 # Operations Hub
 
-- **Decisions**: 100
+- **Decisions**: 101
 - **Patterns**: 19
 - **Blockers**: 6
 

@@ -2,8 +2,8 @@
 
 ## Summary
 
-- **Total decisions**: 100
-- **Unique decision titles**: 100
+- **Total decisions**: 101
+- **Unique decision titles**: 101
 
 ## DEC-001: The rights stack is the thesis, not an adjacency (2026-07-16)
 
@@ -1474,6 +1474,20 @@ Owner approved the recommended architecture decomposition: 43 total IA shards co
 - **Downstream**: 02a consumes party, proof and Shard 06 outcome inputs; 02b consumes Shard 04 media, Shard 07 credit, Shard 17 attendance and Shard 20 consent observations; 02c consumes governed Shard 05 policy publication and bounded marketplace signals. Producers use at-least-once delivery, idempotent inboxes, version fencing, retry and DLQ recovery.
 - **Reversibility**: Medium. Producer schemas and adapters can evolve version by version, but changing canonical ownership or permitting request-time upward reads requires rerunning the originating architecture stage and cascading downstream.
 
+## DEC-101: AC266 moves to a post-Phase-2 production-readiness gate without being passed or waived (2026-09-21)
+
+- **Occurrences**: 1
+- **Latest timestamp**: 2026-09-21T00:38:00-04:00
+- **Agents**: codex
+- **Sources**: /propagate-decision AC266
+- **Index**: [[index]]
+
+- **Problem**: Slice 09 counted AC266 real-device VoiceOver/Safari and NVDA/Firefox evidence in its implementation-completion denominator even though the owner cannot practically access both required devices. Keeping that unavailable manual attestation in the implementation sequence blocks every later Phase 2 slice, while treating automation, simulation, or deferral as acceptance would fabricate evidence.
+- **Options considered**: (A) keep AC266 in Slice 09 completion and halt Phase 2; (B) mark AC266 passed or waived; (C) preserve all authored IDs and fail-closed evidence contracts, exclude AC266 from Phase 2 implementation completion, and retain it as a mandatory post-Phase-2 production-readiness and release gate.
+- **Decision**: Option C. Phase 2 retains 2,000 authored criteria and 1,999 implementation-completion criteria. Slice 09 retains 283 contiguous authored IDs and uses a 282-criterion implementation-completion denominator. AC266 remains authored, unchecked, owner-deferred, and must never be represented as passed, waived, simulated, or inferred. Slice 10 remains locked until AC209, AC211, and AC265 pass.
+- **Downstream**: The Phase 2 plan, Slice 09 and aggregate progress records, architecture map, release-evidence runbook, policy tests, and progress validator distinguish implementation completion from production readiness. Existing AC266 contracts, protected workflows, and real macOS/Safari/VoiceOver plus Windows/Firefox/NVDA requirements remain unchanged and must pass before production readiness or release.
+- **Reversibility**: High for implementation sequencing, but no production release may erase or weaken the deferred real-device evidence obligation without a new owner decision and full downstream propagation.
+
 ## Full Log
 
 ### DEC-001: The rights stack is the thesis, not an adjacency (2026-07-16)
@@ -2844,3 +2858,16 @@ Owner approved the recommended architecture decomposition: 43 total IA shards co
 - **Decision**: Option C. Later shards retain canonical ownership and deliver only allowlisted, versioned observations or policy commands. Shard 02 authenticates the producer, validates the exact schema and monotonic source version, stores the bounded local projection, and never reads a higher-numbered store. Critical consequences use protected commands rather than advisory events. Shard 05 may operate generic governed publication, while 02c owns qualification and trader policy semantics, rule versions and evaluation behavior.
 - **Downstream**: 02a consumes party, proof and Shard 06 outcome inputs; 02b consumes Shard 04 media, Shard 07 credit, Shard 17 attendance and Shard 20 consent observations; 02c consumes governed Shard 05 policy publication and bounded marketplace signals. Producers use at-least-once delivery, idempotent inboxes, version fencing, retry and DLQ recovery.
 - **Reversibility**: Medium. Producer schemas and adapters can evolve version by version, but changing canonical ownership or permitting request-time upward reads requires rerunning the originating architecture stage and cascading downstream.
+
+### DEC-101: AC266 moves to a post-Phase-2 production-readiness gate without being passed or waived (2026-09-21)
+
+- **Timestamp**: 2026-09-21T00:38:00-04:00
+- **Agent**: codex
+- **Source**: /propagate-decision AC266
+- **Tags**: decision, phase-2, slice-09, accessibility, production-readiness, propagation
+
+- **Problem**: Slice 09 counted AC266 real-device VoiceOver/Safari and NVDA/Firefox evidence in its implementation-completion denominator even though the owner cannot practically access both required devices. Keeping that unavailable manual attestation in the implementation sequence blocks every later Phase 2 slice, while treating automation, simulation, or deferral as acceptance would fabricate evidence.
+- **Options considered**: (A) keep AC266 in Slice 09 completion and halt Phase 2; (B) mark AC266 passed or waived; (C) preserve all authored IDs and fail-closed evidence contracts, exclude AC266 from Phase 2 implementation completion, and retain it as a mandatory post-Phase-2 production-readiness and release gate.
+- **Decision**: Option C. Phase 2 retains 2,000 authored criteria and 1,999 implementation-completion criteria. Slice 09 retains 283 contiguous authored IDs and uses a 282-criterion implementation-completion denominator. AC266 remains authored, unchecked, owner-deferred, and must never be represented as passed, waived, simulated, or inferred. Slice 10 remains locked until AC209, AC211, and AC265 pass.
+- **Downstream**: The Phase 2 plan, Slice 09 and aggregate progress records, architecture map, release-evidence runbook, policy tests, and progress validator distinguish implementation completion from production readiness. Existing AC266 contracts, protected workflows, and real macOS/Safari/VoiceOver plus Windows/Firefox/NVDA requirements remain unchanged and must pass before production readiness or release.
+- **Reversibility**: High for implementation sequencing, but no production release may erase or weaken the deferred real-device evidence obligation without a new owner decision and full downstream propagation.

@@ -51,12 +51,14 @@
 - [[specs/audits/phase-1-staging-runtime-evidence|Phase 1 Staging Runtime Evidence]] — audit — spec-vault
 - [[specs/audits/phase-1-validation|Phase 1 Validation]] — audit — spec-vault
 - [[specs/audits/propagation-ac265-2026-09-09|Approved AC265 propagation]] — audit — spec-vault
+- [[specs/audits/propagation-ac266-2026-09-21|Approved AC266 Phase 2 completion-policy propagation]] — audit — spec-vault
 - [[specs/audits/propagation-observability-cost-2026-08-30|Sentry Removal and Free-Only Operations Propagation Record]] — audit — spec-vault
 - [[specs/audits/propagation-option-a-2026-09-02|Slice 09 Option A propagation record]] — audit — spec-vault
 - [[specs/audits/propagation-owner-bootstrap-2026-09-10|Initial-owner propagation]] — audit — spec-vault
 - [[specs/audits/propagation-scan-2026-08-30|Sentry Removal and Free-Only Operations Propagation Scan]] — audit — spec-vault
 - [[specs/audits/propagation-scan-2026-09-02|Option A downstream propagation scan]] — audit — spec-vault
 - [[specs/audits/propagation-scan-2026-09-09|AC265 scope propagation scan]] — audit — spec-vault
+- [[specs/audits/propagation-scan-2026-09-21|AC266 completion-policy propagation scan]] — audit — spec-vault
 - [[specs/audits/remediation-state|Pipeline remediation state]] — audit — spec-vault
 - [[specs/audits/verify-infrastructure-2026-09-04-1255|Infrastructure Verification Report]] — audit — spec-vault
 - [[specs/audits/verify-infrastructure-2026-09-04-1353|Infrastructure Verification Report]] — audit — spec-vault
@@ -1552,6 +1554,7 @@
 
 ## Structured Memory
 
+- decision: DEC-101: AC266 moves to a post-Phase-2 production-readiness gate without being passed or waived (2026-09-21) — 2026-09-21T00:38:00-04:00
 - pattern: PAT-016: Operational truth must be server-owned and fail closed (2026-08-30) — 2026-08-30T06:08:13-04:00
 - pattern: PAT-017: Generated artifacts need check-only validation outside broad format globs (2026-08-30) — 2026-08-30T06:08:13-04:00
 - decision: DEC-100: Shard 02 accepts bounded inbound evidence and policy commands without upward store reads (2026-08-28) — 2026-08-28T19:00:00-04:00

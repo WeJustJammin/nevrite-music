@@ -279,6 +279,153 @@ if (existsSync(SPEC_PIPELINE_PATH)) {
   }
 }
 
+// ----- Cross-check the active Phase 2 completion policy -----
+// Slice 09 keeps all 283 authored IDs for traceability, while AC266 is an
+// unchecked, owner-deferred production-readiness gate outside the 282-item
+// implementation denominator. Keep this check scoped to the current tracker
+// sections so historical 279/283 evidence remains valid audit history.
+const policySection = (text, heading, nextHeading = /^##\s/imu) => {
+  const start = text.search(heading);
+  if (start < 0) return '';
+  const remainder = text.slice(start + text.match(heading)[0].length);
+  const end = remainder.search(nextHeading);
+  return end < 0 ? remainder : remainder.slice(0, end);
+};
+
+const assertPolicy = (file, text, checks) => {
+  if (text == null) return;
+  for (const { pattern, message } of checks) {
+    if (!pattern.test(text)) {
+      drift.push({
+        kind: 'phase-2-completion-policy-mismatch',
+        file,
+        message,
+      });
+    }
+  }
+};
+
+const checkPhaseTwoCompletionPolicy = () => {
+  const phasePath = join(PHASES_DIR, 'phase-02.md');
+  const slicePath = join(SLICES_DIR, 'phase-02-slice-09.md');
+  const phaseText = existsSync(phasePath) ? read(phasePath) : null;
+  const sliceText = existsSync(slicePath) ? read(slicePath) : null;
+  const indexHeader = indexText?.split('\n').slice(0, 12).join('\n');
+  const phaseHeader = phaseText?.split('\n').slice(0, 16).join('\n');
+  const phaseRows =
+    phaseText
+      ?.split('\n')
+      .filter((line) => /\|\s*09\s+Content schemas/iu.test(line))
+      .join('\n') ?? '';
+  const sliceHeader = sliceText?.split('\n').slice(0, 40).join('\n');
+  const sliceBlocking = sliceText
+    ? policySection(
+        sliceText,
+        /^##\s+Blocking release evidence\s+\(current\b/imu,
+      )
+    : '';
+
+  assertPolicy('index.md', indexHeader, [
+    {
+      pattern:
+        /\*\*Phase 2 criteria\*\*:\s*1,999\s+active\s*\/\s*2,000\s+authored/iu,
+      message:
+        'index.md must publish the 1,999 active / 2,000 authored Phase 2 denominator',
+    },
+    {
+      pattern: /Slice 09 is 279\/282\s+active\s+\(283\s+authored IDs\)/iu,
+      message:
+        'index.md must publish Slice 09 as 279/282 active with 283 authored IDs',
+    },
+  ]);
+
+  assertPolicy('phases/phase-02.md', phaseHeader, [
+    {
+      pattern:
+        /\*\*Criteria[^:]*\*\*:\s*1,999\s+active\s*\/\s*2,000\s+authored/iu,
+      message:
+        'phase-02.md must publish the 1,999 active / 2,000 authored Phase 2 denominator',
+    },
+    {
+      pattern:
+        /Slice 09 remains blocked at \*\*279\/282\s+active\*\* \(\*\*283\s+authored IDs\*\*\)/iu,
+      message:
+        'phase-02.md current gate must publish Slice 09 as 279/282 active with 283 authored IDs',
+    },
+    {
+      pattern:
+        /AC266[\s\S]{0,400}owner-deferred[\s\S]{0,400}unchecked[\s\S]{0,400}excluded from active Phase 2 completion/iu,
+      message:
+        'phase-02.md must keep AC266 unchecked, owner-deferred, and outside active completion',
+    },
+    {
+      pattern:
+        /Slice 10 remains locked only on AC209,\s*AC211,\s*and\s+AC265\b/iu,
+      message:
+        'phase-02.md must limit Slice 10 implementation blockers to AC209, AC211, and AC265',
+    },
+    {
+      pattern:
+        /AC266[\s\S]{0,300}mandatory[\s\S]{0,100}post-Phase 2 production-readiness\/release gate/iu,
+      message:
+        'phase-02.md must retain AC266 as the post-Phase 2 production-readiness/release gate',
+    },
+  ]);
+
+  assertPolicy('phases/phase-02.md#slice-09', phaseRows, [
+    {
+      pattern:
+        /\|\s*09\s+Content schemas[^|]*\|\s*blocked\s*\|\s*279\/282\s+active\s*\(283\s+authored\)\s*\|/iu,
+      message:
+        'phase-02.md Slice 09 row must use the 279/282 active and 283 authored notation',
+    },
+  ]);
+
+  assertPolicy('slices/phase-02-slice-09.md', sliceHeader, [
+    {
+      pattern: /\*\*Acceptance criteria \(authored\)\*\*:\s*283\b/iu,
+      message: 'Slice 09 must retain all 283 authored acceptance IDs',
+    },
+    {
+      pattern: /\*\*Active release denominator\*\*:\s*282\b/iu,
+      message: 'Slice 09 must declare a 282-item active release denominator',
+    },
+    {
+      pattern:
+        /\*\*Local QA-GREEN \(active\)\*\*:\s*279\/282\s+verified;\s*283\s+authored IDs remain/iu,
+      message:
+        'Slice 09 must publish 279/282 active evidence while retaining 283 authored IDs',
+    },
+    {
+      pattern:
+        /AC266[\s\S]{0,500}owner-deferred[\s\S]{0,500}remains unchecked and excluded from active Phase 2 completion/iu,
+      message:
+        'Slice 09 must keep AC266 unchecked, owner-deferred, and outside active completion',
+    },
+  ]);
+
+  assertPolicy(
+    'slices/phase-02-slice-09.md#blocking-release-evidence',
+    sliceBlocking,
+    [
+      {
+        pattern:
+          /Slice 10 remains locked only on AC209,\s*AC211,\s*and\s+AC265\b/iu,
+        message:
+          'Slice 09 blocker section must limit Slice 10 implementation blockers to AC209, AC211, and AC265',
+      },
+      {
+        pattern:
+          /AC266[\s\S]{0,300}mandatory[\s\S]{0,100}post-Phase 2 production-readiness\/release/iu,
+        message:
+          'Slice 09 blocker section must retain AC266 as a production-readiness/release gate',
+      },
+    ],
+  );
+};
+
+checkPhaseTwoCompletionPolicy();
+
 // ----- Report -----
 const status = malformed.length > 0 ? "malformed" : drift.length > 0 ? "drift" : "consistent";
 const report = { status, drift, malformed, phases: [...phaseSummary.entries()].map(([n, p]) => ({ phase: n, done: p.computedDone, total: p.computedTotal })) };

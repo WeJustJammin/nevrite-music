@@ -1,8 +1,8 @@
 # Spec Pipeline Progress
 
 **Project**: WeJammin
-**Last updated**: 2026-09-20
-**Overall**: IA 43/43 authored and independently ambiguity-passed (**fresh rerun PASS — 0/344 = 0.00%, 2026-08-28**); Phase 1 complete at 7/7 slices; Phase 2 at 8/17 complete with Slice 09 blocked at 279/283.
+**Last updated**: 2026-09-21
+**Overall**: IA 43/43 authored and independently ambiguity-passed (**fresh rerun PASS — 0/344 = 0.00%, 2026-08-28**); Phase 1 complete at 7/7 slices; Phase 2 at 8/17 complete with an active criteria denominator of 1,999 out of 2,000 authored. Slice 09 is blocked at 279/282 active (283 authored IDs); AC266 is owner-deferred and excluded from the active Phase 2 completion denominator, but remains mandatory for post-Phase 2 production-readiness/release.
 
 ## Legend
 
@@ -68,23 +68,27 @@
   Independent `/validate-phase`, exact-SHA CI/staging, and protected production
   approval passed; live production deployment was not required or performed.
   See `.memory/wiki/specs/audits/phase-1-validation.md`.
-- **CURRENT IMPLEMENTATION (2026-09-20):** Phase 2 Slices 01–08 are complete.
-  Slice 09 remains locally QA-GREEN at 279/283 with depth ratio `0.986`.
-  The current exact-main baseline is PR #80 at SHA
-  `918f598525de772c82b0a0bcd82348ea8f5d523d`; CI `34823698333` and staging
-  `34824312138` / deployment `6433521892` passed. AC211 provenance and AC266
+- **CURRENT IMPLEMENTATION (2026-09-21):** Phase 2 Slices 01–08 are complete.
+  Slice 09 remains locally QA-GREEN at 279/282 active (283 authored IDs) with
+  authored depth ratio `0.986`.
+  The current exact-main baseline is PR #81 at SHA
+  `f8a6b77e529c7b150df367f5ce59e43b1aed0db1`; CI `35560004822` and staging
+  `35560514952` / deployment `6561553954` passed. AC211 provenance and AC266
   report-preparation tooling is landed, but neither is hosted acceptance.
   AC265 preflight `34824500796` passed, while authorization foundation run
   `34824651793` failed at `staging_prepare`; no hosted browser acceptance ran.
-  Slice 10 remains dependency-locked. See
+  AC266 is owner-deferred because the required real devices are unavailable; it
+  remains unchecked and excluded from active Phase 2 completion. Slice 10
+  remains locked only on AC209, AC211, and AC265; AC266 remains a mandatory
+  post-Phase 2 production-readiness/release gate. See
   `.memory/pipeline/progress/phases/phase-02.md` and
   `.memory/pipeline/progress/slices/phase-02-slice-09.md`.
-- **CURRENT VALIDATION (fresh 2026-09-20):** Under exact Node `22.23.1` and
-  pnpm `11.24.0`, `pnpm validate` passed 535 Vitest files / 4,228 tests plus one
+- **CURRENT VALIDATION (fresh 2026-09-21):** Under exact Node `22.23.1` and
+  pnpm `11.24.0`, `pnpm validate` passed 536 Vitest files / 4,234 tests plus one
   skip at 100% coverage (13,028 statements, 9,826 branches, 2,151 functions,
   and 12,109 lines), the Slice 09 evidence gate, 101 functional plus 5 real
   Slice 09 E2E tests, all workspace builds, bundle budgets, and performance
-  smoke (`p95=1.174159 ms`, threshold `500 ms`, zero errors). Fresh
+  smoke (`p95=1.527671 ms`, threshold `500 ms`, zero errors). Fresh
   `pnpm db:verify` passed 52 pgTAP files / 1,917 tests with migrated type parity.
   These local/tooling results do not close hosted acceptance.
 - **HISTORICAL PRE-REMEDIATION CANDIDATE:** Before this remediation, PR #9 branch
@@ -124,6 +128,11 @@
   with `provider_graphql_error` on `emailSendingAdaptive`; it sent no email,
   changed no queue or production state, performed no deployment, and produced
   no receipt. AC209 remains open.
+- **LATEST AC211 EVIDENCE (2026-09-21):** Collection run `35560241699` passed
+  preflight but failed closed for insufficient samples:
+  `commands=0`, `protectedRpcs=0`, `acceptances=0`, and
+  `queueFirstAttempts=0`; no artifact was produced. AC211 remains open and is
+  one of the three active Slice 10 blockers.
 - **HISTORICAL DIAGNOSTIC EVIDENCE:** PR #24 was exact `main` SHA
   `3bf66a610b013bf9600889780ee26319559fb31c`; CI `34013034252` and staging
   `34013296132` passed. Protected production runs `34016439881` and
@@ -180,8 +189,9 @@ failed: malformed response`. The token still passes Workers Observability.
   remains open.
 - **NEXT:** pursue the genuine AC209 delivery receipt, qualifying AC211
   UTC-day/200-sample SLO and DLQ evidence, and the approved AC265
-  9-role/10-scenario hosted report plus identity-lifecycle evidence. AC266 is
-  owner-deferred because the required real devices are unavailable; it remains
-  open and is not accepted or waived. Keep Slice 09 blocked at 279/283 and
-  Phase 2 at 8/17. Do not start Slice 10 until all four criteria, including
-  deferred AC266, pass.
+  9-role/10-scenario hosted report plus identity-lifecycle evidence. Keep Slice
+  09 at 279/282 active (283 authored IDs) and Phase 2 at 8/17 slices with
+  1,999 active criteria out of 2,000 authored. Slice 10 remains locked only
+  until AC209, AC211, and AC265 pass. AC266 stays unchecked and owner-deferred,
+  excluded from active Phase 2 completion, and mandatory for post-Phase 2
+  production-readiness/release.

@@ -368,6 +368,19 @@ describe('[P2-S09-AC-269] executable S09 evidence map', () => {
     },
   );
 
+  it('[P2-S09-AC-266] keeps deferred real-device evidence partial and unpassed', () => {
+    const ac266 = S09_EVIDENCE_MAP.find(
+      ({ criterion }) => criterion === 'P2-S09-AC-266',
+    );
+    expect(ac266).toBeDefined();
+    expect(ac266?.status).toBe('partial');
+    expect(ac266?.observed).toMatch(/automated axe|keyboard|live-region/iu);
+    expect(ac266?.limitation).toMatch(/VoiceOver and NVDA/iu);
+    expect(ac266?.limitation).not.toMatch(
+      /(?:accepted|passed|waived|simulated|inferred)/iu,
+    );
+  });
+
   it('[P2-S09-AC-271] keeps the operation-boundary artifact within both line-count conventions', () => {
     const operationBoundary = read(
       'tests/integration/phase-02-slice-09-operation-boundaries.test.ts',
