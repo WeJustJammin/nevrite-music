@@ -131,9 +131,14 @@ either mapping from the submitted contract or report. Bind each role receipt to
 that role's session-reference digest and resource-reference digests, and each
 scenario receipt to its authenticated role bindings and corresponding
 session/resource digests. A browser or manifest assertion alone does not prove
-the mapping was authorized. No live mapping-source endpoint or trusted key/
-configuration is currently defined, so this interface does not establish
-hosted approval.
+the mapping was authorized. CP-02 now provides a local, unpromoted private
+registry foundation for these opaque resource references and mapping envelopes.
+Its forced-RLS tables and service-role-only RPCs derive
+candidate/run/identity/deployment/project scope, enforce immutable/idempotent
+redacted records, and never retain raw resource contents or locators. No live
+mapping-source endpoint or trusted authentication key/configuration is
+currently defined; the registry therefore does not authenticate mapping
+provenance or establish hosted approval.
 
 ## Versioned scenario parameter policy
 
@@ -247,6 +252,15 @@ seeds no approved target and exposes no public Worker route. It is therefore a
 local control-plane prerequisite only: the independently authenticated target
 source, hosted workflow wiring, signed receipt issuer/resolver, and genuine
 provider fault remain mandatory before AC265 acceptance.
+
+The CP-02 approved safe-resource and runner-mapping registry is a separate
+local foundation (`20260921020000_ac265_approved_runner_registry.sql`). It
+stores only server-derived opaque references, reference/locator digests, and
+redacted role/scenario bindings behind forced RLS and service-role-only RPCs.
+The migration seeds no registry rows and exposes no public route. It does not
+authenticate an external approval source, verify underlying resource contents,
+issue receipts, or connect the hosted runner; those boundaries remain required
+for AC265 acceptance.
 
 The lease reference's lowercase SHA-256 digest is computed from its exact
 UTF-8 bytes. Acquisition and expiry are bounded timestamps; the lease must be

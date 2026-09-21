@@ -6,9 +6,12 @@ The staging-only runner contract is now documented in the
 [AC265 hosted E2E runner contract v1](./ac265-hosted-e2e-contract-v1.md). The
 contract defines required inputs and evidence; it is not hosted evidence or
 permission to test production. The runner must remain fail-closed until the
-session broker, safe staging resources, fault-evidence service, hosted specs,
-protected workflow, report producer, and independent verification against
-protected workflow/deployment outputs exist and pass protected verification.
+protected population/authentication path for the CP-02 registry, session
+broker, safe staging resources, fault-evidence service, hosted specs, protected
+workflow, report producer, and independent verification against protected
+workflow/deployment outputs exist and pass protected verification. CP-02 now
+provides only a local, unpromoted private registry foundation; it does not
+authenticate mapping provenance or establish hosted evidence.
 The local v3 schema/verifier does not satisfy those hosted gates. Do not generate
 `hosted/e2e.json` from policy, configuration, local fixtures, or a partial run.
 
@@ -77,9 +80,12 @@ receipts to their approved session/resource reference digests and scenario
 receipts to their independently approved role assignments and corresponding
 reference digests.
 
-No live mapping-source endpoint or authentication key/configuration is defined.
-The schema and callback are a fail-closed interface contract, not a deployed
-approval source or hosted acceptance evidence.
+CP-02 supplies private forced-RLS registry tables and service-role-only RPCs
+for redacted opaque resource references and mappings, but no live
+mapping-source endpoint, authenticity key/configuration, or protected
+population path is defined. The schema, callback, and local registry are
+fail-closed interface/control-plane foundations, not an authenticated approval
+source or hosted acceptance evidence.
 
 The outage target is not invented by the policy: completing it additionally
 requires exact `ac265-approved-outage-target-v1` bytes authenticated by a
@@ -138,11 +144,16 @@ consume event, and cleanup `outageLeaseReleaseProof`. Missing lease or proof
 fails validation; there is no skip or unleased outage pass.
 
 This remains a local trust boundary only. CP-01 implements the private
-database lease lifecycle and its service-role-only RPCs, but it does not
-implement a protected session broker, signed receipt issuer, independently
-authenticated approved-outage-target source, evidence-byte service, or hosted
-workflow integration. It also seeds no live target. The target source endpoint
-and authentication key/config remain unresolved; do not claim hosted
+database lease lifecycle and its service-role-only RPCs, while CP-02 provides
+the local private safe-resource and runner-mapping registry foundation. CP-02
+stores only opaque references and digests, derives candidate/run/identity/
+deployment/project scope from the authorized candidate, and returns redacted
+mapping envelopes; it does not verify underlying resource contents or
+authenticate mapping bytes. Neither checkpoint implements a protected session
+broker, signed receipt issuer, independently authenticated
+approved-outage-target source, evidence-byte service, or hosted workflow
+integration. It also seeds no live target or registry rows. The target source
+endpoint and authentication key/config remain unresolved; do not claim hosted
 acceptance or infer it from local pgTAP results.
 
 The report also requires a fresh `fresh_google_oauth_through_supabase` flow,
@@ -164,11 +175,12 @@ acceptance runner; direct state paths do not implement the v1 opaque-handle/
 broker contract and cannot be treated as acceptance evidence.
 
 No hosted AC265 Playwright spec or protected workflow implements the matrix. The
-global setup continues to fail closed because no v1 session broker, approved
-safe-resource registry, hosted control/evidence service, hosted spec, isolated
-protected workflow, or report producer is available. The local v3 verifier does
-not provide a protected broker/issuer or independent workflow/deployment
-verification. The workflow must use an isolated disposable runner; a shared
+global setup continues to fail closed because no v1 session broker, protected
+registry population/authentication source, hosted control/evidence service,
+hosted spec, isolated protected workflow, or report producer is available. The
+local v3 verifier and CP-02 registry do not provide a protected broker/issuer or
+independent workflow/deployment verification. The workflow must use an isolated
+disposable runner; a shared
 persistent self-hosted runner, shared browser profile, or cross-run session
 state is prohibited. Do not run a local role fixture as hosted evidence.
 
@@ -180,8 +192,11 @@ implemented and independently verified:
 1. A run-scoped external session broker that resolves exactly nine role-bound
    handles without exposing session contents, plus independent role and current
    admin-step-up verification.
-2. A registry of pre-existing, safe adult-only staging resources, with
-   server-derived before/after state evidence for denied and disabled cases.
+2. A protected approval/population path for the CP-02 registry containing
+   pre-existing, safe adult-only staging resources, with server-derived
+   before/after state evidence for denied and disabled cases. The registry's
+   opaque references and locator digests do not establish resource safety by
+   themselves.
 3. A staging fault-evidence service for genuine provider expiry and server
    429 evidence, plus the bounded one-use dependency-outage lease and cleanup
    receipt. The Google flow must traverse the real Google IdP and Supabase Auth.

@@ -47,7 +47,21 @@ owner-deferred to the mandatory post-Phase 2 production-readiness/release gate.
 
 ## Next dependency
 
-CP-02 must add the protected runner-mapping and approved-safe-resource registry
-without embedding credentials or raw resource contents. Later checkpoints must
-provide the protected broker, independent receipt authentication, hosted
-workflow, genuine execution, and report verification before AC265 can close.
+CP-02 now supplies the local, unpromoted private runner-mapping and
+approved-safe-resource registry foundation without embedding credentials or raw
+resource contents. It seeds no registry rows and does not authenticate mapping
+provenance, verify underlying resource contents, or provide hosted evidence. See
+the [CP-02 verification record](2026-09-21-ac265-approved-runner-registry.md).
+The next dependency is CP-03's independently authenticated canonical
+mapping/resource source, followed by the protected broker, independent receipt
+authentication, hosted workflow, genuine execution, and report verification
+before AC265 can close.
+
+## Promotion evidence
+
+PR #83 merged the CP-01 foundation as exact-main
+`05e88ea52f1c9cf206d54f455e53bc849044cb9b`. CI `35569923623` and staging
+`35570556554` passed, producing successful staging deployment `6563225343`.
+This proves promotion of the private foundation only; it does not add a target,
+public route, independently authenticated receipt, live fault, browser matrix,
+or AC265 acceptance.

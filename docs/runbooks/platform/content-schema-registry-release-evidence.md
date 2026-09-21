@@ -150,12 +150,17 @@ after `cleanup.completedAt` and within that run window/cutoff.
 
 These are local trust-boundary checks only. The verifier does not implement a
 protected issuer, session broker, evidence-byte service, outage-lease service,
-or independent binding to actual protected workflow/deployment outputs. The
-v1 session broker, safe-resource registry, fault-evidence service, isolated
-hosted workflow, and report producer remain unimplemented. The runner must be
-isolated and disposable; shared persistent self-hosted runners and cross-run
-browser/session state are prohibited. Keep this criterion blocked: this
-contract and local checks do not prove hosted acceptance.
+or independent binding to actual protected workflow/deployment outputs. CP-02
+now provides a local, unpromoted private safe-resource and runner-mapping
+registry foundation with forced-RLS tables and service-role-only RPCs; it stores
+only opaque references/digests and redacted bindings, does not authenticate
+mapping provenance or verify underlying resource contents, and seeds no rows.
+The protected population/authentication source, v1 session broker,
+fault-evidence service, isolated hosted workflow, and report producer remain
+unimplemented. The runner must be isolated and disposable; shared persistent
+self-hosted runners and cross-run browser/session state are prohibited. Keep
+this criterion blocked: this contract and local checks do not prove hosted
+acceptance.
 
 The protected staging deployment runs `infra/workflows/collect-staging-axe-evidence.sh`
 after public contract verification. It paginates GitHub deployment/status metadata,
@@ -501,9 +506,9 @@ cleanup-receipt ordering. A hash of `hosted/e2e.json` or a local fixture alone p
 the external sessions, resources, signed receipts, or hosted observations.
 
 This remains a local trust-boundary check, not hosted AC265 acceptance. The
-protected session broker, safe-resource registry, authenticated outage
-lease/fault-evidence service, evidence-byte service, isolated hosted workflow,
-and v3 hosted report producer are still missing. A future protected workflow
+protected session broker, authenticated population/mapping source, authenticated
+outage lease/fault-evidence service, evidence-byte service, isolated hosted
+workflow, and v3 hosted report producer are still missing. A future protected workflow
 must supply the verifier's trusted context from authenticated CI/deployment
 outputs and resolve/sign the real staging evidence. Keep the criterion
 blocked until a complete protected staging run and accepted v3 report exist.

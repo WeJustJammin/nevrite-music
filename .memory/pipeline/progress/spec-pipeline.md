@@ -71,29 +71,38 @@
 - **CURRENT IMPLEMENTATION (2026-09-21):** Phase 2 Slices 01–08 are complete.
   Slice 09 remains locally QA-GREEN at 279/282 active (283 authored IDs) with
   authored depth ratio `0.986`.
-  The current exact-main baseline is PR #82 at SHA
-  `71d59166e5b1b6440ac0786d2d4c192dfba526fa`; CI `35563634660` and staging
-  `35564168797` / deployment `6562174644` passed. AC211 provenance and AC266
+  The current exact-main baseline is PR #83 at SHA
+  `05e88ea52f1c9cf206d54f455e53bc849044cb9b`; CI `35569923623` and staging
+  `35570556554` / deployment `6563225343` passed. AC211 provenance and AC266
   report-preparation tooling is landed, but neither is hosted acceptance.
   AC265 preflight `34824500796` passed, while authorization foundation run
   `34824651793` failed at `staging_prepare`; no hosted browser acceptance ran.
-  AC265 CP-01 now has a locally verified staging-only outage-lease database
-  control plane, but no target is seeded and no hosted receipt is produced.
+  AC265 CP-01 now has a promoted staging-only outage-lease database control
+  plane, but no target is seeded, no hosted route is exposed, and no hosted
+  receipt is produced. CP-02 adds only a local, unpromoted private
+  safe-resource/runner-mapping registry foundation; it seeds no registry rows
+  and does not authenticate mapping provenance or produce hosted evidence.
   AC266 is owner-deferred because the required real devices are unavailable; it
   remains unchecked and excluded from active Phase 2 completion. Slice 10
   remains locked only on AC209, AC211, and AC265; AC266 remains a mandatory
   post-Phase 2 production-readiness/release gate. See
   `.memory/pipeline/progress/phases/phase-02.md` and
   `.memory/pipeline/progress/slices/phase-02-slice-09.md`.
-- **CURRENT VALIDATION (fresh 2026-09-21):** Under exact Node `22.23.1` and
-  pnpm `11.24.0`, `pnpm validate` passed 537 Vitest files / 4,241 tests plus one
-  skip at 100% coverage (13,048 statements, 9,828 branches, 2,152 functions,
-  and 12,129 lines), the Slice 09 evidence gate, 101 functional plus 5 real
-  Slice 09 E2E tests, all workspace builds, bundle budgets, and performance
-  smoke (`p95=1.190315 ms`, threshold `500 ms`, zero errors). Fresh
-  `pnpm db:verify` passed 54 pgTAP files / 2,000 tests with migrated type parity.
-  These local/tooling results do not close hosted acceptance; see the
-  [CP-01 verification record](verification/2026-09-21-ac265-outage-lease-control-plane.md).
+- **CURRENT VALIDATION (clean full pass, 2026-09-21):** Under exact Node
+  `22.23.1` and pnpm `11.24.0`, `pnpm validate` passed 538 Vitest files / 4,250
+  passed + 1 intentional skip (4,251 total) at 100% coverage (13,093
+  statements, 9,836 branches, 2,156 functions, and 12,174 lines), the Slice 09
+  evidence command, 101 functional plus 5 real Slice 09 E2E tests, all workspace
+  builds, bundle budgets, and performance smoke (`p95=1.402399 ms`, threshold
+  `500 ms`, zero errors). The first full run exposed 99.96% branch coverage in
+  the new schema; impossible defensive branches were refactored, focused schema
+  coverage reached 100%, and the clean full pass then succeeded. Fresh
+  `pnpm db:verify` passed 56 pgTAP files / 2,065 tests with migrated type parity.
+  The focused CP-02 contract set passed 2 files / 11 tests, and broader AC265
+  contract verification passed 4 files / 31 tests; targeted CP-02 SQL passed 2
+  files / 65 assertions. These local/tooling results do not close hosted
+  acceptance; see the [CP-01 verification record](verification/2026-09-21-ac265-outage-lease-control-plane.md)
+  and [CP-02 verification record](verification/2026-09-21-ac265-approved-runner-registry.md).
 - **HISTORICAL PRE-REMEDIATION CANDIDATE:** Before this remediation, PR #9 branch
   `codex/phase-2-slices-01-09` was at
   `67264c5e9b5196d00ac3f0aa272896a010c872d7`; synthetic merge

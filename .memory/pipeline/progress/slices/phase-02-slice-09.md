@@ -10,7 +10,7 @@
 **Phase 2 completion denominator**: 282  
 **Slice 10 implementation prerequisites**: AC209, AC211, and AC265.  
 **Authored criterion policy**: 283 authored Slice 09 IDs remain; AC266 is the deferred post-Phase 2 production-readiness gate.  
-**AC266 evidence status**: not passed, accepted, waived, simulated, or inferred.  
+**AC266 evidence status**: owner-deferred; remains unchecked and excluded from active Phase 2 completion; not passed, accepted, waived, simulated, or inferred.  
 **Plan source**: [Phase 2 plan](../../../wiki/specs/phases/phase-2.md)  
 **Preflight gate**: strict current-disk floor reconciled — [contract reconciliation](../verification/2026-09-02-slice-09-contract-reconciliation.md)
 **Local QA-GREEN (active)**: 279/282 verified; 283 authored IDs remain — [evidence and external gates](../../../wiki/specs/audits/phase-02-slice-09-qa-green.md)
@@ -22,19 +22,23 @@
 - [x] `BE` data, API, and policy implementation
 - [x] `FE` Astro SSR and bounded React-island implementation
 - [x] `QA` GREEN, adversarial verification, and canonical validation (current
-      exact-main baseline PR #82 SHA `71d59166e5b1b6440ac0786d2d4c192dfba526fa`;
-      CI `35563634660` and staging `35564168797` / deployment `6562174644`
+      exact-main baseline PR #83 SHA `05e88ea52f1c9cf206d54f455e53bc849044cb9b`;
+      CI `35569923623` and staging `35570556554` / deployment `6563225343`
       passed. Fresh 2026-09-21 local validation under exact Node `22.23.1` and
-      pnpm `11.24.0` passed 537 Vitest files / 4,241 tests plus one skip at 100%
-      coverage (13,048 statements, 9,828 branches, 2,152 functions, and 12,129
-      lines), 101 functional and 5 real Slice 09 E2E tests, builds, bundle
-      checks, and performance smoke (`p95=1.190315 ms`, threshold `500 ms`, zero
-      errors); `pnpm db:verify` passed 54 pgTAP files / 2,000 tests with migrated
-      type parity. See the [CP-01 verification record](../verification/2026-09-21-ac265-outage-lease-control-plane.md).
+      pnpm `11.24.0` passed 538 Vitest files / 4,250 passed + 1 intentional
+      skip (4,251 total) at 100% coverage (13,093 statements, 9,836 branches,
+      2,156 functions, and 12,174 lines), 101 functional and 5 real Slice 09
+      E2E tests, builds, bundle checks, and performance smoke
+      (`p95=1.402399 ms`, threshold `500 ms`, zero
+      errors); `pnpm db:verify` passed 56 pgTAP files / 2,065 tests with migrated
+      type parity. See the [CP-01 verification record](../verification/2026-09-21-ac265-outage-lease-control-plane.md)
+      and [CP-02 verification record](../verification/2026-09-21-ac265-approved-runner-registry.md).
       AC265 preflight `34824500796`
       passed, while authorization foundation run `34824651793` failed at
-      `staging_prepare`; CP-01 is locally green but unpromoted and produces no
-      hosted receipt or browser evidence, so no hosted acceptance is claimed. AC266 is
+      `staging_prepare`; CP-01 is promoted and staging-green but seeds no
+      target, while CP-02 is local and unpromoted with no seeded registry rows;
+      neither exposes a hosted route or produces an independently authenticated
+      receipt or browser evidence, so no hosted acceptance is claimed. AC266 is
       owner-deferred because the required real devices are unavailable, and
       remains unchecked and excluded from active Phase 2 completion; the three
       active external release checks remain open.)
@@ -676,14 +680,17 @@ response`; Workers Observability passed. Cloudflare's documented successful
   and staging `34824312138` / deployment `6433521892`. Preflight `34824500796`
   passed, but authorization foundation run `34824651793` failed at
   `staging_prepare`; no hosted browser matrix or accepted 9-role/10-scenario
-  report exists. Current `main` is PR #82 SHA
-  `71d59166e5b1b6440ac0786d2d4c192dfba526fa`; CI `35563634660` and
-  staging `35564168797` / deployment `6562174644` passed. CP-01 now has a
-  locally verified, staging-only one-use outage-lease database control plane,
-  but it seeds no target, exposes no hosted route, and produces no signed
-  receipt or browser evidence. The approved target/mapping/resource source,
-  role/session broker, MFA/step-up, evidence resolver, teardown, and complete
-  hosted Auth/RLS/IdP matrix remain open.
+  report exists. Current `main` is PR #83 SHA
+  `05e88ea52f1c9cf206d54f455e53bc849044cb9b`; CI `35569923623` and
+  staging `35570556554` / deployment `6563225343` passed. CP-01 now has a
+  promoted, staging-only one-use outage-lease database control plane, but it
+  seeds no target, exposes no hosted route, and produces no signed receipt or
+  browser evidence. CP-02 now provides only a local, unpromoted private
+  safe-resource/runner-mapping registry foundation; it does not authenticate
+  mapping provenance or verify underlying resource contents. The authenticated
+  canonical mapping/resource source, target source, role/session broker,
+  MFA/step-up, evidence resolver, teardown, and complete hosted Auth/RLS/IdP
+  matrix remain open.
 - P2-S09-AC-266: owner-deferred because the required real devices are
   unavailable. Retain operator-attested VoiceOver/Safari and NVDA/Firefox
   manual smoke against the exact hosted candidate when devices are available;

@@ -6,16 +6,19 @@
   at **279/282 active** (**283 authored IDs**) with authored depth ratio
   **0.986**. Phase 2 has **1,999 active criteria / 2,000 authored** because
   AC266 is owner-deferred and excluded from the active completion denominator.
-  Current `main` is PR #82 at
-  `71d59166e5b1b6440ac0786d2d4c192dfba526fa`; exact-main CI
-  [run 35563634660](https://github.com/WeJustJammin/nevrite-music/actions/runs/35563634660)
-  and staging [run 35564168797](https://github.com/WeJustJammin/nevrite-music/actions/runs/35564168797)
-  passed, producing staging deployment `6562174644`. AC265 preflight
+  Current `main` is PR #83 at
+  `05e88ea52f1c9cf206d54f455e53bc849044cb9b`; exact-main CI
+  [run 35569923623](https://github.com/WeJustJammin/nevrite-music/actions/runs/35569923623)
+  and staging [run 35570556554](https://github.com/WeJustJammin/nevrite-music/actions/runs/35570556554)
+  passed, producing staging deployment `6563225343`. AC265 preflight
   [run 34824500796](https://github.com/WeJustJammin/nevrite-music/actions/runs/34824500796)
   passed; authorization foundation [run 34824651793](https://github.com/WeJustJammin/nevrite-music/actions/runs/34824651793)
   failed at `staging_prepare`, so no hosted browser acceptance ran. The local
-  CP-01 outage-lease control plane is green but unpromoted and deliberately
-  seeds no target; it does not close AC265. Read-only
+  CP-01 outage-lease control plane is green and promoted to staging, but
+  deliberately seeds no target and exposes no hosted route; it does not close
+  AC265. CP-02's local, unpromoted private safe-resource/runner-mapping
+  registry foundation seeds no registry rows and does not authenticate mapping
+  provenance or produce hosted evidence. Read-only
   AC209 verifier [run 34813947512](https://github.com/WeJustJammin/nevrite-music/actions/runs/34813947512)
   failed with `provider_graphql_error` and produced no email, queue mutation,
   deployment, or receipt. AC211 collection [run 35560241699](https://github.com/WeJustJammin/nevrite-music/actions/runs/35560241699)
@@ -26,13 +29,21 @@
   is excluded from active Phase 2 completion, but is mandatory for post-Phase 2
   production-readiness/release. No active acceptance gate closed. Slice 10
   remains locked only on AC209, AC211, and AC265; AC266 does not block Slice 10
-  implementation. Fresh 2026-09-21 local validation
-  passes **537 Vitest files / 4,241 tests plus one skip**, 100% coverage
-  (**13,048 statements, 9,828 branches, 2,152 functions, and 12,129 lines**),
-  **101 functional + 5 real Slice 09 E2E tests**, and performance smoke
-  (`p95=1.190315 ms`, threshold `500 ms`, zero errors). Fresh database
-  verification passes **54 pgTAP files / 2,000 tests** with migrated type parity;
-  see [the CP-01 verification record](../verification/2026-09-21-ac265-outage-lease-control-plane.md).
+  implementation. Clean full 2026-09-21 validation passes **538 Vitest files /
+  4,250 passed + 1 intentional skip (4,251 total)**, 100% coverage
+  (**13,093 statements, 9,836 branches, 2,156 functions, and 12,174 lines**),
+  the Slice 09 evidence command, **101 functional + 5 real Slice 09 E2E tests**,
+  builds, bundle budgets, and performance smoke (`p95=1.402399 ms`, threshold
+  `500 ms`, zero errors). Fresh database verification passes **56 pgTAP files /
+  2,065 tests** with migrated type parity;
+  focused CP-02 contracts pass **2 files / 11 tests**, broader AC265 contract
+  verification passes **4 files / 31 tests**, and targeted CP-02 SQL passes **2
+  files / 65 assertions**. See [the CP-01 verification record](../verification/2026-09-21-ac265-outage-lease-control-plane.md)
+  and [the CP-02 verification record](../verification/2026-09-21-ac265-approved-runner-registry.md).
+  Next AC265 dependency is CP-03: an independently authenticated canonical
+  mapping/resource source. It must be followed by the run-scoped broker,
+  evidence/receipt resolver, protected hosted workflow, and genuine hosted
+  nine-role/ten-scenario execution before AC265 can close.
 
 ## Historical
 
