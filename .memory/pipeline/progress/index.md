@@ -14,20 +14,24 @@
 
 ## Latest checkpoint — 2026-09-21 AC265 CP-04d
 
-CP-04c remains the latest promoted private construction foundation: PR #90 merged
-at exact main SHA `e7525fa9ea80bbdf2325e8ce08d18930d6485b15`; exact-main CI
-`35634692281` succeeded, and staging workflow `35635650934` failed on
-`run_attempt=1` only at transient web release-identity propagation before the
-same workflow succeeded on `run_attempt=2` with deployment `6574859596` at
-`https://staging.wejamm.in`. The exact staging endpoints now serve
-`e7525fa9ea80bbdf2325e8ce08d18930d6485b15`; CP-04d includes the retry
-hardening in the current worktree, but it has not been promoted.
-Candidate artifact `10656615428` has digest
-`sha256:5568778c8bec9eacd8090ae2020518caa070ce82b1a901aa4c7fe9a95f03d592`;
-deployment evidence artifact `10655784856` has digest
-`sha256:02422c5ef8b4988fe50bdc7d02771c286ac81c148e51bac6bc80927736ec461d`;
-staging p95 was `49.30431599999997 ms` and the automated axe digest was
-`00968b6a806db4993ab895f83fcb592af81a65ec925f9b38e6aa3140c0f87d87`.
+CP-04d is now the latest promoted private construction foundation: PR #91
+merged to `main` at exact SHA
+`289ed3a2f4f92da383aa1464340f804777496257`; exact-main CI `35656504913`
+succeeded across all three jobs, and automatic staging run `35657406613`
+succeeded on `run_attempt=1` with deployment `6578526934`. Candidate artifact
+`10665966829` has digest
+`sha256:d51c0104d8ea7933e5d4a45af021b0ac2067a24150739390edb58e171cab827c`;
+deployment evidence artifact `10665756858` has digest
+`sha256:2724a98beb5e2152b7c601697c95042af508ee94d2e62da7ee143495362c9664`;
+source `artifactDigest` is
+`0e92da9874c0fae7e0d62fb4419678a83f00a8986087de558dc101c465451c04`;
+migration `20260921050000` and provider deployments
+`dac978c4-fe9d-4c86-9cf4-53d96a42d45e` and
+`b27ddb9f-0ab3-4c07-88da-5ff8ea0b2f7b` are recorded. Staging p95 was
+`29.956710999999927 ms` against the `500 ms` threshold and automated axe
+digest `6a7f59d9792a176e3032a9b410c6a0c1bb03850f27ed2918bc98fe82fddbbcf4`
+reported serious/critical counts `0/0`. These are exact-main CI and staging
+promotion proofs only; staging proof does not equal hosted AC265 acceptance.
 CP-04d adds the strict signed artifact-source manifest, server-derived
 authorization window, separate manifest digest, canonical source ordering,
 immutable reserve-to-finalize/readback authority ledger, and truthful
@@ -47,8 +51,8 @@ reset with migrations through `20260921050000`; database lint had existing
 warnings only, **61 files / 2,208 tests** passed, and generated types matched.
 The initial validate failure was root-caused to a fixture `PUBLIC_KEY_PEM`
 re-export issue; after the fix, focused **8/8** and **12-repeat** stability
-checks passed before the successful rerun. Exact-main CI, staging promotion,
-and any CP-04d promotion remain pending. No AC265 hosted acceptance is claimed:
+checks passed before the successful rerun. PR #91 exact-main CI and staging
+promotion are recorded above. No AC265 hosted acceptance is claimed:
 live hosted producer/source population, protected
 signer execution, retained hosted artifacts, independently authenticated
 receipts, and the complete hosted matrix remain open. Phase 2 remains **8/17**

@@ -2,7 +2,7 @@
 
 **Date:** 2026-09-21  
 **Scope:** local/private signed source-manifest, authority-ledger, resolver, and staging-retry foundation  
-**Verdict:** CP04d local validation is GREEN; exact-main CI, promotion, and hosted AC265 acceptance remain pending
+**Verdict:** CP04d local validation, exact-main CI, and staging promotion are GREEN as private construction evidence; hosted AC265 acceptance remains OPEN
 
 ## Implemented boundary
 
@@ -73,8 +73,25 @@ Focused database authority evidence reports **78/78 assertions** and the
 concurrency proof reports **6/6** (**84/84 total**). After a fresh reset, final
 local `pnpm db:verify` passed with migrations through `20260921050000`;
 database lint had existing warnings only, **61 files / 2,208 tests** passed,
-and generated types matched. Exact-main CI, CP04d staging promotion, and any
-CP04d promotion remain pending.
+and generated types matched.
+
+PR #91 merged to `main` at exact SHA
+`289ed3a2f4f92da383aa1464340f804777496257`. Exact-main CI run
+`35656504913` succeeded across all three jobs. Automatic staging run
+`35657406613` succeeded on `run_attempt=1`, with deployment
+`6578526934`. The candidate artifact is `10665966829` with digest
+`sha256:d51c0104d8ea7933e5d4a45af021b0ac2067a24150739390edb58e171cab827c`;
+the deployment evidence artifact is `10665756858` with digest
+`sha256:2724a98beb5e2152b7c601697c95042af508ee94d2e62da7ee143495362c9664`;
+the recorded source `artifactDigest` is
+`0e92da9874c0fae7e0d62fb4419678a83f00a8986087de558dc101c465451c04`.
+The promoted migration is `20260921050000`; provider deployment IDs are
+`dac978c4-fe9d-4c86-9cf4-53d96a42d45e` and
+`b27ddb9f-0ab3-4c07-88da-5ff8ea0b2f7b`. Staging p95 was
+**29.956710999999927 ms** against the **500 ms** threshold. The automated axe
+digest is `6a7f59d9792a176e3032a9b410c6a0c1bb03850f27ed2918bc98fe82fddbbcf4`,
+with serious/critical counts **0/0**. These are exact-main CI and staging
+promotion proofs only; staging proof does not equal hosted AC265 acceptance.
 
 ## Acceptance boundary
 

@@ -70,16 +70,27 @@
   See `.memory/wiki/specs/audits/phase-1-validation.md`.
 - **CURRENT IMPLEMENTATION (2026-09-21):** Phase 2 Slices 01–08 are complete.
   Slice 09 remains locally QA-GREEN at 279/282 active (283 authored IDs) with
-  authored depth ratio `0.986`. PR #90 is the current promoted main at exact
-  SHA `e7525fa9ea80bbdf2325e8ce08d18930d6485b15`; exact-main CI
-  `35634692281` succeeded, and staging workflow `35635650934` failed on
-  `run_attempt=1` only at transient web release-identity propagation before
-  succeeding on `run_attempt=2`; deployment `6574859596` succeeded at
-  `https://staging.wejamm.in`. The exact staging endpoints now serve
-  `e7525fa9ea80bbdf2325e8ce08d18930d6485b15`; CP-04c is the last promoted
-  baseline and CP-04d includes the retry hardening in the current unpromoted
-  worktree.
-  Candidate artifact `10656615428` has digest
+  authored depth ratio `0.986`. PR #91 is the latest promoted CP-04d
+  implementation baseline at exact
+  SHA `289ed3a2f4f92da383aa1464340f804777496257`; exact-main CI
+  `35656504913` succeeded across all three jobs, and automatic staging run
+  `35657406613` succeeded on `run_attempt=1` with deployment `6578526934`.
+  Candidate artifact `10665966829` has digest
+  `sha256:d51c0104d8ea7933e5d4a45af021b0ac2067a24150739390edb58e171cab827c`;
+  deployment evidence artifact `10665756858` has digest
+  `sha256:2724a98beb5e2152b7c601697c95042af508ee94d2e62da7ee143495362c9664`;
+  source `artifactDigest` is
+  `0e92da9874c0fae7e0d62fb4419678a83f00a8986087de558dc101c465451c04`;
+  migration `20260921050000` and provider deployments
+  `dac978c4-fe9d-4c86-9cf4-53d96a42d45e` and
+  `b27ddb9f-0ab3-4c07-88da-5ff8ea0b2f7b` are recorded. Staging p95 was
+  `29.956710999999927 ms` against the `500 ms` threshold; automated axe
+  digest `6a7f59d9792a176e3032a9b410c6a0c1bb03850f27ed2918bc98fe82fddbbcf4`
+  reported serious/critical counts `0/0`. These are exact-main CI and
+  staging promotion proofs only; staging proof does not equal hosted AC265
+  acceptance. CP-04d is the latest promoted private foundation. For historical
+  comparison, the preceding CP-04c promotion used candidate artifact
+  `10656615428` with digest
   `sha256:5568778c8bec9eacd8090ae2020518caa070ce82b1a901aa4c7fe9a95f03d592`;
   deployment evidence artifact `10655784856` has digest
   `sha256:02422c5ef8b4988fe50bdc7d02771c286ac81c148e51bac6bc80927736ec461d`;
@@ -122,32 +133,34 @@
   post-Phase 2 production-readiness/release gate. See
   `.memory/pipeline/progress/phases/phase-02.md` and
   `.memory/pipeline/progress/slices/phase-02-slice-09.md`.
-- **LATEST LOCAL CP-04D FOUNDATION (2026-09-21):** CP-04c remains the last
-  promoted private construction foundation. PR #90 merged at exact
-  main SHA `e7525fa9ea80bbdf2325e8ce08d18930d6485b15`; exact-main CI
-  `35634692281` succeeded, and staging workflow `35635650934` failed on
-  `run_attempt=1` only at transient web release-identity propagation before
-  succeeding on `run_attempt=2`. Deployment `6574859596` succeeded at
-  `https://staging.wejamm.in`; the exact staging endpoints now serve
-  `e7525fa9ea80bbdf2325e8ce08d18930d6485b15`; the CP-04c promotion record
-  predates the CP-04d retry hardening now present in the unpromoted worktree.
-  Candidate artifact `10656615428` has digest
-  `sha256:5568778c8bec9eacd8090ae2020518caa070ce82b1a901aa4c7fe9a95f03d592`;
-  deployment evidence artifact `10655784856` has digest
-  `sha256:02422c5ef8b4988fe50bdc7d02771c286ac81c148e51bac6bc80927736ec461d`;
-  staging p95 was `49.30431599999997 ms` and automated axe digest
-  `00968b6a806db4993ab895f83fcb592af81a65ec925f9b38e6aa3140c0f87d87`.
-  Strict Ed25519 attestation covers exact artifact bytes, and a branded
-  resolver enforces exact artifact kind/reference/key/subject/run/candidate/
-  runner bindings with a maximum source set of **256**. Upstream authenticated
-  manifest/registry/run authority and the external replay ledger remain open;
-  no hosted artifact, hosted matrix, independently authenticated receipt, or
-  AC265 acceptance is claimed. Focused local verification passes **5 files /
-  74 tests** and `pnpm type-check` is green. Totals remain Slice 09
-  **279/282 active** with **283 authored IDs**, Phase 2 **8/17** with
-  **1,999/2,000 active criteria**; AC209/AC211/AC265 remain open, Slice 10
-  remains locked, and AC266 remains owner-deferred as the mandatory post-Phase 2
-  production-readiness/release gate.
+- **LATEST PROMOTED CP-04D FOUNDATION (2026-09-21):** PR #91 merged to
+  `main` at exact SHA `289ed3a2f4f92da383aa1464340f804777496257`; exact-main
+  CI `35656504913` succeeded across all three jobs, and automatic staging run
+  `35657406613` succeeded on `run_attempt=1` with deployment `6578526934`.
+  Candidate artifact `10665966829` has digest
+  `sha256:d51c0104d8ea7933e5d4a45af021b0ac2067a24150739390edb58e171cab827c`;
+  deployment evidence artifact `10665756858` has digest
+  `sha256:2724a98beb5e2152b7c601697c95042af508ee94d2e62da7ee143495362c9664`;
+  source `artifactDigest` is
+  `0e92da9874c0fae7e0d62fb4419678a83f00a8986087de558dc101c465451c04`;
+  migration `20260921050000` and provider deployments
+  `dac978c4-fe9d-4c86-9cf4-53d96a42d45e` and
+  `b27ddb9f-0ab3-4c07-88da-5ff8ea0b2f7b` are recorded. Staging p95 was
+  `29.956710999999927 ms` against the `500 ms` threshold; automated axe
+  digest `6a7f59d9792a176e3032a9b410c6a0c1bb03850f27ed2918bc98fe82fddbbcf4`
+  reported serious/critical counts `0/0`. These are exact-main CI and
+  staging promotion proofs only; staging proof does not equal hosted AC265
+  acceptance. Strict Ed25519 attestation covers exact artifact bytes, and the
+  branded resolver enforces exact artifact kind/reference/key/subject/run/
+  candidate/runner bindings with a maximum source set of **256**. The CP-04d
+  manifest/registry/run authority and external replay ledger remain open; no
+  hosted artifact, hosted matrix, independently authenticated receipt, or
+  AC265 acceptance is claimed. Focused local verification passes **16 files /
+  104 tests** plus **84/84** database authority/concurrency assertions. Totals
+  remain Slice 09 **279/282 active** with **283 authored IDs**, Phase 2 **8/17**
+  with **1,999/2,000 active criteria**; AC209/AC211/AC265 remain open, Slice 10
+  remains locked, and AC266 remains owner-deferred as the mandatory post-Phase
+  2 production-readiness/release gate.
   CP-04d adds the strict signed artifact-source manifest, server-derived
   authorization window, separate manifest digest, canonical source ordering,
   immutable reserve-to-finalize/readback authority ledger, and truthful
@@ -167,26 +180,26 @@
   existing warnings only, **61 files / 2,208 tests** passed, and generated types
   matched. The initial validate failure was root-caused to a fixture
   `PUBLIC_KEY_PEM` re-export issue; after the fix, focused **8/8** and
-  **12-repeat** stability checks passed before the successful rerun. CP-04d
-  exact-main CI, staging promotion, and any CP-04d promotion remain pending.
-  No hosted AC265 acceptance is claimed: live hosted producer/source
+  **12-repeat** stability checks passed before the successful rerun. PR #91
+  exact-main CI and staging promotion are recorded above. No hosted AC265
+  acceptance is claimed: live hosted producer/source
   population, protected signer execution, retained hosted artifacts,
   independently authenticated receipts, and the complete hosted matrix remain
   open. See the [CP-04d verification record](verification/2026-09-21-ac265-hosted-artifact-source-manifest.md).
-- **LATEST COMPLETE LOCAL VALIDATION (CP-04b, 2026-09-21):** Under exact Node
+- **HISTORICAL COMPLETE LOCAL VALIDATION (CP-04b, 2026-09-21):** Under exact Node
   `22.23.1` and pnpm `11.24.0`, final canonical `pnpm validate` passed **551
   Vitest files, 4,387 passed + 1 intentional skip**. Coverage is complete:
   **13,143/13,143 statements, 9,850/9,850 branches, 2,160/2,160 functions,
   and 12,224/12,224 lines** (100%). The evidence-map gate passed; Playwright
   passed **101 functional checks + 5 production-built Slice 09 real-route
   checks**. Workspace builds, bundle budgets, and performance smoke are green;
-  API p95 is **1.491154 ms**. Fresh `pnpm db:verify` is current-final at **59
+  API p95 is **1.491154 ms**. Fresh `pnpm db:verify` passed **59
   pgTAP files / 2,124 assertions**, with database lint and generated-type parity
   passing. Architecture compile passed **1,632 nodes / 10,125 edges**, with 55
   known lint issues. These local results do not supply live keys, rows,
   artifacts, the hosted matrix, an independently authenticated receipt, or
   AC265 acceptance. See the [CP-04b verification record](verification/2026-09-21-ac265-approved-outage-target-registration.md).
-- **CURRENT CP-04A CHECKS (promoted foundation):** CP-04a adds a strict
+- **HISTORICAL CP-04A CHECKS (promoted foundation):** CP-04a adds a strict
   service-role-only approved-target read over CP-01 rows, canonical target and
   stored-digest binding, a distinct domain-separated Ed25519 target attestation,
   and a protected manual main/staging fail-closed entrypoint/workflow. The
@@ -208,7 +221,7 @@
   registry rows, retained target/attestation artifacts, attestation workflow
   execution, hosted browser matrix, independently authenticated receipt, and
   AC265 acceptance remain absent. See the [CP-04a verification record](verification/2026-09-21-ac265-approved-outage-target-attestation.md).
-- **CURRENT CP-04B CHECKS (promoted private foundation):** The RPC client suite
+- **HISTORICAL CP-04B CHECKS (promoted private foundation):** The RPC client suite
   passes **15 tests**; together with the registration contract/public-export
   tests this is **3 files / 24 tests**. Registration SQL covers **35 pgTAP
   assertions**, including direct registration-to-lease acquisition for the
@@ -216,12 +229,12 @@
   covers **2 assertions**. The policy requires **exact 120-second target
   validity**, leaving a bounded 60-second acquisition window; future-dated or
   too-short policy windows return generic conflict. Final canonical validation
-  via `pnpm validate` is current-final at **551 Vitest files, 4,387 passed + 1
+  via `pnpm validate` passed **551 Vitest files, 4,387 passed + 1
   intentional skip**, with **13,143/13,143 statements, 9,850/9,850 branches,
   2,160/2,160 functions, and 12,224/12,224 lines** (100%). The evidence-map
   gate passed; Playwright passed **101 functional + 5 production-built Slice
   09 real-route checks**. Builds, bundle budgets, and performance are green;
-  API p95 is **1.491154 ms**. Fresh `pnpm db:verify` is current-final at **59
+  API p95 is **1.491154 ms**. Fresh `pnpm db:verify` passed **59
   pgTAP files / 2,124 assertions**; database lint exits 0 with **46
   longstanding warnings** (39 never-read, 6 unused, 1 immutable/stable), and
   generated database types match. Architecture compile passed **1,632 nodes /
@@ -273,7 +286,7 @@
   Cloudflare's Zone Analytics Email Sending capability check with sanitized
   `provider_graphql_error`; no genuine delivery receipt or production
   acceptance is claimed. The token policy edit/retest remains pending.
-- **LATEST AC209 EVIDENCE:** Read-only observability run `34813947512` failed
+- **LATEST AC209 EVIDENCE:** Read-only observability run `35612514031` failed
   with `provider_graphql_error` on `emailSendingAdaptive`; it sent no email,
   changed no queue or production state, performed no deployment, and produced
   no receipt. AC209 remains open.
@@ -321,7 +334,8 @@ failed: malformed response`. The token still passes Workers Observability.
   callback/session/protected-route proof passed on staging. AC265 remains open:
   the approved 9-role/10-scenario hosted report and identity provisioning,
   teardown, and lifecycle evidence are still missing.
-- **LATEST AC265 EVIDENCE:** Current SHA `918f598525de772c82b0a0bcd82348ea8f5d523d`
+- **LATEST HOSTED AC265 AUTHORIZATION ATTEMPT:** Historical SHA
+  `918f598525de772c82b0a0bcd82348ea8f5d523d`
   passed CI `34823698333` and staging `34824312138` / deployment `6433521892`.
   AC265 preflight `34824500796` passed; authorization foundation run
   `34824651793` failed at `staging_prepare`, so no hosted browser matrix or

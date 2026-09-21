@@ -6,23 +6,25 @@
   at **279/282 active** (**283 authored IDs**) with authored depth ratio
   **0.986**. Phase 2 has **1,999 active criteria / 2,000 authored** because
   AC266 is owner-deferred and excluded from the active completion denominator.
-  Current `main` is PR #90 at exact SHA
-  `e7525fa9ea80bbdf2325e8ce08d18930d6485b15`; exact-main CI
-  [run 35634692281](https://github.com/WeJustJammin/nevrite-music/actions/runs/35634692281)
-  succeeded, and staging workflow
-  [run 35635650934](https://github.com/WeJustJammin/nevrite-music/actions/runs/35635650934)
-  failed on `run_attempt=1` only at transient web release-identity propagation
-  before succeeding on `run_attempt=2`. Deployment `6574859596` succeeded at
-  `https://staging.wejamm.in`; the exact staging endpoints now serve
-  `e7525fa9ea80bbdf2325e8ce08d18930d6485b15`; that CP-04c promotion record
-  predates the CP-04d retry hardening, which is present in the current
-  unpromoted worktree.
-  Candidate artifact `10656615428` has digest
-  `sha256:5568778c8bec9eacd8090ae2020518caa070ce82b1a901aa4c7fe9a95f03d592`;
-  deployment evidence artifact `10655784856` has digest
-  `sha256:02422c5ef8b4988fe50bdc7d02771c286ac81c148e51bac6bc80927736ec461d`;
-  staging p95 was `49.30431599999997 ms` and automated axe digest
-  `00968b6a806db4993ab895f83fcb592af81a65ec925f9b38e6aa3140c0f87d87`.
+  The latest promoted CP-04d implementation baseline is PR #91 at exact SHA
+  `289ed3a2f4f92da383aa1464340f804777496257`; exact-main CI
+  [run 35656504913](https://github.com/WeJustJammin/nevrite-music/actions/runs/35656504913)
+  succeeded across all three jobs, and automatic staging
+  [run 35657406613](https://github.com/WeJustJammin/nevrite-music/actions/runs/35657406613)
+  succeeded on `run_attempt=1`. Deployment `6578526934` succeeded; candidate
+  artifact `10665966829` has digest
+  `sha256:d51c0104d8ea7933e5d4a45af021b0ac2067a24150739390edb58e171cab827c`;
+  deployment evidence artifact `10665756858` has digest
+  `sha256:2724a98beb5e2152b7c601697c95042af508ee94d2e62da7ee143495362c9664`;
+  source `artifactDigest` is
+  `0e92da9874c0fae7e0d62fb4419678a83f00a8986087de558dc101c465451c04`.
+  Migration `20260921050000` and provider deployments
+  `dac978c4-fe9d-4c86-9cf4-53d96a42d45e` and
+  `b27ddb9f-0ab3-4c07-88da-5ff8ea0b2f7b` are recorded. Staging p95 was
+  `29.956710999999927 ms` against the `500 ms` threshold; automated axe digest
+  is `6a7f59d9792a176e3032a9b410c6a0c1bb03850f27ed2918bc98fe82fddbbcf4`,
+  serious/critical `0/0`. These are exact-main CI and staging promotion proofs
+  only; staging proof does not equal hosted AC265 acceptance.
   AC265 preflight
   [run 34824500796](https://github.com/WeJustJammin/nevrite-music/actions/runs/34824500796)
   passed; authorization foundation [run 34824651793](https://github.com/WeJustJammin/nevrite-music/actions/runs/34824651793)
@@ -33,7 +35,7 @@
   safe-resource/runner-mapping registry foundation; it still seeds no registry
   rows and does not authenticate mapping provenance or produce hosted evidence.
   Read-only
-  AC209 verifier [run 34813947512](https://github.com/WeJustJammin/nevrite-music/actions/runs/34813947512)
+  AC209 verifier [run 35612514031](https://github.com/WeJustJammin/nevrite-music/actions/runs/35612514031)
   failed with `provider_graphql_error` and produced no email, queue mutation,
   deployment, or receipt. AC211 collection [run 35560241699](https://github.com/WeJustJammin/nevrite-music/actions/runs/35560241699)
   passed preflight but collection failed for insufficient samples
@@ -43,30 +45,32 @@
   is excluded from active Phase 2 completion, but is mandatory for post-Phase 2
   production-readiness/release. No active acceptance gate closed. Slice 10
   remains locked only on AC209, AC211, and AC265; AC266 does not block Slice 10
-  implementation. Final canonical validation passes **551 Vitest files, 4,387
-  passed + 1 intentional skip**, with **13,143/13,143 statements,
-  9,850/9,850 branches, 2,160/2,160 functions, and 12,224/12,224 lines** at
+  implementation. Final canonical validation passes **562 Vitest files, 4,498
+  passed + 1 intentional skip**, with **13,184/13,184 statements,
+  9,862/9,862 branches, 2,164/2,164 functions, and 12,263/12,263 lines** at
   100%. The evidence-map gate passed; Playwright passed **101 functional + 5
   production-built Slice 09 real-route checks**. Builds, bundle budgets, and
-  performance are green with API p95 **1.491154 ms**. Fresh database
-  verification passes **59 pgTAP files / 2,124 assertions**, database lint,
+  performance are green with local API p95 **1.2129150000000095 ms**. Fresh
+  database verification passes **61 pgTAP files / 2,208 assertions**, database lint,
   and generated-type parity; architecture compile passed **1,632 nodes / 10,125
   edges** with 55 known lint issues. See [the CP-01 verification record](../verification/2026-09-21-ac265-outage-lease-control-plane.md),
   [the CP-02 verification record](../verification/2026-09-21-ac265-approved-runner-registry.md),
   [the CP-03 verification record](../verification/2026-09-21-ac265-approved-runner-mapping-attestation.md),
-  and [the CP-04a verification record](../verification/2026-09-21-ac265-approved-outage-target-attestation.md).
+  [the CP-04a verification record](../verification/2026-09-21-ac265-approved-outage-target-attestation.md),
+  and [the CP-04d verification record](../verification/2026-09-21-ac265-hosted-artifact-source-manifest.md).
   CP-03 code is promoted, but no
   live signing-key configuration, registry rows, retained mapping/attestation
   artifact, attestation workflow run, hosted browser matrix,
   independently authenticated receipt, browser evidence, or AC265 acceptance
-  exists. The next AC265 dependency is the independently authenticated
-  canonical mapping/resource population source. The CP-04a
+  exists. The next AC265 dependency is the protected source-manifest publication
+  tranche: typed RPC projection, protected authority/trust sources, signed-byte
+  integration, and a protected publication workflow. The CP-04a
   approved-outage-target read/attestation foundation is promoted through PR #86,
   exact-main CI `35597438023`, and staging `35598236704` / deployment
   `6568074493`, but currently has no
   live target-signing key/configuration, seeded target or registry rows,
   retained target/attestation artifact, protected workflow run, hosted matrix,
-  or receipt. Final canonical `pnpm validate` exits 0 with 551 Vitest files,
+  or receipt. That CP-04a baseline's canonical `pnpm validate` exited 0 with 551 Vitest files,
   4,387 passed + 1 intentional skip, 100% coverage, 101 functional plus 5
   production-built Slice 09 real-route checks, green builds/bundle checks,
   evidence-map gate, and API p95 1.491154 ms. Fresh `pnpm db:verify` is green:
@@ -86,13 +90,13 @@
   proof passes **2 assertions**. The policy requires **exact 120-second target
   validity**, leaving a bounded 60-second acquisition window; future-dated or
   too-short policy windows return generic conflict.
-  Final canonical `pnpm validate` is current-final at **551 Vitest files, 4,387
+  The CP-04b baseline `pnpm validate` passed **551 Vitest files, 4,387
   passed + 1 intentional skip**, with **13,143/13,143 statements, 9,850/9,850
   branches, 2,160/2,160 functions, and 12,224/12,224 lines** (100%). The
   evidence-map gate passed; Playwright passed **101 functional + 5 production-built
   Slice 09 real-route checks**. Builds, bundle budgets, and performance are
   green; API p95 is **1.491154 ms**. Fresh post-remediation database
-  verification is current-final at **59 pgTAP files / 2,124 assertions**;
+  verification passed **59 pgTAP files / 2,124 assertions**;
   database lint exits 0 with **46 longstanding warnings** (39 never-read, 6
   unused, 1 immutable/stable), and generated database types match. Architecture
   compile passed **1,632 nodes / 10,125 edges** with 55 known lint issues. The deployed
@@ -121,8 +125,7 @@
   succeeding on `run_attempt=2`. Deployment `6574859596` succeeded at
   `https://staging.wejamm.in`; the exact staging endpoints now serve
   `e7525fa9ea80bbdf2325e8ce08d18930d6485b15`; the CP-04c promotion record
-  predates the CP-04d retry hardening, which is present in the current
-  unpromoted worktree.
+  predates the CP-04d retry hardening now promoted in PR #91.
   Candidate artifact `10656615428` has digest
   `sha256:5568778c8bec9eacd8090ae2020518caa070ce82b1a901aa4c7fe9a95f03d592`;
   deployment evidence artifact `10655784856` has digest
@@ -164,8 +167,24 @@
   warnings only, **61 files / 2,208 tests** passed, and generated types matched.
   The initial validate failure was root-caused to a fixture `PUBLIC_KEY_PEM`
   re-export issue; after the fix, focused **8/8** and **12-repeat** stability
-  checks passed before the successful rerun. Exact-main CI, staging promotion,
-  and CP-04d promotion remain pending. No hosted AC265 acceptance is claimed:
+  checks passed before the successful rerun. PR #91 merged to `main` at exact
+  SHA `289ed3a2f4f92da383aa1464340f804777496257`; exact-main CI `35656504913`
+  succeeded across all three jobs, and automatic staging run `35657406613`
+  succeeded on `run_attempt=1` with deployment `6578526934`. Candidate artifact
+  `10665966829` has digest
+  `sha256:d51c0104d8ea7933e5d4a45af021b0ac2067a24150739390edb58e171cab827c`;
+  deployment evidence artifact `10665756858` has digest
+  `sha256:2724a98beb5e2152b7c601697c95042af508ee94d2e62da7ee143495362c9664`;
+  source `artifactDigest` is
+  `0e92da9874c0fae7e0d62fb4419678a83f00a8986087de558dc101c465451c04`;
+  migration `20260921050000` and provider deployments
+  `dac978c4-fe9d-4c86-9cf4-53d96a42d45e` and
+  `b27ddb9f-0ab3-4c07-88da-5ff8ea0b2f7b` are recorded. Staging p95 was
+  **29.956710999999927 ms** against the **500 ms** threshold; automated axe
+  digest is `6a7f59d9792a176e3032a9b410c6a0c1bb03850f27ed2918bc98fe82fddbbcf4`,
+  serious/critical **0/0**. These are exact-main CI and staging promotion
+  proofs only; staging proof does not equal hosted AC265 acceptance. No hosted
+  AC265 acceptance is claimed:
   live producer
   or source population, protected signer execution, retained hosted artifacts,
   independently authenticated receipts, and the complete hosted matrix remain
