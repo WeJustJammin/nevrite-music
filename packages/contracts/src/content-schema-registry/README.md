@@ -47,6 +47,16 @@ signature, domain separator, and a positive maximum five-minute validity
 window. The envelope is only a verification input; it does not create a key,
 authenticate a hosted run by itself, or prove AC265 acceptance.
 
+`operational-release-evidence-hosted-approved-outage-target-control.ts`
+defines the strict CP-04 read boundary for one authorization-bound, staging-only
+outage target. The response retains the canonical target plus its stored digest
+while exposing no provider locator, credential, token, or mutation surface.
+`operational-release-evidence-hosted-approved-outage-target-attestation.ts`
+binds that exact canonical target digest, target reference, run ID, protected
+key ID, Ed25519 domain, and bounded validity window. These contracts support a
+protected signing workflow; they neither create signing keys nor prove a hosted
+outage or AC265 acceptance.
+
 ## Ownership
 
 These schemas define the cross-surface boundary. They do not grant authority,

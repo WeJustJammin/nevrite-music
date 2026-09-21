@@ -14,10 +14,12 @@ import {
 } from '../../packages/contracts/src/content-schema-registry/operational-release-evidence-hosted-outage-lease-scope.ts';
 import type { ApprovedRunnerMappingsV1 } from '../../packages/contracts/src/content-schema-registry/operational-release-evidence-hosted-approved-runner-mappings.ts';
 import type { ApprovedRunnerMappingAttestationV1 } from '../../packages/contracts/src/content-schema-registry/operational-release-evidence-hosted-approved-runner-mapping-attestation.ts';
+import type { ApprovedOutageTargetV1 } from '../../packages/contracts/src/content-schema-registry/operational-release-evidence-hosted-approved-outage-target.ts';
+import type { ApprovedOutageTargetAttestationV1 } from '../../packages/contracts/src/content-schema-registry/operational-release-evidence-hosted-approved-outage-target-attestation.ts';
 import {
-  authenticateApprovedOutageTargetV1,
-  type ApprovedOutageTargetV1,
-} from './ac265-hosted-runner-policy-v1.ts';
+  authenticateAc265ApprovedOutageTargetV1,
+  type Ac265ApprovedOutageTargetTrustedKey,
+} from './ac265-approved-outage-target-attestation.ts';
 import {
   authenticateAc265ApprovedRunnerMappingsV1,
   type Ac265ApprovedRunnerMappingTrustedKey,
@@ -35,13 +37,11 @@ export type ContentSchemaRegistryHostedE2eReportV3VerificationContext =
     readonly trustedCutoffAt: string;
     readonly expectedOutageLeaseScope: HostedOutageLeaseScope;
     readonly approvedOutageTargetBytes: Uint8Array;
+    readonly approvedOutageTargetAttestationBytes: Uint8Array;
+    readonly approvedOutageTargetTrustedKeys: readonly Ac265ApprovedOutageTargetTrustedKey[];
     readonly approvedRunnerMappingsBytes: Uint8Array;
     readonly approvedRunnerMappingAttestationBytes: Uint8Array;
     readonly approvedRunnerMappingTrustedKeys: readonly Ac265ApprovedRunnerMappingTrustedKey[];
-    readonly verifyApprovedOutageTargetAuthenticity: (
-      bytes: Uint8Array,
-      parsedTarget: unknown,
-    ) => boolean;
     readonly resolveReceipt: (ref: string) => Uint8Array | undefined;
     readonly resolveEvidence: (ref: string) => Uint8Array | undefined;
     readonly verifyReceiptAuthenticity: (
@@ -54,12 +54,14 @@ export type ContentSchemaRegistryHostedE2eReportV3VerificationContext =
 type ParsedContentSchemaRegistryHostedE2eReportV3VerificationContext = Omit<
   ContentSchemaRegistryHostedE2eReportV3VerificationContext,
   | 'approvedOutageTargetBytes'
-  | 'verifyApprovedOutageTargetAuthenticity'
+  | 'approvedOutageTargetAttestationBytes'
+  | 'approvedOutageTargetTrustedKeys'
   | 'approvedRunnerMappingsBytes'
   | 'approvedRunnerMappingAttestationBytes'
   | 'approvedRunnerMappingTrustedKeys'
 > & {
   readonly approvedOutageTarget: ApprovedOutageTargetV1;
+  readonly approvedOutageTargetAttestation: ApprovedOutageTargetAttestationV1;
   readonly approvedRunnerMappings: ApprovedRunnerMappingsV1;
   readonly approvedRunnerMappingAttestation: ApprovedRunnerMappingAttestationV1;
 };
@@ -134,23 +136,31 @@ export const parseHostedE2eVerificationContext = (
       'AC265 approved runner mappings do not match the protected trusted mapping context.',
     );
   const approvedOutageTargetBytes = context['approvedOutageTargetBytes'];
-  const verifyApprovedOutageTargetAuthenticity =
-    context['verifyApprovedOutageTargetAuthenticity'];
+  const approvedOutageTargetAttestationBytes =
+    context['approvedOutageTargetAttestationBytes'];
+  const approvedOutageTargetTrustedKeys =
+    context['approvedOutageTargetTrustedKeys'];
   if (
     !(approvedOutageTargetBytes instanceof Uint8Array) ||
     approvedOutageTargetBytes.byteLength === 0 ||
-    typeof verifyApprovedOutageTargetAuthenticity !== 'function'
+    !(approvedOutageTargetAttestationBytes instanceof Uint8Array) ||
+    approvedOutageTargetAttestationBytes.byteLength === 0 ||
+    !Array.isArray(approvedOutageTargetTrustedKeys)
   )
     throw new Error(
-      'Protected AC265 approved outage target bytes and authenticity verifier are required.',
+      'Protected AC265 approved outage target bytes, signed attestation, and trusted keys are required.',
     );
-  const approvedOutageTarget = authenticateApprovedOutageTargetV1(
-    approvedOutageTargetBytes,
-    verifyApprovedOutageTargetAuthenticity as (
-      bytes: Uint8Array,
-      parsedTarget: unknown,
-    ) => boolean,
-  );
+  const authenticatedOutageTarget = authenticateAc265ApprovedOutageTargetV1({
+    targetBytes: approvedOutageTargetBytes,
+    attestationBytes: approvedOutageTargetAttestationBytes,
+    trustedKeys:
+      approvedOutageTargetTrustedKeys as readonly Ac265ApprovedOutageTargetTrustedKey[],
+  });
+  const approvedOutageTarget = authenticatedOutageTarget.target;
+  if (approvedOutageTarget.scope.runId !== expectedRunId)
+    throw new Error(
+      'AC265 approved outage target does not match the trusted context run.',
+    );
   const outageScope = context['expectedOutageLeaseScope'];
   const parsedOutageScope =
     outageScope === undefined
@@ -191,6 +201,7 @@ export const parseHostedE2eVerificationContext = (
     trustedCutoffAt: trustedCutoffAt.data,
     expectedOutageLeaseScope: approvedOutageTarget.scope,
     approvedOutageTarget,
+    approvedOutageTargetAttestation: authenticatedOutageTarget.attestation,
     approvedRunnerMappings,
     approvedRunnerMappingAttestation: authenticatedRunnerMappings.attestation,
     resolveReceipt: context['resolveReceipt'] as (

@@ -110,12 +110,38 @@ keys complete; do not infer all role/scenario pairs or per-role resource kinds.
 Bind role/scenario receipts to the approved session and resource reference
 digests.
 
-CP-03 now supplies only a local, unpromoted attestation boundary for the exact
-`ac265-approved-runner-mappings-v1` bytes. It canonicalizes those bytes and
-verifies a trusted Ed25519 signature, key/report validity windows, domain
-separator, and run/mapping identity. No live signing-key configuration,
-registry rows, retained mapping/attestation artifact, hosted run, receipt, or
-promotion exists; fixtures and generated test keys are not acceptance evidence.
+CP-03 now supplies a promoted application attestation boundary for the exact
+`ac265-approved-runner-mappings-v1` bytes. PR #85 at exact main SHA
+`a94ffbca3d41da703218dff12ee7527f31c23a34` passed exact-main CI
+`35592046696`; staging workflow `35592722418` succeeded after one failed-job
+retry for the immediate Cloudflare provider-evidence query, with no provider
+configuration change, and deployment `6567092259` succeeded at
+`https://staging.wejamm.in`. It canonicalizes those bytes and verifies a
+trusted Ed25519 signature, key/report validity windows, domain separator, and
+run/mapping identity. No live signing-key configuration, registry rows,
+retained mapping/attestation artifact, attestation workflow run, hosted browser
+matrix, independently authenticated receipt, or AC265 acceptance exists;
+fixtures and generated test keys are not acceptance evidence.
+
+CP-04a adds a local, unpromoted approved outage-target read and attestation
+boundary. The service-role-only `ac265_approved_outage_target_read` RPC reads
+CP-01 target rows and returns a redacted canonical target projection with its
+stored `targetSha256`. A distinct domain-separated Ed25519 envelope binds the
+exact `ac265-approved-outage-target-v1` bytes, target reference, run ID, digest,
+key ID, and validity window. The protected manual main/staging entrypoint and
+workflow, verifier, and policy require this signed target; a caller-provided
+authenticity callback cannot substitute. Focused AC265 verification covers 54
+files / 483 tests with `pnpm type-check` passing. Exact-runtime `pnpm validate`
+exits 0 with 549 Vitest files, 4,366 passed + 1 intentional skip (4,367 total),
+100% coverage, 101 functional Chromium checks, five production-built checks,
+green builds/bundle checks, and local API p95 1.377056 ms. After a clean reset,
+all `pnpm db:verify` components are green: 57 pgTAP files / 2,087 assertions,
+database lint, and generated-type checks pass. Independent security review
+found no CP-04a blocker; a protected orchestrator remains a required trust
+boundary. Promotion, staging execution, live target key/configuration, seeded
+target or registry rows, retained artifact, workflow run, hosted browser
+matrix, independently authenticated receipt, and AC265 acceptance remain
+pending.
 
 The protected workflow must resolve each opaque reference and receipt to its
 exact raw bytes, recompute SHA-256 before parsing, and cross-verify the
@@ -140,13 +166,17 @@ duplicates and escaped-equivalent keys fail closed. For each role and scenario,
 
 The trusted verification context also supplies a positive safe-integer
 `maxRunDurationMs`, `trustedCutoffAt`, the exact
-`approvedOutageTargetBytes`, and an authenticity verifier for those raw bytes.
-The target is parsed as `ac265-approved-outage-target-v1` and its scope is the
-only source of `expectedOutageLeaseScope`; do not accept that scope from
-workflow dispatch or the runner contract. The scope is exactly `runId`,
+`approvedOutageTargetBytes`, `approvedOutageTargetAttestationBytes`, and
+`approvedOutageTargetTrustedKeys`. The target is parsed as
+`ac265-approved-outage-target-v1` and its scope is the only source of
+`expectedOutageLeaseScope`; authenticate the target bytes with the
+domain-separated attestation and trusted keys before using that scope. Do not
+accept the target, scope, or authenticity callback from workflow dispatch or
+the runner contract. The scope is exactly `runId`,
 `hostingProjectId`, `supabaseProjectRef`, `deploymentId`, `dependencyId`, and
-route `{ operationId, method, path }`. No live target-source endpoint or
-authentication key/config is defined, so the retained gate stays closed. The
+route `{ operationId, method, path }`. No live target-source endpoint,
+target key/configuration, approved row, or retained target artifact is defined,
+so the retained gate stays closed. The
 signed/authenticated lease receipt
 must bind that scope to the staging-only `ac265-lease://staging/<uuid>` ref and
 its exact-UTF-8 SHA-256, bounded acquire/expiry timestamps, one matching
@@ -172,19 +202,22 @@ now provides a promoted staging private safe-resource and runner-mapping
 registry foundation with forced-RLS tables and service-role-only RPCs; it stores
 only opaque references/digests and redacted bindings, does not authenticate
 mapping provenance or verify underlying resource contents, and seeds no rows.
-CP-03 authenticates only supplied canonical mapping bytes; it does not provide
-the live source key, resource-content validation, or protected artifact needed
-for hosted acceptance.
+CP-03 authenticates only supplied canonical mapping bytes; its code is promoted,
+but it does not provide the live source key, resource-content validation, or
+protected artifact needed for hosted acceptance.
 Its local hardening covers UUID-v4 mapping-ID alignment, awaited response-body
 cancellation, realpath/symlink-safe execution, an unnamed Linux `O_TMPFILE`
 writability preflight, no-follow held descriptors, summaries constrained
 beneath `RUNNER_TEMP`, and deletion-free fail-closed handling that preserves
 only private runner-local remnants.
+CP-04a authenticates only supplied canonical target bytes through its local
+domain-separated attestation boundary. It does not provide live target-key
+configuration, approved rows, retained artifacts, or hosted evidence.
 The protected population/authentication source, v1 session broker,
 fault-evidence service, isolated hosted workflow, and report producer remain
 unimplemented. The runner must be isolated and disposable; shared persistent
 self-hosted runners and cross-run browser/session state are prohibited. Keep
-this criterion blocked: this contract and local checks do not prove hosted
+this criterion blocked: these contracts and local checks do not prove hosted
 acceptance.
 
 The protected staging deployment runs `infra/workflows/collect-staging-axe-evidence.sh`

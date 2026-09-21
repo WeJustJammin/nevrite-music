@@ -1,8 +1,14 @@
 import { type ContentSchemaRegistryHostedE2eReportV3 } from '../../packages/contracts/src/content-schema-registry/operational-release-evidence-hosted-report.ts';
 import type { ContentSchemaRegistryHostedRunnerContract } from '../../packages/contracts/src/content-schema-registry/operational-release-evidence-hosted-input.ts';
 import type { HostedOutageLeaseScope } from '../../packages/contracts/src/content-schema-registry/operational-release-evidence-hosted-outage-lease-scope.ts';
+import type { ApprovedOutageTargetAttestationV1 } from '../../packages/contracts/src/content-schema-registry/operational-release-evidence-hosted-approved-outage-target-attestation.ts';
 import type { ApprovedRunnerMappingAttestationV1 } from '../../packages/contracts/src/content-schema-registry/operational-release-evidence-hosted-approved-runner-mapping-attestation.ts';
 import { validateContentSchemaRegistryHostedE2eReportV3 } from '../../infra/workflows/content-schema-registry-hosted-e2e-report-verifier.ts';
+import {
+  canonicalizeAc265ApprovedOutageTargetV1,
+  createAc265ApprovedOutageTargetAttestation,
+  type Ac265ApprovedOutageTargetTrustedKey,
+} from '../../infra/workflows/ac265-approved-outage-target-attestation.ts';
 import {
   canonicalizeAc265ApprovedRunnerMappingsV1,
   createAc265ApprovedRunnerMappingAttestation,
@@ -24,13 +30,11 @@ export type VerifierContext = {
   expectedScenarioRoleBindings: ContentSchemaRegistryHostedRunnerContract['scenarioRoleBindings'];
   expectedOutageLeaseScope?: HostedOutageLeaseScope;
   approvedOutageTargetBytes?: Uint8Array;
+  approvedOutageTargetAttestationBytes?: Uint8Array;
+  approvedOutageTargetTrustedKeys?: readonly Ac265ApprovedOutageTargetTrustedKey[];
   approvedRunnerMappingsBytes?: Uint8Array;
   approvedRunnerMappingAttestationBytes?: Uint8Array;
   approvedRunnerMappingTrustedKeys?: readonly Ac265ApprovedRunnerMappingTrustedKey[];
-  verifyApprovedOutageTargetAuthenticity?: (
-    bytes: Uint8Array,
-    parsedTarget: unknown,
-  ) => boolean;
   maxRunDurationMs: number;
   trustedCutoffAt: string;
   resolveReceipt: (ref: string) => Uint8Array | undefined;
@@ -64,13 +68,48 @@ const outageScopeFor = (
 const approvedOutageTargetBytesFor = (
   trustedContract: ContentSchemaRegistryHostedRunnerContract,
 ): Uint8Array =>
-  jsonBytes({
+  canonicalizeAc265ApprovedOutageTargetV1({
     schemaVersion: 'ac265-approved-outage-target-v1',
     source: 'protected-staging-fault-control-plane',
-    targetId: 'fault-target-01',
+    targetId: '30000000-0000-4000-8000-000000000001',
+    targetRef:
+      'ac265-outage-target://staging/30000000-0000-4000-8000-000000000001',
     approvedAt: '2026-09-03T10:29:00.000Z',
+    expiresAt: '2026-09-03T12:30:00.000Z',
     scope: outageScopeFor(trustedContract),
+  }).bytes;
+
+export const AC265_TEST_OUTAGE_TARGET_PRIVATE_KEY_PEM = `-----BEGIN PRIVATE KEY-----
+MC4CAQAwBQYDK2VwBCIEIFwhcYW8DHraBPN/wTDi/7KKx0zpqeLUCXJTFhyxly8Q
+-----END PRIVATE KEY-----`;
+export const AC265_TEST_OUTAGE_TARGET_PUBLIC_KEY_PEM = `-----BEGIN PUBLIC KEY-----
+MCowBQYDK2VwAyEA+4miFYsls54Kot2YngGcIlJAzbLkF/+yKxXsT3BwH7k=
+-----END PUBLIC KEY-----`;
+export const AC265_TEST_OUTAGE_TARGET_KEY_ID = 'ac265-outage-target-v1';
+
+const approvedOutageTargetAttestationFor = (
+  targetBytes: Uint8Array,
+): Readonly<{
+  attestation: ApprovedOutageTargetAttestationV1;
+  attestationBytes: Uint8Array;
+}> =>
+  createAc265ApprovedOutageTargetAttestation({
+    targetBytes,
+    keyId: AC265_TEST_OUTAGE_TARGET_KEY_ID,
+    privateKeyPem: AC265_TEST_OUTAGE_TARGET_PRIVATE_KEY_PEM,
+    issuedAt: '2026-09-03T10:30:00.000Z',
+    expiresAt: '2026-09-03T10:35:00.000Z',
   });
+
+export const AC265_TEST_OUTAGE_TARGET_TRUSTED_KEYS = [
+  {
+    keyId: AC265_TEST_OUTAGE_TARGET_KEY_ID,
+    publicKeyPem: AC265_TEST_OUTAGE_TARGET_PUBLIC_KEY_PEM,
+    validFrom: '2026-09-01T00:00:00.000Z',
+    validUntil: '2026-10-01T00:00:00.000Z',
+    status: 'active' as const,
+  },
+] as const;
 
 const approvedRunnerMappingsBytesFor = (
   trustedContract: ContentSchemaRegistryHostedRunnerContract,
@@ -124,6 +163,11 @@ export const contextFor = (
 ): VerifierContext => {
   const approvedRunnerMappingsBytes =
     approvedRunnerMappingsBytesFor(trustedContract);
+  const approvedOutageTargetBytes =
+    approvedOutageTargetBytesFor(trustedContract);
+  const approvedOutageTargetAttestation = approvedOutageTargetAttestationFor(
+    approvedOutageTargetBytes,
+  );
   const { attestationBytes } = approvedRunnerMappingAttestationFor(
     approvedRunnerMappingsBytes,
   );
@@ -134,13 +178,13 @@ export const contextFor = (
     expectedRoleResourceBindings: trustedContract.roleResourceBindings,
     expectedScenarioRoleBindings: trustedContract.scenarioRoleBindings,
     expectedOutageLeaseScope: outageScopeFor(trustedContract),
-    approvedOutageTargetBytes: approvedOutageTargetBytesFor(trustedContract),
+    approvedOutageTargetBytes,
+    approvedOutageTargetAttestationBytes:
+      approvedOutageTargetAttestation.attestationBytes,
+    approvedOutageTargetTrustedKeys: AC265_TEST_OUTAGE_TARGET_TRUSTED_KEYS,
     approvedRunnerMappingsBytes,
     approvedRunnerMappingAttestationBytes: attestationBytes,
     approvedRunnerMappingTrustedKeys: AC265_TEST_RUNNER_MAPPING_TRUSTED_KEYS,
-    // Test-only fixture models an authenticated control-plane source; it is not a
-    // production approval or an accepted AC265 hosted target.
-    verifyApprovedOutageTargetAuthenticity: () => true,
     // Test-only ceiling; production callers must supply their trusted policy.
     maxRunDurationMs: 60 * 60 * 1_000,
     trustedCutoffAt: '2026-09-03T12:00:00.000Z',
@@ -148,6 +192,20 @@ export const contextFor = (
     resolveEvidence: (ref) => fixture.evidenceBytes.get(ref),
     verifyReceiptAuthenticity: () => true,
   };
+};
+
+export const setApprovedOutageTargetSource = (
+  context: VerifierContext,
+  payload: unknown,
+): void => {
+  const canonical = canonicalizeAc265ApprovedOutageTargetV1(payload);
+  const { attestationBytes } = approvedOutageTargetAttestationFor(
+    canonical.bytes,
+  );
+  context.approvedOutageTargetBytes = canonical.bytes;
+  context.approvedOutageTargetAttestationBytes = attestationBytes;
+  context.approvedOutageTargetTrustedKeys =
+    AC265_TEST_OUTAGE_TARGET_TRUSTED_KEYS;
 };
 
 export const setApprovedRunnerMappingSource = (

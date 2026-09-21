@@ -6,11 +6,15 @@
   at **279/282 active** (**283 authored IDs**) with authored depth ratio
   **0.986**. Phase 2 has **1,999 active criteria / 2,000 authored** because
   AC266 is owner-deferred and excluded from the active completion denominator.
-  Current `main` is PR #84 at
-  `cea2e5601872975a2f974d13e739ace26da677ff`; exact-main CI
-  [run 35578970402](https://github.com/WeJustJammin/nevrite-music/actions/runs/35578970402)
-  and staging [run 35579638864](https://github.com/WeJustJammin/nevrite-music/actions/runs/35579638864)
-  passed, producing staging deployment `6564785922`. AC265 preflight
+  Current `main` is PR #85 at
+  `a94ffbca3d41da703218dff12ee7527f31c23a34`; exact-main CI
+  [run 35592046696](https://github.com/WeJustJammin/nevrite-music/actions/runs/35592046696)
+  passed and staging [run 35592722418](https://github.com/WeJustJammin/nevrite-music/actions/runs/35592722418)
+  / deployment `6567092259` succeeded at
+  `https://staging.wejamm.in`. The first staging attempt failed at the
+  immediate Cloudflare provider-evidence query after endpoint verification and
+  deploy; one failed-job retry succeeded with no provider configuration change.
+  AC265 preflight
   [run 34824500796](https://github.com/WeJustJammin/nevrite-music/actions/runs/34824500796)
   passed; authorization foundation [run 34824651793](https://github.com/WeJustJammin/nevrite-music/actions/runs/34824651793)
   failed at `staging_prepare`, so no hosted browser acceptance ran. The local
@@ -52,11 +56,25 @@
   are trusted release-policy context preconditions for a future protected
   orchestration constructor; no current untrusted caller exists. See [the CP-03
   verification record](../verification/2026-09-21-ac265-approved-runner-mapping-attestation.md).
-  CP-03 remains local and unpromoted: no live signing-key configuration,
-  registry rows, retained mapping/attestation artifact, hosted workflow run,
-  independently authenticated receipt, browser evidence, or promotion exists.
-  Next AC265 dependency is CP-03: an independently authenticated canonical
-  mapping/resource source. It must be followed by the run-scoped broker,
+  CP-03 code is promoted on PR #85 and the staging deployment above, but no
+  live signing-key configuration, registry rows, retained mapping/attestation
+  artifact, attestation workflow run, hosted browser matrix,
+  independently authenticated receipt, browser evidence, or AC265 acceptance
+  exists. The next AC265 dependency is the independently authenticated
+  canonical mapping/resource source and promotion of the CP-04a
+  approved-outage-target read/attestation foundation. CP-04a currently has no
+  live target-signing key/configuration, seeded target or registry rows,
+  retained target/attestation artifact, protected workflow run, hosted matrix,
+  or receipt. Focused AC265 verification covers 54 files / 483 tests. Exact-
+  runtime `pnpm validate` exits 0 with 549 Vitest files, 4,366 passed + 1
+  intentional skip (4,367 total), 100% coverage, 101 functional Chromium
+  checks, five production-built checks, green builds/bundle checks, and local
+  API p95 1.377056 ms. After a clean reset, all `pnpm db:verify` components
+  are green: 57 pgTAP files / 2,087 assertions, database lint, and generated-
+  type checks pass. Independent security review found no CP-04a blocker; a
+  protected orchestrator remains a required trust boundary. Promotion,
+  staging execution, and hosted acceptance remain pending. These foundations
+  must be followed by the run-scoped broker,
   evidence/receipt resolver, protected hosted workflow, and genuine hosted
   nine-role/ten-scenario execution before AC265 can close.
 

@@ -11,10 +11,34 @@ broker, safe staging resources, fault-evidence service, hosted specs, protected
 workflow, report producer, and independent verification against protected
 workflow/deployment outputs exist and pass protected verification. CP-02 now
 provides only a promoted staging private registry foundation with no seeded
-rows; it does not authenticate mapping provenance or establish hosted evidence. CP-03 now adds
-only a local, unpromoted signed runner-mapping attestation boundary; no live
-signing-key configuration, registry rows, retained mapping/attestation
-artifact, hosted run, independently authenticated receipt, or promotion exists.
+rows; it does not authenticate mapping provenance or establish hosted evidence.
+CP-03 now adds a promoted signed runner-mapping attestation application
+boundary on PR #85 at exact main SHA
+`a94ffbca3d41da703218dff12ee7527f31c23a34`; exact-main CI
+`35592046696` passed and staging workflow `35592722418` produced deployment
+`6567092259` at `https://staging.wejamm.in`; no live signing-key
+configuration, registry rows, retained mapping/attestation artifact,
+attestation workflow run, hosted browser matrix, independently authenticated
+receipt, or AC265 acceptance exists. The staging workflow's failed-job retry
+was limited to the immediate Cloudflare provider-evidence query and made no
+provider configuration change.
+CP-04a is a local, unpromoted approved outage-target read/attestation
+foundation. It adds a strict service-role-only read over CP-01 target rows, a
+canonical target projection with the stored digest, and a distinct
+domain-separated Ed25519 target attestation. The protected manual main/staging
+entrypoint and workflow, plus the verifier/policy, require that signed target;
+a caller-provided authenticity callback cannot substitute. Focused local
+verification covers 54 files / 483 tests with `pnpm type-check` passing. Exact-
+runtime `pnpm validate` exits 0 with 549 Vitest files, 4,366 passed + 1
+intentional skip (4,367 total), 100% coverage, 101 functional Chromium checks,
+five production-built checks, green builds/bundle checks, and local API p95
+1.377056 ms. After a clean reset, all `pnpm db:verify` components are green:
+57 pgTAP files / 2,087 assertions, database lint, and generated-type checks
+pass. Independent security review found no CP-04a blocker; a protected
+orchestrator remains a required trust boundary. Promotion, staging execution,
+live target key/configuration, seeded target or registry rows, retained
+artifact, workflow run, hosted matrix, receipt, and AC265 acceptance remain
+pending.
 The local v3 schema/verifier does not satisfy those hosted gates. Do not generate
 `hosted/e2e.json` from policy, configuration, local fixtures, or a partial run.
 
@@ -90,13 +114,14 @@ population path is defined. The schema, callback, and local registry are
 fail-closed interface/control-plane foundations, not an authenticated approval
 source or hosted acceptance evidence.
 
-CP-03 supplies a local attestation implementation for exact
+CP-03 supplies a promoted application attestation implementation for exact
 `ac265-approved-runner-mappings-v1` bytes. It canonicalizes the mapping,
 binds the run/mapping identity and digest, and verifies the Ed25519 signature,
 trusted key window, domain separator, and report validity. Its workflow/RPC
-boundary is unpromoted and has no live trusted key, source artifact, protected
-run, or hosted acceptance evidence; local fixtures and generated test keys are
-not deployment configuration. Local hardening covers UUID-v4 mapping-ID
+boundary is deployed but has no live trusted key, source artifact, attestation
+workflow run, protected hosted run, or hosted acceptance evidence; local
+fixtures and generated test keys are not deployment configuration. Local
+hardening covers UUID-v4 mapping-ID
 alignment, awaited response-body cancellation, realpath/symlink-safe
 execution, an unnamed Linux `O_TMPFILE` writability preflight, no-follow held
 descriptors, summaries constrained beneath `RUNNER_TEMP`, and deletion-free
@@ -106,12 +131,14 @@ release-policy context preconditions for a future protected orchestration
 constructor; no current untrusted caller exists.
 
 The outage target is not invented by the policy: completing it additionally
-requires exact `ac265-approved-outage-target-v1` bytes authenticated by a
-separately protected source. Its validated scope supplies the expected run,
-hosting and Supabase projects, deployment, dependency, and route. Missing,
-placeholder, or unauthenticated target input leaves the gate closed. No live
-source endpoint or trusted key/configuration is currently defined, so this
-target cannot yet be obtained for hosted verification.
+requires exact `ac265-approved-outage-target-v1` bytes authenticated by the
+separately protected CP-04a target source and its trusted Ed25519 key registry.
+Its validated scope supplies the expected run, hosting and Supabase projects,
+deployment, dependency, and route. Missing, placeholder, unsigned, or
+unauthenticated target input leaves the gate closed. CP-04a is only a local
+read/attestation foundation; no live source key/configuration, approved row,
+or retained artifact currently exists, so this target cannot yet be obtained
+for hosted verification.
 
 The protected v3 reporter and verifier must bind every session/resource
 reference and every server receipt to the same immutable candidate identity.
@@ -143,8 +170,9 @@ escaped-equivalent and nested duplicate keys fail before parsing rather than
 being resolved by last-member-wins behavior.
 
 For `dependency_outage`, derive `expectedOutageLeaseScope` only from the
-authenticated `ApprovedOutageTarget`; do not accept it from workflow dispatch
-or the runner contract. The scope must exactly match `runId`,
+authenticated `ApprovedOutageTarget` and its CP-04a Ed25519 attestation; do not
+accept it from workflow dispatch, a caller callback, or the runner contract.
+The scope must exactly match `runId`,
 `hostingProjectId`, `supabaseProjectRef`, `deploymentId`, `dependencyId`, and
 route `{ operationId, method, path }`. Require a signed/authenticated lease receipt,
 an `ac265-lease://staging/<uuid>` reference with its exact-UTF-8 SHA-256,
@@ -161,19 +189,20 @@ V3 report must include matching outage evidence and `leaseReceipt`, exactly one
 consume event, and cleanup `outageLeaseReleaseProof`. Missing lease or proof
 fails validation; there is no skip or unleased outage pass.
 
-This remains a local trust boundary only. CP-01 implements the private
+This remains a local trust boundary for evidence, even though the CP-03 code is
+promoted. CP-01 implements the private
 database lease lifecycle and its service-role-only RPCs, while CP-02 provides
-the local private safe-resource and runner-mapping registry foundation and
-CP-03 provides only the local signed mapping-attestation boundary. CP-02
+the promoted private safe-resource and runner-mapping registry foundation and
+CP-03 provides the promoted signed mapping-attestation boundary. CP-04a
+provides only the unpromoted signed target-read/attestation boundary. CP-02
 stores only opaque references and digests, derives candidate/run/identity/
 deployment/project scope from the authorized candidate, and returns redacted
-mapping envelopes; CP-03 authenticates only supplied local canonical bytes.
-Neither CP-02 nor CP-03 verifies live underlying resource contents or
+mapping envelopes; CP-03 authenticates only supplied canonical bytes.
+Neither CP-02, CP-03, nor CP-04a verifies live underlying resource contents or
 implements a protected session
 broker, signed receipt issuer, independently authenticated
-approved-outage-target source, evidence-byte service, or hosted workflow
-integration. It also seeds no live target or registry rows. The target source
-endpoint and authentication key/config remain unresolved; do not claim hosted
+approved-outage-target population, evidence-byte service, or hosted workflow
+integration. CP-04a seeds no live target or registry rows. Do not claim hosted
 acceptance or infer it from local pgTAP results.
 
 The report also requires a fresh `fresh_google_oauth_through_supabase` flow,
@@ -198,7 +227,7 @@ No hosted AC265 Playwright spec or protected workflow implements the matrix. The
 global setup continues to fail closed because no v1 session broker, protected
 registry population/authentication source, hosted control/evidence service,
 hosted spec, isolated protected workflow, or report producer is available. The
-local v3 verifier, CP-02 registry, and CP-03 local attestation do not provide a
+local v3 verifier, CP-02 registry, and CP-03 promoted attestation do not provide a
 protected broker/issuer or
 independent workflow/deployment verification. The workflow must use an isolated
 disposable runner; a shared

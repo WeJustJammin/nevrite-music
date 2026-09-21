@@ -145,6 +145,7 @@ export const verifyContentSchemaRegistryHostedE2eV3Bindings = (input: {
   assertAc265HostedRunnerPolicyV1(
     input.contract,
     context.approvedOutageTarget,
+    context.approvedOutageTargetAttestation,
     context.approvedRunnerMappings,
     context.approvedRunnerMappingAttestation,
     input.report.startedAt,

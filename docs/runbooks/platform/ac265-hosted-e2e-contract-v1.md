@@ -16,13 +16,16 @@ issuer, staging control plane, or AC265 acceptance. Hosted acceptance remains
 open until a protected staging run produces a complete v3 report and the
 existing release-evidence verifier accepts it.
 
-CP-03 adds a local, unpromoted signed mapping-attestation boundary for the
-exact `ac265-approved-runner-mappings-v1` bytes. It authenticates canonical
-mapping bytes with a trusted Ed25519 key, bounded key/report windows, a fixed
-domain separator, and run/mapping identity binding. No live signing-key
-configuration, registry rows, retained attestation artifact, protected hosted
-run, independently authenticated receipt, or promotion exists, so this local
-boundary does not alter the hosted acceptance gate.
+CP-03 adds a promoted signed mapping-attestation application boundary for the
+exact `ac265-approved-runner-mappings-v1` bytes. PR #85 at exact main SHA
+`a94ffbca3d41da703218dff12ee7527f31c23a34` passed exact-main CI
+`35592046696`; staging workflow `35592722418` succeeded after one failed-job
+retry for the immediate Cloudflare provider-evidence query, with no provider
+configuration change, and deployment `6567092259` succeeded at
+`https://staging.wejamm.in`. The code promotion does not create live
+signing-key configuration, registry rows, retained attestation artifact,
+attestation workflow run, protected hosted run, independently authenticated
+receipt, or AC265 acceptance, so it does not alter the hosted acceptance gate.
 
 The retained release gate is V3-only. It requires the exact protected runner
 contract bytes and a separately trusted V3 verification context; a V2 report or
@@ -157,12 +160,32 @@ forward-only migration seeds no registry rows. No live mapping-source endpoint
 or trusted authentication key/configuration is currently defined; the registry
 therefore does not authenticate mapping provenance or establish hosted approval.
 
-CP-03 now supplies only the local attestation verifier and protected-entrypoint
+CP-03 now supplies the promoted application attestation verifier and protected-entrypoint
 contract for canonical mapping bytes. Its Ed25519 signature and trusted-window
 checks authenticate supplied bytes, not a live source or the referenced
 resources. The source key, live registry population, retained mapping artifact,
 and protected hosted run remain absent; fixtures and generated test keys are not
 acceptance evidence.
+
+CP-04a now supplies a local, unpromoted approved outage-target read and
+attestation boundary. Its service-role-only
+`ac265_approved_outage_target_read` RPC reads CP-01 target rows and returns a
+redacted canonical projection plus the stored target digest. A distinct,
+domain-separated Ed25519 envelope authenticates the exact
+`ac265-approved-outage-target-v1` bytes, target reference, run ID, digest, key
+ID, and validity window. The protected manual main/staging entrypoint and
+workflow require that signed target attestation; the verifier and policy do
+not accept a caller-provided authenticity callback as a substitute. Focused
+AC265 verification covers 54 files / 483 tests. Exact-runtime `pnpm validate`
+exits 0 with 549 Vitest files, 4,366 passed + 1 intentional skip (4,367 total),
+100% coverage, 101 functional Chromium checks, five production-built checks,
+green builds/bundle checks, and local API p95 1.377056 ms. After a clean reset,
+all `pnpm db:verify` components are green: 57 pgTAP files / 2,087 assertions,
+database lint, and generated-type checks pass. Independent security review
+found no CP-04a blocker; a protected orchestrator remains a required trust
+boundary. Promotion, staging execution, live target key/configuration, seeded
+target or registry rows, retained artifact, or workflow run remain pending, so
+CP-04a is not hosted acceptance evidence.
 
 ## Versioned scenario parameter policy
 
@@ -174,12 +197,14 @@ values are compared exactly, in addition to the schema's valid ranges.
 The locked sources do not name a safe dependency-outage target. The verifier
 therefore cannot complete policy v1 from contract or dispatch data. It requires
 raw `ac265-approved-outage-target-v1` bytes from the protected staging fault
-control plane plus an authenticity check over those exact bytes. The target
-must bind the current run, staging hosting project, Supabase project, and
-deployment; placeholders, missing input, or failed authenticity leave the
-retained gate closed. No such hosted approval source is currently implemented.
-The CP-03 mapping-attestation source code does not provide this outage-target
-source and must not be treated as one.
+control plane plus the CP-04a domain-separated Ed25519 attestation over those
+exact bytes. The target must bind the current run, staging hosting project,
+Supabase project, and deployment; placeholders, missing input, unsigned input,
+or failed authenticity leave the retained gate closed. CP-04a implements only
+the local read/attestation boundary: no live source key/configuration, seeded
+target, retained target artifact, or protected workflow run currently exists.
+The CP-03 mapping-attestation source does not provide this outage-target source
+and must not be treated as one.
 The policy pins the outage lease to one request and at most 60 seconds; the
 run-scoped lease reference and timestamps remain bound to the authenticated
 control-plane receipt and the run window.
@@ -261,12 +286,14 @@ must issue a `staging_one_use_lease` reference in the form
 `ac265-lease://staging/<uuid>` and a signed/authenticated control-plane receipt.
 The verifier derives `expectedOutageLeaseScope` only from separately protected
 `ac265-approved-outage-target-v1` bytes after authenticating those exact raw
-bytes. Do not accept the target or its scope from workflow dispatch or the
-runner contract. The derived scope must exactly match the contract and receipt:
-`runId`, `hostingProjectId`, `supabaseProjectRef`, `deploymentId`,
-`dependencyId`, and route `{ operationId, method, path }`. No live source
-endpoint or authentication key/config is currently defined, so the hosted
-gate remains closed until one is approved and implemented.
+bytes with the CP-04a domain-separated Ed25519 target attestation and trusted
+target keys. Do not accept the target, its scope, or an authenticity callback
+from workflow dispatch or the runner contract. The derived scope must exactly
+match the contract and receipt: `runId`, `hostingProjectId`,
+`supabaseProjectRef`, `deploymentId`, `dependencyId`, and route
+`{ operationId, method, path }`. No live source endpoint, target key/config, or
+approved row is currently defined, so the hosted gate remains closed until one
+is approved and implemented.
 
 The CP-01 database foundation now provides private, forced-RLS approved-target
 and lease ledgers plus service-role-only acquire, consume, and release RPCs
@@ -290,12 +317,14 @@ authenticate an external approval source, verify underlying resource contents,
 issue receipts, or connect the hosted runner; those boundaries remain required
 for AC265 acceptance.
 
-The CP-03 approved runner-mapping attestation is a separate local foundation
+The CP-03 approved runner-mapping attestation is a separate promoted code
+foundation
 (`ac265-approved-runner-mapping-attestation.ts`; `attest-ac265-approved-runner-mapping.ts`;
 `attest-ac265-hosted-runner-mapping.yml`). It canonicalizes exact mapping bytes
 and verifies a trusted Ed25519 signature, key/report windows, and run binding,
-but has no live key configuration, registry rows, retained artifact, hosted run,
-receipt, or promotion. It therefore does not establish hosted acceptance.
+but has no live key configuration, registry rows, retained artifact, attestation
+workflow run, hosted browser matrix, receipt, or AC265 acceptance. It therefore
+does not establish hosted acceptance.
 
 CP-03 hardening also verifies UUID-v4 mapping-ID alignment, awaited
 response-body cancellation, realpath/symlink-safe execution, an unnamed Linux
@@ -303,6 +332,17 @@ response-body cancellation, realpath/symlink-safe execution, an unnamed Linux
 constrained beneath `RUNNER_TEMP`, and deletion-free fail-closed handling that
 preserves only private runner-local remnants. These are local
 implementation checks, not hosted evidence.
+
+CP-04a is a separate local, unpromoted target-read/attestation foundation
+(`ac265-approved-outage-target-rpc.ts`;
+`ac265-approved-outage-target-attestation.ts`;
+`attest-ac265-approved-outage-target.ts`;
+`attest-ac265-hosted-outage-target.yml`). It reads only CP-01 target rows,
+returns a redacted canonical projection with the stored target digest, and
+authenticates the exact target bytes with a distinct Ed25519 domain. Its
+focused and full local checks pass, but it has no live signing key/configuration,
+seeded target or registry rows, retained artifact, protected workflow run,
+hosted matrix, or receipt. CP-04a does not establish AC265 acceptance.
 
 The lease reference's lowercase SHA-256 digest is computed from its exact
 UTF-8 bytes. Acquisition and expiry are bounded timestamps; the lease must be
