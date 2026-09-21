@@ -1,7 +1,7 @@
 # Spec Pipeline Progress
 
 **Project**: WeJammin
-**Last updated**: 2026-09-13
+**Last updated**: 2026-09-20
 **Overall**: IA 43/43 authored and independently ambiguity-passed (**fresh rerun PASS — 0/344 = 0.00%, 2026-08-28**); Phase 1 complete at 7/7 slices; Phase 2 at 8/17 complete with Slice 09 blocked at 279/283.
 
 ## Legend
@@ -68,30 +68,25 @@
   Independent `/validate-phase`, exact-SHA CI/staging, and protected production
   approval passed; live production deployment was not required or performed.
   See `.memory/wiki/specs/audits/phase-1-validation.md`.
-- **CURRENT IMPLEMENTATION:** Phase 2 Slices 01–08 are complete. Slice 09 is
-  implemented and locally QA-GREEN at 279/283, including the follow-up
-  production operational-alert provider boundary and deployed AC211 collector.
-  PR #74 is merged at exact `main` SHA
-  `f8e10db06b5e70ea6262a3531f7fab69965febc3` and adds AC211
-  deployment-provenance verification plus AC266 report-preparation tooling. The
-  tooling is landed, but it is not hosted acceptance. Depth ratio remains
-  `0.986` because
-  all four external acceptance criteria remain open. Slice 10 remains
-  dependency-locked. See
+- **CURRENT IMPLEMENTATION (2026-09-20):** Phase 2 Slices 01–08 are complete.
+  Slice 09 remains locally QA-GREEN at 279/283 with depth ratio `0.986`.
+  The current exact-main baseline is PR #80 at SHA
+  `918f598525de772c82b0a0bcd82348ea8f5d523d`; CI `34823698333` and staging
+  `34824312138` / deployment `6433521892` passed. AC211 provenance and AC266
+  report-preparation tooling is landed, but neither is hosted acceptance.
+  AC265 preflight `34824500796` passed, while authorization foundation run
+  `34824651793` failed at `staging_prepare`; no hosted browser acceptance ran.
+  Slice 10 remains dependency-locked. See
   `.memory/pipeline/progress/phases/phase-02.md` and
   `.memory/pipeline/progress/slices/phase-02-slice-09.md`.
-- **CURRENT VALIDATION:** PR #74 exact-main CI `34792878043` and staging
-  `34793282345` / deployment `6428325619` pass at SHA
-  `f8e10db06b5e70ea6262a3531f7fab69965febc3`. Local `pnpm validate` exits 0
-  with 522 Vitest files / 4,091 passed + 1 skipped at 100% coverage (12,634
-  statements, 9,578 branches, 2,099 functions, 11,747 lines), the Slice 09
-  evidence gate, 101 functional plus 5 real-route Playwright checks, workspace
-  builds, bundle budgets, and performance smoke. `pnpm db:verify` passes 50
-  pgTAP files / 1,818 checks with migrated types matching. Focused AC211 passes
-  59/59; AC266 passes 83/83; adversarial reviews have no remaining findings.
-  `pnpm progress:check`, the Prettier check on updated records, and the Git diff
-  whitespace check pass. Exact-main and staging prove the tooling release, not
-  any still-open external acceptance criterion.
+- **CURRENT VALIDATION (fresh 2026-09-20):** Under exact Node `22.23.1` and
+  pnpm `11.24.0`, `pnpm validate` passed 535 Vitest files / 4,228 tests plus one
+  skip at 100% coverage (13,028 statements, 9,826 branches, 2,151 functions,
+  and 12,109 lines), the Slice 09 evidence gate, 101 functional plus 5 real
+  Slice 09 E2E tests, all workspace builds, bundle budgets, and performance
+  smoke (`p95=1.174159 ms`, threshold `500 ms`, zero errors). Fresh
+  `pnpm db:verify` passed 52 pgTAP files / 1,917 tests with migrated type parity.
+  These local/tooling results do not close hosted acceptance.
 - **HISTORICAL PRE-REMEDIATION CANDIDATE:** Before this remediation, PR #9 branch
   `codex/phase-2-slices-01-09` was at
   `67264c5e9b5196d00ac3f0aa272896a010c872d7`; synthetic merge
@@ -119,12 +114,16 @@
   Gmail contains no genuine platform-on-call delivery, and AC209, AC211, AC265,
   and AC266 remain open. See
   `.memory/wiki/specs/audits/verify-infrastructure-2026-09-05-0824.md`.
-- **CURRENT EXACT-MAIN / FAIL-CLOSED EVIDENCE:** PR #73 is merged at exact
+- **HISTORICAL EXACT-MAIN / FAIL-CLOSED EVIDENCE (PR #73):** PR #73 is merged at exact
   `main` SHA `2b397453709f8135537cb849c4f308986abfb3f4`; exact-main CI and
   staging passed. Protected exercise run `34782931928` failed closed at
   Cloudflare's Zone Analytics Email Sending capability check with sanitized
   `provider_graphql_error`; no genuine delivery receipt or production
   acceptance is claimed. The token policy edit/retest remains pending.
+- **LATEST AC209 EVIDENCE:** Read-only observability run `34813947512` failed
+  with `provider_graphql_error` on `emailSendingAdaptive`; it sent no email,
+  changed no queue or production state, performed no deployment, and produced
+  no receipt. AC209 remains open.
 - **HISTORICAL DIAGNOSTIC EVIDENCE:** PR #24 was exact `main` SHA
   `3bf66a610b013bf9600889780ee26319559fb31c`; CI `34013034252` and staging
   `34013296132` passed. Protected production runs `34016439881` and
@@ -153,15 +152,22 @@ failed: malformed response`. The token still passes Workers Observability.
   exists. Protected run `34189916813` attempted 2026-09-07 UTC and failed closed
   for insufficient natural samples; the next eligible complete day at that time
   was 2026-09-08 UTC and could be collected only after `2026-09-09T00:00:00Z`.
-  Current earliest eligibility is 2026-09-14 UTC, with earliest dispatch at
-  `2026-09-15T00:01:00Z`, subject to natural sample floors. AC211 remains open.
-- **CURRENT HOSTED OAUTH EVIDENCE:** Exact `main` SHA
+  At that time, the earliest eligibility was 2026-09-14 UTC, with earliest
+  dispatch at `2026-09-15T00:01:00Z`, subject to natural sample floors. The
+  later collection run `34424101528` still produced zero qualifying samples;
+  no complete retained AC211 report exists.
+- **HISTORICAL HOSTED OAUTH EVIDENCE (2026-09-08):** Exact `main` SHA
   `10f320b97ccce0c62fba2ee27a3b792f08f83285`; CI `34224641678`, staging
   `34225256920` / deployment `6327379740` passed. Google is configured and the
   provider registry is enabled and verified at version `16`. Live external-browser
   callback/session/protected-route proof passed on staging. AC265 remains open:
   the approved 9-role/10-scenario hosted report and identity provisioning,
   teardown, and lifecycle evidence are still missing.
+- **LATEST AC265 EVIDENCE:** Current SHA `918f598525de772c82b0a0bcd82348ea8f5d523d`
+  passed CI `34823698333` and staging `34824312138` / deployment `6433521892`.
+  AC265 preflight `34824500796` passed; authorization foundation run
+  `34824651793` failed at `staging_prepare`, so no hosted browser matrix or
+  acceptance report exists.
 - **AC265 PREFLIGHT EVIDENCE (PR #71 BASELINE):** PR #71 merged at `origin/main` SHA
   `03329530ce1375de63d1d5a0ecee6b5ce8ccb50d`; exact-main CI `34776703106`
   attempt 1 and staging `34777077865` attempt 1 / deployment `6425379348` passed.
@@ -172,9 +178,10 @@ failed: malformed response`. The token still passes Workers Observability.
   contracts, and a fail-closed collector port boundary. This remains scaffolding:
   no protected collector/service protocol or hosted acceptance exists, and AC265
   remains open.
-- **NEXT:** retain a genuine post-configuration redacted alert delivery receipt.
-  Keep Slice 09 blocked at 279/283 and Phase 2 at 8/17 until AC209, the complete
-  UTC-day/200-sample SLO and DLQ evidence for AC211, the approved 9-role/10-scenario
-  hosted report plus identity lifecycle evidence for AC265, and VoiceOver/Safari
-  plus NVDA/Firefox manual smoke for AC266 all pass. Do not start Slice 10 until
-  all four pass.
+- **NEXT:** pursue the genuine AC209 delivery receipt, qualifying AC211
+  UTC-day/200-sample SLO and DLQ evidence, and the approved AC265
+  9-role/10-scenario hosted report plus identity-lifecycle evidence. AC266 is
+  owner-deferred because the required real devices are unavailable; it remains
+  open and is not accepted or waived. Keep Slice 09 blocked at 279/283 and
+  Phase 2 at 8/17. Do not start Slice 10 until all four criteria, including
+  deferred AC266, pass.

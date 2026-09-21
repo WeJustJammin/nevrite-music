@@ -41,3 +41,14 @@ The local TDD correction permits at most five seconds of positive provider creat
 ## Acceptance boundary
 
 No acceptance criterion was closed by this work. Slice 09 remains **279/283** (depth ratio **0.986**); **AC209, AC211, AC265, and AC266 remain open**. Slices 10–17 remain dependency-locked until Slice 09 closes. Local contract, test, artifact, and database verification do not substitute for promotion and a live rerun of the timestamp-skew correction, successful OIDC authorization, a successful live AC209 exercise with retained evidence and a genuine receipt, or hosted AC265 identity/RLS/IdP/MFA/teardown acceptance.
+
+## PR #80 follow-up
+
+PR #80 promoted the bounded timestamp-skew correction as exact `main` SHA
+`918f598525de772c82b0a0bcd82348ea8f5d523d`. CI run `34823698333` and staging
+run `34824312138` passed; the authoritative staging deployment is
+`6433521892`. AC265 preflight run `34824500796` then passed. Authorization-only
+run `34824651793` failed closed at fixed phase `staging_prepare`, so no hosted
+browser matrix or acceptance report ran. This follow-up supersedes only the
+pending-promotion statement above; it does not close AC265 or any other
+acceptance criterion.

@@ -2,7 +2,30 @@
 
 ## Active
 
-- **P2-S09 external release evidence** (updated 2026-09-14) — Slice 09 remains
+- **P2-S09 external release evidence** (updated 2026-09-20) — Slice 09 remains
+  at **279/283** with depth ratio **0.986**. Current `main` is PR #80 at
+  `918f598525de772c82b0a0bcd82348ea8f5d523d`; exact-main CI
+  [run 34823698333](https://github.com/WeJustJammin/nevrite-music/actions/runs/34823698333)
+  and staging [run 34824312138](https://github.com/WeJustJammin/nevrite-music/actions/runs/34824312138)
+  passed, producing staging deployment `6433521892`. AC265 preflight
+  [run 34824500796](https://github.com/WeJustJammin/nevrite-music/actions/runs/34824500796)
+  passed; authorization foundation [run 34824651793](https://github.com/WeJustJammin/nevrite-music/actions/runs/34824651793)
+  failed at `staging_prepare`, so no hosted browser acceptance ran. Read-only
+  AC209 verifier [run 34813947512](https://github.com/WeJustJammin/nevrite-music/actions/runs/34813947512)
+  failed with `provider_graphql_error` and produced no email, queue mutation,
+  deployment, or receipt. AC211 collection [run 34424101528](https://github.com/WeJustJammin/nevrite-music/actions/runs/34424101528)
+  produced zero qualifying samples and no report. AC266 is owner-deferred
+  because the required real devices are unavailable; it remains open and is
+  not accepted or waived. No acceptance gate closed. All four remain open,
+  keeping Slices 10–17 dependency-locked. Fresh 2026-09-20 local validation
+  passes **535 Vitest files / 4,228 tests plus one skip**, 100% coverage,
+  **101 functional + 5 real Slice 09 E2E tests**, and performance smoke
+  (`p95=1.174159 ms`, threshold `500 ms`, zero errors). Fresh database
+  verification passes **52 pgTAP files / 1,917 tests** with migrated type parity.
+
+## Historical
+
+- **P2-S09 external release evidence (PR #79 snapshot)** (updated 2026-09-14) — Slice 09 remains
   at **279/283** with depth ratio **0.986**. [PR #79](https://github.com/WeJustJammin/nevrite-music/pull/79)
   merged the GitHub token-service host and safe phase-diagnostic correction as
   `e68d2e7d92867d3f00ac1942a430437dc5c5be9e`; exact-main CI

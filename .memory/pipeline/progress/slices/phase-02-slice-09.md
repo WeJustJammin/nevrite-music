@@ -16,18 +16,19 @@
 - [x] `QA` RED: failing contract, permission, unit, integration, component, accessibility, and applicable E2E tests
 - [x] `BE` data, API, and policy implementation
 - [x] `FE` Astro SSR and bounded React-island implementation
-- [x] `QA` GREEN, adversarial verification, and canonical validation (PR #74
-      merged at exact `main` SHA `f8e10db06b5e70ea6262a3531f7fab69965febc3`;
-      exact-main CI `34792878043` and staging `34793282345` / deployment
-      `6428325619` passed. Local `pnpm validate`
-      exits 0 with 522 Vitest files / 4,091 passed + 1 skipped at 100% coverage
-      (12,634 statements, 9,578 branches, 2,099 functions, 11,747 lines), 101
-      functional and 5 real-route Playwright checks, and `pnpm db:verify` with
-      50 pgTAP files / 1,818 checks and matching migrated types. Focused AC211
-      tests pass 59/59; AC266 tests pass 83/83; adversarial reviews have no
-      remaining findings. AC211 provenance and AC266 report-preparation tooling
-      are landed, but do not constitute hosted acceptance; all four external
-      release checks remain blocked.)
+- [x] `QA` GREEN, adversarial verification, and canonical validation (current
+      exact-main baseline PR #80 SHA `918f598525de772c82b0a0bcd82348ea8f5d523d`;
+      CI `34823698333` and staging `34824312138` / deployment `6433521892`
+      passed. Fresh 2026-09-20 local validation under exact Node `22.23.1` and
+      pnpm `11.24.0` passed 535 Vitest files / 4,228 tests plus one skip at 100%
+      coverage, 101 functional and 5 real Slice 09 E2E tests, builds, bundle
+      checks, and performance smoke (`p95=1.174159 ms`, threshold `500 ms`, zero
+      errors); `pnpm db:verify` passed 52 pgTAP files / 1,917 tests with migrated
+      type parity. AC265 preflight `34824500796`
+      passed, while authorization foundation run `34824651793` failed at
+      `staging_prepare`; no hosted acceptance is claimed. AC266 is
+      owner-deferred because the required real devices are unavailable, and
+      all four external release checks remain open.)
 - [x] Documentation, runbooks, graph, feature ledger, and progress tracking
 
 ## Acceptance Criteria
@@ -647,36 +648,38 @@ response`; Workers Observability passed. Cloudflare's documented successful
 - Verified acceptance items: 279/283.
 - Depth ratio: 0.986. The hard 1.0 completion gate is not met.
 
-## Blocking release evidence
+## Blocking release evidence (current as of 2026-09-20)
 
 - P2-S09-AC-209: retain a genuine post-configuration redacted live-delivery
-  receipt. Worker scheduling, Send Email binding, sending domain/DNS, and the
-  destination are healthy, but the retained provider window has zero events.
-- P2-S09-AC-211: the corrected protected collector reaches the real production
-  provider query but the 2026-09-07 UTC day has insufficient natural samples.
-  Retain a later complete UTC day with at least 200 command/RPC/acceptance
-  samples, all five SLO results, and daily queue/DLQ counts.
-- P2-S09-AC-265: Google Cloud terms are accepted and the business-owned Google
-  OAuth client is configured on exact staged SHA
-  `10f320b97ccce0c62fba2ee27a3b792f08f83285` (CI `34224641678`; staging
-  `34225256920` / deployment `6327379740`). The Supabase provider registry is
-  `enabled` and verified at version `16`; one real Google identity completed a
-  live five-cookie callback/session/protected-route flow. AC265 remains open
-  for the approved 9-role/10-scenario hosted report, role/identity lifecycle,
-  MFA/step-up, teardown, and complete hosted Auth/RLS/IdP evidence.
-- P2-S09-AC-266: retain operator-attested VoiceOver/Safari and NVDA/Firefox
-  manual smoke against the exact hosted candidate. Linux-hosted automation
-  passes but cannot replace either real-platform report.
+  receipt. The latest read-only observability run `34813947512` failed with
+  `provider_graphql_error` on `emailSendingAdaptive`; it sent no email,
+  changed no queue or production state, performed no deployment, and produced
+  no receipt.
+- P2-S09-AC-211: the latest collection run `34424101528` produced zero
+  qualifying command/RPC/acceptance/queue-first samples for its completed day.
+  No complete retained UTC-day report exists; retain a later complete day with
+  at least 200 samples, all five SLO results, and daily queue/DLQ counts.
+- P2-S09-AC-265: current exact-main SHA
+  `918f598525de772c82b0a0bcd82348ea8f5d523d` passed CI `34823698333` and
+  staging `34824312138` / deployment `6433521892`. Preflight `34824500796`
+  passed, but authorization foundation run `34824651793` failed at
+  `staging_prepare`; no hosted browser matrix or accepted 9-role/10-scenario
+  report exists. Role/identity lifecycle, MFA/step-up, teardown, and complete
+  hosted Auth/RLS/IdP evidence remain open.
+- P2-S09-AC-266: owner-deferred because the required real devices are
+  unavailable. Retain operator-attested VoiceOver/Safari and NVDA/Firefox
+  manual smoke against the exact hosted candidate when devices are available;
+  Linux-hosted automation cannot replace either real-platform report.
 
 Operational controls outside the 283-item acceptance count are verified for
 this candidate: fail-closed staging migration executed before app deployment,
 immutable migration evidence retained, exact-main-SHA CI/staging/deployment
 identity recorded, two consecutive production cron evaluations succeeded, and
 the staging/production auth-provider catalog transport is healthy.
-The four external acceptance receipts above remain required.
+The four external acceptance gates above remain required.
 
 Slice 09 remains blocked. Slice 10 depends on Slice 09 and must not start until
-all four release-evidence gates pass.
+all four release-evidence gates pass; AC266 is deferred, not accepted or waived.
 
 ## 2026-09-09 external-evidence remediation update
 
@@ -791,9 +794,9 @@ operator attestation, exact byte digests, protected workflow provenance, and
 environment approval.
 
 No VoiceOver/Safari or NVDA/Firefox report was created, accepted, or inferred,
-and no protected AC266 workflow was dispatched. AC266 remains unchecked,
-Slice 09 remains **279/283** with depth ratio **0.986**, and Slices 10–17 remain
-dependency-locked.
+and no protected AC266 workflow was dispatched. AC266 is owner-deferred and
+remains unchecked; Slice 09 remains **279/283** with depth ratio **0.986**, and
+Slices 10–17 remain dependency-locked.
 
 ## 2026-09-13 AC209 zone-diagnostic follow-up
 
