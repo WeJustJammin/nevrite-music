@@ -71,9 +71,13 @@
 - **CURRENT IMPLEMENTATION (2026-09-21):** Phase 2 Slices 01–08 are complete.
   Slice 09 remains locally QA-GREEN at 279/282 active (283 authored IDs) with
   authored depth ratio `0.986`.
-  The current exact-main baseline is PR #84 at SHA
-  `cea2e5601872975a2f974d13e739ace26da677ff`; exact-main CI `35578970402`
-  and staging `35579638864` / deployment `6564785922` passed. AC211 provenance and AC266
+  The current exact-main baseline is PR #85 at SHA
+  `a94ffbca3d41da703218dff12ee7527f31c23a34`; exact-main CI `35592046696`
+  and staging `35592722418` / deployment `6567092259` passed. The first
+  staging attempt failed at the immediate Cloudflare provider-evidence query
+  after endpoint verification/deploy; one failed-job retry succeeded with no
+  provider configuration change. Staging is available at
+  `https://staging.wejamm.in`. AC211 provenance and AC266
   report-preparation tooling is landed, but neither is hosted acceptance.
   AC265 preflight `34824500796` passed, while authorization foundation run
   `34824651793` failed at `staging_prepare`; no hosted browser acceptance ran.
@@ -82,10 +86,11 @@
   receipt is produced. CP-02 is promoted on that exact-main candidate as a
   private safe-resource/runner-mapping registry foundation; it still seeds no
   registry rows and does not authenticate mapping provenance or produce hosted
-  evidence. CP-03 remains local and unpromoted.
-  CP-03 adds a locally verified signed runner-mapping attestation boundary, but
-  no live registry rows, signing-key configuration, mapping artifact, or
-  promotion exists.
+  evidence. CP-03 is now promoted on PR #85 and adds a signed runner-mapping
+  attestation boundary, but no live registry rows, signing-key configuration,
+  retained mapping/attestation artifact, attestation workflow run, hosted
+  browser matrix, independently authenticated receipt, or AC265 acceptance
+  exists. The promotion covers code and staging deployment only.
   AC266 is owner-deferred because the required real devices are unavailable; it
   remains unchecked and excluded from active Phase 2 completion. Slice 10
   remains locked only on AC209, AC211, and AC265; AC266 remains a mandatory
@@ -105,20 +110,40 @@
   files / 65 assertions. These local/tooling results do not close hosted
   acceptance; see the [CP-01 verification record](verification/2026-09-21-ac265-outage-lease-control-plane.md)
   and [CP-02 verification record](verification/2026-09-21-ac265-approved-runner-registry.md).
-- **CURRENT CP-03 LOCAL CHECKS (pre-promotion):** The focused AC265 verification
+- **CURRENT CP-03 CHECKS (post-promotion):** The focused AC265 verification
   passed **44 files / 392 tests**, with `pnpm type-check` and `pnpm lint` passing.
   Final hardening covers UUID-v4 mapping-ID alignment, awaited response-body
   cancellation, realpath/symlink-safe execution, an unnamed Linux `O_TMPFILE`
   writability preflight, no-follow held descriptors, summaries constrained
   beneath `RUNNER_TEMP`, and deletion-free fail-closed handling that preserves
   only private runner-local remnants. Current `pnpm db:verify` passed; `pnpm
-  db:test` passed exactly **56 files / 2,065 assertions**. Trusted-key list,
+db:test` passed exactly **56 files / 2,065 assertions**. Trusted-key list,
   trusted cutoff, and maximum run duration are trusted release-policy context
   preconditions that a future protected orchestration constructor must source;
   no current untrusted caller exists. The final full `pnpm validate` totals are
-  recorded above; no live key, registry rows,
-  attestation artifact, hosted run, promotion, or AC265 acceptance is claimed.
+  recorded above; no live key, registry rows, retained mapping/attestation
+  artifact, attestation workflow run, hosted browser matrix, independently
+  authenticated receipt, or AC265 acceptance is claimed. The promoted PR #85
+  code and staging deployment are recorded above and do not satisfy AC265.
   See the [CP-03 verification record](verification/2026-09-21-ac265-approved-runner-mapping-attestation.md).
+- **CURRENT CP-04A CHECKS (local, unpromoted):** CP-04a adds a strict
+  service-role-only approved-target read over CP-01 rows, canonical target and
+  stored-digest binding, a distinct domain-separated Ed25519 target attestation,
+  and a protected manual main/staging fail-closed entrypoint/workflow. The
+  verifier and policy require the signed target attestation; a caller-provided
+  authenticity callback cannot substitute. Focused AC265 verification passes
+  **54 files / 483 tests**, with `pnpm type-check` passing. Exact-runtime
+  `pnpm validate` exits 0 with **549 Vitest files, 4,366 passed + 1
+  intentional skip (4,367 total)**, 100% coverage, 101 functional Chromium
+  checks, five production-built checks, green builds/bundle checks, and local
+  API p95 **1.377056 ms**. After a clean reset, all `pnpm db:verify`
+  components are green: **57 pgTAP files / 2,087 assertions**, database lint,
+  and generated-type checks pass. Independent security review found no CP-04a
+  blocker; a protected orchestrator remains a required trust boundary.
+  Promotion, staging execution, live target key/configuration, seeded target or
+  registry rows, retained target/attestation artifact, attestation workflow
+  run, hosted browser matrix, independently authenticated receipt, or AC265
+  acceptance remains pending. See the [CP-04a verification record](verification/2026-09-21-ac265-approved-outage-target-attestation.md).
 - **HISTORICAL PRE-REMEDIATION CANDIDATE:** Before this remediation, PR #9 branch
   `codex/phase-2-slices-01-09` was at
   `67264c5e9b5196d00ac3f0aa272896a010c872d7`; synthetic merge

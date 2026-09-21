@@ -21,7 +21,7 @@ const Ac265OutageLeaseAuthorizationReferenceSchema = z
     ),
   );
 
-const Ac265OutageLeaseTargetReferenceSchema = z
+export const Ac265OutageLeaseTargetReferenceSchema = z
   .string()
   .regex(
     new RegExp(

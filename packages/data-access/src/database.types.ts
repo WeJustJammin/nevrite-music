@@ -87,6 +87,10 @@ export type Database = {
       }
     }
     Functions: {
+      ac265_approved_outage_target_read: {
+        Args: { p_request: Json }
+        Returns: Json
+      }
       ac265_approved_runner_mapping_read: {
         Args: { p_request: Json }
         Returns: Json

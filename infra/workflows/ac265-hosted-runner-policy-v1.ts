@@ -2,20 +2,18 @@ import { createHash } from 'node:crypto';
 import { isDeepStrictEqual } from 'node:util';
 
 import {
-  AC265_APPROVED_OUTAGE_TARGET_SCHEMA_VERSION,
   AC265_APPROVED_OUTAGE_TARGET_SOURCE,
-  ApprovedOutageTargetV1Schema,
   type ApprovedOutageTargetV1,
 } from '../../packages/contracts/src/content-schema-registry/operational-release-evidence-hosted-approved-outage-target.ts';
+import type { ApprovedOutageTargetAttestationV1 } from '../../packages/contracts/src/content-schema-registry/operational-release-evidence-hosted-approved-outage-target-attestation.ts';
 import { type ApprovedRunnerMappingsV1 } from '../../packages/contracts/src/content-schema-registry/operational-release-evidence-hosted-approved-runner-mappings.ts';
 import type { ApprovedRunnerMappingAttestationV1 } from '../../packages/contracts/src/content-schema-registry/operational-release-evidence-hosted-approved-runner-mapping-attestation.ts';
 import type { ContentSchemaRegistryHostedRunnerContract } from '../../packages/contracts/src/content-schema-registry/operational-release-evidence-hosted-input.ts';
-import { parseJsonBytesWithoutDuplicateMembers } from './strict-json-object-members.ts';
 import { assertAc265ApprovedRunnerMappingAttestationWindow } from './ac265-approved-runner-mapping-attestation.ts';
+import { assertAc265ApprovedOutageTargetAttestationWindow } from './ac265-approved-outage-target-attestation.ts';
 
 export const AC265_HOSTED_RUNNER_POLICY_V1_VERSION =
   'ac265-hosted-runner-policy-v1' as const;
-const authenticatedTargets = new WeakSet<object>();
 
 const deepFreeze = <Value>(value: Value): Value => {
   if (typeof value === 'object' && value !== null && !Object.isFrozen(value)) {
@@ -61,38 +59,7 @@ type HostedRunnerContract = ContentSchemaRegistryHostedRunnerContract;
 const sha256Reference = (reference: string): string =>
   createHash('sha256').update(Buffer.from(reference, 'utf8')).digest('hex');
 
-export const authenticateApprovedOutageTargetV1 = (
-  bytes: Uint8Array,
-  verifyAuthenticity: (bytes: Uint8Array, parsedTarget: unknown) => boolean,
-): ApprovedOutageTargetV1 => {
-  let parsed: unknown;
-  try {
-    parsed = parseJsonBytesWithoutDuplicateMembers(
-      bytes,
-      'AC265 approved outage target',
-    );
-  } catch (error: unknown) {
-    throw new Error(
-      `AC265 approved outage target bytes are invalid: ${error instanceof Error ? error.message : 'unknown error'}.`,
-      {
-        cause: error,
-      },
-    );
-  }
-  const result = ApprovedOutageTargetV1Schema.safeParse(parsed);
-  if (!result.success)
-    throw new Error('AC265 approved outage target is invalid.');
-  if (verifyAuthenticity(bytes, result.data) !== true)
-    throw new Error('AC265 approved outage target authenticity is untrusted.');
-  authenticatedTargets.add(result.data);
-  return result.data;
-};
-
 const assertApprovedTargetIsReal = (target: ApprovedOutageTargetV1): void => {
-  if (!authenticatedTargets.has(target))
-    throw new Error(
-      `AC265 approved outage target must come from the protected source (${AC265_APPROVED_OUTAGE_TARGET_SCHEMA_VERSION}).`,
-    );
   const possiblePlaceholders = [
     target.targetId,
     target.scope.dependencyId,
@@ -188,11 +155,18 @@ const assertScenarioParameters = (
 export const assertAc265HostedRunnerPolicyV1 = (
   contract: HostedRunnerContract,
   target: ApprovedOutageTargetV1,
+  targetAttestation: ApprovedOutageTargetAttestationV1,
   mappings: ApprovedRunnerMappingsV1,
   attestation: ApprovedRunnerMappingAttestationV1,
   reportStartedAt: string,
   trustedCutoffAt: string,
 ): void => {
+  assertAc265ApprovedOutageTargetAttestationWindow({
+    target,
+    attestation: targetAttestation,
+    reportStartedAt,
+    trustedCutoffAt,
+  });
   const policy = createCompletePolicy(target);
   assertApprovedRunnerMappingsAreReal(
     mappings,

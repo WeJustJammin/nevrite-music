@@ -10,6 +10,7 @@ import {
   setApprovedRunnerMappingSource,
   validateWithContext,
 } from './ac265-hosted-receipt-test-fixtures.ts';
+import { setApprovedOutageTargetSource } from './ac265-hosted-receipt-context-fixtures.ts';
 import {
   jsonBytes,
   makeContract,
@@ -370,7 +371,41 @@ describe('AC265 independently versioned production runner policy', () => {
     ).toThrow(/approved outage target bytes.*required/i);
   });
 
-  it('rejects placeholder outage targets even when a local test authenticator accepts their bytes', () => {
+  it('requires an independently signed outage-target attestation', () => {
+    const contract = makeContract();
+    const fixture = createFixture({
+      contract,
+      includeCandidateIdentityReceipt: true,
+      includeExecutionBindings: true,
+      receiptIssuedAt: '2026-09-03T11:00:00.000Z',
+    });
+    const context = contextFor(fixture, contract);
+    delete context.approvedOutageTargetAttestationBytes;
+    const untrusted = context as unknown as Record<string, unknown>;
+    untrusted['verifyApprovedOutageTargetAuthenticity'] = () => true;
+
+    expect(() =>
+      validateWithContext(fixture.report, fixture.contractBytes, context),
+    ).toThrow(/attestation.*required/i);
+  });
+
+  it('requires independently trusted outage-target signing keys', () => {
+    const contract = makeContract();
+    const fixture = createFixture({
+      contract,
+      includeCandidateIdentityReceipt: true,
+      includeExecutionBindings: true,
+      receiptIssuedAt: '2026-09-03T11:00:00.000Z',
+    });
+    const context = contextFor(fixture, contract);
+    context.approvedOutageTargetTrustedKeys = [];
+
+    expect(() =>
+      validateWithContext(fixture.report, fixture.contractBytes, context),
+    ).toThrow(/outage.target.*key|signing key|trusted key/i);
+  });
+
+  it('rejects an outage target changed after its attestation was signed', () => {
     const contract = makeContract();
     const fixture = createFixture({
       contract,
@@ -382,16 +417,62 @@ describe('AC265 independently versioned production runner policy', () => {
     const parsedTarget = JSON.parse(
       Buffer.from(context.approvedOutageTargetBytes ?? []).toString('utf8'),
     ) as Record<string, unknown>;
+    const scope = parsedTarget['scope'];
+    if (typeof scope !== 'object' || scope === null || Array.isArray(scope))
+      throw new Error('Expected an outage-target scope fixture.');
     context.approvedOutageTargetBytes = jsonBytes({
       ...parsedTarget,
-      targetId: 'approved-staging-dependency',
+      scope: {
+        ...(scope as Record<string, unknown>),
+        dependencyId: 'tampered-staging-service',
+      },
     });
 
     expect(() =>
       validateWithContext(fixture.report, fixture.contractBytes, context),
-    ).toThrow(/placeholder/i);
+    ).toThrow(/attestation|digest|signature|target/i);
   });
-  it('rejects valid-looking outage-target dispatch bytes without trusted-source authentication', () => {
+
+  it.each([
+    [
+      'unknown',
+      (key: Record<string, unknown>) => ({
+        ...key,
+        keyId: 'ac265-outage-target-unknown-v1',
+      }),
+    ],
+    [
+      'revoked',
+      (key: Record<string, unknown>) => ({ ...key, status: 'revoked' }),
+    ],
+  ] as const)(
+    'rejects an outage target with a %s trusted signing key',
+    (_label, mutate) => {
+      const contract = makeContract();
+      const fixture = createFixture({
+        contract,
+        includeCandidateIdentityReceipt: true,
+        includeExecutionBindings: true,
+        receiptIssuedAt: '2026-09-03T11:00:00.000Z',
+      });
+      const context = contextFor(fixture, contract);
+      const trustedKey = context.approvedOutageTargetTrustedKeys?.[0];
+      if (trustedKey === undefined)
+        throw new Error('Expected an outage-target trusted key fixture.');
+      context.approvedOutageTargetTrustedKeys = [
+        mutate({ ...trustedKey } as Record<
+          string,
+          unknown
+        >) as typeof trustedKey,
+      ];
+
+      expect(() =>
+        validateWithContext(fixture.report, fixture.contractBytes, context),
+      ).toThrow(/unknown|revoked|trusted key|signing key/i);
+    },
+  );
+
+  it('rejects placeholder outage targets even when their bytes are validly signed', () => {
     const contract = makeContract();
     const fixture = createFixture({
       contract,
@@ -400,10 +481,26 @@ describe('AC265 independently versioned production runner policy', () => {
       receiptIssuedAt: '2026-09-03T11:00:00.000Z',
     });
     const context = contextFor(fixture, contract);
-    context.verifyApprovedOutageTargetAuthenticity = () => false;
+    const parsedTarget = JSON.parse(
+      Buffer.from(context.approvedOutageTargetBytes ?? []).toString('utf8'),
+    ) as Record<string, unknown>;
+    const scope = parsedTarget['scope'];
+    if (typeof scope !== 'object' || scope === null || Array.isArray(scope))
+      throw new Error('Expected an outage-target scope fixture.');
+    setApprovedOutageTargetSource(context, {
+      ...parsedTarget,
+      scope: {
+        ...(scope as Record<string, unknown>),
+        dependencyId: 'approved-staging-dependency',
+      },
+    });
+    context.expectedOutageLeaseScope = {
+      ...context.expectedOutageLeaseScope!,
+      dependencyId: 'approved-staging-dependency',
+    };
 
     expect(() =>
       validateWithContext(fixture.report, fixture.contractBytes, context),
-    ).toThrow(/approved outage target authenticity is untrusted/i);
+    ).toThrow(/placeholder/i);
   });
 });

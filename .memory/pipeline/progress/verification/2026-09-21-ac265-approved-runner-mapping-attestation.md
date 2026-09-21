@@ -1,8 +1,8 @@
 # AC265 CP-03 approved runner-mapping attestation verification
 
 **Date:** 2026-09-21  
-**Scope:** local, pre-promotion CP-03 foundation only  
-**Verdict:** CP-03 locally verified; AC265 remains OPEN
+**Scope:** promoted CP-03 application foundation; hosted acceptance remains unproven  
+**Verdict:** CP-03 promoted foundation verified; AC265 remains OPEN
 
 ## Implemented boundary
 
@@ -28,7 +28,7 @@
 - `pnpm type-check` passed.
 - `pnpm lint` passed for the CP-03 changes.
 - Under exact Node **22.23.1** and pnpm **11.24.0**, the final full `pnpm
-  validate` passed **543 Vitest files / 4,312 passed + 1 intentional skip
+validate` passed **543 Vitest files / 4,312 passed + 1 intentional skip
   (4,313 total)** at **100% coverage** (**13,101 statements, 9,840 branches,
   2,157 functions, and 12,182 lines**), the Slice 09 evidence command, **101
   functional browser checks + 5 production-built checks**, all workspace
@@ -39,6 +39,23 @@
 - The CP-03 contract, cryptographic source, RPC, entrypoint, workflow contract,
   receipt-context, and fail-closed negative-path checks are included in that
   focused result.
+
+## Promotion evidence
+
+- PR **#85** is the exact promoted CP-03 candidate at main SHA
+  `a94ffbca3d41da703218dff12ee7527f31c23a34`.
+- Exact-main CI run **35592046696** passed.
+- Staging workflow run **35592722418** reached endpoint verification and
+  deployment, then its first attempt failed at the immediate Cloudflare
+  provider-evidence query. Retrying the failed job succeeded; no provider
+  configuration changed between attempts.
+- GitHub deployment **6567092259** succeeded at
+  `https://staging.wejamm.in`.
+
+These records prove source-identified CP-03 code promotion and staging
+deployment only. The staging provider-evidence retry does not create hosted
+attestation or AC265 acceptance evidence.
+
 - Independent security re-review found no remaining blocker under the protected
   disposable GitHub-hosted runner threat model. Unsupported `O_TMPFILE`
   filesystems fail closed before protected RPC access.
@@ -46,9 +63,10 @@
 ## Evidence boundary
 
 This checkpoint has no live approved registry rows, no live signing-key
-configuration, no retained mapping or attestation artifact, no hosted workflow
-run, no hosted browser matrix, no independently issued receipt, and no
-promotion. Local keys and mappings are test fixtures only. CP-03 therefore does
+configuration, no retained mapping or attestation artifact, no attestation
+workflow run, no hosted browser matrix, no independently issued receipt, and
+no AC265 acceptance. Local keys and mappings are test fixtures only. The
+promotion evidence above covers the CP-03 code and staging deployment; it does
 not authenticate a live hosted source, satisfy AC265, or unlock Slice 10.
 
 AC209 and AC211 remain open. AC266 remains unchecked and owner-deferred to the
