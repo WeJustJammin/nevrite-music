@@ -12,7 +12,23 @@
 | Phase 1: Operational foundation        | complete    |      7/7 | [→](phases/phase-01.md) |
 | Phase 2: Identity, admin, CMS/settings | in-progress |     8/17 | [→](phases/phase-02.md) |
 
-## Latest checkpoint — 2026-09-21 AC265 CP-04d
+## Current worktree checkpoint — 2026-09-21 AC265 CP-04e
+
+CP-04e adds the protected artifact-source publication boundary: strict
+context-capsule loading, exact CI/staging selector and digest binding,
+quota-bounded archive extraction, typed register/finalize/readback RPCs,
+canonical signing, finalized readback verification, and one allowlisted
+redacted retained bundle. Focused root verification passed **11 files / 52
+tests**. Final local `pnpm validate` passed **572 files** with **4,543 passed +
+1 skipped / 4,544** at 100% coverage; `pnpm db:verify` passed **62 files /
+2,211 tests** after a fresh reset through migration `20260921060000`. This is
+unpromoted local/private construction evidence only. The protected
+`AC265_PUBLICATION_CONTEXT_BUNDLE_B64` trust source, signing configuration,
+genuine protected run, retained hosted artifact, receipt, and complete hosted
+matrix remain external and unproven. No gate or total changes. See the [CP-04e
+verification record](verification/2026-09-21-ac265-hosted-artifact-source-manifest-publication.md).
+
+## Latest promoted checkpoint — 2026-09-21 AC265 CP-04d
 
 CP-04d is now the latest promoted private construction foundation: PR #91
 merged to `main` at exact SHA

@@ -952,7 +952,8 @@ begin
       decode(repeat(chr(96 + n), 64), 'hex'), repeat(chr(96 + n), 40), '64285239' || lpad(n::text, 2, '0'),
       'wejammin-staging', 'abcdefghijklmnopqrst', 'execution_evidence', decode(repeat('d', 64), 'hex'),
       decode(repeat('e', 64), 'hex'), 'release-key-race', decode(repeat('f', 64), 'hex'),
-      clock_timestamp() - interval '30 seconds', clock_timestamp() + interval '90 seconds', clock_timestamp()
+      date_trunc('milliseconds', clock_timestamp() - interval '30 seconds'),
+      date_trunc('milliseconds', clock_timestamp() + interval '90 seconds'), clock_timestamp()
     from generate_series(1, 3) as row(n);
     insert into platform_private.ac265_hosted_artifact_manifest_sources (
       manifest_id, source_ordinal, artifact_ref, artifact_kind, artifact_sha256,

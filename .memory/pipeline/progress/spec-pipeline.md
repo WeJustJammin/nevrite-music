@@ -171,7 +171,7 @@
   evidence is **6/6** (**84/84 total**). After a fresh reset, `pnpm db:test`
   passed **61 files / 2,208 tests**; `pnpm db:lint` passed with unrelated
   existing warnings, and `pnpm db:types:check` passed. Final local `pnpm
-  validate` passed **562 files** with **4,498 passed + 1 skipped / 4,499**, 100%
+validate` passed **562 files** with **4,498 passed + 1 skipped / 4,499**, 100%
   coverage (**13,184 statements, 9,862 branches, 2,164 functions, 12,263
   lines**); Slice 09 evidence passed, Playwright passed **101/101 functional**
   and **5/5 real-route** checks, builds and bundle budgets passed, and local API
@@ -186,6 +186,18 @@
   population, protected signer execution, retained hosted artifacts,
   independently authenticated receipts, and the complete hosted matrix remain
   open. See the [CP-04d verification record](verification/2026-09-21-ac265-hosted-artifact-source-manifest.md).
+- **CURRENT WORKTREE CP-04E FOUNDATION (2026-09-21):** The protected
+  artifact-source publication boundary is locally complete: strict capsule
+  loading, exact CI/staging selector and digest binding, quota-bounded archive
+  handling, typed register/finalize/readback RPCs, canonical signing, finalized
+  readback verification, and one allowlisted retained bundle. Root focused
+  verification passed **11 files / 52 tests**; `pnpm validate` passed **572
+  files**, **4,543 passed + 1 skipped / 4,544**, at 100% coverage; `pnpm
+db:verify` passed **62 files / 2,211 tests** through migration
+  `20260921060000`. This worktree is unpromoted and has no populated protected
+  context/signing configuration or hosted run. AC265 remains open and no totals
+  or gates change. See the [CP-04e verification
+  record](verification/2026-09-21-ac265-hosted-artifact-source-manifest-publication.md).
 - **HISTORICAL COMPLETE LOCAL VALIDATION (CP-04b, 2026-09-21):** Under exact Node
   `22.23.1` and pnpm `11.24.0`, final canonical `pnpm validate` passed **551
   Vitest files, 4,387 passed + 1 intentional skip**. Coverage is complete:

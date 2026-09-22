@@ -1,0 +1,104 @@
+name: AC265 protected source-manifest publication
+
+on:
+  workflow_dispatch:
+    inputs:
+      authorization_ref:
+        description: Opaque protected AC265 authorization reference
+        required: true
+        type: string
+      candidate_ref:
+        description: Opaque registered AC265 candidate reference
+        required: true
+        type: string
+
+concurrency:
+  group: ac265-source-manifest-${{ github.ref }}
+  cancel-in-progress: false
+
+permissions:
+  actions: read
+  contents: read
+  deployments: read
+
+jobs:
+  publish:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    environment: staging
+    permissions:
+      actions: read
+      contents: read
+      deployments: read
+    steps:
+      - name: Check out the immutable dispatched commit
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+
+      - name: Set up pinned workspace dependencies
+        uses: ./.github/actions/setup
+
+      - name: Resolve protected source artifact selectors
+        id: resolve
+        env:
+          AC265_AUTHORIZATION_REF: ${{ inputs.authorization_ref }}
+          AC265_CANDIDATE_REF: ${{ inputs.candidate_ref }}
+          AC265_SOURCE_MANIFEST_OUTPUT_DIR: ${{ runner.temp }}/ac265-source-manifest
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          GITHUB_TOKEN: ${{ github.token }}
+          AC265_PUBLICATION_CONTEXT_BUNDLE_B64: ${{ secrets.AC265_PUBLICATION_CONTEXT_BUNDLE_B64 }}
+        run: node --experimental-strip-types infra/workflows/publish-ac265-hosted-artifact-source-manifest.ts --resolve-source
+
+      - name: Download exact CI source artifact
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
+        with:
+          artifact-ids: ${{ steps.resolve.outputs.ci_artifact_id }}
+          repository: ${{ github.repository }}
+          run-id: ${{ steps.resolve.outputs.ci_run_id }}
+          github-token: ${{ github.token }}
+          skip-decompress: true
+          digest-mismatch: error
+          path: ${{ runner.temp }}/ac265-source-manifest/ci-source
+      - name: Download exact staging source artifact
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
+        with:
+          artifact-ids: ${{ steps.resolve.outputs.staging_artifact_id }}
+          repository: ${{ github.repository }}
+          run-id: ${{ steps.resolve.outputs.staging_run_id }}
+          github-token: ${{ github.token }}
+          skip-decompress: true
+          digest-mismatch: error
+          path: ${{ runner.temp }}/ac265-source-manifest/staging-source
+
+      - name: Publish finalized AC265 source-manifest bundle
+        id: publish
+        env:
+          AC265_AUTHORIZATION_REF: ${{ inputs.authorization_ref }}
+          AC265_CANDIDATE_REF: ${{ inputs.candidate_ref }}
+          AC265_PUBLICATION_CONTEXT_BUNDLE_B64: ${{ secrets.AC265_PUBLICATION_CONTEXT_BUNDLE_B64 }}
+          AC265_RESOLVED_CONTEXT_BUNDLE_SHA256: ${{ steps.resolve.outputs.context_bundle_sha256 }}
+          AC265_RESOLVED_CI_RUN_ID: ${{ steps.resolve.outputs.ci_run_id }}
+          AC265_RESOLVED_CI_ARTIFACT_ID: ${{ steps.resolve.outputs.ci_artifact_id }}
+          AC265_RESOLVED_STAGING_RUN_ID: ${{ steps.resolve.outputs.staging_run_id }}
+          AC265_RESOLVED_STAGING_ARTIFACT_ID: ${{ steps.resolve.outputs.staging_artifact_id }}
+          AC265_SOURCE_MANIFEST_CI_SOURCE_DIR: ${{ runner.temp }}/ac265-source-manifest/ci-source
+          AC265_SOURCE_MANIFEST_STAGING_SOURCE_DIR: ${{ runner.temp }}/ac265-source-manifest/staging-source
+          AC265_SOURCE_MANIFEST_OUTPUT_DIR: ${{ runner.temp }}/ac265-source-manifest/finalized
+          SUPABASE_URL: ${{ vars.SUPABASE_URL }}
+          SUPABASE_PROJECT_REF: ${{ vars.SUPABASE_PROJECT_REF }}
+          SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
+          AC265_SOURCE_MANIFEST_SIGNING_PRIVATE_KEY_PEM: ${{ secrets.AC265_SOURCE_MANIFEST_SIGNING_PRIVATE_KEY_PEM }}
+          AC265_SOURCE_MANIFEST_SIGNING_KEY_ID: ${{ vars.AC265_SOURCE_MANIFEST_SIGNING_KEY_ID }}
+        run: node --experimental-strip-types infra/workflows/publish-ac265-hosted-artifact-source-manifest.ts --publish
+
+      - name: Upload only finalized source-manifest bundle
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+        with:
+          name: ac265-source-manifest-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            ${{ runner.temp }}/ac265-source-manifest/finalized/ac265-source-manifest.bundle
+          if-no-files-found: error
+          retention-days: 30

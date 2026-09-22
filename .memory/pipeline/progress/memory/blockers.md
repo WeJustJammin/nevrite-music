@@ -57,14 +57,16 @@
   [the CP-02 verification record](../verification/2026-09-21-ac265-approved-runner-registry.md),
   [the CP-03 verification record](../verification/2026-09-21-ac265-approved-runner-mapping-attestation.md),
   [the CP-04a verification record](../verification/2026-09-21-ac265-approved-outage-target-attestation.md),
-  and [the CP-04d verification record](../verification/2026-09-21-ac265-hosted-artifact-source-manifest.md).
+  [the CP-04d verification record](../verification/2026-09-21-ac265-hosted-artifact-source-manifest.md),
+  and [the CP-04e verification record](../verification/2026-09-21-ac265-hosted-artifact-source-manifest-publication.md).
   CP-03 code is promoted, but no
   live signing-key configuration, registry rows, retained mapping/attestation
   artifact, attestation workflow run, hosted browser matrix,
   independently authenticated receipt, browser evidence, or AC265 acceptance
-  exists. The next AC265 dependency is the protected source-manifest publication
-  tranche: typed RPC projection, protected authority/trust sources, signed-byte
-  integration, and a protected publication workflow. The CP-04a
+  exists. The local CP-04e publication boundary is implemented and verified;
+  the next AC265 dependency is external population of its protected authority
+  capsule and signing configuration, followed by a genuine protected
+  publication and hosted matrix. The CP-04a
   approved-outage-target read/attestation foundation is promoted through PR #86,
   exact-main CI `35597438023`, and staging `35598236704` / deployment
   `6568074493`, but currently has no
@@ -144,8 +146,24 @@
   Slice 09 **279/282 active** (**283 authored IDs**) and Phase 2 **1,999/2,000
   active criteria**, **8/17 slices**.
 
+- **P2-S09 AC265 CP-04e protected source-manifest publication foundation**
+  (updated 2026-09-21) — The current worktree adds a real protected capsule
+  loader, exact CI/staging selector and archive-digest binding, quota-bounded
+  archive extraction, typed register/finalize/readback transport, canonical
+  signing, finalized readback verification, and a main-only workflow retaining
+  one allowlisted redacted bundle. Root focused verification passed **11 files /
+  52 tests**. Final local `pnpm validate` passed **572 files**, **4,543 passed +
+  1 skipped / 4,544**, at 100% coverage; fresh `pnpm db:verify` passed **62
+  files / 2,211 tests** through migration `20260921060000`. No live
+  `AC265_PUBLICATION_CONTEXT_BUNDLE_B64`, signing configuration, protected run,
+  retained hosted artifact, independently authenticated receipt, or complete
+  hosted matrix exists. AC265 remains open; AC209 and AC211 remain open; Slice
+  10 remains locked; totals remain Slice 09 **279/282 active** (**283 authored
+  IDs**) and Phase 2 **1,999/2,000 active criteria** (**8/17 slices**). AC266
+  remains owner-deferred and mandatory for the post-Phase 2 release gate.
+
 - **P2-S09 AC265 CP-04d signed source-manifest and authority foundation**
-  (updated 2026-09-21) — The current worktree adds a strict signed
+  (updated 2026-09-21) — The promoted CP-04d baseline adds a strict signed
   artifact-source manifest with canonical ordering, a server-derived
   authorization window, a manifest digest separate from the request hash, and
   an immutable reserve-to-finalize/readback ledger. Authority readback exposes
