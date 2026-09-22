@@ -108,7 +108,7 @@ and `pnpm type-check` is green. Phase 2 remains **8/17** with **1,999/2,000
 active criteria**; Slice 09 remains **279/282 active** (**283 authored IDs**),
 AC209/AC211/AC265 remain open, Slice 10 remains locked, and AC266 remains
 owner-deferred as the mandatory post-Phase 2 production-readiness/release
- gate.
+gate.
 
 ## CP-04d signed source-manifest and authority foundation (local/private only)
 
@@ -123,7 +123,7 @@ never an acceptance result. The resolver, semantic-subject serializer, and
 protected verification context reject structural/callback-only substitutions
 and snapshot mutable inputs before use.
 
-The staging verifier retry hardening is implemented in the current worktree:
+The staging verifier retry hardening is implemented in the promoted baseline:
 it prevalidates inputs and retries the complete release contract for **13
 attempts at 5 seconds**. Known focused TypeScript evidence is **16 files / 104
 tests**. Focused database authority evidence is **78/78 assertions** and
@@ -163,6 +163,26 @@ receipt, or complete hosted matrix exists. AC265 remains open, Slice 10 remains
 locked, and AC266 remains owner-deferred as the mandatory post-Phase 2
 production-readiness/release gate. See the [CP-04d verification
 record](../verification/2026-09-21-ac265-hosted-artifact-source-manifest.md).
+
+## CP-04e protected source-manifest publication foundation (local/private only)
+
+CP-04e implements the protected context-capsule loader, exact CI/staging
+selector and archive-digest binding, quota-bounded ZIP reader, typed
+register/finalize/readback client, canonical signing, finalized readback
+verification, and main-only protected workflow. Focused root verification
+passed **11 files / 52 tests**. Final local `pnpm validate` passed **572 files**
+with **4,543 passed + 1 skipped / 4,544** at 100% coverage; fresh `pnpm
+db:verify` passed **62 files / 2,211 tests** through migration
+`20260921060000`.
+
+This is unpromoted local/private evidence. No live protected context capsule,
+signing configuration, protected publication run, retained hosted artifact,
+authenticated receipt, or complete hosted matrix exists. AC265 remains open;
+AC209 and AC211 remain open; Slice 10 remains locked. Totals remain **8/17**
+slices, **1,999/2,000 active criteria**, and Slice 09 **279/282 active** with
+**283 authored IDs**. AC266 remains owner-deferred and mandatory for the
+post-Phase 2 production-readiness/release gate. See the [CP-04e verification
+record](../verification/2026-09-21-ac265-hosted-artifact-source-manifest-publication.md).
 
 Slice 08 is complete (51/51). Slice 09 local QA-GREEN passes. PR #13 merged as
 exact main SHA `7250754dcdc9c1b7a863aa41d79772e6ab7092ab`; CI run

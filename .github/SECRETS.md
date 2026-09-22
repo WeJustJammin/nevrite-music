@@ -6,12 +6,31 @@ Only the credentials listed below are authorized. They belong in protected GitHu
 
 ## Staging environment secrets
 
-| Name                    | Owner   | Purpose                                                               |
-| ----------------------- | ------- | --------------------------------------------------------------------- |
-| `CLOUDFLARE_API_TOKEN`  | Hosting | Deploy Workers/assets with least-privilege edit permissions.          |
-| `SUPABASE_ACCESS_TOKEN` | Data    | Manage the staging Supabase project through the CLI.                  |
-| `SUPABASE_DB_PASSWORD`  | Data    | Apply and verify staging database migrations.                         |
-| `SUPABASE_SECRET_KEY`   | Data    | Rotatable server-only API access; never exposed to Astro client code. |
+| Name                                            | Owner            | Purpose                                                                                       |
+| ----------------------------------------------- | ---------------- | --------------------------------------------------------------------------------------------- |
+| `CLOUDFLARE_API_TOKEN`                          | Hosting          | Deploy Workers/assets with least-privilege edit permissions.                                  |
+| `SUPABASE_ACCESS_TOKEN`                         | Data             | Manage the staging Supabase project through the CLI.                                          |
+| `SUPABASE_DB_PASSWORD`                          | Data             | Apply and verify staging database migrations.                                                 |
+| `SUPABASE_SECRET_KEY`                           | Data             | Rotatable server-only API access; never exposed to Astro client code.                         |
+| `AC265_PUBLICATION_CONTEXT_BUNDLE_B64`          | Release evidence | Base64-encoded bounded AC265 protected context bundle for the protected publication workflow. |
+| `AC265_SOURCE_MANIFEST_SIGNING_PRIVATE_KEY_PEM` | Release evidence | Ed25519 private key used only to sign the finalized AC265 publication manifest.               |
+
+`AC265_PUBLICATION_CONTEXT_BUNDLE_B64` is the owner-controlled trust root for
+an AC265 publication run. It is configured only in the protected `staging`
+environment; its reviewer, main-branch restriction, and audit history govern
+changes. The bundle carries the signed authority manifest, pinned public keys,
+authorization/candidate bindings, separate CI and staging provenance, and
+archive digests. The bundle signature does not independently authenticate a
+replacement of this secret. Populate and rotate it externally under the
+release-evidence owner process; no live value is configured in this repository.
+
+`AC265_SOURCE_MANIFEST_SIGNING_PRIVATE_KEY_PEM` is a distinct protected
+`staging` secret. It must match the public key pinned by the authorized context
+bundle, must never be embedded in that bundle, and is exposed only to the
+publication step after the bundle and artifact provenance checks succeed. Its
+non-secret identifier is configured as the protected staging environment
+variable `AC265_SOURCE_MANIFEST_SIGNING_KEY_ID`. Neither live value is
+configured by this repository change.
 
 ## Production environment secrets
 
@@ -99,7 +118,7 @@ tokens; never reuse the interactive Wrangler OAuth credential in CI.
 
 ## Environment variables
 
-Non-secret GitHub environment variables include `CLOUDFLARE_ACCOUNT_ID`, `STAGING_WEB_ORIGIN`, `STAGING_API_ORIGIN`, `SUPABASE_PROJECT_REF`, and `SUPABASE_URL`. Production also records `PRODUCTION_API_ORIGIN` for the post-deploy health gate, `PRODUCTION_ALERT_EMAIL_SHA256` and `PRODUCTION_ALERT_SENDER_SHA256` for redacted AC209 address verification, `CLOUDFLARE_EMAIL_ZONE_ID` for the exact Email Sending analytics zone, `CLOUDFLARE_PLATFORM_QUEUE_ID` for the exact production queue and AC211 Queue Analytics query, and `STAGING_SUPABASE_PROJECT_REF` so promotion can independently match staging migration evidence to the configured staging project. Browser-safe application values are variables rather than secrets: `PUBLIC_APP_ORIGIN`, `PUBLIC_SUPABASE_URL`, and `PUBLIC_SUPABASE_PUBLISHABLE_KEY`. Administrative keys and database passwords remain secrets. No third-party application-provider credential is authorized.
+Non-secret GitHub environment variables include `CLOUDFLARE_ACCOUNT_ID`, `STAGING_WEB_ORIGIN`, `STAGING_API_ORIGIN`, `SUPABASE_PROJECT_REF`, `SUPABASE_URL`, and the protected staging publication key identifier `AC265_SOURCE_MANIFEST_SIGNING_KEY_ID`. Production also records `PRODUCTION_API_ORIGIN` for the post-deploy health gate, `PRODUCTION_ALERT_EMAIL_SHA256` and `PRODUCTION_ALERT_SENDER_SHA256` for redacted AC209 address verification, `CLOUDFLARE_EMAIL_ZONE_ID` for the exact Email Sending analytics zone, `CLOUDFLARE_PLATFORM_QUEUE_ID` for the exact production queue and AC211 Queue Analytics query, and `STAGING_SUPABASE_PROJECT_REF` so promotion can independently match staging migration evidence to the configured staging project. Browser-safe application values are variables rather than secrets: `PUBLIC_APP_ORIGIN`, `PUBLIC_SUPABASE_URL`, and `PUBLIC_SUPABASE_PUBLISHABLE_KEY`. Administrative keys and database passwords remain secrets. No third-party application-provider credential is authorized.
 
 ## Cost control
 

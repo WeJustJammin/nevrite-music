@@ -226,9 +226,20 @@ export const safeGitHubUrl = (
   if (typeof value !== 'string') return false;
   try {
     const url = new URL(value);
+    const schemeEnd = value.indexOf('://');
+    if (
+      schemeEnd < 0 ||
+      value
+        .slice(schemeEnd + 3)
+        .split(/[/?#]/u, 1)[0]!
+        .includes('@')
+    )
+      return false;
     return (
       url.protocol === 'https:' &&
       url.origin === 'https://api.github.com' &&
+      url.username === '' &&
+      url.password === '' &&
       url.pathname === expectedPath &&
       url.search === '' &&
       url.hash === ''

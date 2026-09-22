@@ -99,6 +99,26 @@
   mandatory post-Phase 2 production-readiness/release gate. See the [CP-04d
   verification record](../verification/2026-09-21-ac265-hosted-artifact-source-manifest.md).
 
+## 2026-09-21 AC265 CP-04e protected publication foundation (local/private only)
+
+- Added the real protected context-capsule loader, exact CI/staging run,
+  artifact, and archive-digest binding, quota-bounded ZIP handling, typed
+  register/finalize/readback transport, canonical signing, finalized readback
+  verification, and a main-only publication workflow retaining one allowlisted
+  redacted bundle.
+- Focused root verification passed **11 files / 52 tests**. Final local `pnpm
+validate` passed **572 files** with **4,543 passed + 1 skipped / 4,544** and
+  100% coverage. Fresh `pnpm db:verify` passed **62 files / 2,211 tests** after
+  migration `20260921060000`.
+- No protected context secret or signing configuration was populated and no
+  genuine protected publication, retained hosted artifact, authenticated
+  receipt, or complete hosted matrix ran. AC265 remains open. Totals remain
+  **279/282 active** (**283 authored IDs**), **8/17** Phase 2 slices, and
+  **1,999/2,000 active criteria**; AC209/AC211 remain open, Slice 10 remains
+  locked, and AC266 remains owner-deferred as the mandatory post-Phase 2
+  production-readiness/release gate. See the [CP-04e verification
+  record](../verification/2026-09-21-ac265-hosted-artifact-source-manifest-publication.md).
+
 ## Tasks
 
 - [x] Contract: lock Zod, data, registry, event, and route contracts

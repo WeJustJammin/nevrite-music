@@ -2,6 +2,7 @@ export * from './models.ts';
 export * from './openapi.ts';
 export * from './operational-release-evidence-hosted-artifact-attestation.ts';
 export * from './operational-release-evidence-hosted-artifact-source-manifest.ts';
+export * from './operational-release-evidence-hosted-artifact-source-manifest-control.ts';
 export * from './operational-release-evidence-hosted-approved-outage-target-attestation.ts';
 export * from './operational-release-evidence-hosted-approved-outage-target-control.ts';
 export * from './operational-release-evidence-hosted-approved-outage-target-registration.ts';
