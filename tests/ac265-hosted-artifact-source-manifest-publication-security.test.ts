@@ -28,7 +28,7 @@ import {
 const CANDIDATE_REF =
   'ac265-candidate://staging/80000000-0000-4000-8000-000000000008';
 const envBase = () => ({
-  GITHUB_REPOSITORY: 'WeJustJammin/nevrite-music',
+  GITHUB_REPOSITORY: 'WeJustJammin/wejammin',
   GITHUB_REF: 'refs/heads/main',
   GITHUB_SHA: SOURCE_REVISION,
   GITHUB_EVENT_NAME: 'workflow_dispatch',
@@ -44,7 +44,7 @@ const validContextBundle = (): string =>
   Buffer.from(
     JSON.stringify({
       schemaVersion: 'ac265-hosted-artifact-source-manifest-context-v1',
-      repository: 'WeJustJammin/nevrite-music',
+      repository: 'WeJustJammin/wejammin',
       branch: 'main',
       sourceRevision: SOURCE_REVISION,
       authorizationRef: AUTHORIZATION_REF,
@@ -216,7 +216,7 @@ describe('AC265 publication fail-closed boundary', () => {
       { authorizationRef: AUTHORIZATION_REF.replace('002', '003') },
     ]) {
       const loadProtectedContext = vi.fn(async () => ({
-        repository: 'WeJustJammin/nevrite-music',
+        repository: 'WeJustJammin/wejammin',
         branch: 'main',
         sourceRevision: SOURCE_REVISION,
         authorizationRef: AUTHORIZATION_REF,

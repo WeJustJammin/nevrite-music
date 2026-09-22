@@ -35,7 +35,7 @@ const archive = (
 });
 
 const context = (archives: readonly Ac265ProtectedArtifactArchive[]) => ({
-  repository: 'WeJustJammin/nevrite-music' as const,
+  repository: 'WeJustJammin/wejammin' as const,
   branch: 'main' as const,
   sourceRevision: SOURCE_REVISION,
   authorizationRef: AUTHORIZATION_REF,

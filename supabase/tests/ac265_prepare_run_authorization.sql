@@ -128,8 +128,8 @@ with instant as (
     'github', jsonb_build_object(
       'issuer', 'https://token.actions.githubusercontent.com',
       'audience', 'urn:wejammin:ac265:staging-runner:v1',
-      'subject', 'repo:WeJustJammin/nevrite-music:environment:staging',
-      'repository', 'WeJustJammin/nevrite-music',
+      'subject', 'repo:WeJustJammin@305953066/wejammin@1297208152:environment:staging',
+      'repository', 'WeJustJammin/wejammin',
       'repositoryId', '1297208152',
       'repositoryOwner', 'WeJustJammin',
       'repositoryOwnerId', '305953066',
@@ -139,7 +139,7 @@ with instant as (
       'eventName', 'workflow_dispatch',
       'environment', 'staging',
       'runnerEnvironment', 'github-hosted',
-      'workflowRef', 'WeJustJammin/nevrite-music/.github/workflows/run-ac265-hosted-e2e.yml@refs/heads/main',
+      'workflowRef', 'WeJustJammin/wejammin/.github/workflows/run-ac265-hosted-e2e.yml@refs/heads/main',
       'workflowSha', repeat('a', 40),
       'sha', repeat('a', 40),
       'githubRunId', '34796668543',
@@ -167,8 +167,9 @@ cross join lateral (values
   ('production-github-environment', jsonb_set(base.request, '{github,environment}', to_jsonb('production'::text))),
   ('wrong-repository-id', jsonb_set(base.request, '{github,repositoryId}', to_jsonb('1297208153'::text))),
   ('wrong-owner-id', jsonb_set(base.request, '{github,repositoryOwnerId}', to_jsonb('305953067'::text))),
+  ('legacy-subject', jsonb_set(base.request, '{github,subject}', to_jsonb('repo:WeJustJammin/nevrite-music:environment:staging'::text))),
   ('untrusted-api-origin', base.request || jsonb_build_object('identity', jsonb_build_object('apiOrigin', 'https://attacker.example'))),
-  ('wrong-workflow-ref', jsonb_set(base.request, '{github,workflowRef}', to_jsonb('WeJustJammin/nevrite-music/.github/workflows/other.yml@refs/heads/main'::text))),
+  ('wrong-workflow-ref', jsonb_set(base.request, '{github,workflowRef}', to_jsonb('WeJustJammin/wejammin/.github/workflows/other.yml@refs/heads/main'::text))),
   ('unprotected-ref', jsonb_set(base.request, '{github,refProtected}', 'false'::jsonb)),
   ('non-main-ref', jsonb_set(base.request, '{github,ref}', to_jsonb('refs/heads/feature'::text))),
   ('self-hosted-runner', jsonb_set(base.request, '{github,runnerEnvironment}', to_jsonb('self-hosted'::text))),
@@ -359,6 +360,7 @@ select throws_ok($$select platform_api.ac265_prepare_hosted_run((select request 
 select throws_ok($$select platform_api.ac265_prepare_hosted_run((select request from pg_temp.ac265_prepare_run_fixtures where fixture_name = 'production-github-environment'))$$, '22023', 'AC265 prepare-run request rejected', 'production GitHub environment is rejected');
 select throws_ok($$select platform_api.ac265_prepare_hosted_run((select request from pg_temp.ac265_prepare_run_fixtures where fixture_name = 'wrong-repository-id'))$$, '22023', 'AC265 prepare-run request rejected', 'repository ID is pinned');
 select throws_ok($$select platform_api.ac265_prepare_hosted_run((select request from pg_temp.ac265_prepare_run_fixtures where fixture_name = 'wrong-owner-id'))$$, '22023', 'AC265 prepare-run request rejected', 'repository owner ID is pinned');
+select throws_ok($$select platform_api.ac265_prepare_hosted_run((select request from pg_temp.ac265_prepare_run_fixtures where fixture_name = 'legacy-subject'))$$, '22023', 'AC265 prepare-run request rejected', 'legacy mutable OIDC subjects are rejected');
 select throws_ok($$select platform_api.ac265_prepare_hosted_run((select request from pg_temp.ac265_prepare_run_fixtures where fixture_name = 'untrusted-api-origin'))$$, '22023', 'AC265 prepare-run request rejected', 'only the approved staging Worker API origin is accepted');
 select throws_ok($$select platform_api.ac265_prepare_hosted_run((select request from pg_temp.ac265_prepare_run_fixtures where fixture_name = 'wrong-workflow-ref'))$$, '22023', 'AC265 prepare-run request rejected', 'protected workflow reference is pinned');
 select throws_ok($$select platform_api.ac265_prepare_hosted_run((select request from pg_temp.ac265_prepare_run_fixtures where fixture_name = 'unprotected-ref'))$$, '22023', 'AC265 prepare-run request rejected', 'unprotected refs are rejected');

@@ -1,7 +1,7 @@
 {
-  "builtAt": "2026-09-21T17:41:40.207Z",
-  "nodeCount": 1632,
-  "edgeCount": 10125,
+  "builtAt": "2026-09-22T17:00:44.754Z",
+  "nodeCount": 1634,
+  "edgeCount": 10129,
   "nodes": [
     {
       "id": "plan:2026-08-02-architecture-design",
@@ -256,6 +256,13 @@
       "shardId": null
     },
     {
+      "id": "audit:audits/propagation-github-repository-identity-2026-09-22",
+      "type": "audit",
+      "label": "Approved AC265 GitHub repository identity propagation",
+      "path": ".memory/wiki/specs/audits/propagation-github-repository-identity-2026-09-22.md",
+      "shardId": null
+    },
+    {
       "id": "audit:audits/propagation-observability-cost-2026-08-30",
       "type": "audit",
       "label": "Sentry Removal and Free-Only Operations Propagation Record",
@@ -302,6 +309,13 @@
       "type": "audit",
       "label": "AC266 completion-policy propagation scan",
       "path": ".memory/wiki/specs/audits/propagation-scan-2026-09-21.md",
+      "shardId": null
+    },
+    {
+      "id": "audit:audits/propagation-scan-2026-09-22-repository-identity",
+      "type": "audit",
+      "label": "GitHub repository identity propagation scan",
+      "path": ".memory/wiki/specs/audits/propagation-scan-2026-09-22-repository-identity.md",
       "shardId": null
     },
     {
@@ -11658,6 +11672,18 @@
       "source": "wikilink"
     },
     {
+      "from": "audit:audits/propagation-github-repository-identity-2026-09-22",
+      "to": "phase-plan:phases/phase-2",
+      "type": "phases_into",
+      "source": "phase-ref"
+    },
+    {
+      "from": "audit:audits/propagation-github-repository-identity-2026-09-22",
+      "to": "phase-plan:phases/phase-2",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
       "from": "audit:audits/propagation-option-a-2026-09-02",
       "to": "phase-plan:phases/phase-2",
       "type": "phases_into",
@@ -11725,6 +11751,18 @@
     },
     {
       "from": "audit:audits/propagation-scan-2026-09-21",
+      "to": "phase-plan:phases/phase-2",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "audit:audits/propagation-scan-2026-09-22-repository-identity",
+      "to": "phase-plan:phases/phase-2",
+      "type": "phases_into",
+      "source": "phase-ref"
+    },
+    {
+      "from": "audit:audits/propagation-scan-2026-09-22-repository-identity",
       "to": "phase-plan:phases/phase-2",
       "type": "references",
       "source": "wikilink"
@@ -72184,7 +72222,7 @@
     "byNodeType": {
       "plan": 12,
       "architecture": 18,
-      "audit": 29,
+      "audit": 31,
       "be-spec": 157,
       "fe-spec": 44,
       "ia-spec": 85,
@@ -72193,9 +72231,9 @@
       "decision": 97
     },
     "byEdgeType": {
-      "phases_into": 93,
+      "phases_into": 95,
       "constrained_by": 9041,
-      "references": 918,
+      "references": 920,
       "derives_from": 64,
       "implemented_by": 6,
       "split_from": 3

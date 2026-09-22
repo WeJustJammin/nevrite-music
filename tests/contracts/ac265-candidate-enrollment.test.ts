@@ -52,7 +52,7 @@ const identity = {
 };
 
 const provenance = {
-  repository: 'WeJustJammin/nevrite-music',
+  repository: 'WeJustJammin/wejammin',
   sourceRevision: SOURCE_REVISION,
   ci: {
     runId: CI_RUN_ID,

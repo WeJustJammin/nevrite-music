@@ -126,7 +126,7 @@ describe('AC265 read-only staging candidate provenance verifier', () => {
 
   it('rejects malformed dispatch fields before making any GitHub request', async () => {
     for (const patch of [
-      { repository: 'https://github.com/WeJustJammin/nevrite-music' },
+      { repository: 'https://github.com/WeJustJammin/wejammin' },
       { token: 'token with spaces' },
       { ciRunId: '0' },
       { ciRunId: '1/attempts/2' },

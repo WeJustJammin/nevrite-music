@@ -20,6 +20,14 @@ import {
 const now = Date.parse('2026-09-14T02:00:00.000Z');
 const sourceRevision = 'a'.repeat(40);
 const jti = '20000000-0000-4000-8000-000000000002';
+const currentRepository = 'WeJustJammin/wejammin';
+const immutableSubject =
+  'repo:WeJustJammin@305953066/wejammin@1297208152:environment:staging';
+const legacySubject = 'repo:WeJustJammin/nevrite-music:environment:staging';
+const currentWorkflowRef =
+  'WeJustJammin/wejammin/.github/workflows/run-ac265-hosted-e2e.yml@refs/heads/main';
+const legacyWorkflowRef =
+  'WeJustJammin/nevrite-music/.github/workflows/run-ac265-hosted-e2e.yml@refs/heads/main';
 
 let privateKey: CryptoKey;
 let publicKey: CryptoKey;
@@ -86,16 +94,24 @@ describe('AC265 GitHub OIDC verifier', () => {
   it('verifies the signature and every immutable runner claim', async () => {
     const verify = createAc265GithubOidcVerifier({ keySet, now: () => now });
 
-    await expect(verify(await token())).resolves.toMatchObject({
+    await expect(
+      verify(
+        await token({
+          sub: immutableSubject,
+          repository: currentRepository,
+          workflow_ref: currentWorkflowRef,
+        }),
+      ),
+    ).resolves.toMatchObject({
       issuer: AC265_GITHUB_OIDC_ISSUER,
       audience: AC265_GITHUB_OIDC_AUDIENCE,
-      subject: AC265_GITHUB_OIDC_SUBJECT,
-      repository: AC265_GITHUB_OIDC_REPOSITORY,
+      subject: immutableSubject,
+      repository: currentRepository,
       repositoryId: AC265_GITHUB_OIDC_REPOSITORY_ID,
       repositoryOwnerId: AC265_GITHUB_OIDC_REPOSITORY_OWNER_ID,
       refProtected: true,
       runnerEnvironment: 'github-hosted',
-      workflowRef: AC265_GITHUB_OIDC_WORKFLOW_REF,
+      workflowRef: currentWorkflowRef,
       workflowSha: sourceRevision,
       sha: sourceRevision,
       githubRunId: '34796668543',
@@ -147,13 +163,16 @@ describe('AC265 GitHub OIDC verifier', () => {
   it.each([
     ['repository ID', { repository_id: '1297208153' }],
     ['owner ID', { repository_owner_id: '305953067' }],
+    ['legacy subject', { sub: legacySubject }],
+    ['legacy repository', { repository: 'WeJustJammin/nevrite-music' }],
+    ['legacy workflow ref', { workflow_ref: legacyWorkflowRef }],
     ['unprotected ref', { ref_protected: 'false' }],
     ['self-hosted runner', { runner_environment: 'self-hosted' }],
     [
       'workflow ref',
       {
         workflow_ref:
-          'WeJustJammin/nevrite-music/.github/workflows/preflight-ac265-hosted-e2e.yml@refs/heads/main',
+          'WeJustJammin/wejammin/.github/workflows/preflight-ac265-hosted-e2e.yml@refs/heads/main',
       },
     ],
   ])('rejects %s drift', async (_label, overrides) => {

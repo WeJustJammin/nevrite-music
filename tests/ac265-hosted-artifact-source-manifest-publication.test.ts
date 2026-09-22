@@ -203,7 +203,7 @@ const makeArchives = () => {
 const context = (
   archives: ReturnType<typeof makeArchives>['archives'],
 ): Ac265HostedArtifactSourceManifestProtectedContext => ({
-  repository: 'WeJustJammin/nevrite-music',
+  repository: 'WeJustJammin/wejammin',
   branch: 'main',
   sourceRevision: SOURCE_REVISION,
   authorizationRef: AUTHORIZATION_REF,
@@ -305,7 +305,7 @@ describe('AC265 protected source-manifest publication', () => {
     const writeOutput = vi.fn<(value: string) => void>();
     const result = await resolveAc265HostedArtifactSourceSelectors({
       env: {
-        GITHUB_REPOSITORY: 'WeJustJammin/nevrite-music',
+        GITHUB_REPOSITORY: 'WeJustJammin/wejammin',
         GITHUB_REF: 'refs/heads/main',
         GITHUB_SHA: SOURCE_REVISION,
         GITHUB_EVENT_NAME: 'workflow_dispatch',
@@ -347,7 +347,7 @@ describe('AC265 protected source-manifest publication', () => {
     const outputDir = join(archives.root, 'output');
     const result = await publishAc265HostedArtifactSourceManifest({
       env: {
-        GITHUB_REPOSITORY: 'WeJustJammin/nevrite-music',
+        GITHUB_REPOSITORY: 'WeJustJammin/wejammin',
         GITHUB_REF: 'refs/heads/main',
         GITHUB_SHA: SOURCE_REVISION,
         GITHUB_EVENT_NAME: 'workflow_dispatch',

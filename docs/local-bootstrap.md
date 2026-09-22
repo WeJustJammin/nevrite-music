@@ -15,8 +15,8 @@ Supabase tooling only.
 For a fresh checkout:
 
 ```sh
-git clone https://github.com/WeJustJammin/nevrite-music.git
-cd nevrite-music
+git clone https://github.com/WeJustJammin/wejammin.git
+cd wejammin
 ```
 
 Run the remaining commands from the checkout root, where `package.json` is
