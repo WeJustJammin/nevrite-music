@@ -14,7 +14,7 @@ import { dirname, join } from 'node:path';
 import { AC265_STAGING_API_ORIGIN } from '../packages/contracts/src/content-schema-registry/operational-release-evidence-hosted-control-plane.ts';
 import { report as axeReport } from './contracts/phase-02-slice-09-automated-axe-report.test-support.ts';
 
-export const REPOSITORY = 'WeJustJammin/nevrite-music';
+export const REPOSITORY = 'WeJustJammin/wejammin';
 export const SOURCE_SHA = 'a'.repeat(40);
 export const CI_RUN_ID = '7001001';
 export const CI_RUN_ATTEMPT = '2';

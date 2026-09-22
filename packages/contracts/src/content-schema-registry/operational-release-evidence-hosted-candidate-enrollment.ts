@@ -130,7 +130,7 @@ const Ac265CandidateEnrollmentProviderProvenanceSchema = z
 
 export const ContentSchemaRegistryAc265CandidateEnrollmentProvenanceSchema = z
   .object({
-    repository: z.literal('WeJustJammin/nevrite-music'),
+    repository: z.literal('WeJustJammin/wejammin'),
     sourceRevision: ReleaseEvidenceSourceRevisionSchema,
     ci: Ac265CandidateEnrollmentCiProvenanceSchema,
     staging: Ac265CandidateEnrollmentStagingProvenanceSchema,
@@ -159,7 +159,7 @@ export type ContentSchemaRegistryAc265CandidateEnrollmentProvenance = z.infer<
 export const ContentSchemaRegistryAc265VerifiedCandidateProvenanceSchema = z
   .object({
     status: z.literal('candidate_provenance_verified'),
-    repository: z.literal('WeJustJammin/nevrite-music'),
+    repository: z.literal('WeJustJammin/wejammin'),
     sourceRevision: ReleaseEvidenceSourceRevisionSchema,
     ci: z
       .object({

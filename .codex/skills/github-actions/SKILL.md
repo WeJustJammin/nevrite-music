@@ -10,7 +10,7 @@ Use the canonical bundled guidance at `.codex/skill-library/stack/devops/github-
 
 ## WeJammin Constraints
 
-- Target the private `WeJustJammin/nevrite-music` repository and the locked GitHub-to-Cloudflare deployment path.
+- Target the private `WeJustJammin/wejammin` repository and the locked GitHub-to-Cloudflare deployment path.
 - Use the existing self-hosted runners through the `wejammin` label; do not bind workflows to a single runner name.
 - Cap heavy parallel jobs at two until runner-host measurements demonstrate safe capacity for three.
 - Never execute untrusted fork code on the self-hosted fleet.

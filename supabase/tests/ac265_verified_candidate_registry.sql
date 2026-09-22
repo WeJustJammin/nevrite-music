@@ -105,7 +105,7 @@ with candidate as (
 ), evidence as (
   select candidate.identity,
          jsonb_build_object(
-           'repository', 'WeJustJammin/nevrite-music',
+           'repository', 'WeJustJammin/wejammin',
            'sourceRevision', candidate.identity ->> 'sourceRevision',
            'ci', jsonb_build_object(
              'runId', candidate.identity ->> 'ciRunId',
@@ -306,8 +306,8 @@ with instant as (
     'github', jsonb_build_object(
       'issuer', 'https://token.actions.githubusercontent.com',
       'audience', 'urn:wejammin:ac265:staging-runner:v1',
-      'subject', 'repo:WeJustJammin/nevrite-music:environment:staging',
-      'repository', 'WeJustJammin/nevrite-music',
+      'subject', 'repo:WeJustJammin@305953066/wejammin@1297208152:environment:staging',
+      'repository', 'WeJustJammin/wejammin',
       'repositoryId', '1297208152',
       'repositoryOwner', 'WeJustJammin',
       'repositoryOwnerId', '305953066',
@@ -317,7 +317,7 @@ with instant as (
       'eventName', 'workflow_dispatch',
       'environment', 'staging',
       'runnerEnvironment', 'github-hosted',
-      'workflowRef', 'WeJustJammin/nevrite-music/.github/workflows/run-ac265-hosted-e2e.yml@refs/heads/main',
+      'workflowRef', 'WeJustJammin/wejammin/.github/workflows/run-ac265-hosted-e2e.yml@refs/heads/main',
       'workflowSha', repeat('a', 40),
       'sha', repeat('a', 40),
       'githubRunId', '34796668543',

@@ -17,9 +17,8 @@ describe('AC265 hosted artifact archive policy boundary', () => {
 
   it('requires the exact GitHub archive origin, ZIP content type, no redirect, and bounded length', () => {
     const valid = {
-      url: 'https://api.github.com/repos/WeJustJammin/nevrite-music/actions/artifacts/123/zip',
-      expectedPath:
-        '/repos/WeJustJammin/nevrite-music/actions/artifacts/123/zip',
+      url: 'https://api.github.com/repos/WeJustJammin/wejammin/actions/artifacts/123/zip',
+      expectedPath: '/repos/WeJustJammin/wejammin/actions/artifacts/123/zip',
       status: 200,
       redirected: false,
       contentType: 'application/zip',

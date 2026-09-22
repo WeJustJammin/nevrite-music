@@ -82,7 +82,7 @@ const options = (): ProductionPromotionGuardOptions => ({
   apiUrl: 'https://api.github.com',
   confirmProduction: true,
   ref: 'refs/heads/main',
-  repository: 'WeJustJammin/nevrite-music',
+  repository: 'WeJustJammin/wejammin',
   sourceSha,
   stagingRunId,
   token: 'test-token',

@@ -12,7 +12,7 @@ const environment = {
   CONFIRM_VERIFICATION: 'true',
   GITHUB_API_URL: 'https://api.github.com',
   GITHUB_REF: 'refs/heads/main',
-  GITHUB_REPOSITORY: 'WeJustJammin/nevrite-music',
+  GITHUB_REPOSITORY: 'WeJustJammin/wejammin',
   GITHUB_TOKEN: 'test-token',
   SOURCE_SHA: sourceSha,
 } as const;
@@ -54,7 +54,7 @@ describe('production environment preflight entrypoint', () => {
 
     expect(fetchImpl).toHaveBeenCalledTimes(1);
     expect(String(fetchImpl.mock.calls[0]?.[0])).toBe(
-      'https://api.github.com/repos/WeJustJammin/nevrite-music/environments/production',
+      'https://api.github.com/repos/WeJustJammin/wejammin/environments/production',
     );
     expect(fetchImpl.mock.calls[0]?.[1]?.headers).toEqual({
       Accept: 'application/vnd.github+json',

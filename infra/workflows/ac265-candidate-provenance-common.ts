@@ -3,7 +3,7 @@ import { TextDecoder } from 'node:util';
 import { SafeReleaseTimestampSchema } from '../../packages/contracts/src/release-recovery-common.ts';
 import { parseStrictJson } from './parse-strict-json.ts';
 
-export const AC265_REPOSITORY = 'WeJustJammin/nevrite-music' as const;
+export const AC265_REPOSITORY = 'WeJustJammin/wejammin' as const;
 export const AC265_CI_WORKFLOW_NAME = 'CI' as const;
 export const AC265_CI_WORKFLOW_PATH = '.github/workflows/ci.yml' as const;
 export const AC265_STAGING_WORKFLOW_NAME = 'Deploy staging' as const;

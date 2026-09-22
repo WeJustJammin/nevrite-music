@@ -52,6 +52,7 @@
 - [[specs/audits/phase-1-validation|Phase 1 Validation]] — audit — spec-vault
 - [[specs/audits/propagation-ac265-2026-09-09|Approved AC265 propagation]] — audit — spec-vault
 - [[specs/audits/propagation-ac266-2026-09-21|Approved AC266 Phase 2 completion-policy propagation]] — audit — spec-vault
+- [[specs/audits/propagation-github-repository-identity-2026-09-22|Approved AC265 GitHub repository identity propagation]] — audit — spec-vault
 - [[specs/audits/propagation-observability-cost-2026-08-30|Sentry Removal and Free-Only Operations Propagation Record]] — audit — spec-vault
 - [[specs/audits/propagation-option-a-2026-09-02|Slice 09 Option A propagation record]] — audit — spec-vault
 - [[specs/audits/propagation-owner-bootstrap-2026-09-10|Initial-owner propagation]] — audit — spec-vault
@@ -59,6 +60,7 @@
 - [[specs/audits/propagation-scan-2026-09-02|Option A downstream propagation scan]] — audit — spec-vault
 - [[specs/audits/propagation-scan-2026-09-09|AC265 scope propagation scan]] — audit — spec-vault
 - [[specs/audits/propagation-scan-2026-09-21|AC266 completion-policy propagation scan]] — audit — spec-vault
+- [[specs/audits/propagation-scan-2026-09-22-repository-identity|GitHub repository identity propagation scan]] — audit — spec-vault
 - [[specs/audits/remediation-state|Pipeline remediation state]] — audit — spec-vault
 - [[specs/audits/verify-infrastructure-2026-09-04-1255|Infrastructure Verification Report]] — audit — spec-vault
 - [[specs/audits/verify-infrastructure-2026-09-04-1353|Infrastructure Verification Report]] — audit — spec-vault

@@ -15,15 +15,14 @@ export const AC265_GITHUB_OIDC_ISSUER =
   'https://token.actions.githubusercontent.com' as const;
 export const AC265_GITHUB_OIDC_AUDIENCE =
   'urn:wejammin:ac265:staging-runner:v1' as const;
-export const AC265_GITHUB_OIDC_REPOSITORY =
-  'WeJustJammin/nevrite-music' as const;
+export const AC265_GITHUB_OIDC_REPOSITORY = 'WeJustJammin/wejammin' as const;
 export const AC265_GITHUB_OIDC_REPOSITORY_ID = '1297208152' as const;
 export const AC265_GITHUB_OIDC_REPOSITORY_OWNER = 'WeJustJammin' as const;
 export const AC265_GITHUB_OIDC_REPOSITORY_OWNER_ID = '305953066' as const;
 export const AC265_GITHUB_OIDC_SUBJECT =
-  'repo:WeJustJammin/nevrite-music:environment:staging' as const;
+  'repo:WeJustJammin@305953066/wejammin@1297208152:environment:staging' as const;
 export const AC265_GITHUB_OIDC_WORKFLOW_REF =
-  'WeJustJammin/nevrite-music/.github/workflows/run-ac265-hosted-e2e.yml@refs/heads/main' as const;
+  'WeJustJammin/wejammin/.github/workflows/run-ac265-hosted-e2e.yml@refs/heads/main' as const;
 export const AC265_STAGING_API_ORIGIN =
   'https://wejammin-api-staging.wejammin.workers.dev' as const;
 export const AC265_RUNNER_AUTHORIZATION_MAX_DURATION_MS = 5 * 60 * 1_000;

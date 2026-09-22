@@ -4,7 +4,7 @@ import type { Ac265HostedArtifactSourceManifestTrustedKey } from './ac265-hosted
 
 export const AC265_PUBLICATION_FAILURE =
   'AC265 hosted artifact-source manifest publication failed';
-export const AC265_REPOSITORY = 'WeJustJammin/nevrite-music' as const;
+export const AC265_REPOSITORY = 'WeJustJammin/wejammin' as const;
 
 export interface Ac265ProtectedArtifactArchive {
   readonly selector: 'ci' | 'staging';
