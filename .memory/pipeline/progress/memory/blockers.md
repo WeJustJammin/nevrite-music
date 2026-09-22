@@ -6,25 +6,31 @@
   at **279/282 active** (**283 authored IDs**) with authored depth ratio
   **0.986**. Phase 2 has **1,999 active criteria / 2,000 authored** because
   AC266 is owner-deferred and excluded from the active completion denominator.
-  The latest promoted CP-04d implementation baseline is PR #91 at exact SHA
-  `289ed3a2f4f92da383aa1464340f804777496257`; exact-main CI
-  [run 35656504913](https://github.com/WeJustJammin/nevrite-music/actions/runs/35656504913)
-  succeeded across all three jobs, and automatic staging
-  [run 35657406613](https://github.com/WeJustJammin/nevrite-music/actions/runs/35657406613)
-  succeeded on `run_attempt=1`. Deployment `6578526934` succeeded; candidate
-  artifact `10665966829` has digest
-  `sha256:d51c0104d8ea7933e5d4a45af021b0ac2067a24150739390edb58e171cab827c`;
-  deployment evidence artifact `10665756858` has digest
-  `sha256:2724a98beb5e2152b7c601697c95042af508ee94d2e62da7ee143495362c9664`;
-  source `artifactDigest` is
-  `0e92da9874c0fae7e0d62fb4419678a83f00a8986087de558dc101c465451c04`.
-  Migration `20260921050000` and provider deployments
-  `dac978c4-fe9d-4c86-9cf4-53d96a42d45e` and
-  `b27ddb9f-0ab3-4c07-88da-5ff8ea0b2f7b` are recorded. Staging p95 was
-  `29.956710999999927 ms` against the `500 ms` threshold; automated axe digest
-  is `6a7f59d9792a176e3032a9b410c6a0c1bb03850f27ed2918bc98fe82fddbbcf4`,
-  serious/critical `0/0`. These are exact-main CI and staging promotion proofs
-  only; staging proof does not equal hosted AC265 acceptance.
+  The latest promoted CP-04e implementation baseline is PR #93 at exact SHA
+  `15032d0e333c1931008c8d363a60a4840b3a6bb2`; exact-main CI
+  [run 35673427068](https://github.com/WeJustJammin/nevrite-music/actions/runs/35673427068)
+  succeeded with database job `106574760348`, quality job `106574760514`, and
+  immutable-build job `106576054809`. Staging
+  [run 35673923999](https://github.com/WeJustJammin/nevrite-music/actions/runs/35673923999)
+  succeeded with job `106576288369` and GitHub deployment `6581175667`.
+  Cloudflare API deployment `62bb526d-3755-4f6d-a534-f798ae339248` published
+  version `0164eae4-b06c-4e1e-a342-7cf6a3100bf5`; web deployment
+  `62e2fbcb-c1f3-49a5-96cb-686b2cb20e3e` published version
+  `87ec18d2-9075-4f76-a2ce-73d0124d028a`. Workspace artifact
+  `10672800366` has digest
+  `sha256:4eac5ecba0c04209e6aa948423a46b77ccfbbb792233786f022fa456ee7a4659`;
+  test evidence artifact `10672235833` has digest
+  `sha256:22b884f947ee254227a80ab9c98319e4afb1ce1e38304934977e651cc618b216`;
+  staging candidate `10672316126` has digest
+  `sha256:db2496deeaf6dbf38efd7135a726d15a6b82e66476aa007b8c0aa520d6750337`;
+  staging deployment artifact `10672405997` has digest
+  `sha256:204289b5797247dda9049f781949ca8094854b67b03cbde41a5ec0000681d6eb`;
+  internal manifest digest is
+  `9192affb6097e48caf3aa86aa776a441f2031c2743f969cc1c2d244ed7148835`.
+  Migration `20260921060000` is included. Staging p95 was **33.31 ms / 500 ms**
+  across 20 samples with zero errors; accessibility was **0/0** across three
+  routes. These are staging promotion proofs only; they do not equal
+  production evidence or hosted AC265 acceptance.
   AC265 preflight
   [run 34824500796](https://github.com/WeJustJammin/nevrite-music/actions/runs/34824500796)
   passed; authorization foundation [run 34824651793](https://github.com/WeJustJammin/nevrite-music/actions/runs/34824651793)
@@ -37,10 +43,12 @@
   Read-only
   AC209 verifier [run 35612514031](https://github.com/WeJustJammin/nevrite-music/actions/runs/35612514031)
   failed with `provider_graphql_error` and produced no email, queue mutation,
-  deployment, or receipt. AC211 collection [run 35560241699](https://github.com/WeJustJammin/nevrite-music/actions/runs/35560241699)
+  deployment, or receipt. AC211 collection [run 35673313035](https://github.com/WeJustJammin/nevrite-music/actions/runs/35673313035)
   passed preflight but collection failed for insufficient samples
   (`commands=0`, `protectedRpcs=0`, `acceptances=0`,
-  `queueFirstAttempts=0`) and produced no artifact. AC266 is owner-deferred
+  `queueFirstAttempts=0`); `dataset=1`, `registry=0`,
+  `productionRegistry=0`, and `releaseRegistry=0`. No artifact or SLO verdict
+  was produced. AC266 is owner-deferred
   because the required real devices are unavailable; it remains unchecked and
   is excluded from active Phase 2 completion, but is mandatory for post-Phase 2
   production-readiness/release. No active acceptance gate closed. Slice 10
@@ -147,20 +155,32 @@
   active criteria**, **8/17 slices**.
 
 - **P2-S09 AC265 CP-04e protected source-manifest publication foundation**
-  (updated 2026-09-21) — The current worktree adds a real protected capsule
-  loader, exact CI/staging selector and archive-digest binding, quota-bounded
-  archive extraction, typed register/finalize/readback transport, canonical
-  signing, finalized readback verification, and a main-only workflow retaining
-  one allowlisted redacted bundle. Root focused verification passed **11 files /
-  52 tests**. Final local `pnpm validate` passed **572 files**, **4,543 passed +
-  1 skipped / 4,544**, at 100% coverage; fresh `pnpm db:verify` passed **62
-  files / 2,211 tests** through migration `20260921060000`. No live
-  `AC265_PUBLICATION_CONTEXT_BUNDLE_B64`, signing configuration, protected run,
-  retained hosted artifact, independently authenticated receipt, or complete
-  hosted matrix exists. AC265 remains open; AC209 and AC211 remain open; Slice
-  10 remains locked; totals remain Slice 09 **279/282 active** (**283 authored
-  IDs**) and Phase 2 **1,999/2,000 active criteria** (**8/17 slices**). AC266
-  remains owner-deferred and mandatory for the post-Phase 2 release gate.
+  (updated 2026-09-21) — CP-04e is now promoted through PR #93 at exact main
+  SHA `15032d0e333c1931008c8d363a60a4840b3a6bb2`. Exact-main CI
+  `35673427068` passed database `106574760348`, quality `106574760514`, and
+  immutable-build `106576054809`; staging `35673923999` passed job
+  `106576288369` with GitHub deployment `6581175667`. API deployment
+  `62bb526d-3755-4f6d-a534-f798ae339248` published version
+  `0164eae4-b06c-4e1e-a342-7cf6a3100bf5`, and web deployment
+  `62e2fbcb-c1f3-49a5-96cb-686b2cb20e3e` published version
+  `87ec18d2-9075-4f76-a2ce-73d0124d028a`. Workspace, test, staging-candidate,
+  and staging-deployment artifacts are `10672800366`, `10672235833`,
+  `10672316126`, and `10672405997`, with digests recorded in the CP-04e
+  verification record; internal manifest digest is
+  `9192affb6097e48caf3aa86aa776a441f2031c2743f969cc1c2d244ed7148835`.
+  Migration `20260921060000` is included; staging p95 was **33.31 ms / 500 ms**
+  across 20 samples with zero errors, and accessibility was **0/0** across
+  three routes. Focused local verification passed **11 files / 52 tests**;
+  final local `pnpm validate` passed **572 files**, **4,543 passed + 1 skipped /
+  4,544**, at 100% coverage; fresh `pnpm db:verify` passed **62 files / 2,211
+  tests**. This is staging promotion evidence only, not production evidence or
+  hosted AC265 acceptance. No live `AC265_PUBLICATION_CONTEXT_BUNDLE_B64`,
+  signing configuration, protected run, retained hosted artifact,
+  independently authenticated receipt, or complete hosted matrix exists.
+  AC265 remains open; AC209 and AC211 remain open; Slice 10 remains locked;
+  totals remain Slice 09 **279/282 active** (**283 authored IDs**) and Phase 2
+  **1,999/2,000 active criteria** (**8/17 slices**). AC266 remains
+  owner-deferred and mandatory for the post-Phase 2 release gate.
 
 - **P2-S09 AC265 CP-04d signed source-manifest and authority foundation**
   (updated 2026-09-21) — The promoted CP-04d baseline adds a strict signed
