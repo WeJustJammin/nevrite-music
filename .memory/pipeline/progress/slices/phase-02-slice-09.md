@@ -93,13 +93,17 @@
   remains local/private construction evidence: no hosted producer/source
   population, protected signer execution, retained hosted artifact,
   independently authenticated receipt, or complete hosted matrix exists.
-  Totals remain **279/282 active** (**283 authored IDs**), **8/17** Phase 2
+  The fresh AC211 collection run `35673313035` passed preflight but failed
+  closed for insufficient samples: `commands=0`, `protectedRpcs=0`,
+  `acceptances=0`, `queueFirstAttempts=0`; `dataset=1`, `registry=0`,
+  `productionRegistry=0`, and `releaseRegistry=0`. No artifact or SLO verdict
+  exists, so AC211 remains open. Totals remain **279/282 active** (**283 authored IDs**), **8/17** Phase 2
   slices, and **1,999/2,000 active criteria**; AC209, AC211, and AC265 remain
   open, Slice 10 remains locked, and AC266 remains owner-deferred as the
   mandatory post-Phase 2 production-readiness/release gate. See the [CP-04d
   verification record](../verification/2026-09-21-ac265-hosted-artifact-source-manifest.md).
 
-## 2026-09-21 AC265 CP-04e protected publication foundation (local/private only)
+## 2026-09-21 AC265 CP-04e protected publication (staging promotion only)
 
 - Added the real protected context-capsule loader, exact CI/staging run,
   artifact, and archive-digest binding, quota-bounded ZIP handling, typed
@@ -110,13 +114,28 @@
 validate` passed **572 files** with **4,543 passed + 1 skipped / 4,544** and
   100% coverage. Fresh `pnpm db:verify` passed **62 files / 2,211 tests** after
   migration `20260921060000`.
-- No protected context secret or signing configuration was populated and no
-  genuine protected publication, retained hosted artifact, authenticated
-  receipt, or complete hosted matrix ran. AC265 remains open. Totals remain
-  **279/282 active** (**283 authored IDs**), **8/17** Phase 2 slices, and
-  **1,999/2,000 active criteria**; AC209/AC211 remain open, Slice 10 remains
-  locked, and AC266 remains owner-deferred as the mandatory post-Phase 2
-  production-readiness/release gate. See the [CP-04e verification
+- CP-04e is promoted through PR #93 at exact main SHA
+  `15032d0e333c1931008c8d363a60a4840b3a6bb2`. Exact-main CI `35673427068`
+  passed database `106574760348`, quality `106574760514`, and immutable-build
+  `106576054809`; staging `35673923999` passed job `106576288369` with GitHub
+  deployment `6581175667`. API deployment
+  `62bb526d-3755-4f6d-a534-f798ae339248` published version
+  `0164eae4-b06c-4e1e-a342-7cf6a3100bf5`; web deployment
+  `62e2fbcb-c1f3-49a5-96cb-686b2cb20e3e` published version
+  `87ec18d2-9075-4f76-a2ce-73d0124d028a`. Workspace, test, staging-candidate,
+  and staging-deployment artifacts are `10672800366`, `10672235833`,
+  `10672316126`, and `10672405997`; the internal manifest digest is
+  `9192affb6097e48caf3aa86aa776a441f2031c2743f969cc1c2d244ed7148835`.
+  Migration `20260921060000` is included. Staging p95 was **33.31 ms / 500 ms**
+  across 20 samples with zero errors; accessibility was **0/0** across three
+  routes. These are staging promotion proofs only, not production evidence or
+  hosted AC265 acceptance. No protected context secret or signing configuration
+  was populated and no genuine protected publication, retained hosted artifact,
+  authenticated receipt, or complete hosted matrix ran. AC265 remains open.
+  Totals remain **279/282 active** (**283 authored IDs**), **8/17** Phase 2
+  slices, and **1,999/2,000 active criteria**; AC209/AC211 remain open, Slice
+  10 remains locked, and AC266 remains owner-deferred as the mandatory post-
+  Phase 2 production-readiness/release gate. See the [CP-04e verification
   record](../verification/2026-09-21-ac265-hosted-artifact-source-manifest-publication.md).
 
 ## Tasks

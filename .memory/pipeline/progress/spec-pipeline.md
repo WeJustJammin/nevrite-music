@@ -70,8 +70,8 @@
   See `.memory/wiki/specs/audits/phase-1-validation.md`.
 - **CURRENT IMPLEMENTATION (2026-09-21):** Phase 2 Slices 01–08 are complete.
   Slice 09 remains locally QA-GREEN at 279/282 active (283 authored IDs) with
-  authored depth ratio `0.986`. PR #91 is the latest promoted CP-04d
-  implementation baseline at exact
+  authored depth ratio `0.986`. The prior CP-04d implementation baseline was
+  PR #91 at exact
   SHA `289ed3a2f4f92da383aa1464340f804777496257`; exact-main CI
   `35656504913` succeeded across all three jobs, and automatic staging run
   `35657406613` succeeded on `run_attempt=1` with deployment `6578526934`.
@@ -133,7 +133,41 @@
   post-Phase 2 production-readiness/release gate. See
   `.memory/pipeline/progress/phases/phase-02.md` and
   `.memory/pipeline/progress/slices/phase-02-slice-09.md`.
-- **LATEST PROMOTED CP-04D FOUNDATION (2026-09-21):** PR #91 merged to
+- **LATEST PROMOTED CP-04E FOUNDATION (2026-09-21):** PR #93 merged to
+  `main` at exact SHA `15032d0e333c1931008c8d363a60a4840b3a6bb2`; exact-main
+  CI `35673427068` succeeded with database job `106574760348`, quality job
+  `106574760514`, and immutable-build job `106576054809`; staging
+  `35673923999` succeeded with job `106576288369` and GitHub deployment
+  `6581175667`. API deployment `62bb526d-3755-4f6d-a534-f798ae339248`
+  published version `0164eae4-b06c-4e1e-a342-7cf6a3100bf5`; web deployment
+  `62e2fbcb-c1f3-49a5-96cb-686b2cb20e3e` published version
+  `87ec18d2-9075-4f76-a2ce-73d0124d028a`. Workspace artifact
+  `10672800366` has digest
+  `sha256:4eac5ecba0c04209e6aa948423a46b77ccfbbb792233786f022fa456ee7a4659`;
+  test evidence artifact `10672235833` has digest
+  `sha256:22b884f947ee254227a80ab9c98319e4afb1ce1e38304934977e651cc618b216`;
+  staging candidate `10672316126` has digest
+  `sha256:db2496deeaf6dbf38efd7135a726d15a6b82e66476aa007b8c0aa520d6750337`;
+  staging deployment artifact `10672405997` has digest
+  `sha256:204289b5797247dda9049f781949ca8094854b67b03cbde41a5ec0000681d6eb`;
+  internal manifest digest is
+  `9192affb6097e48caf3aa86aa776a441f2031c2743f969cc1c2d244ed7148835`.
+  Migration `20260921060000` is included. Staging p95 was **33.31 ms / 500 ms**
+  across 20 samples with zero errors; accessibility was **0/0** across three
+  routes. These are staging promotion proofs only, not production evidence or
+  hosted AC265 acceptance. CP-04e retains the protected source-manifest
+  publication boundary, but no live context/signing configuration, protected
+  publication run, retained hosted artifact, authenticated receipt, or complete
+  hosted matrix exists. Fresh AC211 run `35673313035` passed preflight but had
+  insufficient samples (`commands=0`, `protectedRpcs=0`, `acceptances=0`,
+  `queueFirstAttempts=0`; `dataset=1`, `registry=0`,
+  `productionRegistry=0`, `releaseRegistry=0`); no artifact or SLO verdict
+  exists. AC209/AC211/AC265 remain open, Slice 10 remains locked, and AC266
+  remains owner-deferred, unchecked, and mandatory for post-Phase 2
+  production-readiness/release. Totals remain Slice 09 **279/282 active**
+  (**283 authored IDs**) and Phase 2 **8/17** with **1,999/2,000 active
+  criteria**.
+- **PRIOR PROMOTED CP-04D FOUNDATION (2026-09-21):** PR #91 merged to
   `main` at exact SHA `289ed3a2f4f92da383aa1464340f804777496257`; exact-main
   CI `35656504913` succeeded across all three jobs, and automatic staging run
   `35657406613` succeeded on `run_attempt=1` with deployment `6578526934`.
@@ -302,11 +336,13 @@ db:verify` passed **62 files / 2,211 tests** through migration
   with `provider_graphql_error` on `emailSendingAdaptive`; it sent no email,
   changed no queue or production state, performed no deployment, and produced
   no receipt. AC209 remains open.
-- **LATEST AC211 EVIDENCE (2026-09-21):** Collection run `35560241699` passed
+- **LATEST AC211 EVIDENCE (2026-09-21):** Collection run `35673313035` passed
   preflight but failed closed for insufficient samples:
   `commands=0`, `protectedRpcs=0`, `acceptances=0`, and
-  `queueFirstAttempts=0`; no artifact was produced. AC211 remains open and is
-  one of the three active Slice 10 blockers.
+  `queueFirstAttempts=0`; `dataset=1`, `registry=0`,
+  `productionRegistry=0`, and `releaseRegistry=0`. No artifact or SLO verdict
+  was produced. AC211 remains open and is one of the three active Slice 10
+  blockers.
 - **HISTORICAL DIAGNOSTIC EVIDENCE:** PR #24 was exact `main` SHA
   `3bf66a610b013bf9600889780ee26319559fb31c`; CI `34013034252` and staging
   `34013296132` passed. Protected production runs `34016439881` and
