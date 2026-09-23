@@ -125,7 +125,10 @@ begin
       to_regclass('platform_private.ac265_approved_runner_mapping_resources'),
       to_regclass('platform_private.ac265_approved_runner_mapping_scenarios'),
       to_regclass('platform_private.ac265_runner_authorizations'),
-      to_regclass('platform_private.ac265_verified_candidates')
+      to_regclass('platform_private.ac265_verified_candidates'),
+      to_regclass('platform_private.ac265_approved_registry_resources'),
+      to_regclass('platform_private.ac265_approved_registry_role_kinds'),
+      to_regclass('platform_private.ac265_approved_registry_scenario_roles')
     );
 
   for trigger_row in
@@ -189,6 +192,15 @@ begin
     '10000000-0000-4000-8000-000000000031'::uuid,
     '10000000-0000-4000-8000-000000000032'::uuid
   );
+
+  -- This suite seeds the CP-02 owner-approved pins (which the population-gate
+  -- migration leaves empty) through an autocommitting dblink session, so they
+  -- outlive the transaction rollback.  Their immutability triggers were dropped
+  -- above with the rest, so delete every pin here to keep `pnpm db:test`
+  -- hermetic across repeated runs without a reset.
+  delete from platform_private.ac265_approved_registry_scenario_roles;
+  delete from platform_private.ac265_approved_registry_role_kinds;
+  delete from platform_private.ac265_approved_registry_resources;
 
   for trigger_row in
     select trigger_definition
@@ -295,12 +307,49 @@ begin
         ('20000000-0000-4000-8000-000000000031'::uuid, '10000000-0000-4000-8000-000000000031'::uuid, repeat('c', 64), repeat('d', 40), '6428523631', '34796668531', repeat('d', 40), repeat('3', 64), repeat('4', 64)),
         ('20000000-0000-4000-8000-000000000032'::uuid, '10000000-0000-4000-8000-000000000032'::uuid, repeat('e', 64), repeat('f', 40), '6428523632', '34796668532', repeat('f', 40), repeat('5', 64), repeat('6', 64))
     ) as fixture(authorization_id, run_id, identity_hex, source_revision, deployment_id, github_run_id, workflow_sha, jti_hex, request_hex)
-  $authorizations$);
+ $authorizations$);
 
-  perform extensions.dblink_connect(
-    gate_connection,
-    'host=db port=5432 dbname=postgres user=postgres password=postgres'
-  );
+ perform extensions.dblink_connect(
+   gate_connection,
+   'host=db port=5432 dbname=postgres user=postgres password=postgres'
+ );
+
+  -- AC265 CP-02 owner-approved population pins (disposable, local-test-only).
+  -- The population-gate migration seeds no rows; these exact pins let the
+  -- register RPCs accept the disposable fixtures used by this suite.  The pin
+  -- tables deliberately grant nothing to service_role, so fixtures are loaded
+  -- as the superuser connection exactly like the CP-01 candidate/authorization
+  -- rows above, never through a runtime role.
+  perform extensions.dblink_exec(setup_connection, $pins_resources$
+    insert into platform_private.ac265_approved_registry_resources
+      (resource_kind, locator_sha256, approval_ref, environment)
+    values
+      ('content_schema', decode(repeat('1', 64), 'hex'), 'ac265-approval://staging/90000000-0000-4000-8000-000000000001', 'staging'),
+      ('staff_case', decode(repeat('2', 64), 'hex'), 'ac265-approval://staging/90000000-0000-4000-8000-000000000002', 'staging'),
+      ('organization', decode(repeat('3', 64), 'hex'), 'ac265-approval://staging/90000000-0000-4000-8000-000000000003', 'staging'),
+      ('prerequisite', decode(repeat('4', 64), 'hex'), 'ac265-approval://staging/90000000-0000-4000-8000-000000000004', 'staging')
+  $pins_resources$);
+  perform extensions.dblink_exec(setup_connection, $pins_roles$
+    insert into platform_private.ac265_approved_registry_role_kinds
+      (role_key, resource_kind, approval_ref, environment)
+    values
+      ('entitled_read', 'content_schema', 'ac265-approval://staging/90000000-0000-4000-8000-000000000010', 'staging'),
+      ('owner_full', 'organization', 'ac265-approval://staging/90000000-0000-4000-8000-000000000011', 'staging'),
+      ('guardian_mandate', 'content_schema', 'ac265-approval://staging/90000000-0000-4000-8000-000000000012', 'staging'),
+      ('junior_restricted', 'content_schema', 'ac265-approval://staging/90000000-0000-4000-8000-000000000013', 'staging'),
+      ('business_mandate', 'organization', 'ac265-approval://staging/90000000-0000-4000-8000-000000000014', 'staging'),
+      ('staff_case_scoped', 'staff_case', 'ac265-approval://staging/90000000-0000-4000-8000-000000000015', 'staging'),
+      ('admin_step_up', 'organization', 'ac265-approval://staging/90000000-0000-4000-8000-000000000016', 'staging'),
+      ('forbidden_hidden', 'content_schema', 'ac265-approval://staging/90000000-0000-4000-8000-000000000017', 'staging'),
+      ('disabled_prerequisite', 'prerequisite', 'ac265-approval://staging/90000000-0000-4000-8000-000000000018', 'staging')
+  $pins_roles$);
+  perform extensions.dblink_exec(setup_connection, $pins_scenarios$
+    insert into platform_private.ac265_approved_registry_scenario_roles
+      (scenario_key, role_key, approval_ref, environment)
+    select scenario_key, role_key, 'ac265-approval://staging/90000000-0000-4000-8000-000000000020', 'staging'
+    from unnest(array['idp_sign_in', 'server_authoritative_rls', 'keyboard_landmarks_live_regions', 'three_breakpoints', 'zoom_200', 'offline_reconnect', 'stale_multi_tab', 'auth_expiry', 'rate_limit_429', 'dependency_outage']) as scenarios(scenario_key)
+    cross join unnest(array['entitled_read', 'owner_full', 'guardian_mandate', 'junior_restricted', 'business_mandate', 'staff_case_scoped', 'admin_step_up', 'forbidden_hidden', 'disabled_prerequisite']) as roles(role_key)
+  $pins_scenarios$);
 
   -- Case 1: the same safe-resource request is dispatched twice.
   same_resource_request := jsonb_build_object(
@@ -492,14 +541,14 @@ begin
       values
         (authorization_ref_a, 'ac265-idempotency://staging/40000000-0000-4000-8000-000000000033', 'organization', repeat('3', 64)),
         (authorization_ref_a, 'ac265-idempotency://staging/40000000-0000-4000-8000-000000000034', 'prerequisite', repeat('4', 64)),
-        (authorization_ref_b, 'ac265-idempotency://staging/40000000-0000-4000-8000-000000000035', 'content_schema', repeat('5', 64)),
-        (authorization_ref_b, 'ac265-idempotency://staging/40000000-0000-4000-8000-000000000036', 'staff_case', repeat('6', 64)),
-        (authorization_ref_b, 'ac265-idempotency://staging/40000000-0000-4000-8000-000000000037', 'organization', repeat('7', 64)),
-        (authorization_ref_b, 'ac265-idempotency://staging/40000000-0000-4000-8000-000000000038', 'prerequisite', repeat('8', 64)),
-        (authorization_ref_c, 'ac265-idempotency://staging/40000000-0000-4000-8000-000000000039', 'content_schema', repeat('9', 64)),
-        (authorization_ref_c, 'ac265-idempotency://staging/40000000-0000-4000-8000-000000000040', 'staff_case', repeat('a', 64)),
-        (authorization_ref_c, 'ac265-idempotency://staging/40000000-0000-4000-8000-000000000041', 'organization', repeat('b', 64)),
-        (authorization_ref_c, 'ac265-idempotency://staging/40000000-0000-4000-8000-000000000042', 'prerequisite', repeat('c', 64))
+        (authorization_ref_b, 'ac265-idempotency://staging/40000000-0000-4000-8000-000000000035', 'content_schema', repeat('1', 64)),
+        (authorization_ref_b, 'ac265-idempotency://staging/40000000-0000-4000-8000-000000000036', 'staff_case', repeat('2', 64)),
+        (authorization_ref_b, 'ac265-idempotency://staging/40000000-0000-4000-8000-000000000037', 'organization', repeat('3', 64)),
+        (authorization_ref_b, 'ac265-idempotency://staging/40000000-0000-4000-8000-000000000038', 'prerequisite', repeat('4', 64)),
+        (authorization_ref_c, 'ac265-idempotency://staging/40000000-0000-4000-8000-000000000039', 'content_schema', repeat('1', 64)),
+        (authorization_ref_c, 'ac265-idempotency://staging/40000000-0000-4000-8000-000000000040', 'staff_case', repeat('2', 64)),
+        (authorization_ref_c, 'ac265-idempotency://staging/40000000-0000-4000-8000-000000000041', 'organization', repeat('3', 64)),
+        (authorization_ref_c, 'ac265-idempotency://staging/40000000-0000-4000-8000-000000000042', 'prerequisite', repeat('4', 64))
     ) as seed(authorization_ref, idempotency_ref, resource_kind, locator_sha256)
   loop
     perform extensions.dblink_exec(
@@ -960,6 +1009,14 @@ select ok(
    from ac265_cp02_concurrency_results
    where case_name = 'read-during-mapping-registration'),
   'a concurrent read sees either no mapping or the complete mapping, never a partial child set'
+);
+
+select is(
+  (select (select count(*) from platform_private.ac265_approved_registry_resources)
+        + (select count(*) from platform_private.ac265_approved_registry_role_kinds)
+        + (select count(*) from platform_private.ac265_approved_registry_scenario_roles)),
+  0::bigint,
+  'suite cleanup removes every autocommitted owner-approved pin so repeated runs stay hermetic'
 );
 
 select finish();

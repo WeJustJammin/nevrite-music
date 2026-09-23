@@ -1,0 +1,59 @@
+# AC265 CP-02 registry registration transport (plumbing only).
+#
+# This workflow forwards one strict register request to the service-role CP-02
+# RPCs. It is NOT an owner-approval source: a workflow_dispatch input plus the
+# unreviewed `staging` environment does not prove that the referenced safe
+# resources or the runner mapping are owner-approved, and CP-02 (unlike CP-04b)
+# has no pinned policy table from which the server could derive approval. A
+# successful run populates opaque, server-derived registry rows only; it is not
+# the owner-approved registry population gate and must not be read as hosted-run
+# evidence.
+name: AC265 registry registration transport (approval binding pending)
+
+on:
+  workflow_dispatch:
+    inputs:
+      request_json:
+        description: Exact strict AC265 registry register request (owner-approval binding is not established by this dispatch)
+        required: true
+        type: string
+
+concurrency:
+  group: ac265-registry-registration-${{ github.ref }}
+  cancel-in-progress: false
+
+permissions: { contents: read }
+
+jobs:
+  register:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    environment: staging
+    permissions: { contents: read }
+    steps:
+      - name: Check out the immutable dispatched commit
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+
+      - name: Set up pinned workspace dependencies
+        uses: ./.github/actions/setup
+
+      - name: Materialize the dispatched registry request (caller-supplied input)
+        env:
+          AC265_REGISTRY_REGISTRATION_REQUEST_JSON: ${{ inputs.request_json }}
+          AC265_REGISTRY_REGISTRATION_REQUEST_PATH: ${{ runner.temp }}/ac265-registry-registration-request.json
+        run: |
+          set -euo pipefail
+          umask 077
+          printf '%s\n' "$AC265_REGISTRY_REGISTRATION_REQUEST_JSON" > "$AC265_REGISTRY_REGISTRATION_REQUEST_PATH"
+
+      - name: Submit the registry registration request (transport only)
+        env:
+          AC265_REGISTRY_REGISTRATION_REQUEST_PATH: ${{ runner.temp }}/ac265-registry-registration-request.json
+          SUPABASE_URL: ${{ vars.SUPABASE_URL }}
+          SUPABASE_PROJECT_REF: ${{ vars.SUPABASE_PROJECT_REF }}
+          SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
+        run: node --experimental-strip-types infra/workflows/register-ac265-approved-registry.ts

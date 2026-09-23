@@ -1158,5 +1158,132 @@ Slices 10–17 remain dependency-locked.
   builds, bundle budgets, and performance smoke. Separate database verification
   remains green at 50 pgTAP files / 1,818 tests with type parity.
 
+## 2026-09-23 AC265 CP-02 registry registration transport (plumbing only, unmerged)
+
+This is an isolated worktree feature branch (`codex/ac265-cp02-registry-population`
+from `origin/main`); nothing here is pushed, merged, or deployed, and no registry
+row, identity, or grant is created.
+
+Independent security review found a policy blocker, so this work is now
+described honestly as registration transport/plumbing only. CP-02 (unlike
+CP-04b) pins no approval policy table, so a `workflow_dispatch` request body
+plus the currently unreviewed `staging` environment does NOT prove
+owner-approved safe resources or mapping. The owner-approval binding for the
+CP-02 population gate remains OPEN; this commit does not close it and is not
+acceptance evidence.
+
+- Added the missing TypeScript register transport for the already-promoted
+  CP-02 migration. No migration and no contract change: the strict
+  `ac265-hosted-approved-registry-control-v1` schemas are consumed as-is, so
+  `contracts:check` is unaffected.
+
+```text
+infra/workflows/ac265-approved-registry-registration-rpc.ts   (new bounded service-role client; transport only)
+infra/workflows/register-ac265-approved-registry.ts           (new manual registration entrypoint; owner-approval binding open)
+tests/ac265-approved-registry-registration-rpc.test.ts        (new, RED-first)
+tests/ac265-approved-registry-registration-entrypoint.test.ts (new, RED-first)
+tests/ac265-approved-registry-registration-workflow-contract.test.ts (new)
+.github/workflows/register-ac265-approved-registry.yml        (new, main-only/staging; transport only)
+```
+
+- The bounded service-role client POSTs only the strict register request to
+  exactly `ac265_approved_safe_resource_register` or
+  `ac265_approved_runner_mapping_register` at `https://<projectRef>.supabase.co`
+  (`^[a-z0-9]{20}$`), with printable secret <= 8192, `redirect: 'error'`,
+  `cache: 'no-store'`, a 64 KiB streamed response cap, content-length rejection,
+  fatal UTF-8 decoding, a fixed 10-second abort deadline, duplicate-member
+  rejection, awaited body cancellation, and one generic failure per RPC.
+- The register results have no `status` field (unlike CP-04b): success is bound
+  by echoing `authorizationRef`, `idempotencyRef`, `environment === 'staging'`,
+  `hostingProjectId === 'wejammin-staging'`, `supabaseProjectRef === projectRef`,
+  and `redacted === true`, plus `locatorSha256` and `resource.kind` for the
+  safe-resource result and a full role/scenario mapping-to-resources re-binding
+  for the mapping result. Any `{status:'conflict'}` response fails generically.
+- The registration entrypoint reads only `$RUNNER_TEMP/ac265-registry-registration-request.json`
+  (<= 32 KiB, strict schema, safe path/realpath checks), requires the full
+  registration environment, and appends only the server-derived resource reference
+  and kind, or the mapping id, to `GITHUB_OUTPUT` and `GITHUB_STEP_SUMMARY`.
+- The workflow is manual-only (`workflow_dispatch`), main-only
+  (`if: github.ref == 'refs/heads/main'`), `runs-on: ubuntu-24.04`,
+  `timeout-minutes: 10`, `environment: staging`, `permissions: { contents: read }`,
+  pinned `actions/checkout` SHA, and uses `.github/actions/setup`. It needs no
+  signing key; `SUPABASE_SECRET_KEY` already exists in `.github/SECRETS.md`.
+- RED proof: both new test files first failed with `Cannot find module` before
+  the client and entrypoint existed. GREEN (actual completed local runs, not
+  aspirational): RPC client 20 tests, entrypoint 8 tests, workflow contract 6
+  tests — 34 new tests, and 49 across those three plus the untouched CP-04b
+  client suite. These ran in this worktree at 01:51–01:59 local on the pinned
+  workspace; a confirming focused re-run after the Prettier reformat
+  (`--maxWorkers=1`, 02:17 local, after the concurrent PR #96 CI coverage gate
+  ended) again reported 3 files / 34 tests passed. Prettier and ESLint are clean
+  on the new files. Full `pnpm validate`/Playwright remain deliberately unrun to
+  avoid host contention, per operator direction.
+- Boundary: this transport registers only opaque, server-derived registry rows
+  behind the existing forced-RLS/service-role RPCs. It does not seed identities,
+  mandates, grants, or resources, does not verify underlying resource safety or
+  owner approval, mints no receipt or attestation, and provides no hosted
+  runner. It closes no AC265 criterion and is not acceptance evidence.
+
+## 2026-09-23 AC265 CP-02 owner-approved population gate (local only, unmerged)
+
+Independent security review found that a dispatched request body plus the
+unreviewed `staging` environment does not prove owner-approved safe
+resources or mapping, and CP-02 (unlike CP-04b) pinned no approval policy. This
+adds an Option A forward-only, fail-closed approval gate so the registry RPCs
+cannot be used as a population path until an owner-approved policy exists.
+
+- New forward-only migration `20260923090000_ac265_approved_registry_population_gate.sql`
+  creates three EMPTY private pinned policy tables
+  (`ac265_approved_registry_resources`, `ac265_approved_registry_role_kinds`,
+  `ac265_approved_registry_scenario_roles`: forced RLS, no direct grants,
+  immutable insert-only, guard function revoked from every runtime role).
+  It redefines `platform_api.ac265_approved_safe_resource_register(jsonb)` and
+  `platform_api.ac265_approved_runner_mapping_register(jsonb)` with
+  `create or replace` to require EXACT SET EQUALITY against those pins,
+  bidirectionally, before any registry insert. The strict
+  `ac265-hosted-approved-registry-control-v1` contracts are unchanged; no
+  server-derived field is invented.
+- It seeds no owner row, value, resource, identity, grant, or mandate. With the
+  tables empty both RPCs fail closed and return only the generic
+  `{"status":"conflict"}` sentinel, so the owner-approval binding remains
+  OPEN. The gate is enforced inside the RPCs rather than by a row trigger
+  because the register contract exposes only the conflict sentinel.
+- Design decision (flagged): the pin is staging-wide (one locator digest per
+  kind), following CP-04b's single-pinned-policy-reference pattern; there is no
+  per-authorization dimension. The existing pgTAP suites were updated
+  accordingly: `ac265_approved_runner_registry.sql` seeds the disposable pins
+  (locators 1..4), and `ac265_approved_runner_registry_concurrency.sql`
+  normalizes its per-authorization locator sets to that single pinned set and
+  seeds the pins as the superuser fixture connection (never through
+  service_role).
+
+- Security-review correction: the first gate draft mixed a 1-column kind branch
+  with 2-column role/scenario branches under one `UNION ALL`, which is
+  invalid SQL (42601) rather than a conflict. The mapping gate is now three
+  SEPARATE equal-arity bidirectional `EXCEPT` predicates (a: kind, one column;
+  b: role-to-kind, two; c: scenario-to-role, two), verified programmatically to
+  have uniform select arity within each predicate. The pgTAP suite also proves
+  the missing-policy mapping case (all pins removed) returns only the conflict
+  sentinel and writes no registry parent.
+- `approval_ref` is documented as an opaque, documentation-only
+  owner-approval locator: it is not an independently verified signature and
+  grants no safety. Pins deliberately carry no time validity because they are
+  immutable; expiry would require a further owner-approved forward migration.
+  The pin proves only that a submitted digest equals a pinned digest, not that
+  the underlying resource is real, synthetic, or safe.
+- New pgTAP suite `ac265_approved_registry_population_gate.sql` proves the
+  boundary: table/RLS/grant/immutability shape, fail-closed with no pins, a
+  matching (kind, locator) registering, a non-pinned locator failing closed, a
+  mapping equal to the pins registering, and drift in either direction (wrong
+  role kind, missing scenario member) rejected by the gate with only the
+  sentinel. Drift cases use fresh idempotency refs so the gate, not replay,
+  rejects them.
+- NOT YET RUN: the local Supabase stack was reserved by the parent's validation
+  and then by PR #96 CI on this shared host, so `pnpm db:verify`/pgTAP and
+  `db:types:check` are pending operator release. Expected follow-up once
+  free: apply the migration, run `pnpm db:verify`, and regenerate
+  `packages/data-access/src/database.types.ts` (the new private tables make
+  the committed types stale, exactly as CP-04b's migration required). Closes no
+  AC265 criterion; no hosted acceptance is claimed.
 AC209, AC211, AC265, and AC266 remain open. Slice 09 stays **279/283** with
 depth ratio **0.986**; Slices 10–17 remain dependency-locked.
