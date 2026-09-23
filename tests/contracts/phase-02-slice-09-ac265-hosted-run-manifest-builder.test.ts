@@ -15,6 +15,7 @@ import {
   uuidFor,
 } from './ac265-hosted-test-fixtures.ts';
 
+import { CONTENT_SCHEMA_REGISTRY_HOSTED_ROLES } from '../../packages/contracts/src/content-schema-registry/operational-release-evidence-common.ts';
 const correlationId = uuidFor(900);
 const FAILURE = 'AC265 hosted run manifest is invalid.';
 
@@ -25,11 +26,134 @@ const build = (overrides: Record<string, unknown> = {}) =>
     ...overrides,
   });
 
+const manifestBytesOf = (
+  result: ReturnType<typeof buildAc265HostedRunManifestV1>,
+): Uint8Array => result.manifestBytes();
+
+const contractBytesOf = (
+  result: ReturnType<typeof buildAc265HostedRunManifestV1>,
+): Uint8Array => result.runnerContractBytes();
+
 const expectFailure = (input: unknown): void => {
   expect(() => buildAc265HostedRunManifestV1(input)).toThrow(FAILURE);
 };
 
 describe('AC265 hosted run manifest v1 builder', () => {
+  it('canonicalizes intrinsically unordered reference collections to one stable digest', () => {
+    const contract = runnerContract();
+    const baseline = build();
+
+    // The four safe resource references are one-per-kind and distinct, so their
+    // array order carries no meaning. Reversing them must not move the digest.
+    const reversedResources = build({
+      runnerContract: {
+        ...contract,
+        resourceRefs: [...contract.resourceRefs].reverse(),
+      },
+    });
+    expect(contractBytesOf(reversedResources)).toEqual(
+      contractBytesOf(baseline),
+    );
+    expect(reversedResources.runnerContractSha256).toBe(
+      baseline.runnerContractSha256,
+    );
+    expect(manifestBytesOf(reversedResources)).toEqual(
+      manifestBytesOf(baseline),
+    );
+    expect(reversedResources.manifestSha256).toBe(baseline.manifestSha256);
+
+    // Every scenario's role list is a distinctness-checked set, so its order
+    // carries no meaning either.
+    const reversedScenarioRoles = Object.fromEntries(
+      Object.entries(contract.scenarioRoleBindings).map(([scenario, roles]) => [
+        scenario,
+        [...roles].reverse(),
+      ]),
+    );
+    const reversedScenarios = build({
+      runnerContract: {
+        ...contract,
+        scenarioRoleBindings: reversedScenarioRoles,
+      },
+    });
+    expect(contractBytesOf(reversedScenarios)).toEqual(
+      contractBytesOf(baseline),
+    );
+    expect(reversedScenarios.runnerContractSha256).toBe(
+      baseline.runnerContractSha256,
+    );
+    expect(reversedScenarios.manifestSha256).toBe(baseline.manifestSha256);
+
+    // Reversing both unordered collections together is still one digest.
+    const reversedBoth = build({
+      runnerContract: {
+        ...contract,
+        resourceRefs: [...contract.resourceRefs].reverse(),
+        scenarioRoleBindings: reversedScenarioRoles,
+      },
+    });
+    expect(reversedBoth.runnerContractSha256).toBe(
+      baseline.runnerContractSha256,
+    );
+    expect(reversedBoth.manifestSha256).toBe(baseline.manifestSha256);
+
+    // Ordered sequences are not reordered: role-to-resource arrays and the
+    // session/resource reference forms keep the caller's order.
+    const canonical = JSON.parse(
+      Buffer.from(contractBytesOf(baseline)).toString('utf8'),
+    ) as { roleResourceBindings: Record<string, string[]> };
+    for (const role of Object.keys(contract.roleResourceBindings))
+      expect(canonical.roleResourceBindings[role]).toEqual([
+        ...contract.roleResourceBindings[role],
+      ]);
+
+    // Object members are emitted in code-point order, and the session key set is
+    // still exactly the locked roles.
+    expect(Object.keys(canonical.sessionHandles)).toEqual(
+      [...CONTENT_SCHEMA_REGISTRY_HOSTED_ROLES].sort((left, right) =>
+        left < right ? -1 : 1,
+      ),
+    );
+    expect(
+      (canonical.resourceRefs as { kind: string }[]).map(({ kind }) => kind),
+    ).toEqual([...contract.resourceRefs.map(({ kind }) => kind)]);
+
+    // Normalization is limited to the two unordered collections.
+    expect(Object.keys(canonical).sort()).toEqual(Object.keys(contract).sort());
+  });
+
+  it('publishes bytes that cannot be mutated to break the frozen digests', () => {
+    const result = build();
+    const pristineManifest = manifestBytesOf(result);
+    const pristineContract = contractBytesOf(result);
+    const publishedManifestSha = result.manifestSha256;
+    const publishedContractSha = result.runnerContractSha256;
+
+    // Any mutation must land on a caller-owned copy, never the held snapshot.
+    for (const bytes of [pristineManifest, pristineContract])
+      for (let index = 0; index < bytes.byteLength; index++)
+        bytes[index] = bytes[index]! ^ 0xff;
+
+    const secondManifest = manifestBytesOf(result);
+    const secondContract = contractBytesOf(result);
+    expect(secondManifest).not.toBe(pristineManifest);
+    expect(secondContract).not.toBe(pristineContract);
+    expect(secondManifest).toEqual(manifestBytesOf(result));
+    expect(Buffer.from(secondManifest)).toEqual(
+      Buffer.from(canonicalManifestBytes(result.manifest)),
+    );
+    expect(sha256Bytes(secondManifest)).toBe(publishedManifestSha);
+    expect(sha256Bytes(secondContract)).toBe(publishedContractSha);
+    expect(result.manifestSha256).toBe(publishedManifestSha);
+    expect(result.runnerContractSha256).toBe(publishedContractSha);
+
+    // The runner-contract digest binds the exact retained bytes, which is what
+    // the retained V3 verifier hashes.
+    expect(sha256Bytes(contractBytesOf(result))).toBe(
+      result.runnerContractSha256,
+    );
+  });
+
   it('freezes the manifest and binds the exact canonical runner contract bytes', () => {
     const contract = runnerContract();
     const result = build();
@@ -44,8 +168,10 @@ describe('AC265 hosted run manifest v1 builder', () => {
     expect(result.manifest.resourceRefs).toEqual(resourceRefs);
     expect(result.manifest.controls).toEqual(contract.controls);
 
-    expect(result.runnerContractBytes).toEqual(
-      canonicalManifestBytes(contract),
+    // `toEqual` distinguishes a Buffer from a plain Uint8Array, so compare the
+    // decoded canonical text and the digest rather than the constructor.
+    expect(Buffer.from(contractBytesOf(result)).toString('utf8')).toBe(
+      Buffer.from(canonicalManifestBytes(contract)).toString('utf8'),
     );
     expect(result.runnerContractSha256).toBe(
       sha256Bytes(canonicalManifestBytes(contract)),
@@ -53,10 +179,10 @@ describe('AC265 hosted run manifest v1 builder', () => {
     expect(result.manifestSha256).toBe(
       sha256Bytes(canonicalManifestBytes(result.manifest)),
     );
-    expect(result.manifestBytes.byteLength).toBeLessThanOrEqual(
+    expect(manifestBytesOf(result).byteLength).toBeLessThanOrEqual(
       AC265_HOSTED_RUN_MANIFEST_MAX_BYTES,
     );
-    expect(result.runnerContractBytes.byteLength).toBeLessThanOrEqual(
+    expect(contractBytesOf(result).byteLength).toBeLessThanOrEqual(
       AC265_HOSTED_RUN_MANIFEST_MAX_BYTES,
     );
 
@@ -75,12 +201,12 @@ describe('AC265 hosted run manifest v1 builder', () => {
       runnerContract: Object.fromEntries(Object.entries(contract).reverse()),
     });
 
-    expect(reordered.runnerContractBytes).toEqual(first.runnerContractBytes);
+    expect(contractBytesOf(reordered)).toEqual(contractBytesOf(first));
     expect(reordered.runnerContractSha256).toBe(first.runnerContractSha256);
     expect(reordered.manifestSha256).toBe(first.manifestSha256);
-    expect(reordered.manifestBytes).toEqual(first.manifestBytes);
+    expect(manifestBytesOf(reordered)).toEqual(manifestBytesOf(first));
 
-    const manifestText = Buffer.from(first.manifestBytes).toString('utf8');
+    const manifestText = Buffer.from(manifestBytesOf(first)).toString('utf8');
     expect(JSON.parse(manifestText)).toEqual({
       ...first.manifest,
       sessionHandles: first.manifest.sessionHandles,
@@ -91,9 +217,7 @@ describe('AC265 hosted run manifest v1 builder', () => {
     for (const resource of contract.resourceRefs)
       expect(manifestText).toContain(resource.ref);
 
-    const contractText = Buffer.from(first.runnerContractBytes).toString(
-      'utf8',
-    );
+    const contractText = Buffer.from(contractBytesOf(first)).toString('utf8');
     expect(contractText).not.toContain('accessToken');
     expect(contractText).not.toContain('storageState');
     expect(contractText).not.toContain('cookies');
@@ -177,7 +301,7 @@ describe('AC265 hosted run manifest v1 builder', () => {
   it('carries only the nine session and four resource references, never other run references', () => {
     const contract = runnerContract();
     const result = build();
-    const manifestText = Buffer.from(result.manifestBytes).toString('utf8');
+    const manifestText = Buffer.from(manifestBytesOf(result)).toString('utf8');
     const manifestReferences = [
       ...manifestText.matchAll(/ac265-[a-z0-9-]+:\/\/[^"\\]*/gu),
     ].map((match) => match[0]);

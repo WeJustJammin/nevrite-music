@@ -1326,3 +1326,46 @@ depth ratio **0.986**; Slices 10–17 remain dependency-locked.
 - This is local/private construction only. It establishes no protected session
   broker, approval source, hosted runner, receipt, report, or AC265 acceptance;
   AC265 and Slice 10 remain exactly as open and locked as before.
+
+### 2026-09-23 independent-review fixes (CP-04f H1/H2)
+
+- **H1 canonicalization defect (fixed).** The first cut sorted object members but
+  left array elements untouched, so reordering the four safe resource references
+  or any scenario's role list produced a different `runnerContractSha256` and
+  `manifestSha256` for the same logical contract, contradicting the
+  byte-stability claim. A RED test that reverses `resourceRefs` now passes:
+  canonicalization normalizes exactly the two collections the locked contract
+  treats as sets — `resourceRefs` to the locked resource-kind declaration order
+  and each `scenarioRoleBindings[scenario]` list to the locked role declaration
+  order — so one logical contract yields one digest.
+- Normalization deliberately excludes ordered sequences. `roleResourceBindings`
+  arrays, the session-handle record, and the resource-reference record are left
+  in caller order because the V3 verifier deep-compares them against the
+  independently attested `ac265-approved-runner-mappings-v1` bytes. Only the
+  two set-like collections are reordered, and no role or scenario key is added,
+  dropped, or renamed.
+- **H2 mutable-byte defect (fixed).** The build result previously exposed
+  `manifestBytes`/`runnerContractBytes` as the held `Buffer` instances, so a
+  caller could mutate bytes after the digests were computed and silently break
+  integrity; `Object.freeze` cannot be used on a non-empty `Buffer` with
+  elements. The result now exposes `manifestBytes()`/`runnerContractBytes()`
+  copy-on-read accessors returning caller-owned `Uint8Array` values. A RED test
+  mutates every byte of both returned buffers and proves the published digests
+  and subsequent reads are unchanged.
+- **Documented limits.** `correlationId` is a non-authority correlation label:
+  the schema accepts any UUID version, including nil and v1, so it is neither a
+  v4 identifier nor asserted unique, and it carries no anti-replay, ordering,
+  binding, or ownership meaning. `controls` carries the shared bounded control
+  schema only; pinned policy values are enforced by the separately versioned
+  `ac265-hosted-runner-policy-v1` comparison at verification time, not by this
+  builder.
+- **Verifier compatibility, bounded claim.** The builder emits
+  `runnerContractBytes` as the exact canonical UTF-8 bytes it digests, and
+  `runnerContractSha256` binds those same bytes, matching what the retained
+  verifier hashes via `sha256Bytes(runnerContractBytes)`. This does not claim V3
+  integration: the retained V3 path parses raw protected bytes supplied by
+  trusted context, and wiring this builder into it is a separate step.
+- Re-verified with pinned Node 22.23.1 / pnpm 11.24.0: 15 focused tests across
+  both suites, `pnpm type-check`, ESLint `--max-warnings=0`, and Prettier. Full
+  `pnpm validate` and `pnpm db:verify` remain deferred while the CP-02 agent
+  holds the shared local database and host.
