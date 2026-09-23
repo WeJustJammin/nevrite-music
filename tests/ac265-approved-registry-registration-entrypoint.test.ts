@@ -10,7 +10,8 @@ import { makeContract } from './contracts/ac265-hosted-test-fixtures.ts';
 
 const SUPABASE_PROJECT_REF = 'abcdefghijklmnopqrst';
 const SUPABASE_URL = `https://${SUPABASE_PROJECT_REF}.supabase.co`;
-const SERVICE_ROLE_KEY = 'synthetic_service_key_ac265-approved-registry-entrypoint-fixture';
+const SERVICE_ROLE_KEY =
+  'synthetic_service_key_ac265-approved-registry-entrypoint-fixture';
 const AUTHORIZATION_REF =
   'ac265-authorization://staging/72000000-0000-4000-8000-000000000001';
 const SAFE_RESOURCE_IDEMPOTENCY_REF =
