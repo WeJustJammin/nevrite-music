@@ -1322,6 +1322,85 @@ export type Database = {
         }
         Relationships: []
       }
+      ac265_approved_registry_resources: {
+        Row: {
+          approval_ref: string
+          environment: string
+          locator_sha256: string
+          resource_kind: string
+        }
+        Insert: {
+          approval_ref: string
+          environment: string
+          locator_sha256: string
+          resource_kind: string
+        }
+        Update: {
+          approval_ref?: string
+          environment?: string
+          locator_sha256?: string
+          resource_kind?: string
+        }
+        Relationships: []
+      }
+      ac265_approved_registry_role_kinds: {
+        Row: {
+          approval_ref: string
+          environment: string
+          resource_kind: string
+          role_key: string
+        }
+        Insert: {
+          approval_ref: string
+          environment: string
+          resource_kind: string
+          role_key: string
+        }
+        Update: {
+          approval_ref?: string
+          environment?: string
+          resource_kind?: string
+          role_key?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ac265_approved_registry_role_kinds_resource_kind_fkey"
+            columns: ["resource_kind"]
+            isOneToOne: false
+            referencedRelation: "ac265_approved_registry_resources"
+            referencedColumns: ["resource_kind"]
+          },
+        ]
+      }
+      ac265_approved_registry_scenario_roles: {
+        Row: {
+          approval_ref: string
+          environment: string
+          role_key: string
+          scenario_key: string
+        }
+        Insert: {
+          approval_ref: string
+          environment: string
+          role_key: string
+          scenario_key: string
+        }
+        Update: {
+          approval_ref?: string
+          environment?: string
+          role_key?: string
+          scenario_key?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ac265_approved_registry_scenario_roles_role_key_fkey"
+            columns: ["role_key"]
+            isOneToOne: false
+            referencedRelation: "ac265_approved_registry_role_kinds"
+            referencedColumns: ["role_key"]
+          },
+        ]
+      }
       ac265_approved_runner_mapping_resources: {
         Row: {
           mapping_id: string

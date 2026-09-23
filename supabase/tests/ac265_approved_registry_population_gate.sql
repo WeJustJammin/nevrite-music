@@ -41,15 +41,16 @@ select ok(
 
 select ok(
   coalesce((
-    select count(*) = 0
-    from pg_catalog.pg_proc as p
-    where p.proname = 'ac265_reject_approved_registry_policy_mutation'
-      and not (
+    select count(*) = 1 and bool_and(
+      not (
         coalesce(has_function_privilege('public', p.oid, 'execute'), false)
         or coalesce(has_function_privilege('anon', p.oid, 'execute'), false)
         or coalesce(has_function_privilege('authenticated', p.oid, 'execute'), false)
         or coalesce(has_function_privilege('service_role', p.oid, 'execute'), false)
       )
+    )
+    from pg_catalog.pg_proc as p
+    where p.proname = 'ac265_reject_approved_registry_policy_mutation'
   ), false),
   'the pinned-policy mutation guard is not executable by any runtime role'
 );
@@ -66,6 +67,27 @@ select ok(
     ) as functions(proc)
   ), false),
   'the redefined register RPCs remain service_role-only'
+);
+
+-- Start from a deterministic empty policy state: earlier local runs or a
+-- partial failure can leave committed disposable pins behind, and this suite
+-- must never depend on ambient rows.  Immutability triggers are disabled only
+-- to clear disposable test pins and re-enabled immediately afterwards.
+alter table platform_private.ac265_approved_registry_scenario_roles disable trigger ac265_approved_registry_scenario_roles_are_immutable;
+alter table platform_private.ac265_approved_registry_role_kinds disable trigger ac265_approved_registry_role_kinds_are_immutable;
+alter table platform_private.ac265_approved_registry_resources disable trigger ac265_approved_registry_resources_are_immutable;
+delete from platform_private.ac265_approved_registry_scenario_roles;
+delete from platform_private.ac265_approved_registry_role_kinds;
+delete from platform_private.ac265_approved_registry_resources;
+alter table platform_private.ac265_approved_registry_resources enable trigger ac265_approved_registry_resources_are_immutable;
+alter table platform_private.ac265_approved_registry_role_kinds enable trigger ac265_approved_registry_role_kinds_are_immutable;
+alter table platform_private.ac265_approved_registry_scenario_roles enable trigger ac265_approved_registry_scenario_roles_are_immutable;
+select is(
+  (select (select count(*) from platform_private.ac265_approved_registry_resources)
+        + (select count(*) from platform_private.ac265_approved_registry_role_kinds)
+        + (select count(*) from platform_private.ac265_approved_registry_scenario_roles)),
+  0::bigint,
+  'the suite starts from an empty pinned policy state'
 );
 
 create temporary table ac265_gate_results (result_name text primary key, result jsonb) on commit drop;
