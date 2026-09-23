@@ -173,4 +173,37 @@ describe('AC265 hosted run manifest v1 builder', () => {
       ]),
     );
   });
+
+  it('carries only the nine session and four resource references, never other run references', () => {
+    const contract = runnerContract();
+    const result = build();
+    const manifestText = Buffer.from(result.manifestBytes).toString('utf8');
+    const manifestReferences = [
+      ...manifestText.matchAll(/ac265-[a-z0-9-]+:\/\/[^"\\]*/gu),
+    ].map((match) => match[0]);
+
+    expect(manifestReferences).toEqual(
+      expect.arrayContaining([
+        ...Object.values(contract.sessionHandles).map(({ ref }) => ref),
+        ...contract.resourceRefs.map(({ ref }) => ref),
+      ]),
+    );
+    expect(manifestReferences).toHaveLength(13);
+    expect(new Set(manifestReferences).size).toBe(13);
+    for (const reference of manifestReferences) {
+      expect(reference).toMatch(/^ac265-(?:session|resource):\/\//u);
+      expect(reference).not.toMatch(
+        /^ac265-(?:lease|receipt|evidence|authorization|idempotency|outage-target|artifact-manifest|candidate|finalization):/u,
+      );
+    }
+
+    // The lease, receipt, and evidence references belong to the report and the
+    // outage control plane, never to the frozen manifest.
+    expect(manifestText).not.toContain('ac265-lease://');
+    expect(manifestText).not.toContain('ac265-receipt://');
+    expect(manifestText).not.toContain('ac265-evidence://');
+    expect(manifestText).not.toContain('outageLease');
+    expect(manifestText).not.toContain('consumeEvents');
+    expect(manifestText).not.toContain('leaseReceipt');
+  });
 });
