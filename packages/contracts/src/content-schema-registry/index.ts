@@ -11,6 +11,7 @@ export * from './operational-release-evidence-hosted-approved-registry-control.t
 export * from './operational-release-evidence-hosted-approved-runner-mapping-attestation.ts';
 export * from './operational-release-evidence-hosted-approved-runner-mappings.ts';
 export * from './operational-release-evidence-hosted-outage-lease-control.ts';
+export * from './operational-release-evidence-hosted-run-manifest.ts';
 export * from './operational-release-evidence.ts';
 export * from './primitives.ts';
 export * from './requests.ts';

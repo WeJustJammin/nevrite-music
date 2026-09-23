@@ -1287,3 +1287,42 @@ cannot be used as a population path until an owner-approved policy exists.
   AC265 criterion; no hosted acceptance is claimed.
 AC209, AC211, AC265, and AC266 remain open. Slice 09 stays **279/283** with
 depth ratio **0.986**; Slices 10–17 remain dependency-locked.
+
+## 2026-09-23 AC265 CP-04f frozen run-manifest contract and builder (local/private only)
+
+- Adds the bounded frozen run-manifest contract `ac265-hosted-run-manifest-v1`
+  at `packages/contracts/src/content-schema-registry/operational-release-evidence-hosted-run-manifest.ts`
+  and its fail-closed builder at `infra/workflows/ac265-hosted-run-manifest.ts`.
+  The manifest carries exactly the membership the runner contract names: the
+  version, criterion, runner contract version, run ID, run correlation ID,
+  immutable candidate identity, the nine role-matched `ac265-session://`
+  references, the four approved `ac265-resource://` references, and the bounded
+  control policy. It carries no session state, credentials, resource contents,
+  or mappings.
+- Session and resource references reuse the existing locked schemas rather than
+  re-declaring them, so role alignment, nine-way distinctness, exactly-one-per
+  locked resource kind, and v4 staging shapes are enforced by the same rules as
+  the runner contract. The builder additionally re-derives every reference's
+  lowercase SHA-256 digest and fails closed on drift, then emits canonical
+  code-point-ordered UTF-8 bytes, a manifest SHA-256, and the exact canonical
+  runner-contract bytes plus their SHA-256 for the retained V3 binding.
+- Red→Green: the two new suites (`phase-02-slice-09-ac265-hosted-run-manifest-contract`
+  and `-builder`) pass 12 tests covering pinned versions, missing/extra/duplicated
+  role and resource references, role-mismatched and digest-mismatched references,
+  control-policy bound violations, sensitive-member rejection, canonical
+  byte-stability under member reordering, and the absence of any approval,
+  attestation, broker, or mapping-resolution surface.
+- Open contract reading requiring owner confirmation: the runner contract names
+  a run correlation ID in the manifest but no AC265 module defines its format or
+  source. This slice binds it as a UUID supplied by the protected orchestrator
+  and never derives it from the run ID. Confirming that reading (or defining a
+  different source) is a documented decision, not an inferred semantic.
+- Verification is focused only: pinned Node 22.23.1 / pnpm 11.24.0 focused
+  Vitest, `pnpm type-check`, ESLint on changed files, Prettier, and
+  `pnpm progress:check` pass. Full `pnpm validate`, `pnpm db:verify`, and the
+  broader contract suite are deferred to avoid contending for the shared local
+  database and host with the CP-02 agent, and no hosted, provider, or
+  acceptance evidence is claimed.
+- This is local/private construction only. It establishes no protected session
+  broker, approval source, hosted runner, receipt, report, or AC265 acceptance;
+  AC265 and Slice 10 remain exactly as open and locked as before.
