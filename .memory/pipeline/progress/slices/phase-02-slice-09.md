@@ -1158,5 +1158,63 @@ Slices 10–17 remain dependency-locked.
   builds, bundle budgets, and performance smoke. Separate database verification
   remains green at 50 pgTAP files / 1,818 tests with type parity.
 
+## 2026-09-23 AC265 CP-02 protected registry-population client (local only, unmerged)
+
+This is an isolated worktree feature branch (`codex/ac265-cp02-registry-population`
+from `origin/main`); nothing here is pushed, merged, or deployed, and no registry
+row, identity, or grant is created.
+
+- Added the missing TypeScript protected population path for the already-promoted
+  CP-02 migration. No migration and no contract change: the strict
+  `ac265-hosted-approved-registry-control-v1` schemas are consumed as-is, so
+  `contracts:check` is unaffected.
+
+```text
+infra/workflows/ac265-approved-registry-registration-rpc.ts   (new bounded service-role client)
+infra/workflows/register-ac265-approved-registry.ts           (new protected manual entrypoint)
+tests/ac265-approved-registry-registration-rpc.test.ts        (new, RED-first)
+tests/ac265-approved-registry-registration-entrypoint.test.ts (new, RED-first)
+tests/ac265-approved-registry-registration-workflow-contract.test.ts (new)
+.github/workflows/register-ac265-approved-registry.yml        (new, main-only/staging)
+```
+
+- The bounded service-role client POSTs only the strict register request to
+  exactly `ac265_approved_safe_resource_register` or
+  `ac265_approved_runner_mapping_register` at `https://<projectRef>.supabase.co`
+  (`^[a-z0-9]{20}$`), with printable secret <= 8192, `redirect: 'error'`,
+  `cache: 'no-store'`, a 64 KiB streamed response cap, content-length rejection,
+  fatal UTF-8 decoding, a fixed 10-second abort deadline, duplicate-member
+  rejection, awaited body cancellation, and one generic failure per RPC.
+- The register results have no `status` field (unlike CP-04b): success is bound
+  by echoing `authorizationRef`, `idempotencyRef`, `environment === 'staging'`,
+  `hostingProjectId === 'wejammin-staging'`, `supabaseProjectRef === projectRef`,
+  and `redacted === true`, plus `locatorSha256` and `resource.kind` for the
+  safe-resource result and a full role/scenario mapping-to-resources re-binding
+  for the mapping result. Any `{status:'conflict'}` response fails generically.
+- The protected entrypoint reads only `$RUNNER_TEMP/ac265-registry-registration-request.json`
+  (<= 32 KiB, strict schema, safe path/realpath checks), requires the full
+  protected environment, and appends only the server-derived resource reference
+  and kind, or the mapping id, to `GITHUB_OUTPUT` and `GITHUB_STEP_SUMMARY`.
+- The workflow is manual-only (`workflow_dispatch`), main-only
+  (`if: github.ref == 'refs/heads/main'`), `runs-on: ubuntu-24.04`,
+  `timeout-minutes: 10`, `environment: staging`, `permissions: { contents: read }`,
+  pinned `actions/checkout` SHA, and uses `.github/actions/setup`. It needs no
+  signing key; `SUPABASE_SECRET_KEY` already exists in `.github/SECRETS.md`.
+- RED proof: both new test files first failed with `Cannot find module` before
+  the client and entrypoint existed. GREEN (actual completed local runs, not
+  aspirational): RPC client 20 tests, entrypoint 8 tests, workflow contract 6
+  tests — 34 new tests, and 49 across those three plus the untouched CP-04b
+  client suite. These ran in this worktree at 01:51–01:59 local on the pinned
+  workspace; a confirming focused re-run after the Prettier reformat
+  (`--maxWorkers=1`, 02:17 local, after the concurrent PR #96 CI coverage gate
+  ended) again reported 3 files / 34 tests passed. Prettier and ESLint are clean
+  on the new files. Full `pnpm validate`/Playwright remain deliberately unrun to
+  avoid host contention, per operator direction.
+- Boundary: this path registers only opaque, server-derived registry rows behind
+  the existing forced-RLS/service-role RPCs. It does not seed identities,
+  mandates, grants, or resources, does not verify underlying resource safety,
+  mints no receipt or attestation, and provides no hosted runner. It closes no
+  AC265 criterion and is not acceptance evidence.
+
 AC209, AC211, AC265, and AC266 remain open. Slice 09 stays **279/283** with
 depth ratio **0.986**; Slices 10–17 remain dependency-locked.

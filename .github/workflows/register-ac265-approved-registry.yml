@@ -1,0 +1,49 @@
+name: AC265 approved registry registration
+
+on:
+  workflow_dispatch:
+    inputs:
+      request_json:
+        description: Exact strict AC265 approved-registry register request object
+        required: true
+        type: string
+
+concurrency:
+  group: ac265-approved-registry-${{ github.ref }}
+  cancel-in-progress: false
+
+permissions: { contents: read }
+
+jobs:
+  register:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    environment: staging
+    permissions: { contents: read }
+    steps:
+      - name: Check out the immutable dispatched commit
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+
+      - name: Set up pinned workspace dependencies
+        uses: ./.github/actions/setup
+
+      - name: Materialize the exact protected registry request
+        env:
+          AC265_REGISTRY_REGISTRATION_REQUEST_JSON: ${{ inputs.request_json }}
+          AC265_REGISTRY_REGISTRATION_REQUEST_PATH: ${{ runner.temp }}/ac265-registry-registration-request.json
+        run: |
+          set -euo pipefail
+          umask 077
+          printf '%s\n' "$AC265_REGISTRY_REGISTRATION_REQUEST_JSON" > "$AC265_REGISTRY_REGISTRATION_REQUEST_PATH"
+
+      - name: Register the approved registry entry
+        env:
+          AC265_REGISTRY_REGISTRATION_REQUEST_PATH: ${{ runner.temp }}/ac265-registry-registration-request.json
+          SUPABASE_URL: ${{ vars.SUPABASE_URL }}
+          SUPABASE_PROJECT_REF: ${{ vars.SUPABASE_PROJECT_REF }}
+          SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
+        run: node --experimental-strip-types infra/workflows/register-ac265-approved-registry.ts

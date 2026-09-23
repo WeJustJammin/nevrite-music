@@ -153,6 +153,25 @@ filesystem and validation operations.
   caller; require `providerMessageId` only in a later forward migration after
   the new Worker is verified live.
 
+- `register-ac265-approved-registry.ts` is the protected manual entrypoint for
+  the CP-02 approved safe-resource/runner-mapping registry. Its sibling bounded
+  service-role client `ac265-approved-registry-registration-rpc.ts` POSTs only
+  the strict register request to exactly `ac265_approved_safe_resource_register`
+  or `ac265_approved_runner_mapping_register` at the exact
+  `https://<ref>.supabase.co` origin, with no-redirect/no-store transport, a
+  64 KiB streamed response cap, fatal UTF-8 decoding, a fixed 10-second
+  deadline, and a single generic failure boundary. It rejects any redirect,
+  non-200 status, duplicate JSON member, or `{status:'conflict'}` response and
+  binds every register result field (authorization, idempotency, resource kind
+  and locator, environment, hosting project, Supabase project ref, and
+  redaction) to the submitted request before returning. The entrypoint reads
+  the request only from the exact runner-temp JSON file, requires the full
+  protected environment, and appends only the server-derived
+  resource reference/kind or mapping id to `GITHUB_OUTPUT` and
+  `GITHUB_STEP_SUMMARY`. It deliberately does not seed rows, create identities
+  or grants, or verify underlying resource safety, and no hosted acceptance is
+  claimed.
+
 ## Conventions
 
 Scripts accept identity only through environment values derived by the calling
