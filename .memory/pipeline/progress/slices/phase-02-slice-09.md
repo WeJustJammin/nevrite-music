@@ -1287,3 +1287,176 @@ cannot be used as a population path until an owner-approved policy exists.
   AC265 criterion; no hosted acceptance is claimed.
 AC209, AC211, AC265, and AC266 remain open. Slice 09 stays **279/283** with
 depth ratio **0.986**; Slices 10–17 remain dependency-locked.
+
+## 2026-09-23 AC265 CP-04f frozen run-manifest contract and builder (local/private only)
+
+- Adds the bounded frozen run-manifest contract `ac265-hosted-run-manifest-v1`
+  at `packages/contracts/src/content-schema-registry/operational-release-evidence-hosted-run-manifest.ts`
+  and its fail-closed builder at `infra/workflows/ac265-hosted-run-manifest.ts`.
+  The manifest carries exactly the membership the runner contract names: the
+  version, criterion, runner contract version, run ID, run correlation ID,
+  immutable candidate identity, the nine role-matched `ac265-session://`
+  references, the four approved `ac265-resource://` references, and the bounded
+  control policy. It carries no session state, credentials, resource contents,
+  or mappings.
+- Session and resource references reuse the existing locked schemas rather than
+  re-declaring them, so role alignment, nine-way distinctness, exactly-one-per
+  locked resource kind, and v4 staging shapes are enforced by the same rules as
+  the runner contract. The builder additionally re-derives every reference's
+  lowercase SHA-256 digest and fails closed on drift, then emits canonical
+  code-point-ordered UTF-8 bytes, a manifest SHA-256, and the exact canonical
+  runner-contract bytes plus their SHA-256 for the retained V3 binding.
+- Red→Green: the two new suites (`phase-02-slice-09-ac265-hosted-run-manifest-contract`
+  and `-builder`) pass 12 tests covering pinned versions, missing/extra/duplicated
+  role and resource references, role-mismatched and digest-mismatched references,
+  control-policy bound violations, sensitive-member rejection, canonical
+  byte-stability under member reordering, and the absence of any approval,
+  attestation, broker, or mapping-resolution surface.
+- Open contract reading requiring owner confirmation: the runner contract names
+  a run correlation ID in the manifest but no AC265 module defines its format or
+  source. This slice binds it as a UUID supplied by the protected orchestrator
+  and never derives it from the run ID. Confirming that reading (or defining a
+  different source) is a documented decision, not an inferred semantic.
+- Verification is focused only: pinned Node 22.23.1 / pnpm 11.24.0 focused
+  Vitest, `pnpm type-check`, ESLint on changed files, Prettier, and
+  `pnpm progress:check` pass. Full `pnpm validate`, `pnpm db:verify`, and the
+  broader contract suite are deferred to avoid contending for the shared local
+  database and host with the CP-02 agent, and no hosted, provider, or
+  acceptance evidence is claimed.
+- This is local/private construction only. It establishes no protected session
+  broker, approval source, hosted runner, receipt, report, or AC265 acceptance;
+  AC265 and Slice 10 remain exactly as open and locked as before.
+
+### 2026-09-23 independent-review fixes (CP-04f H1/H2)
+
+- **H1 canonicalization defect (fixed).** The first cut sorted object members but
+  left array elements untouched, so reordering the four safe resource references
+  or any scenario's role list produced a different `runnerContractSha256` and
+  `manifestSha256` for the same logical contract, contradicting the
+  byte-stability claim. A RED test that reverses `resourceRefs` now passes:
+  canonicalization normalizes exactly the two collections the locked contract
+  treats as sets — `resourceRefs` to the locked resource-kind declaration order
+  and each `scenarioRoleBindings[scenario]` list to the locked role declaration
+  order — so one logical contract yields one digest.
+- Normalization deliberately excludes ordered sequences. `roleResourceBindings`
+  arrays, the session-handle record, and the resource-reference record are left
+  in caller order because the V3 verifier deep-compares them against the
+  independently attested `ac265-approved-runner-mappings-v1` bytes. Only the
+  two set-like collections are reordered, and no role or scenario key is added,
+  dropped, or renamed.
+- **H2 mutable-byte defect (fixed).** The build result previously exposed
+  `manifestBytes`/`runnerContractBytes` as the held `Buffer` instances, so a
+  caller could mutate bytes after the digests were computed and silently break
+  integrity; `Object.freeze` cannot be used on a non-empty `Buffer` with
+  elements. The result now exposes `manifestBytes()`/`runnerContractBytes()`
+  copy-on-read accessors returning caller-owned `Uint8Array` values. A RED test
+  mutates every byte of both returned buffers and proves the published digests
+  and subsequent reads are unchanged.
+- **Documented limits.** `correlationId` is a non-authority correlation label:
+  the schema accepts any UUID version, including nil and v1, so it is neither a
+  v4 identifier nor asserted unique, and it carries no anti-replay, ordering,
+  binding, or ownership meaning. `controls` carries the shared bounded control
+  schema only; pinned policy values are enforced by the separately versioned
+  `ac265-hosted-runner-policy-v1` comparison at verification time, not by this
+  builder.
+- **Verifier compatibility, bounded claim.** The builder emits
+  `runnerContractBytes` as the exact canonical UTF-8 bytes it digests, and
+  `runnerContractSha256` binds those same bytes, matching what the retained
+  verifier hashes via `sha256Bytes(runnerContractBytes)`. This does not claim V3
+  integration: the retained V3 path parses raw protected bytes supplied by
+  trusted context, and wiring this builder into it is a separate step.
+- Re-verified with pinned Node 22.23.1 / pnpm 11.24.0: 15 focused tests across
+  both suites, `pnpm type-check`, ESLint `--max-warnings=0`, and Prettier. Full
+  `pnpm validate` and `pnpm db:verify` remain deferred while the CP-02 agent
+  holds the shared local database and host.
+
+### 2026-09-23 re-review fixes (CP-04f H1c and scenario-order over-normalization)
+
+- **V3 compatibility blocker (fixed).** The H1 fix over-reached: it normalized
+  each `scenarioRoleBindings[scenario]` array to locked role declaration order,
+  but `assertAc265HostedRunnerPolicyV1` compares those arrays to the
+  independently attested `ac265-approved-runner-mappings-v1` bytes with
+  `isDeepStrictEqual`, which is position-sensitive on arrays. A legitimate
+  approval whose array read `[owner_full, entitled_read, ...]` was rewritten to
+  `[entitled_read, owner_full, ...]`, so the verifier rejected a correct
+  contract. Scenario-order normalization is removed entirely.
+- `scenarioRoleBindings` and `roleResourceBindings` are now both left untouched.
+  Their element order is approval-source-significant, so a reordered sequence is
+  a different mapping and must move the digest instead of being normalized to
+  match; there is no canonical set normalization for those collections. Only
+  `resourceRefs` is normalized, and it remains order-stable.
+- **H1c (fixed).** Bytes and digest were computed from a normalized copy while
+  the returned frozen `manifest` retained the caller's original reference order,
+  so `sha256(canonicalManifestBytes(result.manifest))` did not reproduce
+  `manifestSha256` for reversed input. The builder now parses the normalized
+  candidate and returns that same frozen object, so the returned manifest, the
+  published bytes, and the digest describe one value.
+- RED first: a rehash-under-reversed-references case failed with mismatched
+  digests, and a reversed-scenario case failed because the digest did not move.
+  Both now pass, and the scenario test additionally asserts the scenario order
+  is retained verbatim in the canonical bytes and that the digest changes.
+- Re-verified with pinned Node 22.23.1 / pnpm 11.24.0: 16 focused tests across
+  both suites, `pnpm type-check`, ESLint `--max-warnings=0`, Prettier, and
+  `pnpm progress:check`. Full `pnpm validate` and `pnpm db:verify` remain
+  deferred while the CP-02 agent holds the shared local database and host.
+
+### 2026-09-23 dedicated staging test accounts - owner decision recorded
+
+- The owner decided on 2026-09-23 to provision dedicated staging test accounts
+  for the nine locked AC265 roles. The decision and its unresolved gates are
+  recorded in the
+  [AC265 dedicated staging test accounts decision record](../verification/2026-09-23-ac265-dedicated-staging-test-accounts-decision.md).
+  Nothing was provisioned and no criterion moved.
+- Open gates recorded there: the Cloud Identity Free vs existing Google org
+  choice is pending, the 2026-09-10 sole-admin-principal decision still governs
+  privileged admin test identity and is not superseded, the separate async
+  question on that privileged identity is unanswered, and the Chrome browser
+  bridge is unavailable on this host. No credential, identity, grant, tenant, or
+  resource was created.
+
+### 2026-09-23 AC265 run-manifest read-side boundary (CP-04g, local/private only)
+
+- Adds the missing read half for the frozen run manifest. The builder could emit
+  canonical bytes and a digest, but nothing could read a manifest back from
+  bytes, so a hosted consumer would have had to hand-roll a loose parse.
+- `infra/workflows/ac265-hosted-run-manifest-crypto.ts` now owns one canonical
+  form and one parse boundary: `parseAc265HostedRunManifestV1Bytes` rejects
+  non-bytes, empty, and over-64 KiB input, duplicate JSON object members, schema
+  drift, and any encoding that is not already canonical;
+  `canonicalizeAc265HostedRunManifestV1` canonicalizes a value;
+  `canonicalAc265HostedRunManifestBytes` and
+  `canonicalAc265HostedRunnerContractBytes` produce canonical bytes;
+  `verifyAc265HostedRunManifestSha256` binds a digest fail-closed; and
+  `readAc265HostedRunManifestV1Bytes` is the digest-bound read entrypoint, so a
+  consumer cannot read manifest bytes without proving them against the expected
+  digest.
+- The builder consumes the shared module instead of its own private copies, so
+  the build and parse sides cannot drift. `lockedOrder`, the resource-reference
+  normalization, the code-point canonical serializer, the digest helper, and the
+  reference-digest checks now exist once. The builder re-exports
+  `AC265_HOSTED_RUN_MANIFEST_MAX_BYTES`, `canonicalManifestBytes`, and
+  `sha256Bytes` so existing imports are unaffected.
+- Order semantics are pinned in the new suite. Only `resourceRefs` is
+  order-insensitive, matching the V3 verifier's keyed-map read; a reversed
+  resource set yields one digest in both the manifest and runner-contract byte
+  paths. Approved `scenarioRoleBindings` order stays significant because the V3
+  verifier deep-compares it against the independently attested
+  `ac265-approved-runner-mappings-v1` bytes, so a reordered approval moves the
+  runner-contract digest instead of being normalized to match.
+- Exported canonical byte functions return a fresh plain `Uint8Array`, not a
+  `Buffer` and never a retained internal alias, so a caller cannot mutate bytes
+  after the digest was computed.
+- Focused evidence: 3 files / 26 tests pass, covering 10 new read-boundary cases
+  plus the existing builder and contract suites; ESLint `--max-warnings=0`,
+  Prettier, and `pnpm progress:check` are clean under pinned Node 22.23.1 /
+  pnpm 11.24.0. Full `pnpm validate` and `pnpm db:verify` remain deferred while
+  PR #98 CI and the main/staging chain own the shared runner.
+- Chronology note: the test file was authored before the implementation module,
+  but an independent reviewer's focused run found 3/10 failures from `Buffer`
+  versus `Uint8Array` equality and one over-generic expected error message. A
+  passing pre-fix run was therefore never observed, so this record does not claim
+  an observed RED; the failures were test and format integration defects rather
+  than missing behavior.
+- This is local/private construction only. No report-v3 contract change, no
+  seeded identity, resource, grant, or registry row, and no hosted acceptance.
+  The external gates listed in the decision record above are unchanged.
