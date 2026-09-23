@@ -1256,6 +1256,21 @@ cannot be used as a population path until an owner-approved policy exists.
   normalizes its per-authorization locator sets to that single pinned set and
   seeds the pins as the superuser fixture connection (never through
   service_role).
+
+- Security-review correction: the first gate draft mixed a 1-column kind branch
+  with 2-column role/scenario branches under one `UNION ALL`, which is
+  invalid SQL (42601) rather than a conflict. The mapping gate is now three
+  SEPARATE equal-arity bidirectional `EXCEPT` predicates (a: kind, one column;
+  b: role-to-kind, two; c: scenario-to-role, two), verified programmatically to
+  have uniform select arity within each predicate. The pgTAP suite also proves
+  the missing-policy mapping case (all pins removed) returns only the conflict
+  sentinel and writes no registry parent.
+- `approval_ref` is documented as an opaque, documentation-only
+  owner-approval locator: it is not an independently verified signature and
+  grants no safety. Pins deliberately carry no time validity because they are
+  immutable; expiry would require a further owner-approved forward migration.
+  The pin proves only that a submitted digest equals a pinned digest, not that
+  the underlying resource is real, synthetic, or safe.
 - New pgTAP suite `ac265_approved_registry_population_gate.sql` proves the
   boundary: table/RLS/grant/immutability shape, fail-closed with no pins, a
   matching (kind, locator) registering, a non-pinned locator failing closed, a

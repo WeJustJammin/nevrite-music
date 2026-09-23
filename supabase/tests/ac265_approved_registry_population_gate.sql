@@ -5,12 +5,12 @@ select no_plan();
 
 -- AC265 CP-02 owner-approved population gate.
 --
--- The migration that owns this boundary creates three EMPTY pinned policy
--- tables and redefines the two CP-02 register RPCs to require an exact match
--- against those pins.  With no pinned rows both RPCs fail closed with only
--- the generic conflict sentinel; with disposable pinned rows they accept
--- exactly the pinned approvals and reject drift in either direction.
--- Disposable rows here are local-test-only; the migration seeds none.
+-- The gate migration creates three EMPTY pinned policy tables and redefines
+-- the two CP-02 register RPCs to require exact set equality against those
+-- pins.  With no pinned rows both RPCs fail closed with only the generic
+-- conflict sentinel; with disposable pinned rows they accept exactly the
+-- pinned approvals and reject drift in either direction.  Disposable rows
+-- here are local-test-only; the migration seeds none.
 
 select ok(
   coalesce((
@@ -342,9 +342,61 @@ select ok(
   'the approved mapping returns the redacted four-resource envelope'
 );
 
+-- Missing policy: with the four safe resources registered, remove every pin
+-- and prove the mapping RPC fails closed at the gate (immutability triggers are
+-- disabled only to remove disposable test pins, then re-enabled immediately).
+alter table platform_private.ac265_approved_registry_scenario_roles disable trigger ac265_approved_registry_scenario_roles_are_immutable;
+alter table platform_private.ac265_approved_registry_role_kinds disable trigger ac265_approved_registry_role_kinds_are_immutable;
+alter table platform_private.ac265_approved_registry_resources disable trigger ac265_approved_registry_resources_are_immutable;
+delete from platform_private.ac265_approved_registry_scenario_roles;
+delete from platform_private.ac265_approved_registry_role_kinds;
+delete from platform_private.ac265_approved_registry_resources;
+alter table platform_private.ac265_approved_registry_resources enable trigger ac265_approved_registry_resources_are_immutable;
+alter table platform_private.ac265_approved_registry_role_kinds enable trigger ac265_approved_registry_role_kinds_are_immutable;
+alter table platform_private.ac265_approved_registry_scenario_roles enable trigger ac265_approved_registry_scenario_roles_are_immutable;
+select is(
+  (select (select count(*) from platform_private.ac265_approved_registry_resources)
+        + (select count(*) from platform_private.ac265_approved_registry_role_kinds)
+        + (select count(*) from platform_private.ac265_approved_registry_scenario_roles)),
+  0::bigint,
+  'all disposable pins are removed to model a missing owner policy'
+);
+select is(
+  platform_api.ac265_approved_runner_mapping_register(
+    jsonb_set((select request from ac265_gate_requests where request_name = 'mapping-valid'), '{idempotencyRef}', to_jsonb('ac265-idempotency://staging/50000000-0000-4000-8000-000000000072'::text))
+  ),
+  '{"status":"conflict"}'::jsonb,
+  'a mapping with no pinned owner policy fails closed with only the conflict sentinel'
+);
+select is(
+  (select count(*)::integer from platform_private.ac265_approved_runner_mappings),
+  1,
+  'the missing-policy mapping attempt creates no extra registry parent'
+);
+
+-- Restore the pins so the drift checks below reach the gate with policy present.
+insert into platform_private.ac265_approved_registry_resources (resource_kind, locator_sha256, approval_ref, environment) values
+  ('content_schema', decode(repeat('1', 64), 'hex'), 'ac265-approval://staging/90000000-0000-4000-8000-000000000001', 'staging'),
+  ('staff_case', decode(repeat('2', 64), 'hex'), 'ac265-approval://staging/90000000-0000-4000-8000-000000000002', 'staging'),
+  ('organization', decode(repeat('3', 64), 'hex'), 'ac265-approval://staging/90000000-0000-4000-8000-000000000003', 'staging'),
+  ('prerequisite', decode(repeat('4', 64), 'hex'), 'ac265-approval://staging/90000000-0000-4000-8000-000000000004', 'staging');
+insert into platform_private.ac265_approved_registry_role_kinds (role_key, resource_kind, approval_ref, environment) values
+  ('entitled_read', 'content_schema', 'ac265-approval://staging/90000000-0000-4000-8000-000000000010', 'staging'),
+  ('owner_full', 'organization', 'ac265-approval://staging/90000000-0000-4000-8000-000000000011', 'staging'),
+  ('guardian_mandate', 'content_schema', 'ac265-approval://staging/90000000-0000-4000-8000-000000000012', 'staging'),
+  ('junior_restricted', 'content_schema', 'ac265-approval://staging/90000000-0000-4000-8000-000000000013', 'staging'),
+  ('business_mandate', 'organization', 'ac265-approval://staging/90000000-0000-4000-8000-000000000014', 'staging'),
+  ('staff_case_scoped', 'staff_case', 'ac265-approval://staging/90000000-0000-4000-8000-000000000015', 'staging'),
+  ('admin_step_up', 'organization', 'ac265-approval://staging/90000000-0000-4000-8000-000000000016', 'staging'),
+  ('forbidden_hidden', 'content_schema', 'ac265-approval://staging/90000000-0000-4000-8000-000000000017', 'staging'),
+  ('disabled_prerequisite', 'prerequisite', 'ac265-approval://staging/90000000-0000-4000-8000-000000000018', 'staging');
+insert into platform_private.ac265_approved_registry_scenario_roles (scenario_key, role_key, approval_ref, environment)
+select scenario_key, role_key, 'ac265-approval://staging/90000000-0000-4000-8000-000000000020', 'staging'
+from unnest(array['idp_sign_in', 'server_authoritative_rls', 'keyboard_landmarks_live_regions', 'three_breakpoints', 'zoom_200', 'offline_reconnect', 'stale_multi_tab', 'auth_expiry', 'rate_limit_429', 'dependency_outage']) as scenarios(scenario_key)
+cross join unnest(array['entitled_read', 'owner_full', 'guardian_mandate', 'junior_restricted', 'business_mandate', 'staff_case_scoped', 'admin_step_up', 'forbidden_hidden', 'disabled_prerequisite']) as roles(role_key);
+
 -- Drift is rejected by the policy gate itself, not by idempotent replay, so
 -- each drift case uses a fresh idempotency reference.
--- A role bound to the wrong pinned kind is rejected.
 set local role service_role;
 select is(
   platform_api.ac265_approved_runner_mapping_register(
@@ -362,7 +414,7 @@ select is(
   'a role bound to the wrong pinned resource kind fails closed'
 );
 reset role;
--- A scenario missing a pinned role member is rejected.
+set local role service_role;
 select is(
   platform_api.ac265_approved_runner_mapping_register(
     jsonb_set(
@@ -378,14 +430,13 @@ select is(
   '{"status":"conflict"}'::jsonb,
   'a scenario missing a pinned role member fails closed'
 );
--- CP-02 permits exactly one mapping per (authorization, run), so order
--- independence is not separately re-registered here; set equality is proven
--- bidirectionally by the accepted exact mapping above and the two rejections.
+reset role;
 select is(
   (select count(*)::integer from platform_private.ac265_approved_runner_mappings),
   1,
-  'only the exact pinned mapping creates an immutable parent'
+  'drifted mapping attempts create no extra immutable parent'
 );
+
 select * from finish();
 rollback;
 

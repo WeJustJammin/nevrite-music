@@ -12,6 +12,14 @@
 -- fail closed and return only the generic {"status":"conflict"} sentinel.
 -- The strict ac265-hosted-approved-registry-control-v1 request/response
 -- contracts are unchanged, and no server-derived field is invented.
+--
+-- approval_ref is documentation of the intended owner-approval provenance of a
+-- pinned row (an opaque ac265-approval://staging/<uuid> locator).  It is NOT an
+-- independently verified signature or authority: nothing here authenticates
+-- it, and it grants no safety.  A pinned row is trusted only because a
+-- separate owner-approved forward migration is reviewed and applied.  These
+-- pins deliberately carry no time validity; removing or expiring them would
+-- require a further forward migration because they are immutable.
 
 create table platform_private.ac265_approved_registry_resources (
   resource_kind text primary key,
@@ -513,17 +521,15 @@ begin
   end if;
 
   -- CP-02 owner-approved population gate.  It enforces EXACT SET EQUALITY
-  -- between the request and the pinned owner approvals, in both directions:
-  --   * every registered resource must match a pinned (kind, locator) pin;
-  --   * every pinned resource-kind pin must be covered by a registered resource;
-  --   * the role-to-kind assignment and every scenario-to-role assignment must
-  --     equal the pinned sets exactly, with no extra and no missing member;
-  --   * the pinned scenario assignment must reference only roles the request
-  --     actually binds.
-  -- CP-02 pins no approval by itself, so until a separate owner-approved
-  -- forward migration seeds the pinned rows this gate fails closed with only
-  -- the generic conflict sentinel.
+  -- between the request and the pinned owner approvals, in both directions.
+  -- Each comparison is its own predicate with a single, uniform column arity:
+  -- kind sets are compared as one column, role->kind and scenario->role as two,
+  -- so no branch mixes column counts.  CP-02 pins no approval by itself, so
+  -- until a separate owner-approved forward migration seeds the pinned rows
+  -- this gate fails closed with only the generic conflict sentinel.
   -- (Resource kinds are matched by registered resource, not by locator alone.)
+
+  -- (a) registered resource KIND set must equal the pinned kind set.
   if exists (
     (
       select distinct resource.resource_kind
@@ -531,13 +537,13 @@ begin
       join platform_private.ac265_approved_safe_resources as resource
         on resource.resource_ref = requested.resource_ref
       except
-      select distinct pinned.resource_kind
+      select pinned.resource_kind
       from platform_private.ac265_approved_registry_resources as pinned
       where pinned.environment = 'staging'
     )
     union all
     (
-      select distinct pinned.resource_kind
+      select pinned.resource_kind
       from platform_private.ac265_approved_registry_resources as pinned
       where pinned.environment = 'staging'
       except
@@ -546,7 +552,12 @@ begin
       join platform_private.ac265_approved_safe_resources as resource
         on resource.resource_ref = requested.resource_ref
     )
-    union all
+  ) then
+    return jsonb_build_object('status', 'conflict');
+  end if;
+
+  -- (b) role -> resource-kind assignment must equal the pinned assignment.
+  if exists (
     (
       select role_binding.role_key, resource.resource_kind
       from jsonb_each(v_roles) as role_binding(role_key, resource_refs)
@@ -570,7 +581,12 @@ begin
       join platform_private.ac265_approved_safe_resources as resource
         on resource.resource_ref = requested.resource_ref
     )
-    union all
+  ) then
+    return jsonb_build_object('status', 'conflict');
+  end if;
+
+  -- (c) scenario -> role assignment must equal the pinned assignment.
+  if exists (
     (
       select scenario_binding.scenario_key, requested.role_key
       from jsonb_each(v_scenarios) as scenario_binding(scenario_key, role_values)
@@ -683,6 +699,8 @@ comment on table platform_private.ac265_approved_registry_role_kinds is
   'Private owner-approved nine-role to safe-resource-kind assignment; empty until an owner-approved forward migration seeds it.';
 comment on table platform_private.ac265_approved_registry_scenario_roles is
   'Private owner-approved ten-scenario to role assignment; empty until an owner-approved forward migration seeds it.';
+comment on column platform_private.ac265_approved_registry_resources.approval_ref is
+  'Documentation-only opaque owner-approval locator; not a verified signature and grants no safety.';
 comment on function platform_api.ac265_approved_safe_resource_register(jsonb) is
   'Registers one server-derived, digest-only staging resource only when it exactly matches an owner-approved pinned kind/locator; otherwise a generic conflict.';
 comment on function platform_api.ac265_approved_runner_mapping_register(jsonb) is
