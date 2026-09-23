@@ -51,7 +51,12 @@ const TOOL_ENV = Object.freeze({
   LC_ALL: 'C',
   TZ: 'UTC',
 });
+// `execFileSync` sends `killSignal` once and then waits for the child to exit,
+// so `timeout` is a hard bound only when the child cannot ignore the signal.
+// `unzip` catches SIGTERM and can deadlock inside that handler, which would
+// strand the synchronous wait with no upper bound, so kill with SIGKILL.
 const TOOL_TIMEOUT_MS = 10_000;
+const TOOL_KILL_SIGNAL = 'SIGKILL' as const;
 
 const fail = (message?: string): never => {
   void message;
@@ -134,6 +139,7 @@ const runTool = (
       encoding: 'utf8',
       maxBuffer,
       timeout: TOOL_TIMEOUT_MS,
+      killSignal: TOOL_KILL_SIGNAL,
       windowsHide: true,
     });
   } catch {
@@ -152,6 +158,7 @@ const runToolBytes = (
       encoding: 'buffer',
       maxBuffer,
       timeout: TOOL_TIMEOUT_MS,
+      killSignal: TOOL_KILL_SIGNAL,
       windowsHide: true,
     }) as Buffer;
   } catch {
