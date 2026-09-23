@@ -12,16 +12,16 @@ const workflow = readFileSync(
 
 const workflowHeader = workflow.slice(0, workflow.indexOf('\njobs:'));
 const materializeStep = workflow.match(
-  /\n\s{6}- name: Materialize the exact protected registry request[\s\S]*?(?=\n\s{6}- name: Register)/u,
+  /\n\s{6}- name: Materialize the dispatched registry request \(caller-supplied input\)[\s\S]*?(?=\n\s{6}- name: Submit)/u,
 );
 const registerStep = workflow.match(
-  /\n\s{6}- name: Register the approved registry entry[\s\S]*$/u,
+  /\n\s{6}- name: Submit the registry registration request \(transport only\)[\s\S]*$/u,
 );
 
-describe('AC265 approved-registry registration workflow contract', () => {
-  it('is manual-only, names the protected registration, and accepts exactly one required string', () => {
+describe('AC265 registry registration transport workflow contract', () => {
+  it('is manual-only, names the transport, and accepts exactly one required string', () => {
     expect(workflow).toMatch(
-      /^name:\s*AC265 approved registry registration\s*$/mu,
+      /^name:\s*AC265 registry registration transport \(approval binding pending\)\s*$/mu,
     );
     expect(workflow).not.toMatch(/hosted acceptance/iu);
     expect(workflowHeader).toMatch(/^on:\s*$/mu);
@@ -81,7 +81,7 @@ describe('AC265 approved-registry registration workflow contract', () => {
     expect(workflow).toContain('uses: ./.github/actions/setup');
   });
 
-  it('materializes only the exact dispatched request beneath runner temp with an owner-only mask', () => {
+  it('materializes only the dispatched request beneath runner temp with an owner-only mask and no approval claim', () => {
     expect(materializeStep).toBeDefined();
     const step = materializeStep?.[0] ?? '';
     expect(step).toContain(
@@ -99,7 +99,7 @@ describe('AC265 approved-registry registration workflow contract', () => {
     expect(step).not.toContain('secrets.SUPABASE_SECRET_KEY');
   });
 
-  it('passes only protected runtime inputs to the registration entrypoint', () => {
+  it('passes only the registration runtime inputs to the transport entrypoint', () => {
     expect(registerStep).toBeDefined();
     const step = registerStep?.[0] ?? '';
     expect(

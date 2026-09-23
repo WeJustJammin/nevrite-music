@@ -8,6 +8,15 @@ import {
 import { isAbsolute, resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
 
+// Protected manual entrypoint for the CP-02 approved-registry register RPCs.
+//
+// This is registration transport/plumbing only. The caller supplies the strict
+// register request through the workflow dispatch input; CP-02 (unlike CP-04b)
+// pins no policy table, so nothing here proves that the referenced safe
+// resources or the runner mapping are owner-approved. A successful run writes
+// opaque, server-derived registry rows; it does not establish the owner-approval
+// binding and must not be treated as the registry population gate.
+
 import { parseStrictJson } from './parse-strict-json.ts';
 import {
   registerAc265ApprovedRunnerMapping,
@@ -20,7 +29,7 @@ import {
   type ContentSchemaRegistryAc265ApprovedSafeResourceRegisterRequest,
 } from '../../packages/contracts/src/content-schema-registry/operational-release-evidence-hosted-approved-registry-control.ts';
 
-const FAILURE = 'AC265 approved registry registration failed';
+const FAILURE = 'AC265 registry registration failed';
 const REQUEST_FILE_NAME = 'ac265-registry-registration-request.json';
 const MAX_REQUEST_BYTES = 32 * 1024;
 
@@ -173,10 +182,11 @@ export const runRegisterAc265ApprovedRegistry = async ({
     appendSafeOutput(
       summaryPath,
       [
-        '## AC265 approved safe resource registered',
+        '## AC265 registry safe-resource row registered (transport only)',
         '',
         `- Resource kind: \`${outcome.resourceKind}\``,
         `- Resource reference: \`${outcome.resourceRef}\``,
+        '- Owner-approval binding: not established by this dispatch.',
         '',
       ].join('\n'),
     );
@@ -203,9 +213,10 @@ export const runRegisterAc265ApprovedRegistry = async ({
   appendSafeOutput(
     summaryPath,
     [
-      '## AC265 approved runner mapping registered',
+      '## AC265 registry runner-mapping row registered (transport only)',
       '',
       `- Mapping ID: \`${outcome.mappingId}\``,
+      '- Owner-approval binding: not established by this dispatch.',
       '',
     ].join('\n'),
   );

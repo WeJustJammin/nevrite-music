@@ -1,4 +1,12 @@
 import { parseStrictJson } from './parse-strict-json.ts';
+
+// Bounded service-role transport for the CP-02 approved-registry register RPCs.
+//
+// This is registration plumbing only: it forwards an already-formed strict
+// register request and echoes/binds the server result. CP-02 pins no approval
+// policy table, so registering through this client does not prove that the
+// caller is owner-approved, nor that the referenced safe resources or the
+// runner mapping are approved facts.
 import {
   ContentSchemaRegistryAc265ApprovedRunnerMappingRegisterRequestSchema,
   ContentSchemaRegistryAc265ApprovedRunnerMappingRegisterResponseSchema,

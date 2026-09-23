@@ -1158,24 +1158,32 @@ Slices 10–17 remain dependency-locked.
   builds, bundle budgets, and performance smoke. Separate database verification
   remains green at 50 pgTAP files / 1,818 tests with type parity.
 
-## 2026-09-23 AC265 CP-02 protected registry-population client (local only, unmerged)
+## 2026-09-23 AC265 CP-02 registry registration transport (plumbing only, unmerged)
 
 This is an isolated worktree feature branch (`codex/ac265-cp02-registry-population`
 from `origin/main`); nothing here is pushed, merged, or deployed, and no registry
 row, identity, or grant is created.
 
-- Added the missing TypeScript protected population path for the already-promoted
+Independent security review found a policy blocker, so this work is now
+described honestly as registration transport/plumbing only. CP-02 (unlike
+CP-04b) pins no approval policy table, so a `workflow_dispatch` request body
+plus the currently unreviewed `staging` environment does NOT prove
+owner-approved safe resources or mapping. The owner-approval binding for the
+CP-02 population gate remains OPEN; this commit does not close it and is not
+acceptance evidence.
+
+- Added the missing TypeScript register transport for the already-promoted
   CP-02 migration. No migration and no contract change: the strict
   `ac265-hosted-approved-registry-control-v1` schemas are consumed as-is, so
   `contracts:check` is unaffected.
 
 ```text
-infra/workflows/ac265-approved-registry-registration-rpc.ts   (new bounded service-role client)
-infra/workflows/register-ac265-approved-registry.ts           (new protected manual entrypoint)
+infra/workflows/ac265-approved-registry-registration-rpc.ts   (new bounded service-role client; transport only)
+infra/workflows/register-ac265-approved-registry.ts           (new manual registration entrypoint; owner-approval binding open)
 tests/ac265-approved-registry-registration-rpc.test.ts        (new, RED-first)
 tests/ac265-approved-registry-registration-entrypoint.test.ts (new, RED-first)
 tests/ac265-approved-registry-registration-workflow-contract.test.ts (new)
-.github/workflows/register-ac265-approved-registry.yml        (new, main-only/staging)
+.github/workflows/register-ac265-approved-registry.yml        (new, main-only/staging; transport only)
 ```
 
 - The bounded service-role client POSTs only the strict register request to
@@ -1191,9 +1199,9 @@ tests/ac265-approved-registry-registration-workflow-contract.test.ts (new)
   and `redacted === true`, plus `locatorSha256` and `resource.kind` for the
   safe-resource result and a full role/scenario mapping-to-resources re-binding
   for the mapping result. Any `{status:'conflict'}` response fails generically.
-- The protected entrypoint reads only `$RUNNER_TEMP/ac265-registry-registration-request.json`
+- The registration entrypoint reads only `$RUNNER_TEMP/ac265-registry-registration-request.json`
   (<= 32 KiB, strict schema, safe path/realpath checks), requires the full
-  protected environment, and appends only the server-derived resource reference
+  registration environment, and appends only the server-derived resource reference
   and kind, or the mapping id, to `GITHUB_OUTPUT` and `GITHUB_STEP_SUMMARY`.
 - The workflow is manual-only (`workflow_dispatch`), main-only
   (`if: github.ref == 'refs/heads/main'`), `runs-on: ubuntu-24.04`,
@@ -1210,11 +1218,11 @@ tests/ac265-approved-registry-registration-workflow-contract.test.ts (new)
   ended) again reported 3 files / 34 tests passed. Prettier and ESLint are clean
   on the new files. Full `pnpm validate`/Playwright remain deliberately unrun to
   avoid host contention, per operator direction.
-- Boundary: this path registers only opaque, server-derived registry rows behind
-  the existing forced-RLS/service-role RPCs. It does not seed identities,
-  mandates, grants, or resources, does not verify underlying resource safety,
-  mints no receipt or attestation, and provides no hosted runner. It closes no
-  AC265 criterion and is not acceptance evidence.
+- Boundary: this transport registers only opaque, server-derived registry rows
+  behind the existing forced-RLS/service-role RPCs. It does not seed identities,
+  mandates, grants, or resources, does not verify underlying resource safety or
+  owner approval, mints no receipt or attestation, and provides no hosted
+  runner. It closes no AC265 criterion and is not acceptance evidence.
 
 AC209, AC211, AC265, and AC266 remain open. Slice 09 stays **279/283** with
 depth ratio **0.986**; Slices 10–17 remain dependency-locked.

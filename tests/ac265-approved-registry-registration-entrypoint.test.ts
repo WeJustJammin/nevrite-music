@@ -22,7 +22,7 @@ const RESOURCE_REF =
   'ac265-resource://content_schema/74000000-0000-4000-8000-000000000001';
 const MAPPING_ID = '76000000-0000-4000-8000-000000000007';
 const APPROVED_AT = '2026-09-21T13:00:00.000Z';
-const FAILURE = 'AC265 approved registry registration failed';
+const FAILURE = 'AC265 registry registration failed';
 
 const contract = makeContract();
 const entrypointPath = fileURLToPath(
@@ -134,7 +134,7 @@ const responseFor = (payload: unknown, status = 200) =>
     headers: { 'content-type': 'application/json' },
   });
 
-describe('AC265 protected approved-registry registration step', () => {
+describe('AC265 registry registration transport step (plumbing only)', () => {
   it('registers a safe resource and persists only the server-derived reference and kind', async () => {
     const env = environmentFor(writeRequest(safeResourceRequest));
     let body = '';
@@ -154,7 +154,7 @@ describe('AC265 protected approved-registry registration step', () => {
       `registration_outcome=safe_resource_registered\nresource_ref=${RESOURCE_REF}\nresource_kind=content_schema\n`,
     );
     const summary = readFileSync(env.GITHUB_STEP_SUMMARY, 'utf8');
-    expect(summary).toContain('AC265 approved safe resource registered');
+    expect(summary).toContain('AC265 registry safe-resource row registered');
     expect(summary).toContain(RESOURCE_REF);
     expect(body).not.toContain(SERVICE_ROLE_KEY);
     expect(readFileSync(env.GITHUB_OUTPUT, 'utf8')).not.toContain(
@@ -197,7 +197,7 @@ describe('AC265 protected approved-registry registration step', () => {
     expect(readFileSync(env.GITHUB_OUTPUT, 'utf8')).toBe('');
   });
 
-  it('requires the full protected environment before RPC', async () => {
+  it('requires the full registration environment before RPC', async () => {
     const path = writeRequest(safeResourceRequest);
     for (const name of [
       'RUNNER_TEMP',
