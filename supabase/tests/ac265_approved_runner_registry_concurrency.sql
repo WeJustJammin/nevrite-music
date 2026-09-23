@@ -125,7 +125,10 @@ begin
       to_regclass('platform_private.ac265_approved_runner_mapping_resources'),
       to_regclass('platform_private.ac265_approved_runner_mapping_scenarios'),
       to_regclass('platform_private.ac265_runner_authorizations'),
-      to_regclass('platform_private.ac265_verified_candidates')
+      to_regclass('platform_private.ac265_verified_candidates'),
+      to_regclass('platform_private.ac265_approved_registry_resources'),
+      to_regclass('platform_private.ac265_approved_registry_role_kinds'),
+      to_regclass('platform_private.ac265_approved_registry_scenario_roles')
     );
 
   for trigger_row in
@@ -189,6 +192,15 @@ begin
     '10000000-0000-4000-8000-000000000031'::uuid,
     '10000000-0000-4000-8000-000000000032'::uuid
   );
+
+  -- This suite seeds the CP-02 owner-approved pins (which the population-gate
+  -- migration leaves empty) through an autocommitting dblink session, so they
+  -- outlive the transaction rollback.  Their immutability triggers were dropped
+  -- above with the rest, so delete every pin here to keep `pnpm db:test`
+  -- hermetic across repeated runs without a reset.
+  delete from platform_private.ac265_approved_registry_scenario_roles;
+  delete from platform_private.ac265_approved_registry_role_kinds;
+  delete from platform_private.ac265_approved_registry_resources;
 
   for trigger_row in
     select trigger_definition
@@ -997,6 +1009,14 @@ select ok(
    from ac265_cp02_concurrency_results
    where case_name = 'read-during-mapping-registration'),
   'a concurrent read sees either no mapping or the complete mapping, never a partial child set'
+);
+
+select is(
+  (select (select count(*) from platform_private.ac265_approved_registry_resources)
+        + (select count(*) from platform_private.ac265_approved_registry_role_kinds)
+        + (select count(*) from platform_private.ac265_approved_registry_scenario_roles)),
+  0::bigint,
+  'suite cleanup removes every autocommitted owner-approved pin so repeated runs stay hermetic'
 );
 
 select finish();
