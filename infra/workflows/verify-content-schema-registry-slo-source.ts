@@ -79,7 +79,6 @@ export const verifyContentSchemaRegistrySloSource = async (
     ),
     jobReference,
     options.sourceRevision,
-    successfulStatus.status,
   );
   const workflowId = verifyProductionWorkflow(
     await requestJson(

@@ -16,6 +16,21 @@ filesystem and validation operations.
   output. Missing counts remain null, not zero. Diagnostic failures warn but
   never replace or bypass the subsequent normal evidence collector.
 
+- `ac209-email-diagnostics.ts` and its entrypoint
+  `diagnose-production-ac209-email.ts` answer one AC209 failure-forensics
+  question for the old exercise window: whether the Email Sending dataset was
+  readable and enabled for the observability token, whether the window query
+  returned zero rows, an identity mismatch, a terminal-status mismatch, a full
+  page, or duplicate/multiple matches, and the documented requester limits.
+  It reuses the exact settings and event shapes documented for
+  `zones(...).settings.emailSendingAdaptive` and `emailSendingAdaptive`, is
+  read-only, and writes one redacted report of bounded counts, booleans, and
+  closed non-PII codes. It never retains raw addresses, subjects, provider
+  message identifiers, provider bodies, or secrets, closes no acceptance
+  criterion, and replaces neither the delivery verifier nor the visible receipt
+  inspection. Dispatch contract:
+  `.github/workflows/diagnose-production-ac209-email.yml`.
+
 - `build-immutable-artifacts.sh` builds the workspace and packages both web
   runtime configurations for the immutable CI artifact.
 - `write-ci-gate-evidence.sh` derives the release gate set from successful CI

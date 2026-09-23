@@ -13,6 +13,12 @@ type ProductionJobReference = Readonly<{
   jobId: string;
 }>;
 
+type VerifiedProductionJobReference = Readonly<{
+  runId: string;
+  jobId: string;
+  canonicalUrl: string;
+}>;
+
 type VerifiedProductionJob = Readonly<{
   runId: string;
   runAttempt: number;
@@ -33,17 +39,36 @@ const failDeployProductionIdentity = (): never => {
   );
 };
 
-const parseProductionJobUrl = (
-  value: unknown,
+// A GitHub repository rename leaves every historical deployment status and job
+// URL address pinned to the slug in effect at the time it was recorded. GitHub
+// still serves those aliases for the same immutable repository identity, so the
+// production verifier accepts the recorded slug of the repository it already
+// binds by owner, name, and numeric ID. The mapping is exact and owner-scoped:
+// only the listed historical slug for this exact repository is accepted, and
+// every run, job, source, and repository-numeric-ID check is unchanged.
+const HISTORICAL_REPOSITORY_SLUGS: Readonly<Record<string, readonly string[]>> =
+  {
+    'WeJustJammin/wejammin': ['WeJustJammin/nevrite-music'],
+  };
+
+const acceptedRepositorySlugs = (
   owner: string,
   name: string,
+): readonly string[] => [
+  `${owner}/${name}`,
+  ...(HISTORICAL_REPOSITORY_SLUGS[`${owner}/${name}`] ?? []),
+];
+
+const parseProductionJobUrl = (
+  value: unknown,
+  acceptedSlugs: readonly string[],
 ): ProductionJobReference => {
   if (typeof value !== 'string') return failDeployProductionIdentity();
   const match =
     /^https:\/\/github\.com\/([^/]+)\/([^/]+)\/actions\/runs\/([1-9][0-9]*)\/job\/([1-9][0-9]*)$/u.exec(
       value,
     );
-  if (match?.[1] !== owner || match[2] !== name)
+  if (match === null || !acceptedSlugs.includes(`${match[1]}/${match[2]}`))
     return failDeployProductionIdentity();
   return { runId: match[3]!, jobId: match[4]! };
 };
@@ -52,12 +77,17 @@ export const verifyProductionJobReference = (
   status: JsonObject,
   owner: string,
   name: string,
-): ProductionJobReference => {
-  const target = parseProductionJobUrl(status.target_url, owner, name);
-  const log = parseProductionJobUrl(status.log_url, owner, name);
+): VerifiedProductionJobReference => {
+  const acceptedSlugs = acceptedRepositorySlugs(owner, name);
+  const target = parseProductionJobUrl(status.target_url, acceptedSlugs);
+  const log = parseProductionJobUrl(status.log_url, acceptedSlugs);
   if (target.runId !== log.runId || target.jobId !== log.jobId)
     return failDeployProductionIdentity();
-  return target;
+  return {
+    runId: target.runId,
+    jobId: target.jobId,
+    canonicalUrl: `https://github.com/${owner}/${name}/actions/runs/${target.runId}/job/${target.jobId}`,
+  };
 };
 
 const positiveSafeInteger = (value: unknown): value is number =>
@@ -65,9 +95,8 @@ const positiveSafeInteger = (value: unknown): value is number =>
 
 export const verifyProductionJob = (
   value: unknown,
-  expected: ProductionJobReference,
+  expected: VerifiedProductionJobReference,
   sourceRevision: string,
-  status: JsonObject,
 ): VerifiedProductionJob => {
   if (
     !isJsonObject(value) ||
@@ -82,8 +111,7 @@ export const verifyProductionJob = (
     value.conclusion !== 'success' ||
     value.head_sha !== sourceRevision ||
     value.head_branch !== 'main' ||
-    value.html_url !== status.target_url ||
-    value.html_url !== status.log_url
+    value.html_url !== expected.canonicalUrl
   )
     return failDeployProductionIdentity();
 
