@@ -1399,3 +1399,17 @@ depth ratio **0.986**; Slices 10–17 remain dependency-locked.
   both suites, `pnpm type-check`, ESLint `--max-warnings=0`, Prettier, and
   `pnpm progress:check`. Full `pnpm validate` and `pnpm db:verify` remain
   deferred while the CP-02 agent holds the shared local database and host.
+
+### 2026-09-23 dedicated staging test accounts - owner decision recorded
+
+- The owner decided on 2026-09-23 to provision dedicated staging test accounts
+  for the nine locked AC265 roles. The decision and its unresolved gates are
+  recorded in the
+  [AC265 dedicated staging test accounts decision record](../verification/2026-09-23-ac265-dedicated-staging-test-accounts-decision.md).
+  Nothing was provisioned and no criterion moved.
+- Open gates recorded there: the Cloud Identity Free vs existing Google org
+  choice is pending, the 2026-09-10 sole-admin-principal decision still governs
+  privileged admin test identity and is not superseded, the separate async
+  question on that privileged identity is unanswered, and the Chrome browser
+  bridge is unavailable on this host. No credential, identity, grant, tenant, or
+  resource was created.
