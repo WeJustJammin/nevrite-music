@@ -96,12 +96,14 @@ export class Ac209EmailSendingAnalyticsError extends Error {
   }
 }
 
-const fail = (
+export const failAc209EmailSendingAnalytics = (
   code: Ac209EmailSendingAnalyticsErrorCode,
   detail?: string,
 ): never => {
   throw new Ac209EmailSendingAnalyticsError(code, detail);
 };
+
+const fail = failAc209EmailSendingAnalytics;
 
 const EmailShaSchema = z.string().regex(SHA256);
 export const Ac209EmailSendingAnalyticsInputSchema = z
@@ -268,7 +270,14 @@ const readProviderEvent = (value: unknown) => {
   };
 };
 
-const readRows = (payload: unknown): unknown[] => {
+/**
+ * Reads the single zone record every AC209 Email Sending query expects.
+ * Exported so the redacted diagnostic reuses one envelope contract instead of
+ * duplicating the provider-shape rules.
+ */
+export const readAc209EmailSendingZoneRecord = (
+  payload: unknown,
+): Record<string, unknown> => {
   if (!isRecord(payload))
     fail('provider_response_invalid', 'provider response is malformed.');
   if (
@@ -287,7 +296,12 @@ const readRows = (payload: unknown): unknown[] => {
     fail('provider_resource_unavailable', 'provider zone is unavailable.');
   if (zones.length !== 1 || !isRecord(zones[0]))
     fail('provider_response_invalid', 'provider zone result is not unique.');
-  const rows = zones[0].emailSendingAdaptive;
+  return zones[0];
+};
+
+const readRows = (payload: unknown): unknown[] => {
+  const zone = readAc209EmailSendingZoneRecord(payload);
+  const rows = zone.emailSendingAdaptive;
   if (!Array.isArray(rows))
     fail('provider_response_invalid', 'provider event result is malformed.');
   if (rows.length >= AC209_EMAIL_SENDING_PAGE_LIMIT)
@@ -296,25 +310,7 @@ const readRows = (payload: unknown): unknown[] => {
 };
 
 const verifyCapabilityResponse = (payload: unknown): void => {
-  if (!isRecord(payload))
-    fail('provider_response_invalid', 'provider response is malformed.');
-  if (
-    'errors' in payload &&
-    payload.errors !== undefined &&
-    payload.errors !== null
-  )
-    failGraphqlErrors(payload.errors);
-  const data = payload.data;
-  if (!isRecord(data) || !isRecord(data.viewer))
-    fail('provider_response_invalid', 'provider response is malformed.');
-  const zones = data.viewer.zones;
-  if (!Array.isArray(zones))
-    fail('provider_response_invalid', 'provider zone result is malformed.');
-  if (zones.length === 0)
-    fail('provider_resource_unavailable', 'provider zone is unavailable.');
-  if (zones.length !== 1 || !isRecord(zones[0]))
-    fail('provider_response_invalid', 'provider zone result is not unique.');
-  const events = zones[0].emailSendingAdaptive;
+  const events = readAc209EmailSendingZoneRecord(payload).emailSendingAdaptive;
   if (!Array.isArray(events) || events.length > 1)
     fail('provider_response_invalid', 'provider event result is malformed.');
   if (
@@ -330,7 +326,12 @@ const verifyCapabilityResponse = (payload: unknown): void => {
     fail('provider_response_invalid', 'provider event status is malformed.');
 };
 
-const request = async (
+/**
+ * Issues one bounded, timeout-guarded GraphQL request against the documented
+ * Cloudflare endpoint. Exported for the redacted diagnostic so both callers
+ * share one request, classification, and redaction boundary.
+ */
+export const requestAc209EmailSendingGraphql = async (
   fetchImpl: typeof fetch,
   token: string,
   body: Readonly<Record<string, unknown>>,
@@ -416,7 +417,7 @@ export const verifyAc209EmailSendingCapability = async (
     configurationValidated = true;
     const endMs = Date.now();
     verifyCapabilityResponse(
-      await request(fetchImpl ?? fetch, parsed.token, {
+      await requestAc209EmailSendingGraphql(fetchImpl ?? fetch, parsed.token, {
         query: AC209_EMAIL_SENDING_CAPABILITY_QUERY,
         variables: {
           zoneTag: parsed.zoneId,
@@ -453,7 +454,7 @@ export const collectAc209EmailSendingAnalytics = async (
     )
       fail('invalid_configuration', 'provider time window is invalid.');
     const rows = readRows(
-      await request(fetchImpl ?? fetch, parsed.token, {
+      await requestAc209EmailSendingGraphql(fetchImpl ?? fetch, parsed.token, {
         query: AC209_EMAIL_SENDING_QUERY,
         variables: {
           zoneTag: parsed.zoneId,
