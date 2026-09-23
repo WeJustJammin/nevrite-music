@@ -1369,3 +1369,33 @@ depth ratio **0.986**; Slices 10–17 remain dependency-locked.
   both suites, `pnpm type-check`, ESLint `--max-warnings=0`, and Prettier. Full
   `pnpm validate` and `pnpm db:verify` remain deferred while the CP-02 agent
   holds the shared local database and host.
+
+### 2026-09-23 re-review fixes (CP-04f H1c and scenario-order over-normalization)
+
+- **V3 compatibility blocker (fixed).** The H1 fix over-reached: it normalized
+  each `scenarioRoleBindings[scenario]` array to locked role declaration order,
+  but `assertAc265HostedRunnerPolicyV1` compares those arrays to the
+  independently attested `ac265-approved-runner-mappings-v1` bytes with
+  `isDeepStrictEqual`, which is position-sensitive on arrays. A legitimate
+  approval whose array read `[owner_full, entitled_read, ...]` was rewritten to
+  `[entitled_read, owner_full, ...]`, so the verifier rejected a correct
+  contract. Scenario-order normalization is removed entirely.
+- `scenarioRoleBindings` and `roleResourceBindings` are now both left untouched.
+  Their element order is approval-source-significant, so a reordered sequence is
+  a different mapping and must move the digest instead of being normalized to
+  match; there is no canonical set normalization for those collections. Only
+  `resourceRefs` is normalized, and it remains order-stable.
+- **H1c (fixed).** Bytes and digest were computed from a normalized copy while
+  the returned frozen `manifest` retained the caller's original reference order,
+  so `sha256(canonicalManifestBytes(result.manifest))` did not reproduce
+  `manifestSha256` for reversed input. The builder now parses the normalized
+  candidate and returns that same frozen object, so the returned manifest, the
+  published bytes, and the digest describe one value.
+- RED first: a rehash-under-reversed-references case failed with mismatched
+  digests, and a reversed-scenario case failed because the digest did not move.
+  Both now pass, and the scenario test additionally asserts the scenario order
+  is retained verbatim in the canonical bytes and that the digest changes.
+- Re-verified with pinned Node 22.23.1 / pnpm 11.24.0: 16 focused tests across
+  both suites, `pnpm type-check`, ESLint `--max-warnings=0`, Prettier, and
+  `pnpm progress:check`. Full `pnpm validate` and `pnpm db:verify` remain
+  deferred while the CP-02 agent holds the shared local database and host.

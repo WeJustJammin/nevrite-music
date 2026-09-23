@@ -4,7 +4,6 @@ import {
   type Ac265HostedRunManifestV1,
 } from '../../packages/contracts/src/content-schema-registry/operational-release-evidence-hosted-run-manifest.ts';
 import { ContentSchemaRegistryHostedRunnerContractSchema } from '../../packages/contracts/src/content-schema-registry/operational-release-evidence-hosted-input.ts';
-import { CONTENT_SCHEMA_REGISTRY_HOSTED_ROLES } from '../../packages/contracts/src/content-schema-registry/operational-release-evidence-common.ts';
 import { CONTENT_SCHEMA_REGISTRY_HOSTED_RESOURCE_KINDS } from '../../packages/contracts/src/content-schema-registry/operational-release-evidence-hosted-input-references.ts';
 import { CorrelationIdSchema } from '../../packages/contracts/src/identifiers.ts';
 
@@ -33,17 +32,23 @@ const isRecord = (value: unknown): value is Record<string, unknown> =>
 const compareCodePoints = (left: string, right: string): number =>
   left < right ? -1 : 1;
 
-// Two collections in the locked contract are sets rather than sequences: the
-// four safe resource references are exactly one per locked kind and distinct,
-// and each scenario's role list is distinctness-checked. Their array order
+// Exactly one contract collection is a set rather than a sequence: the four
+// safe resource references are one per locked kind and distinct, and the V3
+// verifier consumes them through a keyed map. Their array order therefore
 // carries no meaning, so it is normalized to the contract's own locked
 // declaration order before serialization and one logical contract yields one
 // digest.
 //
-// Role-to-resource arrays are deliberately NOT reordered. The V3 verifier
-// compares them by exact deep equality against the independently attested
-// ac265-approved-runner-mappings-v1 bytes, so their order is
-// contract-significant and must survive canonicalization unchanged.
+// Nothing else is reordered. The V3 verifier compares `roleResourceBindings`
+// and `scenarioRoleBindings` by exact deep equality against the independently
+// attested ac265-approved-runner-mappings-v1 bytes, so their element order is
+// approval-source-significant: a reordered sequence is a different mapping and
+// must produce a different digest rather than being silently normalized to
+// match. There is no canonical set normalization for those collections.
+//
+// The normalized resource order is also applied to the manifest the builder
+// returns, so the frozen object, the published bytes, and the digest all
+// describe the same value.
 const lockedOrder =
   <Item>(
     locked: readonly string[],
@@ -68,34 +73,11 @@ const normalizeResourceRefs = (value: unknown): unknown =>
       )
     : value;
 
-const normalizeScenarioRoleBindings = (value: unknown): unknown =>
-  isRecord(value)
-    ? Object.fromEntries(
-        Object.entries(value).map(([scenario, roles]) => [
-          scenario,
-          Array.isArray(roles)
-            ? [...roles].sort(
-                lockedOrder<unknown>(
-                  CONTENT_SCHEMA_REGISTRY_HOSTED_ROLES,
-                  (role) => String(role),
-                ),
-              )
-            : roles,
-        ]),
-      )
-    : value;
-
 const canonicalContractValue = (value: object): object => {
-  const contract = value as {
-    resourceRefs?: unknown;
-    scenarioRoleBindings?: unknown;
-  };
+  const contract = value as { resourceRefs?: unknown };
   return {
     ...value,
     resourceRefs: normalizeResourceRefs(contract.resourceRefs),
-    scenarioRoleBindings: normalizeScenarioRoleBindings(
-      contract.scenarioRoleBindings,
-    ),
   };
 };
 
@@ -197,10 +179,15 @@ export const buildAc265HostedRunManifestV1 = (
   if (!manifest.success) fail();
   assertReferenceDigests(manifest.data);
 
-  const manifestBytes = canonicalManifestBytes({
+  // Normalize before freezing so the returned manifest is exactly the value the
+  // canonical bytes and digest describe: re-hashing it reproduces the digest.
+  const normalizedManifest = Ac265HostedRunManifestV1Schema.safeParse({
     ...manifest.data,
     resourceRefs: normalizeResourceRefs(manifest.data.resourceRefs),
   });
+  if (!normalizedManifest.success) fail();
+
+  const manifestBytes = canonicalManifestBytes(normalizedManifest.data);
   const runnerContractBytes = canonicalManifestBytes(
     canonicalContractValue(contract.data),
   );
@@ -211,7 +198,7 @@ export const buildAc265HostedRunManifestV1 = (
     fail();
 
   return deepFreeze({
-    manifest: manifest.data,
+    manifest: normalizedManifest.data,
     manifestBytes: () => new Uint8Array(manifestBytes),
     manifestSha256: sha256Bytes(manifestBytes),
     runnerContractBytes: () => new Uint8Array(runnerContractBytes),

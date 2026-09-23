@@ -16,6 +16,7 @@ import {
 } from './ac265-hosted-test-fixtures.ts';
 
 import { CONTENT_SCHEMA_REGISTRY_HOSTED_ROLES } from '../../packages/contracts/src/content-schema-registry/operational-release-evidence-common.ts';
+import { CONTENT_SCHEMA_REGISTRY_HOSTED_RESOURCE_KINDS } from '../../packages/contracts/src/content-schema-registry/operational-release-evidence-hosted-input-references.ts';
 const correlationId = uuidFor(900);
 const FAILURE = 'AC265 hosted run manifest is invalid.';
 
@@ -39,7 +40,7 @@ const expectFailure = (input: unknown): void => {
 };
 
 describe('AC265 hosted run manifest v1 builder', () => {
-  it('canonicalizes intrinsically unordered reference collections to one stable digest', () => {
+  it('normalizes the unordered resource-reference set to one stable digest', () => {
     const contract = runnerContract();
     const baseline = build();
 
@@ -62,40 +63,20 @@ describe('AC265 hosted run manifest v1 builder', () => {
     );
     expect(reversedResources.manifestSha256).toBe(baseline.manifestSha256);
 
-    // Every scenario's role list is a distinctness-checked set, so its order
-    // carries no meaning either.
-    const reversedScenarioRoles = Object.fromEntries(
-      Object.entries(contract.scenarioRoleBindings).map(([scenario, roles]) => [
-        scenario,
-        [...roles].reverse(),
-      ]),
+    // The returned frozen manifest must be the same normalized object that the
+    // published bytes and digest describe, so re-hashing it reproduces the
+    // published digest even when the input reference order differed.
+    expect(
+      sha256Bytes(canonicalManifestBytes(reversedResources.manifest)),
+    ).toBe(reversedResources.manifestSha256);
+    expect(reversedResources.manifestSha256).toBe(baseline.manifestSha256);
+    expect(
+      Buffer.from(manifestBytesOf(reversedResources)).toString('utf8'),
+    ).toBe(
+      Buffer.from(canonicalManifestBytes(reversedResources.manifest)).toString(
+        'utf8',
+      ),
     );
-    const reversedScenarios = build({
-      runnerContract: {
-        ...contract,
-        scenarioRoleBindings: reversedScenarioRoles,
-      },
-    });
-    expect(contractBytesOf(reversedScenarios)).toEqual(
-      contractBytesOf(baseline),
-    );
-    expect(reversedScenarios.runnerContractSha256).toBe(
-      baseline.runnerContractSha256,
-    );
-    expect(reversedScenarios.manifestSha256).toBe(baseline.manifestSha256);
-
-    // Reversing both unordered collections together is still one digest.
-    const reversedBoth = build({
-      runnerContract: {
-        ...contract,
-        resourceRefs: [...contract.resourceRefs].reverse(),
-        scenarioRoleBindings: reversedScenarioRoles,
-      },
-    });
-    expect(reversedBoth.runnerContractSha256).toBe(
-      baseline.runnerContractSha256,
-    );
-    expect(reversedBoth.manifestSha256).toBe(baseline.manifestSha256);
 
     // Ordered sequences are not reordered: role-to-resource arrays and the
     // session/resource reference forms keep the caller's order.
@@ -116,10 +97,55 @@ describe('AC265 hosted run manifest v1 builder', () => {
     );
     expect(
       (canonical.resourceRefs as { kind: string }[]).map(({ kind }) => kind),
-    ).toEqual([...contract.resourceRefs.map(({ kind }) => kind)]);
+    ).toEqual([...CONTENT_SCHEMA_REGISTRY_HOSTED_RESOURCE_KINDS]);
+  });
 
-    // Normalization is limited to the two unordered collections.
-    expect(Object.keys(canonical).sort()).toEqual(Object.keys(contract).sort());
+  it('preserves approval-source scenario-role order because the V3 verifier deep-compares it', () => {
+    const contract = runnerContract();
+    const baseline = build();
+
+    // The locked contract says a scenario-role mapping must be fixed by the
+    // independently approved ac265-approved-runner-mappings-v1 source, and the
+    // V3 verifier compares these arrays to those attested bytes with
+    // isDeepStrictEqual. Array order is therefore approval-source-significant.
+    const reversedScenarioRoles = Object.fromEntries(
+      Object.entries(contract.scenarioRoleBindings).map(([scenario, roles]) => [
+        scenario,
+        [...roles].reverse(),
+      ]),
+    );
+    const reversedScenarios = build({
+      runnerContract: {
+        ...contract,
+        scenarioRoleBindings: reversedScenarioRoles,
+      },
+    });
+
+    // A changed approval order is a different mapping, so the digest must move.
+    expect(reversedScenarios.runnerContractSha256).not.toBe(
+      baseline.runnerContractSha256,
+    );
+    expect(reversedScenarios.manifestSha256).toBe(baseline.manifestSha256);
+    expect(reversedScenarios.manifest).not.toHaveProperty(
+      'scenarioRoleBindings',
+    );
+    expect(reversedScenarios.manifest).not.toHaveProperty(
+      'roleResourceBindings',
+    );
+
+    // The caller's order survives verbatim into the canonical bytes.
+    const canonical = JSON.parse(
+      Buffer.from(contractBytesOf(reversedScenarios)).toString('utf8'),
+    ) as { scenarioRoleBindings: Record<string, string[]> };
+    for (const scenario of Object.keys(contract.scenarioRoleBindings))
+      expect(canonical.scenarioRoleBindings[scenario]).toEqual([
+        ...reversedScenarioRoles[scenario],
+      ]);
+
+    // The returned object agrees with the published bytes and digest.
+    expect(
+      sha256Bytes(canonicalManifestBytes(reversedScenarios.manifest)),
+    ).toBe(reversedScenarios.manifestSha256);
   });
 
   it('publishes bytes that cannot be mutated to break the frozen digests', () => {
