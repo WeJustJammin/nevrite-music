@@ -1413,3 +1413,50 @@ depth ratio **0.986**; Slices 10–17 remain dependency-locked.
   question on that privileged identity is unanswered, and the Chrome browser
   bridge is unavailable on this host. No credential, identity, grant, tenant, or
   resource was created.
+
+### 2026-09-23 AC265 run-manifest read-side boundary (CP-04g, local/private only)
+
+- Adds the missing read half for the frozen run manifest. The builder could emit
+  canonical bytes and a digest, but nothing could read a manifest back from
+  bytes, so a hosted consumer would have had to hand-roll a loose parse.
+- `infra/workflows/ac265-hosted-run-manifest-crypto.ts` now owns one canonical
+  form and one parse boundary: `parseAc265HostedRunManifestV1Bytes` rejects
+  non-bytes, empty, and over-64 KiB input, duplicate JSON object members, schema
+  drift, and any encoding that is not already canonical;
+  `canonicalizeAc265HostedRunManifestV1` canonicalizes a value;
+  `canonicalAc265HostedRunManifestBytes` and
+  `canonicalAc265HostedRunnerContractBytes` produce canonical bytes;
+  `verifyAc265HostedRunManifestSha256` binds a digest fail-closed; and
+  `readAc265HostedRunManifestV1Bytes` is the digest-bound read entrypoint, so a
+  consumer cannot read manifest bytes without proving them against the expected
+  digest.
+- The builder consumes the shared module instead of its own private copies, so
+  the build and parse sides cannot drift. `lockedOrder`, the resource-reference
+  normalization, the code-point canonical serializer, the digest helper, and the
+  reference-digest checks now exist once. The builder re-exports
+  `AC265_HOSTED_RUN_MANIFEST_MAX_BYTES`, `canonicalManifestBytes`, and
+  `sha256Bytes` so existing imports are unaffected.
+- Order semantics are pinned in the new suite. Only `resourceRefs` is
+  order-insensitive, matching the V3 verifier's keyed-map read; a reversed
+  resource set yields one digest in both the manifest and runner-contract byte
+  paths. Approved `scenarioRoleBindings` order stays significant because the V3
+  verifier deep-compares it against the independently attested
+  `ac265-approved-runner-mappings-v1` bytes, so a reordered approval moves the
+  runner-contract digest instead of being normalized to match.
+- Exported canonical byte functions return a fresh plain `Uint8Array`, not a
+  `Buffer` and never a retained internal alias, so a caller cannot mutate bytes
+  after the digest was computed.
+- Focused evidence: 3 files / 26 tests pass, covering 10 new read-boundary cases
+  plus the existing builder and contract suites; ESLint `--max-warnings=0`,
+  Prettier, and `pnpm progress:check` are clean under pinned Node 22.23.1 /
+  pnpm 11.24.0. Full `pnpm validate` and `pnpm db:verify` remain deferred while
+  PR #98 CI and the main/staging chain own the shared runner.
+- Chronology note: the test file was authored before the implementation module,
+  but an independent reviewer's focused run found 3/10 failures from `Buffer`
+  versus `Uint8Array` equality and one over-generic expected error message. A
+  passing pre-fix run was therefore never observed, so this record does not claim
+  an observed RED; the failures were test and format integration defects rather
+  than missing behavior.
+- This is local/private construction only. No report-v3 contract change, no
+  seeded identity, resource, grant, or registry row, and no hosted acceptance.
+  The external gates listed in the decision record above are unchanged.
