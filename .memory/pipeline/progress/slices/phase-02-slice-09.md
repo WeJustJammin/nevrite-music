@@ -1224,5 +1224,51 @@ tests/ac265-approved-registry-registration-workflow-contract.test.ts (new)
   owner approval, mints no receipt or attestation, and provides no hosted
   runner. It closes no AC265 criterion and is not acceptance evidence.
 
+## 2026-09-23 AC265 CP-02 owner-approved population gate (local only, unmerged)
+
+Independent security review found that a dispatched request body plus the
+unreviewed `staging` environment does not prove owner-approved safe
+resources or mapping, and CP-02 (unlike CP-04b) pinned no approval policy. This
+adds an Option A forward-only, fail-closed approval gate so the registry RPCs
+cannot be used as a population path until an owner-approved policy exists.
+
+- New forward-only migration `20260923090000_ac265_approved_registry_population_gate.sql`
+  creates three EMPTY private pinned policy tables
+  (`ac265_approved_registry_resources`, `ac265_approved_registry_role_kinds`,
+  `ac265_approved_registry_scenario_roles`: forced RLS, no direct grants,
+  immutable insert-only, guard function revoked from every runtime role).
+  It redefines `platform_api.ac265_approved_safe_resource_register(jsonb)` and
+  `platform_api.ac265_approved_runner_mapping_register(jsonb)` with
+  `create or replace` to require EXACT SET EQUALITY against those pins,
+  bidirectionally, before any registry insert. The strict
+  `ac265-hosted-approved-registry-control-v1` contracts are unchanged; no
+  server-derived field is invented.
+- It seeds no owner row, value, resource, identity, grant, or mandate. With the
+  tables empty both RPCs fail closed and return only the generic
+  `{"status":"conflict"}` sentinel, so the owner-approval binding remains
+  OPEN. The gate is enforced inside the RPCs rather than by a row trigger
+  because the register contract exposes only the conflict sentinel.
+- Design decision (flagged): the pin is staging-wide (one locator digest per
+  kind), following CP-04b's single-pinned-policy-reference pattern; there is no
+  per-authorization dimension. The existing pgTAP suites were updated
+  accordingly: `ac265_approved_runner_registry.sql` seeds the disposable pins
+  (locators 1..4), and `ac265_approved_runner_registry_concurrency.sql`
+  normalizes its per-authorization locator sets to that single pinned set and
+  seeds the pins as the superuser fixture connection (never through
+  service_role).
+- New pgTAP suite `ac265_approved_registry_population_gate.sql` proves the
+  boundary: table/RLS/grant/immutability shape, fail-closed with no pins, a
+  matching (kind, locator) registering, a non-pinned locator failing closed, a
+  mapping equal to the pins registering, and drift in either direction (wrong
+  role kind, missing scenario member) rejected by the gate with only the
+  sentinel. Drift cases use fresh idempotency refs so the gate, not replay,
+  rejects them.
+- NOT YET RUN: the local Supabase stack was reserved by the parent's validation
+  and then by PR #96 CI on this shared host, so `pnpm db:verify`/pgTAP and
+  `db:types:check` are pending operator release. Expected follow-up once
+  free: apply the migration, run `pnpm db:verify`, and regenerate
+  `packages/data-access/src/database.types.ts` (the new private tables make
+  the committed types stale, exactly as CP-04b's migration required). Closes no
+  AC265 criterion; no hosted acceptance is claimed.
 AC209, AC211, AC265, and AC266 remain open. Slice 09 stays **279/283** with
 depth ratio **0.986**; Slices 10–17 remain dependency-locked.

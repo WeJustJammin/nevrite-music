@@ -265,6 +265,36 @@ select lives_ok(
   'the disposable CP-02 authorization fixture loads'
 );
 
+-- AC265 CP-02 owner-approved population pins (disposable, local-test-only).
+-- The population-gate migration seeds no rows; these exact pins let the
+-- register RPCs accept the disposable fixtures used by this suite.
+insert into platform_private.ac265_approved_registry_resources
+  (resource_kind, locator_sha256, approval_ref, environment)
+values
+  ('content_schema', decode(repeat('1', 64), 'hex'), 'ac265-approval://staging/90000000-0000-4000-8000-000000000001', 'staging'),
+  ('staff_case', decode(repeat('2', 64), 'hex'), 'ac265-approval://staging/90000000-0000-4000-8000-000000000002', 'staging'),
+  ('organization', decode(repeat('3', 64), 'hex'), 'ac265-approval://staging/90000000-0000-4000-8000-000000000003', 'staging'),
+  ('prerequisite', decode(repeat('4', 64), 'hex'), 'ac265-approval://staging/90000000-0000-4000-8000-000000000004', 'staging');
+
+insert into platform_private.ac265_approved_registry_role_kinds
+  (role_key, resource_kind, approval_ref, environment)
+values
+  ('entitled_read', 'content_schema', 'ac265-approval://staging/90000000-0000-4000-8000-000000000010', 'staging'),
+  ('owner_full', 'organization', 'ac265-approval://staging/90000000-0000-4000-8000-000000000011', 'staging'),
+  ('guardian_mandate', 'content_schema', 'ac265-approval://staging/90000000-0000-4000-8000-000000000012', 'staging'),
+  ('junior_restricted', 'content_schema', 'ac265-approval://staging/90000000-0000-4000-8000-000000000013', 'staging'),
+  ('business_mandate', 'organization', 'ac265-approval://staging/90000000-0000-4000-8000-000000000014', 'staging'),
+  ('staff_case_scoped', 'staff_case', 'ac265-approval://staging/90000000-0000-4000-8000-000000000015', 'staging'),
+  ('admin_step_up', 'organization', 'ac265-approval://staging/90000000-0000-4000-8000-000000000016', 'staging'),
+  ('forbidden_hidden', 'content_schema', 'ac265-approval://staging/90000000-0000-4000-8000-000000000017', 'staging'),
+  ('disabled_prerequisite', 'prerequisite', 'ac265-approval://staging/90000000-0000-4000-8000-000000000018', 'staging');
+
+insert into platform_private.ac265_approved_registry_scenario_roles
+  (scenario_key, role_key, approval_ref, environment)
+select scenario_key, role_key, 'ac265-approval://staging/90000000-0000-4000-8000-000000000020', 'staging'
+from unnest(array['idp_sign_in', 'server_authoritative_rls', 'keyboard_landmarks_live_regions', 'three_breakpoints', 'zoom_200', 'offline_reconnect', 'stale_multi_tab', 'auth_expiry', 'rate_limit_429', 'dependency_outage']) as scenarios(scenario_key)
+cross join unnest(array['entitled_read', 'owner_full', 'guardian_mandate', 'junior_restricted', 'business_mandate', 'staff_case_scoped', 'admin_step_up', 'forbidden_hidden', 'disabled_prerequisite']) as roles(role_key);
+
 select ok(
   (
     select identity_sha256 = extensions.digest(
