@@ -10,17 +10,39 @@ import {
   type VerifierContext,
   withReceiptHash,
 } from './ac265-hosted-receipt-test-fixtures.ts';
+import type { ReceiptSlot } from './ac265-hosted-receipt-test-types.ts';
 import { sha256 } from './ac265-hosted-test-fixtures.ts';
 
 describe('AC265 hosted receipt integrity fail-closed behavior', () => {
-  it('rejects missing, digest-mismatched, or byte-tampered receipt data for every receipt subject', () => {
-    const fixture = createFixture({ includeCandidateIdentityReceipt: true });
-    expect(
-      ContentSchemaRegistryHostedE2eReportV3Schema.safeParse(fixture.report)
-        .success,
-    ).toBe(true);
+  const intactFixture = createFixture({
+    includeCandidateIdentityReceipt: true,
+  });
+  const descriptionFor = (slot: ReceiptSlot): string => {
+    if (slot.kind === 'candidate') return 'candidate identity receipt';
+    if (slot.kind === 'cleanup') return 'cleanup receipt';
+    if (slot.kind === 'role')
+      return `role receipt (${intactFixture.report.roles[slot.index]?.role ?? slot.index})`;
+    return `scenario receipt (${intactFixture.report.scenarios[slot.index]?.scenario ?? slot.index})`;
+  };
 
-    for (const slot of fixture.slots) {
+  it('accepts the intact report body across the exhaustive receipt subject set', () => {
+    expect(
+      ContentSchemaRegistryHostedE2eReportV3Schema.safeParse(
+        intactFixture.report,
+      ).success,
+    ).toBe(true);
+  });
+
+  // One test per receipt subject keeps each corruption class comfortably inside
+  // the shared CI timeout. Building a fixture re-signs the full artifact set, so
+  // a single test spanning all 21 subjects x 3 corruption classes exceeded the
+  // 15s budget; the subject x class matrix below preserves exhaustive coverage.
+  describe.each(
+    intactFixture.slots.map(
+      (slot) => [descriptionFor(slot), slot] as [string, ReceiptSlot],
+    ),
+  )('receipt subject %s', (_description, slot) => {
+    it('rejects missing receipt data', () => {
       const missing = createFixture({ includeCandidateIdentityReceipt: true });
       expect(
         ContentSchemaRegistryHostedE2eReportV3Schema.safeParse(missing.report)
@@ -34,7 +56,9 @@ describe('AC265 hosted receipt integrity fail-closed behavior', () => {
           contextFor(missing),
         ),
       ).toThrow();
+    });
 
+    it('rejects digest-mismatched receipt data', () => {
       const badDigest = createFixture({
         includeCandidateIdentityReceipt: true,
       });
@@ -55,7 +79,9 @@ describe('AC265 hosted receipt integrity fail-closed behavior', () => {
           contextFor(badDigest),
         ),
       ).toThrow();
+    });
 
+    it('rejects byte-tampered receipt data', () => {
       const tamperedBytes = createFixture({
         includeCandidateIdentityReceipt: true,
       });
@@ -72,35 +98,43 @@ describe('AC265 hosted receipt integrity fail-closed behavior', () => {
           contextFor(tamperedBytes),
         ),
       ).toThrow();
-    }
+    });
   });
 
-  it('rejects mismatched receipt subjects and results even when retained bytes and report digests agree', () => {
-    for (const slot of createFixture({ includeCandidateIdentityReceipt: true })
-      .slots) {
-      for (const target of ['subject', 'result'] as const) {
-        const fixture = createFixture({
-          includeCandidateIdentityReceipt: true,
-        });
-        const originalBytes = fixture.receiptBytes.get(slot.ref);
-        expect(originalBytes).toBeDefined();
-        const alteredBytes = tamperEnvelope(originalBytes!, target);
-        fixture.receiptBytes.set(slot.ref, alteredBytes);
-        withReceiptHash(fixture.report, slot, sha256(alteredBytes));
-        expect(
-          ContentSchemaRegistryHostedE2eReportV3Schema.safeParse(fixture.report)
-            .success,
-        ).toBe(true);
-        expect(() =>
-          validateWithContext(
-            fixture.report,
-            fixture.contractBytes,
-            contextFor(fixture),
-          ),
-        ).toThrow();
-      }
-    }
-  });
+  describe.each(
+    intactFixture.slots.map(
+      (slot) => [descriptionFor(slot), slot] as [string, ReceiptSlot],
+    ),
+  )(
+    'receipt subject %s with internally consistent bytes and digests',
+    (_description, slot) => {
+      it.each(['subject', 'result'] as const)(
+        'rejects %s-mismatched receipt data',
+        (target) => {
+          const fixture = createFixture({
+            includeCandidateIdentityReceipt: true,
+          });
+          const originalBytes = fixture.receiptBytes.get(slot.ref);
+          expect(originalBytes).toBeDefined();
+          const alteredBytes = tamperEnvelope(originalBytes!, target);
+          fixture.receiptBytes.set(slot.ref, alteredBytes);
+          withReceiptHash(fixture.report, slot, sha256(alteredBytes));
+          expect(
+            ContentSchemaRegistryHostedE2eReportV3Schema.safeParse(
+              fixture.report,
+            ).success,
+          ).toBe(true);
+          expect(() =>
+            validateWithContext(
+              fixture.report,
+              fixture.contractBytes,
+              contextFor(fixture),
+            ),
+          ).toThrow();
+        },
+      );
+    },
+  );
 
   it('requires genuine resolver branding and trusted artifact coverage', () => {
     const fixture = createFixture({ includeCandidateIdentityReceipt: true });

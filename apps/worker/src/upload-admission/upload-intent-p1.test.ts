@@ -366,9 +366,14 @@ describe('upload-intent P1 contract boundary', () => {
   });
 
   it('reconciles a canonical attempt when the commit rejects after the deadline', async () => {
+    vi.useFakeTimers();
     let rejectCommit!: (error: Error) => void;
     const commitResult = new Promise<never>((_, reject) => {
       rejectCommit = reject;
+    });
+    let markCommitStarted!: () => void;
+    const commitStarted = new Promise<void>((resolve) => {
+      markCommitStarted = resolve;
     });
     const cancelIntent = vi.fn(async () => {
       throw new Error('cancellation unavailable');
@@ -379,6 +384,7 @@ describe('upload-intent P1 contract boundary', () => {
       repository: {
         cancelIntent,
         createIntent: vi.fn(async () => {
+          markCommitStarted();
           await commitResult;
           throw new Error('commit failed after timeout');
         }),
@@ -394,13 +400,20 @@ describe('upload-intent P1 contract boundary', () => {
         })),
       },
     })(request());
-    await new Promise((resolve) => setTimeout(resolve, 15));
-    await expect(responsePromise).resolves.toMatchObject({ status: 503 });
-    expect(cancelIntent).toHaveBeenCalledOnce();
+    try {
+      await commitStarted;
+      await vi.advanceTimersByTimeAsync(5);
+      await expect(responsePromise).resolves.toMatchObject({ status: 503 });
+      expect(cancelIntent).toHaveBeenCalledOnce();
+      expect(revoke).toHaveBeenCalledOnce();
 
-    rejectCommit(new Error('commit failed after timeout'));
-    await new Promise((resolve) => setTimeout(resolve, 0));
-    expect(revoke).toHaveBeenCalledOnce();
+      rejectCommit(new Error('commit failed after timeout'));
+      await vi.advanceTimersByTimeAsync(0);
+      expect(cancelIntent).toHaveBeenCalledOnce();
+      expect(revoke).toHaveBeenCalledOnce();
+    } finally {
+      vi.useRealTimers();
+    }
   });
 
   it('bounds a never-settling commit while invoking the cancellation fence', async () => {
