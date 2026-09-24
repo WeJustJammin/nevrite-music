@@ -91,6 +91,34 @@ filesystem and validation operations.
   request.
   Dispatch contract: `.github/workflows/probe-production-ac209-email-presence.yml`.
 
+  A second, sibling entry answers the dataset-ownership question that the sending
+  probe alone cannot. Cloudflare documents that emails sent from a Worker through
+  the `send_email` binding appear in the Email Routing summary as dropped, even
+  when they were delivered successfully
+  (https://developers.cloudflare.com/email-service/platform/limits/), while also
+  publishing two separate zone-level datasets, `emailSendingAdaptive` and
+  `emailRoutingAdaptive`
+  (https://developers.cloudflare.com/email-service/observability/metrics-analytics/).
+  `ac209-email-routing-presence-contract.ts` declares the routing contract and the
+  combined report, `ac209-email-routing-presence.ts` implements both, and
+  `probe-production-ac209-datasets.ts` is the entrypoint. One dispatch reads the
+  sending dataset and the routing dataset from a single probe instant and reports
+  them side by side: four requests total, two bounded windows per dataset, each
+  with `limit: 1` and each selecting only the non-PII `status` field. Neither
+  verdict is derived from the other, and the routing read reuses the sibling's
+  request boundary, zone-record reader, and closed failure vocabulary rather than
+  restating provider-shape rules.
+
+  Interpretation stays deliberately cautious. A routing `dropped` row does not by
+  itself prove that the Email Sending dataset should be empty, and an unreadable
+  routing dataset does not prove that it holds events; in particular, an
+  unavailable routing dataset is reported as a closed code rather than as an empty
+  reading, which is the expected shape when Email Routing is not enabled on the
+  zone. The probe enables nothing, mutates nothing, closes no acceptance
+  criterion, and replaces neither the correlation gate, the delivery verifier, nor
+  the visible receipt inspection. Dispatch contract:
+  `.github/workflows/probe-production-ac209-email-datasets.yml`.
+
 - `write-ci-gate-evidence.sh` derives the release gate set from successful CI
   job results and the built artifact boundary.
 - `verify-ci-release-gates.sh` runs the contract, production-registry, and SLO
