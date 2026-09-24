@@ -120,6 +120,21 @@ tokens; never reuse the interactive Wrangler OAuth credential in CI.
 
 Non-secret GitHub environment variables include `CLOUDFLARE_ACCOUNT_ID`, `STAGING_WEB_ORIGIN`, `STAGING_API_ORIGIN`, `SUPABASE_PROJECT_REF`, `SUPABASE_URL`, and the protected staging publication key identifier `AC265_SOURCE_MANIFEST_SIGNING_KEY_ID`. Production also records `PRODUCTION_API_ORIGIN` for the post-deploy health gate, `PRODUCTION_ALERT_EMAIL_SHA256` and `PRODUCTION_ALERT_SENDER_SHA256` for redacted AC209 address verification, `CLOUDFLARE_EMAIL_ZONE_ID` for the exact Email Sending analytics zone, `CLOUDFLARE_PLATFORM_QUEUE_ID` for the exact production queue and AC211 Queue Analytics query, and `STAGING_SUPABASE_PROJECT_REF` so promotion can independently match staging migration evidence to the configured staging project. Browser-safe application values are variables rather than secrets: `PUBLIC_APP_ORIGIN`, `PUBLIC_SUPABASE_URL`, and `PUBLIC_SUPABASE_PUBLISHABLE_KEY`. Administrative keys and database passwords remain secrets. No third-party application-provider credential is authorized.
 
+`AC209_PRESENCE_ALTERNATE_ZONE_TAG` is a non-secret protected production
+environment variable for the read-only AC209 email presence probe. It is **unset
+by default**, and an unset or empty value means "no alternate candidate tag", so
+a default dispatch sends no extra request. Setting it to a zone identifier makes
+the probe read one bounded, count-only Email Sending window for that tag in
+addition to the exact parent zone, and report only whether that read succeeded.
+That is a cross-zone read, so it may be set only when the observability token's
+zone resources already permit the tag; the variable never expands token scope,
+the probe never changes token authorization, and no cross-zone read is performed
+while the variable is unset. The alternate read is inventory only: it never
+feeds the parent-zone classification, never contributes to AC209 acceptance, and
+neither tag identifier is retained in the artifact. Editing or setting this
+variable requires owner authorization, as with every other environment variable
+above.
+
 ## Cost control
 
 Workers Paid runs under DEC-103's soft $10/month operational budget. Cloudflare's enabled account-level `Billing Budget Alert` is set to exactly `$10` and delivers to the owner email. Both Worker environments retain a 50 ms per-invocation CPU cap; any expected increase above the budget requires a new owner decision before configuration changes.
