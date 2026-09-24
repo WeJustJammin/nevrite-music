@@ -223,29 +223,50 @@ describe('AC265 hosted artifact attestation issuer windows and bindings', () => 
     );
   });
 
-  it('accepts a v7 run identity exactly as the upstream runner contract does', () => {
+  it('rejects a non-v4 run identity, matching the authority that mints it and CP-04d', () => {
     const issuer = issuerWith(issuerSigningMaterial());
-    const v7RunId = '70000000-0000-7000-8000-000000000007';
+    // The run authority mints `randomUUID()` (v4) and CP-04d plus retained-report
+    // provenance are v4-only, so a v1/v5/v7 identity must fail at this boundary
+    // rather than produce a companion the rest of the pipeline cannot carry.
+    for (const runId of [
+      '70000000-0000-1000-8000-000000000007',
+      '70000000-0000-5000-8000-000000000007',
+      '70000000-0000-7000-8000-000000000007',
+    ])
+      expect(() =>
+        issuer.signArtifact(
+          issuerReceiptRequest(),
+          issuerRunBinding({ runId }),
+        ),
+      ).toThrow(/binding|attestation|invalid|key/i);
+    expect(() =>
+      assertAc265HostedArtifactAttestationIssuerRunBinding(
+        issuer,
+        issuerRunBinding({ runId: '70000000-0000-7000-8000-000000000007' }),
+      ),
+    ).toThrow(/binding|issuer|invalid/i);
+    // The v4 identity the authority actually mints still signs and authenticates.
     const signed = issuer.signArtifact(
       issuerReceiptRequest(),
-      issuerRunBinding({ runId: v7RunId }),
+      issuerRunBinding(),
     );
-    expect(signed.runId).toBe(v7RunId);
-    const authenticated = authenticateAc265HostedArtifactAttestationV1({
-      artifactBytes: signed.artifactBytes,
-      attestationBytes: signed.attestationBytes,
-      expected: {
-        keyId: issuer.keyId,
-        kind: 'server_receipt',
-        artifactRef: ISSUER_RECEIPT_REF,
-        runId: v7RunId,
-        candidateIdentitySha256: ISSUER_CANDIDATE_IDENTITY_SHA256,
-        runnerContractSha256: ISSUER_RUNNER_CONTRACT_SHA256,
-        subjectSha256: signed.subjectSha256,
-      },
-      trustedKeys: issuer.trustedKeys,
-    });
-    expect(authenticated.attestation.runId).toBe(v7RunId);
+    expect(signed.runId).toBe(ISSUER_RUN_ID);
+    expect(
+      authenticateAc265HostedArtifactAttestationV1({
+        artifactBytes: signed.artifactBytes,
+        attestationBytes: signed.attestationBytes,
+        expected: {
+          keyId: issuer.keyId,
+          kind: 'server_receipt',
+          artifactRef: ISSUER_RECEIPT_REF,
+          runId: ISSUER_RUN_ID,
+          candidateIdentitySha256: ISSUER_CANDIDATE_IDENTITY_SHA256,
+          runnerContractSha256: ISSUER_RUNNER_CONTRACT_SHA256,
+          subjectSha256: signed.subjectSha256,
+        },
+        trustedKeys: issuer.trustedKeys,
+      }).attestation.runId,
+    ).toBe(ISSUER_RUN_ID);
   });
 
   it('still rejects malformed, wrong-variant, uppercase-swapped, and short run identities', () => {

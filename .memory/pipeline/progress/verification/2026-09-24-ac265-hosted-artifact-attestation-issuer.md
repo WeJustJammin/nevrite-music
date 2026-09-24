@@ -1,4 +1,4 @@
-# AC265 hosted-artifact attestation issuer — CP-04i
+# AC265 hosted-artifact attestation issuer — CP-04j
 
 **Date**: 2026-09-24  
 **Verdict**: local/private implementation GREEN; hosted acceptance OPEN  
@@ -6,9 +6,12 @@
 
 ## Implemented boundary
 
-CP-04i adds the missing live producer for the CP-04c/CP-04d hosted-artifact
-attestation path. The repository could already authenticate exact receipt and
-execution-evidence bytes and resolve them through a branded resolver, but
+CP-04j adds the missing live producer for the CP-04c/CP-04d hosted-artifact
+attestation path. The designation is CP-04j because the CP-04i label is
+already owned by the run-manifest producer-side integration on the
+`codex/ac265-manifest-v3-integration` branch. The repository could already
+authenticate exact receipt and execution-evidence bytes and resolve them
+through a branded resolver, but
 `createAc265HostedArtifactAttestation` had no non-test callsite, so nothing could
 produce the signed companions the resolver consumes.
 
@@ -29,6 +32,24 @@ requires, with the caller-pinned validity window. No secret is read, written,
 generated, or configured by this change.
 
 ## Byte-derived subjects
+
+## Run identity
+
+The boundary is v4-only and lowercase-exact, because the run authority mints
+`randomUUID()` (version 4) and both the CP-04d source manifest and the
+retained-report provenance are v4-only. One shared
+`HostedArtifactAttestationRunIdSchema` is enforced by the issuer, the
+entrypoint, the CP-04c attestation contract, and the resolver trust clone, so
+no layer can accept a run identity another layer rejects.
+
+An earlier revision on this branch widened three of those gates to a
+version-agnostic form while the entrypoint still enforced v4-only. That made a
+v7 acceptance path unreachable and would have let a signed companion exist for
+a run the rest of the pipeline cannot carry. It was corrected in this branch,
+not on promoted main: the widened gates were restored to v4-only, the
+entrypoint gate was folded onto the same shared schema, and the entrypoint now
+has direct end-to-end coverage for both a non-v4 rejection and a v4 issuance.
+The layer-level v7 tests that missed the gap were inverted to assert rejection.
 
 Server receipts must be complete canonical `ac265-hosted-e2e-receipt-v1`
 envelopes: the strict receipt envelope schema, the caller run identity, and the

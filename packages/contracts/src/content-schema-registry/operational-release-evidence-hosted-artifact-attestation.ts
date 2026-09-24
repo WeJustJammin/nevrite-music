@@ -22,18 +22,17 @@ export const HostedArtifactAttestationKindSchema = z.enum([
 const ARTIFACT_UUID =
   '[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}';
 /**
- * Run identity mirrors the frozen upstream runner contract's version-agnostic
- * UUID acceptance, so a v1 or v7 upstream run identity is accepted here
- * exactly as a v4 one is. The canonical lowercase form is retained because the
- * signed attestation bytes are canonical and the trusted run identity is
- * lowercase: uppercase spellings, the nil/max non-identities, and malformed
- * shapes stay rejected so one UUID can only ever be written one way. Artifact
- * references below stay v4-exact.
+ * Canonical run identity for the hosted-artifact boundary. The run authority
+ * mints `randomUUID()` (version 4) and the CP-04d source manifest plus the
+ * retained-report provenance are v4-only, so this boundary stays v4-only and
+ * lowercase-exact rather than accepting a version the rest of the pipeline
+ * cannot carry. Every gate from the issuer through the entrypoint and the
+ * resolver shares this one schema so they cannot drift apart.
  */
 export const HostedArtifactAttestationRunIdSchema = z
   .string()
   .regex(
-    /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/u,
+    /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/u,
     'run_id_invalid',
   );
 const HostedServerReceiptReferenceSchema = z

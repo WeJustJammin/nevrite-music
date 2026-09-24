@@ -295,6 +295,51 @@ describe('AC265 hosted artifact attestation issuance boundaries', () => {
     expect(() => statSync(run.output)).toThrow();
   });
 
+  it('rejects a non-v4 run identity end to end at the entrypoint', async () => {
+    // Coverage gap that let an unreachable v7 fix ship: the previous v7 tests
+    // only exercised signArtifact/resolver directly, never this entrypoint.
+    // The run authority mints randomUUID() (v4) and CP-04d is v4-only, so the
+    // entrypoint must fail closed on every non-v4 identity before publishing.
+    for (const runId of [
+      '71000000-0000-1000-8000-000000000007',
+      '71000000-0000-5000-8000-000000000007',
+      '71000000-0000-7000-8000-000000000007',
+    ]) {
+      const run = harness({
+        request: {
+          schemaVersion: 'ac265-hosted-artifact-attestation-request-v1',
+          runId,
+          candidateIdentitySha256: CANDIDATE_IDENTITY_DIGEST,
+          runnerContractSha256: RUNNER_CONTRACT_SHA256,
+          sources: [
+            {
+              kind: 'server_receipt',
+              ref: RECEIPT_REF,
+              artifactMember: 'receipt.json',
+              subject: { kind: 'role', key: 'owner_full' },
+              issuedAt: ISSUED_AT,
+              expiresAt: EXPIRES_AT,
+            },
+          ],
+        },
+      });
+      await expect(
+        runIssueAc265HostedArtifactsAttestations({ env: run.env }),
+      ).rejects.toThrow(FAILURE);
+      expect(() => statSync(run.output)).toThrow();
+    }
+  });
+
+  it('issues for the canonical v4 run identity end to end at the entrypoint', async () => {
+    const run = harness();
+    const summary = await runIssueAc265HostedArtifactsAttestations({
+      env: run.env,
+    });
+    expect(summary.runId).toBe(RUN_ID);
+    expect(summary.sources).toBe(2);
+    expect(statSync(run.output).isDirectory()).toBe(true);
+  });
+
   it('requires the step summary and artifact directory to resolve beneath runner temp', async () => {
     const outsideSummary = harness();
     const foreignSummary = join(

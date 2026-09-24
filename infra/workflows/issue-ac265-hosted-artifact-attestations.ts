@@ -11,7 +11,6 @@ import {
   AC265_HOSTED_ARTIFACT_ATTESTATION_REQUEST_MEMBERS,
   AC265_HOSTED_ARTIFACT_ATTESTATION_REQUEST_SCHEMA_VERSION,
   AC265_HOSTED_ARTIFACT_ATTESTATION_SHA256_PATTERN,
-  AC265_HOSTED_ARTIFACT_ATTESTATION_UUID_V4_PATTERN,
   failAc265HostedArtifactAttestationIssuance,
   type Ac265HostedArtifactAttestationEntrypointOptions,
   type Ac265HostedArtifactAttestationIssuanceSummary,
@@ -35,6 +34,7 @@ import {
   createAc265HostedArtifactAttestationIssuer,
   type Ac265HostedArtifactAttestationIssuerResult,
 } from './ac265-hosted-artifact-attestation-issuer.ts';
+import { AC265_HOSTED_ARTIFACT_ISSUER_RUN_ID_SCHEMA } from './ac265-hosted-artifact-attestation-issuer-inputs.ts';
 import { SafeReleaseTimestampSchema } from '../../packages/contracts/src/release-recovery-common.ts';
 
 export type {
@@ -149,7 +149,7 @@ export const runIssueAc265HostedArtifactsAttestations = async ({
     const runId = request['runId'];
     if (
       typeof runId !== 'string' ||
-      !AC265_HOSTED_ARTIFACT_ATTESTATION_UUID_V4_PATTERN.test(runId)
+      !AC265_HOSTED_ARTIFACT_ISSUER_RUN_ID_SCHEMA.safeParse(runId).success
     )
       return failAc265HostedArtifactAttestationIssuance();
     const candidateIdentitySha256 = requireDigest(

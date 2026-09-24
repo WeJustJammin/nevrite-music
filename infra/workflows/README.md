@@ -220,8 +220,10 @@ filesystem and validation operations.
 - `ac265-hosted-artifact-attestation-issuer.ts` is the live, fail-closed
   producer half of the CP-04c hosted-artifact boundary. It signs exact
   caller-supplied `server_receipt` and `execution_evidence` bytes into the
-  canonical, domain-separated `HostedArtifactAttestationV1` companion the
-  protected CP-04c/CP-04d resolver consumes. It never synthesizes receipts,
+  canonical, domain-separated `HostedArtifactAttestationV1` companion that the
+  CP-04c resolver authenticates as one member of the `Ac265HostedArtifactSource`
+  tuple the calling harness assembles; the resolver never consumes the
+  companion on its own. It never synthesizes receipts,
   credentials, or identity: the caller supplies the bytes and the run binding,
   and the signer refuses anything else. Key pinning is self-describing — the
   key ID is derived as `ac265-hosted-artifact-ed25519-<sha256(SPKI DER)[0..32]>`

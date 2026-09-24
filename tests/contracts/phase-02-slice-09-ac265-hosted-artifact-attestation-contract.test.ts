@@ -8,8 +8,6 @@ import {
 } from '../../packages/contracts/src/content-schema-registry/operational-release-evidence-hosted-artifact-attestation.ts';
 import * as contentSchemaRegistry from '../../packages/contracts/src/content-schema-registry/index.ts';
 import * as contracts from '../../packages/contracts/src/index.ts';
-import { ContentSchemaRegistryHostedRunnerContractSchema } from '../../packages/contracts/src/content-schema-registry/operational-release-evidence-hosted-input.ts';
-import { makeContract } from './ac265-hosted-test-fixtures.ts';
 
 const runId = '70000000-0000-4000-8000-000000000007';
 const artifactSha256 = 'a'.repeat(64);
@@ -129,47 +127,21 @@ describe('AC265 hosted artifact-attestation contract', () => {
       ).toBe(false);
   });
 
-  it('accepts the version-agnostic run identities the upstream runner contract allows', () => {
-    for (const runId of [
-      '70000000-0000-1000-8000-000000000007',
-      '70000000-0000-5000-8000-000000000007',
-      '70000000-0000-7000-8000-000000000007',
-    ])
-      expect(
-        HostedArtifactAttestationV1Schema.safeParse({
-          ...serverReceiptAttestation,
-          runId,
-        }).success,
-      ).toBe(true);
-  });
-
-  it('accepts every run identity the frozen upstream runner contract accepts, except non-canonical spellings', () => {
-    const contract = makeContract();
-    // Canonical lowercase identities must track upstream acceptance exactly.
+  it('accepts only the canonical lowercase v4 run identity the authority mints', () => {
+    // The run authority mints `randomUUID()` (version 4) and CP-04d plus
+    // retained-report provenance are v4-only, so this gate must stay v4-only
+    // rather than accept a version the rest of the pipeline cannot carry.
+    expect(
+      HostedArtifactAttestationV1Schema.safeParse({
+        ...serverReceiptAttestation,
+        runId: '70000000-0000-4000-8000-000000000007',
+      }).success,
+    ).toBe(true);
     for (const runId of [
       '70000000-0000-1000-8000-000000000007',
       '70000000-0000-3000-8000-000000000007',
-      '70000000-0000-4000-8000-000000000007',
       '70000000-0000-5000-8000-000000000007',
       '70000000-0000-7000-8000-000000000007',
-    ]) {
-      expect(
-        ContentSchemaRegistryHostedRunnerContractSchema.safeParse({
-          ...contract,
-          runId,
-        }).success,
-      ).toBe(true);
-      expect(
-        HostedArtifactAttestationV1Schema.safeParse({
-          ...serverReceiptAttestation,
-          runId,
-        }).success,
-      ).toBe(true);
-    }
-    // Non-canonical or malformed spellings stay rejected at this boundary even
-    // though the generic upstream schema is lenient about them, so one run
-    // identity always has exactly one canonical signed spelling.
-    for (const runId of [
       'A0000000-0000-4000-8000-000000000007',
       '00000000-0000-0000-0000-000000000000',
       'ffffffff-ffff-ffff-ffff-ffffffffffff',
