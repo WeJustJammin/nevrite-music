@@ -133,4 +133,23 @@ describe('AC265 hosted-runner authorization foundation workflow', () => {
     );
     expect(entrypoint).toContain('requestAc265HostedRunAuthorization');
   });
+
+  it('verifies system Google Chrome before any hosted browser work', () => {
+    const authorize = jobBlock(workflow, 'authorize');
+    const chromeStep = stepBlock(authorize, 'Verify system Google Chrome');
+
+    expect(chromeStep).toContain(
+      'run: bash infra/workflows/verify-system-chrome.sh',
+    );
+    expect(chromeStep).not.toMatch(
+      /playwright install|--with-deps|apt-get|curl|wget/iu,
+    );
+    expect(authorize.indexOf('Verify system Google Chrome')).toBeGreaterThan(
+      authorize.indexOf('uses: ./.github/actions/setup'),
+    );
+    expect(authorize.indexOf('Verify system Google Chrome')).toBeLessThan(
+      authorize.indexOf('Issue a redacted runner authorization'),
+    );
+    expect(workflow).not.toMatch(/playwright install/iu);
+  });
 });

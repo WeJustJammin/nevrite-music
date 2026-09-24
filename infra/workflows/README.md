@@ -83,6 +83,9 @@ filesystem and validation operations.
   job results and the built artifact boundary.
 - `verify-ci-release-gates.sh` runs the contract, production-registry, and SLO
   runbook checks that supply independent gate evidence.
+- `verify-system-chrome.sh` fails closed unless the runner provides the
+  installer-provided Google Chrome binary, so browser gates never silently fall
+  back to the Playwright-bundled Chromium download.
 - `verify-staging-artifacts.sh` validates the workflow-derived staging
   identity, origins, and downloaded artifact boundary.
 - `record-staging-artifacts.sh` records deterministic SHA-256 entries for the
