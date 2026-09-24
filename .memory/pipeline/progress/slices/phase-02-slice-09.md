@@ -819,18 +819,39 @@ response`; Workers Observability passed. Cloudflare's documented successful
   denominator while remaining unchecked and mandatory for post-Phase 2
   production-readiness/release.
 
-## Blocking release evidence (current as of 2026-09-21)
+## Blocking release evidence (current as of 2026-09-24)
 
 - P2-S09-AC-209: retain a genuine post-configuration redacted live-delivery
-  receipt. The latest read-only observability run `35612514031` failed with
-  `provider_graphql_error` on `emailSendingAdaptive`; it sent no email,
-  changed no queue or production state, performed no deployment, and produced
-  no receipt.
-- P2-S09-AC-211: collection run `35560241699` passed preflight but failed for
-  insufficient samples: `commands=0`, `protectedRpcs=0`, `acceptances=0`, and
-  `queueFirstAttempts=0`. No artifact was produced. Collection run `35846440023`
-  (UTC 2026-09-22) then reached the Queue Analytics parser and failed closed on
-  `malformed_queue_analytics_row` before any sample counts were computed. No
+  receipt. The read-only Email Routing day-count probe
+  [run 36067233068](https://github.com/WeJustJammin/wejammin/actions/runs/36067233068)
+  succeeded from exact `main` `20338c72` and reported **9 delivered routing rows
+  across 4 days** (2026-09-22/1, 2026-09-12/4, 2026-09-11/3, 2026-09-05/1) in
+  the 31-day window; the Email Sending dataset still reports **zero** in both
+  windows (`zone_wide_missing`). Grouped routing counts carry only `date` and
+  `status`, so none is attributable to the 2026-09-22 control alert, and the
+  provider may sample adaptive datasets. The earlier `provider_graphql_error`
+  on `emailSendingAdaptive` is repaired: the read-only dataset presence probe
+  [run 36059761536](https://github.com/WeJustJammin/wejammin/actions/runs/36059761536)
+  reached that dataset directly and returned zero rows instead of a provider
+  error, so the error condition itself is cleared and what remains is the
+  absence of sending telemetry. The read-only email diagnostic
+  [run 36069837542](https://github.com/WeJustJammin/wejammin/actions/runs/36069837542)
+  then queried that node over the exact hour of the verified send and returned
+  `settings=available` with `rowsReturned=0` and classification `zero_rows`,
+  confirming the query path is healthy and the dataset is empty for that hour.
+  Neither run yields a correlated Sending event or a delivered `dlq_nonempty`
+  row, so a fresh exercise is deferred until the evidence path works. The open
+  gate is the correlated
+  provider event plus a delivered `dlq_nonempty` row for the exact release.
+- P2-S09-AC-211: collection
+  [run 36038007951](https://github.com/WeJustJammin/wejammin/actions/runs/36038007951)
+  (UTC day 2026-09-23) passed preflight and failed closed for insufficient
+  samples: `commands=0`, `protectedRpcs=0`, `acceptances=0`, and
+  `queueFirstAttempts=0`, against floors of 200/200/200/1. No artifact was
+  produced. The Sep-22 run `35846440023` had failed earlier on
+  `malformed_queue_analytics_row`; that row-shape defect is fixed and promoted
+  in `21929176`, and this run's queue envelope was accepted with
+  `rowCount=0`, so the remaining blocker is genuine production volume. No
   complete retained UTC-day report exists; retain a later complete day with at
   least 200 samples, all five SLO results, and daily queue/DLQ counts.
 - P2-S09-AC-265: the latest candidate authorization attempt used PR #80 SHA

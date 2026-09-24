@@ -40,11 +40,13 @@ p95 / 500 ms** across 20 samples with zero errors; accessibility was **0/0**
 across three routes. These are staging promotion proofs only, not production
 evidence and not AC265 acceptance. The protected context, signing execution,
 retained hosted artifact, independently authenticated receipt, and complete
-hosted matrix remain open. Fresh AC211 collection run `35673313035` passed
+hosted matrix remain open. Superseded AC211 collection run `35673313035` passed
 preflight but failed closed for insufficient samples (`commands=0`,
 `protectedRpcs=0`, `acceptances=0`, `queueFirstAttempts=0`; `dataset=1`,
 `registry=0`, `productionRegistry=0`, `releaseRegistry=0`); no artifact or SLO
-verdict exists. See the [CP-04e verification record](verification/2026-09-21-ac265-hosted-artifact-source-manifest-publication.md).
+verdict exists. Current AC209/AC211 results are in the
+[2026-09-24 protected-run record](verification/2026-09-24-ac209-ac211-protected-run-evidence.md).
+See the [CP-04e verification record](verification/2026-09-21-ac265-hosted-artifact-source-manifest-publication.md).
 
 ## Prior promoted checkpoint — 2026-09-21 AC265 CP-04d
 

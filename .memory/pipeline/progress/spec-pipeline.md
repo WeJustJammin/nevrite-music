@@ -332,17 +332,25 @@ db:verify` passed **62 files / 2,211 tests** through migration
   Cloudflare's Zone Analytics Email Sending capability check with sanitized
   `provider_graphql_error`; no genuine delivery receipt or production
   acceptance is claimed. The token policy edit/retest remains pending.
-- **LATEST AC209 EVIDENCE:** Read-only observability run `35612514031` failed
+- **HISTORICAL AC209 EVIDENCE (superseded 2026-09-24):** Read-only observability run `35612514031` failed
   with `provider_graphql_error` on `emailSendingAdaptive`; it sent no email,
   changed no queue or production state, performed no deployment, and produced
-  no receipt. AC209 remains open.
-- **LATEST AC211 EVIDENCE (2026-09-21):** Collection run `35673313035` passed
+  no receipt. That failure has since cleared: dataset presence probe
+  `36059761536` and email diagnostic `36069837542` both reached
+  `emailSendingAdaptive` successfully - the latter over the exact hour of the
+  verified send, returning `settings=available`, `rowsReturned=0`, `zero_rows` -
+  so the error is a query/authorization condition that is gone, not a
+  permissions fault, and it yields no correlated Sending telemetry. AC209
+  remains open; the current reading is in the
+  [2026-09-24 protected-run record](verification/2026-09-24-ac209-ac211-protected-run-evidence.md).
+- **HISTORICAL AC211 EVIDENCE (2026-09-21, superseded):** Collection run `35673313035` passed
   preflight but failed closed for insufficient samples:
   `commands=0`, `protectedRpcs=0`, `acceptances=0`, and
   `queueFirstAttempts=0`; `dataset=1`, `registry=0`,
   `productionRegistry=0`, and `releaseRegistry=0`. No artifact or SLO verdict
   was produced. AC211 remains open and is one of the three active Slice 10
-  blockers.
+  blockers; the current 2026-09-23 result is in the
+  [2026-09-24 protected-run record](verification/2026-09-24-ac209-ac211-protected-run-evidence.md).
 - **HISTORICAL DIAGNOSTIC EVIDENCE:** PR #24 was exact `main` SHA
   `3bf66a610b013bf9600889780ee26319559fb31c`; CI `34013034252` and staging
   `34013296132` passed. Protected production runs `34016439881` and

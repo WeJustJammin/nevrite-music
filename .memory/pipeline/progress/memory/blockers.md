@@ -2,7 +2,7 @@
 
 ## Active
 
-- **P2-S09 external release evidence** (updated 2026-09-21) — Slice 09 remains
+- **P2-S09 external release evidence** (updated 2026-09-24) — Slice 09 remains
   at **279/282 active** (**283 authored IDs**) with authored depth ratio
   **0.986**. Phase 2 has **1,999 active criteria / 2,000 authored** because
   AC266 is owner-deferred and excluded from the active completion denominator.
@@ -48,7 +48,32 @@
   (`commands=0`, `protectedRpcs=0`, `acceptances=0`,
   `queueFirstAttempts=0`); `dataset=1`, `registry=0`,
   `productionRegistry=0`, and `releaseRegistry=0`. No artifact or SLO verdict
-  was produced. AC266 is owner-deferred
+  was produced.
+  The read-only AC209 Email Routing day-count probe
+  [run 36067233068](https://github.com/WeJustJammin/wejammin/actions/runs/36067233068)
+  succeeded from exact `main` `20338c72` and retained a redacted 582-byte
+  ZIP artifact whose digest, over the 967 bytes of uncompressed JSON, is
+  `sha256:95e3cc7378a1d3128ff7660bdf842808a175fc6c52fff07b0f522249b7a88c3a`,
+  with 7-day retention: **9 delivered routing rows across 4 days**
+  (2026-09-22/1, 2026-09-12/4, 2026-09-11/3, 2026-09-05/1), reported with
+  `observation=provider_reported_grouped_totals` and
+  `sampling=provider_may_sample_adaptive_dataset`. Email Sending still reports
+  zero rows in both windows (`zone_wide_missing`), and the grouped routing
+  counts carry only `date` and `status`, so none is attributable to the
+  2026-09-22 control alert; AC209 stays open on the correlated provider event
+  plus a delivered `dlq_nonempty` row. Read-only email diagnostic
+  [run 36069837542](https://github.com/WeJustJammin/wejammin/actions/runs/36069837542)
+  queried `emailSendingAdaptive` over the send hour and returned
+  `settings=available`, `rowsReturned=0`, `zero_rows`, which clears the earlier
+  permissions/query error without producing correlated telemetry. Cloudflare
+  support case `02343626` was
+  still **New** with no reply when read live on 2026-09-24. AC211 collection
+  [run 36038007951](https://github.com/WeJustJammin/wejammin/actions/runs/36038007951)
+  (UTC day 2026-09-23) passed preflight and failed closed with `commands=0`,
+  `protectedRpcs=0`, `acceptances=0`, and `queueFirstAttempts=0` against
+  floors of 200/200/200/1, producing no artifact; its queue envelope was
+  accepted with `rowCount=0`, so the remaining blocker is genuine production
+  volume rather than the fixed row-shape defect. AC266 is owner-deferred
   because the required real devices are unavailable; it remains unchecked and
   is excluded from active Phase 2 completion, but is mandatory for post-Phase 2
   production-readiness/release. No active acceptance gate closed. Slice 10
@@ -121,7 +146,9 @@
   target/attestation/evidence artifact, hosted matrix, independently
   authenticated receipt, or AC265 acceptance. Read-only AC209 verifier
   `35612514031` failed with `provider_graphql_error` after all
-  preflight/protection/workspace gates and produced no effects or receipt;
+  preflight/protection/workspace gates and produced no effects or receipt. That
+  failure has since cleared; the current AC209/AC211 reading is in the
+  [2026-09-24 protected-run record](../verification/2026-09-24-ac209-ac211-protected-run-evidence.md).
   AC265 remains open and Slice 10 remains locked on AC209, AC211, and AC265.
   AC266 remains unchecked and owner-deferred because real devices are
   unavailable; it is not passed or waived and remains a mandatory post-Phase 2
