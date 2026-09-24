@@ -178,6 +178,82 @@ filesystem and validation operations.
   deliberately does not read. Dispatch contract:
   `.github/workflows/probe-production-ac209-routing-day-counts.yml`.
 
+- `ac209-email-routing-event-contract.ts` owns the per-event query, the row and
+  window bounds, and the provenance rationale. `ac209-email-routing-event-schema.ts`
+  owns the Zod schemas and is re-exported by the contract, so one schema file
+  holds one domain and the dependency stays one-way (a DAG).
+  `ac209-email-routing-event.ts` and
+  `probe-production-ac209-routing-events.ts` answer the shape question the other
+  two routing diagnostics cannot: the presence probe issues `limit: 1`, so it
+  proves only at-least-one; the day-count diagnostic reports a provider-reported
+  magnitude per UTC DAY and deliberately reads no per-event field. This one asks
+  how the provider's ROUTING events distributed inside one exact hour - the hour
+  an existing AC209 diagnostic already asked the Email Sending dataset for, which
+  is what makes the two readings comparable at all.
+
+  Exactly one bounded query is issued against `emailRoutingAdaptive` over the
+  caller's hour, selecting only `datetime`, `status`, `action`, `isLastEvent`,
+  and `messageId`. Nothing else is selected, so no address, subject, session,
+  routing rule, authentication result, or provider error detail is read, and the
+  row guard rejects any provider key outside that selection set rather than
+  keeping it. The artifact carries bounded counts, the provider's own `status`
+  and `action` label tallies, the final-event count, and one-way SHA-256 digests
+  of the in-window message identifiers. The identifiers themselves are never
+  retained, logged, or published: they exist only long enough to be hashed, and
+  they appear in the retained artifact as digests only, never in the CI log line.
+  An operator who holds a candidate identifier can hash it and test set
+  membership; no raw identifier is recoverable from a digest. `messageId` is the
+  one optional selected field, because a routing event may legitimately carry
+  none, and `messageIdDigestCoverage` records `complete` or `partial` accordingly
+  so a non-match against a partial set cannot be read as absence.
+
+  Interpretation is deliberately narrow, and the parent guard for this change is
+  encoded in the artifact rather than only in prose. Cloudflare documents that a
+  Worker `send_email` binding send appears in the Email Routing summary as
+  dropped even when it was delivered successfully
+  (https://developers.cloudflare.com/email-service/platform/limits/) and that
+  outbound success belongs to the Email Sending dataset; routing rows and sending
+  rows may therefore both exist for the same send. This diagnostic reads ONE
+  dataset over ONE hour, so it does not establish which dataset should hold any
+  transport, does not refute a reading of the Email Sending dataset, and cannot
+  show that either dataset is missing data it ought to hold. A zero-row hour is
+  not proof that no routing event occurred, because the dataset name carries the
+  `Adaptive` suffix, which Cloudflare documents as possibly served from a sample
+  (https://developers.cloudflare.com/analytics/graphql-api/sampling/); the
+  required `sampling: 'provider_may_sample_adaptive_dataset'` literal records that
+  caveat, and `observation: 'provider_reported_per_event_rows'` records the
+  provenance so a count can never read as a delivery claim. That sampling literal
+  is the documented sampling indicator rather than a substitute for one:
+  Cloudflare documents sampling as a property of the dataset - carried by the
+  `Adaptive` name and stated in the dataset description, both discoverable through
+  introspection - and documents no per-response or numeric sampling field for this
+  dataset, so the designation is known from the query itself and no field is
+  invented. A third pinned literal, `underlyingEventAbsence: 'not_established'`,
+  records the inference this diagnostic refuses to make: an empty or sparse hour is
+  an observation about the rows the provider returned, never proof that the
+  underlying routing events did not occur, because the dataset may be sampled and
+  provider retention bounds also apply. Pinning it structurally means a reader
+  cannot strip the caveat and leave a report that reads as proof of absence.
+
+  The row bound is deliberately low (50) and a full page fails closed as
+  `provider_result_truncated`, because a distribution computed from a truncated
+  page would be worse than a failure. Every other provider condition fails closed
+  into a closed code rather than degrading into an empty reading, and an unusable
+  or over-wide window is rejected before any provider call is made. In-window rows
+  are re-checked locally so an out-of-window row can never enter a distribution or
+  a digest set. The `status` and `action` labels are restricted to visible ASCII
+  because they are echoed into a CI log line, so a control character, tab, escape
+  sequence, or multi-byte glyph is rejected rather than emitted, and the artifact
+  carries a `zoneTagSha256` digest of the requested zone so a reader can confirm
+  which zone produced the numbers without the report retaining the raw identifier.
+  Investigation only: it performs no mutation, sends no email, changes no
+  provider setting, closes no acceptance criterion, and cannot attribute any count
+  to a particular message. The redacted artifact is retained for seven days
+  (`retention-days: 7`, matching the sibling AC209 probes), after which its review
+  window closes; the message-identifier digests live only inside that artifact and
+  never in the workflow log. Dispatch contract:
+  `.github/workflows/probe-production-ac209-routing-events.yml`.
+
 - `write-ci-gate-evidence.sh` derives the release gate set from successful CI
   job results and the built artifact boundary.
 - `verify-ci-release-gates.sh` runs the contract, production-registry, and SLO
