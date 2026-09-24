@@ -64,14 +64,43 @@ const classifyActionType = (
     : 'action_type_unknown';
 };
 
-/** Read and Write rows carry no outcome; Delete rows are a closed set. */
+/**
+ * Cloudflare documents the Queue Analytics `outcome` dimension as applicable
+ * only to `DeleteMessage`
+ * (https://developers.cloudflare.com/queues/observability/metrics/), and
+ * `dlq` on a delete row is the only DLQ statement the provider makes. A
+ * protected run confirmed that real read and write rows still carry a value
+ * there, so those values are treated as inapplicable: a bounded string is
+ * accepted and never counted, while a non-string, an unbounded string, or the
+ * `dlq` marker on a non-delete row fails closed instead of hiding DLQ
+ * evidence or inventing it.
+ */
+export const QUEUE_ANALYTICS_DLQ_OUTCOME = 'dlq';
+const QUEUE_ANALYTICS_DELETE_OUTCOMES = [
+  'success',
+  QUEUE_ANALYTICS_DLQ_OUTCOME,
+  'fail',
+] as const;
+const MAX_QUEUE_ANALYTICS_OUTCOME_PLACEHOLDER_LENGTH = 64;
+
+const classifyInapplicableOutcome = (
+  outcome: unknown,
+): QueueAnalyticsRowRejectionGate | null => {
+  if (outcome === undefined || outcome === null) return null;
+  if (typeof outcome !== 'string') return 'outcome_shape';
+  if (outcome.length > MAX_QUEUE_ANALYTICS_OUTCOME_PLACEHOLDER_LENGTH)
+    return 'outcome_shape';
+  return outcome === QUEUE_ANALYTICS_DLQ_OUTCOME ? 'outcome_shape' : null;
+};
+
+/** Read and Write outcomes are inapplicable placeholders; Delete is closed. */
 const classifyOutcome = (
   actionType: string,
   outcome: unknown,
 ): QueueAnalyticsRowRejectionGate | null => {
   if (actionType === 'ReadMessage' || actionType === 'WriteMessage')
-    return outcome === undefined || outcome === null ? null : 'outcome_shape';
-  return outcome === 'success' || outcome === 'dlq' || outcome === 'fail'
+    return classifyInapplicableOutcome(outcome);
+  return QUEUE_ANALYTICS_DELETE_OUTCOMES.some((value) => value === outcome)
     ? null
     : 'outcome_shape';
 };
@@ -154,7 +183,8 @@ export const classifyQueueAnalyticsRows = (
     const dimensions = (row as JsonRecord).dimensions as JsonRecord;
     if (dimensions.actionType === 'ReadMessage') queueAttempts += count;
     else if (dimensions.actionType === 'DeleteMessage') {
-      if (dimensions.outcome === 'dlq') dlqMessages += count;
+      if (dimensions.outcome === QUEUE_ANALYTICS_DLQ_OUTCOME)
+        dlqMessages += count;
     }
     if (
       queueAttempts > MAX_SAFE_PROVIDER_COUNT ||
