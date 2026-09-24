@@ -33,6 +33,22 @@ filesystem and validation operations.
 
 - `build-immutable-artifacts.sh` builds the workspace and packages both web
   runtime configurations for the immutable CI artifact.
+- `ac209-email-presence-contract.ts` declares the contract for
+  `ac209-email-presence.ts` and its entrypoint
+  `probe-production-ac209-email-presence.ts`, which answer the one question the
+  hour-bounded correlation gate cannot: whether the exact parent zone's Email
+  Sending dataset holds any telemetry at all. The probe samples two trailing
+  windows - 24 hours and 30 days - from one instant with `limit: 1` and reports a
+  bounded row count, a presence boolean, and one closed classification
+  (`recent_present`, `recent_missing`, `zone_wide_missing`, or
+  `provider_unavailable`). It selects only the non-PII `status` field, required
+  by the GraphQL rule that every selection set be non-empty, and never publishes
+  its value; no address, subject, or provider message identifier is ever selected
+  or retained. It is read-only, performs no mutation, and closes no acceptance
+  criterion. Dispatching it does not close AC209 and does not replace the
+  correlation gate, the delivery verifier, or the visible receipt inspection.
+  Dispatch contract: `.github/workflows/probe-production-ac209-email-presence.yml`.
+
 - `write-ci-gate-evidence.sh` derives the release gate set from successful CI
   job results and the built artifact boundary.
 - `verify-ci-release-gates.sh` runs the contract, production-registry, and SLO

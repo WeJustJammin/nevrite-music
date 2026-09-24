@@ -1,0 +1,94 @@
+name: Probe production AC209 email dataset presence
+
+on:
+  workflow_dispatch:
+    inputs:
+      source_revision:
+        description: Full lowercase main revision containing this presence probe
+        required: true
+        type: string
+      confirm_presence_probe:
+        description: Confirm protected read-only AC209 email presence probe
+        required: true
+        type: boolean
+        default: false
+
+concurrency:
+  group: probe-production-ac209-email-presence
+  cancel-in-progress: false
+
+permissions: { contents: read }
+
+jobs:
+  preflight:
+    if: inputs.confirm_presence_probe == true && github.ref == 'refs/heads/main'
+    runs-on: [self-hosted, wejammin]
+    timeout-minutes: 5
+    steps:
+      - name: Verify dispatch intent and exact main revision
+        env:
+          CONFIRM_PRESENCE_PROBE: ${{ inputs.confirm_presence_probe }}
+          DISPATCHED_SOURCE_SHA: ${{ github.sha }}
+          SOURCE_REVISION: ${{ inputs.source_revision }}
+        run: |
+          test "$CONFIRM_PRESENCE_PROBE" = "true"
+          test "$GITHUB_REF" = "refs/heads/main"
+          test "$SOURCE_REVISION" = "$DISPATCHED_SOURCE_SHA"
+      - name: Check out the exact presence-probe revision
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          ref: ${{ inputs.source_revision }}
+          persist-credentials: false
+      - name: Verify live production environment protection
+        env:
+          CONFIRM_VERIFICATION: ${{ inputs.confirm_presence_probe }}
+          GITHUB_TOKEN: ${{ github.token }}
+          SOURCE_SHA: ${{ inputs.source_revision }}
+        run: node --experimental-strip-types infra/workflows/verify-production-environment.ts
+
+  probe:
+    needs: preflight
+    runs-on: [self-hosted, wejammin]
+    timeout-minutes: 10
+    environment: { name: production }
+    env:
+      AC209_PRESENCE_OUTPUT_PATH: ac209-presence/presence.json
+    steps:
+      - name: Check out the exact presence-probe revision
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          ref: ${{ inputs.source_revision }}
+          persist-credentials: false
+      - name: Verify protected execution identity
+        env:
+          EXPECTED_SOURCE_REVISION: ${{ inputs.source_revision }}
+        run: |
+          checked_out_sha="$(git rev-parse HEAD)"
+          test "$GITHUB_REF" = "refs/heads/main"
+          test "$checked_out_sha" = "$EXPECTED_SOURCE_REVISION"
+      - name: Set up pinned workspace dependencies
+        uses: ./.github/actions/setup
+      - name: Reverify immutable workspace before secret use
+        env:
+          EXPECTED_SOURCE_REVISION: ${{ inputs.source_revision }}
+        run: |
+          checked_out_sha="$(git rev-parse HEAD)"
+          test "$GITHUB_REF" = "refs/heads/main"
+          test "$checked_out_sha" = "$EXPECTED_SOURCE_REVISION"
+          git diff --quiet
+          git diff --cached --quiet
+          test -z "$(git status --porcelain --untracked-files=all)"
+      - name: Collect redacted AC209 email presence probe
+        env:
+          CLOUDFLARE_EMAIL_ZONE_ID: '${{ vars.CLOUDFLARE_EMAIL_ZONE_ID }}'
+          CLOUDFLARE_OBSERVABILITY_API_TOKEN: '${{ secrets.CLOUDFLARE_OBSERVABILITY_API_TOKEN }}'
+          SOURCE_REVISION: ${{ inputs.source_revision }}
+        run: node --experimental-strip-types infra/workflows/probe-production-ac209-email-presence.ts
+      - name: Upload redacted AC209 email presence probe
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+        with:
+          name: production-ac209-email-presence-${{ inputs.source_revision }}
+          path: ac209-presence/presence.json
+          if-no-files-found: warn
+          retention-days: 7
