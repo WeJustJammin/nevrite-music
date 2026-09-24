@@ -130,8 +130,24 @@ const harness = (operation: 'acquire' | 'consume' | 'release') => {
 const recordPath = (runnerTemp: string): string =>
   join(runnerTemp, 'ac265-outage-lease', 'outage-lease-control.json');
 
+/**
+ * Captures the default mask writer's stdout so a leaked fixture capability is
+ * observable. The runner's real stdout has no GitHub Actions consumer here.
+ */
+const captureStdout = () => {
+  const written: string[] = [];
+  vi.spyOn(process.stdout, 'write').mockImplementation(((
+    chunk: string | Uint8Array,
+  ) => {
+    written.push(String(chunk));
+    return true;
+  }) as typeof process.stdout.write);
+  return written;
+};
+
 afterEach(() => {
   vi.useRealTimers();
+  vi.restoreAllMocks();
   while (roots.length > 0) {
     const root = roots.pop();
     if (root !== undefined) rmSync(root, { recursive: true, force: true });
@@ -272,6 +288,45 @@ describe('AC265 outage-lease control entrypoint', () => {
     const outputIndex = order.indexOf(readFileSync(output, 'utf8'));
     expect(maskIndex).toBeGreaterThanOrEqual(0);
     expect(maskIndex).toBeLessThan(outputIndex);
+  });
+
+  it('keeps the default mask writer silent outside a GitHub Actions step so the fixture capability never reaches stdout', async () => {
+    const { runnerTemp, output, env } = harness('acquire');
+    const fetchImpl = vi.fn<typeof fetch>(async () =>
+      responseFor(acquireResult()),
+    );
+    const written = captureStdout();
+
+    const reported = await runAc265OutageLeaseControl({ env, fetchImpl });
+
+    const streamed = written.join('');
+    expect(written).toEqual([]);
+    expect(streamed).not.toContain(LEASE_REF);
+    expect(streamed).not.toContain('::add-mask::');
+    // Silence must not suppress the capability's real destinations: the redacted
+    // record still lands, and the job-scoped step output still carries the ref.
+    expect(reported.leaseRefSha256).toBe(LEASE_SHA256);
+    const recordBytes = readFileSync(recordPath(runnerTemp), 'utf8');
+    expect(recordBytes).not.toContain(LEASE_REF);
+    expect(readFileSync(output, 'utf8')).toContain(`leaseRef=${LEASE_REF}`);
+  });
+
+  it('masks the capability as the first stdout line when running as a GitHub Actions step', async () => {
+    const { output, env } = harness('acquire');
+    const fetchImpl = vi.fn<typeof fetch>(async () =>
+      responseFor(acquireResult()),
+    );
+    const written = captureStdout();
+
+    const reported = await runAc265OutageLeaseControl({
+      env: { ...env, GITHUB_ACTIONS: 'true' },
+      fetchImpl,
+    });
+
+    expect(written).toEqual([`::add-mask::${LEASE_REF}\n`]);
+    expect(reported.leaseRefSha256).toBe(LEASE_SHA256);
+    // The mask is emitted before the capability is persisted to the step output.
+    expect(readFileSync(output, 'utf8')).toContain(`leaseRef=${LEASE_REF}`);
   });
 
   it.each(['acquire', 'consume', 'release'] as const)(

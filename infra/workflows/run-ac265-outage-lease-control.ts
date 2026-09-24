@@ -28,16 +28,34 @@ const RECORD_FILE_NAME = 'outage-lease-control.json';
 const SAFE_REFERENCE_PATTERN = /^[A-Za-z0-9][A-Za-z0-9._:/#?=&%+@-]{0,255}$/u;
 // A GitHub Actions workflow command must start at the beginning of a line.
 const WORKFLOW_COMMAND_PREFIX = '::add-mask::';
+// GitHub exports this marker into every Actions step environment. That is the
+// same environment that supplies the step-output and summary paths, so it is
+// the honest signal for "this process is a real Actions step" rather than a
+// unit run. A workflow command written to a local or captured stdout is an
+// inert string with no runner to interpret it, so the default writer stays
+// silent unless the marker is present.
+const GITHUB_ACTIONS_MARKER = 'GITHUB_ACTIONS';
 
 const defaultMaskLine = (line: string): void => {
   if (!line.startsWith(WORKFLOW_COMMAND_PREFIX)) throw new Error(FAILURE);
   process.stdout.write(`${line}\n`);
 };
 
+/**
+ * True only inside a GitHub Actions step. Outside one there is no runner to
+ * interpret a workflow command, so masking would only print the capability.
+ */
+const isGithubActionsStep = (
+  env: Readonly<Record<string, string | undefined>>,
+): boolean => env[GITHUB_ACTIONS_MARKER] === 'true';
+
 export interface Ac265OutageLeaseControlOptions {
   readonly env: Readonly<Record<string, string | undefined>>;
   readonly fetchImpl?: typeof fetch;
-  /** Emits one GitHub Actions workflow-command line, used only for masking. */
+  /**
+   * Emits one GitHub Actions workflow-command line, used only for masking.
+   * Defaults to the real Actions writer, which is active only inside a step.
+   */
   readonly writeMaskLine?: (line: string) => void;
 }
 
@@ -168,8 +186,12 @@ const lifecycleFields = (
 export const runAc265OutageLeaseControl = async ({
   env,
   fetchImpl,
-  writeMaskLine = defaultMaskLine,
+  writeMaskLine,
 }: Ac265OutageLeaseControlOptions): Promise<Ac265OutageLeaseRecord> => {
+  // A real Actions step emits the mask; a unit run leaves this undefined so the
+  // default writer never prints a fixture capability to captured stdout.
+  const maskLine =
+    writeMaskLine ?? (isGithubActionsStep(env) ? defaultMaskLine : undefined);
   let summaryFd: number | undefined;
   let outputFd: number | undefined;
   let runnerTempDirectory: DirectoryHandle | undefined;
@@ -234,7 +256,7 @@ export const runAc265OutageLeaseControl = async ({
     };
     // Mask the one-use capability before it reaches any persisted or echoed
     // channel, so a later failure cannot reveal it in the run log.
-    writeMaskLine(`::add-mask::${result.leaseRef}`);
+    if (maskLine !== undefined) maskLine(`::add-mask::${result.leaseRef}`);
     writeExclusiveFile(
       outputDirectory,
       RECORD_FILE_NAME,
