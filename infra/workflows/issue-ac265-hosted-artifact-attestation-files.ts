@@ -7,10 +7,8 @@ import {
   lstatSync,
   mkdirSync,
   openSync,
-  readFileSync,
   readSync,
   realpathSync,
-  statSync,
   writeSync,
 } from 'node:fs';
 import { createHash } from 'node:crypto';
@@ -212,7 +210,9 @@ export const createAc265AttestationOutputDirectory = (
 
 /**
  * Writes one file under an owner-only directory with exclusive creation,
- * `fsync`, and a digest-bound readback of the published bytes.
+ * `fsync`, and a digest-bound readback of the published bytes. The readback
+ * deliberately reopens the path with `O_NOFOLLOW`, so verifying the bytes we
+ * just wrote cannot be redirected through a symlink swapped in after publish.
  */
 export const publishAc265AttestationBytes = (
   directory: string,
@@ -245,15 +245,46 @@ export const publishAc265AttestationBytes = (
     fsyncSync(fd);
     closeSync(fd);
     fd = undefined;
-    if (readFileSync(path).byteLength !== buffer.byteLength)
-      return failAc265HostedArtifactAttestationIssuance();
-    if (
-      sha256Ac265AttestationBytes(readFileSync(path)) !==
-      sha256Ac265AttestationBytes(buffer)
-    )
-      return failAc265HostedArtifactAttestationIssuance();
-    if ((statSync(path).mode & 0o777) !== 0o600)
-      return failAc265HostedArtifactAttestationIssuance();
+    // Readback through one held `O_NOFOLLOW` descriptor: file identity, size,
+    // mode, and content are all observed on the same descriptor, so a symlink
+    // or replacement swapped in after publication cannot redirect or spoof the
+    // verification of the bytes we just wrote.
+    let readbackFd: number | undefined;
+    try {
+      readbackFd = openSync(
+        path,
+        fsConstants.O_RDONLY | (fsConstants.O_NOFOLLOW ?? 0),
+      );
+      const readbackStat = fstatSync(readbackFd);
+      if (
+        !readbackStat.isFile() ||
+        readbackStat.size !== buffer.byteLength ||
+        (readbackStat.mode & 0o777) !== 0o600
+      )
+        return failAc265HostedArtifactAttestationIssuance();
+      const readback = Buffer.alloc(readbackStat.size);
+      let readbackOffset = 0;
+      while (readbackOffset < readbackStat.size) {
+        const read = readSync(
+          readbackFd,
+          readback,
+          readbackOffset,
+          readbackStat.size - readbackOffset,
+          readbackOffset,
+        );
+        if (read <= 0) return failAc265HostedArtifactAttestationIssuance();
+        readbackOffset += read;
+      }
+      if (
+        fstatSync(readbackFd).size !== readbackStat.size ||
+        readbackOffset !== readbackStat.size ||
+        sha256Ac265AttestationBytes(readback) !==
+          sha256Ac265AttestationBytes(buffer)
+      )
+        return failAc265HostedArtifactAttestationIssuance();
+    } finally {
+      if (readbackFd !== undefined) closeSync(readbackFd);
+    }
     return path;
   } catch {
     return failAc265HostedArtifactAttestationIssuance();

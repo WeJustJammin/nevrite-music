@@ -4,7 +4,7 @@ import {
   AC265_HOSTED_ARTIFACT_ATTESTATION_ISSUER_BINDING_MEMBERS,
   AC265_HOSTED_ARTIFACT_ATTESTATION_ISSUER_KEY_ID_PREFIX,
   AC265_HOSTED_ARTIFACT_ATTESTATION_ISSUER_MEMBERS,
-  AC265_HOSTED_ARTIFACT_ISSUER_UUID_V4_PATTERN,
+  AC265_HOSTED_ARTIFACT_ISSUER_RUN_ID_SCHEMA,
   deriveAc265HostedArtifactSigningKeyId,
   failAc265HostedArtifactAttestationIssuer,
   hasExactAc265HostedArtifactIssuerMembers,
@@ -61,7 +61,7 @@ const snapshotRunBinding = (
   const runId = binding['runId'];
   if (
     typeof runId !== 'string' ||
-    !AC265_HOSTED_ARTIFACT_ISSUER_UUID_V4_PATTERN.test(runId)
+    !AC265_HOSTED_ARTIFACT_ISSUER_RUN_ID_SCHEMA.safeParse(runId).success
   )
     return failAc265HostedArtifactAttestationIssuer(
       'AC265 hosted artifact issuer run binding is invalid.',

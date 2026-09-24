@@ -1,4 +1,5 @@
 import type { HostedArtifactAttestationKind } from '../../packages/contracts/src/content-schema-registry/operational-release-evidence-hosted-artifact-attestation.ts';
+import { HostedArtifactAttestationRunIdSchema } from '../../packages/contracts/src/content-schema-registry/operational-release-evidence-hosted-artifact-attestation.ts';
 import { CmsReleaseKeyIdSchema } from '../../packages/contracts/src/content-schema-registry/primitives.ts';
 import { SafeReleaseTimestampSchema } from '../../packages/contracts/src/release-recovery-common.ts';
 import type {
@@ -12,8 +13,6 @@ const MAX_TRUSTED_KEYS = 16;
 const MAX_ARTIFACT_BYTES = 64 * 1024;
 const MAX_ATTESTATION_BYTES = 64 * 1024;
 const SHA256_PATTERN = /^[0-9a-f]{64}$/u;
-const UUID_V4_PATTERN =
-  /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/u;
 const RECEIPT_REFERENCE_PATTERN =
   /^ac265-receipt:\/\/server\/[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/u;
 const EVIDENCE_REFERENCE_PATTERN =
@@ -107,7 +106,7 @@ export const cloneTrustedKeys = (
 export const cloneTrust = (input: unknown): Ac265HostedArtifactTrust => {
   if (!isRecord(input)) return fail('AC265 hosted artifact trust is invalid.');
   const runId = input['runId'];
-  if (typeof runId !== 'string' || !UUID_V4_PATTERN.test(runId))
+  if (!HostedArtifactAttestationRunIdSchema.safeParse(runId).success)
     return fail('AC265 hosted artifact run identity is invalid.');
   return Object.freeze({
     runId,

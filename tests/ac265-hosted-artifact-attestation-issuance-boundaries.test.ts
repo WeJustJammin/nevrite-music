@@ -295,6 +295,41 @@ describe('AC265 hosted artifact attestation issuance boundaries', () => {
     expect(() => statSync(run.output)).toThrow();
   });
 
+  it('requires the step summary and artifact directory to resolve beneath runner temp', async () => {
+    const outsideSummary = harness();
+    const foreignSummary = join(
+      tmpdir(),
+      `ac265-foreign-summary-${process.pid}.md`,
+    );
+    writeFileSync(foreignSummary, '', { mode: 0o600 });
+    await expect(
+      runIssueAc265HostedArtifactsAttestations({
+        env: { ...outsideSummary.env, GITHUB_STEP_SUMMARY: foreignSummary },
+      }),
+    ).rejects.toThrow(FAILURE);
+    rmSync(foreignSummary, { force: true });
+
+    const outsideArtifacts = harness();
+    await expect(
+      runIssueAc265HostedArtifactsAttestations({
+        env: {
+          ...outsideArtifacts.env,
+          AC265_ATTESTATION_ARTIFACT_DIR: tmpdir(),
+        },
+      }),
+    ).rejects.toThrow(FAILURE);
+
+    const outsideRequest = harness();
+    await expect(
+      runIssueAc265HostedArtifactsAttestations({
+        env: {
+          ...outsideRequest.env,
+          AC265_ATTESTATION_REQUEST_PATH: '/etc/hosts',
+        },
+      }),
+    ).rejects.toThrow(FAILURE);
+  });
+
   it('rejects a symlinked request document and a symlinked step summary', async () => {
     const symlinkedRequest = harness();
     const realRequest = `${symlinkedRequest.requestPath}.real`;

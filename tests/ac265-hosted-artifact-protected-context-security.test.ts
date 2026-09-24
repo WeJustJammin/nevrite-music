@@ -65,12 +65,32 @@ describe('AC265 protected-context security contract', () => {
   });
 
   it.each([
+    // The upstream runner contract is version-agnostic, so v1 and v5 run
+    // identities must be accepted exactly as v4 ones are.
     '70000000-0000-1000-8000-000000000007',
     '70000000-0000-5000-8000-000000000007',
+    '70000000-0000-7000-8000-000000000007',
+  ])(
+    'accepts the version-agnostic runId %s the upstream contract allows',
+    (runId) => {
+      expect(() =>
+        createResolver(undefined, { ...trust(), runId }),
+      ).not.toThrow();
+    },
+  );
+
+  it.each([
+    // Non-canonical spellings, non-identities, and malformed shapes stay
+    // rejected so one run identity has exactly one canonical spelling.
     'A0000000-0000-4000-8000-000000000007',
-  ])('rejects non-lowercase UUIDv4 runId %s', (runId) => {
+    '00000000-0000-0000-0000-000000000000',
+    'ffffffff-ffff-ffff-ffff-ffffffffffff',
+    '70000000-0000-4000-c000-000000000007',
+    '70000000-0000-4000-8000',
+    'not-a-uuid',
+  ])('rejects non-canonical or malformed runId %s', (runId) => {
     expect(() => createResolver(undefined, { ...trust(), runId })).toThrow(
-      /run|identity|uuid|version/i,
+      /run|identity|uuid|version|invalid/i,
     );
   });
 

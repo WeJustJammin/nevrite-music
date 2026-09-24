@@ -8,6 +8,8 @@ import {
 } from '../../packages/contracts/src/content-schema-registry/operational-release-evidence-hosted-artifact-attestation.ts';
 import * as contentSchemaRegistry from '../../packages/contracts/src/content-schema-registry/index.ts';
 import * as contracts from '../../packages/contracts/src/index.ts';
+import { ContentSchemaRegistryHostedRunnerContractSchema } from '../../packages/contracts/src/content-schema-registry/operational-release-evidence-hosted-input.ts';
+import { makeContract } from './ac265-hosted-test-fixtures.ts';
 
 const runId = '70000000-0000-4000-8000-000000000007';
 const artifactSha256 = 'a'.repeat(64);
@@ -113,12 +115,9 @@ describe('AC265 hosted artifact-attestation contract', () => {
       { ...serverReceiptAttestation, runId: 'not-a-uuid' },
       {
         ...serverReceiptAttestation,
-        runId: '70000000-0000-1000-8000-000000000007',
+        runId: '70000000-0000-4000-c000-000000000007',
       },
-      {
-        ...serverReceiptAttestation,
-        runId: '70000000-0000-5000-8000-000000000007',
-      },
+      { ...serverReceiptAttestation, runId: '70000000-0000-4000-8000' },
       {
         ...serverReceiptAttestation,
         runId: 'A0000000-0000-4000-8000-000000000007',
@@ -127,6 +126,64 @@ describe('AC265 hosted artifact-attestation contract', () => {
     ])
       expect(
         HostedArtifactAttestationV1Schema.safeParse(candidate).success,
+      ).toBe(false);
+  });
+
+  it('accepts the version-agnostic run identities the upstream runner contract allows', () => {
+    for (const runId of [
+      '70000000-0000-1000-8000-000000000007',
+      '70000000-0000-5000-8000-000000000007',
+      '70000000-0000-7000-8000-000000000007',
+    ])
+      expect(
+        HostedArtifactAttestationV1Schema.safeParse({
+          ...serverReceiptAttestation,
+          runId,
+        }).success,
+      ).toBe(true);
+  });
+
+  it('accepts every run identity the frozen upstream runner contract accepts, except non-canonical spellings', () => {
+    const contract = makeContract();
+    // Canonical lowercase identities must track upstream acceptance exactly.
+    for (const runId of [
+      '70000000-0000-1000-8000-000000000007',
+      '70000000-0000-3000-8000-000000000007',
+      '70000000-0000-4000-8000-000000000007',
+      '70000000-0000-5000-8000-000000000007',
+      '70000000-0000-7000-8000-000000000007',
+    ]) {
+      expect(
+        ContentSchemaRegistryHostedRunnerContractSchema.safeParse({
+          ...contract,
+          runId,
+        }).success,
+      ).toBe(true);
+      expect(
+        HostedArtifactAttestationV1Schema.safeParse({
+          ...serverReceiptAttestation,
+          runId,
+        }).success,
+      ).toBe(true);
+    }
+    // Non-canonical or malformed spellings stay rejected at this boundary even
+    // though the generic upstream schema is lenient about them, so one run
+    // identity always has exactly one canonical signed spelling.
+    for (const runId of [
+      'A0000000-0000-4000-8000-000000000007',
+      '00000000-0000-0000-0000-000000000000',
+      'ffffffff-ffff-ffff-ffff-ffffffffffff',
+      '70000000-0000-4000-c000-000000000007',
+      '70000000-0000-4000-8000',
+      'not-a-uuid',
+      '70000000_0000_4000_8000_000000000007',
+      '',
+    ])
+      expect(
+        HostedArtifactAttestationV1Schema.safeParse({
+          ...serverReceiptAttestation,
+          runId,
+        }).success,
       ).toBe(false);
   });
 

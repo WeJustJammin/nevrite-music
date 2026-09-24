@@ -222,4 +222,49 @@ describe('AC265 hosted artifact attestation issuer windows and bindings', () => 
       sha256(jsonBytes(contract.identity)),
     );
   });
+
+  it('accepts a v7 run identity exactly as the upstream runner contract does', () => {
+    const issuer = issuerWith(issuerSigningMaterial());
+    const v7RunId = '70000000-0000-7000-8000-000000000007';
+    const signed = issuer.signArtifact(
+      issuerReceiptRequest(),
+      issuerRunBinding({ runId: v7RunId }),
+    );
+    expect(signed.runId).toBe(v7RunId);
+    const authenticated = authenticateAc265HostedArtifactAttestationV1({
+      artifactBytes: signed.artifactBytes,
+      attestationBytes: signed.attestationBytes,
+      expected: {
+        keyId: issuer.keyId,
+        kind: 'server_receipt',
+        artifactRef: ISSUER_RECEIPT_REF,
+        runId: v7RunId,
+        candidateIdentitySha256: ISSUER_CANDIDATE_IDENTITY_SHA256,
+        runnerContractSha256: ISSUER_RUNNER_CONTRACT_SHA256,
+        subjectSha256: signed.subjectSha256,
+      },
+      trustedKeys: issuer.trustedKeys,
+    });
+    expect(authenticated.attestation.runId).toBe(v7RunId);
+  });
+
+  it('still rejects malformed, wrong-variant, uppercase-swapped, and short run identities', () => {
+    const issuer = issuerWith(issuerSigningMaterial());
+    const request = issuerReceiptRequest();
+    for (const runId of [
+      'not-a-uuid',
+      '70000000-0000-4000-c000-000000000007',
+      '70000000-0000-4000-8000',
+      '70000000-0000-4000-8000-00000000000',
+      '70000000_0000_4000_8000_000000000007',
+      '',
+      7,
+    ])
+      expect(() =>
+        issuer.signArtifact(
+          request,
+          issuerRunBinding({ runId }) as Record<string, unknown>,
+        ),
+      ).toThrow(/binding|attestation|invalid|key/i);
+  });
 });

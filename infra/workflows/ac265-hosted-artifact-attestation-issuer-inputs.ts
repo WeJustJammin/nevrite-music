@@ -4,6 +4,7 @@ import { z } from '../../packages/contracts/node_modules/zod/index.js';
 
 import {
   HostedArtifactAttestationKindSchema,
+  HostedArtifactAttestationRunIdSchema,
   type HostedArtifactAttestationKind,
 } from '../../packages/contracts/src/content-schema-registry/operational-release-evidence-hosted-artifact-attestation.ts';
 import { ContentSchemaRegistryHostedReceiptSubjectSchema } from '../../packages/contracts/src/content-schema-registry/operational-release-evidence-hosted-receipt.ts';
@@ -42,8 +43,13 @@ export const AC265_HOSTED_ARTIFACT_ATTESTATION_ISSUER_MEMBERS = [
   'validUntil',
 ] as const;
 
-export const AC265_HOSTED_ARTIFACT_ISSUER_UUID_V4_PATTERN =
-  /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/u;
+/**
+ * Run identity delegates to the same frozen contract schema the CP-04c
+ * attestation and resolver use, so the issuer cannot accept or reject a run
+ * identity differently from the boundaries it feeds.
+ */
+export const AC265_HOSTED_ARTIFACT_ISSUER_RUN_ID_SCHEMA =
+  HostedArtifactAttestationRunIdSchema;
 
 const MAX_PRIVATE_KEY_PEM_LENGTH = 8_192;
 const MAX_ARTIFACT_BYTES = 64 * 1024;

@@ -88,8 +88,12 @@ const requireDigest = (value: unknown): string => {
 
 /**
  * Signs caller-supplied receipt and execution-evidence bytes with the pinned
- * key and publishes the exact signed companions plus a digest index that the
- * CP-04c/CP-04d protected resolver consumes directly.
+ * key and publishes the exact signed companions plus a digest index for the
+ * calling harness. The index is a handoff record, not a resolver input: a
+ * harness still assembles each `Ac265HostedArtifactSource` from the artifact
+ * bytes, the published attestation companion, and its own expectation, exactly
+ * as the CP-04c fixtures do. `GITHUB_STEP_SUMMARY` and every artifact member
+ * must resolve beneath `RUNNER_TEMP`; a path outside it fails closed.
  */
 export const runIssueAc265HostedArtifactsAttestations = async ({
   env,

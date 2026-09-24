@@ -247,9 +247,15 @@ filesystem and validation operations.
   reads each member through no-follow bounded reads, re-derives each subject
   from the member bytes, and publishes only the signed companions plus a
   digest index under an owner-only `0700` directory created fresh beneath
-  `RUNNER_TEMP`. An existing output directory fails closed, so the entrypoint
-  never overwrites prior evidence. It emits a redacted step summary and no
-  artifact bytes or private material.
+  `RUNNER_TEMP`. The index is a handoff record for the calling harness, not a
+  resolver input: the harness still builds each `Ac265HostedArtifactSource`
+  from the artifact bytes, the published attestation companion, and its own
+  expectation, exactly as the CP-04c fixtures do. An existing output directory
+  fails closed, so the entrypoint never overwrites prior evidence. Identity
+  comes only from environment values; `GITHUB_STEP_SUMMARY` and every artifact
+  member must resolve beneath `RUNNER_TEMP`, and a path outside it fails
+  closed. It emits a redacted step summary and no artifact bytes or private
+  material.
 
   - `issue-ac265-hosted-artifact-attestation-contract.ts` owns the entrypoint
     constants, the request/source member sets, and the issuance summary type.

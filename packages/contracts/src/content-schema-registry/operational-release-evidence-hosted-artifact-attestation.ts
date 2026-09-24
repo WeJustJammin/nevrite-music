@@ -21,6 +21,21 @@ export const HostedArtifactAttestationKindSchema = z.enum([
 
 const ARTIFACT_UUID =
   '[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}';
+/**
+ * Run identity mirrors the frozen upstream runner contract's version-agnostic
+ * UUID acceptance, so a v1 or v7 upstream run identity is accepted here
+ * exactly as a v4 one is. The canonical lowercase form is retained because the
+ * signed attestation bytes are canonical and the trusted run identity is
+ * lowercase: uppercase spellings, the nil/max non-identities, and malformed
+ * shapes stay rejected so one UUID can only ever be written one way. Artifact
+ * references below stay v4-exact.
+ */
+export const HostedArtifactAttestationRunIdSchema = z
+  .string()
+  .regex(
+    /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/u,
+    'run_id_invalid',
+  );
 const HostedServerReceiptReferenceSchema = z
   .string()
   .regex(new RegExp(`^ac265-receipt://server/${ARTIFACT_UUID}$`, 'u'));
@@ -34,7 +49,7 @@ const HostedArtifactAttestationShape = {
   algorithm: z.literal(AC265_HOSTED_ARTIFACT_ATTESTATION_ALGORITHM),
   keyId: CmsReleaseKeyIdSchema,
   artifactSha256: ReleaseEvidenceDigestSchema,
-  runId: z.string().regex(new RegExp(`^${ARTIFACT_UUID}$`, 'u')),
+  runId: HostedArtifactAttestationRunIdSchema,
   candidateIdentitySha256: ReleaseEvidenceDigestSchema,
   runnerContractSha256: ReleaseEvidenceDigestSchema,
   subjectSha256: ReleaseEvidenceDigestSchema,
