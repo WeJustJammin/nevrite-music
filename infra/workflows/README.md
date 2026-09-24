@@ -177,6 +177,46 @@ filesystem and validation operations.
   or grants, or verify underlying resource safety, and it closes no AC265
   criterion.
 
+- `ac265-retained-report-producer.ts` is the retained hosted E2E report
+  producer. It takes the exact report bytes the assembler emitted plus the
+  independently trusted run facts, validates them on the raw-byte boundary, and
+  publishes one owner-only report at the sidecar-declared relative path. Its
+  ordering is deliberate: the bytes are validated in full before the report
+  root is created, inspected, or written, so a rejected report leaves no
+  directory behind. The returned digest is SHA-256 over the exact bytes written,
+  not over a canonical re-serialization, and `serializeAc265RetainedReportV3`
+  owns that one byte form. This produces a retained artifact for the existing
+  verifier; it brokers no sessions, issues no receipts, and claims no criterion.
+
+  - `ac265-retained-report-redactor.ts` is the value-level redaction boundary.
+    Four layers must all pass: provenance parsing with structural classes, the
+    strict `ac265-hosted-e2e-v3` schema, provenance equality for every identity
+    field, reference, digest, and the run window, and prohibited-content
+    inspection. There is deliberately no global high-entropy scan: the
+    contract's own UUIDs, revisions, and digests are high-entropy by design and
+    a secret can be made to match a digest.
+  - `ac265-retained-report-provenance.ts` parses and validates the trusted run
+    facts and owns the field-aware identity classes, reference patterns, and the
+    shared failure boundary. `ac265-retained-report-provenance-parsers.ts` owns
+    the contract, receipt-slot, session-handle, and resource-binding parsers it
+    composes, so both files stay inside the utility size cap.
+  - `ac265-retained-report-trusted-digests.ts` derives the trusted receipt and
+    evidence digests by resolving each reference through the authenticated
+    resolver and hashing the returned bytes, so no digest is ever taken from the
+    report or from a caller.
+  - `ac265-retained-report-publication.ts` is the narrow byte-level boundary.
+    It carries no assembler, broker, or resolver and requires complete trusted
+    provenance, so it is not a path that skips authentication.
+  - `ac265-retained-report-binding.ts` binds a schema-valid report to those
+    trusted facts, so a valid report from another run, identity, receipt set, or
+    resource set is rejected instead of republished.
+  - `ac265-retained-report-prohibited-content.ts` owns the focused marker
+    vocabulary applied to decoded member names and string leaves.
+  - `ac265-retained-report-writer.ts` owns atomic, exclusive publication: an
+    owner-only temporary file, `fsync`, and `link` publication that cannot
+    replace an existing or racing destination, with symlinked roots and path
+    components rejected and temporary artifacts removed on failure.
+
 ## Conventions
 
 Scripts accept identity only through environment values derived by the calling

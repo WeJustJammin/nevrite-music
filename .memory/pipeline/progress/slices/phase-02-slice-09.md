@@ -1285,8 +1285,8 @@ cannot be used as a population path until an owner-approved policy exists.
   `packages/data-access/src/database.types.ts` (the new private tables make
   the committed types stale, exactly as CP-04b's migration required). Closes no
   AC265 criterion; no hosted acceptance is claimed.
-AC209, AC211, AC265, and AC266 remain open. Slice 09 stays **279/283** with
-depth ratio **0.986**; Slices 10–17 remain dependency-locked.
+  AC209, AC211, AC265, and AC266 remain open. Slice 09 stays **279/283** with
+  depth ratio **0.986**; Slices 10–17 remain dependency-locked.
 
 ## 2026-09-23 AC265 CP-04f frozen run-manifest contract and builder (local/private only)
 
@@ -1460,3 +1460,103 @@ depth ratio **0.986**; Slices 10–17 remain dependency-locked.
 - This is local/private construction only. No report-v3 contract change, no
   seeded identity, resource, grant, or registry row, and no hosted acceptance.
   The external gates listed in the decision record above are unchanged.
+
+### 2026-09-23 AC265 CP-04h retained-report producer and redactor (local/private only)
+
+- Adds the missing producer half of the retained-report path. Until now the
+  repository could assemble a V3 report in memory and verify one from bytes,
+  but nothing could publish the report the verifier reads. This adds the
+  integrated producer plus the value-level redaction boundary it uses.
+- `infra/workflows/ac265-retained-report-producer.ts` exposes the single
+  production entrypoint `produceAc265RetainedHostedE2eReportV3({ assembly,
+provenance, reportRoot, declaredReportPath })`. It calls the existing
+  `assembleAc265HostedE2eReportV3` with the caller's exact runner-contract
+  bytes, authenticated artifact resolver, and receipt references; serializes
+  the assembled report exactly once into the retained byte form; derives every
+  trusted receipt/evidence digest by resolving each reference through the
+  resolver and hashing the returned bytes; then redacts, binds, and publishes
+  those exact bytes. The published digest is SHA-256 over the bytes written, not
+  over a canonical re-serialization, so the digest the retained verifier checks
+  describes the artifact on disk.
+- `infra/workflows/ac265-retained-report-redactor.ts` is the value-level
+  boundary: provenance parsing with field-aware structural classes, the strict
+  `ac265-hosted-e2e-v3` schema, provenance equality for every identity field /
+  receipt slot / session digest / resource binding / window, and a focused
+  prohibited-content pass over decoded member names and string leaves. There is
+  deliberately no global high-entropy scan: the contract's own UUIDs,
+  revisions, and digests are high-entropy by design and a secret can be shaped
+  to match a digest, so structure plus provenance plus vocabulary is the guard.
+- Supporting modules keep each file inside the 300-line utility cap and give
+  the boundary one owner each: `-provenance.ts` (trusted facts, identity
+  classes, reference patterns), `-binding.ts` (report-to-facts equality),
+  `-prohibited-content.ts` (marker vocabulary), `-trusted-digests.ts`
+  (resolver-derived digests), `-writer.ts` (exclusive atomic publication), and
+  `-publication.ts` (the narrow byte-level boundary). The byte-level function is
+  not exported from the producer: it lives in the explicitly named publication
+  module, carries no assembler/broker/resolver, and requires complete trusted
+  provenance, so there is no producer-named path that skips authentication.
+- Redaction binding is layered and fails closed with one opaque message, so a
+  rejection never echoes the material it rejected. Enforced: identity equality
+  plus field classes (`ciRunId`/`stagingRunId` numeric, `deploymentId` numeric
+  or `deployment-<n>`, `buildId` `ci-<n>[-<attempt>]`/`build-<n>[-<attempt>]`,
+  `hostingProjectId` pinned `wejammin-staging`); slot-exact receipt refs AND
+  digests (candidate, each role, each scenario, cleanup) so swapping two refs in
+  the same run fails; session-handle and resource ref/digest equality against
+  the authenticated runner contract, so a forged digest cannot stand in as
+  proof; contract bytes bound to an externally trusted digest recomputed from
+  those exact bytes; the report window inside deployment and trusted-cutoff
+  bounds; and duplicate-JSON-member rejection on the raw bytes before
+  `JSON.parse`. Cleanup is required to finish inside the window, not equal to
+  `completedAt`, matching the locked schema.
+- Publication is exclusive and idempotent: an owner-only (`0600`) temporary
+  file in the destination directory, `link` publication that cannot replace an
+  existing or racing destination, a post-publish readback confirming the
+  destination holds exactly the intended bytes, an existing report with
+  identical bytes treated as a no-op, an existing report with different bytes
+  rejected, root and every existing path component rejected if symlinked,
+  missing directories created `0700`, existing files bounded and read with
+  `O_NOFOLLOW|O_NONBLOCK` plus an `fstat` regular-file check and the 10 MiB cap,
+  and temporary artifacts removed on every failure path. Validation runs before
+  any directory is created, so a rejected report leaves no artifact behind.
+- RED/GREEN honesty: the first RED run failed only as module-not-found for both
+  new suites, so that run proves absence, not behavior; a later run surfaced
+  three genuine behavioral failures (a marker vocabulary that missed bare
+  `Bearer`, identity free-form slots that admitted a person name, and an
+  integration test that needed the full retained tree). This record therefore
+  does not claim a clean behavioral RED. Four independent review rounds then
+  found real defects, each fixed with a regression test: deployment IDs falsely
+  rejected because the class demanded an alphabetic prefix; receipt binding
+  reduced to set membership so two swapped refs passed; receipt/evidence
+  digests only syntax-checked so a fabricated 64-hex value passed; cleanup
+  equality stricter than the contract; and trusted session/resource digests not
+  cross-checked against the authenticated contract.
+- Focused evidence: 5 files / 60 tests pass, including the integrated
+  assemble→derive→redact→bind→write path checked by the existing
+  `verifyContentSchemaRegistryRetainedReports`, a sidecar-declared path that is
+  not `hosted/e2e.json`, root-contains-only-the-declared-path, symlinked root /
+  destination / intermediate directory rejection, an oversized existing report,
+  a racing destination, and forged-digest and swapped-slot rejections. Under
+  pinned Node 22.23.1 / pnpm 11.24.0, full `pnpm validate` passed with a
+  verified exit status of 0 (captured with `set -o pipefail`): 587 test files,
+  4826 passed + 1 skipped / 4827, 100% coverage (13,262 statements, 9,890
+  branches, 2,174 functions, 12,340 lines), S09 evidence 7 passed, Playwright
+  101/101 functional and 5/5 real-route, build and bundle budgets passed, and
+  local API p95 1.366 ms against the 500 ms threshold. The local Supabase stack
+  was started for this validation (migrations through `20260923090000`).
+- Caller requirement recorded, not assumed: the CP-04f canonical builder emits
+  code-point-ordered runner-contract bytes whose digest differs from the
+  insertion-ordered `JSON.stringify` bytes used by the test harness for the same
+  contract. The producer binds the trusted digest to the exact bytes supplied
+  (`sha256Ac265RetainedReportBytes(runnerContractBytes)`), so the protected
+  caller must pass the canonical bytes together with the digest of those same
+  canonical bytes — exactly what the retained verifier hashes from its trusted
+  context. A regression test documents the two forms and their differing
+  digests.
+- This is local/private construction only. No hosted acceptance, session
+  broker, receipt issuer, evidence service, fault-control plane, or reseeded
+  registry is added or implied; no identity, credential, resource, or grant was
+  created; no AC265 criterion is closed and no contributor count moves. Totals
+  remain 279/282 active (283 authored IDs), Phase 2 8/17, and 1,999/2,000 active
+  criteria; AC209, AC211, and AC265 remain open, Slice 10 remains locked, and
+  AC266 remains owner-deferred as the mandatory post-Phase 2
+  production-readiness/release gate.
