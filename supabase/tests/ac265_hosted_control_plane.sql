@@ -1026,8 +1026,10 @@ select is(
   'a replayed consume cannot create a second event or change the first outcome'
 );
 
--- A second synthetic staging fixture proves release-before-consume is rejected
--- and provides an unconsumed lease for the server-time expiry fence.
+-- A second synthetic staging fixture proves an abandoned, never-consumed lease
+-- can still be released for bounded teardown (clearing the active-lease slot so
+-- the binding stays usable), and that the released capability is then spent:
+-- it can never be consumed, and a released lease is never reported as consumed.
 select lives_ok(
   $$
   insert into platform_private.ac265_runner_authorizations (

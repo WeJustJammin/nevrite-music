@@ -217,10 +217,24 @@ only member is `status` set to `conflict`. The operation reports that as a
 distinct `AC265 outage lease <operation> conflict` outcome so an operator can
 separate an authorization refusal from a transport or trust failure; every
 other rejection collapses to one generic failure. The retained record carries
-only the operation, state, environment, lease digest, and redaction marker.
-The raw lease reference is a one-use capability for the subsequent consume and
-release calls, so it is written only to the job-scoped step output and never to
-the step summary or the uploaded record.
+the operation, state, environment, lease digest, redaction marker, and the
+server-derived lifecycle timestamps for the state it recorded: acquisition and
+expiry with the fixed duration and request limit for an acquire, the consume
+timestamp and request limit for a consume, and the release timestamp for a
+release. Retaining those server timestamps is what lets an operator distinguish
+an expired replay from a fresh decision without re-reading provider state. The
+raw lease reference is a one-use capability for the subsequent consume and
+release calls, so it is masked through a workflow command before use and then
+written only to the job-scoped step output; it never enters the step summary or
+the uploaded record.
+
+One limitation is recorded rather than fixed: the control plane's acquire
+replay is keyed to the exact request digest, so it returns the original
+`acquired` envelope even after that lease has already been consumed or released.
+The replay stays fail-closed for the capability itself, because a spent lease
+cannot be consumed again and consumption never survives release, and the
+retained lifecycle timestamps let an operator detect the spent state without
+guessing. Do not treat a replayed `acquired` result as a live one-use grant.
 
 This is transport and plumbing for an already-promoted private foundation. It
 exercises no outage, seeds no approved target, registers no dependency or
