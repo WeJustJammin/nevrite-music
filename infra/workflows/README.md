@@ -264,6 +264,56 @@ filesystem and validation operations.
     replace an existing or racing destination, with symlinked roots and path
     components rejected and temporary artifacts removed on failure.
 
+- `ac265-hosted-artifact-attestation-issuer.ts` is the live, fail-closed
+  producer half of the CP-04c hosted-artifact boundary. It signs exact
+  caller-supplied `server_receipt` and `execution_evidence` bytes into the
+  canonical, domain-separated `HostedArtifactAttestationV1` companion that the
+  CP-04c resolver authenticates as one member of the `Ac265HostedArtifactSource`
+  tuple the calling harness assembles; the resolver never consumes the
+  companion on its own. It never synthesizes receipts,
+  credentials, or identity: the caller supplies the bytes and the run binding,
+  and the signer refuses anything else. Key pinning is self-describing — the
+  key ID is derived as `ac265-hosted-artifact-ed25519-<sha256(SPKI DER)[0..32]>`
+  and any key ID that does not name the exact public half of the supplied
+  private key is rejected. Subject digests are derived from the bytes, never
+  accepted as a caller-supplied digest. No live signing key is configured by
+  this code; while the distinct artifact-attestation issuer key and its
+  `artifactTrustedKeys` pinning remain owner decisions, the publishing boundary
+  stays unwired and AC265 stays open.
+
+  - `ac265-hosted-artifact-attestation-issuer-inputs.ts` owns the shared
+    validators, the execution-evidence subject vocabulary, and the SPKI-derived
+    key-ID derivation.
+  - `ac265-hosted-artifact-attestation-issuer-contract.ts` owns the issuer
+    request/result/run-binding interfaces and the trusted-key surface.
+  - `ac265-hosted-artifact-attestation-issuer-signing.ts` owns the single
+    signing pass: request-shape validation, window checks against the pinned
+    key validity, and the canonical detached signature.
+
+- `issue-ac265-hosted-artifact-attestations.ts` is the protected entrypoint
+  that runs on an isolated runner. It reads one bounded, duplicate-member-free
+  request document listing the exact artifact members the caller already holds,
+  reads each member through no-follow bounded reads, re-derives each subject
+  from the member bytes, and publishes only the signed companions plus a
+  digest index under an owner-only `0700` directory created fresh beneath
+  `RUNNER_TEMP`. The index is a handoff record for the calling harness, not a
+  resolver input: the harness still builds each `Ac265HostedArtifactSource`
+  from the artifact bytes, the published attestation companion, and its own
+  expectation, exactly as the CP-04c fixtures do. An existing output directory
+  fails closed, so the entrypoint never overwrites prior evidence. Identity
+  comes only from environment values; `GITHUB_STEP_SUMMARY` and every artifact
+  member must resolve beneath `RUNNER_TEMP`, and a path outside it fails
+  closed. It emits a redacted step summary and no artifact bytes or private
+  material.
+
+  - `issue-ac265-hosted-artifact-attestation-contract.ts` owns the entrypoint
+    constants, the request/source member sets, and the issuance summary type.
+  - `issue-ac265-hosted-artifact-attestation-files.ts` owns the bounded
+    no-follow reads and the exclusive owner-only publication with digest-bound
+    readback.
+  - `issue-ac265-hosted-artifact-attestation-sources.ts` owns declared-source
+    parsing and the byte-derived subject digests for both artifact kinds.
+
 ## Conventions
 
 Scripts accept identity only through environment values derived by the calling

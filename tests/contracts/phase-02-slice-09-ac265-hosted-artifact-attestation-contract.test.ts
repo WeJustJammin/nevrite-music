@@ -113,12 +113,9 @@ describe('AC265 hosted artifact-attestation contract', () => {
       { ...serverReceiptAttestation, runId: 'not-a-uuid' },
       {
         ...serverReceiptAttestation,
-        runId: '70000000-0000-1000-8000-000000000007',
+        runId: '70000000-0000-4000-c000-000000000007',
       },
-      {
-        ...serverReceiptAttestation,
-        runId: '70000000-0000-5000-8000-000000000007',
-      },
+      { ...serverReceiptAttestation, runId: '70000000-0000-4000-8000' },
       {
         ...serverReceiptAttestation,
         runId: 'A0000000-0000-4000-8000-000000000007',
@@ -127,6 +124,38 @@ describe('AC265 hosted artifact-attestation contract', () => {
     ])
       expect(
         HostedArtifactAttestationV1Schema.safeParse(candidate).success,
+      ).toBe(false);
+  });
+
+  it('accepts only the canonical lowercase v4 run identity the authority mints', () => {
+    // The run authority mints `randomUUID()` (version 4) and CP-04d plus
+    // retained-report provenance are v4-only, so this gate must stay v4-only
+    // rather than accept a version the rest of the pipeline cannot carry.
+    expect(
+      HostedArtifactAttestationV1Schema.safeParse({
+        ...serverReceiptAttestation,
+        runId: '70000000-0000-4000-8000-000000000007',
+      }).success,
+    ).toBe(true);
+    for (const runId of [
+      '70000000-0000-1000-8000-000000000007',
+      '70000000-0000-3000-8000-000000000007',
+      '70000000-0000-5000-8000-000000000007',
+      '70000000-0000-7000-8000-000000000007',
+      'A0000000-0000-4000-8000-000000000007',
+      '00000000-0000-0000-0000-000000000000',
+      'ffffffff-ffff-ffff-ffff-ffffffffffff',
+      '70000000-0000-4000-c000-000000000007',
+      '70000000-0000-4000-8000',
+      'not-a-uuid',
+      '70000000_0000_4000_8000_000000000007',
+      '',
+    ])
+      expect(
+        HostedArtifactAttestationV1Schema.safeParse({
+          ...serverReceiptAttestation,
+          runId,
+        }).success,
       ).toBe(false);
   });
 
