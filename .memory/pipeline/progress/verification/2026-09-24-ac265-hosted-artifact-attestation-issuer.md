@@ -94,9 +94,10 @@ claim, and none is claimed as implemented:
   rather than deleted, matching the existing entrypoint precedent that never
   deletes a path it cannot prove it owns.
 - **Underlying UI-evidence digest.** The execution-evidence payload's
-  `artifactSha256` references UI evidence this producer never sees; it is
-  checked by the evidence service, not here, exactly as in the resolver
-  fixtures.
+  `artifactSha256` references UI evidence this producer never sees; it must be
+  checked by a future independently authenticated evidence service, not here,
+  exactly as in the resolver fixtures. No hosted evidence service currently
+  exists, so this remains unverified.
 - **Issuer primitive byte-opacity.** `createAc265HostedArtifactAttestation`
   remains byte-opaque by design; the protected wrapper derives every subject
   from the bytes and must be the only production entrypoint.
