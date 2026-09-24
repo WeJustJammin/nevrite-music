@@ -48,6 +48,37 @@ filesystem and validation operations.
 
 - `build-immutable-artifacts.sh` builds the workspace and packages both web
   runtime configurations for the immutable CI artifact.
+- `ac209-email-presence-contract.ts` declares the contract for
+  `ac209-email-presence.ts` and its entrypoint
+  `probe-production-ac209-email-presence.ts`, which answer the one question the
+  hour-bounded correlation gate cannot: whether the exact parent zone's Email
+  Sending dataset holds any telemetry at all. The probe samples two trailing
+  windows - 24 hours and 30 days - from one instant with `limit: 1` and reports a
+  bounded row count, a presence boolean, and one closed classification
+  (`recent_present`, `recent_missing`, `zone_wide_missing`, or
+  `provider_unavailable`). It selects only the non-PII `status` field, required
+  by the GraphQL rule that every selection set be non-empty, and never publishes
+  its value; no address, subject, or provider message identifier is ever selected
+  or retained. An unavailable window carries a closed code from
+  `AC209_EMAIL_PRESENCE_UNAVAILABLE_CODES` rather than free text, so the retained
+  artifact cannot carry a provider message or a token, and the wide window is
+  checked against the provider duration ceiling at module load. It is read-only,
+  performs no mutation, and closes no acceptance criterion. Dispatching it does
+  not close AC209 and does not replace the correlation gate, the delivery
+  verifier, or the visible receipt inspection.
+
+  It also accepts an optional second candidate tag through
+  `AC209_PRESENCE_ALTERNATE_ZONE_TAG`. The Email Sending dashboard path shows a
+  sending-domain identifier beside the parent zone id, and Cloudflare documents
+  `zoneTag` as a zone id without stating how a sending-domain tag resolves. The
+  optional tag is inventoried over the recent window in the same dispatch and
+  reported as its own closed value (`not_configured`, a bounded count, or a
+  closed code). It is inventory only: it never feeds the parent-zone
+  classification, never contributes to AC209 acceptance, and is never retained -
+  neither tag id appears in the artifact. Omitting the variable makes no extra
+  request.
+  Dispatch contract: `.github/workflows/probe-production-ac209-email-presence.yml`.
+
 - `write-ci-gate-evidence.sh` derives the release gate set from successful CI
   job results and the built artifact boundary.
 - `verify-ci-release-gates.sh` runs the contract, production-registry, and SLO
