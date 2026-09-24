@@ -31,4 +31,3 @@ done
 echo "Google Chrome is required for every browser gate and was not found at: ${chrome_candidates[*]}." >&2
 echo "Install the official Google Chrome package on the runner; bundled Chromium is not a supported fallback." >&2
 exit 1
-
