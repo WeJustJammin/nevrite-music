@@ -841,7 +841,8 @@ $cleanup$,
                 'ac265_session_broker_handle_roles_reject_delete',
                 'ac265_verified_candidates_are_immutable'
               )
-              and tgdisabled <> 0) as disabled_triggers
+              -- tgenabled is 'O' when enabled and 'D' when disabled.
+              and tgenabled = 'D') as disabled_triggers
       $cleanup_evidence$,
       resolve_one_use_run_id, resolve_replay_run_id,
       authorize_race_run_id, teardown_race_run_id,
