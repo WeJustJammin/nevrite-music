@@ -212,6 +212,18 @@ filesystem and validation operations.
     resource set is rejected instead of republished.
   - `ac265-retained-report-prohibited-content.ts` owns the focused marker
     vocabulary applied to decoded member names and string leaves.
+  - `ac265-retained-report-run-manifest.ts` integrates the protected run
+    manifest into the producer boundary. It reads the exact canonical
+    `ac265-hosted-run-manifest-v1` bytes through the CP-04g digest-bound
+    `readAc265HostedRunManifestV1Bytes`, so duplicate members, schema drift, and
+    insertion-ordered (non-canonical) members fail closed rather than being
+    re-canonicalized onto a different digest, and it binds the manifest's
+    criterion, contract version, run, identity, session references, resource
+    references, and control policy to the contract parsed from the same runner
+    contract bytes the report is assembled from. The producer requires those
+    bytes and their trusted digest, binds them before assembly and before any
+    directory is created, and returns the verified digest so a consumer can
+    recompute it over the returned bytes.
   - `ac265-retained-report-writer.ts` owns atomic, exclusive publication: an
     owner-only temporary file, `fsync`, and `link` publication that cannot
     replace an existing or racing destination, with symlinked roots and path
