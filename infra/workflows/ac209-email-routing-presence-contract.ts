@@ -1,11 +1,9 @@
 import { z } from '../../packages/contracts/node_modules/zod/index.js';
+import { SafeReleaseTimestampSchema } from '../../packages/contracts/src/release-recovery-common.ts';
 import {
-  AC209_EMAIL_PRESENCE_RECENT_WINDOW_MS,
-  AC209_EMAIL_PRESENCE_SAMPLE_LIMIT,
-  AC209_EMAIL_PRESENCE_WIDE_WINDOW_MS,
+  Ac209EmailPresenceInputSchema,
   Ac209EmailPresenceProbeReportSchema,
   Ac209EmailPresenceWindowSchema,
-  type Ac209EmailPresenceClassification,
 } from './ac209-email-presence-contract.ts';
 
 /**
@@ -69,17 +67,18 @@ export const AC209_EMAIL_ROUTING_PRESENCE_QUERY =
   }
 }` as const;
 
-export const Ac209EmailRoutingPresenceInputSchema = z
-  .object({
-    zoneId: z.string().regex(/^[0-9a-f]{32}$/u),
-    token: z
-      .string()
-      .min(20)
-      .max(4096)
-      .refine((value) => !/\s/u.test(value)),
-    sourceRevision: z.string().regex(/^[0-9a-f]{40}$/u),
-  })
-  .strict();
+/**
+ * Derived from the sibling presence input instead of restating its regexes, so
+ * the zone-id, token, and revision rules cannot drift between the two probes.
+ * The sibling-only alternate candidate tag is intentionally not picked: the
+ * routing probe has no cross-tag inventory.
+ */
+export const Ac209EmailRoutingPresenceInputSchema =
+  Ac209EmailPresenceInputSchema.pick({
+    zoneId: true,
+    token: true,
+    sourceRevision: true,
+  }).strict();
 
 export type Ac209EmailRoutingPresenceInput = z.infer<
   typeof Ac209EmailRoutingPresenceInputSchema
@@ -94,7 +93,7 @@ export const Ac209EmailRoutingPresenceReportSchema = z
     diagnosticOnly: z.literal(true),
     environment: z.literal('production'),
     sourceRevision: z.string().regex(/^[0-9a-f]{40}$/u),
-    probedAt: z.string(),
+    probedAt: SafeReleaseTimestampSchema,
     dataset: z.literal(AC209_EMAIL_ROUTING_DATASET),
     windows: z
       .object({
@@ -127,7 +126,7 @@ export const Ac209EmailDatasetsProbeReportSchema = z
     diagnosticOnly: z.literal(true),
     environment: z.literal('production'),
     sourceRevision: z.string().regex(/^[0-9a-f]{40}$/u),
-    probedAt: z.string(),
+    probedAt: SafeReleaseTimestampSchema,
     sending: Ac209EmailPresenceProbeReportSchema,
     routing: Ac209EmailRoutingPresenceReportSchema,
   })
@@ -136,13 +135,3 @@ export const Ac209EmailDatasetsProbeReportSchema = z
 export type Ac209EmailDatasetsProbeReport = z.infer<
   typeof Ac209EmailDatasetsProbeReportSchema
 >;
-
-/** Re-exported so callers share one closed vocabulary across both datasets. */
-export type Ac209EmailRoutingPresenceClassification =
-  Ac209EmailPresenceClassification;
-
-export const AC209_EMAIL_DATASETS_WINDOWS_MS = Object.freeze({
-  recent: AC209_EMAIL_PRESENCE_RECENT_WINDOW_MS,
-  wide: AC209_EMAIL_PRESENCE_WIDE_WINDOW_MS,
-  sample: AC209_EMAIL_PRESENCE_SAMPLE_LIMIT,
-});

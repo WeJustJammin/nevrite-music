@@ -101,7 +101,12 @@ filesystem and validation operations.
   (https://developers.cloudflare.com/email-service/observability/metrics-analytics/).
   `ac209-email-routing-presence-contract.ts` declares the routing contract and the
   combined report, `ac209-email-routing-presence.ts` implements both, and
-  `probe-production-ac209-datasets.ts` is the entrypoint. One dispatch reads the
+  `probe-production-ac209-datasets.ts` is the entrypoint. The rules that are not
+  dataset-specific - the probe-instant reader, the closed provider-failure mapper,
+  and the bounded single-row reader - live once in
+  `ac209-email-dataset-presence-shared.ts` and are shared by both probes, so the
+  two halves cannot drift into different instant semantics or page bounds. One
+  dispatch reads the
   sending dataset and the routing dataset from a single probe instant and reports
   them side by side: four requests total, two bounded windows per dataset, each
   with `limit: 1` and each selecting only the non-PII `status` field. Neither

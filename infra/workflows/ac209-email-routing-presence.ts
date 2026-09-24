@@ -1,9 +1,13 @@
 import {
   AC209_EMAIL_PRESENCE_RECENT_WINDOW_MS,
-  AC209_EMAIL_PRESENCE_SAMPLE_LIMIT,
   AC209_EMAIL_PRESENCE_WIDE_WINDOW_MS,
   type Ac209EmailPresenceClassification,
 } from './ac209-email-presence-contract.ts';
+import {
+  readDatasetPresenceInstant,
+  readDatasetPresenceRows,
+  toUnavailableWindow,
+} from './ac209-email-dataset-presence-shared.ts';
 import { collectAc209EmailPresenceProbe } from './ac209-email-presence.ts';
 import {
   AC209_EMAIL_DATASETS_PRESENCE_SCHEMA_VERSION,
@@ -18,10 +22,8 @@ import {
   type Ac209EmailRoutingPresenceReport,
 } from './ac209-email-routing-presence-contract.ts';
 import {
-  AC209_EMAIL_SENDING_MAX_RESPONSE_BYTES,
   Ac209EmailSendingAnalyticsError,
   failAc209EmailSendingAnalytics,
-  readAc209EmailSendingZoneRecord,
   requestAc209EmailSendingGraphql,
 } from './ac209-email-sending-analytics.ts';
 
@@ -51,61 +53,20 @@ import {
  * correlation gate, the delivery verifier, or the visible receipt inspection.
  */
 
-/** The widest instant a JavaScript `Date` can represent, in epoch ms. */
-const MAX_SAFE_INSTANT_MS = 8_640_000_000_000_000;
-const MAX_STATUS_LENGTH = 256;
-
-const isRecord = (value: unknown): value is Record<string, unknown> =>
-  typeof value === 'object' && value !== null && !Array.isArray(value);
+/**
+ * Reads the routing sample through the shared bounded reader, so the routing
+ * and sending halves cannot drift into different page bounds or row-shape
+ * rules. The count is the whole signal: no field value is ever returned.
+ */
+const readRoutingPresenceRows = (payload: unknown): number =>
+  readDatasetPresenceRows(payload, AC209_EMAIL_ROUTING_DATASET, 'routing');
 
 /**
- * Reads the routing sample and keeps the same documented provider rule the
- * sending probe enforces: a page larger than the requested single row is a
- * contract violation, not evidence of presence.
+ * Turns one routing provider failure into one closed non-PII code, so an
+ * unreadable routing dataset is never reported as an empty one. An unforeseen
+ * internal exception propagates and fails the run closed.
  */
-const readRoutingPresenceRows = (payload: unknown): number => {
-  const rows =
-    readAc209EmailSendingZoneRecord(payload)[AC209_EMAIL_ROUTING_DATASET];
-  if (!Array.isArray(rows))
-    failAc209EmailSendingAnalytics(
-      'provider_response_invalid',
-      'provider routing presence result is malformed.',
-    );
-  if (rows.length > AC209_EMAIL_PRESENCE_SAMPLE_LIMIT)
-    failAc209EmailSendingAnalytics(
-      'provider_response_invalid',
-      'provider routing presence page exceeds the single-row sample.',
-    );
-  for (const row of rows)
-    if (
-      !isRecord(row) ||
-      Object.keys(row).length !== 1 ||
-      typeof row.status !== 'string' ||
-      row.status.length === 0 ||
-      row.status.length > MAX_STATUS_LENGTH
-    )
-      failAc209EmailSendingAnalytics(
-        'provider_response_invalid',
-        'provider routing presence row is malformed.',
-      );
-  return rows.length;
-};
-
-/**
- * Turns one provider failure into one closed non-PII code. Only classified
- * provider failures become an unavailable window, so an unreadable routing
- * dataset is never reported as an empty one; an unforeseen internal exception
- * propagates and fails the run closed.
- */
-const toUnavailable = (
-  error: unknown,
-): Readonly<{
-  status: 'unavailable';
-  code: Ac209EmailSendingAnalyticsError['code'];
-}> => {
-  if (!(error instanceof Ac209EmailSendingAnalyticsError)) throw error;
-  return { status: 'unavailable', code: error.code };
-};
+const toUnavailable = toUnavailableWindow;
 
 const probeRoutingWindow = async (
   fetchImpl: typeof fetch,
@@ -148,20 +109,12 @@ const classifyPresence = (
   return wide.present ? 'recent_missing' : 'zone_wide_missing';
 };
 
-const readProbeInstant = (
-  now: () => number,
-): Readonly<{ probedAt: string }> => {
-  const probedAtMs = now();
-  if (
-    !Number.isFinite(probedAtMs) ||
-    Math.abs(probedAtMs) > MAX_SAFE_INSTANT_MS
-  )
-    failAc209EmailSendingAnalytics(
-      'invalid_configuration',
-      'provider probe instant is invalid.',
-    );
-  return { probedAt: new Date(probedAtMs).toISOString() };
-};
+/**
+ * Reads one probe instant through the shared reader, so the routing probe, the
+ * sending probe, and the combined probe all apply the same finite, in-range,
+ * safe-release-timestamp rules and fail closed identically.
+ */
+const readProbeInstant = readDatasetPresenceInstant;
 
 export const collectAc209EmailRoutingPresence = async (
   input: Ac209EmailRoutingPresenceInput,
@@ -217,8 +170,12 @@ export const collectAc209EmailRoutingPresence = async (
 export const collectAc209EmailDatasetsProbe = async (
   input: Ac209EmailRoutingPresenceInput,
 ): Promise<Ac209EmailDatasetsProbeReport> => {
-  const probedAtMs = (input.now ?? Date.now)();
-  const probedAt = new Date(probedAtMs).toISOString();
+  // The outer probe validates the instant before either dataset is read, so an
+  // unusable instant fails closed into the same closed code instead of
+  // surfacing a raw RangeError from the render below.
+  const nowSource = input.now ?? Date.now;
+  const { probedAt } = readDatasetPresenceInstant(nowSource);
+  const probedAtMs = Date.parse(probedAt);
   const sending = await collectAc209EmailPresenceProbe({
     zoneId: input.zoneId,
     token: input.token,
@@ -243,7 +200,3 @@ export const collectAc209EmailDatasetsProbe = async (
     routing,
   });
 };
-
-/** Maximum bytes any single response in these probes may occupy. */
-export const AC209_EMAIL_ROUTING_PRESENCE_MAX_RESPONSE_BYTES =
-  AC209_EMAIL_SENDING_MAX_RESPONSE_BYTES;
