@@ -1,0 +1,75 @@
+name: AC265 outage-lease control operation (staging control plane only)
+
+on:
+  workflow_dispatch:
+    inputs:
+      operation:
+        description: Bounded control operation to perform (acquire, consume, or release)
+        required: true
+        type: choice
+        options: [acquire, consume, release]
+      authorization_ref:
+        description: Protected AC265 authorization reference
+        required: true
+        type: string
+      target_ref:
+        description: Approved AC265 outage-target reference
+        required: true
+        type: string
+      idempotency_ref:
+        description: Opaque idempotency reference for this exact operation request
+        required: true
+        type: string
+      lease_ref:
+        description: Existing lease reference (consume and release only)
+        required: false
+        type: string
+      lease_sha256:
+        description: Existing lease reference digest (consume and release only)
+        required: false
+        type: string
+
+permissions: { contents: read }
+
+concurrency:
+  group: ac265-outage-lease-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  operate:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    environment: staging
+    permissions: { contents: read }
+    steps:
+      - name: Check out the immutable dispatched commit
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+
+      - name: Set up pinned workspace dependencies
+        uses: ./.github/actions/setup
+
+      - name: Run one bounded outage-lease control operation
+        id: lease
+        env:
+          AC265_OUTAGE_LEASE_OPERATION: ${{ inputs.operation }}
+          AC265_AUTHORIZATION_REF: ${{ inputs.authorization_ref }}
+          AC265_TARGET_REF: ${{ inputs.target_ref }}
+          AC265_IDEMPOTENCY_REF: ${{ inputs.idempotency_ref }}
+          AC265_LEASE_REF: ${{ inputs.lease_ref }}
+          AC265_LEASE_SHA256: ${{ inputs.lease_sha256 }}
+          SUPABASE_URL: ${{ vars.SUPABASE_URL }}
+          SUPABASE_PROJECT_REF: ${{ vars.SUPABASE_PROJECT_REF }}
+          SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
+        run: node --experimental-strip-types infra/workflows/run-ac265-outage-lease-control.ts
+
+      - name: Upload the redacted control record
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+        with:
+          name: ac265-outage-lease-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/ac265-outage-lease/outage-lease-control.json
+          if-no-files-found: error
+          retention-days: 1

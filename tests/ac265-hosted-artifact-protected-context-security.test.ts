@@ -65,13 +65,27 @@ describe('AC265 protected-context security contract', () => {
   });
 
   it.each([
+    // The run authority mints `randomUUID()` (v4) and CP-04d plus
+    // retained-report provenance are v4-only, so every non-v4 or non-canonical
+    // spelling fails this boundary instead of producing a run identity the
+    // rest of the pipeline cannot carry.
     '70000000-0000-1000-8000-000000000007',
     '70000000-0000-5000-8000-000000000007',
+    '70000000-0000-7000-8000-000000000007',
     'A0000000-0000-4000-8000-000000000007',
-  ])('rejects non-lowercase UUIDv4 runId %s', (runId) => {
+    '00000000-0000-0000-0000-000000000000',
+    'ffffffff-ffff-ffff-ffff-ffffffffffff',
+    '70000000-0000-4000-c000-000000000007',
+    '70000000-0000-4000-8000',
+    'not-a-uuid',
+  ])('rejects non-canonical or malformed runId %s', (runId) => {
     expect(() => createResolver(undefined, { ...trust(), runId })).toThrow(
-      /run|identity|uuid|version/i,
+      /run|identity|uuid|version|invalid/i,
     );
+  });
+
+  it('accepts the canonical v4 run identity the authority mints', () => {
+    expect(() => createResolver()).not.toThrow();
   });
 
   it('canonicalizes attestation fields in deterministic code-point order', () => {

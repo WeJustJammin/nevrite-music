@@ -21,6 +21,20 @@ export const HostedArtifactAttestationKindSchema = z.enum([
 
 const ARTIFACT_UUID =
   '[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}';
+/**
+ * Canonical run identity for the hosted-artifact boundary. The run authority
+ * mints `randomUUID()` (version 4) and the CP-04d source manifest plus the
+ * retained-report provenance are v4-only, so this boundary stays v4-only and
+ * lowercase-exact rather than accepting a version the rest of the pipeline
+ * cannot carry. Every gate from the issuer through the entrypoint and the
+ * resolver shares this one schema so they cannot drift apart.
+ */
+export const HostedArtifactAttestationRunIdSchema = z
+  .string()
+  .regex(
+    /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/u,
+    'run_id_invalid',
+  );
 const HostedServerReceiptReferenceSchema = z
   .string()
   .regex(new RegExp(`^ac265-receipt://server/${ARTIFACT_UUID}$`, 'u'));
@@ -34,7 +48,7 @@ const HostedArtifactAttestationShape = {
   algorithm: z.literal(AC265_HOSTED_ARTIFACT_ATTESTATION_ALGORITHM),
   keyId: CmsReleaseKeyIdSchema,
   artifactSha256: ReleaseEvidenceDigestSchema,
-  runId: z.string().regex(new RegExp(`^${ARTIFACT_UUID}$`, 'u')),
+  runId: HostedArtifactAttestationRunIdSchema,
   candidateIdentitySha256: ReleaseEvidenceDigestSchema,
   runnerContractSha256: ReleaseEvidenceDigestSchema,
   subjectSha256: ReleaseEvidenceDigestSchema,

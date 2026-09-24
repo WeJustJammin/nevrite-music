@@ -31,9 +31,14 @@ import {
   contextFor,
   createFixture,
 } from './ac265-hosted-receipt-test-fixtures.ts';
-import { makeContract } from './ac265-hosted-test-fixtures.ts';
+import { makeContract, uuidFor } from './ac265-hosted-test-fixtures.ts';
+import { buildAc265HostedRunManifestV1 } from '../../infra/workflows/ac265-hosted-run-manifest.ts';
 
 export const AC265_PRODUCTION_RECEIPT_ISSUED_AT = '2026-09-03T11:00:00.000Z';
+
+// The protected orchestrator supplies the run correlation ID; the builder never
+// derives it from the run ID, the identity, or time.
+export const AC265_PRODUCTION_CORRELATION_ID = uuidFor(900);
 
 // The retained-release sidecar declares the relative report path. The producer
 // must publish to that declared path instead of assuming `hosted/e2e.json`, so
@@ -123,6 +128,17 @@ export const createProductionFixture = (
 };
 
 export type Ac265ProductionFixture = ReturnType<typeof createProductionFixture>;
+
+/**
+ * Builds the frozen run manifest for a production fixture through the real
+ * builder, so the bytes and digest under test are the ones the protected
+ * producer boundary is required to accept.
+ */
+export const runManifestFor = (production: Ac265ProductionFixture) =>
+  buildAc265HostedRunManifestV1({
+    correlationId: AC265_PRODUCTION_CORRELATION_ID,
+    runnerContract: production.contract,
+  });
 
 // The produced bytes are the exact UTF-8 bytes of a two-space-indented JSON
 // document with one trailing newline. The retained-report digest binds those
@@ -271,6 +287,13 @@ export const productionRequestFor = (
     completedAt: production.fixture.report.completedAt,
     receiptRefs: production.receiptRefs,
   },
+  ...(() => {
+    const manifest = runManifestFor(production);
+    return {
+      runManifestBytes: manifest.manifestBytes(),
+      expectedRunManifestSha256: manifest.manifestSha256,
+    };
+  })(),
   // The integrated request omits receipt/evidence digests: they are derived
   // from the authenticated resolver inside the producer.
   provenance: (() => {

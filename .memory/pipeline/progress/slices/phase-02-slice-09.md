@@ -1563,6 +1563,164 @@ provenance, reportRoot, declaredReportPath })`. It calls the existing
   AC266 remains owner-deferred as the mandatory post-Phase 2
   production-readiness/release gate.
 
+### 2026-09-23 AC265 run-manifest producer-side integration (CP-04i, local/private only)
+
+- Closes the producer-side gap left open by CP-04f/CP-04g: the frozen
+  `ac265-hosted-run-manifest-v1` builder and its digest-bound read boundary
+  existed, but nothing in the retained V3 path imported them, so the protected
+  run manifest could not reach the report producer at all.
+- `infra/workflows/ac265-retained-report-run-manifest.ts` is the new binding
+  owner. `parseAc265RetainedReportRunManifest` reads the manifest through the
+  CP-04g `readAc265HostedRunManifestV1Bytes` boundary, so the bytes must hash to
+  the independently trusted digest and must already be the CP-04f canonical
+  form: duplicate members, schema drift, and insertion-ordered members fail
+  closed instead of being quietly re-canonicalized onto a different digest. The
+  bytes are snapshotted before verification and the digest is recomputed over
+  that snapshot, so a caller mutating its array afterwards cannot change what
+  the digest and the manifest describe. Membership (`criterion`,
+  `contractVersion` against `schemaVersion`, `runId`, `identity`,
+  `sessionHandles`, `resourceRefs`, `controls`) is then deep-compared against
+  the runner contract parsed from the same `assembly.runnerContractBytes` the
+  report is assembled from, so the two artifacts cannot validate each other and
+  a manifest for another run, candidate, session set, resource set, or control
+  policy is rejected even though it is internally valid.
+- `produceAc265RetainedHostedE2eReportV3` now requires `runManifestBytes` and
+  `expectedRunManifestSha256` in its strict key set, binds the manifest before
+  assembly and before any directory is created, and returns `runManifestSha256`
+  plus a copy-on-read `runManifestBytes()` accessor. A caller recomputing
+  SHA-256 over the returned bytes reproduces the published digest, which is the
+  regression the new suite pins. No criterion closes; no verifier, report
+  schema, or contract module changed.
+- Red→Green: the new suite
+  `tests/contracts/phase-02-slice-09-ac265-retained-report-run-manifest.test.ts`
+  covers the digest-equality canary, absent bytes/digest, insertion-ordered
+  rejection (proving canonicalization is not silently applied), malformed
+  digests, run/identity/session-reference drift, unknown request fields,
+  byte-snapshot immutability, and that a rejected binding leaves no report on
+  disk. Two of the first three failures were test-construction defects rather
+  than absent behavior and were fixed; a scratch probe then confirmed the
+  legacy four-key request still published while any manifest-bearing request
+  threw, so the remaining RED proved the missing behavior rather than a harness
+  fault. The scratch file was removed and is not part of the change.
+- Full `pnpm validate` on the final tree passed with a verified exit status of
+  **0** (pinned Node 22.23.1 / pnpm 11.24.0, `set -o pipefail`): **589 test
+  files, 4834 passed + 1 skipped / 4835**, 100% coverage (13,262 statements,
+  9,890 branches, 2,174 functions, 12,340 lines), S09 evidence 9 groups / 46
+  passed with 5 skipped, Playwright **101/101 functional** and **5/5
+  real-route**, build and bundle budgets passed, and local API p95 **1.751 ms**
+  against the 500 ms threshold. The local Supabase stack was started for this
+  validation, migrations through `20260923090000`.
+- Browser policy: the repository's Playwright configs select
+  `devices['Desktop Chrome']` without a `channel`, which launches Playwright's
+  bundled Chromium rather than system Google Chrome. The first full run was
+  stopped at the E2E stage for that reason and is not evidence; a second run hit
+  a `127.0.0.1:8787` port collision with a concurrent agent's E2E server and
+  executed zero E2E tests. The conclusive run used a temporary local
+  `channel: 'chrome'` override in both configs and was verified at the process
+  level to use `/opt/google/chrome/chrome` (Google Chrome 154.0.8037.57). Both
+  overrides were reverted with `apply_patch` afterwards and are absent from this
+  change; `git diff` for both config files is empty.
+- Contract reading recorded, not inferred: the run manifest is a protected
+  caller input because the locked `ac265-hosted-e2e-v3` schema is strict and
+  carries no manifest member, so binding it into the report body would have
+  meant a contract change. The manifest's correlation ID remains
+  caller-supplied and is deliberately not part of the cross-binding.
+- Independent-review fixes: `resourceRefs` is now compared through the same
+  kind-keyed normalization the CP-04f builder applies, because the locked
+  schema defines that collection as a four-element set rather than a sequence —
+  the previous raw-order comparison wrongly rejected a valid contract that
+  listed the same four references in another order (RED reproduced by disabling
+  the fix). The stale pre-manifest `Ac265RetainedReportProductionResult` alias,
+  which had no importers, was removed. Both byte inputs are now bounded by the
+  existing `MAX_RETAINED_REPORT_BYTES` cap before parsing instead of decoding an
+  oversized contract first. Re-verified: 12 tests in the suite, 5 files / 40
+  tests focused, 108 files / 929 passed in `tests/contracts`, ESLint, Prettier,
+  `tsc --build`, `progress:check`, and `git diff --check` clean. Port-bound
+  Playwright gates were not re-run because the E2E port slot was owned by
+  another task.
+- Bounded claim recorded: the manifest digest is bound at the producer boundary
+  and returned to the protected caller, and is not carried into any retained
+  artifact. `ac265-hosted-e2e-v3` is strict with no manifest member and the
+  release-evidence sidecar references only the report, so this is a locally
+  verifiable property, not hosted proof; carrying it into retained evidence
+  would require a decision to change a locked schema.
+- This is local/private construction only. No hosted acceptance, session
+  broker, receipt issuer, evidence service, fault-control plane, seeded
+  identity, resource, grant, or registry row is added or implied. Totals remain
+  279/282 active (283 authored IDs), Phase 2 8/17, and 1,999/2,000 active
+  criteria; AC209, AC211, and AC265 remain open, Slice 10 remains locked, and
+  AC266 remains owner-deferred.
+
+### 2026-09-24 AC265 hosted-artifact attestation issuer (CP-04j, local/private only)
+
+- Adds the missing live producer for the CP-04c/CP-04d hosted-artifact
+  attestation path. The repository could already authenticate exact receipt and
+  execution-evidence bytes and resolve them through a branded resolver, but
+  `createAc265HostedArtifactAttestation` had no non-test callsite, so nothing
+  could produce the signed companions the resolver consumes. See the [CP-04j
+  verification record](../verification/2026-09-24-ac265-hosted-artifact-attestation-issuer.md).
+- Designation: this entry is CP-04j because the CP-04i label is already owned by
+  the run-manifest producer-side integration recorded above. No duplicate
+  CP-04i designation is carried into this integration.
+- `infra/workflows/ac265-hosted-artifact-attestation-issuer.ts` (with its
+  `-inputs`, `-contract`, and `-signing` siblings) signs caller-supplied
+  artifact bytes into canonical `HostedArtifactAttestationV1` companions with
+  pinned key material, and `issue-ac265-hosted-artifact-attestations.ts` (with
+  its `-contract`, `-files`, and `-sources` siblings) runs the protected
+  issuance entrypoint that reads one bounded request document plus the exact
+  artifact members, derives every subject from the bytes, and publishes the
+  signed companions with a digest index beneath `RUNNER_TEMP`.
+- Run identity is v4-only and lowercase-exact through one shared
+  `HostedArtifactAttestationRunIdSchema` enforced by the issuer, the
+  entrypoint, the CP-04c attestation contract, and the resolver trust clone. An
+  earlier revision on the source branch widened three of those gates to a
+  version-agnostic form while the entrypoint still enforced v4-only, which made
+  a v7 acceptance path unreachable; that was corrected on the branch — the
+  widened gates restored to v4-only, the entrypoint gate folded onto the same
+  shared schema, and direct end-to-end coverage added for a non-v4 rejection
+  and a v4 issuance — before this integration.
+- Publication properties: the output directory must be exactly
+  `${RUNNER_TEMP}/ac265-hosted-artifact-attestations` and must not pre-exist;
+  it is created `0700` with the mode re-asserted on a held descriptor. Each
+  attestation and the index are written `O_CREAT|O_EXCL|O_NOFOLLOW` at `0600`
+  with `fsync` and a digest-bound readback. Request and artifact reads use one
+  held `O_RDONLY|O_NOFOLLOW` descriptor with `fstat` size rechecks and symlink
+  rejection. No secret is read, written, generated, or configured.
+- Focused evidence at the source SHA: **10 files / 120 tests** pass, including
+  the positive assembly control that signs the real envelopes through
+  the protected entrypoint and requires the protected resolver to return
+  byte-identical receipt and evidence bytes, plus negative controls for
+  bare-subject receipt, foreign run ID, mutated identity, declared-subject
+  contradiction, kind/reference swap, duplicate reference, unbounded source set,
+  unsafe member name, symlinked request, symlinked artifact, foreign signing
+  key, out-of-window attestation, pre-existing output directory, and malformed
+  request document. Evidence-payload kind is pinned to its descriptor kind
+  (`role` → `role_assertion`, `scenario` → `scenario_observation`,
+  `session_teardown` → `session_teardown`), so a self-consistent payload
+  whose kind contradicts its descriptor fails closed instead of being signed
+  into evidence the CP-04c verifier must reject. The focused 10 files / 120 tests above were measured on this
+  final source tree; only the record's full-repository test totals, its other
+  full-repository gates, and the browser gate were measured on the source branch
+  and are not re-run for this static-only integration.
+- Recorded boundaries, not acceptance: the request `runId` and the source
+  `issuedAt`/`expiresAt` window are caller-asserted here and must be derived
+  from authenticated runner context by a future protected harness; the
+  reference-to-content digest binding belongs to the CP-04d source manifest and
+  is not duplicated; a mid-loop failure can leave partial signed attestations in
+  the fresh owner-only directory with no index, which fails closed on read; the
+  execution-evidence `artifactSha256` references UI evidence this producer
+  never sees and needs a future independently authenticated evidence service;
+  and `createAc265HostedArtifactAttestation` remains byte-opaque, with the
+  protected wrapper as the only production entrypoint. None of these is an
+  owner decision or a hosted-acceptance claim.
+- This is local/private construction only. No hosted acceptance, session
+  broker, receipt issuer, artifact store, evidence service, seeded identity,
+  credential, resource, grant, or registry row is added or implied; the distinct
+  artifact-attestation issuer key and its `artifactTrustedKeys` pinning remain
+  owner decisions. Totals remain 279/282 active (283 authored IDs), Phase 2
+  8/17, and 1,999/2,000 active criteria; AC209, AC211, and AC265 remain open,
+  Slice 10 remains locked, and AC266 remains owner-deferred.
+
 ## 2026-09-24 AC211 queue analytics row-shape diagnostic (local only, unmerged)
 
 - Diagnosis basis: collection run `35846440023` (UTC day 2026-09-22) passed

@@ -238,6 +238,41 @@ filesystem and validation operations.
   or grants, or verify underlying resource safety, and it closes no AC265
   criterion.
 
+- `run-ac265-outage-lease-control.ts` is the manual entrypoint for exactly
+  one bounded CP-01 outage-lease control operation: acquire, consume, or
+  release. It is foundation transport only and grants no AC265 acceptance. It
+  chooses no dependency, route, duration, limit, or target: the operation and
+  the authorization, target, idempotency, and (for consume/release) lease
+  reference and digest all arrive as operator-supplied inputs, while the
+  control plane owns every timestamp, the canonical reference digest, the
+  fixed 60-second one-request policy, and the conflict decision. Its sibling
+  bounded service-role client `ac265-outage-lease-rpc.ts` POSTs only the
+  strict request to exactly `ac265_hosted_outage_lease_acquire`,
+  `ac265_hosted_outage_lease_consume`, or `ac265_hosted_outage_lease_release`
+  at the exact `https://<ref>.supabase.co` origin, with no-redirect/no-store
+  transport, a 64 KiB streamed response cap, fatal UTF-8 decoding, and a fixed
+  10-second deadline. `ac265-outage-lease-transport.ts` owns that shared
+  transport and the failure/conflict classification, while
+  `runner-temp-artifact-boundary.ts` owns the held-descriptor runner-temp,
+  summary, and exclusive-record filesystem boundary used by this entrypoint.
+  That boundary module is new and local to these files; the earlier
+  outage-target and runner-mapping entrypoints still carry their own copies of
+  the same pattern, and deduplicating them is not part of this change. The
+  client accepts only a schema-valid success result whose
+  authorization, target, idempotency, environment, state, and redaction fields
+  are bound to the submitted request and whose lease digest it independently
+  recomputes from the returned lease reference; every other rejection collapses
+  to one generic failure boundary. The control plane's deliberate refusal
+  envelope `{status:'conflict'}` is reported as a distinct conflict outcome so
+  an operator can tell a refusal from a transport or trust failure. The
+  entrypoint writes exactly one exclusive redacted record at
+  `${RUNNER_TEMP}/ac265-outage-lease/outage-lease-control.json`, appends a
+  redacted summary, and emits the lease reference only as a job-scoped step
+  output because that reference is a one-use capability. It exercises no
+  outage, seeds no approved target, registers
+  no dependency or route, contacts no hosted resource, creates no identity or
+  grant, and closes no AC265 criterion.
+
 - `ac265-retained-report-producer.ts` is the retained hosted E2E report
   producer. It takes the exact report bytes the assembler emitted plus the
   independently trusted run facts, validates them on the raw-byte boundary, and
@@ -273,10 +308,79 @@ filesystem and validation operations.
     resource set is rejected instead of republished.
   - `ac265-retained-report-prohibited-content.ts` owns the focused marker
     vocabulary applied to decoded member names and string leaves.
+  - `ac265-retained-report-run-manifest.ts` integrates the protected run
+    manifest into the producer boundary. It reads the exact canonical
+    `ac265-hosted-run-manifest-v1` bytes through the CP-04g digest-bound
+    `readAc265HostedRunManifestV1Bytes`, so duplicate members, schema drift, and
+    insertion-ordered (non-canonical) members fail closed rather than being
+    re-canonicalized onto a different digest, and it binds the manifest's
+    criterion, contract version, run, identity, session references, resource
+    references, and control policy to the contract parsed from the same runner
+    contract bytes the report is assembled from. The producer requires those
+    bytes and their trusted digest, binds them before assembly and before any
+    directory is created, and returns the verified digest so a consumer can
+    recompute it over the returned bytes.
   - `ac265-retained-report-writer.ts` owns atomic, exclusive publication: an
     owner-only temporary file, `fsync`, and `link` publication that cannot
     replace an existing or racing destination, with symlinked roots and path
     components rejected and temporary artifacts removed on failure.
+
+- `ac265-hosted-artifact-attestation-issuer.ts` is the live, fail-closed
+  producer half of the CP-04c hosted-artifact boundary. It signs exact
+  caller-supplied `server_receipt` and `execution_evidence` bytes into the
+  canonical, domain-separated `HostedArtifactAttestationV1` companion that the
+  CP-04c resolver authenticates as one member of the `Ac265HostedArtifactSource`
+  tuple the calling harness assembles; the resolver never consumes the
+  companion on its own. It never synthesizes receipts,
+  credentials, or identity: the caller supplies the bytes and the run binding,
+  and the signer refuses anything else. Key pinning is self-describing — the
+  key ID is derived as `ac265-hosted-artifact-ed25519-<sha256(SPKI DER)[0..32]>`
+  and any key ID that does not name the exact public half of the supplied
+  private key is rejected. Subject digests are derived from the bytes, never
+  accepted as a caller-supplied digest. Receipt bytes must be complete,
+  duplicate-member-free `ac265-hosted-e2e-receipt-v1` envelopes, and an
+  execution-evidence payload's own `kind` must match the kind its declared
+  descriptor maps to (`role` → `role_assertion`, `scenario` →
+  `scenario_observation`, `session_teardown` → `session_teardown`), so a
+  self-consistent payload the CP-04c verifier must reject is never signed.
+  Canonical byte form is not required of either input: the digest is over the
+  exact bytes and the resolver digests those same bytes. No live signing key is configured by
+  this code; while the distinct artifact-attestation issuer key and its
+  `artifactTrustedKeys` pinning remain owner decisions, the publishing boundary
+  stays unwired and AC265 stays open.
+
+  - `ac265-hosted-artifact-attestation-issuer-inputs.ts` owns the shared
+    validators, the execution-evidence subject vocabulary, and the SPKI-derived
+    key-ID derivation.
+  - `ac265-hosted-artifact-attestation-issuer-contract.ts` owns the issuer
+    request/result/run-binding interfaces and the trusted-key surface.
+  - `ac265-hosted-artifact-attestation-issuer-signing.ts` owns the single
+    signing pass: request-shape validation, window checks against the pinned
+    key validity, and the canonical detached signature.
+
+- `issue-ac265-hosted-artifact-attestations.ts` is the protected entrypoint
+  that runs on an isolated runner. It reads one bounded, duplicate-member-free
+  request document listing the exact artifact members the caller already holds,
+  reads each member through no-follow bounded reads, re-derives each subject
+  from the member bytes, and publishes only the signed companions plus a
+  digest index under an owner-only `0700` directory created fresh beneath
+  `RUNNER_TEMP`. The index is a handoff record for the calling harness, not a
+  resolver input: the harness still builds each `Ac265HostedArtifactSource`
+  from the artifact bytes, the published attestation companion, and its own
+  expectation, exactly as the CP-04c fixtures do. An existing output directory
+  fails closed, so the entrypoint never overwrites prior evidence. Identity
+  comes only from environment values; `GITHUB_STEP_SUMMARY` and every artifact
+  member must resolve beneath `RUNNER_TEMP`, and a path outside it fails
+  closed. It emits a redacted step summary and no artifact bytes or private
+  material.
+
+  - `issue-ac265-hosted-artifact-attestation-contract.ts` owns the entrypoint
+    constants, the request/source member sets, and the issuance summary type.
+  - `issue-ac265-hosted-artifact-attestation-files.ts` owns the bounded
+    no-follow reads and the exclusive owner-only publication with digest-bound
+    readback.
+  - `issue-ac265-hosted-artifact-attestation-sources.ts` owns declared-source
+    parsing and the byte-derived subject digests for both artifact kinds.
 
 ## Conventions
 
