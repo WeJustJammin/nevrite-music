@@ -186,6 +186,8 @@ review.
   `infra/workflows/README.md` - dispatch contract and entry documentation.
 - `tests/ac209-email-presence.test.ts`,
   `tests/ac209-email-presence-workflow-contract.test.ts`,
-  `tests/ac209-email-presence-type-safety.test.ts` - probe coverage.
+  `tests/ac209-email-presence-type-safety.test.ts`,
+  `tests/ac209-email-presence-alternate-tag.test.ts`, and
+  `tests/ac209-email-presence-entrypoint.test.ts` - probe coverage.
 - `.memory/pipeline/progress/verification/2026-09-22-ac209-diagnostic-ac211-provenance-ac265-report-assembler.md`
   - the diagnostic record whose retained artifact this probe follows.
