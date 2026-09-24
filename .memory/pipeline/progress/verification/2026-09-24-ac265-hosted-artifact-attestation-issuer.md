@@ -72,6 +72,36 @@ steps are preserved.
 
 ## Residual limitations
 
+### Owner-confirmed deferred boundaries (2026-09-24)
+
+The owner reviewed the five review-flagged follow-ups and confirmed each as an
+explicit, intentional deferred boundary of this local-only module. None of them
+is a defect, and none is claimed as implemented:
+
+- **Run identity and clock source.** The request `runId` and the source
+  `issuedAt`/`expiresAt` window are caller-asserted here. A future protected
+  harness must derive them from authenticated runner context; this module
+  deliberately does not invent an unauthenticated clock or run authority.
+- **Reference-to-content digest binding.** Kind/reference shape and exact
+  membership are enforced, but the reference-to-artifact digest binding belongs
+  to the CP-04d source manifest, which already pins
+  `ref -> artifactSha256/attestationSha256`; it is not duplicated here.
+- **Partial output on failure.** A mid-loop failure can leave signed
+  attestations in the fresh owner-only directory, but no index is written, so
+  the artifact is unusable and fails closed on read. Partials are preserved
+  rather than deleted, matching the existing entrypoint precedent that never
+  deletes a path it cannot prove it owns.
+- **Underlying UI-evidence digest.** The execution-evidence payload's
+  `artifactSha256` references UI evidence this producer never sees; it is
+  checked by the evidence service, not here, exactly as in the resolver
+  fixtures.
+- **Issuer primitive byte-opacity.** `createAc265HostedArtifactAttestation`
+  remains byte-opaque by design; the protected wrapper derives every subject
+  from the bytes and must be the only production entrypoint.
+
+No hosted acceptance is claimed for any of these, and the deferred items add no
+new tracker count.
+
 - No hosted acceptance, session broker, artifact store, or receipt issuer is
   added or implied. A local issuance is not hosted evidence.
 - The distinct artifact-attestation issuer key and its `artifactTrustedKeys`
