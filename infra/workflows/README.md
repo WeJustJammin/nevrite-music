@@ -16,6 +16,20 @@ filesystem and validation operations.
   output. Missing counts remain null, not zero. Diagnostic failures warn but
   never replace or bypass the subsequent normal evidence collector.
 
+- `diagnose-content-schema-registry-queue-shape.mjs` answers the next AC211
+  failure-forensics question after a `malformed_queue_analytics_row` failure:
+  which Queue Analytics field drifted. It reuses the collector's exact query
+  string, envelope classification, and row classifier, so its verdict is the
+  collection verdict rather than a second opinion. It emits only closed value
+  classes (row type, dimension presence and key count, date/count/action/outcome
+  classes) plus the exact rejected gate and bounded row counts. Provider values,
+  timestamps, queue identifiers, raw rows, and secrets never enter output, and
+  the emitted row list is capped. It is read-only, writes no evidence file,
+  and a failure warns without replacing or bypassing the normal collector.
+  The gate vocabulary lives in
+  `content-schema-registry-slo-queue-shape.ts`, which the collector imports, so
+  the two cannot drift apart.
+
 - `ac209-email-diagnostics.ts` and its entrypoint
   `diagnose-production-ac209-email.ts` answer one AC209 failure-forensics
   question for the old exercise window: whether the Email Sending dataset was

@@ -155,6 +155,74 @@ describe('content schema registry SLO provider queue adapter', () => {
     }
   });
 
+  it('names the rejected row gate so provider drift is diagnosable', async () => {
+    const cases: Array<{ row: unknown; gate: string }> = [
+      { gate: 'row_not_object', row: 'not-a-row' },
+      { gate: 'dimensions_shape', row: { count: 1 } },
+      {
+        gate: 'date_missing',
+        row: { count: 1, dimensions: { actionType: 'ReadMessage' } },
+      },
+      {
+        gate: 'date_not_string',
+        row: {
+          count: 1,
+          dimensions: { actionType: 'ReadMessage', date: 20260902 },
+        },
+      },
+      {
+        gate: 'date_format',
+        row: row('ReadMessage', '2026-09-02T00:00:00.001Z', 1, null),
+      },
+      {
+        gate: 'count_shape',
+        row: row('ReadMessage', '2026-09-02', -1, null),
+      },
+      {
+        gate: 'action_type_missing',
+        row: { count: 1, dimensions: { date: '2026-09-02' } },
+      },
+      {
+        gate: 'action_type_not_string',
+        row: { count: 1, dimensions: { actionType: 7, date: '2026-09-02' } },
+      },
+      {
+        gate: 'action_type_unknown',
+        row: row('PurgeMessage', '2026-09-02', 1, null),
+      },
+      {
+        gate: 'outcome_shape',
+        row: row('DeleteMessage', '2026-09-02', 1, 'unknown-outcome'),
+      },
+    ];
+
+    for (const testCase of cases) {
+      const fetchImpl = vi
+        .fn<typeof fetch>()
+        .mockResolvedValue(
+          queueResponse([testCase.row as Record<string, unknown>]),
+        );
+      await expect(
+        queryQueueMessageOperations(queryInput(fetchImpl)),
+      ).rejects.toThrow(`malformed queue analytics row (${testCase.gate})`);
+    }
+  });
+
+  it('names the summed-count overflow gate without relaxing any row gate', async () => {
+    const fetchImpl = vi
+      .fn<typeof fetch>()
+      .mockResolvedValue(
+        queueResponse([
+          row('ReadMessage', '2026-09-02', 64_000, null),
+          row('ReadMessage', '2026-09-02', 64_000, null),
+        ]),
+      );
+
+    await expect(
+      queryQueueMessageOperations(queryInput(fetchImpl)),
+    ).rejects.toThrow('malformed queue analytics row (count_sum_overflow)');
+  });
+
   it('fails safely on HTTP, JSON, GraphQL, account, node, and row failures', async () => {
     const cases: Array<{ response: Response; expected: string }> = [
       {

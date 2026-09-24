@@ -25,6 +25,23 @@ describe('production AC211 collection workflow contract', () => {
       'AC211 diagnostic unavailable; normal collection still required.',
     );
   });
+
+  it('runs the read-only queue shape diagnostic before collection as a warning-only hint', () => {
+    const shapeDiagnostic = 'diagnose-content-schema-registry-queue-shape.mjs';
+    const collector = 'collect-content-schema-registry-slo-evidence.ts';
+
+    expect(collect).toContain(shapeDiagnostic);
+    expect(collect?.indexOf(shapeDiagnostic)).toBeLessThan(
+      collect?.indexOf(collector) ?? -1,
+    );
+    expect(collect).toContain(
+      'AC211 queue shape diagnostic unavailable; normal collection still required.',
+    );
+    const preceding = collect?.slice(0, collect.indexOf(collector)) ?? '';
+    expect(preceding).toContain('if ! node --experimental-strip-types');
+    expect(preceding).not.toMatch(/^\s+exit\s+1/mu);
+    expect(preceding).not.toMatch(/continue-on-error/u);
+  });
   it('is manual, explicit, main-only, and serialized without cancellation', () => {
     expect(workflowHeader).toContain('workflow_dispatch:');
     expect(workflowHeader).not.toMatch(
