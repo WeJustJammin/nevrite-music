@@ -2,9 +2,9 @@ begin;
 
 create extension if not exists pgtap with schema extensions;
 
--- Fixed plan: 59 assertions, enumerated below in source order.  A hard count
+-- Fixed plan: 71 assertions, enumerated below in source order.  A hard count
 -- keeps this suite from silently passing if an assertion is dropped.
-select plan(59);
+select plan(71);
 
 -- The broker control plane owns authorization, one-use resolve bookkeeping, and
 -- teardown only.  It must never hold session state, and it must stay
@@ -570,6 +570,126 @@ select ok(
   'every stored handle is role-bound, digest-matched, unresolved and not logged out'
 );
 
+-- The envelope order is server-derived from the locked role matrix, not from
+-- the caller's array order, so a reordered request cannot change the result.
+select is(
+  (
+    select jsonb_agg(handle.value ->> 'role' order by handle.ordinality)
+    from ac265_broker_results as result
+    cross join lateral jsonb_array_elements(result.result -> 'handles')
+      with ordinality as handle(value, ordinality)
+    where result.result_name = 'authorize'
+  ),
+  '["entitled_read", "owner_full", "guardian_mandate", "junior_restricted",
+    "business_mandate", "staff_case_scoped", "admin_step_up",
+    "forbidden_hidden", "disabled_prerequisite"]'::jsonb,
+  'the authorization envelope returns the locked role order regardless of request order'
+);
+
+-- An exact authorization replay is idempotent and returns the stored envelope
+-- rather than minting a second handle set.
+set local role service_role;
+select lives_ok(
+  $$
+  insert into ac265_broker_results (result_name, result)
+  select 'authorize-replay', platform_api.ac265_session_broker_authorize(request)
+  from pg_temp.ac265_broker_requests
+  where request_name = 'authorize'
+  $$,
+  'an exact authorization replay is idempotent'
+);
+reset role;
+
+select is(
+  (
+    select (select result from ac265_broker_results where result_name = 'authorize-replay')
+      = (select result from ac265_broker_results where result_name = 'authorize')
+  ),
+  true,
+  'the authorization replay returns the identical frozen handle envelope'
+);
+
+-- A repeated idempotency reference with different bytes is a conflict, not a
+-- second authorization.
+set local role service_role;
+select lives_ok(
+  $$
+  insert into ac265_broker_results (result_name, result)
+  select 'authorize-replay-mutated', platform_api.ac265_session_broker_authorize(
+    jsonb_set(
+      request,
+      '{handles,0,materialRef}',
+      to_jsonb('ac265-session-material://staging/32000000-0000-4000-8000-000000000099'::text)
+    )
+  )
+  from pg_temp.ac265_broker_requests
+  where request_name = 'authorize'
+  $$,
+  'a mutated replay under the same idempotency reference reaches the replay fence'
+);
+reset role;
+
+select is(
+  (select result from ac265_broker_results where result_name = 'authorize-replay-mutated'),
+  '{"status":"conflict"}'::jsonb,
+  'a differing payload for the same idempotency reference is refused'
+);
+
+select is(
+  (
+    select count(*)::integer
+    from platform_private.ac265_session_broker_handles
+    where run_id = '10000000-0000-4000-8000-000000000001'::uuid
+  ),
+  1,
+  'a refused replay did not mint a second handle set'
+);
+
+-- A duplicate role and an array-order role swap are both malformed requests.
+select throws_ok(
+  $$
+  select platform_api.ac265_session_broker_authorize(
+    jsonb_set(
+      (
+        select request
+        from pg_temp.ac265_broker_requests
+        where request_name = 'authorize'
+      ),
+      '{handles,1,role}',
+      to_jsonb('entitled_read'::text)
+    )
+  )
+  $$,
+  '22023',
+  'AC265 session broker authorization request rejected',
+  'a duplicated role is rejected even when the handle stays role-bound'
+);
+
+select throws_ok(
+  $$
+  select platform_api.ac265_session_broker_authorize(
+    jsonb_set(
+      (
+        select request
+        from pg_temp.ac265_broker_requests
+        where request_name = 'authorize'
+      ),
+      '{handles,1,materialRef}',
+      to_jsonb(
+        (
+          select request -> 'handles' -> 0 ->> 'materialRef'
+          from pg_temp.ac265_broker_requests
+          where request_name = 'authorize'
+        )
+      )
+    )
+  )
+  $$,
+  '22023',
+  'AC265 session broker authorization request rejected',
+  'a duplicated material reference is rejected even with distinct roles and handles'
+);
+
 -- Exactly one resolve per handle; the handle reference alone is not authority.
 insert into ac265_broker_requests (request_name, request)
 select
@@ -619,6 +739,25 @@ select ok(
       and handle.role = 'owner_full'
   ),
   'the resolve envelope returns only an opaque material reference and short expiry'
+);
+
+-- Resolution never extends the window: the resolve expiry is exactly the
+-- server-derived broker window the authorization already committed to.
+select is(
+  (
+    select result ->> 'expiresAt'
+    from ac265_broker_results
+    where result_name = 'resolve-owner'
+  ),
+  to_char(
+    (
+      select expires_at
+      from platform_private.ac265_session_broker_handles
+      where run_id = '10000000-0000-4000-8000-000000000001'::uuid
+    ) at time zone 'UTC',
+    'YYYY-MM-DD"T"HH24:MI:SS.MS"Z"'
+  ),
+  'the resolve expiry is exactly the stored broker window and is never extended'
 );
 
 set local role service_role;
@@ -851,6 +990,61 @@ select ok(
       and logged_out_at is not null
   ),
   'teardown of one handle never logs out another run-scoped session'
+);
+
+-- The remaining count is run-scoped, not global: a second teardown in the same
+-- run must decrement it by exactly one.
+insert into ac265_broker_requests (request_name, request)
+select
+  'teardown-second-role',
+  jsonb_build_object(
+    'criterion', 'P2-S09-AC-265',
+    'schemaVersion', 'ac265-hosted-session-broker-control-v1',
+    'authorizationRef', 'ac265-authorization://staging/20000000-0000-4000-8000-000000000001',
+    'runId', '10000000-0000-4000-8000-000000000001',
+    'identitySha256', 'ac265b0' || repeat('b', 64 - 7),
+    'idempotencyRef', 'ac265-idempotency://staging/41000000-0000-4000-8000-000000000009',
+    'role', handle.role,
+    'handleRef', handle.handle_ref,
+    'handleSha256', handle.handle_sha256,
+    'logoutScope', 'current_session_only'
+  )
+from ac265_broker_handles as handle
+where handle.role = 'forbidden_hidden';
+
+set local role service_role;
+select lives_ok(
+  $$
+  insert into ac265_broker_results (result_name, result)
+  select 'teardown-second-role', platform_api.ac265_session_broker_teardown(request)
+  from pg_temp.ac265_broker_requests
+  where request_name = 'teardown-second-role'
+  $$,
+  'a second role-bound teardown in the same run is authorized'
+);
+reset role;
+
+select is(
+  (
+    select result ->> 'teardownsRemaining'
+    from ac265_broker_results
+    where result_name = 'teardown-second-role'
+  ),
+  '7',
+  'the run-scoped teardown count decrements once per logged-out session'
+);
+
+select is(
+  (
+    select count(*)::integer
+    from platform_private.ac265_session_broker_handle_roles as handle
+    join platform_private.ac265_session_broker_handles as context
+      on context.broker_authorization_id = handle.broker_authorization_id
+    where handle.logged_out_at is not null
+      and context.run_id = '10000000-0000-4000-8000-000000000001'::uuid
+  ),
+  2,
+  'exactly two run-scoped sessions are logged out'
 );
 
 -- Resolve must fail closed once the broker window has closed.  The handle set

@@ -1,4 +1,4 @@
-import { describe, it } from 'vitest';
+import { describe, expect, it } from 'vitest';
 
 import {
   Ac265SessionBrokerAuthorizeRequestSchema,
@@ -137,11 +137,27 @@ describe('AC265 session broker control contract validation', () => {
         ...resolveRequest,
         authorizationRef: authorization,
       });
-    for (const run of ['', 'not-a-uuid', '10000000-0000-4000-8000-00000000000'])
+    // The private RPCs accept only the exact lowercase RFC 4122 version-4
+    // spelling.  Every other spelling a looser UUID validator would admit must
+    // fail here, or a request can be rejected by the database after passing the
+    // client contract.
+    for (const run of [
+      '',
+      'not-a-uuid',
+      '10000000-0000-4000-8000-00000000000',
+      '10000000-0000-1000-8000-000000000001',
+      '00000000-0000-0000-0000-000000000000',
+      '10000000-0000-4000-8000-00000000000A',
+      '10000000-0000-4000-C000-000000000001',
+      '10000000-0000-4000-8000-000000000001 ',
+    ])
       expectRejected(Ac265SessionBrokerResolveRequestSchema, {
         ...resolveRequest,
         runId: run,
       });
+    expect(
+      Ac265SessionBrokerResolveRequestSchema.safeParse(resolveRequest).success,
+    ).toBe(true);
   });
 
   it('rejects unknown members on every request and result', () => {

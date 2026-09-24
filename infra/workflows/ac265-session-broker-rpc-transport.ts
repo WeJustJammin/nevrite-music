@@ -9,12 +9,37 @@ export const AC265_SESSION_BROKER_FAILURE =
 const SUPABASE_PROJECT_REF_PATTERN = /^[a-z0-9]{20}$/u;
 const PRINTABLE_SECRET_PATTERN = /^[\x21-\x7e]+$/u;
 
+export type Ac265SessionBrokerOperation = 'authorize' | 'resolve' | 'teardown';
+
 export interface Ac265SessionBrokerTransportOptions {
   readonly supabaseUrl: string;
   readonly supabaseProjectRef: string;
   readonly serviceRoleKey: string;
   readonly fetchImpl?: typeof fetch;
 }
+
+/**
+ * Raised when the broker control plane deliberately refuses the request. A
+ * conflict is a fail-closed authorization outcome, not a transport or trust
+ * failure: the run has no live authorization, the handle was already resolved
+ * or logged out with a different idempotency reference, or the scope does not
+ * match the stored run. Reporting it as a distinct typed outcome lets an
+ * operator tell a refusal from a transport, digest, or trust failure.
+ */
+export class Ac265SessionBrokerConflictError extends Error {
+  public readonly operation: Ac265SessionBrokerOperation;
+
+  public constructor(operation: Ac265SessionBrokerOperation) {
+    super(`AC265 session broker ${operation} conflict`);
+    this.name = 'Ac265SessionBrokerConflictError';
+    this.operation = operation;
+  }
+}
+
+export const isAc265SessionBrokerConflict = (
+  error: unknown,
+): error is Ac265SessionBrokerConflictError =>
+  error instanceof Ac265SessionBrokerConflictError;
 
 export function fail(): never {
   throw new Error(AC265_SESSION_BROKER_FAILURE);
@@ -139,7 +164,21 @@ export function decodeStrict(source: string): unknown {
   }
 }
 
+/**
+ * The control plane answers a deliberate refusal with exactly this envelope and
+ * nothing else. Any other shape stays on the generic failure boundary.
+ */
+const isConflictEnvelope = (value: unknown): boolean => {
+  if (typeof value !== 'object' || value === null || Array.isArray(value))
+    return false;
+  const keys = Object.keys(value);
+  return (
+    keys.length === 1 && keys[0] === 'status' && value.status === 'conflict'
+  );
+};
+
 async function withDeadline<T>(
+  operation: Ac265SessionBrokerOperation,
   perform: (signal: AbortSignal) => Promise<T>,
 ): Promise<T> {
   const controller = new AbortController();
@@ -153,7 +192,10 @@ async function withDeadline<T>(
 
   try {
     return await Promise.race([perform(controller.signal), deadline]);
-  } catch {
+  } catch (error: unknown) {
+    // A deliberate refusal is a stable authorization outcome, not a transport
+    // failure, so it must survive the generic deadline boundary.
+    if (error instanceof Ac265SessionBrokerConflictError) throw error;
     return fail();
   } finally {
     if (timeout !== undefined) clearTimeout(timeout);
@@ -162,6 +204,7 @@ async function withDeadline<T>(
 
 export async function callAc265SessionBrokerRpc(
   options: Ac265SessionBrokerTransportOptions,
+  operation: Ac265SessionBrokerOperation,
   rpcName: string,
   request: unknown,
 ): Promise<string> {
@@ -174,7 +217,7 @@ export async function callAc265SessionBrokerRpc(
   const fetchImpl = options.fetchImpl ?? fetch;
   if (typeof fetchImpl !== 'function') return fail();
 
-  return withDeadline(async (signal) => {
+  return withDeadline(operation, async (signal) => {
     const response = await fetchImpl(endpoint, {
       method: 'POST',
       headers: {
@@ -193,6 +236,9 @@ export async function callAc265SessionBrokerRpc(
       await cancelBody(response);
       return fail();
     }
-    return readBoundedText(response);
+    const source = await readBoundedText(response);
+    if (isConflictEnvelope(decodeStrict(source)))
+      throw new Ac265SessionBrokerConflictError(operation);
+    return source;
   });
 }

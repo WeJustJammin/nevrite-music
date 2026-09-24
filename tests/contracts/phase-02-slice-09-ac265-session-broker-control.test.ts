@@ -155,6 +155,48 @@ describe('AC265 run-scoped session broker control contract', () => {
     });
   });
 
+  it('binds the handle to its request by role, not by array position', () => {
+    // The role lives inside the handle reference, so a caller cannot satisfy
+    // the contract by reordering the locked roles: every permutation either
+    // mismatches the reference or duplicates a role.
+    const rotated = [...handles.slice(1), handles[0]];
+    for (const index of [0, 3, 8])
+      expectRejected(Ac265SessionBrokerAuthorizeRequestSchema, {
+        ...authorizeRequest,
+        handles: handles.map((handle, position) =>
+          position === index ? rotated[position] : handle,
+        ),
+      });
+
+    const sortedByRole = [...handles].sort((left, right) =>
+      left.role.localeCompare(right.role),
+    );
+    expect(
+      Ac265SessionBrokerAuthorizeRequestSchema.parse({
+        ...authorizeRequest,
+        handles: sortedByRole,
+      }).handles.map(({ role }) => role),
+    ).toEqual(sortedByRole.map(({ role }) => role));
+  });
+
+  it('accepts only the exact replay envelope shape for a repeated reference', () => {
+    // Replay semantics are enforced by the control plane: an exact repeat
+    // returns the stored envelope, and any change under the same idempotency
+    // reference is a conflict. The contract must keep both shapes stable.
+    expect(
+      Ac265SessionBrokerAuthorizeRequestSchema.parse(authorizeRequest),
+    ).toEqual(authorizeRequest);
+    expect(
+      Ac265SessionBrokerResolveRequestSchema.parse(resolveRequest),
+    ).toEqual(resolveRequest);
+    expect(
+      Ac265SessionBrokerTeardownRequestSchema.parse(teardownRequest),
+    ).toEqual(teardownRequest);
+    expect(
+      Ac265SessionBrokerConflictSchema.parse({ status: 'conflict' }),
+    ).toEqual({ status: 'conflict' });
+  });
+
   it('rejects teardown that does not bind the exact handle digest', () => {
     expectRejected(Ac265SessionBrokerTeardownResultSchema, {
       ...teardownResult,

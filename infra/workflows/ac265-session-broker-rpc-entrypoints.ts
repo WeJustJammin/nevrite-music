@@ -34,6 +34,7 @@ export async function authorizeAc265SessionBroker(
       return fail();
   const source = await callAc265SessionBrokerRpc(
     options,
+    'authorize',
     AUTHORIZE_RPC_NAME,
     parsed.data,
   );
@@ -53,6 +54,7 @@ export async function resolveAc265SessionBroker(
     return fail();
   const source = await callAc265SessionBrokerRpc(
     options,
+    'resolve',
     RESOLVE_RPC_NAME,
     parsed.data,
   );
@@ -70,6 +72,7 @@ export async function teardownAc265SessionBroker(
     return fail();
   const source = await callAc265SessionBrokerRpc(
     options,
+    'teardown',
     TEARDOWN_RPC_NAME,
     parsed.data,
   );

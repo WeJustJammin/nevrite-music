@@ -2,6 +2,7 @@ import { describe, expect, it, vi } from 'vitest';
 
 import {
   authorizeAc265SessionBroker,
+  isAc265SessionBrokerConflict,
   resolveAc265SessionBroker,
   teardownAc265SessionBroker,
 } from '../infra/workflows/ac265-session-broker-rpc.ts';
@@ -73,31 +74,62 @@ describe('AC265 session broker RPC client', () => {
     );
   });
 
-  it('surfaces the closed conflict envelope as a typed failure', async () => {
-    const fetchImpl = vi.fn<typeof fetch>(async () =>
-      responseFor({ status: 'conflict' }),
-    );
-    await expect(
-      resolveAc265SessionBroker(clientOptions(fetchImpl), resolveRequest),
-    ).rejects.toThrow(FAILURE);
-    await expect(
-      authorizeAc265SessionBroker(clientOptions(fetchImpl), authorizeRequest),
-    ).rejects.toThrow(FAILURE);
-    await expect(
-      teardownAc265SessionBroker(clientOptions(fetchImpl), teardownRequest),
-    ).rejects.toThrow(FAILURE);
+  it('surfaces the closed conflict envelope as a distinct typed conflict', async () => {
+    const cases = [
+      {
+        operation: 'authorize',
+        request: authorizeRequest,
+        call: authorizeAc265SessionBroker,
+      },
+      {
+        operation: 'resolve',
+        request: resolveRequest,
+        call: resolveAc265SessionBroker,
+      },
+      {
+        operation: 'teardown',
+        request: teardownRequest,
+        call: teardownAc265SessionBroker,
+      },
+    ] as const;
+
+    for (const { operation, request, call } of cases) {
+      const fetchImpl = vi.fn<typeof fetch>(async () =>
+        responseFor({ status: 'conflict' }),
+      );
+      const outcome: unknown = await call(
+        clientOptions(fetchImpl),
+        request,
+      ).catch((error: unknown) => error);
+
+      // A deliberate refusal is a stable fail-closed authorization outcome, not
+      // a transport or trust failure, so the operator can tell them apart.
+      expect(isAc265SessionBrokerConflict(outcome)).toBe(true);
+      expect((outcome as Error).message).toBe(
+        `AC265 session broker ${operation} conflict`,
+      );
+      expect((outcome as { operation: string }).operation).toBe(operation);
+      expect((outcome as Error).message).not.toContain(FAILURE);
+    }
   });
 
-  it('rejects a conflict envelope carrying extra private detail', async () => {
+  it('fails generically for conflict-shaped envelopes that are not the closed sentinel', async () => {
     for (const payload of [
       { status: 'conflict', detail: 'private' },
       { status: 'ok' },
       { status: 'conflict', cookies: [] },
+      { status: 'conflict', materialRef: 'leaked' },
+      { status: 'conflicts' },
+      {},
     ]) {
       const fetchImpl = vi.fn<typeof fetch>(async () => responseFor(payload));
-      await expect(
-        resolveAc265SessionBroker(clientOptions(fetchImpl), resolveRequest),
-      ).rejects.toThrow(FAILURE);
+      const outcome: unknown = await resolveAc265SessionBroker(
+        clientOptions(fetchImpl),
+        resolveRequest,
+      ).catch((error: unknown) => error);
+
+      expect(isAc265SessionBrokerConflict(outcome)).toBe(false);
+      expect((outcome as Error).message).toBe(FAILURE);
     }
   });
 
