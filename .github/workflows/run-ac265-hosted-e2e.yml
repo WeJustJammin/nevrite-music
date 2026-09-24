@@ -29,6 +29,8 @@ jobs:
           persist-credentials: false
       - name: Set up the pinned project runtime
         uses: ./.github/actions/setup
+      - name: Verify system Google Chrome
+        run: bash infra/workflows/verify-system-chrome.sh
       - name: Issue a redacted runner authorization
         env:
           AC265_CANDIDATE_REF: ${{ inputs.candidate_ref }}

@@ -130,7 +130,7 @@ export const S09_EVIDENCE_MAP: readonly S09EvidenceEntry[] = [
     criterion: 'P2-S09-AC-265',
     source: '.memory/wiki/specs/audits/phase-02-slice-09-qa-green.md',
     command:
-      'pnpm exec playwright test tests/e2e/phase-02-slice-09-content-schema-registry-roles.spec.ts tests/e2e/phase-02-slice-09-network-resilience.spec.ts --project=chromium && pnpm exec playwright test --config=playwright.s09-real.config.ts tests/e2e/phase-02-slice-09-content-schema-registry-real-route.spec.ts',
+      'pnpm exec playwright test tests/e2e/phase-02-slice-09-content-schema-registry-roles.spec.ts tests/e2e/phase-02-slice-09-network-resilience.spec.ts --project=chrome && pnpm exec playwright test --config=playwright.s09-real.config.ts tests/e2e/phase-02-slice-09-content-schema-registry-real-route.spec.ts',
     testFiles: [
       'tests/e2e/phase-02-slice-09-content-schema-registry-roles.spec.ts',
       'tests/e2e/phase-02-slice-09-network-resilience.spec.ts',
@@ -147,7 +147,7 @@ export const S09_EVIDENCE_MAP: readonly S09EvidenceEntry[] = [
     criterion: 'P2-S09-AC-266',
     source: '.memory/pipeline/progress/slices/phase-02-slice-09.md',
     command:
-      'pnpm exec playwright test tests/e2e/phase-02-slice-09-content-schema-registry.spec.ts tests/e2e/phase-02-slice-09-accessibility-keyboard.spec.ts --project=chromium',
+      'pnpm exec playwright test tests/e2e/phase-02-slice-09-content-schema-registry.spec.ts tests/e2e/phase-02-slice-09-accessibility-keyboard.spec.ts --project=chrome',
     testFiles: [
       'tests/e2e/phase-02-slice-09-content-schema-registry.spec.ts',
       'tests/e2e/phase-02-slice-09-accessibility-keyboard.spec.ts',

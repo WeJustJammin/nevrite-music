@@ -34,8 +34,10 @@ export default defineConfig({
   metadata: { docsOrigin },
   projects: [
     {
-      name: 'chromium',
-      use: devices['Desktop Chrome'],
+      // Google Chrome only: the installer-provided browser, launched through
+      // the Chrome channel so the bundled Chromium download is never used.
+      name: 'chrome',
+      use: { ...devices['Desktop Chrome'], channel: 'chrome' },
     },
   ],
   reporter: process.env.CI ? 'github' : 'list',
