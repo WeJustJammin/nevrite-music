@@ -33,6 +33,7 @@ export async function parseAuthorizeResult(
     readonly authorizationRef: string;
     readonly runId: string;
     readonly idempotencyRef: string;
+    readonly identitySha256: string;
   },
 ): Promise<Ac265SessionBrokerAuthorizeResult> {
   const decoded = decodeStrict(source);
@@ -44,6 +45,7 @@ export async function parseAuthorizeResult(
     result.authorizationRef !== request.authorizationRef ||
     result.runId !== request.runId ||
     result.idempotencyRef !== request.idempotencyRef ||
+    result.identitySha256 !== request.identitySha256 ||
     result.environment !== 'staging' ||
     result.hostingProjectId !== AC265_SESSION_BROKER_HOSTING_PROJECT_ID ||
     result.schemaVersion !==
@@ -74,6 +76,7 @@ export async function parseResolveResult(
   request: {
     readonly authorizationRef: string;
     readonly runId: string;
+    readonly identitySha256: string;
     readonly role: string;
     readonly handleRef: string;
     readonly handleSha256: string;
@@ -89,6 +92,7 @@ export async function parseResolveResult(
     result.authorizationRef !== request.authorizationRef ||
     result.runId !== request.runId ||
     result.idempotencyRef !== request.idempotencyRef ||
+    result.identitySha256 !== request.identitySha256 ||
     result.role !== request.role ||
     result.handleRef !== request.handleRef ||
     result.handleSha256 !== request.handleSha256 ||
@@ -109,6 +113,7 @@ export async function parseTeardownResult(
   request: {
     readonly authorizationRef: string;
     readonly runId: string;
+    readonly identitySha256: string;
     readonly role: string;
     readonly handleRef: string;
     readonly handleSha256: string;
@@ -124,6 +129,7 @@ export async function parseTeardownResult(
     result.authorizationRef !== request.authorizationRef ||
     result.runId !== request.runId ||
     result.idempotencyRef !== request.idempotencyRef ||
+    result.identitySha256 !== request.identitySha256 ||
     result.role !== request.role ||
     result.handleRef !== request.handleRef ||
     result.handleSha256 !== request.handleSha256 ||

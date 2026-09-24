@@ -104,6 +104,7 @@ describe('AC265 session broker RPC client', () => {
   it('rejects a response that rebinds scope, handle, or digest', async () => {
     const cases = [
       { ...resolveResult, runId: '10000000-0000-4000-8000-000000000099' },
+      { ...resolveResult, identitySha256: 'f'.repeat(64) },
       {
         ...resolveResult,
         authorizationRef: `ac265-authorization://staging/${uuidForIndex(9)}`,
@@ -175,6 +176,7 @@ describe('AC265 session broker RPC client', () => {
       },
       { ...authorizeResult, environment: 'production' },
       { ...authorizeResult, runId: '10000000-0000-4000-8000-000000000099' },
+      { ...authorizeResult, identitySha256: 'f'.repeat(64) },
     ];
     for (const payload of cases) {
       const fetchImpl = vi.fn<typeof fetch>(async () => responseFor(payload));
@@ -191,6 +193,25 @@ describe('AC265 session broker RPC client', () => {
       { ...teardownResult, state: 'resolved' },
       { ...teardownResult, teardownsRemaining: 9 },
       { ...teardownResult, loggedOutAt: null },
+    ];
+    for (const payload of cases) {
+      const fetchImpl = vi.fn<typeof fetch>(async () => responseFor(payload));
+      await expect(
+        teardownAc265SessionBroker(clientOptions(fetchImpl), teardownRequest),
+      ).rejects.toThrow(FAILURE);
+    }
+  });
+
+  it('rejects a teardown response that rebinds identity or run', async () => {
+    const cases = [
+      { ...teardownResult, identitySha256: 'f'.repeat(64) },
+      { ...teardownResult, runId: '10000000-0000-4000-8000-000000000099' },
+      {
+        ...teardownResult,
+        authorizationRef: `ac265-authorization://staging/${uuidForIndex(9)}`,
+      },
+      { ...teardownResult, role: 'forbidden_hidden' },
+      { ...teardownResult, handleRef: handles[1]!.handleRef },
     ];
     for (const payload of cases) {
       const fetchImpl = vi.fn<typeof fetch>(async () => responseFor(payload));

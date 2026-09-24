@@ -15,9 +15,9 @@ begin;
 
 create extension if not exists dblink with schema extensions;
 create extension if not exists pgtap with schema extensions;
--- Fixed plan: four concurrent cases, one aggregate assertion each.  A hard
--- count keeps the probe from silently passing if a case is dropped.
-select plan(4);
+-- Fixed plan: four concurrent cases plus one cleanup-integrity assertion.  A
+-- hard count keeps the probe from silently passing if a case is dropped.
+select plan(5);
 
 create temporary table ac265_broker_concurrency_results (
   case_name text primary key,
@@ -45,13 +45,27 @@ create temporary table ac265_broker_concurrency_handles (
   primary key (case_name, role)
 ) on commit drop;
 
+-- Cleanup integrity: the probe must remove its own committed fixtures and leave
+-- every private immutability guard enabled for later suites.
+create temporary table ac265_broker_concurrency_cleanup (
+  broker_rows bigint not null,
+  role_rows bigint not null,
+  authorization_rows bigint not null,
+  candidate_rows bigint not null,
+  disabled_triggers bigint not null
+) on commit drop;
+
 do $probe$
 declare
   criterion constant text := 'P2-S09-AC-265';
   schema_version constant text := 'ac265-hosted-session-broker-control-v1';
   authorization_ref_prefix constant text := 'ac265-authorization://staging/';
   idempotency_ref_prefix constant text := 'ac265-idempotency://staging/';
-  identity_sha256_hex constant text := repeat('b', 64);
+  -- Probe-private identity digest.  The verified-candidate registry is unique on
+  -- identity_sha256 alone, so sharing a repeated-character digest with another
+  -- suite would collide if that suite was interrupted before its cleanup.
+  identity_sha256_hex constant text :=
+    'ac265b0' || repeat('c', 64 - 7);
   source_revision constant text := repeat('a', 40);
   deployment_id constant text := '6428523608';
   hosting_project_id constant text := 'wejammin-staging';
@@ -63,6 +77,25 @@ declare
   authorize_function constant text := 'platform_api.ac265_session_broker_authorize';
   resolve_function constant text := 'platform_api.ac265_session_broker_resolve';
   teardown_function constant text := 'platform_api.ac265_session_broker_teardown';
+  worker_timeouts constant text :=
+    'set statement_timeout = ''30s''; set lock_timeout = ''10s''';
+  -- Aggregate reads run on the setup connection.  Reading the broker tables
+  -- from the outer test transaction would hold ACCESS SHARE until rollback and
+  -- self-deadlock against the cleanup DDL, which needs ACCESS EXCLUSIVE.
+  aggregate_sql_template constant text := $agg$
+select
+  count(distinct broker.broker_authorization_id),
+  count(handle.handle_id),
+  count(handle.handle_id) filter (where handle.resolves = 1),
+  count(handle.handle_id) filter (where handle.last_resolve_idempotency_ref is not null),
+  count(handle.handle_id) filter (where handle.logged_out_at is not null),
+  count(handle.handle_id) filter (where handle.last_teardown_idempotency_ref is not null),
+  coalesce(%s, '')
+from platform_private.ac265_session_broker_handles as broker
+left join platform_private.ac265_session_broker_handle_roles as handle
+  on handle.broker_authorization_id = broker.broker_authorization_id
+where broker.run_id = %L::uuid
+    $agg$;
   worker_temp_table constant text :=
     'create temporary table ac265_broker_worker_result(result jsonb) on commit preserve rows';
   worker_result_select constant text := 'select result from pg_temp.ac265_broker_worker_result';
@@ -132,6 +165,20 @@ $worker$;
   v_request_a jsonb;
   v_result_a jsonb;
   v_result_b jsonb;
+  v_aggregate_sql text;
+  v_handle_count bigint;
+  v_role_row_count bigint;
+  v_resolved_count bigint;
+  v_resolve_ref_count bigint;
+  v_logged_out_count bigint;
+  v_teardown_ref_count bigint;
+  v_stored_idempotency_ref text;
+  v_trigger_state text;
+  v_broker_rows bigint;
+  v_role_rows bigint;
+  v_authorization_rows bigint;
+  v_candidate_rows bigint;
+  v_disabled_triggers bigint;
   v_handle_ref text;
   v_handle_sha256 text;
   ignored_rows bigint;
@@ -144,39 +191,44 @@ begin
   perform extensions.dblink_connect(setup_connection, connection_string);
 
   -- The broker tables reject every delete, so the disposable probe rows are
-  -- removed with their guard triggers temporarily dropped and restored.  The
-  -- whole cleanup runs as one statement on the setup connection, so the private
-  -- immutability guards are never left disabled.
+  -- removed with their guard triggers disabled.  The disable, the deletes, and
+  -- the re-enable all run inside ONE explicit transaction, and PostgreSQL
+  -- re-enables the triggers on rollback.  A connection loss mid-cleanup
+  -- therefore leaves the private immutability guards enabled; durable DDL is
+  -- never issued.  Deletes are scoped to this probe's own run and candidate
+  -- identifiers only.
   v_cleanup_sql := format($cleanup$
-do $body$
-begin
-  execute 'drop trigger if exists ac265_session_broker_handles_are_immutable on platform_private.ac265_session_broker_handles';
-  execute 'drop trigger if exists ac265_session_broker_handle_roles_reject_delete on platform_private.ac265_session_broker_handle_roles';
+begin;
+alter table platform_private.ac265_session_broker_handles
+  disable trigger ac265_session_broker_handles_are_immutable;
+alter table platform_private.ac265_session_broker_handle_roles
+  disable trigger ac265_session_broker_handle_roles_reject_delete;
 
-  delete from platform_private.ac265_session_broker_handle_roles
-  where broker_authorization_id in (
-    select broker_authorization_id
-    from platform_private.ac265_session_broker_handles
-    where run_id in (%L::uuid, %L::uuid, %L::uuid, %L::uuid)
-  );
+delete from platform_private.ac265_session_broker_handle_roles
+where broker_authorization_id in (
+  select broker_authorization_id
+  from platform_private.ac265_session_broker_handles
+  where run_id in (%L::uuid, %L::uuid, %L::uuid, %L::uuid)
+);
 
-  delete from platform_private.ac265_session_broker_handles
-  where run_id in (%L::uuid, %L::uuid, %L::uuid, %L::uuid);
+delete from platform_private.ac265_session_broker_handles
+where run_id in (%L::uuid, %L::uuid, %L::uuid, %L::uuid);
 
-  execute 'create trigger ac265_session_broker_handles_are_immutable before update or delete or truncate on platform_private.ac265_session_broker_handles for each statement execute function platform_private.ac265_reject_session_broker_mutation()';
-  execute 'create trigger ac265_session_broker_handle_roles_reject_delete before delete on platform_private.ac265_session_broker_handle_roles for each statement execute function platform_private.ac265_reject_session_broker_mutation()';
+alter table platform_private.ac265_session_broker_handles
+  enable trigger ac265_session_broker_handles_are_immutable;
+alter table platform_private.ac265_session_broker_handle_roles
+  enable trigger ac265_session_broker_handle_roles_reject_delete;
 
-  delete from platform_private.ac265_runner_authorizations
-  where authorization_id in (%L::uuid, %L::uuid, %L::uuid, %L::uuid);
+delete from platform_private.ac265_runner_authorizations
+where authorization_id in (%L::uuid, %L::uuid, %L::uuid, %L::uuid);
 
-  execute 'drop trigger if exists ac265_verified_candidates_are_immutable on platform_private.ac265_verified_candidates';
-
-  delete from platform_private.ac265_verified_candidates
-  where candidate_id = %L::uuid;
-
-  execute 'create trigger ac265_verified_candidates_are_immutable before update or delete or truncate on platform_private.ac265_verified_candidates for each statement execute function platform_private.ac265_reject_verified_candidate_mutation()';
-end;
-$body$;
+alter table platform_private.ac265_verified_candidates
+  disable trigger ac265_verified_candidates_are_immutable;
+delete from platform_private.ac265_verified_candidates
+where candidate_id = %L::uuid;
+alter table platform_private.ac265_verified_candidates
+  enable trigger ac265_verified_candidates_are_immutable;
+commit;
 $cleanup$,
     resolve_one_use_run_id, resolve_replay_run_id,
     authorize_race_run_id, teardown_race_run_id,
@@ -200,7 +252,7 @@ $cleanup$,
         ci_run_id, ci_run_attempt, staging_run_id, staging_run_attempt,
         ci_artifact_id, staging_artifact_id, identity, provenance
       ) values (
-        %L::uuid, decode(repeat('b', 64), 'hex'), %L, %L,
+        %L::uuid, decode(%L, 'hex'), %L, %L,
         '34751910240', 1, '34751910241', 1, 8841, 9941,
         jsonb_build_object(
           'environment', 'staging',
@@ -226,8 +278,8 @@ $cleanup$,
         '{}'::jsonb
       )
     $candidate$,
-      candidate_id, source_revision, deployment_id, source_revision,
-      deployment_id, hosting_project_id, supabase_project_ref
+      candidate_id, identity_sha256_hex, source_revision, deployment_id,
+      source_revision, deployment_id, hosting_project_id, supabase_project_ref
     )
   );
   perform extensions.dblink_exec(
@@ -238,31 +290,31 @@ $cleanup$,
         deployment_id, github_run_id, github_run_attempt, workflow_sha,
         jti_sha256, request_sha256, authorized_at, expires_at
       ) values
-        (%L::uuid, %L::uuid, decode(repeat('b', 64), 'hex'), %L, %L,
+        (%L::uuid, %L::uuid, decode(%L, 'hex'), %L, %L,
          '34796668511', 1, %L, decode(repeat('7', 64), 'hex'),
          decode(repeat('9', 64), 'hex'), clock_timestamp() - interval '10 seconds',
          clock_timestamp() + interval '4 minutes'),
-        (%L::uuid, %L::uuid, decode(repeat('b', 64), 'hex'), %L, %L,
+        (%L::uuid, %L::uuid, decode(%L, 'hex'), %L, %L,
          '34796668512', 1, %L, decode(repeat('1', 64), 'hex'),
          decode(repeat('2', 64), 'hex'), clock_timestamp() - interval '10 seconds',
          clock_timestamp() + interval '4 minutes'),
-        (%L::uuid, %L::uuid, decode(repeat('b', 64), 'hex'), %L, %L,
+        (%L::uuid, %L::uuid, decode(%L, 'hex'), %L, %L,
          '34796668513', 1, %L, decode(repeat('3', 64), 'hex'),
          decode(repeat('4', 64), 'hex'), clock_timestamp() - interval '10 seconds',
          clock_timestamp() + interval '4 minutes'),
-        (%L::uuid, %L::uuid, decode(repeat('b', 64), 'hex'), %L, %L,
+        (%L::uuid, %L::uuid, decode(%L, 'hex'), %L, %L,
          '34796668514', 1, %L, decode(repeat('5', 64), 'hex'),
          decode(repeat('6', 64), 'hex'), clock_timestamp() - interval '10 seconds',
          clock_timestamp() + interval '4 minutes')
     $authorizations$,
-      resolve_one_use_authorization_id, resolve_one_use_run_id, source_revision,
-      deployment_id, source_revision,
-      resolve_replay_authorization_id, resolve_replay_run_id, source_revision,
-      deployment_id, source_revision,
-      authorize_race_authorization_id, authorize_race_run_id, source_revision,
-      deployment_id, source_revision,
-      teardown_race_authorization_id, teardown_race_run_id, source_revision,
-      deployment_id, source_revision
+      resolve_one_use_authorization_id, resolve_one_use_run_id,
+      identity_sha256_hex, source_revision, deployment_id, source_revision,
+      resolve_replay_authorization_id, resolve_replay_run_id,
+      identity_sha256_hex, source_revision, deployment_id, source_revision,
+      authorize_race_authorization_id, authorize_race_run_id,
+      identity_sha256_hex, source_revision, deployment_id, source_revision,
+      teardown_race_authorization_id, teardown_race_run_id,
+      identity_sha256_hex, source_revision, deployment_id, source_revision
     )
   );
   perform extensions.dblink_exec(setup_connection, 'commit');
@@ -409,6 +461,8 @@ $cleanup$,
   perform extensions.dblink_connect(resolve_one_use_b, connection_string);
   perform extensions.dblink_exec(resolve_one_use_a, 'set role service_role');
   perform extensions.dblink_exec(resolve_one_use_b, 'set role service_role');
+  perform extensions.dblink_exec(resolve_one_use_a, worker_timeouts);
+  perform extensions.dblink_exec(resolve_one_use_b, worker_timeouts);
   perform extensions.dblink_exec(resolve_one_use_a, worker_temp_table);
   perform extensions.dblink_exec(resolve_one_use_b, worker_temp_table);
   perform extensions.dblink_send_query(
@@ -445,26 +499,32 @@ $cleanup$,
   perform extensions.dblink_disconnect(resolve_one_use_b);
   perform extensions.dblink_disconnect(resolve_one_use_a);
 
+  v_aggregate_sql := format(
+    aggregate_sql_template,
+    format('max(handle.last_resolve_idempotency_ref) filter (where handle.role = %L::text)', resolve_one_use_role),
+    resolve_one_use_run_id
+  );
+  select agg.handle_count, agg.role_row_count, agg.resolved_count,
+         agg.resolve_ref_count, agg.logged_out_count, agg.teardown_ref_count,
+         agg.stored_idempotency_ref
+    into v_handle_count, v_role_row_count, v_resolved_count,
+         v_resolve_ref_count, v_logged_out_count, v_teardown_ref_count,
+         v_stored_idempotency_ref
+  from extensions.dblink(setup_connection, v_aggregate_sql)
+    as agg(handle_count bigint, role_row_count bigint, resolved_count bigint,
+           resolve_ref_count bigint, logged_out_count bigint,
+           teardown_ref_count bigint, stored_idempotency_ref text);
+
   insert into ac265_broker_concurrency_results (
     case_name, result_a, result_b, handle_count, role_row_count,
     resolved_count, resolve_ref_count, logged_out_count, teardown_ref_count,
     stored_idempotency_ref
-  )
-  select
-    case_resolve_one_use,
-    v_result_a,
-    v_result_b,
-    count(distinct broker.broker_authorization_id),
-    count(handle.handle_id),
-    count(handle.handle_id) filter (where handle.resolves = 1),
-    count(handle.handle_id) filter (where handle.last_resolve_idempotency_ref is not null),
-    count(handle.handle_id) filter (where handle.logged_out_at is not null),
-    count(handle.handle_id) filter (where handle.last_teardown_idempotency_ref is not null),
-    max(handle.last_resolve_idempotency_ref) filter (where handle.role = resolve_one_use_role)
-  from platform_private.ac265_session_broker_handles as broker
-  left join platform_private.ac265_session_broker_handle_roles as handle
-    on handle.broker_authorization_id = broker.broker_authorization_id
-  where broker.run_id = resolve_one_use_run_id;
+  ) values (
+    case_resolve_one_use, v_result_a, v_result_b, v_handle_count,
+    v_role_row_count, v_resolved_count, v_resolve_ref_count,
+    v_logged_out_count, v_teardown_ref_count,
+    nullif(v_stored_idempotency_ref, '')
+  );
 
   -- Case 2: identical resolve replay race.  Two identical requests for the same
   -- handle must both return the same resolved envelope while still consuming
@@ -496,6 +556,8 @@ $cleanup$,
   perform extensions.dblink_connect(resolve_replay_b, connection_string);
   perform extensions.dblink_exec(resolve_replay_a, 'set role service_role');
   perform extensions.dblink_exec(resolve_replay_b, 'set role service_role');
+  perform extensions.dblink_exec(resolve_replay_a, worker_timeouts);
+  perform extensions.dblink_exec(resolve_replay_b, worker_timeouts);
   perform extensions.dblink_exec(resolve_replay_a, worker_temp_table);
   perform extensions.dblink_exec(resolve_replay_b, worker_temp_table);
   perform extensions.dblink_send_query(
@@ -525,26 +587,32 @@ $cleanup$,
   perform extensions.dblink_disconnect(resolve_replay_b);
   perform extensions.dblink_disconnect(resolve_replay_a);
 
+  v_aggregate_sql := format(
+    aggregate_sql_template,
+    format('max(handle.last_resolve_idempotency_ref) filter (where handle.role = %L::text)', resolve_replay_role),
+    resolve_replay_run_id
+  );
+  select agg.handle_count, agg.role_row_count, agg.resolved_count,
+         agg.resolve_ref_count, agg.logged_out_count, agg.teardown_ref_count,
+         agg.stored_idempotency_ref
+    into v_handle_count, v_role_row_count, v_resolved_count,
+         v_resolve_ref_count, v_logged_out_count, v_teardown_ref_count,
+         v_stored_idempotency_ref
+  from extensions.dblink(setup_connection, v_aggregate_sql)
+    as agg(handle_count bigint, role_row_count bigint, resolved_count bigint,
+           resolve_ref_count bigint, logged_out_count bigint,
+           teardown_ref_count bigint, stored_idempotency_ref text);
+
   insert into ac265_broker_concurrency_results (
     case_name, result_a, result_b, handle_count, role_row_count,
     resolved_count, resolve_ref_count, logged_out_count, teardown_ref_count,
     stored_idempotency_ref
-  )
-  select
-    case_resolve_replay,
-    v_result_a,
-    v_result_b,
-    count(distinct broker.broker_authorization_id),
-    count(handle.handle_id),
-    count(handle.handle_id) filter (where handle.resolves = 1),
-    count(handle.handle_id) filter (where handle.last_resolve_idempotency_ref is not null),
-    count(handle.handle_id) filter (where handle.logged_out_at is not null),
-    count(handle.handle_id) filter (where handle.last_teardown_idempotency_ref is not null),
-    max(handle.last_resolve_idempotency_ref) filter (where handle.role = resolve_replay_role)
-  from platform_private.ac265_session_broker_handles as broker
-  left join platform_private.ac265_session_broker_handle_roles as handle
-    on handle.broker_authorization_id = broker.broker_authorization_id
-  where broker.run_id = resolve_replay_run_id;
+  ) values (
+    case_resolve_replay, v_result_a, v_result_b, v_handle_count,
+    v_role_row_count, v_resolved_count, v_resolve_ref_count,
+    v_logged_out_count, v_teardown_ref_count,
+    nullif(v_stored_idempotency_ref, '')
+  );
 
   -- Case 3: authorize race.  Two different-idempotency authorize requests for the
   -- same run must serialize to one frozen nine-role handle set; the one-per-run
@@ -581,6 +649,8 @@ $cleanup$,
   perform extensions.dblink_connect(authorize_race_b, connection_string);
   perform extensions.dblink_exec(authorize_race_a, 'set role service_role');
   perform extensions.dblink_exec(authorize_race_b, 'set role service_role');
+  perform extensions.dblink_exec(authorize_race_a, worker_timeouts);
+  perform extensions.dblink_exec(authorize_race_b, worker_timeouts);
   perform extensions.dblink_exec(authorize_race_a, worker_temp_table);
   perform extensions.dblink_exec(authorize_race_b, worker_temp_table);
   perform extensions.dblink_send_query(
@@ -617,26 +687,32 @@ $cleanup$,
   perform extensions.dblink_disconnect(authorize_race_b);
   perform extensions.dblink_disconnect(authorize_race_a);
 
+  v_aggregate_sql := format(
+    aggregate_sql_template,
+    'max(broker.idempotency_ref)',
+    authorize_race_run_id
+  );
+  select agg.handle_count, agg.role_row_count, agg.resolved_count,
+         agg.resolve_ref_count, agg.logged_out_count, agg.teardown_ref_count,
+         agg.stored_idempotency_ref
+    into v_handle_count, v_role_row_count, v_resolved_count,
+         v_resolve_ref_count, v_logged_out_count, v_teardown_ref_count,
+         v_stored_idempotency_ref
+  from extensions.dblink(setup_connection, v_aggregate_sql)
+    as agg(handle_count bigint, role_row_count bigint, resolved_count bigint,
+           resolve_ref_count bigint, logged_out_count bigint,
+           teardown_ref_count bigint, stored_idempotency_ref text);
+
   insert into ac265_broker_concurrency_results (
     case_name, result_a, result_b, handle_count, role_row_count,
     resolved_count, resolve_ref_count, logged_out_count, teardown_ref_count,
     stored_idempotency_ref
-  )
-  select
-    case_authorize_race,
-    v_result_a,
-    v_result_b,
-    count(distinct broker.broker_authorization_id),
-    count(handle.handle_id),
-    count(handle.handle_id) filter (where handle.resolves = 1),
-    count(handle.handle_id) filter (where handle.last_resolve_idempotency_ref is not null),
-    count(handle.handle_id) filter (where handle.logged_out_at is not null),
-    count(handle.handle_id) filter (where handle.last_teardown_idempotency_ref is not null),
-    max(broker.idempotency_ref)
-  from platform_private.ac265_session_broker_handles as broker
-  left join platform_private.ac265_session_broker_handle_roles as handle
-    on handle.broker_authorization_id = broker.broker_authorization_id
-  where broker.run_id = authorize_race_run_id;
+  ) values (
+    case_authorize_race, v_result_a, v_result_b, v_handle_count,
+    v_role_row_count, v_resolved_count, v_resolve_ref_count,
+    v_logged_out_count, v_teardown_ref_count,
+    nullif(v_stored_idempotency_ref, '')
+  );
 
   -- Case 4: teardown race.  Two different-idempotency teardowns for the same
   -- handle must serialize to exactly one logged-out handle, and teardown stays
@@ -669,6 +745,8 @@ $cleanup$,
   perform extensions.dblink_connect(teardown_race_b, connection_string);
   perform extensions.dblink_exec(teardown_race_a, 'set role service_role');
   perform extensions.dblink_exec(teardown_race_b, 'set role service_role');
+  perform extensions.dblink_exec(teardown_race_a, worker_timeouts);
+  perform extensions.dblink_exec(teardown_race_b, worker_timeouts);
   perform extensions.dblink_exec(teardown_race_a, worker_temp_table);
   perform extensions.dblink_exec(teardown_race_b, worker_temp_table);
   perform extensions.dblink_send_query(
@@ -705,29 +783,94 @@ $cleanup$,
   perform extensions.dblink_disconnect(teardown_race_b);
   perform extensions.dblink_disconnect(teardown_race_a);
 
+  v_aggregate_sql := format(
+    aggregate_sql_template,
+    format('max(handle.last_teardown_idempotency_ref) filter (where handle.role = %L::text)', teardown_race_role),
+    teardown_race_run_id
+  );
+  select agg.handle_count, agg.role_row_count, agg.resolved_count,
+         agg.resolve_ref_count, agg.logged_out_count, agg.teardown_ref_count,
+         agg.stored_idempotency_ref
+    into v_handle_count, v_role_row_count, v_resolved_count,
+         v_resolve_ref_count, v_logged_out_count, v_teardown_ref_count,
+         v_stored_idempotency_ref
+  from extensions.dblink(setup_connection, v_aggregate_sql)
+    as agg(handle_count bigint, role_row_count bigint, resolved_count bigint,
+           resolve_ref_count bigint, logged_out_count bigint,
+           teardown_ref_count bigint, stored_idempotency_ref text);
+
   insert into ac265_broker_concurrency_results (
     case_name, result_a, result_b, handle_count, role_row_count,
     resolved_count, resolve_ref_count, logged_out_count, teardown_ref_count,
     stored_idempotency_ref
-  )
-  select
-    case_teardown_race,
-    v_result_a,
-    v_result_b,
-    count(distinct broker.broker_authorization_id),
-    count(handle.handle_id),
-    count(handle.handle_id) filter (where handle.resolves = 1),
-    count(handle.handle_id) filter (where handle.last_resolve_idempotency_ref is not null),
-    count(handle.handle_id) filter (where handle.logged_out_at is not null),
-    count(handle.handle_id) filter (where handle.last_teardown_idempotency_ref is not null),
-    max(handle.last_teardown_idempotency_ref) filter (where handle.role = teardown_race_role)
-  from platform_private.ac265_session_broker_handles as broker
-  left join platform_private.ac265_session_broker_handle_roles as handle
-    on handle.broker_authorization_id = broker.broker_authorization_id
-  where broker.run_id = teardown_race_run_id;
+  ) values (
+    case_teardown_race, v_result_a, v_result_b, v_handle_count,
+    v_role_row_count, v_resolved_count, v_resolve_ref_count,
+    v_logged_out_count, v_teardown_ref_count,
+    nullif(v_stored_idempotency_ref, '')
+  );
 
   perform extensions.dblink_disconnect(gate_connection);
   perform extensions.dblink_exec(setup_connection, v_cleanup_sql);
+
+  -- Record cleanup integrity from the setup connection so the outer test
+  -- transaction still takes no lock on the private broker tables.
+  perform extensions.dblink_exec(
+    setup_connection,
+    format(
+      $cleanup_evidence$
+        create temporary table ac265_broker_cleanup_evidence on commit preserve rows as
+        select
+          (select count(*) from platform_private.ac265_session_broker_handles
+            where run_id in (%L::uuid, %L::uuid, %L::uuid, %L::uuid)) as broker_rows,
+          (select count(*) from platform_private.ac265_session_broker_handle_roles
+            where broker_authorization_id in (%L::uuid, %L::uuid, %L::uuid, %L::uuid)) as role_rows,
+          (select count(*) from platform_private.ac265_runner_authorizations
+            where authorization_id in (%L::uuid, %L::uuid, %L::uuid, %L::uuid)) as authorization_rows,
+          (select count(*) from platform_private.ac265_verified_candidates
+            where candidate_id = %L::uuid) as candidate_rows,
+          (select count(*) from pg_catalog.pg_trigger
+            where tgrelid in (
+                'platform_private.ac265_session_broker_handles'::regclass,
+                'platform_private.ac265_session_broker_handle_roles'::regclass,
+                'platform_private.ac265_verified_candidates'::regclass
+              )
+              and not tgisinternal
+              and tgname in (
+                'ac265_session_broker_handles_are_immutable',
+                'ac265_session_broker_handle_roles_reject_delete',
+                'ac265_verified_candidates_are_immutable'
+              )
+              and tgdisabled <> 0) as disabled_triggers
+      $cleanup_evidence$,
+      resolve_one_use_run_id, resolve_replay_run_id,
+      authorize_race_run_id, teardown_race_run_id,
+      resolve_one_use_authorization_id, resolve_replay_authorization_id,
+      authorize_race_authorization_id, teardown_race_authorization_id,
+      resolve_one_use_authorization_id, resolve_replay_authorization_id,
+      authorize_race_authorization_id, teardown_race_authorization_id,
+      candidate_id
+    )
+  );
+  select evidence.broker_rows, evidence.role_rows, evidence.authorization_rows,
+         evidence.candidate_rows, evidence.disabled_triggers
+    into v_broker_rows, v_role_rows, v_authorization_rows,
+         v_candidate_rows, v_disabled_triggers
+  from extensions.dblink(
+    setup_connection,
+    'select broker_rows, role_rows, authorization_rows, candidate_rows, disabled_triggers from pg_temp.ac265_broker_cleanup_evidence'
+  ) as evidence(broker_rows bigint, role_rows bigint, authorization_rows bigint,
+                candidate_rows bigint, disabled_triggers bigint);
+  insert into ac265_broker_concurrency_cleanup (
+    broker_rows, role_rows, authorization_rows, candidate_rows, disabled_triggers
+  ) values (
+    v_broker_rows, v_role_rows, v_authorization_rows, v_candidate_rows,
+    v_disabled_triggers
+  );
+  perform extensions.dblink_exec(
+    setup_connection,
+    'drop table pg_temp.ac265_broker_cleanup_evidence'
+  );
   perform extensions.dblink_disconnect(setup_connection);
 exception when others then
   begin perform extensions.dblink_cancel_query(resolve_one_use_a); exception when others then null; end;
@@ -837,6 +980,18 @@ select ok(
     where case_name = 'teardown-race'
   ),
   'concurrent distinct-idempotency teardown requests serialize to one logged-out handle and one conflict'
+);
+
+select ok(
+  (
+    select broker_rows = 0
+      and role_rows = 0
+      and authorization_rows = 0
+      and candidate_rows = 0
+      and disabled_triggers = 0
+    from ac265_broker_concurrency_cleanup
+  ),
+  'the probe removes its committed fixtures and leaves every private immutability guard enabled'
 );
 
 select finish();

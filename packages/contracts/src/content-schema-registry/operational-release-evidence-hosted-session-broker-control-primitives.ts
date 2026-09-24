@@ -17,6 +17,12 @@ export const AC265_SESSION_BROKER_MAX_DURATION_MS = 5 * 60 * 1_000;
 const AC265_SESSION_BROKER_UUID =
   '[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}';
 
+// The private RPCs accept only this exact lowercase v4 shape.  z.string().uuid()
+// would also admit v1, nil, and uppercase spellings the database rejects.
+export const Ac265SessionBrokerRunIdSchema = z
+  .string()
+  .regex(new RegExp(`^${AC265_SESSION_BROKER_UUID}$`, 'u'));
+
 export const Ac265SessionBrokerAuthorizationReferenceSchema = z
   .string()
   .regex(
@@ -65,7 +71,7 @@ export const Ac265SessionBrokerControlBaseShape = {
     CONTENT_SCHEMA_REGISTRY_AC265_SESSION_BROKER_SCHEMA_VERSION,
   ),
   authorizationRef: Ac265SessionBrokerAuthorizationReferenceSchema,
-  runId: z.string().uuid(),
+  runId: Ac265SessionBrokerRunIdSchema,
   identitySha256: ReleaseEvidenceDigestSchema,
 } as const;
 
