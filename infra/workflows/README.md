@@ -124,6 +124,60 @@ filesystem and validation operations.
   the visible receipt inspection. Dispatch contract:
   `.github/workflows/probe-production-ac209-email-datasets.yml`.
 
+- `ac209-email-routing-day-counts-contract.ts` owns the query, the window
+  constants, and the provenance rationale. `ac209-email-routing-day-counts-schema.ts`
+  owns the Zod schemas and is
+  re-exported by the contract, so one schema file holds one domain and the
+  dependency stays one-way (a DAG). `ac209-email-routing-day-counts.ts` and
+  `probe-production-ac209-routing-day-counts.ts` answer the magnitude
+  question the events probe cannot. That probe issues `limit: 1`, so its
+  `routing_wide30d=1` reading proves only that at least one routing row exists;
+  it cannot give a count. Cloudflare documents `emailRoutingAdaptiveGroups` as
+  the aggregated counterpart carrying `count` plus `dimensions`, and documents
+  that `*AdaptiveGroups` datasets take `Date`-typed filters (`date_geq`,
+  `date_leq`) for day-level filtering while `*Adaptive` events datasets take
+  `Time` filters. This diagnostic therefore issues one bounded query over an
+  inclusive 31-day UTC window, selecting only `count` and the two grouped
+  dimensions `date` and `status` - never a sender, recipient, subject, provider
+  message identifier, session, routing rule, or error detail. The window is 30
+  elapsed days. The provider reports two distinct limits on these settings
+  nodes - `notOlderThan` (the retention horizon) and `maxDuration` (the widest
+  single-request span) - so the window is sized against the smaller of the two
+  and reuses the sibling presence contract's `AC209_EMAIL_PRESENCE_WIDE_WINDOW_MS` as
+  the one named reference for that span.
+
+  The numbers are the provider's own, and the artifact is explicit that they are
+  NOT presented as exact underlying event counts. Cloudflare documents that any
+  node whose name carries the `Adaptive` suffix may be served from a sample,
+  with sampling returning an estimate - low volume is commonly unsampled but is
+  not a guarantee (https://developers.cloudflare.com/analytics/graphql-api/sampling/).
+  `emailRoutingAdaptiveGroups` carries that suffix, so the report states
+  `sampling: 'provider_may_sample_adaptive_dataset'` as a required literal, records
+  `observation: 'provider_reported_grouped_totals'` as provenance, and records
+  `pageComplete` - pinned true, since a truncated page fails closed and never
+  reaches an artifact, so no separate always-false flag is carried alongside it
+  - only to say the row bound did not cut the page short. A complete page is not
+    evidence of unsampled data: completeness and sampling are independent
+    properties. If the provider later exposes a documented
+    sample-interval field for this dataset it can be surfaced; none is invented now.
+
+  The row bound is deliberately low (100) and a full page fails closed as
+  `provider_result_truncated`, because a page cut short by the bound cannot
+  support a complete-window total; a partial sum published as authoritative would
+  be worse than a failure. Every other provider condition also fails closed into a
+  closed code rather than degrading into an empty reading, and a bare UTC day is
+  enforced so a day label cannot be a timestamp. The `status` label is restricted to
+  visible ASCII because it is echoed into a CI log line, so a control character,
+  tab, escape sequence, or multi-byte glyph is rejected rather than emitted, and
+  the artifact carries a `zoneTagSha256` digest of the requested zone so a reader
+  can confirm which zone produced the numbers without the report retaining the
+  raw identifier. It issues exactly one provider query. Investigation only: it
+  performs no mutation, closes no acceptance
+  criterion, and cannot attribute a grouped count to any particular message,
+  since attribution would require the per-event identity this diagnostic
+  deliberately does not read. Dispatch contract:
+  `.github/workflows/probe-production-ac209-routing-day-counts.yml`.
+
 - `write-ci-gate-evidence.sh` derives the release gate set from successful CI
   job results and the built artifact boundary.
 - `verify-ci-release-gates.sh` runs the contract, production-registry, and SLO
