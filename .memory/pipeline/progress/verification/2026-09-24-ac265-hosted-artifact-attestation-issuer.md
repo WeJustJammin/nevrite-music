@@ -72,11 +72,13 @@ steps are preserved.
 
 ## Residual limitations
 
-### Owner-confirmed deferred boundaries (2026-09-24)
+### Local implementation boundaries pending owner/hosted verification (2026-09-24)
 
-The owner reviewed the five review-flagged follow-ups and confirmed each as an
-explicit, intentional deferred boundary of this local-only module. None of them
-is a defect, and none is claimed as implemented:
+An independent implementation review raised five follow-ups against this
+local-only module. They are recorded here as local implementation boundaries
+that remain open pending owner and hosted verification; none is an owner
+decision, a locked product or architecture decision, or a hosted-acceptance
+claim, and none is claimed as implemented:
 
 - **Run identity and clock source.** The request `runId` and the source
   `issuedAt`/`expiresAt` window are caller-asserted here. A future protected
@@ -98,6 +100,9 @@ is a defect, and none is claimed as implemented:
 - **Issuer primitive byte-opacity.** `createAc265HostedArtifactAttestation`
   remains byte-opaque by design; the protected wrapper derives every subject
   from the bytes and must be the only production entrypoint.
+
+These boundaries are recorded as current implementation facts, not as resolved
+decisions, and they do not close, defer, or waive any acceptance criterion.
 
 No hosted acceptance is claimed for any of these, and the deferred items add no
 new tracker count.

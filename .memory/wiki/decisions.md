@@ -2,8 +2,8 @@
 
 ## Summary
 
-- **Total decisions**: 102
-- **Unique decision titles**: 102
+- **Total decisions**: 101
+- **Unique decision titles**: 101
 
 ## DEC-001: The rights stack is the thesis, not an adjacency (2026-07-16)
 
@@ -1488,20 +1488,6 @@ Owner approved the recommended architecture decomposition: 43 total IA shards co
 - **Downstream**: The Phase 2 plan, Slice 09 and aggregate progress records, architecture map, release-evidence runbook, policy tests, and progress validator distinguish implementation completion from production readiness. Existing AC266 contracts, protected workflows, and real macOS/Safari/VoiceOver plus Windows/Firefox/NVDA requirements remain unchanged and must pass before production readiness or release.
 - **Reversibility**: High for implementation sequencing, but no production release may erase or weaken the deferred real-device evidence obligation without a new owner decision and full downstream propagation.
 
-## DEC-102: The local AC265 hosted-artifact attestation issuer keeps five explicit deferred boundaries (2026-09-24)
-
-- **Occurrences**: 1
-- **Latest timestamp**: 2026-09-24T01:20:00-04:00
-- **Agents**: codex
-- **Sources**: /root/ac265_signed_issuer review
-- **Index**: [[index]]
-
-- **Problem**: The new local hosted-artifact attestation issuer and its protected issuance entrypoint left five review-flagged follow-ups open: caller-asserted request `runId`; no trusted clock anchor for the source window; no reference-to-content digest binding; possible signed partials in the output directory after a mid-loop failure; and an unchecked underlying UI-evidence `artifactSha256` inside execution-evidence payloads. Each could be read either as a defect to fix now or as a boundary owned by a later protected harness.
-- **Options considered**: (A) implement all five locally now, inventing an unauthenticated clock, run authority, and evidence service; (B) bind them into the CP-04d source manifest and the future protected harness, and document each as an explicit deferred boundary with no hosted-acceptance claim; (C) leave them undocumented.
-- **Decision**: Option B. The owner confirmed all five as intentional deferred boundaries for this local-only module: run identity and clock come from the future authenticated protected harness; reference-to-artifact-digest binding stays with the CP-04d source manifest, which already pins `ref -> artifactSha256/attestationSha256`; a directory with signed partials but no index fails closed on read and partials are preserved rather than deleted; the underlying UI-evidence digest is verified by the evidence service, not this producer; and the pre-existing `createAc265HostedArtifactAttestation` primitive stays byte-opaque with the protected wrapper as the only production entrypoint.
-- **Downstream**: `.memory/pipeline/progress/verification/2026-09-24-ac265-hosted-artifact-attestation-issuer.md` records the boundaries in its Residual limitations section. The issuer consumes caller-supplied key material only; no secret, identity, grant, or hosted acceptance is created, and AC265, AC209, and AC211 remain open with Slice 10 locked.
-- **Reversibility**: High — each boundary is additive and can be tightened by the protected harness or the source manifest without reworking the signing or publication code.
-
 ## Full Log
 
 ### DEC-001: The rights stack is the thesis, not an adjacency (2026-07-16)
@@ -2885,16 +2871,3 @@ Owner approved the recommended architecture decomposition: 43 total IA shards co
 - **Decision**: Option C. Phase 2 retains 2,000 authored criteria and 1,999 implementation-completion criteria. Slice 09 retains 283 contiguous authored IDs and uses a 282-criterion implementation-completion denominator. AC266 remains authored, unchecked, owner-deferred, and must never be represented as passed, waived, simulated, or inferred. Slice 10 remains locked until AC209, AC211, and AC265 pass.
 - **Downstream**: The Phase 2 plan, Slice 09 and aggregate progress records, architecture map, release-evidence runbook, policy tests, and progress validator distinguish implementation completion from production readiness. Existing AC266 contracts, protected workflows, and real macOS/Safari/VoiceOver plus Windows/Firefox/NVDA requirements remain unchanged and must pass before production readiness or release.
 - **Reversibility**: High for implementation sequencing, but no production release may erase or weaken the deferred real-device evidence obligation without a new owner decision and full downstream propagation.
-
-### DEC-102: The local AC265 hosted-artifact attestation issuer keeps five explicit deferred boundaries (2026-09-24)
-
-- **Timestamp**: 2026-09-24T01:20:00-04:00
-- **Agent**: codex
-- **Source**: /root/ac265_signed_issuer review
-- **Tags**: decision, ac265, slice-09, attestation, boundary, deferred
-
-- **Problem**: The new local hosted-artifact attestation issuer and its protected issuance entrypoint left five review-flagged follow-ups open: caller-asserted request `runId`; no trusted clock anchor for the source window; no reference-to-content digest binding; possible signed partials in the output directory after a mid-loop failure; and an unchecked underlying UI-evidence `artifactSha256` inside execution-evidence payloads. Each could be read either as a defect to fix now or as a boundary owned by a later protected harness.
-- **Options considered**: (A) implement all five locally now, inventing an unauthenticated clock, run authority, and evidence service; (B) bind them into the CP-04d source manifest and the future protected harness, and document each as an explicit deferred boundary with no hosted-acceptance claim; (C) leave them undocumented.
-- **Decision**: Option B. The owner confirmed all five as intentional deferred boundaries for this local-only module: run identity and clock come from the future authenticated protected harness; reference-to-artifact-digest binding stays with the CP-04d source manifest, which already pins `ref -> artifactSha256/attestationSha256`; a directory with signed partials but no index fails closed on read and partials are preserved rather than deleted; the underlying UI-evidence digest is verified by the evidence service, not this producer; and the pre-existing `createAc265HostedArtifactAttestation` primitive stays byte-opaque with the protected wrapper as the only production entrypoint.
-- **Downstream**: `.memory/pipeline/progress/verification/2026-09-24-ac265-hosted-artifact-attestation-issuer.md` records the boundaries in its Residual limitations section. The issuer consumes caller-supplied key material only; no secret, identity, grant, or hosted acceptance is created, and AC265, AC209, and AC211 remain open with Slice 10 locked.
-- **Reversibility**: High — each boundary is additive and can be tightened by the protected harness or the source manifest without reworking the signing or publication code.
