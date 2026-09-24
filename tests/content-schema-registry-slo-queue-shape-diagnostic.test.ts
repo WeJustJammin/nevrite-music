@@ -3,7 +3,10 @@ import { spawnSync } from 'node:child_process';
 import { describe, expect, it, vi } from 'vitest';
 
 import { diagnoseQueueAnalyticsShape } from '../infra/workflows/content-schema-registry-slo-queue-shape-diagnostic.ts';
-import { queueMessageOperationsQuery } from '../infra/workflows/content-schema-registry-slo-provider-queue.ts';
+import {
+  queryQueueMessageOperations,
+  queueMessageOperationsQuery,
+} from '../infra/workflows/content-schema-registry-slo-provider-queue.ts';
 
 const accountId = 'b1c05c00f04130a0d100adbca6696e6e';
 const queueId = 'c'.repeat(32);
@@ -249,5 +252,173 @@ describe('protected AC211 queue analytics shape diagnostic', () => {
     expect(success.stdout + success.stderr + failure.stderr).not.toMatch(
       /private-cloudflare-token|never-print/u,
     );
+  });
+});
+
+describe('queue analytics shape diagnostic verdict parity', () => {
+  const providerCap = 64_000;
+
+  const diagnosticInput = (fetchImpl: typeof fetch) => ({
+    accountId,
+    fetchImpl,
+    queryId,
+    queueId,
+    token,
+    window: {
+      endedAt: '2026-09-03T00:00:00.000Z',
+      startedAt: '2026-09-02T00:00:00.000Z',
+    },
+  });
+
+  const collectorInput = (fetchImpl: typeof fetch) => ({
+    accountId,
+    date: '2026-09-02',
+    fetchImpl,
+    queryId,
+    queueId,
+    token,
+  });
+
+  const responseFor = (rows: readonly unknown[]): Response =>
+    Response.json({
+      data: {
+        viewer: { accounts: [{ queueMessageOperationsAdaptiveGroups: rows }] },
+      },
+      errors: null,
+    });
+
+  const collectVerdict = async (rows: readonly unknown[]) => {
+    const fetchImpl = vi
+      .fn<typeof fetch>()
+      .mockResolvedValue(responseFor(rows));
+    try {
+      await queryQueueMessageOperations(collectorInput(fetchImpl));
+      return 'accepted' as const;
+    } catch {
+      return 'rejected' as const;
+    }
+  };
+
+  const diagnose = async (rows: readonly unknown[]) => {
+    const fetchImpl = vi
+      .fn<typeof fetch>()
+      .mockResolvedValue(responseFor(rows));
+    return diagnoseQueueAnalyticsShape(diagnosticInput(fetchImpl));
+  };
+
+  const cases: ReadonlyArray<{
+    label: string;
+    rows: readonly unknown[];
+    expectedVerdict: 'accepted' | 'rejected';
+    expectedSummaryGate: string | null;
+  }> = [
+    {
+      expectedSummaryGate: null,
+      expectedVerdict: 'accepted',
+      label: 'two read rows exactly at the provider cap',
+      rows: [
+        row('ReadMessage', '2026-09-02', providerCap / 2),
+        row('ReadMessage', '2026-09-02', providerCap / 2),
+      ],
+    },
+    {
+      expectedSummaryGate: 'count_sum_overflow',
+      expectedVerdict: 'rejected',
+      label: 'two read rows one above the provider cap',
+      rows: [
+        row('ReadMessage', '2026-09-02', providerCap),
+        row('ReadMessage', '2026-09-02', providerCap),
+      ],
+    },
+    {
+      expectedSummaryGate: 'count_sum_overflow',
+      expectedVerdict: 'rejected',
+      label: 'two read rows one above the provider cap by a single message',
+      rows: [
+        row('ReadMessage', '2026-09-02', providerCap),
+        row('ReadMessage', '2026-09-02', 1),
+      ],
+    },
+    {
+      expectedSummaryGate: null,
+      expectedVerdict: 'accepted',
+      label: 'read and delete rows that stay under the cap',
+      rows: [
+        row('ReadMessage', '2026-09-02', 5),
+        row('DeleteMessage', '2026-09-02', 9, 'success'),
+      ],
+    },
+    {
+      expectedSummaryGate: 'count_sum_overflow',
+      expectedVerdict: 'rejected',
+      label: 'two dlq delete rows above the provider cap',
+      rows: [
+        row('DeleteMessage', '2026-09-02', providerCap, 'dlq'),
+        row('DeleteMessage', '2026-09-02', providerCap, 'dlq'),
+      ],
+    },
+    {
+      expectedSummaryGate: null,
+      expectedVerdict: 'accepted',
+      label: 'non-dlq delete rows that sum high without dlq overflow',
+      rows: [
+        row('DeleteMessage', '2026-09-02', providerCap, 'success'),
+        row('DeleteMessage', '2026-09-02', providerCap, 'fail'),
+      ],
+    },
+    {
+      expectedSummaryGate: 'outcome_shape',
+      expectedVerdict: 'rejected',
+      label: 'a drifted later row after overflow-free rows',
+      rows: [
+        row('ReadMessage', '2026-09-02', 1),
+        row('DeleteMessage', '2026-09-02', 1, 'not-a-real-outcome'),
+      ],
+    },
+    {
+      expectedSummaryGate: 'date_format',
+      expectedVerdict: 'rejected',
+      label: 'a drifted first date ahead of an overflowing read total',
+      rows: [
+        row('ReadMessage', '2026-09-02T00:00:01Z', 1),
+        row('ReadMessage', '2026-09-02', providerCap),
+        row('ReadMessage', '2026-09-02', providerCap),
+      ],
+    },
+  ];
+
+  it.each(cases)('agrees with the collector on $label', async (testCase) => {
+    expect(await collectVerdict(testCase.rows)).toBe(testCase.expectedVerdict);
+
+    const result = await diagnose(testCase.rows);
+
+    expect(result.collectorVerdict).toBe(testCase.expectedVerdict);
+    expect(result.summaryGate).toBe(testCase.expectedSummaryGate);
+  });
+
+  it('reports the aggregate overflow as classes without raw provider values', async () => {
+    const result = await diagnose([
+      row('ReadMessage', '2026-09-02', providerCap),
+      row('ReadMessage', '2026-09-02', providerCap),
+    ]);
+
+    expect(result.collectorVerdict).toBe('rejected');
+    expect(result.summaryGate).toBe('count_sum_overflow');
+    expect(result.queueAttemptsClass).toBe('above_provider_cap');
+    expect(result.dlqMessagesClass).toBe('within_provider_cap');
+
+    const serialized = JSON.stringify(result);
+    expect(serialized).not.toContain(String(providerCap));
+    expect(serialized).not.toContain(queueId);
+    expect(serialized).not.toMatch(/\d{4}-\d{2}-\d{2}T/u);
+  });
+
+  it('keeps the aggregate classes within-cap for an accepted payload', async () => {
+    const result = await diagnose([row('ReadMessage', '2026-09-02', 3)]);
+
+    expect(result.collectorVerdict).toBe('accepted');
+    expect(result.summaryGate).toBeNull();
+    expect(result.queueAttemptsClass).toBe('within_provider_cap');
+    expect(result.dlqMessagesClass).toBe('within_provider_cap');
   });
 });

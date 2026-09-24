@@ -41,6 +41,31 @@ describe('production AC211 collection workflow contract', () => {
     expect(preceding).toContain('if ! node --experimental-strip-types');
     expect(preceding).not.toMatch(/^\s+exit\s+1/mu);
     expect(preceding).not.toMatch(/continue-on-error/u);
+    // The diagnostic must stay a conditional warning: the guard wraps only the
+    // diagnostic invocation, and the collector is the next unconditional
+    // statement in the same shell block.
+    const diagnosticGuard =
+      preceding.match(
+        /if ! node --experimental-strip-types [^;]*?queue-shape\.mjs; then([\s\S]*?)fi/u,
+      )?.[1] ?? '';
+    expect(diagnosticGuard.trim()).toMatch(/^echo '::warning::/u);
+    expect(diagnosticGuard).not.toMatch(/\b(exit|return)\b/u);
+    // The guard closes before the collector line, so the last complete line in
+    // the preceding text is the diagnostic's own `fi`.
+    const lastCompleteLine = preceding
+      .slice(0, preceding.lastIndexOf('\n'))
+      .trimEnd();
+    expect(lastCompleteLine.endsWith('fi')).toBe(true);
+    // Reaching the collector cannot depend on the diagnostic succeeding, so the
+    // diagnostic statement must not be chained with && or ||
+    const diagnosticStatement =
+      collect?.match(
+        /^\s*if ! node --experimental-strip-types [^;]*?queue-shape\.mjs; then[\s\S]*?^\s*fi\s*$/mu,
+      )?.[0] ?? '';
+    expect(diagnosticStatement).not.toMatch(/&&|\|\|/u);
+    expect(collect).toMatch(
+      /fi\n\s+node --experimental-strip-types infra\/workflows\/collect-content-schema-registry-slo-evidence\.ts/u,
+    );
   });
   it('is manual, explicit, main-only, and serialized without cancellation', () => {
     expect(workflowHeader).toContain('workflow_dispatch:');

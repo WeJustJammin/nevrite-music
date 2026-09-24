@@ -23,20 +23,6 @@ export type QueueAnalyticsRowRejectionGate =
   | 'outcome_shape'
   | 'count_sum_overflow';
 
-/** Evaluation order of {@link classifyQueueAnalyticsRow}. */
-export const QUEUE_ANALYTICS_ROW_REJECTION_GATES = [
-  'row_not_object',
-  'dimensions_shape',
-  'date_missing',
-  'date_not_string',
-  'date_format',
-  'count_shape',
-  'action_type_missing',
-  'action_type_not_string',
-  'action_type_unknown',
-  'outcome_shape',
-] as const satisfies readonly QueueAnalyticsRowRejectionGate[];
-
 /** Date forms the collector accepts: the bare UTC day or its exact midnight. */
 export const isExactQueueAnalyticsDate = (
   value: string,
@@ -109,6 +95,74 @@ export const classifyQueueAnalyticsRow = (
   const actionTypeGate = classifyActionType(dimensions.actionType);
   if (actionTypeGate !== null) return actionTypeGate;
   return classifyOutcome(dimensions.actionType as string, dimensions.outcome);
+};
+export type QueueAnalyticsAggregate = Readonly<{
+  dlqMessages: number;
+  queueAttempts: number;
+}>;
+/**
+ * Result of walking every row in order. The failure variant carries the same
+ * code and message the collector throws, so the collector, the read-only
+ * diagnostic, and this aggregate walk all report one verdict.
+ */
+export type QueueAnalyticsRowsVerdict =
+  | {
+      readonly aggregate: QueueAnalyticsAggregate;
+      readonly stage: 'accepted';
+    }
+  | {
+      readonly aggregate: QueueAnalyticsAggregate;
+      readonly code: 'malformed_queue_analytics_row';
+      readonly gate: QueueAnalyticsRowRejectionGate;
+      readonly message: string;
+      readonly stage: 'rejected';
+    };
+/**
+ * The running totals at the moment of rejection are kept, so a reader can see
+ * which aggregate crossed the cap without exposing a single provider value.
+ */
+const rejectedRowsVerdict = (
+  gate: QueueAnalyticsRowRejectionGate,
+  aggregate: QueueAnalyticsAggregate,
+): QueueAnalyticsRowsVerdict => ({
+  aggregate,
+  code: 'malformed_queue_analytics_row',
+  gate,
+  message: `malformed queue analytics row (${gate})`,
+  stage: 'rejected',
+});
+/**
+ * Walks rows in provider order and returns the single collector verdict.
+ *
+ * Rejections follow the collector's own precedence: each row's shape gate
+ * first, then the running `queueAttempts` and `dlqMessages` overflow check the
+ * collector performs after adding that row. Keeping the aggregate check inside
+ * the collector's loop alone lets the diagnostic call an overflowing payload
+ * accepted, which is exactly the disagreement this function prevents.
+ */
+export const classifyQueueAnalyticsRows = (
+  rows: readonly unknown[],
+  expectedDate: string,
+): QueueAnalyticsRowsVerdict => {
+  let queueAttempts = 0;
+  let dlqMessages = 0;
+  const running = () => ({ dlqMessages, queueAttempts });
+  for (const row of rows) {
+    const gate = classifyQueueAnalyticsRow(row, expectedDate);
+    if (gate !== null) return rejectedRowsVerdict(gate, running());
+    const count = (row as JsonRecord).count as number;
+    const dimensions = (row as JsonRecord).dimensions as JsonRecord;
+    if (dimensions.actionType === 'ReadMessage') queueAttempts += count;
+    else if (dimensions.actionType === 'DeleteMessage') {
+      if (dimensions.outcome === 'dlq') dlqMessages += count;
+    }
+    if (
+      queueAttempts > MAX_SAFE_PROVIDER_COUNT ||
+      dlqMessages > MAX_SAFE_PROVIDER_COUNT
+    )
+      return rejectedRowsVerdict('count_sum_overflow', running());
+  }
+  return { aggregate: running(), stage: 'accepted' };
 };
 
 /**

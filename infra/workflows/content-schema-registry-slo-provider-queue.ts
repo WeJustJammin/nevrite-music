@@ -2,11 +2,11 @@ import { requestJson } from './content-schema-registry-slo-provider-http.ts';
 import {
   classifyQueueAnalyticsResponseShape,
   classifyQueueAnalyticsRow,
+  classifyQueueAnalyticsRows,
   type QueueAnalyticsRowRejectionGate,
 } from './content-schema-registry-slo-queue-shape.ts';
 import {
   CLOUDFLARE_API_ROOT,
-  MAX_SAFE_PROVIDER_COUNT,
   UTC_DAY_MS,
   fail,
   isSafeQueueQueryId,
@@ -94,28 +94,12 @@ export const queryQueueMessageOperations = async (
     maxResponseBytes,
   );
   const rows = parseQueueAnalyticsResponse(payload, input.date);
-  let queueAttempts = 0;
-  let dlqMessages = 0;
-  for (const row of rows) {
-    const gate = classifyQueueAnalyticsRow(row, input.date);
-    if (gate !== null) rejectQueueAnalyticsRow(gate);
-    const count = row.count as number;
-    const dimensions = row.dimensions as JsonRecord;
-    if (dimensions.actionType === 'ReadMessage') {
-      queueAttempts += count;
-    } else if (dimensions.actionType === 'DeleteMessage') {
-      if (dimensions.outcome === 'dlq') dlqMessages += count;
-    }
-    if (
-      queueAttempts > MAX_SAFE_PROVIDER_COUNT ||
-      dlqMessages > MAX_SAFE_PROVIDER_COUNT
-    )
-      rejectQueueAnalyticsRow('count_sum_overflow');
-  }
+  const verdict = classifyQueueAnalyticsRows(rows, input.date);
+  if (verdict.stage === 'rejected') fail(verdict.code, verdict.message);
   return {
     date: input.date,
-    dlqMessages,
-    queueAttempts,
+    dlqMessages: verdict.aggregate.dlqMessages,
+    queueAttempts: verdict.aggregate.queueAttempts,
     queueId: input.queueId,
     queryId: input.queryId,
   };

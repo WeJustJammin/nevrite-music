@@ -100,6 +100,12 @@ const classifyOutcomeValue = (
     : 'other_string';
 };
 
+/**
+ * Closed classes for aggregate totals. The diagnostic reports the two sums the
+ * collector accumulates, as classes rather than raw values.
+ */
+export type QueueAnalyticsAggregateClass =
+  'above_provider_cap' | 'within_provider_cap';
 export type QueueAnalyticsRowType =
   'object' | 'array' | 'string' | 'number' | 'boolean' | 'null' | 'undefined';
 

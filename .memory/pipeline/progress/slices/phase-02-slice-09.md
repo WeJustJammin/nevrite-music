@@ -1598,6 +1598,23 @@ provenance, reportRoot, declaredReportPath })`. It calls the existing
   `(count_sum_overflow)`. GREEN: 19/19 across the three directly touched suites,
   72/72 across the eight-file AC211 surface, and a full local `pnpm test` of
   589 files / 4,835 passed plus one intentional skip.
+- Independent review found a verdict-parity defect, now fixed: the aggregate
+  `count_sum_overflow` check lived only in the collector's own loop, so the
+  diagnostic reported `accepted` for a payload the collector rejects (two
+  ReadMessage rows of 64,000 each). Reproduced against the pre-fix source as
+  `expected 'accepted' to be 'rejected'`. `classifyQueueAnalyticsRows` in
+  `content-schema-registry-slo-queue-shape.ts` now owns the whole-row walk in the
+  collector's precedence — each row's shape gate first, then the running
+  `queueAttempts`/`dlqMessages` overflow check — and both the collector and the
+  diagnostic call it, so one verdict governs both. The diagnostic additionally
+  reports `summaryGate` and closed `queueAttemptsClass`/`dlqMessagesClass`
+  labels instead of raw sums. Eight parity cases compare the collector and
+  diagnostic verdicts directly, including Read and Delete overflow; the
+  warning-only workflow test now asserts the guard body executes no `exit`,
+  closes before the collector, chains no `&&`/`||`, and leaves the collector
+  unconditional (verified by temporarily sabotaging the guard and confirming the
+  test fails). Full local `pnpm test` after the fix: 589 files / 4,845 passed
+  plus one intentional skip.
 - Local validation under pinned Node `22.23.1` / pnpm `11.24.0`:
   `format:check`, `lint`, `type-check`, `contracts:check`, `progress:check`,
   `db:types:check`, `test:evidence:s09`, `build`, `bundle:check`, and
@@ -1617,4 +1634,3 @@ provenance, reportRoot, declaredReportPath })`. It calls the existing
   workflow dispatched again for a complete UTC day. That run is the first one
   that can reveal the real provider row shape; until it lands, the date shape
   stays unverified and the diagnostic is only a hint, never acceptance.
-

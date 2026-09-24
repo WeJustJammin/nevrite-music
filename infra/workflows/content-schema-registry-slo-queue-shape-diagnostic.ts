@@ -2,13 +2,18 @@ import { requestJson } from './content-schema-registry-slo-provider-http.ts';
 import {
   classifyQueueAnalyticsResponseShape,
   classifyQueueAnalyticsRow,
+  classifyQueueAnalyticsRows,
   type QueueAnalyticsRowRejectionGate,
 } from './content-schema-registry-slo-queue-shape.ts';
-import { describeQueueAnalyticsRowShape } from './content-schema-registry-slo-queue-value-classes.ts';
+import {
+  describeQueueAnalyticsRowShape,
+  type QueueAnalyticsAggregateClass,
+} from './content-schema-registry-slo-queue-value-classes.ts';
 import {
   CLOUDFLARE_API_ROOT,
   DEFAULT_TIMEOUT_MS,
   MAX_PROVIDER_RESPONSE_BYTES,
+  MAX_SAFE_PROVIDER_COUNT,
   UTC_DAY_MS,
   fail,
   isSafeQueueQueryId,
@@ -31,15 +36,21 @@ export type DiagnoseQueueAnalyticsShapeInput = Readonly<{
   window: Readonly<{ startedAt: string; endedAt: string }>;
 }>;
 
+const aggregateClass = (value: number): QueueAnalyticsAggregateClass =>
+  value > MAX_SAFE_PROVIDER_COUNT
+    ? 'above_provider_cap'
+    : 'within_provider_cap';
 export type QueueAnalyticsShapeDiagnostic = Readonly<{
   collectorVerdict: 'accepted' | 'rejected';
   diagnosticOnly: true;
+  dlqMessagesClass: QueueAnalyticsAggregateClass | 'not_evaluated';
   envelope:
     | 'rows'
     | 'malformed_response'
     | 'graphql_error'
     | 'missing_account_result'
     | 'missing_queue_analytics_node';
+  queueAttemptsClass: QueueAnalyticsAggregateClass | 'not_evaluated';
   rejectedRowCount: number;
   rowCount: number;
   rows: readonly Readonly<
@@ -48,6 +59,7 @@ export type QueueAnalyticsShapeDiagnostic = Readonly<{
     }
   >[];
   rowsTruncated: boolean;
+  summaryGate: QueueAnalyticsRowRejectionGate | null;
 }>;
 
 const parseUtcDay = (
@@ -120,29 +132,34 @@ export const diagnoseQueueAnalyticsShape = async (
     return {
       collectorVerdict: 'rejected',
       diagnosticOnly: true,
-      envelope: shape.code === 'graphql_error' ? 'graphql_error' : shape.code,
+      dlqMessagesClass: 'not_evaluated',
+      envelope: shape.code,
+      queueAttemptsClass: 'not_evaluated',
       rejectedRowCount: 0,
       rowCount: 0,
       rows: [],
       rowsTruncated: false,
+      summaryGate: null,
     };
   }
 
   const { rows } = shape;
-  const described = rows.map((row: JsonRecord) => {
-    const rejectionGate = classifyQueueAnalyticsRow(row, expectedDate);
-    return { ...describeQueueAnalyticsRowShape(row), rejectionGate };
-  });
+  const verdict = classifyQueueAnalyticsRows(rows, expectedDate);
+  const described = rows.map((row: JsonRecord) => ({
+    ...describeQueueAnalyticsRowShape(row),
+    rejectionGate: classifyQueueAnalyticsRow(row, expectedDate),
+  }));
   return {
-    collectorVerdict: described.some((row) => row.rejectionGate !== null)
-      ? 'rejected'
-      : 'accepted',
+    collectorVerdict: verdict.stage === 'accepted' ? 'accepted' : 'rejected',
     diagnosticOnly: true,
+    dlqMessagesClass: aggregateClass(verdict.aggregate.dlqMessages),
     envelope: 'rows',
+    queueAttemptsClass: aggregateClass(verdict.aggregate.queueAttempts),
     rejectedRowCount: described.filter((row) => row.rejectionGate !== null)
       .length,
     rowCount: described.length,
     rows: described.slice(0, QUEUE_ANALYTICS_DIAGNOSTIC_MAX_ROWS),
     rowsTruncated: described.length > QUEUE_ANALYTICS_DIAGNOSTIC_MAX_ROWS,
+    summaryGate: verdict.stage === 'accepted' ? null : verdict.gate,
   };
 };
