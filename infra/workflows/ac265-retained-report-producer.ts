@@ -21,6 +21,7 @@ import {
   listAc265HostedEvidenceSubjects,
   type Ac265HostedEvidenceSubjectSource,
 } from './ac265-retained-report-trusted-digests.ts';
+import { parseAc265RetainedReportRunManifest } from './ac265-retained-report-run-manifest.ts';
 
 export { AC265_RETAINED_REPORT_FAILURE };
 export { resolveAc265RetainedReportRoot } from './ac265-retained-report-writer.ts';
@@ -30,6 +31,15 @@ export type { Ac265RetainedReportPublicationInput };
 
 export type Ac265RetainedReportProductionResult =
   Ac265RetainedReportWriteResult;
+
+export type Ac265RetainedReportProductionOutcome =
+  Ac265RetainedReportWriteResult &
+    Readonly<{
+      /** Digest of the exact canonical run-manifest bytes this run bound. */
+      runManifestSha256: string;
+      /** Copy-on-read accessor for those same published bytes. */
+      runManifestBytes: () => Uint8Array;
+    }>;
 
 /**
  * Top-level producer request: the authenticated assembler inputs plus the
@@ -43,6 +53,16 @@ export type Ac265RetainedReportProductionResult =
  */
 export type Ac265RetainedReportProductionRequest = Readonly<{
   assembly: Ac265HostedE2eReportV3AssemblyInput;
+  /**
+   * Exact canonical `ac265-hosted-run-manifest-v1` bytes. The run manifest is
+   * the protected run's own authorization container, so it is a required
+   * protected input rather than an assembled value: the producer reads it
+   * through the digest-bound CP-04g boundary and binds its membership to the
+   * same runner contract the report is assembled from.
+   */
+  runManifestBytes: Uint8Array;
+  /** Independently trusted digest of those exact bytes. */
+  expectedRunManifestSha256: string;
   provenance: Omit<
     Ac265RetainedReportRedactionProvenance,
     'trustedReceiptSlots' | 'trustedEvidenceSha256'
@@ -53,6 +73,8 @@ export type Ac265RetainedReportProductionRequest = Readonly<{
 
 const PRODUCTION_REQUEST_KEYS = [
   'assembly',
+  'runManifestBytes',
+  'expectedRunManifestSha256',
   'provenance',
   'reportRoot',
   'declaredReportPath',
@@ -86,7 +108,9 @@ const REQUEST_PROVENANCE_KEYS = [
  * requires an authenticated resolver and the trusted context values, and it
  * claims no hosted acceptance on its own.
  */
-export const produceAc265RetainedHostedE2eReportV3 = (input: unknown) => {
+export const produceAc265RetainedHostedE2eReportV3 = (
+  input: unknown,
+): Ac265RetainedReportProductionOutcome => {
   try {
     if (
       !isAc265Record(input) ||
@@ -112,6 +136,15 @@ export const produceAc265RetainedHostedE2eReportV3 = (input: unknown) => {
       provenance['reportCompletedAt'] !== assembly.completedAt
     )
       return failAc265RetainedReport();
+    // The protected run manifest is read and bound before the report is
+    // assembled or any directory is created, so a request whose manifest does
+    // not describe this exact run leaves nothing behind.
+    const runManifest = parseAc265RetainedReportRunManifest({
+      runManifestBytes: input['runManifestBytes'],
+      expectedRunManifestSha256: input['expectedRunManifestSha256'],
+      runnerContractBytes: (assembly as { runnerContractBytes?: unknown })
+        .runnerContractBytes,
+    });
     const report = assembleAc265HostedE2eReportV3(assembly);
     // Trusted digests come from the authenticated source, never from the caller
     // or from the report: each reference is resolved and hashed here.
@@ -123,7 +156,7 @@ export const produceAc265RetainedHostedE2eReportV3 = (input: unknown) => {
         report as unknown as Ac265HostedEvidenceSubjectSource,
       ),
     });
-    return publishAc265RetainedReportV3Bytes({
+    const published = publishAc265RetainedReportV3Bytes({
       reportBytes: serializeAc265RetainedReportV3(report),
       provenance: {
         ...provenance,
@@ -132,6 +165,13 @@ export const produceAc265RetainedHostedE2eReportV3 = (input: unknown) => {
       },
       reportRoot: input['reportRoot'],
       declaredReportPath: input['declaredReportPath'],
+    });
+    // The published manifest bytes are the exact verified snapshot, so a
+    // consumer recomputing the digest over them reproduces the published value.
+    return Object.freeze({
+      ...published,
+      runManifestSha256: runManifest.sha256,
+      runManifestBytes: runManifest.bytes,
     });
   } catch {
     return failAc265RetainedReport();
