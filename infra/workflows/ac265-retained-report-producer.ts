@@ -29,9 +29,6 @@ export type { Ac265RetainedReportRedactionProvenance };
 
 export type { Ac265RetainedReportPublicationInput };
 
-export type Ac265RetainedReportProductionResult =
-  Ac265RetainedReportWriteResult;
-
 export type Ac265RetainedReportProductionOutcome =
   Ac265RetainedReportWriteResult &
     Readonly<{

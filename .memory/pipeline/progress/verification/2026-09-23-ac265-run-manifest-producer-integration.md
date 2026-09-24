@@ -127,3 +127,48 @@ appears in the change.
   authority remains with the protected broker and the authenticated resolver.
 - No AC265 criterion closes and no count moves. AC209, AC211, and AC265 remain
   open; Slice 10 remains locked; AC266 remains owner-deferred.
+
+## Independent-review fixes
+
+An independent review of the first commit found four items; three were
+actionable in code and one was a documentation-accuracy item.
+
+- **F1 (fixed, was a real defect).** The membership comparison deep-compared the
+  manifest's `resourceRefs` against the contract's raw array order, but the
+  manifest side is normalized to the locked resource-kind order by the CP-04f
+  builder while `HostedResourceReferencesSchema` defines the collection as a
+  four-element set (every kind exactly once, distinct, no ordering rule). A
+  contract that listed the same four references in any other order therefore
+  produced normalized manifest bytes that could never equal the raw contract
+  array, so a legitimate reversed or rotated contract was wrongly rejected. Both
+  sides now pass through the same `normalizeAc265HostedResourceRefs` projection,
+  keyed by kind, so order no longer matters while kind, reference, and digest
+  must still all be equal. RED was a shuffled-order fixture that failed against
+  the old comparison; the fix was then disabled again to confirm the same test
+  fails without it and passes with it.
+- **F3 (fixed).** The stale exported `Ac265RetainedReportProductionResult` alias
+  still described the pre-manifest write-result shape after the entrypoint began
+  returning the manifest-bearing outcome. It had no importers, so it was removed
+  and the test now asserts the returned outcome object's exact key set.
+- **F4 (fixed).** The runner contract was decoded before any size check, so an
+  oversized document was parsed in full before failing. Both byte inputs are now
+  bounded by the existing `MAX_RETAINED_REPORT_BYTES` (10 MiB) cap before
+  parsing, matching what `parseRunnerContract` already applies to the same
+  contract bytes. The regression uses a schema-valid contract padded past the
+  cap with in-document whitespace, which is still valid and schema-valid JSON
+  and so can only be rejected by the byte bound.
+- **F2 (documented, no code change).** The manifest digest is not carried into
+  any retained artifact: `ac265-hosted-e2e-v3` is strict with no manifest member
+  and the release-evidence sidecar's hosted section references only the report,
+  so the digest is bound at the producer boundary and returned to the protected
+  caller. That is a locally verifiable property and not hosted proof, and
+  carrying it into retained evidence would require a decision to change a locked
+  schema. Both the module doc comment and this record state that bound
+  explicitly.
+
+Re-verified after the fixes, under pinned Node 22.23.1 / pnpm 11.24.0:
+**12 tests** in the run-manifest suite (was 8), **5 files / 40 tests** across the
+retained-report and manifest suites, **108 files / 929 passed + 1 skipped** in
+`tests/contracts`, plus ESLint `--max-warnings=0`, Prettier, `tsc --build`,
+`pnpm progress:check`, and `git diff --check` all clean. Port-bound Playwright
+gates were not re-run: the E2E port slot was owned by the artifact-issuer task.

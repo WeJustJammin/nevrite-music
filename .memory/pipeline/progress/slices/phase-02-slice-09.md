@@ -1623,6 +1623,25 @@ provenance, reportRoot, declaredReportPath })`. It calls the existing
   carries no manifest member, so binding it into the report body would have
   meant a contract change. The manifest's correlation ID remains
   caller-supplied and is deliberately not part of the cross-binding.
+- Independent-review fixes: `resourceRefs` is now compared through the same
+  kind-keyed normalization the CP-04f builder applies, because the locked
+  schema defines that collection as a four-element set rather than a sequence —
+  the previous raw-order comparison wrongly rejected a valid contract that
+  listed the same four references in another order (RED reproduced by disabling
+  the fix). The stale pre-manifest `Ac265RetainedReportProductionResult` alias,
+  which had no importers, was removed. Both byte inputs are now bounded by the
+  existing `MAX_RETAINED_REPORT_BYTES` cap before parsing instead of decoding an
+  oversized contract first. Re-verified: 12 tests in the suite, 5 files / 40
+  tests focused, 108 files / 929 passed in `tests/contracts`, ESLint, Prettier,
+  `tsc --build`, `progress:check`, and `git diff --check` clean. Port-bound
+  Playwright gates were not re-run because the E2E port slot was owned by
+  another task.
+- Bounded claim recorded: the manifest digest is bound at the producer boundary
+  and returned to the protected caller, and is not carried into any retained
+  artifact. `ac265-hosted-e2e-v3` is strict with no manifest member and the
+  release-evidence sidecar references only the report, so this is a locally
+  verifiable property, not hosted proof; carrying it into retained evidence
+  would require a decision to change a locked schema.
 - This is local/private construction only. No hosted acceptance, session
   broker, receipt issuer, evidence service, fault-control plane, seeded
   identity, resource, grant, or registry row is added or implied. Totals remain
