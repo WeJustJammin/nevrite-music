@@ -1,5 +1,6 @@
 import { z } from '../../packages/contracts/node_modules/zod/index.js';
 import { SafeReleaseTimestampSchema } from '../../packages/contracts/src/release-recovery-common.ts';
+import type { Ac209EmailSendingAnalyticsErrorCode } from './ac209-email-sending-analytics.ts';
 
 /**
  * Contract surface for the bounded, read-only AC209 Email Sending
@@ -29,6 +30,41 @@ export const AC209_EMAIL_PRESENCE_RECENT_WINDOW_MS = 86_400_000 as const;
 export const AC209_EMAIL_PRESENCE_WIDE_WINDOW_MS = 2_592_000_000 as const;
 /** The provider's own reported `maxDuration` ceiling: 2,678,400 seconds. */
 export const AC209_EMAIL_PRESENCE_MAX_DURATION_MS = 2_678_400_000 as const;
+
+/**
+ * The closed provider-failure vocabulary a window may report. The artifact is
+ * logged and retained, so an unconstrained string could carry provider free text
+ * or a token into durable evidence; this list is the same vocabulary the shared
+ * request boundary already classifies into.
+ */
+export const AC209_EMAIL_PRESENCE_UNAVAILABLE_CODES = [
+  'invalid_configuration',
+  'provider_graphql_error',
+  'provider_permission_denied',
+  'provider_query_invalid',
+  'provider_request_failed',
+  'provider_resource_unavailable',
+  'provider_response_invalid',
+  'provider_result_truncated',
+  'provider_temporarily_unavailable',
+  'event_not_unique',
+  'unexpected_failure',
+] as const satisfies readonly Ac209EmailSendingAnalyticsErrorCode[];
+
+/**
+ * Enforced, not merely documented: the wide window must fit inside the
+ * provider's own reported `maxDuration` ceiling, or the probe would ask for a
+ * range the Email Sending dataset refuses to serve. Evaluated at module load so
+ * a widened window fails immediately and everywhere rather than at request time.
+ */
+export const AC209_EMAIL_PRESENCE_WINDOWS_FIT_PROVIDER_BUDGET: boolean =
+  AC209_EMAIL_PRESENCE_WIDE_WINDOW_MS <= AC209_EMAIL_PRESENCE_MAX_DURATION_MS &&
+  AC209_EMAIL_PRESENCE_RECENT_WINDOW_MS <= AC209_EMAIL_PRESENCE_WIDE_WINDOW_MS;
+
+if (!AC209_EMAIL_PRESENCE_WINDOWS_FIT_PROVIDER_BUDGET)
+  throw new RangeError(
+    'AC209 Email Sending presence windows exceed the provider duration budget.',
+  );
 
 const ZONE_ID = /^[0-9a-f]{32}$/u;
 const SOURCE_REVISION = /^[0-9a-f]{40}$/u;
@@ -82,7 +118,10 @@ export type Ac209EmailPresenceInput = z.infer<
 };
 
 const UnavailableSchema = z
-  .object({ status: z.literal('unavailable'), code: z.string() })
+  .object({
+    status: z.literal('unavailable'),
+    code: z.enum(AC209_EMAIL_PRESENCE_UNAVAILABLE_CODES),
+  })
   .strict();
 
 const AvailableWindowSchema = z

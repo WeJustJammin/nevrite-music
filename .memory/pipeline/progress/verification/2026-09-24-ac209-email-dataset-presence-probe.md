@@ -70,6 +70,22 @@ is a provider contradiction: the probe fails closed rather than publishing a
 self-contradicting report. Invalid configuration is rejected before any provider
 request.
 
+Three further hardenings were applied after independent review, each with a test
+that was confirmed to fail against the previous behaviour:
+
+- The retained artifact's unavailable `code` is a closed enum
+  (`AC209_EMAIL_PRESENCE_UNAVAILABLE_CODES`) rather than a free string, so a
+  provider free-text message or a token can never reach logged or retained
+  evidence. This is scoped to the presence artifact only; the sibling
+  `ac209-email-diagnostics.ts` still uses an open string and was left untouched.
+- The provider duration budget is enforced, not documented. The wide window must
+  fit the provider's own reported `maxDuration` ceiling, and a widened constant
+  now fails at module load with a `RangeError` instead of reaching a request.
+- A nested-contradiction test pins the populated-recent / empty-wide case, and
+  the workflow contract test asserts the two protected credentials stay at step
+  level through indentation-scoped structure checks that a `toContain` could not
+  provide; a deliberate job-level hoist was confirmed to fail the suite.
+
 ## Verification performed (first-hand)
 
 - Pinned runtime: Node `22.23.1`, pnpm `11.24.0` (Corepack), from the repository
@@ -90,9 +106,14 @@ request.
 - `infra/` is outside every tsconfig, so the classification vocabulary keeps its
   own AST-based guard: the exported union, the report-schema enum, and the
   literals `classifyPresence` actually returns must agree.
-- Formatting, ESLint with `--max-warnings=0`, `tsc --build`, repository
-  consistency checks, coverage, the Slice 09 evidence map, builds, bundle
-  budgets, and the local performance smoke were run from this worktree.
+- A complete `pnpm validate` ran from this worktree with temporary
+  `channel: 'chrome'` overrides in both Playwright configs (reverted afterward)
+  and exited **0**: 591 test files, 4,856 passed plus one intentional skip, 100%
+  statements/branches/functions/lines, 101 functional E2E plus 5 production-built
+  Slice 09 real-route checks, builds, bundle budgets, and a local p95 smoke of
+  2.34 ms against the 500 ms threshold. Every browser process was confirmed to
+  resolve to system Google Chrome through `/proc/<pid>/exe`; bundled Chromium was
+  never used.
 
 ## What this does not do
 

@@ -44,9 +44,13 @@ filesystem and validation operations.
   `provider_unavailable`). It selects only the non-PII `status` field, required
   by the GraphQL rule that every selection set be non-empty, and never publishes
   its value; no address, subject, or provider message identifier is ever selected
-  or retained. It is read-only, performs no mutation, and closes no acceptance
-  criterion. Dispatching it does not close AC209 and does not replace the
-  correlation gate, the delivery verifier, or the visible receipt inspection.
+  or retained. An unavailable window carries a closed code from
+  `AC209_EMAIL_PRESENCE_UNAVAILABLE_CODES` rather than free text, so the retained
+  artifact cannot carry a provider message or a token, and the wide window is
+  checked against the provider duration ceiling at module load. It is read-only,
+  performs no mutation, and closes no acceptance criterion. Dispatching it does
+  not close AC209 and does not replace the correlation gate, the delivery
+  verifier, or the visible receipt inspection.
   Dispatch contract: `.github/workflows/probe-production-ac209-email-presence.yml`.
 
 - `write-ci-gate-evidence.sh` derives the release gate set from successful CI
