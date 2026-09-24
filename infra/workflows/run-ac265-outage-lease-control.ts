@@ -26,10 +26,19 @@ const FAILURE = 'AC265 outage lease control failed';
 const OUTPUT_DIRECTORY_NAME = 'ac265-outage-lease';
 const RECORD_FILE_NAME = 'outage-lease-control.json';
 const SAFE_REFERENCE_PATTERN = /^[A-Za-z0-9][A-Za-z0-9._:/#?=&%+@-]{0,255}$/u;
+// A GitHub Actions workflow command must start at the beginning of a line.
+const WORKFLOW_COMMAND_PREFIX = '::add-mask::';
+
+const defaultMaskLine = (line: string): void => {
+  if (!line.startsWith(WORKFLOW_COMMAND_PREFIX)) throw new Error(FAILURE);
+  process.stdout.write(`${line}\n`);
+};
 
 export interface Ac265OutageLeaseControlOptions {
   readonly env: Readonly<Record<string, string | undefined>>;
   readonly fetchImpl?: typeof fetch;
+  /** Emits one GitHub Actions workflow-command line, used only for masking. */
+  readonly writeMaskLine?: (line: string) => void;
 }
 
 /**
@@ -44,6 +53,15 @@ export interface Ac265OutageLeaseRecord {
   readonly leaseRefSha256: string;
   readonly environment: 'staging';
   readonly redacted: true;
+  // Server-derived lifecycle timestamps are retained so a later operator can
+  // tell an expired replay from a fresh decision without re-reading provider
+  // state. They are server truth, not caller input.
+  readonly acquiredAt?: string;
+  readonly expiresAt?: string;
+  readonly leaseDurationSeconds?: 60;
+  readonly requestLimit?: 1;
+  readonly consumedAt?: string;
+  readonly releasedAt?: string;
 }
 
 const required = (
@@ -120,6 +138,27 @@ const appendStepOutputs = (
 };
 
 /**
+ * Retains only the server-derived lifecycle fields that the returned state
+ * actually carries, so strict object equality still distinguishes an acquire
+ * from a consume or release record.
+ */
+const lifecycleFields = (
+  result: Record<string, unknown>,
+): Partial<Ac265OutageLeaseRecord> => {
+  const fields: Record<string, unknown> = {};
+  for (const name of [
+    'acquiredAt',
+    'expiresAt',
+    'leaseDurationSeconds',
+    'requestLimit',
+    'consumedAt',
+    'releasedAt',
+  ] as const)
+    if (result[name] !== undefined) fields[name] = result[name];
+  return fields as Partial<Ac265OutageLeaseRecord>;
+};
+
+/**
  * Runs exactly one outage-lease control operation against the staging control
  * plane and records a redacted result. The entrypoint never chooses a
  * dependency, route, target, duration, or limit: every value arrives as an
@@ -129,6 +168,7 @@ const appendStepOutputs = (
 export const runAc265OutageLeaseControl = async ({
   env,
   fetchImpl,
+  writeMaskLine = defaultMaskLine,
 }: Ac265OutageLeaseControlOptions): Promise<Ac265OutageLeaseRecord> => {
   let summaryFd: number | undefined;
   let outputFd: number | undefined;
@@ -190,7 +230,11 @@ export const runAc265OutageLeaseControl = async ({
       leaseRefSha256: result.leaseSha256,
       environment: result.environment,
       redacted: true,
+      ...lifecycleFields(result as unknown as Record<string, unknown>),
     };
+    // Mask the one-use capability before it reaches any persisted or echoed
+    // channel, so a later failure cannot reveal it in the run log.
+    writeMaskLine(`::add-mask::${result.leaseRef}`);
     writeExclusiveFile(
       outputDirectory,
       RECORD_FILE_NAME,
@@ -220,7 +264,9 @@ export const runAc265OutageLeaseControl = async ({
     // A refusal is a distinct, operator-readable outcome; everything else
     // collapses to the single generic failure boundary.
     if (isAc265OutageLeaseConflict(error))
+      // eslint-disable-next-line preserve-caught-error -- The refusal error carries only this operation's literal outcome, and the generic boundary below must not expose provider causes.
       throw new Error(`AC265 outage lease ${error.operation} conflict`);
+    // eslint-disable-next-line preserve-caught-error -- Provider and transport errors can contain response bodies, request material, or bearer credentials and must not be attached to a surfaced error.
     throw new Error(FAILURE);
   } finally {
     closeQuietly(outputDirectory?.fd);

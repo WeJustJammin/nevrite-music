@@ -31,6 +31,10 @@ on:
 
 permissions: { contents: read }
 
+concurrency:
+  group: ac265-outage-lease-${{ github.ref }}
+  cancel-in-progress: false
+
 jobs:
   operate:
     if: github.ref == 'refs/heads/main'

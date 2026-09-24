@@ -151,7 +151,7 @@ describe('AC265 outage-lease control entrypoint', () => {
 
       const reported = await runAc265OutageLeaseControl({ env, fetchImpl });
 
-      expect(reported).toEqual({
+      expect(reported).toMatchObject({
         operation,
         state: result.state,
         leaseRefSha256: LEASE_SHA256,
@@ -160,6 +160,27 @@ describe('AC265 outage-lease control entrypoint', () => {
       });
       const recordBytes = readFileSync(recordPath(runnerTemp), 'utf8');
       expect(JSON.parse(recordBytes)).toEqual(reported);
+      // Only the lifecycle fields this state actually carries are retained.
+      const base = [
+        'environment',
+        'leaseRefSha256',
+        'operation',
+        'redacted',
+        'state',
+      ];
+      const expectedKeys =
+        operation === 'acquire'
+          ? [
+              ...base,
+              'acquiredAt',
+              'expiresAt',
+              'leaseDurationSeconds',
+              'requestLimit',
+            ]
+          : operation === 'consume'
+            ? [...base, 'consumedAt', 'requestLimit']
+            : [...base, 'releasedAt'];
+      expect(Object.keys(reported).sort()).toEqual([...expectedKeys].sort());
       // The raw lease reference is a capability: it must never be retained in
       // the uploaded record or the step summary.
       expect(recordBytes).not.toContain(LEASE_REF);
@@ -179,6 +200,79 @@ describe('AC265 outage-lease control entrypoint', () => {
       expect(recordBytes).toMatch(/"leaseRefSha256":"[a-f0-9]{64}"/u);
     },
   );
+
+  it.each([
+    ['acquire', acquireResult()],
+    ['consume', consumeResult()],
+    ['release', releaseResult()],
+  ] as const)(
+    'retains the server-derived %s lifecycle timestamps so an expiry replay is unambiguous',
+    async (operation, result) => {
+      const { runnerTemp, env } = harness(operation);
+      const fetchImpl = vi.fn<typeof fetch>(async () => responseFor(result));
+
+      const reported = await runAc265OutageLeaseControl({ env, fetchImpl });
+      const record = JSON.parse(
+        readFileSync(recordPath(runnerTemp), 'utf8'),
+      ) as Record<string, unknown>;
+
+      const expected: Record<string, unknown> =
+        operation === 'acquire'
+          ? {
+              acquiredAt: result['acquiredAt'],
+              expiresAt: result['expiresAt'],
+              leaseDurationSeconds: 60,
+              requestLimit: 1,
+            }
+          : operation === 'consume'
+            ? { consumedAt: result['consumedAt'], requestLimit: 1 }
+            : { releasedAt: result['releasedAt'] };
+      expect(record).toMatchObject(expected);
+      expect(reported).toMatchObject(expected);
+    },
+  );
+
+  it('masks the one-use lease capability before publishing it as a step output', async () => {
+    const { env } = harness('acquire');
+    const fetchImpl = vi.fn<typeof fetch>(async () =>
+      responseFor(acquireResult()),
+    );
+    const maskLines: string[] = [];
+
+    const reported = await runAc265OutageLeaseControl({
+      env,
+      fetchImpl,
+      writeMaskLine: (line) => maskLines.push(line),
+    });
+
+    // Masking must happen before the capability can reach the summary, the
+    // retained record, or any later command that echoes it.
+    expect(maskLines).toEqual([`::add-mask::${LEASE_REF}`]);
+    expect(reported.leaseRefSha256).toBe(LEASE_SHA256);
+    expect(maskLines.join('\n')).not.toContain(LEASE_SHA256);
+  });
+
+  it('never writes the lease capability to a step output before masking it', async () => {
+    const { output, env } = harness('acquire');
+    const fetchImpl = vi.fn<typeof fetch>(async () =>
+      responseFor(acquireResult()),
+    );
+    const order: string[] = [];
+
+    await runAc265OutageLeaseControl({
+      env,
+      fetchImpl,
+      writeMaskLine: (line) => order.push(line),
+    });
+    order.push(readFileSync(output, 'utf8'));
+
+    const maskIndex = order.findIndex((entry) =>
+      entry.startsWith('::add-mask::'),
+    );
+    const outputIndex = order.indexOf(readFileSync(output, 'utf8'));
+    expect(maskIndex).toBeGreaterThanOrEqual(0);
+    expect(maskIndex).toBeLessThan(outputIndex);
+  });
 
   it.each(['acquire', 'consume', 'release'] as const)(
     'sends exactly one request for %s using the derived request shape',

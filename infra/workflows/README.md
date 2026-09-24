@@ -193,8 +193,11 @@ filesystem and validation operations.
   10-second deadline. `ac265-outage-lease-transport.ts` owns that shared
   transport and the failure/conflict classification, while
   `runner-temp-artifact-boundary.ts` owns the held-descriptor runner-temp,
-  summary, and exclusive-record filesystem boundary. The client accepts only a
-  schema-valid success result whose
+  summary, and exclusive-record filesystem boundary used by this entrypoint.
+  That boundary module is new and local to these files; the earlier
+  outage-target and runner-mapping entrypoints still carry their own copies of
+  the same pattern, and deduplicating them is not part of this change. The
+  client accepts only a schema-valid success result whose
   authorization, target, idempotency, environment, state, and redaction fields
   are bound to the submitted request and whose lease digest it independently
   recomputes from the returned lease reference; every other rejection collapses

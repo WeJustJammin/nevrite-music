@@ -1146,19 +1146,6 @@ from ac265_control_plane_results
 where result_name = 'second-acquire';
 
 insert into ac265_control_plane_requests (request_name, request)
-select 'consume-expired', jsonb_build_object(
-  'criterion', 'P2-S09-AC-265',
-  'schemaVersion', 'ac265-hosted-outage-lease-control-v1',
-  'authorizationRef', 'ac265-authorization://staging/20000000-0000-4000-8000-000000000002',
-  'targetRef', 'ac265-outage-target://staging/30000000-0000-4000-8000-000000000002',
-  'idempotencyRef', 'ac265-idempotency://staging/50000000-0000-4000-8000-000000000009',
-  'leaseRef', result ->> 'leaseRef',
-  'leaseSha256', result ->> 'leaseSha256'
-)
-from ac265_control_plane_results
-where result_name = 'second-acquire';
-
-insert into ac265_control_plane_requests (request_name, request)
 select 'third-consume', jsonb_build_object(
   'criterion', 'P2-S09-AC-265',
   'schemaVersion', 'ac265-hosted-outage-lease-control-v1',
@@ -1206,14 +1193,122 @@ select lives_ok(
 reset role;
 
 select is(
+  (select result ->> 'state' from ac265_control_plane_results where result_name = 'release-before-consume'),
+  'released',
+  'an unconsumed lease can still be released so bounded teardown clears the active-lease slot'
+);
+select lives_ok(
+  $$
+  insert into ac265_control_plane_results (result_name, result)
+  select 'release-before-consume-repeat', platform_api.ac265_hosted_outage_lease_release(request)
+  from pg_temp.ac265_control_plane_requests
+  where request_name = 'release-before-consume'
+  $$,
+  'repeating the same unconsumed teardown release is idempotent'
+);
+select is(
+  (select result from ac265_control_plane_results where result_name = 'release-before-consume-repeat'),
   (select result from ac265_control_plane_results where result_name = 'release-before-consume'),
-  '{"status":"conflict"}'::jsonb,
-  'release requires the lease to have been consumed first'
+  'an unconsumed teardown release replay returns the same immutable outcome'
+);
+select ok(
+  (
+    select result ? 'releasedAt'
+      and result ?& array[
+        'criterion', 'schemaVersion', 'authorizationRef', 'targetRef',
+        'idempotencyRef', 'leaseRef', 'leaseSha256', 'environment', 'state',
+        'releasedAt', 'redacted'
+      ]
+      and (result - array[
+        'criterion', 'schemaVersion', 'authorizationRef', 'targetRef',
+        'idempotencyRef', 'leaseRef', 'leaseSha256', 'environment', 'state',
+        'releasedAt', 'redacted'
+      ]) = '{}'::jsonb
+      and result ->> 'state' = 'released'
+      and result ->> 'redacted' = 'true'
+      and not (result ?| array['consumedAt', 'targetBytes', 'secret', 'token'])
+    from ac265_control_plane_results
+    where result_name = 'release-before-consume'
+  ),
+  'the unconsumed teardown release returns the exact redacted contract with no consume claim'
+);
+select ok(
+  not exists (
+    select 1
+    from platform_private.ac265_hosted_outage_leases
+    where lease_ref = (select result ->> 'leaseRef' from ac265_control_plane_results where result_name = 'second-acquire')
+      and released_at is null
+  ),
+  'releasing an unconsumed lease clears the row from the active-lease set'
 );
 
--- Expiry is server-time based.  The fixture update is a test-only superuser
--- mutation; callers cannot update this table because the direct-grant test
--- above is part of this contract.
+-- The released lease is spent: it must never be consumable afterwards, or a
+-- released capability could still inject one request.
+insert into ac265_control_plane_requests (request_name, request)
+select 'consume-after-release', jsonb_build_object(
+  'criterion', 'P2-S09-AC-265',
+  'schemaVersion', 'ac265-hosted-outage-lease-control-v1',
+  'authorizationRef', 'ac265-authorization://staging/20000000-0000-4000-8000-000000000002',
+  'targetRef', 'ac265-outage-target://staging/30000000-0000-4000-8000-000000000002',
+  'idempotencyRef', 'ac265-idempotency://staging/50000000-0000-4000-8000-000000000017',
+  'leaseRef', result ->> 'leaseRef',
+  'leaseSha256', result ->> 'leaseSha256'
+)
+from ac265_control_plane_results
+where result_name = 'second-acquire';
+
+set local role service_role;
+select lives_ok(
+  $$
+  insert into ac265_control_plane_results (result_name, result)
+  select 'consume-after-release', platform_api.ac265_hosted_outage_lease_consume(request)
+  from pg_temp.ac265_control_plane_requests
+  where request_name = 'consume-after-release'
+  $$,
+  'consuming a previously released lease reaches the lifecycle fence'
+);
+reset role;
+select is(
+  (select result from ac265_control_plane_results where result_name = 'consume-after-release'),
+  '{"status":"conflict"}'::jsonb,
+  'a released lease cannot be consumed afterwards'
+);
+
+-- Teardown must leave the binding usable: the same authorization/target pair
+-- can acquire a fresh one-use lease after the abandoned one was released.
+insert into ac265_control_plane_requests (request_name, request)
+select 'teardown-reacquire', jsonb_build_object(
+  'criterion', 'P2-S09-AC-265',
+  'schemaVersion', 'ac265-hosted-outage-lease-control-v1',
+  'authorizationRef', 'ac265-authorization://staging/20000000-0000-4000-8000-000000000002',
+  'targetRef', 'ac265-outage-target://staging/30000000-0000-4000-8000-000000000002',
+  'idempotencyRef', 'ac265-idempotency://staging/40000000-0000-4000-8000-000000000018',
+  'leaseDurationSeconds', 60,
+  'requestLimit', 1
+);
+
+set local role service_role;
+select lives_ok(
+  $$
+  insert into ac265_control_plane_results (result_name, result)
+  select 'teardown-reacquire', platform_api.ac265_hosted_outage_lease_acquire(request)
+  from pg_temp.ac265_control_plane_requests
+  where request_name = 'teardown-reacquire'
+  $$,
+  'the binding accepts a fresh acquire after an unconsumed teardown release'
+);
+reset role;
+select is(
+  (select result ->> 'state' from ac265_control_plane_results where result_name = 'teardown-reacquire'),
+  'acquired',
+  'teardown leaves the authorization and target binding usable for a later attempt'
+);
+
+-- Expiry is server-time based.  These fixture updates are test-only superuser
+-- mutations; callers cannot update this table because the direct-grant test
+-- above is part of this contract.  The expiry assertions use the fresh
+-- teardown re-acquire, because the earlier fixture lease has been released by
+-- the teardown coverage and a released lease is spent.
 select lives_ok(
   $$
   with lease_clock as (select clock_timestamp() as now)
@@ -1221,10 +1316,38 @@ select lives_ok(
   set acquired_at = lease_clock.now - interval '61 seconds',
       expires_at = lease_clock.now - interval '1 second'
   from lease_clock
-  where lease_ref = (select result ->> 'leaseRef' from ac265_control_plane_results where result_name = 'second-acquire')
+  where lease_ref = (select result ->> 'leaseRef' from ac265_control_plane_results where result_name = 'teardown-reacquire')
   $$,
   'the disposable lease fixture can be moved past its server expiry for the expiry assertion'
 );
+
+insert into ac265_control_plane_requests (request_name, request)
+select 'consume-expired', jsonb_build_object(
+  'criterion', 'P2-S09-AC-265',
+  'schemaVersion', 'ac265-hosted-outage-lease-control-v1',
+  'authorizationRef', 'ac265-authorization://staging/20000000-0000-4000-8000-000000000002',
+  'targetRef', 'ac265-outage-target://staging/30000000-0000-4000-8000-000000000002',
+  'idempotencyRef', 'ac265-idempotency://staging/50000000-0000-4000-8000-000000000009',
+  'leaseRef', result ->> 'leaseRef',
+  'leaseSha256', result ->> 'leaseSha256'
+)
+from ac265_control_plane_results
+where result_name = 'teardown-reacquire';
+
+-- An unexpired-but-window-expired lease must also refuse release, so an
+-- operator cannot silently clear the active slot after the bounded window.
+insert into ac265_control_plane_requests (request_name, request)
+select 'release-expired-unconsumed', jsonb_build_object(
+  'criterion', 'P2-S09-AC-265',
+  'schemaVersion', 'ac265-hosted-outage-lease-control-v1',
+  'authorizationRef', 'ac265-authorization://staging/20000000-0000-4000-8000-000000000002',
+  'targetRef', 'ac265-outage-target://staging/30000000-0000-4000-8000-000000000002',
+  'idempotencyRef', 'ac265-idempotency://staging/60000000-0000-4000-8000-000000000019',
+  'leaseRef', result ->> 'leaseRef',
+  'leaseSha256', result ->> 'leaseSha256'
+)
+from ac265_control_plane_results
+where result_name = 'teardown-reacquire';
 select lives_ok(
   $$
   insert into ac265_control_plane_results (result_name, result)
@@ -1238,6 +1361,23 @@ select is(
   (select result from ac265_control_plane_results where result_name = 'consume-expired'),
   '{"status":"conflict"}'::jsonb,
   'an expired one-use lease cannot be consumed'
+);
+
+set local role service_role;
+select lives_ok(
+  $$
+  insert into ac265_control_plane_results (result_name, result)
+  select 'release-expired-unconsumed', platform_api.ac265_hosted_outage_lease_release(request)
+  from pg_temp.ac265_control_plane_requests
+  where request_name = 'release-expired-unconsumed'
+  $$,
+  'expired unconsumed release reaches the expiry fence'
+);
+reset role;
+select is(
+  (select result from ac265_control_plane_results where result_name = 'release-expired-unconsumed'),
+  '{"status":"conflict"}'::jsonb,
+  'an unconsumed lease cannot be released after its bounded window has expired'
 );
 
 -- A consumed lease that has passed its hard expiry remains consumed but cannot
@@ -1280,6 +1420,7 @@ select ok(
   ),
   'an expired release conflict leaves all release state fields unchanged'
 );
+
 
 select finish();
 rollback;

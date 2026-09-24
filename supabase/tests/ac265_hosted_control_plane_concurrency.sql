@@ -360,9 +360,11 @@ $worker$, different_gate, different_request_b::text);
   perform extensions.dblink_disconnect(different_b);
   perform extensions.dblink_disconnect(different_a);
 
-  -- Seed one committed lease, then race consume against release.  The only
-  -- valid serializations are consume+release, or conflict-on-release followed
-  -- by consume; neither can leave a half-populated transition.
+  -- Seed one committed lease, then race consume against release.  Release no
+  -- longer requires a prior consume, so the serializations are consume+release
+  -- (consumed then released), release-then-consume (released first, so the
+  -- consume must conflict), or consume-then-conflicting-release when the lease
+  -- is already released.  None may leave a half-populated transition.
   transition_acquire_request := jsonb_build_object(
     'criterion', 'P2-S09-AC-265',
     'schemaVersion', 'ac265-hosted-outage-lease-control-v1',
@@ -527,16 +529,18 @@ select ok(
 );
 
 select ok(
-  (select result_a ->> 'state' = 'consumed'
-      and (result_b = '{"status":"conflict"}'::jsonb or result_b ->> 'state' = 'released')
+  (select ((result_a ->> 'state' = 'consumed' and result_b ->> 'state' = 'released')
+        or (result_a ->> 'state' = 'consumed' and result_b = '{"status":"conflict"}'::jsonb)
+        or (result_a = '{"status":"conflict"}'::jsonb and result_b ->> 'state' = 'released'))
       and lease_count = 1
       and active_count between 0 and 1
-      and consumed_count = 1
+      and consumed_count between 0 and 1
       and released_count between 0 and 1
+      and consumed_count + released_count >= 1
       and partial_count = 0
    from ac265_cp01_concurrency_results
    where case_name = 'consume-release'),
-  'concurrent consume and release produce one complete consume and an allowed serialized release outcome'
+  'concurrent consume and release serialize to consume-then-release, or a release that forces the consume to conflict'
 );
 
 select finish();

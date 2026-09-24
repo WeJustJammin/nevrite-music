@@ -90,6 +90,12 @@ describe('AC265 outage-lease control workflow contract', () => {
     expect(workflow).not.toMatch(/self-hosted|wejammin/iu);
   });
 
+  it('serializes dispatches so two bounded operations cannot overlap on one binding', () => {
+    expect(workflow).toMatch(
+      /^concurrency:\n\s{2}group: ac265-outage-lease-\$\{\{ github\.ref \}\}\n\s{2}cancel-in-progress: false$/mu,
+    );
+  });
+
   it('checks out the dispatched commit without credentials and runs the protected entrypoint once', () => {
     expect(operationStep).toBeDefined();
     const step = operationStep?.[0] ?? '';
