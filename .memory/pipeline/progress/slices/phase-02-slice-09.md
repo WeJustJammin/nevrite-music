@@ -1648,3 +1648,68 @@ provenance, reportRoot, declaredReportPath })`. It calls the existing
   279/282 active (283 authored IDs), Phase 2 8/17, and 1,999/2,000 active
   criteria; AC209, AC211, and AC265 remain open, Slice 10 remains locked, and
   AC266 remains owner-deferred.
+
+### 2026-09-24 AC265 hosted-artifact attestation issuer (CP-04j, local/private only)
+
+- Adds the missing live producer for the CP-04c/CP-04d hosted-artifact
+  attestation path. The repository could already authenticate exact receipt and
+  execution-evidence bytes and resolve them through a branded resolver, but
+  `createAc265HostedArtifactAttestation` had no non-test callsite, so nothing
+  could produce the signed companions the resolver consumes. See the [CP-04j
+  verification record](../verification/2026-09-24-ac265-hosted-artifact-attestation-issuer.md).
+- Designation: this entry is CP-04j because the CP-04i label is already owned by
+  the run-manifest producer-side integration recorded above. No duplicate
+  CP-04i designation is carried into this integration.
+- `infra/workflows/ac265-hosted-artifact-attestation-issuer.ts` (with its
+  `-inputs`, `-contract`, and `-signing` siblings) signs caller-supplied
+  artifact bytes into canonical `HostedArtifactAttestationV1` companions with
+  pinned key material, and `issue-ac265-hosted-artifact-attestations.ts` (with
+  its `-contract`, `-files`, and `-sources` siblings) runs the protected
+  issuance entrypoint that reads one bounded request document plus the exact
+  artifact members, derives every subject from the bytes, and publishes the
+  signed companions with a digest index beneath `RUNNER_TEMP`.
+- Run identity is v4-only and lowercase-exact through one shared
+  `HostedArtifactAttestationRunIdSchema` enforced by the issuer, the
+  entrypoint, the CP-04c attestation contract, and the resolver trust clone. An
+  earlier revision on the source branch widened three of those gates to a
+  version-agnostic form while the entrypoint still enforced v4-only, which made
+  a v7 acceptance path unreachable; that was corrected on the branch — the
+  widened gates restored to v4-only, the entrypoint gate folded onto the same
+  shared schema, and direct end-to-end coverage added for a non-v4 rejection
+  and a v4 issuance — before this integration.
+- Publication properties: the output directory must be exactly
+  `${RUNNER_TEMP}/ac265-hosted-artifact-attestations` and must not pre-exist;
+  it is created `0700` with the mode re-asserted on a held descriptor. Each
+  attestation and the index are written `O_CREAT|O_EXCL|O_NOFOLLOW` at `0600`
+  with `fsync` and a digest-bound readback. Request and artifact reads use one
+  held `O_RDONLY|O_NOFOLLOW` descriptor with `fstat` size rechecks and symlink
+  rejection. No secret is read, written, generated, or configured.
+- Focused evidence at the source SHA: **10 files / 116 tests** pass, including
+  the positive assembly control that signs the real canonical envelopes through
+  the protected entrypoint and requires the protected resolver to return
+  byte-identical receipt and evidence bytes, plus negative controls for
+  bare-subject receipt, foreign run ID, mutated identity, declared-subject
+  contradiction, kind/reference swap, duplicate reference, unbounded source set,
+  unsafe member name, symlinked request, symlinked artifact, foreign signing
+  key, out-of-window attestation, pre-existing output directory, and malformed
+  request document. The record's full-repository numbers and browser gate were
+  measured on the source branch and are not re-run for this static-only
+  integration.
+- Recorded boundaries, not acceptance: the request `runId` and the source
+  `issuedAt`/`expiresAt` window are caller-asserted here and must be derived
+  from authenticated runner context by a future protected harness; the
+  reference-to-content digest binding belongs to the CP-04d source manifest and
+  is not duplicated; a mid-loop failure can leave partial signed attestations in
+  the fresh owner-only directory with no index, which fails closed on read; the
+  execution-evidence `artifactSha256` references UI evidence this producer
+  never sees and needs a future independently authenticated evidence service;
+  and `createAc265HostedArtifactAttestation` remains byte-opaque, with the
+  protected wrapper as the only production entrypoint. None of these is an
+  owner decision or a hosted-acceptance claim.
+- This is local/private construction only. No hosted acceptance, session
+  broker, receipt issuer, artifact store, evidence service, seeded identity,
+  credential, resource, grant, or registry row is added or implied; the distinct
+  artifact-attestation issuer key and its `artifactTrustedKeys` pinning remain
+  owner decisions. Totals remain 279/282 active (283 authored IDs), Phase 2
+  8/17, and 1,999/2,000 active criteria; AC209, AC211, and AC265 remain open,
+  Slice 10 remains locked, and AC266 remains owner-deferred.
