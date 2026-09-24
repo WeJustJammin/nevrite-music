@@ -75,9 +75,11 @@ succeeded. Promotion artifact `10645302055` has digest
 `sha256:12f05e8371586996dc413b85b75167934045f342091defff5197435b8b707782`.
 Staging p95 was **32.589357 ms** and the automated axe digest was
 `df2522f8512dcea587146f5bce43ad5232b94964d5048825ffdb745286dd772d`.
-Read-only AC209 verifier `35612514031` failed with `provider_graphql_error`
-after all preflight/protection/workspace gates and produced no effects or
-receipt. Slice 09 remains **279/282 active**; AC265 remains open and Slice 10
+Historical read-only AC209 verifier `35612514031` failed with
+`provider_graphql_error` after all preflight/protection/workspace gates and
+produced no effects or receipt; that failure has since cleared, and the current
+reading is in the [2026-09-24 protected-run record](../verification/2026-09-24-ac209-ac211-protected-run-evidence.md).
+Slice 09 remains **279/282 active**; AC265 remains open and Slice 10
 remains locked on AC209, AC211, and AC265. AC266 remains unchecked,
 owner-deferred, and mandatory at the post-Phase 2 production-readiness/release
 gate. See the [CP-04b verification
