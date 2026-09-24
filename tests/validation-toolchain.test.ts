@@ -92,7 +92,9 @@ describe('validation toolchain contracts', () => {
     expect(vitest).toContain('maxWorkers: process.env.CI ? 4 : 2');
     expect(vitest).toContain('testTimeout: 15_000');
     expect(playwright).toContain("testDir: './tests/e2e'");
-    expect(playwright).toContain("name: 'chromium'");
+    expect(playwright).toContain("name: 'chrome'");
+    expect(playwright).toContain("channel: 'chrome'");
+    expect(playwright).not.toContain('playwright install');
     expect(playwright).toContain('const ciRunId = process.env.GITHUB_RUN_ID;');
     expect(playwright).toContain('BigInt(ciRunId) % 10_000n');
     expect(playwright).toContain('30_000 + ciPortSlot * 2');
@@ -114,6 +116,7 @@ describe('validation toolchain contracts', () => {
     );
     expect(s09RealPlaywright).toContain('timeout: realRouteServerTimeout');
     expect(s09RealPlaywright).toContain("trace: 'off'");
+    expect(s09RealPlaywright).toContain("channel: 'chrome'");
     expect(e2e).toContain("metadata['docsOrigin']");
     expect(e2e).not.toContain('http://127.0.0.1:4322');
     expect(webAstro).toContain("'GITHUB_RUN_ID' in runtimeEnvironment");

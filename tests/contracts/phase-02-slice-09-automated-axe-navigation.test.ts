@@ -1,4 +1,4 @@
-import { chromium } from '@playwright/test';
+import { chromium, devices } from '@playwright/test';
 import {
   existsSync,
   mkdtempSync,
@@ -11,10 +11,7 @@ import { join } from 'node:path';
 
 import { describe, expect, it, vi } from 'vitest';
 
-import {
-  assertPlaywrightChromiumExecutable,
-  playwrightChromiumExecutablePath,
-} from '../../infra/workflows/content-schema-registry-axe-browser.ts';
+import { googleChromeExecutablePath } from '../../infra/workflows/content-schema-registry-axe-browser.ts';
 import {
   assertExpectedAxeNavigation,
   assertExpectedReleaseHeader,
@@ -262,15 +259,25 @@ describe('Slice 09 AC266 automated axe navigation contract', () => {
     ).rejects.toThrow(message);
   });
 
-  it('uses the lockfile-pinned Playwright Chromium and fails when absent', () => {
-    const executablePath = playwrightChromiumExecutablePath();
-    expect(executablePath).toBe(chromium.executablePath());
-    expect(existsSync(executablePath)).toBe(true);
-    expect(() =>
-      assertPlaywrightChromiumExecutable(
-        join(tmpdir(), 'wejammin-missing-chromium'),
-      ),
-    ).toThrow('Pinned Playwright Chromium executable is unavailable.');
+  it('resolves the installer-provided Google Chrome instead of bundled Chromium', () => {
+    const chromeExecutable = googleChromeExecutablePath();
+    // Playwright reports the bundled download from executablePath(); the Chrome
+    // channel only takes effect at launch, so the resolved system candidate must
+    // be a canonical installer path and never the bundled build.
+    expect([
+      '/usr/bin/google-chrome-stable',
+      '/usr/bin/google-chrome',
+      '/opt/google/chrome/chrome',
+    ]).toContain(chromeExecutable);
+    expect(existsSync(chromeExecutable)).toBe(true);
+    expect(chromeExecutable).not.toBe(chromium.executablePath());
+  });
+
+  it('records the Chrome engine family without pinning a bundled browser build', () => {
+    const desktopChrome = devices['Desktop Chrome'];
+    expect(desktopChrome.defaultBrowserType).toBe('chromium');
+    expect('channel' in desktopChrome).toBe(false);
+    expect(desktopChrome.userAgent).toMatch(/Chrome\//u);
   });
 
   it('rejects absolute, traversal, workspace, and symlink-escaping report roots', () => {

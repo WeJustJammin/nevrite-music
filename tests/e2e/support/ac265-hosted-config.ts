@@ -8,8 +8,8 @@ export const createAc265HostedPlaywrightConfig = (
   globalSetup: './tests/e2e/support/ac265-hosted-global-setup.ts',
   projects: [
     {
-      name: 'chromium',
-      use: devices['Desktop Chrome'],
+      name: 'chrome',
+      use: { ...devices['Desktop Chrome'], channel: 'chrome' },
     },
   ],
   reporter: 'list',

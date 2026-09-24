@@ -77,11 +77,14 @@ Stop the process holding the port, or start the web server on another local
 port with `pnpm --filter @wejammin/web dev -- --port 4322`. Keep the Worker and
 web terminals separate so their logs remain attributable.
 
-### Playwright cannot find Chromium
+### Playwright cannot find Google Chrome
 
-Install the pinned local browser with `pnpm exec playwright install chromium`,
-then rerun `pnpm validate`. This downloads a test dependency to the local
-machine; it creates no hosted account or subscription.
+Every browser gate runs Google Chrome, matching the browser the operator and the
+release evidence use. Install the official Google Chrome package for your
+distribution, then rerun `pnpm validate`. The Playwright-bundled Chromium
+download is not an accepted substitute, so the gate fails closed instead of
+silently running a different browser build. Verify the installed browser with
+`bash infra/workflows/verify-system-chrome.sh`.
 
 ### Wrangler asks for login or a deploy fails
 
