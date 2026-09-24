@@ -828,9 +828,11 @@ response`; Workers Observability passed. Cloudflare's documented successful
   no receipt.
 - P2-S09-AC-211: collection run `35560241699` passed preflight but failed for
   insufficient samples: `commands=0`, `protectedRpcs=0`, `acceptances=0`, and
-  `queueFirstAttempts=0`. No artifact was produced. No complete retained
-  UTC-day report exists; retain a later complete day with at least 200 samples,
-  all five SLO results, and daily queue/DLQ counts.
+  `queueFirstAttempts=0`. No artifact was produced. Collection run `35846440023`
+  (UTC 2026-09-22) then reached the Queue Analytics parser and failed closed on
+  `malformed_queue_analytics_row` before any sample counts were computed. No
+  complete retained UTC-day report exists; retain a later complete day with at
+  least 200 samples, all five SLO results, and daily queue/DLQ counts.
 - P2-S09-AC-265: the latest candidate authorization attempt used PR #80 SHA
   `918f598525de772c82b0a0bcd82348ea8f5d523d`, which passed CI `34823698333`
   and staging `34824312138` / deployment `6433521892`. Preflight `34824500796`
@@ -1560,3 +1562,75 @@ provenance, reportRoot, declaredReportPath })`. It calls the existing
   criteria; AC209, AC211, and AC265 remain open, Slice 10 remains locked, and
   AC266 remains owner-deferred as the mandatory post-Phase 2
   production-readiness/release gate.
+
+## 2026-09-24 AC211 queue analytics row-shape diagnostic (local only, unmerged)
+
+- Diagnosis basis: collection run `35846440023` (UTC day 2026-09-22) passed
+  preflight and then failed inside
+  `infra/workflows/content-schema-registry-slo-provider-queue.ts` with
+  `malformed_queue_analytics_row`, before any sample counts were computed. Runs
+  `35560241699` and `35673313035` never reached that parser path — they failed
+  later at the sample-sufficiency gate — so the queue date gate was untested in
+  those windows and the actual provider date shape remains **unverified**. No
+  date-format relaxation, no widened action/outcome vocabulary, and no
+  fabricated production sample was introduced.
+- The collector rejection is now self-diagnosing. A shared module
+  `infra/workflows/content-schema-registry-slo-queue-shape.ts` owns the row gate
+  order (`row_not_object`, `dimensions_shape`, `date_missing`,
+  `date_not_string`, `date_format`, `count_shape`, `action_type_missing`,
+  `action_type_not_string`, `action_type_unknown`, `outcome_shape`,
+  `count_sum_overflow`) and the response-envelope classification. The collector
+  now throws `malformed queue analytics row (<gate>)` and imports that module, so
+  collector and diagnostic verdicts cannot drift apart. Detail codes are closed
+  and value-free: no provider value, timestamp, identifier, or secret is added
+  to any log.
+- A new read-only shape diagnostic
+  (`infra/workflows/content-schema-registry-slo-queue-shape-diagnostic.ts` plus
+  entrypoint `diagnose-content-schema-registry-queue-shape.mjs`) reuses the
+  collector exact query string and classifiers and emits only closed value
+  classes (row type, dimension presence and key count, date/count/action/outcome
+  classes), bounded row counts, and the exact rejected gate, capped at 12 emitted
+  rows. It is wired into the existing protected workflow
+  `collect-production-ac211.yml` as a warning-only step before collection; it
+  writes no evidence, closes no criterion, and cannot bypass the collection gate.
+- RED/GREEN: the two new collector tests first failed at the pinned base commit
+  with the bare message against expected `(row_not_object)` and
+  `(count_sum_overflow)`. GREEN: 19/19 across the three directly touched suites,
+  72/72 across the eight-file AC211 surface, and a full local `pnpm test` of
+  589 files / 4,835 passed plus one intentional skip.
+- Independent review found a verdict-parity defect, now fixed: the aggregate
+  `count_sum_overflow` check lived only in the collector's own loop, so the
+  diagnostic reported `accepted` for a payload the collector rejects (two
+  ReadMessage rows of 64,000 each). Reproduced against the pre-fix source as
+  `expected 'accepted' to be 'rejected'`. `classifyQueueAnalyticsRows` in
+  `content-schema-registry-slo-queue-shape.ts` now owns the whole-row walk in the
+  collector's precedence — each row's shape gate first, then the running
+  `queueAttempts`/`dlqMessages` overflow check — and both the collector and the
+  diagnostic call it, so one verdict governs both. The diagnostic additionally
+  reports `summaryGate` and closed `queueAttemptsClass`/`dlqMessagesClass`
+  labels instead of raw sums. Eight parity cases compare the collector and
+  diagnostic verdicts directly, including Read and Delete overflow; the
+  warning-only workflow test now asserts the guard body executes no `exit`,
+  closes before the collector, chains no `&&`/`||`, and leaves the collector
+  unconditional (verified by temporarily sabotaging the guard and confirming the
+  test fails). Full local `pnpm test` after the fix: 589 files / 4,845 passed
+  plus one intentional skip.
+- Local validation under pinned Node `22.23.1` / pnpm `11.24.0`:
+  `format:check`, `lint`, `type-check`, `contracts:check`, `progress:check`,
+  `db:types:check`, `test:evidence:s09`, `build`, `bundle:check`, and
+  `performance:smoke` all exited 0 (local API p95 18.79 ms against the 500 ms
+  threshold, zero errors). E2E ran Chrome-only against system Google Chrome
+  `154.0.8037.57` via a temporary `channel: 'chrome'` override: 101/101
+  functional and 5/5 real-route passed. The override was reverted and
+  `playwright.config.ts` is byte-identical to HEAD
+  (`62f50862821d8e14963e0bfd2e16119e`); the committed change carries no
+  Playwright configuration diff.
+- This closes no criterion and moves no contributor count. Totals remain
+  279/282 active (283 authored IDs), Phase 2 8/17, and 1,999/2,000 active
+  criteria; AC209, AC211, and AC265 remain open, Slice 10 remains locked, and
+  AC266 remains owner-deferred as the mandatory post-Phase 2
+  production-readiness/release gate.
+- Next evidence: the diagnostic must be merged to `main` and the protected
+  workflow dispatched again for a complete UTC day. That run is the first one
+  that can reveal the real provider row shape; until it lands, the date shape
+  stays unverified and the diagnostic is only a hint, never acceptance.

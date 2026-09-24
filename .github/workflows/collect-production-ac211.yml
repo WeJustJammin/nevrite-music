@@ -78,6 +78,9 @@ jobs:
           if ! node --experimental-strip-types infra/workflows/diagnose-content-schema-registry-slo.mjs; then
             echo '::warning::AC211 diagnostic unavailable; normal collection still required.'
           fi
+          if ! node --experimental-strip-types infra/workflows/diagnose-content-schema-registry-queue-shape.mjs; then
+            echo '::warning::AC211 queue shape diagnostic unavailable; normal collection still required.'
+          fi
           node --experimental-strip-types infra/workflows/collect-content-schema-registry-slo-evidence.ts
       - name: Upload retained AC211 reports
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
