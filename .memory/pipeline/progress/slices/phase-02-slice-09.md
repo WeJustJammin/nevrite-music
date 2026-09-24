@@ -1686,15 +1686,19 @@ provenance, reportRoot, declaredReportPath })`. It calls the existing
   with `fsync` and a digest-bound readback. Request and artifact reads use one
   held `O_RDONLY|O_NOFOLLOW` descriptor with `fstat` size rechecks and symlink
   rejection. No secret is read, written, generated, or configured.
-- Focused evidence at the source SHA: **10 files / 116 tests** pass, including
-  the positive assembly control that signs the real canonical envelopes through
+- Focused evidence at the source SHA: **10 files / 120 tests** pass, including
+  the positive assembly control that signs the real envelopes through
   the protected entrypoint and requires the protected resolver to return
   byte-identical receipt and evidence bytes, plus negative controls for
   bare-subject receipt, foreign run ID, mutated identity, declared-subject
   contradiction, kind/reference swap, duplicate reference, unbounded source set,
   unsafe member name, symlinked request, symlinked artifact, foreign signing
   key, out-of-window attestation, pre-existing output directory, and malformed
-  request document. The focused 10 files / 116 tests above were measured on this
+  request document. Evidence-payload kind is pinned to its descriptor kind
+  (`role` → `role_assertion`, `scenario` → `scenario_observation`,
+  `session_teardown` → `session_teardown`), so a self-consistent payload
+  whose kind contradicts its descriptor fails closed instead of being signed
+  into evidence the CP-04c verifier must reject. The focused 10 files / 120 tests above were measured on this
   final source tree; only the record's full-repository test totals, its other
   full-repository gates, and the browser gate were measured on the source branch
   and are not re-run for this static-only integration.

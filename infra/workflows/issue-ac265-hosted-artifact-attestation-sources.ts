@@ -9,6 +9,7 @@ import {
   AC265_HOSTED_ARTIFACT_ATTESTATION_SOURCE_MEMBERS,
   failAc265HostedArtifactAttestationIssuance,
 } from './issue-ac265-hosted-artifact-attestation-contract.ts';
+import { Ac265HostedArtifactAttestationEvidenceSubjectSchema } from './ac265-hosted-artifact-attestation-issuer-inputs.ts';
 import {
   isAc265AttestationMemberName,
   isAc265AttestationRecord,
@@ -59,10 +60,13 @@ export const parseAc265HostedArtifactAttestationDeclaredSource = (
 };
 
 /**
- * Receipt bytes must be a complete canonical server-receipt envelope, not just
- * a bare subject. The full envelope is validated before signing, and the run
- * identity plus the declared subject must match the authenticated caller run
- * binding, so a malformed or foreign-run receipt cannot be attested.
+ * Receipt bytes must be a complete, duplicate-member-free server-receipt
+ * envelope, not just a bare subject. The full envelope is validated before
+ * signing, and the run identity plus the declared subject must match the
+ * authenticated caller run binding, so a malformed or foreign-run receipt
+ * cannot be attested. Canonical byte form is deliberately not required: the
+ * signed artifact digest is over the exact bytes and the resolver compares the
+ * digest of the same bytes, so member order and whitespace carry no meaning.
  */
 export const subjectSha256ForAc265HostedServerReceipt = (
   bytes: Uint8Array,
@@ -101,8 +105,22 @@ export const subjectSha256ForAc265HostedServerReceipt = (
 };
 
 /**
+ * The evidence payload's own `kind` is the discriminator the CP-04c verifier
+ * compares against the descriptor's mapped kind, so the two must agree here.
+ * Without this mapping a payload could carry the digest of one descriptor kind
+ * while declaring another, and the producer would sign evidence that every
+ * resolver rejects — the same produce-then-reject class the run identity fixes.
+ */
+const EXECUTION_EVIDENCE_KIND_FOR_SUBJECT_KIND = {
+  role: 'role_assertion',
+  scenario: 'scenario_observation',
+  session_teardown: 'session_teardown',
+} as const;
+
+/**
  * Execution-evidence payloads carry only the subject digest, so the declared
- * role/scenario/teardown descriptor must equal the digest inside the bytes.
+ * role/scenario/teardown descriptor must equal the digest inside the bytes and
+ * must map to the payload's own `kind`.
  */
 export const subjectSha256ForAc265HostedExecutionEvidence = (
   bytes: Uint8Array,
@@ -118,7 +136,15 @@ export const subjectSha256ForAc265HostedExecutionEvidence = (
   if (!payload.success) return failAc265HostedArtifactAttestationIssuance();
   if (payload.data.candidateIdentitySha256 !== candidateIdentitySha256)
     return failAc265HostedArtifactAttestationIssuance();
-  const subjectSha256 = sha256Ac265HostedSemanticSubject(declared);
+  const descriptor =
+    Ac265HostedArtifactAttestationEvidenceSubjectSchema.safeParse(declared);
+  if (!descriptor.success) return failAc265HostedArtifactAttestationIssuance();
+  if (
+    payload.data.kind !==
+    EXECUTION_EVIDENCE_KIND_FOR_SUBJECT_KIND[descriptor.data.kind]
+  )
+    return failAc265HostedArtifactAttestationIssuance();
+  const subjectSha256 = sha256Ac265HostedSemanticSubject(descriptor.data);
   if (payload.data.subjectSha256 !== subjectSha256)
     return failAc265HostedArtifactAttestationIssuance();
   return subjectSha256;

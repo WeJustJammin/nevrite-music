@@ -12,6 +12,7 @@ import { join } from 'node:path';
 import { afterEach, describe, expect, it } from 'vitest';
 
 import { runIssueAc265HostedArtifactsAttestations } from '../infra/workflows/issue-ac265-hosted-artifact-attestations.ts';
+import { sha256Ac265HostedSemanticSubject } from '../infra/workflows/ac265-hosted-semantic-subject.ts';
 import {
   CANDIDATE_IDENTITY_DIGEST,
   CANDIDATE_IDENTITY_SHA256,
@@ -26,6 +27,7 @@ import {
   harness,
   receiptBytes,
 } from './ac265-hosted-artifact-attestation-issuer.test-support.ts';
+import { jsonBytes } from './contracts/ac265-hosted-test-fixtures.ts';
 
 afterEach(() => {
   cleanupAttestationIssuerRoots();
@@ -192,7 +194,105 @@ describe('AC265 hosted artifact attestation issuance boundaries', () => {
     ).rejects.toThrow(FAILURE);
   });
 
-  it('rejects a bare-subject receipt that is not a complete canonical envelope', async () => {
+  it('rejects execution evidence whose payload kind contradicts its descriptor kind', async () => {
+    // A payload whose subject digest matches the declared descriptor but whose
+    // own kind belongs to a different descriptor kind is self-consistent yet
+    // unusable: the CP-04c verifier requires payload.kind to equal the kind the
+    // descriptor maps to, so signing it would publish evidence nothing can
+    // resolve. Each pair below is rejected for the kind mismatch alone.
+    const evidenceRef =
+      'ac265-evidence://blob/71000000-0000-4000-8000-000000000009';
+    const scenarios: readonly {
+      readonly payloadKind: string;
+      readonly subject: Record<string, unknown>;
+    }[] = [
+      {
+        payloadKind: 'scenario_observation',
+        subject: { kind: 'role', key: 'owner_full' },
+      },
+      {
+        payloadKind: 'session_teardown',
+        subject: { kind: 'role', key: 'owner_full' },
+      },
+      {
+        payloadKind: 'role_assertion',
+        subject: { kind: 'scenario', key: 'idp_sign_in' },
+      },
+      {
+        payloadKind: 'session_teardown',
+        subject: { kind: 'scenario', key: 'idp_sign_in' },
+      },
+      {
+        payloadKind: 'role_assertion',
+        subject: { kind: 'session_teardown', key: 'owner_full' },
+      },
+      {
+        payloadKind: 'scenario_observation',
+        subject: { kind: 'session_teardown', key: 'owner_full' },
+      },
+    ];
+    for (const scenario of scenarios) {
+      const run = harness({
+        artifacts: {
+          'evidence.json': jsonBytes({
+            schemaVersion: 'ac265-execution-evidence-v1',
+            candidateIdentitySha256: CANDIDATE_IDENTITY_DIGEST,
+            subjectSha256: sha256Ac265HostedSemanticSubject(scenario.subject),
+            artifactSha256: 'e'.repeat(64),
+            kind: scenario.payloadKind,
+          }),
+        },
+        request: {
+          schemaVersion: 'ac265-hosted-artifact-attestation-request-v1',
+          runId: RUN_ID,
+          candidateIdentitySha256: CANDIDATE_IDENTITY_DIGEST,
+          runnerContractSha256: RUNNER_CONTRACT_SHA256,
+          sources: [
+            {
+              kind: 'execution_evidence',
+              ref: evidenceRef,
+              artifactMember: 'evidence.json',
+              subject: scenario.subject,
+              issuedAt: ISSUED_AT,
+              expiresAt: EXPIRES_AT,
+            },
+          ],
+        },
+      });
+      await expect(
+        runIssueAc265HostedArtifactsAttestations({ env: run.env }),
+      ).rejects.toThrow(FAILURE);
+      expect(() => statSync(run.output)).toThrow();
+    }
+  });
+
+  it('still issues evidence whose payload kind matches its descriptor kind', async () => {
+    const run = harness({
+      request: {
+        schemaVersion: 'ac265-hosted-artifact-attestation-request-v1',
+        runId: RUN_ID,
+        candidateIdentitySha256: CANDIDATE_IDENTITY_DIGEST,
+        runnerContractSha256: RUNNER_CONTRACT_SHA256,
+        sources: [
+          {
+            kind: 'execution_evidence',
+            ref: 'ac265-evidence://blob/71000000-0000-4000-8000-000000000009',
+            artifactMember: 'evidence.json',
+            subject: { kind: 'scenario', key: 'idp_sign_in' },
+            issuedAt: ISSUED_AT,
+            expiresAt: EXPIRES_AT,
+          },
+        ],
+      },
+    });
+    const summary = await runIssueAc265HostedArtifactsAttestations({
+      env: run.env,
+    });
+    expect(summary.sources).toBe(1);
+    expect(summary.runId).toBe(RUN_ID);
+  });
+
+  it('rejects a bare-subject receipt that is not a complete envelope', async () => {
     const run = harness({
       artifacts: {
         'receipt.json': Buffer.from(
@@ -222,7 +322,7 @@ describe('AC265 hosted artifact attestation issuance boundaries', () => {
     ).rejects.toThrow(FAILURE);
   });
 
-  it('rejects a canonical receipt bound to a foreign run or foreign identity', async () => {
+  it('rejects a complete envelope receipt bound to a foreign run or foreign identity', async () => {
     const foreignRun = JSON.parse(
       Buffer.from(receiptBytes).toString('utf8'),
     ) as Record<string, unknown>;

@@ -66,7 +66,7 @@ const evidenceSubjectFor = (
 };
 
 /**
- * Positive control for the P1 fix: the same canonical envelopes the real v3
+ * Positive control for the P1 fix: the same complete envelopes the real v3
  * verifier resolves must be issuable end to end. This signs the fixture's own
  * receipt and evidence bytes through the protected entrypoint and then feeds
  * the produced sources to the protected resolver, so a regression to

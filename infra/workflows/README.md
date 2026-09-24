@@ -325,7 +325,14 @@ filesystem and validation operations.
   key ID is derived as `ac265-hosted-artifact-ed25519-<sha256(SPKI DER)[0..32]>`
   and any key ID that does not name the exact public half of the supplied
   private key is rejected. Subject digests are derived from the bytes, never
-  accepted as a caller-supplied digest. No live signing key is configured by
+  accepted as a caller-supplied digest. Receipt bytes must be complete,
+  duplicate-member-free `ac265-hosted-e2e-receipt-v1` envelopes, and an
+  execution-evidence payload's own `kind` must match the kind its declared
+  descriptor maps to (`role` → `role_assertion`, `scenario` →
+  `scenario_observation`, `session_teardown` → `session_teardown`), so a
+  self-consistent payload the CP-04c verifier must reject is never signed.
+  Canonical byte form is not required of either input: the digest is over the
+  exact bytes and the resolver digests those same bytes. No live signing key is configured by
   this code; while the distinct artifact-attestation issuer key and its
   `artifactTrustedKeys` pinning remain owner decisions, the publishing boundary
   stays unwired and AC265 stays open.

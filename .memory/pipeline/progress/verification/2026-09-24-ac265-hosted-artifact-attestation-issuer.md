@@ -33,13 +33,21 @@ generated, or configured by this change.
 
 ## Byte-derived subjects
 
-Server receipts must be complete canonical `ac265-hosted-e2e-receipt-v1`
+Server receipts must be complete, duplicate-member-free `ac265-hosted-e2e-receipt-v1`
 envelopes: the strict receipt envelope schema, the caller run identity, and the
 canonical serialized identity digest are all checked before signing, so a
 bare-subject document, a foreign run, or a foreign identity fails closed.
-Execution-evidence payloads are validated against their contract, and their
-embedded `subjectSha256` and `candidateIdentitySha256` must agree with the
-declared descriptor and the caller run binding.
+Canonical byte form is not required there: the artifact digest is over the
+exact bytes and the resolver digests the same bytes, so member order and
+whitespace carry no meaning. Execution-evidence payloads are validated against
+their contract, and their embedded `subjectSha256` and
+`candidateIdentitySha256` must agree with the declared descriptor and the
+caller run binding. Each descriptor kind also pins the payload's own `kind`
+— `role` to `role_assertion`, `scenario` to `scenario_observation`, and
+`session_teardown` to `session_teardown` — because that discriminator is
+what the CP-04c verifier compares, so a self-consistent payload whose kind
+contradicts its descriptor fails closed instead of being signed into evidence
+nothing can resolve.
 
 ## Run identity
 
@@ -72,7 +80,7 @@ steps are preserved.
 
 ## Verification evidence
 
-- Focused: **10 files / 116 tests** pass (measured on the final tree), including
+- Focused: **10 files / 120 tests** pass (measured on the final tree), including
   the CP-04c foundation, protected-context, security, coverage, and slice-09
   contract suites.
 - The positive assembly control signs the real `createFixture` canonical
