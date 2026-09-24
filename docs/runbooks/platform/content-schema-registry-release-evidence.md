@@ -198,6 +198,37 @@ store, broker, hosted report, server receipt, or browser matrix exists. This
 local foundation is not synthetic or hosted acceptance evidence: AC265 remains
 open and Slice 10 remains locked.
 
+### CP-01 outage-lease control operation (not release evidence)
+
+The CP-01 lease now has a bounded control operation for the staging control
+plane. One manually dispatched `main`/staging run performs exactly one
+`acquire`, `consume`, or `release` call through
+`run-ac265-outage-lease-control.ts` and its bounded service-role client
+`ac265-outage-lease-rpc.ts`. The operator supplies only the authorization,
+target, and idempotency references, plus the lease reference and digest for
+consume and release; the entrypoint selects no dependency, route, target,
+duration, or limit. The server still owns every timestamp, the canonical
+reference digest, the fixed 60-second one-request policy, and the conflict
+decision, and the client re-derives the lease digest from the returned
+reference before accepting any result.
+
+The control plane answers a deliberate refusal with an exact envelope whose
+only member is `status` set to `conflict`. The operation reports that as a
+distinct `AC265 outage lease <operation> conflict` outcome so an operator can
+separate an authorization refusal from a transport or trust failure; every
+other rejection collapses to one generic failure. The retained record carries
+only the operation, state, environment, lease digest, and redaction marker.
+The raw lease reference is a one-use capability for the subsequent consume and
+release calls, so it is written only to the job-scoped step output and never to
+the step summary or the uploaded record.
+
+This is transport and plumbing for an already-promoted private foundation. It
+exercises no outage, seeds no approved target, registers no dependency or
+route, contacts no hosted browser session, mints no receipt, and creates no
+identity or grant. The approved dependency, route, and target remain
+owner-pending and are deliberately not selected here. It is not AC265
+acceptance evidence, it closes no criterion, and it does not unlock Slice 10.
+
 The read-only AC209 verifier `35612514031` passed exact-main preflight,
 protection, and workspace checks, then failed closed at the capability query
 with `provider_graphql_error`; it made no effects and retained no receipt.

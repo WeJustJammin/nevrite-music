@@ -14,6 +14,11 @@
   one complete production UTC day of redacted AC211 SLO evidence. Its preflight
   binds the supplied deployment to the successful `Deploy production` job/run
   and exact deployed source SHA before collection.
+- `operate-ac265-outage-lease.yml` — manually initiated, protected staging
+  control-plane operation that performs exactly one bounded AC265 outage-lease
+  `acquire`, `consume`, or `release` call from operator-supplied references.
+  It selects no dependency, route, or target, exercises no outage, and closes
+  no acceptance criterion.
 
 ## Ownership
 
