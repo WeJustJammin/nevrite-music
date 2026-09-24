@@ -1,8 +1,6 @@
-import { SafeReleaseTimestampSchema } from '../../packages/contracts/src/release-recovery-common.ts';
 import {
   AC209_EMAIL_PRESENCE_QUERY,
   AC209_EMAIL_PRESENCE_RECENT_WINDOW_MS,
-  AC209_EMAIL_PRESENCE_SAMPLE_LIMIT,
   AC209_EMAIL_PRESENCE_SCHEMA_VERSION,
   AC209_EMAIL_PRESENCE_WIDE_WINDOW_MS,
   Ac209EmailPresenceInputSchema,
@@ -17,11 +15,14 @@ import {
   AC209_EMAIL_SENDING_GRAPHQL_URL,
   AC209_EMAIL_SENDING_MAX_RESPONSE_BYTES,
   Ac209EmailSendingAnalyticsError,
-  type Ac209EmailSendingAnalyticsErrorCode,
   failAc209EmailSendingAnalytics,
-  readAc209EmailSendingZoneRecord,
   requestAc209EmailSendingGraphql,
 } from './ac209-email-sending-analytics.ts';
+import {
+  readDatasetPresenceInstant,
+  readDatasetPresenceRows,
+  toUnavailableWindow,
+} from './ac209-email-dataset-presence-shared.ts';
 
 /**
  * Bounded, read-only AC209 Email Sending dataset-presence probe.
@@ -37,10 +38,6 @@ import {
  * verifier, or the visible receipt inspection.
  */
 
-/** The widest instant a JavaScript `Date` can represent, in epoch milliseconds. */
-const MAX_SAFE_INSTANT_MS = 8_640_000_000_000_000;
-const MAX_STATUS_LENGTH = 256;
-
 export const AC209_EMAIL_PRESENCE_GRAPHQL_URL = AC209_EMAIL_SENDING_GRAPHQL_URL;
 export const AC209_EMAIL_PRESENCE_MAX_RESPONSE_BYTES =
   AC209_EMAIL_SENDING_MAX_RESPONSE_BYTES;
@@ -53,54 +50,20 @@ export const AC209_EMAIL_PRESENCE_MAX_RESPONSE_BYTES =
 const NOT_CONFIGURED = Object.freeze({ status: 'not_configured' as const });
 Object.freeze(NOT_CONFIGURED);
 
-const isRecord = (value: unknown): value is Record<string, unknown> =>
-  typeof value === 'object' && value !== null && !Array.isArray(value);
-
 /**
- * Reads the sample and keeps one documented provider rule: a page larger than
- * the requested single row is a contract violation, not evidence of presence.
+ * Reads the sample through the shared bounded reader, which keeps the
+ * documented provider rule: a page larger than the requested single row is a
+ * contract violation, not evidence of presence.
  */
-const readPresenceRows = (payload: unknown): number => {
-  const rows = readAc209EmailSendingZoneRecord(payload).emailSendingAdaptive;
-  if (!Array.isArray(rows))
-    failAc209EmailSendingAnalytics(
-      'provider_response_invalid',
-      'provider presence result is malformed.',
-    );
-  if (rows.length > AC209_EMAIL_PRESENCE_SAMPLE_LIMIT)
-    failAc209EmailSendingAnalytics(
-      'provider_response_invalid',
-      'provider presence page exceeds the single-row sample.',
-    );
-  for (const row of rows)
-    if (
-      !isRecord(row) ||
-      Object.keys(row).length !== 1 ||
-      typeof row.status !== 'string' ||
-      row.status.length === 0 ||
-      row.status.length > MAX_STATUS_LENGTH
-    )
-      failAc209EmailSendingAnalytics(
-        'provider_response_invalid',
-        'provider presence row is malformed.',
-      );
-  return rows.length;
-};
+const readPresenceRows = (payload: unknown): number =>
+  readDatasetPresenceRows(payload, 'emailSendingAdaptive');
 
 /**
  * Turns one provider failure into one closed non-PII code. Only classified
  * provider failures become an unavailable window; an unforeseen internal
  * exception propagates so the probe fails closed instead of reporting absence.
  */
-const toUnavailable = (
-  error: unknown,
-): Readonly<{
-  status: 'unavailable';
-  code: Ac209EmailSendingAnalyticsErrorCode;
-}> => {
-  if (!(error instanceof Ac209EmailSendingAnalyticsError)) throw error;
-  return { status: 'unavailable', code: error.code };
-};
+const toUnavailable = toUnavailableWindow;
 
 const probeWindow = async (
   fetchImpl: typeof fetch,
@@ -167,26 +130,8 @@ const classifyPresence = (
   return wide.present ? 'recent_missing' : 'zone_wide_missing';
 };
 
-const readProbeInstant = (
-  now: () => number,
-): Readonly<{ probedAt: string }> => {
-  const probedAtMs = now();
-  if (
-    !Number.isFinite(probedAtMs) ||
-    Math.abs(probedAtMs) > MAX_SAFE_INSTANT_MS
-  )
-    failAc209EmailSendingAnalytics(
-      'invalid_configuration',
-      'provider probe instant is invalid.',
-    );
-  const probedAt = new Date(probedAtMs).toISOString();
-  if (!SafeReleaseTimestampSchema.safeParse(probedAt).success)
-    failAc209EmailSendingAnalytics(
-      'invalid_configuration',
-      'provider probe instant is invalid.',
-    );
-  return { probedAt };
-};
+/** Shared with the routing sibling so both probes close instants identically. */
+const readProbeInstant = readDatasetPresenceInstant;
 
 export const collectAc209EmailPresenceProbe = async (
   input: Ac209EmailPresenceInput,
