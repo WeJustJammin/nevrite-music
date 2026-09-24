@@ -1,4 +1,4 @@
-import { realpathSync, statSync, writeFileSync } from 'node:fs';
+import { realpathSync, statSync } from 'node:fs';
 import { resolve, sep } from 'node:path';
 import { pathToFileURL } from 'node:url';
 
@@ -17,6 +17,7 @@ import {
   type Ac265HostedArtifactAttestationIssuanceSummary,
 } from './issue-ac265-hosted-artifact-attestation-contract.ts';
 import {
+  appendAc265AttestationStepSummary,
   createAc265AttestationOutputDirectory,
   isAc265AttestationDirectory,
   isAc265AttestationFileInside,
@@ -178,7 +179,12 @@ export const runIssueAc265HostedArtifactsAttestations = async ({
         source.artifactMember,
       );
       if (source.kind === 'server_receipt')
-        subjectSha256ForAc265HostedServerReceipt(artifactBytes, source.subject);
+        subjectSha256ForAc265HostedServerReceipt(
+          artifactBytes,
+          source.subject,
+          runId,
+          candidateIdentitySha256,
+        );
       else
         subjectSha256ForAc265HostedExecutionEvidence(
           artifactBytes,
@@ -244,7 +250,7 @@ export const runIssueAc265HostedArtifactsAttestations = async ({
         'utf8',
       ),
     );
-    writeFileSync(
+    appendAc265AttestationStepSummary(
       summaryPath,
       [
         '## AC265 hosted artifact attestation issuance',
@@ -257,7 +263,6 @@ export const runIssueAc265HostedArtifactsAttestations = async ({
         `- Index: \`${AC265_HOSTED_ARTIFACT_ATTESTATION_INDEX_FILE_NAME}\``,
         '',
       ].join('\n'),
-      { encoding: 'utf8', flag: 'w', mode: 0o600 },
     );
     return Object.freeze({
       runId,

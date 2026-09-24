@@ -6,7 +6,13 @@ import { fileURLToPath } from 'node:url';
 
 import { deriveAc265HostedArtifactSigningKeyId } from '../infra/workflows/ac265-hosted-artifact-attestation-issuer.ts';
 import { sha256Ac265HostedSemanticSubject } from '../infra/workflows/ac265-hosted-semantic-subject.ts';
-import { jsonBytes } from './contracts/ac265-hosted-test-fixtures.ts';
+import { serializeAc265HostedRunnerIdentityForDigest } from '../packages/contracts/src/content-schema-registry/operational-release-evidence-hosted-candidate-enrollment.ts';
+import {
+  digestFor,
+  identity,
+  jsonBytes,
+  sha256,
+} from './contracts/ac265-hosted-test-fixtures.ts';
 
 export const RUN_ID = '71000000-0000-4000-8000-000000000007';
 export const RECEIPT_REF =
@@ -48,17 +54,33 @@ export const material = () => {
 export const receiptSubject = { kind: 'role', key: 'owner_full' };
 export const evidenceSubject = { kind: 'scenario', key: 'idp_sign_in' };
 
+/**
+ * The receipt path validates a complete canonical receipt envelope, so the
+ * fixture must carry the real staging identity and a kind-correct execution
+ * binding. The candidate identity digest is the canonical serialized form the
+ * evidence verifier uses, which is also the insertion-ordered form here.
+ */
+export const CANDIDATE_IDENTITY_DIGEST = sha256(
+  Buffer.from(serializeAc265HostedRunnerIdentityForDigest(identity), 'utf8'),
+);
+
 export const receiptBytes = jsonBytes({
   schemaVersion: 'ac265-hosted-e2e-receipt-v1',
   issuedAt: ISSUED_AT,
   runId: RUN_ID,
+  identity,
   subject: receiptSubject,
-  result: {},
+  result: {
+    executionBinding: {
+      sessionRefSha256: digestFor(70),
+      resourceRefSha256s: [digestFor(71)],
+    },
+  },
 });
 
 export const evidenceBytes = jsonBytes({
   schemaVersion: 'ac265-execution-evidence-v1',
-  candidateIdentitySha256: CANDIDATE_IDENTITY_SHA256,
+  candidateIdentitySha256: CANDIDATE_IDENTITY_DIGEST,
   subjectSha256: sha256Ac265HostedSemanticSubject(evidenceSubject),
   artifactSha256: REFERENCED_ARTIFACT_SHA256,
   kind: 'scenario_observation',
@@ -92,7 +114,7 @@ export const harness = (
       overrides.request ?? {
         schemaVersion: 'ac265-hosted-artifact-attestation-request-v1',
         runId: RUN_ID,
-        candidateIdentitySha256: CANDIDATE_IDENTITY_SHA256,
+        candidateIdentitySha256: CANDIDATE_IDENTITY_DIGEST,
         runnerContractSha256: RUNNER_CONTRACT_SHA256,
         sources: [
           {

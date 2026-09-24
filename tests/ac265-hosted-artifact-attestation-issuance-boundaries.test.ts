@@ -1,5 +1,11 @@
 import { spawnSync } from 'node:child_process';
-import { rmSync, statSync, symlinkSync, writeFileSync } from 'node:fs';
+import {
+  renameSync,
+  rmSync,
+  statSync,
+  symlinkSync,
+  writeFileSync,
+} from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 
@@ -7,6 +13,7 @@ import { afterEach, describe, expect, it } from 'vitest';
 
 import { runIssueAc265HostedArtifactsAttestations } from '../infra/workflows/issue-ac265-hosted-artifact-attestations.ts';
 import {
+  CANDIDATE_IDENTITY_DIGEST,
   CANDIDATE_IDENTITY_SHA256,
   ENTRYPOINT_PATH,
   EXPIRES_AT,
@@ -185,6 +192,98 @@ describe('AC265 hosted artifact attestation issuance boundaries', () => {
     ).rejects.toThrow(FAILURE);
   });
 
+  it('rejects a bare-subject receipt that is not a complete canonical envelope', async () => {
+    const run = harness({
+      artifacts: {
+        'receipt.json': Buffer.from(
+          JSON.stringify({ subject: { kind: 'role', key: 'owner_full' } }),
+          'utf8',
+        ),
+      },
+      request: {
+        schemaVersion: 'ac265-hosted-artifact-attestation-request-v1',
+        runId: RUN_ID,
+        candidateIdentitySha256: CANDIDATE_IDENTITY_DIGEST,
+        runnerContractSha256: RUNNER_CONTRACT_SHA256,
+        sources: [
+          {
+            kind: 'server_receipt',
+            ref: RECEIPT_REF,
+            artifactMember: 'receipt.json',
+            subject: { kind: 'role', key: 'owner_full' },
+            issuedAt: ISSUED_AT,
+            expiresAt: EXPIRES_AT,
+          },
+        ],
+      },
+    });
+    await expect(
+      runIssueAc265HostedArtifactsAttestations({ env: run.env }),
+    ).rejects.toThrow(FAILURE);
+  });
+
+  it('rejects a canonical receipt bound to a foreign run or foreign identity', async () => {
+    const foreignRun = JSON.parse(
+      Buffer.from(receiptBytes).toString('utf8'),
+    ) as Record<string, unknown>;
+    foreignRun['runId'] = '72000000-0000-4000-8000-000000000007';
+    const foreignRunHarness = harness({
+      artifacts: {
+        'receipt.json': Buffer.from(JSON.stringify(foreignRun), 'utf8'),
+      },
+      request: {
+        schemaVersion: 'ac265-hosted-artifact-attestation-request-v1',
+        runId: RUN_ID,
+        candidateIdentitySha256: CANDIDATE_IDENTITY_DIGEST,
+        runnerContractSha256: RUNNER_CONTRACT_SHA256,
+        sources: [
+          {
+            kind: 'server_receipt',
+            ref: RECEIPT_REF,
+            artifactMember: 'receipt.json',
+            subject: { kind: 'role', key: 'owner_full' },
+            issuedAt: ISSUED_AT,
+            expiresAt: EXPIRES_AT,
+          },
+        ],
+      },
+    });
+    await expect(
+      runIssueAc265HostedArtifactsAttestations({ env: foreignRunHarness.env }),
+    ).rejects.toThrow(FAILURE);
+
+    const foreignIdentity = JSON.parse(
+      Buffer.from(receiptBytes).toString('utf8'),
+    ) as { identity: Record<string, unknown> };
+    foreignIdentity.identity['deploymentId'] = 'deployment-99999999999';
+    const foreignIdentityHarness = harness({
+      artifacts: {
+        'receipt.json': Buffer.from(JSON.stringify(foreignIdentity), 'utf8'),
+      },
+      request: {
+        schemaVersion: 'ac265-hosted-artifact-attestation-request-v1',
+        runId: RUN_ID,
+        candidateIdentitySha256: CANDIDATE_IDENTITY_DIGEST,
+        runnerContractSha256: RUNNER_CONTRACT_SHA256,
+        sources: [
+          {
+            kind: 'server_receipt',
+            ref: RECEIPT_REF,
+            artifactMember: 'receipt.json',
+            subject: { kind: 'role', key: 'owner_full' },
+            issuedAt: ISSUED_AT,
+            expiresAt: EXPIRES_AT,
+          },
+        ],
+      },
+    });
+    await expect(
+      runIssueAc265HostedArtifactsAttestations({
+        env: foreignIdentityHarness.env,
+      }),
+    ).rejects.toThrow(FAILURE);
+  });
+
   it('rejects a malformed request document before creating any output directory', async () => {
     const run = harness();
     writeFileSync(run.requestPath, '{"schemaVersion":"wrong",', {
@@ -194,6 +293,24 @@ describe('AC265 hosted artifact attestation issuance boundaries', () => {
       runIssueAc265HostedArtifactsAttestations({ env: run.env }),
     ).rejects.toThrow(FAILURE);
     expect(() => statSync(run.output)).toThrow();
+  });
+
+  it('rejects a symlinked request document and a symlinked step summary', async () => {
+    const symlinkedRequest = harness();
+    const realRequest = `${symlinkedRequest.requestPath}.real`;
+    renameSync(symlinkedRequest.requestPath, realRequest);
+    symlinkSync(realRequest, symlinkedRequest.requestPath);
+    await expect(
+      runIssueAc265HostedArtifactsAttestations({ env: symlinkedRequest.env }),
+    ).rejects.toThrow(FAILURE);
+
+    const symlinkedSummary = harness();
+    const realSummary = `${symlinkedSummary.summary}.real`;
+    renameSync(symlinkedSummary.summary, realSummary);
+    symlinkSync(realSummary, symlinkedSummary.summary);
+    await expect(
+      runIssueAc265HostedArtifactsAttestations({ env: symlinkedSummary.env }),
+    ).rejects.toThrow(FAILURE);
   });
 
   it('rejects a request document with a foreign schema version or unknown members', async () => {

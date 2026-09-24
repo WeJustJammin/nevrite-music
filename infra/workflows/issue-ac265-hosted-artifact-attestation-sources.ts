@@ -1,5 +1,8 @@
+import { createHash } from 'node:crypto';
+
 import { HostedExecutionEvidencePayloadSchema } from '../../packages/contracts/src/content-schema-registry/operational-release-evidence-hosted-execution-evidence.ts';
-import { ContentSchemaRegistryHostedReceiptSubjectSchema } from '../../packages/contracts/src/content-schema-registry/operational-release-evidence-hosted-receipt.ts';
+import { serializeAc265HostedRunnerIdentityForDigest } from '../../packages/contracts/src/content-schema-registry/operational-release-evidence-hosted-candidate-enrollment.ts';
+import { ContentSchemaRegistryHostedReceiptEnvelopeSchema } from '../../packages/contracts/src/content-schema-registry/operational-release-evidence-hosted-receipt.ts';
 import { SafeReleaseTimestampSchema } from '../../packages/contracts/src/release-recovery-common.ts';
 import { sha256Ac265HostedSemanticSubject } from './ac265-hosted-semantic-subject.ts';
 import {
@@ -56,12 +59,16 @@ export const parseAc265HostedArtifactAttestationDeclaredSource = (
 };
 
 /**
- * Receipt subjects are read from the receipt bytes, never from the caller.
- * The declared descriptor, when present, must match the bytes exactly.
+ * Receipt bytes must be a complete canonical server-receipt envelope, not just
+ * a bare subject. The full envelope is validated before signing, and the run
+ * identity plus the declared subject must match the authenticated caller run
+ * binding, so a malformed or foreign-run receipt cannot be attested.
  */
 export const subjectSha256ForAc265HostedServerReceipt = (
   bytes: Uint8Array,
   declared: unknown,
+  runId: string,
+  candidateIdentitySha256: string,
 ): string => {
   const document = parseJsonBytesWithoutDuplicateMembers(
     bytes,
@@ -69,11 +76,22 @@ export const subjectSha256ForAc265HostedServerReceipt = (
   );
   if (!isAc265AttestationRecord(document))
     return failAc265HostedArtifactAttestationIssuance();
-  const parsed = ContentSchemaRegistryHostedReceiptSubjectSchema.safeParse(
-    document['subject'],
-  );
-  if (!parsed.success) return failAc265HostedArtifactAttestationIssuance();
-  const subjectSha256 = sha256Ac265HostedSemanticSubject(parsed.data);
+  const envelope =
+    ContentSchemaRegistryHostedReceiptEnvelopeSchema.safeParse(document);
+  if (!envelope.success) return failAc265HostedArtifactAttestationIssuance();
+  if (envelope.data.runId !== runId)
+    return failAc265HostedArtifactAttestationIssuance();
+  const receiptCandidateIdentitySha256 = createHash('sha256')
+    .update(
+      Buffer.from(
+        serializeAc265HostedRunnerIdentityForDigest(envelope.data.identity),
+        'utf8',
+      ),
+    )
+    .digest('hex');
+  if (receiptCandidateIdentitySha256 !== candidateIdentitySha256)
+    return failAc265HostedArtifactAttestationIssuance();
+  const subjectSha256 = sha256Ac265HostedSemanticSubject(envelope.data.subject);
   if (
     declared !== undefined &&
     subjectSha256 !== sha256Ac265HostedSemanticSubject(declared)

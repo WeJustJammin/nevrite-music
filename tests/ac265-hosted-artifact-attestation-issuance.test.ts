@@ -1,4 +1,4 @@
-import { mkdirSync, readFileSync, statSync } from 'node:fs';
+import { mkdirSync, readFileSync, statSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 
 import { afterEach, describe, expect, it } from 'vitest';
@@ -8,7 +8,7 @@ import { runIssueAc265HostedArtifactsAttestations } from '../infra/workflows/iss
 import { sha256Ac265HostedSemanticSubject } from '../infra/workflows/ac265-hosted-semantic-subject.ts';
 import { sha256 } from './contracts/ac265-hosted-test-fixtures.ts';
 import {
-  CANDIDATE_IDENTITY_SHA256,
+  CANDIDATE_IDENTITY_DIGEST,
   EVIDENCE_REF,
   EXPIRES_AT,
   FAILURE,
@@ -82,7 +82,7 @@ describe('AC265 hosted artifact attestation issuance', () => {
     const resolver = createAc265HostedArtifactResolver(
       {
         runId: RUN_ID,
-        candidateIdentitySha256: CANDIDATE_IDENTITY_SHA256,
+        candidateIdentitySha256: CANDIDATE_IDENTITY_DIGEST,
         runnerContractSha256: RUNNER_CONTRACT_SHA256,
         trustedKeys: summary.trustedKeys,
         trustedCutoffAt: '2026-09-23T10:30:00.000Z',
@@ -134,11 +134,24 @@ describe('AC265 hosted artifact attestation issuance', () => {
     ).rejects.toThrow(FAILURE);
   });
 
+  it('appends its step summary without clobbering earlier step content', async () => {
+    const run = harness();
+    const earlier = '## Earlier step\n\nkept verbatim.\n';
+    writeFileSync(run.summary, earlier, { mode: 0o600 });
+    await runIssueAc265HostedArtifactsAttestations({ env: run.env });
+    const summaryText = readFileSync(run.summary, 'utf8');
+    expect(summaryText.startsWith(earlier)).toBe(true);
+    expect(summaryText).toContain(
+      '## AC265 hosted artifact attestation issuance',
+    );
+    expect(summaryText).toContain(RUN_ID);
+  });
+
   it('rejects unsafe members, duplicate references, and unbounded source sets', async () => {
     const base = {
       schemaVersion: 'ac265-hosted-artifact-attestation-request-v1',
       runId: RUN_ID,
-      candidateIdentitySha256: CANDIDATE_IDENTITY_SHA256,
+      candidateIdentitySha256: CANDIDATE_IDENTITY_DIGEST,
       runnerContractSha256: RUNNER_CONTRACT_SHA256,
     };
     const source = {

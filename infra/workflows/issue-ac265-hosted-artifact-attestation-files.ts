@@ -79,14 +79,15 @@ export const isAc265AttestationFileInside = (
   }
 };
 
-/** Bounded, no-follow, non-symlink read of one artifact member. */
-export const readAc265AttestationArtifactMember = (
-  directory: string,
-  member: string,
+/**
+ * Bounded read through one held no-follow descriptor. The size, regular-file
+ * identity, and non-symlink realpath are rechecked around the read, so a
+ * replaced or swapped path cannot widen the window after the open.
+ */
+const readBoundedNoFollowFile = (
+  path: string,
+  maxBytes: number,
 ): Uint8Array => {
-  const path = join(directory, member);
-  if (!isAc265AttestationFileInside(directory, path))
-    return failAc265HostedArtifactAttestationIssuance();
   let fd: number | undefined;
   try {
     fd = openSync(path, fsConstants.O_RDONLY | (fsConstants.O_NOFOLLOW ?? 0));
@@ -94,7 +95,7 @@ export const readAc265AttestationArtifactMember = (
     if (
       !stat.isFile() ||
       stat.size === 0 ||
-      stat.size > MAX_ARTIFACT_BYTES ||
+      stat.size > maxBytes ||
       !lstatSync(path).isFile() ||
       lstatSync(path).isSymbolicLink() ||
       realpathSync(path) !== path
@@ -117,26 +118,26 @@ export const readAc265AttestationArtifactMember = (
   }
 };
 
+/** Bounded, no-follow, non-symlink read of one artifact member. */
+export const readAc265AttestationArtifactMember = (
+  directory: string,
+  member: string,
+): Uint8Array => {
+  const path = join(directory, member);
+  if (!isAc265AttestationFileInside(directory, path))
+    return failAc265HostedArtifactAttestationIssuance();
+  return readBoundedNoFollowFile(path, MAX_ARTIFACT_BYTES);
+};
+
 export const readAc265AttestationRequestDocument = (
   path: string,
 ): Record<string, unknown> => {
   if (!isAc265AttestationFileInside(resolve(path, '..'), path))
     return failAc265HostedArtifactAttestationIssuance();
-  let bytes: Buffer;
-  try {
-    const stat = lstatSync(path);
-    if (
-      !stat.isFile() ||
-      stat.isSymbolicLink() ||
-      stat.size === 0 ||
-      stat.size > AC265_HOSTED_ARTIFACT_ATTESTATION_MAX_REQUEST_BYTES ||
-      realpathSync(path) !== path
-    )
-      return failAc265HostedArtifactAttestationIssuance();
-    bytes = readFileSync(path);
-  } catch {
-    return failAc265HostedArtifactAttestationIssuance();
-  }
+  const bytes = readBoundedNoFollowFile(
+    path,
+    AC265_HOSTED_ARTIFACT_ATTESTATION_MAX_REQUEST_BYTES,
+  );
   const document = parseJsonBytesWithoutDuplicateMembers(
     bytes,
     'AC265 hosted artifact attestation request',
@@ -144,6 +145,45 @@ export const readAc265AttestationRequestDocument = (
   if (!isAc265AttestationRecord(document))
     return failAc265HostedArtifactAttestationIssuance();
   return document;
+};
+
+/**
+ * Appends one step-summary section without clobbering earlier steps' content.
+ * The descriptor is held with `O_APPEND|O_NOFOLLOW` and must be a single-link
+ * regular file, matching the other protected AC265 entrypoints.
+ */
+export const appendAc265AttestationStepSummary = (
+  path: string,
+  text: string,
+): void => {
+  let fd: number | undefined;
+  try {
+    fd = openSync(
+      path,
+      fsConstants.O_WRONLY | fsConstants.O_APPEND | fsConstants.O_NOFOLLOW,
+    );
+    const stat = fstatSync(fd);
+    if (!stat.isFile() || stat.nlink !== 1)
+      return failAc265HostedArtifactAttestationIssuance();
+    const buffer = Buffer.from(text, 'utf8');
+    let offset = 0;
+    while (offset < buffer.byteLength) {
+      const written = writeSync(
+        fd,
+        buffer,
+        offset,
+        buffer.byteLength - offset,
+        null,
+      );
+      if (written <= 0) return failAc265HostedArtifactAttestationIssuance();
+      offset += written;
+    }
+    fsyncSync(fd);
+  } catch {
+    return failAc265HostedArtifactAttestationIssuance();
+  } finally {
+    if (fd !== undefined) closeSync(fd);
+  }
 };
 
 export const createAc265AttestationOutputDirectory = (
