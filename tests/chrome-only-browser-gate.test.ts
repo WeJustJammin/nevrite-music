@@ -1,11 +1,48 @@
 import { spawnSync } from 'node:child_process';
-import { readFileSync, readdirSync } from 'node:fs';
+import { readFileSync, readdirSync, realpathSync } from 'node:fs';
+import { createRequire } from 'node:module';
 import { dirname, join, relative, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 import { describe, expect, it } from 'vitest';
 
 const repositoryRoot = resolve(dirname(fileURLToPath(import.meta.url)), '..');
+
+const requireFromTest = createRequire(import.meta.url);
+
+type PlaywrightChannelExecutable = Readonly<{
+  executablePath: () => string | undefined;
+}>;
+
+type PlaywrightCoreBundle = Readonly<{
+  registry: Readonly<{
+    registry: Readonly<{
+      findExecutable: (name: string) => PlaywrightChannelExecutable;
+    }>;
+  }>;
+}>;
+
+/**
+ * Playwright resolves `channel: 'chrome'` at launch time from a hardcoded
+ * per-platform table inside playwright-core, so every Chrome guard in this
+ * repository has to accept exactly the executable Playwright launches. Reading
+ * the resolved path from the installed Playwright build keeps these
+ * expectations tied to the launcher instead of a hand-maintained literal.
+ */
+const playwrightChromeChannelExecutable = (): string => {
+  const requireFromPlaywright = createRequire(
+    realpathSync(requireFromTest.resolve('@playwright/test')),
+  );
+  const { registry } = requireFromPlaywright(
+    'playwright-core/lib/coreBundle',
+  ) as PlaywrightCoreBundle;
+  const resolved = registry.registry.findExecutable('chrome').executablePath();
+  if (!resolved)
+    throw new Error(
+      'playwright-core resolved no chrome channel executable on this platform',
+    );
+  return resolved;
+};
 
 const read = (relativePath: string): string =>
   readFileSync(resolve(repositoryRoot, relativePath), 'utf8');
@@ -98,23 +135,28 @@ describe('Google Chrome only browser gates', () => {
     expect(collector).not.toContain('launchPinnedPlaywrightChromium');
   });
 
-  it('keeps one canonical Chrome candidate list for the preflight and the collector', () => {
+  it('pins the preflight and the collector to the executable Playwright launches', () => {
+    const channelExecutable = playwrightChromeChannelExecutable();
+    expect(channelExecutable).toBe('/opt/google/chrome/chrome');
+
     const preflight = read('infra/workflows/verify-system-chrome.sh');
     const browserModule = read(
       'infra/workflows/content-schema-registry-axe-browser.ts',
     );
-    const preflightCandidates = [
-      ...preflight.matchAll(/^\s{2}(\/[^\s]+)$/gmu),
-    ].map((match) => match[1]);
-    const moduleCandidates = [
-      ...browserModule.matchAll(/^\s{2}'([^']+)',$/gmu),
-    ].map((match) => match[1]);
 
-    expect(preflightCandidates.length).toBeGreaterThan(0);
-    expect(moduleCandidates).toEqual(preflightCandidates);
+    expect(preflight).toContain(`chrome_executable=${channelExecutable}`);
+    expect(browserModule).toContain(
+      `const PLAYWRIGHT_CHROME_CHANNEL_EXECUTABLE = '${channelExecutable}';`,
+    );
+
+    // A distributor wrapper is a different file than the channel target, so
+    // accepting one let the preflight pass while Playwright still could not
+    // launch Chrome.
+    for (const source of [preflight, browserModule])
+      expect(source).not.toContain('/usr/bin/google-chrome');
   });
 
-  it('fails closed when the runner has no system Google Chrome', () => {
+  it('reports the executable Playwright launches and fails closed on wrapper fallbacks', () => {
     const resolved = spawnSync('bash', [chromePreflightPath], {
       cwd: repositoryRoot,
       encoding: 'utf8',
@@ -123,19 +165,18 @@ describe('Google Chrome only browser gates', () => {
     expect(resolved.status).toBe(0);
     expect(resolved.stdout).toMatch(/Google Chrome \d+\.\d+\.\d+\.\d+/u);
 
-    const missing = spawnSync(
-      'bash',
-      [
-        chromePreflightPath,
-        join(repositoryRoot, 'tests/no-google-chrome-here'),
-      ],
-      { cwd: repositoryRoot, encoding: 'utf8' },
-    );
-    expect(missing.status).not.toBe(0);
-    expect(missing.stderr).toContain('Google Chrome');
-    expect(missing.stderr).toContain(
-      'bundled Chromium is not a supported fallback',
-    );
+    const reported = /^system_chrome=(.+)$/mu.exec(resolved.stdout)?.[1];
+    expect(reported).toBe(playwrightChromeChannelExecutable());
+
+    const preflight = read('infra/workflows/verify-system-chrome.sh');
+    for (const rejected of [
+      '/usr/bin/google-chrome-stable',
+      '/usr/bin/google-chrome',
+      '/opt/google/chrome-beta/chrome',
+      '/opt/google/chrome-unstable/chrome',
+    ])
+      expect(preflight, rejected).not.toContain(rejected);
+    expect(preflight).toContain('bundled Chromium');
   });
 
   it('verifies system Google Chrome before browser gates in every workflow', () => {

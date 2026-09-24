@@ -6,28 +6,23 @@ export type AutomatedAxeBrowser = Readonly<{
   version: string;
 }>;
 
-// Playwright's Chrome channel resolves the installer-provided browser at
-// launch time. `chromium.executablePath()` ignores the channel and reports the
-// bundled download, so the availability check resolves the canonical system
-// candidates itself. `verify-system-chrome.sh` keeps the same list.
-const SYSTEM_GOOGLE_CHROME_CANDIDATES = [
-  '/usr/bin/google-chrome-stable',
-  '/usr/bin/google-chrome',
-  '/opt/google/chrome/chrome',
-] as const;
+// Playwright's `channel: 'chrome'` hard-resolves the installer-provided
+// binary at launch time and never falls back to the bundled Chromium download,
+// so the availability check targets that exact executable. On Linux the launch
+// target is `/opt/google/chrome/chrome`; a `/usr/bin` distribution wrapper is a
+// different file and does not prove the channel can launch. The preflight in
+// `verify-system-chrome.sh` pins the same per-platform path.
+const PLAYWRIGHT_CHROME_CHANNEL_EXECUTABLE = '/opt/google/chrome/chrome';
 
 export const googleChromeExecutablePath = (): string => {
-  for (const candidate of SYSTEM_GOOGLE_CHROME_CANDIDATES) {
-    try {
-      accessSync(candidate, constants.X_OK);
-      return candidate;
-    } catch {
-      continue;
-    }
+  try {
+    accessSync(PLAYWRIGHT_CHROME_CHANNEL_EXECUTABLE, constants.X_OK);
+  } catch {
+    throw new Error(
+      'System Google Chrome is unavailable; install the official Google Chrome package on the runner. Bundled Chromium is not a supported fallback.',
+    );
   }
-  throw new Error(
-    'System Google Chrome is unavailable; install the official Google Chrome package on the runner. Bundled Chromium is not a supported fallback.',
-  );
+  return PLAYWRIGHT_CHROME_CHANNEL_EXECUTABLE;
 };
 
 export const launchSystemGoogleChrome = async (): Promise<{
