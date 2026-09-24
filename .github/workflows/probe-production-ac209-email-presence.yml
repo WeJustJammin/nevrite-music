@@ -82,6 +82,7 @@ jobs:
         env:
           CLOUDFLARE_EMAIL_ZONE_ID: '${{ vars.CLOUDFLARE_EMAIL_ZONE_ID }}'
           CLOUDFLARE_OBSERVABILITY_API_TOKEN: '${{ secrets.CLOUDFLARE_OBSERVABILITY_API_TOKEN }}'
+          AC209_PRESENCE_ALTERNATE_ZONE_TAG: '${{ vars.AC209_PRESENCE_ALTERNATE_ZONE_TAG }}'
           SOURCE_REVISION: ${{ inputs.source_revision }}
         run: node --experimental-strip-types infra/workflows/probe-production-ac209-email-presence.ts
       - name: Upload redacted AC209 email presence probe

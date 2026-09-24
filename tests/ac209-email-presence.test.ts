@@ -10,11 +10,9 @@ import {
   AC209_EMAIL_PRESENCE_RECENT_WINDOW_MS,
   AC209_EMAIL_PRESENCE_SAMPLE_LIMIT,
   AC209_EMAIL_PRESENCE_SCHEMA_VERSION,
-  AC209_EMAIL_PRESENCE_UNAVAILABLE_CODES,
   AC209_EMAIL_PRESENCE_WINDOWS_FIT_PROVIDER_BUDGET,
   AC209_EMAIL_PRESENCE_WIDE_WINDOW_MS,
   Ac209EmailPresenceProbeReportSchema,
-  Ac209EmailPresenceWindowSchema,
 } from '../infra/workflows/ac209-email-presence-contract.ts';
 import { collectAc209EmailPresenceProbe } from '../infra/workflows/ac209-email-presence.ts';
 
@@ -380,54 +378,5 @@ describe('AC209 Email Sending presence probe', () => {
       code: 'provider_response_invalid',
       name: 'Ac209EmailSendingAnalyticsError',
     });
-  });
-});
-
-describe('AC209 Email Sending presence unavailable codes', () => {
-  it('accepts every closed provider failure code the artifact can carry', () => {
-    expect(AC209_EMAIL_PRESENCE_UNAVAILABLE_CODES.length).toBeGreaterThan(0);
-    for (const code of AC209_EMAIL_PRESENCE_UNAVAILABLE_CODES)
-      expect(
-        Ac209EmailPresenceWindowSchema.parse({ status: 'unavailable', code }),
-      ).toEqual({ status: 'unavailable', code });
-  });
-
-  it('rejects an out-of-vocabulary code so the retained artifact stays closed', () => {
-    for (const code of [
-      '',
-      'graphql_error',
-      'provider_unknown',
-      'AC209 Email Sending analytics query failed.',
-      'provider_response_invalid ',
-    ])
-      expect(
-        Ac209EmailPresenceWindowSchema.safeParse({
-          status: 'unavailable',
-          code,
-        }).success,
-      ).toBe(false);
-  });
-
-  it('rejects a report that smuggles a free-text code', () => {
-    expect(() =>
-      Ac209EmailPresenceProbeReportSchema.parse({
-        schemaVersion: AC209_EMAIL_PRESENCE_SCHEMA_VERSION,
-        diagnosticOnly: true,
-        environment: 'production',
-        sourceRevision,
-        probedAt: '2026-09-24T12:00:00.000Z',
-        windows: {
-          last24Hours: {
-            status: 'unavailable',
-            code: 'provider_response_invalid: leaked detail',
-          },
-          last30Days: {
-            status: 'unavailable',
-            code: 'provider_request_failed',
-          },
-        },
-        classification: 'provider_unavailable',
-      }),
-    ).toThrow();
   });
 });

@@ -51,6 +51,17 @@ filesystem and validation operations.
   performs no mutation, and closes no acceptance criterion. Dispatching it does
   not close AC209 and does not replace the correlation gate, the delivery
   verifier, or the visible receipt inspection.
+
+  It also accepts an optional second candidate tag through
+  `AC209_PRESENCE_ALTERNATE_ZONE_TAG`. The Email Sending dashboard path shows a
+  sending-domain identifier beside the parent zone id, and Cloudflare documents
+  `zoneTag` as a zone id without stating how a sending-domain tag resolves. The
+  optional tag is inventoried over the recent window in the same dispatch and
+  reported as its own closed value (`not_configured`, a bounded count, or a
+  closed code). It is inventory only: it never feeds the parent-zone
+  classification, never contributes to AC209 acceptance, and is never retained -
+  neither tag id appears in the artifact. Omitting the variable makes no extra
+  request.
   Dispatch contract: `.github/workflows/probe-production-ac209-email-presence.yml`.
 
 - `write-ci-gate-evidence.sh` derives the release gate set from successful CI

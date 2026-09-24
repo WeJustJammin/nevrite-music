@@ -4,6 +4,7 @@ import { fileURLToPath } from 'node:url';
 
 import {
   Ac209EmailPresenceProbeReportSchema,
+  type Ac209EmailPresenceAlternateCandidate,
   type Ac209EmailPresenceProbeReport,
   type Ac209EmailPresenceWindow,
 } from './ac209-email-presence-contract.ts';
@@ -11,6 +12,20 @@ import { collectAc209EmailPresenceProbe } from './ac209-email-presence.ts';
 import { writeProviderReleaseEvidenceFile } from './provider-release-evidence-files.ts';
 
 const SAFE_ARTIFACT_PATH = /^[A-Za-z0-9._/-]{1,256}$/u;
+
+/** A window renders as its bounded count or its closed code, never as detail. */
+const formatWindow = (candidate: Ac209EmailPresenceWindow): string =>
+  candidate.status === 'available'
+    ? String(candidate.rowsReturned)
+    : `unavailable(${candidate.code})`;
+
+/** The optional alternate inventory adds exactly one closed extra state. */
+const formatAlternate = (
+  candidate: Ac209EmailPresenceAlternateCandidate,
+): string =>
+  candidate.status === 'not_configured'
+    ? 'not_configured'
+    : formatWindow(candidate);
 
 /**
  * Redacted summary line for the workflow log.
@@ -21,13 +36,8 @@ const SAFE_ARTIFACT_PATH = /^[A-Za-z0-9._/-]{1,256}$/u;
  */
 export const formatAc209EmailPresenceSummary = (
   report: Ac209EmailPresenceProbeReport,
-): string => {
-  const window = (candidate: Ac209EmailPresenceWindow): string =>
-    candidate.status === 'available'
-      ? String(candidate.rowsReturned)
-      : `unavailable(${candidate.code})`;
-  return `AC209_EMAIL_PRESENCE_PROBE classification=${report.classification} recent24h=${window(report.windows.last24Hours)} wide30d=${window(report.windows.last30Days)}`;
-};
+): string =>
+  `AC209_EMAIL_PRESENCE_PROBE classification=${report.classification} recent24h=${formatWindow(report.windows.last24Hours)} wide30d=${formatWindow(report.windows.last30Days)} alternate=${formatAlternate(report.alternateCandidate)}`;
 
 const resolveArtifact = (
   workspaceRoot: string,
@@ -52,6 +62,10 @@ const run = async (): Promise<void> => {
     zoneId: process.env['CLOUDFLARE_EMAIL_ZONE_ID'] ?? '',
     token: process.env['CLOUDFLARE_OBSERVABILITY_API_TOKEN'] ?? '',
     sourceRevision: process.env['SOURCE_REVISION'] ?? '',
+    ...(process.env['AC209_PRESENCE_ALTERNATE_ZONE_TAG'] === undefined ||
+    process.env['AC209_PRESENCE_ALTERNATE_ZONE_TAG'] === ''
+      ? {}
+      : { alternateZoneTag: process.env['AC209_PRESENCE_ALTERNATE_ZONE_TAG'] }),
   });
   const parsed = Ac209EmailPresenceProbeReportSchema.parse(report);
   const serialized = `${JSON.stringify(parsed, null, 2)}\n`;

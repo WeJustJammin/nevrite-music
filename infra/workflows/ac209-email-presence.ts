@@ -7,6 +7,7 @@ import {
   AC209_EMAIL_PRESENCE_WIDE_WINDOW_MS,
   Ac209EmailPresenceInputSchema,
   Ac209EmailPresenceProbeReportSchema,
+  type Ac209EmailPresenceAlternateCandidate,
   type Ac209EmailPresenceClassification,
   type Ac209EmailPresenceInput,
   type Ac209EmailPresenceProbeReport,
@@ -43,6 +44,14 @@ const MAX_STATUS_LENGTH = 256;
 export const AC209_EMAIL_PRESENCE_GRAPHQL_URL = AC209_EMAIL_SENDING_GRAPHQL_URL;
 export const AC209_EMAIL_PRESENCE_MAX_RESPONSE_BYTES =
   AC209_EMAIL_SENDING_MAX_RESPONSE_BYTES;
+
+/**
+ * The single outcome reported when no alternate candidate tag was supplied. The
+ * probe then makes no third request, so a default run stays exactly as cheap as
+ * before this field existed.
+ */
+const NOT_CONFIGURED = Object.freeze({ status: 'not_configured' as const });
+Object.freeze(NOT_CONFIGURED);
 
 const isRecord = (value: unknown): value is Record<string, unknown> =>
   typeof value === 'object' && value !== null && !Array.isArray(value);
@@ -120,6 +129,24 @@ const probeWindow = async (
 };
 
 /**
+ * Inventories the optional alternate candidate tag over the recent window. It
+ * reuses the parent window sampler, so an unusable tag is reported as an
+ * unreadable window rather than as an empty dataset. Its result is never merged
+ * into the parent classification: this field exists to answer whether the tag is
+ * a readable dataset at all, not to influence AC209.
+ */
+const probeAlternateCandidate = async (
+  fetchImpl: typeof fetch,
+  token: string,
+  alternateZoneTag: string | undefined,
+  start: string,
+  end: string,
+): Promise<Ac209EmailPresenceAlternateCandidate> =>
+  alternateZoneTag === undefined
+    ? NOT_CONFIGURED
+    : probeWindow(fetchImpl, token, alternateZoneTag, start, end);
+
+/**
  * Resolves the closed classification. A recent window that reports presence
  * while the enclosing wide window reports none is a provider contradiction -
  * the two windows are nested and sampled from one instant - so the probe fails
@@ -187,6 +214,13 @@ export const collectAc209EmailPresenceProbe = async (
       startFor(AC209_EMAIL_PRESENCE_WIDE_WINDOW_MS),
       probedAt,
     );
+    const alternateCandidate = await probeAlternateCandidate(
+      request,
+      parsed.token,
+      parsed.alternateZoneTag,
+      startFor(AC209_EMAIL_PRESENCE_RECENT_WINDOW_MS),
+      probedAt,
+    );
     return Ac209EmailPresenceProbeReportSchema.parse({
       schemaVersion: AC209_EMAIL_PRESENCE_SCHEMA_VERSION,
       diagnosticOnly: true,
@@ -194,6 +228,7 @@ export const collectAc209EmailPresenceProbe = async (
       sourceRevision: parsed.sourceRevision,
       probedAt,
       windows: { last24Hours, last30Days },
+      alternateCandidate,
       classification: classifyPresence(last24Hours, last30Days),
     });
   } catch (error: unknown) {

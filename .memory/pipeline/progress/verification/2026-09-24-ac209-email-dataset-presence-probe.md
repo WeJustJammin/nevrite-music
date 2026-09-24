@@ -117,6 +117,40 @@ that was confirmed to fail against the previous behaviour:
 
 ## What this does not do
 
+### Optional alternate candidate tag (investigation only)
+
+The Email Sending dashboard path carries a second identifier beside the parent
+zone id - a sending-domain tag. Cloudflare documents `zoneTag` as a zone id and
+does not state how a sending-domain tag resolves, so the parent-zone premise for
+subdomain sending events rested on inference. Two independent facts now bound
+that question, and the probe can settle it for the cost of one extra read rather
+than another CI cycle.
+
+First, the premise is externally checkable: `alerts.wejamm.in` is not a delegated
+DNS zone. Both authoritative nameservers for `wejamm.in` return no `NS` and no
+`SOA` for the subdomain, while `wejamm.in` itself carries a normal Cloudflare
+`SOA`. There is therefore no second zone for `zoneTag` to name, and the parent
+zone is the only real zone in the picture. `.github/SECRETS.md` already recorded
+this rule for the operator, and the 2026-09-22 handoff record already flagged the
+sending-domain tag as "not a proven zone."
+
+Second, because that premise was previously unproven, the probe now accepts an
+optional `AC209_PRESENCE_ALTERNATE_ZONE_TAG` and inventories it over the recent
+window in the same dispatch. It reports one closed value: `not_configured` when
+no tag is supplied (and makes no extra request), a bounded count when the tag is
+a readable dataset, or a closed code when it is not. Its result is never merged
+into `classification` and can never contribute to AC209 acceptance; the
+isolation is pinned by a test that fails if an alternate tag with events is
+allowed to move the parent classification. Neither tag identifier is retained in
+the artifact. The field is additive, so a default dispatch behaves exactly as
+before.
+
+Reading the outcome is bounded and non-committal: an unavailable code for the
+alternate tag is consistent with the external DNS finding that it is not a zone,
+while a readable count would be a genuine new lead worth a separate, explicitly
+authorized investigation. Neither outcome changes AC209, its gate, or the
+observability token's authorization.
+
 It closes no criterion, marks nothing passed, and produces no provider or
 hosted evidence. Dispatching the probe is not AC209 acceptance and does not
 replace the correlation gate, the delivery verifier, or the visible receipt

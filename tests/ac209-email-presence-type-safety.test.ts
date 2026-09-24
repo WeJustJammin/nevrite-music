@@ -5,6 +5,11 @@ import * as ts from 'typescript';
 import { describe, expect, it } from 'vitest';
 
 import { Ac209EmailPresenceProbeReportSchema } from '../infra/workflows/ac209-email-presence-contract.ts';
+import {
+  AC209_EMAIL_PRESENCE_SCHEMA_VERSION,
+  AC209_EMAIL_PRESENCE_UNAVAILABLE_CODES,
+  Ac209EmailPresenceWindowSchema,
+} from '../infra/workflows/ac209-email-presence-contract.ts';
 
 const WORKFLOW_DIRECTORY = resolve(import.meta.dirname, '../infra/workflows');
 
@@ -128,5 +133,55 @@ describe('AC209 email presence classification type safety', () => {
     expect(declared.length).toBeGreaterThan(0);
     expect(returned.length).toBeGreaterThan(0);
     for (const literal of returned) expect(declared).toContain(literal);
+  });
+});
+
+describe('AC209 presence artifact closed unavailable codes', () => {
+  it('accepts every closed provider failure code the artifact can carry', () => {
+    expect(AC209_EMAIL_PRESENCE_UNAVAILABLE_CODES.length).toBeGreaterThan(0);
+    for (const code of AC209_EMAIL_PRESENCE_UNAVAILABLE_CODES)
+      expect(
+        Ac209EmailPresenceWindowSchema.parse({ status: 'unavailable', code }),
+      ).toEqual({ status: 'unavailable', code });
+  });
+
+  it('rejects an out-of-vocabulary code so the retained artifact stays closed', () => {
+    for (const code of [
+      '',
+      'graphql_error',
+      'provider_unknown',
+      'AC209 Email Sending analytics query failed.',
+      'provider_response_invalid ',
+    ])
+      expect(
+        Ac209EmailPresenceWindowSchema.safeParse({
+          status: 'unavailable',
+          code,
+        }).success,
+      ).toBe(false);
+  });
+
+  it('rejects a report that smuggles a free-text code', () => {
+    expect(() =>
+      Ac209EmailPresenceProbeReportSchema.parse({
+        schemaVersion: AC209_EMAIL_PRESENCE_SCHEMA_VERSION,
+        diagnosticOnly: true,
+        environment: 'production',
+        sourceRevision: 'c8f0cbd52cb6140ee1a756f106fa329f8c23b0e2',
+        probedAt: '2026-09-24T12:00:00.000Z',
+        windows: {
+          last24Hours: {
+            status: 'unavailable',
+            code: 'provider_response_invalid: leaked detail',
+          },
+          last30Days: {
+            status: 'unavailable',
+            code: 'provider_request_failed',
+          },
+        },
+        alternateCandidate: { status: 'not_configured' },
+        classification: 'provider_unavailable',
+      }),
+    ).toThrow();
   });
 });

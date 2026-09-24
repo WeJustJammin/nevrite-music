@@ -107,6 +107,16 @@ export const Ac209EmailPresenceInputSchema = z
       .max(4096)
       .refine((value) => !/\s/u.test(value)),
     sourceRevision: z.string().regex(SOURCE_REVISION),
+    /**
+     * Optional second candidate tag to inventory in the same dispatch. The
+     * Email Sending dashboard path carries a sending-domain identifier beside
+     * the parent zone id, and Cloudflare documents `zoneTag` as a zone id
+     * without stating how a sending-domain tag resolves. Supplying it here lets
+     * one bounded read either confirm the tag is not a readable zone or show
+     * that it holds events, without a second CI cycle. Omitted means
+     * "not configured" and performs no extra request.
+     */
+    alternateZoneTag: z.string().regex(ZONE_ID).optional(),
   })
   .strict();
 
@@ -146,6 +156,22 @@ export const Ac209EmailPresenceWindowSchema = z.discriminatedUnion('status', [
   AvailableWindowSchema,
 ]);
 
+const NotConfiguredSchema = z
+  .object({ status: z.literal('not_configured') })
+  .strict();
+
+/**
+ * Closed outcome of the optional alternate-tag inventory. It reuses the window
+ * shape so a readable tag reports the same bounded counts as the parent zone,
+ * and it adds exactly one state: no tag was supplied, so no request was made.
+ * This field is inventory only - it never feeds the parent-zone classification
+ * and can never contribute to AC209 acceptance.
+ */
+export const Ac209EmailPresenceAlternateCandidateSchema = z.discriminatedUnion(
+  'status',
+  [NotConfiguredSchema, UnavailableSchema, AvailableWindowSchema],
+);
+
 export const Ac209EmailPresenceProbeReportSchema = z
   .object({
     schemaVersion: z.literal(AC209_EMAIL_PRESENCE_SCHEMA_VERSION),
@@ -159,6 +185,7 @@ export const Ac209EmailPresenceProbeReportSchema = z
         last30Days: Ac209EmailPresenceWindowSchema,
       })
       .strict(),
+    alternateCandidate: Ac209EmailPresenceAlternateCandidateSchema,
     classification: z.enum([
       'recent_present',
       'recent_missing',
@@ -170,6 +197,9 @@ export const Ac209EmailPresenceProbeReportSchema = z
 
 export type Ac209EmailPresenceWindow = z.infer<
   typeof Ac209EmailPresenceWindowSchema
+>;
+export type Ac209EmailPresenceAlternateCandidate = z.infer<
+  typeof Ac209EmailPresenceAlternateCandidateSchema
 >;
 export type Ac209EmailPresenceProbeReport = z.infer<
   typeof Ac209EmailPresenceProbeReportSchema
