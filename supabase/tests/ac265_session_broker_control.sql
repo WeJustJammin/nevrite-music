@@ -1,7 +1,10 @@
 begin;
 
 create extension if not exists pgtap with schema extensions;
-select no_plan();
+
+-- Fixed plan: 59 assertions, enumerated below in source order.  A hard count
+-- keeps this suite from silently passing if an assertion is dropped.
+select plan(59);
 
 -- The broker control plane owns authorization, one-use resolve bookkeeping, and
 -- teardown only.  It must never hold session state, and it must stay
@@ -850,6 +853,146 @@ select ok(
   'teardown of one handle never logs out another run-scoped session'
 );
 
+-- Resolve must fail closed once the broker window has closed.  The handle set
+-- below is a disposable fixture with an already-closed window so the fence can
+-- be exercised without weakening the immutability trigger on live handles.
+select lives_ok(
+  $$
+  insert into platform_private.ac265_runner_authorizations (
+    authorization_id, run_id, identity_sha256, source_revision, deployment_id,
+    github_run_id, github_run_attempt, workflow_sha, jti_sha256,
+    request_sha256, authorized_at, expires_at
+  ) values (
+    '20000000-0000-4000-8000-000000000002'::uuid,
+    '10000000-0000-4000-8000-000000000002'::uuid,
+    decode(repeat('b', 64), 'hex'),
+    repeat('a', 40),
+    '6428523608',
+    '34796668544',
+    1,
+    repeat('a', 40),
+    decode(repeat('9', 64), 'hex'),
+    decode(repeat('9', 64), 'hex'),
+    clock_timestamp() - interval '10 minutes',
+    clock_timestamp() - interval '9 minutes'
+  )
+  $$,
+  'the disposable closed-window runner authorization fixture loads'
+);
+
+select lives_ok(
+  $$
+  insert into platform_private.ac265_session_broker_handles (
+    broker_authorization_id, authorization_id, run_id, identity_sha256,
+    source_revision, deployment_id, environment, hosting_project_id,
+    supabase_project_ref, idempotency_ref, request_sha256, authorized_at,
+    expires_at
+  ) values (
+    '40000000-0000-4000-8000-000000000002'::uuid,
+    '20000000-0000-4000-8000-000000000002'::uuid,
+    '10000000-0000-4000-8000-000000000002'::uuid,
+    decode(repeat('b', 64), 'hex'),
+    repeat('a', 40),
+    '6428523608',
+    'staging',
+    'wejammin-staging',
+    'abcdefghijklmnopqrst',
+    'ac265-idempotency://staging/41000000-0000-4000-8000-000000000007',
+    decode(repeat('9', 64), 'hex'),
+    clock_timestamp() - interval '10 minutes',
+    clock_timestamp() - interval '9 minutes'
+  )
+  $$,
+  'the disposable closed-window broker authorization fixture loads'
+);
+
+select lives_ok(
+  $$
+  insert into platform_private.ac265_session_broker_handle_roles (
+    broker_authorization_id, role, handle_ref, handle_sha256, material_ref
+  )
+  select
+    '40000000-0000-4000-8000-000000000002'::uuid,
+    locked.role,
+    'ac265-session://' || locked.role || '/' || locked.handle_id::text,
+    extensions.digest(
+      convert_to(
+        'ac265-session://' || locked.role || '/' || locked.handle_id::text,
+        'utf8'
+      ),
+      'sha256'
+    ),
+    'ac265-session-material://staging/' || locked.material_id::text
+  from (
+    values
+      ('entitled_read', '31b00000-0000-4000-8000-000000000001'::uuid, '32b00000-0000-4000-8000-000000000001'::uuid),
+      ('owner_full', '31b00000-0000-4000-8000-000000000002'::uuid, '32b00000-0000-4000-8000-000000000002'::uuid),
+      ('guardian_mandate', '31b00000-0000-4000-8000-000000000003'::uuid, '32b00000-0000-4000-8000-000000000003'::uuid),
+      ('junior_restricted', '31b00000-0000-4000-8000-000000000004'::uuid, '32b00000-0000-4000-8000-000000000004'::uuid),
+      ('business_mandate', '31b00000-0000-4000-8000-000000000005'::uuid, '32b00000-0000-4000-8000-000000000005'::uuid),
+      ('staff_case_scoped', '31b00000-0000-4000-8000-000000000006'::uuid, '32b00000-0000-4000-8000-000000000006'::uuid),
+      ('admin_step_up', '31b00000-0000-4000-8000-000000000007'::uuid, '32b00000-0000-4000-8000-000000000007'::uuid),
+      ('forbidden_hidden', '31b00000-0000-4000-8000-000000000008'::uuid, '32b00000-0000-4000-8000-000000000008'::uuid),
+      ('disabled_prerequisite', '31b00000-0000-4000-8000-000000000009'::uuid, '32b00000-0000-4000-8000-000000000009'::uuid)
+  ) as locked(role, handle_id, material_id)
+  $$,
+  'the disposable closed-window handle rows load'
+);
+
+insert into ac265_broker_requests (request_name, request)
+select
+  'resolve-closed-window',
+  jsonb_build_object(
+    'criterion', 'P2-S09-AC-265',
+    'schemaVersion', 'ac265-hosted-session-broker-control-v1',
+    'authorizationRef', 'ac265-authorization://staging/20000000-0000-4000-8000-000000000002',
+    'runId', '10000000-0000-4000-8000-000000000002',
+    'identitySha256', repeat('b', 64),
+    'idempotencyRef', 'ac265-idempotency://staging/41000000-0000-4000-8000-000000000008',
+    'role', 'owner_full',
+    'handleRef', 'ac265-session://owner_full/31b00000-0000-4000-8000-000000000002',
+    'handleSha256', encode(
+      extensions.digest(
+        convert_to(
+          'ac265-session://owner_full/31b00000-0000-4000-8000-000000000002',
+          'utf8'
+        ),
+        'sha256'
+      ),
+      'hex'
+    )
+  );
+
+set local role service_role;
+select lives_ok(
+  $$
+  insert into ac265_broker_results (result_name, result)
+  select 'resolve-closed-window', platform_api.ac265_session_broker_resolve(request)
+  from pg_temp.ac265_broker_requests
+  where request_name = 'resolve-closed-window'
+  $$,
+  'a resolve outside the broker window reaches the expiry fence'
+);
+reset role;
+
+select is(
+  (select result from ac265_broker_results where result_name = 'resolve-closed-window'),
+  '{"status":"conflict"}'::jsonb,
+  'a resolution requested after the broker window closed is refused'
+);
+
+select is(
+  (
+    select resolves
+    from platform_private.ac265_session_broker_handle_roles
+    where broker_authorization_id =
+        '40000000-0000-4000-8000-000000000002'::uuid
+      and role = 'owner_full'
+  ),
+  0,
+  'the refused expired resolve stored no resolve progress'
+);
+
 -- An authorization whose window has closed can no longer bind new handles.
 insert into ac265_broker_requests (request_name, request)
 select
@@ -898,6 +1041,7 @@ select ok(
   (
     select count(*) = 1
     from platform_private.ac265_session_broker_handles
+    where run_id = '10000000-0000-4000-8000-000000000001'::uuid
   ),
   'the rejected late authorization did not mint a second handle set'
 );
