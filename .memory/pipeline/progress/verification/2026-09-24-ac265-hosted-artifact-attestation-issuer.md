@@ -1,0 +1,96 @@
+# AC265 hosted-artifact attestation issuer — CP-04i
+
+**Date**: 2026-09-24  
+**Verdict**: local/private implementation GREEN; hosted acceptance OPEN  
+**Closes**: no AC265 criterion
+
+## Implemented boundary
+
+CP-04i adds the missing live producer for the CP-04c/CP-04d hosted-artifact
+attestation path. The repository could already authenticate exact receipt and
+execution-evidence bytes and resolve them through a branded resolver, but
+`createAc265HostedArtifactAttestation` had no non-test callsite, so nothing could
+produce the signed companions the resolver consumes.
+
+`createAc265HostedArtifactAttestationIssuer` signs caller-supplied artifact
+bytes into canonical `HostedArtifactAttestationV1` companions with pinned key
+material, and `runIssueAc265HostedArtifactsAttestations` runs the protected
+issuance entrypoint that reads one bounded request document plus the exact
+artifact members, derives every subject from the bytes, and publishes the
+signed companions with a digest index beneath `RUNNER_TEMP`.
+
+## Key pinning
+
+The issuer key ID is derived from the signing key's own public half as
+`ac265-hosted-artifact-ed25519-<sha256(SPKI DER) first 32 hex>`, and any key ID
+that does not name the exact public half of the supplied private key is
+rejected. The issuer returns the single active trusted key the CP-04c resolver
+requires, with the caller-pinned validity window. No secret is read, written,
+generated, or configured by this change.
+
+## Byte-derived subjects
+
+Server receipts must be complete canonical `ac265-hosted-e2e-receipt-v1`
+envelopes: the strict receipt envelope schema, the caller run identity, and the
+canonical serialized identity digest are all checked before signing, so a
+bare-subject document, a foreign run, or a foreign identity fails closed.
+Execution-evidence payloads are validated against their contract, and their
+embedded `subjectSha256` and `candidateIdentitySha256` must agree with the
+declared descriptor and the caller run binding.
+
+## Publication properties
+
+The output directory must be exactly
+`${RUNNER_TEMP}/ac265-hosted-artifact-attestations` and must not pre-exist; it
+is created `0700` with the mode re-asserted on a held descriptor. Each
+attestation and the index are written `O_CREAT|O_EXCL|O_NOFOLLOW` at `0600`
+with `fsync` and a digest-bound readback. Request and artifact reads use one
+held `O_RDONLY|O_NOFOLLOW` descriptor with `fstat` size rechecks and symlink
+rejection. The step summary is appended with `O_APPEND|O_NOFOLLOW` so earlier
+steps are preserved.
+
+## Verification evidence
+
+- Focused: **10 files / 105 tests** pass, including the CP-04c foundation,
+  protected-context, security, coverage, and slice-09 contract suites.
+- The positive assembly control signs the real `createFixture` canonical
+  envelopes through the protected entrypoint and requires the protected
+  resolver to return byte-identical receipt and evidence bytes.
+- Negative controls: bare-subject receipt, foreign run ID, mutated identity,
+  declared-subject contradiction, kind/reference swap, duplicate reference,
+  unbounded source set, unsafe member name, symlinked request, symlinked
+  artifact, foreign signing key, out-of-window attestation, pre-existing output
+  directory, and malformed request document.
+- Full repository checks under pinned Node `22.23.1` / pnpm `11.24.0`:
+  `pnpm test` **593 files, 4,857 passed + 1 skipped / 4,858**; `contracts:check`,
+  `db:types:check`, `progress:check`, `format:check`, `lint`, `type-check`,
+  `test:evidence:s09` (**7 passed**), `build`, `bundle:check`, and
+  `performance:smoke` (p95 **1.291 ms** against the **500 ms** threshold) all
+  exit 0. Browser end-to-end was deliberately not run for this change while the
+  staging E2E port slot is reserved by another workstream; the browser gate is
+  therefore reported as unrun rather than passed.
+
+## Residual limitations
+
+- No hosted acceptance, session broker, artifact store, or receipt issuer is
+  added or implied. A local issuance is not hosted evidence.
+- The distinct artifact-attestation issuer key and its `artifactTrustedKeys`
+  pinning remain owner decisions, so the protected harness stays unwired.
+- The request run ID, source window, and reference set are caller-asserted at
+  this boundary; the protected wiring must supply them from authenticated
+  runner context.
+- No identity, credential, safe resource, or grant was created; no registry row
+  was seeded; no AC265 criterion is closed and no count moves.
+- AC209, AC211, and AC265 remain open; Slice 10 remains locked; AC266 remains
+  owner-deferred.
+
+## Local sources
+
+- `infra/workflows/ac265-hosted-artifact-attestation-issuer.ts` and its
+  `-inputs`, `-contract`, and `-signing` siblings.
+- `infra/workflows/issue-ac265-hosted-artifact-attestations.ts` and its
+  `-contract`, `-files`, and `-sources` siblings.
+- `infra/workflows/ac265-hosted-artifact-attestation.ts` (CP-04c verifier) and
+  `content-schema-registry-hosted-e2e-protected-context.ts` (resolver).
+- `docs/runbooks/platform/ac265-hosted-e2e-contract-v1.md` sections CP-04c and
+  the server-receipt/report requirements.
