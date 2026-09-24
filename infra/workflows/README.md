@@ -26,9 +26,10 @@ filesystem and validation operations.
   timestamps, queue identifiers, raw rows, and secrets never enter output, and
   the emitted row list is capped. It is read-only, writes no evidence file,
   and a failure warns without replacing or bypassing the normal collector.
-  The gate vocabulary lives in
-  `content-schema-registry-slo-queue-shape.ts`, which the collector imports, so
-  the two cannot drift apart.
+  The gate vocabulary and envelope classification live in
+  `content-schema-registry-slo-queue-shape.ts`, and the closed value-class
+  descriptors live in `content-schema-registry-slo-queue-value-classes.ts`. The
+  collector imports the former, so the two cannot drift apart.
 
 - `ac209-email-diagnostics.ts` and its entrypoint
   `diagnose-production-ac209-email.ts` answer one AC209 failure-forensics

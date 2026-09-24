@@ -2,9 +2,9 @@ import { requestJson } from './content-schema-registry-slo-provider-http.ts';
 import {
   classifyQueueAnalyticsResponseShape,
   classifyQueueAnalyticsRow,
-  describeQueueAnalyticsRowShape,
   type QueueAnalyticsRowRejectionGate,
 } from './content-schema-registry-slo-queue-shape.ts';
+import { describeQueueAnalyticsRowShape } from './content-schema-registry-slo-queue-value-classes.ts';
 import {
   CLOUDFLARE_API_ROOT,
   DEFAULT_TIMEOUT_MS,
