@@ -2,8 +2,8 @@
 
 ## Summary
 
-- **Total decisions**: 101
-- **Unique decision titles**: 101
+- **Total decisions**: 102
+- **Unique decision titles**: 102
 
 ## DEC-001: The rights stack is the thesis, not an adjacency (2026-07-16)
 
@@ -1487,6 +1487,19 @@ Owner approved the recommended architecture decomposition: 43 total IA shards co
 - **Decision**: Option C. Phase 2 retains 2,000 authored criteria and 1,999 implementation-completion criteria. Slice 09 retains 283 contiguous authored IDs and uses a 282-criterion implementation-completion denominator. AC266 remains authored, unchecked, owner-deferred, and must never be represented as passed, waived, simulated, or inferred. Slice 10 remains locked until AC209, AC211, and AC265 pass.
 - **Downstream**: The Phase 2 plan, Slice 09 and aggregate progress records, architecture map, release-evidence runbook, policy tests, and progress validator distinguish implementation completion from production readiness. Existing AC266 contracts, protected workflows, and real macOS/Safari/VoiceOver plus Windows/Firefox/NVDA requirements remain unchanged and must pass before production readiness or release.
 - **Reversibility**: High for implementation sequencing, but no production release may erase or weaken the deferred real-device evidence obligation without a new owner decision and full downstream propagation.
+
+### DEC-102: Browser gates run Google Chrome only, on the engine-family wire contract (2026-09-24)
+
+- **Timestamp**: 2026-09-24T12:20:00-04:00
+- **Agent**: codex
+- **Source**: Owner instruction - Chrome-only browser gates (branch codex/chrome-only-browser-gates)
+- **Tags**: decision, ci, playwright, accessibility, tooling, owner-directive
+
+- **Problem**: Every Playwright project installed and launched Playwright's bundled Chromium download, including the protected staging AC266 automated-axe collector. Local runs, CI, and release evidence could therefore validate a browser build the owner never uses, while the desktop of record runs the installer-provided Google Chrome. The project Playwright skill named Chromium as the pull-request baseline, so the repository had no single statement of which browser the gates must exercise.
+- **Options considered**: (A) keep bundled Chromium and treat Google Chrome as a manual-only check; (B) install Google Chrome dynamically inside the workflows so any runner could satisfy the gate; (C) run the installer-provided Google Chrome through Playwright's Chrome channel (channel: 'chrome') and fail closed on a runner that lacks it.
+- **Decision**: Option C. Owner-scoped: the browser automation and CI gates for this project run Google Chrome only, and no Chromium fallback is provided. All three Playwright entry points (playwright.config.ts, playwright.s09-real.config.ts, tests/e2e/support/ac265-hosted-config.ts) declare channel: 'chrome', and infra/workflows/verify-system-chrome.sh asserts the binary before any gate runs. The AC266 automated-axe artifact keeps its locked name: 'chromium' engine-family literal and its ac266-automated-axe-v1 schema version, because that field records the render engine rather than the distributor build; Google Chrome is Chromium-based, so no retained or deployed evidence interpretation changes and no new device acceptance is claimed. The Playwright skill mirrors were deliberately left unedited for this change.
+- **Downstream**: CI and staging verification now depend on the official Google Chrome package being present on the runner; a runner without it fails closed instead of silently degrading. Verified on the self-hosted fleet - three wejammin runners on this host, Chrome 154.0.8037.57 - with 101/101 functional checks reported as [chrome], the production-built S09 real-route suite, 100% coverage across 4,835 tests, and pnpm validate exit 0. Launched processes resolved to /opt/google/chrome/chrome. The GitHub-hosted ubuntu-24.04 image already ships Google Chrome (152.0.7977.82, image 20260907.300.1), so the AC265 authorization-foundation preflight passes there, with a hosted/local Chrome version skew of 152 versus 154 that matters for evidence reproducibility. The AC266 real-device VoiceOver/NVDA obligation is untouched: this decision covers automated browser gates only and claims no hosted acceptance.
+- **Reversibility**: High. Reverting to bundled Chromium means restoring the playwright install chromium steps and dropping the channel pin; the fail-closed preflight is the only new runner requirement.
 
 ## Full Log
 
