@@ -96,9 +96,14 @@ that was confirmed to fail against the previous behaviour:
 - RED first: the module tests failed on the missing module before any
   implementation existed; the entrypoint and workflow contract tests failed on
   the missing entrypoint for the same reason.
-- GREEN: `tests/ac209-email-presence.test.ts`, `tests/ac209-email-presence-type-safety.test.ts`,
-  and `tests/ac209-email-presence-workflow-contract.test.ts` pass **30 tests**.
-  The existing AC209 suites (`tests/ac209-email-diagnostics.test.ts`,
+- GREEN: the probe's own suites pass **46 tests across 5 files**:
+  `tests/ac209-email-presence.test.ts` (19),
+  `tests/ac209-email-presence-workflow-contract.test.ts` (7),
+  `tests/ac209-email-presence-type-safety.test.ts` (6) as the original three
+  files (32 tests), plus `tests/ac209-email-presence-alternate-tag.test.ts` (8)
+  and `tests/ac209-email-presence-entrypoint.test.ts` (6) added for the optional
+  alternate-tag inventory and the entrypoint cases (14 tests). The existing AC209
+  suites (`tests/ac209-email-diagnostics.test.ts`,
   `tests/ac209-email-diagnostic-workflow-contract.test.ts`,
   `tests/ac209-email-diagnostic-type-safety.test.ts`,
   `tests/ac209-email-sending-analytics.test.ts`) still pass **112 tests**,
@@ -108,10 +113,11 @@ that was confirmed to fail against the previous behaviour:
   literals `classifyPresence` actually returns must agree.
 - A complete `pnpm validate` ran from this worktree with temporary
   `channel: 'chrome'` overrides in both Playwright configs (reverted afterward)
-  and exited **0**: 591 test files, 4,856 passed plus one intentional skip, 100%
+  and exited **0**: 593 test files, 4,872 passed plus one intentional skip, 100%
   statements/branches/functions/lines, 101 functional E2E plus 5 production-built
   Slice 09 real-route checks, builds, bundle budgets, and a local p95 smoke of
-  2.34 ms against the 500 ms threshold. Every browser process was confirmed to
+  2.14 ms against the 500 ms threshold. The run emitted no engine warning, and
+  every browser process was confirmed to
   resolve to system Google Chrome through `/proc/<pid>/exe`; bundled Chromium was
   never used.
 
