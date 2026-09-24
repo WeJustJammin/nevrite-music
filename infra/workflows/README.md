@@ -177,6 +177,41 @@ filesystem and validation operations.
   or grants, or verify underlying resource safety, and it closes no AC265
   criterion.
 
+- `run-ac265-outage-lease-control.ts` is the manual entrypoint for exactly
+  one bounded CP-01 outage-lease control operation: acquire, consume, or
+  release. It is foundation transport only and grants no AC265 acceptance. It
+  chooses no dependency, route, duration, limit, or target: the operation and
+  the authorization, target, idempotency, and (for consume/release) lease
+  reference and digest all arrive as operator-supplied inputs, while the
+  control plane owns every timestamp, the canonical reference digest, the
+  fixed 60-second one-request policy, and the conflict decision. Its sibling
+  bounded service-role client `ac265-outage-lease-rpc.ts` POSTs only the
+  strict request to exactly `ac265_hosted_outage_lease_acquire`,
+  `ac265_hosted_outage_lease_consume`, or `ac265_hosted_outage_lease_release`
+  at the exact `https://<ref>.supabase.co` origin, with no-redirect/no-store
+  transport, a 64 KiB streamed response cap, fatal UTF-8 decoding, and a fixed
+  10-second deadline. `ac265-outage-lease-transport.ts` owns that shared
+  transport and the failure/conflict classification, while
+  `runner-temp-artifact-boundary.ts` owns the held-descriptor runner-temp,
+  summary, and exclusive-record filesystem boundary used by this entrypoint.
+  That boundary module is new and local to these files; the earlier
+  outage-target and runner-mapping entrypoints still carry their own copies of
+  the same pattern, and deduplicating them is not part of this change. The
+  client accepts only a schema-valid success result whose
+  authorization, target, idempotency, environment, state, and redaction fields
+  are bound to the submitted request and whose lease digest it independently
+  recomputes from the returned lease reference; every other rejection collapses
+  to one generic failure boundary. The control plane's deliberate refusal
+  envelope `{status:'conflict'}` is reported as a distinct conflict outcome so
+  an operator can tell a refusal from a transport or trust failure. The
+  entrypoint writes exactly one exclusive redacted record at
+  `${RUNNER_TEMP}/ac265-outage-lease/outage-lease-control.json`, appends a
+  redacted summary, and emits the lease reference only as a job-scoped step
+  output because that reference is a one-use capability. It exercises no
+  outage, seeds no approved target, registers
+  no dependency or route, contacts no hosted resource, creates no identity or
+  grant, and closes no AC265 criterion.
+
 - `ac265-retained-report-producer.ts` is the retained hosted E2E report
   producer. It takes the exact report bytes the assembler emitted plus the
   independently trusted run facts, validates them on the raw-byte boundary, and
