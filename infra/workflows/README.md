@@ -31,6 +31,18 @@ filesystem and validation operations.
   descriptors live in `content-schema-registry-slo-queue-value-classes.ts`. The
   collector imports the former, so the two cannot drift apart.
 
+  Cloudflare documents the `outcome` dimension as applicable only to
+  `DeleteMessage`
+  (https://developers.cloudflare.com/queues/observability/metrics/). Protected
+  run `36038432808` showed that real `ReadMessage` and `WriteMessage` rows
+  still carry a value there, and collection failed closed on `outcome_shape`
+  because of it. The row gate now treats a non-delete outcome as inapplicable:
+  an absent, null, or bounded string placeholder is accepted and never counted
+  toward `dlqMessages`, while a non-string, a string past the 64-character
+  bound, or the `dlq` marker on a non-delete row still rejects the row.
+  `DeleteMessage` keeps its closed `success`/`dlq`/`fail` vocabulary, so
+  `dlq` remains the only way a message can count as a DLQ message.
+
 - `ac209-email-diagnostics.ts` and its entrypoint
   `diagnose-production-ac209-email.ts` answer one AC209 failure-forensics
   question for the old exercise window: whether the Email Sending dataset was

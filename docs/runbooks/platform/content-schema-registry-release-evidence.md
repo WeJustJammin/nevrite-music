@@ -573,6 +573,16 @@ ledger. Low natural traffic is a real failed gate: do not manufacture production
 requests merely to reach 200 samples. Re-run promptly after an eligible day
 because Workers Observability retention is bounded.
 
+The `outcome` dimension is documented as applicable only to `DeleteMessage`
+(https://developers.cloudflare.com/queues/observability/metrics/), so a DLQ
+message is only ever a `DeleteMessage` row whose outcome is exactly `dlq`.
+Protected runs return read and write rows with a populated `outcome` anyway;
+that value is treated as inapplicable, accepted when it is absent, null, or a
+bounded string, and never counted toward `dlqMessages`. A non-string value, a
+string past 64 characters, or a `dlq` marker on a non-delete row fails
+collection closed on `outcome_shape` rather than silently under- or
+over-counting DLQ messages.
+
 ## Assemble the sidecar
 
 Create the JSON only inside the protected workflow workspace. Its strict shape
