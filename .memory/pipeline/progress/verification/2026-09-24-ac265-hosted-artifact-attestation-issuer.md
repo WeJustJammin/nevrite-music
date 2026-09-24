@@ -51,8 +51,9 @@ steps are preserved.
 
 ## Verification evidence
 
-- Focused: **10 files / 105 tests** pass, including the CP-04c foundation,
-  protected-context, security, coverage, and slice-09 contract suites.
+- Focused: **10 files / 116 tests** pass (measured on the final tree), including
+  the CP-04c foundation, protected-context, security, coverage, and slice-09
+  contract suites.
 - The positive assembly control signs the real `createFixture` canonical
   envelopes through the protected entrypoint and requires the protected
   resolver to return byte-identical receipt and evidence bytes.
@@ -62,13 +63,25 @@ steps are preserved.
   artifact, foreign signing key, out-of-window attestation, pre-existing output
   directory, and malformed request document.
 - Full repository checks under pinned Node `22.23.1` / pnpm `11.24.0`:
-  `pnpm test` **593 files, 4,857 passed + 1 skipped / 4,858**; `contracts:check`,
+  `pnpm test` **593 files, 4,868 passed + 1 skipped / 4,869**; `contracts:check`,
   `db:types:check`, `progress:check`, `format:check`, `lint`, `type-check`,
   `test:evidence:s09` (**7 passed**), `build`, `bundle:check`, and
-  `performance:smoke` (p95 **1.291 ms** against the **500 ms** threshold) all
-  exit 0. Browser end-to-end was deliberately not run for this change while the
-  staging E2E port slot is reserved by another workstream; the browser gate is
-  therefore reported as unrun rather than passed.
+  `performance:smoke` (p95 **1.358 ms** against the **500 ms** threshold) all
+  exit 0. The browser gate also passed under system Chrome: **101 functional
+  Playwright tests** and **5 Slice 09 real-route tests** (production-built
+  server-authorized list/detail/sign-in, forged-token, expired-token, and
+  revoked-session rejection) with the temporary `channel: 'chrome'` override,
+  which was restored byte-identically afterward.
+
+### Validation chronology
+
+The first full-validate attempt at this SHA failed in the Slice 09 real-route
+spec with `ERR_CONNECTION_REFUSED` on port `4324`; the wrangler dev server had
+exited with `Network connection lost` inside its proxy worker while the host
+carried load ~18.7 on 8 cores with significant memory pressure. An isolated
+rerun of that spec on a quiet host passed **5/5**, and the subsequent full
+validate on the quiet host passed with exit 0, so the failure is attributed to
+host contention rather than to this change. Both runs are retained as evidence.
 
 ## Residual limitations
 
