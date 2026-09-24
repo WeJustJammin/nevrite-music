@@ -1692,9 +1692,10 @@ provenance, reportRoot, declaredReportPath })`. It calls the existing
   contradiction, kind/reference swap, duplicate reference, unbounded source set,
   unsafe member name, symlinked request, symlinked artifact, foreign signing
   key, out-of-window attestation, pre-existing output directory, and malformed
-  request document. The record's full-repository numbers and browser gate were
-  measured on the source branch and are not re-run for this static-only
-  integration.
+  request document. The focused 10 files / 116 tests above were measured on this
+  final source tree; only the record's full-repository test totals, its other
+  full-repository gates, and the browser gate were measured on the source branch
+  and are not re-run for this static-only integration.
 - Recorded boundaries, not acceptance: the request `runId` and the source
   `issuedAt`/`expiresAt` window are caller-asserted here and must be derived
   from authenticated runner context by a future protected harness; the

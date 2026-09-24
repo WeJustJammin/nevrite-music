@@ -33,6 +33,14 @@ generated, or configured by this change.
 
 ## Byte-derived subjects
 
+Server receipts must be complete canonical `ac265-hosted-e2e-receipt-v1`
+envelopes: the strict receipt envelope schema, the caller run identity, and the
+canonical serialized identity digest are all checked before signing, so a
+bare-subject document, a foreign run, or a foreign identity fails closed.
+Execution-evidence payloads are validated against their contract, and their
+embedded `subjectSha256` and `candidateIdentitySha256` must agree with the
+declared descriptor and the caller run binding.
+
 ## Run identity
 
 The boundary is v4-only and lowercase-exact, because the run authority mints
@@ -50,14 +58,6 @@ not on promoted main: the widened gates were restored to v4-only, the
 entrypoint gate was folded onto the same shared schema, and the entrypoint now
 has direct end-to-end coverage for both a non-v4 rejection and a v4 issuance.
 The layer-level v7 tests that missed the gap were inverted to assert rejection.
-
-Server receipts must be complete canonical `ac265-hosted-e2e-receipt-v1`
-envelopes: the strict receipt envelope schema, the caller run identity, and the
-canonical serialized identity digest are all checked before signing, so a
-bare-subject document, a foreign run, or a foreign identity fails closed.
-Execution-evidence payloads are validated against their contract, and their
-embedded `subjectSha256` and `candidateIdentitySha256` must agree with the
-declared descriptor and the caller run binding.
 
 ## Publication properties
 

@@ -84,9 +84,9 @@ V3 report must prove.
 | RED (client absent)                                          | `Cannot find module '../infra/workflows/ac265-outage-lease-rpc.ts'` — expected initial failure                              |
 | `tests/ac265-outage-lease-rpc.test.ts`                       | 15 tests passed                                                                                                             |
 | `tests/ac265-outage-lease-rpc-binding.test.ts`               | 8 tests passed                                                                                                              |
-| `tests/ac265-outage-lease-control-entrypoint.test.ts`        | 19 tests passed                                                                                                             |
+| `tests/ac265-outage-lease-control-entrypoint.test.ts`        | 19 tests passed in the pre-mask-fix source-branch run; 2 later mask-writer tests await integrated validation |
 | `tests/ac265-outage-lease-control-workflow-contract.test.ts` | 6 tests passed                                                                                                              |
-| Focused AC265 lease suite total                              | 48 tests passed                                                                                                             |
+| Focused AC265 lease suite total                              | 48 tests passed in the pre-mask-fix source-branch run; the final tree adds 2 unrun mask-writer tests |
 | RED (teardown lifecycle)                                     | pgTAP exit 1, 5 expected failures: tests 86, 88, 89, 91, 93, all on the new abandoned-lease assertions. That RED run measured `Tests: 93` for the then-current revision of this file, which has since been restructured; the final revision's authoritative count is the `1..90` plan below, and no RED-era count is claimed for it. |
 | `supabase/tests/ac265_hosted_control_plane.sql`              | TAP plan `1..90` after the forward fix (was `1..80` at origin/main, so exactly +10); replayed directly against the reset local database for the plan count, then via `supabase test db` |
 | `pnpm format:check`                                          | passed                                                                                                                      |
@@ -111,6 +111,12 @@ the runner-temp/summary/output filesystem boundary. The pgTAP suite covers the
 forward-fixed teardown lifecycle: unconsumed release, its replay, the cleared
 active-lease slot, refusal to consume a released lease, refusal to release
 after expiry, and binding reuse for a later attempt.
+
+Two later branch commits add mask-writer branch coverage to the entrypoint suite:
+one for the default writer staying silent outside a GitHub Actions step, and one
+for masking the capability as the first stdout line inside a step. Those two
+tests are not covered by the pre-mask-fix run recorded in the table above and
+await an integrated run on this branch.
 
 ## Evidence boundary
 
