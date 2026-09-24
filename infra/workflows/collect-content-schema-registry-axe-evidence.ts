@@ -9,7 +9,7 @@ import {
 } from '../../packages/contracts/src/content-schema-registry/operational-release-evidence-common.ts';
 import { SafeReleaseIdSchema } from '../../packages/contracts/src/release-recovery-common.ts';
 
-import { launchPinnedPlaywrightChromium } from './content-schema-registry-axe-browser.ts';
+import { launchSystemGoogleChrome } from './content-schema-registry-axe-browser.ts';
 import {
   assertExpectedAxeNavigation,
   assertExpectedReleaseHeader,
@@ -99,7 +99,7 @@ export const collectContentSchemaRegistryAutomatedAxeEvidence = async (
     options.workspaceRoot ?? process.env.GITHUB_WORKSPACE ?? process.cwd();
   const reportRoot = resolveReportRoot(options.reportRoot, workspaceRoot);
   const expectedOrigin = new URL(options.webOrigin).origin;
-  const { browser, metadata } = await launchPinnedPlaywrightChromium();
+  const { browser, metadata } = await launchSystemGoogleChrome();
   try {
     const pages: Array<{
       requestedPath: (typeof CONTENT_SCHEMA_REGISTRY_AUTOMATED_A11Y_TARGETS)[number]['requestedPath'];

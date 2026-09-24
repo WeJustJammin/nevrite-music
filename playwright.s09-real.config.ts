@@ -32,6 +32,9 @@ export default defineConfig({
     // Trace DOM snapshots perturb the Event Timing values this project owns.
     trace: 'off',
     ...devices['Desktop Chrome'],
+    // Google Chrome only; the bundled Chromium download is not used. Applied
+    // after the device descriptor so the channel always wins.
+    channel: 'chrome',
   },
   webServer: {
     command: `node ${JSON.stringify(serverLauncher)}`,

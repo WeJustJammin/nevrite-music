@@ -200,8 +200,9 @@ describe('AC266 automated axe evidence workflow contract', () => {
     expect(workflow).toContain(
       'promotion-candidate/provider-release-evidence.json',
     );
-    expect(workflow).toContain('Install pinned Chromium runtime');
-    expect(workflow).toContain('pnpm exec playwright install chromium');
+    expect(workflow).toContain('Verify system Google Chrome');
+    expect(workflow).toContain('bash infra/workflows/verify-system-chrome.sh');
+    expect(workflow).not.toContain('playwright install');
     expect(webDeployStep).toMatch(/--var APP_RELEASE:"\$DEPLOY_SHA"/u);
     expect(webDeployStep.match(/--var/gu)).toHaveLength(1);
     expect(workflow).toContain('promotion-candidate/accessibility/axe.json');
@@ -223,10 +224,14 @@ describe('AC266 automated axe evidence workflow contract', () => {
         'Verify public staging contracts and collect automated accessibility evidence',
       ),
     ).toBeLessThan(workflow.indexOf('Finalize staging promotion evidence'));
-    expect(workflow.indexOf('Install pinned Chromium runtime')).toBeGreaterThan(
+    expect(
+      workflow.indexOf('bash infra/workflows/verify-system-chrome.sh'),
+    ).toBeGreaterThan(
       workflow.indexOf('Deploy web SSR Worker staging artifact'),
     );
-    expect(workflow.indexOf('Install pinned Chromium runtime')).toBeLessThan(
+    expect(
+      workflow.indexOf('bash infra/workflows/verify-system-chrome.sh'),
+    ).toBeLessThan(
       workflow.indexOf(
         'Verify public staging contracts and collect automated accessibility evidence',
       ),

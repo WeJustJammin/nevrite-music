@@ -303,8 +303,9 @@ digest before the candidate and deployment evidence artifacts are uploaded, toge
 run-owned deployment creation time and a protected collection cutoff. GitHub keeps
 the deployment status `in_progress` while this collection step runs; it may mark
 the deployment `success` only after the job completes. This proves only the
-automated Chromium/axe portion and GitHub run binding. Its precondition is the
-preceding `verify-staging` gate: the served Cloudflare web response must expose
+automated Google Chrome (Chromium engine family)/axe portion and GitHub run
+binding. Its precondition is the preceding `verify-staging` gate: the served
+Cloudflare web response must expose
 `x-wejammin-release` equal to the promoted SHA (the API response is checked too).
 The GitHub deployment ID and Cloudflare Worker version ID are distinct provider
 identities and must be recorded separately; neither substitutes for the served
