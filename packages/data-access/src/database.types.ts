@@ -136,6 +136,15 @@ export type Database = {
         Returns: Json
       }
       ac265_prepare_hosted_run: { Args: { p_request: Json }; Returns: Json }
+      ac265_session_broker_authorize: {
+        Args: { p_request: Json }
+        Returns: Json
+      }
+      ac265_session_broker_resolve: { Args: { p_request: Json }; Returns: Json }
+      ac265_session_broker_teardown: {
+        Args: { p_request: Json }
+        Returns: Json
+      }
       accept_job_with_outbox: {
         Args: {
           p_acting_party_id: string
@@ -2025,6 +2034,121 @@ export type Database = {
           workflow_sha?: string
         }
         Relationships: []
+      }
+      ac265_session_broker_handle_roles: {
+        Row: {
+          broker_authorization_id: string
+          handle_id: string
+          handle_ref: string
+          handle_sha256: string
+          last_resolve_idempotency_ref: string | null
+          last_resolve_request_sha256: string | null
+          last_resolved_at: string | null
+          last_teardown_idempotency_ref: string | null
+          last_teardown_request_sha256: string | null
+          logged_out_at: string | null
+          material_ref: string
+          resolve_limit: number
+          resolves: number
+          role: string
+        }
+        Insert: {
+          broker_authorization_id: string
+          handle_id?: string
+          handle_ref: string
+          handle_sha256: string
+          last_resolve_idempotency_ref?: string | null
+          last_resolve_request_sha256?: string | null
+          last_resolved_at?: string | null
+          last_teardown_idempotency_ref?: string | null
+          last_teardown_request_sha256?: string | null
+          logged_out_at?: string | null
+          material_ref: string
+          resolve_limit?: number
+          resolves?: number
+          role: string
+        }
+        Update: {
+          broker_authorization_id?: string
+          handle_id?: string
+          handle_ref?: string
+          handle_sha256?: string
+          last_resolve_idempotency_ref?: string | null
+          last_resolve_request_sha256?: string | null
+          last_resolved_at?: string | null
+          last_teardown_idempotency_ref?: string | null
+          last_teardown_request_sha256?: string | null
+          logged_out_at?: string | null
+          material_ref?: string
+          resolve_limit?: number
+          resolves?: number
+          role?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ac265_session_broker_handle_roles_broker_authorization_id_fkey"
+            columns: ["broker_authorization_id"]
+            isOneToOne: false
+            referencedRelation: "ac265_session_broker_handles"
+            referencedColumns: ["broker_authorization_id"]
+          },
+        ]
+      }
+      ac265_session_broker_handles: {
+        Row: {
+          authorization_id: string
+          authorized_at: string
+          broker_authorization_id: string
+          deployment_id: string
+          environment: string
+          expires_at: string
+          hosting_project_id: string
+          idempotency_ref: string
+          identity_sha256: string
+          request_sha256: string
+          run_id: string
+          source_revision: string
+          supabase_project_ref: string
+        }
+        Insert: {
+          authorization_id: string
+          authorized_at: string
+          broker_authorization_id?: string
+          deployment_id: string
+          environment?: string
+          expires_at: string
+          hosting_project_id: string
+          idempotency_ref: string
+          identity_sha256: string
+          request_sha256: string
+          run_id: string
+          source_revision: string
+          supabase_project_ref: string
+        }
+        Update: {
+          authorization_id?: string
+          authorized_at?: string
+          broker_authorization_id?: string
+          deployment_id?: string
+          environment?: string
+          expires_at?: string
+          hosting_project_id?: string
+          idempotency_ref?: string
+          identity_sha256?: string
+          request_sha256?: string
+          run_id?: string
+          source_revision?: string
+          supabase_project_ref?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ac265_session_broker_handles_authorization_id_fkey"
+            columns: ["authorization_id"]
+            isOneToOne: false
+            referencedRelation: "ac265_runner_authorizations"
+            referencedColumns: ["authorization_id"]
+          },
+        ]
       }
       ac265_verified_candidates: {
         Row: {
@@ -5681,6 +5805,18 @@ export type Database = {
       }
       ac265_build_hosted_artifact_manifest_envelope: {
         Args: { p_manifest_id: string }
+        Returns: Json
+      }
+      ac265_build_session_broker_authorize_envelope: {
+        Args: { p_broker_authorization_id: string }
+        Returns: Json
+      }
+      ac265_build_session_broker_resolve_envelope: {
+        Args: { p_handle_id: string }
+        Returns: Json
+      }
+      ac265_build_session_broker_teardown_envelope: {
+        Args: { p_handle_id: string }
         Returns: Json
       }
       ac265_prepare_hosted_run_candidate: {

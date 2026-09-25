@@ -57,6 +57,24 @@ key ID, Ed25519 domain, and bounded validity window. These contracts support a
 protected signing workflow; they neither create signing keys nor prove a hosted
 outage or AC265 acceptance.
 
+`operational-release-evidence-hosted-session-broker-control.ts` defines the
+strict CP-05 run-scoped session broker boundary for authorizing, resolving, and
+tearing down exactly nine role-bound handles of one protected hosted run. It
+accepts opaque `ac265-session://<role>/<uuid>` handle references and opaque
+`ac265-session-material://staging/<uuid>` material references only, requires
+every locked role exactly once with distinct handles and material, binds each
+handle reference to its embedded role, and keeps every result redacted with a
+bounded five-minute window and exactly one resolve per handle. The contract
+carries no session state, resolves no material, and proves no hosted
+acceptance. A material reference is a caller-declared request-side value: the
+authorize boundary validates only its shape, distinctness, and per-role binding,
+the database verifies no ownership of it, and no result envelope returns it, so
+it is never authority. A material reference is not a bearer credential,
+resolving it is decided solely by the approved external broker at dereference
+time inside the protected run, and the resolve envelope reports only the bound
+handle and its digest. The schemas are sharded so every shard stays inside the
+repository schema line cap.
+
 ## Ownership
 
 These schemas define the cross-surface boundary. They do not grant authority,
