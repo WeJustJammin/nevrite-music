@@ -1,11 +1,11 @@
-# AC209 routing day-count probe, AC209 email diagnostic, and AC211 2026-09-23 collection - protected run evidence
+# AC209 routing probes and email diagnostic, and AC211 2026-09-23 collection - protected run evidence
 
 **Date**: 2026-09-24 (local)
-**Scope**: documentation only. This record persists the redacted results of three
+**Scope**: documentation only. This record persists the redacted results of four
 protected production runs that were already dispatched and completed, plus the
-observed status of the Cloudflare support case. It changes no code, contract,
-migration, workflow, secret, deployment, or provider state, and it moves no
-tracker count.
+observed status of the Cloudflare support case. The per-event probe was added on
+2026-09-25. It changes no code, contract, migration, workflow, secret,
+deployment, or provider state, and it moves no tracker count.
 
 **Verdict**: the AC209 Email Routing day-count probe
 [36067233068](https://github.com/WeJustJammin/wejammin/actions/runs/36067233068)
@@ -27,7 +27,13 @@ returned `settings=available` with `rowsReturned=0` and classification
 condition - the earlier `provider_graphql_error` does not reproduce - while
 establishing **no** correlated Sending telemetry and no delivered
 `dlq_nonempty` row. A fresh email exercise stays deferred until the evidence path
-can return a row for a known-delivered send.
+can return a row for a known-delivered send. The per-event routing probe
+[36083336932](https://github.com/WeJustJammin/wejammin/actions/runs/36083336932)
+then found exactly **one** provider-reported `delivered` per-event row inside
+that same hour, marked final, with one complete message-id digest; its `action`
+label is `unknown`. With no comparable message identifier held from the send
+itself, that row is **not attributable** to the control alert, so AC209 stays
+open.
 
 ## Status totals (unchanged)
 
@@ -115,6 +121,94 @@ delivered `dlq_nonempty` alert row for the exact release, retained with an
 exercise artifact. A grouped routing count closes none of that, and AC209 remains
 open.
 
+## AC209 - protected Email Routing per-event probe (run 36083336932)
+
+The per-event diagnostic added by PR #107 was dispatched read-only from exact
+`main` `859dc5f3734b1bf79b003b618dc60476299c26b2` at `2026-09-25T01:44:42Z`
+(`run_attempt=1`, `workflow_dispatch`, conclusion **success**). That revision
+passed exact-main CI
+[36082498084](https://github.com/WeJustJammin/wejammin/actions/runs/36082498084)
+and staging
+[36083138344](https://github.com/WeJustJammin/wejammin/actions/runs/36083138344)
+before dispatch. Preflight job `107909789841` and probe job `107909817033` both
+succeeded.
+
+This is the first AC209 probe to read per-event rows over the exact hour of the
+verified send, rather than a day aggregate or a presence check.
+
+- Window: inclusive `2026-09-22T20:00:00Z` to `2026-09-22T20:59:59Z`, the same
+  hour the Email Sending diagnostic asked, which is what makes the two
+  comparable. Dataset `emailRoutingAdaptive`; schema
+  `ac209-email-routing-event-v2`; `probedAt 2026-09-25T01:46:01.214Z`;
+  `zoneTagSha256=94385f2a214a04825b578eb135b368882d2ffd10898dfb0988a3a6c5c1b00c98`
+  (the same zone binding as the other probes).
+- Retained redacted artifact
+  `production-ac209-routing-events-859dc5f3734b1bf79b003b618dc60476299c26b2`
+  (artifact `10842447346`, created `2026-09-25T01:46:03Z`, **7-day** retention,
+  expiring `2026-10-02T01:46:02Z`). GitHub reports the archive as **809 bytes**;
+  the entrypoint digests the uncompressed JSON, which is **1,248 bytes** with
+  `sha256:914c65bf537cfa7c3ed8e10a77bde1fa86370de3904ef915c051c9f3f278dac2`.
+  The **809-byte ZIP archive** has
+  `sha256:01fa45c3d8d9060d75dcaca2f6083dbc069b28b8fc477d5173f1ef00c59aed3f`.
+  I recomputed both first-hand: the JSON digest over the downloaded file, and the
+  ZIP digest over the archive bytes fetched directly from the artifacts API. Both
+  match. As in the sibling probes, the digest printed in the run log is over the
+  JSON, not the archive.
+- Provider reading, bounded and redacted: `status: available`, `rowsReturned: 1`,
+  `withinWindowRows: 1`, `outsideWindowRows: 0`, `uniqueMessageIds: 1`,
+  `messageIdsMissing: 0`, `finalEventRows: 1`, `messageIdDigestCoverage: complete`.
+  One `status` tally of count 1 and one `action` tally of count 1, published only
+  as one-way label digests.
+- Label identification: the run emits only digests, never label text. I inferred
+  the two labels by hashing candidate strings and matching them against the
+  published digests, so `delivered` and `unknown` are candidate-hash matches
+  rather than values the run directly reports. The `status` digest
+  `373e0712c83cffe15ff427b60e788b549f82496fe5fd5391f7921832b04c6b20` is the
+  SHA-256 of the label `delivered`; the `action` digest
+  `b23a6a8439c0dde5515893e7c90c1e3233b8616e634470f20dc4928bcf3609bc` is the
+  SHA-256 of the label `unknown`. Source confirms the method: the reader digests
+  the raw provider label with a plain SHA-256 and fails the run on a malformed
+  label rather than substituting a placeholder, so `unknown` is provider-reported
+  text and not an invented fill value.
+- Pinned caveat literals carried by the artifact: `sampling` is
+  `provider_may_sample_adaptive_dataset`, `observation` is
+  `provider_reported_per_event_rows`, and `underlyingEventAbsence` is
+  `not_established`.
+
+### What this establishes
+
+The Email Routing dataset returns exactly one per-event row inside the hour that
+contains the verified `~20:22Z` send; that row is provider-reported `delivered`;
+it is marked as a final event; and it carries exactly one provider message
+identifier with complete digest coverage. This is materially narrower and more
+concrete than the earlier day-count reading, which could only place a delivered
+row in the right **day**. This places one in the right **hour**.
+
+### What this does not establish
+
+1. **No attribution.** No comparable email message identifier is held from the
+   send itself, so the single provider message-id digest cannot be matched against
+   anything. The row is consistent with the control alert and also consistent with
+   any other routing traffic in that hour. One row in an hour is not evidence that
+   this particular row is our send, and AC209 therefore cannot close on it.
+2. **The `action` label is `unknown`, so the transport is unidentified.** The
+   action tally does not resolve to a forward, a Worker handoff, a drop, or any
+   other specific routing outcome. Because Cloudflare documents that Worker
+   `send_email` binding mail can appear in the Email Routing summary as dropped
+   even when it was delivered, and that outbound success belongs to Email Sending
+   telemetry, this row cannot be used to infer how the message was transported.
+3. **No `dlq_nonempty` alert row.** The AC209 gate needs a delivered alert row for
+   the exact release. A routing status of `delivered` is not that alert row, and
+   nothing here shows the alert was delivered.
+4. **Sampling and retention still apply.** `emailRoutingAdaptive` carries the
+   `Adaptive` designation, so the provider may serve these rows from a sample, and
+   the pinned `underlyingEventAbsence` literal records that a returned-row reading
+   never proves the absence or completeness of the underlying event set.
+
+AC209 remains open. This probe narrows the question substantially - a delivered
+routing row does exist inside the correct hour - while closing no part of the
+gate, because the row cannot be tied to our send and its transport is unresolved.
+
 ## AC209 - protected email-visibility diagnostic (run 36069837542)
 
 The read-only diagnostic introduced by PR #96 (`795efa62`) and dispatched from exact `main`
@@ -199,9 +293,17 @@ These are two different provider datasets answering two different questions, and
 neither substitutes for the other. The routing probe shows the Email **Routing**
 node is populated (9 delivered rows across 4 days, unattributable); this
 diagnostic shows the Email **Sending** node is queryable and holds zero rows for
-the send hour. Together they locate the gap precisely: the query path works and
-the sending dataset is empty, so the missing piece is ingestion of sending
-events, not authorization and not query construction.
+the send hour. Together they locate the gap without naming its cause: the query
+path works and the sending dataset is empty for the send hour, so attributable
+Sending visibility remains missing - and that absence could arise from event
+ingestion, from zone or sending-service scope, or from provider sampling and
+retention, none of which is established here.
+
+The per-event probe above refines the routing half of that boundary: the Routing
+dataset is not merely populated somewhere in the month, it holds one `delivered`
+per-event row inside the send hour itself. That sharpens the picture without
+changing the conclusion, because the row is still unattributable and its `action`
+is still `unknown`. The sending half is unchanged - zero rows for the same hour.
 
 ### Corroboration: Cloudflare dashboard (read-only, subordinate)
 
@@ -317,11 +419,13 @@ counts; they only stop presenting superseded runs as current.
 
 No workflow was dispatched by this pass, no approval was given, no provider
 setting or secret was changed, no email was sent, no queue was written, no
-deployment or migration ran, and no identity or grant was created. The diagnostic
-recorded here was already dispatched and completed; this pass only read its run
-record and artifact. The only external reads were the three already-completed run
-records and artifacts and the already-open support case. Everything quoted is
-provider- or platform-reported, non-secret, and free of addresses, subjects,
+deployment or migration ran, and no identity or grant was created. Every run
+recorded here was already dispatched and completed; this pass only read the run
+records and artifacts. The external reads were those four completed run records
+and artifacts plus the already-open support case. For the per-event probe the ZIP
+digest was taken from the artifacts API and the JSON digest was recomputed over
+the downloaded file. Everything quoted is provider- or platform-reported,
+non-secret, and free of addresses, subjects,
 tokens, and provider message identifiers. No acceptance criterion is closed and
 no total moves.
 
@@ -330,6 +434,12 @@ no total moves.
 - `.github/workflows/probe-production-ac209-routing-day-counts.yml` and
   `infra/workflows/ac209-email-routing-day-counts.ts` - the probe and its
   bounds.
+- `.github/workflows/probe-production-ac209-routing-events.yml`,
+  `infra/workflows/probe-production-ac209-routing-events.ts`,
+  `infra/workflows/ac209-email-routing-event.ts`, and
+  `infra/workflows/ac209-email-routing-event-row.ts` - the per-event probe, its
+  selection set, and the label/identifier digest boundary that fails a malformed
+  label instead of substituting a placeholder.
 - `.github/workflows/diagnose-production-ac209-email.yml`,
   `infra/workflows/diagnose-production-ac209-email.ts`, and
   `infra/workflows/ac209-email-diagnostics.ts` - the diagnostic entrypoint, its
@@ -343,6 +453,9 @@ no total moves.
     the `1`-sample floor for queue first attempts.
 - `.memory/pipeline/progress/verification/2026-09-24-ac209-email-dataset-presence-probe.md`
   - the earlier presence probe that established `sending=zone_wide_missing`.
+- `.memory/pipeline/progress/verification/2026-09-24-ac209-routing-event-diagnostic.md`
+  - the implementation record for the per-event probe, including its redaction
+    and interpretation boundaries.
 - `.memory/pipeline/progress/verification/2026-09-22-ac209-repair-ac211-readiness-ac265-handoff.md`
   - the mailbox receipt provenance for the 2026-09-22 control alert.
 
