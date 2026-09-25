@@ -245,7 +245,11 @@ acceptance evidence, it closes no criterion, and it does not unlock Slice 10.
 
 The read-only AC209 verifier `35612514031` passed exact-main preflight,
 protection, and workspace checks, then failed closed at the capability query
-with `provider_graphql_error`; it made no effects and retained no receipt.
+with `provider_graphql_error`; it made no effects and retained no receipt. That
+historical failure is not the current state: the same protected verifier passes
+every step, including the capability query, at
+[run 35777357009](https://github.com/WeJustJammin/wejammin/actions/runs/35777357009),
+so AC209 is open on its evidence path and not on authorization.
 
 The protected workflow must resolve each opaque reference and receipt to its
 exact raw bytes, recompute SHA-256 before parsing, and cross-verify the
