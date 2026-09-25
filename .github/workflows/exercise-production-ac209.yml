@@ -51,6 +51,7 @@ jobs:
       EXPECTED_ALERT_EMAIL_SHA256: ${{ vars.PRODUCTION_ALERT_EMAIL_SHA256 }}
       AC209_OUTPUT_PATH: ac209-exercise/configuration.json
       AC209_EXERCISE_OUTPUT_PATH: ac209-exercise/exercise.json
+      AC209_EXERCISE_FAILURE_OUTPUT_PATH: ac209-exercise/exercise-failure.json
     steps:
       - name: Check out exact main revision
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
@@ -129,4 +130,13 @@ jobs:
             ac209-exercise/configuration.json
             ac209-exercise/exercise.json
           if-no-files-found: error
+          retention-days: 30
+
+      - name: Upload redacted AC209 failure receipt
+        if: failure()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+        with:
+          name: production-ac209-exercise-failure-${{ inputs.source_revision }}
+          path: ac209-exercise/exercise-failure.json
+          if-no-files-found: warn
           retention-days: 30

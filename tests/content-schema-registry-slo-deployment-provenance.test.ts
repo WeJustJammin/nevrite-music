@@ -183,7 +183,10 @@ const productionRun = {
   head_repository: { id: 1297208152, full_name: repository },
 };
 
-const fetchFor = (statusUrl: string) =>
+const fetchFor = (
+  statusUrl: string,
+  runOverrides: Record<string, unknown> = {},
+) =>
   vi.fn<typeof fetch>(async (input) => {
     const url = new URL(String(input));
     if (url.pathname.endsWith(`/deployments/${deploymentId}`))
@@ -195,11 +198,14 @@ const fetchFor = (statusUrl: string) =>
     if (url.pathname.endsWith('/actions/workflows/deploy-production.yml'))
       return response(productionWorkflow);
     if (url.pathname.endsWith(`/actions/runs/${runId}/attempts/${runAttempt}`))
-      return response(productionRun);
+      return response({ ...productionRun, ...runOverrides });
     throw new Error('Unexpected test URL.');
   });
 
-const runPreflight = (statusUrl: string) =>
+const runPreflight = (
+  statusUrl: string,
+  runOverrides: Record<string, unknown> = {},
+) =>
   verifyContentSchemaRegistrySloSource(
     {
       apiUrl: 'https://api.github.com/',
@@ -210,7 +216,7 @@ const runPreflight = (statusUrl: string) =>
       utcDay: '2026-09-14',
       now: () => Date.parse('2026-09-15T00:00:01Z'),
     },
-    fetchFor(statusUrl),
+    fetchFor(statusUrl, runOverrides),
   );
 
 describe('AC211 production SLO source preflight across the repository rename', () => {
@@ -230,6 +236,72 @@ describe('AC211 production SLO source preflight across the repository rename', (
       runPreflight(
         `https://github.com/AnotherOwner/nevrite-music/actions/runs/${runId}/job/${jobId}`,
       ),
+    ).rejects.toThrow(/Deploy production/u);
+  });
+});
+
+// GitHub backfills the workflow-run `run_started_at` from the assigned runner
+// slot, so a genuine, successfully completed Deploy production run can record a
+// `run_started_at` that precedes its own `created_at`. Observed on real record
+// 6400415025 (run 34639861376, job 103396669995), where created_at is
+// 2026-09-11T19:37:47Z and run_started_at is 2026-09-11T19:37:46Z. The strict
+// `createdAt > startedAt` ordering rejected that genuine deployment.
+describe('AC211 production run record timestamp ordering', () => {
+  const runOffsets = (createdAt: string, runStartedAt: string) => ({
+    created_at: createdAt,
+    run_started_at: runStartedAt,
+  });
+
+  it('accepts a run whose runner-start timestamp precedes its creation by one second', async () => {
+    await expect(
+      runPreflight(
+        canonicalJobUrl,
+        runOffsets('2026-09-13T03:05:01Z', '2026-09-13T03:05:00Z'),
+      ),
+    ).resolves.toMatchObject({ deploymentId, sourceRevision });
+  });
+
+  it.each([1, 2, 3, 4, 5])(
+    'accepts a runner-start backfill of %s second(s) within the bound',
+    async (seconds) => {
+      const createdAt = '2026-09-13T03:05:06Z';
+      const runStartedAt = new Date(
+        Date.parse(createdAt) - seconds * 1000,
+      ).toISOString();
+      await expect(
+        runPreflight(canonicalJobUrl, runOffsets(createdAt, runStartedAt)),
+      ).resolves.toMatchObject({ deploymentId, sourceRevision });
+    },
+  );
+
+  it.each([6, 60, 3600])(
+    'still rejects a runner-start backfill of %s seconds beyond the bound',
+    async (seconds) => {
+      const createdAt = '2026-09-13T03:05:06Z';
+      const runStartedAt = new Date(
+        Date.parse(createdAt) - seconds * 1000,
+      ).toISOString();
+      await expect(
+        runPreflight(canonicalJobUrl, runOffsets(createdAt, runStartedAt)),
+      ).rejects.toThrow(/Deploy production/u);
+    },
+  );
+
+  it('still rejects a run whose completion precedes its runner start', async () => {
+    await expect(
+      runPreflight(canonicalJobUrl, {
+        run_started_at: '2026-09-13T03:05:00Z',
+        updated_at: '2026-09-13T03:04:59Z',
+      }),
+    ).rejects.toThrow(/Deploy production/u);
+  });
+
+  it('still rejects a run whose creation exceeds the deployment timeline', async () => {
+    await expect(
+      runPreflight(canonicalJobUrl, {
+        created_at: '2026-09-13T04:00:00Z',
+        run_started_at: '2026-09-13T03:05:00Z',
+      }),
     ).rejects.toThrow(/Deploy production/u);
   });
 });
