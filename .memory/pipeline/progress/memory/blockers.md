@@ -65,7 +65,12 @@
   [run 36069837542](https://github.com/WeJustJammin/wejammin/actions/runs/36069837542)
   queried `emailSendingAdaptive` over the send hour and returned
   `settings=available`, `rowsReturned=0`, `zero_rows`, which clears the earlier
-  permissions/query error without producing correlated telemetry. Cloudflare
+  permissions/query error without producing correlated telemetry. Per-event
+  routing probe
+  [run 36083336932](https://github.com/WeJustJammin/wejammin/actions/runs/36083336932)
+  found exactly one provider-reported `delivered` per-event row in that same hour
+  with one complete message-id digest, but its `action` label is `unknown` and no
+  comparable send-side identifier is held, so the row is unattributable. Cloudflare
   support case `02343626` was
   still **New** with no reply when read live on 2026-09-24. AC211 collection
   [run 36038007951](https://github.com/WeJustJammin/wejammin/actions/runs/36038007951)

@@ -843,6 +843,13 @@ response`; Workers Observability passed. Cloudflare's documented successful
   row, so a fresh exercise is deferred until the evidence path works. The open
   gate is the correlated
   provider event plus a delivered `dlq_nonempty` row for the exact release.
+  Per-event routing probe
+  [run 36083336932](https://github.com/WeJustJammin/wejammin/actions/runs/36083336932)
+  went further and found exactly **one** provider-reported `delivered` per-event
+  row inside that same hour, marked final, with one complete message-id digest;
+  its `action` label is `unknown`. No comparable message identifier is held from
+  the send itself, so the row is not attributable to the control alert and AC209
+  stays open on the same gate.
 - P2-S09-AC-211: collection
   [run 36038007951](https://github.com/WeJustJammin/wejammin/actions/runs/36038007951)
   (UTC day 2026-09-23) passed preflight and failed closed for insufficient

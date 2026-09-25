@@ -340,7 +340,11 @@ db:verify` passed **62 files / 2,211 tests** through migration
   `emailSendingAdaptive` successfully - the latter over the exact hour of the
   verified send, returning `settings=available`, `rowsReturned=0`, `zero_rows` -
   so the error is a query/authorization condition that is gone, not a
-  permissions fault, and it yields no correlated Sending telemetry. AC209
+  permissions fault, and it yields no correlated Sending telemetry. Per-event
+  routing probe `36083336932` then found one provider-reported `delivered`
+  per-event row inside that same hour with one complete message-id digest, but its
+  `action` label is `unknown` and no comparable send-side identifier is held, so
+  the row is unattributable. AC209
   remains open; the current reading is in the
   [2026-09-24 protected-run record](verification/2026-09-24-ac209-ac211-protected-run-evidence.md).
 - **HISTORICAL AC211 EVIDENCE (2026-09-21, superseded):** Collection run `35673313035` passed
