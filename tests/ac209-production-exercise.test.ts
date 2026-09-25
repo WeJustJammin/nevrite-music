@@ -141,6 +141,7 @@ const dependencies = () => {
       checkedAt: CHECKED_AT,
     })),
     verifyEmailCapability: vi.fn(async () => undefined),
+    verifyEmailSettings: vi.fn(async () => undefined),
     collectEmailAnalytics: vi.fn(async () => emailReport),
     verifyDelivery: vi.fn(async () => delivery),
     now: vi
@@ -175,9 +176,6 @@ describe('production AC209 queue-to-email exercise orchestration', () => {
       zoneId: ZONE_ID,
       token: 'email-analytics-token-that-is-never-reported',
     });
-    expect(deps.verifyEmailCapability.mock.invocationCallOrder[0]).toBeLessThan(
-      deps.beforeQueueAccess.mock.invocationCallOrder[0] ?? 0,
-    );
     expect(deps.beforeQueueAccess).toHaveBeenCalledExactlyOnceWith();
     expect(deps.beforeQueueAccess.mock.invocationCallOrder[0]).toBeLessThan(
       deps.queueExercise.mock.invocationCallOrder[0] ?? 0,

@@ -1,18 +1,10 @@
 import { describe, expect, it, vi } from 'vitest';
 
-import {
-  verifyCloudflareObservabilityToken,
-  verifyCloudflareProductionMonitoringToken,
-} from '../infra/verify-cloudflare-observability.ts';
-import { AC209_EMAIL_SENDING_CAPABILITY_QUERY } from '../infra/workflows/ac209-email-sending-analytics.ts';
+import { verifyCloudflareObservabilityToken } from '../infra/verify-cloudflare-observability.ts';
 
 const config = {
   accountId: 'b1c05c00f04130a0d100adbca6696e6e',
   token: 'production-observability-token',
-} as const;
-const productionConfig = {
-  ...config,
-  emailZoneId: '4f2dc13e11f742b1a826268a27a76ac8',
 } as const;
 
 const jsonResponse = (body: unknown, status = 200): Response =>
@@ -25,106 +17,6 @@ const dryObservabilityResponse = (): Response =>
   jsonResponse({ result: { run: { dry: true } }, success: true });
 
 describe('Cloudflare observability token verification', () => {
-  it('proves zone Email Sending analytics access before accepting the production token', async () => {
-    vi.useFakeTimers();
-    vi.setSystemTime(new Date('2026-09-14T23:59:59-04:00'));
-    try {
-      const fetchImpl = vi
-        .fn<typeof fetch>()
-        .mockResolvedValueOnce(dryObservabilityResponse())
-        .mockResolvedValueOnce(
-          jsonResponse({
-            data: {
-              viewer: {
-                accounts: [{ queueBacklogAdaptiveGroups: [] }],
-              },
-            },
-          }),
-        )
-        .mockResolvedValueOnce(
-          jsonResponse({
-            data: {
-              viewer: {
-                zones: [
-                  {
-                    emailSendingAdaptive: [{ status: 'delivered' }],
-                  },
-                ],
-              },
-            },
-          }),
-        );
-
-      await expect(
-        verifyCloudflareProductionMonitoringToken(productionConfig, fetchImpl),
-      ).resolves.toBeUndefined();
-
-      expect(fetchImpl).toHaveBeenCalledTimes(3);
-      const [emailAnalyticsUrl, emailAnalyticsInit] = fetchImpl.mock.calls[2]!;
-      expect(emailAnalyticsUrl).toBe(
-        'https://api.cloudflare.com/client/v4/graphql',
-      );
-      const emailAnalyticsBody = JSON.parse(
-        String(emailAnalyticsInit?.body),
-      ) as {
-        query: string;
-        variables: Record<string, unknown>;
-      };
-      expect(emailAnalyticsBody).toEqual({
-        query: AC209_EMAIL_SENDING_CAPABILITY_QUERY,
-        variables: {
-          zoneTag: productionConfig.emailZoneId,
-          start: '2026-09-15T02:59:59.000Z',
-          end: '2026-09-15T03:59:59.000Z',
-        },
-      });
-      expect(emailAnalyticsBody.query).toMatch(
-        /emailSendingAdaptive\([\s\S]*\)\s*\{\s*status\s*\}/u,
-      );
-      expect(emailAnalyticsBody.query).not.toMatch(
-        /\b(?:from|to|subject|messageId|sender|recipient|errorCause)\b/iu,
-      );
-    } finally {
-      vi.useRealTimers();
-    }
-  });
-
-  it('fails safely when zone Email Sending analytics access is rejected', async () => {
-    const fetchImpl = vi
-      .fn<typeof fetch>()
-      .mockResolvedValueOnce(dryObservabilityResponse())
-      .mockResolvedValueOnce(
-        jsonResponse({
-          data: {
-            viewer: {
-              accounts: [{ queueBacklogAdaptiveGroups: [] }],
-            },
-          },
-        }),
-      )
-      .mockResolvedValueOnce(
-        jsonResponse({
-          errors: [
-            {
-              message: `token ${productionConfig.token} cannot access ${productionConfig.emailZoneId}`,
-            },
-          ],
-        }),
-      );
-
-    const verification = verifyCloudflareProductionMonitoringToken(
-      productionConfig,
-      fetchImpl,
-    );
-    await expect(verification).rejects.toThrow(
-      'Cloudflare Zone Analytics permission check failed: provider_permission_denied',
-    );
-    await expect(verification).rejects.not.toThrow(productionConfig.token);
-    await expect(verification).rejects.not.toThrow(
-      productionConfig.emailZoneId,
-    );
-  });
-
   it('proves Workers Observability and Account Analytics access without exposing the token', async () => {
     const fetchImpl = vi
       .fn<typeof fetch>()

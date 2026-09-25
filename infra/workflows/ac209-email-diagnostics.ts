@@ -6,7 +6,6 @@ import {
   AC209_EMAIL_SENDING_MAX_WINDOW_MS,
   AC209_EMAIL_SENDING_PAGE_LIMIT,
   AC209_EMAIL_SENDING_QUERY,
-  AC209_EMAIL_SENDING_REQUIRED_FIELDS,
   Ac209EmailSendingAnalyticsError,
   failAc209EmailSendingAnalytics,
   readAc209EmailSendingZoneRecord,
@@ -14,6 +13,14 @@ import {
   sha256CanonicalEmail,
   type Ac209EmailSendingAnalyticsErrorCode,
 } from './ac209-email-sending-analytics.ts';
+import {
+  AC209_EMAIL_SENDING_MAX_SETTINGS_FIELDS,
+  AC209_EMAIL_SENDING_SETTINGS_QUERY,
+  AC209_EMAIL_SENDING_SETTINGS_REQUIRED_FIELDS,
+  readAc209EmailSendingSettingsFacts,
+} from './ac209-email-sending-settings-capability.ts';
+
+export { AC209_EMAIL_SENDING_SETTINGS_QUERY };
 
 /**
  * Bounded, read-only AC209 Email Sending diagnostic.
@@ -33,39 +40,18 @@ export const AC209_EMAIL_DIAGNOSTIC_SCHEMA_VERSION =
 
 /** The window query selects exactly these fields; the settings probe compares them. */
 export const AC209_EMAIL_DIAGNOSTIC_REQUIRED_SETTINGS_FIELDS =
-  AC209_EMAIL_SENDING_REQUIRED_FIELDS;
-
-/**
- * Documented Settings-node shape: `settings` is available for zone scope and
- * exposes each zone dataset as a field with `enabled`, `availableFields`,
- * `maxPageSize`, `maxNumberOfFields`, `notOlderThan`, and `maxDuration`.
- */
-export const AC209_EMAIL_SENDING_SETTINGS_QUERY =
-  `query Ac209EmailSendingSettings($zoneTag: string!) {
-  viewer {
-    zones(filter: { zoneTag: $zoneTag }) {
-      settings {
-        emailSendingAdaptive {
-          enabled
-          availableFields
-          maxPageSize
-          maxNumberOfFields
-          notOlderThan
-          maxDuration
-        }
-      }
-    }
-  }
-}` as const;
+  AC209_EMAIL_SENDING_SETTINGS_REQUIRED_FIELDS;
 
 const ZONE_ID = /^[0-9a-f]{32}$/u;
 const SOURCE_REVISION = /^[0-9a-f]{40}$/u;
 const SHA256 = /^[0-9a-f]{64}$/u;
 const PROVIDER_MESSAGE_ID = /^[\x21-\x7e]{1,512}$/u;
-/** Settings paths may be nested, so a dot-separated path is valid. */
-const SETTINGS_FIELD_PATH =
-  /^[A-Za-z_][A-Za-z0-9_]*(?:\.[A-Za-z_][A-Za-z0-9_]*)*$/u;
-const MAX_SETTINGS_FIELDS = 512;
+/**
+ * The settings-node shape is owned by `ac209-email-sending-settings-capability.ts`,
+ * which the exercise uses to enforce the same contract before any mutation, so
+ * this read-only diagnostic and the enforcing gate cannot disagree.
+ */
+const MAX_SETTINGS_FIELDS = AC209_EMAIL_SENDING_MAX_SETTINGS_FIELDS;
 
 export type Ac209EmailDiagnosticStatusCode =
   Ac209EmailSendingAnalyticsErrorCode;
@@ -206,87 +192,10 @@ const toUnavailable = (
       : 'unexpected_failure',
 });
 
-const readNonNegativeInteger = (value: unknown): number => {
-  if (typeof value !== 'number' || !Number.isSafeInteger(value) || value < 0)
-    failAc209EmailSendingAnalytics(
-      'provider_response_invalid',
-      'settings field is malformed.',
-    );
-  return value;
-};
-
-const readAvailableFields = (value: unknown): readonly string[] => {
-  if (!Array.isArray(value) || value.length > MAX_SETTINGS_FIELDS)
-    failAc209EmailSendingAnalytics(
-      'provider_response_invalid',
-      'settings availableFields is malformed.',
-    );
-  const fields: string[] = [];
-  for (const entry of value) {
-    if (typeof entry !== 'string' || !SETTINGS_FIELD_PATH.test(entry))
-      failAc209EmailSendingAnalytics(
-        'provider_response_invalid',
-        'settings availableFields is malformed.',
-      );
-    fields.push(entry);
-  }
-  return fields;
-};
-
-/**
- * The window query selects bare field names while availableFields may report a
- * nested path such as `dimensions.status`, so a selected field counts as
- * available when any reported path names it as its last segment.
- */
-const isFieldAvailable = (
-  field: string,
-  availableFields: readonly string[],
-): boolean =>
-  availableFields.some(
-    (candidate) => candidate === field || candidate.endsWith(`.${field}`),
-  );
-
 const readSettings = (payload: unknown): Ac209EmailDiagnosticSettings => {
-  const zone = readAc209EmailSendingZoneRecord(payload);
-  const settings = zone.settings;
-  if (!isRecord(settings))
-    failAc209EmailSendingAnalytics(
-      'provider_response_invalid',
-      'settings result is malformed.',
-    );
-  const node = settings.emailSendingAdaptive;
-  if (!isRecord(node))
-    failAc209EmailSendingAnalytics(
-      'provider_response_invalid',
-      'settings dataset is malformed.',
-    );
-  if (typeof node.enabled !== 'boolean')
-    failAc209EmailSendingAnalytics(
-      'provider_response_invalid',
-      'settings enabled flag is malformed.',
-    );
-  const availableFields = readAvailableFields(node.availableFields);
-  const maxPageSize = readNonNegativeInteger(node.maxPageSize);
-  const maxNumberOfFields = readNonNegativeInteger(node.maxNumberOfFields);
-  const notOlderThanSeconds = readNonNegativeInteger(node.notOlderThan);
-  const maxDurationSeconds = readNonNegativeInteger(node.maxDuration);
-  const missing = AC209_EMAIL_DIAGNOSTIC_REQUIRED_SETTINGS_FIELDS.filter(
-    (field) => !isFieldAvailable(field, availableFields),
-  );
   return {
     status: 'available',
-    enabled: node.enabled,
-    availableFieldCount: availableFields.length,
-    requiredFieldsAvailable: missing.length === 0,
-    requiredFieldsMissing: missing.length,
-    maxPageSize,
-    maxNumberOfFields,
-    notOlderThanSeconds,
-    maxDurationSeconds,
-    supportsPageLimit: maxPageSize >= AC209_EMAIL_SENDING_PAGE_LIMIT,
-    supportsRequiredFields:
-      maxNumberOfFields >=
-      AC209_EMAIL_DIAGNOSTIC_REQUIRED_SETTINGS_FIELDS.length,
+    ...readAc209EmailSendingSettingsFacts(payload),
   };
 };
 
