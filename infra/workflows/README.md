@@ -552,6 +552,30 @@ filesystem and validation operations.
   - `issue-ac265-hosted-artifact-attestation-sources.ts` owns declared-source
     parsing and the byte-derived subject digests for both artifact kinds.
 
+- `ac265-session-broker-rpc.ts` is the bounded service-role client for the
+  run-scoped session broker control plane (CP-05). It exposes exactly three
+  entry points — authorize, resolve, teardown — and POSTs only the strict
+  request to exactly `ac265_session_broker_authorize`,
+  `ac265_session_broker_resolve`, or `ac265_session_broker_teardown` at the
+  exact `https://<ref>.supabase.co` origin, with no-redirect/no-store
+  transport, a 128 KiB streamed response cap, fatal UTF-8 decoding, and a fixed
+  10-second deadline. Every response is rebound to the submitted request:
+  authorization, run, identity, idempotency reference, role, handle reference,
+  and environment must echo, and each handle digest is recomputed locally from
+  the reference bytes so a caller cannot assert a digest for a handle it does
+  not hold. The control plane's deliberate refusal envelope
+  `{status:'conflict'}` is reported as a distinct typed conflict outcome so an
+  operator can tell a refusal from a transport or trust failure. The client
+  stores no session state, resolves no material, and closes no AC265 criterion;
+  a live resolve still requires an owner-provisioned broker, a live runner
+  authorization, and the exact run identity.
+
+  - `ac265-session-broker-rpc-transport.ts` owns the shared endpoint, secret,
+    bounded-response, deadline, and conflict-classification boundary.
+  - `ac265-session-broker-rpc-parsers.ts` owns result parsing and rebinding.
+  - `ac265-session-broker-rpc-entrypoints.ts` owns the three public entry
+    points and their local digest preconditions.
+
 ## Conventions
 
 Scripts accept identity only through environment values derived by the calling
