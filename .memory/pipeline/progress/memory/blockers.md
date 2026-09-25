@@ -43,7 +43,10 @@
   Read-only
   AC209 verifier [run 35612514031](https://github.com/WeJustJammin/nevrite-music/actions/runs/35612514031)
   failed with `provider_graphql_error` and produced no email, queue mutation,
-  deployment, or receipt. AC211 collection [run 35673313035](https://github.com/WeJustJammin/nevrite-music/actions/runs/35673313035)
+  deployment, or receipt. That failure is historical: the parent-zone GraphQL
+  authorization is fixed, and the same protected verifier now passes every step
+  at [run 35777357009](https://github.com/WeJustJammin/wejammin/actions/runs/35777357009).
+  AC209's current blocker is therefore not authorization. AC211 collection [run 35673313035](https://github.com/WeJustJammin/nevrite-music/actions/runs/35673313035)
   passed preflight but collection failed for insufficient samples
   (`commands=0`, `protectedRpcs=0`, `acceptances=0`,
   `queueFirstAttempts=0`); `dataset=1`, `registry=0`,
@@ -61,7 +64,18 @@
   zero rows in both windows (`zone_wide_missing`), and the grouped routing
   counts carry only `date` and `status`, so none is attributable to the
   2026-09-22 control alert; AC209 stays open on the correlated provider event
-  plus a delivered `dlq_nonempty` row. Read-only email diagnostic
+  plus a delivered `dlq_nonempty` row. The two AC209 conditions now open are
+  distinct and neither is an authorization gap: (1) the Email Sending dataset
+  is readable and enabled yet holds zero rows zone-wide, so the gate's first
+  link cannot be satisfied from provider telemetry; and (2) a fresh exercise
+  dispatch additionally requires the exact main revision to be the live
+  100 percent production API Worker version bound by `workers/tag`, the
+  `APP_RELEASE` variable, and the active deployment, so production must serve
+  that revision before a rerun can proceed; the
+  [2026-09-24 protected-run record](../verification/2026-09-24-ac209-ac211-protected-run-evidence.md)
+  notes the selected production Worker still serving `c8f0cbd5` from
+  deployment `6417116181`. Neither condition asserts why the dataset is
+  empty, and neither makes any routing row attributable. Read-only email diagnostic
   [run 36069837542](https://github.com/WeJustJammin/wejammin/actions/runs/36069837542)
   queried `emailSendingAdaptive` over the send hour and returned
   `settings=available`, `rowsReturned=0`, `zero_rows`, which clears the earlier
