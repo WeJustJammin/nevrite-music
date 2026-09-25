@@ -59,6 +59,7 @@ export const dependencies = () => ({
     checkedAt: CHECKED_AT,
   })),
   verifyEmailCapability: vi.fn(async () => undefined),
+  verifyEmailSettings: vi.fn(async () => undefined),
   collectEmailAnalytics: vi.fn(),
   verifyDelivery: vi.fn(),
   now: vi.fn<() => number>().mockReturnValue(Date.parse(FAILED_AT)),

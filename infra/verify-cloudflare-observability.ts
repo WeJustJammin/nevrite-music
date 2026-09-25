@@ -9,6 +9,7 @@ import {
   Ac209EmailSendingAnalyticsError,
   verifyAc209EmailSendingCapability,
 } from './workflows/ac209-email-sending-analytics.ts';
+import { verifyAc209EmailSendingSettings } from './workflows/ac209-email-sending-settings-capability.ts';
 
 export interface CloudflareObservabilityVerificationConfig {
   readonly accountId: string;
@@ -197,6 +198,17 @@ export const verifyCloudflareProductionMonitoringToken = async (
   await verifyCloudflareObservabilityToken(config, fetchImpl);
   try {
     await verifyAc209EmailSendingCapability({
+      fetchImpl,
+      token: config.token,
+      zoneId: config.emailZoneId,
+    });
+    // The events probe above accepts an empty window because zero rows still
+    // prove read access, so it cannot show that the dataset is enabled, that
+    // every field the event query selects is available to this token, or that
+    // the requester limits cover the exercise's window and row bound. Verifying
+    // that capability here keeps a protected production run from discovering a
+    // capability shortfall only after it has opened the queue boundary.
+    await verifyAc209EmailSendingSettings({
       fetchImpl,
       token: config.token,
       zoneId: config.emailZoneId,

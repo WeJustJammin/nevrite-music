@@ -25,6 +25,7 @@ import {
   type Ac209EmailSendingAnalyticsErrorCode,
   type Ac209EmailSendingAnalyticsReport,
 } from './ac209-email-sending-analytics.ts';
+import { verifyAc209EmailSendingSettings } from './ac209-email-sending-settings-capability.ts';
 import {
   Ac209ProductionExerciseReportSchema,
   type Ac209ProductionExerciseReport,
@@ -129,6 +130,7 @@ export type Ac209ProductionExerciseDependencies = Readonly<{
   ) => Promise<Ac209QueueExerciseReport>;
   readEligibility?: typeof readAc209ExerciseEligibility;
   verifyEmailCapability?: typeof verifyAc209EmailSendingCapability;
+  verifyEmailSettings?: typeof verifyAc209EmailSendingSettings;
   collectEmailAnalytics?: typeof collectAc209EmailSendingAnalytics;
   verifyDelivery?: typeof verifyAc209AlertDelivery;
   beforeQueueAccess?: () => void;
@@ -180,6 +182,28 @@ export const exerciseProductionAc209 = async (
     stageDiagnostic = { stage: 'evidence', code: 'email_query_failed' };
     try {
       await verifyEmailCapability({
+        zoneId: input.emailZoneId,
+        token: input.emailAnalyticsToken,
+      });
+    } catch (error: unknown) {
+      stageDiagnostic = {
+        stage: 'evidence',
+        code: resolveAc209EmailDiagnosticCode(error),
+      };
+      failAc209ProductionExercise();
+    }
+
+    // The events probe above accepts an empty window because zero events still
+    // proves read access, so it cannot prove the dataset is enabled, that every
+    // field the event query selects is available to this requester, or that the
+    // requester limits cover the exercise's 50-row bound and seven selections.
+    // The settings gate is an independent second preflight: both must pass
+    // before the step records cleanup_required and enters the queue boundary.
+    const verifyEmailSettings =
+      dependencies.verifyEmailSettings ?? verifyAc209EmailSendingSettings;
+    stageDiagnostic = { stage: 'evidence', code: 'email_query_failed' };
+    try {
+      await verifyEmailSettings({
         zoneId: input.emailZoneId,
         token: input.emailAnalyticsToken,
       });

@@ -348,6 +348,27 @@ filesystem and validation operations.
   exact version's tag, message, and upload provenance through the pinned
   Wrangler CLI. Raw provider payloads and the alert address are discarded
   before the atomic redacted artifact is written.
+- `ac209-email-sending-settings-capability.ts` owns the AC209 Email Sending
+  Settings-node contract the exercise enforces before any mutation. The events
+  probe in `ac209-email-sending-analytics.ts` accepts an empty window because
+  zero rows still prove read access, so it cannot distinguish a disabled dataset
+  or a field unavailable to the requester from a successful read of nothing.
+  This gate reads `zones(...).settings.emailSendingAdaptive` and fails closed
+  unless `enabled` is true, every field the event query selects appears in
+  `availableFields`, and `maxPageSize`/`maxNumberOfFields` cover the 50-row
+  bound and all seven selections. It is an independent second preflight: both
+  gates run before the step records `cleanup_required=true`. A `maxDuration` or
+  `notOlderThan` horizon below the exercise's own one-hour analytics window is
+  rejected too, because such a requester would abort the run at the evidence
+  stage after the queue boundary had already opened. The settings-node
+  readers and query live here and are reused by `ac209-email-diagnostics.ts`,
+  so the enforcing gate and the read-only diagnostic cannot disagree about the
+  same provider payload. It is read-only, performs no mutation, closes no
+  acceptance criterion, and reports only closed diagnostic codes.
+  `verify-cloudflare-observability.ts` runs the same gate when it verifies the
+  production monitoring token, so the deploy path and the exercise path reject
+  the same capability shortfalls.
+
 - `ac209-queue-exercise.ts` runs the bounded AC209 queue marker exercise and
   re-exports its contracts plus `cleanupAc209QueueMarker` for cancellation-safe
   exact-marker cleanup.
@@ -368,6 +389,11 @@ filesystem and validation operations.
   streaming, timeout-bounded, and rejected on invalid UTF-8. The database check
   receives `notBefore = exercise.startedAt`, so an earlier delivery for the same
   release cannot satisfy the run.
+  Before either preflight the step requires an eligible alert cooldown; the
+  events capability probe and the Settings-node gate then both have to pass
+  before `cleanup_required=true` is recorded and the queue boundary opens, so a
+  cooldown, capability, or settings shortfall performs no queue access and no
+  cleanup.
   `cleanup-production-ac209.ts` is the idempotent `always()` safety step: it
   rechecks the pre-generated opaque marker across both exact queues and either
   proves absence or purges only its matching refs. Neither path performs a

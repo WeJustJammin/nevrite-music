@@ -4,7 +4,11 @@ import {
   verifyCloudflareObservabilityToken,
   verifyCloudflareProductionMonitoringToken,
 } from '../infra/verify-cloudflare-observability.ts';
-import { AC209_EMAIL_SENDING_CAPABILITY_QUERY } from '../infra/workflows/ac209-email-sending-analytics.ts';
+import {
+  AC209_EMAIL_SENDING_CAPABILITY_QUERY,
+  AC209_EMAIL_SENDING_REQUIRED_FIELDS,
+} from '../infra/workflows/ac209-email-sending-analytics.ts';
+import { AC209_EMAIL_SENDING_SETTINGS_QUERY } from '../infra/workflows/ac209-email-sending-settings-capability.ts';
 
 const config = {
   accountId: 'b1c05c00f04130a0d100adbca6696e6e',
@@ -25,7 +29,7 @@ const dryObservabilityResponse = (): Response =>
   jsonResponse({ result: { run: { dry: true } }, success: true });
 
 describe('Cloudflare observability token verification', () => {
-  it('proves zone Email Sending analytics access before accepting the production token', async () => {
+  it('proves zone Email Sending analytics access and settings capability before accepting the production token', async () => {
     vi.useFakeTimers();
     vi.setSystemTime(new Date('2026-09-14T23:59:59-04:00'));
     try {
@@ -53,13 +57,37 @@ describe('Cloudflare observability token verification', () => {
               },
             },
           }),
+        )
+        .mockResolvedValueOnce(
+          jsonResponse({
+            data: {
+              viewer: {
+                zones: [
+                  {
+                    settings: {
+                      emailSendingAdaptive: {
+                        availableFields: [
+                          ...AC209_EMAIL_SENDING_REQUIRED_FIELDS,
+                        ],
+                        enabled: true,
+                        maxDuration: 2_592_000,
+                        maxNumberOfFields: 30,
+                        maxPageSize: 10_000,
+                        notOlderThan: 2_678_400,
+                      },
+                    },
+                  },
+                ],
+              },
+            },
+          }),
         );
 
       await expect(
         verifyCloudflareProductionMonitoringToken(productionConfig, fetchImpl),
       ).resolves.toBeUndefined();
 
-      expect(fetchImpl).toHaveBeenCalledTimes(3);
+      expect(fetchImpl).toHaveBeenCalledTimes(4);
       const [emailAnalyticsUrl, emailAnalyticsInit] = fetchImpl.mock.calls[2]!;
       expect(emailAnalyticsUrl).toBe(
         'https://api.cloudflare.com/client/v4/graphql',
@@ -84,10 +112,95 @@ describe('Cloudflare observability token verification', () => {
       expect(emailAnalyticsBody.query).not.toMatch(
         /\b(?:from|to|subject|messageId|sender|recipient|errorCause)\b/iu,
       );
+
+      // A disabled dataset, an unavailable selected field, or a sub-window
+      // requester limit must reject the production token here, before a
+      // protected run can open the queue boundary.
+      const [settingsUrl, settingsInit] = fetchImpl.mock.calls[3]!;
+      expect(settingsUrl).toBe('https://api.cloudflare.com/client/v4/graphql');
+      expect(
+        JSON.parse(String(settingsInit?.body)) as {
+          query: string;
+          variables: Record<string, unknown>;
+        },
+      ).toEqual({
+        query: AC209_EMAIL_SENDING_SETTINGS_QUERY,
+        variables: { zoneTag: productionConfig.emailZoneId },
+      });
     } finally {
       vi.useRealTimers();
     }
   });
+
+  it.each([
+    ['a disabled dataset', { enabled: false }],
+    [
+      'a selected field unavailable to the token',
+      { availableFields: ['status'] },
+    ],
+    ['a sub-window single-request span', { maxDuration: 60 }],
+    ['a sub-window retention horizon', { notOlderThan: 60 }],
+  ])(
+    'rejects the production token for %s before any protected run',
+    async (_label, override) => {
+      const fetchImpl = vi
+        .fn<typeof fetch>()
+        .mockResolvedValueOnce(dryObservabilityResponse())
+        .mockResolvedValueOnce(
+          jsonResponse({
+            data: {
+              viewer: { accounts: [{ queueBacklogAdaptiveGroups: [] }] },
+            },
+          }),
+        )
+        .mockResolvedValueOnce(
+          jsonResponse({
+            data: {
+              viewer: {
+                zones: [{ emailSendingAdaptive: [{ status: 'delivered' }] }],
+              },
+            },
+          }),
+        )
+        .mockResolvedValueOnce(
+          jsonResponse({
+            data: {
+              viewer: {
+                zones: [
+                  {
+                    settings: {
+                      emailSendingAdaptive: {
+                        availableFields: [
+                          ...AC209_EMAIL_SENDING_REQUIRED_FIELDS,
+                        ],
+                        enabled: true,
+                        maxDuration: 2_592_000,
+                        maxNumberOfFields: 30,
+                        maxPageSize: 10_000,
+                        notOlderThan: 2_678_400,
+                        ...override,
+                      },
+                    },
+                  },
+                ],
+              },
+            },
+          }),
+        );
+
+      const verification = verifyCloudflareProductionMonitoringToken(
+        productionConfig,
+        fetchImpl,
+      );
+      await expect(verification).rejects.toThrow(
+        'Cloudflare Zone Analytics permission check failed: provider_resource_unavailable',
+      );
+      await expect(verification).rejects.not.toThrow(productionConfig.token);
+      await expect(verification).rejects.not.toThrow(
+        productionConfig.emailZoneId,
+      );
+    },
+  );
 
   it('fails safely when zone Email Sending analytics access is rejected', async () => {
     const fetchImpl = vi
