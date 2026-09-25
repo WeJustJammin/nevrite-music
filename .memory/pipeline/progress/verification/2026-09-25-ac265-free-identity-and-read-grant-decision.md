@@ -48,12 +48,15 @@ paid Google Workspace** subscription. This resolves the previously open
 
 These are Google-published properties of Cloud Identity Free, recorded separately
 from the owner's choice so a later reader does not mistake a provider property for
-a project decision:
+a project decision. Both entries were re-verified against official Google
+documentation on 2026-09-25:
 
-- Cloud Identity Free provides up to **50 free user licenses**.
+- Cloud Identity Free provides up to **50 free user licenses**
+  (<https://cloud.google.com/identity/pricing>).
 - Adopting it requires **creating a new Cloud Identity account/organization with a
   new administrator**, completing **domain verification** for `wejamm.in`, and
-  **accepting Google's terms of service**.
+  **accepting Google's terms of service**
+  (<https://docs.cloud.google.com/identity/docs/how-to/set-up-cloud-identity-admin>).
 
 ### Consequence
 
@@ -90,8 +93,12 @@ None of the following may be treated as decided while it remains open:
 
 1. **No second privileged admin test identity.** The existing owner account
    remains the sole administrator, and this record authorizes no additional
-   privileged identity. The async question about a privileged admin test identity
-   is answered as not needed.
+   privileged identity. The owner's reply approved only one narrow expiring read
+   grant and the existing owner's continued sole-admin position; the separate
+   async question about a privileged admin test identity was not restated there,
+   so it is **not answered by this record** and must not be read as resolved. It
+   is not needed under the current plan, which keeps privileged CMS authority with
+   the existing owner account alone.
 2. **TOTP enrollment is unconfirmed.** The dashboard reading confirms the App
    Authenticator feature is enabled for the project, not that the administrator
    has an enrolled factor. `admin_step_up` still requires a real enrolled factor

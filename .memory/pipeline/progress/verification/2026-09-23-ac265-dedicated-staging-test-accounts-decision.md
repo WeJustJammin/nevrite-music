@@ -1,10 +1,12 @@
 # AC265 dedicated staging test accounts - owner decision record
 
 **Date**: 2026-09-23 (local).
-**Partially resolved 2026-09-25**: gates 1-3 below were answered by the owner's
-2026-09-25 decisions. See the
+**Partially resolved 2026-09-25**: gates 1-2 below were resolved by the owner's
+2026-09-25 decisions. Gate 3 was **not** answered and stays pending, although no
+second privileged identity is authorized and the question is not needed for the
+current plan. See the
 [2026-09-25 Cloud Identity Free source and single read-grant decision record](./2026-09-25-ac265-free-identity-and-read-grant-decision.md),
-which supersedes gates 1-3 of this record and leaves gates 4-5 unchanged.
+which supersedes gates 1-2 of this record and leaves gates 3-5 otherwise unchanged.
 **Scope**: documentation only. This record persists the owner's 2026-09-23
 decision to provision dedicated staging AC265 test accounts and states the gates
 that remain unresolved. It changes no code, contract, migration, workflow,
@@ -54,8 +56,12 @@ inference while it remains open:
    the sole-admin rule otherwise continues in force. See the
    [2026-09-25 record](./2026-09-25-ac265-free-identity-and-read-grant-decision.md).
 3. **Separate async question pending on the privileged admin test identity.
-   ** **Resolved 2026-09-25**: no privileged admin test identity is needed or
-   authorized; the existing owner account remains the sole administrator. See the
+   ** **Not answered 2026-09-25**: no reply to this question was received, and
+   nothing in the 2026-09-25 decisions may be read as one. Those decisions do
+   establish that no second privileged identity is **authorized**, because the
+   owner kept the existing account as the sole administrator and approved only one
+   narrow expiring `cms.schema_registry.read` grant; the question itself remains
+   pending and is not needed under the current plan. See the
    [2026-09-25 record](./2026-09-25-ac265-free-identity-and-read-grant-decision.md).
 4. **Chrome browser bridge unavailable.** The Chrome browser bridge is
    **unavailable on this host** for the required hosted browser acceptance work,
@@ -86,5 +92,5 @@ control and before any hosted run.
 
 - `.memory/pipeline/progress/verification/2026-09-22-ac209-diagnostic-ac211-provenance-ac265-report-assembler.md` - the owner's approval in principle and the identity-source gate as first recorded.
 - `.memory/pipeline/progress/verification/2026-09-10-ac265-bootstrap-plan.md` - the sole intended CMS/admin principal decision that still governs privileged admin identity.
-- `.memory/pipeline/progress/verification/2026-09-25-ac265-free-identity-and-read-grant-decision.md` - the 2026-09-25 decisions that resolved gates 1-3 of this record.
+- `.memory/pipeline/progress/verification/2026-09-25-ac265-free-identity-and-read-grant-decision.md` - the 2026-09-25 decisions that resolved gates 1-2 of this record.
 - `docs/runbooks/platform/ac265-hosted-e2e-contract-v1.md` - the nine-role matrix, the approved external session broker boundary, and the no-identity-creation rule.

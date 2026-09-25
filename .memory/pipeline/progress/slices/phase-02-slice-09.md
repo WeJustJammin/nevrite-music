@@ -1831,8 +1831,10 @@ provenance, reportRoot, declaredReportPath })`. It calls the existing
   owner account as the **sole admin** with no `cms.schema_designer` and no
   admin/design permission. Both are recorded in the
   [AC265 Cloud Identity Free and read-grant decision record](../verification/2026-09-25-ac265-free-identity-and-read-grant-decision.md),
-  which resolves gates 1-3 of the
+  which resolves gates 1-2 of the
   [2026-09-23 dedicated-accounts record](../verification/2026-09-23-ac265-dedicated-staging-test-accounts-decision.md).
+  That record's privileged-admin-question gate stays unanswered, and no second
+  privileged identity is authorized.
 - Nothing was provisioned and no criterion moved. Outstanding: Google-side Cloud
   Identity account/administrator creation, `wejamm.in` domain verification and
   terms acceptance; TOTP enrollment is unconfirmed (the App Authenticator feature
