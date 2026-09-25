@@ -1,63 +1,22 @@
-import { createHash } from 'node:crypto';
-
-import { describe, expect, it, vi } from 'vitest';
+import { describe, expect, it } from 'vitest';
 
 import {
   AC209_EMAIL_ROUTING_EVENT_MAX_ROWS,
   AC209_EMAIL_ROUTING_EVENT_MAX_WINDOW_MS,
   AC209_EMAIL_ROUTING_EVENT_QUERY,
   AC209_EMAIL_ROUTING_EVENT_SCHEMA_VERSION,
-  Ac209EmailRoutingEventReportSchema,
 } from '../infra/workflows/ac209-email-routing-event-contract.ts';
 import { collectAc209EmailRoutingEvents } from '../infra/workflows/ac209-email-routing-event.ts';
-
-const zoneId = '5bfba340525c623584c47d631116804c';
-const sourceRevision = '20338c72ef9f5924f5f2a7ce82c12122aa84c46a';
-const token = 'observability-token-that-must-never-be-emitted';
-const probedAtMs = Date.parse('2026-09-24T12:00:00Z');
-const windowStart = '2026-09-22T20:00:00.000Z';
-const windowEnd = '2026-09-22T20:59:59.000Z';
-
-const response = (payload: unknown, status = 200): Response =>
-  new Response(JSON.stringify(payload), {
-    status,
-    headers: { 'content-type': 'application/json' },
-  });
-
-const eventsPayload = (rows: readonly unknown[]) => ({
-  data: { viewer: { zones: [{ emailRoutingAdaptive: rows }] } },
-  errors: null,
-});
-
-const eventRow = (
-  overrides: Readonly<Record<string, unknown>> = {},
-): Record<string, unknown> => ({
-  datetime: '2026-09-22T20:22:30.000Z',
-  status: 'delivered',
-  action: 'forward',
-  isLastEvent: 1,
-  messageId: 'cloudflare-email-message-0001',
-  ...overrides,
-});
-
-const input = (fetchImpl: typeof fetch) => ({
-  zoneId,
+import {
+  digestOf,
+  eventRow,
+  input,
+  stub,
   token,
-  sourceRevision,
-  start: windowStart,
-  end: windowEnd,
-  fetchImpl,
-  now: () => probedAtMs,
-});
-
-const digestOf = (value: string): string =>
-  createHash('sha256').update(value).digest('hex');
-
-const stub = (rows: readonly unknown[]) => {
-  const fetchImpl = vi.fn<typeof fetch>();
-  fetchImpl.mockResolvedValueOnce(response(eventsPayload(rows)));
-  return fetchImpl;
-};
+  windowEnd,
+  windowStart,
+  zoneId,
+} from './ac209-email-routing-event.test-support.ts';
 
 describe('AC209 routing event query shape', () => {
   it('uses the documented events dataset over Time filters on one hour', () => {
@@ -97,7 +56,7 @@ describe('AC209 routing event query shape', () => {
       );
   });
 
-  it('bounds the window to the widest span a single events request may serve', () => {
+  it('bounds the window to the span the sibling diagnostic also asks for', () => {
     expect(AC209_EMAIL_ROUTING_EVENT_MAX_WINDOW_MS).toBe(3_600_000);
   });
 });
@@ -148,14 +107,17 @@ describe('AC209 routing event collection', () => {
     expect(report.outcome.messageIdsMissing).toBe(0);
     expect(report.outcome.messageIdDigestCoverage).toBe('complete');
     expect(report.outcome.finalEventRows).toBe(3);
-    // Ordered by descending count, then label, so the artifact is deterministic.
+    // Labels are published as one-way digests, so the tally is deterministic and
+    // carries no provider text. Ordered by descending count, then digest.
     expect(report.outcome.statusCounts).toEqual([
-      { label: 'delivered', count: 2 },
-      { label: 'dropped', count: 2 },
+      { labelSha256: digestOf('delivered'), count: 2 },
+      { labelSha256: digestOf('dropped'), count: 2 },
     ]);
     expect(report.outcome.actionCounts).toEqual([
-      { label: 'drop', count: 2 },
-      { label: 'forward', count: 2 },
+      // Ties break on the digest, which is the only label form carried, so the
+      // artifact stays byte-stable without ordering by withheld text.
+      { labelSha256: digestOf('forward'), count: 2 },
+      { labelSha256: digestOf('drop'), count: 2 },
     ]);
   });
 
@@ -259,7 +221,7 @@ describe('AC209 routing event collection', () => {
     expect(report.outcome.outsideWindowRows).toBe(2);
     expect(report.outcome.uniqueMessageIds).toBe(1);
     expect(report.outcome.statusCounts).toEqual([
-      { label: 'delivered', count: 1 },
+      { labelSha256: digestOf('delivered'), count: 1 },
     ]);
     expect(report.outcome.messageIdDigests).toEqual([digestOf('inside')]);
   });
@@ -290,186 +252,5 @@ describe('AC209 routing event collection', () => {
       status: 'unavailable',
       code: 'provider_result_truncated',
     });
-  });
-
-  it('reports a closed non-PII code when the query fails', async () => {
-    const fetchImpl = vi.fn<typeof fetch>();
-    fetchImpl.mockResolvedValueOnce(
-      response({ data: null, errors: [{ message: 'Permission denied' }] }),
-    );
-
-    const report = await collectAc209EmailRoutingEvents(input(fetchImpl));
-
-    expect(report.outcome).toEqual({
-      status: 'unavailable',
-      code: 'provider_permission_denied',
-    });
-  });
-
-  it('fails closed on a malformed row rather than interpreting it', async () => {
-    const cases: readonly Readonly<Record<string, unknown>>[] = [
-      {
-        datetime: 'not-a-time',
-        status: 'dropped',
-        action: 'drop',
-        isLastEvent: 1,
-        messageId: 'a',
-      },
-      {
-        datetime: '2026-09-22T20:22:30.000Z',
-        status: '',
-        action: 'drop',
-        isLastEvent: 1,
-        messageId: 'a',
-      },
-      {
-        datetime: '2026-09-22T20:22:30.000Z',
-        status: 'dropped\nnl',
-        action: 'drop',
-        isLastEvent: 1,
-        messageId: 'a',
-      },
-      {
-        datetime: '2026-09-22T20:22:30.000Z',
-        status: 'dropped',
-        action: 'dr\u001bop',
-        isLastEvent: 1,
-        messageId: 'a',
-      },
-      {
-        datetime: '2026-09-22T20:22:30.000Z',
-        status: 'dropped',
-        action: 'drop',
-        isLastEvent: 2,
-        messageId: 'a',
-      },
-      {
-        datetime: '2026-09-22T20:22:30.000Z',
-        status: 'dropped',
-        action: 'drop',
-        isLastEvent: '1',
-        messageId: 'a',
-      },
-    ];
-
-    for (const row of cases) {
-      const fetchImpl = stub([row]);
-      const report = await collectAc209EmailRoutingEvents(input(fetchImpl));
-      expect(report.outcome).toEqual({
-        status: 'unavailable',
-        code: 'provider_response_invalid',
-      });
-    }
-  });
-
-  it('rejects a row carrying an extra or missing field', async () => {
-    const extraField = {
-      ...eventRow(),
-      errorDetail: 'provider-private-detail',
-    };
-    const missingField = eventRow();
-    delete missingField['action'];
-
-    for (const row of [extraField, missingField]) {
-      const fetchImpl = stub([row]);
-      const report = await collectAc209EmailRoutingEvents(input(fetchImpl));
-
-      expect(report.outcome).toEqual({
-        status: 'unavailable',
-        code: 'provider_response_invalid',
-      });
-    }
-  });
-
-  it('rejects a dataset that is not an array', async () => {
-    const fetchImpl = vi.fn<typeof fetch>();
-    fetchImpl.mockResolvedValueOnce(
-      response({
-        data: { viewer: { zones: [{ emailRoutingAdaptive: 'not-an-array' }] } },
-        errors: null,
-      }),
-    );
-
-    const report = await collectAc209EmailRoutingEvents(input(fetchImpl));
-
-    expect(report.outcome).toEqual({
-      status: 'unavailable',
-      code: 'provider_response_invalid',
-    });
-  });
-
-  it('rejects an unusable window before any provider call', async () => {
-    for (const window of [
-      { start: windowEnd, end: windowStart },
-      { start: windowStart, end: windowStart },
-      { start: 'not-a-time', end: windowEnd },
-      // One millisecond wider than the documented single-request span.
-      { start: '2026-09-22T19:00:00.000Z', end: windowEnd },
-    ]) {
-      const fetchImpl = stub([]);
-
-      await expect(
-        collectAc209EmailRoutingEvents({ ...input(fetchImpl), ...window }),
-      ).rejects.toMatchObject({ code: 'invalid_configuration' });
-      expect(fetchImpl).not.toHaveBeenCalled();
-    }
-  });
-
-  it('accepts a window exactly as wide as the documented span', async () => {
-    const fetchImpl = stub([]);
-
-    const report = await collectAc209EmailRoutingEvents({
-      ...input(fetchImpl),
-      start: '2026-09-22T20:00:00.000Z',
-      end: '2026-09-22T21:00:00.000Z',
-    });
-
-    expect(report.window).toEqual({
-      start: '2026-09-22T20:00:00.000Z',
-      end: '2026-09-22T21:00:00.000Z',
-    });
-  });
-
-  it('rejects invalid configuration with a closed code', async () => {
-    const fetchImpl = stub([]);
-
-    for (const overrides of [
-      { zoneId: 'not-a-zone' },
-      { sourceRevision: 'main' },
-      { token: 'short' },
-      { token: 'has whitespace in it' },
-      { start: '' },
-    ]) {
-      await expect(
-        collectAc209EmailRoutingEvents({ ...input(fetchImpl), ...overrides }),
-      ).rejects.toMatchObject({ code: 'invalid_configuration' });
-      await expect(
-        collectAc209EmailRoutingEvents({ ...input(fetchImpl), ...overrides }),
-      ).rejects.toBeInstanceOf(Error);
-    }
-    expect(fetchImpl).not.toHaveBeenCalled();
-  });
-
-  it('validates the probe instant through the shared reader', async () => {
-    const fetchImpl = stub([]);
-
-    for (const now of [Number.NaN, Number.POSITIVE_INFINITY, 1e18])
-      await expect(
-        collectAc209EmailRoutingEvents({ ...input(fetchImpl), now: () => now }),
-      ).rejects.toMatchObject({ code: 'invalid_configuration' });
-    expect(fetchImpl).not.toHaveBeenCalled();
-  });
-
-  it('binds the artifact to the zone by digest without retaining the zone id', async () => {
-    const report = await collectAc209EmailRoutingEvents(input(stub([])));
-
-    expect(report.zoneTagSha256).toBe(digestOf(zoneId));
-    expect(report.environment).toBe('production');
-    expect(report.diagnosticOnly).toBe(true);
-    expect(report.dataset).toBe('emailRoutingAdaptive');
-    expect(report.sourceRevision).toBe(sourceRevision);
-    expect(Ac209EmailRoutingEventReportSchema.safeParse(report).success).toBe(
-      true,
-    );
   });
 });

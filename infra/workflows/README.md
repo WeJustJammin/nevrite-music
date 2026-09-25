@@ -166,9 +166,11 @@ filesystem and validation operations.
   support a complete-window total; a partial sum published as authoritative would
   be worse than a failure. Every other provider condition also fails closed into a
   closed code rather than degrading into an empty reading, and a bare UTC day is
-  enforced so a day label cannot be a timestamp. The `status` label is restricted to
-  visible ASCII because it is echoed into a CI log line, so a control character,
-  tab, escape sequence, or multi-byte glyph is rejected rather than emitted, and
+  enforced so a day label cannot be a timestamp. The `status` label is bounded and
+  shape-checked, then published only as a one-way SHA-256 digest, because it
+  reaches a CI log line and a retained artifact as provider-owned text that
+  Cloudflare types as a plain `string` with no documented value list. A control
+  character, newline, tab, or multi-byte glyph is rejected before the digest, and
   the artifact carries a `zoneTagSha256` digest of the requested zone so a reader
   can confirm which zone produced the numbers without the report retaining the
   raw identifier. It issues exactly one provider query. Investigation only: it
@@ -197,12 +199,13 @@ filesystem and validation operations.
   routing rule, authentication result, or provider error detail is read, and the
   row guard rejects any provider key outside that selection set rather than
   keeping it. The artifact carries bounded counts, the provider's own `status`
-  and `action` label tallies, the final-event count, and one-way SHA-256 digests
-  of the in-window message identifiers. The identifiers themselves are never
-  retained, logged, or published: they exist only long enough to be hashed, and
-  they appear in the retained artifact as digests only, never in the CI log line.
-  An operator who holds a candidate identifier can hash it and test set
-  membership; no raw identifier is recoverable from a digest. `messageId` is the
+  and `action` label tallies as one-way SHA-256 digests, the final-event count,
+  and one-way SHA-256 digests of the in-window message identifiers. The
+  identifiers themselves are never retained, logged, or published: they exist
+  only long enough to be hashed, and they appear in the retained artifact as
+  digests only, never in the CI log line. An operator who holds a candidate
+  identifier can hash it and test set membership; no raw identifier is recoverable
+  from a digest. `messageId` is the
   one optional selected field, because a routing event may legitimately carry
   none, and `messageIdDigestCoverage` records `complete` or `partial` accordingly
   so a non-match against a partial set cannot be read as absence.
@@ -241,10 +244,14 @@ filesystem and validation operations.
   into a closed code rather than degrading into an empty reading, and an unusable
   or over-wide window is rejected before any provider call is made. In-window rows
   are re-checked locally so an out-of-window row can never enter a distribution or
-  a digest set. The `status` and `action` labels are restricted to visible ASCII
-  because they are echoed into a CI log line, so a control character, tab, escape
-  sequence, or multi-byte glyph is rejected rather than emitted, and the artifact
-  carries a `zoneTagSha256` digest of the requested zone so a reader can confirm
+  a digest set. The `status` and `action` labels are bounded and shape-checked,
+  then reduced to one-way SHA-256 digests before they reach the log line or the
+  artifact, so no raw provider text is emitted on either surface: Cloudflare types
+  both as plain `string` and documents no value list, so a label is unvetted text
+  that may carry a workflow-command token or personal data, and the digest removes
+  both risks while keeping the tallies comparable. A printable label is digested
+  for the same reason, because printable ASCII is not a safety property. The
+  artifact carries a `zoneTagSha256` digest of the requested zone so a reader can confirm
   which zone produced the numbers without the report retaining the raw identifier.
   Investigation only: it performs no mutation, sends no email, changes no
   provider setting, closes no acceptance criterion, and cannot attribute any count

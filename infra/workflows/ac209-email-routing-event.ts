@@ -1,23 +1,23 @@
 import { createHash } from 'node:crypto';
 
-import { SafeReleaseTimestampSchema } from '../../packages/contracts/src/release-recovery-common.ts';
 import { readDatasetPresenceInstant } from './ac209-email-dataset-presence-shared.ts';
 import {
   AC209_EMAIL_ROUTING_EVENT_DATASET,
-  AC209_EMAIL_ROUTING_EVENT_FIELDS,
   AC209_EMAIL_ROUTING_EVENT_MAX_ROWS,
   AC209_EMAIL_ROUTING_EVENT_MAX_WINDOW_MS,
   AC209_EMAIL_ROUTING_EVENT_QUERY,
-  AC209_EMAIL_ROUTING_EVENT_REQUIRED_FIELDS,
   AC209_EMAIL_ROUTING_EVENT_SCHEMA_VERSION,
   Ac209EmailRoutingEventInputSchema,
   Ac209EmailRoutingEventReportSchema,
-  isVisibleAsciiStatus,
   type Ac209EmailRoutingEventInput,
   type Ac209EmailRoutingEventLabelCount,
   type Ac209EmailRoutingEventOutcome,
   type Ac209EmailRoutingEventReport,
 } from './ac209-email-routing-event-contract.ts';
+import {
+  readRoutingEvent,
+  type RoutingEvent,
+} from './ac209-email-routing-event-row.ts';
 import {
   Ac209EmailSendingAnalyticsError,
   type Ac209EmailSendingAnalyticsErrorCode,
@@ -32,11 +32,11 @@ import {
  * Issues exactly ONE provider query over one caller-supplied hour against the
  * documented `emailRoutingAdaptive` events dataset on the exact parent zone, and
  * reports a redacted distribution: in-window row counts, provider-reported
- * `status` and `action` label tallies, the final-event count, and one-way digests
- * of the in-window provider message identifiers. It reuses the sibling probes'
- * instant reader, the shared provider request/zone-record boundary, and the
- * shared closed error vocabulary rather than restating envelope, timeout,
- * redaction, or classification rules.
+ * `status` and `action` label tallies as one-way digests, the final-event count,
+ * and one-way digests of the in-window provider message identifiers. It reuses the
+ * sibling probes' instant reader, the shared provider request/zone-record
+ * boundary, the shared label-digest rule, and the shared closed error vocabulary
+ * rather than restating envelope, timeout, redaction, or classification rules.
  *
  * What the numbers can and cannot say is stated in the contract module and
  * encoded in the artifact's `observation` and `sampling` literals. In short: this
@@ -51,116 +51,24 @@ import {
  * `invalid_configuration` before any provider call is made.
  */
 
-const isRecord = (value: unknown): value is Record<string, unknown> =>
-  typeof value === 'object' && value !== null && !Array.isArray(value);
-
-/** One in-window routing event, reduced to the bounded fields this diagnostic uses. */
-type RoutingEvent = Readonly<{
-  datetime: string;
-  status: string;
-  action: string;
-  isLastEvent: number;
-  /** `undefined` when the provider returned no usable identifier for this row. */
-  messageIdDigest: string | undefined;
-}>;
-
-const readBoundedLabel = (value: unknown): string => {
-  // Visible ASCII only: the label is echoed into a CI log line, so a control
-  // character, tab, escape sequence, DEL, C1 byte, or multi-byte glyph is
-  // rejected rather than emitted. No closed vocabulary is imposed, because
-  // enumerating the provider's values is the purpose of this diagnostic.
-  if (
-    typeof value !== 'string' ||
-    value.length === 0 ||
-    value.length > 256 ||
-    !isVisibleAsciiStatus(value)
-  )
-    failAc209EmailSendingAnalytics(
-      'provider_response_invalid',
-      'provider routing event label is malformed.',
-    );
-  return value;
-};
-
 /**
- * Reduces one provider message identifier to a one-way digest. The identifier
- * itself is never returned, retained, compared as text, or logged: it exists only
- * inside this function's frame. An identifier that is absent, blank, over-long,
- * or non-printable yields `undefined` rather than failing the run, because the
- * documented rule for a routing event is that some rows legitimately carry no
- * identifier - the report records that as `partial` digest coverage.
+ * Groups rows into a deterministic tally ordered by descending count, then
+ * digest, so the artifact stays byte-stable across runs.
  */
-const readMessageIdDigest = (value: unknown): string | undefined => {
-  if (typeof value !== 'string') return undefined;
-  if (!/^[\x21-\x7e]{1,512}$/u.test(value)) return undefined;
-  return createHash('sha256').update(value).digest('hex');
-};
-
-/**
- * Reads one per-event row and keeps it bounded to the selected shape.
- *
- * The four required fields must be present and the row may carry NO key outside
- * the selected five, so an unexpected or PII-bearing field is a contract
- * violation rather than a row to interpret. `messageId` is the one optional
- * member: a routing event may legitimately have no provider identifier, and JSON
- * transport cannot distinguish an absent identifier from an omitted key, so it
- * is read as "no identifier" and recorded as partial digest coverage instead of
- * failing the whole run.
- */
-const readRoutingEvent = (row: unknown): RoutingEvent => {
-  if (!isRecord(row))
-    failAc209EmailSendingAnalytics(
-      'provider_response_invalid',
-      'provider routing event row is malformed.',
-    );
-  for (const key of Object.keys(row))
-    if (!AC209_EMAIL_ROUTING_EVENT_FIELDS.includes(key))
-      failAc209EmailSendingAnalytics(
-        'provider_response_invalid',
-        'provider routing event row carries an unexpected field.',
-      );
-  for (const key of AC209_EMAIL_ROUTING_EVENT_REQUIRED_FIELDS)
-    if (!(key in row))
-      failAc209EmailSendingAnalytics(
-        'provider_response_invalid',
-        'provider routing event row is missing a field.',
-      );
-  const datetime = SafeReleaseTimestampSchema.safeParse(row['datetime']);
-  if (!datetime.success)
-    failAc209EmailSendingAnalytics(
-      'provider_response_invalid',
-      'provider routing event timestamp is invalid.',
-    );
-  const isLastEvent = row['isLastEvent'];
-  if (isLastEvent !== 0 && isLastEvent !== 1)
-    failAc209EmailSendingAnalytics(
-      'provider_response_invalid',
-      'provider routing event final-event flag is malformed.',
-    );
-  return {
-    datetime: datetime.data,
-    status: readBoundedLabel(row['status']),
-    action: readBoundedLabel(row['action']),
-    isLastEvent,
-    messageIdDigest: readMessageIdDigest(row['messageId']),
-  };
-};
-
-/** Groups rows into a deterministic tally ordered by descending count, then label. */
 const tallyLabels = (
   rows: readonly RoutingEvent[],
   select: (row: RoutingEvent) => string,
 ): readonly Ac209EmailRoutingEventLabelCount[] => {
   const counts = new Map<string, number>();
   for (const row of rows) {
-    const label = select(row);
-    counts.set(label, (counts.get(label) ?? 0) + 1);
+    const labelSha256 = select(row);
+    counts.set(labelSha256, (counts.get(labelSha256) ?? 0) + 1);
   }
   return [...counts.entries()]
-    .map(([label, count]) => ({ label, count }))
+    .map(([labelSha256, count]) => ({ labelSha256, count }))
     .sort((left, right) =>
       left.count === right.count
-        ? left.label.localeCompare(right.label)
+        ? left.labelSha256.localeCompare(right.labelSha256)
         : right.count - left.count,
     );
 };
@@ -226,8 +134,8 @@ const summarizeEvents = (
     messageIdsMissing,
     finalEventRows: withinWindow.filter((event) => event.isLastEvent === 1)
       .length,
-    statusCounts: tallyLabels(withinWindow, (event) => event.status),
-    actionCounts: tallyLabels(withinWindow, (event) => event.action),
+    statusCounts: tallyLabels(withinWindow, (event) => event.statusSha256),
+    actionCounts: tallyLabels(withinWindow, (event) => event.actionSha256),
     messageIdDigests: [...digests].sort(),
     messageIdDigestCoverage: messageIdsMissing > 0 ? 'partial' : 'complete',
   };

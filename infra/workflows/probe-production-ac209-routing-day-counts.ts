@@ -8,6 +8,7 @@ import {
   type Ac209EmailRoutingDayCountsReport,
 } from './ac209-email-routing-day-counts-contract.ts';
 import { collectAc209EmailRoutingDayCounts } from './ac209-email-routing-day-counts.ts';
+import { boundedFailureCode } from './ac209-email-log-safety.ts';
 import { writeProviderReleaseEvidenceFile } from './provider-release-evidence-files.ts';
 
 const SAFE_ARTIFACT_PATH = /^[A-Za-z0-9._/-]{1,256}$/u;
@@ -19,14 +20,17 @@ const SAFE_ARTIFACT_PATH = /^[A-Za-z0-9._/-]{1,256}$/u;
  * flag alongside the reported numbers, so a provider-reported grouped total can
  * never be read as the sibling events probe's at-least-one observation, nor as
  * a guaranteed exact underlying event count. Group rows appear as bounded
- * `date/status/count` triples: no address, subject, provider message
- * identifier, routing rule, or token is selected, so none can reach the log.
+ * `date/digest/count` triples: no address, subject, provider message
+ * identifier, routing rule, or token is selected, and the provider's status label
+ * is reduced to a one-way digest before it is grouped, so neither provider text
+ * nor the `##[` token the Actions runner matches anywhere in a line can reach the
+ * log.
  */
 export const formatAc209EmailRoutingDayCountsSummary = (
   report: Ac209EmailRoutingDayCountsReport,
 ): string => {
   const groups = report.groups
-    .map((group) => `${group.date}/${group.status}=${group.count}`)
+    .map((group) => `${group.date}/${group.statusSha256}=${group.count}`)
     .join(',');
   return [
     `AC209_EMAIL_ROUTING_DAY_COUNTS`,
@@ -79,14 +83,11 @@ const run = async (): Promise<void> => {
 const entrypoint = process.argv[1];
 if (entrypoint && resolve(entrypoint) === fileURLToPath(import.meta.url)) {
   run().catch((error: unknown) => {
-    const code =
-      typeof error === 'object' &&
-      error !== null &&
-      'code' in error &&
-      typeof error.code === 'string'
-        ? error.code
-        : 'unexpected_failure';
-    console.error(`AC209_EMAIL_ROUTING_DAY_COUNTS failed code=${code}`);
+    // A failure line is public, so it carries a code from the closed vocabulary
+    // rather than any string a caught value exposes.
+    console.error(
+      `AC209_EMAIL_ROUTING_DAY_COUNTS failed code=${boundedFailureCode(error)}`,
+    );
     process.exitCode = 1;
   });
 }

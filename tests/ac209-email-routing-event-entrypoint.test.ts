@@ -1,4 +1,5 @@
 import { spawnSync } from 'node:child_process';
+import { createHash } from 'node:crypto';
 import { mkdtempSync, readdirSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
@@ -12,6 +13,10 @@ import {
 import { formatAc209EmailRoutingEventSummary } from '../infra/workflows/probe-production-ac209-routing-events.ts';
 
 const sourceRevision = '20338c72ef9f5924f5f2a7ce82c12122aa84c46a';
+
+const digestOf = (value: string): string =>
+  createHash('sha256').update(value).digest('hex');
+
 const entrypointPath = new URL(
   '../infra/workflows/probe-production-ac209-routing-events.ts',
   import.meta.url,
@@ -68,7 +73,7 @@ describe('AC209 routing event entrypoint', () => {
     );
   });
 
-  it('renders the provider label distributions as bounded pairs', () => {
+  it('renders the provider label distributions as bounded digest pairs', () => {
     const summary = formatAc209EmailRoutingEventSummary(
       report({
         outcome: {
@@ -80,17 +85,23 @@ describe('AC209 routing event entrypoint', () => {
           messageIdDigestCoverage: 'partial',
           finalEventRows: 1,
           statusCounts: [
-            { label: 'dropped', count: 3 },
-            { label: 'delivered', count: 1 },
+            { labelSha256: digestOf('dropped'), count: 3 },
+            { labelSha256: digestOf('delivered'), count: 1 },
           ],
-          actionCounts: [{ label: 'drop', count: 4 }],
+          actionCounts: [{ labelSha256: digestOf('drop'), count: 4 }],
         },
       }),
     );
 
-    expect(summary).toContain('statusCounts=[dropped=3,delivered=1]');
-    expect(summary).toContain('actionCounts=[drop=4]');
+    expect(summary).toContain(
+      `statusCounts=[${digestOf('dropped')}=3,${digestOf('delivered')}=1]`,
+    );
+    expect(summary).toContain(`actionCounts=[${digestOf('drop')}=4]`);
     expect(summary).toContain('digestCoverage=partial');
+    // A log line is public and is scanned for workflow commands, so the raw
+    // provider label never appears on it.
+    expect(summary).not.toContain('dropped');
+    expect(summary).not.toContain('delivered=');
     // The line reports an observation of one dataset, never a delivery claim.
     expect(summary).not.toContain('delivered=true');
     expect(summary).not.toContain('exact');

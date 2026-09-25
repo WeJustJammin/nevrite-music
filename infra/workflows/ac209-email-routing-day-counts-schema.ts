@@ -1,5 +1,6 @@
 import { z } from '../../packages/contracts/node_modules/zod/index.js';
 import { SafeReleaseTimestampSchema } from '../../packages/contracts/src/release-recovery-common.ts';
+import { PROVIDER_LABEL_SHA256 } from './ac209-email-log-safety.ts';
 
 /**
  * Zod schemas and the two literal identities for the bounded, read-only AC209
@@ -12,13 +13,16 @@ import { SafeReleaseTimestampSchema } from '../../packages/contracts/src/release
  * importers are unaffected and keep importing the contract path.
  *
  * The row shape is the whole safety story: the report may only ever carry a bare
- * UTC day, a visible-ASCII status label, and a non-negative integer count. See
- * the contract module for why sampling makes these provider-reported values
- * rather than guaranteed exact underlying event counts.
+ * UTC day, a one-way digest of the provider's status label, and a non-negative
+ * integer count. See the contract module for why sampling makes these
+ * provider-reported values rather than guaranteed exact underlying event counts,
+ * and `ac209-email-log-safety.ts` for why the label is published as a digest. The
+ * retained artifact is public, so the rule is enforced by the schema rather than
+ * only by the reader: a row has no field that could carry the raw label.
  */
 
 export const AC209_EMAIL_ROUTING_DAY_COUNTS_SCHEMA_VERSION =
-  'ac209-email-routing-day-counts-v1' as const;
+  'ac209-email-routing-day-counts-v2' as const;
 
 export const AC209_EMAIL_ROUTING_DAY_COUNTS_DATASET =
   'emailRoutingAdaptiveGroups' as const;
@@ -26,17 +30,20 @@ export const AC209_EMAIL_ROUTING_DAY_COUNTS_DATASET =
 const ZONE_ID = /^[0-9a-f]{32}$/u;
 const SOURCE_REVISION = /^[0-9a-f]{40}$/u;
 const UTC_DAY = /^\d{4}-\d{2}-\d{2}$/u;
-const VISIBLE_ASCII = /^[\x20-\x7e]+$/u;
-
+const BOUNDED_PROVIDER_LABEL = /^[\x20-\x7e]{1,256}$/u;
 /**
- * One definition of a printable status label, shared by the schema refinement
- * and the collector's own boundary check so the two cannot drift. The label is
- * provider-owned and is echoed into a CI log line, so control characters, tabs,
- * escape sequences, DEL, C1 bytes, and multi-byte glyphs are all rejected; no
- * arbitrary whitelist narrows the provider's actual vocabulary.
+ * Bounds one provider-owned status label before it is digested. Shared by the
+ * schema refinement and the collector's own boundary check so the two cannot
+ * drift.
+ *
+ * This test is a shape check, not a safety boundary: `##[`, `::`, and `@` are all
+ * visible ASCII, so passing it has never meant the label is safe to publish. What
+ * makes the label safe is that the digest, not the label, is what reaches a log
+ * line or an artifact. Bounding length keeps a hostile payload small, and no
+ * whitelist narrows the provider's actual vocabulary, which is unenumerated.
  */
-export const isVisibleAsciiStatus = (value: string): boolean =>
-  VISIBLE_ASCII.test(value);
+export const isBoundedProviderLabel = (value: string): boolean =>
+  BOUNDED_PROVIDER_LABEL.test(value);
 
 export const Ac209EmailRoutingDayCountsInputSchema = z
   .object({
@@ -58,24 +65,22 @@ export type Ac209EmailRoutingDayCountsInput = z.infer<
 };
 
 /**
- * `status` is a provider-owned opaque label. It is bounded and shape-checked
- * but NOT constrained to a closed vocabulary, because enumerating the values is
- * the diagnostic's purpose; the report therefore draws no conclusion from any
- * particular value.
+ * `status` is a provider-owned opaque label published only as a one-way digest.
+ * It is bounded and shape-checked but NOT constrained to a closed vocabulary,
+ * because enumerating the values is the diagnostic's purpose and the provider
+ * documents no value list; the report therefore draws no conclusion from any
+ * particular value, and retains no text an operator did not already hold.
  */
 export const Ac209EmailRoutingDayCountGroupSchema = z
   .object({
     date: z.string().regex(UTC_DAY),
     /**
-     * Visible ASCII only. The label is provider-owned and is echoed into a CI
-     * log line, so control characters, tabs, escape sequences, and multi-byte
-     * glyphs are rejected rather than emitted.
+     * One-way digest of the provider's status label, not the label. The raw value
+     * exists only inside the reader frame that hashed it, so a workflow-command
+     * token such as `##[` or `::`, or any personal data a label might carry, has
+     * no field to land in on a public artifact or log line.
      */
-    status: z
-      .string()
-      .min(1)
-      .max(256)
-      .refine((value) => isVisibleAsciiStatus(value)),
+    statusSha256: z.string().regex(PROVIDER_LABEL_SHA256),
     count: z.number().int().min(0),
   })
   .strict();

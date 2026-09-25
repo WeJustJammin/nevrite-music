@@ -1,3 +1,5 @@
+import { createHash } from 'node:crypto';
+
 import { describe, expect, it } from 'vitest';
 
 import {
@@ -11,11 +13,14 @@ import {
   Ac209EmailRoutingEventInputSchema,
   Ac209EmailRoutingEventLabelCountSchema,
   Ac209EmailRoutingEventReportSchema,
-  isVisibleAsciiStatus,
+  isBoundedProviderLabel,
 } from '../infra/workflows/ac209-email-routing-event-contract.ts';
 
 const sourceRevision = '20338c72ef9f5924f5f2a7ce82c12122aa84c46a';
 const zoneId = '5bfba340525c623584c47d631116804c';
+
+const digest = (value: string): string =>
+  createHash('sha256').update(value).digest('hex');
 
 const availableOutcome = {
   status: 'available',
@@ -153,14 +158,21 @@ describe('AC209 routing event contract closure', () => {
     ).toBe(false);
   });
 
-  it('accepts a bounded visible-ASCII label and rejects anything unprintable', () => {
+  it('accepts a label digest and rejects any raw provider label', () => {
+    // The tally carries digests, never labels, so a raw label - printable or not,
+    // including a workflow-command token - has no accepted form.
     expect(
       Ac209EmailRoutingEventLabelCountSchema.safeParse({
-        label: 'dropped',
+        labelSha256: digest('dropped'),
         count: 3,
       }).success,
     ).toBe(true);
     for (const label of [
+      'dropped',
+      '##[error]',
+      '##[set-output name=leak;]exfiltrated',
+      '::set-output name=leak::exfiltrated',
+      'someone@example.invalid',
       '',
       'drop\nnl',
       'drop\trt',
@@ -175,27 +187,44 @@ describe('AC209 routing event contract closure', () => {
         Ac209EmailRoutingEventLabelCountSchema.safeParse({ label, count: 1 })
           .success,
       ).toBe(false);
+    for (const labelSha256 of [
+      '',
+      'A'.repeat(64),
+      'a'.repeat(63),
+      'a'.repeat(65),
+      `${'a'.repeat(63)}z`,
+    ])
+      expect(
+        Ac209EmailRoutingEventLabelCountSchema.safeParse({
+          labelSha256,
+          count: 1,
+        }).success,
+      ).toBe(false);
     for (const count of [-1, 1.5, '1', null])
       expect(
         Ac209EmailRoutingEventLabelCountSchema.safeParse({
-          label: 'dropped',
+          labelSha256: digest('dropped'),
           count,
         }).success,
       ).toBe(false);
     expect(
       Ac209EmailRoutingEventLabelCountSchema.safeParse({
-        label: 'dropped',
+        labelSha256: digest('dropped'),
         count: 1,
         messageId: 'provider-owned',
       }).success,
     ).toBe(false);
   });
 
-  it('exposes the one shared printable-label predicate', () => {
-    expect(isVisibleAsciiStatus('dropped')).toBe(true);
-    expect(isVisibleAsciiStatus('delivery failed')).toBe(true);
+  it('exposes the one shared label-bound predicate', () => {
+    expect(isBoundedProviderLabel('dropped')).toBe(true);
+    expect(isBoundedProviderLabel('delivery failed')).toBe(true);
+    // Bounded printable ASCII is not safety: these tokens pass it, which is why
+    // the digest and the absent raw-label field are what make the artifact safe.
+    expect(isBoundedProviderLabel('##[error]')).toBe(true);
+    expect(isBoundedProviderLabel('::set-output name=x::y')).toBe(true);
     for (const value of ['', 'a\nb', 'a\tb', 'a\u001bb', 'aéd'])
-      expect(isVisibleAsciiStatus(value)).toBe(false);
+      expect(isBoundedProviderLabel(value)).toBe(false);
   });
 
   it('carries a digest array rather than any raw identifier field', () => {

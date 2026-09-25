@@ -21,10 +21,11 @@ import { AC209_EMAIL_SENDING_MAX_WINDOW_MS } from './ac209-email-sending-analyti
  * (https://developers.cloudflare.com/email-service/platform/limits/) while
  * publishing two independent zone-level datasets
  * (https://developers.cloudflare.com/email-service/observability/metrics-analytics/).
- * A one-hour window is the documented widest span the `*Adaptive` events datasets
- * serve for a single request, and it is also the span an existing AC209
- * diagnostic already asked the Email *Sending* dataset for. Asking the ROUTING
- * dataset for the same span is what makes the two readings comparable at all.
+ * A one-hour window is the span an existing AC209 diagnostic already asked the
+ * Email *Sending* dataset for, and that diagnostic uses the same one-hour value;
+ * it is not asserted here to be the provider's maximum permitted span, which this
+ * module does not query. Asking the ROUTING dataset for the same span is what
+ * makes the two readings comparable at all.
  *
  * Deliberately NOT claimed anywhere in this contract or in the artifact:
  *
@@ -38,24 +39,27 @@ import { AC209_EMAIL_SENDING_MAX_WINDOW_MS } from './ac209-email-sending-analyti
  *   sample, so the required `sampling` literal records that caveat in every
  *   artifact.
  * - It attributes no count to any particular message. Correlation across reports
- *   is possible only through one-way digests, and only when the `digits` field
- *   reports `sufficient` for both reports being compared.
+ *   is possible only through one-way digests of provider message identifiers, and
+ *   only when the compared reports both record `complete` digest coverage
+ *   (`messageIdDigestCoverage`); a `partial` set cannot support a non-match.
  * - It closes no acceptance criterion and produces no evidence that can substitute
  *   for the correlation gate, the delivery verifier, or the visible receipt
  *   inspection.
  *
- * Schemas live in `ac209-email-routing-event-schema.ts` and are re-exported here
- * so importers keep one stable path; the dependency runs one way, keeping the
- * module graph a DAG.
+ * Schemas live in two modules split by shape, and both are re-exported here so
+ * importers keep one stable path: `ac209-email-routing-event-schema.ts` owns the
+ * measurement shapes and `ac209-email-routing-event-report-schema.ts` owns the
+ * report envelope. The dependency runs one way, keeping the module graph a DAG.
  */
 
 export * from './ac209-email-routing-event-schema.ts';
+export * from './ac209-email-routing-event-report-schema.ts';
 
 /**
- * The widest single-request span the `*Adaptive` events datasets serve, reused
- * from the sibling Email Sending contract rather than restated: the existing
- * AC209 email diagnostic already asks its window against that same constant, so
- * there is exactly one named reference for the widest served span.
+ * The one-hour window this diagnostic asks for, reused from the sibling Email
+ * Sending contract rather than restated so the two readings are asked over the
+ * same span and exactly one named reference exists. It is the span the sibling
+ * AC209 diagnostic uses, not a provider maximum this module verified.
  */
 export const AC209_EMAIL_ROUTING_EVENT_MAX_WINDOW_MS =
   AC209_EMAIL_SENDING_MAX_WINDOW_MS;

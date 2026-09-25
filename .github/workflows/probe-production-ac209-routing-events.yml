@@ -1,5 +1,4 @@
 name: Probe production AC209 Email Routing events
-
 on:
   workflow_dispatch:
     inputs:
@@ -20,13 +19,10 @@ on:
         required: true
         type: boolean
         default: false
-
 concurrency:
   group: probe-production-ac209-routing-events
   cancel-in-progress: false
-
 permissions: { contents: read }
-
 jobs:
   preflight:
     if: inputs.confirm_routing_event_probe == true && github.ref == 'refs/heads/main'
@@ -53,7 +49,6 @@ jobs:
           GITHUB_TOKEN: ${{ github.token }}
           SOURCE_SHA: ${{ inputs.source_revision }}
         run: node --experimental-strip-types infra/workflows/verify-production-environment.ts
-
   probe:
     needs: preflight
     runs-on: [self-hosted, wejammin]

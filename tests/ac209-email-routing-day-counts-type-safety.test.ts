@@ -1,7 +1,9 @@
+import { createHash } from 'node:crypto';
+
 import { describe, expect, it } from 'vitest';
 
 import { AC209_EMAIL_PRESENCE_WIDE_WINDOW_MS } from '../infra/workflows/ac209-email-presence-contract.ts';
-import { isVisibleAsciiStatus } from '../infra/workflows/ac209-email-routing-day-counts-schema.ts';
+import { isBoundedProviderLabel } from '../infra/workflows/ac209-email-routing-day-counts-schema.ts';
 import {
   AC209_EMAIL_ROUTING_DAY_COUNTS_DATASET,
   AC209_EMAIL_ROUTING_DAY_COUNTS_MAX_ROWS,
@@ -15,8 +17,12 @@ import {
 /**
  * Schema-level guards for the aggregated diagnostic. The row contract is the
  * whole safety story here: the report may only ever carry a bare UTC day, a
- * bounded status label, and a non-negative integer count.
+ * one-way digest of the provider's status label, and a non-negative integer
+ * count.
  */
+
+const digest = (value: string): string =>
+  createHash('sha256').update(value).digest('hex');
 describe('AC209 routing day-counts contract closure', () => {
   it('declares the aggregated dataset and the low row bound', () => {
     expect(AC209_EMAIL_ROUTING_DAY_COUNTS_DATASET).toBe(
@@ -39,11 +45,11 @@ describe('AC209 routing day-counts contract closure', () => {
     expect(elapsedMs).toBeLessThanOrEqual(AC209_EMAIL_PRESENCE_WIDE_WINDOW_MS);
   });
 
-  it('accepts a bare UTC day with a bounded status and a non-negative count', () => {
+  it('accepts a bare UTC day with a digest and a non-negative count', () => {
     expect(
       Ac209EmailRoutingDayCountGroupSchema.safeParse({
         date: '2026-09-22',
-        status: 'dropped',
+        statusSha256: digest('dropped'),
         count: 0,
       }).success,
     ).toBe(true);
@@ -78,11 +84,17 @@ describe('AC209 routing day-counts contract closure', () => {
       ).toBe(false);
   });
 
-  it('exposes one shared visible-ASCII predicate used by both boundaries', () => {
-    // The collector boundary and the schema must agree on what a printable
-    // status is, so the predicate lives in exactly one place.
-    expect(isVisibleAsciiStatus('dropped')).toBe(true);
-    expect(isVisibleAsciiStatus('delivery failed')).toBe(true);
+  it('exposes one shared label-bound predicate used by both boundaries', () => {
+    // The collector boundary and the schema must agree on what a bounded provider
+    // label is, so the predicate lives in exactly one place. It is a shape check:
+    // the predicates that make a label safe to publish are the digest and the
+    // absence of any field that could hold the raw text.
+    expect(isBoundedProviderLabel('dropped')).toBe(true);
+    expect(isBoundedProviderLabel('delivery failed')).toBe(true);
+    // A workflow-command token IS bounded printable ASCII, which is exactly why
+    // the bound alone was never the safety boundary.
+    expect(isBoundedProviderLabel('##[error]')).toBe(true);
+    expect(isBoundedProviderLabel('::set-output name=x::y')).toBe(true);
     for (const value of [
       '',
       'drop\nped',
@@ -90,25 +102,22 @@ describe('AC209 routing day-counts contract closure', () => {
       'drop\u001b[31mped',
       'dropéd',
       'drop\u007fped',
+      'a'.repeat(257),
     ])
-      expect(isVisibleAsciiStatus(value)).toBe(false);
+      expect(isBoundedProviderLabel(value)).toBe(false);
   });
 
-  it('rejects an empty status label or any non-printable character', () => {
-    // The status label is provider-owned and lands in a CI log line, so it is
-    // restricted to visible ASCII: a control character, an escape sequence, a
-    // tab, or a multi-byte glyph is rejected rather than echoed.
+  it('carries only a digest, so no raw provider label can be represented', () => {
+    // A raw provider label has no field to land in, whatever it contains: a
+    // control character, a newline, a workflow-command token, or an address.
     for (const status of [
-      '',
-      'a'.repeat(257),
+      'dropped',
+      '##[error]',
+      '##[set-output name=leak;]exfiltrated',
+      '::set-output name=leak::exfiltrated',
+      'someone@example.invalid',
       'drop\nped',
-      'drop\rped',
-      'drop\tped',
-      'drop\u0000ped',
-      'drop\u001b[31mped',
-      'drop\u007fped',
-      'drop\u009bped',
-      'dropéd',
+      'a'.repeat(257),
     ])
       expect(
         Ac209EmailRoutingDayCountGroupSchema.safeParse({
@@ -117,21 +126,28 @@ describe('AC209 routing day-counts contract closure', () => {
           count: 1,
         }).success,
       ).toBe(false);
-    // Ordinary visible-ASCII provider labels still parse.
-    // A space is printable ASCII, so a two-word provider label still parses.
-    for (const status of [
-      'dropped',
-      'forwarded',
-      'deliveryFailed',
-      'delivery failed',
+    // The digest form is what parses, and nothing else identifies the label.
+    expect(
+      Ac209EmailRoutingDayCountGroupSchema.safeParse({
+        date: '2026-09-22',
+        statusSha256: digest('dropped'),
+        count: 1,
+      }).success,
+    ).toBe(true);
+    for (const statusSha256 of [
+      '',
+      'A'.repeat(64),
+      'a'.repeat(63),
+      'a'.repeat(65),
+      `${'a'.repeat(63)}z`,
     ])
       expect(
         Ac209EmailRoutingDayCountGroupSchema.safeParse({
           date: '2026-09-22',
-          status,
+          statusSha256,
           count: 1,
         }).success,
-      ).toBe(true);
+      ).toBe(false);
   });
 
   it('rejects a group carrying an extra field', () => {

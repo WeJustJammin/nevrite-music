@@ -9,25 +9,33 @@ import {
   type Ac209EmailRoutingEventReport,
 } from './ac209-email-routing-event-contract.ts';
 import { collectAc209EmailRoutingEvents } from './ac209-email-routing-event.ts';
+import { boundedFailureCode } from './ac209-email-log-safety.ts';
 import { writeProviderReleaseEvidenceFile } from './provider-release-evidence-files.ts';
 
 const SAFE_ARTIFACT_PATH = /^[A-Za-z0-9._/-]{1,256}$/u;
 
-/** Renders one label tally as bounded `label=count` pairs. */
+/**
+ * Renders one digest tally as bounded `labelSha256=count` pairs. The values are
+ * one-way digests, so the line carries no provider text an operator did not
+ * already hold.
+ */
 const formatLabelCounts = (
   counts: readonly Ac209EmailRoutingEventLabelCount[],
-): string => counts.map((entry) => `${entry.label}=${entry.count}`).join(',');
+): string =>
+  counts.map((entry) => `${entry.labelSha256}=${entry.count}`).join(',');
 
 /**
  * Redacted summary line for the workflow log.
  *
  * The workflow must never print a raw GraphQL response, so the line carries the
  * provenance, the sampling caveat, the bounded counts, and the two provider
- * label distributions. It deliberately does NOT carry the message-identifier
- * digests: those stay in the retained artifact, and they are one-way digests of
- * identifiers rather than identifiers themselves, so no address, subject,
- * provider message identifier, session, routing rule, or error detail can reach
- * a log line from any path.
+ * label distributions as one-way digests. It deliberately does NOT carry the
+ * message-identifier digests: those stay in the retained artifact, and they are
+ * one-way digests of identifiers rather than identifiers themselves, so no
+ * address, subject, provider message identifier, session, routing rule, provider
+ * label text, or error detail can reach a log line from any path. Digested labels
+ * keep the line free of the `##[` token the Actions runner matches anywhere in a
+ * line, and of any personal data a provider label might carry.
  */
 export const formatAc209EmailRoutingEventSummary = (
   report: Ac209EmailRoutingEventReport,
@@ -98,14 +106,11 @@ const run = async (): Promise<void> => {
 const entrypoint = process.argv[1];
 if (entrypoint && resolve(entrypoint) === fileURLToPath(import.meta.url)) {
   run().catch((error: unknown) => {
-    const code =
-      typeof error === 'object' &&
-      error !== null &&
-      'code' in error &&
-      typeof error.code === 'string'
-        ? error.code
-        : 'unexpected_failure';
-    console.error(`AC209_EMAIL_ROUTING_EVENTS failed code=${code}`);
+    // A failure line is public, so it carries a code from the closed vocabulary
+    // rather than any string a caught value exposes.
+    console.error(
+      `AC209_EMAIL_ROUTING_EVENTS failed code=${boundedFailureCode(error)}`,
+    );
     process.exitCode = 1;
   });
 }

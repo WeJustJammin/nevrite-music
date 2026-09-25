@@ -1,3 +1,5 @@
+import { createHash } from 'node:crypto';
+
 import { describe, expect, it, vi } from 'vitest';
 
 import {
@@ -44,6 +46,9 @@ const stub = (rows: readonly unknown[]) => {
   fetchImpl.mockResolvedValueOnce(response(groupsPayload([...rows])));
   return fetchImpl;
 };
+
+const digestOf = (value: string): string =>
+  createHash('sha256').update(value).digest('hex');
 
 describe('AC209 routing day-counts query shape', () => {
   it('uses the documented aggregated dataset with day-level date filters', () => {
@@ -120,13 +125,17 @@ describe('AC209 routing day counts collection', () => {
     const report = await collectAc209EmailRoutingDayCounts(input(fetchImpl));
 
     expect(report.groups).toEqual([
-      { date: '2026-09-22', status: 'dropped', count: 1 },
-      { date: '2026-09-22', status: 'forwarded', count: 3 },
-      { date: '2026-08-30', status: 'dropped', count: 7 },
+      { date: '2026-09-22', statusSha256: digestOf('dropped'), count: 1 },
+      { date: '2026-09-22', statusSha256: digestOf('forwarded'), count: 3 },
+      { date: '2026-08-30', statusSha256: digestOf('dropped'), count: 7 },
     ]);
     expect(report.distinctDays).toBe(2);
     expect(report.reportedTotalCount).toBe(11);
     expect(report.pageComplete).toBe(true);
+    // The provider label itself never leaves the reader frame: only its digest is
+    // carried, so no raw provider text reaches the artifact or the log line.
+    expect(JSON.stringify(report)).not.toContain('dropped');
+    expect(JSON.stringify(report)).not.toContain('forwarded');
   });
 
   it('distinguishes a complete-page zero total from the sibling at-least-one reading', async () => {

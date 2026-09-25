@@ -3,6 +3,8 @@ import { mkdtempSync, readdirSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 
+import { createHash } from 'node:crypto';
+
 import { describe, expect, it } from 'vitest';
 
 import {
@@ -12,6 +14,9 @@ import {
 import { formatAc209EmailRoutingDayCountsSummary } from '../infra/workflows/probe-production-ac209-routing-day-counts.ts';
 
 const sourceRevision = 'bcf609da43ebe756478960c4f99fb93de31207c3';
+
+const digestOf = (value: string): string =>
+  createHash('sha256').update(value).digest('hex');
 
 const report = (
   overrides: Readonly<Record<string, unknown>> = {},
@@ -47,8 +52,8 @@ describe('AC209 routing day-counts entrypoint', () => {
     const summary = formatAc209EmailRoutingDayCountsSummary(
       report({
         groups: [
-          { date: '2026-09-22', status: 'dropped', count: 1 },
-          { date: '2026-08-30', status: 'forwarded', count: 7 },
+          { date: '2026-09-22', statusSha256: digestOf('dropped'), count: 1 },
+          { date: '2026-08-30', statusSha256: digestOf('forwarded'), count: 7 },
         ],
         reportedTotalCount: 8,
         distinctDays: 2,
@@ -59,8 +64,11 @@ describe('AC209 routing day-counts entrypoint', () => {
     expect(summary).toContain('reportedTotalCount=8');
     expect(summary).toContain('sampling=provider_may_sample_adaptive_dataset');
     expect(summary).toContain(
-      'groups=[2026-09-22/dropped=1,2026-08-30/forwarded=7]',
+      `groups=[2026-09-22/${digestOf('dropped')}=1,2026-08-30/${digestOf('forwarded')}=7]`,
     );
+    // The provider label is digested, so no raw provider text reaches the log.
+    expect(summary).not.toContain('dropped');
+    expect(summary).not.toContain('forwarded');
     // The events probe reports at-least-one; this artifact must never claim it.
     expect(summary).not.toContain('recent24h');
     expect(summary).not.toContain('wide30d');
