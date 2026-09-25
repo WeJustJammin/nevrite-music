@@ -679,6 +679,40 @@ filesystem and validation operations.
   a live resolve still requires an owner-provisioned broker, a live runner
   authorization, and the exact run identity.
 
+- `ac265-hosted-runner-contract-composer.ts` composes the canonical
+  `ac265-hosted-runner-v1` contract bytes and digest. It is the producer the
+  retained-report assembler and the V3 verifier already expect but that no
+  component previously supplied; before it, every consumer required exact
+  runner-contract bytes the run had no way to derive. Authority is derived,
+  never accepted. The CP-03 authenticated runner-mapping attestation supplies
+  the run, candidate identity, role/resource bindings, and scenario/role
+  bindings; the CP-04a authenticated outage-target attestation supplies the
+  dependency and route; the authenticated CP-05 session-broker authorization
+  supplies the nine role-matched session references; and the CP-01 acquire
+  result supplies the run-scoped one-use outage lease. The bounded controls and
+  fixed scenario parameters come from `ac265-hosted-runner-policy-v1.ts`
+  rather than being restated, so the two cannot drift apart.
+
+  The two protected sources must describe the same attempt: the mapping, the
+  target, and the broker authorization all have to agree on the run, and the
+  authorization must digest the same candidate identity and pin the same
+  staging project. The lease must have been acquired under that same
+  authorization and for exactly the authenticated target. The safe-resource
+  manifest is precisely the reference set the approved mapping binds — one per
+  locked kind — so a kind the mapping does not authorize fails closed instead of
+  being invented or narrowed. Every reference digest is recomputed from its
+  exact UTF-8 bytes, and a lease or attestation outside the trusted run window
+  is rejected. The result is frozen and its byte accessor returns caller-owned
+  copies, so a consumer cannot corrupt bytes after the digest was computed.
+
+  It returns contract bytes only and is a reference container, never session
+  state or credentials. It creates no live authority, identity, session,
+  receipt, or fault, closes no AC265 criterion, and does not establish hosted
+  acceptance. Contract coverage lives in
+  `tests/contracts/phase-02-slice-09-ac265-hosted-runner-contract-composer.test.ts`
+  and
+  `tests/contracts/phase-02-slice-09-ac265-hosted-runner-contract-composer-bindings.test.ts`.
+
   - `ac265-session-broker-rpc-transport.ts` owns the shared endpoint, secret,
     bounded-response, deadline, and conflict-classification boundary.
   - `ac265-session-broker-rpc-parsers.ts` owns result parsing and rebinding.
