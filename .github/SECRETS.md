@@ -57,6 +57,13 @@ zone in its Cloudflare resource policy. Before production promotion, dispatch
 `Verify production Cloudflare observability` from `main` with that exact main
 SHA and proceed only after the protected read-only check passes. It never
 retains raw provider responses.
+The read-only AC209 diagnostic workflow uses the same token for both of its
+probes in one step: the per-event Email Sending window query and the hourly
+`emailSendingAdaptiveGroups` corroboration probe. Both are read-only, and
+neither sends email, mutates a queue, or closes an acceptance criterion. The
+corroboration probe reads only the aggregated `count` and the
+`datetimeHour`/`status` dimensions, so it needs no permission beyond the Zone
+Analytics Read already required for the parent zone.
 The queue-exercise token must be
 restricted to the WeJammin account with Workers Queues Write and no deployment,
 zone-management, Email Sending management, or billing permission. It exists

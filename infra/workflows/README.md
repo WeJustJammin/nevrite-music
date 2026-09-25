@@ -145,6 +145,45 @@ filesystem and validation operations.
   single-request span) - so the window is sized against the smaller of the two
   and reuses the sibling presence contract's `AC209_EMAIL_PRESENCE_WIDE_WINDOW_MS` as
   the one named reference for that span.
+- `ac209-email-sending-groups-contract.ts` owns the query, the page and window
+  bounds, and the provenance rationale for the bounded, read-only Email Sending
+  _groups_ corroboration probe; `ac209-email-sending-groups-schema.ts` holds its
+  strict Zod row/report shapes, and the contract re-exports them so the
+  dependency stays one-way (a DAG). `ac209-email-sending-groups.ts` and
+  `probe-production-ac209-sending-groups.ts` answer the magnitude question the
+  events diagnostic cannot: when the per-event window query returns zero rows,
+  an operator cannot tell an empty zone from a missing identity, so this probe
+  reports the provider's own `count` per `datetimeHour` x `status` group for
+  the same operator-supplied UTC window, using Cloudflare's documented hourly
+  `emailSendingAdaptiveGroups` shape
+  (https://developers.cloudflare.com/email-service/observability/metrics-analytics/).
+  The hourly `Time` filters are used because the day-level `Date` forms would
+  collapse a sub-hour exercise window into one day. Because a bucket labelled
+  `20:00` covers the whole hour and the filter compares bucket labels, the query
+  asks for exactly the buckets that OVERLAP the requested window: an unaligned
+  start would exclude the very bucket holding the activity and report a false
+  zero, while asking for an aligned end's own hour would add an hour the operator
+  never requested. The artifact records the requested and queried windows plus
+  `granularity: 'utc_hour_bucket'` and `hourRounded`, so the counts are never
+  mistaken for an exact sub-hour total. The window is capped at 7 days because
+  720 hourly buckets cannot fit one page, and the provider's hour label is
+  normalized from every documented form - including `...T14:00:00Z` without a
+  fractional part - to one canonical spelling. Only `count` and the two
+  documented non-PII dimensions are selected, so no address, subject, provider
+  message identifier, or sending domain can be read or retained, and the
+  provider's `status` label is published only as a one-way digest under the
+  shared `ac209-email-log-safety.ts` rule. A page that reaches the row bound
+  fails closed as `provider_result_truncated` rather than publishing a partial
+  total; the bound is deliberately set so that guard is reachable inside the
+  shared response cap, and a module-load guard ties the two together. The
+  artifact pins `diagnosticOnly: true`, `pageComplete: true`, the sampling
+  caveat, and `observation: 'provider_reported_grouped_totals'`. It is
+  read-only, performs no mutation, sends no email, closes no acceptance
+  criterion, and cannot substitute for the unique per-event predicate AC209
+  acceptance requires - a grouped total carries no identity.
+  Dispatch contract: `.github/workflows/diagnose-production-ac209-email.yml`,
+  which runs it in the same token-bearing step as the events diagnostic and
+  retains both redacted artifacts.
 
   The numbers are the provider's own, and the artifact is explicit that they are
   NOT presented as exact underlying event counts. Cloudflare documents that any
