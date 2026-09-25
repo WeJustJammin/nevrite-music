@@ -2,8 +2,8 @@
 
 ## Summary
 
-- **Total decisions**: 102
-- **Unique decision titles**: 102
+- **Total decisions**: 103
+- **Unique decision titles**: 103
 
 ## DEC-001: The rights stack is the thesis, not an adjacency (2026-07-16)
 
@@ -1500,6 +1500,19 @@ Owner approved the recommended architecture decomposition: 43 total IA shards co
 - **Decision**: Option C. Owner-scoped: the browser automation and CI gates for this project run Google Chrome only, and no Chromium fallback is provided. All three Playwright entry points (playwright.config.ts, playwright.s09-real.config.ts, tests/e2e/support/ac265-hosted-config.ts) declare channel: 'chrome', and infra/workflows/verify-system-chrome.sh asserts the binary before any gate runs. The AC266 automated-axe artifact keeps its locked name: 'chromium' engine-family literal and its ac266-automated-axe-v1 schema version, because that field records the render engine rather than the distributor build; Google Chrome is Chromium-based, so no retained or deployed evidence interpretation changes and no new device acceptance is claimed. The Playwright skill mirrors were deliberately left unedited for this change.
 - **Downstream**: CI and staging verification now depend on the official Google Chrome package being present on the runner; a runner without it fails closed instead of silently degrading. Verified on the self-hosted fleet - three wejammin runners on this host, Chrome 154.0.8037.57 - with 101/101 functional checks reported as [chrome], the production-built S09 real-route suite, 100% coverage across 4,835 tests, and pnpm validate exit 0. Launched processes resolved to /opt/google/chrome/chrome. The GitHub-hosted ubuntu-24.04 image already ships Google Chrome (152.0.7977.82, image 20260907.300.1), so the AC265 authorization-foundation preflight passes there, with a hosted/local Chrome version skew of 152 versus 154 that matters for evidence reproducibility. The AC266 real-device VoiceOver/NVDA obligation is untouched: this decision covers automated browser gates only and claims no hosted acceptance.
 - **Reversibility**: High. Reverting to bundled Chromium means restoring the playwright install chromium steps and dropping the channel pin; the fail-closed preflight is the only new runner requirement.
+
+### DEC-103: AC265 staging identities come from Cloud Identity Free, with exactly one narrow expiring CMS read grant (2026-09-25)
+
+- **Timestamp**: 2026-09-25T15:52:00-04:00
+- **Agent**: codex
+- **Source**: Owner decision - Cloud Identity Free source for dedicated AC265 staging test identities, plus a single narrow read-grant exception (branch codex/ac265-free-identity-decision)
+- **Tags**: decision, ac265, identity, staging, authorization, owner-directive
+
+- **Problem**: Slice 09 could not provision the dedicated AC265 staging test identities because two gates were open. The identity source was undecided (Cloud Identity Free on the owner-controlled `wejamm.in` domain versus an existing Google organization) under a cost ceiling that excludes paid Workspace seats, and the sole-admin/no-other-CMS-authority rule had no dated exception. Separately, the locked `entitled_read` role requires an actor holding `cms.schema_registry.read` without `cms.schema_designer`, because the deployed server resolver selects `ownerFull` first whenever `cms.schema_designer` is present, so the role cannot be produced by the sole admin account.
+- **Options considered**: (A) leave both gates open and continue to hold the matrix; (B) source identities from paid Google Workspace or an existing organization; (C) source them from Cloud Identity Free on `wejamm.in` with no paid Workspace, keep the existing account as sole admin, and approve exactly one narrowly scoped, expiring `cms.schema_registry.read` staging grant as an explicit exception.
+- **Decision**: Option C. Dedicated AC265 staging test identities come from **Cloud Identity Free** on `wejamm.in` with **no paid Google Workspace**. The existing owner account remains the **sole admin**, and exactly one narrowly scoped, expiring `cms.schema_registry.read` staging test-account grant is authorized as an explicit exception; no test account receives `cms.schema_designer` or admin/design permission. Recorded in the [2026-09-25 decision record](../pipeline/progress/verification/2026-09-25-ac265-free-identity-and-read-grant-decision.md), which resolves gates 1-3 of the [2026-09-23 dedicated-accounts record](../pipeline/progress/verification/2026-09-23-ac265-dedicated-staging-test-accounts-decision.md). **Nothing is provisioned and no criterion closes**: Google-side Cloud Identity account/administrator creation, `wejamm.in` domain verification, and terms acceptance remain owner-performed and outstanding.
+- **Downstream**: Unblocks owner-performed provisioning of the nonprivileged staging identities and the single expiring read grant, with the sole-admin decision retained rather than superseded. `admin_step_up` still needs a confirmed enrolled factor and a completed current-context step-up (the staging dashboard showed App Authenticator `Enabled` on the Free plan, but enrolled factors were not confirmed), and the step-up surface decision remains open. `staff_case_scoped` stays a Slice 09 scope blocker, not an account blocker. The runner contract still forbids the runner from creating identities, grants, mandates, organizations, cases, content schemas, or prerequisites, so provisioning happens outside the runner under owner control. Resolves the stale `supabase/config.toml` claim that MFA requires the Supabase Pro plan.
+- **Reversibility**: Medium. The identity source and the single narrow grant can be changed by a new dated owner record, but hosted AC265 acceptance remains contingent on genuine provisioned identities, a confirmed enrolled factor, and the unprovisioned broker/evidence services, none of which this decision supplies.
 
 ## Full Log
 
