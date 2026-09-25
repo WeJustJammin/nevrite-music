@@ -55,3 +55,23 @@ Canonical project decisions are compiled at .memory/wiki/decisions.md. This file
   attempt, conclusion, or artifact-origin checks. `run_started_at` must still
   precede completion, and the exact CI run must still complete before the
   staging workflow starts.
+
+## 2026-09-25 — Source AC265 staging identities from Cloud Identity Free with one narrow read grant
+
+- The dedicated AC265 staging test identities come from **Cloud Identity Free**
+  on the owner-controlled `wejamm.in` domain, with **no paid Google Workspace**.
+  Google-side setup (new Cloud Identity account and administrator, domain
+  verification, terms acceptance) remains owner-performed and outstanding; the
+  runner may not create identities, grants, or tenants.
+- The `entitled_read` role needs `cms.schema_registry.read` **without**
+  `cms.schema_designer`, because the server resolver selects `ownerFull` first
+  when `cms.schema_designer` is present. The owner approved **exactly one**
+  narrowly scoped, expiring `cms.schema_registry.read` staging test-account grant
+  as an explicit exception. The existing owner account stays the **sole admin**
+  and no test account receives `cms.schema_designer` or admin/design authority.
+- Confirmed read-only on the staging dashboard this session: App Authenticator
+  (TOTP) is `Enabled` on the Free plan; SMS/phone MFA is disabled and Pro-only.
+  Enrolled factors were **not** confirmed, so `admin_step_up` still needs a real
+  enrolled factor and a completed current-context step-up. This also retires the
+  stale `supabase/config.toml` comment claiming MFA requires the Pro plan.
+- Record: [2026-09-25 decision record](../verification/2026-09-25-ac265-free-identity-and-read-grant-decision.md).

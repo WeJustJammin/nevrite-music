@@ -1820,3 +1820,23 @@ provenance, reportRoot, declaredReportPath })`. It calls the existing
   workflow dispatched again for a complete UTC day. That run is the first one
   that can reveal the real provider row shape; until it lands, the date shape
   stays unverified and the diagnostic is only a hint, never acceptance.
+
+## 2026-09-25 AC265 identity source and single read-grant exception (decision recorded)
+
+- The owner decided on 2026-09-25 to source the dedicated AC265 staging test
+  identities from **Cloud Identity Free** on `wejamm.in` with **no paid Google
+  Workspace**, and to approve **exactly one** narrowly scoped, expiring
+  `cms.schema_registry.read` staging test-account grant as an explicit exception
+  to the earlier sole-admin / no-other-CMS-authority rule, keeping the existing
+  owner account as the **sole admin** with no `cms.schema_designer` and no
+  admin/design permission. Both are recorded in the
+  [AC265 Cloud Identity Free and read-grant decision record](../verification/2026-09-25-ac265-free-identity-and-read-grant-decision.md),
+  which resolves gates 1-2 of the
+  [2026-09-23 dedicated-accounts record](../verification/2026-09-23-ac265-dedicated-staging-test-accounts-decision.md).
+  That record's privileged-admin-question gate stays unanswered, and no second
+  privileged identity is authorized.
+- Nothing was provisioned and no criterion moved. Outstanding: Google-side Cloud
+  Identity account/administrator creation, `wejamm.in` domain verification and
+  terms acceptance; TOTP enrollment is unconfirmed (the App Authenticator feature
+  is enabled on the project, not the administrator's factor); the step-up surface
+  decision is still open; `staff_case_scoped` remains a scope blocker.

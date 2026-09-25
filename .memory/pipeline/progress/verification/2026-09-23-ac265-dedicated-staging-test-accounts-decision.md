@@ -1,6 +1,12 @@
 # AC265 dedicated staging test accounts - owner decision record
 
 **Date**: 2026-09-23 (local).
+**Partially resolved 2026-09-25**: gates 1-2 below were resolved by the owner's
+2026-09-25 decisions. Gate 3 was **not** answered and stays pending, although no
+second privileged identity is authorized and the question is not needed for the
+current plan. See the
+[2026-09-25 Cloud Identity Free source and single read-grant decision record](./2026-09-25-ac265-free-identity-and-read-grant-decision.md),
+which supersedes gates 1-2 of this record and leaves gates 3-5 otherwise unchanged.
 **Scope**: documentation only. This record persists the owner's 2026-09-23
 decision to provision dedicated staging AC265 test accounts and states the gates
 that remain unresolved. It changes no code, contract, migration, workflow,
@@ -36,23 +42,27 @@ supersedes nothing in that note and does not restate it as new approval.
 None of the following may be treated as decided, and none may be filled in by
 inference while it remains open:
 
-1. **Cloud Identity Free vs existing Google org.** Whether the nine identities
-   come from a Google tenant on the owner-controlled `wejamm.in` domain via a
-   free **Cloud Identity Free** path, or from an existing Google organization, is
-   **pending owner choice**. The locked cost ceiling excludes paid Workspace
-   seats, and the viability of a free Cloud Identity path for consumer-style
-   Google sign-in is unverified, so neither option is selected here.
-2. **Earlier sole-admin-principal decision not yet superseded.** The 2026-09-10
-   bootstrap plan named the owner account the "sole intended CMS/admin
-   principal" and rejected a second privileged test account. That decision is
-   **still in force**. Under the pipeline's progressive-lock rule it must be
-   explicitly superseded by a new dated owner record before any privileged
-   admin test identity is provisioned; this record does not supersede it.
+1. **Cloud Identity Free vs existing Google org.** **Resolved 2026-09-25**: the
+   owner selected **Cloud Identity Free** on `wejamm.in` with no paid Google
+   Workspace. The underlying Google-side setup (new Cloud Identity account and
+   administrator, `wejamm.in` domain verification, and Google terms acceptance)
+   is still outstanding, and nothing is provisioned. See the
+   [2026-09-25 record](./2026-09-25-ac265-free-identity-and-read-grant-decision.md).
+2. **Earlier sole-admin-principal decision not yet superseded.** **Resolved
+   2026-09-25**: the owner kept the existing account as the **sole admin** and
+   authorized exactly one narrowly scoped, expiring `cms.schema_registry.read`
+   staging grant as an explicit exception, with no `cms.schema_designer` and no
+   admin/design permission. No privileged *second admin* identity is authorized;
+   the sole-admin rule otherwise continues in force. See the
+   [2026-09-25 record](./2026-09-25-ac265-free-identity-and-read-grant-decision.md).
 3. **Separate async question pending on the privileged admin test identity.
-   ** The question of how a privileged admin test identity is authorized, given
-   the un-superseded sole-admin-principal decision, is asked and **not yet
-   answered**. No privileged admin test identity may be created, assumed, or
-   described as approved until that answer arrives.
+   ** **Not answered 2026-09-25**: no reply to this question was received, and
+   nothing in the 2026-09-25 decisions may be read as one. Those decisions do
+   establish that no second privileged identity is **authorized**, because the
+   owner kept the existing account as the sole administrator and approved only one
+   narrow expiring `cms.schema_registry.read` grant; the question itself remains
+   pending and is not needed under the current plan. See the
+   [2026-09-25 record](./2026-09-25-ac265-free-identity-and-read-grant-decision.md).
 4. **Chrome browser bridge unavailable.** The Chrome browser bridge is
    **unavailable on this host** for the required hosted browser acceptance work,
    so no `idp_sign_in` or other browser-observed scenario can be produced here.
@@ -67,9 +77,11 @@ inference while it remains open:
 This record does not authorize creation of a Google or Cloud Identity tenant, a
 Workspace or Cloud Identity subscription, any admin or CMS grant, any second
 privileged account, or any credential handling outside the owner-controlled
-process. It does not supersede the 2026-09-10 sole-admin-principal decision, and
-it does not resolve the Google identity-source choice. It closes no criterion,
-produces no hosted evidence, and changes no tracker total.
+process. As of 2026-09-25 the Google identity-source choice is resolved in favor
+of Cloud Identity Free, and the sole-admin-principal decision is retained with a
+single narrow, expiring `cms.schema_registry.read` exception recorded in the
+[2026-09-25 record](./2026-09-25-ac265-free-identity-and-read-grant-decision.md).
+It closes no criterion, produces no hosted evidence, and changes no tracker total.
 
 The runner contract continues to forbid the runner from creating identities,
 grants, mandates, organizations, cases, content schemas, or prerequisites to
@@ -80,4 +92,5 @@ control and before any hosted run.
 
 - `.memory/pipeline/progress/verification/2026-09-22-ac209-diagnostic-ac211-provenance-ac265-report-assembler.md` - the owner's approval in principle and the identity-source gate as first recorded.
 - `.memory/pipeline/progress/verification/2026-09-10-ac265-bootstrap-plan.md` - the sole intended CMS/admin principal decision that still governs privileged admin identity.
+- `.memory/pipeline/progress/verification/2026-09-25-ac265-free-identity-and-read-grant-decision.md` - the 2026-09-25 decisions that resolved gates 1-2 of this record.
 - `docs/runbooks/platform/ac265-hosted-e2e-contract-v1.md` - the nine-role matrix, the approved external session broker boundary, and the no-identity-creation rule.
