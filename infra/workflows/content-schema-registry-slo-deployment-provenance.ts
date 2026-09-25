@@ -8,6 +8,13 @@ const PRODUCTION_WORKFLOW_NAME = 'Deploy production';
 const PRODUCTION_WORKFLOW_PATH = '.github/workflows/deploy-production.yml';
 const PRODUCTION_JOB_NAME = 'deploy';
 
+// GitHub backfills a workflow run's `run_started_at` from the runner slot that
+// picked the run up, so a genuine, successful run can record a runner-start
+// timestamp a moment earlier than its own `created_at`. The allowance matches
+// the AC265 candidate provenance bound and still rejects any larger inversion,
+// which no legitimate run ordering produces.
+const GITHUB_RUN_TIMESTAMP_SKEW_MS = 5 * 1000;
+
 type ProductionJobReference = Readonly<{
   runId: string;
   jobId: string;
@@ -186,7 +193,10 @@ export const verifyProductionWorkflowRun = (
     'Deploy production run',
   );
   const completedAt = parseTimestamp(value.updated_at, 'Deploy production run');
-  if (createdAt > startedAt || startedAt > completedAt)
+  if (
+    createdAt - startedAt > GITHUB_RUN_TIMESTAMP_SKEW_MS ||
+    startedAt > completedAt
+  )
     return failDeployProductionIdentity();
   return { createdAt, startedAt, completedAt };
 };
