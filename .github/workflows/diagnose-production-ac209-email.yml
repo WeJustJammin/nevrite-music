@@ -61,6 +61,7 @@ jobs:
     environment: { name: production }
     env:
       AC209_DIAGNOSTIC_OUTPUT_PATH: ac209-diagnostic/email.json
+      AC209_SENDING_GROUPS_OUTPUT_PATH: ac209-sending-groups/groups.json
       EXPECTED_ALERT_SUBJECT: '[WeJammin] dlq_nonempty'
     steps:
       - name: Check out the exact diagnostic revision
@@ -96,12 +97,27 @@ jobs:
           SOURCE_REVISION: ${{ inputs.source_revision }}
           AC209_DIAGNOSTIC_WINDOW_START: ${{ inputs.window_start }}
           AC209_DIAGNOSTIC_WINDOW_END: ${{ inputs.window_end }}
-        run: node --experimental-strip-types infra/workflows/diagnose-production-ac209-email.ts
+        # Both probes share one step so the observability token stays referenced
+        # exactly once, and so neither probe can run before the immutable-workspace
+        # reverification above has passed. Each exit status is captured so a
+        # failure in one probe still lets the other report its finding, and the
+        # step still fails closed if either probe failed.
+        run: |
+          set +e
+          node --experimental-strip-types infra/workflows/diagnose-production-ac209-email.ts
+          diagnostic_status=$?
+          node --experimental-strip-types infra/workflows/probe-production-ac209-sending-groups.ts
+          groups_status=$?
+          set -e
+          test "$diagnostic_status" -eq 0
+          test "$groups_status" -eq 0
       - name: Upload redacted AC209 email diagnostic
         if: always()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
         with:
           name: production-ac209-email-diagnostic-${{ inputs.source_revision }}
-          path: ac209-diagnostic/email.json
+          path: |
+            ac209-diagnostic/email.json
+            ac209-sending-groups/groups.json
           if-no-files-found: warn
           retention-days: 7

@@ -96,20 +96,32 @@ describe('production AC209 email diagnostic workflow contract', () => {
 
   it('runs only the bounded read-only diagnostic entrypoint', () => {
     expect(workflow).toContain(
-      'run: node --experimental-strip-types infra/workflows/diagnose-production-ac209-email.ts',
+      'node --experimental-strip-types infra/workflows/diagnose-production-ac209-email.ts',
+    );
+    // The corroboration probe shares the one token-bearing step, so the
+    // credential stays referenced exactly once and no probe can run before the
+    // immutable-workspace reverification.
+    expect(workflow).toContain(
+      'node --experimental-strip-types infra/workflows/probe-production-ac209-sending-groups.ts',
     );
     expect(workflow).not.toMatch(/exercise-production-ac209/u);
     expect(workflow).not.toMatch(/cleanup-production-ac209/u);
+    expect(workflow).not.toMatch(/collect-production-ac209/u);
     expect(workflow).not.toMatch(/wrangler deploy/u);
     expect(workflow).not.toMatch(/apply-hosted-migrations/u);
     expect(workflow).not.toMatch(/deploy-api-worker/u);
     expect(workflow).not.toMatch(/gh workflow run/u);
     expect(workflow).not.toMatch(/queue/iu);
+    // Both probes are read-only: neither may send or mutate.
+    expect(workflow).not.toMatch(/send_email|sendEmail|mailbox/iu);
   });
 
   it('retains only the bounded redacted diagnostic artifact', () => {
     expect(workflow).toContain(
       'AC209_DIAGNOSTIC_OUTPUT_PATH: ac209-diagnostic/email.json',
+    );
+    expect(workflow).toContain(
+      'AC209_SENDING_GROUPS_OUTPUT_PATH: ac209-sending-groups/groups.json',
     );
     expect(workflow).toContain(
       "EXPECTED_ALERT_SUBJECT: '[WeJammin] dlq_nonempty'",
@@ -120,7 +132,8 @@ describe('production AC209 email diagnostic workflow contract', () => {
     expect(upload).toBeDefined();
     expect(upload).toContain('if: always()');
     expect(upload).toMatch(/uses: actions\/upload-artifact@[0-9a-f]{40}/u);
-    expect(upload).toContain('path: ac209-diagnostic/email.json');
+    expect(upload).toContain('ac209-diagnostic/email.json');
+    expect(upload).toContain('ac209-sending-groups/groups.json');
     expect(upload).toContain('if-no-files-found: warn');
     expect(upload).toContain('retention-days: 7');
     expect(upload).not.toMatch(/path:\s+ac209-diagnostic\s*$/mu);

@@ -490,6 +490,49 @@ redacted body fields for the same release, then record the bounded manual
 receipt and reviewer attestation. Do not close AC209 from the Cloudflare
 `delivered` status alone.
 
+The same protected diagnostic dispatch runs one corroboration probe beside the
+per-event query. When the per-event window returns zero rows, the operator
+cannot tell an empty zone from a missing identity, so
+`probe-production-ac209-sending-groups.ts` reports the provider's own `count`
+per `datetimeHour` x `status` group for the same operator-supplied UTC window,
+using Cloudflare's documented hourly `emailSendingAdaptiveGroups` shape. The
+hourly `Time` filters are used because the day-level `Date` forms would
+collapse a sub-hour exercise window into one day. Only the aggregated `count`
+and the `datetimeHour`/`status` dimensions are selected, so no address,
+subject, provider message identifier, or sending domain is read or retained, and
+the provider's `status` label is published only as a one-way digest. A page
+that reaches the row bound fails closed as `provider_result_truncated` instead
+of publishing a partial total, and the artifact pins `diagnosticOnly: true`,
+`pageComplete: true`, the adaptive-sampling caveat, and
+`observation: 'provider_reported_grouped_totals'`. This probe is
+corroboration only: a grouped total carries no identity, so it can neither
+replace the unique per-event AC209 acceptance predicate nor close AC209.
+
+The group counts are scoped to whole UTC hour buckets, and the artifact says so
+rather than leaving it to inference. A bucket labelled `20:00` covers the whole
+20:00-21:00 hour, and the provider's hour filter compares bucket labels, so the
+probe asks for exactly the buckets that overlap the operator's window: an
+unaligned request would exclude the very bucket that holds the activity and
+report a false zero, while asking for an aligned end's own hour would add an
+hour the operator never requested. The report records both the requested and the
+queried window, plus `granularity: 'utc_hour_bucket'` and `hourRounded`; when
+`hourRounded` is true the counts cover whole hours and may include activity just
+outside the requested span. The window is capped at 7 days, because the dataset
+returns one row per hour and status and 720 hourly buckets cannot fit one page.
+Read a group count as corroboration of magnitude for an hour-scoped window -
+never as an exact count for the arbitrary sub-hour window the per-event query
+used, which remains the only exact-window diagnostic.
+
+A Cloudflare support case is open for the underlying question this probe
+corroborates: the Email Sending activity is missing for the development/staging
+validation despite a delivered control. Case `02343626` was still `New` with
+no provider reply as of 2026-09-25 19:29Z
+(https://www.support.cloudflare.com/s/case/500Nv00000jYwsWIAS/email-sending-activity-is-missing-for-our-developmentstaging-validation-despite-a-delivered-control).
+That case is the operator-approved channel and holds only redacted zone
+identifiers and zero-row counts. Do not post further provider telemetry to it
+without explicit approval, and do not treat its contents as acceptance
+evidence.
+
 Manual accessibility reports record stable opaque operator IDs rather than
 names or email addresses. They use strict schema version
 `ac266-manual-a11y-v1`, bind the exact source SHA, deployment, origin, and
