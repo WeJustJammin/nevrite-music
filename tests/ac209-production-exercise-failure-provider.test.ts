@@ -76,35 +76,91 @@ const exerciseWithProvider = async (
   return { failure, captureFailureReceipt };
 };
 
+const PROVIDER_DEADLINE_MS = 5;
+const PROVIDER_DEADLINE_STEPS = 8;
+
+/**
+ * Expires the provider deadline until the exercise settles.
+ *
+ * Every provider request is bounded, and the bounded body read measures that
+ * budget against the wall clock, so a real millisecond budget is only as
+ * reliable as the scheduler that has to reach the mock in time. On a loaded CI
+ * worker the budget expired while the first successful queue-list body was
+ * still being read, which reports a queue_list/200 failure instead of the
+ * queue_peek/null failure this regression exists to prove. Driving the clock
+ * keeps the fail-closed timeout semantics under test and removes the jitter.
+ *
+ * Three deadlines have to expire before the exercise settles: the preflight
+ * peek that never settles, then the source and dead-letter probes the cleanup
+ * path issues after it. The step count leaves headroom so a genuine hang fails
+ * here instead of looping.
+ */
+const expireProviderDeadlines = async (
+  pending: Promise<unknown>,
+): Promise<void> => {
+  let settled = false;
+  void pending.then(
+    () => {
+      settled = true;
+    },
+    () => {
+      settled = true;
+    },
+  );
+  for (let step = 0; step < PROVIDER_DEADLINE_STEPS; step += 1) {
+    if (settled) return;
+    await vi.advanceTimersByTimeAsync(PROVIDER_DEADLINE_MS);
+  }
+  // Flush once more so a settlement that landed during the final advance is
+  // visible before this helper reports a hang.
+  await vi.advanceTimersByTimeAsync(0);
+  if (!settled)
+    throw new Error(
+      'AC209 exercise did not settle within the expected provider deadlines',
+    );
+};
+
 describe('AC209 failure receipt from real provider failures', () => {
   it('retains the boundary when a request times out before any status is read', async () => {
-    const { source, deadLetter } = queueIdentities();
-    const fetchImpl = vi.fn<typeof fetch>(async (url) => {
-      const path = String(url);
-      if (path.endsWith('/queues?page=1&per_page=100'))
-        return queueList([source, deadLetter], 1);
-      if (path.endsWith(`/queues/${QUEUE_SOURCE_ID}/consumers`))
-        return jsonResponse({ result: source.consumers, success: true });
-      // The preflight peek never settles, so the bounded request times out with
-      // no HTTP status while the boundary is already known.
-      return new Promise<Response>(() => undefined);
-    });
-    const { failure, captureFailureReceipt } = await exerciseWithProvider(
-      fetchImpl,
-      { timeoutMs: 5 },
-    );
+    vi.useFakeTimers();
+    try {
+      const { source, deadLetter } = queueIdentities();
+      const unboundedRequests: string[] = [];
+      const fetchImpl = vi.fn<typeof fetch>(async (url) => {
+        const path = String(url);
+        if (path.endsWith('/queues?page=1&per_page=100'))
+          return queueList([source, deadLetter], 1);
+        if (path.endsWith(`/queues/${QUEUE_SOURCE_ID}/consumers`))
+          return jsonResponse({ result: source.consumers, success: true });
+        // The preflight peek never settles, so the bounded request times out
+        // with no HTTP status while the boundary is already known.
+        unboundedRequests.push(path);
+        return new Promise<Response>(() => undefined);
+      });
+      const { failure, captureFailureReceipt } = await exerciseWithProvider(
+        fetchImpl,
+        { timeoutMs: PROVIDER_DEADLINE_MS },
+      );
 
-    await expect(failure).rejects.toThrow('AC209 production exercise failed');
-    expect(captureFailureReceipt).toHaveBeenCalledExactlyOnceWith(
-      expect.objectContaining({
-        stage: 'queue',
-        code: 'provider_request_failed',
-        boundary: 'queue_peek',
-        providerStatus: null,
-        cleanupRequired: true,
-        cleanup: 'unverified',
-      }),
-    );
+      await expireProviderDeadlines(failure);
+
+      await expect(failure).rejects.toThrow('AC209 production exercise failed');
+      // The deadline has to expire on the preflight peek. An earlier expiry is
+      // the queue_list/200 regression, and a later one never reaches a peek.
+      expect(unboundedRequests[0]).toMatch(/\/messages\/peek$/u);
+      expect(captureFailureReceipt).toHaveBeenCalledExactlyOnceWith(
+        expect.objectContaining({
+          stage: 'queue',
+          code: 'provider_request_failed',
+          boundary: 'queue_peek',
+          providerStatus: null,
+          cleanupRequired: true,
+          cleanup: 'unverified',
+        }),
+      );
+    } finally {
+      vi.useRealTimers();
+    }
   });
 
   it.each([
