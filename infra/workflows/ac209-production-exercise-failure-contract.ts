@@ -18,11 +18,16 @@ const SHA256 = /^[0-9a-f]{64}$/u;
 
 /**
  * `not_required`: the exercise never recorded `cleanup_required`, so no queue
- * mutation started. `verified`: the exact-marker cleanup step proved marker
- * absence. `unverified`: cleanup was required but no successful proof was
- * recorded, so a reviewer must treat the marker as possibly still resident.
+ * mutation started. `unverified`: cleanup was required but this process holds
+ * no proof that it completed, so a reviewer must treat the marker as possibly
+ * resident.
+ *
+ * There is deliberately no `verified` value. Proof of marker absence comes from
+ * the separate `always()` cleanup step, which runs after this process exits and
+ * writes no file, so a receipt produced here can never honestly claim it. A
+ * value that no producer can emit would invite exactly that misreading.
  */
-const CLEANUP_STATES = ['not_required', 'verified', 'unverified'] as const;
+const CLEANUP_STATES = ['not_required', 'unverified'] as const;
 
 /**
  * The stage and code allowlists are compiled from the same closed table the
@@ -62,11 +67,12 @@ export const Ac209ProductionExerciseFailureReceiptSchema = z
     const reject = (message: string, path: string): void => {
       context.addIssue({ code: 'custom', path: [path], message });
     };
-    if ((receipt.boundary === null) !== (receipt.providerStatus === null))
-      reject(
-        'Provider status and queue boundary must be recorded together.',
-        'providerStatus',
-      );
+    // A known boundary with no HTTP status is the normal shape for a transport
+    // timeout, an unreadable response body, or a rejected purge: the provider
+    // never returned a status we could read. The reverse -- a status with no
+    // boundary -- has no producer and is rejected.
+    if (receipt.providerStatus !== null && receipt.boundary === null)
+      reject('A provider status requires a queue boundary.', 'providerStatus');
     if (!receipt.cleanupRequired && receipt.cleanup !== 'not_required')
       reject(
         'Cleanup cannot be reported when it was never required.',
@@ -94,3 +100,5 @@ export const Ac209ProductionExerciseFailureReceiptSchema = z
 export type Ac209ProductionExerciseFailureReceipt = z.infer<
   typeof Ac209ProductionExerciseFailureReceiptSchema
 >;
+
+export const AC209_FAILURE_CLEANUP_STATES = CLEANUP_STATES;

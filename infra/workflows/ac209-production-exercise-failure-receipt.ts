@@ -14,12 +14,14 @@ export {
  * Cleanup disposition for a failed exercise.
  *
  * `not_required` — the exercise never recorded `cleanup_required`, so no queue
- * mutation started. `verified` — the exact-marker cleanup step proved marker
- * absence. `unverified` — cleanup was required but this process has no proof
- * that it completed, so a reviewer must treat the marker as possibly resident.
+ * mutation started. `unverified` — cleanup was required but this process has no
+ * proof that it completed, so a reviewer must treat the marker as possibly
+ * resident.
+ *
+ * There is deliberately no `verified` state: proof of marker absence comes from
+ * the separate `always()` cleanup step, which runs after this process exits.
  */
-export type Ac209FailureCleanupState =
-  'not_required' | 'verified' | 'unverified';
+export type Ac209FailureCleanupState = 'not_required' | 'unverified';
 
 export type Ac209ProductionExerciseFailureReceiptInput = Readonly<{
   sourceRevision: string;

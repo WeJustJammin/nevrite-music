@@ -1,5 +1,8 @@
+import { readFileSync } from 'node:fs';
+
 import { describe, expect, it } from 'vitest';
 
+import { AC209_FAILURE_CLEANUP_STATES } from '../infra/workflows/ac209-production-exercise-failure-contract.ts';
 import {
   Ac209ProductionExerciseFailureReceiptSchema,
   buildAc209ProductionExerciseFailureReceipt,
@@ -139,21 +142,65 @@ describe('AC209 failure receipt contract', () => {
       ).rejects.toThrow(INVALID);
   });
 
+  it.each([
+    ['transport timeout', 'provider_request_failed', null],
+    ['unreadable response body', 'provider_response_invalid', null],
+    ['provider error status', 'provider_request_failed', 503],
+  ] as const)(
+    'retains a known queue boundary with %s',
+    async (_label, code, status) => {
+      const receipt = await build({
+        diagnostic: {
+          stage: 'queue',
+          code,
+          boundary: 'queue_publish',
+          status,
+        },
+        cleanupRequired: true,
+        cleanup: 'unverified',
+      });
+
+      expect(receipt).toMatchObject({
+        stage: 'queue',
+        code,
+        boundary: 'queue_publish',
+        providerStatus: status,
+        cleanup: 'unverified',
+      });
+      expect(
+        Ac209ProductionExerciseFailureReceiptSchema.parse(receipt),
+      ).toEqual(receipt);
+    },
+  );
+
+  it('rejects a provider status that has no boundary, since no producer emits one', async () => {
+    await expect(
+      build({
+        diagnostic: {
+          stage: 'queue',
+          code: 'provider_request_failed',
+          status: 503,
+        },
+      }),
+    ).rejects.toThrow(INVALID);
+  });
+
   it('rejects any cleanup state outside the closed vocabulary', async () => {
     for (const cleanup of [
       'unspecified',
       'pending_cleanup_step',
-      'verified\n',
+      'verified',
+      'unverified\n',
       1,
       null,
     ])
-      await expect(build({ cleanup: cleanup as 'verified' })).rejects.toThrow(
+      await expect(build({ cleanup: cleanup as 'unverified' })).rejects.toThrow(
         INVALID,
       );
 
     await expect(
-      build({ cleanupRequired: true, cleanup: 'verified' }),
-    ).resolves.toMatchObject({ cleanupRequired: true, cleanup: 'verified' });
+      build({ cleanupRequired: true, cleanup: 'unverified' }),
+    ).resolves.toMatchObject({ cleanupRequired: true, cleanup: 'unverified' });
     await expect(
       build({ cleanupRequired: true, cleanup: 'not_required' }),
     ).rejects.toThrow(INVALID);
@@ -245,5 +292,39 @@ describe('AC209 failure receipt contract', () => {
         stage: 'queue',
         code: 'provider_request_failed',
       });
+  });
+
+  it('documents the retained cleanup vocabulary without promising an unreachable value', async () => {
+    const readme = readFileSync(
+      new URL('../infra/workflows/README.md', import.meta.url),
+      'utf8',
+    );
+    const section = readme.slice(
+      readme.indexOf('ac209-production-exercise-failure-receipt.ts'),
+      readme.indexOf('- `register-ac265-approved-registry.ts`'),
+    );
+
+    expect(section).toContain('`not_required` or `unverified`');
+    // A missing receipt has several causes; the doc must not narrow it to one.
+    expect(section).toContain('three distinct cases');
+    expect(section).toMatch(
+      /never identifies the cause|no\s+cause may be inferred/u,
+    );
+    const base = await build();
+    for (const value of AC209_FAILURE_CLEANUP_STATES)
+      expect(
+        Ac209ProductionExerciseFailureReceiptSchema.safeParse({
+          ...base,
+          cleanupRequired: value !== 'not_required',
+          cleanup: value,
+        }).success,
+      ).toBe(true);
+    expect(
+      Ac209ProductionExerciseFailureReceiptSchema.safeParse({
+        ...base,
+        cleanupRequired: true,
+        cleanup: 'verified',
+      }).success,
+    ).toBe(false);
   });
 });

@@ -397,7 +397,9 @@ filesystem and validation operations.
   in log text. The receipt records `status: unsuccessful` and
   `outcome: no_acceptance` plus the allowlisted stage/code, an optional queue
   boundary and provider status, and the cleanup disposition
-  (`not_required`, `verified`, or `unverified`). It carries no marker, address,
+  (`not_required` or `unverified`; there is deliberately no `verified` value,
+  because proof of marker absence comes from the separate `always()` cleanup
+  step, which cannot write this artifact). It carries no marker, address,
   provider identifier, subject, payload, or token, and it can never satisfy a
   success verifier: the schema literals and the distinct
   `production-ac209-exercise-failure-` artifact name both keep it separate from
@@ -410,13 +412,19 @@ filesystem and validation operations.
   Two limits are deliberate. First, the receipt holds closed vocabulary only, so
   it narrows _where_ a failure happened and never _what the provider said_: a
   provider rejection is recorded as its boundary and HTTP status, and the
-  provider's own error text is neither read nor retained. Second, a failure
-  before the exercise step runs at all — the marker preparation step, the
-  input-validation step that must run before secrets are used, or the
-  exact-version configuration collector — leaves no failure receipt, because the
-  receipt is written by the exercise process. Those failures still surface
-  through the failing step and its log, so read a missing failure receipt as a
-  preflight failure rather than as a missing artifact.
+  provider's own error text is neither read nor retained. A transport timeout, an
+  unreadable response body, or a rejected purge still names its boundary and
+  records a null status, because the provider never returned one.
+
+  Second, a missing failure receipt does not mean the run failed before the
+  exercise step. The receipt is written by the exercise process, so it is absent
+  in three distinct cases: the marker preparation or exact-version configuration
+  collector failed before that step ran, the exercise failed before the receipt
+  could be captured, or capture itself failed. A reviewer must read the failing
+  step's outcome and the retained `AC209_DIAGNOSTIC` log line to tell those cases
+  apart; the absence of the artifact alone never identifies the cause, and no
+  cause may be inferred from it. Only a failure in the marker preparation or
+  configuration collector is genuinely a preflight failure.
 
 - `register-ac265-approved-registry.ts` is the manual entrypoint that submits an
   already-formed strict register request to the CP-02 approved-registry RPCs.
