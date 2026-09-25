@@ -9,6 +9,16 @@ import {
   type Ac209DeliveryVerification,
 } from './ac209-delivery-verification.ts';
 import {
+  formatAc209StageDiagnostic,
+  type Ac209StageDiagnostic,
+} from './ac209-exercise-stage-diagnostic.ts';
+import {
+  buildAc209ProductionExerciseFailureReceipt,
+  resolveAc209FailureCapturedAt,
+  type Ac209FailureCleanupState,
+} from './ac209-production-exercise-failure-receipt.ts';
+import type { Ac209ProductionExerciseFailureReceipt } from './ac209-production-exercise-failure-contract.ts';
+import {
   Ac209EmailSendingAnalyticsError,
   collectAc209EmailSendingAnalytics,
   verifyAc209EmailSendingCapability,
@@ -30,7 +40,6 @@ import {
   Ac209QueueExerciseError,
   parseAc209QueueDiagnostic,
   runAc209QueueExercise,
-  type Ac209QueueExerciseErrorCode,
   type Ac209QueueExerciseInput,
   type Ac209QueueExerciseReport,
 } from './ac209-queue-exercise.ts';
@@ -42,6 +51,7 @@ const MAX_CONFIGURATION_BYTES = 256 * 1024;
 export { Ac209ProductionExerciseReportSchema } from './ac209-production-exercise-contract.ts';
 export type { Ac209ProductionExerciseReport } from './ac209-production-exercise-contract.ts';
 export type { Ac209ProductionExerciseInput } from './ac209-production-exercise-input.ts';
+export { formatAc209StageDiagnostic } from './ac209-exercise-stage-diagnostic.ts';
 
 type Ac209EmailDiagnosticCode =
   | 'email_not_observed'
@@ -55,19 +65,6 @@ type Ac209EmailDiagnosticCode =
   | 'email_provider_response_invalid'
   | 'email_provider_result_truncated'
   | 'email_provider_temporarily_unavailable';
-
-type Ac209StageDiagnostic =
-  | Readonly<{ stage: 'configuration'; code: 'invalid_configuration' }>
-  | Readonly<{
-      stage: 'eligibility';
-      code: 'request_failed' | 'blocked';
-    }>
-  | Readonly<{ stage: 'queue'; code: Ac209QueueExerciseErrorCode }>
-  | Readonly<{
-      stage: 'evidence';
-      code: Ac209EmailDiagnosticCode | 'database_not_observed' | 'invalid';
-    }>
-  | Readonly<{ stage: 'report'; code: 'invalid' }>;
 
 const AC209_EMAIL_DIAGNOSTIC_CODES = Object.freeze({
   event_not_unique: 'email_not_observed',
@@ -93,69 +90,37 @@ const resolveAc209EmailDiagnosticCode = (
     ? AC209_EMAIL_DIAGNOSTIC_CODES[error.code]
     : 'email_query_failed';
 
-const AC209_STAGE_DIAGNOSTIC_CODES = Object.freeze({
-  configuration: new Set<unknown>(['invalid_configuration']),
-  eligibility: new Set<unknown>(['request_failed', 'blocked']),
-  queue: new Set<unknown>([
-    'invalid_configuration',
-    'provider_request_failed',
-    'provider_response_invalid',
-    'queue_identity_invalid',
-    'consumer_configuration_invalid',
-    'consumer_count_invalid',
-    'consumer_type_invalid',
-    'consumer_queue_name_invalid',
-    'consumer_script_invalid',
-    'consumer_dead_letter_queue_invalid',
-    'consumer_max_retries_invalid',
-    'preflight_not_empty',
-    'marker_not_observed',
-    'marker_ambiguous',
-    'marker_message_invalid',
-    'cleanup_failed',
-    'marker_remains_after_cleanup',
-  ]),
-  evidence: new Set<unknown>([
-    'email_not_observed',
-    'email_query_failed',
-    'email_invalid_configuration',
-    'email_provider_graphql_error',
-    'email_provider_permission_denied',
-    'email_provider_query_invalid',
-    'email_provider_request_failed',
-    'email_provider_resource_unavailable',
-    'email_provider_response_invalid',
-    'email_provider_result_truncated',
-    'email_provider_temporarily_unavailable',
-    'database_not_observed',
-    'invalid',
-  ]),
-  report: new Set<unknown>(['invalid']),
-});
-
-export const formatAc209StageDiagnostic = (
-  value: unknown,
-): string | undefined => {
-  if (typeof value !== 'object' || value === null || Array.isArray(value))
-    return undefined;
-  const candidate = value as Record<string, unknown>;
-  if (typeof candidate.stage !== 'string') return undefined;
-  if (!Object.hasOwn(AC209_STAGE_DIAGNOSTIC_CODES, candidate.stage))
-    return undefined;
-  const codes =
-    AC209_STAGE_DIAGNOSTIC_CODES[
-      candidate.stage as keyof typeof AC209_STAGE_DIAGNOSTIC_CODES
-    ];
-  if (codes === undefined || !codes.has(candidate.code)) return undefined;
-  return `AC209_DIAGNOSTIC stage=${candidate.stage} code=${String(candidate.code)}`;
-};
-
 export const formatAc209QueueDiagnostic = (
   value: unknown,
 ): string | undefined => {
   const diagnostic = parseAc209QueueDiagnostic(value);
   if (diagnostic === undefined) return undefined;
   return `AC209_DIAGNOSTIC boundary=${diagnostic.boundary} code=${diagnostic.code} status=${diagnostic.status ?? 'none'}`;
+};
+
+/**
+ * Selects the closed diagnostic that best explains this failure.
+ *
+ * A queue error that carries a provider boundary reports that boundary, because
+ * the boundary and status are what a reviewer needs first. Any other queue
+ * error reports its own stage code. Every other failure reports the stage that
+ * was in flight when it was thrown.
+ */
+const failureDiagnostic = (
+  error: unknown,
+  stageDiagnostic: Ac209StageDiagnostic,
+): unknown => {
+  if (!(error instanceof Ac209QueueExerciseError)) return stageDiagnostic;
+  const queueDiagnostic = parseAc209QueueDiagnostic(error.diagnostic);
+  if (queueDiagnostic !== undefined)
+    return {
+      stage: 'queue',
+      code: queueDiagnostic.code,
+      boundary: queueDiagnostic.boundary,
+      status: queueDiagnostic.status,
+    };
+  if (stageDiagnostic.stage === 'evidence') return stageDiagnostic;
+  return { stage: 'queue', code: error.code };
 };
 
 export type Ac209ProductionExerciseDependencies = Readonly<{
@@ -167,6 +132,9 @@ export type Ac209ProductionExerciseDependencies = Readonly<{
   collectEmailAnalytics?: typeof collectAc209EmailSendingAnalytics;
   verifyDelivery?: typeof verifyAc209AlertDelivery;
   beforeQueueAccess?: () => void;
+  captureFailureReceipt?: (
+    receipt: Ac209ProductionExerciseFailureReceipt,
+  ) => void;
   now?: () => number;
   reportQueueDiagnostic?: (diagnostic: string) => void;
   sleep?: (milliseconds: number) => Promise<void>;
@@ -180,6 +148,8 @@ export const exerciseProductionAc209 = async (
     stage: 'configuration',
     code: 'invalid_configuration',
   };
+  let cleanupRequired = false;
+  let cleanup: Ac209FailureCleanupState = 'not_required';
   try {
     const configuration = validateAc209ProductionExerciseInput(input);
     const now = dependencies.now ?? Date.now;
@@ -234,6 +204,8 @@ export const exerciseProductionAc209 = async (
     const queueExercise = dependencies.queueExercise ?? runAc209QueueExercise;
     stageDiagnostic = { stage: 'queue', code: 'provider_request_failed' };
     dependencies.beforeQueueAccess?.();
+    cleanupRequired = true;
+    cleanup = 'unverified';
     const queue = await queueExercise({
       accountId: input.accountId,
       providerToken: input.queueToken,
@@ -356,6 +328,29 @@ export const exerciseProductionAc209 = async (
         // Diagnostic reporting must not alter the fail-closed exercise result.
       }
     }
+    const capturedAt = resolveAc209FailureCapturedAt(
+      dependencies.now ?? Date.now,
+    );
+    if (
+      dependencies.captureFailureReceipt !== undefined &&
+      capturedAt !== undefined
+    ) {
+      try {
+        dependencies.captureFailureReceipt(
+          buildAc209ProductionExerciseFailureReceipt({
+            sourceRevision: input.sourceRevision,
+            productionVersionId: input.productionVersionId || null,
+            recipientConfiguration: input.configuration,
+            diagnostic: failureDiagnostic(error, stageDiagnostic),
+            cleanupRequired,
+            cleanup,
+            capturedAt,
+          }),
+        );
+      } catch {
+        // Retention must never replace the fail-closed exercise result.
+      }
+    }
     if (
       error instanceof Error &&
       error.message === 'AC209 production exercise failed'
@@ -420,6 +415,11 @@ const run = async (): Promise<void> => {
   const artifactPath =
     process.env['AC209_EXERCISE_OUTPUT_PATH'] ?? 'ac209-exercise/exercise.json';
   const outputPath = resolveArtifact(workspaceRoot, artifactPath);
+  const failurePath = resolveArtifact(
+    workspaceRoot,
+    process.env['AC209_EXERCISE_FAILURE_OUTPUT_PATH'] ??
+      'ac209-exercise/exercise-failure.json',
+  );
   if (existsSync(outputPath)) failAc209ProductionExercise();
   const report = await exerciseProductionAc209(
     {
@@ -449,6 +449,18 @@ const run = async (): Promise<void> => {
         writeAc209CleanupRequiredOutput(process.env['GITHUB_OUTPUT']),
       reportQueueDiagnostic: (diagnostic: string) =>
         console.error(`::error::${diagnostic}`),
+      captureFailureReceipt: (receipt) => {
+        const serialized = `${JSON.stringify(receipt, null, 2)}\n`;
+        writeProviderReleaseEvidenceFile(
+          serialized,
+          failurePath,
+          workspaceRoot,
+        );
+        const sha256 = createHash('sha256').update(serialized).digest('hex');
+        console.error(
+          `AC209_EXERCISE_FAILURE_RECEIPT status=unsuccessful stage=${receipt.stage} code=${receipt.code} cleanup=${receipt.cleanup} sha256=${sha256}`,
+        );
+      },
     },
   );
   const serialized = `${JSON.stringify(report, null, 2)}\n`;

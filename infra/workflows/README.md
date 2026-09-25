@@ -384,6 +384,48 @@ filesystem and validation operations.
   caller; require `providerMessageId` only in a later forward migration after
   the new Worker is verified live.
 
+- `ac209-exercise-stage-diagnostic.ts` holds the one closed stage-diagnostic
+  vocabulary for the AC209 exercise. The workflow log line and the retained
+  failure receipt both derive from this table, so the two outputs cannot drift,
+  and neither has a free-text slot that could carry a provider response body,
+  token, address, marker, subject, or provider message identifier.
+
+- `ac209-production-exercise-failure-receipt.ts` and its
+  `ac209-production-exercise-failure-contract.ts` schema build the one artifact
+  a failed exercise previously did not leave behind. Success-only upload meant a
+  fail-closed run retained nothing, so a production failure was invisible except
+  in log text. The receipt records `status: unsuccessful` and
+  `outcome: no_acceptance` plus the allowlisted stage/code, an optional queue
+  boundary and provider status, and the cleanup disposition
+  (`not_required` or `unverified`; there is deliberately no `verified` value,
+  because proof of marker absence comes from the separate `always()` cleanup
+  step, which cannot write this artifact). It carries no marker, address,
+  provider identifier, subject, payload, or token, and it can never satisfy a
+  success verifier: the schema literals and the distinct
+  `production-ac209-exercise-failure-` artifact name both keep it separate from
+  success evidence. An identity it cannot verify is recorded as null rather than
+  guessed, and a capture failure never replaces the fail-closed exercise result.
+  Cleanup still happens through the existing `always()` safety step; the receipt
+  records that the marker must be treated as possibly resident when the process
+  cannot prove otherwise. The receipt closes no acceptance criterion.
+
+  Two limits are deliberate. First, the receipt holds closed vocabulary only, so
+  it narrows _where_ a failure happened and never _what the provider said_: a
+  provider rejection is recorded as its boundary and HTTP status, and the
+  provider's own error text is neither read nor retained. A transport timeout, an
+  unreadable response body, or a rejected purge still names its boundary and
+  records a null status, because the provider never returned one.
+
+  Second, a missing failure receipt does not mean the run failed before the
+  exercise step. The receipt is written by the exercise process, so it is absent
+  in three distinct cases: the marker preparation or exact-version configuration
+  collector failed before that step ran, the exercise failed before the receipt
+  could be captured, or capture itself failed. A reviewer must read the failing
+  step's outcome and the retained `AC209_DIAGNOSTIC` log line to tell those cases
+  apart; the absence of the artifact alone never identifies the cause, and no
+  cause may be inferred from it. Only a failure in the marker preparation or
+  configuration collector is genuinely a preflight failure.
+
 - `register-ac265-approved-registry.ts` is the manual entrypoint that submits an
   already-formed strict register request to the CP-02 approved-registry RPCs.
   This is registration transport/plumbing only: CP-02, unlike CP-04b, pins no
