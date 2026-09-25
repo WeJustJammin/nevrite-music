@@ -61,10 +61,11 @@ Two review findings widened the gate beyond the row bound alone.
   requester that could not serve the evidence window able to pass both
   preflights, open the queue boundary, push the marker, and then fail at the
   evidence stage - the post-mutation failure this gate exists to prevent. The
-  live node reported on 2026-09-24 carries `maxDuration: 2_592_000` and
-  `notOlderThan: 2_678_400` as distinct values, both far above the one-hour
-  bound; the test fixture keeps them distinct so a test cannot pass by
-  conflating them.
+  retained 2026-09-24 diagnostic artifact (run `35846435937`) reported
+  `notOlderThanSeconds` and `maxDurationSeconds` as the same `2678400`, so the
+  gate deliberately does not depend on the two differing and both forms are
+  tested. The distinct `2592000`/`2678400` pair exists only in this repository's
+  own day-counts test fixture, so no live single-request reading is claimed here.
 - **Deploy path.** `verifyCloudflareProductionMonitoringToken` in
   `infra/verify-cloudflare-observability.ts` ran only the zero-row-tolerant
   events probe, so a disabled dataset or an unavailable selected field could
@@ -72,7 +73,10 @@ Two review findings widened the gate beyond the row bound alone.
   a protected exercise. It now runs the same settings gate under the same
   `{zoneId, token}`, and its tests assert that a disabled dataset, a withheld
   field, and a sub-window limit each reject the token without exposing the token
-  or the zone.
+  or the zone. Because the settings gate reports every capability shortfall under
+  the one closed `provider_resource_unavailable` code, the shared failure message
+  now names the verified capability instead of a permission result; the closed
+  detail code is what distinguishes the cases.
 
 ## Local verification
 
@@ -83,7 +87,11 @@ Two review findings widened the gate beyond the row bound alone.
   `cloudflare-observability-token` until the settings response was mocked.
 - GREEN: the settings suites pass **53/53** (capability and fail-closed shapes),
   and the orchestrator, diagnostic, deploy-verifier, and failure-receipt suites
-  pass with them.
+  pass with them. The observability token suite is split into
+  `cloudflare-observability-token.test.ts` (base Workers Observability and
+  Account Analytics checks) and
+  `cloudflare-observability-production-token.test.ts` (the production monitoring
+  capability gate), each under the 400-line test ceiling.
 - Full local `pnpm validate` under pinned Node `22.23.1` / pnpm `11.24.0`
   passed (**exit 0**) after the review corrections: 630 Vitest files,
   **5,307 passed + 1 intentional skip**,

@@ -13,8 +13,8 @@ import {
 } from '../infra/workflows/ac209-email-sending-settings-capability.ts';
 import { AC209_EMAIL_DIAGNOSTIC_REQUIRED_SETTINGS_FIELDS } from '../infra/workflows/ac209-email-diagnostics.ts';
 import {
-  LIVE_MAX_DURATION_SECONDS,
-  LIVE_NOT_OLDER_THAN_SECONDS,
+  FIXTURE_MAX_DURATION_SECONDS,
+  FIXTURE_NOT_OLDER_THAN_SECONDS,
   response,
   SETTINGS_FIELDS,
   settingsNode,
@@ -103,7 +103,7 @@ describe('AC209 Email Sending settings capability preflight', () => {
       response(
         settingsResponse(
           settingsNode({
-            maxDuration: LIVE_MAX_DURATION_SECONDS,
+            maxDuration: FIXTURE_MAX_DURATION_SECONDS,
             notOlderThan: AC209_EMAIL_SENDING_REQUIRED_WINDOW_SECONDS - 1,
           }),
         ),
@@ -114,21 +114,38 @@ describe('AC209 Email Sending settings capability preflight', () => {
     });
   });
 
-  it('accepts the live requester limits the 2026-09-24 diagnostic reported', async () => {
-    const fetchImpl = vi
+  it('accepts either an equal limit pair or a distinct single-request span', async () => {
+    // The retained 2026-09-24 diagnostic artifact (run 35846435937) reported
+    // notOlderThanSeconds and maxDurationSeconds as the same 2678400 value, so
+    // the gate must not depend on the two differing. The fixtures keep them
+    // distinct so the one-hour bound can never pass by reading one field twice.
+    expect(FIXTURE_MAX_DURATION_SECONDS).not.toBe(
+      FIXTURE_NOT_OLDER_THAN_SECONDS,
+    );
+    for (const seconds of [
+      FIXTURE_MAX_DURATION_SECONDS,
+      FIXTURE_NOT_OLDER_THAN_SECONDS,
+    ])
+      expect(seconds).toBeGreaterThan(
+        AC209_EMAIL_SENDING_REQUIRED_WINDOW_SECONDS,
+      );
+
+    const retained = vi.fn<typeof fetch>().mockResolvedValue(
+      response(
+        settingsResponse(
+          settingsNode({
+            maxDuration: FIXTURE_NOT_OLDER_THAN_SECONDS,
+            notOlderThan: FIXTURE_NOT_OLDER_THAN_SECONDS,
+          }),
+        ),
+      ),
+    );
+    await expect(verify(retained)).resolves.toBeUndefined();
+
+    const distinct = vi
       .fn<typeof fetch>()
       .mockResolvedValue(response(settingsResponse()));
-
-    // The live node reports a 30-day single-request span and a 31-day retention
-    // horizon as distinct values; both must clear the one-hour exercise bound.
-    expect(LIVE_MAX_DURATION_SECONDS).toBeGreaterThan(
-      AC209_EMAIL_SENDING_REQUIRED_WINDOW_SECONDS,
-    );
-    expect(LIVE_NOT_OLDER_THAN_SECONDS).toBeGreaterThan(
-      AC209_EMAIL_SENDING_REQUIRED_WINDOW_SECONDS,
-    );
-    expect(LIVE_MAX_DURATION_SECONDS).not.toBe(LIVE_NOT_OLDER_THAN_SECONDS);
-    await expect(verify(fetchImpl)).resolves.toBeUndefined();
+    await expect(verify(distinct)).resolves.toBeUndefined();
   });
 
   it('accepts a nested available-field path for every selected field', async () => {

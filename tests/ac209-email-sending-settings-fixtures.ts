@@ -14,12 +14,16 @@ export const SETTINGS_FIELDS = [
 ] as const;
 
 /**
- * The live requester limits the 2026-09-24 diagnostic runs reported: a 30-day
- * single-request span and a 31-day retention horizon, deliberately distinct so a
- * test cannot pass by conflating them.
+ * Synthetic limit values for these fixtures. They are not a retained reading of
+ * the live requester: the retained 2026-09-24 diagnostic artifact from run
+ * 35846435937 reported `notOlderThanSeconds` and `maxDurationSeconds` both as
+ * 2678400, and the distinct 2592000/2678400 pair appears only in this
+ * repository's own test fixture for the day-counts diagnostic. They are kept
+ * deliberately distinct here so the window gate can never pass by conflating
+ * the single-request span with the retention horizon.
  */
-export const LIVE_MAX_DURATION_SECONDS = 2_592_000;
-export const LIVE_NOT_OLDER_THAN_SECONDS = 2_678_400;
+export const FIXTURE_MAX_DURATION_SECONDS = 2_592_000;
+export const FIXTURE_NOT_OLDER_THAN_SECONDS = 2_678_400;
 
 export const response = (payload: unknown, status = 200): Response =>
   new Response(JSON.stringify(payload), {
@@ -32,10 +36,10 @@ export const settingsNode = (
 ): Record<string, unknown> => ({
   enabled: true,
   availableFields: [...AC209_EMAIL_SENDING_REQUIRED_FIELDS],
-  maxDuration: LIVE_MAX_DURATION_SECONDS,
+  maxDuration: FIXTURE_MAX_DURATION_SECONDS,
   maxNumberOfFields: 30,
   maxPageSize: 10_000,
-  notOlderThan: LIVE_NOT_OLDER_THAN_SECONDS,
+  notOlderThan: FIXTURE_NOT_OLDER_THAN_SECONDS,
   ...overrides,
 });
 

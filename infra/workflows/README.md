@@ -367,7 +367,9 @@ filesystem and validation operations.
   acceptance criterion, and reports only closed diagnostic codes.
   `verify-cloudflare-observability.ts` runs the same gate when it verifies the
   production monitoring token, so the deploy path and the exercise path reject
-  the same capability shortfalls.
+  the same capability shortfalls. Both limits are reported as one closed
+  `provider_resource_unavailable` code, so the deploy verifier's message names
+  the verified capability rather than a permission result.
 
 - `ac209-queue-exercise.ts` runs the bounded AC209 queue marker exercise and
   re-exports its contracts plus `cleanupAc209QueueMarker` for cancellation-safe

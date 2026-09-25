@@ -203,11 +203,11 @@ export const verifyCloudflareProductionMonitoringToken = async (
       zoneId: config.emailZoneId,
     });
     // The events probe above accepts an empty window because zero rows still
-    // prove read access, so it cannot show that the dataset is enabled, that
-    // every field the event query selects is available to this token, or that
-    // the requester limits cover the exercise's window and row bound. Verifying
-    // that capability here keeps a protected production run from discovering a
-    // capability shortfall only after it has opened the queue boundary.
+    // prove read access, so it cannot show that the dataset is enabled or that
+    // every field the event query selects is available to this token. The
+    // settings gate distinguishes those cases and rejects the production token
+    // here, instead of letting a protected run discover the shortfall after it
+    // has opened the queue boundary.
     await verifyAc209EmailSendingSettings({
       fetchImpl,
       token: config.token,
@@ -218,8 +218,13 @@ export const verifyCloudflareProductionMonitoringToken = async (
       error instanceof Ac209EmailSendingAnalyticsError
         ? error.code
         : 'unexpected_failure';
+    // The settings gate shares this boundary with the events probe, so the
+    // message names the verified capability rather than a permission check: a
+    // `provider_resource_unavailable` here can mean a permission denial, a
+    // disabled dataset, an unavailable selected field, or an insufficient
+    // limit or window, and the closed `detail` code is what distinguishes them.
     throw verificationError(
-      'Cloudflare Zone Analytics permission check failed',
+      'Cloudflare Zone Analytics read and Email Sending capability check failed',
       detail,
     );
   }

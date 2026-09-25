@@ -397,6 +397,12 @@ Email Sending zone as `CLOUDFLARE_EMAIL_ZONE_ID`, the fixed sender digest as
 `CLOUDFLARE_PLATFORM_QUEUE_ID`. The existing observability token supplies
 Account Analytics Read for Queue Analytics and Zone Analytics Read for the Email
 Sending query. Its Zone Resources must include the exact Email Sending zone.
+The production monitoring preflight requires the same settings capability the
+exercise enforces: it rejects the observability token unless the exact Email
+Sending zone's dataset is enabled, every event-query field is available to the
+token, and the requester limits cover the 50-row bound, all seven selections,
+and the one-hour analytics window. A capability shortfall therefore fails at
+deployment verification rather than well into a protected exercise.
 
 After the verification RPC migration and exercise workflow are deployed,
 dispatch `exercise-production-ac209.yml` from `main`. Supply the exact deployed
@@ -407,8 +413,11 @@ eligible alert cooldown and queries the exact zone's Email Sending Settings
 node. The capability preflight requires `emailSendingAdaptive.enabled = true`
 and every field selected by the event query to appear in `availableFields` for
 the observability token. Its requester-specific `maxPageSize` must support the
-50-row bound and `maxNumberOfFields` must support all seven selections. Only
-after both preflights pass does the step record
+50-row bound, `maxNumberOfFields` must support all seven selections, and both
+`maxDuration` and `notOlderThan` must cover the exercise's own one-hour
+analytics window at 3600 seconds or more, so a requester that cannot serve the
+evidence window fails before any mutation rather than at the evidence stage.
+Only after both preflights pass does the step record
 `cleanup_required=true`, enter the queue boundary, require empty exact
 source/DLQ peeks, push one UUID-marked malformed envelope, observe retry
 exhaustion in the DLQ, and keep that exact message present while it correlates
