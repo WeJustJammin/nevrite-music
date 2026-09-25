@@ -198,7 +198,38 @@ describe('production AC209 exercise workflow contract', () => {
     expect(upload).not.toMatch(/path:\s+ac209-exercise\s*$/mu);
     expect(upload).toContain('if-no-files-found: error');
     expect(upload).toContain('retention-days: 30');
-    expect(upload).not.toMatch(/if: always\(\)/u);
+    const uploadSteps = workflow
+      .split(/^ {6}- name: /mu)
+      .filter((step) => step.includes('actions/upload-artifact@'));
+    expect(uploadSteps).toHaveLength(2);
+    // The marker-cleanup safety step owns `if: always()`; no evidence upload may
+    // copy that condition, or a redacted artifact would outlive a fail-closed run.
+    for (const step of uploadSteps) expect(step).not.toMatch(/if: always\(\)/u);
     expect(workflow).not.toMatch(/\b(wrangler deploy|supabase db reset)\b/iu);
+  });
+
+  it('retains a redacted failure receipt only when the guarded exercise does not succeed', () => {
+    const workflow = readWorkflow();
+    expect(workflow).toContain(
+      'AC209_EXERCISE_FAILURE_OUTPUT_PATH: ac209-exercise/exercise-failure.json',
+    );
+    const failure = workflow.match(
+      /- name: Upload redacted AC209 failure receipt[\s\S]*$/u,
+    )?.[0];
+    expect(failure).toBeDefined();
+    expect(failure).toContain('if: failure()');
+    expect(failure).toContain(
+      'name: production-ac209-exercise-failure-${{ inputs.source_revision }}',
+    );
+    expect(failure).toContain('path: ac209-exercise/exercise-failure.json');
+    expect(failure).toContain('if-no-files-found: warn');
+    expect(failure).toContain('retention-days: 30');
+    expect(failure).not.toContain('ac209-exercise/exercise.json');
+    expect(
+      workflow.indexOf('Upload redacted AC209 exercise evidence'),
+    ).toBeLessThan(workflow.indexOf('Upload redacted AC209 failure receipt'));
+    expect(
+      workflow.indexOf('Upload redacted AC209 failure receipt'),
+    ).toBeGreaterThan(workflow.indexOf('Ensure exact AC209 marker cleanup'));
   });
 });

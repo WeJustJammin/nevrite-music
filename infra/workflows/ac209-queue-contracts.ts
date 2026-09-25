@@ -47,17 +47,24 @@ export type Ac209QueueDiagnostic = Readonly<{
 }>;
 
 const AC209_QUEUE_ERROR_PREFIX = 'AC209 queue exercise failed: ';
-const AC209_QUEUE_DIAGNOSTIC_BOUNDARIES = new Set<unknown>([
+export const AC209_QUEUE_DIAGNOSTIC_BOUNDARIES = Object.freeze([
   'queue_list',
   'queue_consumer_list',
   'queue_peek',
   'queue_publish',
   'queue_purge',
 ]);
-const AC209_QUEUE_DIAGNOSTIC_CODES = new Set<unknown>([
+export const AC209_QUEUE_DIAGNOSTIC_CODES = Object.freeze([
   'provider_request_failed',
   'provider_response_invalid',
 ]);
+
+const AC209_QUEUE_DIAGNOSTIC_BOUNDARY_SET = new Set<unknown>(
+  AC209_QUEUE_DIAGNOSTIC_BOUNDARIES,
+);
+const AC209_QUEUE_DIAGNOSTIC_CODE_SET = new Set<unknown>(
+  AC209_QUEUE_DIAGNOSTIC_CODES,
+);
 
 export const parseAc209QueueDiagnostic = (
   value: unknown,
@@ -66,8 +73,8 @@ export const parseAc209QueueDiagnostic = (
     return undefined;
   const candidate = value as Record<string, unknown>;
   if (
-    !AC209_QUEUE_DIAGNOSTIC_BOUNDARIES.has(candidate.boundary) ||
-    !AC209_QUEUE_DIAGNOSTIC_CODES.has(candidate.code) ||
+    !AC209_QUEUE_DIAGNOSTIC_BOUNDARY_SET.has(candidate.boundary) ||
+    !AC209_QUEUE_DIAGNOSTIC_CODE_SET.has(candidate.code) ||
     (candidate.status !== null &&
       (typeof candidate.status !== 'number' ||
         !Number.isSafeInteger(candidate.status) ||
