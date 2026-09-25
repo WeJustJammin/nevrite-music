@@ -1,6 +1,7 @@
 import { createHash } from 'node:crypto';
 
 import { readDatasetPresenceInstant } from './ac209-email-dataset-presence-shared.ts';
+import { digestProviderLabel } from './ac209-email-log-safety.ts';
 import {
   AC209_EMAIL_ROUTING_DAY_COUNTS_DATASET,
   AC209_EMAIL_ROUTING_DAY_COUNTS_ELAPSED_MS,
@@ -9,7 +10,7 @@ import {
   AC209_EMAIL_ROUTING_DAY_COUNTS_SCHEMA_VERSION,
   Ac209EmailRoutingDayCountsInputSchema,
   Ac209EmailRoutingDayCountsReportSchema,
-  isVisibleAsciiStatus,
+  isBoundedProviderLabel,
   type Ac209EmailRoutingDayCountsInput,
   type Ac209EmailRoutingDayCountsReport,
 } from './ac209-email-routing-day-counts-contract.ts';
@@ -25,7 +26,8 @@ import {
  *
  * Issues exactly ONE provider query against the documented aggregated dataset
  * over a bounded UTC-day window and reports the provider-reported `count`
- * per `date` x `status` group. It reuses the sibling probe's instant
+ * per `date` x `status` group, with the provider's `status` label published only
+ * as a one-way digest. It reuses the sibling probe's instant
  * reader and the shared provider request/zone-record boundary rather than
  * restating time, envelope, or redaction rules.
  *
@@ -66,7 +68,7 @@ const isBareUtcDay = (value: unknown): value is string =>
  */
 const readGroupedRow = (
   row: unknown,
-): Readonly<{ date: string; status: string; count: number }> => {
+): Readonly<{ date: string; statusSha256: string; count: number }> => {
   if (!isRecord(row) || Object.keys(row).length !== 2)
     failAc209EmailSendingAnalytics(
       'provider_response_invalid',
@@ -84,15 +86,15 @@ const readGroupedRow = (
       'provider routing day-count dimensions are malformed.',
     );
   const { date, status } = dimensions as { date: string; status: string };
-  // Visible ASCII only: this label is echoed into a CI log line, so a control
-  // character, tab, escape sequence, or multi-byte glyph is rejected rather
-  // than emitted to the log.
+  // The label is bounded, then reduced in this frame and never returned: only the
+  // digest leaves the reader. Visible ASCII is not a safety property - `##[` and
+  // `::` both pass it - so the label is not published in any form.
   if (status.length === 0 || status.length > MAX_STATUS_LENGTH)
     failAc209EmailSendingAnalytics(
       'provider_response_invalid',
       'provider routing day-count status is malformed.',
     );
-  if (!isVisibleAsciiStatus(status))
+  if (!isBoundedProviderLabel(status))
     failAc209EmailSendingAnalytics(
       'provider_response_invalid',
       'provider routing day-count status is not printable.',
@@ -103,7 +105,7 @@ const readGroupedRow = (
       'provider_response_invalid',
       'provider routing day-count value is malformed.',
     );
-  return { date, status, count };
+  return { date, statusSha256: digestProviderLabel(status), count };
 };
 
 /**
