@@ -143,7 +143,10 @@ describe('AC265 session broker RPC client', () => {
       },
       { ...resolveResult, handleRef: handles[1]!.handleRef },
       { ...resolveResult, handleSha256: 'c'.repeat(64) },
+      // A resolve envelope must never carry a material reference: echoing the
+      // caller-declared reference would launder it into apparent authority.
       { ...resolveResult, materialRef: resolveResult.handleRef },
+      { ...resolveResult, materialRef: handles[0]!.materialRef },
       { ...resolveResult, environment: 'production' },
       { ...resolveResult, hostingProjectId: 'wejammin-production' },
       { ...resolveResult, redacted: false },

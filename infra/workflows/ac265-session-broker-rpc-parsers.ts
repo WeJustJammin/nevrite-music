@@ -97,11 +97,14 @@ export async function parseResolveResult(
     result.handleRef !== request.handleRef ||
     result.handleSha256 !== request.handleSha256 ||
     result.environment !== 'staging' ||
-    result.hostingProjectId !== AC265_SESSION_BROKER_HOSTING_PROJECT_ID ||
-    result.materialRef === result.handleRef
+    result.hostingProjectId !== AC265_SESSION_BROKER_HOSTING_PROJECT_ID
   )
     return fail();
 
+  // The resolve envelope deliberately carries no material reference: the
+  // caller-declared reference is unverified here, so echoing it back would
+  // present it as broker authority.  The strict response schema above already
+  // rejects any envelope that adds one.
   requireBoundHandle(result.handleRef, result.role);
   if (result.handleSha256 !== (await sha256Hex(result.handleRef)))
     return fail();

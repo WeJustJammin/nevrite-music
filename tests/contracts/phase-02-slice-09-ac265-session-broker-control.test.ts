@@ -60,6 +60,28 @@ describe('AC265 run-scoped session broker control contract', () => {
     ).toEqual(teardownResult);
   });
 
+  it('never lets a resolve envelope carry a material reference as authority', () => {
+    // A caller-supplied material reference is a request-side declaration only.
+    // The resolve envelope must not echo it back, because echoing it would
+    // present an unverified caller-named reference as broker authority.
+    expect(
+      Ac265SessionBrokerResolveResultSchema.safeParse(resolveResult).success,
+    ).toBe(true);
+    for (const materialRef of [
+      'ac265-session-material://staging/30000000-0000-4000-8000-000000000001',
+      authorizeRequest.handles[0]!.materialRef,
+      resolveResult.handleRef,
+    ])
+      expectRejected(Ac265SessionBrokerResolveResultSchema, {
+        ...resolveResult,
+        materialRef,
+      });
+    expectRejected(Ac265SessionBrokerResolveResponseSchema, {
+      ...resolveResult,
+      materialRef: authorizeRequest.handles[0]!.materialRef,
+    });
+  });
+
   it('accepts only the closed conflict envelope for every operation', () => {
     for (const schema of [
       Ac265SessionBrokerAuthorizeResponseSchema,

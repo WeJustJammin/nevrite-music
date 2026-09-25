@@ -10,7 +10,6 @@ import {
   AC265_SESSION_BROKER_MAX_DURATION_MS,
   AC265_SESSION_BROKER_MAX_RESOLVES_PER_HANDLE,
   Ac265SessionBrokerIdempotencyReferenceSchema,
-  Ac265SessionBrokerMaterialReferenceSchema,
   Ac265SessionBrokerRedactedResultShape,
   Ac265SessionBrokerRoleHandleShape,
   requireAc265SessionBrokerHandleRoleBinding,
@@ -74,7 +73,6 @@ export const Ac265SessionBrokerResolveResultSchema = z
     ...Ac265SessionBrokerRoleHandleShape,
     idempotencyRef: Ac265SessionBrokerIdempotencyReferenceSchema,
     state: z.literal('resolved'),
-    materialRef: Ac265SessionBrokerMaterialReferenceSchema,
     maxResolvesPerHandle: z.literal(
       AC265_SESSION_BROKER_MAX_RESOLVES_PER_HANDLE,
     ),

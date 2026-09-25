@@ -68,7 +68,6 @@ export const authorizeResult = {
   redacted: true,
 } as const;
 
-export const firstMaterialRef = handles[0]!.materialRef;
 export const firstHandle = {
   role: handles[0]!.role,
   handleRef: handles[0]!.handleRef,
@@ -87,7 +86,6 @@ export const resolveResult = {
   ...firstHandle,
   idempotencyRef: resolveRequest.idempotencyRef,
   state: 'resolved',
-  materialRef: firstMaterialRef,
   maxResolvesPerHandle: 1,
   resolvedAt: '2026-09-24T10:00:30.000Z',
   expiresAt: '2026-09-24T10:05:00.000Z',

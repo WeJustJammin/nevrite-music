@@ -66,9 +66,14 @@ every locked role exactly once with distinct handles and material, binds each
 handle reference to its embedded role, and keeps every result redacted with a
 bounded five-minute window and exactly one resolve per handle. The contract
 carries no session state, resolves no material, and proves no hosted
-acceptance; a material reference is not a bearer credential, and only the
-approved external broker can dereference it inside the protected run. The
-schemas are sharded so every shard stays inside the repository schema line cap.
+acceptance. A material reference is a caller-declared request-side value: the
+authorize boundary validates only its shape, distinctness, and per-role binding,
+the database verifies no ownership of it, and no result envelope returns it, so
+it is never authority. A material reference is not a bearer credential,
+resolving it is decided solely by the approved external broker at dereference
+time inside the protected run, and the resolve envelope reports only the bound
+handle and its digest. The schemas are sharded so every shard stays inside the
+repository schema line cap.
 
 ## Ownership
 

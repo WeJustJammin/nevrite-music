@@ -3,12 +3,24 @@
 -- This migration owns only authorization, one-use resolution bookkeeping, and
 -- teardown for the nine locked role handles of one protected hosted run.  It
 -- deliberately stores no session state: every handle row carries the opaque
--- handle reference, its reference digest, and an opaque material reference that
--- only the external broker can dereference.  A handle reference is not a bearer
--- credential, and resolving it through these RPCs is impossible without the
--- exact live runner authorization for the same run, identity, source revision,
--- and deployment.  No live authorization, handle, or material reference is
--- seeded here.
+-- handle reference, its reference digest, and the caller-declared material
+-- reference that the protected run asks the external broker to resolve.
+--
+-- Trust boundary, stated explicitly so no reader infers authority the database
+-- does not verify:
+--   * The handle reference is broker-owned.  A handle reference is not a bearer
+--     credential, and resolving it through these RPCs is impossible without the
+--     exact live runner authorization for the same run, identity, source
+--     revision, and deployment.
+--   * The material reference is caller-declared and unverified here.  This
+--     migration validates only its shape, its distinctness, and its per-role
+--     binding; it does not verify that the caller holds the referenced material.
+--     Whether the reference resolves is decided by the external broker at
+--     dereference time, entirely outside this schema.
+--   * Because of that, no result envelope returns the material reference.  A
+--     resolve envelope reports the bound handle and its digest only, so a
+--     caller-named reference is never echoed back as broker authority.
+--   * No live authorization, handle, or material reference is seeded here.
 
 create table platform_private.ac265_session_broker_handles (
   broker_authorization_id uuid primary key
@@ -72,6 +84,13 @@ create table platform_private.ac265_session_broker_handle_roles (
     unique (broker_authorization_id, role),
   constraint ac265_session_broker_handle_roles_handle_ref_unique
     unique (handle_ref),
+  -- Deliberate anti-reuse guard: the uniqueness is global, not per run, so a
+  -- material reference can never be re-declared across runs.  A run that tries
+  -- to reuse a material reference another run already claimed gets the same
+  -- fail-closed conflict as any other rejected binding.  Do not narrow this to
+  -- (broker_authorization_id, material_ref): the cross-run conflict is the
+  -- property that keeps a caller from replaying one reference as reusable
+  -- authority across runs.
   constraint ac265_session_broker_handle_roles_material_ref_unique
     unique (material_ref),
   constraint ac265_session_broker_handle_roles_role_locked
@@ -305,7 +324,6 @@ as $function$
     'handleSha256', encode(handle.handle_sha256, 'hex'),
     'idempotencyRef', handle.last_resolve_idempotency_ref,
     'state', 'resolved',
-    'materialRef', handle.material_ref,
     'maxResolvesPerHandle', 1,
     'resolvedAt', to_char(handle.last_resolved_at at time zone 'UTC', 'YYYY-MM-DD"T"HH24:MI:SS.MS"Z"'),
     'expiresAt', to_char(context.expires_at at time zone 'UTC', 'YYYY-MM-DD"T"HH24:MI:SS.MS"Z"'),
@@ -366,7 +384,7 @@ revoke all on function platform_private.ac265_build_session_broker_teardown_enve
 comment on table platform_private.ac265_session_broker_handles is
   'Private immutable run-scoped session broker authorizations for one protected AC265 hosted run; carries no session state, only reference digests.';
 comment on table platform_private.ac265_session_broker_handle_roles is
-  'Private one-use resolve and current-session-only teardown bookkeeping for the nine locked role handles; session material never enters this table.';
+  'Private one-use resolve and current-session-only teardown bookkeeping for the nine locked role handles; the stored material reference is caller-declared and unverified, is never returned by any envelope, and session material never enters this table.';
 comment on function platform_private.ac265_reject_session_broker_mutation() is
   'Rejects every update, delete, and truncate of the immutable AC265 session broker authorization header.';
 comment on function platform_private.ac265_guard_session_broker_handle_role_update() is
@@ -810,6 +828,6 @@ grant execute on function platform_api.ac265_session_broker_teardown(jsonb)
 comment on function platform_api.ac265_session_broker_authorize(jsonb) is
   'Binds the nine locked role handles to one live run authorization and returns a redacted handle envelope; a handle reference is never a bearer credential.';
 comment on function platform_api.ac265_session_broker_resolve(jsonb) is
-  'Authorizes exactly one resolution per role handle for the exact authorized run and runner identity and returns only an opaque session-material reference and short expiry.';
+  'Authorizes exactly one resolution per role handle for the exact authorized run and runner identity and returns only the bound handle, its digest, and a short expiry; it does not verify or return the caller-declared material reference, so it grants no material authority.';
 comment on function platform_api.ac265_session_broker_teardown(jsonb) is
   'Records current-session-only teardown for one run-scoped handle and returns the handle-digest-bound teardown evidence envelope; it never revokes another session.';

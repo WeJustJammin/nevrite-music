@@ -728,17 +728,29 @@ select is(
 
 select ok(
   (
-    select result ->> 'materialRef' = handle.material_ref
-      and result ->> 'materialRef' <> result ->> 'handleRef'
+    -- The stored material reference is caller-declared and unverified, so the
+    -- resolve envelope must not return it: echoing it back would present an
+    -- unverified caller-named reference as broker authority.
+    select not result ? 'materialRef'
+      and not result ? 'material_ref'
       and result ->> 'maxResolvesPerHandle' = '1'
-      and result ?& array['materialRef', 'resolvedAt', 'expiresAt', 'redacted']
-      and not result ?| array['cookies', 'storageState', 'accessToken', 'refreshToken']
+      -- Pin the exact member count as well as the required and forbidden
+      -- members, so a future envelope that leaks any extra key (not only a
+      -- material reference) fails here instead of passing unnoticed.
+      and (select count(*) from jsonb_object_keys(result)) = 16
+      and result ?& array['criterion', 'schemaVersion', 'authorizationRef',
+        'runId', 'identitySha256', 'role']
+      and result ?& array['handleRef', 'handleSha256', 'role', 'resolvedAt',
+        'expiresAt', 'idempotencyRef', 'redacted']
+      and result ->> 'handleSha256' = handle.handle_sha256
+      and not result ?| array['cookies', 'storageState', 'storage_state', 'accessToken',
+        'refreshToken', 'material', 'session']
     from ac265_broker_results
     cross join ac265_broker_handles as handle
     where result_name = 'resolve-owner'
       and handle.role = 'owner_full'
   ),
-  'the resolve envelope returns only an opaque material reference and short expiry'
+  'the resolve envelope returns only the bound handle and short expiry, never the caller-declared material reference'
 );
 
 -- Resolution never extends the window: the resolve expiry is exactly the

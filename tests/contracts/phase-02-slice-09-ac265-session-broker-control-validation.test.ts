@@ -73,7 +73,9 @@ describe('AC265 session broker control contract validation', () => {
     }
   });
 
-  it('rejects material references that are not opaque staging references', () => {
+  it('rejects declared material references that are not opaque staging references', () => {
+    // The material reference is a request-side declaration on the authorize
+    // boundary.  It is never authority, and it never appears on a result.
     for (const materialRef of [
       '',
       'ac265-session-material://staging',
@@ -82,11 +84,24 @@ describe('AC265 session broker control contract validation', () => {
       'ac265-session-material://staging/not-a-uuid',
       'ac265-session://owner_full/30000000-0000-4000-8000-000000000001',
       'https://storage.example.test/material.json',
-    ])
+    ]) {
+      expectRejected(Ac265SessionBrokerAuthorizeRequestSchema, {
+        ...authorizeRequest,
+        handles: authorizeRequest.handles.map((handle, position) =>
+          position === 0 ? { ...handle, materialRef } : handle,
+        ),
+      });
       expectRejected(Ac265SessionBrokerResolveResultSchema, {
         ...resolveResult,
         materialRef,
       });
+      expectRejected(Ac265SessionBrokerAuthorizeResultSchema, {
+        ...authorizeResult,
+        handles: authorizeResult.handles.map((handle, position) =>
+          position === 0 ? { ...handle, materialRef } : handle,
+        ),
+      });
+    }
   });
 
   it('rejects unauthorized criterion, version, environment, and project drift', () => {
