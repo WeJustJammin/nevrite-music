@@ -24,7 +24,7 @@ const DEPLOYMENT_STATES = new Set([
   'waiting',
 ]);
 
-const deploymentJobUrl = (runId: string, repository: string): RegExp => {
+export const deploymentJobUrl = (runId: string, repository: string): RegExp => {
   const escapedRepository = repository.replace(/[.*+?^${}()|[\]\\]/gu, '\\$&');
   return new RegExp(
     `^https://github\\.com/${escapedRepository}/actions/runs/${runId}/job/[1-9][0-9]*$`,
