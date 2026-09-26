@@ -2,10 +2,24 @@
 
 ## Active
 
-- **P2-S09 external release evidence** (updated 2026-09-24) — Slice 09 remains
-  at **279/282 active** (**283 authored IDs**) with authored depth ratio
-  **0.986**. Phase 2 has **1,999 active criteria / 2,000 authored** because
-  AC266 is owner-deferred and excluded from the active completion denominator.
+- **P2-S09 external release evidence** (updated 2026-09-25) — Slice 09 remains
+  at **279/280 active** (**283 authored IDs**) with authored depth ratio
+  **0.986**. Phase 2 has **1,997 active criteria / 2,000 authored** because
+  AC209, AC211, and AC266 are authored and unchecked outside the active
+  implementation-completion denominator (DEC-101, DEC-104).
+  AC265 is the only Slice 10 implementation prerequisite and remains an active
+  implementation gate. It **cannot close prelaunch** as currently implemented:
+  its contract is staging-only, but its declared acceptance route requires the
+  combined release-evidence verifier, which pins `alerting.deploymentId` and
+  `slo.deploymentId` to the expected production deployment. A hosted-scope
+  acceptance route is the tracked follow-up (DEC-104); until it lands the
+  prelaunch circularity is only partially resolved.
+  AC209 is deferred as a production-rollout/post-initial-controlled-deployment
+  alert gate that must pass before alerting is declared ready — it does not
+  gate Slice 10 implementation or the initial controlled production
+  deployment. AC211 is deferred as post-launch operational SLO acceptance,
+  mandatory after initial launch and not a blocker of the initial launch.
+  AC266 remains the pre-release real-device production-readiness/release gate.
   The latest promoted CP-04e implementation baseline is PR #93 at exact SHA
   `15032d0e333c1931008c8d363a60a4840b3a6bb2`; exact-main CI
   [run 35673427068](https://github.com/WeJustJammin/nevrite-music/actions/runs/35673427068)
@@ -122,8 +136,9 @@
   because the required real devices are unavailable; it remains unchecked and
   is excluded from active Phase 2 completion, but is mandatory for post-Phase 2
   production-readiness/release. No active acceptance gate closed. Slice 10
-  remains locked only on AC209, AC211, and AC265; AC266 does not block Slice 10
-  implementation. Final canonical validation passes **562 Vitest files, 4,498
+  remains locked only on AC265. AC209 and AC211 are deferred production-evidence
+  gates (DEC-104) and do not block Slice 10 implementation or initial launch;
+  AC266 remains the pre-release gate and does not block Slice 10 implementation. Final canonical validation passes **562 Vitest files, 4,498
   passed + 1 intentional skip**, with **13,184/13,184 statements,
   9,862/9,862 branches, 2,164/2,164 functions, and 12,263/12,263 lines** at
   100%. The evidence-map gate passed; Playwright passed **101 functional + 5
@@ -194,7 +209,8 @@
   preflight/protection/workspace gates and produced no effects or receipt. That
   failure has since cleared; the current AC209/AC211 reading is in the
   [2026-09-24 protected-run record](../verification/2026-09-24-ac209-ac211-protected-run-evidence.md).
-  AC265 remains open and Slice 10 remains locked on AC209, AC211, and AC265.
+  At that checkpoint AC265, AC209, and AC211 were open and Slice 10 was locked on all
+  three; DEC-104 later moved AC209 and AC211 outside the active denominator.
   AC266 remains unchecked and owner-deferred because real devices are
   unavailable; it is not passed or waived and remains a mandatory post-Phase 2
   production-readiness/release gate.
@@ -221,10 +237,10 @@
   no hosted artifact, hosted matrix, independently authenticated receipt, or
   AC265 acceptance exists. Focused local verification passes **5 files / 74
   tests** and `pnpm type-check` is green. AC265 remains open; AC209 and AC211
-  remain open; Slice 10 remains locked; AC266 remains owner-deferred and is a
-  mandatory post-Phase 2 production-readiness/release gate. Totals remain
-  Slice 09 **279/282 active** (**283 authored IDs**) and Phase 2 **1,999/2,000
-  active criteria**, **8/17 slices**.
+  were open at that checkpoint; Slice 10 was locked; AC266 remained owner-deferred and is a
+  mandatory post-Phase 2 production-readiness/release gate. At that checkpoint
+  totals were Slice 09 **279/282 active** (**283 authored IDs**) and Phase 2
+  **1,999/2,000 active criteria**, **8/17 slices**.
 
 - **P2-S09 AC265 CP-04e protected source-manifest publication foundation**
   (updated 2026-09-21) — CP-04e is now promoted through PR #93 at exact main
@@ -249,9 +265,9 @@
   hosted AC265 acceptance. No live `AC265_PUBLICATION_CONTEXT_BUNDLE_B64`,
   signing configuration, protected run, retained hosted artifact,
   independently authenticated receipt, or complete hosted matrix exists.
-  AC265 remains open; AC209 and AC211 remain open; Slice 10 remains locked;
-  totals remain Slice 09 **279/282 active** (**283 authored IDs**) and Phase 2
-  **1,999/2,000 active criteria** (**8/17 slices**). AC266 remains
+  AC265 was open; AC209 and AC211 were open; Slice 10 was locked;
+  totals were Slice 09 **279/282 active** (**283 authored IDs**) and Phase 2
+  **1,999/2,000 active criteria** (**8/17 slices**). AC266 remained
   owner-deferred and mandatory for the post-Phase 2 release gate.
 
 - **P2-S09 AC265 CP-04d signed source-manifest and authority foundation**
@@ -298,9 +314,9 @@
   live producer
   or source population, protected signer execution, retained hosted artifacts,
   independently authenticated receipts, and the complete hosted matrix remain
-  open. Totals remain Slice 09 **279/282 active** (**283 authored IDs**) and
-  Phase 2 **1,999/2,000 active criteria** (**8/17 slices**); AC209, AC211, and
-  AC265 remain open, Slice 10 remains locked, and AC266 remains owner-deferred
+  open. At that checkpoint totals were Slice 09 **279/282 active** (**283 authored
+  IDs**) and Phase 2 **1,999/2,000 active criteria** (**8/17 slices**); AC209,
+  AC211, and AC265 were open, Slice 10 was locked, and AC266 was owner-deferred
   as the mandatory post-Phase 2 production-readiness/release gate.
 
 ## Historical

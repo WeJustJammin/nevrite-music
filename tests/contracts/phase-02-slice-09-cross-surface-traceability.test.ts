@@ -352,16 +352,19 @@ describe('Phase 2 Slice 09 cross-surface traceability', () => {
     }
   });
 
-  it('[P2-S09-AC-267] separates the 283 authored IDs from the 282-item active completion policy', () => {
+  it('[P2-S09-AC-267] separates the 283 authored IDs from the 280-item active completion policy', () => {
     expect(distinctSorted(acceptanceIds(sliceTracker))).toHaveLength(283);
     expect(sliceTracker).toMatch(
       /\*\*Acceptance criteria \(authored\)\*\*:\s*283\b/iu,
     );
     expect(sliceTracker).toMatch(
-      /\*\*Active release denominator\*\*:\s*282\b/iu,
+      /\*\*Active release denominator\*\*:\s*280\b/iu,
     );
     expect(sliceTracker).toMatch(
-      /\*\*Local QA-GREEN \(active\)\*\*:\s*279\/282\s+verified;\s*283\s+authored IDs remain/iu,
+      /\*\*Slice 09 implementation-completion denominator\*\*:\s*280\b/iu,
+    );
+    expect(sliceTracker).toMatch(
+      /\*\*Local QA-GREEN \(active\)\*\*:\s*279\/280\s+verified;\s*283\s+authored IDs remain/iu,
     );
 
     const ac266Row = sliceTracker
@@ -369,13 +372,13 @@ describe('Phase 2 Slice 09 cross-surface traceability', () => {
       .find((line) => /P2-S09-AC-266/iu.test(line));
     expect(ac266Row).toMatch(/^\s*-\s*\[ \]/u);
     expect(sliceTracker).toMatch(
-      /AC266[\s\S]{0,500}owner-deferred[\s\S]{0,500}remains unchecked and excluded from active Phase 2 completion/iu,
+      /AC266[\s\S]{0,500}owner-deferred[\s\S]{0,500}remains unchecked and excluded from active Phase 2/iu,
     );
     expect(sliceTracker).toMatch(
-      /Slice 10 remains locked only on AC209,\s*AC211,\s*and\s+AC265\b/iu,
+      /Slice 10 implementation prerequisites\*\*:\s*AC265\b/iu,
     );
     expect(sliceTracker).toMatch(
-      /AC266[\s\S]{0,300}mandatory[\s\S]{0,100}post-Phase 2 production-readiness\/release/iu,
+      /AC266[\s\S]{0,300}mandatory[\s\S]{0,100}pre-release[\s\S]{0,100}production-readiness\/release/iu,
     );
   });
 });

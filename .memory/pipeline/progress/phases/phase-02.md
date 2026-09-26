@@ -2,11 +2,12 @@
 
 **Status**: in-progress  
 **Progress**: 8/17 slices (47%)  
-**Criteria (2026-09-21)**: 1,999 active / 2,000 authored; AC266 is owner-deferred and excluded from the active Phase 2 completion denominator, but remains mandatory for post-Phase 2 production-readiness/release.  
-**Current gate (2026-09-21)**: CP-04e is promoted through PR #93 at exact main SHA `15032d0e333c1931008c8d363a60a4840b3a6bb2`; exact-main CI `35673427068` succeeded with jobs `106574760348`, `106574760514`, and `106576054809`, and staging `35673923999` succeeded with job `106576288369` and GitHub deployment `6581175667`. API deployment `62bb526d-3755-4f6d-a534-f798ae339248` published version `0164eae4-b06c-4e1e-a342-7cf6a3100bf5`; web deployment `62e2fbcb-c1f3-49a5-96cb-686b2cb20e3e` published version `87ec18d2-9075-4f76-a2ce-73d0124d028a`. Workspace artifact `10672800366`, test evidence `10672235833`, staging candidate `10672316126`, and staging deployment artifact `10672405997` are digest-bound in the CP-04e record; migration `20260921060000` is included. Staging p95 was **33.31 ms / 500 ms** across 20 samples with zero errors; accessibility was **0/0** across three routes. These are staging promotion proofs only, not production evidence or hosted AC265 acceptance. AC211 run `35673313035` passed preflight but had insufficient samples (`commands=0`, `protectedRpcs=0`, `acceptances=0`, `queueFirstAttempts=0`; `dataset=1`, `registry=0`, `productionRegistry=0`, `releaseRegistry=0`), so no artifact or SLO verdict exists. Slice 09 remains **279/282 active** (**283 authored IDs**), Phase 2 remains **8/17**, AC209/AC211/AC265 remain open, Slice 10 remains locked, and AC266 remains owner-deferred, unchecked, and mandatory for post-Phase 2 production-readiness/release.  
+**Criteria (2026-09-25)**: 1,997 active / 2,000 authored; AC209, AC211, and AC266 are authored, unchecked, and excluded from the active Phase 2 implementation-completion denominator. Slice 09 is 279/280 active with 283 authored IDs.  
+**Current gate (2026-09-25)**: DEC-104 supersedes DEC-101's Slice 10 dependency sentence and defers the production-evidence closure of P2-S09-AC-209 and P2-S09-AC-211. AC265 is the only Slice 10 implementation prerequisite. Slice 09 remains blocked at **279/280 active** (**283 authored IDs**); Phase 2 remains **8/17**. AC209 is a production-rollout/post-deployment evidence gate that does not gate Slice 10 implementation or the initial controlled production deployment and must pass before alerting is declared ready; AC211 is post-launch operational SLO acceptance that does not gate the initial launch and is mandatory after initial launch; AC266 remains the pre-release production-readiness/release gate. All three remain authored, unchecked, and never passed, waived, simulated, or inferred.  
+**Prior gate (superseded 2026-09-25 by DEC-104)**: CP-04e is promoted through PR #93 at exact main SHA `15032d0e333c1931008c8d363a60a4840b3a6bb2`; exact-main CI `35673427068` succeeded with jobs `106574760348`, `106574760514`, and `106576054809`, and staging `35673923999` succeeded with job `106576288369` and GitHub deployment `6581175667`. API deployment `62bb526d-3755-4f6d-a534-f798ae339248` published version `0164eae4-b06c-4e1e-a342-7cf6a3100bf5`; web deployment `62e2fbcb-c1f3-49a5-96cb-686b2cb20e3e` published version `87ec18d2-9075-4f76-a2ce-73d0124d028a`. Workspace artifact `10672800366`, test evidence `10672235833`, staging candidate `10672316126`, and staging deployment artifact `10672405997` are digest-bound in the CP-04e record; migration `20260921060000` is included. Staging p95 was **33.31 ms / 500 ms** across 20 samples with zero errors; accessibility was **0/0** across three routes. These are staging promotion proofs only, not production evidence or hosted AC265 acceptance. AC211 run `35673313035` passed preflight but had insufficient samples (`commands=0`, `protectedRpcs=0`, `acceptances=0`, `queueFirstAttempts=0`; `dataset=1`, `registry=0`, `productionRegistry=0`, `releaseRegistry=0`), so no artifact or SLO verdict exists. At that checkpoint Slice 09 was **279/282 active** (**283 authored IDs**), Phase 2 was **8/17**, AC209/AC211/AC265 were open, Slice 10 was locked, and AC266 was owner-deferred. DEC-104 later moved AC209 and AC211 outside the active denominator.  
 **Prior CP-04d gate (superseded 2026-09-21)**: Slice 09 remains blocked at **279/282 active** (**283 authored IDs**) with depth ratio **0.986**; Phase 2 remains **8/17** slices. PR #91 is the latest promoted CP-04d implementation baseline at exact SHA `289ed3a2f4f92da383aa1464340f804777496257`; exact-main CI `35656504913` succeeded across all three jobs, and automatic staging run `35657406613` succeeded on `run_attempt=1` with deployment `6578526934`. Candidate artifact `10665966829` has digest `sha256:d51c0104d8ea7933e5d4a45af021b0ac2067a24150739390edb58e171cab827c`; deployment evidence artifact `10665756858` has digest `sha256:2724a98beb5e2152b7c601697c95042af508ee94d2e62da7ee143495362c9664`; source `artifactDigest` is `0e92da9874c0fae7e0d62fb4419678a83f00a8986087de558dc101c465451c04`; promoted migration is `20260921050000`; provider deployment IDs are `dac978c4-fe9d-4c86-9cf4-53d96a42d45e` and `b27ddb9f-0ab3-4c07-88da-5ff8ea0b2f7b`. Staging p95 was **29.956710999999927 ms** against the **500 ms** threshold, with automated axe digest `6a7f59d9792a176e3032a9b410c6a0c1bb03850f27ed2918bc98fe82fddbbcf4` and serious/critical counts **0/0**. These are exact-main CI and staging promotion proofs only; staging proof does not equal hosted AC265 acceptance. CP-04d adds the signed source-manifest contract, server-derived authorization window, separate manifest digest, canonical ordering, immutable reserve-to-finalize/readback authority, truthful `sourceSetComplete`/`kindComplete` fields that never assert acceptance, and resolver/semantic-subject/protected-context hardening. Known focused TypeScript evidence is **16 files / 104 tests**. Focused database authority evidence is **78/78 assertions** and concurrency evidence is **6/6** (**84/84 total**). After a fresh reset, `pnpm db:test` passed **61 files / 2,208 tests**; `pnpm db:lint` passed with unrelated existing warnings, and `pnpm db:types:check` passed. Final local `pnpm validate` passed **562 files** with **4,498 passed + 1 skipped / 4,499**, 100% coverage (**13,184 statements, 9,862 branches, 2,164 functions, 12,263 lines**); Slice 09 evidence passed, Playwright passed **101/101 functional** and **5/5 real-route** checks, builds and bundle budgets passed, and local API p95 was **1.2129150000000095 ms**. Final local `pnpm db:verify` passed after a fresh reset with migrations through `20260921050000`; database lint had existing warnings only, **61 files / 2,208 tests** passed, and generated types matched. The initial validate failure was root-caused to a fixture `PUBLIC_KEY_PEM` re-export issue; after the fix, focused **8/8** and **12-repeat** stability checks passed before the successful rerun. The CP-04d foundation is private construction evidence only: no live hosted producer/source population, protected signer execution, retained hosted artifact, independently authenticated receipt, or complete hosted matrix exists; AC265 remains open. Read-only AC209 verifier `35612514031` failed with `provider_graphql_error` after all preflight/protection/workspace gates, with no effects or receipt. AC211 also remains open. AC266 is owner-deferred because the required real devices are unavailable; it remains unchecked and excluded from active Phase 2 completion. Slice 10 remains locked only on AC209, AC211, and AC265; AC266 remains a mandatory post-Phase 2 production-readiness/release gate.  
 **Plan**: [Phase 2 plan](../../../wiki/specs/phases/phase-2.md)  
-**Updated**: 2026-09-21
+**Updated**: 2026-09-25
 **Prior remote evidence**: Before this remediation, PR #9 head `67264c5e9b5196d00ac3f0aa272896a010c872d7` produced synthetic merge `a79dfe30db60e4f54024f064fc2fdf2d01033919` and passing CI run `33841270472`. That run is not evidence for the remediation; no merge or deployment is claimed
 
 ## CP-04a approved outage-target attestation (promoted foundation)
@@ -32,7 +33,7 @@ workflow `35598236704` / deployment `6568074493` are green. Live target-signing
 key/configuration, seeded CP-01 target or registry rows, retained target or
 attestation artifact, attestation workflow run, hosted browser matrix,
 independently authenticated receipt, or AC265 acceptance remain absent. Slice
-09 remains **279/282 active** and Slice 10 remains locked on AC209, AC211, and
+09 remained **279/282 active** and Slice 10 remained locked on AC209, AC211, and
 AC265. See the [CP-04a verification record](../verification/2026-09-21-ac265-approved-outage-target-attestation.md).
 
 ## CP-04b approved outage-target registration (promoted private foundation)
@@ -79,8 +80,9 @@ Historical read-only AC209 verifier `35612514031` failed with
 `provider_graphql_error` after all preflight/protection/workspace gates and
 produced no effects or receipt; that failure has since cleared, and the current
 reading is in the [2026-09-24 protected-run record](../verification/2026-09-24-ac209-ac211-protected-run-evidence.md).
-Slice 09 remains **279/282 active**; AC265 remains open and Slice 10
-remains locked on AC209, AC211, and AC265. AC266 remains unchecked,
+Slice 09 remained **279/282 active** at that checkpoint; AC265 remained open and Slice 10
+remained locked on AC209, AC211, and AC265. Superseded by DEC-104 — see the current
+gate above. AC266 remains unchecked,
 owner-deferred, and mandatory at the post-Phase 2 production-readiness/release
 gate. See the [CP-04b verification
 record](../verification/2026-09-21-ac265-approved-outage-target-registration.md).
@@ -107,9 +109,9 @@ with a maximum source set of **256**. The upstream authenticated
 manifest/registry/run authority and external replay ledger remain open; no
 hosted artifact, hosted matrix, independently authenticated receipt, or AC265
 acceptance is claimed. Focused local verification passes **5 files / 74 tests**
-and `pnpm type-check` is green. Phase 2 remains **8/17** with **1,999/2,000
-active criteria**; Slice 09 remains **279/282 active** (**283 authored IDs**),
-AC209/AC211/AC265 remain open, Slice 10 remains locked, and AC266 remains
+and `pnpm type-check` is green. At that checkpoint Phase 2 was **8/17** with
+**1,999/2,000 active criteria**; Slice 09 was **279/282 active** (**283 authored
+IDs**), AC209/AC211/AC265 were open, Slice 10 was locked, and AC266 remained
 owner-deferred as the mandatory post-Phase 2 production-readiness/release
 gate.
 
@@ -196,7 +198,7 @@ routes. These are staging promotion proofs only, not production evidence or
 hosted AC265 acceptance. No live protected context capsule, signing
 configuration, protected publication run, retained hosted artifact,
 authenticated receipt, or complete hosted matrix exists. AC265 remains open;
-AC209 and AC211 remain open; Slice 10 remains locked. Totals remain **8/17**
+AC209 and AC211 were open at that checkpoint; Slice 10 was locked. Totals were **8/17**
 slices, **1,999/2,000 active criteria**, and Slice 09 **279/282 active** with
 **283 authored IDs**. AC266 remains owner-deferred and mandatory for the
 post-Phase 2 production-readiness/release gate. See the [CP-04e verification
@@ -304,7 +306,7 @@ remain open; Slice 09 stays at 279/283 and Slice 10 remains locked.
 |                       06 Public profiles and credit-backed portfolio | complete    |                       121/121 | Slices 03 and 05 | [→](../slices/phase-02-slice-06.md) |
 |           07 Typed settings registry, effective values, and rollback | complete    |                       176/176 | Slice 01         | [→](../slices/phase-02-slice-07.md) |
 |             08 Admin shell, task inbox, capability grants, and audit | complete    |                         51/51 | Slices 03 and 07 | [→](../slices/phase-02-slice-08.md) |
-|        09 Content schemas, relations, activation, and block registry | blocked     | 279/282 active (283 authored) | Slices 07 and 08 | [→](../slices/phase-02-slice-09.md) |
+|        09 Content schemas, relations, activation, and block registry | blocked     | 279/280 active (283 authored) | Slices 07 and 08 | [→](../slices/phase-02-slice-09.md) |
 |        10 Entry authoring, conflict resolution, and revision restore | not started |                          0/60 | Slice 09         | [→](../slices/phase-02-slice-10.md) |
 |                 11 Review, scheduling, preview, and safe publication | not started |                          0/45 | Slice 10         | [→](../slices/phase-02-slice-11.md) |
 |             12 Templates, reusable patterns, and taxonomy governance | not started |                          0/50 | Slice 09         | [→](../slices/phase-02-slice-12.md) |
@@ -324,7 +326,7 @@ remain open; Slice 09 stays at 279/283 and Slice 10 remains locked.
 - [x] **Slice 06**: Public profiles and credit-backed portfolio → [log](../slices/phase-02-slice-06.md)
 - [x] **Slice 07**: Typed settings registry, effective values, and rollback → [log](../slices/phase-02-slice-07.md)
 - [x] **Slice 08**: Admin shell, task inbox, capability grants, and audit → [log](../slices/phase-02-slice-08.md)
-- [!] **Slice 09**: Content schemas, relations, activation, and block registry — 279/282 active (283 authored); AC266 owner-deferred → [log](../slices/phase-02-slice-09.md)
+- [!] **Slice 09**: Content schemas, relations, activation, and block registry — 279/280 active (283 authored); AC209/AC211 deferred to production-evidence gates; AC266 owner-deferred → [log](../slices/phase-02-slice-09.md)
 - [ ] **Slice 10**: Entry authoring, conflict resolution, and revision restore → [log](../slices/phase-02-slice-10.md)
 - [ ] **Slice 11**: Review, scheduling, preview, and safe publication → [log](../slices/phase-02-slice-11.md)
 - [ ] **Slice 12**: Templates, reusable patterns, and taxonomy governance → [log](../slices/phase-02-slice-12.md)

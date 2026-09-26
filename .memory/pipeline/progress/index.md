@@ -1,9 +1,9 @@
 # Implementation Progress
 
 **Project**: WeJammin  
-**Last updated**: 2026-09-21
+**Last updated**: 2026-09-25
 **Overall**: 15/24 slices (63%)
-**Phase 2 criteria**: 1,999 active / 2,000 authored; AC266 is owner-deferred and excluded from the active completion denominator, but remains mandatory for post-Phase 2 production-readiness/release. Slice 09 is 279/282 active (283 authored IDs).
+**Phase 2 criteria**: 1,997 active / 2,000 authored; AC209, AC211, and AC266 are authored, unchecked, and outside the active completion denominator on distinct post-implementation timelines. Slice 09 is 279/280 active with 283 authored IDs. AC265 is the only Slice 10 implementation prerequisite.
 
 ## Phases
 
@@ -91,8 +91,9 @@ checks passed before the successful rerun. PR #91 exact-main CI and staging
 promotion are recorded above. No AC265 hosted acceptance is claimed:
 live hosted producer/source population, protected
 signer execution, retained hosted artifacts, independently authenticated
-receipts, and the complete hosted matrix remain open. Phase 2 remains **8/17**
-with **1,999/2,000 active criteria**, Slice 09 remains **279/282 active** with
-**283 authored IDs**, AC209/AC211/AC265 remain open, Slice 10 remains locked,
-and AC266 remains owner-deferred as a mandatory post-Phase 2
-production-readiness/release gate.
+receipts, and the complete hosted matrix remain open. At that checkpoint Phase
+2 was **8/17** with **1,999/2,000 active criteria**, Slice 09 was **279/282
+active** with **283 authored IDs**, AC209/AC211/AC265 were open, and Slice 10
+was locked. DEC-104 later moved AC209 and AC211 outside the active
+implementation denominator, leaving Slice 09 at 279/280 and Slice 10 locked only
+on AC265.

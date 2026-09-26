@@ -50,6 +50,7 @@
 - [[specs/audits/phase-02-slice-09-verification-remediation|Phase 2 Slice 09 verification remediation evidence]] — audit — spec-vault
 - [[specs/audits/phase-1-staging-runtime-evidence|Phase 1 Staging Runtime Evidence]] — audit — spec-vault
 - [[specs/audits/phase-1-validation|Phase 1 Validation]] — audit — spec-vault
+- [[specs/audits/propagation-ac209-ac211-2026-09-25|Approved AC209/AC211 prelaunch production-evidence propagation]] — audit — spec-vault
 - [[specs/audits/propagation-ac265-2026-09-09|Approved AC265 propagation]] — audit — spec-vault
 - [[specs/audits/propagation-ac266-2026-09-21|Approved AC266 Phase 2 completion-policy propagation]] — audit — spec-vault
 - [[specs/audits/propagation-github-repository-identity-2026-09-22|Approved AC265 GitHub repository identity propagation]] — audit — spec-vault
@@ -61,6 +62,7 @@
 - [[specs/audits/propagation-scan-2026-09-09|AC265 scope propagation scan]] — audit — spec-vault
 - [[specs/audits/propagation-scan-2026-09-21|AC266 completion-policy propagation scan]] — audit — spec-vault
 - [[specs/audits/propagation-scan-2026-09-22-repository-identity|GitHub repository identity propagation scan]] — audit — spec-vault
+- [[specs/audits/propagation-scan-2026-09-25|AC209/AC211 prelaunch production-evidence propagation scan]] — audit — spec-vault
 - [[specs/audits/remediation-state|Pipeline remediation state]] — audit — spec-vault
 - [[specs/audits/verify-infrastructure-2026-09-04-1255|Infrastructure Verification Report]] — audit — spec-vault
 - [[specs/audits/verify-infrastructure-2026-09-04-1353|Infrastructure Verification Report]] — audit — spec-vault
@@ -1556,6 +1558,9 @@
 
 ## Structured Memory
 
+- decision: DEC-104: AC209 and AC211 move to post-implementation production-evidence gates without being passed or waived (2026-09-25) — 2026-09-25T20:30:00-04:00
+- decision: DEC-103: AC265 staging identities come from Cloud Identity Free, with exactly one narrow expiring CMS read grant (2026-09-25) — 2026-09-25T15:52:00-04:00
+- decision: DEC-102: Browser gates run Google Chrome only, on the engine-family wire contract (2026-09-24) — 2026-09-24T12:20:00-04:00
 - decision: DEC-101: AC266 moves to a post-Phase-2 production-readiness gate without being passed or waived (2026-09-21) — 2026-09-21T00:38:00-04:00
 - pattern: PAT-016: Operational truth must be server-owned and fail closed (2026-08-30) — 2026-08-30T06:08:13-04:00
 - pattern: PAT-017: Generated artifacts need check-only validation outside broad format globs (2026-08-30) — 2026-08-30T06:08:13-04:00
