@@ -71,6 +71,7 @@ describe('AC265 hosted verification run provenance', () => {
     ['a token', { token: '' }],
     ['a run id', { runId: 'not-a-run' }],
     ['a run attempt', { attempt: '0' }],
+    ['a run attempt that does not match the completed run', { attempt: '9' }],
     ['the repository', { repository: 'attacker/repo' }],
     ['a non-origin web origin', { stagingWebOrigin: 'https://x.test/path' }],
     ['an http web origin', { stagingWebOrigin: 'http://x.test' }],
@@ -145,6 +146,29 @@ describe('AC265 hosted verification run provenance', () => {
   it('rejects a report artifact whose digest is not a sha256 digest', async () => {
     await expect(
       resolve({ stagingArtifacts: [reportArtifact({ digest: 'md5:abc' })] }),
+    ).rejects.toThrow();
+  });
+
+  it('carries the exact declared archive size through provenance', async () => {
+    const provenance = await resolve({
+      stagingArtifacts: [reportArtifact({ size_in_bytes: 4096 })],
+    });
+    expect(provenance.reportArchiveBytes).toBe(4096);
+  });
+
+  it('rejects a declared archive size that is not a positive integer', async () => {
+    await expect(
+      resolve({ stagingArtifacts: [reportArtifact({ size_in_bytes: 0 })] }),
+    ).rejects.toThrow();
+  });
+
+  it('rejects a report artifact size above the bounded archive ceiling', async () => {
+    await expect(
+      resolve({
+        stagingArtifacts: [
+          reportArtifact({ size_in_bytes: 1024 * 1024 * 1024 }),
+        ],
+      }),
     ).rejects.toThrow();
   });
 

@@ -35,7 +35,6 @@ export interface Ac265HostedVerificationArchiveSource {
 }
 
 export interface Ac265HostedVerificationArchive {
-  readonly selector: 'ci' | 'staging';
   readonly path: string;
   readonly expectedBytes: number;
   readonly expectedSha256: string;
@@ -52,7 +51,6 @@ export const parseAc265HostedVerificationArchives = (
   return value.map((entry) => {
     const archive = requireRecord(entry);
     requireMembers(archive, [
-      'selector',
       'path',
       'expectedBytes',
       'expectedSha256',
@@ -60,8 +58,6 @@ export const parseAc265HostedVerificationArchives = (
       'requiredMembers',
       'sources',
     ]);
-    if (archive['selector'] !== 'ci' && archive['selector'] !== 'staging')
-      return failAc265HostedVerification();
     const path = archive['path'];
     if (
       typeof path !== 'string' ||
@@ -102,7 +98,6 @@ export const parseAc265HostedVerificationArchives = (
     if (!Array.isArray(sources) || sources.length === 0 || sources.length > 512)
       return failAc265HostedVerification();
     return Object.freeze({
-      selector: archive['selector'],
       path,
       expectedBytes,
       expectedSha256,

@@ -181,7 +181,6 @@ export const createStagingScopeFixture = (
 
   const archives: readonly Ac265HostedVerificationArchive[] = [
     {
-      selector: 'staging',
       path: archivePath,
       expectedBytes: archiveBytes.byteLength,
       expectedSha256:
