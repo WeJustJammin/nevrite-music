@@ -2,10 +2,24 @@
 
 ## Active
 
-- **P2-S09 external release evidence** (updated 2026-09-24) — Slice 09 remains
-  at **279/282 active** (**283 authored IDs**) with authored depth ratio
-  **0.986**. Phase 2 has **1,999 active criteria / 2,000 authored** because
-  AC266 is owner-deferred and excluded from the active completion denominator.
+- **P2-S09 external release evidence** (updated 2026-09-25) — Slice 09 remains
+  at **279/280 active** (**283 authored IDs**) with authored depth ratio
+  **0.986**. Phase 2 has **1,997 active criteria / 2,000 authored** because
+  AC209, AC211, and AC266 are authored and unchecked outside the active
+  implementation-completion denominator (DEC-101, DEC-104).
+  AC265 is the only Slice 10 implementation prerequisite and remains an active
+  implementation gate. It **cannot close prelaunch** as currently implemented:
+  its contract is staging-only, but its declared acceptance route requires the
+  combined release-evidence verifier, which pins `alerting.deploymentId` and
+  `slo.deploymentId` to the expected production deployment. A hosted-scope
+  acceptance route is the tracked follow-up (DEC-104); until it lands the
+  prelaunch circularity is only partially resolved.
+  AC209 is deferred as a production-rollout/post-initial-controlled-deployment
+  alert gate that must pass before alerting is declared ready — it does not
+  gate Slice 10 implementation or the initial controlled production
+  deployment. AC211 is deferred as post-launch operational SLO acceptance,
+  mandatory after initial launch and not a blocker of the initial launch.
+  AC266 remains the pre-release real-device production-readiness/release gate.
   The latest promoted CP-04e implementation baseline is PR #93 at exact SHA
   `15032d0e333c1931008c8d363a60a4840b3a6bb2`; exact-main CI
   [run 35673427068](https://github.com/WeJustJammin/nevrite-music/actions/runs/35673427068)
@@ -122,8 +136,9 @@
   because the required real devices are unavailable; it remains unchecked and
   is excluded from active Phase 2 completion, but is mandatory for post-Phase 2
   production-readiness/release. No active acceptance gate closed. Slice 10
-  remains locked only on AC209, AC211, and AC265; AC266 does not block Slice 10
-  implementation. Final canonical validation passes **562 Vitest files, 4,498
+  remains locked only on AC265. AC209 and AC211 are deferred production-evidence
+  gates (DEC-104) and do not block Slice 10 implementation or initial launch;
+  AC266 remains the pre-release gate and does not block Slice 10 implementation. Final canonical validation passes **562 Vitest files, 4,498
   passed + 1 intentional skip**, with **13,184/13,184 statements,
   9,862/9,862 branches, 2,164/2,164 functions, and 12,263/12,263 lines** at
   100%. The evidence-map gate passed; Playwright passed **101 functional + 5

@@ -1,7 +1,7 @@
 {
-  "builtAt": "2026-09-22T17:00:44.754Z",
-  "nodeCount": 1634,
-  "edgeCount": 10129,
+  "builtAt": "2026-09-26T00:26:18.306Z",
+  "nodeCount": 1636,
+  "edgeCount": 10132,
   "nodes": [
     {
       "id": "plan:2026-08-02-architecture-design",
@@ -242,6 +242,13 @@
       "shardId": null
     },
     {
+      "id": "audit:audits/propagation-ac209-ac211-2026-09-25",
+      "type": "audit",
+      "label": "Approved AC209/AC211 prelaunch production-evidence propagation",
+      "path": ".memory/wiki/specs/audits/propagation-ac209-ac211-2026-09-25.md",
+      "shardId": null
+    },
+    {
       "id": "audit:audits/propagation-ac265-2026-09-09",
       "type": "audit",
       "label": "Approved AC265 propagation",
@@ -316,6 +323,13 @@
       "type": "audit",
       "label": "GitHub repository identity propagation scan",
       "path": ".memory/wiki/specs/audits/propagation-scan-2026-09-22-repository-identity.md",
+      "shardId": null
+    },
+    {
+      "id": "audit:audits/propagation-scan-2026-09-25",
+      "type": "audit",
+      "label": "AC209/AC211 prelaunch production-evidence propagation scan",
+      "path": ".memory/wiki/specs/audits/propagation-scan-2026-09-25.md",
       "shardId": null
     },
     {
@@ -11648,6 +11662,12 @@
       "source": "wikilink"
     },
     {
+      "from": "audit:audits/propagation-ac209-ac211-2026-09-25",
+      "to": "phase-plan:phases/phase-2",
+      "type": "phases_into",
+      "source": "phase-ref"
+    },
+    {
       "from": "audit:audits/propagation-ac265-2026-09-09",
       "to": "phase-plan:phases/phase-2",
       "type": "phases_into",
@@ -11763,6 +11783,18 @@
     },
     {
       "from": "audit:audits/propagation-scan-2026-09-22-repository-identity",
+      "to": "phase-plan:phases/phase-2",
+      "type": "references",
+      "source": "wikilink"
+    },
+    {
+      "from": "audit:audits/propagation-scan-2026-09-25",
+      "to": "phase-plan:phases/phase-2",
+      "type": "phases_into",
+      "source": "phase-ref"
+    },
+    {
+      "from": "audit:audits/propagation-scan-2026-09-25",
       "to": "phase-plan:phases/phase-2",
       "type": "references",
       "source": "wikilink"
@@ -72222,7 +72254,7 @@
     "byNodeType": {
       "plan": 12,
       "architecture": 18,
-      "audit": 31,
+      "audit": 33,
       "be-spec": 157,
       "fe-spec": 44,
       "ia-spec": 85,
@@ -72231,9 +72263,9 @@
       "decision": 97
     },
     "byEdgeType": {
-      "phases_into": 95,
+      "phases_into": 97,
       "constrained_by": 9041,
-      "references": 920,
+      "references": 921,
       "derives_from": 64,
       "implemented_by": 6,
       "split_from": 3

@@ -280,10 +280,11 @@ if (existsSync(SPEC_PIPELINE_PATH)) {
 }
 
 // ----- Cross-check the active Phase 2 completion policy -----
-// Slice 09 keeps all 283 authored IDs for traceability, while AC266 is an
-// unchecked, owner-deferred production-readiness gate outside the 282-item
-// implementation denominator. Keep this check scoped to the current tracker
-// sections so historical 279/283 evidence remains valid audit history.
+// Slice 09 keeps all 283 authored IDs for traceability. AC266 (DEC-101) and
+// AC209/AC211 (DEC-104) are unchecked production-evidence gates outside the
+// 280-item Slice 09 and 1997-item Phase 2 implementation denominators. Keep
+// this check scoped to the current tracker sections so historical 279/283
+// evidence remains valid audit history.
 const policySection = (text, heading, nextHeading = /^##\s/imu) => {
   const start = text.search(heading);
   if (start < 0) return '';
@@ -328,56 +329,73 @@ const checkPhaseTwoCompletionPolicy = () => {
   assertPolicy('index.md', indexHeader, [
     {
       pattern:
-        /\*\*Phase 2 criteria\*\*:\s*1,999\s+active\s*\/\s*2,000\s+authored/iu,
+        /\*\*Phase 2 criteria\*\*:\s*1,997\s+active\s*\/\s*2,000\s+authored/iu,
       message:
-        'index.md must publish the 1,999 active / 2,000 authored Phase 2 denominator',
+        'index.md must publish the 1,997 active / 2,000 authored Phase 2 denominator',
     },
     {
-      pattern: /Slice 09 is 279\/282\s+active\s+\(283\s+authored IDs\)/iu,
+      pattern: /Slice 09 is 279\/280\s+active\s+with\s+283\s+authored IDs/iu,
       message:
-        'index.md must publish Slice 09 as 279/282 active with 283 authored IDs',
+        'index.md must publish Slice 09 as 279/280 active with 283 authored IDs',
+    },
+    {
+      pattern: /AC265 is the only Slice 10 implementation prerequisite/iu,
+      message:
+        'index.md must limit the Slice 10 implementation prerequisite to AC265',
     },
   ]);
 
   assertPolicy('phases/phase-02.md', phaseHeader, [
     {
       pattern:
-        /\*\*Criteria[^:]*\*\*:\s*1,999\s+active\s*\/\s*2,000\s+authored/iu,
+        /\*\*Criteria[^:]*\*\*:\s*1,997\s+active\s*\/\s*2,000\s+authored/iu,
       message:
-        'phase-02.md must publish the 1,999 active / 2,000 authored Phase 2 denominator',
+        'phase-02.md must publish the 1,997 active / 2,000 authored Phase 2 denominator',
     },
     {
       pattern:
-        /Slice 09 remains blocked at \*\*279\/282\s+active\*\* \(\*\*283\s+authored IDs\*\*\)/iu,
+        /Slice 09 remains blocked at \*\*279\/280\s+active\*\* \(\*\*283\s+authored IDs\*\*\)/iu,
       message:
-        'phase-02.md current gate must publish Slice 09 as 279/282 active with 283 authored IDs',
+        'phase-02.md current gate must publish Slice 09 as 279/280 active with 283 authored IDs',
     },
     {
       pattern:
-        /AC266[\s\S]{0,400}owner-deferred[\s\S]{0,400}unchecked[\s\S]{0,400}excluded from active Phase 2 completion/iu,
+        /AC265 is the only Slice 10 implementation prerequisite/iu,
       message:
-        'phase-02.md must keep AC266 unchecked, owner-deferred, and outside active completion',
+        'phase-02.md must limit the Slice 10 implementation prerequisite to AC265',
     },
     {
       pattern:
-        /Slice 10 remains locked only on AC209,\s*AC211,\s*and\s+AC265\b/iu,
+        /AC209[\s\S]{0,400}production-rollout\/post-deployment evidence gate[\s\S]{0,400}before alerting is declared ready/iu,
       message:
-        'phase-02.md must limit Slice 10 implementation blockers to AC209, AC211, and AC265',
+        'phase-02.md must classify AC209 as a production-rollout/post-deployment gate that gates alerting readiness, not launch',
     },
     {
       pattern:
-        /AC266[\s\S]{0,300}mandatory[\s\S]{0,100}post-Phase 2 production-readiness\/release gate/iu,
+        /AC211[\s\S]{0,400}post-launch operational SLO acceptance[\s\S]{0,400}mandatory after initial launch/iu,
       message:
-        'phase-02.md must retain AC266 as the post-Phase 2 production-readiness/release gate',
+        'phase-02.md must classify AC211 as post-launch operational SLO acceptance',
+    },
+    {
+      pattern:
+        /AC266[\s\S]{0,400}pre-release[\s\S]{0,400}production-readiness\/release gate/iu,
+      message:
+        'phase-02.md must retain AC266 as the pre-release production-readiness/release gate',
+    },
+    {
+      pattern:
+        /never passed, waived, simulated, or inferred/iu,
+      message:
+        'phase-02.md must keep the deferred criteria free of pass/waiver claims',
     },
   ]);
 
   assertPolicy('phases/phase-02.md#slice-09', phaseRows, [
     {
       pattern:
-        /\|\s*09\s+Content schemas[^|]*\|\s*blocked\s*\|\s*279\/282\s+active\s*\(283\s+authored\)\s*\|/iu,
+        /\|\s*09\s+Content schemas[^|]*\|\s*blocked\s*\|\s*279\/280\s+active\s*\(283\s+authored\)\s*\|/iu,
       message:
-        'phase-02.md Slice 09 row must use the 279/282 active and 283 authored notation',
+        'phase-02.md Slice 09 row must use the 279/280 active and 283 authored notation',
     },
   ]);
 
@@ -387,20 +405,31 @@ const checkPhaseTwoCompletionPolicy = () => {
       message: 'Slice 09 must retain all 283 authored acceptance IDs',
     },
     {
-      pattern: /\*\*Active release denominator\*\*:\s*282\b/iu,
-      message: 'Slice 09 must declare a 282-item active release denominator',
+      pattern: /\*\*Active release denominator\*\*:\s*280\b/iu,
+      message: 'Slice 09 must declare a 280-item active release denominator',
     },
     {
       pattern:
-        /\*\*Local QA-GREEN \(active\)\*\*:\s*279\/282\s+verified;\s*283\s+authored IDs remain/iu,
+        /\*\*Local QA-GREEN \(active\)\*\*:\s*279\/280\s+verified;\s*283\s+authored IDs remain/iu,
       message:
-        'Slice 09 must publish 279/282 active evidence while retaining 283 authored IDs',
+        'Slice 09 must publish 279/280 active evidence while retaining 283 authored IDs',
     },
     {
       pattern:
-        /AC266[\s\S]{0,500}owner-deferred[\s\S]{0,500}remains unchecked and excluded from active Phase 2 completion/iu,
+        /AC209[\s\S]{0,300}production-rollout\/post-deployment evidence gate/iu,
       message:
-        'Slice 09 must keep AC266 unchecked, owner-deferred, and outside active completion',
+        'Slice 09 must classify AC209 as a production-rollout/post-deployment evidence gate',
+    },
+    {
+      pattern: /AC211[\s\S]{0,300}post-launch operational SLO acceptance/iu,
+      message:
+        'Slice 09 must classify AC211 as post-launch operational SLO acceptance',
+    },
+    {
+      pattern:
+        /AC266[\s\S]{0,300}owner-deferred pre-release gate[\s\S]{0,300}not passed, accepted, waived, simulated, or inferred/iu,
+      message:
+        'Slice 09 must keep AC266 unchecked, owner-deferred, pre-release, and free of pass/waiver claims',
     },
   ]);
 
@@ -410,15 +439,32 @@ const checkPhaseTwoCompletionPolicy = () => {
     [
       {
         pattern:
-          /Slice 10 remains locked only on AC209,\s*AC211,\s*and\s+AC265\b/iu,
+          /AC265 is the only remaining\s+active Slice 09 implementation gate and the only Slice 10\s+implementation\s+prerequisite/iu,
         message:
-          'Slice 09 blocker section must limit Slice 10 implementation blockers to AC209, AC211, and AC265',
+          'Slice 09 blocker section must state that AC265 is the only active implementation gate and Slice 10 prerequisite',
       },
       {
         pattern:
-          /AC266[\s\S]{0,300}mandatory[\s\S]{0,100}post-Phase 2 production-readiness\/release/iu,
+          /AC209 is a\s+production-rollout\/post-deployment gate that must pass before alerting is\s+declared ready/iu,
         message:
-          'Slice 09 blocker section must retain AC266 as a production-readiness/release gate',
+          'Slice 09 blocker section must classify AC209 as a post-deployment alerting-readiness gate',
+      },
+      {
+        pattern:
+          /AC211 is post-launch operational SLO acceptance that is\s+mandatory after initial launch/iu,
+        message:
+          'Slice 09 blocker section must classify AC211 as post-launch operational SLO acceptance',
+      },
+      {
+        pattern:
+          /AC266 remains the pre-release real-device\s+gate/iu,
+        message:
+          'Slice 09 blocker section must retain AC266 as the pre-release real-device gate',
+      },
+      {
+        pattern: /Each remains authored and unchecked/iu,
+        message:
+          'Slice 09 blocker section must keep every deferred criterion authored and unchecked',
       },
     ],
   );

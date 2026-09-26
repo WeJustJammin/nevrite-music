@@ -6,14 +6,17 @@
 **Depends on**: Slices 07 and 08  
 **Spec depth floor**: 283  
 **Acceptance criteria (authored)**: 283  
-**Active release denominator**: 282 (AC266 owner-deferred and excluded from the Phase 2 completion denominator)  
-**Phase 2 completion denominator**: 282  
-**Slice 10 implementation prerequisites**: AC209, AC211, and AC265.  
-**Authored criterion policy**: 283 authored Slice 09 IDs remain; AC266 is the deferred post-Phase 2 production-readiness gate.  
-**AC266 evidence status**: owner-deferred; remains unchecked and excluded from active Phase 2 completion; not passed, accepted, waived, simulated, or inferred.  
+**Active release denominator**: 280 (AC266 owner-deferred under DEC-101; AC209 and AC211 deferred under DEC-104 as production-evidence gates)  
+**Slice 09 implementation-completion denominator**: 280  
+**Phase 2 implementation-completion denominator**: 1997  
+**Slice 10 implementation prerequisites**: AC265.  
+**Authored criterion policy**: Slice 09 is **279/280 active**; 283 authored Slice 09 IDs remain, with AC209, AC211, and AC266 authored and unchecked outside the active implementation denominator.  
+**AC209 evidence status**: production-rollout/post-deployment evidence gate; remains authored and unchecked. Does not gate Slice 10 implementation or the initial controlled production deployment, and must pass before alerting is declared ready.  
+**AC211 evidence status**: post-launch operational SLO acceptance; remains authored and unchecked. Does not gate the initial launch and is mandatory after initial launch.  
+**AC266 evidence status**: owner-deferred pre-release gate; remains unchecked and excluded from active Phase 2 implementation completion; not passed, accepted, waived, simulated, or inferred.  
 **Plan source**: [Phase 2 plan](../../../wiki/specs/phases/phase-2.md)  
 **Preflight gate**: strict current-disk floor reconciled — [contract reconciliation](../verification/2026-09-02-slice-09-contract-reconciliation.md)
-**Local QA-GREEN (active)**: 279/282 verified; 283 authored IDs remain — [evidence and external gates](../../../wiki/specs/audits/phase-02-slice-09-qa-green.md)
+**Local QA-GREEN (active)**: 279/280 verified; 283 authored IDs remain — [evidence and external gates](../../../wiki/specs/audits/phase-02-slice-09-qa-green.md)
 
 ## 2026-09-21 AC265 CP-04c hosted artifact foundation (local/private only)
 
@@ -815,13 +818,22 @@ response`; Workers Observability passed. Cloudflare's documented successful
 ## Depth Ratio
 
 - Authored acceptance items: 279/283 verified; authored depth ratio: 0.986.
-- Active release completion: 279/282; AC266 is excluded from the active
-  denominator while remaining unchecked and mandatory for post-Phase 2
-  production-readiness/release.
+- Active implementation completion: 279/280; AC209, AC211, and AC266 are
+  excluded from the active implementation denominator while remaining
+  authored, unchecked, and mandatory on their own timelines.
 
-## Blocking release evidence (current as of 2026-09-24)
+## Blocking release evidence (current as of 2026-09-25)
 
-- P2-S09-AC-209: retain a genuine post-configuration redacted live-delivery
+Deferred production-evidence gates under DEC-104. AC265 is the only remaining
+active Slice 09 implementation gate and the only Slice 10 implementation
+prerequisite. None of the criteria below blocks initial launch: AC209 is a
+production-rollout/post-deployment gate that must pass before alerting is
+declared ready, AC211 is post-launch operational SLO acceptance that is
+mandatory after initial launch, and AC266 remains the pre-release real-device
+gate. Each remains authored and unchecked.
+
+- P2-S09-AC-209 (production-rollout/post-deployment evidence gate, unchecked):
+  retain a genuine post-configuration redacted live-delivery
   receipt. The read-only Email Routing day-count probe
   [run 36067233068](https://github.com/WeJustJammin/wejammin/actions/runs/36067233068)
   succeeded from exact `main` `20338c72` and reported **9 delivered routing rows
@@ -850,7 +862,7 @@ response`; Workers Observability passed. Cloudflare's documented successful
   its `action` label is `unknown`. No comparable message identifier is held from
   the send itself, so the row is not attributable to the control alert and AC209
   stays open on the same gate.
-- P2-S09-AC-211: collection
+- P2-S09-AC-211 (post-launch operational SLO acceptance, unchecked): collection
   [run 36038007951](https://github.com/WeJustJammin/wejammin/actions/runs/36038007951)
   (UTC day 2026-09-23) passed preflight and failed closed for insufficient
   samples: `commands=0`, `protectedRpcs=0`, `acceptances=0`, and
@@ -861,7 +873,9 @@ response`; Workers Observability passed. Cloudflare's documented successful
   `rowCount=0`, so the remaining blocker is genuine production volume. No
   complete retained UTC-day report exists; retain a later complete day with at
   least 200 samples, all five SLO results, and daily queue/DLQ counts.
-- P2-S09-AC-265: the latest candidate authorization attempt used PR #80 SHA
+- P2-S09-AC-265 (active Slice 09 implementation gate and only Slice 10
+  implementation prerequisite, unchecked): the latest candidate authorization
+  attempt used PR #80 SHA
   `918f598525de772c82b0a0bcd82348ea8f5d523d`, which passed CI `34823698333`
   and staging `34824312138` / deployment `6433521892`. Preflight `34824500796`
   passed, but authorization foundation run `34824651793` failed at
@@ -895,7 +909,8 @@ response`; Workers Observability passed. Cloudflare's documented successful
   evidence, or hosted acceptance. The canonical mapping/resource and target sources, role/session
   broker, MFA/step-up, evidence service, teardown, durable uniqueness, and
   complete hosted Auth/RLS/IdP matrix remain open.
-- P2-S09-AC-266: owner-deferred because the required real devices are
+- P2-S09-AC-266 (pre-release real-device gate, unchecked): owner-deferred
+  because the required real devices are
   unavailable. Retain operator-attested VoiceOver/Safari and NVDA/Firefox
   manual smoke against the exact hosted candidate when devices are available;
   Linux-hosted automation cannot replace either real-platform report.
@@ -905,13 +920,17 @@ this candidate: fail-closed staging migration executed before app deployment,
 immutable migration evidence retained, exact-main-SHA CI/staging/deployment
 identity recorded, two consecutive production cron evaluations succeeded, and
 the staging/production auth-provider catalog transport is healthy.
-The three active external acceptance gates above remain required. AC266 is
-owner-deferred, excluded from active Phase 2 completion, and remains mandatory
-for post-Phase 2 production-readiness/release.
+The active external acceptance gate above remains required: AC265. AC209 and
+AC211 are excluded from active Phase 2 implementation completion as
+production-evidence gates (DEC-104), and AC266 remains the owner-deferred
+pre-release production-readiness/release gate (DEC-101); none is passed,
+accepted, or waived.
 
-Slice 09 remains blocked. Slice 10 remains locked only on AC209, AC211, and
-AC265; AC266 is deferred, not accepted or waived, and does not block Slice 10
-implementation while remaining a mandatory post-Phase 2 release gate.
+Slice 09 remains blocked only on AC265, which is its remaining active
+implementation gate. AC209, AC211, and AC266 are deferred, not accepted or
+waived, and do not block Slice 10 implementation. AC209 must pass before
+alerting is declared ready, AC211 is mandatory after initial launch, and AC266
+remains the mandatory pre-release production-readiness/release gate.
 
 ## 2026-09-21 AC266 owner-deferred phase propagation
 

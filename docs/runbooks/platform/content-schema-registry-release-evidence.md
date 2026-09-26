@@ -4,15 +4,34 @@ Use this runbook to assemble and verify the release sidecar for
 `P2-S09-AC-209`, `P2-S09-AC-211`, `P2-S09-AC-265`, and `P2-S09-AC-266`.
 Passing local tests does not satisfy these gates.
 
-For Phase 2 implementation completion, AC209, AC211, and AC265 are the
-mandatory external gates and Slice 10 remains locked until all three pass.
-The plan retains all 283 authored Slice 09 IDs and 2000 authored Phase 2
-criteria, while implementation completion uses denominators of 282 and 1999.
-AC266 remains authored and unchecked outside those implementation denominators
-as a mandatory post-Phase 2 production-readiness/release gate. While deferred,
-it must not be marked passed, waived, or simulated; only the genuine protected
-macOS/Safari/VoiceOver and Windows/Firefox/NVDA reports and combined
+For Phase 2 implementation completion, AC265 is the only Slice 10
+implementation prerequisite. The plan retains all 283 authored Slice 09 IDs
+and 2000 authored Phase 2 criteria, while implementation completion uses
+denominators of 280 for Slice 09 and 1997 for Phase 2. AC209, AC211, and AC266
+remain authored and unchecked outside those implementation denominators, on
+distinct timelines, and must not be marked passed, waived, simulated, or
+inferred.
+
+This sidecar's production-bound expectations apply to production evidence.
+`alerting` and `slo` are mandatory members of the production sidecar and
+remain mandatory for AC209 and AC211: AC209 is a
+production-rollout/post-initial-controlled-deployment alert gate that must pass
+before alerting is declared ready for the release, and AC211 is post-launch
+operational SLO acceptance that is mandatory after initial launch. Neither
+gates the initial controlled production deployment or the initial launch.
+AC266 remains the separate pre-release real-device gate; only the genuine
+protected macOS/Safari/VoiceOver and Windows/Firefox/NVDA reports and combined
 verification can close it.
+
+AC265 follows the staging-only identity and evidence contract, and its logic
+reads hosted evidence only. However, its declared acceptance route currently
+requires the combined release-evidence verifier, which pins
+`alerting.deploymentId` and `slo.deploymentId` to the expected production
+deployment and therefore cannot pass before production evidence exists. AC265
+consequently **cannot close prelaunch** until a hosted-scope acceptance route
+is implemented; that decoupling is tracked as follow-up work in `DEC-104`.
+Until it lands, AC265 remains an open active implementation gate and this
+sidecar must not be described as AC265's only acceptance path.
 
 ## Immutable identity
 
@@ -638,9 +657,11 @@ Passing either dedicated workflow proves intake and provenance infrastructure
 only. The current combined release verifier does not automatically consume the
 sanitized AC266 manifest: its protected assembly step must supply the original
 strict report bytes privately, run the four-gate verifier, and remove them
-before artifact upload. AC266 closes only when the two genuine platform reports
-pass and that combined release sidecar succeeds with the other required
-evidence.
+before artifact upload. AC266's own acceptance is not production-bound: it
+closes when the two genuine platform reports pass its independent protected
+staging manual and automated-axe verification. The combined release sidecar
+remains unchanged and is the separate acceptance route for the production
+AC209 and AC211 evidence.
 
 ## Collect AC211 evidence
 
@@ -782,12 +803,16 @@ callback, matching mapping fields, time bounds, and the receipt/evidence
 resolvers and authenticity verifier. The workflow may emit
 `content_schema_registry_release_evidence=passed` only after the V3 retained
 report and all four release gates pass. Until that protected entrypoint exists,
-no standalone command can produce acceptance success. Keep Slice 09
-implementation and dependent Slice 10 blocked until AC209, AC211, and AC265
-produce passing protected evidence and an operator reviews the retained source
-reports. AC266 remains the separate mandatory post-Phase 2
-production-readiness/release gate; while deferred it cannot be passed, waived,
-or simulated.
+no standalone command can produce acceptance success. This combined
+production-bound route is the acceptance path for AC209 and AC211; it is not
+the acceptance path for AC265 or AC266, whose staging-only and pre-release
+evidence must be verified through a hosted-scope route (see the policy section
+above and `DEC-104`). Keep AC265 as the only Slice 10 implementation
+prerequisite and blocked until it produces passing protected evidence and an
+operator reviews the retained source reports. AC209 and AC211 remain
+unchecked deferred production-evidence gates, and AC266 remains the separate
+pre-release production-readiness/release gate; while deferred none of them can
+be passed, waived, or simulated.
 
 Any missing, malformed, duplicate, out-of-root, digest-mismatched,
 structurally local/synthetic, stale-order, threshold-equal,
