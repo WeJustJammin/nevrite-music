@@ -1,4 +1,10 @@
-import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from 'node:fs';
+import {
+  mkdirSync,
+  mkdtempSync,
+  readFileSync,
+  rmSync,
+  writeFileSync,
+} from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 
@@ -108,14 +114,21 @@ describe('AC265 hosted staging evidence CLI', () => {
 
   it('fails closed when the protected bundle secret is absent', async () => {
     const fixture = createStagingScopeFixture();
-    const api = createMockGitHubApi({ stagingArtifacts: [reportArtifact()] });
+    const api = createMockGitHubApi({
+      stagingArtifacts: [
+        reportArtifact({
+          size_in_bytes: fixture.reportArchiveBytes,
+          digest: 'sha256:' + fixture.reportArchiveSha256,
+        }),
+      ],
+    });
     const root = mkdtempSync(join(tmpdir(), 'ac265-cli-'));
     roots.add(root);
     const directory = join(root, 'report-archive');
     mkdirSync(directory);
     writeFileSync(
       join(directory, 'report.zip'),
-      Buffer.from('not-the-authenticated-archive', 'utf8'),
+      readFileSync(fixture.reportArchivePath),
     );
     await expect(
       verifyAc265HostedStagingEvidenceCli({

@@ -160,9 +160,9 @@ export const verifyAc265HostedStagingEvidenceCli = async (options: {
       /^sha256:/u,
       '',
     ),
-    authenticatedReportArchiveBytes: await archiveByteLength(
-      inputs.reportArchivePath,
-    ),
+    // The GitHub-reported byte length, not a local measurement, so the archive
+    // must match what the artifact API reported for this exact run attempt.
+    authenticatedReportArchiveBytes: provenance.reportArchiveBytes,
     authenticatedSourceRevision: provenance.sourceRevision,
     authenticatedDeploymentId: provenance.deploymentId,
   });
@@ -204,12 +204,6 @@ export const resolveAc265HostedStagingSelector = async (options: {
     deploymentId: provenance.deploymentId,
     archiveSha256: provenance.reportArchiveDigest.replace(/^sha256:/u, ''),
   });
-};
-
-const archiveByteLength = async (path: string): Promise<number> => {
-  const info = await lstat(path);
-  if (!info.isFile() || info.isSymbolicLink() || info.size <= 0) return fail();
-  return info.size;
 };
 
 const isDirectExecution = (): boolean => {

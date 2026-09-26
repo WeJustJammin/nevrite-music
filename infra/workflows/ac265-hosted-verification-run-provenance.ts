@@ -38,6 +38,8 @@ export interface Ac265HostedVerificationRunProvenance {
   readonly reportArtifactName: string;
   /** GitHub-reported digest of the exact report archive bytes. */
   readonly reportArchiveDigest: string;
+  /** GitHub-reported byte length of the exact report archive. */
+  readonly reportArchiveBytes: number;
 }
 
 const timestampMs = (value: unknown): number => {
@@ -159,36 +161,45 @@ const verifyReportArtifact = async (input: {
   readonly repositoryId: number;
   readonly attemptStartedAt: number;
   readonly attemptCompletedAt: number;
-}): Promise<{ readonly id: number; readonly digest: string }> => {
+}): Promise<Readonly<{ id: number; digest: string; sizeInBytes: number }>> => {
   const values = await collectPages(
     repositoryApiPrefix() + '/actions/runs/' + input.runId + '/artifacts',
     input.token,
     input.fetchImpl,
   );
-  const matches = values.filter(
-    (value) => isAc265Record(value) && value.name === REPORT_ARTIFACT_NAME,
-  );
+  // GitHub's run-artifact listing spans every attempt of the run, so filter to
+  // the exact verified attempt window before requiring a unique match. A stale
+  // prior-attempt artifact is excluded here and, if it were the only candidate,
+  // leaves nothing to satisfy the gate.
+  const windowStart = input.attemptStartedAt - ARTIFACT_ATTEMPT_SKEW_MS;
+  const windowEnd = input.attemptCompletedAt + ARTIFACT_ATTEMPT_SKEW_MS;
+  const matches = values.filter((value) => {
+    if (!isAc265Record(value) || value.name !== REPORT_ARTIFACT_NAME)
+      return false;
+    const createdAt = Date.parse(String(value['created_at']));
+    const updatedAt = Date.parse(
+      String(value['updated_at'] ?? value['created_at']),
+    );
+    return (
+      Number.isFinite(createdAt) &&
+      Number.isFinite(updatedAt) &&
+      createdAt >= windowStart &&
+      createdAt <= windowEnd &&
+      updatedAt >= createdAt &&
+      updatedAt <= windowEnd
+    );
+  });
   if (matches.length !== 1) return failAc265CandidateProvenance();
   const artifact = matches[0]!;
   if (!isAc265Record(artifact) || !isAc265Record(artifact.workflow_run))
     return failAc265CandidateProvenance();
   const origin = artifact.workflow_run;
   const id = requireSafeInteger(artifact.id);
-  // GitHub's run-artifact listing can include artifacts produced by earlier
-  // attempts of the same run. Bind creation and update to the exact verified
-  // attempt window so a stale prior-attempt report cannot satisfy the gate.
-  const createdAt = timestampMs(artifact.created_at);
-  const updatedAt = timestampMs(artifact.updated_at ?? artifact.created_at);
-  const windowStart = input.attemptStartedAt - ARTIFACT_ATTEMPT_SKEW_MS;
-  const windowEnd = input.attemptCompletedAt + ARTIFACT_ATTEMPT_SKEW_MS;
+  const sizeInBytes = requireSafeInteger(artifact.size_in_bytes);
   if (
     artifact.expired !== false ||
-    requireSafeInteger(artifact.size_in_bytes) > MAX_REPORT_ARCHIVE_BYTES ||
+    sizeInBytes > MAX_REPORT_ARCHIVE_BYTES ||
     !isSha256PrefixedDigest(artifact.digest) ||
-    createdAt < windowStart ||
-    createdAt > windowEnd ||
-    updatedAt < createdAt ||
-    updatedAt > windowEnd ||
     String(requireSafeInteger(origin.id)) !== input.runId ||
     requireSafeInteger(origin.repository_id) !== input.repositoryId ||
     requireSafeInteger(origin.head_repository_id) !== input.repositoryId ||
@@ -206,7 +217,7 @@ const verifyReportArtifact = async (input: {
     )
   )
     return failAc265CandidateProvenance();
-  return { id, digest: artifact.digest };
+  return { id, digest: artifact.digest, sizeInBytes };
 };
 
 const verifyStagingDeployment = async (input: {
@@ -338,5 +349,6 @@ export const resolveAc265HostedVerificationRunProvenance = async (
     reportArtifactId: artifact.id,
     reportArtifactName: REPORT_ARTIFACT_NAME,
     reportArchiveDigest: artifact.digest,
+    reportArchiveBytes: artifact.sizeInBytes,
   });
 };
