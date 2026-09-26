@@ -1,0 +1,82 @@
+name: Verify AC265 hosted staging evidence (staging-scope acceptance route)
+
+on:
+  workflow_dispatch:
+    inputs:
+      staging_run_id:
+        description: Completed AC265 staging hosted-run workflow run ID
+        required: true
+        type: string
+      staging_run_attempt:
+        description: Completed AC265 staging hosted-run workflow run attempt
+        required: true
+        type: string
+
+permissions: { contents: read }
+
+concurrency:
+  group: ac265-hosted-staging-evidence-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  verify:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    environment: staging
+    permissions:
+      actions: read
+      contents: read
+    steps:
+      - name: Check out the immutable dispatched commit
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+
+      - name: Set up pinned workspace dependencies
+        uses: ./.github/actions/setup
+
+      - name: Resolve the exact report artifact for the completed staging run
+        id: resolve
+        env:
+          AC265_STAGING_RUN_ID: ${{ inputs.staging_run_id }}
+          AC265_STAGING_RUN_ATTEMPT: ${{ inputs.staging_run_attempt }}
+          STAGING_WEB_ORIGIN: ${{ vars.STAGING_WEB_ORIGIN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          GITHUB_TOKEN: ${{ github.token }}
+        run: node --experimental-strip-types infra/workflows/resolve-ac265-hosted-staging-selector.ts
+
+      - name: Download the exact report artifact with digest enforcement
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
+        with:
+          artifact-ids: ${{ steps.resolve.outputs.report_artifact_id }}
+          repository: ${{ github.repository }}
+          run-id: ${{ inputs.staging_run_id }}
+          github-token: ${{ github.token }}
+          skip-decompress: true
+          digest-mismatch: error
+          path: ${{ runner.temp }}/ac265-hosted-staging-evidence/report-archive
+
+      - name: Verify hosted staging evidence against protected context
+        env:
+          AC265_STAGING_RUN_ID: ${{ inputs.staging_run_id }}
+          AC265_STAGING_RUN_ATTEMPT: ${{ inputs.staging_run_attempt }}
+          AC265_HOSTED_REPORT_ARCHIVE_DIR: ${{ runner.temp }}/ac265-hosted-staging-evidence/report-archive
+          AC265_HOSTED_VERIFICATION_CONTEXT_BUNDLE_B64: ${{ secrets.AC265_HOSTED_VERIFICATION_CONTEXT_BUNDLE_B64 }}
+          STAGING_WEB_ORIGIN: ${{ vars.STAGING_WEB_ORIGIN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          GITHUB_TOKEN: ${{ github.token }}
+        run: node --experimental-strip-types infra/workflows/verify-ac265-hosted-staging-evidence.ts
+
+      - name: Remove downloaded report bytes before upload
+        if: always()
+        run: rm -rf "${{ runner.temp }}/ac265-hosted-staging-evidence/report-archive"
+
+      - name: Upload only the minimized staging evidence manifest
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+        with:
+          name: ac265-hosted-staging-evidence-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ac265-hosted-staging-evidence/manifest.json
+          if-no-files-found: error
+          retention-days: 30
