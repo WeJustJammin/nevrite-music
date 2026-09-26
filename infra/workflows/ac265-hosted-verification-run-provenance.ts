@@ -23,6 +23,7 @@ const ATTEMPT_PATTERN = /^[1-9][0-9]{0,5}$/u;
 const SHA_PATTERN = /^[a-f0-9]{40}$/u;
 const JOB_URL_PREFIX = 'https://github.com/' + AC265_REPOSITORY;
 const GITHUB_RUN_TIMESTAMP_SKEW_MS = 5 * 1000;
+const ARTIFACT_ATTEMPT_SKEW_MS = 5 * 1000;
 const MAX_REPORT_ARCHIVE_BYTES = 64 * 1024 * 1024;
 
 export interface Ac265HostedVerificationRunProvenance {
@@ -156,6 +157,8 @@ const verifyReportArtifact = async (input: {
   readonly runId: string;
   readonly sourceRevision: string;
   readonly repositoryId: number;
+  readonly attemptStartedAt: number;
+  readonly attemptCompletedAt: number;
 }): Promise<{ readonly id: number; readonly digest: string }> => {
   const values = await collectPages(
     repositoryApiPrefix() + '/actions/runs/' + input.runId + '/artifacts',
@@ -171,10 +174,21 @@ const verifyReportArtifact = async (input: {
     return failAc265CandidateProvenance();
   const origin = artifact.workflow_run;
   const id = requireSafeInteger(artifact.id);
+  // GitHub's run-artifact listing can include artifacts produced by earlier
+  // attempts of the same run. Bind creation and update to the exact verified
+  // attempt window so a stale prior-attempt report cannot satisfy the gate.
+  const createdAt = timestampMs(artifact.created_at);
+  const updatedAt = timestampMs(artifact.updated_at ?? artifact.created_at);
+  const windowStart = input.attemptStartedAt - ARTIFACT_ATTEMPT_SKEW_MS;
+  const windowEnd = input.attemptCompletedAt + ARTIFACT_ATTEMPT_SKEW_MS;
   if (
     artifact.expired !== false ||
     requireSafeInteger(artifact.size_in_bytes) > MAX_REPORT_ARCHIVE_BYTES ||
     !isSha256PrefixedDigest(artifact.digest) ||
+    createdAt < windowStart ||
+    createdAt > windowEnd ||
+    updatedAt < createdAt ||
+    updatedAt > windowEnd ||
     String(requireSafeInteger(origin.id)) !== input.runId ||
     requireSafeInteger(origin.repository_id) !== input.repositoryId ||
     requireSafeInteger(origin.head_repository_id) !== input.repositoryId ||
@@ -301,6 +315,8 @@ export const resolveAc265HostedVerificationRunProvenance = async (
     runId,
     sourceRevision: run.sourceRevision,
     repositoryId: run.repositoryId,
+    attemptStartedAt: run.startedAt,
+    attemptCompletedAt: run.completedAt,
   });
   const deploymentId = await verifyStagingDeployment({
     token,

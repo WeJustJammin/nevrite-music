@@ -166,6 +166,41 @@ describe('AC265 hosted verification run provenance', () => {
     ).rejects.toThrow();
   });
 
+  it('rejects a stale report artifact created before the verified attempt', async () => {
+    await expect(
+      resolve({
+        stagingArtifacts: [
+          reportArtifact({ created_at: '2026-09-08T12:00:00.000Z' }),
+        ],
+      }),
+    ).rejects.toThrow();
+  });
+
+  it('rejects a report artifact updated after the verified attempt completed', async () => {
+    await expect(
+      resolve({
+        stagingArtifacts: [
+          reportArtifact({
+            created_at: '2026-09-08T13:25:00.000Z',
+            updated_at: '2026-09-08T14:30:00.000Z',
+          }),
+        ],
+      }),
+    ).rejects.toThrow();
+  });
+
+  it('accepts an artifact created inside the verified attempt window', async () => {
+    const provenance = await resolve({
+      stagingArtifacts: [
+        reportArtifact({
+          created_at: '2026-09-08T13:06:00.000Z',
+          updated_at: '2026-09-08T13:07:00.000Z',
+        }),
+      ],
+    });
+    expect(provenance.reportArtifactId).toBe(REPORT_ARTIFACT_ID);
+  });
+
   it('rejects a failed deployment status', async () => {
     await expect(
       resolve({

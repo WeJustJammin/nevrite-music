@@ -88,6 +88,46 @@ artifact, public web/API origins, hosting and Supabase projects, and applied
 migration. Every role, scenario, reference, and server receipt must bind to
 that same identity.
 
+#### AC265 staging-scope acceptance route
+
+AC265 is staging-only by contract, but the combined sidecar above is
+production-bound: it pins `alerting.deploymentId` and `slo.deploymentId` to
+the expected production deployment, so it cannot pass before production
+evidence exists. The `verify-ac265-hosted-staging-evidence.yml` workflow is
+the staging-scope acceptance route that removes that prelaunch circularity. It
+reuses the same V3 verifier and the same branded protected context as the
+combined route, and it leaves the combined sidecar and its five production
+files unchanged.
+
+The route derives run, revision, deployment, and report-archive identity from
+the GitHub Actions API for the exact completed `Deploy staging` run named by
+`staging_run_id` and `staging_run_attempt`; nothing is read from dispatch
+text or from the artifact under verification. `Deploy staging` is triggered
+by `workflow_run`, and the report artifact is bound to the exact attempt
+window so a stale prior-attempt artifact cannot satisfy the gate.
+
+Trust material comes only from the protected `staging` environment secret
+`AC265_HOSTED_VERIFICATION_CONTEXT_BUNDLE_B64`, which carries the trusted
+runner contract, the approved runner mappings and outage target with their
+Ed25519 attestations and trusted public keys, the signed artifact-source
+manifest and artifact trusted keys, the trusted cutoff, the report archive
+member name, and the owner-pinned report body digest. The bundle has no
+`workflow_dispatch` override. Missing, stale, mismatched, unsigned, or
+future-cutoff input fails closed.
+
+The archive digest reported by the GitHub artifact API authenticates the
+downloaded archive; the report body digest is compared separately to the
+owner-pinned bundle value. Both comparisons are required and are never
+cross-compared.
+
+**Current prerequisite, not present acceptance.** This route cannot execute
+until a protected hosted producer integrates an upload of the
+`ac265-hosted-e2e-report-v3` artifact into the completed staging run. The
+current `Deploy staging` workflow does not upload that artifact, so no
+staging run can satisfy the selector resolver today, and no AC265 closure may
+be claimed from this route until that producer lands and runs. The route's
+passing tests prove the verification boundary, not hosted acceptance.
+
 The retained release gate is V3-only and fails closed without
 `hostedV3Verification`, including the exact protected `runnerContractBytes` and
 trusted `verificationContext`. The report's `runnerContractSha256` and trusted
