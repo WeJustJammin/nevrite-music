@@ -46,6 +46,12 @@
   deployment, or receipt. That failure is historical: the parent-zone GraphQL
   authorization is fixed, and the same protected verifier now passes every step
   at [run 35777357009](https://github.com/WeJustJammin/wejammin/actions/runs/35777357009).
+  All three monitored capabilities are verified there: Workers Observability,
+  Account Analytics, and the zone Email Sending (`emailSendingAdaptive`)
+  capability that previously returned `provider_graphql_error`. The run also
+  passed protected-execution-identity `production_environment_preflight=passed`
+  and an immutable-workspace reverification before the secret was used, with no
+  failed step. It asserts no Email Routing capability.
   AC209's current blocker is therefore not authorization. AC211 collection [run 35673313035](https://github.com/WeJustJammin/nevrite-music/actions/runs/35673313035)
   passed preflight but collection failed for insufficient samples
   (`commands=0`, `protectedRpcs=0`, `acceptances=0`,
@@ -79,14 +85,34 @@
   [run 36069837542](https://github.com/WeJustJammin/wejammin/actions/runs/36069837542)
   queried `emailSendingAdaptive` over the send hour and returned
   `settings=available`, `rowsReturned=0`, `zero_rows`, which clears the earlier
-  permissions/query error without producing correlated telemetry. Per-event
+  permissions/query error without producing correlated telemetry. That
+  diagnostic was rerun from the promoted `785cbadf` revision at
+  [run 36192308908](https://github.com/WeJustJammin/wejammin/actions/runs/36192308908)
+  and reproduced `settings=available` with the same `zero_rows` classification
+  for the `2026-09-22T20:00:00Z..21:00:00Z` hour; its new grouped probe over
+  that hour reported `reportedTotalCount=0` across `distinctHours=0` with
+  `pageComplete=true`. That diagnostic reads Email Sending settings, events, and
+  grouped aggregates only, so it carries no `action` label and asserts nothing
+  about Email Routing. `zero_rows` remains an unmet condition, not a pass: the
+  required provider event is still not observed, and the window sits inside the
+  dataset's 31-day retention, so retention does not explain the absence. The
+  rerun settles only that the absence is a property of provider telemetry rather
+  than an authorization or query fault, and still no row is attributable to the
+  control alert. The retained artifact expires seven days after 2026-09-25, so
+  the durable evidence is the journal line plus both
+  digests: `sha256=501dee112724481dee15f0b3953851c276c1b833fe27627825f31944703100cf`
+  for the per-event report and
+  `sha256=c5d3e01dd420fa361a2b5a80caa1f570a947462e4ae5110eb1993208000f0962`
+  for the grouped report. Per-event
   routing probe
   [run 36083336932](https://github.com/WeJustJammin/wejammin/actions/runs/36083336932)
   found exactly one provider-reported `delivered` per-event row in that same hour
   with one complete message-id digest, but its `action` label is `unknown` and no
   comparable send-side identifier is held, so the row is unattributable. Cloudflare
-  support case `02343626` was
-  still **New** with no reply when read live on 2026-09-24. AC211 collection
+  support case `02343626` was still **New** with no provider reply when read live
+  on 2026-09-24, and a 2026-09-25 read found it unchanged at **New**; the case is
+  the operator-approved channel for the zone-wide zero-row question and holds
+  only redacted zone identifiers and zero-row counts. AC211 collection
   [run 36038007951](https://github.com/WeJustJammin/wejammin/actions/runs/36038007951)
   (UTC day 2026-09-23) passed preflight and failed closed with `commands=0`,
   `protectedRpcs=0`, `acceptances=0`, and `queueFirstAttempts=0` against
