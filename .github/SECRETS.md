@@ -14,6 +14,9 @@ Only the credentials listed below are authorized. They belong in protected GitHu
 | `SUPABASE_SECRET_KEY`                           | Data             | Rotatable server-only API access; never exposed to Astro client code.                         |
 | `AC265_PUBLICATION_CONTEXT_BUNDLE_B64`          | Release evidence | Base64-encoded bounded AC265 protected context bundle for the protected publication workflow. |
 | `AC265_SOURCE_MANIFEST_SIGNING_PRIVATE_KEY_PEM` | Release evidence | Ed25519 private key used only to sign the finalized AC265 publication manifest.               |
+| `AC265_HOSTED_VERIFICATION_CONTEXT_BUNDLE_B64`  | Release evidence | Per-attempt staging-only trust bundle for the protected hosted-evidence verifier.             |
+| `AC265_RUNNER_MAPPING_SIGNING_PRIVATE_KEY_PEM`  | Release evidence | Ed25519 private key for protected runner-mapping attestations only.                           |
+| `AC265_OUTAGE_TARGET_SIGNING_PRIVATE_KEY_PEM`   | Release evidence | Distinct Ed25519 private key for protected outage-target attestations only.                   |
 
 `AC265_PUBLICATION_CONTEXT_BUNDLE_B64` is the owner-controlled trust root for
 an AC265 publication run. It is configured only in the protected `staging`
@@ -32,10 +35,29 @@ non-secret identifier is configured as the protected staging environment
 variable `AC265_SOURCE_MANIFEST_SIGNING_KEY_ID`. Neither live value is
 configured by this repository change.
 
+`AC265_HOSTED_VERIFICATION_CONTEXT_BUNDLE_B64` is the protected staging-only
+trust root for the AC265 hosted-scope verifier. The release-evidence owner mints
+it only after an exact hosted V3 report exists, pins that report body's digest,
+the trusted cutoff, approved signed sources and public keys, and rotates it
+for every acceptance attempt. It is never a dispatch input, log value, or
+retained artifact. Listing it here authorizes the configuration slot; it does
+not assert that a live bundle exists or that AC265 has passed.
+
+`AC265_RUNNER_MAPPING_SIGNING_PRIVATE_KEY_PEM` and
+`AC265_OUTAGE_TARGET_SIGNING_PRIVATE_KEY_PEM` are separate staging-only keys
+for the two domain-separated protected attestation workflows. Their key IDs
+are the non-secret staging environment variables
+`AC265_RUNNER_MAPPING_SIGNING_KEY_ID` and
+`AC265_OUTAGE_TARGET_SIGNING_KEY_ID`. Configure each only with its matching
+owner-approved public key and scoped source; do not reuse the source-manifest
+key, copy keys to production, or treat a signed fixture as hosted evidence.
+
 ## Production environment secrets
 
-Production uses the same names in the protected `production` environment with
-distinct values, plus the production-only
+Production uses the four Cloudflare/Supabase provider credential names above
+in the protected `production` environment with distinct values. The AC265
+bundles and signing keys above remain staging-only. Production also uses the
+production-only
 `CLOUDFLARE_OBSERVABILITY_API_TOKEN` and the manual-only
 `CLOUDFLARE_QUEUE_EXERCISE_TOKEN`. Configure the observability token for the
 WeJammin account with Workers Observability Write (shown as **Edit** in the
@@ -125,7 +147,7 @@ tokens; never reuse the interactive Wrangler OAuth credential in CI.
 
 ## Environment variables
 
-Non-secret GitHub environment variables include `CLOUDFLARE_ACCOUNT_ID`, `STAGING_WEB_ORIGIN`, `STAGING_API_ORIGIN`, `SUPABASE_PROJECT_REF`, `SUPABASE_URL`, and the protected staging publication key identifier `AC265_SOURCE_MANIFEST_SIGNING_KEY_ID`. Production also records `PRODUCTION_API_ORIGIN` for the post-deploy health gate, `PRODUCTION_ALERT_EMAIL_SHA256` and `PRODUCTION_ALERT_SENDER_SHA256` for redacted AC209 address verification, `CLOUDFLARE_EMAIL_ZONE_ID` for the exact Email Sending analytics zone, `CLOUDFLARE_PLATFORM_QUEUE_ID` for the exact production queue and AC211 Queue Analytics query, and `STAGING_SUPABASE_PROJECT_REF` so promotion can independently match staging migration evidence to the configured staging project. Browser-safe application values are variables rather than secrets: `PUBLIC_APP_ORIGIN`, `PUBLIC_SUPABASE_URL`, and `PUBLIC_SUPABASE_PUBLISHABLE_KEY`. Administrative keys and database passwords remain secrets. No third-party application-provider credential is authorized.
+Non-secret GitHub environment variables include `CLOUDFLARE_ACCOUNT_ID`, `STAGING_WEB_ORIGIN`, `STAGING_API_ORIGIN`, `SUPABASE_PROJECT_REF`, `SUPABASE_URL`, and the protected staging attestation key identifiers `AC265_SOURCE_MANIFEST_SIGNING_KEY_ID`, `AC265_RUNNER_MAPPING_SIGNING_KEY_ID`, and `AC265_OUTAGE_TARGET_SIGNING_KEY_ID`. Production also records `PRODUCTION_API_ORIGIN` for the post-deploy health gate, `PRODUCTION_ALERT_EMAIL_SHA256` and `PRODUCTION_ALERT_SENDER_SHA256` for redacted AC209 address verification, `CLOUDFLARE_EMAIL_ZONE_ID` for the exact Email Sending analytics zone, `CLOUDFLARE_PLATFORM_QUEUE_ID` for the exact production queue and AC211 Queue Analytics query, and `STAGING_SUPABASE_PROJECT_REF` so promotion can independently match staging migration evidence to the configured staging project. Browser-safe application values are variables rather than secrets: `PUBLIC_APP_ORIGIN`, `PUBLIC_SUPABASE_URL`, and `PUBLIC_SUPABASE_PUBLISHABLE_KEY`. Administrative keys and database passwords remain secrets. No third-party application-provider credential is authorized.
 
 `AC209_PRESENCE_ALTERNATE_ZONE_TAG` is a non-secret protected production
 environment variable for the read-only AC209 email presence probe. It is **unset
