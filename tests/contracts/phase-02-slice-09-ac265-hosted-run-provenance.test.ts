@@ -219,4 +219,53 @@ describe('AC265 hosted verification run provenance', () => {
       }),
     ).rejects.toThrow();
   });
+
+  it('rejects a status whose job URL points at a different run', async () => {
+    await expect(
+      resolve({
+        deploymentStatuses: [
+          {
+            id: 4001,
+            state: 'success',
+            environment: 'staging',
+            environment_url: WEB_ORIGIN,
+            target_url:
+              'https://github.com/' +
+              REPOSITORY +
+              '/actions/runs/999999/job/5001',
+            log_url:
+              'https://github.com/' +
+              REPOSITORY +
+              '/actions/runs/999999/job/5001',
+            creator: { login: 'release-operator' },
+            created_at: '2026-09-08T13:09:00.000Z',
+          },
+        ],
+      }),
+    ).rejects.toThrow();
+  });
+
+  it('rejects a status whose target URL is not a run-scoped job URL', async () => {
+    await expect(
+      resolve({
+        deploymentStatuses: [
+          {
+            id: 4001,
+            state: 'success',
+            environment: 'staging',
+            environment_url: WEB_ORIGIN,
+            target_url: 'https://github.com/' + REPOSITORY + '/actions',
+            log_url:
+              'https://github.com/' +
+              REPOSITORY +
+              '/actions/runs/' +
+              STAGING_RUN_ID +
+              '/job/5001',
+            creator: { login: 'release-operator' },
+            created_at: '2026-09-08T13:09:00.000Z',
+          },
+        ],
+      }),
+    ).rejects.toThrow();
+  });
 });

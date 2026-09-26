@@ -120,6 +120,19 @@ downloaded archive; the report body digest is compared separately to the
 owner-pinned bundle value. Both comparisons are required and are never
 cross-compared.
 
+The bundle is a bearer credential for this route, so it is rotated rather than
+reused. It carries an explicit `trustedCutoffAt`; a cutoff that has not yet
+occurred fails closed, so a bundle cannot be used before its window opens, and
+every attestation, manifest, and report timestamp is bounded by it. Re-mint the
+bundle for each acceptance attempt with a cutoff that covers only that run, and
+rotate the trusted Ed25519 public keys, the signed artifact-source manifest,
+the approved runner mappings, and the approved outage target together whenever
+any of them changes. Revoke a superseded public key by publishing it with
+`status: revoked` in the replacement bundle rather than by editing the
+previous one. The bundle is delivered only as a protected `staging`
+environment secret with no `workflow_dispatch` override, so it is never
+echoed, logged, or uploaded.
+
 **Current prerequisite, not present acceptance.** This route cannot execute
 until a protected hosted producer integrates an upload of the
 `ac265-hosted-e2e-report-v3` artifact into the completed staging run. The

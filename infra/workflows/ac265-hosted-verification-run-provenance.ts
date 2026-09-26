@@ -15,13 +15,13 @@ import {
   repositoryApiPrefix,
   requireSafeInteger,
 } from './ac265-candidate-provenance-github-api.ts';
+import { deploymentJobUrl } from './ac265-candidate-provenance-github-deployment.ts';
 
 export const REPORT_ARTIFACT_NAME = 'ac265-hosted-e2e-report-v3';
 
 const RUN_ID_PATTERN = /^[1-9][0-9]{0,18}$/u;
 const ATTEMPT_PATTERN = /^[1-9][0-9]{0,5}$/u;
 const SHA_PATTERN = /^[a-f0-9]{40}$/u;
-const JOB_URL_PREFIX = 'https://github.com/' + AC265_REPOSITORY;
 const GITHUB_RUN_TIMESTAMP_SKEW_MS = 5 * 1000;
 const ARTIFACT_ATTEMPT_SKEW_MS = 5 * 1000;
 const MAX_REPORT_ARCHIVE_BYTES = 64 * 1024 * 1024;
@@ -223,6 +223,7 @@ const verifyReportArtifact = async (input: {
 const verifyStagingDeployment = async (input: {
   readonly token: string;
   readonly fetchImpl: Ac265Fetch;
+  readonly runId: string;
   readonly sourceRevision: string;
   readonly actorLogin: string;
   readonly startedAt: number;
@@ -266,6 +267,7 @@ const verifyStagingDeployment = async (input: {
   if (statuses.length !== 1) return failAc265CandidateProvenance();
   const status = statuses[0];
   if (!isAc265Record(status)) return failAc265CandidateProvenance();
+  const expectedJobUrl = deploymentJobUrl(input.runId, AC265_REPOSITORY);
   if (
     status.state !== 'success' ||
     status.environment !== 'staging' ||
@@ -274,8 +276,8 @@ const verifyStagingDeployment = async (input: {
     status.creator.login !== input.actorLogin ||
     typeof status.target_url !== 'string' ||
     typeof status.log_url !== 'string' ||
-    !status.target_url.startsWith(JOB_URL_PREFIX) ||
-    !status.log_url.startsWith(JOB_URL_PREFIX)
+    !expectedJobUrl.test(status.target_url) ||
+    !expectedJobUrl.test(status.log_url)
   )
     return failAc265CandidateProvenance();
   return deploymentId;
@@ -332,6 +334,7 @@ export const resolveAc265HostedVerificationRunProvenance = async (
   const deploymentId = await verifyStagingDeployment({
     token,
     fetchImpl,
+    runId,
     sourceRevision: run.sourceRevision,
     actorLogin: run.actorLogin,
     startedAt: run.startedAt,
