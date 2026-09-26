@@ -91,7 +91,9 @@ describe('AC209 failure receipt from real provider failures', () => {
     });
     const { failure, captureFailureReceipt } = await exerciseWithProvider(
       fetchImpl,
-      { timeoutMs: 5 },
+      // Leave enough time for queue discovery under parallel coverage load;
+      // the unresolved peek still exercises the provider timeout boundary.
+      { timeoutMs: 1_000 },
     );
 
     await expect(failure).rejects.toThrow('AC209 production exercise failed');

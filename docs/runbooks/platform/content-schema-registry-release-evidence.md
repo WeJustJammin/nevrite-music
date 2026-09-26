@@ -24,14 +24,12 @@ protected macOS/Safari/VoiceOver and Windows/Firefox/NVDA reports and combined
 verification can close it.
 
 AC265 follows the staging-only identity and evidence contract, and its logic
-reads hosted evidence only. However, its declared acceptance route currently
-requires the combined release-evidence verifier, which pins
+reads hosted evidence only. The combined release-evidence verifier still pins
 `alerting.deploymentId` and `slo.deploymentId` to the expected production
-deployment and therefore cannot pass before production evidence exists. AC265
-consequently **cannot close prelaunch** until a hosted-scope acceptance route
-is implemented; that decoupling is tracked as follow-up work in `DEC-104`.
-Until it lands, AC265 remains an open active implementation gate and this
-sidecar must not be described as AC265's only acceptance path.
+deployment, but `verify-ac265-hosted-staging-evidence.yml` now provides the
+separate prelaunch AC265 acceptance route. AC265 remains open until a genuine
+protected hosted report and signed exact artifact provenance pass that route.
+This production-bound sidecar is not AC265's only acceptance path.
 
 ## Immutable identity
 
