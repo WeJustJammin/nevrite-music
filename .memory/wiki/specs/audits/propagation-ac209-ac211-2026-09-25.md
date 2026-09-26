@@ -55,3 +55,6 @@ production release is authorized while AC209, AC211, or AC266 is unproven.
 
 ### Phases into
 - [[specs/phases/phase-2|Phase 2 — Identity, admin, CMS/settings]]
+
+### References
+- [[specs/phases/phase-2|Phase 2 — Identity, admin, CMS/settings]]

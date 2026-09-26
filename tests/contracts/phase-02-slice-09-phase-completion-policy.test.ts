@@ -149,17 +149,31 @@ describe('Phase 2 Slice 09 completion policy', () => {
     }
   });
 
-  it('[P2-S09-AC-266] keeps AC266 acceptance independent of the production-bound sidecar', () => {
+  it('[P2-S09-AC-266] keeps AC266 pre-release by policy, open, and independent of the production-bound sidecar', () => {
     const combinedPolicy = `${phasePlan}\n${slice09Tracker}`;
     expect(
       combinedPolicy,
       'AC266 must not be described as closing through the production sidecar',
-    ).toMatch(/independent protected staging manual/iu);
+    ).toMatch(
+      /hosted-scope acceptance route (?:lands|binds)|hosted-scope acceptance route[^\n]*binds/iu,
+    );
     expect(
       combinedPolicy,
-      'the production sidecar must remain the separate AC209/AC211 route',
+      'AC266 must not claim a proven standalone acceptance path',
     ).toMatch(
-      /separate AC209\/AC211 route|separate acceptance route for the production/iu,
+      /no AC266-only\s+consumer binds both|no AC266-only consumer binds both|hosted-scope acceptance route binds its separate/iu,
+    );
+    expect(
+      combinedPolicy,
+      'AC266 must remain open rather than described as closable today',
+    ).toMatch(
+      /AC266 is (?:still )?open|AC266 remains authored and unchecked, and it is \*\*open\*\*/iu,
+    );
+    expect(
+      combinedPolicy,
+      'the combined sidecar must still require all four evidence streams',
+    ).toMatch(
+      /still requires all four evidence\s+streams|requires all four evidence streams|combined production-release verification/iu,
     );
   });
   it('[P2-S09-AC-266] retains the genuine real-device requirements and the no-substitute rule', () => {

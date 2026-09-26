@@ -13,7 +13,7 @@
 **Authored criterion policy**: Slice 09 is **279/280 active**; 283 authored Slice 09 IDs remain, with AC209, AC211, and AC266 authored and unchecked outside the active implementation denominator.  
 **AC209 evidence status**: production-rollout/post-deployment evidence gate; remains authored and unchecked. Does not gate Slice 10 implementation or the initial controlled production deployment, and must pass before alerting is declared ready.  
 **AC211 evidence status**: post-launch operational SLO acceptance; remains authored and unchecked. Does not gate the initial launch and is mandatory after initial launch.  
-**AC266 evidence status**: owner-deferred pre-release gate; remains unchecked and excluded from active Phase 2 implementation completion; not passed, accepted, waived, simulated, or inferred.  
+**AC266 evidence status**: owner-deferred pre-release gate; remains unchecked and **open** and excluded from active Phase 2 implementation completion; not passed, accepted, waived, simulated, or inferred. It has no proven standalone acceptance path until the hosted-scope acceptance route binds its separate manual and axe verifiers.  
 **Plan source**: [Phase 2 plan](../../../wiki/specs/phases/phase-2.md)  
 **Preflight gate**: strict current-disk floor reconciled — [contract reconciliation](../verification/2026-09-02-slice-09-contract-reconciliation.md)
 **Local QA-GREEN (active)**: 279/280 verified; 283 authored IDs remain — [evidence and external gates](../../../wiki/specs/audits/phase-02-slice-09-qa-green.md)
@@ -43,9 +43,9 @@
   remain open; no hosted artifact, hosted matrix, independently authenticated
   receipt, or AC265 acceptance is claimed. Focused local verification passes
   **5 files / 74 tests** and `pnpm type-check` is green.
-- Totals are unchanged: Slice 09 remains **279/282 active** (**283 authored
-  IDs**), Phase 2 remains **8/17** with **1,999/2,000 active criteria**,
-  AC209/AC211/AC265 remain open, Slice 10 remains locked, and AC266 remains
+- At that checkpoint totals were unchanged: Slice 09 remained **279/282 active**
+  (**283 authored IDs**), Phase 2 remained **8/17** with **1,999/2,000 active
+  criteria**, AC209/AC211/AC265 were open, Slice 10 was locked, and AC266 remained
   owner-deferred as a mandatory post-Phase 2 production-readiness/release gate.
 
 ## 2026-09-21 AC265 CP-04d signed source-manifest and authority foundation (local/private only)
@@ -971,9 +971,10 @@ remains the mandatory pre-release production-readiness/release gate.
 - No live target-signing key/configuration, seeded target or registry rows,
   retained target/attestation artifact, attestation workflow run, hosted
   browser matrix, independently authenticated receipt, or AC265 acceptance
-  exists despite code promotion. AC265 remains open at **279/282 active**; Slice 10 remains locked on
-  AC209, AC211, and AC265. AC266 remains unchecked and owner-deferred as the
-  mandatory post-Phase 2 production-readiness/release gate.
+  exists despite code promotion. At that checkpoint AC265 was open at
+  **279/282 active** and Slice 10 was locked on AC209, AC211, and AC265; AC266
+  remained unchecked and owner-deferred as the mandatory post-Phase 2
+  production-readiness/release gate.
 - See the [CP-04a verification record](../verification/2026-09-21-ac265-approved-outage-target-attestation.md).
 
 ## 2026-09-21 AC265 CP-04b approved outage-target registration (promoted private foundation)

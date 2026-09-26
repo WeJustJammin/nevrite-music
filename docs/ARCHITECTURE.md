@@ -1687,11 +1687,14 @@ the implementation denominators are 1997 for Phase 2 and 280 for Slice 09.
 AC265 is the only Slice 10 implementation prerequisite. AC209 and AC211
 remain deferred production-evidence gates, and AC266 the pre-release gate. AC266 remains authored,
 unchecked, and mandatory after Phase 2 at the production-readiness/release
-gate. While deferred, it must not be marked passed, waived, or simulated; only
-the genuine protected macOS/Safari/VoiceOver and Windows/Firefox/NVDA reports,
-verified through AC266's independent protected staging manual and automated-axe
-verification, can close it. The eventual four-report production release sidecar
-remains unchanged as the separate AC209/AC211 route.
+gate. While deferred, it must not be marked passed, waived, or simulated. AC266
+is open and has no proven standalone acceptance path yet: its protected staging
+manual verifier and automated-axe verifier exist separately, but no AC266-only
+consumer binds both, so it closes only once the hosted-scope acceptance route
+binds them. By policy AC266 is pre-release rather than production-bound, and its
+staging-scope acceptance stays distinct from the later combined
+production-release verification, which still requires all four evidence
+streams including AC209/AC211.
 
 ---
 

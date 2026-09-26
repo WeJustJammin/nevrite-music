@@ -42,7 +42,7 @@ The three deferred criteria are mandatory on distinct timelines:
 
 - `P2-S09-AC-209` — **production-rollout/post-deployment evidence gate**. It does not gate Slice 10 implementation or the initial controlled production deployment; it must pass before alerting is declared ready. AC209 remains authored and unchecked.
 - `P2-S09-AC-211` — **post-launch operational SLO acceptance**. It does not gate the initial launch and is mandatory after initial launch, once genuine production traffic spans a complete UTC day. AC211 remains authored and unchecked.
-- `P2-S09-AC-266` — **pre-release real-device** accessibility gate. AC266 remains authored and unchecked. The genuine macOS/Safari/VoiceOver and Windows/Firefox/NVDA evidence contract is unchanged, and Linux-only or synthetic evidence cannot replace it. AC266's acceptance path is its independent protected staging manual plus automated-axe verification, which is not production-bound; the eventual four-report production release sidecar is unchanged and remains the separate AC209/AC211 route.
+- `P2-S09-AC-266` — **pre-release real-device** accessibility gate. AC266 remains authored and unchecked, and it is **open**. The genuine macOS/Safari/VoiceOver and Windows/Firefox/NVDA evidence contract is unchanged, and Linux-only or synthetic evidence cannot replace it. AC266 has no proven standalone acceptance path today: the protected staging manual verifier and the automated-axe verifier exist as separate components, but no AC266-only consumer binds both, so AC266 cannot close until the hosted-scope acceptance route lands; it must never be marked passed, accepted, waived, simulated, or inferred. By policy AC266 is pre-release rather than production-bound, and its staging-scope acceptance stays distinct from the later combined production-release verification, which still requires all four evidence streams including AC209/AC211.
 
 `P2-S09-AC-265` remains the only Slice 10 implementation prerequisite. Its runner contract is staging-only, but its declared acceptance route currently runs through the combined production-bound release-evidence sidecar, so AC265 is an active implementation gate that **cannot close prelaunch** until a hosted-scope acceptance route is implemented. That decoupling is tracked as follow-up work and is not part of this rescope. While deferred, AC209, AC211, and AC266 must never be marked passed, waived, simulated, or inferred.
 
@@ -1548,7 +1548,7 @@ After Slice 03, Slices 04, 05, and 07 may proceed in parallel when file claims d
 **Spec depth floor**: 283 criteria  
 **Breakdown**: 17 Architecture + 200 BE03a + 49 FE03 + 17 Engineering Standards = 283 checkpoints  
 **Authored criteria**: 283 (strict current-disk floor)
-**Implementation-completion denominator**: 282; AC266 remains authored and unchecked as the post-Phase 2 production-readiness/release gate.
+**Implementation-completion denominator**: 280; AC209, AC211, and AC266 remain authored and unchecked as deferred production-evidence gates (DEC-101, DEC-104).
 
 ### Acceptance criteria
 

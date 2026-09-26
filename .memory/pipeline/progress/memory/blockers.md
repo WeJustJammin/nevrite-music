@@ -209,7 +209,8 @@
   preflight/protection/workspace gates and produced no effects or receipt. That
   failure has since cleared; the current AC209/AC211 reading is in the
   [2026-09-24 protected-run record](../verification/2026-09-24-ac209-ac211-protected-run-evidence.md).
-  AC265 remains open and Slice 10 remains locked on AC209, AC211, and AC265.
+  At that checkpoint AC265, AC209, and AC211 were open and Slice 10 was locked on all
+  three; DEC-104 later moved AC209 and AC211 outside the active denominator.
   AC266 remains unchecked and owner-deferred because real devices are
   unavailable; it is not passed or waived and remains a mandatory post-Phase 2
   production-readiness/release gate.
@@ -236,10 +237,10 @@
   no hosted artifact, hosted matrix, independently authenticated receipt, or
   AC265 acceptance exists. Focused local verification passes **5 files / 74
   tests** and `pnpm type-check` is green. AC265 remains open; AC209 and AC211
-  remain open; Slice 10 remains locked; AC266 remains owner-deferred and is a
-  mandatory post-Phase 2 production-readiness/release gate. Totals remain
-  Slice 09 **279/282 active** (**283 authored IDs**) and Phase 2 **1,999/2,000
-  active criteria**, **8/17 slices**.
+  were open at that checkpoint; Slice 10 was locked; AC266 remained owner-deferred and is a
+  mandatory post-Phase 2 production-readiness/release gate. At that checkpoint
+  totals were Slice 09 **279/282 active** (**283 authored IDs**) and Phase 2
+  **1,999/2,000 active criteria**, **8/17 slices**.
 
 - **P2-S09 AC265 CP-04e protected source-manifest publication foundation**
   (updated 2026-09-21) — CP-04e is now promoted through PR #93 at exact main
@@ -264,9 +265,9 @@
   hosted AC265 acceptance. No live `AC265_PUBLICATION_CONTEXT_BUNDLE_B64`,
   signing configuration, protected run, retained hosted artifact,
   independently authenticated receipt, or complete hosted matrix exists.
-  AC265 remains open; AC209 and AC211 remain open; Slice 10 remains locked;
-  totals remain Slice 09 **279/282 active** (**283 authored IDs**) and Phase 2
-  **1,999/2,000 active criteria** (**8/17 slices**). AC266 remains
+  AC265 was open; AC209 and AC211 were open; Slice 10 was locked;
+  totals were Slice 09 **279/282 active** (**283 authored IDs**) and Phase 2
+  **1,999/2,000 active criteria** (**8/17 slices**). AC266 remained
   owner-deferred and mandatory for the post-Phase 2 release gate.
 
 - **P2-S09 AC265 CP-04d signed source-manifest and authority foundation**
@@ -313,9 +314,9 @@
   live producer
   or source population, protected signer execution, retained hosted artifacts,
   independently authenticated receipts, and the complete hosted matrix remain
-  open. Totals remain Slice 09 **279/282 active** (**283 authored IDs**) and
-  Phase 2 **1,999/2,000 active criteria** (**8/17 slices**); AC209, AC211, and
-  AC265 remain open, Slice 10 remains locked, and AC266 remains owner-deferred
+  open. At that checkpoint totals were Slice 09 **279/282 active** (**283 authored
+  IDs**) and Phase 2 **1,999/2,000 active criteria** (**8/17 slices**); AC209,
+  AC211, and AC265 were open, Slice 10 was locked, and AC266 was owner-deferred
   as the mandatory post-Phase 2 production-readiness/release gate.
 
 ## Historical

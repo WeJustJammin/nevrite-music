@@ -657,11 +657,14 @@ Passing either dedicated workflow proves intake and provenance infrastructure
 only. The current combined release verifier does not automatically consume the
 sanitized AC266 manifest: its protected assembly step must supply the original
 strict report bytes privately, run the four-gate verifier, and remove them
-before artifact upload. AC266's own acceptance is not production-bound: it
-closes when the two genuine platform reports pass its independent protected
-staging manual and automated-axe verification. The combined release sidecar
-remains unchanged and is the separate acceptance route for the production
-AC209 and AC211 evidence.
+before artifact upload. AC266 is not production-bound by policy, but it is
+still open and has no proven standalone acceptance path: its protected staging
+manual verifier and automated-axe verifier exist separately, and no AC266-only
+consumer binds both yet. AC266 therefore closes only once the hosted-scope
+acceptance route binds those two components. That staging-scope acceptance is
+distinct from the combined release sidecar, which remains unchanged and still
+requires all four evidence streams, including the production AC209 and AC211
+evidence.
 
 ## Collect AC211 evidence
 

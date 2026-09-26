@@ -66,19 +66,25 @@ the initial deployment:
 
 ## Remaining work (not delivered by this propagation)
 
-- Implement the hosted-scope acceptance route for AC265 and AC266: add a
-  hosted-scope evidence shape and hosted-only expected identity
+- Implement the hosted-scope acceptance route for **both AC265 and AC266**: add
+  a hosted-scope evidence shape and hosted-only expected identity
   (`{artifact, hostedE2e, accessibility, verifiedAt}` without
   `productionDeploymentId`/`productionDeployedAt`), and route AC265 and AC266
   acceptance through the retained hosted-report verifier plus the existing
-  axe and manual verifiers. `alerting` and `slo` stay mandatory in the
-  production sidecar for AC209 and AC211. Until it lands, AC265 remains an open
-  implementation gate whose closure path is blocked.
-- **Consistent — `P2-S09-AC-266`.** Owner-deferred under `DEC-101`; remains the
-  separate mandatory **pre-release** post-Phase 2 production-readiness/release
-  gate requiring genuine macOS/Safari/VoiceOver and Windows/Firefox/NVDA
-  evidence. It alone carries a pre-release deadline, and that label must not be
-  copied onto AC209 or AC211.
+  axe and manual verifiers, with an AC266-only consumer that binds the manual
+  and axe components. `alerting` and `slo` stay mandatory in the production
+  sidecar for AC209 and AC211. Until it lands, AC265 remains an open
+  implementation gate whose closure path is blocked, and AC266 cannot close
+  either. This work must be coordinated with the in-flight item-B agent.
+- **Open, pre-release by policy — `P2-S09-AC-266`.** Owner-deferred under
+  `DEC-101`; remains the separate mandatory **pre-release** post-Phase 2
+  production-readiness/release gate requiring genuine
+  macOS/Safari/VoiceOver and Windows/Firefox/NVDA evidence. It alone carries a
+  pre-release deadline, and that label must not be copied onto AC209 or AC211.
+  AC266 is still open and has no proven standalone acceptance path: the
+  protected staging manual verifier and the automated-axe verifier exist as
+  separate components, but no AC266-only consumer binds both, so AC266 closes
+  only once the hosted-scope acceptance route binds them.
 
 ## Explicit contradictions
 
