@@ -1,7 +1,11 @@
 import { isDeepStrictEqual } from 'node:util';
 
-import { authenticateAc265ApprovedOutageTargetV1 } from './ac265-approved-outage-target-attestation.ts';
 import {
+  assertAc265ApprovedOutageTargetAttestationWindow,
+  authenticateAc265ApprovedOutageTargetV1,
+} from './ac265-approved-outage-target-attestation.ts';
+import {
+  assertAc265ApprovedRunnerMappingAttestationWindow,
   authenticateAc265ApprovedRunnerMappingsV1,
   type Ac265ApprovedRunnerMappingTrustedKey,
 } from './ac265-approved-runner-mapping-attestation.ts';
@@ -175,16 +179,33 @@ const compose = (
     return fail();
   // The lease must have been acquired under that same authorization and for
   // exactly the authenticated outage target, so the reference it issued is the
-  // only lease this contract may pin. Both attestations must still be inside
-  // the trusted window, and the target must already be approved when it opens.
+  // only lease this contract may pin.
   if (
     acquisition.data.authorizationRef !== authorization.data.authorizationRef ||
-    acquisition.data.targetRef !== target.targetRef ||
-    Date.parse(target.approvedAt) > Date.parse(startedAt.data) ||
-    Date.parse(targetAttestation.expiresAt) > Date.parse(cutoffAt.data) ||
-    Date.parse(mappingAttestation.expiresAt) > Date.parse(cutoffAt.data)
+    acquisition.data.targetRef !== target.targetRef
   )
     return fail();
+  // Reuse the promoted window assertions instead of re-deriving the bounds here,
+  // so this composer cannot drift from the policy the hosted gate already
+  // applies. Together they enforce that each attestation was issued no earlier
+  // than its source approval and no later than the trusted run start
+  // (startedAt >= issuedAt), that the run start falls inside the attestation
+  // lifetime, that the trusted cutoff covers the attestation expiry, and that
+  // the source approval itself precedes the run. A run that starts before its
+  // authority existed, or whose mapping was only approved after the run began,
+  // is rejected here rather than composed into publishable bytes.
+  assertAc265ApprovedRunnerMappingAttestationWindow({
+    mapping,
+    attestation: mappingAttestation,
+    reportStartedAt: startedAt.data,
+    trustedCutoffAt: cutoffAt.data,
+  });
+  assertAc265ApprovedOutageTargetAttestationWindow({
+    target,
+    attestation: targetAttestation,
+    reportStartedAt: startedAt.data,
+    trustedCutoffAt: cutoffAt.data,
+  });
 
   const outageLease = deriveAc265HostedOutageLease({
     acquisition: acquisition.data,

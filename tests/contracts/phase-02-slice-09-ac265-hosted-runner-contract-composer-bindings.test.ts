@@ -1,7 +1,10 @@
 import { describe, expect, it } from 'vitest';
 
 import { composeAc265HostedRunnerContractV1 } from '../../infra/workflows/ac265-hosted-runner-contract-composer.ts';
-import { canonicalizeAc265ApprovedRunnerMappingsV1 } from '../../infra/workflows/ac265-approved-runner-mapping-attestation.ts';
+import {
+  canonicalizeAc265ApprovedRunnerMappingsV1,
+  createAc265ApprovedRunnerMappingAttestation,
+} from '../../infra/workflows/ac265-approved-runner-mapping-attestation.ts';
 import {
   canonicalizeAc265ApprovedOutageTargetV1,
   createAc265ApprovedOutageTargetAttestation,
@@ -10,6 +13,7 @@ import { CONTENT_SCHEMA_REGISTRY_HOSTED_ROLES } from '../../packages/contracts/s
 import {
   ATTESTATION_EXPIRES_AT,
   ATTESTATION_ISSUED_AT,
+  MAPPING_KEY_ID,
   TARGET_KEY_ID,
   TEST_PRIVATE_KEY_PEM,
   composerInput,
@@ -224,5 +228,70 @@ describe('AC265 hosted runner contract composer source bindings', () => {
       expect(() => compose({ ...input, ...overrides })).toThrow(
         /AC265 hosted runner contract composition failed/u,
       );
+  });
+
+  it('fails closed when the trusted start precedes an attestation issue time', async () => {
+    const input = await composerInput();
+    // Both attestations are re-signed so each is issued after the trusted run
+    // start while still inside its own approval and expiry bounds. The window
+    // edges the composer used to re-check (approvedAt, expiresAt vs cutoff) all
+    // hold, so only the promoted "the attestation must exist at the run start"
+    // assertion rejects this input.
+    const issuedAt = '2026-09-03T11:00:40.000Z';
+    const mapping = canonicalizeAc265ApprovedRunnerMappingsV1(mappingFixture());
+    const { attestationBytes: mappingAttestationBytes } =
+      createAc265ApprovedRunnerMappingAttestation({
+        mappingBytes: mapping.bytes,
+        keyId: MAPPING_KEY_ID,
+        privateKeyPem: TEST_PRIVATE_KEY_PEM,
+        issuedAt,
+        expiresAt: ATTESTATION_EXPIRES_AT,
+      });
+    const target = canonicalizeAc265ApprovedOutageTargetV1(targetFixture());
+    const { attestationBytes: targetAttestationBytes } =
+      createAc265ApprovedOutageTargetAttestation({
+        targetBytes: target.bytes,
+        keyId: TARGET_KEY_ID,
+        privateKeyPem: TEST_PRIVATE_KEY_PEM,
+        issuedAt,
+        expiresAt: ATTESTATION_EXPIRES_AT,
+      });
+
+    expect(() =>
+      compose({
+        ...input,
+        mappingAttestationBytes,
+        targetAttestationBytes,
+        trustedStartedAt: '2026-09-03T11:00:35.000Z',
+      }),
+    ).toThrow(/AC265 hosted runner contract composition failed/u);
+  });
+
+  it('fails closed when the approved mapping is approved after the trusted run start', async () => {
+    const input = await composerInput();
+    // The mapping was approved (and therefore attested) only after the trusted
+    // run started. The target source is untouched and remains valid, so only
+    // the promoted mapping window assertion can reject this run.
+    const mapping = canonicalizeAc265ApprovedRunnerMappingsV1({
+      ...mappingFixture(),
+      approvedAt: '2026-09-03T11:00:45.000Z',
+    });
+    const { attestationBytes: mappingAttestationBytes } =
+      createAc265ApprovedRunnerMappingAttestation({
+        mappingBytes: mapping.bytes,
+        keyId: MAPPING_KEY_ID,
+        privateKeyPem: TEST_PRIVATE_KEY_PEM,
+        issuedAt: '2026-09-03T11:00:50.000Z',
+        expiresAt: ATTESTATION_EXPIRES_AT,
+      });
+
+    expect(() =>
+      compose({
+        ...input,
+        mappingBytes: mapping.bytes,
+        mappingAttestationBytes,
+        trustedStartedAt: '2026-09-03T11:00:35.000Z',
+      }),
+    ).toThrow(/AC265 hosted runner contract composition failed/u);
   });
 });
