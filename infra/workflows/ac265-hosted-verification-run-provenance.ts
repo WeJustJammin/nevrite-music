@@ -15,7 +15,10 @@ import {
   repositoryApiPrefix,
   requireSafeInteger,
 } from './ac265-candidate-provenance-github-api.ts';
-import { deploymentJobUrl } from './ac265-candidate-provenance-github-deployment.ts';
+import {
+  deploymentJobUrl,
+  selectAc265DeploymentStatus,
+} from './ac265-candidate-provenance-github-deployment.ts';
 
 export const REPORT_ARTIFACT_NAME = 'ac265-hosted-e2e-report-v3';
 
@@ -264,22 +267,13 @@ const verifyStagingDeployment = async (input: {
     input.token,
     input.fetchImpl,
   );
-  if (statuses.length !== 1) return failAc265CandidateProvenance();
-  const status = statuses[0];
-  if (!isAc265Record(status)) return failAc265CandidateProvenance();
-  const expectedJobUrl = deploymentJobUrl(input.runId, AC265_REPOSITORY);
-  if (
-    status.state !== 'success' ||
-    status.environment !== 'staging' ||
-    status.environment_url !== input.webOrigin ||
-    !isAc265Record(status.creator) ||
-    status.creator.login !== input.actorLogin ||
-    typeof status.target_url !== 'string' ||
-    typeof status.log_url !== 'string' ||
-    !expectedJobUrl.test(status.target_url) ||
-    !expectedJobUrl.test(status.log_url)
-  )
-    return failAc265CandidateProvenance();
+  selectAc265DeploymentStatus(statuses, {
+    actorLogin: input.actorLogin,
+    webOrigin: input.webOrigin,
+    jobUrlPattern: deploymentJobUrl(input.runId, AC265_REPOSITORY),
+    windowStart: timestampMs(deployment.created_at),
+    windowEnd: input.completedAt,
+  });
   return deploymentId;
 };
 

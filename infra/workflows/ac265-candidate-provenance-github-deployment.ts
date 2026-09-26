@@ -24,6 +24,67 @@ const DEPLOYMENT_STATES = new Set([
   'waiting',
 ]);
 
+export interface Ac265DeploymentStatusExpectation {
+  readonly actorLogin: string;
+  readonly webOrigin: string;
+  readonly jobUrlPattern: RegExp;
+  readonly windowStart: number;
+  readonly windowEnd: number;
+}
+
+/**
+ * GitHub records a deployment status history (waiting -> queued ->
+ * in_progress -> success/failure) rather than a single synthetic status, so a
+ * single-status assumption rejects genuine staging deployments. Validate every
+ * entry, then accept only when the uniquely latest status by provider timestamp
+ * is the terminal success: a newer failure, a newer non-terminal state, a tied
+ * timestamp, a wrong actor, or a wrong job URL all fail closed. This is the
+ * promoted selection shared by every AC265 deployment-status consumer.
+ */
+export const selectAc265DeploymentStatus = (
+  statuses: readonly unknown[],
+  expectation: Ac265DeploymentStatusExpectation,
+): number => {
+  const parsedStatuses = statuses.map((value) => {
+    if (!isAc265Record(value)) return failAc265CandidateProvenance();
+    const id = requireSafeInteger(value.id);
+    const createdAt = timestampMs(value.created_at);
+    if (
+      typeof value.state !== 'string' ||
+      !DEPLOYMENT_STATES.has(value.state) ||
+      value.environment !== 'staging' ||
+      !isAc265Record(value.creator) ||
+      value.creator.login !== expectation.actorLogin ||
+      typeof value.target_url !== 'string' ||
+      typeof value.log_url !== 'string' ||
+      !expectation.jobUrlPattern.test(value.target_url) ||
+      !expectation.jobUrlPattern.test(value.log_url) ||
+      createdAt < expectation.windowStart ||
+      createdAt > expectation.windowEnd
+    )
+      return failAc265CandidateProvenance();
+    if (
+      value.state === 'success' &&
+      value.environment_url !== expectation.webOrigin
+    )
+      return failAc265CandidateProvenance();
+    return { id, state: value.state, createdAt };
+  });
+  if (parsedStatuses.length === 0) return failAc265CandidateProvenance();
+  const sorted = [...parsedStatuses].sort(
+    (left, right) => right.createdAt - left.createdAt,
+  );
+  const latest = sorted[0]!;
+  const tied = sorted.filter((status) => status.createdAt === latest.createdAt);
+  if (
+    latest.state !== 'success' ||
+    tied.length !== 1 ||
+    tied.some((status) => status.id !== latest.id)
+  )
+    return failAc265CandidateProvenance();
+  return latest.id;
+};
+
 export const deploymentJobUrl = (runId: string, repository: string): RegExp => {
   const escapedRepository = repository.replace(/[.*+?^${}()|[\]\\]/gu, '\\$&');
   return new RegExp(
@@ -89,43 +150,12 @@ export const verifyAc265StagingDeployment = async (
     input.token,
     fetchImpl,
   );
-  const expectedJobUrl = deploymentJobUrl(stagingRun.runId, input.repository);
-  const parsedStatuses = statuses.map((value) => {
-    if (!isAc265Record(value)) return failAc265CandidateProvenance();
-    const id = requireSafeInteger(value.id);
-    const createdAt = timestampMs(value.created_at);
-    if (
-      typeof value.state !== 'string' ||
-      !DEPLOYMENT_STATES.has(value.state) ||
-      value.environment !== 'staging' ||
-      !isAc265Record(value.creator) ||
-      value.creator.login !== stagingRun.actorLogin ||
-      typeof value.target_url !== 'string' ||
-      typeof value.log_url !== 'string' ||
-      !expectedJobUrl.test(value.target_url) ||
-      !expectedJobUrl.test(value.log_url) ||
-      createdAt < deployment.createdAt ||
-      createdAt > stagingRun.completedAt
-    )
-      return failAc265CandidateProvenance();
-    if (
-      value.state === 'success' &&
-      value.environment_url !== input.stagingWebOrigin
-    )
-      return failAc265CandidateProvenance();
-    return { id, state: value.state, createdAt };
+  selectAc265DeploymentStatus(statuses, {
+    actorLogin: stagingRun.actorLogin,
+    webOrigin: input.stagingWebOrigin,
+    jobUrlPattern: deploymentJobUrl(stagingRun.runId, input.repository),
+    windowStart: deployment.createdAt,
+    windowEnd: stagingRun.completedAt,
   });
-  if (parsedStatuses.length === 0) return failAc265CandidateProvenance();
-  parsedStatuses.sort((left, right) => right.createdAt - left.createdAt);
-  const latest = parsedStatuses[0];
-  const tied = parsedStatuses.filter(
-    (status) => status.createdAt === latest?.createdAt,
-  );
-  if (
-    latest?.state !== 'success' ||
-    tied.length !== 1 ||
-    tied.some((status) => status.id !== latest.id)
-  )
-    return failAc265CandidateProvenance();
   return { ...deployment, webOrigin: input.stagingWebOrigin };
 };

@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 
 import { resolveAc265HostedVerificationRunProvenance } from '../../infra/workflows/ac265-hosted-verification-run-provenance.ts';
 import {
+  DEPLOYMENT_ID,
   REPOSITORY,
   REPOSITORY_ID,
   SOURCE_SHA,
@@ -51,6 +52,22 @@ const resolve = (overrides = {}, patch: Record<string, unknown> = {}) =>
       ...overrides,
     }).fetchImpl,
   );
+
+// Fixture mirroring a real GitHub deployment that records a full state history
+// (waiting -> queued -> in_progress -> success) instead of a single synthetic
+// success status. GitHub returns deployment statuses newest-first.
+const JOB_URL = `https://github.com/${REPOSITORY}/actions/runs/${STAGING_RUN_ID}/job/5001`;
+const deploymentStatus = (patch: Record<string, unknown> = {}) => ({
+  id: 4100,
+  state: 'success',
+  environment: 'staging',
+  environment_url: WEB_ORIGIN,
+  target_url: JOB_URL,
+  log_url: JOB_URL,
+  creator: { login: 'release-operator' },
+  created_at: '2026-09-08T13:09:00.000Z',
+  ...patch,
+});
 
 describe('AC265 hosted verification run provenance', () => {
   it('derives run, revision, deployment, and report archive identity from GitHub', async () => {
@@ -288,6 +305,122 @@ describe('AC265 hosted verification run provenance', () => {
             creator: { login: 'release-operator' },
             created_at: '2026-09-08T13:09:00.000Z',
           },
+        ],
+      }),
+    ).rejects.toThrow();
+  });
+
+  it('accepts a real deployment status history and selects the terminal success', async () => {
+    const provenance = await resolve({
+      deploymentStatuses: [
+        deploymentStatus({ id: 4104 }),
+        deploymentStatus({
+          id: 4103,
+          state: 'in_progress',
+          environment_url: '',
+          created_at: '2026-09-08T13:08:12.000Z',
+        }),
+        deploymentStatus({
+          id: 4102,
+          state: 'queued',
+          environment_url: '',
+          created_at: '2026-09-08T13:08:11.000Z',
+        }),
+        deploymentStatus({
+          id: 4101,
+          state: 'waiting',
+          environment_url: '',
+          created_at: '2026-09-08T13:08:10.000Z',
+        }),
+      ],
+    });
+    expect(provenance.deploymentId).toBe(DEPLOYMENT_ID);
+    expect(provenance.deploymentWebOrigin).toBe(WEB_ORIGIN);
+  });
+
+  it('rejects a newer terminal failure that supersedes an earlier success', async () => {
+    await expect(
+      resolve({
+        deploymentStatuses: [
+          deploymentStatus({
+            id: 4105,
+            state: 'failure',
+            environment_url: '',
+            created_at: '2026-09-08T13:10:00.000Z',
+          }),
+          deploymentStatus({
+            id: 4104,
+            state: 'success',
+            created_at: '2026-09-08T13:09:00.000Z',
+          }),
+        ],
+      }),
+    ).rejects.toThrow();
+  });
+
+  it('rejects a non-terminal status that is newer than the success', async () => {
+    await expect(
+      resolve({
+        deploymentStatuses: [
+          deploymentStatus({
+            id: 4105,
+            state: 'in_progress',
+            environment_url: '',
+            created_at: '2026-09-08T13:10:00.000Z',
+          }),
+          deploymentStatus({
+            id: 4104,
+            state: 'success',
+            created_at: '2026-09-08T13:09:00.000Z',
+          }),
+        ],
+      }),
+    ).rejects.toThrow();
+  });
+
+  it('rejects an ambiguous status history with a tied latest timestamp', async () => {
+    await expect(
+      resolve({
+        deploymentStatuses: [
+          deploymentStatus({ id: 4105 }),
+          deploymentStatus({ id: 4104 }),
+        ],
+      }),
+    ).rejects.toThrow();
+  });
+
+  it('rejects a status history whose earlier entry has a wrong actor', async () => {
+    await expect(
+      resolve({
+        deploymentStatuses: [
+          deploymentStatus({ id: 4104 }),
+          deploymentStatus({
+            id: 4101,
+            state: 'waiting',
+            environment_url: '',
+            creator: { login: 'someone-else' },
+            created_at: '2026-09-08T13:08:10.000Z',
+          }),
+        ],
+      }),
+    ).rejects.toThrow();
+  });
+
+  it('rejects a status history whose earlier entry has a wrong job URL', async () => {
+    await expect(
+      resolve({
+        deploymentStatuses: [
+          deploymentStatus({ id: 4104 }),
+          deploymentStatus({
+            id: 4101,
+            state: 'queued',
+            environment_url: '',
+            target_url:
+              'https://github.com/' +
+              REPOSITORY +
+              '/actions/runs/999999/job/5001',
+            created_at: '2026-09-08T13:08:10.000Z',
+          }),
         ],
       }),
     ).rejects.toThrow();
