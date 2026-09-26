@@ -68,9 +68,9 @@
   Independent `/validate-phase`, exact-SHA CI/staging, and protected production
   approval passed; live production deployment was not required or performed.
   See `.memory/wiki/specs/audits/phase-1-validation.md`.
-- **CURRENT IMPLEMENTATION (2026-09-21):** Phase 2 Slices 01–08 are complete.
-  Slice 09 remains locally QA-GREEN at 279/282 active (283 authored IDs) with
-  authored depth ratio `0.986`. The prior CP-04d implementation baseline was
+- **CHECKPOINT 2026-09-21 (superseded by DEC-104 on 2026-09-25):** Phase 2
+  Slices 01–08 were complete at this checkpoint. Slice 09 was locally QA-GREEN
+  at 279/282 active (283 authored IDs) with authored depth ratio `0.986`. The prior CP-04d implementation baseline was
   PR #91 at exact
   SHA `289ed3a2f4f92da383aa1464340f804777496257`; exact-main CI
   `35656504913` succeeded across all three jobs, and automatic staging run
@@ -127,10 +127,11 @@
   Read-only AC209 verifier `35612514031` failed with
   `provider_graphql_error` after all preflight, protection, and workspace
   gates; it produced no effects and no receipt.
-  AC266 is owner-deferred because the required real devices are unavailable; it
-  remains unchecked and excluded from active Phase 2 completion. Slice 10
-  remains locked only on AC209, AC211, and AC265; AC266 remains a mandatory
-  post-Phase 2 production-readiness/release gate. See
+  AC266 was owner-deferred because the required real devices are unavailable; it
+  remained unchecked and excluded from active Phase 2 completion. At that
+  checkpoint Slice 10 was locked on AC209, AC211, and AC265. DEC-104 later moved
+  AC209 and AC211 outside the active implementation denominator, so Slice 10 is
+  now locked only on AC265. See
   `.memory/pipeline/progress/phases/phase-02.md` and
   `.memory/pipeline/progress/slices/phase-02-slice-09.md`.
 - **LATEST PROMOTED CP-04E FOUNDATION (2026-09-21):** PR #93 merged to

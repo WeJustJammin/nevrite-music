@@ -91,8 +91,9 @@ checks passed before the successful rerun. PR #91 exact-main CI and staging
 promotion are recorded above. No AC265 hosted acceptance is claimed:
 live hosted producer/source population, protected
 signer execution, retained hosted artifacts, independently authenticated
-receipts, and the complete hosted matrix remain open. Phase 2 remains **8/17**
-with **1,999/2,000 active criteria**, Slice 09 remains **279/282 active** with
-**283 authored IDs**, AC209/AC211/AC265 remain open, Slice 10 remains locked,
-and AC266 remains owner-deferred as a mandatory post-Phase 2
-production-readiness/release gate.
+receipts, and the complete hosted matrix remain open. At that checkpoint Phase
+2 was **8/17** with **1,999/2,000 active criteria**, Slice 09 was **279/282
+active** with **283 authored IDs**, AC209/AC211/AC265 were open, and Slice 10
+was locked. DEC-104 later moved AC209 and AC211 outside the active
+implementation denominator, leaving Slice 09 at 279/280 and Slice 10 locked only
+on AC265.

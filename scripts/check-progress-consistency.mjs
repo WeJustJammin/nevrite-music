@@ -541,6 +541,18 @@ const checkPhaseTwoCompletionPolicy = () => {
           'spec-pipeline.md NEXT must keep AC211 on its post-launch window',
       },
     ]);
+    // A dated `CURRENT IMPLEMENTATION` label reads as present-tense guidance.
+    // Once the policy moves on it must be relabelled a superseded checkpoint.
+    const datedCurrentLabel =
+      /\*\*CURRENT IMPLEMENTATION \(\d{4}-\d{2}-\d{2}\)/u.test(nextSpecText);
+    assertPolicy('spec-pipeline.md#current-implementation', nextSpecText, [
+      {
+        pattern: datedCurrentLabel ? /a^/u : /superseded by DEC-104/iu,
+        message: datedCurrentLabel
+          ? 'spec-pipeline.md still labels a dated checkpoint CURRENT IMPLEMENTATION; relabel it as superseded history'
+          : 'spec-pipeline.md must carry a DEC-104 supersession marker for the 2026-09-21 checkpoint',
+      },
+    ]);
     const header = nextSpecText.split('\n').slice(0, 6).join('\n');
     assertPolicy('spec-pipeline.md#header', header, [
       {

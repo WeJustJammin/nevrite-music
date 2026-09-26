@@ -100,10 +100,11 @@
   closed for insufficient samples: `commands=0`, `protectedRpcs=0`,
   `acceptances=0`, `queueFirstAttempts=0`; `dataset=1`, `registry=0`,
   `productionRegistry=0`, and `releaseRegistry=0`. No artifact or SLO verdict
-  exists, so AC211 remains open. Totals remain **279/282 active** (**283 authored IDs**), **8/17** Phase 2
-  slices, and **1,999/2,000 active criteria**; AC209, AC211, and AC265 remain
-  open, Slice 10 remains locked, and AC266 remains owner-deferred as the
-  mandatory post-Phase 2 production-readiness/release gate. See the [CP-04d
+  exists, so AC211 remains open. At that checkpoint totals were **279/282 active**
+  (**283 authored IDs**), **8/17** Phase 2 slices, and **1,999/2,000 active
+  criteria**; AC209, AC211, and AC265 were open and Slice 10 was locked. AC266
+  remained owner-deferred, and DEC-104 later moved AC209 and AC211 outside the
+  active implementation denominator. See the [CP-04d
   verification record](../verification/2026-09-21-ac265-hosted-artifact-source-manifest.md).
 
 ## 2026-09-21 AC265 CP-04e protected publication (staging promotion only)
@@ -134,11 +135,12 @@ validate` passed **572 files** with **4,543 passed + 1 skipped / 4,544** and
   routes. These are staging promotion proofs only, not production evidence or
   hosted AC265 acceptance. No protected context secret or signing configuration
   was populated and no genuine protected publication, retained hosted artifact,
-  authenticated receipt, or complete hosted matrix ran. AC265 remains open.
-  Totals remain **279/282 active** (**283 authored IDs**), **8/17** Phase 2
-  slices, and **1,999/2,000 active criteria**; AC209/AC211 remain open, Slice
-  10 remains locked, and AC266 remains owner-deferred as the mandatory post-
-  Phase 2 production-readiness/release gate. See the [CP-04e verification
+  authenticated receipt, or complete hosted matrix ran. AC265 was open at that
+  checkpoint. Totals were **279/282 active** (**283 authored IDs**), **8/17**
+  Phase 2 slices, and **1,999/2,000 active criteria**; AC209/AC211 were open and
+  Slice 10 was locked. AC266 remained owner-deferred, and DEC-104 later moved
+  AC209 and AC211 outside the active implementation denominator. See the [CP-04e
+  verification
   record](../verification/2026-09-21-ac265-hosted-artifact-source-manifest-publication.md).
 
 ## Tasks
