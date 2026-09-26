@@ -7,6 +7,10 @@ const WORKFLOW_PATH =
 
 describe('AC265 hosted staging-evidence workflow contract', () => {
   const workflow = readFileSync(WORKFLOW_PATH, 'utf8');
+  const protectedEnvironmentInventory = readFileSync(
+    '.github/SECRETS.md',
+    'utf8',
+  );
 
   it('runs only from main on the protected staging environment', () => {
     expect(workflow).toContain("if: github.ref == 'refs/heads/main'");
@@ -31,6 +35,24 @@ describe('AC265 hosted staging-evidence workflow contract', () => {
     expect(workflow).not.toContain(
       'AC265_HOSTED_VERIFICATION_CONTEXT_BUNDLE_B64: ${{ vars.',
     );
+  });
+
+  it('inventories the protected AC265 staging trust material', () => {
+    for (const name of [
+      'AC265_HOSTED_VERIFICATION_CONTEXT_BUNDLE_B64',
+      'AC265_RUNNER_MAPPING_SIGNING_PRIVATE_KEY_PEM',
+      'AC265_OUTAGE_TARGET_SIGNING_PRIVATE_KEY_PEM',
+    ]) {
+      expect(protectedEnvironmentInventory).toMatch(
+        new RegExp('^\\| `' + name + '`\\s*\\| Release evidence \\|', 'm'),
+      );
+    }
+    for (const name of [
+      'AC265_RUNNER_MAPPING_SIGNING_KEY_ID',
+      'AC265_OUTAGE_TARGET_SIGNING_KEY_ID',
+    ]) {
+      expect(protectedEnvironmentInventory).toContain('`' + name + '`');
+    }
   });
 
   it('downloads the exact report artifact with digest enforcement', () => {
