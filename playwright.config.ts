@@ -44,6 +44,8 @@ export default defineConfig({
   retries: process.env.CI ? 2 : 0,
   testDir: './tests/e2e',
   testIgnore: [
+    // Protected staging evidence must never run against the local fixture servers.
+    '**/*.ac265-hosted.spec.ts',
     'phase-02-slice-09-content-schema-registry-performance.spec.ts',
     'phase-02-slice-09-content-schema-registry-real-route.spec.ts',
   ],
