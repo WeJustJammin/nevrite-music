@@ -100,11 +100,15 @@ combined route, and it leaves the combined sidecar and its five production
 files unchanged.
 
 The route derives run, revision, deployment, and report-archive identity from
-the GitHub Actions API for the exact completed `Deploy staging` run named by
-`staging_run_id` and `staging_run_attempt`; nothing is read from dispatch
-text or from the artifact under verification. `Deploy staging` is triggered
-by `workflow_run`, and the report artifact is bound to the exact attempt
-window so a stale prior-attempt artifact cannot satisfy the gate.
+the GitHub Actions API for the exact completed `Deploy staging` run identified
+by `staging_run_id` and `staging_run_attempt`. Those two dispatch inputs are
+untrusted selectors only: they name which run and attempt to look up, and no
+identity, digest, or trust value is taken from dispatch text or from the
+artifact under verification. Every identity value is read back from the
+verified GitHub Actions API response for that exact run attempt. `Deploy
+staging` is triggered by `workflow_run`, and the report artifact is bound to
+the exact attempt window so a stale prior-attempt artifact cannot satisfy the
+gate.
 
 Trust material comes only from the protected `staging` environment secret
 `AC265_HOSTED_VERIFICATION_CONTEXT_BUNDLE_B64`, which carries the trusted
